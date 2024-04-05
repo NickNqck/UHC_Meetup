@@ -1,3 +1,4 @@
 name: UHC
 version: '${version}'
-main: fr.nicknqck.uhc.UHC
+author: [NickNqck]
+main: fr.nicknqck.Main
