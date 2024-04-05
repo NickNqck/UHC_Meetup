@@ -1,0 +1,3 @@
+name: UHC
+version: '${version}'
+main: fr.nicknqck.uhc.UHC
