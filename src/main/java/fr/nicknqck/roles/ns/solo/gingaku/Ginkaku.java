@@ -17,7 +17,7 @@ import fr.nicknqck.utils.StringUtils;
 
 public class Ginkaku extends RoleBase{
 	
-	private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6Kyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
+	private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
 	private int cdKyubi = 0;
 	
 	public Ginkaku(Player player, Roles roles, GameState gameState) {
@@ -41,11 +41,12 @@ public class Ginkaku extends RoleBase{
 				"",
 				AllDesc.items,
 				"",
-				AllDesc.point+"§6Kyubi§f: Pendant§c 3 minutes§f vous offre des effets, cependant ils changent chaque minutes: ",
+				AllDesc.point+"§6§lKyubi§f: Pendant§c 3 minutes§f vous offre des effets, cependant ils changent chaque minutes: ",
 				AllDesc.tab+"§aPremière minute§f: Vous obtenez les effets§e Speed II§f ainsi que§c Force I§f.",
 				AllDesc.tab+"§6Deuxième minute§f: Vous obtenez les effets§e Speed I§f ainsi que§c Force I§f.",
 				AllDesc.tab+"§cTroisième minute§f: Vous obtenez l'effet§e Speed I§f.",
 				"",
+				AllDesc.point+"§6Corde d'or§f: En visant un joueur, le repousse en l'air, puis, lorsqu'il attérit, l'empêche de bouger pendant§c 5s§f."
 				
 		};
 	}
