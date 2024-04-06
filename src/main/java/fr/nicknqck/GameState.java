@@ -325,7 +325,7 @@ public class GameState{
 		NS(false, new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack());
 		private boolean enable;
 		private ItemStack item;
-		private MDJ(boolean e, ItemStack item) {
+		MDJ(boolean e, ItemStack item) {
 			this.enable = e;
 			this.item = item;
 		}
