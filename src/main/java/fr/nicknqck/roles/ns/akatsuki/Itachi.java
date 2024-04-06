@@ -104,7 +104,7 @@ public class Itachi extends RoleBase {
 		}
 		return inv;
 	}
-	private List<Player> Tsukuyomi = new ArrayList<>();
+	private final List<Player> Tsukuyomi = new ArrayList<>();
 	private void useTsukuyomi() {
 		owner.sendMessage("Vous venez d'utiliser votre Tsukuyomi");
 		for (Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
@@ -215,8 +215,7 @@ public class Itachi extends RoleBase {
 							clicker.sendMessage(izanami.getStringsMission());
 							clicker.closeInventory();
 							new ItachiRunnable().runTaskTimer(Main.getInstance(), 0, 20);
-							return;
-						}
+                        }
 					}
 				}
 			}
@@ -443,8 +442,9 @@ public class Itachi extends RoleBase {
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			if (gameState.getServerState() != ServerStates.InGame) {
+			if (gameState.getServerState() != ServerStates.InGame || izanami == null) {
 				cancel();
+				return;
 			}
 			if (izanami.isAllTrue()) {
 				Player owner = Bukkit.getPlayer(izanami.getUser());

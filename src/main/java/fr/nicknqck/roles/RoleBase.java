@@ -66,7 +66,7 @@ public abstract class RoleBase {
 	public Float bonusSpeedMultiplier = 0.00f;
 	private boolean canRespawn = false;
 	private boolean hasNoFall = false;
-	private ArrayList<Player> linkWith = new ArrayList<Player>();
+	private ArrayList<Player> linkWith = new ArrayList<>();
 	private Roles oldRole = null;	
 	float speedBase;
 	private boolean powerEnabled = true;
@@ -84,8 +84,7 @@ public abstract class RoleBase {
 	
 	public abstract ItemStack[] getItems();
 	public ArrayList<Player> getIGPlayers() {return gameState.getInGamePlayers();}
-	public boolean hasCustomDeathMessage = false;
-	public String customDeathMessage = "";
+
 	public int maxduralame = 40;
 	boolean lameincassable = false;
 	public int actualduralame = 0;
@@ -206,7 +205,7 @@ public abstract class RoleBase {
 	            Block block = add.getBlock();
 	            if (!block.getType().isSolid()) {
 	                Collection<Entity> nearbyEntities = add.getWorld().getNearbyEntities(add, radius, radius, radius);
-	                if (nearbyEntities.size() == 0) {
+	                if (nearbyEntities.isEmpty()) {
 	                    continue;
 	                }
 

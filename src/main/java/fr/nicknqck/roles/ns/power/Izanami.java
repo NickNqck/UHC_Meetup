@@ -127,7 +127,7 @@ public class Izanami implements Listener{
 	private enum MissionUser {
 		Taper(0, "\"Tapée la cible 15x\""),//Fait
 		Lave(1, "\"Mettre de la§6 lave§f sous la cible\""),//Fait
-		Fraper(2, "\"Être frappé par l'épée de la cible 15x\""),//FAIT
+		Fraper(2, "\"être frappé par l'épée de la cible 15x\""),//FAIT
 		Gap(3, "\"Donner une pomme d'or à la cible\""),//FAIT
 		Rester(4, "\"Rester proche de la cible (§c20 blocs§f) pendant 5m\"");//FAIT
 		

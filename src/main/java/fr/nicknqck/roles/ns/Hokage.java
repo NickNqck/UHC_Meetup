@@ -16,8 +16,12 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Hokage {
-	private GameState gameState;
-	private int tWait = 0;
+	private final GameState gameState;
+	private final int tWait;
+	private boolean stopPlease = false;
+	public UUID Hokage;
+	private Player forceHokage = null;
+
 	public Hokage(int timeW, GameState ga) {
 		this.gameState = ga;
 		this.tWait = timeW;
@@ -60,14 +64,11 @@ public class Hokage {
 			}
 		}.runTaskTimer(Main.getInstance(), 0, 20);
 	}
-	private boolean stopPlease = false;
-	public UUID Hokage;
 	public void stop() {
 		stopPlease = true;
 	}
 	private Player searchHokage() {
-		List<Player> canBeHokage = new ArrayList<>();
-		canBeHokage.addAll(gameState.getInGamePlayers());
+        List<Player> canBeHokage = new ArrayList<>(gameState.getInGamePlayers());
 		Collections.shuffle(canBeHokage);
 		for (Player p : canBeHokage) {
 			if (!gameState.hasRoleNull(p)) {
@@ -78,7 +79,6 @@ public class Hokage {
 		}
 		return null;
 	}
-	private Player forceHokage = null;
 	public void onDeath(Player player, Entity damager, GameState gameState) {
 		if (Hokage == null) {
 			return;
@@ -101,6 +101,10 @@ public class Hokage {
 						forceHokage = killer;
 					}
 				}
+			}
+			if (!gameState.hasRoleNull(player)){
+				gameState.getPlayerRoles().get(player).addBonusforce(-10);
+				gameState.getPlayerRoles().get(player).addBonusResi(-10);
 			}
 			run();
 		}

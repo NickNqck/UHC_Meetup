@@ -19,12 +19,12 @@ public class Patch implements Listener{
 	}
 	@EventHandler(priority = EventPriority.HIGHEST)
     private void onPatchPotion(EntityDamageByEntityEvent event) {
+        if (gameState.getServerState() != ServerStates.InGame)return;
 		new PatchCritical(event, gameState.critP);
 		for (Chakras ch : Chakras.values()) {
-        	ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
-        }
-        if (!(event.getEntity() instanceof Player)) return;
-        if (gameState.getServerState() != ServerStates.InGame)return;
+			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
+		}
+		if (!(event.getEntity() instanceof Player)) return;
         for (Player a : gameState.getInGamePlayers()) {
         	if (!gameState.hasRoleNull(a)) {
         		if (!event.isCancelled()) {
@@ -47,11 +47,9 @@ public class Patch implements Listener{
         }
         if (damager.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
             ApplyForce(event, gameState.getPlayerRoles().get(damager).getForce(), damager, true);
-            System.out.println("(All Force 1) To "+event.getDamage());
         }
         if (gameState.getPlayerRoles().containsKey(damager)) {
     		ApplyForce(event, gameState.getPlayerRoles().get(damager).getBonusForce(), damager, false);
-    		System.out.println("(Bonus Force 2) To "+event.getDamage());
     	}
         if (Titans.Machoire.getTitan().getOwner() != null && Titans.Machoire.getTitan().getOwner() == damager.getUniqueId() && Titans.Machoire.getTitan().isTransformedinTitan()) {
         	System.out.println(victim.getName()+" has been resi cancelled by Titan Machoire");
@@ -62,11 +60,9 @@ public class Patch implements Listener{
         }
         	if (victim.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
                 ApplyResi(event, gameState.getPlayerRoles().get(victim).getAllResi(), victim, true);
-                System.out.println("(All Resi 5) To "+event.getDamage());
             } else {
             	if (gameState.getPlayerRoles().containsKey(victim)) {
             		ApplyResi(event, gameState.getPlayerRoles().get(victim).getBonusResi(), victim, false);
-            		System.out.println("(Bonus Resi 6) To "+event.getDamage());
             	}
             }
         if (event.getDamage() <= 0) event.setDamage(0.5);
@@ -83,17 +79,25 @@ public class Patch implements Listener{
 	private void ApplyForce(EntityDamageByEntityEvent event, double fPercent, Player damager, boolean effect) {
 		if (effect) {
 			event.setDamage((event.getDamage() / 2.3f) *(1 + gameState.getPlayerRoles().get(damager).getForce() / 100.0f));
+			System.out.println("Force Damage to "+event.getDamage());
 		} else {
-			double rValue = (double)(fPercent/100)+1;
-			event.setDamage(event.getDamage() *rValue);
+			if (fPercent > 0){
+				double rValue = (double)(fPercent/100)+1;
+				event.setDamage(event.getDamage() *rValue);
+				System.out.println("Force Damage to "+event.getDamage());
+			}
 		}
 	}
 	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, Player victim, boolean effect) {
 		if (effect) {
 			event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f);
+			System.out.println("Resi Damage to "+event.getDamage());
 		} else {
-			double rValue = (double)(reiPercent/100)+1;
-			event.setDamage(event.getDamage() *rValue);
+			if (reiPercent > 0){
+				double rValue = (double)(reiPercent/100)+1;
+				event.setDamage(event.getDamage() *rValue);
+				System.out.println("Bonus Resi Damage to "+event.getDamage());
+			}
 		}
 	}
 }

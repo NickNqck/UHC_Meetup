@@ -25,6 +25,11 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Danzo extends RoleBase{
 
+	private int futonCD = 0;
+	private int izanagiItemCD = 0;
+	private int sceauCD = 0;
+	private int coupToScelled = 0;
+	private boolean SceauActived = false;
 	public Danzo(Player player, Roles roles, GameState gameState) {
 		super(player, roles, gameState);
 		setChakraType(Chakras.FUTON);
@@ -114,7 +119,7 @@ public class Danzo extends RoleBase{
 				owner.setMaxHealth(getMaxHealth());
 				owner.sendMessage("§7Tuer un joueur vous a rendu §c1/2"+AllDesc.coeur+"§7 permanent");
 			}
-			if (getListPlayerFromRole(Roles.Madara).contains(victim) || getListPlayerFromRole(Roles.Obito).contains(victim) || getListPlayerFromRole(Roles.Sasuke).contains(victim) || getListPlayerFromRole(Roles.Itachi).contains(victim)) {
+			if (isUchiwa(victim)) {
 				owner.sendMessage("§7Vous venez de tuer un de ces démons du clan §4§lUchiwa !");
 				if (!killUchiwa) {
 					killUchiwa = true;
@@ -145,18 +150,16 @@ public class Danzo extends RoleBase{
 			}
 		}
 	}
-	private int futonCD = 0;
-	private int izanagiItemCD = 0;
-	private int sceauCD = 0;
-	private HashMap<Player, SceauAction> inSceau = new HashMap<>();
+	private boolean isUchiwa(Player p){
+		return getListPlayerFromRole(Roles.Madara).contains(p) || getListPlayerFromRole(Roles.Obito).contains(p) || getListPlayerFromRole(Roles.Sasuke).contains(p) || getListPlayerFromRole(Roles.Itachi).contains(p);
+	}
+
+	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
 	private enum SceauAction {
 		Wither(),
-		Bouger();
-		private SceauAction() {
-		}
+		Bouger()
 	}
-	private int coupToScelled = 0;
-	private boolean SceauActived = false;
+
 	@Override
 	public void resetCooldown() {
 		izanagiItemCD = 0;
@@ -165,6 +168,11 @@ public class Danzo extends RoleBase{
 	}
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
+		if (entity.getUniqueId().equals(owner.getUniqueId())){
+			if (isUchiwa(victim)){
+				event.setDamage(event.getDamage()*1.1);
+			}
+		}
 		if (inSceau.containsKey(victim)) {
 			if (inSceau.get(victim) == SceauAction.Bouger && SceauActived) {
 				event.setDamage(0);
@@ -248,10 +256,7 @@ public class Danzo extends RoleBase{
 					return true;
 				}
 				Location loc = Loc.getRandomLocationAroundPlayer(target, 10);
-				if (loc == null) {
-					return true;
-				}
-				owner.sendMessage("§cIzanagi !");
+                owner.sendMessage("§cIzanagi !");
 				owner.teleport(loc);
 				izanagiItemCD = 60*3;
 				setMaxHealth(getMaxHealth()-1.0);
