@@ -46,8 +46,15 @@ public class Ginkaku extends RoleBase{
 				AllDesc.tab+"§6Deuxième minute§f: Vous obtenez les effets§e Speed I§f ainsi que§c Force I§f.",
 				AllDesc.tab+"§cTroisième minute§f: Vous obtenez l'effet§e Speed I§f.",
 				"",
-				AllDesc.point+"§6Corde d'or§f: En visant un joueur, le repousse en l'air, puis, lorsqu'il attérit, l'empêche de bouger pendant§c 5s§f."
-				
+				AllDesc.point+"§6Corde d'or§f: En visant un joueur, le repousse en l'air, puis, lorsqu'il attérit, l'empêche de bouger pendant§c 5s§f.",
+				"",
+				AllDesc.point+"§bGourde écarlate§f: Après avoir infligé§c 1 joueurs§f vous pourrez poser un§7 hopper§f à votre position, puis,§c 10 secondes§f plus tard, si le§7 hopper§f n'a pas été cassé, téléporte le joueur sur le§7 hopper§f et obtiendra les effets:§2 Poison I§f et§8 Wither I§f pendant§c 10s",
+				"",
+				AllDesc.point+"§aSabre des septs étoiles§f: Sous forme d'une§7 Épée en diamant Tranchant III§f, infligera un effet de§c saignement§f (§c1/2"+AllDesc.coeur+" toute les§c 2 secondes§f pendant§c 8 secondes§f) au joueur sur qui vous infligerez§c 15 coups§f d'affilé.",
+				"",
+				AllDesc.particularite,
+				"",
+				"Vous connaissez le joueur possédant le rôle de§6 Kinkaku"
 		};
 	}
 	@Override
