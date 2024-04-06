@@ -38,8 +38,8 @@ public class Kanae extends RoleBase {
 			sendActionBarCooldown(owner, cooldowncoup);
 		}
 		if (cooldowncoup >= 1) cooldowncoup--;
-		if (timefire >= 1) timefire--; fire = true;
-		if (timefire == 0) fire = false;
+		if (timefire >= 1) timefire--;
+        fire = timefire != 0;
 		super.Update(gameState);
 	}
 	@Override

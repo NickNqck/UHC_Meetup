@@ -2032,7 +2032,7 @@ public class HubListener implements Listener {
 					
 					inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
 					for (Roles roles : Roles.values()) {
-						if (roles.getTeam() == TeamList.Demon && roles.getMdj() == "ds") {
+						if (roles.getTeam() == TeamList.Solo && roles.getMdj() == "ds") {
 							String l1 = "";
 							if (gameState.getAvailableRoles().get(roles) > 0) {
 								l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
