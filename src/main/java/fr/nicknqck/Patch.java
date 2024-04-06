@@ -27,9 +27,7 @@ public class Patch implements Listener{
 		if (!(event.getEntity() instanceof Player)) return;
         for (Player a : gameState.getInGamePlayers()) {
         	if (!gameState.hasRoleNull(a)) {
-        		if (!event.isCancelled()) {
-        			gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntity(event, (Player) event.getEntity(), event.getDamager());
-        		}
+        		gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntity(event, (Player) event.getEntity(), event.getDamager());
         	}
         }
         if (!(event.getDamager() instanceof Player)) return;
