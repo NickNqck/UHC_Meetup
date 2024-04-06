@@ -1,0 +1,105 @@
+package fr.nicknqck.roles.ds.demons;
+
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.StringUtils;
+import net.md_5.bungee.api.ChatColor;
+
+public class Demon_SimpleV2 extends RoleBase {
+	
+	private Player lunesup;
+	
+	public Demon_SimpleV2(Player player, Roles roles, GameState gameState) {
+		super(player, roles, gameState);
+		setForce(20);
+		owner.sendMessage(AllDesc.Demon_SimpleV2);
+		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+            if (lunesup == null) {
+                    lunesup = gameState.getLuneSupPlayers().get(0);
+                    owner.sendMessage("Votre lune supérieure est "+lunesup.getName());
+
+            }
+        }, 20);
+		} 
+	@Override
+	public String[] Desc() {
+		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+            if (lunesup != null) {
+                    owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
+            }
+        }, 20);		
+		return AllDesc.Demon_SimpleV2;
+	}
+	@Override
+	public ItemStack[] getItems() {
+		return new ItemStack[0];
+	}
+	  @Override
+	public void Update(GameState gameState) {
+		  if (gameState.nightTime) {
+			  owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*4, 0, false, false), true);
+		  } else {
+			  if (killnumber == 0) {
+				  owner.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*4, 0, false, false), true);
+			  }
+		  } 
+		  if (Transfocooldown >= 1) {Transfocooldown -= 1;}
+		super.Update(gameState);
+	}
+	private int killnumber = 0;
+	@Override
+	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
+		if (killer == owner) {
+			if (victim != owner) {
+				killnumber+=1; 
+				owner.sendMessage("Vous venez d'obtenir un kill suplémentaire vous êtes désormais à: "+ killnumber);
+				if (killnumber == 1) {
+					owner.removePotionEffect(PotionEffectType.WEAKNESS);
+					owner.sendMessage("Vous perdez désormais votre Weakness de jour");
+				}
+				if (killnumber == 2) {
+					addSpeedAtInt(owner, 10); 
+					owner.sendMessage("Vous obtenez désormais 10% de speed");
+				}
+				if (killnumber == 3) {
+					addBonusforce(10);
+					owner.sendMessage("Vous obtenez désormais 10% de force");
+				}
+				if (killnumber == 4) {
+					addBonusResi(10);
+					owner.sendMessage("Vous obtenez désormais 10% de résitance");
+				}
+				if (killnumber == 6) {
+					owner.getInventory().addItem(Items.getTransformation());
+					owner.sendMessage("Vous obtenez désormais l'item Transformation");
+				}
+			}
+		}
+		super.PlayerKilled(killer, victim, gameState);
+	}   
+	private int Transfocooldown = 0; 
+	@Override
+	public boolean ItemUse(ItemStack item, GameState gameState) {
+		if (item.isSimilar(Items.getTransformation()))
+			if (Transfocooldown <= 0) {
+				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 0, false, false));
+				Transfocooldown = 60*10;
+				setResi(20);
+			} else {
+				owner.sendMessage(ChatColor.RED + "Vous ne pourrez utiliser a nouveau votre Tranformation que dans "+ StringUtils.secondsTowardsBeautiful(Transfocooldown));
+			}
+		return super.ItemUse(item, gameState);
+	}
+	@Override
+	public void resetCooldown() {
+	}
+}

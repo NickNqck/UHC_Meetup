@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -151,6 +152,7 @@ public class GameState{
 		InGame,
 		GameEnded;
 	}
+	@Getter
 	public enum Roles {
 		//Solo ds
 		Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("Yoriichi").toItemStack(), "§bNickNqck"),
@@ -291,7 +293,7 @@ public class GameState{
 			this.item = item;
 			this.gDesign = GDesign;
 		}
-		public TeamList getTeam() {
+		/*public TeamList getTeam() {
 			return team;
 		}
 		public String getMdj() {
@@ -305,7 +307,7 @@ public class GameState{
 		}
 		public String getGDesign() {
 			return gDesign;
-		}
+		}*/
 		}
 	public void setAllMDJDesac() {
 		for (MDJ mdj : MDJ.values()) {

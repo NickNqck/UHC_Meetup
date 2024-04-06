@@ -1,0 +1,127 @@
+package fr.nicknqck.roles.aot.soldats;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.aot.titans.Titan;
+import fr.nicknqck.roles.desc.AllDesc;
+
+public class Hansi extends RoleBase {
+
+	public Hansi(Player player, Roles roles, GameState gameState) {
+		super(player, roles, gameState);
+		owner.sendMessage(Desc());
+		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public String[] Desc() {
+		return new String[] {
+				AllDesc.bar,
+				AllDesc.role+"Hansi","",
+				AllDesc.commande,"",
+				AllDesc.point+"§6/aot torture <§ljoueur§6>§f: Vous permet de \"torturer\" le joueur cibler ce qui fera des choses différente en fonction de son rôle et de son camp",
+				"Si la personne visée est du camp§a Soldat§f ou est§c Jelena§f la personne touchée perdra 2"+AllDesc.coeur+" permanent, cependant vous serez informé qu'elle est du camp§a Soldat",
+				"Si la personne visée est§6 Eren§f ou§6 Gabi§f la personne touchée gagnera 1"+AllDesc.coeur+" permanent et vous serez informé qu'elle est du camp§a Soldat",
+				"Si la personne visée n'est pas du camp§a Soldat§f et n'a pas été mentionné précédemment la personne visée perdra 1"+AllDesc.coeur+" permanent et vous vous en gagnerez 1"+AllDesc.coeur+" permanent, également vous serez informé qu'elle n'est pas du camp§a Soldat",
+				"",
+				AllDesc.point+"§6/aot give <§ljoueur§6>§f: Vous permet de donné une seringue au joueur visé, ce qui lui permettra (s'il est proche d'un Titan lors de sa mort) de pouvoir récupérer un Titan mort proche de lui",
+				"",
+				AllDesc.bar
+		};
+	}
+	private int actualtorture = 0;
+	private int actualseringue = 0;
+	private List<Player> tortured = new ArrayList<>();
+	@Override
+	public void onAotCommands(String arg, String[] args, GameState gameState) {
+		if (args[0].equalsIgnoreCase("torture")) {
+				if (args.length == 2) {
+					if (args[1] != null) {
+						Player target = Bukkit.getPlayer(args[1]);
+						if (!gameState.hasRoleNull(target)) {
+							if (actualtorture < 3) {
+								if (tortured.contains(target)) {
+									owner.sendMessage("§7Ce joueur à déjà été torturé par vos soins");
+									return;
+								}
+								if (getPlayerRoles(target).type == Roles.Eren) {
+									target.sendMessage("§7Vous avez censé avoir perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 mais à la place vous avez gagner 1"+AllDesc.coeur+" permanent, elle à appris que vous êtes dans le camp des §a Soldats");
+									owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
+									giveHeartatInt(target, 1);
+								}else {
+									if (getPlayerRoles(target).type == Roles.Gabi) {
+										target.sendMessage("§7Vous avez censé avoir perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 mais à la place vous avez gagner 1"+AllDesc.coeur+" permanent, elle à appris que vous êtes dans le camp des §a Soldats");
+										owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
+										giveHeartatInt(target, 1);
+									}else {
+										if (getPlayerRoles(target).type == Roles.Jelena) {
+											target.sendMessage("§7Vous avez perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous étiez dans le camp§a Soldat");
+											owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
+											giveHeartatInt(target, -2);
+										}else {
+											if (getPlayerRoles(target).getOldTeam() == TeamList.Soldat) {
+												target.sendMessage("§7Vous avez perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous étiez dans le camp§a Soldat");
+												owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
+												giveHeartatInt(target, -2);
+											}else {
+												if (getPlayerRoles(target).getOldTeam() != TeamList.Soldat) {
+													tortured.add(target);
+													target.sendMessage("§7Vous avez perdu 1"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous n'étiez pas dans le camp§a Soldat");
+													owner.sendMessage("§7Vous avez gagner 1"+AllDesc.coeur+"§7 permanent suite à la torture sur§f "+target.getName()+"§7, vous avez donc compris qu'il§l n'est pas dans votre camp");
+													giveHealedHeartatInt(owner, 1);
+													getPlayerRoles(target).setMaxHealth(target.getMaxHealth()-2);
+													target.setMaxHealth(getPlayerRoles(target).getMaxHealth());
+												}
+											}
+										}
+									}
+								}
+								actualtorture+=1;
+								owner.sendMessage("Il ne vous reste que§6 "+(3-actualtorture)+"§f de /aot torture");
+							}else {
+								owner.sendMessage("Vous avez déjà asser torturé comme sa nan ?");
+							}
+						}else {
+							owner.sendMessage("La personne visée ne possède pas de rôle");
+						}
+					}
+				}else {
+					owner.sendMessage("Veuiller indiquer un joueur");
+				}
+		}
+		if (args[0].equalsIgnoreCase("give")) {
+			if (args.length == 2 && args[1] != null) {
+				Player target = Bukkit.getPlayer(args[1]);
+				if (!gameState.hasRoleNull(target)) {
+					if (actualseringue < 3) {
+						if (!Titan.hasTitan(target) && !getPlayerRoles(target).isAckerMan() ){
+							getPlayerRoles(target).setCanVoleTitan(true);
+							target.sendMessage("§7Vous avez reçus une seringue");
+						}
+						actualseringue++;
+						owner.sendMessage("§7Vous venez de donner une seringue à§a "+target.getName());
+					} else {
+						owner.sendMessage("§7Vous n'avez plus de seringue à disposition");
+					}
+				}
+			}
+		}
+	}
+	@Override
+	public ItemStack[] getItems() {
+		return new ItemStack[0];
+	}
+	@Override
+	public void resetCooldown() {
+		actualtorture = 0;
+		tortured.clear();
+	}
+}
