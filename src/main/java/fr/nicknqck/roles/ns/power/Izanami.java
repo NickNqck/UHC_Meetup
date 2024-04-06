@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,14 +31,16 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 
 public class Izanami implements Listener{
-	
+
+	@Getter
 	private final UUID target;
+	@Getter
 	private final UUID user;
 	private int taperCoupRemaining = 15;
 	private String color;
 	private int FraperCoupRemaining = 15;
-	private HashMap<MissionUser, Boolean> Missions = new HashMap<>();
-	private HashMap<MissionTarget, Boolean> TargetMissions = new HashMap<>();
+	private final HashMap<MissionUser, Boolean> Missions = new HashMap<>();
+	private final HashMap<MissionTarget, Boolean> TargetMissions = new HashMap<>();
 	private final List<BukkitRunnable> runnables = new ArrayList<>();
 	private int gapEatingRemaining = 5;
 	public Izanami(UUID user, UUID target) {
@@ -45,28 +49,13 @@ public class Izanami implements Listener{
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	private boolean isNotNull() {
-		if (user == null) {
-			return false;
-		}
-		if (color == null) {
-			return false;
-		}
-		if (target == null) {
-			return false;
-		}
-		return true;
-	}
+        return target != null && color != null && user != null;
+    }
 	private boolean isGoodMission(MissionUser m) {
-		if (Missions.containsKey(m) && !Missions.get(m)) {
-			return true;
-		}
-		return false;
+		return Missions.containsKey(m) && !Missions.get(m);
 	}
 	private boolean isGoodMission(MissionTarget m) {
-		if (TargetMissions.containsKey(m) && !TargetMissions.get(m)) {
-			return true;
-		}
-		return false;
+		return TargetMissions.containsKey(m) && !TargetMissions.get(m);
 	}
 	private void setTrueMissions(MissionTarget m) {
 		if (isGoodMission(m)) {
@@ -90,12 +79,16 @@ public class Izanami implements Listener{
 		String l1 = "";
 		String l2 = "";
 		for (MissionUser mu : Missions.keySet()) {
-			if (l1 == "") {
+			if (l1.isEmpty()) {
 				l1 = mu.getMission();
 			}
-			if (l2 == "" || l2 == l1) {
+			if (l2.isEmpty() || l2.equals(l1)) {
 				l2 = mu.getMission();
 			}
+		}
+		String l3 = "";
+		if (Missions.keySet().stream().findFirst().isPresent()){
+			l3 = Missions.keySet().stream().findFirst().get().getMission();
 		}
 		return new String[] {
 				"",
@@ -107,14 +100,15 @@ public class Izanami implements Listener{
 				"",
 				"§eMission de la cible: ",
 				"",
-				"§7 - §f"+TargetMissions.keySet().stream().findFirst().get().getMission()
+				"§7 - §f"+l3
 		};
 	}
+	@NonNull
 	private MissionTarget getMission() {
 		for (MissionTarget mt : TargetMissions.keySet()) {
 			return mt;
 		}
-		return null;
+		return MissionTarget.Gap;//Je le met comme base au cas ou
 	}
 	public boolean isAllTrue() {
 		for (MissionUser mu : Missions.keySet()) {
@@ -129,12 +123,7 @@ public class Izanami implements Listener{
 		}
 		return true;
 	}
-	public UUID getUser() {
-		return user;
-	}
-	public UUID getTarget() {
-		return target;
-	}
+	@Getter
 	private enum MissionUser {
 		Taper(0, "\"Tapée la cible 15x\""),//Fait
 		Lave(1, "\"Mettre de la§6 lave§f sous la cible\""),//Fait
@@ -142,34 +131,23 @@ public class Izanami implements Listener{
 		Gap(3, "\"Donner une pomme d'or à la cible\""),//FAIT
 		Rester(4, "\"Rester proche de la cible (§c20 blocs§f) pendant 5m\"");//FAIT
 		
-		private String mission;
-		private int nmb;
-		private MissionUser(int nmb, String string) {
+		private final String mission;
+		private final int nmb;
+		MissionUser(int nmb, String string) {
 			this.nmb=nmb;
 			this.mission = string;
 		}
-		public String getMission() {
-			return mission;
-		}
-		public int getNMB() {
-			return nmb;
-		}
 	}
+	@Getter
 	private enum MissionTarget {
 		Tuer(0, "\"Tuer un joueur\""),//FAIT
 		Gap(1, "\"Manger 5§e pommes d'or\""),//FAIT
 		Distance(2, "\"Rester loin de vous (§c30 blocs§f) pendant 1 minutes\"s");
-		private String mission;
-		private int nmb;
-		private MissionTarget(int nmb, String string) {
+		private final String mission;
+		private final int nmb;
+		MissionTarget(int nmb, String string) {
 			this.nmb=nmb;
 			this.mission = string;
-		}
-		public String getMission() {
-			return mission;
-		}
-		public int getNMB() {
-			return nmb;
 		}
 	}
 	public void start(String izanamiColor) {
@@ -181,15 +159,15 @@ public class Izanami implements Listener{
 		}
 		int rdm3 = RandomUtils.getRandomInt(0, 2);
 		for (MissionUser mo : MissionUser.values()) {
-			if (mo.getNMB() == rdm1) {
+			if (mo.getNmb() == rdm1) {
 				Missions.put(mo, false);
 			}
-			if (mo.getNMB() == rdm2) {
+			if (mo.getNmb() == rdm2) {
 				Missions.put(mo, false);
 			}
 		}
 		for (MissionTarget mt : MissionTarget.values()) {
-			if (mt.getNMB() == rdm3) {
+			if (mt.getNmb() == rdm3) {
 				TargetMissions.put(mt, false);
 				break;
 			}
@@ -214,7 +192,6 @@ public class Izanami implements Listener{
 					
 				}
 			};
-			run1.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);//Le Async est censé permettre d'être plus opti
 			runnables.add(run1);
 		}
 		if (isGoodMission(MissionTarget.Distance)) {
@@ -237,8 +214,12 @@ public class Izanami implements Listener{
 					
 				}
 			};
-			run.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);//Le Async est censé permettre d'être plus opti
 			this.runnables.add(run);
+		}
+		if (!this.runnables.isEmpty()){
+			for (BukkitRunnable run : this.runnables){
+				run.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);//Le Async est censé permettre d'être plus opti
+			}
 		}
 	}
 	public ItemStack getResultVictimMission() {
@@ -295,14 +276,14 @@ public class Izanami implements Listener{
 	private void onDrop(PlayerDropItemEvent e) {
 		if (isGoodMission(MissionUser.Gap) && isNotNull()) {
 			if (e.getPlayer().getUniqueId().equals(user) && e.getItemDrop().getItemStack().getType().equals(Material.GOLDEN_APPLE)) {
-				e.getItemDrop().setMetadata("Izanami.Gap"+user.toString(), new FixedMetadataValue(Main.getInstance(), user));
+				e.getItemDrop().setMetadata("Izanami.Gap"+ user, new FixedMetadataValue(Main.getInstance(), user));
 			}
 		}
 	}
 	@EventHandler
 	private void onRecup(PlayerPickupItemEvent e) {
 		if (isGoodMission(MissionUser.Gap) && isNotNull()) {
-			if (e.getItem().hasMetadata("Izanami.Gap"+user.toString())) {
+			if (e.getItem().hasMetadata("Izanami.Gap"+ user)) {
 		//		Bukkit.getPlayer(user).sendMessage("§c"+e.getPlayer().getDisplayName()+"§7 a récupérer votre§c");
 				if (e.getPlayer().getUniqueId().equals(target)) {
 					setTrueMissions(MissionUser.Gap);
