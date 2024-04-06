@@ -1,4 +1,44 @@
-name: UHC
-version: '${version}'
-author: [NickNqck]
+name: UHC-Meetup
 main: fr.nicknqck.Main
+version: 1.29
+author: NickNqck
+#depend: [UHC-Module]
+commands:
+  ds:
+    description: All Commands about DemonSlayer-UHC-Meetup Plugin
+    usage: /ds [role/list/doc/discord/lame]
+    aliases: [ds]
+  admindsuhc:
+    description: All Admin Commands about DemonSlayer-UHC-Meetup Plugin
+    usage: /a [nuit/jour]
+    aliases: [a]
+  ManagerDesc:
+    description: All Description Commands about DemonSlayer-UHC-Meetup Plugin
+    usage: /desc [role]
+    aliases: [desc]
+  discord:
+    description: Donne le discord
+  aot:
+    description: Fait partie des roles AotUHC
+    aliases: [aot]
+  ns:
+    description: Fait partie des roles NarutoUHC
+    aliases: [ns]
+  drop:
+    description: Permet de drop le ou les items en main
+  claim:
+    description: Permet de claim les des items de role
+  mumble:
+    description: Permet d'obtenir le mumble
+  say:
+    description: Custom of /say commands
+  gamemode:
+    description: Custom of /gamemode commands
+  gm:
+    description: Addon of /gamemode
+  wl:
+    description: Addon of /whitelist
+  whitelist:
+    description: Custom of /whitelist commands
+  mc:
+    description: La daronne a mega
