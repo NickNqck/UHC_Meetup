@@ -1,142 +1,30 @@
 package fr.nicknqck;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
-import lombok.Getter;
-import lombok.Setter;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scoreboard.ScoreboardManager;
-
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
-import fr.nicknqck.roles.aot.mahr.Bertolt;
-import fr.nicknqck.roles.aot.mahr.Lara;
-import fr.nicknqck.roles.aot.mahr.Magath;
-import fr.nicknqck.roles.aot.mahr.Pieck;
-import fr.nicknqck.roles.aot.mahr.Porco;
-import fr.nicknqck.roles.aot.mahr.Reiner;
-import fr.nicknqck.roles.aot.soldats.Armin;
-import fr.nicknqck.roles.aot.soldats.Conny;
-import fr.nicknqck.roles.aot.soldats.Eclaireur;
-import fr.nicknqck.roles.aot.soldats.Erwin;
-import fr.nicknqck.roles.aot.soldats.Hansi;
-import fr.nicknqck.roles.aot.soldats.Jean;
-import fr.nicknqck.roles.aot.soldats.Livai;
-import fr.nicknqck.roles.aot.soldats.Onyankopon;
-import fr.nicknqck.roles.aot.soldats.Sasha;
-import fr.nicknqck.roles.aot.soldats.Soldat;
+import fr.nicknqck.roles.aot.mahr.*;
+import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.Eren;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
-import fr.nicknqck.roles.aot.titanrouge.GrandTitan;
-import fr.nicknqck.roles.aot.titanrouge.Jelena;
-import fr.nicknqck.roles.aot.titanrouge.PetitTitan;
-import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
-import fr.nicknqck.roles.aot.titanrouge.TitanDeviant;
+import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.Assassin;
-import fr.nicknqck.roles.ds.demons.DemonMain;
-import fr.nicknqck.roles.ds.demons.Demon_Simple;
-import fr.nicknqck.roles.ds.demons.Demon_SimpleV2;
-import fr.nicknqck.roles.ds.demons.Furuto;
-import fr.nicknqck.roles.ds.demons.Kumo;
-import fr.nicknqck.roles.ds.demons.Muzan;
-import fr.nicknqck.roles.ds.demons.Susamaru;
-import fr.nicknqck.roles.ds.demons.Yahaba;
-import fr.nicknqck.roles.ds.demons.lune.Akaza;
-import fr.nicknqck.roles.ds.demons.lune.Daki;
-import fr.nicknqck.roles.ds.demons.lune.Doma;
-import fr.nicknqck.roles.ds.demons.lune.Enmu;
-import fr.nicknqck.roles.ds.demons.lune.Gyokko;
-import fr.nicknqck.roles.ds.demons.lune.Gyutaro;
-import fr.nicknqck.roles.ds.demons.lune.Hantengu;
-import fr.nicknqck.roles.ds.demons.lune.HantenguV2;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
-import fr.nicknqck.roles.ds.demons.lune.Nakime;
-import fr.nicknqck.roles.ds.demons.lune.Rui;
-import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.Gyomei;
-import fr.nicknqck.roles.ds.slayers.Hotaru;
-import fr.nicknqck.roles.ds.slayers.Inosuke;
-import fr.nicknqck.roles.ds.slayers.Kagaya;
-import fr.nicknqck.roles.ds.slayers.Kanae;
-import fr.nicknqck.roles.ds.slayers.Kanao;
-import fr.nicknqck.roles.ds.slayers.Kyojuro;
-import fr.nicknqck.roles.ds.slayers.Makomo;
-import fr.nicknqck.roles.ds.slayers.Mitsuri;
-import fr.nicknqck.roles.ds.slayers.Muichiro;
-import fr.nicknqck.roles.ds.slayers.Nezuko;
-import fr.nicknqck.roles.ds.slayers.Obanai;
-import fr.nicknqck.roles.ds.slayers.Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.Sabito;
-import fr.nicknqck.roles.ds.slayers.Sanemi;
-import fr.nicknqck.roles.ds.slayers.Shinobu;
-import fr.nicknqck.roles.ds.slayers.Tanjiro;
-import fr.nicknqck.roles.ds.slayers.Tengen;
-import fr.nicknqck.roles.ds.slayers.Tomioka;
-import fr.nicknqck.roles.ds.slayers.Urokodaki;
-import fr.nicknqck.roles.ds.slayers.ZenItsu;
-import fr.nicknqck.roles.ds.solos.Jigoro;
-import fr.nicknqck.roles.ds.solos.JigoroV2;
-import fr.nicknqck.roles.ds.solos.Kyogai;
-import fr.nicknqck.roles.ds.solos.KyogaiV2;
-import fr.nicknqck.roles.ds.solos.Shinjuro;
-import fr.nicknqck.roles.ds.solos.ShinjuroV2;
-import fr.nicknqck.roles.ds.solos.Yoriichi;
+import fr.nicknqck.roles.ds.demons.*;
+import fr.nicknqck.roles.ds.demons.lune.*;
+import fr.nicknqck.roles.ds.slayers.*;
+import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ns.Hokage;
-import fr.nicknqck.roles.ns.akatsuki.Deidara;
-import fr.nicknqck.roles.ns.akatsuki.Hidan;
-import fr.nicknqck.roles.ns.akatsuki.Itachi;
-import fr.nicknqck.roles.ns.akatsuki.Kakuzu;
-import fr.nicknqck.roles.ns.akatsuki.Kisame;
-import fr.nicknqck.roles.ns.akatsuki.Konan;
-import fr.nicknqck.roles.ns.akatsuki.ZetsuBlanc;
-import fr.nicknqck.roles.ns.akatsuki.ZetsuNoir;
-import fr.nicknqck.roles.ns.orochimaru.Jugo;
-import fr.nicknqck.roles.ns.orochimaru.Kabuto;
-import fr.nicknqck.roles.ns.orochimaru.Karin;
-import fr.nicknqck.roles.ns.orochimaru.Kimimaro;
-import fr.nicknqck.roles.ns.orochimaru.Orochimaru;
-import fr.nicknqck.roles.ns.orochimaru.Sasuke;
-import fr.nicknqck.roles.ns.orochimaru.Suigetsu;
-import fr.nicknqck.roles.ns.shinobi.Asuma;
-import fr.nicknqck.roles.ns.shinobi.Gai;
-import fr.nicknqck.roles.ns.shinobi.Jiraya;
-import fr.nicknqck.roles.ns.shinobi.Kakashi;
-import fr.nicknqck.roles.ns.shinobi.KillerBee;
-import fr.nicknqck.roles.ns.shinobi.Konohamaru;
-import fr.nicknqck.roles.ns.shinobi.Minato;
-import fr.nicknqck.roles.ns.shinobi.Naruto;
-import fr.nicknqck.roles.ns.shinobi.RockLee;
-import fr.nicknqck.roles.ns.shinobi.Sakura;
-import fr.nicknqck.roles.ns.shinobi.Tenten;
-import fr.nicknqck.roles.ns.shinobi.Tsunade;
-import fr.nicknqck.roles.ns.shinobi.YondaimeRaikage;
+import fr.nicknqck.roles.ns.akatsuki.*;
+import fr.nicknqck.roles.ns.orochimaru.*;
+import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
+import fr.nicknqck.roles.ns.solo.gingaku.Ginkaku;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
@@ -145,6 +33,18 @@ import fr.nicknqck.scenarios.FFA;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.NMSPacket;
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.text.DecimalFormat;
+import java.util.*;
 
 public class GameState{
 	@Getter
@@ -276,9 +176,11 @@ public class GameState{
 		TenTen(TeamList.Shinobi, "ns", 12, new ItemBuilder(Material.BOW).setName("§aTenTen").toItemStack(), "§bNickNqck"),
 		//Haku et Zabuza
 		Zabuza(TeamList.Zabuza_et_Haku, "ns", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bZabuza").toItemStack(), "§aYukan"),
-		Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan")/*,
-		
-		//OverWorld
+		Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan"),
+		//KumoGakure
+		Ginkaku(TeamList.Kumogakure, "ns", 0, new ItemBuilder(Material.LADDER).setName("§6Ginkaku").toItemStack(), "§bByC3RV0L3NT")
+
+		/*//OverWorld
         Poulet(TeamList.Overworld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack()),
         Vache(TeamList.Overworld, "mc", 1, new ItemBuilder(Material.MILK_BUCKET).setName("§aVache").toItemStack()),
         Zombie(TeamList.Overworld, "mc", 2, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack()),
@@ -406,7 +308,6 @@ public class GameState{
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<Player, RoleBase>();
 	private HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<Player, HashMap<Player, RoleBase>>();
 	public List<Player> igPlayers = new ArrayList<>();
-	ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
 	int inGameTime = 0;
 	public boolean nightTime = false;
 	boolean prevNightTime = true;
@@ -905,6 +806,9 @@ public class GameState{
 			break;
 		case Raikage:
 			role = new YondaimeRaikage(player, roleType, this);
+			break;
+		case Ginkaku:
+			role = new Ginkaku(player, roleType, this);
 			break;
 		}
 		if (role == null) return null;

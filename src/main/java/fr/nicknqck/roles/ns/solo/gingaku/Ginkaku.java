@@ -26,7 +26,7 @@ public class Ginkaku extends RoleBase{
 	}
 	@Override
 	public void GiveItems() {
-		
+		giveItem(owner, false, getItems());
 	}
 	@Override
 	public String[] Desc() {
