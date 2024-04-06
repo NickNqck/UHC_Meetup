@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -146,7 +147,9 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.NMSPacket;
 
 public class GameState{
-	
+	@Getter
+	@Setter
+	private int timeProcHokage = 90;
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -311,9 +314,11 @@ public class GameState{
 		}
 	public void setAllMDJDesac() {
 		for (MDJ mdj : MDJ.values()) {
+
 			mdj.setEnable(false);
 		}
 	}
+	@Getter
 	public enum MDJ{
 		DS(false, new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
 		AOT(false, new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
@@ -327,9 +332,9 @@ public class GameState{
 		public void setEnable(boolean b) {
 			enable = b;
 		}
-		public boolean isEnable() {
+	/*	public boolean isEnable() {
 			return enable;
-		}
+		}*/
 		public ItemStack getItem() {
 			ItemStack itemC = item.clone();
 			ItemMeta iMeta = item.getItemMeta();
@@ -344,13 +349,10 @@ public class GameState{
 			return itemC;
 		}
 	}
+	@Getter
+	@Setter
 	private MDJ mdj = null;
-	public void setMdj(MDJ mdj) {
-		this.mdj = mdj;
-	}
-	public MDJ getMdj() {
-		return this.mdj;
-	}
+
 	public boolean isAllMdjNull() {
 		boolean toReturn = true;
 		for (MDJ mdj : MDJ.values()) {

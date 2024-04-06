@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -52,9 +53,9 @@ import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
 
 public class HubListener implements Listener {
-	private GameState gameState;
+	private final GameState gameState;
+	@Getter
 	private static HubListener instance;
-	public static HubListener getInstance() {return instance;}
 	public HubListener(GameState gameState) {this.gameState = gameState; instance = this;}
 	public final void StartGame() {
 		gameState.updateGameCanLaunch();
@@ -64,7 +65,7 @@ public class HubListener implements Listener {
 		}
 		gameState.world = Main.getInstance().gameWorld;
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
-		gameState.setInLobbyPlayers(new ArrayList<Player>());
+		gameState.setInLobbyPlayers(new ArrayList<>());
 		gameState.igPlayers.addAll(gameState.getInGamePlayers());
 		gameState.lunesup.clear();
 		spawnPlatform(Bukkit.getWorld("world"), Material.AIR);
@@ -73,8 +74,10 @@ public class HubListener implements Listener {
 		gameState.Assassin = null;
 		gameState.demonKingTanjiro = false;
 		gameState.canBeAssassin.clear();
-		gameState.hokage = new Hokage(90, gameState);
-		gameState.hokage.run();
+		if (gameState.getMdj() != null && gameState.getMdj().equals(MDJ.NS)){
+			gameState.hokage = new Hokage(90, gameState);
+			gameState.hokage.run();
+		}
 		for (Events e : Events.values()) {
 			e.setProba(e.getEvent().getProba());
 			e.getEvent().resetCooldown();
