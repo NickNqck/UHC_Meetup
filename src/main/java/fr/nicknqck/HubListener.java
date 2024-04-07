@@ -500,17 +500,17 @@ public class HubListener implements Listener {
 					break;
 				case "§fConfiguration§7 -> §6scenarios":
 					  if (item.isSimilar(Anti_Abso.getAbsoAll())||item.isSimilar(Anti_Abso.getAbsoInvisible())||item.isSimilar(Anti_Abso.getAbsoOff())) {
-			    			if (Anti_Abso.isAntiAbsoOff()) {
-			    				Anti_Abso.setAntiAbsoOff(false);
-			    				Anti_Abso.setAntiAbsoInv(true);
+			    			if (Anti_Abso.isAntiabsooff()) {
+			    				Anti_Abso.setAntiabsooff(false);
+			    				Anti_Abso.setAntiabsoinvi(true);
 			    				player.sendMessage(Anti_Abso.abso()+"L'absorbtion est maintenant caché pour ceux qui sont invisible");
-			    			} else if (Anti_Abso.isAntiAbsoInv()) {
-			    				Anti_Abso.setAntiAbsoInv(false);
-			    				Anti_Abso.setAntiAbsoAll(true);
+			    			} else if (Anti_Abso.isAntiabsoinvi()) {
+			    				Anti_Abso.setAntiabsoinvi(false);
+			    				Anti_Abso.setAntiabsoall(true);
 			    				player.sendMessage(Anti_Abso.abso()+"L'absorbtion est maintenant caché pour tout les joueurs");
-			    			} else if (Anti_Abso.isAntiAbsoAll()) {
-			    				Anti_Abso.setAntiAbsoAll(false);
-			    				Anti_Abso.setAntiAbsoOff(true);
+			    			} else if (Anti_Abso.isAntiabsoall()) {
+			    				Anti_Abso.setAntiabsoall(false);
+			    				Anti_Abso.setAntiabsooff(true);
 			    				player.sendMessage(Anti_Abso.abso()+"L'absorbtion n'est cachée pour personne");
 			    			}
 			    		} else if (item.isSimilar(FFA.getFFAButton()) || item.isSimilar(FFA.getnotFFAButton())) {
@@ -2513,11 +2513,11 @@ public class HubListener implements Listener {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
 				if (inv.getTitle() == "§fConfiguration§7 -> §6scenarios") {
-					if (Anti_Abso.isAntiAbsoOff()) {
+					if (Anti_Abso.isAntiabsooff()) {
 						inv.setItem(0, Anti_Abso.getAbsoOff());
-					} else if (Anti_Abso.isAntiAbsoInv()) {
+					} else if (Anti_Abso.isAntiabsoinvi()) {
 						inv.setItem(0, Anti_Abso.getAbsoInvisible());
-					} else if (Anti_Abso.isAntiAbsoAll()) {
+					} else if (Anti_Abso.isAntiabsoall()) {
 						inv.setItem(0, Anti_Abso.getAbsoAll());
 					}
 					if (Hastey_Boys.isHasteyBoys()) {
