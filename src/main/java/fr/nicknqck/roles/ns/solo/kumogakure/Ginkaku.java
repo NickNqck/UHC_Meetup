@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ns.solo.gingaku;
+package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
