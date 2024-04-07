@@ -38,7 +38,7 @@ public class Ginkaku extends RoleBase{
 	private int cdSabre = 0;
 	private final ItemStack CordeItem = new ItemBuilder(Material.NETHER_STAR).setUnbreakable(true).setLore("§7Vous permet d'éjecter le joueur viser, puis de l'empêcher de bouger pendant§c 5s§7.").toItemStack();
 	private int cdCorde = 0;
-	TargetFallChecker checker;
+	private TargetFallChecker checker;
 	public Ginkaku(Player player, Roles roles, GameState gameState) {
 		super(player, roles, gameState);
 		setChakraType(getRandomChakras());
@@ -244,7 +244,7 @@ public class Ginkaku extends RoleBase{
 			}
 		}
 	}
-	private static class TargetFallChecker implements Listener {
+	private class TargetFallChecker implements Listener {
 		private UUID gTarget;
 		TargetFallChecker(UUID target){
 			this.gTarget = target;
@@ -256,7 +256,30 @@ public class Ginkaku extends RoleBase{
 		@EventHandler
 		private void onDamage(EntityDamageEvent event){
 			if (gTarget != null && event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && event.getEntity().getUniqueId().equals(gTarget)){
-
+				event.setDamage(0.0);
+				event.getEntity().setFallDistance(0f);
+				new BukkitRunnable() {
+					private final Location initLoc = event.getEntity().getLocation();
+					private final UUID gT = event.getEntity().getUniqueId();
+					private int time = 100;
+					@Override
+					public void run() {
+						Player p = Bukkit.getPlayer(gT);
+						if (p != null){
+							p.setAllowFlight(true);
+							p.setFlying(true);
+							p.teleport(initLoc);
+							time--;
+							if (time == 0){
+								cancel();
+								owner.sendMessage("§c"+p.getDisplayName()+"§7 peut à nouveau bouger.");
+								p.setFlying(false);
+								p.setAllowFlight(false);
+								p.setFallDistance(0f);
+							}
+						}
+					}
+				}.runTaskTimer(Main.getInstance(), 0, 1);
 			}
 		}
 	}
