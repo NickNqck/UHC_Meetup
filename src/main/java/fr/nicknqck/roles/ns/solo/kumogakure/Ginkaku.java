@@ -90,6 +90,7 @@ public class Ginkaku extends RoleBase{
 		if (item.isSimilar(GourdeItem)){
 			if (cdGourde <= 0){
 				if (GourdeTarget != null){
+					cdGourde = 60*7+10;
 					owner.getLocation().getWorld().getBlockAt(owner.getLocation()).setType(Material.HOPPER, true);
 				//	PacketDisplay display = new PacketDisplay(owner.getLocation(), "§c10s", false, true, true, true, true);
 					new BukkitRunnable() {
@@ -103,6 +104,7 @@ public class Ginkaku extends RoleBase{
 								cancel();
 							}
 							if (timeRemaining == 0){
+								cdGourde = 60*7;
 								Player p = Bukkit.getPlayer(uuid);
 								if (p != null){
 									initLoc.getWorld().getBlockAt(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch())).setType(Material.AIR);

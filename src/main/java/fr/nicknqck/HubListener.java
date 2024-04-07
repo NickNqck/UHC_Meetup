@@ -85,8 +85,8 @@ public class HubListener implements Listener {
 		ItemsManager.instance.clearJspList();
 		gameState.t = gameState.timeday;
 		Events.initEvents();
-		gameState.setPlayerRoles(new HashMap<Player, RoleBase>());
-		gameState.setPlayerKills(new HashMap<Player, HashMap<Player, RoleBase>>());
+		gameState.setPlayerRoles(new HashMap<>());
+		gameState.setPlayerKills(new HashMap<>());
 		gameState.borderSize = gameState.maxBorderSize;
 		gameState.shrinking = false;
 		gameState.world.getWorldBorder().setSize(gameState.maxBorderSize);
@@ -203,7 +203,7 @@ public class HubListener implements Listener {
 		((CraftPlayer) p).getHandle().setAbsorptionHearts(0);
 	}
 	// Creer une plateforme pour le spawn des joueurs (Suppression possible grace a Material.AIR)
-	public static final void spawnPlatform(final World world,final Material material) {
+	public static void spawnPlatform(final World world, final Material material) {
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				world.getBlockAt(new Location(world, x, 150, z)).setType(material);
@@ -1029,21 +1029,21 @@ public class HubListener implements Listener {
 								}
 							}
 						}
-						if (name == "Taille de la Bordure Max") {
+						if (name.equals("Taille de la Bordure Max")) {
 							if (action.equals(InventoryAction.PICKUP_ALL)) {
 								gameState.maxBorderSize += 50;
 							} else if (action.equals(InventoryAction.PICKUP_HALF)) {
 								gameState.maxBorderSize -= 50;
 							}
 						}
-						if (name == "Taille de la Bordure Min") {
+						if (name.equals("Taille de la Bordure Min")) {
 							if (action.equals(InventoryAction.PICKUP_ALL)) {
 								gameState.minBorderSize += 50;
 							} else if (action.equals(InventoryAction.PICKUP_HALF)) {
 								gameState.minBorderSize -= 50;
 							}
 						}
-						if (name == "Vitesse de la Bordure") {
+						if (name.equals("Vitesse de la Bordure")) {
 							if (action.equals(InventoryAction.PICKUP_ALL)) {
 								gameState.borderSpeed += 0.1;
 							} else if (action.equals(InventoryAction.PICKUP_HALF)) {
@@ -1057,18 +1057,18 @@ public class HubListener implements Listener {
 								gameState.pvpTimer -= 1*60;
 							}
 						}
-						if (name == "Temps avant annonce des Roles") {
+						if (name.equals("Temps avant annonce des Roles")) {
 							if (action.equals(InventoryAction.PICKUP_ALL)) {
 								gameState.roleTimer+=60;
 							} else if (action.equals(InventoryAction.PICKUP_HALF)) {
 								gameState.roleTimer-=60;
 							}
 						}
-						if (name == "Temps avant réduction de Bordure") {
+						if (name.equals("Temps avant réduction de Bordure")) {
 							if (action.equals(InventoryAction.PICKUP_ALL)) {
-								gameState.shrinkTimer += 1*60;
+								gameState.shrinkTimer += 60;
 							} else if (action.equals(InventoryAction.PICKUP_HALF)) {
-								gameState.shrinkTimer -= 1*60;
+								gameState.shrinkTimer -= 60;
 							}
 						}
 						if (item.getType() == Material.REDSTONE) {
@@ -1110,7 +1110,7 @@ public class HubListener implements Listener {
 			    				}
 			    			}
 			    		}
-						if (name == "Durée du jour (et de la nuit)") {
+						if (name.equals("Durée du jour (et de la nuit)")) {
 							if (player.isOp() || gameState.getHost().contains(player)) {
 								if (action.equals(InventoryAction.PICKUP_ALL)) {
 									gameState.timeday+=10;
