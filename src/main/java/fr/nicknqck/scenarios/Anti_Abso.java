@@ -2,6 +2,8 @@ package fr.nicknqck.scenarios;
 
 import java.util.Arrays;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -12,26 +14,18 @@ public class Anti_Abso {
 	 * fr.nicknqck.mtpds.ItemsManager
 	 * précisément le OnItemConsumed
 	 */
+<<<<<<< src/main/java/fr/nicknqck/scenarios/Anti_Abso.java
 	//TEST
+=======
+	@Getter
+	@Setter
 	private static boolean antiabsoall = false;
+	@Getter
+	@Setter
 	private static boolean antiabsoinvi = true;
+	@Getter
+	@Setter
 	private static boolean antiabsooff = false;
-	
-	public static void setAntiAbsoAll(boolean antiabsoallt) {
-		antiabsoall = antiabsoallt;
-	}
-	public static boolean isAntiAbsoAll() {
-		return antiabsoall;
-	}
-	public static void setAntiAbsoInv(boolean antiabsoinv) {
-		antiabsoinvi = antiabsoinv;
-	}
-	public static boolean isAntiAbsoInv() {
-		return antiabsoinvi;
-	}
-	public static void setAntiAbsoOff(boolean antiabsoofft) {
-		antiabsooff = antiabsoofft;
-	}
 	public static boolean isAntiAbsoOff() {
 		return antiabsooff;
 	}
