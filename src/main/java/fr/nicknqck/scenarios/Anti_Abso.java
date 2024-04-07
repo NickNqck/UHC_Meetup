@@ -11,7 +11,8 @@ public class Anti_Abso {
 	/* Le reste de du code est dans
 	 * fr.nicknqck.mtpds.ItemsManager
 	 * précisément le OnItemConsumed
-	 */	
+	 */
+	//TEST
 	private static boolean antiabsoall = false;
 	private static boolean antiabsoinvi = true;
 	private static boolean antiabsooff = false;
