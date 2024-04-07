@@ -427,8 +427,6 @@ public abstract class RoleBase {
 			}
 		}	
 	}
-
-	public void OnVanillaKill(Player killer, Player player, GameState gameState) {PlayerKilled(killer, player, gameState);}
 	public void onEat(ItemStack item, GameState gameState) {}
 	public void onDSCommandSend(String[] args, GameState gameState) {}
 	public boolean hasItemInHotbar(Player player, Material mat) {
@@ -497,10 +495,7 @@ public abstract class RoleBase {
 	public boolean onBucketEmpty(Material bucket, Block block, GameState gameState, Player player) {return false;}
 	public boolean onBlockPlaced(Block block, Player player, GameState gameState) {return false;}
 	public boolean onBlockBreak(Player player, Block block, GameState gameState) {return false;}
-	public void onLaraTransfoBlockBreak(Player player, GameState gameState) {}
 	public void OnAPlayerKillAnotherPlayer(Player player, Player damager, GameState gameState) {}
-	public void OnVanillaPlayerDie(Player player, GameState gameState) {OnAPlayerDie(player, gameState, player.getKiller());}
-	public void OnVanillaPlayerKillAnotherPlayer(Player player, Player killer, GameState gameState) {OnAPlayerKillAnotherPlayer(player, killer, gameState);}
 	public void onAotCommands(String arg, String[] args, GameState gameState) {}
 	public void onArcTridi(Player player, GameState gameState) {}
 	public int actualTridiCooldown = -1;

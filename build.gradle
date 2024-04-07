@@ -23,15 +23,15 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
-    implementation 'fr.mrmicky:FastParticles:2.0.0'
-    implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.11.3'
+  //  implementation 'fr.mrmicky:FastParticles:2.0.0'
+  ///  implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.11.3'
     compileOnly files('T:\\Bureau\\Dev\\Serv\\serveur de test\\spigot.jar')
     //  implementation files('D:\\Directorty\\Nakime Fiesta\\libs\\bukkitapi-1.0.jar')
 }
 
 shadowJar {
     relocate 'fr.mrmicky.fastparticles', 'fr.nicknqck.utils.particles'
-    relocate 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
+    // 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
 }
 
 setLibsDirName("T:\\Bureau\\Dev\\Serv\\serveur de test\\plugins")

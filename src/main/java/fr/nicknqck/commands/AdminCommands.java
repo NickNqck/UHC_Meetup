@@ -212,7 +212,7 @@ public class AdminCommands implements CommandExecutor{
 									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant nuit");
 									Bukkit.broadcastMessage("");
 									Main.getInstance().gameWorld.setTime(13000);
-									gameState.t =0;
+									gameState.t = gameState.timeday;
 									player.sendMessage(message.toArray(new String[message.size()]));
 									return true;
 									
@@ -224,7 +224,7 @@ public class AdminCommands implements CommandExecutor{
 									Bukkit.broadcastMessage("");
 									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant jour");
 									Bukkit.broadcastMessage("");
-									gameState.t = 0;
+									gameState.t = gameState.timeday;
 									Main.getInstance().gameWorld.setTime(0);
 									player.sendMessage(message.toArray(new String[message.size()]));
 									return true;

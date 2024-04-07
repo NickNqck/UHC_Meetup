@@ -136,8 +136,7 @@ public class Loc {
     }
     public static List<Player> getNearbyPlayers(Location loc, double distance) {
         List<Player> toReturn = new ArrayList<>();
-        Bukkit.getOnlinePlayers().stream()
-        		.filter(target -> target.getWorld().equals(loc.getWorld()))
+        loc.getWorld().getPlayers().stream()
                 .filter(target -> target.getGameMode() != GameMode.SPECTATOR)
                 .filter(target -> target.getLocation().distance(loc) <= distance)
                 .forEach(toReturn::add);

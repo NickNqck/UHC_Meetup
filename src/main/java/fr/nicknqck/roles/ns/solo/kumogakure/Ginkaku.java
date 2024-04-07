@@ -7,6 +7,8 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.PacketDisplay;
 import fr.nicknqck.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.Vec3D;
 import org.bukkit.Bukkit;
@@ -33,12 +35,15 @@ public class Ginkaku extends RoleBase{
 	
 	private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
 	private int cdKyubi = 0;
-	private final ItemStack SabreItem = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).setLore("§7Après avoir infligé§c 15 coups§7 d'affilé a un joueur, lui inflige un effet de§c saignement").toItemStack();
+	private final ItemStack SabreItem = new ItemBuilder(Material.DIAMOND_SWORD).setName("§aSabre des Septs Étoiles").addEnchant(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).setLore("§7Après avoir infligé§c 15 coups§7 d'affilé a un joueur, lui inflige un effet de§c saignement").toItemStack();
 	private final HashMap<UUID, Integer> coupInfliged = new HashMap<>();
 	private int cdSabre = 0;
-	private final ItemStack CordeItem = new ItemBuilder(Material.NETHER_STAR).setUnbreakable(true).setLore("§7Vous permet d'éjecter le joueur viser, puis de l'empêcher de bouger pendant§c 5s§7.").toItemStack();
+	private final ItemStack CordeItem = new ItemBuilder(Material.NETHER_STAR).setName("§6Corde d'or").setUnbreakable(true).setLore("§7Vous permet d'éjecter le joueur viser, puis de l'empêcher de bouger pendant§c 5s§7.").toItemStack();
 	private int cdCorde = 0;
 	private TargetFallChecker checker;
+	private final ItemStack GourdeItem = new ItemBuilder(Material.HOPPER).setName("§bGourde écarlate").setLore("§7Vous permet de connaitre le daron a C3rv0l3nt").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().toItemStack();
+	private UUID GourdeTarget;
+	private int cdGourde = 0;
 	public Ginkaku(Player player, Roles roles, GameState gameState) {
 		super(player, roles, gameState);
 		setChakraType(getRandomChakras());
@@ -65,6 +70,7 @@ public class Ginkaku extends RoleBase{
 				AllDesc.tab+"§aPremière minute§f: Vous obtenez les effets§e Speed II§f ainsi que§c Force I§f.",
 				AllDesc.tab+"§6Deuxième minute§f: Vous obtenez les effets§e Speed I§f ainsi que§c Force I§f.",
 				AllDesc.tab+"§cTroisième minute§f: Vous obtenez l'effet§e Speed I§f.",
+				"§c! Ce pouvoir est utilisable une fois toute les 12 minutes !",
 				"",
 				AllDesc.point+"§6Corde d'or§f: En visant un joueur, le repousse en l'air, puis, lorsqu'il attérit, l'empêche de bouger pendant§c 5s§f.§7 (1x/3m)",
 				"",
@@ -75,21 +81,60 @@ public class Ginkaku extends RoleBase{
 				AllDesc.particularite,
 				"",
 				"Vous connaissez le joueur possédant le rôle de§6 Kinkaku",
-				"Vous possédez la nature de Chakra: "+getChakras().getShowedName(),
 				"",
+				"Vous possédez la nature de Chakra: "+getChakras().getShowedName(),
 				AllDesc.bar
 
 		};
 	}
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
+		if (item.isSimilar(GourdeItem)){
+			if (cdGourde <= 0){
+				if (GourdeTarget != null){
+					owner.getLocation().getWorld().getBlockAt(owner.getLocation()).setType(Material.HOPPER, true);
+					PacketDisplay display = new PacketDisplay(owner.getLocation(), "§c10s");
+					new BukkitRunnable() {
+						private final Location initLoc = owner.getLocation().clone();
+						private int timeRemaining = 10;
+						private final UUID uuid = GourdeTarget;
+						private final PacketDisplay dp = display;
+						@Override
+						public void run() {
+							if (!gameState.getServerState().equals(ServerStates.InGame)){
+								cancel();
+							}
+							for (Player p : Loc.getNearbyPlayers(initLoc, 10)){
+								dp.rename("§c"+StringUtils.secondsTowardsBeautiful(timeRemaining), p);
+								dp.display(p);
+							}
+							if (timeRemaining == 0){
+								Player p = Bukkit.getPlayer(uuid);
+								if (p != null){
+									p.teleport(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch()));
+									p.sendMessage("§7Vous avez été téléporter au lieu de scellement de§6 Ginkaku§7.");
+									owner.sendMessage("§c"+p.getDisplayName()+"§7 à été téléporter");
+								}
+							}
+							timeRemaining--;
+						}
+					}.runTaskTimer(Main.getInstance(), 0, 20);
+				} else {
+					owner.sendMessage("§cIl faut d'abord démarrer le scellement sur un joueur");
+				}
+			} else {
+				sendCooldown(owner, cdGourde);
+				return true;
+			}
+			return true;
+		}
 		if (item.isSimilar(KyubiItem)) {
 			if (cdKyubi <= 0) {
 				owner.sendMessage("§7Activation de§6 Kyubi");
-				cdKyubi = 60*18;
+				cdKyubi = 60*15;
 				new BukkitRunnable() {
-					int time = 60;
-					int state = 3;
+					private int time = 60;
+					private int state = 3;
 					@Override
 					public void run() {
 						if (owner == null) {
@@ -101,7 +146,7 @@ public class Ginkaku extends RoleBase{
 							return;
 						}
 						if (state == 0) {
-							owner.sendMessage("§7L'utilisation du chakra de§6 Kyubi§7 n'est ");
+							owner.sendMessage("§7L'utilisation du chakra de§6 Kyubi§7 est maintenant§c terminer§7.");
 							cancel();
 							return;
 						}
@@ -118,11 +163,12 @@ public class Ginkaku extends RoleBase{
 						}
 						if (time == 0) {
 							state--;
+							time = 60;
 						}
 						sendCustomActionBar(owner, "Temp avant prochain stade de§6 Kyubi§f:§c "+StringUtils.secondsTowardsBeautiful(time));
 						time--;
 					}
-				}.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+				}.runTaskTimer(Main.getInstance(), 0, 20);
 			} else {
 				sendCooldown(owner, cdKyubi);
 				return true;
@@ -151,7 +197,7 @@ public class Ginkaku extends RoleBase{
 	}
 	@Override
 	public void Update(GameState gameState) {
-		if (gameState.nightTime && cdKyubi < 60*10) {
+		if (gameState.nightTime && cdKyubi < 60*12) {
 			givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 		}
 		if (cdKyubi >= 0) {
@@ -176,7 +222,10 @@ public class Ginkaku extends RoleBase{
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				KyubiItem	
+				KyubiItem,
+				SabreItem,
+				CordeItem,
+				GourdeItem
 		};
 	}
 	@Override
@@ -184,6 +233,7 @@ public class Ginkaku extends RoleBase{
 		cdKyubi = 0;
 		cdSabre = 0;
 		cdCorde = 0;
+		cdGourde = 0;
 	}
 	private void ejectPlayers(final Location location, final Player... players) {
 		for (final Player player : players) {
@@ -202,6 +252,24 @@ public class Ginkaku extends RoleBase{
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
 		super.onALLPlayerDamageByEntity(event, victim, entity);
 		if (entity.getUniqueId().equals(owner.getUniqueId())) {
+			if (owner.getItemInHand().isSimilar(GourdeItem)){
+				if (this.GourdeTarget == null){
+					GourdeTarget = victim.getUniqueId();
+					owner.sendMessage("§c"+victim.getDisplayName()+"§7 est prêt à être scellé dans votre§b Gourde§7.");
+					Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+						Player p = Bukkit.getPlayer(GourdeTarget);
+						if (p != null && owner != null){
+							owner.sendMessage("§c"+p.getDisplayName()+"§7 ne peut plus être scellé, pour l'instant...");
+						}
+						GourdeTarget = null;
+					} ,20*10);
+				} else {
+					Player p = Bukkit.getPlayer(GourdeTarget);
+					if (p != null){
+						owner.sendMessage("§7Vous avez déjà un joueur en cours de scellement (§c"+p.getDisplayName()+"§7), vous ne pouvez donc pas scellé§c "+victim.getDisplayName()+"§7.");
+					}
+				}
+			}
 			if (owner.getItemInHand().isSimilar(SabreItem)){
 				if (coupInfliged.containsKey(victim.getUniqueId())) {
 					int i = coupInfliged.get(victim.getUniqueId());
@@ -276,6 +344,7 @@ public class Ginkaku extends RoleBase{
 								p.setFlying(false);
 								p.setAllowFlight(false);
 								p.setFallDistance(0f);
+								gTarget = null;
 							}
 						}
 					}

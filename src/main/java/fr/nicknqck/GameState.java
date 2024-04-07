@@ -24,7 +24,7 @@ import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
-import fr.nicknqck.roles.ns.solo.gingaku.Ginkaku;
+import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
