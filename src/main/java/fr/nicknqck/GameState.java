@@ -1194,7 +1194,7 @@ public class GameState{
 				}
 			}
 		}
-		if (demon.size() > 0) {
+		if (!demon.isEmpty()) {
 			tr+="\n§r("+demon.size()+")§cDémon(s): \n";
 			int i = 0;
 			for (Roles dem : demon) {
@@ -1207,7 +1207,7 @@ public class GameState{
 			}
 			tr+="\n";
 		}
-		if (slayer.size() > 0) {
+		if (!slayer.isEmpty()) {
 			tr+=("\n§r("+slayer.size()+")§aSlayer(s): \n");
 			int i = 0;
 			for (Roles sl : slayer) {
@@ -1219,7 +1219,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Mahr.size() > 0) {
+		if (!Mahr.isEmpty()) {
 			tr+=("\n§r("+Mahr.size()+")§9Mahr(s): \n");
 			int i = 0;
 			for (Roles m : Mahr) {
@@ -1231,7 +1231,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Soldat.size() > 0) {
+		if (!Soldat.isEmpty()) {
 			tr+=("\n§r("+Soldat.size()+")§aSoldat(s): \n");
 			int i = 0;
 			for (Roles dem : Soldat) {
@@ -1243,7 +1243,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Titan.size() > 0) {
+		if (!Titan.isEmpty()) {
 			tr+=("\n§r("+Titan.size()+")§cTitan(s): \n");
 			int i = 0;
 			for (Roles dem : Titan) {
@@ -1255,7 +1255,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Shinobi.size() > 0) {
+		if (!Shinobi.isEmpty()) {
 			tr+=("\n§r("+Shinobi.size()+")§aShinobi(s): \n"+" ");
 			int i = 0;
 			for (Roles dem : Shinobi) {
@@ -1267,7 +1267,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Akatsuki.size() > 0) {
+		if (!Akatsuki.isEmpty()) {
 			tr+=("\n§r("+Akatsuki.size()+")§cAkatsuki(s): \n");
 			int i = 0;
 			for (Roles dem : Akatsuki) {
@@ -1279,7 +1279,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Orochimaru.size() > 0) {
+		if (!Orochimaru.isEmpty()) {
 			tr+=("\n§r("+Orochimaru.size()+")§5Orochimaru(s): \n");
 			int i = 0;
 			for (Roles dem : Orochimaru) {
@@ -1291,7 +1291,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Brume.size() > 0) {
+		if (!Brume.isEmpty()) {
 			tr+=("\n§r("+Brume.size()+")§bZabuza et Haku: \n");
 			int i = 0;
 			for (Roles dem : Brume) {
@@ -1303,7 +1303,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Jubi.size() > 0) {
+		if (!Jubi.isEmpty()) {
 			tr+=("\n§r("+Jubi.size()+")§dJubi(s): \n");
 			int i = 0;
 			for (Roles dem : Jubi) {
@@ -1315,7 +1315,7 @@ public class GameState{
 				}
 			}
 		}
-		if (solo.size() > 0) {
+		if (!solo.isEmpty()) {
 			tr+=("\n§r("+solo.size()+")§eSolo(s): \n");
 			int i = 0;
 			for (Roles dem : solo) {
@@ -1327,7 +1327,7 @@ public class GameState{
 				}
 			}
 		}
-		if (Alliance.size() > 0) {
+		if (!Alliance.isEmpty()) {
 			tr+=("\n§r("+Alliance.size()+")§6Alliance(s): \n");
 			int i = 0;
 			for (Roles dem : Alliance) {
@@ -1343,20 +1343,13 @@ public class GameState{
 		tr+=("\n"+AllDesc.bar);
 		return tr;
 	}
+	@Setter
+	@Getter
 	private Player JubiCrafter;
-	public void setJubiCrafter(Player sender) {
-		this.JubiCrafter = sender;
-	}
-	public Player getJubiCrafter() {
-		return JubiCrafter;
-	}
 	public boolean doTNTGrief = false;
-	public boolean minage = false;
-	public boolean isMinage() {
-		return minage;
-	}
-	public void setMinage(boolean minage) {
-		this.minage = minage;
-	}
+
+	@Getter
+	@Setter
+	private boolean minage = false;
 	public Hokage hokage;
 }
