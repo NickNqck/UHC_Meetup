@@ -7,8 +7,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PacketDisplay;
 import fr.nicknqck.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.Vec3D;
 import org.bukkit.Bukkit;
@@ -93,29 +91,30 @@ public class Ginkaku extends RoleBase{
 			if (cdGourde <= 0){
 				if (GourdeTarget != null){
 					owner.getLocation().getWorld().getBlockAt(owner.getLocation()).setType(Material.HOPPER, true);
-					PacketDisplay display = new PacketDisplay(owner.getLocation(), "§c10s");
+				//	PacketDisplay display = new PacketDisplay(owner.getLocation(), "§c10s", false, true, true, true, true);
 					new BukkitRunnable() {
 						private final Location initLoc = owner.getLocation().clone();
 						private int timeRemaining = 10;
 						private final UUID uuid = GourdeTarget;
-						private final PacketDisplay dp = display;
+					//	private final PacketDisplay dp = display;
 						@Override
 						public void run() {
-							if (!gameState.getServerState().equals(ServerStates.InGame)){
+							if (!gameState.getServerState().equals(ServerStates.InGame) || !getIGPlayers().contains(owner)){
 								cancel();
-							}
-							for (Player p : Loc.getNearbyPlayers(initLoc, 10)){
-								dp.rename("§c"+StringUtils.secondsTowardsBeautiful(timeRemaining), p);
-								dp.display(p);
 							}
 							if (timeRemaining == 0){
 								Player p = Bukkit.getPlayer(uuid);
 								if (p != null){
+									initLoc.getWorld().getBlockAt(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch())).setType(Material.AIR);
 									p.teleport(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch()));
 									p.sendMessage("§7Vous avez été téléporter au lieu de scellement de§6 Ginkaku§7.");
 									owner.sendMessage("§c"+p.getDisplayName()+"§7 à été téléporter");
+									givePotionEffet(p, PotionEffectType.POISON, 20*10, 1, true);
+									givePotionEffet(p, PotionEffectType.WITHER, 20*10, 1, true);
 								}
+								initLoc.getWorld().getBlockAt(initLoc).setType(Material.AIR, true);
 							}
+							sendCustomActionBar(owner, "§bTemp avant scellement: §c"+StringUtils.secondsTowardsBeautiful(timeRemaining));
 							timeRemaining--;
 						}
 					}.runTaskTimer(Main.getInstance(), 0, 20);
@@ -308,7 +307,9 @@ public class Ginkaku extends RoleBase{
 						coupInfliged.put(victim.getUniqueId(), 1);
 					}
 				}
-				sendCustomActionBar(owner, "§7Coup infligé contre§c "+victim.getDisplayName()+"§7 >> "+coupInfliged.get(victim.getUniqueId())+"/15");
+				if (cdSabre <= 0){
+					sendCustomActionBar(owner, "§7Coup infligé contre§c "+victim.getDisplayName()+"§7 >> "+coupInfliged.get(victim.getUniqueId())+"/15");
+				}
 			}
 		}
 	}

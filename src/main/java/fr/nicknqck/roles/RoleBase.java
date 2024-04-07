@@ -810,12 +810,13 @@ public abstract class RoleBase {
 					if (!kill) {
 						target.setHealth(1.0);
 					} else {
-						target.damage(Integer.MAX_VALUE, damager);
+						target.damage(9999.0, damager);
 					}
 				} else {
 					target.setHealth(target.getHealth()-damage);
+					System.out.println(target.getHealth());
 				}
-				target.damage(0.0, damager);
+				target.damage(0.0);
 			}, delay);
 		}
 	}
