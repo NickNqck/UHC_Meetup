@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Collections;
 import java.util.List;
 
 public class AntiPvP extends BasicScenarios {
@@ -40,7 +41,7 @@ public class AntiPvP extends BasicScenarios {
 		meta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		meta.setDisplayName(ChatColor.DARK_PURPLE+"Anti-PvP (Lobby)");
-		meta.setLore(List.of(ChatColor.GOLD + "Désactiver"));
+		meta.setLore(Collections.singletonList(ChatColor.GOLD + "Désactiver"));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -49,7 +50,7 @@ public class AntiPvP extends BasicScenarios {
 		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(ChatColor.DARK_PURPLE+"Anti-PvP (Lobby)");
-		meta.setLore(List.of(ChatColor.GOLD + "Activer"));
+		meta.setLore(Collections.singletonList(ChatColor.GOLD + "Activer"));
 		stack.setItemMeta(meta);
 		return stack;
 	}

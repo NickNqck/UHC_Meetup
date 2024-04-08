@@ -34,10 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class HubListener implements Listener {
 	private final GameState gameState;
@@ -2695,7 +2692,7 @@ public class HubListener implements Listener {
 						
 					ItemMeta DTMeta = daytime.getItemMeta();
 					DTMeta.setDisplayName("Durée du jour (et de la nuit)");
-					DTMeta.setLore(List.of("§r§fTemp actuelle: " + ChatColor.GOLD + StringUtils.secondsTowardsBeautiful(gameState.timeday)));
+					DTMeta.setLore(Collections.singletonList("§r§fTemp actuelle: " + ChatColor.GOLD + StringUtils.secondsTowardsBeautiful(gameState.timeday)));
 					
 					daytime.setItemMeta(DTMeta);
 					maxBorderSize.setItemMeta(maxBSMeta);
