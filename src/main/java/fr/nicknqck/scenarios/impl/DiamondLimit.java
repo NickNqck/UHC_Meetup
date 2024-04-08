@@ -1,9 +1,8 @@
-package fr.nicknqck.scenarios;
+package fr.nicknqck.scenarios.impl;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
+import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,7 +12,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class DiamondLimit extends BasicScenarios{
+public class DiamondLimit extends BasicScenarios {
 	
 	private static int maxdiams = 22;
 	private static int diamsmined = 0;
@@ -52,28 +51,15 @@ public class DiamondLimit extends BasicScenarios{
 
 	@Override
 	public void onClick(Player player) {
-
+		if (isClickGauche()){
+			DiamondLimit.setLimit(false);
+			player.sendMessage(DiamondLimit.DM()+"Désactivation de la Diamond Limite");
+		}
+		if (isClickDroit()){
+			DiamondLimit.setLimit(true);
+			player.sendMessage(DiamondLimit.DM()+"Activation de la Diamond Limite");
+		}
 	}
-
-	public static ItemStack limitON() {
-		  ItemStack stack = new ItemStack(Material.DIAMOND_BLOCK, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setLore(Collections.singletonList(ChatColor.GOLD + "Activer"));
-		  meta.addEnchant(Enchantment.DEPTH_STRIDER, 0, false);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setDisplayName(ChatColor.DARK_PURPLE+"Diamond Limite: ");
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	 
-	 public static ItemStack limitOFF() {
-		  ItemStack stack = new ItemStack(Material.DIAMOND_BLOCK, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setLore(Collections.singletonList(ChatColor.GOLD + "Désactiver"));
-		  meta.setDisplayName(ChatColor.DARK_PURPLE+"Diamond Limite: ");
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }	 
 	 public static ItemStack ChangeDiamond() {
 		  ItemStack stack = new ItemStack(Material.DIAMOND, maxdiams);
 		  ItemMeta meta = stack.getItemMeta();

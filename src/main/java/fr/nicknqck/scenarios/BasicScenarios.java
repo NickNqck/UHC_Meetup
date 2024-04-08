@@ -14,4 +14,16 @@ public abstract class BasicScenarios {
     public abstract String getName();
     public abstract ItemStack getAffichedItem();
     public abstract void onClick(Player player);
+    public boolean isClickGauche(){
+        return getAction() == InventoryAction.PICKUP_ALL;
+    }
+    public boolean isClickDroit(){
+        return getAction() == InventoryAction.PICKUP_HALF;
+    }
+    public boolean isShiftClick(){
+        return getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY;
+    }
+    public boolean isDropClick(){
+        return getAction() == InventoryAction.DROP_ONE_SLOT;
+    }
 }

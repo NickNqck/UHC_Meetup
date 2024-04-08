@@ -107,7 +107,7 @@ public class Ginkaku extends RoleBase{
 								cdGourde = 60*7;
 								Player p = Bukkit.getPlayer(uuid);
 								if (p != null){
-									initLoc.getWorld().getBlockAt(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch())).setType(Material.AIR);
+									initLoc.getWorld().getBlockAt(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY(), initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch())).setType(Material.AIR);
 									p.teleport(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch()));
 									p.sendMessage("§7Vous avez été téléporter au lieu de scellement de§6 Ginkaku§7.");
 									owner.sendMessage("§c"+p.getDisplayName()+"§7 à été téléporter");
@@ -115,6 +115,7 @@ public class Ginkaku extends RoleBase{
 									givePotionEffet(p, PotionEffectType.WITHER, 20*10, 1, true);
 								}
 								initLoc.getWorld().getBlockAt(initLoc).setType(Material.AIR, true);
+								cancel();
 							}
 							sendCustomActionBar(owner, "§bTemp avant scellement: §c"+StringUtils.secondsTowardsBeautiful(timeRemaining));
 							timeRemaining--;
@@ -217,6 +218,12 @@ public class Ginkaku extends RoleBase{
 			cdCorde--;
 			if (cdCorde == 0){
 				owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§6 Corde d'or§7.");
+			}
+		}
+		if (cdGourde >= 0){
+			cdGourde--;
+			if (cdGourde == 0){
+				owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§b Gourde écarlate§7.");
 			}
 		}
 	}

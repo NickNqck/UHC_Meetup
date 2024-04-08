@@ -22,8 +22,8 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
-import fr.nicknqck.scenarios.AntiDrop;
-import fr.nicknqck.scenarios.Anti_Abso;
+import fr.nicknqck.scenarios.impl.AntiDrop;
+import fr.nicknqck.scenarios.impl.Anti_Abso;
 
 public class ItemsManager implements Listener {
  	public static final ItemStack adminWatch = Items.getAdminWatch();

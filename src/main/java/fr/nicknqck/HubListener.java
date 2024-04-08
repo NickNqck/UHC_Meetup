@@ -14,6 +14,9 @@ import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.roles.aot.titans.TitanListener;
 import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.scenarios.*;
+import fr.nicknqck.scenarios.impl.AntiPvP;
+import fr.nicknqck.scenarios.impl.CutClean;
+import fr.nicknqck.scenarios.impl.DiamondLimit;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
@@ -493,15 +496,6 @@ public class HubListener implements Listener {
 								  }									 
 							  }
 						  }
-						if (item.isSimilar(DiamondLimit.limitOFF())||item.isSimilar(DiamondLimit.limitON())) {
-							if (DiamondLimit.isLimit()) {
-								DiamondLimit.setLimit(false);
-								player.sendMessage(DiamondLimit.DM()+"Désactivation de la Diamond Limite");
-							} else {
-								DiamondLimit.setLimit(true);
-								player.sendMessage(DiamondLimit.DM()+"Activation de la Diamond Limite");
-							}
-						}
 						if (item.isSimilar(DiamondLimit.ChangeDiamond())) {
 								if (action.equals(InventoryAction.PICKUP_ALL)) {
 									if (DiamondLimit.getmaxdiams() != 32) {
@@ -1293,11 +1287,7 @@ public class HubListener implements Listener {
 						}
 					}
 					if (name.equals("§r§6Lave§f pour les titans (transformé)")) {
-						if (gameState.LaveTitans) {
-							gameState.LaveTitans = false;
-						}else {
-							gameState.LaveTitans = true;
-						}
+                        gameState.LaveTitans = !gameState.LaveTitans;
 					}
 					if (item.isSimilar(GUIItems.getSelectBackMenu())) {
 						player.openInventory(GUIItems.getMahrGui());
@@ -2434,10 +2424,8 @@ public class HubListener implements Listener {
 						i++;
 					}
 					if (DiamondLimit.isLimit()) {
-						inv.setItem(6, DiamondLimit.limitON());
 						inv.setItem(7, DiamondLimit.ChangeDiamond());
 					} else {
-						inv.setItem(6, DiamondLimit.limitOFF());
 						inv.setItem(7, GUIItems.getx());
 					}
 					inv.setItem(8, GUIItems.getSelectBackMenu());

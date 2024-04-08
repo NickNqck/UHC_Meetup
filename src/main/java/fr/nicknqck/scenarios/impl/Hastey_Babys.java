@@ -1,5 +1,6 @@
-package fr.nicknqck.scenarios;
+package fr.nicknqck.scenarios.impl;
 
+import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Hastey_Babys  extends BasicScenarios{
+public class Hastey_Babys  extends BasicScenarios {
 
 	@Getter
 	@Setter

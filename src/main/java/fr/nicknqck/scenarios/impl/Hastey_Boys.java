@@ -1,12 +1,14 @@
-package fr.nicknqck.scenarios;
+package fr.nicknqck.scenarios.impl;
 
+import fr.nicknqck.scenarios.BasicScenarios;
+import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Hastey_Boys extends BasicScenarios{
+public class Hastey_Boys extends BasicScenarios {
 	private static boolean HasteyBoys = false;
 	public static void setHasteyBoys(boolean hasteyboys) {
 		HasteyBoys = hasteyboys;

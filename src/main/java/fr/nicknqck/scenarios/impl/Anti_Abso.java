@@ -1,5 +1,6 @@
-package fr.nicknqck.scenarios;
+package fr.nicknqck.scenarios.impl;
 
+import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;

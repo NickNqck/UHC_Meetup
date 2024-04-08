@@ -28,7 +28,7 @@ import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
 import fr.nicknqck.roles.ds.slayers.Pourfendeur;
-import fr.nicknqck.scenarios.FFA;
+import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.NMSPacket;
 

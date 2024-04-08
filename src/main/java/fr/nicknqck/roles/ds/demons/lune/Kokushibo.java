@@ -19,7 +19,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.scenarios.FFA;
+import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
 

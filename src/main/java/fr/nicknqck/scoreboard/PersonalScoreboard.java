@@ -14,7 +14,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
-import fr.nicknqck.scenarios.FFA;
+import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.StringUtils;

@@ -15,7 +15,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.scenarios.AntiPvP;
+import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.utils.AttackUtils;
 
 public class EntityDamageEvents implements Listener{

@@ -1,7 +1,8 @@
 package fr.nicknqck.roles;
 
+import lombok.Getter;
 import org.bukkit.entity.Player;
-
+@Getter
 public enum TeamList {
 	
 	Demon("§c"),
@@ -19,14 +20,11 @@ public enum TeamList {
 	Zabuza_et_Haku("§b"),
 	Shinobi("§a"),
 	Kumogakure("§6");
-	private java.util.List<Player> list;
-	private String color;
+	private final java.util.List<Player> list;
+	private final String Color;
 	TeamList(String color){
-		this.color = color;
+		this.Color = color;
 		this.list = new java.util.ArrayList<>();
-	}
-	public String getColor() {
-		return color;
 	}
 	public void addPlayer(Player player) {
 		list.add(player);

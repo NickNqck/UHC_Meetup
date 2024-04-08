@@ -24,8 +24,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.scenarios.CutClean;
-import fr.nicknqck.scenarios.DiamondLimit;
+import fr.nicknqck.scenarios.impl.CutClean;
+import fr.nicknqck.scenarios.impl.DiamondLimit;
 import fr.nicknqck.utils.NMSPacket;
 
 public class BlockManager implements Listener{

@@ -1,9 +1,10 @@
-package fr.nicknqck.scenarios;
+package fr.nicknqck.scenarios.impl;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.blocks.BlockManager;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
