@@ -1,16 +1,23 @@
 package fr.nicknqck;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
+import fr.nicknqck.GameState.MDJ;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.chat.Chat;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.pregen.PregenerationTask;
+import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.aot.titans.TitanListener;
+import fr.nicknqck.roles.ns.Hokage;
+import fr.nicknqck.scenarios.*;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -27,30 +34,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-import fr.nicknqck.GameState.MDJ;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.chat.Chat;
-import fr.nicknqck.events.Events;
-import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.pregen.PregenerationTask;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
-import fr.nicknqck.roles.aot.titans.TitanListener;
-import fr.nicknqck.roles.ns.Hokage;
-import fr.nicknqck.scenarios.AntiDrop;
-import fr.nicknqck.scenarios.AntiPvP;
-import fr.nicknqck.scenarios.Anti_Abso;
-import fr.nicknqck.scenarios.CutClean;
-import fr.nicknqck.scenarios.DiamondLimit;
-import fr.nicknqck.scenarios.FFA;
-import fr.nicknqck.scenarios.Hastey_Babys;
-import fr.nicknqck.scenarios.Hastey_Boys;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.StringUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class HubListener implements Listener {
 	private final GameState gameState;
@@ -132,6 +118,7 @@ public class HubListener implements Listener {
 			b.getBiju().getListener().resetCooldown();
 		}
 		Bijus.initBiju(gameState);
+		gameState.getInGamePlayers().stream().filter(p -> !gameState.hasRoleNull(p)).forEach(p -> Main.getInstance().getGamePlayer().putGamePlayer(p.getUniqueId(), gameState.getPlayerRoles().get(p)));
 		gameState.setServerState(ServerStates.InGame);
 	}
 	public void giveStartInventory(Player p) {
@@ -272,12 +259,12 @@ public class HubListener implements Listener {
 		    		player.openInventory(GUIItems.getSelectInventoryGUI());
 		    		updateSelectInventory(player); //Ouvre le menu pour config l'inventaire
 		    		} else if (item.isSimilar(AntiPvP.getlobbypvp())||item.isSimilar(AntiPvP.getnotlobbypvp())  && (player.isOp() || gameState.getHost().contains(player) )) {
-		    			if (AntiPvP.isantipvplobby()) {
-		    				AntiPvP.setantipvplobby(false);
+		    			if (AntiPvP.isAntipvplobby()) {
+		    				AntiPvP.setAntipvplobby(false);
 		    				player.sendMessage("Vous venez d'activer le PvP dans le Lobby");
 		    				Bukkit.broadcastMessage("Un administrateur à activer le PvP dans le Lobby");
 		    			} else {
-		    				AntiPvP.setantipvplobby(true);
+		    				AntiPvP.setAntipvplobby(true);
 		    				player.sendMessage("Vous venez de désactiver le PvP dans le lobby");
 		    				Bukkit.broadcastMessage("Un administrateur à desactiver le PvP dans le Lobby");
 		    			}
@@ -402,98 +389,96 @@ public class HubListener implements Listener {
 					event.setCancelled(true);
 					break;
 				case "§fConfiguration§7 -> §6Événements":
-					if (item != null) {
-						if (item.getType() != Material.AIR) {
-							if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-								player.openInventory(GUIItems.getAdminWatchGUI());
-				    			updateAdminInventory(player);
-							}else {
-								for (Events e : Events.values()) {
-									if (item.getItemMeta().getDisplayName().equals(e.getName())) {
-										if (e.equals(Events.DemonKingTanjiro)) {
-											if (action == InventoryAction.PICKUP_ALL) {
-												gameState.DKminTime+=60;
-											}
-											if (action == InventoryAction.PICKUP_HALF) {
-												if (gameState.DKminTime > 60) {
-													gameState.DKminTime-=60;
-												}
-											}
-											if (action == InventoryAction.DROP_ONE_SLOT){
-												if (gameState.DKTProba == 0) {
-													gameState.DKTProba = 101;
-												}
-												if (gameState.DKTProba > 0) {
-													gameState.DKTProba--;
-												}
-											}
-											if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-												if (gameState.DKTProba == 100) {
-													gameState.DKTProba = -1;
-												}
-												if (gameState.DKTProba < 100) {
-													gameState.DKTProba++;
-												}
-											}
-										}
-										if (e.equals(Events.AkazaVSKyojuro)) {
-											 if (action == InventoryAction.PICKUP_ALL) {
-												 gameState.AkazaVsKyojuroTime+=60;
-											 }
-											 if (action == InventoryAction.PICKUP_HALF) {
-												 if (gameState.AkazaVsKyojuroTime > 60) {
-													 gameState.AkazaVsKyojuroTime-=60;
-												 }
-												}
-												if (action == InventoryAction.DROP_ONE_SLOT){
-													if (gameState.AkazaVSKyojuroProba == 0) {
-														gameState.AkazaVSKyojuroProba = 101;
-													}
-													if (gameState.AkazaVSKyojuroProba > 0) {
-														gameState.AkazaVSKyojuroProba--;
-													}
-												}
-												if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-													if (gameState.AkazaVSKyojuroProba == 100) {
-														gameState.AkazaVSKyojuroProba = -1;
-													}
-													if (gameState.AkazaVSKyojuroProba < 100) {
-														gameState.AkazaVSKyojuroProba++;
-													}
-												}
-										}
-										if (e.equals(Events.Alliance)) {
-											 if (action == InventoryAction.PICKUP_ALL) {
-												 gameState.AllianceTime+=60;
-											 }
-											 if (action == InventoryAction.PICKUP_HALF) {
-												 if (gameState.AllianceTime > 60) {
-													 gameState.AllianceTime-=60;
-												 }
-												}
-												if (action == InventoryAction.DROP_ONE_SLOT){
-													if (gameState.AllianceProba == 0) {
-														gameState.AllianceProba = 101;
-													}
-													if (gameState.AllianceProba > 0) {
-														gameState.AllianceProba--;
-													}
-												}
-												if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-													if (gameState.AllianceProba == 100) {
-														gameState.AllianceProba = -1;
-													}
-													if (gameState.AllianceProba < 100) {
-														gameState.AllianceProba++;
-													}
-												}
-										}
-									}
-								}
-							}						
-						}
-					}
-					for (Player p : gameState.getInLobbyPlayers()) {
+                    if (item.getType() != Material.AIR) {
+                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+                            player.openInventory(GUIItems.getAdminWatchGUI());
+                            updateAdminInventory(player);
+                        } else {
+                            for (Events e : Events.values()) {
+                                if (item.getItemMeta().getDisplayName().equals(e.getName())) {
+                                    if (e.equals(Events.DemonKingTanjiro)) {
+                                        if (action == InventoryAction.PICKUP_ALL) {
+                                            gameState.DKminTime += 60;
+                                        }
+                                        if (action == InventoryAction.PICKUP_HALF) {
+                                            if (gameState.DKminTime > 60) {
+                                                gameState.DKminTime -= 60;
+                                            }
+                                        }
+                                        if (action == InventoryAction.DROP_ONE_SLOT) {
+                                            if (gameState.DKTProba == 0) {
+                                                gameState.DKTProba = 101;
+                                            }
+                                            if (gameState.DKTProba > 0) {
+                                                gameState.DKTProba--;
+                                            }
+                                        }
+                                        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                                            if (gameState.DKTProba == 100) {
+                                                gameState.DKTProba = -1;
+                                            }
+                                            if (gameState.DKTProba < 100) {
+                                                gameState.DKTProba++;
+                                            }
+                                        }
+                                    }
+                                    if (e.equals(Events.AkazaVSKyojuro)) {
+                                        if (action == InventoryAction.PICKUP_ALL) {
+                                            gameState.AkazaVsKyojuroTime += 60;
+                                        }
+                                        if (action == InventoryAction.PICKUP_HALF) {
+                                            if (gameState.AkazaVsKyojuroTime > 60) {
+                                                gameState.AkazaVsKyojuroTime -= 60;
+                                            }
+                                        }
+                                        if (action == InventoryAction.DROP_ONE_SLOT) {
+                                            if (gameState.AkazaVSKyojuroProba == 0) {
+                                                gameState.AkazaVSKyojuroProba = 101;
+                                            }
+                                            if (gameState.AkazaVSKyojuroProba > 0) {
+                                                gameState.AkazaVSKyojuroProba--;
+                                            }
+                                        }
+                                        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                                            if (gameState.AkazaVSKyojuroProba == 100) {
+                                                gameState.AkazaVSKyojuroProba = -1;
+                                            }
+                                            if (gameState.AkazaVSKyojuroProba < 100) {
+                                                gameState.AkazaVSKyojuroProba++;
+                                            }
+                                        }
+                                    }
+                                    if (e.equals(Events.Alliance)) {
+                                        if (action == InventoryAction.PICKUP_ALL) {
+                                            gameState.AllianceTime += 60;
+                                        }
+                                        if (action == InventoryAction.PICKUP_HALF) {
+                                            if (gameState.AllianceTime > 60) {
+                                                gameState.AllianceTime -= 60;
+                                            }
+                                        }
+                                        if (action == InventoryAction.DROP_ONE_SLOT) {
+                                            if (gameState.AllianceProba == 0) {
+                                                gameState.AllianceProba = 101;
+                                            }
+                                            if (gameState.AllianceProba > 0) {
+                                                gameState.AllianceProba--;
+                                            }
+                                        }
+                                        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+                                            if (gameState.AllianceProba == 100) {
+                                                gameState.AllianceProba = -1;
+                                            }
+                                            if (gameState.AllianceProba < 100) {
+                                                gameState.AllianceProba++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    for (Player p : gameState.getInLobbyPlayers()) {
 		    			updateEventInventory(p);
 					}
 		    		event.setCancelled(true);
@@ -2495,7 +2480,7 @@ public class HubListener implements Listener {
 					inv.setItem(31, GUIItems.getSelectScenarioButton());
 					inv.setItem(28, GUIItems.getSelectInvsButton());
 					inv.setItem(37, GUIItems.getSelectEventButton());
-					if (AntiPvP.isantipvplobby()) {
+					if (AntiPvP.isAntipvplobby()) {
 						inv.setItem(40, AntiPvP.getlobbypvp());
 					} else {
 						inv.setItem(40, AntiPvP.getnotlobbypvp());

@@ -1051,7 +1051,7 @@ public class GameListener implements Listener {
 				}				
 			}
 		} else {//else du serverstates.ingame
-			if (AntiPvP.isantipvplobby()) {			
+			if (AntiPvP.isAntipvplobby()) {
 				event.setCancelled(true);
 			}
 		}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import lombok.Getter;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -92,13 +93,14 @@ public class Main extends JavaPlugin implements Listener{
 	public boolean gen = false;
 	public static String RH() {return "§c❤§r";}
 	public static List<Chunk> keepChunk = new ArrayList<>();
+	@Getter
 	private GamePlayer gamePlayer;
-	public final GamePlayer getGamePlayer() {
-		return gamePlayer;
-	}
+	@Getter
+	private static Main Instance;
+
 	@Override
 	public void onEnable() {
-		instance = this;
+		Instance = this;
 		GameState gameState = new GameState();
 		this.gamePlayer = new GamePlayer();
 		this.gameWorld = Bukkit.getWorld("world");
@@ -320,8 +322,8 @@ public class Main extends JavaPlugin implements Listener{
         }
     }
 
-	private static Main instance;
-	public static Main getInstance() {return instance;}
+
+
 	public ScoreboardManager getScoreboardManager() {
 	    return scoreboardManager;
 	}

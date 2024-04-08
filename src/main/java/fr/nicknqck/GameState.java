@@ -53,8 +53,8 @@ public class GameState{
 	public enum ServerStates {
 		InLobby,
 		InGame,
-		GameEnded;
-	}
+		GameEnded
+    }
 	@Getter
 	public enum Roles {
 		//Solo ds
@@ -186,33 +186,18 @@ public class GameState{
         Zombie(TeamList.Overworld, "mc", 2, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack()),
         Squelette(TeamList.Overworld, "mc", 3, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack())*/;
 		
-		private TeamList team;
-		private String mdj;
-		private int nmb;
-		private ItemStack item;
-		private String gDesign;
-		private Roles(TeamList team, String mdj, int nmb, ItemStack item, String GDesign) {
+		private final TeamList team;
+		private final String mdj;
+		private final int nmb;
+		private final ItemStack item;
+		private final String gDesign;
+		Roles(TeamList team, String mdj, int nmb, ItemStack item, String GDesign) {
 			this.team = team;
 			this.mdj = mdj;
 			this.nmb = nmb;
 			this.item = item;
 			this.gDesign = GDesign;
 		}
-		/*public TeamList getTeam() {
-			return team;
-		}
-		public String getMdj() {
-			return mdj;
-		}
-		public int getInt() {
-			return nmb;
-		}
-		public ItemStack getItem() {
-			return item;
-		}
-		public String getGDesign() {
-			return gDesign;
-		}*/
 		}
 	public void setAllMDJDesac() {
 		for (MDJ mdj : MDJ.values()) {

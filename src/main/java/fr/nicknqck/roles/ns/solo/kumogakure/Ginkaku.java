@@ -183,7 +183,7 @@ public class Ginkaku extends RoleBase{
 					owner.sendMessage("§7Vous éjectez§c "+target.getDisplayName()+"§7.");
 					cdCorde = 120;
 					if (checker == null){
-						checker = new TargetFallChecker(target.getUniqueId());
+						checker = new TargetFallChecker();
 					}
 					checker.starter(target.getUniqueId());
 				} else {
@@ -236,8 +236,7 @@ public class Ginkaku extends RoleBase{
 		cdCorde = 0;
 		cdGourde = 0;
 	}
-	private void ejectPlayers(final Location location, final Player... players) {
-		for (final Player player : players) {
+	private void ejectPlayers(final Location location, final Player player) {
 			final double distance = Math.sqrt(Math.pow(player.getLocation().getX() - location.getX(), 2) + Math.pow(player.getLocation().getY() - location.getY(), 2) + Math.pow(player.getLocation().getZ() - location.getZ(), 2));
 
 			final double exposure = ((CraftWorld) player.getWorld()).getHandle().a(new Vec3D(location.getX(), location.getY(), location.getZ()), ((CraftEntity) player).getHandle().getBoundingBox());
@@ -247,7 +246,6 @@ public class Ginkaku extends RoleBase{
 			final Vector vector = new Vector((player.getLocation().getX() - location.getX()) * multiply, (player.getLocation().getY() + 1.62D - location.getY()) * multiply, (player.getLocation().getZ() - location.getZ()) * multiply);
 
 			player.setVelocity(player.getVelocity().add(vector));
-		}
 	}
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
@@ -317,12 +315,17 @@ public class Ginkaku extends RoleBase{
 	}
 	private class TargetFallChecker implements Listener {
 		private UUID gTarget;
-		TargetFallChecker(UUID target){
-			this.gTarget = target;
+		TargetFallChecker(){
 			Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 		}
 		public void starter(UUID uuid){
 			gTarget = uuid;
+			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+				if (gTarget != null){
+					Main.getInstance().getGamePlayer().stun(gTarget, 5.0, null);
+					gTarget = null;
+				}
+			}, 100);
 		}
 		@EventHandler
 		private void onDamage(EntityDamageEvent event){

@@ -9,14 +9,14 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class Anti_Abso {
+import javax.persistence.Basic;
+
+public class Anti_Abso extends BasicScenarios {
 	/* Le reste de du code est dans
 	 * fr.nicknqck.mtpds.ItemsManager
 	 * précisément le OnItemConsumed
 	 */
-<<<<<<< src/main/java/fr/nicknqck/scenarios/Anti_Abso.java
-	//TEST
-=======
+
 	@Getter
 	@Setter
 	private static boolean antiabsoall = false;
@@ -26,14 +26,14 @@ public class Anti_Abso {
 	@Getter
 	@Setter
 	private static boolean antiabsooff = false;
-	public static boolean isAntiAbsoOff() {
-		return antiabsooff;
+
+	@Override
+	public String getName() {
+		return "Anti Abso";
 	}
-	
-	
+
 	public static String abso() {
-		String abso = ChatColor.GOLD+"[HIDE-ABSO] "+ChatColor.RESET;
-		return abso;
+        return ChatColor.GOLD+"[HIDE-ABSO] "+ChatColor.RESET;
 	}
 	  public static ItemStack getAbsoAll() {
 		  ItemStack stack = new ItemStack(Material.GOLDEN_APPLE, 1);
