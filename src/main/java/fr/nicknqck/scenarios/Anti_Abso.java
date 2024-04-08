@@ -1,7 +1,6 @@
 package fr.nicknqck.scenarios;
 
-import java.util.Arrays;
-
+import fr.nicknqck.utils.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
@@ -9,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.persistence.Basic;
+import java.util.Arrays;
 
 public class Anti_Abso extends BasicScenarios {
 	/* Le reste de du code est dans
@@ -30,6 +29,11 @@ public class Anti_Abso extends BasicScenarios {
 	@Override
 	public String getName() {
 		return "Anti Abso";
+	}
+
+	@Override
+	public ItemStack getAffichedItem() {
+		return new ItemBuilder(Material.GOLDEN_APPLE).setName(getName()).setLore("§eAbsorbtion§f caché pour: "+(antiabsoall ? "§fTout les joueurs" : antiabsoinvi ? "§fLes joueurs invisible" : "§fAucun joueur")).toItemStack();
 	}
 
 	public static String abso() {

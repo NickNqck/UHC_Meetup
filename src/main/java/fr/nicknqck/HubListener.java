@@ -2497,7 +2497,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fConfiguration§7 -> §6scenarios") {
+				if (inv.getTitle().equals("§fConfiguration§7 -> §6scenarios")) {
 					if (Anti_Abso.isAntiabsooff()) {
 						inv.setItem(0, Anti_Abso.getAbsoOff());
 					} else if (Anti_Abso.isAntiabsoinvi()) {
