@@ -10,13 +10,14 @@ import java.util.List;
 
 public class AntiDrop extends BasicScenarios{
 
-
-	@Setter
 	private static boolean AntiDrop = true;
 
 	@Override
 	public String getName() {
 		return "Anti-Drop";
+	}
+	public static void setAntiDrop(boolean b){
+		AntiDrop = b;
 	}
 
 	public static boolean getAntiDrop() {

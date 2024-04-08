@@ -77,12 +77,12 @@ public class ItemsManager implements Listener {
 			RoleBase role = gameState.getPlayerRoles().get(player);
 			if (role == null)return;
 			player.updateInventory();
-			if (Anti_Abso.isAntiAbsoAll()) {
+			if (Anti_Abso.isAntiabsoall()) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {	
 					player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20*60*2, 0, false, false), true);
 					player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*4, 1, false, false), true);
 	        }, 1);	
-			} else if (Anti_Abso.isAntiAbsoInv()) {
+			} else if (Anti_Abso.isAntiabsoinvi()) {
 				if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 						player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20*60*2, 0, false, false), true);

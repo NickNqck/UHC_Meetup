@@ -522,7 +522,7 @@ public class HubListener implements Listener {
 			    				AntiDrop.setAntiDrop(false);
 			    				player.sendMessage(AntiDrop.drop() +ChatColor.RED+"Désactivation de l'Anti-Drop");
 			    			} else {
-			    				AntiDrop.setAntiDrop(true);
+								AntiDrop.setAntiDrop(true);
 			    				player.sendMessage(AntiDrop.drop()+ChatColor.GREEN+"Activation de l'Anti-Drop");
 			    			}
 			    		} else if (item.isSimilar(GUIItems.getSelectBackMenu())) {

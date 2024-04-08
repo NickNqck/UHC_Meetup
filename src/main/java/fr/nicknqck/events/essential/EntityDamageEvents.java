@@ -33,7 +33,7 @@ public class EntityDamageEvents implements Listener{
 				Player player = (Player) event.getEntity();
 				boolean canceled = false;
 				if (event.getCause() == DamageCause.ENTITY_ATTACK) {
-					if (AntiPvP.isantipvplobby()) {
+					if (AntiPvP.isAntipvplobby()) {
 						event.setCancelled(true);
 						canceled = true;
 					}

@@ -32,6 +32,7 @@ dependencies {
 shadowJar {
     relocate 'fr.mrmicky.fastparticles', 'fr.nicknqck.utils.particles'
     // 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
+    relocate 'lombok', 'fr.nicknqck.utils.lombok'
 }
 
 setLibsDirName("T:\\Bureau\\Dev\\Serv\\serveur de test\\plugins")
