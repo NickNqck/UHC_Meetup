@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffect;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class HubListener implements Listener {
 	private final GameState gameState;
@@ -242,6 +243,7 @@ public class HubListener implements Listener {
 				boolean orochimaru = item.isSimilar(GUIItems.getSelectOrochimaruButton());
 				boolean brume = item.isSimilar(GUIItems.getSelectBrumeButton());
 				boolean shinobi = item.isSimilar(GUIItems.getSelectShinobiButton());
+				if (!item.hasItemMeta())return;
 				switch(inv.getTitle()) {
 				case "§fConfiguration":
 		    		if (item.isSimilar(GUIItems.getStartGameButton()) && (player.isOp() || gameState.getHost().contains(player) )) {
@@ -318,11 +320,6 @@ public class HubListener implements Listener {
 		    			}
 		    		} else if (item.isSimilar(GUIItems.getPregen(gameState))) {
 		    			if (!gameState.hasPregen){
-		    			/*	try {
-								Main.createLoadWorld();
-							} catch (NoSuchFieldException | IllegalAccessException e) {
-								e.printStackTrace();
-							}*/
 		    				new PregenerationTask(Main.getInstance().gameWorld, gameState.getMaxBorderSize());
 		    				gameState.hasPregen = true;
 		    			}
@@ -484,48 +481,14 @@ public class HubListener implements Listener {
 		    		event.setCancelled(true);
 					break;
 				case "§fConfiguration§7 -> §6scenarios":
-					  if (item.isSimilar(Anti_Abso.getAbsoAll())||item.isSimilar(Anti_Abso.getAbsoInvisible())||item.isSimilar(Anti_Abso.getAbsoOff())) {
-			    			if (Anti_Abso.isAntiabsooff()) {
-			    				Anti_Abso.setAntiabsooff(false);
-			    				Anti_Abso.setAntiabsoinvi(true);
-			    				player.sendMessage(Anti_Abso.abso()+"L'absorbtion est maintenant caché pour ceux qui sont invisible");
-			    			} else if (Anti_Abso.isAntiabsoinvi()) {
-			    				Anti_Abso.setAntiabsoinvi(false);
-			    				Anti_Abso.setAntiabsoall(true);
-			    				player.sendMessage(Anti_Abso.abso()+"L'absorbtion est maintenant caché pour tout les joueurs");
-			    			} else if (Anti_Abso.isAntiabsoall()) {
-			    				Anti_Abso.setAntiabsoall(false);
-			    				Anti_Abso.setAntiabsooff(true);
-			    				player.sendMessage(Anti_Abso.abso()+"L'absorbtion n'est cachée pour personne");
-			    			}
-			    		} else if (item.isSimilar(FFA.getFFAButton()) || item.isSimilar(FFA.getnotFFAButton())) {
-			    			if (FFA.getFFA()) {
-			    				FFA.setFFA(false);
-			    				player.sendMessage(FFA.ffa() + ChatColor.RED+"Désactivation du mode FFA");
-			    			} else {
-			    				FFA.setFFA(true);
-			    				player.sendMessage(FFA.ffa() + ChatColor.GREEN+"Activation du mode FFA");
-			    			}
-			    		} else if (item.isSimilar(Hastey_Boys.getHasteyBoys())||item.isSimilar(Hastey_Boys.getnotHasteyBoys())) {
-						  if (Hastey_Boys.isHasteyBoys()) {
-							  Hastey_Boys.setHasteyBoys(false);
-							  player.sendMessage(Hastey_Boys.hasteyboy()+ChatColor.GREEN+"Désactivation d'Hastey Boys");
-						  } else {
-							  Hastey_Boys.setHasteyBoys(true);
-							  player.sendMessage(Hastey_Boys.hasteyboy()+ChatColor.GREEN+"Activation d'Hastey Boys");
-							  if (Hastey_Babys.isHasteyBabys()) {
-								  Hastey_Babys.setHasteyBabys(false);
-							  }
-						  }
-					  }  else if (item.isSimilar(AntiDrop.getAntiDropButton()) || item.isSimilar(AntiDrop.getnotAntiDropButton())) {
-			    			if (AntiDrop.getAntiDrop()) {
-			    				AntiDrop.setAntiDrop(false);
-			    				player.sendMessage(AntiDrop.drop() +ChatColor.RED+"Désactivation de l'Anti-Drop");
-			    			} else {
-								AntiDrop.setAntiDrop(true);
-			    				player.sendMessage(AntiDrop.drop()+ChatColor.GREEN+"Activation de l'Anti-Drop");
-			    			}
-			    		} else if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+					for (Scenarios scenario : Scenarios.values()){
+						if (item.isSimilar(scenario.getScenarios().getAffichedItem())){
+							scenario.getScenarios().setAction(action);
+							scenario.getScenarios().onClick(player);
+						}
+					}
+					player.updateInventory();
+					    if (item.isSimilar(GUIItems.getSelectBackMenu())) {
 			    			for (Player p : gameState.getInLobbyPlayers()) {
 								  if (p == event.getWhoClicked()) {
 									  if ((player.isOp() || gameState.getHost().contains(player) ))p.openInventory(GUIItems.getAdminWatchGUI());
@@ -533,20 +496,6 @@ public class HubListener implements Listener {
 								  }									 
 							  }
 						  }
-						
-							
-						if (item.isSimilar(Hastey_Babys.getHasteyBabys())||item.isSimilar(Hastey_Babys.getnotHasteyBabys())) {
-							if (Hastey_Babys.isHasteyBabys()) {
-								Hastey_Babys.setHasteyBabys(false);
-								player.sendMessage(Hastey_Babys.HasteyBabys()+"Désactivation de Hastey Babys");
-							} else {
-								Hastey_Babys.setHasteyBabys(true);
-								player.sendMessage(Hastey_Babys.HasteyBabys()+"Activation de Hastey Babys");
-								if (Hastey_Boys.isHasteyBoys()) {
-									Hastey_Boys.setHasteyBoys(false);
-								}
-							}
-						}
 						if (item.isSimilar(DiamondLimit.limitOFF())||item.isSimilar(DiamondLimit.limitON())) {
 							if (DiamondLimit.isLimit()) {
 								DiamondLimit.setLimit(false);
@@ -572,21 +521,6 @@ public class HubListener implements Listener {
 								}
 							
 			    		}
-						if (item.isSimilar(CutClean.getCutClean())||item.isSimilar(CutClean.getnotCutClean())) {
-							if (action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-								player.openInventory(GUIItems.getCutCleanConfigGUI());
-								updateCutCleanInventory(player);
-								player.updateInventory();
-							} else {
-								if (CutClean.isCutClean()) {
-									CutClean.setCutClean(false);
-									player.sendMessage(CutClean.cutclean()+"Désactivation de CutClean");
-								} else {
-									CutClean.setCutClean(true);
-									player.sendMessage(CutClean.cutclean()+"Activation de CutClean");
-								}
-							}							
-						}
 					  event.setCancelled(true);
 					break;
 				case "§bCutClean":
@@ -1035,11 +969,11 @@ public class HubListener implements Listener {
 								gameState.borderSpeed -= 0.1;
 							}
 						}
-						if (name == "Temps avant activation du PVP") {
+						if (name.equals("Temps avant activation du PVP")) {
 							if (action.equals(InventoryAction.PICKUP_ALL)) {
-								gameState.pvpTimer += 1*60;
+								gameState.pvpTimer += 60;
 							} else if (action.equals(InventoryAction.PICKUP_HALF)) {
-								gameState.pvpTimer -= 1*60;
+								gameState.pvpTimer -= 60;
 							}
 						}
 						if (name.equals("Temps avant annonce des Roles")) {
@@ -1550,7 +1484,6 @@ public class HubListener implements Listener {
 					event.setCancelled(true);
 					break;
 				case "§aNaruto§7 ->§5 Orochimaru":
-					if (!item.hasItemMeta())return;
 					if (!item.getItemMeta().hasDisplayName())return;
 					if (item.isSimilar(GUIItems.getSelectBackMenu())) {
 						player.openInventory(GUIItems.getRoleSelectGUI());
@@ -1701,7 +1634,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§aNaruto§7 ->§a Shinobi") {
+				if (inv.getTitle().equals("§aNaruto§7 ->§a Shinobi")) {
 					inv.clear();
 					ItemStack glass = GUIItems.getGreenStainedGlassPane();
 					inv.setItem(0, glass);
@@ -1888,7 +1821,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "DemonSlayer -> §cDémons") {
+				if (inv.getTitle().equals("DemonSlayer -> §cDémons")) {
 					inv.clear();	
 					inv.setItem(0, GUIItems.getRedStainedGlassPane());
 					inv.setItem(1, GUIItems.getRedStainedGlassPane());
@@ -1944,7 +1877,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fAOT§7 -> §eSolo") {
+				if (inv.getTitle().equals("§fAOT§7 -> §eSolo")) {
 					inv.clear();	
 					inv.setItem(0, GUIItems.getOrangeStainedGlassPane());
 					inv.setItem(1, GUIItems.getOrangeStainedGlassPane());
@@ -1969,7 +1902,7 @@ public class HubListener implements Listener {
 					inv.setItem(52, GUIItems.getOrangeStainedGlassPane());
 					inv.setItem(53, GUIItems.getOrangeStainedGlassPane());//bas droite
 					for (Roles roles : Roles.values()) {
-						if (roles.getTeam() == TeamList.Solo && roles.getMdj() == "aot") {
+						if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("aot")) {
 							String l1 = "";
 							if (gameState.getAvailableRoles().get(roles) > 0) {
 								l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -1990,7 +1923,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "DemonSlayer -> §eSolo") {
+				if (inv.getTitle().equals("DemonSlayer -> §eSolo")) {
 					inv.clear();	
 					inv.setItem(0, GUIItems.getOrangeStainedGlassPane());
 					inv.setItem(1, GUIItems.getOrangeStainedGlassPane());
@@ -2017,7 +1950,7 @@ public class HubListener implements Listener {
 					
 					inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
 					for (Roles roles : Roles.values()) {
-						if (roles.getTeam() == TeamList.Solo && roles.getMdj() == "ds") {
+						if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ds")) {
 							String l1 = "";
 							if (gameState.getAvailableRoles().get(roles) > 0) {
 								l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -2039,7 +1972,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "DemonSlayer ->§a Slayers") {
+				if (inv.getTitle().equals("DemonSlayer ->§a Slayers")) {
 					inv.clear();	
 					inv.setItem(0, GUIItems.getGreenStainedGlassPane());
 					inv.setItem(1, GUIItems.getGreenStainedGlassPane());
@@ -2199,7 +2132,7 @@ public class HubListener implements Listener {
 								item = new ItemStack(Material.PRISMARINE, (byte) 1);
 								lore.set(0, ChatColor.GREEN+"("+gameState.getAvailableRoles().get(r)+")");
 							} else {
-								item = new ItemStack(Material.PRISMARINE, (byte) 1);
+								item = new ItemStack(Material.PRISTINE, (byte) 1);
 								lore.set(0, ChatColor.RED+"(0)");
 							}
 							ItemMeta meta = item.getItemMeta();
@@ -2417,7 +2350,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fConfiguration") {					
+				if (inv.getTitle().equals("§fConfiguration")) {
 					if (gameState.gameCanLaunch) {
 						inv.setItem(0, GUIItems.getGreenStainedGlassPane());
 						inv.setItem(1, GUIItems.getGreenStainedGlassPane());
@@ -2498,37 +2431,10 @@ public class HubListener implements Listener {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
 				if (inv.getTitle().equals("§fConfiguration§7 -> §6scenarios")) {
-					if (Anti_Abso.isAntiabsooff()) {
-						inv.setItem(0, Anti_Abso.getAbsoOff());
-					} else if (Anti_Abso.isAntiabsoinvi()) {
-						inv.setItem(0, Anti_Abso.getAbsoInvisible());
-					} else if (Anti_Abso.isAntiabsoall()) {
-						inv.setItem(0, Anti_Abso.getAbsoAll());
-					}
-					if (Hastey_Boys.isHasteyBoys()) {
-						inv.setItem(1, Hastey_Boys.getHasteyBoys());
-					} else {
-						inv.setItem(1, Hastey_Boys.getnotHasteyBoys());
-					}
-					if (FFA.getFFA()) {
-						inv.setItem(2, FFA.getnotFFAButton());
-					} else {
-						inv.setItem(2, FFA.getFFAButton());
-					}
-					if (AntiDrop.getAntiDrop()) {
-						inv.setItem(3, AntiDrop.getnotAntiDropButton());
-					} else {
-						inv.setItem(3, AntiDrop.getAntiDropButton());
-					}
-					if (CutClean.isCutClean()) {
-						inv.setItem(4, CutClean.getCutClean());
-					} else {
-						inv.setItem(4, CutClean.getnotCutClean());
-					}
-					if (Hastey_Babys.isHasteyBabys()) {
-						inv.setItem(5, Hastey_Babys.getHasteyBabys());
-					} else {
-						inv.setItem(5, Hastey_Babys.getnotHasteyBabys());
+					int i = 0;
+					for (Scenarios sc : Scenarios.values()){
+						inv.setItem(i, sc.getScenarios().getAffichedItem());
+						i++;
 					}
 					if (DiamondLimit.isLimit()) {
 						inv.setItem(6, DiamondLimit.limitON());
@@ -2548,7 +2454,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fConfiguration§7 ->§6 Inventaire") {
+				if (inv.getTitle().equals("§fConfiguration§7 ->§6 Inventaire")) {
 					inv.setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, gameState.nmbGap).setName("§r§fNombre de pomme d'§eor").setLore(
 							"§a+1§f (Clique gauche)",
 							"§c-1§f (Clique droit)",
@@ -2598,7 +2504,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fConfiguration§7 ->§6 Roles") {
+				if (inv.getTitle().equals("§fConfiguration§7 ->§6 Roles")) {
 					inv.clear();
 						if (gameState.isAllMdjNull()) {
 							inv.setItem(13, new ItemBuilder(Material.SIGN).setName("§7Aucun mode de jeux activé !").toItemStack());
@@ -2645,7 +2551,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fRoles§7 ->§6 DemonSlayer") {
+				if (inv.getTitle().equals("§fRoles§7 ->§6 DemonSlayer")) {
 					inv.clear();
 					inv.setItem(11, GUIItems.getSelectSlayersButton());
 					inv.setItem(13, GUIItems.getSelectDemonButton());
@@ -2662,7 +2568,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fRoles§7 ->§6 AOT") {
+				if (inv.getTitle().equals("§fRoles§7 ->§6 AOT")) {
 					inv.clear();
 					inv.setItem(10, GUIItems.getSelectMahrButton());
 					inv.setItem(12, GUIItems.getSelectTitanButton());
@@ -2680,7 +2586,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fRoles§7 ->§6 NS") {
+				if (inv.getTitle().equals("§fRoles§7 ->§6 NS")) {
 					inv.clear();
 					inv.setItem(10, GUIItems.getSelectShinobiButton());
 					inv.setItem(12, GUIItems.getSelectAkatsukiButton());
@@ -2693,12 +2599,12 @@ public class HubListener implements Listener {
 		player.updateInventory();
 		gameState.updateGameCanLaunch();
 	}
-	private void updateCutCleanInventory(Player player) {
+	public void updateCutCleanInventory(Player player) {
 		InventoryView invView = player.getOpenInventory();
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == GUIItems.getCutCleanConfigGUI().getTitle()) {					
+				if (inv.getTitle().equals(GUIItems.getCutCleanConfigGUI().getTitle())) {
 					inv.setItem(0, CutClean.getXpCharbon(gameState));
 					inv.setItem(2, CutClean.getXpFer(gameState));
 					inv.setItem(4, CutClean.getXpOr(gameState));
@@ -2714,7 +2620,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "Configuration de la partie") {
+				if (inv.getTitle().equals("Configuration de la partie")) {
 					inv.clear();
 					ItemStack maxBorderSize = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 5);
 					ItemStack minBorderSize = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 14);
@@ -2789,7 +2695,7 @@ public class HubListener implements Listener {
 						
 					ItemMeta DTMeta = daytime.getItemMeta();
 					DTMeta.setDisplayName("Durée du jour (et de la nuit)");
-					DTMeta.setLore(Arrays.asList("§r§fTemp actuelle: "+ChatColor.GOLD+StringUtils.secondsTowardsBeautiful(gameState.timeday)));
+					DTMeta.setLore(List.of("§r§fTemp actuelle: " + ChatColor.GOLD + StringUtils.secondsTowardsBeautiful(gameState.timeday)));
 					
 					daytime.setItemMeta(DTMeta);
 					maxBorderSize.setItemMeta(maxBSMeta);

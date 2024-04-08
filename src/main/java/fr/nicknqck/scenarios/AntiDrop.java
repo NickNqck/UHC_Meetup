@@ -1,11 +1,11 @@
 package fr.nicknqck.scenarios;
 
+import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
 
 public class AntiDrop extends BasicScenarios{
 
@@ -13,9 +13,25 @@ public class AntiDrop extends BasicScenarios{
 
 	@Override
 	public String getName() {
-		return "Anti-Drop";
+		return "§r§fAnti Drop";
 	}
-	public static void setAntiDrop(boolean b){
+
+	@Override
+	public ItemStack getAffichedItem() {
+		return new ItemBuilder(Material.HOPPER).setName(getName()).setLore("§fl'"+getName()+"§f est actuellement: "+ (AntiDrop ? "§aActivé" : "§cDésactivé")).toItemStack();
+	}
+	@Override
+	public void onClick(Player player) {
+		if (getAntiDrop()) {
+			setAntiDrop(false);
+			player.sendMessage(drop() +ChatColor.RED+"Désactivation de l'Anti-Drop");
+		} else {
+			setAntiDrop(true);
+			player.sendMessage(drop()+ChatColor.GREEN+"Activation de l'Anti-Drop");
+		}
+	}
+
+	public static void setAntiDrop(final boolean b){
 		AntiDrop = b;
 	}
 
@@ -26,23 +42,4 @@ public class AntiDrop extends BasicScenarios{
 	public static String drop() {
         return ChatColor.GOLD+"[ANTI-DROP] "+ChatColor.RESET;
 	}
-
-	public static ItemStack getAntiDropButton() {
-		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14); // Red
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Activer l'Anti-Drop");
-		meta.setLore(List.of(ChatColor.DARK_PURPLE + "Active l'Anti-Drop"));
-		stack.setItemMeta(meta);
-		return stack;
-	}
-
-	public static ItemStack getnotAntiDropButton() {
-		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 5); // Green
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Désactiver l'Anti-Drop");
-		meta.setLore(List.of(ChatColor.DARK_PURPLE + "Désactive l'Anti-Drop"));
-		stack.setItemMeta(meta);
-		return stack;
-	}
-
 }

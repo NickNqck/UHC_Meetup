@@ -541,7 +541,7 @@ public class GameState{
 			} else {
 				role = new FFA_Pourfendeur(player, roleType, this);
 				role.setTeam(TeamList.Solo);
-			}			
+			}
 			break;
 		case DemonMain:
 			role = new DemonMain(player, roleType, this);

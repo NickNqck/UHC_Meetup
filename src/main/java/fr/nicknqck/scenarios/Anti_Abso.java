@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 public class Anti_Abso extends BasicScenarios {
 	/* Le reste de du code est dans
@@ -28,43 +26,32 @@ public class Anti_Abso extends BasicScenarios {
 
 	@Override
 	public String getName() {
-		return "Anti Abso";
+		return "§r§fAnti Abso";
 	}
 
 	@Override
 	public ItemStack getAffichedItem() {
-		return new ItemBuilder(Material.GOLDEN_APPLE).setName(getName()).setLore("§eAbsorbtion§f caché pour: "+(antiabsoall ? "§fTout les joueurs" : antiabsoinvi ? "§fLes joueurs invisible" : "§fAucun joueur")).toItemStack();
+		return new ItemBuilder(Material.GOLDEN_APPLE).setAmount(1).setName(getName()).setLore("§eAbsorbtion§f caché pour: "+(antiabsoall ? "§fTout les joueurs" : antiabsoinvi ? "§fLes joueurs invisible" : "§fAucun joueur")).toItemStack();
+	}
+
+	@Override
+	public void onClick(Player player) {
+		if (Anti_Abso.isAntiabsooff()) {
+			setAntiabsooff(false);
+			setAntiabsoinvi(true);
+			player.sendMessage(abso()+"L'absorbtion est maintenant caché pour ceux qui sont invisible");
+		} else if (Anti_Abso.isAntiabsoinvi()) {
+			setAntiabsoinvi(false);
+			setAntiabsoall(true);
+			player.sendMessage(abso()+"L'absorbtion est maintenant caché pour tout les joueurs");
+		} else if (Anti_Abso.isAntiabsoall()) {
+			setAntiabsoall(false);
+			setAntiabsooff(true);
+			player.sendMessage(abso()+"L'absorbtion n'est cachée pour personne");
+		}
 	}
 
 	public static String abso() {
         return ChatColor.GOLD+"[HIDE-ABSO] "+ChatColor.RESET;
 	}
-	  public static ItemStack getAbsoAll() {
-		  ItemStack stack = new ItemStack(Material.GOLDEN_APPLE, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE+"Caché pour ",
-				  ChatColor.GOLD+"Tout les joueurs"));
-		  meta.setDisplayName(ChatColor.DARK_PURPLE+"Particule d'Abso: ");
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	  public static ItemStack getAbsoInvisible() {
-		  ItemStack stack = new ItemStack(Material.GOLDEN_APPLE, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE+"Caché pour ",
-				  ChatColor.GOLD+"Les invisibles"));
-		  meta.setDisplayName(ChatColor.DARK_PURPLE+"Particule d'Abso: ");
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	  public static ItemStack getAbsoOff() {
-		  ItemStack stack = new ItemStack(Material.GOLDEN_APPLE, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE+"Caché pour ",
-				  ChatColor.GOLD+"Personne"));
-		  meta.setDisplayName(ChatColor.DARK_PURPLE+"Particule d'Abso: ");
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-
 }

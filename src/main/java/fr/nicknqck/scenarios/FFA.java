@@ -1,43 +1,44 @@
 package fr.nicknqck.scenarios;
 
-import java.util.Arrays;
-
+import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class FFA {
+public class FFA extends BasicScenarios{
 
 	
+
 	private static boolean FFA = false;
-	
-	public static void setFFA(boolean FFAt) {
-		FFA = FFAt;
+
+	@Override
+	public String getName() {
+		return "§r§fFFA";
+	}
+
+	@Override
+	public ItemStack getAffichedItem() {
+		return new ItemBuilder(Material.SIGN).setName(getName()).setLore("§r§fLe§6 FFA§f est actuellement: "+(FFA ? "§aActivé" : "§cDésactivé")).toItemStack();
+	}
+
+	@Override
+	public void onClick(Player player) {
+		if (getFFA()) {
+			setFFA(false);
+			player.sendMessage(ffa() + ChatColor.RED+"Désactivation du mode FFA");
+		} else {
+			setFFA(true);
+			player.sendMessage(ffa() + ChatColor.GREEN+"Activation du mode FFA");
+		}
+	}
+	public static void setFFA(boolean b){
+		FFA = b;
 	}
 	public static boolean getFFA() {
 		return FFA;
 	}
 	public static String ffa() {
-		String a = ChatColor.GOLD+"[FFA] "+ChatColor.RESET;
-		return a;
-	}
-	
-	public static ItemStack getFFAButton() {
-		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14); // Red
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Activer le mode FFA");
-		meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE+"Active le mode FFA"));
-		stack.setItemMeta(meta);
-		return stack;
-	}
-
-	public static ItemStack getnotFFAButton() {
-		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 5); // Green
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Désactiver le mode FFA");
-		meta.setLore(Arrays.asList(ChatColor.DARK_PURPLE+"Désactive le mode FFA"));
-		stack.setItemMeta(meta);
-		return stack;
+        return ChatColor.GOLD+"[FFA] "+ChatColor.RESET;
 	}
 }

@@ -1,49 +1,60 @@
 package fr.nicknqck.scenarios;
 
-import java.util.Arrays;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.HubListener;
+import fr.nicknqck.blocks.BlockManager;
+import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.utils.ItemBuilder;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.blocks.BlockManager;
+import java.util.Arrays;
 
-public class CutClean {
+public class CutClean extends BasicScenarios {
 
 	
 	/*Le reste est dans 
 	 * fr.nicknqck.mtpds.blocks.BlockManager.CutClean
-	 * 
 	 */
-	GameState gameState;
-	public CutClean(GameState gameState) {this.gameState = gameState;}
+	@Setter
+	@Getter
 	private static boolean CutClean = false;
-	
-	public static boolean isCutClean() {return CutClean;}
-	public static void setCutClean(boolean CutCleant) {CutClean = CutCleant;}
-	 public static ItemStack getCutClean() {
-		  ItemStack stack = new ItemStack(Material.IRON_PICKAXE, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setLore(Arrays.asList(ChatColor.GOLD+"Activer"));
-		  meta.addEnchant(Enchantment.DEPTH_STRIDER, 0, false);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setDisplayName(ChatColor.DARK_PURPLE+"CutClean: ");
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	  public static ItemStack getnotCutClean() {
-		  ItemStack stack = new ItemStack(Material.IRON_PICKAXE, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setLore(Arrays.asList(ChatColor.GOLD+"Désactiver"));
-		  meta.setDisplayName(ChatColor.DARK_PURPLE+"CutClean: ");
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	  public static ItemStack getXpCharbon(GameState gameState) {
+	@Override
+	public String getName() {
+		return "§r§fCutClean";
+	}
+
+	@Override
+	public ItemStack getAffichedItem() {
+		return new ItemBuilder(Material.IRON_PICKAXE).setName(getName()).setLore("§r§fLe§6 CutClean§f est actuellement: "+(CutClean ? "§aActivé" : "§cDésactivé")).toItemStack();
+	}
+
+	@Override
+	public void onClick(Player player) {
+		if (getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+			player.openInventory(GUIItems.getCutCleanConfigGUI());
+			HubListener.getInstance().updateCutCleanInventory(player);
+			player.updateInventory();
+		} else {
+			if (isCutClean()) {
+				setCutClean(false);
+				player.sendMessage(cutclean()+"Désactivation de CutClean");
+			} else {
+				setCutClean(true);
+				player.sendMessage(cutclean()+"Activation de CutClean");
+			}
+		}
+	}
+
+	public static ItemStack getXpCharbon(GameState gameState) {
 		  ItemStack stack = new ItemStack(Material.COAL, 1);
 		  ItemMeta meta = stack.getItemMeta();
 		  meta.setDisplayName("Point d'xp en plus pour le §6charbon");
@@ -88,7 +99,6 @@ public class CutClean {
 		  return stack;
 	  }
 	  public static String cutclean() {
-			String a = ChatColor.GOLD+"[CutClean] "+ChatColor.RESET;
-			return a;
+          return ChatColor.GOLD+"[CutClean] "+ChatColor.RESET;
 		}
 }

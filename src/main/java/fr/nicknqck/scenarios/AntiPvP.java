@@ -1,21 +1,38 @@
 package fr.nicknqck.scenarios;
 
+import fr.nicknqck.utils.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class AntiPvP {
+public class AntiPvP extends BasicScenarios {
 
 	@Getter
 	@Setter
 	private static boolean antipvplobby = true;
+
+	@Override
+	public String getName() {
+		return "Anti-PvP";
+	}
+
+	@Override
+	public ItemStack getAffichedItem() {
+		return new ItemBuilder(Material.STAINED_CLAY, 1 ,5).setName(getName()).setLore("§fL'"+getName()+"§f est actuellement: "+(isAntipvplobby() ? "§aActivé" : "§cDésactivé")).toItemStack();
+	}
+
+	@Override
+	public void onClick(Player player) {
+
+	}
 
 	public static ItemStack getlobbypvp() {
 		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 5);

@@ -34,7 +34,7 @@ import fr.nicknqck.utils.NMSPacket;
 
 public class AdminCommands implements CommandExecutor{
 
-	GameState gameState;
+	private GameState gameState;
 	
 	public AdminCommands(GameState gameState) {this.gameState = gameState;}
 
@@ -44,6 +44,15 @@ public class AdminCommands implements CommandExecutor{
 			this.gameState = GameState.getInstance();
 		}
 		if (args.length >= 1) {
+			if (args[0].equalsIgnoreCase("vie")){
+				if (args.length == 3){
+					Player target = Bukkit.getPlayer(args[1]);
+					double damage = Double.parseDouble(args[2]);
+					if (target != null){
+						target.setHealth(target.getHealth()-damage);
+					}
+				}
+			}
 			if (args[0].equalsIgnoreCase("list")) {
 				if (sender.hasPermission("Host")) {
 					gameState.getPlayerRoles().forEach((key, value) -> {

@@ -661,26 +661,21 @@ public static ItemStack getSelectConfigButton() {
 		return Bukkit.createInventory(null, 54, "§fAOT§7 -> §eSolo");
 	}
 	public static Inventory getScenarioGUI() {
-		Inventory inv = Bukkit.createInventory(null, 9, "§fConfiguration§7 -> §6scenarios");
-		return inv;
+        return Bukkit.createInventory(null, 9*3, "§fConfiguration§7 -> §6scenarios");
 	}
 	public static Inventory getAdminWatchGUI() {
-		Inventory inv = Bukkit.createInventory(null, 54, "§fConfiguration");
-		return inv;
+        return Bukkit.createInventory(null, 54, "§fConfiguration");
 	}
 	
 	public static Inventory getConfigSelectGUI() {
-		Inventory inv = Bukkit.createInventory(null, 27, "Configuration de la partie");
-		return inv;
+        return Bukkit.createInventory(null, 27, "Configuration de la partie");
 	}
 
 	public static Inventory getRoleSelectGUI() {
-		Inventory inv = Bukkit.createInventory(null, 27, "§fConfiguration§7 ->§6 Roles");
-		return inv;
+        return Bukkit.createInventory(null, 27, "§fConfiguration§7 ->§6 Roles");
 	}
 	public static Inventory getSelectInventoryGUI() {
-		Inventory inv = Bukkit.createInventory(null, 54, "§fConfiguration§7 ->§6 Inventaire");
-		return inv;
+        return Bukkit.createInventory(null, 54, "§fConfiguration§7 ->§6 Inventaire");
 	}
 	
 	public static Inventory getEventSelectGUI() {
