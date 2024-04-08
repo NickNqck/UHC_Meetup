@@ -5,8 +5,6 @@ import fr.nicknqck.HubListener;
 import fr.nicknqck.blocks.BlockManager;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.ItemBuilder;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -24,9 +22,12 @@ public class CutClean extends BasicScenarios {
 	/*Le reste est dans 
 	 * fr.nicknqck.mtpds.blocks.BlockManager.CutClean
 	 */
-	@Setter
-	@Getter
 	private static boolean CutClean = false;
+
+	public static boolean isCutClean() {
+		return CutClean;
+	}
+
 	@Override
 	public String getName() {
 		return "§r§fCutClean";
@@ -44,11 +45,11 @@ public class CutClean extends BasicScenarios {
 			HubListener.getInstance().updateCutCleanInventory(player);
 			player.updateInventory();
 		} else {
-			if (isCutClean()) {
-				setCutClean(false);
+			if (CutClean) {
+				CutClean = false;
 				player.sendMessage(cutclean()+"Désactivation de CutClean");
 			} else {
-				setCutClean(true);
+				CutClean = true;
 				player.sendMessage(cutclean()+"Activation de CutClean");
 			}
 		}

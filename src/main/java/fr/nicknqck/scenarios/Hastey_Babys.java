@@ -8,9 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import static fr.nicknqck.scenarios.Hastey_Boys.isHasteyBoys;
-import static fr.nicknqck.scenarios.Hastey_Boys.setHasteyBoys;
-
 public class Hastey_Babys  extends BasicScenarios{
 
 	@Getter
@@ -35,8 +32,8 @@ public class Hastey_Babys  extends BasicScenarios{
 		} else {
 			setHasteyBabys(true);
 			player.sendMessage(HasteyBabys()+"Activation de Hastey Babys");
-			if (isHasteyBoys()) {
-				setHasteyBoys(false);
+			if (Hastey_Boys.isHasteyBoys()) {
+				Hastey_Boys.setHasteyBoys(false);
 			}
 		}
 	}

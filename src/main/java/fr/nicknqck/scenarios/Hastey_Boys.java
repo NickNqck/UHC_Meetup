@@ -11,9 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-import static fr.nicknqck.scenarios.Hastey_Babys.isHasteyBabys;
-import static fr.nicknqck.scenarios.Hastey_Babys.setHasteyBabys;
-
 public class Hastey_Boys extends BasicScenarios{
 	private static boolean HasteyBoys = false;
 	public static void setHasteyBoys(boolean hasteyboys) {
@@ -41,8 +38,8 @@ public class Hastey_Boys extends BasicScenarios{
 		} else {
 			setHasteyBoys(true);
 			player.sendMessage(hasteyboy()+ChatColor.GREEN+"Activation d'Hastey Boys");
-			if (isHasteyBabys()) {
-				setHasteyBabys(false);
+			if (Hastey_Babys.isHasteyBabys()) {
+				Hastey_Babys.setHasteyBabys(false);
 			}
 		}
 	}
