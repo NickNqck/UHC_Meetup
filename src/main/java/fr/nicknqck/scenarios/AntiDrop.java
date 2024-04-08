@@ -1,6 +1,5 @@
 package fr.nicknqck.scenarios;
 
-import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
