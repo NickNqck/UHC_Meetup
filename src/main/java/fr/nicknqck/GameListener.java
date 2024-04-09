@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -84,18 +85,17 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class GameListener implements Listener {
 
-	private GameState gameState;
+	private final GameState gameState;
 	public WorldBorder border;
-	private static GameListener instance;
+	@Getter
+	private static GameListener Instance;
 //	private BukkitScheduler gameTimer = Bukkit.getServer().getScheduler(); // Seconds
 	public GameListener(GameState gameState) {
 		this.gameState = gameState;
-		instance = this;
+		Instance = this;
 		border = Main.getInstance().gameWorld.getWorldBorder();
 		border.setSize(GameState.getInstance().maxBorderSize);
-		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-			@Override
-			public void run() {
+		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
 			UpdateGame();
 			for (Events e : Events.values()) {
 				e.getEvent().onSecond();
@@ -106,10 +106,10 @@ public class GameListener implements Listener {
 			InfectItem.getInstance().onSecond();
 			BijuListener.getInstance().runnableTask(gameState);
 			TitanListener.getInstance().onSecond();
-			}
+
 		}, 20, 20);
 	}
-	public static GameListener getInstance() {return instance;}
+	//public static GameListener getInstance() {return Instance;}
 	private boolean infectedgiveforce = false;
 	private void UpdateGame() {
 		switch(gameState.getServerState()) {
@@ -342,6 +342,7 @@ public class GameListener implements Listener {
 			if (gameState.hokage != null) {
 				gameState.hokage.stop();
 			}
+			Main.getInstance().getGamePlayer().getGamePlayersRoles().clear();
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().getList().clear();
 			}

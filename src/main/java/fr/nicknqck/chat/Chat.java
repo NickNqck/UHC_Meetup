@@ -1,13 +1,15 @@
 package fr.nicknqck.chat;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,8 +19,7 @@ import fr.nicknqck.utils.CC;
 
 public class Chat implements Listener{
 	private static ChatColor opcolor = ChatColor.RED;
-	private static ChatColor color = null;
-	private GameState gameState;
+    private final GameState gameState;
 	
 	public Chat(GameState gameState) {
 		this.gameState = gameState;
@@ -52,8 +53,8 @@ public class Chat implements Listener{
 				e.setFormat(CC.translate(debut+opcolor+"§lHost§ "+opcolor+p.getName()+": §r"+msg));
 			}
 			if (!p.isOp() && !gameState.getHost().contains(p)) {
-				color = ChatColor.WHITE;
-				e.setFormat(debut+color+p.getName()+": §r"+msg);
+                ChatColor color = ChatColor.WHITE;
+				e.setFormat(debut+ color +p.getName()+": §r"+msg);
 			}
 		}else {
 			if (gameState.getInSpecPlayers().contains(p)) {
@@ -61,8 +62,7 @@ public class Chat implements Listener{
 					spec.sendMessage("§7(§lSPEC§7) "+p.getDisplayName()+"§7:§f "+CC.translate(msg));
 				}
 				e.setCancelled(true);
-				return;
-			}else {
+            }else {
 				for (Player ig : gameState.getInGamePlayers()) {
 					if (!gameState.hasRoleNull(ig)) {
 						if (gameState.getInGamePlayers().contains(p)) {
@@ -76,7 +76,13 @@ public class Chat implements Listener{
 			}
 		}
 	}
-	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	private void onPlayerChat(AsyncPlayerChatEvent event) {
+		String message = event.getMessage();
+		// Remplacer les caractères '&' par '§' dans le message du chat
+		message = message.replace("&", "§");
+		event.setMessage(message);
+	}
 	public static ChatColor getopColor() {return opcolor;}
 	public static void setopColor(ChatColor c) {opcolor = c;}
 	
@@ -84,7 +90,7 @@ public class Chat implements Listener{
 		ItemStack stack = new ItemStack(Material.FEATHER, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(getopColor()+"Une phrase au hasard");
-		meta.setLore(Arrays.asList("Clique pour changer la couleur des gens qui sont op sur le serveur"));
+		meta.setLore(Collections.singletonList("Clique pour changer la couleur des gens qui sont op sur le serveur"));
 		stack.setItemMeta(meta);
 		return stack;
 	}

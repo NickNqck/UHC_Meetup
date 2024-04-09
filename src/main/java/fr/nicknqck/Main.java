@@ -25,7 +25,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -267,13 +266,7 @@ public class Main extends JavaPlugin implements Listener{
 			}
 		}
 	}
-	@EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
-        String message = event.getMessage();
-        // Remplacer les caractères '&' par '§' dans le message du chat
-        message = message.replace("&", "§");
-        event.setMessage(message);
-    }
+
 	@EventHandler
 	public void onChunkUnload(ChunkUnloadEvent e) {
 		if (keepChunk.contains(e.getChunk()))

@@ -807,6 +807,7 @@ public class GameState{
 			System.out.println(role.getTeam().name()+" for role "+role.type.name());
 		}
 		addInPlayerRoles(player, role);
+		Main.getInstance().getGamePlayer().putGamePlayer(player.getUniqueId(), role);
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
 			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon && !getPlayerRoles().get(player).type.equals(Roles.Kyogai)) {
 				canBeAssassin.add(player);
