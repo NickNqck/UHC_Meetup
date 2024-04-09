@@ -41,4 +41,4 @@ commands:
   whitelist:
     description: Custom of /whitelist commands
   mc:
-    description: La daronne a mega
+    description: Fait parti des roles de UHC Minecraft
