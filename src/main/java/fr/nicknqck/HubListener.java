@@ -2423,7 +2423,7 @@ public class HubListener implements Listener {
 						inv.setItem(i, sc.getScenarios().getAffichedItem());
 						i++;
 					}
-					inv.setItem(i, GUIItems.getSelectBackMenu());
+					inv.setItem(26, GUIItems.getSelectBackMenu());
 				}
 			}
 		}

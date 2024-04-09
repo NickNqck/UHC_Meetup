@@ -319,7 +319,7 @@ public class GameListener implements Listener {
 		}
 	}
 	@SuppressWarnings("deprecation")
-	public final static void EndGame(final GameState gameState, final TeamList team) {
+	public static void EndGame(final GameState gameState, final TeamList team) {
 		gameState.setServerState(ServerStates.GameEnded);
 		Bukkit.getPluginManager().callEvent(new EndGameEvent(gameState, team));
 		gameState.setJubiCrafter(null);

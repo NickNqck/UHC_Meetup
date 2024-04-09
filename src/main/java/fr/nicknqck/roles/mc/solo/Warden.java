@@ -3,14 +3,20 @@ package fr.nicknqck.roles.mc.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 public class Warden extends RoleBase {
+
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).setName("").toItemStack();
+
     public Warden(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
         giveHealedHeartatInt(5);
+        addBonusResi(10.0);
     }
 
     @Override
@@ -22,7 +28,9 @@ public class Warden extends RoleBase {
                 "",
                 AllDesc.effet,
                 "",
-                AllDesc.point+"§cForce I§f,§6 Résistance au feu I§f et§c 5"+AllDesc.coeur+" permanenet supplémentaire",
+                AllDesc.point+"§cForce I§f,§6 Résistance au feu I§f et§c 5"+AllDesc.coeur+" permanent supplémentaire",
+                "",
+                AllDesc.items,
                 "",
 
         };
@@ -36,7 +44,9 @@ public class Warden extends RoleBase {
 
     @Override
     public ItemStack[] getItems() {
-        return new ItemStack[0];
+        return new ItemStack[]{
+                sword
+        };
     }
 
     @Override

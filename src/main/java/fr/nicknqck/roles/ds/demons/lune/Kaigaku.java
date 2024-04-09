@@ -19,7 +19,6 @@ import fr.nicknqck.utils.RandomUtils;
 public class Kaigaku extends RoleBase{
 
 	private boolean killzen = false;
-	private boolean killjig = false;
 	private int cooldownquatriememouvement = 0;
 	private int cooldowntroisiememouvement = 0;
 	public Kaigaku(Player player, Roles roles, GameState gameState) {
@@ -95,10 +94,6 @@ public class Kaigaku extends RoleBase{
 		if (gameState.nightTime) {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
 		}
-		if (killjig) {
-			owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
-		}
-		super.Update(gameState);
 	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
@@ -162,7 +157,7 @@ public class Kaigaku extends RoleBase{
 								  if (!gameState.JigoroV2Pacte2) {
 									  owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*(60*3), 0, false, false));
 								  }
-							    	owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + p.getName() + "");
+							    	owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + p.getName());
 							    	p.sendMessage(ChatColor.GREEN+"Vous avez été touchez le Troisième mouvement du soufle de la foudre de:"+ChatColor.GOLD+" Kaigaku");
 							        gameState.spawnLightningBolt(p.getWorld(), p.getLocation());
 							    }	
