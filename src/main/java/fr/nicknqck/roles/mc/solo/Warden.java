@@ -1,17 +1,20 @@
 package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class Warden extends RoleBase {
@@ -21,6 +24,7 @@ public class Warden extends RoleBase {
     private int cdLaser = 0;
     private final ItemStack darkness = new ItemBuilder(Material.NETHER_STAR).setUnbreakable(true).setName("§9Darkness").toItemStack();
     private int cdDarkness = 0;
+    private int cdCible = 0;
     public Warden(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
         addBonusResi(10.0);
@@ -31,6 +35,7 @@ public class Warden extends RoleBase {
     public void GiveItems() {
         super.GiveItems();
         super.giveItem(owner, false, getItems());
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> giveHealedHeartatInt(owner, 5), 20);
     }
 
     @Override
@@ -72,6 +77,29 @@ public class Warden extends RoleBase {
             for (Player target : particleLoc.getWorld().getPlayers()) {
                 if (target != shooter && target.getLocation().distance(particleLoc) < 1.0) {
                     damage(target, 6.0, 1, owner, true);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onMcCommand(String[] args) {
+        if (args.length == 2){
+            if (args[0].equalsIgnoreCase("cible")){
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null){
+                    if (cdCible <= 0){
+                        cdCible = 60*10;
+                        new BukkitRunnable() {
+
+                            @Override
+                            public void run() {
+
+                            }
+                        }.runTaskTimer(Main.getInstance(), 0, 20);
+                    } else {
+                        sendCooldown(owner, cdCible);
+                    }
                 }
             }
         }
