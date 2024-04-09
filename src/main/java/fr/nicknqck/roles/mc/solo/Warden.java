@@ -2,20 +2,26 @@ package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCPlayerKill;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import java.util.UUID;
 
 public class Warden extends RoleBase {
 
@@ -89,17 +95,17 @@ public class Warden extends RoleBase {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null){
                     if (cdCible <= 0){
-                        cdCible = 60*10;
-                        new BukkitRunnable() {
-
-                            @Override
-                            public void run() {
-
-                            }
-                        }.runTaskTimer(Main.getInstance(), 0, 20);
+                        if (getBonusResi() >= 5.0){
+                            cdCible = 60*10;
+                            new WardenRunnable(this, target).runTaskTimer(Main.getInstance(), 0, 20);
+                        } else {
+                            owner.sendMessage("§7Vous n'avez plus asser de§c pourcentage§7 pour cibler un joueur.");
+                        }
                     } else {
                         sendCooldown(owner, cdCible);
                     }
+                } else {
+                    owner.sendMessage("§b"+args[1]+"§c n'est pas connecter !");
                 }
             }
         }
@@ -165,5 +171,45 @@ public class Warden extends RoleBase {
     public void resetCooldown() {
         cdLaser = 0;
         cdDarkness = 0;
+        cdCible = 0;
+    }
+    private static class WardenRunnable extends BukkitRunnable implements Listener {
+    private final Warden warden;
+    private final UUID target;
+        public WardenRunnable(Warden warden, Player p){
+            this.warden = warden;
+            Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
+            this.target = p.getUniqueId();
+        }
+        private int timeRemaining = 60*5;
+        @Override
+        public void run() {
+            if (warden.owner == null || !warden.gameState.getServerState().equals(GameState.ServerStates.InGame)){
+                cancel();
+                return;
+            }
+            if (timeRemaining <= 0){
+                warden.owner.sendMessage("§7La traque est maintenant terminer.");
+                warden.setBonusForce(warden.getBonusResi()-5.0);
+                cancel();
+                return;
+            }
+            warden.givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+            warden.sendCustomActionBar(warden.owner, "§bTemp de traque restant:§c "+ StringUtils.secondTowardsConventional(timeRemaining));
+            timeRemaining--;
+        }
+        @EventHandler
+        private void onKill(UHCPlayerKill e){
+            if (Main.getInstance().getGamePlayer().getGamePlayersRoles().containsKey(e.getKiller().getUniqueId())){
+                if (Main.getInstance().getGamePlayer().getRole(e.getKiller().getUniqueId()).getClass().equals(warden.getClass())){
+                    if (e.getVictim().getUniqueId().equals(target) && timeRemaining > 0){
+                        if (warden.getBonusResi() < 30.0){
+                            warden.addBonusResi(5.0);
+                        }
+                        e.getKiller().sendMessage("§7Vous avez réussi a tué§c "+e.getVictim().getDisplayName()+"§7 qui était votre cible vous obtenez donc§c 5%§7 de§9 Résistance");
+                    }
+                }
+            }
+        }
     }
 }
