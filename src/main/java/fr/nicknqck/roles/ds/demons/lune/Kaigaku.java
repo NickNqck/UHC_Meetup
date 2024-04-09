@@ -173,18 +173,9 @@ public class Kaigaku extends RoleBase{
 				owner.sendMessage(ChatColor.RED+"Votre pouvoir est désactivé.");
 				return false;
 			}
-			if (cooldownquatriememouvement <= 0) {				
+			if (cooldownquatriememouvement <= 0) {
 				double min = 25;
-				Player target = null;
-				for (Player p : gameState.getInGamePlayers()) {
-					if (owner.canSee(p) && p != owner) {
-						double dist = Math.abs(p.getLocation().distance(owner.getLocation()));
-						if (dist < min) {
-							target = p;
-							min = dist;
-						}
-					}
-				}
+				Player target = getTargetPlayer(owner, min);
 					if (target != null) {
 						if (owner.canSee(target)) {
 							Location loc = target.getLocation();
@@ -203,8 +194,12 @@ public class Kaigaku extends RoleBase{
 							owner.sendMessage(ChatColor.GREEN+"Exécution du"+ChatColor.GOLD+" Quatrième mouvement du soufle de la foudre");
 							cooldownquatriememouvement = 60*3;
 							target.sendMessage(ChatColor.WHITE+"Vous avez été touché par un soufle de la foudre");
+							owner.teleport(loc);
+
 						}	
-			} 
+					} else {
+						owner.sendMessage("§cIl faut viser un joueur !");
+					}
 				} else {
 					sendCooldown(owner, cooldownquatriememouvement);
 				}
@@ -214,7 +209,7 @@ public class Kaigaku extends RoleBase{
 	@Override
 	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {
 		if (killzen) {
-			if (item.isSimilar(Items.getdiamondsword())) {
+			if (item.getType().name().contains("SWORD")) {
 				if (RandomUtils.getOwnRandomProbability(10)) {
 					for(Player p : gameState.getInGamePlayers()) {
 						if (p != owner && p == victim) {

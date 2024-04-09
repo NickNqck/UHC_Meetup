@@ -18,6 +18,7 @@ import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.solos.*;
+import fr.nicknqck.roles.mc.solo.Warden;
 import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.orochimaru.*;
@@ -178,14 +179,15 @@ public class GameState{
 		Zabuza(TeamList.Zabuza_et_Haku, "ns", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bZabuza").toItemStack(), "§aYukan"),
 		Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan"),
 		//KumoGakure
-		Ginkaku(TeamList.Kumogakure, "ns", 0, new ItemBuilder(Material.LADDER).setName("§6Ginkaku").toItemStack(), "§bByC3RV0L3NT")
+		Ginkaku(TeamList.Kumogakure, "ns", 0, new ItemBuilder(Material.LADDER).setName("§6Ginkaku").toItemStack(), "§bByC3RV0L3NT"),
 
 		/*//OverWorld
         Poulet(TeamList.Overworld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack()),
         Vache(TeamList.Overworld, "mc", 1, new ItemBuilder(Material.MILK_BUCKET).setName("§aVache").toItemStack()),
         Zombie(TeamList.Overworld, "mc", 2, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack()),
-        Squelette(TeamList.Overworld, "mc", 3, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack())*/;
-		
+        Squelette(TeamList.Overworld, "mc", 3, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack())*/
+		//Solo mc
+		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§9Warden").toItemStack(), "§bNickNqck");
 		private final TeamList team;
 		private final String mdj;
 		private final int nmb;
@@ -795,9 +797,12 @@ public class GameState{
 		case Ginkaku:
 			role = new Ginkaku(player, roleType, this);
 			break;
+		case Warden:
+			role = new Warden(player, roleType, this);
+			break;
 		}
 		if (role == null) return null;
-		if(getInSpecPlayers().contains(player)) getInSpecPlayers().remove(player);
+       getInSpecPlayers().remove(player);
 		if (role.type != Roles.Slayer && role.type != Roles.Kyogai) {
 			if (!FFA.getFFA()) {
 				role.setTeam(roleType.getTeam());

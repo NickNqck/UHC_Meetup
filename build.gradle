@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'fr.nicknqck'
@@ -23,7 +23,7 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
-  //  implementation 'fr.mrmicky:FastParticles:2.0.0'
+    implementation 'fr.mrmicky:FastParticles:2.0.0'
   ///  implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.11.3'
     compileOnly files('T:\\Bureau\\Dev\\Serv\\serveur de test\\spigot.jar')
     //  implementation files('D:\\Directorty\\Nakime Fiesta\\libs\\bukkitapi-1.0.jar')
