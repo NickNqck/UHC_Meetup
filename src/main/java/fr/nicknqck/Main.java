@@ -65,7 +65,6 @@ import fr.nicknqck.pregen.WorldGenCaves;
 import fr.nicknqck.roles.aot.titans.Bestial;
 import fr.nicknqck.roles.aot.titans.TitanListener;
 import fr.nicknqck.roles.ds.Lame;
-import fr.nicknqck.scenarios.BetaZombie;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.NMSPacket;
@@ -172,7 +171,6 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new Lame(), this);
 		getServer().getPluginManager().registerEvents(new Arctridi(gameState), this);
 		getServer().getPluginManager().registerEvents(new Whitelist(gameState), this);
-		getServer().getPluginManager().registerEvents(new BetaZombie(), this);
 		getServer().getPluginManager().registerEvents(new BijuListener(), this);
 		getServer().getPluginManager().registerEvents(new TitanListener(), this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion

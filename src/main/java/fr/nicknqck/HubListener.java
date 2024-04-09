@@ -2423,12 +2423,7 @@ public class HubListener implements Listener {
 						inv.setItem(i, sc.getScenarios().getAffichedItem());
 						i++;
 					}
-					if (DiamondLimit.isLimit()) {
-						inv.setItem(7, DiamondLimit.ChangeDiamond());
-					} else {
-						inv.setItem(7, GUIItems.getx());
-					}
-					inv.setItem(8, GUIItems.getSelectBackMenu());
+					inv.setItem(i, GUIItems.getSelectBackMenu());
 				}
 			}
 		}

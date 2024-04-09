@@ -13,7 +13,8 @@ public enum Scenarios {
     Drop(new AntiDrop()),
     CutClean(new CutClean()),
     BowSwap(new BowSwap()),
-    DiamondLimit(new DiamondLimit());
+    DiamondLimit(new DiamondLimit()),
+    BetaZombie(new BetaZombie());
 
     private final BasicScenarios scenarios;
     Scenarios(BasicScenarios sc){

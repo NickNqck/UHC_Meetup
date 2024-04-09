@@ -46,18 +46,24 @@ public class DiamondLimit extends BasicScenarios {
 
 	@Override
 	public ItemStack getAffichedItem() {
-		return new ItemBuilder(Material.DIAMOND_BLOCK).setLore("§fLa "+getName()+" est actuellement: "+(alimit ? "§aActivé" : "§cDésactivé")).toItemStack();
+		return new ItemBuilder(Material.DIAMOND_BLOCK).setName(getName()).setLore("§fLa "+getName()+" est actuellement: "+(alimit ? "§aActivé" : "§cDésactivé"),"§r§fLe nombre maximal de diamant minable est:§b"+getmaxdiams()).toItemStack();
 	}
 
 	@Override
 	public void onClick(Player player) {
-		if (isClickGauche()){
+		if (isClickDroit()){
 			DiamondLimit.setLimit(false);
 			player.sendMessage(DiamondLimit.DM()+"Désactivation de la Diamond Limite");
 		}
-		if (isClickDroit()){
+		if (isClickGauche()){
 			DiamondLimit.setLimit(true);
 			player.sendMessage(DiamondLimit.DM()+"Activation de la Diamond Limite");
+		}
+		if (isShiftClick() && maxdiams < 64){
+			maxdiams++;
+		}
+		if (isDropClick() && maxdiams > 0){
+			maxdiams--;
 		}
 	}
 	 public static ItemStack ChangeDiamond() {
