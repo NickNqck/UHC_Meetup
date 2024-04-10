@@ -140,7 +140,6 @@ public class GameListener implements Listener {
 				if (gameState.getLuneSupPlayers().size() != 0)gameState.getLuneSupPlayers().clear();
 				if (gameState.getPillier().size() != 0)gameState.getPillier().clear();
 				if (gameState.getInObiPlayers().size() != 0)gameState.getInObiPlayers().clear();
-				if (gameState.getInDiscPlayers().size() != 0)gameState.getInDiscPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p))gameState.addInLobbyPlayers(p);
 			}
 			break;

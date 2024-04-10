@@ -307,17 +307,6 @@ public class Pourfendeur extends RoleBase {
 		}
 		super.PlayerKilled(killer, victim, gameState);
 	}
-	@Override
-	public int UpdateScoreboard(Objective objective, int i) {
-    	if (form != null) {
-    		objective.getScore("D.S.C: "+ChatColor.GOLD+form.name()).setScore(i);
-    	} else {
-    		objective.getScore("Veuiller Choisir un Soufle").setScore(i);
-    	}
-    	objective.getScore("Nombre de Soufle Maitriser: "+ChatColor.GOLD+ nombredesoufle).setScore(i-1);;
-    	objective.getScore("Kill en Réserve: "+ChatColor.GOLD+ kill).setScore(i-2);
-		return super.UpdateScoreboard(objective, i-2);
-    }
 
 	@Override
 	public ItemStack[] getItems() {

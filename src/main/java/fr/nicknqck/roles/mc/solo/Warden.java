@@ -13,6 +13,7 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,11 +22,13 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Warden extends RoleBase {
 
-    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).toItemStack();
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("Item non droppable").toItemStack();
     private final ItemStack laser = new ItemBuilder(Material.NETHER_STAR).setUnbreakable(true).setName("§bLaser").toItemStack();
     private int cdLaser = 0;
     private final ItemStack darkness = new ItemBuilder(Material.NETHER_STAR).setUnbreakable(true).setName("§9Darkness").toItemStack();
@@ -75,14 +78,17 @@ public class Warden extends RoleBase {
 
         double range = 10;
         double step = 0.5;
-
+        List<UUID> damaged = new ArrayList<>();
         for (double i = 0; i < range; i += step) {
             Location particleLoc = shooterLoc.clone().add(direction.clone().multiply(i));
             MathUtil.sendParticle(EnumParticle.REDSTONE, particleLoc);
 
             for (Player target : particleLoc.getWorld().getPlayers()) {
                 if (target != shooter && target.getLocation().distance(particleLoc) < 1.0) {
-                    damage(target, 6.0, 1, owner, true);
+                    if (!damaged.contains(target.getUniqueId())){
+                        damage(target, 6.0, 1, owner, true);
+                        damaged.add(target.getUniqueId());
+                    }
                 }
             }
         }
@@ -176,12 +182,13 @@ public class Warden extends RoleBase {
     private static class WardenRunnable extends BukkitRunnable implements Listener {
     private final Warden warden;
     private final UUID target;
+    private boolean cancel = false;
+        private int timeRemaining = 60*5;
         public WardenRunnable(Warden warden, Player p){
             this.warden = warden;
             Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
             this.target = p.getUniqueId();
         }
-        private int timeRemaining = 60*5;
         @Override
         public void run() {
             if (warden.owner == null || !warden.gameState.getServerState().equals(GameState.ServerStates.InGame)){
@@ -193,6 +200,9 @@ public class Warden extends RoleBase {
                 warden.setBonusForce(warden.getBonusResi()-5.0);
                 cancel();
                 return;
+            }
+            if (cancel){
+                cancel();
             }
             warden.givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
             warden.sendCustomActionBar(warden.owner, "§bTemp de traque restant:§c "+ StringUtils.secondTowardsConventional(timeRemaining));
@@ -207,6 +217,7 @@ public class Warden extends RoleBase {
                             warden.addBonusResi(5.0);
                         }
                         e.getKiller().sendMessage("§7Vous avez réussi a tué§c "+e.getVictim().getDisplayName()+"§7 qui était votre cible vous obtenez donc§c 5%§7 de§9 Résistance");
+                        cancel = true;
                     }
                 }
             }

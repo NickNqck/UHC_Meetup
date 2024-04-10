@@ -40,9 +40,6 @@ public class JoinEvents implements Listener{
 		switch(gameState.getServerState()) {
 		case InLobby:
 			gameState.addInLobbyPlayers(player);
-			if (gameState.getInDiscPlayers().size() >= 1) {
-				gameState.delInDiscPlayers(player);
-			}
 			player.setMaxHealth(20.0);
 			player.setGameMode(GameMode.ADVENTURE);
 			ItemsManager.GiveHubItems(player);
@@ -114,7 +111,6 @@ public class JoinEvents implements Listener{
 		// Update Players
 		for (Player p : (ArrayList<Player>) gameState.getInGamePlayers().clone()) {
 			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-					gameState.getInDiscPlayers().remove(p);
 				gameState.getInGamePlayers().remove(p);
 				gameState.getInGamePlayers().add(player);
 				System.out.println("game Player: "+p);
@@ -122,7 +118,6 @@ public class JoinEvents implements Listener{
 		}
 		for (Player p : (ArrayList<Player>) gameState.getInLobbyPlayers().clone()) {
 			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-					gameState.getInDiscPlayers().remove(p);
 				gameState.getInLobbyPlayers().remove(p);
 				gameState.getInLobbyPlayers().add(player);
 				System.out.println("lobby Player: "+p);
@@ -130,17 +125,9 @@ public class JoinEvents implements Listener{
 		}
 		for (Player p : (ArrayList<Player>) gameState.getInSpecPlayers().clone()) {
 			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-					gameState.getInDiscPlayers().remove(p);
 				gameState.getInSpecPlayers().remove(p);
 				gameState.getInSpecPlayers().add(player);
 				System.out.println("spec Player: "+p);
-			}
-		}
-		for (Player p : (ArrayList<Player>) gameState.getInDiscPlayers().clone()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				gameState.getInDiscPlayers().remove(p);
-				gameState.getInSpecPlayers().add(player);
-				System.out.println("disc Player: "+p);
 			}
 		}
 		for (Player p : ((HashMap<Player, HashMap<Player, RoleBase>>)gameState.getPlayerKills().clone()).keySet()) {

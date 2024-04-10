@@ -317,7 +317,6 @@ public abstract class RoleBase {
 	public void OpenFormInventory(GameState gameState) {}
 	public void FormChoosen(ItemStack item, GameState gameState) {}
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
-	public int UpdateScoreboard(Objective objective, int i) {return (i);}
 	// Fonction appelée a la fin d'une partie, utiliser pour supprimer des variables ou données spécifiques.
 	public void endRole() {}
 	

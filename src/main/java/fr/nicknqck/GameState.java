@@ -1,6 +1,5 @@
 package fr.nicknqck;
 
-import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
@@ -26,9 +25,10 @@ import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
-import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
+import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.scenarios.impl.FFA;
@@ -37,7 +37,6 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -47,7 +46,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -184,7 +182,7 @@ public class GameState{
 		Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan"),
 		//KumoGakure
 		Ginkaku(TeamList.Kumogakure, "ns", 0, new ItemBuilder(Material.LADDER).setName("§6Ginkaku").toItemStack(), "§bByC3RV0L3NT"),
-
+		Kinkaku(TeamList.Kumogakure, "ns", 1, new ItemBuilder(Material.NETHER_STAR).setName("§6Kinkaku").toItemStack(), "§bByC3RV0L3NT"),
 		/*//OverWorld
         Poulet(TeamList.Overworld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack()),
         Vache(TeamList.Overworld, "mc", 1, new ItemBuilder(Material.MILK_BUCKET).setName("§aVache").toItemStack()),
@@ -292,7 +290,6 @@ public class GameState{
 	private ArrayList<Player> inLobbyPlayers = new ArrayList<Player>();
 	private ArrayList<Player> inGamePlayers = new ArrayList<Player>();
 	private ArrayList<Player> inSpecPlayers = new ArrayList<Player>();
-	private ArrayList<Player> inDiscPlayers = new ArrayList<Player>();
 	
 	public ArrayList<Player> Charmed = new ArrayList<Player>();
 	public ArrayList<Player> LuneSuperieur = new ArrayList<Player>();
@@ -300,6 +297,7 @@ public class GameState{
 	private HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<Player, HashMap<Player, RoleBase>>();
 	public List<Player> igPlayers = new ArrayList<>();
 	int inGameTime = 0;
+
 	public boolean nightTime = false;
 	boolean prevNightTime = true;
 	boolean pvp = false;
@@ -393,14 +391,6 @@ public class GameState{
 	public void addInSpecPlayers(Player player) {inSpecPlayers.add(player);}
 
 	public void delInSpecPlayers(Player player) {inSpecPlayers.remove(player);}
-
-	public ArrayList<Player> getInDiscPlayers() {return inDiscPlayers;}
-
-	public void setInDiscPlayers(ArrayList<Player> inDiscPlayer) {inDiscPlayer = inDiscPlayers;}
-
-	public void addInDiscPlayers(Player player) {inDiscPlayers.add(player);}
-
-	public void delInDiscPlayers(Player player) {inDiscPlayers.remove(player);}
 
 	public HashMap<Player, RoleBase> getPlayerRoles() {return playerRoles;}
 	public void setPlayerRoles(HashMap<Player, RoleBase> playerRole) {playerRoles = playerRole;}
@@ -803,6 +793,9 @@ public class GameState{
 			break;
 		case Warden:
 			role = new Warden(player, roleType, this);
+			break;
+		case Kinkaku:
+			role = new Kinkaku(player, roleType, this);
 			break;
 		}
 		if (role == null) return null;

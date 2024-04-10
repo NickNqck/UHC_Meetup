@@ -6,6 +6,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.chat.Chat;
 import fr.nicknqck.events.Events;
+import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
@@ -50,6 +51,7 @@ public class HubListener implements Listener {
 			System.out.println("Impossible de start la partie");
 			return;
 		}
+		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
 		gameState.world = Main.getInstance().gameWorld;
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		gameState.setInLobbyPlayers(new ArrayList<>());

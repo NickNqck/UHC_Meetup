@@ -1,5 +1,8 @@
 package fr.nicknqck;
 
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.ns.Chakras;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,15 +11,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.roles.aot.titans.Titans;
-import fr.nicknqck.roles.ns.Chakras;
-
 public class Patch implements Listener{
-	GameState gameState;
+	private final GameState gameState;
 	public Patch(GameState gameState) {
 		this.gameState = gameState;
 	}
+
+
 	@EventHandler(priority = EventPriority.HIGHEST)
     private void onPatchPotion(EntityDamageByEntityEvent event) {
         if (gameState.getServerState() != ServerStates.InGame)return;
@@ -57,10 +58,10 @@ public class Patch implements Listener{
             event.setCancelled(true);
         }
         	if (victim.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                ApplyResi(event, gameState.getPlayerRoles().get(victim).getAllResi(), victim, true);
+                ApplyResi(event, gameState.getPlayerRoles().get(victim).getAllResi(), true);
             } else {
             	if (gameState.getPlayerRoles().containsKey(victim)) {
-            		ApplyResi(event, gameState.getPlayerRoles().get(victim).getBonusResi(), victim, false);
+            		ApplyResi(event, gameState.getPlayerRoles().get(victim).getBonusResi(), false);
             	}
             }
         if (event.getDamage() <= 0) event.setDamage(0.5);
@@ -80,19 +81,19 @@ public class Patch implements Listener{
 			System.out.println("Force Damage to "+event.getDamage());
 		} else {
 			if (fPercent > 0){
-				double rValue = (double)(fPercent/100)+1;
+				double rValue = (fPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
 				System.out.println("Force Damage to "+event.getDamage());
 			}
 		}
 	}
-	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, Player victim, boolean effect) {
+	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, boolean effect) {
 		if (effect) {
 			event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f);
 			System.out.println("Resi Damage to "+event.getDamage());
 		} else {
 			if (reiPercent > 0){
-				double rValue = (double)(reiPercent/100)+1;
+				double rValue = (reiPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
 				System.out.println("Bonus Resi Damage to "+event.getDamage());
 			}

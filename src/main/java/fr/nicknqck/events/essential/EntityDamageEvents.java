@@ -1,5 +1,12 @@
 package fr.nicknqck.events.essential;
 
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.scenarios.impl.AntiPvP;
+import fr.nicknqck.utils.AttackUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -10,19 +17,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.scenarios.impl.AntiPvP;
-import fr.nicknqck.utils.AttackUtils;
-
 public class EntityDamageEvents implements Listener{
 
 	
 	private final GameState gameState = GameState.getInstance();
-	
 	@EventHandler(priority = EventPriority.NORMAL)
 	private void OnDamagedEntity(EntityDamageEvent event) {
 		if (AttackUtils.CantReceveAttack.contains(event.getEntity().getUniqueId())) {

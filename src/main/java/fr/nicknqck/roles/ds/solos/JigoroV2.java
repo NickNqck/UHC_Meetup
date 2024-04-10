@@ -358,9 +358,4 @@ GameState gameState;
 		}
 		super.PlayerKilled(killer, victim, gameState);
 	}
-	@Override
-	public int UpdateScoreboard(Objective objective, int i) {
-		objective.getScore("Pacte:§6 "+pacte.name()).setScore(i);
-		return super.UpdateScoreboard(objective, i);
-	}
 }

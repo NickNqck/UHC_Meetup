@@ -205,10 +205,4 @@ public class Daki extends RoleBase{
 	private String a() {
 		return diegyutaro ? "Mort" : "Vivant"; 
 	}
-	@Override
-	public int UpdateScoreboard(Objective objective, int i) {
-    	objective.getScore("Gyutaro " + this.a()).setScore(i);
-		return super.UpdateScoreboard(objective, i);
-	}
-
 }

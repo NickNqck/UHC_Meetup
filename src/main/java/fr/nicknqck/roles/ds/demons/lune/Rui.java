@@ -268,11 +268,4 @@ public class Rui extends RoleBase {
 		owner.updateInventory();
 		super.FormChoosen(item, gameState);
 	}
-
-	@Override
-	public int UpdateScoreboard(Objective objective, int i) {
-    	objective.getScore(ChatColor.RED+"Fil Utilisée: "+ChatColor.GOLD+filuse+ChatColor.RED+"/"+ChatColor.GOLD+"2").setScore(i);
-		return super.UpdateScoreboard(objective, i);
-	}
-	
 }
