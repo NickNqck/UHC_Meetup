@@ -1,5 +1,6 @@
 package fr.nicknqck;
 
+import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
@@ -34,7 +35,9 @@ import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -44,6 +47,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -1084,255 +1088,61 @@ public class GameState{
 	public int nmbArrow = 24;
 	public boolean LaveTitans = true;
 	public String getRolesList() {
-		List<Roles> demon = new ArrayList<>();
-		List<Roles> slayer = new ArrayList<>();
-		List<Roles> solo = new ArrayList<>();
-		List<Roles> Mahr = new ArrayList<>();
-		List<Roles> Soldat = new ArrayList<>();
-		List<Roles> Titan = new ArrayList<>();
-		List<Roles> Alliance = new ArrayList<>();
-		List<Roles> Orochimaru = new ArrayList<>();
-		List<Roles> Jubi = new ArrayList<>();
-		List<Roles> Akatsuki = new ArrayList<>();
-		List<Roles> Brume = new ArrayList<>();
-		List<Roles> Shinobi = new ArrayList<>();
-		String tr = "";
-		tr+=AllDesc.bar;
+		HashMap<TeamList, List<Roles>> hashMap = new LinkedHashMap<>();
+		StringBuilder tr = new StringBuilder();
+		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
 			for (RoleBase e : getPlayerRoles().values()) {
 				if (e.type != null && e.getOldTeam() != null) {
-					if (!getInSpecPlayers().contains(e.owner) && getInGamePlayers().contains(e.owner) && e.owner.isOnline()) {
-						if (e.getOldTeam() == TeamList.Demon){
-							demon.add(e.type);
-						}							
-						if (e.getOldTeam() == TeamList.Slayer) {
-							slayer.add(e.type);
+					if (e.owner != null && !getInSpecPlayers().contains(e.owner) && getInGamePlayers().contains(e.owner)) {
+						if (hashMap.get(e.getOldTeam()) == null){
+							List<Roles> r = new ArrayList<>();
+							hashMap.put(e.getOldTeam(), r);
 						}
-						if (e.getOldTeam().equals(TeamList.Mahr)) {
-							Mahr.add(e.type);
-						}
-						if (e.getOldTeam().equals(TeamList.Soldat)) {
-							Soldat.add(e.type);
-						}
-						if (e.getOldTeam().equals(TeamList.Titan)) {
-							Titan.add(e.type);
-						}
-						if (e.getOldTeam().equals(TeamList.Alliance)) {
-							Alliance.add(e.type);
-						}
-						if (e.getOldTeam().equals(TeamList.Orochimaru)) {
-							Orochimaru.add(e.type);
-						}
-						if (e.getOldTeam() == TeamList.Jubi) {
-							Jubi.add(e.type);
-						}
-						if (e.type == Roles.JigoroV2 || e.getOldTeam() == TeamList.Solo) {
-							if (e.type != Roles.Kyogai) {
-								solo.add(e.type);
-							}
-						}
-						if (e.getOldTeam() == TeamList.Akatsuki) {
-							Akatsuki.add(e.type);
-						}
-						if (e.getOldTeam() == TeamList.Zabuza_et_Haku) {
-							Brume.add(e.type);
-						}
-						if (e.getOldTeam() == TeamList.Shinobi) {
-							Shinobi.add(e.type);
-						}
+						List<Roles> aList = hashMap.get(e.getOldTeam());
+						aList.add(e.type);
+						hashMap.remove(e.getOldTeam(), hashMap.get(e.getOldTeam()));
+						hashMap.put(e.getOldTeam(), aList);
 					}
 				}
 			}
 		} else {
-			for (Roles e : getAvailableRoles().keySet()) {
-				if (getAvailableRoles().get(e) > 0) {
-					if (e.getTeam() == TeamList.Demon){
-						demon.add(e);
-					}							
-					if (e.getTeam() == TeamList.Slayer) {
-						slayer.add(e);
-					}
-					if (e.getTeam().equals(TeamList.Mahr)) {
-						Mahr.add(e);
-					}
-					if (e.getTeam().equals(TeamList.Soldat)) {
-						Soldat.add(e);
-					}
-					if (e.getTeam().equals(TeamList.Titan)) {
-						Titan.add(e);
-					}
-					if (e.getTeam().equals(TeamList.Alliance)) {
-						Alliance.add(e);
-					}
-					if (e.getTeam().equals(TeamList.Orochimaru)) {
-						Orochimaru.add(e);
-					}
-					if (e.getTeam() == TeamList.Jubi) {
-						Jubi.add(e);
-					}
-					if (e.getTeam() == TeamList.Solo) {
-							solo.add(e);
-					}
-					if (e.getTeam() == TeamList.Akatsuki) {
-						Akatsuki.add(e);
-					}
-					if (e.getTeam() == TeamList.Zabuza_et_Haku) {
-						Brume.add(e);
-					}
-					if (e.getTeam() == TeamList.Shinobi) {
-						Shinobi.add(e);
+			if (!getAvailableRoles().isEmpty()){
+				for (Roles e : getAvailableRoles().keySet()) {
+					if (getAvailableRoles().get(e) > 0){
+						if (hashMap.get(e.getTeam()) == null){
+							List<Roles> r = new ArrayList<>();
+							hashMap.put(e.getTeam(), r);
+						}
+						List<Roles> aList = hashMap.get(e.getTeam());
+						aList.add(e);
+						hashMap.remove(e.getTeam(), hashMap.get(e.getTeam()));
+						hashMap.put(e.getTeam(), aList);
 					}
 				}
 			}
 		}
-		if (!demon.isEmpty()) {
-			tr+="\n§r("+demon.size()+")§cDémon(s): \n";
-			int i = 0;
-			for (Roles dem : demon) {
-				i++;
-				if (i != demon.size()) {
-					tr+="§c"+dem.name()+"§f, ";
-				}else {
-					tr+="§c"+dem.name()+"\n";
+		if (!hashMap.isEmpty()){
+			for (TeamList t : hashMap.keySet()){
+				int size = 0;
+				if (hashMap.get(t) != null){
+					size = hashMap.get(t).size();
 				}
-			}
-			tr+="\n";
-		}
-		if (!slayer.isEmpty()) {
-			tr+=("\n§r("+slayer.size()+")§aSlayer(s): \n");
-			int i = 0;
-			for (Roles sl : slayer) {
-				i++;
-				if (i != slayer.size()) {
-					tr+=("§a"+sl.name()+"§f, ");
-				}else {
-					tr+=("§a"+sl.name()+"\n");
+                tr.append("\n§r(").append(t.getColor()).append(size).append("§f)").append(t.getColor()).append(StringUtils.replaceUnderscoreWithSpace(t.name())).append("(s): \n");
+				int i = 0;
+				for (Roles roles : hashMap.get(t)){
+					i++;
+					if (i != hashMap.get(t).size()){
+						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("§f,");
+					} else {
+						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("\n");
+					}
 				}
 			}
 		}
-		if (!Mahr.isEmpty()) {
-			tr+=("\n§r("+Mahr.size()+")§9Mahr(s): \n");
-			int i = 0;
-			for (Roles m : Mahr) {
-				i++;
-				if (i != Mahr.size()) {
-					tr+=("§9"+m.name()+"§f, ");
-				}else {
-					tr+=("§9"+m.name()+"\n");
-				}
-			}
-		}
-		if (!Soldat.isEmpty()) {
-			tr+=("\n§r("+Soldat.size()+")§aSoldat(s): \n");
-			int i = 0;
-			for (Roles dem : Soldat) {
-				i++;
-				if (i != Soldat.size()) {
-					tr+=("§a"+dem.name()+"§f, ");
-				}else {
-					tr+=("§a"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!Titan.isEmpty()) {
-			tr+=("\n§r("+Titan.size()+")§cTitan(s): \n");
-			int i = 0;
-			for (Roles dem : Titan) {
-				i++;
-				if (i != Titan.size()) {
-					tr+=("§c"+dem.name()+"§f, ");
-				}else {
-					tr+=("§c"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!Shinobi.isEmpty()) {
-			tr+=("\n§r("+Shinobi.size()+")§aShinobi(s): \n"+" ");
-			int i = 0;
-			for (Roles dem : Shinobi) {
-				i++;
-				if (i != Shinobi.size()) {
-					tr+=("§a"+dem.name()+"§f, ");
-				}else {
-					tr+=("§a"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!Akatsuki.isEmpty()) {
-			tr+=("\n§r("+Akatsuki.size()+")§cAkatsuki(s): \n");
-			int i = 0;
-			for (Roles dem : Akatsuki) {
-				i++;
-				if (i != Akatsuki.size()) {
-					tr+=("§c"+dem.name()+"§f, ");
-				}else {
-					tr+=("§c"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!Orochimaru.isEmpty()) {
-			tr+=("\n§r("+Orochimaru.size()+")§5Orochimaru(s): \n");
-			int i = 0;
-			for (Roles dem : Orochimaru) {
-				i++;
-				if (i != Orochimaru.size()) {
-					tr+=("§5"+dem.name()+"§f, ");
-				}else {
-					tr+=("§5"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!Brume.isEmpty()) {
-			tr+=("\n§r("+Brume.size()+")§bZabuza et Haku: \n");
-			int i = 0;
-			for (Roles dem : Brume) {
-				i++;
-				if (i != Brume.size()) {
-					tr+=("§b"+dem.name()+"§f, ");
-				}else {
-					tr+=("§b"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!Jubi.isEmpty()) {
-			tr+=("\n§r("+Jubi.size()+")§dJubi(s): \n");
-			int i = 0;
-			for (Roles dem : Jubi) {
-				i++;
-				if (i != Jubi.size()) {
-					tr+=("§d"+dem.name()+"§f, ");
-				}else {
-					tr+=("§d"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!solo.isEmpty()) {
-			tr+=("\n§r("+solo.size()+")§eSolo(s): \n");
-			int i = 0;
-			for (Roles dem : solo) {
-				i++;
-				if (i != solo.size()) {
-					tr+=("§e"+dem.name()+"§f, ");
-				}else {
-					tr+=("§e"+dem.name()+"\n");
-				}
-			}
-		}
-		if (!Alliance.isEmpty()) {
-			tr+=("\n§r("+Alliance.size()+")§6Alliance(s): \n");
-			int i = 0;
-			for (Roles dem : Alliance) {
-				i++;
-				if (i != Alliance.size()) {
-					tr+=("§6"+dem.name()+"§f, ");
-				}else {
-					tr+=("§6"+dem.name()+"\n");
-				}
-			}
-		}
-		tr+="\n";
-		tr+=("\n"+AllDesc.bar);
-		return tr;
+		tr.append("\n");
+		tr.append("\n").append(AllDesc.bar);
+		return tr.toString();
 	}
 	@Setter
 	@Getter
