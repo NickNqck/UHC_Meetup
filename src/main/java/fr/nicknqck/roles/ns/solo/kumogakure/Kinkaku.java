@@ -67,7 +67,7 @@ public class Kinkaku extends RoleBase {
                 "",
                 AllDesc.point+"§aEventail de bananier§f: Symboliser par une épée en diamant§7 tranchant III§f, vous permet de cumuler la nature de Chakra d'un joueur que vous tuez avec à la votre.",
                 "",
-                AllDesc.point+"§aMission§f: Vous permet en ciblant un joueur, de lui attribuer une Mission aléatoire, si la cible l'accomplie, vous obtiendrez §e+4"+ AllDesc.Coeur("§e")+"§7 et §d+8 secondes de régénération II§7.",
+                AllDesc.point+"§aMission§f: Vous permet en ciblant un joueur, de lui attribuer une Mission aléatoire, si la cible l'accomplie, vous obtiendrez §e+4"+ AllDesc.Coeur("§e")+"§f et §d+8 secondes de régénération II§7.",
                 "",
                 AllDesc.particularite,
                 "",
