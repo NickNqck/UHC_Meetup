@@ -1,6 +1,7 @@
 package fr.nicknqck.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -95,12 +96,6 @@ public class Loc {
 		loc.setPitch(0);
 		teleported.teleport(loc);
     }
-    public static void invertEyeLocation(Player player) {
-    	Location location = player.getLocation().clone();
-	     location.setYaw(-location.getYaw());
-	     location.setPitch(-location.getPitch());
-	     player.teleport(location);
-    }
     public static List<Player> getNearbyPlayersExcept(Entity entity, int distance) {
         List<Player> toReturn = new ArrayList<>();
         entity.getWorld().getPlayers().stream()
@@ -114,9 +109,7 @@ public class Loc {
     public static List<Player> getNearbyPlayersExcept(Entity entity, int distance, Player... imunised) {
         List<Player> toReturn = new ArrayList<>();
         List<Player> imun = new ArrayList<>();
-        for (Player p : imunised) {
-        	imun.add(p);
-        }
+        Collections.addAll(imun, imunised);
         Bukkit.getOnlinePlayers().stream()
         		.filter(target -> target.getWorld().equals(entity.getWorld()))
                 .filter(target -> target.getGameMode() != GameMode.SPECTATOR)
@@ -168,7 +161,7 @@ public class Loc {
             System.out.println(user.getName()+" n'a pas de direction (inverseDirection methode)");
         }
     }
-    public static void organicFly(final Player user,final double flydistance, int maxJump) {
+    public static void organicFly(final Player user, int maxJump) {
     	new BukkitRunnable() {
     		int jump = 0;
 			@Override

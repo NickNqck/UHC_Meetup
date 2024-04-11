@@ -205,7 +205,7 @@ public class Warden extends RoleBase {
                 cancel();
             }
             warden.givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-            warden.sendCustomActionBar(warden.owner, "§bTemp de traque restant:§c "+ StringUtils.secondTowardsConventional(timeRemaining));
+            warden.sendCustomActionBar(warden.owner, Loc.getDirectionMate(warden.owner, Bukkit.getPlayer(target), true)+"§bTemp de traque restant:§c "+ StringUtils.secondTowardsConventional(timeRemaining));
             timeRemaining--;
         }
         @EventHandler

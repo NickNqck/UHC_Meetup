@@ -2,30 +2,41 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.PatchCritical;
 import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.UUID;
+import java.util.*;
 
 public class Kinkaku extends RoleBase {
     private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
     private int cdKyubi = 0;
     private final ItemStack EventailItem = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aEventail de bananier").setLore("§7Vous permet de cumulé la nature de chakra des joueurs tués avec la votre").toItemStack();
     private final ItemStack MissionItem = new ItemBuilder(Material.NETHER_STAR).setName("§aMission").setLore("§7Vous permet en ayant cibler un joueur de lui donner une mission").toItemStack();
+    private final List<UUID> cantBeMission = new ArrayList<>();
     public Kinkaku(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
+        super.setChakraType(super.getRandomChakras());
         owner.sendMessage(Desc());
     }
 
@@ -38,7 +49,25 @@ public class Kinkaku extends RoleBase {
     @Override
     public String[] Desc() {
         return new String[]{
-
+                AllDesc.bar,
+                AllDesc.role+"§6Kinkaku",
+                AllDesc.objectifsolo+"avec§6 Ginkaku",
+                "",
+                AllDesc.effet,
+                "",
+                AllDesc.point+"§9Résistance I§f proche de§6 Ginkaku§f et§e Speed I§f la "+AllDesc.jour,
+                "",
+                AllDesc.items,
+                "",
+                AllDesc.point+"§6§lKyubi§f: Pendant§c 3 minutes§f vous offre des effets, cependant ils changent chaque minutes: ",
+                AllDesc.tab+"§aPremière minute§f: Vous obtenez les effets§e Speed II§f ainsi que§c Force I§f.",
+                AllDesc.tab+"§6Deuxième minute§f: Vous obtenez les effets§e Speed I§f ainsi que§c Force I§f.",
+                AllDesc.tab+"§cTroisième minute§f: Vous obtenez l'effet§e Speed I§f.",
+                "§c! Ce pouvoir est utilisable une fois toute les 12 minutes !",
+                "",
+                AllDesc.point+"§aEventail de bananier§f: Symboliser par une épée en diamant§7 tranchant III§f, vous permet de cumuler la nature de Chakra d'un joueur que vous tuez avec à la votre.",
+                "",
+                AllDesc.point+"§aMission§f: Vous permet en ciblant un joueur, de lui attribuer une Mission aléatoire, si la cible l'accomplie, vous obtiendrez §e+4"+ AllDesc.Coeur("§e")+"§7 et §d+8 secondes de régénération II§7."
         };
     }
 
@@ -46,13 +75,15 @@ public class Kinkaku extends RoleBase {
     public ItemStack[] getItems() {
         return new ItemStack[]{
                 KyubiItem,
-                EventailItem
+                EventailItem,
+                MissionItem
         };
     }
 
     @Override
     public void resetCooldown() {
         cdKyubi = 0;
+        cantBeMission.clear();
     }
 
     @Override
@@ -83,6 +114,22 @@ public class Kinkaku extends RoleBase {
     }
     @Override
     public boolean ItemUse(ItemStack item, GameState gameState) {
+        if (item.isSimilar(MissionItem)){
+            Player target = getTargetPlayer(owner, 30);
+            if (target != null){
+                if (cantBeMission.contains(target.getUniqueId())){
+                    owner.sendMessage("§cVous ne pouvez pas mettre de mission à un joueur qui en a déjà eu une dans les 10 dernières minutes.");
+                    return true;
+                }
+                if (cantBeMission.isEmpty()){
+                    new KinkakuMissions(owner.getUniqueId(), target.getUniqueId());
+                    cantBeMission.add(target.getUniqueId());
+                } else {
+                    owner.sendMessage("§cVous ne pouvez pas donner une Mission a quelqu'un qui en a déjà une.");
+                }
+                return true;
+            }
+        }
         if (item.isSimilar(KyubiItem)) {
             if (cdKyubi <= 0) {
                 owner.sendMessage("§7Activation de§6 Kyubi");
@@ -132,23 +179,117 @@ public class Kinkaku extends RoleBase {
         return super.ItemUse(item, gameState);
     }
     private static class KinkakuMissions implements Listener {
-        private final UUID user;
-        private final UUID target;
+        private UUID user;
+        private UUID target;
+        private Missions mission;
+        private int nmbCoupCrit = 0;
+        private int timeNearby = 0;
+        private int nmbGapEat = 0;
+        private double distanceSquared;
         private KinkakuMissions(UUID user, UUID target){
             this.user = user;
             this.target = target;
+            getRandomMissions();
+        }
+        private void getRandomMissions(){
+            int rdm = RandomUtils.getRandomInt(0, Missions.values().length-1);
+            for (Missions missions : Missions.values()){
+                if (missions.getRdm() == rdm){
+                    this.mission = missions;
+                    break;
+                }
+            }
+            if (isNotNull()){
+                if (mission == Missions.Rester){
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            if (isNotNull()){
+                                Player t = Bukkit.getPlayer(target);
+                                Player u = Bukkit.getPlayer(user);
+                                if (u != null && t != null){
+                                    if (Loc.getNearbyPlayersExcept(u, 10).contains(t)){
+                                        timeNearby++;
+                                    } else {
+                                        timeNearby = 0;
+                                    }
+                                    if (timeNearby == 10){
+                                        accomplyMission();
+                                        cancel();
+                                    }
+                                }
+                            }
+                        }
+                    }.runTaskTimer(Main.getInstance(), 0, 20);
+                }
+            }
+        }
+        private void accomplyMission(){
+            Player e = Bukkit.getPlayer(user);
+            if (e == null) return;
+            CraftPlayer craftPlayer = (CraftPlayer) e;
+            craftPlayer.getHandle().setAbsorptionHearts(craftPlayer.getHandle().getAbsorptionHearts()+4.0f);
+            craftPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*8 ,1, false, false), true);
+            craftPlayer.sendMessage("§c"+e.getDisplayName()+"§7 à réussi sa mission secrète, vous obtenez donc §e+4"+ AllDesc.Coeur("§e")+"§7 et §d+8 secondes de régénération II§7.");
+            mission = null;
+            user = null;
+            target = null;
+        }
+        private boolean isNotNull(){
+            return user != null && target != null && mission != null;
         }
         @Getter
         private enum Missions {
-            Crits("Vous infligez 3 coups critique");
+            Crits("Vous infligez 3 coups critique", 0),
+            Rester("Il doit rester proche de vous (10 blocs) pendant 10s", 1),
+            Gap("Il doit manger 3 pommes d'or en moins de 10s", 2),
+            Parcourir("Il doit parcourir un total de§c 50 blocs", 3);
             private final String mission;
-            Missions(String mission){
+            private final int rdm;
+            Missions(String mission, int rdmPoint){
                 this.mission = mission;
+                this.rdm = rdmPoint;
+            }
+        }
+        @EventHandler
+        private void onTap(EntityDamageByEntityEvent e){
+            if (isNotNull()){
+                if (e.getDamager().getUniqueId().equals(target) && mission == Missions.Crits && e.getEntity().getUniqueId().equals(user) && e.getDamager() instanceof Player && e.getEntity() instanceof Player){
+                    if (new PatchCritical(e, 1).isCritical()){
+                        if (nmbCoupCrit == 0){
+                            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> nmbCoupCrit = 0, 100);
+                        }
+                        nmbCoupCrit++;
+                        if (nmbCoupCrit == 3){
+                            accomplyMission();
+                        }
+                    }
+                }
             }
         }
         @EventHandler
         private void onPlayerEat(PlayerItemConsumeEvent e){
-
+            if (isNotNull()){
+                if (e.getPlayer().getUniqueId().equals(target) && mission == Missions.Gap && e.getItem().getType().equals(Material.GOLDEN_APPLE)){
+                    Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> nmbGapEat = 0, 200);
+                    nmbGapEat++;
+                    if (nmbGapEat == 3){
+                        accomplyMission();
+                    }
+                }
+            }
+        }
+        @EventHandler
+        private void onMoove(PlayerMoveEvent e){
+            if (isNotNull()){
+                if (e.getPlayer().getUniqueId().equals(target) && mission == Missions.Parcourir){
+                    if (distanceSquared >= 50){
+                        accomplyMission();
+                    } else {
+                        distanceSquared+= e.getFrom().distance(e.getTo());
+                    }
+                }
+            }
         }
     }
 }

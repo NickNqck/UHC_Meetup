@@ -49,7 +49,7 @@ public class PatchCritical {
         return c;
     }
 
-    private boolean isCritical() {
+    public boolean isCritical() {
     	if (e == null)return false;
         if (!(e.getDamager() instanceof Player))
         return false;//Le damager ne peut pas être un joueur donc pas de critical

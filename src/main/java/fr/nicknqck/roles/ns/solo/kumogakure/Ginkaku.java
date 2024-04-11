@@ -39,7 +39,7 @@ public class Ginkaku extends RoleBase{
 	private final ItemStack CordeItem = new ItemBuilder(Material.NETHER_STAR).setName("§6Corde d'or").setUnbreakable(true).setLore("§7Vous permet d'éjecter le joueur viser, puis de l'empêcher de bouger pendant§c 5s§7.").toItemStack();
 	private int cdCorde = 0;
 	private TargetFallChecker checker;
-	private final ItemStack GourdeItem = new ItemBuilder(Material.HOPPER).setName("§bGourde écarlate").setLore("§7Vous permet de connaitre le daron a C3rv0l3nt").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().toItemStack();
+	private final ItemStack GourdeItem = new ItemBuilder(Material.HOPPER).setName("§bGourde écarlate").setLore("§7Vous permet de sceller un joueur.").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().toItemStack();
 	private UUID GourdeTarget;
 	private int cdGourde = 0;
 	public Ginkaku(Player player, Roles roles, GameState gameState) {
