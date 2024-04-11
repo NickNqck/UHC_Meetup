@@ -213,10 +213,12 @@ public class Warden extends RoleBase {
             if (Main.getInstance().getGamePlayer().getGamePlayersRoles().containsKey(e.getKiller().getUniqueId())){
                 if (Main.getInstance().getGamePlayer().getRole(e.getKiller().getUniqueId()).getClass().equals(warden.getClass())){
                     if (e.getVictim().getUniqueId().equals(target) && timeRemaining > 0){
-                        if (warden.getBonusResi() < 30.0){
+                        if (warden.getBonusResi() < 30.0 && !cancel){
                             warden.addBonusResi(5.0);
                         }
-                        e.getKiller().sendMessage("§7Vous avez réussi a tué§c "+e.getVictim().getDisplayName()+"§7 qui était votre cible vous obtenez donc§c 5%§7 de§9 Résistance");
+                        if (!cancel){
+                            e.getKiller().sendMessage("§7Vous avez réussi a tué§c "+e.getVictim().getDisplayName()+"§7 qui était votre cible vous obtenez donc§c 5%§7 de§9 Résistance");
+                        }
                         cancel = true;
                     }
                 }

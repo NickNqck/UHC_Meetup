@@ -92,7 +92,8 @@ public class Hokage {
 			if (damager instanceof Player) {
 				killer = (Player)damager;
 			}
-			if (damager instanceof Projectile prok) {
+			if (damager instanceof Projectile) {
+				Projectile prok = (Projectile)damager;
                 if (prok.getShooter() instanceof Player) {
 					killer = (Player) prok.getShooter();
 				}

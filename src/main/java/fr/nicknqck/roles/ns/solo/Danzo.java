@@ -203,6 +203,7 @@ public class Danzo extends RoleBase{
 							inSceau.remove(victim, inSceau.get(victim));
 							coupToScelled = 0;
 							SceauActived = false;
+							cantHaveAbso.remove(victim.getUniqueId());
 						}, 20*8);
 					}
 				} else {

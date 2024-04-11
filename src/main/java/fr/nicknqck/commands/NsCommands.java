@@ -53,7 +53,7 @@ public class NsCommands implements CommandExecutor {
 										break;
 									}
 								}
-								if (toRegister == "") {
+								if (toRegister.equals("")) {
 									for (TeamList t : TeamList.values()) {
 										if (args[2].equalsIgnoreCase(t.name())) {
 											toRegister = t.getColor()+t.name()+" ";
@@ -62,7 +62,7 @@ public class NsCommands implements CommandExecutor {
 									}
 								}
 						//		gameState.getPlayerRoles().get(sender).customName.remove(target.getUniqueId(), gameState.getPlayerRoles().get(sender));
-								if (toRegister != "") {
+								if (!toRegister.equals("")) {
 						//			gameState.getPlayerRoles().get(sender).customName.put(target.getUniqueId(), toRegister);
 							//		PersonalScoreboard.setTag(sender, target.getName(), toRegister);
 									sender.sendMessage("§7Feature non dev sorry");
@@ -129,7 +129,9 @@ public class NsCommands implements CommandExecutor {
 							return true;
 						}
 					}
-					gameState.getPlayerRoles().get(sender).onNsCommand(args);
+					if (gameState.getInGamePlayers().contains(sender) && !gameState.hasRoleNull(sender)){
+						gameState.getPlayerRoles().get(sender).onNsCommand(args);
+					}
 					return true;
 				}
 			}

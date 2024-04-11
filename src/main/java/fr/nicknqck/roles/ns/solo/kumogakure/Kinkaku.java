@@ -31,7 +31,7 @@ import java.util.*;
 public class Kinkaku extends RoleBase {
     private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
     private int cdKyubi = 0;
-    private final ItemStack EventailItem = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aEventail de bananier").setLore("§7Vous permet de cumulé la nature de chakra des joueurs tués avec la votre").toItemStack();
+    private final ItemStack EventailItem = new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aEventail de bananier").setLore("§7Vous permet de cumulé la nature de chakra des joueurs tués avec la votre").toItemStack();
     private final ItemStack MissionItem = new ItemBuilder(Material.NETHER_STAR).setName("§aMission").setLore("§7Vous permet en ayant cibler un joueur de lui donner une mission").toItemStack();
     private final List<UUID> cantBeMission = new ArrayList<>();
     public Kinkaku(Player player, GameState.Roles roles, GameState gameState) {
@@ -207,6 +207,7 @@ public class Kinkaku extends RoleBase {
                 }
             }
             if (isNotNull()){
+                Bukkit.getPlayer(user).sendMessage("§7La mission de votre cible est§f "+mission.getMission());
                 if (mission == Missions.Rester){
                     new BukkitRunnable() {
                         @Override
@@ -263,9 +264,6 @@ public class Kinkaku extends RoleBase {
             if (isNotNull()){
                 if (e.getDamager().getUniqueId().equals(target) && mission == Missions.Crits && e.getEntity().getUniqueId().equals(user) && e.getDamager() instanceof Player && e.getEntity() instanceof Player){
                     if (new PatchCritical(e, 1).isCritical()){
-                        if (nmbCoupCrit == 0){
-                            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> nmbCoupCrit = 0, 100);
-                        }
                         nmbCoupCrit++;
                         if (nmbCoupCrit == 3){
                             accomplyMission();
