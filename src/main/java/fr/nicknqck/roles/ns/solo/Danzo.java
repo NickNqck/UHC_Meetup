@@ -1,6 +1,9 @@
 package fr.nicknqck.roles.ns.solo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -8,7 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -30,6 +33,7 @@ public class Danzo extends RoleBase{
 	private int sceauCD = 0;
 	private int coupToScelled = 0;
 	private boolean SceauActived = false;
+	private final List<UUID> cantHaveAbso = new ArrayList<>();
 	public Danzo(Player player, Roles roles, GameState gameState) {
 		super(player, roles, gameState);
 		setChakraType(Chakras.FUTON);
@@ -61,7 +65,7 @@ public class Danzo extends RoleBase{
 				"",
 				AllDesc.point+IzanagiItem().getItemMeta().getDisplayName()+": En visant un joueur, vous permet de vous téléportez dans les§c 10 blocs§f autours d'un joueur, également, vous gagnerez§e 2 pommes d'or§f, de plus, vous §dvous régénéreriez entièrement§f, cependant, vous perdrez§c 1/2"+AllDesc.coeur+"§c permanent",
 				"",
-				AllDesc.point+"Sceau: En visant un joueur, vous permet de lui imposer un sceau ayant un effet aléatoire la cible obtiendra sois l'effet§1 Wither 1§f pendant§c 12s§f, sois, l'incapacité de bouger pendant§c 5 secondes§f.",
+				AllDesc.point+"Sceau: En visant un joueur, vous permet de lui imposer un sceau ayant un effet aléatoire la cible obtiendra sois l'effet§1 Wither II§f pendant§c 12s§f, sois, l'incapacité d'obtenir l'effet§e Absorbtion§f via des§e pommes d'or§f pendant§c 8 secondes§f.",
 				"§c⚠ Pour activer le §nSceau§c il faudra infliger 15 coups à la cible ⚠",
 				"",
 				AllDesc.commande,
@@ -71,6 +75,7 @@ public class Danzo extends RoleBase{
 				AllDesc.particularite,
 				"",
 				"Si vous parvenez à tuer un membre du clan§4§l Uchiwa§f vous obtiendrez l'effet "+AllDesc.Resi+"§9 1 permanent",
+				"Vous infligez§c +10%§f de dégat au§4§l Uchiwa",
 				"",
 				AllDesc.chakra+getChakras().getShowedName(),
 				AllDesc.bar
@@ -157,7 +162,7 @@ public class Danzo extends RoleBase{
 	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
 	private enum SceauAction {
 		Wither(),
-		Bouger()
+		AntiAbso()
 	}
 
 	@Override
@@ -174,10 +179,6 @@ public class Danzo extends RoleBase{
 			}
 		}
 		if (inSceau.containsKey(victim)) {
-			if (inSceau.get(victim) == SceauAction.Bouger && SceauActived) {
-				event.setDamage(0);
-				event.setCancelled(true);
-			}
 			if (entity.getUniqueId() == owner.getUniqueId()) {
 				if (coupToScelled == 15 && !SceauActived) {
 					owner.sendMessage("§7Votre Sceau c'est activé");
@@ -192,19 +193,17 @@ public class Danzo extends RoleBase{
 							coupToScelled = 0;
 							SceauActived = false;
 						}, 20*12);
-					} else {
+					}
+					if (inSceau.get(victim).equals(SceauAction.AntiAbso)){
 						SceauActived = true;
-						victim.setAllowFlight(true);
-						victim.setFlying(true);
-						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-							SceauActived = false;
-							owner.sendMessage("§7Votre sceau ne fais plus effet sur "+victim.getDisplayName());
-							victim.setFlying(false);
-							victim.setAllowFlight(false);
+						cantHaveAbso.add(victim.getUniqueId());
+						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 							victim.sendMessage("§7Les effets du sceau se dissipent");
+							owner.sendMessage("§7Votre sceau ne fais plus effet sur "+victim.getDisplayName());
 							inSceau.remove(victim, inSceau.get(victim));
 							coupToScelled = 0;
-						}, 20*5);
+							SceauActived = false;
+						}, 20*8);
 					}
 				} else {
 					if (inSceau.size() == 1 && !SceauActived) {
@@ -214,15 +213,15 @@ public class Danzo extends RoleBase{
 			}
 		}
 	}
+
 	@Override
-	public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {
-		if (SceauActived) {
-			if (inSceau.containsKey(moover)) {
-				if (inSceau.get(moover) == SceauAction.Bouger) {
-					moover.teleport(e.getFrom());
-					e.setCancelled(true);
-				}
-			}
+	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {
+		super.onALLPlayerEat(e, item, eater);
+		if (cantHaveAbso.contains(eater.getUniqueId())){
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+				eater.removePotionEffect(PotionEffectType.ABSORPTION);
+				eater.sendMessage("§cUn sceau vous empêche d'obtenir l'effet§e Absorbtion");
+			}, 1);
 		}
 	}
 	@Override
@@ -239,15 +238,14 @@ public class Danzo extends RoleBase{
 				if (RandomUtils.getOwnRandomProbability(50)) {
 					inSceau.put(target, SceauAction.Wither);
 				} else {
-					inSceau.put(target, SceauAction.Bouger);
+					inSceau.put(target, SceauAction.AntiAbso);
 				}
 				owner.sendMessage("§7Dans§c 15 coups§f "+target.getName()+"§7 subirat les effets de votre§c Sceau");
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, sceauCD);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(IzanagiItem())) {
 			if (izanagiItemCD <= 0) {
 				Player target = getTargetPlayer(owner, 30);
@@ -264,23 +262,22 @@ public class Danzo extends RoleBase{
 				owner.setHealth(owner.getMaxHealth());
 				giveItem(owner, false, new ItemStack(Material.GOLDEN_APPLE, 2));
 				owner.updateInventory();
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, izanagiItemCD);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(FutonItem())) {
 			if (futonCD <= 0) {
 				Vector dir = owner.getLocation().getDirection();
 				owner.setVelocity(dir.multiply(3));
 				futonCD = 90;
-				return true;
-			} else {
+				owner.sendMessage("§7Vous avez utilisé votre "+FutonItem().getItemMeta().getDisplayName());
+            } else {
 				sendCooldown(owner, futonCD);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 }
