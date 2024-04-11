@@ -14,7 +14,8 @@ public enum Scenarios {
     CutClean(new CutClean()),
     BowSwap(new BowSwap()),
     DiamondLimit(new DiamondLimit()),
-    BetaZombie(new BetaZombie());
+    BetaZombie(new BetaZombie()),
+    CatEyes(new CatEyes());
 
     private final BasicScenarios scenarios;
     Scenarios(BasicScenarios sc){
