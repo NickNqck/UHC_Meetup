@@ -1676,7 +1676,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§eSolo§7 ->§b Zabuza et Haku") {
+				if (inv.getTitle().equals("§eSolo§7 ->§b Zabuza et Haku")) {
 					inv.clear();
 					ItemStack glass = GUIItems.getPinkStainedGlassPane();
 					inv.setItem(0, glass);
@@ -1741,7 +1741,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fConfiguration§7 -> §6Événements") {
+				if (inv.getTitle().equals("§fConfiguration§7 -> §6Événements")) {
 					inv.clear();
 					inv.setItem(8, GUIItems.getSelectBackMenu());
 					
@@ -1800,7 +1800,7 @@ public class HubListener implements Listener {
 			}
 		}
 	}
-	private HashMap<Roles, Integer> availableRoles = new HashMap<Roles, Integer>();
+	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
 	public HashMap<Roles, Integer> getAvailableRoles() {return availableRoles;}
 	public void setAvailableRoles(HashMap<Roles, Integer> availableRoles) {this.availableRoles = availableRoles;}
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
@@ -2854,7 +2854,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§fAOT§7 ->§a Soldats") {
+				if (inv.getTitle().equals("§fAOT§7 ->§a Soldats")) {
 					inv.clear();	
 					inv.setItem(0, GUIItems.getGreenStainedGlassPane());
 					inv.setItem(1, GUIItems.getGreenStainedGlassPane());
@@ -2904,7 +2904,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§aNaruto§7 ->§c Akatsuki") {
+				if (inv.getTitle().equals("§aNaruto§7 ->§c Akatsuki")) {
 					inv.clear();	
 					inv.setItem(0, GUIItems.getRedStainedGlassPane());
 					inv.setItem(1, GUIItems.getRedStainedGlassPane());
@@ -2956,7 +2956,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§aNaruto§7 ->§5 Orochimaru") {
+				if (inv.getTitle().equals("§aNaruto§7 ->§5 Orochimaru")) {
 					inv.clear();	
 					inv.setItem(0, GUIItems.getPurpleStainedGlassPane());
 					inv.setItem(1, GUIItems.getPurpleStainedGlassPane());
@@ -3006,7 +3006,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§aNaruto§7 ->§e Solo") {
+				if (inv.getTitle().equals("§aNaruto§7 ->§e Solo")) {
 					inv.clear();
 					inv.setItem(0, GUIItems.getOrangeStainedGlassPane());
 					inv.setItem(1, GUIItems.getOrangeStainedGlassPane());
@@ -3032,7 +3032,7 @@ public class HubListener implements Listener {
 					
 					inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
 					for (Roles roles : Roles.values()) {
-						if (roles.getTeam() == TeamList.Solo && roles.getMdj() == "ns") {
+						if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ns")) {
 							String l1 = "";
 							if (gameState.getAvailableRoles().get(roles) > 0) {
 								l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -3054,7 +3054,7 @@ public class HubListener implements Listener {
 		if (invView != null) {
 			Inventory inv = invView.getTopInventory();
 			if (inv != null) {
-				if (inv.getTitle() == "§eSolo§7 ->§d Jubi") {
+				if (inv.getTitle().equals("§eSolo§7 ->§d Jubi")) {
 					inv.clear();
 					ItemStack glass = GUIItems.getPinkStainedGlassPane();
 					inv.setItem(0, glass);
