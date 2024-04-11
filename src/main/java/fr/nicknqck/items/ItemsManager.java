@@ -1,6 +1,7 @@
 package fr.nicknqck.items;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -42,9 +43,7 @@ public class ItemsManager implements Listener {
 		jsp.clear();
 	}
 	public void addItemToJspList(ItemStack... i) {
-		for (ItemStack e : i) {
-			jsp.add(e);
-		}
+        jsp.addAll(Arrays.asList(i));
 	}
 	public static ItemsManager instance;
 	public static void ClearInventory(Player player) {
