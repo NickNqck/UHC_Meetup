@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.ns.solo.Danzo;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -55,6 +56,9 @@ public class Hokage {
 						Hokage = fH.getUniqueId();
 						gameState.getPlayerRoles().get(fH).addBonusforce(10);
 						gameState.getPlayerRoles().get(fH).addBonusResi(10);
+						Player finalFH = fH;
+						Player finalFH1 = fH;
+						gameState.getInGamePlayers().stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getPlayerRoles().get(p).getClass().equals(Danzo.class)).filter(p -> !p.getUniqueId().equals(finalFH.getUniqueId())).forEach(p -> p.sendMessage("§7Voici le rôle de l'Hokage: "+gameState.getPlayerRoles().get(finalFH1).type.getItem().getItemMeta().getDisplayName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)"));
 					} else {
 						GameListener.SendToEveryone("§7Aucun joueur n'a le niveau pour devenir§c hokage§7...");
 					}
@@ -88,9 +92,8 @@ public class Hokage {
 			if (damager instanceof Player) {
 				killer = (Player)damager;
 			}
-			if (damager instanceof Projectile) {
-				Projectile prok = (Projectile) damager;
-				if (prok.getShooter() instanceof Player) {
+			if (damager instanceof Projectile prok) {
+                if (prok.getShooter() instanceof Player) {
 					killer = (Player) prok.getShooter();
 				}
 			}
