@@ -13,10 +13,10 @@ public enum Chakras {
 	FUTON("§aFûton", new Futon(), (short) 10),
 	DOTON("§6Doton", new Doton(), (short) 14),
 	RAITON("§eRaiton", new Raiton(), (short) 11);
-	private String showed;
-	private Chakra ch;
-	private short color;
-	private Chakras(String a, Chakra ch, short colorCode) {
+	private final String showed;
+	private final Chakra ch;
+	private final short color;
+	Chakras(String a, Chakra ch, short colorCode) {
 		this.showed = a;
 		this.ch = ch;
 		this.color = colorCode;
