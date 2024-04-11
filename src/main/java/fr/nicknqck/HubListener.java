@@ -51,7 +51,6 @@ public class HubListener implements Listener {
 			System.out.println("Impossible de start la partie");
 			return;
 		}
-		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
 		gameState.world = Main.getInstance().gameWorld;
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		gameState.setInLobbyPlayers(new ArrayList<>());
@@ -122,6 +121,7 @@ public class HubListener implements Listener {
 		}
 		Bijus.initBiju(gameState);
 		gameState.getInGamePlayers().stream().filter(p -> !gameState.hasRoleNull(p)).forEach(p -> Main.getInstance().getGamePlayer().putGamePlayer(p.getUniqueId(), gameState.getPlayerRoles().get(p)));
+		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
 		gameState.setServerState(ServerStates.InGame);
 	}
 	public void giveStartInventory(Player p) {
