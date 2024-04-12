@@ -89,6 +89,8 @@ public class Nagato extends RoleBase {
                             owner.sendMessage(getTeamColor(target)+"§f possède le rôle: "+getPlayerRoles(target).type.getItem().getItemMeta().getDisplayName());
                             useJikogudo++;
                         }
+                    } else {
+                        owner.sendMessage("§cVous n'êtes pas asser proche du joueur viser");
                     }
                 } else {
                     owner.sendMessage("§c"+args[1]+" n'est pas connectée !");
@@ -108,6 +110,8 @@ public class Nagato extends RoleBase {
                             owner.sendMessage(target.getDisplayName()+"§7 est dans le camp: "+getTeamColor(target)+getTeam(target).name()+"§7, et possède exactement "+ GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE));
                             useNingendo++;
                         }
+                    } else {
+                        owner.sendMessage("§cVous n'êtes pas asser proche du joueur viser");
                     }
                 } else {
                     owner.sendMessage("§c"+args[1]+" n'est pas connectée !");
@@ -197,6 +201,8 @@ public class Nagato extends RoleBase {
                     target.teleport(owner);
                     owner.sendMessage("§7Vous avez téléporter§c "+target.getDisplayName()+"§7 à votre position.");
                     cdLeftBensho = 60*5;
+                } else {
+                    owner.sendMessage("§cIl faut viser un joueur !");
                 }
             } else {
                 if (cdRightBensho > 0){
@@ -206,6 +212,7 @@ public class Nagato extends RoleBase {
                 PropulserUtils pu = new PropulserUtils(owner, 20).soundToPlay("nsmtp.shinratensei");
                 NF.addAll(pu.getPropulsedUUID());
                 pu.applyPropulsion();
+                owner.sendMessage("§7Vous avez utiliser votre§c Shinra Tensei");
             }
         }
     }

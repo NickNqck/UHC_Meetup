@@ -1128,9 +1128,7 @@ public class GameListener implements Listener {
 			}
 			for (Player p : gameState.getInGamePlayers()) {
 				if (!gameState.hasRoleNull(p)) {
-					if (!event.isCancelled()) {
-						gameState.getPlayerRoles().get(p).onALLPlayerInteract(event, player);
-					}
+					gameState.getPlayerRoles().get(p).onALLPlayerInteract(event, player);
 				}
 			}
 			if (!gameState.hasRoleNull(player) && event.getAction().name().contains("RIGHT")) {

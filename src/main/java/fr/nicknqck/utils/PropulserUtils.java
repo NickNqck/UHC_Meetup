@@ -12,10 +12,10 @@ import org.bukkit.util.Vector;
 
 public class PropulserUtils {
 
-	Player p;
-	String toPlayer;
-	boolean sound = false;
-	int distance;
+	private final Player p;
+	private String toPlayer;
+	private boolean sound = false;
+	private final int distance;
 	public PropulserUtils(Player user, int distance) {
 		this.p = user;
 		this.distance = distance;
@@ -49,7 +49,7 @@ public class PropulserUtils {
         direction.add(new Vector(0, .8, .8));
         onlyTarget.setVelocity(direction);
         if (sound) {
-        	playSound((Player) onlyTarget, toPlayer);
+        	playSound(onlyTarget, toPlayer);
         }
 	}
 	private void playSound(Player p, String sound) {
