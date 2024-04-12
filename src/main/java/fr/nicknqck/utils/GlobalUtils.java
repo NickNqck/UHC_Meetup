@@ -165,4 +165,13 @@ public class GlobalUtils {
 	            return null;
 	        }
 	    }
+	public static int getItemAmount(Player player, Material material) {
+		int toReturn = 0;
+		for (ItemStack content : player.getInventory().getContents()) {
+			if (content != null && content.getType() == material) {
+				toReturn += content.getAmount();
+			}
+		}
+		return toReturn;
+	}
 }

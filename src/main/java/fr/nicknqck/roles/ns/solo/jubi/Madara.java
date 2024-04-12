@@ -41,6 +41,12 @@ import fr.nicknqck.utils.particles.MathUtil;
 
 public class Madara extends RoleBase {
 
+	private int BenshoCD = 0;
+	private int ShinraCD = 0;
+	private int MeteoriteUse =  0;
+	private int SusanoCD = 0;
+	private boolean hasIzanagi = false;
+
 	public Madara(Player player, Roles roles, GameState gameState) {
 		super(player, roles, gameState);
 		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
@@ -98,7 +104,7 @@ public class Madara extends RoleBase {
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				new ItemBuilder(Material.DIAMOND_SWORD).setName("§dGunbaï").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).toItemStack(),
+				new ItemBuilder(Material.DIAMOND_SWORD).setName("§dGunbaï").setLore("§7").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).toItemStack(),
 				MadaraItem(),
 				ChibakuTenseiItem(),
 				SusanoItem(),
@@ -139,16 +145,15 @@ public class Madara extends RoleBase {
 				givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true);
 				setForce(20);
 				MadaraUse = true;
-				return true;
-			} else {
+            } else {
 				owner.sendMessage("§7Vous perdez votre puissance...");
 				setForce(0);
 				owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 				owner.removePotionEffect(PotionEffectType.SPEED);
 				MadaraUse = false;
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(ChibakuTenseiItem())) {
 			openChibakuTenseiInventory();
 			return true;
@@ -228,11 +233,6 @@ public class Madara extends RoleBase {
 		}
 		owner.openInventory(inv);
 	}
-	private int BenshoCD = 0;
-	private int ShinraCD = 0;
-	private int MeteoriteUse =  0;
-	private int SusanoCD = 0;
-	private boolean hasIzanagi = false;
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
@@ -290,7 +290,7 @@ public class Madara extends RoleBase {
 			}
 		}
 	}
-	private List<UUID> NF = new ArrayList<>();
+	private final List<UUID> NF = new ArrayList<>();
 	@Override
 	public void onALLPlayerDamage(EntityDamageEvent e, Player victim) {
 		if (NF.contains(victim.getUniqueId())) {
@@ -312,7 +312,7 @@ public class Madara extends RoleBase {
 		NF.clear();
 		setOldBlockwMap();
 	}
-	private HashMap<Block, Integer> map = new HashMap<>();
+	private final HashMap<Block, Integer> map = new HashMap<>();
 	@Override
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
 		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -401,7 +401,7 @@ public class Madara extends RoleBase {
 					owner.sendMessage("§7Votre météorite attérira dans 10s");
 					Loc.getNearbyPlayers(owner, 50).stream().filter(p -> gameState.getInGamePlayers().contains(p)).filter(p -> !gameState.hasRoleNull(p)).forEach(e -> playSound(e, "mob.wither.death"));
 					new BukkitRunnable() {
-						Location loc = owner.getLocation();
+						final Location loc = owner.getLocation();
 						int s = 0;
 						@SuppressWarnings("deprecation")
 						@Override
@@ -437,9 +437,7 @@ public class Madara extends RoleBase {
 								}
 								new MathUtil().spawnFallingBlocks(new Location(loc.getWorld(), loc.getX(), loc.getY()+10, loc.getZ()), Material.STONE, 8, false, true, 60);
 								cancel();
-								Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-									setOldBlockwMap();
-					            }, 20*60*3);
+								Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> setOldBlockwMap(), 20*60*3);
 							}
 							if (gameState.getInSpecPlayers().contains(owner)) {
 								cancel();
