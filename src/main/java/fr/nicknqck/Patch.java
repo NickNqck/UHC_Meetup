@@ -21,7 +21,7 @@ public class Patch implements Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
     private void onPatchPotion(EntityDamageByEntityEvent event) {
         if (gameState.getServerState() != ServerStates.InGame)return;
-		new PatchCritical(event, gameState.critP);
+		new PatchCritical(event, gameState.getCritP());
 		for (Chakras ch : Chakras.values()) {
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
 		}

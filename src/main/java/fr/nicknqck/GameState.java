@@ -53,6 +53,20 @@ public class GameState{
 	@Getter
 	@Setter
 	private int timeProcHokage = 90;
+	@Getter
+	private final List<Roles> deadRoles = new ArrayList<>();
+
+	public boolean BijusEnable = false;
+	public boolean stuffUnbreak = true;
+	public int TridiCooldown = 16;
+	public boolean hasPregen = false;
+	public int WaterEmptyTiming = 30;
+	public int LavaEmptyTiming = 30;
+	public boolean pregenNakime = false;
+	public static Roles setPlayerRoles;
+	public boolean demonKingTanjiro = false;
+	public boolean gameCanLaunch = false;
+	int groupe = 5;
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -215,27 +229,24 @@ public class GameState{
 		DS(false, new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
 		AOT(false, new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
 		NS(false, new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack());
+
+		@Setter
 		private boolean enable;
-		private ItemStack item;
+		private final ItemStack item;
 		MDJ(boolean e, ItemStack item) {
 			this.enable = e;
 			this.item = item;
 		}
-		public void setEnable(boolean b) {
-			enable = b;
-		}
-	/*	public boolean isEnable() {
-			return enable;
-		}*/
+
 		public ItemStack getItem() {
 			ItemStack itemC = item.clone();
 			ItemMeta iMeta = item.getItemMeta();
 			if (isEnable()) {
 				iMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
 				iMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				iMeta.setLore(Arrays.asList("§r§aActivé"));
+				iMeta.setLore(Collections.singletonList("§r§aActivé"));
 			} else {
-				iMeta.setLore(Arrays.asList("§r§cDésactivé"));
+				iMeta.setLore(Collections.singletonList("§r§cDésactivé"));
 			}
 			itemC.setItemMeta(iMeta);
 			return itemC;
@@ -255,17 +266,6 @@ public class GameState{
 		}
 		return toReturn;
 	}
-	public boolean BijusEnable = false;
-	public boolean stuffUnbreak = true;
-	public int TridiCooldown = 16;
-	public boolean hasPregen = false;
-	public int WaterEmptyTiming = 30;
-	public int LavaEmptyTiming = 30;
-	public boolean pregenNakime = false;
-	public static Roles setPlayerRoles;
-	public boolean demonKingTanjiro = false;
-	public boolean gameCanLaunch = false;
-	int groupe = 5;
 	public void setGroupe(int e) {groupe = e;}
 	public int getGroupe() {return groupe;}
 	public int roleTimer = 1;
@@ -321,15 +321,15 @@ public class GameState{
 	public int timewaitingbeinfected = 60;
 	public Player infecteur = null;
 	public boolean roletab = false;
+	@Getter
 	public int critP = 20;
 	public boolean cibletanjiroAssassin = true;
-	static GameState instance;
+	private static GameState instance;
 	public int TimeSpawnBiju = 60;
 	public static GameState getInstance() {return instance;}
 	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
-	public int getCritP() {return critP;}
 	public List<Player> infectedbyadmin = new ArrayList<>();
 	public ArrayList<Player> Obi = new ArrayList<Player>();
 	public ArrayList<Player> getInObiPlayers() {return Obi;}
@@ -822,7 +822,7 @@ public class GameState{
 			System.out.println("Giving Role Ended");
 			System.out.println("Preparing Assassin System");
 			Assassin assassin = new Assassin();
-			OnEndGiveRole(this, assassin);
+			OnEndGiveRole(assassin);
 		} else {
 			System.out.println("Giving Role: "+getPlayerRoles().size()+"/"+getInGamePlayers().size());
 			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon) {
@@ -833,11 +833,12 @@ public class GameState{
 		attributedRole.add(roleType);
 		return role;
 	}
+	@Getter
 	public List<Roles> attributedRole = new ArrayList<>();
 	public ArrayList<Player> canBeAssassin = new ArrayList<>();
 	public Player Assassin = null;
-	public void OnEndGiveRole(GameState gameState, Assassin assa) {
-		if (canBeAssassin.size() < 1) {
+	public void OnEndGiveRole(Assassin assa) {
+		if (canBeAssassin.isEmpty()) {
 			System.out.println("Can't Enable to Start Assassin System because size of TeamList.Demon < 1");
 			return;
 		}

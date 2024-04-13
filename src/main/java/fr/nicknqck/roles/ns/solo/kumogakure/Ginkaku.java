@@ -7,6 +7,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.Vec3D;
 import org.bukkit.Bukkit;
@@ -27,6 +28,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 public class Ginkaku extends RoleBase{
@@ -46,6 +48,11 @@ public class Ginkaku extends RoleBase{
 		super(player, roles, gameState);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
+		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+			if (!gameState.getAttributedRole().contains(Roles.Kinkaku)){
+				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+			}
+		}, 100);
 	}
 	@Override
 	public void GiveItems() {
@@ -53,6 +60,7 @@ public class Ginkaku extends RoleBase{
 	}
 	@Override
 	public String[] Desc() {
+		KnowRole(owner, Roles.Kinkaku, 16);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"§6Ginkaku",
@@ -225,6 +233,11 @@ public class Ginkaku extends RoleBase{
 			if (cdGourde == 0){
 				owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§b Gourde écarlate§7.");
 			}
+		}
+		if (gameState.getDeadRoles().contains(Roles.Kinkaku)){
+			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		} else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(Roles.Kinkaku))){
+			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 		}
 	}
 	@Override

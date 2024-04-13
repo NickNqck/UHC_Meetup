@@ -110,6 +110,9 @@ public class GlobalUtils {
 	        head.setItemMeta(meta);
 	        return head;
 	    }
+		private ItemStack truc(Player player){
+			return new ItemBuilder(Material.SKULL_ITEM).setSkullOwner(player.getName()).toItemStack();
+		}
 	    public static String getTexture(UUID playerUUID) {
 	        String texture = null;
 	        try {

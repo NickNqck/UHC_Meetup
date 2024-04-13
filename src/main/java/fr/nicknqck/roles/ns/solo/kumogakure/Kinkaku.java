@@ -2,7 +2,6 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.PatchCritical;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
@@ -38,6 +37,11 @@ public class Kinkaku extends RoleBase {
         super(player, roles, gameState);
         super.setChakraType(super.getRandomChakras());
         owner.sendMessage(Desc());
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            if (!gameState.getAttributedRole().contains(GameState.Roles.Ginkaku)){
+                givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+            }
+        }, 100);
     }
 
     @Override
@@ -48,6 +52,7 @@ public class Kinkaku extends RoleBase {
 
     @Override
     public String[] Desc() {
+        KnowRole(owner, GameState.Roles.Ginkaku, 16);
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§6Kinkaku",
@@ -104,6 +109,11 @@ public class Kinkaku extends RoleBase {
             if (cdKyubi == 0) {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser§6§l Kyubi§7.");
             }
+        }
+        if (gameState.getDeadRoles().contains(GameState.Roles.Ginkaku)){
+            givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+        } else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(GameState.Roles.Ginkaku))){
+            givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
         }
     }
 
@@ -189,10 +199,10 @@ public class Kinkaku extends RoleBase {
         private UUID user;
         private UUID target;
         private Missions mission;
-        private int nmbCoupCrit = 0;
         private int timeNearby = 0;
         private int nmbGapEat = 0;
         private double distanceSquared;
+        private int nmbCoup = 0;
         private KinkakuMissions(UUID user, UUID target){
             this.user = user;
             this.target = target;
@@ -236,7 +246,7 @@ public class Kinkaku extends RoleBase {
             Player e = Bukkit.getPlayer(user);
             if (e == null) return;
             CraftPlayer craftPlayer = (CraftPlayer) e;
-            craftPlayer.getHandle().setAbsorptionHearts(craftPlayer.getHandle().getAbsorptionHearts()+4.0f);
+            craftPlayer.getHandle().setAbsorptionHearts(craftPlayer.getHandle().getAbsorptionHearts()+8.0f);
             craftPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*8 ,1, false, false), true);
             craftPlayer.sendMessage("§c"+e.getDisplayName()+"§7 à réussi sa mission secrète, vous obtenez donc §e+4"+ AllDesc.Coeur("§e")+"§7 et §d+8 secondes de régénération II§7.");
             mission = null;
@@ -248,7 +258,7 @@ public class Kinkaku extends RoleBase {
         }
         @Getter
         private enum Missions {
-            Crits("Vous infligez 3 coups critique", 0),
+            Infliger("Vous infligez 15 coups", 0),
             Rester("Il doit rester proche de vous (10 blocs) pendant 10s", 1),
             Gap("Il doit manger 3 pommes d'or en moins de 10s", 2),
             Parcourir("Il doit parcourir un total de§c 50 blocs", 3);
@@ -260,14 +270,12 @@ public class Kinkaku extends RoleBase {
             }
         }
         @EventHandler
-        private void onTap(EntityDamageByEntityEvent e){
+        private void onDamage(EntityDamageByEntityEvent e){
             if (isNotNull()){
-                if (e.getDamager().getUniqueId().equals(target) && mission == Missions.Crits && e.getEntity().getUniqueId().equals(user) && e.getDamager() instanceof Player && e.getEntity() instanceof Player){
-                    if (new PatchCritical(e, 1).isCritical()){
-                        nmbCoupCrit++;
-                        if (nmbCoupCrit == 3){
-                            accomplyMission();
-                        }
+                if (e.getDamager().getUniqueId().equals(target)){
+                    nmbCoup++;
+                    if (nmbCoup == 15) {
+                        accomplyMission();
                     }
                 }
             }

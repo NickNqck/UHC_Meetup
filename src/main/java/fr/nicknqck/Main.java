@@ -3,6 +3,7 @@ package fr.nicknqck;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -95,10 +96,11 @@ public class Main extends JavaPlugin implements Listener{
 	private GamePlayer gamePlayer;
 	@Getter
 	private static Main Instance;
-
+	public static Random RANDOM;
 	@Override
 	public void onEnable() {
 		Instance = this;
+		RANDOM = new Random();
 		GameState gameState = new GameState();
 		this.gamePlayer = new GamePlayer();
 		this.gameWorld = Bukkit.getWorld("world");

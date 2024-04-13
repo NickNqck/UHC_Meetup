@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,6 +202,8 @@ public class Nagato extends RoleBase {
                     target.teleport(owner);
                     owner.sendMessage("§7Vous avez téléporter§c "+target.getDisplayName()+"§7 à votre position.");
                     cdLeftBensho = 60*5;
+                    givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*60*3, 1, true);
+                    setForce(20.0);
                 } else {
                     owner.sendMessage("§cIl faut viser un joueur !");
                 }
@@ -213,6 +216,8 @@ public class Nagato extends RoleBase {
                 NF.addAll(pu.getPropulsedUUID());
                 pu.applyPropulsion();
                 owner.sendMessage("§7Vous avez utiliser votre§c Shinra Tensei");
+                givePotionEffet(PotionEffectType.SPEED, 20*60, 1, true);
+                cdRightBensho = 60*3;
             }
         }
     }
@@ -224,6 +229,7 @@ public class Nagato extends RoleBase {
             if (NF.contains(victim.getUniqueId())){
                 e.setDamage(0.0);
                 victim.setFallDistance(0f);
+                NF.remove(victim.getUniqueId());
             }
         }
         if (victim.getUniqueId().equals(owner.getUniqueId())){

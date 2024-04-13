@@ -1,48 +1,5 @@
 package fr.nicknqck.roles;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.Vector;
-
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -51,11 +8,26 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.BoundingBox;
-import fr.nicknqck.utils.NMSPacket;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.RayTrace;
-import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.*;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.*;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
+
+import java.text.DecimalFormat;
+import java.util.*;
 
 public abstract class RoleBase {
 
@@ -564,7 +536,7 @@ public abstract class RoleBase {
 			if (!gameState.hasRoleNull(p)) {
 				if (getListPlayerFromRole(toknow).contains(p)) {
 					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-						if (knower.isOnline() && p.isOnline() && knower != null && p != null && !gameState.hasRoleNull(p) && getOldTeam(p) != null) {
+						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p) && getOldTeam(p) != null) {
 							knower.sendMessage("Le joueur possédant le rôle de "+getPlayerRoles(p).getOldTeam().getColor()+toknow.name()+"§f est "+p.getName());
 						}
 						
@@ -749,7 +721,7 @@ public abstract class RoleBase {
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).type == roles).forEach(e -> toReturn.add(e));
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).type == roles).filter(p -> gameState.getInGamePlayers().contains(p)).forEach(e -> toReturn.add(e));
 		return toReturn;
 	}
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {}

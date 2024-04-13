@@ -2,6 +2,7 @@ package fr.nicknqck.utils;
 
 import java.util.Random;
 
+import fr.nicknqck.Main;
 import org.bukkit.ChatColor;
 
 public class RandomUtils {
@@ -100,14 +101,9 @@ public class RandomUtils {
     	if (pourcentage <= 0) {
     		return false;
     	}
-    	Random rdm = new Random();
     	
-    	double random = rdm.nextDouble();
+    	double random = Main.RANDOM.nextDouble();
     	double value = random*100;
-    	if (value <= pourcentage) {
-    		return true;
-    	}else {
-    		return false;
-    	}
+        return value <= pourcentage;
     }
 }

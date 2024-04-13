@@ -341,6 +341,7 @@ public class GameListener implements Listener {
 			if (gameState.hokage != null) {
 				gameState.hokage.stop();
 			}
+			gameState.getDeadRoles().clear();
 			Main.getInstance().getGamePlayer().getGamePlayersRoles().clear();
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().getList().clear();
@@ -644,6 +645,7 @@ public class GameListener implements Listener {
 				if (gameState.getPlayerRoles().get(player).onPreDie(damager, gameState)) {
 					return;
 				}
+				gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).type);
 				if (gameState.getPlayerRoles().get(player).getItems() != null) {
 					for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
 						if (player.getInventory().contains(item)) {
@@ -681,15 +683,14 @@ public class GameListener implements Listener {
 						}
 					}
 				for (Player p : gameState.getInGamePlayers()) {
-					if (gameState.getPlayerRoles().containsKey(p))
-						if (damager instanceof Player) {
-							gameState.getPlayerRoles().get(p).PlayerKilled((Player)damager, player, gameState);
-							if (!gameState.getPlayerKills().get(damager).containsKey(player)) {
-								RoleBase fakeRole = gameState.getPlayerRoles().get(player);
-								fakeRole.setOldRole(gameState.getPlayerRoles().get(player).getOldRole());
-								gameState.getPlayerKills().get(damager).put(player, fakeRole);
-							}
-						}
+					if (gameState.getPlayerRoles().containsKey(p)) {
+                        gameState.getPlayerRoles().get(p).PlayerKilled((Player)damager, player, gameState);
+                        if (!gameState.getPlayerKills().get(damager).containsKey(player)) {
+                            RoleBase fakeRole = gameState.getPlayerRoles().get(player);
+                            fakeRole.setOldRole(gameState.getPlayerRoles().get(player).getOldRole());
+                            gameState.getPlayerKills().get(damager).put(player, fakeRole);
+                        }
+                    }
 				}
 				for (Player p : gameState.getInGamePlayers()) {
 					if (!gameState.hasRoleNull(player)) {
@@ -707,8 +708,8 @@ public class GameListener implements Listener {
 									gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
 								}
 							}
-							if (gameState.getPlayerRoles().containsKey(damager)) {
-								RoleBase role = gameState.getPlayerRoles().get(damager);
+							if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
+								RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
 								if (role.getTeam() == TeamList.Demon || role.type == Roles.Kaigaku || role.type == Roles.Nezuko) {
 									for (Player p : gameState.getInGamePlayers()) {
 										if (!gameState.hasRoleNull(p)) {
@@ -722,14 +723,12 @@ public class GameListener implements Listener {
 							}
 						for (Player p : gameState.getInGamePlayers()) {
 							if (gameState.getPlayerRoles().containsKey(p))
-								if (damager instanceof Player) {
-									gameState.getPlayerRoles().get(p).PlayerKilled((Player)damager, player, gameState);
-									if (!gameState.getPlayerKills().get(damager).containsKey(player)) {
+									gameState.getPlayerRoles().get(p).PlayerKilled((Player)arr.getShooter(), player, gameState);
+									if (!gameState.getPlayerKills().get((Player)arr.getShooter()).containsKey(player)) {
 										RoleBase fakeRole = gameState.getPlayerRoles().get(player);
 										fakeRole.setOldRole(gameState.getPlayerRoles().get(player).getOldRole());
-										gameState.getPlayerKills().get(damager).put(player, fakeRole);
+										gameState.getPlayerKills().get((Player)arr.getShooter()).put(player, fakeRole);
 									}
-								}
 						}
 						for (Player p : gameState.getInGamePlayers()) {
 							if (!gameState.hasRoleNull(player)) {
