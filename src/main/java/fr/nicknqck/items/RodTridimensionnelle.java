@@ -23,7 +23,7 @@ import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.PotionUtils;
 
 public class RodTridimensionnelle implements Listener {
-    public static final ItemStack getItem() {
+    public static ItemStack getItem() {
         return new ItemBuilder(Material.FISHING_ROD).setName("§f§lEquipement Tridimensionnel").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore("§7Utilisation plus réaliste de l'§lEquipement Tridimentionnel").setUnbreakable(true).toItemStack();
     }
     GameState gameState;

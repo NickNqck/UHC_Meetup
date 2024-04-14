@@ -97,6 +97,7 @@ public class Main extends JavaPlugin implements Listener{
 	@Getter
 	private static Main Instance;
 	public static Random RANDOM;
+
 	@Override
 	public void onEnable() {
 		Instance = this;

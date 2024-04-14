@@ -24,7 +24,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 
 public class Arctridi implements Listener{
-	private GameState gameState;
+	private final GameState gameState;
 	public Arctridi(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -46,12 +46,12 @@ public class Arctridi implements Listener{
             }
         }
     }
-	private List<Player> noFall = new ArrayList<>();
+	private final List<Player> noFall = new ArrayList<>();
 	@EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
     	if (gameState.getServerState() != ServerStates.InGame)return;
-    	if (event.getEntity() instanceof Arrow) {
-    		if (event.getEntity().hasMetadata("teleportArrow "+gameState.getPlayerRoles().get(event.getEntity().getShooter()).roleID)) {
+    	if (event.getEntity() instanceof Arrow && event.getEntity().getShooter() instanceof Player) {
+    		if (event.getEntity().hasMetadata("teleportArrow "+gameState.getPlayerRoles().get((Player)event.getEntity().getShooter()).roleID)) {
                 Arrow arrow = (Arrow) event.getEntity();
                 Player player = (Player) arrow.getShooter();
                 if (gameState.getPlayerRoles().get(player).ArcTridiCooldown() <= 0 && !gameState.getPlayerRoles().get(player).isTransformedinTitan) {
@@ -71,11 +71,9 @@ public class Arctridi implements Listener{
                         	gameState.getPlayerRoles().get(player).gazAmount-=gazToRemove;
                         	DecimalFormat df = new DecimalFormat("0.0");
                         	player.sendMessage("§7Vous avez perdu§c "+df.format(gazToRemove)+"%§7 de gaz, il ne vous reste que §c"+df.format(gameState.getPlayerRoles().get(player).gazAmount)+"%");
-                        	event.getEntity().removeMetadata("teleportArrow "+gameState.getPlayerRoles().get(event.getEntity().getShooter()).roleID, Main.getInstance());
+                        	event.getEntity().removeMetadata("teleportArrow "+gameState.getPlayerRoles().get((Player)event.getEntity().getShooter()).roleID, Main.getInstance());
                         }
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-                        	noFall.remove(player);
-            	        }, 20*5);
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> noFall.remove(player), 20*5);
                 	}
                 } else {
                 	if (gameState.getPlayerRoles().get(player).getActualCooldownArc() > 0) {
@@ -92,8 +90,8 @@ public class Arctridi implements Listener{
  
     @EventHandler
     public void onDamage(EntityDamageEvent e) {
-    	if (e.getCause() == DamageCause.FALL || e.getCause() == DamageCause.FALLING_BLOCK) {
-    		if (noFall.contains(e.getEntity())) {
+    	if (e.getCause() == DamageCause.FALL && e.getEntity() instanceof Player) {
+    		if (noFall.contains((Player)e.getEntity())) {
     			e.setCancelled(true);
     		}
     	}

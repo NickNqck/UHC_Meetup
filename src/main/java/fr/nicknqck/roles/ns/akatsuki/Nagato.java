@@ -34,12 +34,14 @@ public class Nagato extends RoleBase {
         super(player, roles, gameState);
         setChakraType(Chakras.SUITON);
         player.sendMessage(Desc());
+        super.setForce(20.0);
     }
 
     @Override
     public void GiveItems() {
         super.GiveItems();
         super.giveItem(owner, false, getItems());
+        super.giveHealedHeartatInt(owner, 3.0);
     }
 
     @Override
@@ -143,6 +145,7 @@ public class Nagato extends RoleBase {
     @Override
     public void Update(GameState gameState) {
         super.Update(gameState);
+        givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
         if (cdShikushodo >= 0){
             cdShikushodo--;
             if (cdShikushodo == 0){
@@ -202,8 +205,6 @@ public class Nagato extends RoleBase {
                     target.teleport(owner);
                     owner.sendMessage("§7Vous avez téléporter§c "+target.getDisplayName()+"§7 à votre position.");
                     cdLeftBensho = 60*5;
-                    givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*60*3, 1, true);
-                    setForce(20.0);
                 } else {
                     owner.sendMessage("§cIl faut viser un joueur !");
                 }
@@ -216,7 +217,6 @@ public class Nagato extends RoleBase {
                 NF.addAll(pu.getPropulsedUUID());
                 pu.applyPropulsion();
                 owner.sendMessage("§7Vous avez utiliser votre§c Shinra Tensei");
-                givePotionEffet(PotionEffectType.SPEED, 20*60, 1, true);
                 cdRightBensho = 60*3;
             }
         }
