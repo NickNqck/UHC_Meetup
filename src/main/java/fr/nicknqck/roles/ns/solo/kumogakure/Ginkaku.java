@@ -8,13 +8,11 @@ import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.StringUtils;
-import net.minecraft.server.v1_8_R3.Vec3D;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -25,7 +23,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -188,7 +185,7 @@ public class Ginkaku extends RoleBase{
 			if (cdCorde <= 0){
 				Player target = getTargetPlayer(owner, 25);
 				if (target != null){
-					ejectPlayers(owner.getLocation(), target);
+					new PropulserUtils(owner, 30).setNoFall(true).applyPropulsion(target);
 					owner.sendMessage("§7Vous éjectez§c "+target.getDisplayName()+"§7.");
 					cdCorde = 120;
 					if (checker == null){
@@ -255,17 +252,6 @@ public class Ginkaku extends RoleBase{
 		cdSabre = 0;
 		cdCorde = 0;
 		cdGourde = 0;
-	}
-	private void ejectPlayers(final Location location, final Player player) {
-			final double distance = Math.sqrt(Math.pow(player.getLocation().getX() - location.getX(), 2) + Math.pow(player.getLocation().getY() - location.getY(), 2) + Math.pow(player.getLocation().getZ() - location.getZ(), 2));
-
-			final double exposure = ((CraftWorld) player.getWorld()).getHandle().a(new Vec3D(location.getX(), location.getY(), location.getZ()), ((CraftEntity) player).getHandle().getBoundingBox());
-
-			final double multiply = (1D - (distance / (8 * 2F))) * exposure;
-
-			final Vector vector = new Vector((player.getLocation().getX() - location.getX()) * multiply, (player.getLocation().getY() + 1.62D - location.getY()) * multiply, (player.getLocation().getZ() - location.getZ()) * multiply);
-
-			player.setVelocity(player.getVelocity().add(vector));
 	}
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {

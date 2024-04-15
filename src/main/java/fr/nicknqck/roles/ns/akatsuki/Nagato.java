@@ -27,8 +27,8 @@ public class Nagato extends RoleBase {
     private int cdShikushodo = 0;
     private int useNingendo = 0;
     private final ItemStack BenshoItem = new ItemBuilder(Material.NETHER_STAR).setName("§cBenshô Ten'in").setLore("§7").toItemStack();
-    private int cdLeftBensho = 0;
-    private int cdRightBensho = 0;
+    private int cdTpMe = 0;
+    private int cdRepousser = 0;
     private final List<UUID> NF = new ArrayList<>();
     public Nagato(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
@@ -58,8 +58,8 @@ public class Nagato extends RoleBase {
                 AllDesc.point+"Shikushodo: Permet via un clique droit de ce téléporter à un emplacement au préalable prédéfinie via un shift + clique droit",
                 "",
                 AllDesc.point+"§cBenshô Ten'In§f: Effectue différente action en fonction du clique utiliser: ",
-                AllDesc.tab+"§aClique droit§f: Vous permet de repousser toute entité étant à moins de§c 20 blocs§f de vous.",
-                AllDesc.tab+"§cClique gauche§f: Vous permet de téléporter le joueur viser à votre position.",
+                AllDesc.tab+"§aClique gauche§f: Vous permet de repousser toute entité étant à moins de§c 20 blocs§f de vous.",
+                AllDesc.tab+"§cClique droit§f: Vous permet de téléporter le joueur viser à votre position.",
                 "",
                 AllDesc.commande,
                 "",
@@ -138,8 +138,8 @@ public class Nagato extends RoleBase {
         cdShikushodo = 0;
         ShikushodoLoc = null;
         useNingendo = 0;
-        cdLeftBensho = 0;
-        cdRightBensho = 0;
+        cdTpMe = 0;
+        cdRepousser = 0;
     }
 
     @Override
@@ -152,15 +152,15 @@ public class Nagato extends RoleBase {
                 owner.sendMessage("§7Vous pouvez à nouveau vous téléportez à l'emplacement de§f Shikushodo§7.");
             }
         }
-        if (cdLeftBensho >= 0){
-            cdLeftBensho--;
-            if (cdLeftBensho == 0){
+        if (cdTpMe >= 0){
+            cdTpMe--;
+            if (cdTpMe == 0){
                 owner.sendMessage("§7Vous pouvez à nouveau téléporter un joueur à votre position.");
             }
         }
-        if (cdRightBensho >= 0){
-            cdRightBensho--;
-            if (cdRightBensho == 0){
+        if (cdRepousser >= 0){
+            cdRepousser--;
+            if (cdRepousser == 0){
                 owner.sendMessage("§7Vous pouvez à nouveau éjecter les joueurs proches de vous.");
             }
         }
@@ -195,29 +195,29 @@ public class Nagato extends RoleBase {
     public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
         super.onALLPlayerInteract(event, player);
         if (player.getUniqueId().equals(owner.getUniqueId()) && event.getItem().isSimilar(BenshoItem)){
-            if (event.getAction().name().contains("LEFT")){
-                if (cdLeftBensho > 0){
-                    sendCooldown(owner, cdLeftBensho);
+            if (event.getAction().name().contains("RIGHT")){
+                if (cdTpMe > 0){
+                    sendCooldown(owner, cdTpMe);
                     return;
                 }
                 Player target = getTargetPlayer(owner, 50);
                 if (target != null){
                     target.teleport(owner);
                     owner.sendMessage("§7Vous avez téléporter§c "+target.getDisplayName()+"§7 à votre position.");
-                    cdLeftBensho = 60*5;
+                    cdTpMe = 60*5;
                 } else {
                     owner.sendMessage("§cIl faut viser un joueur !");
                 }
             } else {
-                if (cdRightBensho > 0){
-                    sendCooldown(owner, cdRightBensho);
+                if (cdRepousser > 0){
+                    sendCooldown(owner, cdRepousser);
                     return;
                 }
                 PropulserUtils pu = new PropulserUtils(owner, 20).soundToPlay("nsmtp.shinratensei");
                 NF.addAll(pu.getPropulsedUUID());
                 pu.applyPropulsion();
                 owner.sendMessage("§7Vous avez utiliser votre§c Shinra Tensei");
-                cdRightBensho = 60*3;
+                cdRepousser = 60*3;
             }
         }
     }
