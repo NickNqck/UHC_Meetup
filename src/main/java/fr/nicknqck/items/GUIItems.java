@@ -597,6 +597,9 @@ public static ItemStack getSelectConfigButton() {
 	public static ItemStack getSelectShinobiButton() {
 		return new ItemBuilder(Material.INK_SACK).setDurability(10).setName("§aShinobi").toItemStack();
 	}
+	public static ItemStack getSelectKumogakureButton() {
+		return new ItemBuilder(Material.INK_SACK).setDurability(14).setName("§6Kumogakure").toItemStack();
+	}
 	public static Inventory getSelectNSShinobiInventory() {
 		return Bukkit.createInventory(null, 54, "§aNaruto§7 ->§a Shinobi");
 	}

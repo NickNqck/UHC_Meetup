@@ -20,13 +20,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class Nagato extends RoleBase {
-    private final ItemStack ShuradoItem = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setName("§7Shuradô").setLore("§7").toItemStack();
+    private final ItemStack ShuradoItem = new ItemBuilder(Material.DIAMOND_SWORD).hideEnchantAttributes().addEnchant(Enchantment.DAMAGE_ALL, 4).setName("§7Shuradô").setLore("§7Sharpness IV").toItemStack();
     private int useJikogudo = 0;
-    private final ItemStack ShikushodoItem = new ItemBuilder(Material.NETHER_STAR).setName("§fShikushodo").setLore("§7").toItemStack();
+    private final ItemStack ShikushodoItem = new ItemBuilder(Material.NETHER_STAR).setName("§fShikushodo").setLore(
+            "§aShift + Clique droit§f: Vous permet de placer un point de téléportation à votre position.",
+            "",
+            "§cClique droit§f: Vous permet de vous téléportez à la dernière position poser.").toItemStack();
     private Location ShikushodoLoc;
     private int cdShikushodo = 0;
     private int useNingendo = 0;
-    private final ItemStack BenshoItem = new ItemBuilder(Material.NETHER_STAR).setName("§cBenshô Ten'in").setLore("§7").toItemStack();
+    private final ItemStack BenshoItem = new ItemBuilder(Material.NETHER_STAR).setName("§cBenshô Ten'in").setLore("§aClique gauche§f: Vous permet de repousser toute entité étant à moins de§c 20 blocs§f de vous.","","§cClique droit§f: Vous permet de téléporter le joueur viser à votre position.").toItemStack();
     private int cdTpMe = 0;
     private int cdRepousser = 0;
     private final List<UUID> NF = new ArrayList<>();
@@ -65,7 +68,7 @@ public class Nagato extends RoleBase {
                 "",
                 AllDesc.point+"§6/ns jigokudo <joueur>§f: Vous permet (si vous êtes à moins de§c 15 blocs§f du joueur) d'obtenir précisément le rôle du joueur viser.",
                 "",
-                AllDesc.point+"§6/ns ningendo <joueur>§f: Vous permet (si vous êtes proche à moins de§c 15 blocs du joueur) d'obtenir précisément le camp du joueur ainsi que son nombre de§e pomme d'or§f.",
+                AllDesc.point+"§6/ns ningendo <joueur>§f: Vous permet (si vous êtes proche à moins de§c 15 blocs du joueur§f) d'obtenir précisément le camp du joueur ainsi que son nombre de§e pomme d'or§f.",
                 "",
                 AllDesc.particularite,
                 "",
@@ -89,7 +92,7 @@ public class Nagato extends RoleBase {
                 if (target != null){
                     if (Loc.getNearbyPlayersExcept(owner, 15).contains(target)){
                         if (!gameState.hasRoleNull(target)){
-                            owner.sendMessage(getTeamColor(target)+"§f possède le rôle: "+getPlayerRoles(target).type.getItem().getItemMeta().getDisplayName());
+                            owner.sendMessage(getPlayerRoles(target).type.getTeam().getColor()+target.getDisplayName()+"§f possède le rôle: "+getPlayerRoles(target).type.getItem().getItemMeta().getDisplayName());
                             useJikogudo++;
                         }
                     } else {
@@ -110,8 +113,10 @@ public class Nagato extends RoleBase {
                 if (target != null){
                     if (Loc.getNearbyPlayersExcept(owner, 15).contains(target)){
                         if (!gameState.hasRoleNull(target)){
-                            owner.sendMessage(target.getDisplayName()+"§7 est dans le camp: "+getTeamColor(target)+getTeam(target).name()+"§7, et possède exactement "+ GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE));
+                            owner.sendMessage(getTeamColor(target)+target.getDisplayName()+"§7 est dans le camp: "+getTeamColor(target)+getTeam(target).name()+"§7, et possède exactement "+ GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE)+"§e pommes d'or");
                             useNingendo++;
+                        } else {
+                            owner.sendMessage(target.getDisplayName()+" ne possède pas de rôle, et donc de team.");
                         }
                     } else {
                         owner.sendMessage("§cVous n'êtes pas asser proche du joueur viser");

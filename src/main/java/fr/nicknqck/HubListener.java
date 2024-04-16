@@ -248,6 +248,7 @@ public class HubListener implements Listener {
 				boolean orochimaru = item.isSimilar(GUIItems.getSelectOrochimaruButton());
 				boolean brume = item.isSimilar(GUIItems.getSelectBrumeButton());
 				boolean shinobi = item.isSimilar(GUIItems.getSelectShinobiButton());
+				boolean kumo = item.isSimilar(GUIItems.getSelectKumogakureButton());
 				if (!item.hasItemMeta())return;
 				switch(inv.getTitle()) {
 				case "§fConfiguration":
@@ -1514,6 +1515,12 @@ public class HubListener implements Listener {
 							event.setCancelled(true);
 							return;
 						}
+						if (kumo){
+							player.openInventory(Bukkit.createInventory(player, 54, "§eSolo§7 ->§6 Kumogakure"));
+							updateNSKumogakure(player);
+							event.setCancelled(true);
+							return;
+						}
 						if (gameState.getHost().contains(player) || player.isOp()) {
 							for (Roles roles : Roles.values()) {
 								if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
@@ -1532,8 +1539,8 @@ public class HubListener implements Listener {
 					if (!item.hasItemMeta())return;
 					if (!item.getItemMeta().hasDisplayName())return;
 					if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-						player.openInventory(GUIItems.getRoleSelectGUI());
-						updateRoleInventory(player);
+						player.openInventory(GUIItems.getSelectNSSoloInventory());
+						updateNSSoloInventory(player);
 					} else {
 						if (gameState.getHost().contains(player) || player.isOp()) {
 							for (Roles roles : Roles.values()) {
@@ -1591,6 +1598,27 @@ public class HubListener implements Listener {
 					}
 					event.setCancelled(true);
 					break;
+				case "§eSolo§7 ->§6 Kumogakure":
+					if (!item.hasItemMeta())return;
+					if (!item.getItemMeta().hasDisplayName())return;
+					if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+						player.openInventory(GUIItems.getSelectNSSoloInventory());
+						updateNSSoloInventory(player);
+					} else {
+						if (gameState.getHost().contains(player) || player.isOp()) {
+							for (Roles roles : Roles.values()) {
+								if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
+									if (action.equals(InventoryAction.PICKUP_ALL)) {
+										gameState.addInAvailableRoles(roles, Math.min(gameState.getInLobbyPlayers().size(), gameState.getAvailableRoles().get(roles)+1));
+									} else if (action.equals(InventoryAction.PICKUP_HALF)) {
+										gameState.addInAvailableRoles(roles, Math.max(0, gameState.getAvailableRoles().get(roles)-1));
+									}
+								}
+							}
+						}
+					}
+					event.setCancelled(true);
+					break;
 		    	default:
 		    		break;
 				}
@@ -1617,9 +1645,61 @@ public class HubListener implements Listener {
 	    			updateNSJubiInventory(p);
 	    			updateNSBrumeInventory(p);
 	    			updateNSShinobiInventory(p);
+					updateNSKumogakure(p);
 				}
 		    }
 		}
+	}
+	private void updateNSKumogakure(Player player) {
+		InventoryView invView = player.getOpenInventory();
+		if (invView != null) {
+			Inventory inv = invView.getTopInventory();
+			if (inv != null) {
+				if (inv.getTitle().equals("§eSolo§7 ->§6 Kumogakure")) {
+					inv.clear();
+					ItemStack glass = GUIItems.getOrangeStainedGlassPane();
+					inv.setItem(0, glass);
+					inv.setItem(1, glass);
+					inv.setItem(9, glass);//haut gauche
+
+					inv.setItem(4, GUIItems.getSelectBackMenu());
+					if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+					if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+					inv.setItem(7, glass);//haut droite
+					inv.setItem(8, glass);
+					inv.setItem(17, glass);
+
+					inv.setItem(45, glass);
+					inv.setItem(46, glass);
+					inv.setItem(36, glass);//bas gauche
+
+					inv.setItem(44, glass);
+					inv.setItem(52, glass);
+					inv.setItem(53, glass);//bas droite
+
+					inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
+					inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
+					inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
+					for (Roles roles : Roles.values()) {
+						if (roles.getTeam() == TeamList.Kumogakure) {
+							String l1 = "";
+							if (gameState.getAvailableRoles().get(roles) > 0) {
+								l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+							} else {
+								l1 = "§c(0)";
+							}
+							inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+						}
+					}
+					inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
+					inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
+					inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
+				}
+			}
+		}
+		player.updateInventory();
+		gameState.updateGameCanLaunch();
 	}
 	private void updateNSShinobiInventory(Player player) {
 		InventoryView invView = player.getOpenInventory();
@@ -2696,6 +2776,7 @@ public class HubListener implements Listener {
 					inv.setItem(2, GUIItems.getSelectJubiButton());
 					inv.setItem(3, GUIItems.getSelectBrumeButton());
 					inv.setItem(4, GUIItems.getSelectBackMenu());
+					inv.setItem(5, GUIItems.getSelectKumogakureButton());
 				if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
 				if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 					
@@ -2710,8 +2791,7 @@ public class HubListener implements Listener {
 					inv.setItem(44, GUIItems.getOrangeStainedGlassPane());
 					inv.setItem(52, GUIItems.getOrangeStainedGlassPane());
 					inv.setItem(53, GUIItems.getOrangeStainedGlassPane());//bas droite
-					
-					inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
+
 					for (Roles roles : Roles.values()) {
 						if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ns")) {
 							String l1 = "";
@@ -2723,7 +2803,6 @@ public class HubListener implements Listener {
 							inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
 						}
 					}
-					inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
 				}
 			}
 		}

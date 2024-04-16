@@ -29,12 +29,7 @@ public enum TeamList {
 	public void addPlayer(Player player) {
 		list.add(player);
 	}
-	public static TeamList getPlayerTeam(Player player) {
-		return java.util.Arrays.stream(TeamList.values()).filter(teamList -> teamList.list.contains(player)).findAny().get();
-	}
-	public void removePlayer(Player player) {
-		list.remove(player);
-	}
+
 	public java.util.List<Player> getPlayers(){
 		return list;
 	}
