@@ -1,32 +1,5 @@
 package fr.nicknqck.roles.ns.solo.jubi;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
@@ -36,21 +9,34 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.GlobalUtils;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.KamuiUtils;
+import fr.nicknqck.roles.ns.power.Izanami;
+import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.KamuiUtils.Users;
 import fr.nicknqck.utils.particles.MathUtil;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Obito extends RoleBase {
 	public List<Player> Tsukuyomi = new ArrayList<>();
-
+	private fr.nicknqck.roles.ns.power.Izanami izanami;
 	public Obito(Player player, Roles roles, GameState gameState) {
 		super(player, roles, gameState);
 		setChakraType(Chakras.KATON);
@@ -60,69 +46,30 @@ public class Obito extends RoleBase {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}
-		missionsO.clear();
-		missionI = new HashMap<Integer, MissionInfecte>();
-		for (MissionObito mo : MissionObito.values()) {
-			mo.setFinished(false);
-		}
-		for (MissionInfecte mi : MissionInfecte.values()) {
-			mi.setFinished(false);
-		}
 	}
-	public class ObitoRunnable extends BukkitRunnable{
-
+	private static class ObitoRunnable extends BukkitRunnable{
+		private final Obito obito;
+		ObitoRunnable(Obito owner){
+			this.obito = owner;
+		}
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			if (gameState.getServerState() != ServerStates.InGame) {
+			if (GameState.getInstance().getServerState() != ServerStates.InGame) {
 				cancel();
 			}
-			if (toIzanami != null) {
-				if (missionI.get(1) == MissionInfecte.Bouger && !Tsukuyomi.contains(toIzanami)) {
-					Location loc = toIzanami.getLocation().clone();
-					loc.setPitch(0);
-					loc.setYaw(0);
-					if (sansbougerLoc != null) {
-						if (loc.equals(sansbougerLoc)) {
-							timesansbouger++;
-						}
-					}
-				}
-				if (missionsO.get(1) == MissionObito.Rester || missionsO.get(2) == MissionObito.Rester) {
-					for(Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-						if (p.getUniqueId() == toIzanami.getUniqueId()) {
-							timepassedp++;
-						}
-					}
-					if (timepassedp == 60*5) {
-						owner.sendMessage("§7Vous avez fini l'une de vos mission !");
-						MissionObito.Rester.setFinished(true);
-					}
-				}
-			}
-			if (timesansbouger == 5 && missionI.get(1) == MissionInfecte.Bouger) {
-				owner.sendMessage("§7Votre cible à accomplie sa mission !");
-				missionI.get(1).setFinished(true);
-			}
-			if (missionsO.size() == 2) {
-				if (missionsO.get(1).getifFinished()) {
-					if (missionsO.get(2).getifFinished()) {
-						if (missionI.size() == 1) {
-							if (missionI.get(1).getifFinished()) {
-								if (!b) {
-									owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant le camp§d Jubi");
-									getPlayerRoles(toIzanami).setOldTeamList(getPlayerRoles(toIzanami).getTeam());
-									getPlayerRoles(toIzanami).setTeam(getPlayerRoles(owner).getTeam());
-									toIzanami.resetTitle();
-									b = true;
-									toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp§d Jubi");
-									toIzanami.sendMessage("§7Voici l'identité de vos coéquipier§d Obito: "+(getPlayerFromRole(Roles.Obito) != null ? getPlayerFromRole(Roles.Obito).getName() : "§cMort")+"§f et§d Madara: "+(getPlayerFromRole(Roles.Madara) != null ? getPlayerFromRole(Roles.Madara).getName() : "§cMort"));
-									System.out.println("Obito izanami finished");
-									cancel();
-								}
-							}
-						}
-					}
+			if (obito.izanami.isAllTrue()) {
+				Player owner = Bukkit.getPlayer(obito.izanami.getUser());
+				Player toIzanami = Bukkit.getPlayer(obito.izanami.getTarget());
+				if (owner != null && toIzanami != null) {
+					owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
+					obito.getPlayerRoles(toIzanami).setOldTeamList(obito.getPlayerRoles(toIzanami).getTeam());
+					obito.getPlayerRoles(toIzanami).setTeam(obito.getPlayerRoles(owner).getTeam());
+					obito.toIzanami.resetTitle();
+					obito.toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+obito.getTeamColor(owner)+obito.getTeam().name());
+					obito.toIzanami.sendMessage("§7Voici l'identité de votre coéquipier§e Sasuke: "+(obito.getPlayerFromRole(Roles.Obito) != null ? obito.getPlayerFromRole(Roles.Obito).getName() : "§cMort"));
+					obito.hasIzanami = true;
+					cancel();
 				}
 			}
 		}
@@ -195,11 +142,9 @@ public class Obito extends RoleBase {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target == null) {
 					owner.sendMessage("§CVeuiller cibler un joueur éxistant !");
-					return;
 				}else {
 					if (target.getWorld().equals(Bukkit.getWorld("Kamui"))) {
 						KamuiUtils.end(target);
-						return;
 					}
 				}
 			}
@@ -247,14 +192,12 @@ public class Obito extends RoleBase {
 		if (!Izanami) {
 			inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous permez d'infecter quelqu'un").toItemStack());
 		} else {
-			if (Izanami) {
-				if (b) {
-					return inv;
-				} else {
-					inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous êtes en cours d'infection").toItemStack());
-				}
-			}
-		}
+            if (hasIzanami) {
+                return inv;
+            } else {
+                inv.setItem(8, new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous êtes en cours d'infection").toItemStack());
+            }
+        }
 		return inv;
 	}
 	private int cdSonohoka = 0;
@@ -328,76 +271,13 @@ public class Obito extends RoleBase {
 			owner.openInventory(toOpen);
 		} else {
 			Inventory inv = Bukkit.createInventory(owner, 9, "§cIzanami");
-			String l1 = "§eVotre missions \"§f"+missionsO.get(1).getMission()+"\"§e est "+(missionsO.get(1).getifFinished() ? "§aTerminé" : "§cInachevé§f"+(missionsO.get(1) == MissionObito.Fraper ? " (§c"+fraper+"§f/§615§f)" : (missionsO.get(1) == MissionObito.Rester ? " (§c"+StringUtils.secondsTowardsBeautiful(timepassedp)+"§f/§65m§f)" : missionsO.get(1) == MissionObito.Taper ? " (§c"+taper+"§f/§615§f)" :"")));
-			String l2 = "§eVotre missions \"§f"+missionsO.get(2).getMission()+"\"§e est "+(missionsO.get(2).getifFinished() ? "§aTerminé" : "§cInachevé§f"+(missionsO.get(2) == MissionObito.Fraper ? " (§c"+fraper+"§f/§615§f)" : (missionsO.get(2) == MissionObito.Rester ? " (§c"+StringUtils.secondsTowardsBeautiful(timepassedp)+"§f/§65m§f)" : (missionsO.get(2) == MissionObito.Taper ? " (§c"+taper+"§f/§615§f)" :""))));
-			inv.setItem(3, new ItemBuilder(GlobalUtils.getPlayerHead(owner.getUniqueId())).setName("§eVos objectifs").setLore("",l1,l2).toItemStack());
-			String l3 = "§eSa mission \"§f"+missionI.get(1).getMission()+"\"§e est "+(missionI.get(1).getifFinished() ? "§aTerminé" : "§cInachevé§f"+(missionI.get(1) == MissionInfecte.Gap ? "(§c"+gapEated+"§f/§65§f)" : ""));
-			inv.setItem(5, new ItemBuilder(Material.NETHER_STAR).setName("§eSon objectif").setLore("",l3).toItemStack());
+			inv.setItem(3, new ItemBuilder(GlobalUtils.getPlayerHead(owner.getUniqueId())).setName("§eVos objectifs").setLore("").toItemStack());
+			inv.setItem(5, new ItemBuilder(Material.NETHER_STAR).setName("§eSon objectif").setLore("").toItemStack());
 			inv.setItem(8, GUIItems.getSelectBackMenu());
 			owner.openInventory(inv);
 		}
 	}
-	private int timesansbouger = 0;
-	private Location sansbougerLoc = null;
-	private int taper = 0;
-	boolean b = false;
-	private int fraper = 0;
-	private int timepassedp = 0;
-	private enum MissionObito {
-		Taper(0, "Tapée la cible 15x", false),
-		Lave(1, "Mettre de la§6 lave§7 sous la cible", false),
-		Fraper(2, "Être frappé par l'épée de la cible 15x", false),
-		Gap(3, "Donner une pomme d'or à la cible", false),
-		Rester(4, "Rester proche de la cible pendant 5m", false);
-		
-		private String mission;
-		private int nmb;
-		private boolean finished;
-		private MissionObito(int nmb, String string, boolean fini) {
-			this.nmb=nmb;
-			this.mission = string;
-			this.finished = fini;
-		}
-		public String getMission() {
-			return mission;
-		}
-		public int getNMB() {
-			return nmb;
-		}
-		public boolean getifFinished() {
-			return finished;
-		}
-		public void setFinished(boolean b) {
-			this.finished = b;
-		}
-	}
-	private enum MissionInfecte {
-		Tuer(0, "Tuer un joueur", false),
-		Gap(1, "Manger 5§e pommes d'or", false),
-		Bouger(2, "Ne pas bouger pendant 5s (§nsans§c Tsukuyomi§f)", false);
-		private String mission;
-		private int nmb;
-		private boolean finished;
-		private MissionInfecte(int nmb, String string, boolean fini) {
-			this.nmb=nmb;
-			this.mission = string;
-			this.finished = fini;
-		}
-		public String getMission() {
-			return mission;
-		}
-		public int getNMB() {
-			return nmb;
-		}
-		public boolean getifFinished() {
-			return finished;
-		}
-		public void setFinished(boolean b) {
-			this.finished = b;
-		}
-	}
-	private HashMap<Integer, MissionInfecte> missionI = new HashMap<>();
-	private Location lavaLoc = null;
+	private boolean hasIzanami = false;
 	private Bijus traqued = null;
 	@Override
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
@@ -422,23 +302,6 @@ public class Obito extends RoleBase {
 			}
 		}
 	}
-	@Override
-	public boolean onBucketEmpty(Material bucket, Block block, GameState gameState, Player player) {
-		if (bucket == Material.LAVA_BUCKET) {
-				this.lavaLoc = block.getLocation();
-		}
-		return false;
-	}
-	@Override
-	public void onBucketFill(PlayerBucketFillEvent e, Material bucket) {
-		Block block = e.getBlockClicked().getRelative(e.getBlockFace());
-		if (lavaLoc != null) {
-			if (block.getLocation() == lavaLoc) {
-				lavaLoc = null;
-			}
-		}
-	}
-	private Map<Integer, MissionObito> missionsO = new HashMap<>();
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
@@ -494,30 +357,6 @@ public class Obito extends RoleBase {
 		}
 		owner.openInventory(inv);
 	}
-	private int gapEated = 0;
-	private boolean toIzanaKillqql = false;
-	@Override
-	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {
-		if (toIzanami != null) {
-			if (missionI.get(1).equals(MissionInfecte.Gap) && !missionI.get(1).getifFinished() && eater.getUniqueId() == toIzanami.getUniqueId()) {
-				gapEated++;
-				if (gapEated == 5) {
-					owner.sendMessage("§7Votre victime à accomplie sa mission !");
-					missionI.get(1).setFinished(true);
-				}
-			}
-		}
-	}
-	@Override
-	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (toIzanami != null) {
-			if (killer.getUniqueId() == toIzanami.getUniqueId() && missionI.get(1) == MissionInfecte.Tuer && !toIzanaKillqql) {
-				toIzanaKillqql = true;
-				owner.sendMessage("§7Votre victime à accomplie sa mission !");
-				missionI.get(1).setFinished(true);
-			}
-		}
-	}
 	@Override
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 		if (clicker.getUniqueId() == owner.getUniqueId()) {
@@ -545,7 +384,7 @@ public class Obito extends RoleBase {
 					}
 				}
 				if (inv.getTitle().equals("§cKamui§7 ->§d Sonohaka")) {
-					if (item != null && item.getType() != Material.AIR) {
+					if (item.getType() != Material.AIR) {
 						if (item.isSimilar(GUIItems.getSelectBackMenu())) {
 							owner.openInventory(KamuiInventory());
 							event.setCancelled(true);
@@ -570,8 +409,7 @@ public class Obito extends RoleBase {
 											}
 											if (clicked.getWorld() != Bukkit.getWorld("Kamui")) {
 												cancel();
-												return;
-											}
+                                            }
 										}
 									}.runTaskTimer(Main.getInstance(), 0, 20);
 									cdSonohoka = 60*15;
@@ -608,7 +446,7 @@ public class Obito extends RoleBase {
 											return;
 										}
 										i++;
-										if (owner.getWorld().getName() != "Kamui") {
+										if (!owner.getWorld().getName().equals("Kamui")) {
 											cancel();
 											return;
 										}
@@ -616,29 +454,26 @@ public class Obito extends RoleBase {
 											owner.sendMessage("§7Vous sortez du§d Kamui§7 !");
 											KamuiUtils.end(owner);
 											cancel();
-											return;
-										} else {
+                                        } else {
 											sendCustomActionBar(owner, "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful((60*3)-i));
 										}
 									}
 								}.runTaskTimer(Main.getInstance(), 0, 20);
-								return;
-						} else {
+                        } else {
 							sendCooldown(clicker, cdArimasu);
-							return;
-						}
-					}
+                        }
+                        return;
+                    }
 					if (event.getSlot() == 7) {
 						event.setCancelled(true);
 						owner.closeInventory();
 						if (cdSonohoka <= 0) {
 								openSonohakaInventory();
-								return;
-						} else {
+                        } else {
 							sendCooldown(clicker, cdSonohoka);
-							return;
-						}
-					}
+                        }
+                        return;
+                    }
 				}
 				if (inv.getTitle().equalsIgnoreCase("§cGenjutsu")) {
 					event.setCancelled(true);
@@ -658,7 +493,7 @@ public class Obito extends RoleBase {
 							sendCooldown(owner, cdAttaque);
 						}
 					}
-					if (!b) {
+					if (!hasIzanami) {
 						if (event.getSlot()== 8) {
 							openIzanamiInventory();
 							event.setCancelled(true);
@@ -703,36 +538,11 @@ public class Obito extends RoleBase {
 								toIzanami = clicked;
 								clicker.sendMessage("§cL'izanami§7 commence...");
 								clicker.closeInventory();
-								missionsO.clear();
-								int rdm1 = RandomUtils.getRandomInt(0, 4);
-								int rdm2 = rdm1;
-								while (rdm2 == rdm1) {
-									rdm2 = RandomUtils.getRandomInt(0, 4);
-								}
-								int rdm3 = RandomUtils.getRandomInt(0, 2);
-								for (MissionObito mo : MissionObito.values()) {
-										if (mo.getNMB() == rdm1) {
-											missionsO.put(1, mo);
-										}
-										if (mo.getNMB() == rdm2) {
-											missionsO.put(2, mo);
-										}
-								}
-								for (MissionInfecte mi : MissionInfecte.values()) {
-									if (mi.getNMB() == rdm3) {
-										missionI.put(1, mi);
-									}
-								}
-								clicker.sendMessage(new String[] {
-										"",
-										"§7Votre première mission est \"§n"+missionsO.get(1).getMission()+"§7\",",
-										"§7Votre deuxième mission est \"§n"+missionsO.get(2).getMission()+"§7\""
-										,"",
-										"§7La mission de \"§l"+clicked.getDisplayName()+"§7\"§7 est \"§n"+missionI.get(1).getMission()+"§7\"",
-										""
-								});
-								new ObitoRunnable().runTaskTimer(Main.getInstance(), 0, 20);
-								return;
+								Izanami izanami1 = new Izanami(clicker.getUniqueId(), clicked.getUniqueId());
+								izanami1.start("§d");
+								this.izanami = izanami1;
+								clicker.sendMessage(izanami1.getStringsMission());
+								new ObitoRunnable(this).runTaskTimer(Main.getInstance(), 0, 20);
 							}
 						}
 					}
@@ -740,7 +550,6 @@ public class Obito extends RoleBase {
 			}
 		}
 	}
-	private Map<UUID, ItemStack> drop = new HashMap<>();
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {
@@ -753,36 +562,6 @@ public class Obito extends RoleBase {
 					Madara.sendMessage(CC.translate("&dObito: "+msg.substring(1)));
 				}
 			}
-		}
-	}
-	@Override
-	public void onALLPlayerDropItem(PlayerDropItemEvent e, Player dropper, ItemStack item) {
-		if (dropper.getUniqueId() == owner.getUniqueId()) {
-			if (missionsO.get(1) == MissionObito.Gap || missionsO.get(2) == MissionObito.Gap) {
-				if (item.getType() == Material.GOLDEN_APPLE) {
-					drop.put(owner.getUniqueId(), item);
-				}
-			}
-		}
-	}
-	@Override
-	public void onALLPlayerRecupItem(PlayerPickupItemEvent e, ItemStack s) {
-		if (toIzanami != null) {
-				if (missionsO.get(1) == MissionObito.Gap || missionsO.get(2) == MissionObito.Gap) {
-					if (e.getPlayer() == toIzanami && !MissionObito.Gap.getifFinished()) {
-						if (!drop.containsKey(owner.getUniqueId())) {
-							return;
-						}
-						if (drop.get(owner.getUniqueId()) == null) {
-							return;
-						}
-						if (drop.get(owner.getUniqueId()).isSimilar(s)) {
-							owner.sendMessage("§7Vous venez d'accomplir l'une de vos mission");
-							MissionObito.Gap.setFinished(true);
-							drop.remove(owner.getUniqueId(), s);
-						}
-					}
-				}
 		}
 	}
 	@Override
@@ -801,66 +580,12 @@ public class Obito extends RoleBase {
 			event.setDamage(0);
 			event.setCancelled(true);
 		}
-		if (toIzanami != null) {
-			if (toIzanami.getUniqueId() == victim.getUniqueId()) {
-				if (entity.getUniqueId() == owner.getUniqueId()) {
-					if (missionsO.get(1) ==MissionObito.Taper || missionsO.get(2) == MissionObito.Taper) {
-						if (!MissionObito.Taper.getifFinished()) {
-								taper++;
-								if (taper == 15) {
-									owner.sendMessage("§7Vous avez terminé l'une de vos mission !");
-									MissionObito.Taper.setFinished(true);
-								}
-						}
-					}
-				}
-			}
-			if (owner.getUniqueId() == victim.getUniqueId()) {
-				if (entity.getUniqueId() == toIzanami.getUniqueId()) {
-					if (missionsO.get(1) ==MissionObito.Fraper || missionsO.get(2) == MissionObito.Fraper) {
-						if (!MissionObito.Fraper.getifFinished()) {
-								fraper++;
-								if (fraper == 15) {
-									owner.sendMessage("§7Vous avez terminé l'une de vos mission !");
-									MissionObito.Fraper.setFinished(true);
-								}
-						}
-					}
-				}
-			}
-		}
 	}
 	@Override
 	public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {
 		if (Tsukuyomi.contains(moover)) {
 			e.setCancelled(true);
 			moover.teleport(e.getFrom());
-		}
-		if (toIzanami != null) {
-			if (!Tsukuyomi.contains(toIzanami)) {
-				if (moover == toIzanami) {
-					if (missionI.get(1) == MissionInfecte.Bouger && !missionI.get(1).getifFinished()) {
-						Location loc = moover.getLocation().clone();
-						loc.setPitch(0);
-						loc.setYaw(0);
-						this.sansbougerLoc = loc;
-						timesansbouger = 0;
-					}
-				}
-			}
-		}
-		if (lavaLoc != null && toIzanami != null) {
-			if (missionsO.get(1) == MissionObito.Lave || missionsO.get(2) == MissionObito.Lave) {
-				if (toIzanami.getUniqueId() == moover.getUniqueId()) {
-					if (lavaLoc.getWorld() != moover.getWorld()) {
-						return;
-					}
-					if (moover.getLocation().distance(lavaLoc) < 1 && !MissionObito.Lave.getifFinished() && lavaLoc.getBlock().getType().name().contains("LAVA")) {
-						MissionObito.Lave.setFinished(true);
-						owner.sendMessage("§7Une mission viens de s'accomplir");
-					}
-				}
-			}
 		}
 	}
 	@Override
@@ -900,12 +625,11 @@ public class Obito extends RoleBase {
 									}
 								}
 							}.runTaskTimer(Main.getInstance(), 0, 20);
-							return true;
-						} else {
+                        } else {
 							sendCooldown(owner, cdSusano);
-							return true;
-						}
-					}
+                        }
+                        return true;
+                    }
 				}
 			}
 		}
@@ -934,18 +658,16 @@ public class Obito extends RoleBase {
 						}
 						if (i>= 60) {
 							cancel();
-							return;
-						}
+                        }
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
 				cdNinjutsu = 60*8;
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdNinjutsu);
-				return true;
-			}
-			
-		}
+            }
+            return true;
+
+        }
 		if (item.isSimilar(GenjutsuItem())) {
 			owner.openInventory(GenjutsuInventory());
 			return true;
