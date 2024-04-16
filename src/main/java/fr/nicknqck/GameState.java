@@ -19,6 +19,7 @@ import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.mc.solo.Warden;
+import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.orochimaru.*;
@@ -204,7 +205,8 @@ public class GameState{
         Zombie(TeamList.Overworld, "mc", 2, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack()),
         Squelette(TeamList.Overworld, "mc", 3, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack())*/
 		//Solo mc
-		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§9Warden").toItemStack(), "§bNickNqck");
+		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
+		Wither(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck");
 		private final TeamList team;
 		private final String mdj;
 		private final int nmb;
@@ -800,6 +802,9 @@ public class GameState{
 			break;
 		case Nagato:
 			role = new Nagato(player, roleType, this);
+			break;
+		case Wither:
+			role = new WitherBoss(player, roleType, this);
 			break;
 		}
 		if (role == null) return null;
