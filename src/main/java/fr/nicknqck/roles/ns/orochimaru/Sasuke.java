@@ -46,7 +46,7 @@ public class Sasuke extends RoleBase {
 	private boolean hasIzanami = false;
 	private boolean killItachi = false;
 	private boolean infectFinish = false;
-	private List<Player> Tsukuyomi = new ArrayList<>();
+	private final List<Player> Tsukuyomi = new ArrayList<>();
 	
 	public Sasuke(Player player, Roles roles, GameState gameState) {
 		super(player, roles, gameState);
@@ -139,14 +139,12 @@ public class Sasuke extends RoleBase {
 		if (!hasIzanami) {
 			inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous permez d'infecter quelqu'un").toItemStack());
 		} else {
-			if (hasIzanami) {
-				if (infectFinish) {
-					return inv;
-				}else{
-					inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous êtes en cours d'infection").toItemStack());
-				}
-			}
-		}
+            if (infectFinish) {
+                return inv;
+            } else {
+                inv.setItem(8, new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous êtes en cours d'infection").toItemStack());
+            }
+        }
 		return inv;
 	}
 	private void useTsukuyomi() {
@@ -261,8 +259,7 @@ public class Sasuke extends RoleBase {
 							clicker.sendMessage(izanami.getStringsMission());
 							clicker.closeInventory();
 							new SasukeRunnable(izanami).runTaskTimer(Main.getInstance(), 0, 20);
-							return;
-						}
+                        }
 					}
 				}
 			}
@@ -336,7 +333,7 @@ public class Sasuke extends RoleBase {
 		if (gameState.attributedRole.contains(Roles.Itachi) && !killItachi) {
 			new BukkitRunnable() {
 				int i = 0;
-				Player itachi = getPlayerFromRole(Roles.Itachi);
+				final Player itachi = getPlayerFromRole(Roles.Itachi);
 				@Override
 				public void run() {
 					i++;
