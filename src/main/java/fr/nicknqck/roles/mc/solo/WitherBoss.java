@@ -3,20 +3,29 @@ package fr.nicknqck.roles.mc.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class WitherBoss extends RoleBase {
     private boolean isFlying = false;
     private final ItemStack FlyItem = new ItemBuilder(Material.FEATHER).setName("§aFly").setLore("§7Vous permet de voler pendant un temp maximum de§c 15s").toItemStack();
     private int cdFly = 0;
+    private boolean passifActive = false;
     public WitherBoss(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
+        owner.sendMessage(Desc());
     }
 
     @Override
@@ -32,14 +41,37 @@ public class WitherBoss extends RoleBase {
         if (!isFlying){
             givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
             givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+        } else {
+            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+        }
+        if (cdFly >= 0){
+            cdFly--;
+            if (cdFly == 0){
+                owner.sendMessage("§7Vous pouvez à nouveau§a voler§7.");
+            }
         }
     }
 
     @Override
     public String[] Desc() {
         return new String[]{
+                AllDesc.bar
 
         };
+    }
+
+    @Override
+    public void onMcCommand(String[] args) {
+        super.onMcCommand(args);
+        if (args[0].equalsIgnoreCase("passif")){
+            if (!passifActive){
+                passifActive = true;
+                owner.sendMessage("§7Vous avez activé votre§a passif");
+            } else {
+                passifActive = false;
+                owner.sendMessage("§7Vous avez désactivé votre§c passif");
+            }
+        }
     }
 
     @Override
@@ -61,11 +93,14 @@ public class WitherBoss extends RoleBase {
                 isFlying = true;
                 owner.sendMessage("§7Vous avez activé votre§a Fly");
                 cdFly = 60*7+15;
+                owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                owner.setAllowFlight(true);
+                owner.setFlying(true);
                 new BukkitRunnable(){
                     private int timeRemaining = 15;
                     @Override
                     public void run() {
-                        if (gameState.getServerState() != GameState.ServerStates.InGame || !getIGPlayers().contains(owner)){
+                        if (gameState.getServerState() != GameState.ServerStates.InGame || !getIGPlayers().contains(owner) || !isFlying){
                             cancel();
                             return;
                         }
@@ -75,6 +110,8 @@ public class WitherBoss extends RoleBase {
                             owner.setAllowFlight(false);
                             owner.setFallDistance(0f);
                             isFlying = false;
+                            owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+                            cdFly = 60*7;
                             cancel();
                             return;
                         }
@@ -89,6 +126,8 @@ public class WitherBoss extends RoleBase {
                     owner.setAllowFlight(false);
                     owner.setFallDistance(0f);
                     isFlying = false;
+                    owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+                    cdFly = 60*7;
                 } else {
                     sendCooldown(owner, cdFly);
                 }
@@ -96,5 +135,33 @@ public class WitherBoss extends RoleBase {
             return true;
         }
         return super.ItemUse(item, gameState);
+    }
+
+    @Override
+    public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
+        super.onALLPlayerDamageByEntity(event, victim, entity);
+        if (!victim.getUniqueId().equals(owner.getUniqueId())){
+            UUID damager = getUuid(entity);
+            if (damager != null){
+                if (RandomUtils.getOwnRandomProbability(25.0) && passifActive){
+                    givePotionEffet(victim, PotionEffectType.WITHER, 80, 1, true);
+                }
+            }
+        }
+    }
+
+    private UUID getUuid(Entity entity) {
+        UUID damager = null;
+        if (entity.getUniqueId().equals(owner.getUniqueId())){
+            damager = entity.getUniqueId();
+        }
+        if (entity instanceof Projectile){
+            if (((Projectile) entity).getShooter() instanceof Entity){
+                if (((Entity) ((Projectile) entity).getShooter()).getUniqueId().equals(owner.getUniqueId())){
+                    damager = ((Entity) ((Projectile) entity).getShooter()).getUniqueId();
+                }
+            }
+        }
+        return damager;
     }
 }

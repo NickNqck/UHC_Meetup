@@ -165,8 +165,10 @@ public abstract class RoleBase {
 	public String getTeamColor() {
 		return getTeam().getColor();
 	}
-	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force);}	
-	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {owner.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force);}	
+	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
+		player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force);
+	}
+	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {givePotionEffet(owner, type, time, level, force);}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 	public Player getRightClicked(double maxDistance, int radius) {
@@ -246,6 +248,12 @@ public abstract class RoleBase {
 		allresi = getResi()+getBonusResi();
 		if (owner != null) {
 		owner.setMaxHealth(getMaxHealth());
+		if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)){
+			setResi(0.0);
+		}
+		if (!owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)){
+			setForce(0.0);
+		}
 		if (actualTridiCooldown > 0) {
 			actualTridiCooldown--;
 			if (owner.getItemInHand().isSimilar(gameState.EquipementTridi())) {
