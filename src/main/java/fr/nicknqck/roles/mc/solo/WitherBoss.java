@@ -55,6 +55,22 @@ public class WitherBoss extends RoleBase {
     @Override
     public String[] Desc() {
         return new String[]{
+                AllDesc.bar,
+                AllDesc.role+"§e WitherBoss",
+                AllDesc.objectifsolo+"§e Seul",
+                "",
+                AllDesc.effet,
+                "",
+                AllDesc.point+"§c2"+AllDesc.coeur+"§f, §eSpeed I§f et §9 Résistance I§f permanent",
+                "",
+                AllDesc.items,
+                "",
+                AllDesc.point+"§aFly§f: Vous permet d'obtenir la capacité de voler pendant§c 15 secondes§f, également, pendant ce temp vous perdrez votre effet de§9 Résistance§f mais gagnerez l'effet§c Force I§f§f.§7 (1x/7m)",
+                "",
+                AllDesc.commande,
+                "",
+                AllDesc.point+"§6/mc passif§f: Vous permet d'activé votre passif, il vous permet d'avoir§c 25%§f de chance d'infliger l'effet Wither I au joueur qui subisse des dégats de votre provenance.",
+                "",
                 AllDesc.bar
 
         };
