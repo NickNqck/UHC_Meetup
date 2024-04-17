@@ -1,23 +1,34 @@
 package fr.nicknqck;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.bijus.BijuListener;
+import fr.nicknqck.blocks.BlockManager;
+import fr.nicknqck.blocks.BrickBlockListener;
+import fr.nicknqck.chat.Chat;
+import fr.nicknqck.commands.*;
+import fr.nicknqck.commands.vanilla.Gamemode;
+import fr.nicknqck.commands.vanilla.Say;
+import fr.nicknqck.commands.vanilla.Whitelist;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.events.essential.EntityDamageEvents;
+import fr.nicknqck.events.essential.JoinEvents;
+import fr.nicknqck.events.essential.QuitEvents;
+import fr.nicknqck.items.*;
+import fr.nicknqck.pregen.WorldGenCaves;
+import fr.nicknqck.roles.aot.titans.Bestial;
+import fr.nicknqck.roles.aot.titans.TitanListener;
+import fr.nicknqck.roles.ds.Lame;
+import fr.nicknqck.scoreboard.ScoreboardManager;
+import fr.nicknqck.utils.AttackUtils;
+import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.PotionUtils;
+import fr.nicknqck.utils.SchedulerRunnable;
+import fr.nicknqck.utils.betteritem.BetterItemListener;
+import fr.nicknqck.worlds.WorldFillTask;
+import fr.nicknqck.worlds.WorldGenerator;
 import lombok.Getter;
 import org.apache.commons.io.FileUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -32,47 +43,12 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.blocks.BlockManager;
-import fr.nicknqck.blocks.BrickBlockListener;
-import fr.nicknqck.chat.Chat;
-import fr.nicknqck.commands.AdminCommands;
-import fr.nicknqck.commands.AotCommands;
-import fr.nicknqck.commands.ClaimCommand;
-import fr.nicknqck.commands.CommandeDesc;
-import fr.nicknqck.commands.DSmtpCommands;
-import fr.nicknqck.commands.Discord;
-import fr.nicknqck.commands.DropCommand;
-import fr.nicknqck.commands.McCommands;
-import fr.nicknqck.commands.Mumble;
-import fr.nicknqck.commands.NsCommands;
-import fr.nicknqck.commands.vanilla.Gamemode;
-import fr.nicknqck.commands.vanilla.Say;
-import fr.nicknqck.commands.vanilla.Whitelist;
-import fr.nicknqck.events.Events;
-import fr.nicknqck.events.essential.EntityDamageEvents;
-import fr.nicknqck.events.essential.JoinEvents;
-import fr.nicknqck.events.essential.QuitEvents;
-import fr.nicknqck.items.Arctridi;
-import fr.nicknqck.items.BulleGyokko;
-import fr.nicknqck.items.InfectItem;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.items.RodTridimensionnelle;
-import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.pregen.WorldGenCaves;
-import fr.nicknqck.roles.aot.titans.Bestial;
-import fr.nicknqck.roles.aot.titans.TitanListener;
-import fr.nicknqck.roles.ds.Lame;
-import fr.nicknqck.scoreboard.ScoreboardManager;
-import fr.nicknqck.utils.AttackUtils;
-import fr.nicknqck.utils.NMSPacket;
-import fr.nicknqck.utils.PotionUtils;
-import fr.nicknqck.utils.SchedulerRunnable;
-import fr.nicknqck.utils.betteritem.BetterItemListener;
-import fr.nicknqck.worlds.WorldFillTask;
-import fr.nicknqck.worlds.WorldGenerator;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /*
 [DS-MTP UHC Plugin Credits]
@@ -92,8 +68,7 @@ public class Main extends JavaPlugin implements Listener{
 	public boolean gen = false;
 	public static String RH() {return "§c❤§r";}
 	public static List<Chunk> keepChunk = new ArrayList<>();
-	@Getter
-	private GamePlayer gamePlayer;
+
 	@Getter
 	private static Main Instance;
 	public static Random RANDOM;
@@ -103,7 +78,6 @@ public class Main extends JavaPlugin implements Listener{
 		Instance = this;
 		RANDOM = new Random();
 		GameState gameState = new GameState();
-		this.gamePlayer = new GamePlayer();
 		this.gameWorld = Bukkit.getWorld("world");
 		gameState.world = gameWorld;
 		gameWorld.setGameRuleValue("randomTickSpeed", "3");

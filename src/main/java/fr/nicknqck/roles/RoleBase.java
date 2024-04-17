@@ -6,9 +6,11 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.*;
+import lombok.Getter;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
@@ -51,6 +53,8 @@ public abstract class RoleBase {
 	private double Bonusforce = 0;
 	private double Bonusresi = 0;
 	public GameState gameState;
+	@Getter
+	private GamePlayer gamePlayer;
 	public ArrayList<Player> canBeCibleYahaba = new ArrayList<>();
 	public abstract String[] Desc();
 	
@@ -82,6 +86,7 @@ public abstract class RoleBase {
 
         }, 20);
 		if (owner != null) {
+			this.gamePlayer = new GamePlayer(owner.getUniqueId());
 			owner.sendMessage("");
 			owner.setAllowFlight(false);
 			owner.setFlying(false);

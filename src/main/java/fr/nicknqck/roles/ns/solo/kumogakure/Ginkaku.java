@@ -328,7 +328,11 @@ public class Ginkaku extends RoleBase{
 			gTarget = uuid;
 			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 				if (gTarget != null){
-					Main.getInstance().getGamePlayer().stun(gTarget, 5.0, null);
+					if (Bukkit.getPlayer(gTarget) != null){
+						if (!gameState.hasRoleNull(Bukkit.getPlayer(gTarget))){
+							gameState.getPlayerRoles().get(Bukkit.getPlayer(gTarget)).getGamePlayer().stun(5.0);
+						}
+					}
 					gTarget = null;
 				}
 			}, 100);
