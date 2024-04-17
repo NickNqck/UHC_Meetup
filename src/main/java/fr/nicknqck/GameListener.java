@@ -342,7 +342,6 @@ public class GameListener implements Listener {
 				gameState.hokage.stop();
 			}
 			gameState.getDeadRoles().clear();
-			Main.getInstance().getGamePlayer().getGamePlayersRoles().clear();
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().getList().clear();
 			}

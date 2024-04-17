@@ -1,7 +1,10 @@
 package fr.nicknqck.events.custom;
 
+import fr.nicknqck.player.GamePlayer;
+import lombok.Getter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -9,9 +12,11 @@ import fr.nicknqck.GameState;
 
 public class UHCPlayerKill extends Event {
 	private static final HandlerList handlers = new HandlerList();
-	private Player victim;
-	private Entity damager;
-	private GameState gameState;
+	@Getter
+	private final Player victim;
+	private final Entity damager;
+	@Getter
+	private final GameState gameState;
 	public UHCPlayerKill(Player player, Entity damager, GameState gameState) {
 		this.victim = player;
 		this.damager = damager;
@@ -25,13 +30,27 @@ public class UHCPlayerKill extends Event {
 	public static HandlerList getHandlerList() {
 	    return handlers;
 	}
-	public GameState getGameState() {
-		return gameState;
-	}
-	public Player getVictim() {
-		return victim;
-	}
+
 	public Entity getKiller() {
 		return damager;
+	}
+	public Player getPlayerKiller(){
+		Player killer = null;
+		if (getKiller() instanceof Player){
+			killer = (Player) getKiller();
+		} else if (getKiller() instanceof Projectile){
+			if (((Projectile) getKiller()).getShooter() instanceof Player){
+				killer = ((Player) ((Projectile) getKiller()).getShooter()).getPlayer();
+			}
+		}
+		return killer;
+	}
+	public GamePlayer getGamePlayerKiller(){
+		if (getPlayerKiller() != null){
+			if (!getGameState().hasRoleNull(getPlayerKiller())){
+				return getGameState().getPlayerRoles().get(getPlayerKiller()).getGamePlayer();
+			}
+		}
+		return null;
 	}
 }

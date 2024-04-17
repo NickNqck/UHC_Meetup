@@ -123,7 +123,6 @@ public class HubListener implements Listener {
 			b.getBiju().getListener().resetCooldown();
 		}
 		Bijus.initBiju(gameState);
-		gameState.getInGamePlayers().stream().filter(p -> !gameState.hasRoleNull(p)).forEach(p -> Main.getInstance().getGamePlayer().putGamePlayer(p.getUniqueId(), gameState.getPlayerRoles().get(p)));
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
 		gameState.setServerState(ServerStates.InGame);
 	}

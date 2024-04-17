@@ -4,6 +4,7 @@ import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.roles.aot.mahr.*;
@@ -67,6 +68,8 @@ public class GameState{
 	public static Roles setPlayerRoles;
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
+	@Getter
+	private HashMap<GamePlayer, Class<? extends RoleBase>> GamePlayers = new LinkedHashMap<>();
 	int groupe = 5;
 	public enum ServerStates {
 		InLobby,
@@ -818,7 +821,6 @@ public class GameState{
 			System.out.println(role.getTeam().name()+" for role "+role.type.name());
 		}
 		addInPlayerRoles(player, role);
-		Main.getInstance().getGamePlayer().putGamePlayer(player.getUniqueId(), role);
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
 			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon && !getPlayerRoles().get(player).type.equals(Roles.Kyogai)) {
 				canBeAssassin.add(player);

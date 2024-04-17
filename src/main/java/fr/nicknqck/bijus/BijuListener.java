@@ -2,6 +2,8 @@ package fr.nicknqck.bijus;
 
 import java.util.UUID;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,22 +38,44 @@ import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class BijuListener implements Listener{
+	@Getter
+	@Setter
 	private int isobuCooldown = 0;
+	@Setter
+	@Getter
 	private UUID isobuDamage = null;
 	
+	@Getter
+	@Setter
 	private int kokuoCooldown = 0;
-    private UUID kokuoUser = null;
+    @Getter
+	@Setter
+	private UUID kokuoUser = null;
     
-    private int sonGokuCooldown = 0;
-    private UUID sonGokuUser = null;
+    @Setter
+	@Getter
+	private int sonGokuCooldown = 0;
+    @Setter
+	@Getter
+	private UUID sonGokuUser = null;
     
-    private int matatabiCooldown = 0;
-    private UUID matatabiFire = null;
+    @Getter
+	@Setter
+	private int matatabiCooldown = 0;
+    @Setter
+	@Getter
+	private UUID matatabiFire = null;
     
-    private int chomeiCooldown = 0;
+    @Setter
+	@Getter
+	private int chomeiCooldown = 0;
     
-    private int saikenCooldown = 0;
-    private UUID saikenUser = null;
+    @Getter
+	@Setter
+	private int saikenCooldown = 0;
+    @Setter
+	@Getter
+	private UUID saikenUser = null;
 	
 	public void runnableTask(GameState gameState) {
         if (isobuCooldown >= 0) isobuCooldown--;
@@ -65,6 +89,7 @@ public class BijuListener implements Listener{
         	b.getBiju().onSecond(gameState);
         }
     }
+	@Getter
 	private static BijuListener instance;
 	public BijuListener() {
 		instance = this;
@@ -102,7 +127,7 @@ public class BijuListener implements Listener{
 	public ItemStack JubiItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§dJûbi").setLore("§7Vous permet d'invoquer la§c puissance§7 du§d Jûbi").toItemStack();
 	}
-	public static BijuListener getInstance() {return instance;}
+
 	@EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (!event.isCancelled()) {
@@ -153,8 +178,7 @@ public class BijuListener implements Listener{
 								}
 							}
 						}.runTaskTimer(Main.getInstance(), 0, 20);
-						return;
-        			}
+                    }
         		} else {
         			Bijus bijus = null;
                 	for (Bijus value : Bijus.values()) {
@@ -200,13 +224,6 @@ public class BijuListener implements Listener{
 		for (Bijus value : Bijus.values()) {
 			if (value.getBiju().getLivingEntity() != null) {
 				if (e.getEntity().getUniqueId().equals(value.getBiju().getLivingEntity().getUniqueId())) {
-					/*if (k != null) {
-						if (gameState.getPlayerRoles().get(k).type.equals(GameState.Roles.Naruto) || gameState.getPlayerRoles().get(k).type.equals(GameState.Roles.KillerBee)) {
-							k.sendMessage("§cVous êtes déjà l'hôte d'un§d Bijus§c !");
-							gameState.getPlayerRoles().get(k).giveItem(k, false, value.getBiju().getItem());
-							return;
-						}
-					}*/
 					bijus = value;
 				}
 			}
@@ -317,71 +334,5 @@ public class BijuListener implements Listener{
 	    	 value.getBiju().onBucketEmpty(event, player);
 	     }
 	 }
-	 public void setSonGokuCooldown(int sonGokuCooldown) {
-	        this.sonGokuCooldown = sonGokuCooldown;
-	    }
-	 public int getSonGokuCooldown() {
-	        return sonGokuCooldown;
-	    }
-	 public UUID getSonGokuUser() {
-	        return sonGokuUser;
-	    }
-	 public void setSonGokuUser(UUID sonGokuUser) {
-	        this.sonGokuUser = sonGokuUser;
-	    }
-	public void setIsobuCooldown(int isobuCooldown) {
-        this.isobuCooldown = isobuCooldown;
-    }
-	public int getIsobuCooldown() {
-        return isobuCooldown;
-    }
-	public void setKokuoCooldown(int kokuoCooldown) {
-        this.kokuoCooldown = kokuoCooldown;
-    }
-	public int getKokuoCooldown() {
-        return kokuoCooldown;
-    }
-	public UUID getIsobuDamage() {
-        return isobuDamage;
-    }
-	public void setIsobuDamage(UUID isobuDamage) {
-        this.isobuDamage = isobuDamage;
-    }
-	public void setKokuoUser(UUID kokuoUser) {
-        this.kokuoUser = kokuoUser;
-    }
-	public UUID getKokuoUser() {
-        return kokuoUser;
-    }
-	public int getChomeiCooldown() {
-		return chomeiCooldown;
-	}
-	public void setChomeiCooldown(int cd) {
-		chomeiCooldown = cd;
-	}
-	public UUID getMatatabiFire() {
-        return matatabiFire;
-    }
 
-    public void setMatatabiFire(UUID matatabiFire) {
-        this.matatabiFire = matatabiFire;
-    }
-    public int getMatatabiCooldown() {
-    	return this.matatabiCooldown;
-    }
-    public void setMatatabiCooldown(int cd) {
-    	this.matatabiCooldown = cd;
-    }
-    public void setSaikenCooldown(int saikenCooldown) {
-        this.saikenCooldown = saikenCooldown;
-    }
-    public int getSaikenCooldown() {
-        return saikenCooldown;
-    }
-    public UUID getSaikenUser() {
-        return saikenUser;
-    }
-    public void setSaikenUser(UUID uuid) {
-    	saikenUser = uuid;
-    }
 }
