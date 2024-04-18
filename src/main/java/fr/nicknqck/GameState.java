@@ -70,6 +70,8 @@ public class GameState{
 	public boolean gameCanLaunch = false;
 	@Getter
 	private HashMap<GamePlayer, Class<? extends RoleBase>> GamePlayers = new LinkedHashMap<>();
+	@Setter
+	@Getter
 	int groupe = 5;
 	public enum ServerStates {
 		InLobby,
@@ -271,8 +273,7 @@ public class GameState{
 		}
 		return toReturn;
 	}
-	public void setGroupe(int e) {groupe = e;}
-	public int getGroupe() {return groupe;}
+
 	public int roleTimer = 1;
 	int pvpTimer = 1;
 	public int getPvPTimer() {
@@ -314,6 +315,9 @@ public class GameState{
 		pvp = p;
 	}
 	boolean shrinking = false;
+	@Getter
+	@Setter
+	private int actualPvPTimer = getPvPTimer();
 	public int timeday = 60*5;
 	public int t = 0;//Utilisée dans GameListener
 	public int xpfer = 0;
@@ -821,6 +825,8 @@ public class GameState{
 			System.out.println(role.getTeam().name()+" for role "+role.type.name());
 		}
 		addInPlayerRoles(player, role);
+		role.setGamePlayer(new GamePlayer(player.getUniqueId()));
+		this.getGamePlayers().put(role.getGamePlayer(), role.getClass());
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
 			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon && !getPlayerRoles().get(player).type.equals(Roles.Kyogai)) {
 				canBeAssassin.add(player);

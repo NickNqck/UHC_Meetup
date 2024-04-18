@@ -11,6 +11,7 @@ import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
@@ -54,6 +55,7 @@ public abstract class RoleBase {
 	private double Bonusresi = 0;
 	public GameState gameState;
 	@Getter
+	@Setter
 	private GamePlayer gamePlayer;
 	public ArrayList<Player> canBeCibleYahaba = new ArrayList<>();
 	public abstract String[] Desc();
@@ -86,7 +88,6 @@ public abstract class RoleBase {
 
         }, 20);
 		if (owner != null) {
-			this.gamePlayer = new GamePlayer(owner.getUniqueId());
 			owner.sendMessage("");
 			owner.setAllowFlight(false);
 			owner.setFlying(false);

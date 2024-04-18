@@ -106,7 +106,7 @@ public class PersonalScoreboard {
     		if (this.gameState.getPvP()) {
     			objectiveSign.setLine(6, premsg+"§fPvP:§c Activée");
     		} else {
-				objectiveSign.setLine(6, premsg+"§fPvP:§c "+ StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getPvPTimer()));
+				objectiveSign.setLine(6, premsg+"§fPvP:§c "+ StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getActualPvPTimer()));
 			}
     		if (this.gameState.getInGameTime() < this.gameState.shrinkTimer) {
     			int time = this.gameState.shrinkTimer-this.gameState.getInGameTime();

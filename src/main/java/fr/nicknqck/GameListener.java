@@ -247,7 +247,7 @@ public class GameListener implements Listener {
 						}
 					}
 					Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
-	        }, 100);
+	        }, 50);
 			} else {
 				gameState.t--;
 				if (gameState.t <= 0) {
@@ -308,6 +308,13 @@ public class GameListener implements Listener {
 					}
 				}
 			}
+			if (gameState.getActualPvPTimer() == 0){
+				gameState.setPvP(true);
+				SendToEveryone("(§c!§f) Le§c pvp§f est maintenant activé !");
+				gameState.setActualPvPTimer(-1);
+			} else {
+				gameState.setActualPvPTimer(gameState.getActualPvPTimer()-1);
+			}
 			gameState.inGameTime+=1;
 			break;
 		case GameEnded:
@@ -322,6 +329,7 @@ public class GameListener implements Listener {
 		gameState.setServerState(ServerStates.GameEnded);
 		Bukkit.getPluginManager().callEvent(new EndGameEvent(gameState, team));
 		gameState.setJubiCrafter(null);
+		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
 			gameState.borderSize = gameState.maxBorderSize;

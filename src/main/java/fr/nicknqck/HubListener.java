@@ -124,6 +124,7 @@ public class HubListener implements Listener {
 		}
 		Bijus.initBiju(gameState);
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
+		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
 	}
 	public void giveStartInventory(Player p) {

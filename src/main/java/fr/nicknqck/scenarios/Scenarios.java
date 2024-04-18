@@ -15,7 +15,8 @@ public enum Scenarios {
     BowSwap(new BowSwap()),
     DiamondLimit(new DiamondLimit()),
     BetaZombie(new BetaZombie()),
-    CatEyes(new CatEyes());
+    CatEyes(new CatEyes()),
+    Timber(new TimberPvP());
 
     private final BasicScenarios scenarios;
     Scenarios(BasicScenarios sc){
