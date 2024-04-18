@@ -292,10 +292,6 @@ public class GameListener implements Listener {
 					r.RoleGiven(gameState);
 				}
 			}
-			if (gameState.inGameTime == gameState.pvpTimer) {
-				gameState.pvp = true;
-				SendToEveryone("(§c!§f) Le§c pvp§f est maintenant activé !");
-			}
 			for (Player p : gameState.getInGamePlayers()) {
 				if (gameState.getPlayerRoles().containsKey(p)) {
 					gameState.getPlayerRoles().get(p).Update(gameState);

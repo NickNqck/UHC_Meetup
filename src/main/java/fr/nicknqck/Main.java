@@ -18,6 +18,7 @@ import fr.nicknqck.pregen.WorldGenCaves;
 import fr.nicknqck.roles.aot.titans.Bestial;
 import fr.nicknqck.roles.aot.titans.TitanListener;
 import fr.nicknqck.roles.ds.Lame;
+import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.NMSPacket;
@@ -127,6 +128,7 @@ public class Main extends JavaPlugin implements Listener{
         getScoreboardManager().onEnable();
 	}
 	private void registerEvents(GameState gameState) {
+		getServer().getPluginManager().registerEvents(new TimberPvP(), this);
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new JoinEvents(), this);
 		getServer().getPluginManager().registerEvents(new QuitEvents(), this);

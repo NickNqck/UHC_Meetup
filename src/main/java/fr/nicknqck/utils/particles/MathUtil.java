@@ -18,6 +18,9 @@ import fr.nicknqck.Main;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 public class MathUtil {
 	
     public static void sendParticle(final EnumParticle particle, final Location location) {
@@ -41,8 +44,8 @@ public class MathUtil {
         final double increment = 6.283185307179586 / amount;
         for (int i = 0; i < amount; ++i) {
             final double angle = i * increment;
-            final double x = center.getX() + radius * Math.cos(angle);
-            final double z = center.getZ() + radius * Math.sin(angle);
+            final double x = center.getX() + radius * cos(angle);
+            final double z = center.getZ() + radius * sin(angle);
             sendParticle(particle, x, center.getY() + 0.5, z, center.getWorld());
         }
     }
@@ -52,8 +55,8 @@ public class MathUtil {
     	final double increment = 6.283185307179586 / amount;
     	for (int i = 0; i < amount; ++i) {
     		final double angle = i * increment;
-            final double x = center.getX() + radius * Math.cos(angle);
-            final double z = center.getZ() + radius * Math.sin(angle);
+            final double x = center.getX() + radius * cos(angle);
+            final double z = center.getZ() + radius * sin(angle);
             e.add(new Location(center.getWorld(), x, center.getY(), z));
     	}
     	return e;
@@ -78,8 +81,8 @@ public class MathUtil {
         final double increment = 6.283185307179586 / amount;
         for (int i = 0; i < amount; ++i) {
             final double angle = i * increment;
-            final double x = center.getX() + radius * Math.cos(angle);
-            final double z = center.getZ() + radius * Math.sin(angle);
+            final double x = center.getX() + radius * cos(angle);
+            final double z = center.getZ() + radius * sin(angle);
             sendParticle(particle, x, center.getY() + 2.5, z, center.getWorld());
         }
     }
@@ -269,5 +272,37 @@ public class MathUtil {
                 currentRadius -= step;
             }
         }.runTaskTimer(Main.getInstance(), 0, 8);
+    }
+    public static void spawnSimpleWave(Player player){
+        new BukkitRunnable(){
+            double t = Math.PI/4;
+            Location loc = player.getLocation();
+            public void run(){
+                t = t + 0.1*Math.PI;
+                for (double theta = 0; theta <= 2*Math.PI; theta = theta + Math.PI/32){
+                    double x = t*cos(theta);
+                    double y = 2*Math.exp(-0.1*t) * sin(t) + 1.5;
+                    double z = t*sin(theta);
+                    loc.add(x,y,z);
+                    sendParticle(EnumParticle.FIREWORKS_SPARK, loc);
+ //                   ParticleEffect.FIREWORKS_SPARK.display(loc,0,0,0,0,1);
+                    loc.subtract(x,y,z);
+
+                    theta = theta + Math.PI/64;
+
+                    x = t*cos(theta);
+                    y = 2*Math.exp(-0.1*t) * sin(t) + 1.5;
+                    z = t*sin(theta);
+                    loc.add(x,y,z);
+                    sendParticle(EnumParticle.CRIT_MAGIC, loc);
+               //     ParticleEffect.WITCH_MAGIC.display(loc,0,0,0,0,1);
+                    loc.subtract(x,y,z);
+                }
+                if (t > 20){
+                    this.cancel();
+                }
+            }
+
+        }.runTaskTimer(Main.getInstance(), 0, 1);
     }
 }

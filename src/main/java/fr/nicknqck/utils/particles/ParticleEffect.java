@@ -1,7 +1,9 @@
 package fr.nicknqck.utils.particles;
 
+import lombok.Getter;
 import org.bukkit.entity.Player;
 
+@Getter
 public abstract class ParticleEffect {
 
     private final int timeInTicks;
@@ -11,9 +13,6 @@ public abstract class ParticleEffect {
         this.timeInTicks = timeInTicks;
     }
 
-    public int getTimeInTicks() {
-        return this.timeInTicks;
-    }    
     public abstract void start(Player player);
         
 }
