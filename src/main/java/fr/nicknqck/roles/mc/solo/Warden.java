@@ -97,7 +97,7 @@ public class Warden extends RoleBase {
 
     @Override
     public void onMcCommand(String[] args) {
-        MathUtil.drawTornado(owner.getLocation(), 0, 0.05);
+        MathUtil.drawTornado(owner.getLocation(), 0.5, 0.015);
         if (args.length == 2){
             if (args[0].equalsIgnoreCase("cible")){
                 Player target = Bukkit.getPlayer(args[1]);

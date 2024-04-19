@@ -267,7 +267,7 @@ public class BijuListener implements Listener{
         	if (event.getEntity().getUniqueId().equals(getSonGokuUser())) {
             	if (event.getCause().equals(DamageCause.FALL)) {
             		for (Player p : Loc.getNearbyPlayersExcept(event.getEntity(), 30)) {
-            			p.damage(event.getDamage()/2, Bukkit.getPlayer(getSonGokuUser()));
+            			p.damage(Bukkit.getPlayer(getSonGokuUser()).getFallDistance(), Bukkit.getPlayer(getSonGokuUser()));
             		}
             		event.setCancelled(true);
             	}

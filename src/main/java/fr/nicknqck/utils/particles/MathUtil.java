@@ -3,7 +3,6 @@ package fr.nicknqck.utils.particles;
 import fr.nicknqck.Main;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -335,21 +334,25 @@ public class MathUtil {
             double y = loc.getY();
             double t = loc.getX();
             double Finalradius = radius;
+            Location aLoc = loc.clone();
             @Override
             public void run() {
-                if (t >= loc.getX()+10.0) {
+                if (aLoc.distance(loc) >= 10.0) {
                     cancel();
                     return;
                 }
 
-                double x = loc.getX()+(Finalradius*Math.sin(t));
-                double z = loc.getZ()+(Finalradius*Math.cos(t));
+                double x = loc.getX()+(Finalradius*Math.sin(t-0.01));
+                double z = loc.getZ()+(Finalradius*Math.cos(t-0.01));
                 Location toLoc = new Location(loc.getWorld(), x, y, z);
                 sendParticle(EnumParticle.REDSTONE, toLoc);
-                Bukkit.broadcastMessage(toLoc.toString());
+         //       Bukkit.broadcastMessage(toLoc.toString());
                 y += 0.01;
                 Finalradius+=increase;
                 t+= 0.05;
+                aLoc = toLoc;
+             //   Bukkit.broadcastMessage("t ="+ t+", y= "+y+", radius = "+Finalradius);
+
             }
         }.runTaskTimerAsynchronously(Main.getInstance(), 0,1);
     }
