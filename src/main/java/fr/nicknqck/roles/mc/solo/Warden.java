@@ -28,7 +28,7 @@ import java.util.UUID;
 
 public class Warden extends RoleBase {
 
-    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("§7").toItemStack();
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("§c").toItemStack();
     private final ItemStack laser = new ItemBuilder(Material.NETHER_STAR).setLore("§7").setUnbreakable(true).setName("§bLaser").toItemStack();
     private int cdLaser = 0;
     private final ItemStack darkness = new ItemBuilder(Material.NETHER_STAR).setLore("§7").setUnbreakable(true).setName("§9Darkness").toItemStack();
@@ -162,7 +162,7 @@ public class Warden extends RoleBase {
             final List<UUID> damaged = new ArrayList<>();
             @Override
             public void run() {
-                double particleDistance = 0.5;
+                double particleDistance = 0.1;
                 Location location = owner.getLocation().add(0, 1, 0);
 
                 for (double waypoint = 1; waypoint < 10; waypoint += particleDistance) {
