@@ -69,6 +69,8 @@ public abstract class RoleBase {
 	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
+	@Getter
+	private UUID uuidOwner;
 	public RoleBase(Player player, Roles roles, GameState gameState) {
 		this.gameState = gameState;
 		owner = player;
@@ -88,6 +90,7 @@ public abstract class RoleBase {
 
         }, 20);
 		if (owner != null) {
+			this.uuidOwner = owner.getUniqueId();
 			owner.sendMessage("");
 			owner.setAllowFlight(false);
 			owner.setFlying(false);

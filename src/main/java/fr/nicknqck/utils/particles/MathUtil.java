@@ -298,7 +298,7 @@ public class MathUtil {
                 }
             }
 
-        }.runTaskTimer(Main.getInstance(), 0, 1);
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 2);
     }
     public static void createLaser(Player user, int length){
         new BukkitRunnable() {

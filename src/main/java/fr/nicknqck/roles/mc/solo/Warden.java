@@ -29,10 +29,10 @@ import java.util.UUID;
 
 public class Warden extends RoleBase {
 
-    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("Item non droppable").toItemStack();
-    private final ItemStack laser = new ItemBuilder(Material.NETHER_STAR).setUnbreakable(true).setName("§bLaser").toItemStack();
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("§7").toItemStack();
+    private final ItemStack laser = new ItemBuilder(Material.NETHER_STAR).setLore("§7").setUnbreakable(true).setName("§bLaser").toItemStack();
     private int cdLaser = 0;
-    private final ItemStack darkness = new ItemBuilder(Material.NETHER_STAR).setUnbreakable(true).setName("§9Darkness").toItemStack();
+    private final ItemStack darkness = new ItemBuilder(Material.NETHER_STAR).setLore("§7").setUnbreakable(true).setName("§9Darkness").toItemStack();
     private int cdDarkness = 0;
     private int cdCible = 0;
     public Warden(Player player, GameState.Roles roles, GameState gameState) {
@@ -45,7 +45,7 @@ public class Warden extends RoleBase {
     public void GiveItems() {
         super.GiveItems();
         super.giveItem(owner, false, getItems());
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> giveHealedHeartatInt(owner, 5), 20);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> giveHealedHeartatInt(owner, 5), 20);
     }
 
     @Override
@@ -102,6 +102,10 @@ public class Warden extends RoleBase {
             if (args[0].equalsIgnoreCase("cible")){
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null){
+                    if (target.getUniqueId().equals(getUuidOwner())) {
+                        owner.sendMessage("§cVous ne pouvez pas vous ciblez vous même.");
+                        return;
+                    }
                     if (cdCible <= 0){
                         if (getBonusResi() >= 5.0){
                             cdCible = 60*10;
