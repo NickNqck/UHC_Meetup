@@ -275,30 +275,57 @@ public class MathUtil {
         new BukkitRunnable(){
             double t = Math.PI/4;
             Location loc = player.getLocation();
+            int time = 0;
             public void run(){
                 t = t + 0.1*Math.PI;
+                time++;
                 for (double theta = 0; theta <= 2*Math.PI; theta = theta + Math.PI/16){
+                    theta = theta + Math.PI/48;
+
                     double x = t*cos(theta);
-                    double y = Math.exp(-0.1*t) * sin(t) + 1.5;
+                    double y = Math.exp(-0.1*t) * sin(t);
                     double z = t*sin(theta);
-                    loc.add(x,y,z);
-                    loc.subtract(x,y,z);
-
-                    theta = theta + Math.PI/32;
-
-                    x = t*cos(theta);
-                    y = Math.exp(-0.1*t) * sin(t);
-                    z = t*sin(theta);
                     loc.add(x,y,z);
                     sendParticle(EnumParticle.VILLAGER_HAPPY, loc);
                     loc.subtract(x,y,z);
                 }
-                if (t > maxTimeInTick){
+                if (time > maxTimeInTick){
                     this.cancel();
                 }
             }
 
-        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 2);
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+    }
+    public static class SimpleWave extends BukkitRunnable {
+        private Player player;
+        private int maxTimeInTick;
+        private int time = 0;
+        double t = Math.PI/4;
+        Location loc;
+        public SimpleWave(Player player, int maxTimeInTick){
+            this.player = player;
+            this.maxTimeInTick = maxTimeInTick;
+            this.loc = player.getLocation().clone();
+        }
+
+        @Override
+        public void run() {
+            t = t + 0.1*Math.PI;
+            time++;
+            for (double theta = 0; theta <= 2*Math.PI; theta = theta + Math.PI/16){
+                theta = theta + Math.PI/48;
+
+                double x = t*cos(theta);
+                double y = Math.exp(-0.1*t) * sin(t);
+                double z = t*sin(theta);
+                loc.add(x,y,z);
+                sendParticle(EnumParticle.VILLAGER_HAPPY, loc);
+                loc.subtract(x,y,z);
+            }
+            if (time > maxTimeInTick){
+                this.cancel();
+            }
+        }
     }
     public static void createLaser(Player user, int length){
         new BukkitRunnable() {

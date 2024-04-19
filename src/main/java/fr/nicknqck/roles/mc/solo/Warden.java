@@ -13,7 +13,6 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -73,27 +72,6 @@ public class Warden extends RoleBase {
 
         };
     }
-    public void fireLaser(Player shooter) {
-        Location shooterLoc = shooter.getLocation();
-        Vector direction = shooterLoc.getDirection().normalize();
-
-        double range = 10;
-        double step = 0.5;
-        List<UUID> damaged = new ArrayList<>();
-        for (double i = 0; i < range; i += step) {
-            Location particleLoc = shooterLoc.clone().add(direction.clone().multiply(i));
-            MathUtil.sendParticle(EnumParticle.REDSTONE, particleLoc);
-
-            for (Player target : particleLoc.getWorld().getPlayers()) {
-                if (target != shooter && target.getLocation().distance(particleLoc) < 1.0) {
-                    if (!damaged.contains(target.getUniqueId())){
-                        damage(target, 6.0, 1, owner, true);
-                        damaged.add(target.getUniqueId());
-                    }
-                }
-            }
-        }
-    }
 
     @Override
     public void onMcCommand(String[] args) {
@@ -142,12 +120,6 @@ public class Warden extends RoleBase {
     }
 
     @Override
-    public boolean onBlockBreak(Player player, Block block, GameState gameState) {
-        MathUtil.spawnSimpleWave(owner, 20);
-        return true;
-    }
-
-    @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
                 sword,
@@ -159,9 +131,8 @@ public class Warden extends RoleBase {
     @Override
     public boolean ItemUse(ItemStack item, GameState gameState) {
         if (item.isSimilar(laser)){
-            MathUtil.createLaser(owner, 5);
             if (cdLaser <=0){
-                fireLaser(owner);
+                createLaser();
                 cdLaser = 120;
                 owner.sendMessage("§7Vous avez lancer votre§9 laser§7.");
             } else {
@@ -184,6 +155,33 @@ public class Warden extends RoleBase {
             return true;
         }
         return super.ItemUse(item, gameState);
+    }
+    private void createLaser(){
+        new BukkitRunnable() {
+            //  int i = 20;
+            final List<UUID> damaged = new ArrayList<>();
+            @Override
+            public void run() {
+                double particleDistance = 0.5;
+                Location location = owner.getLocation().add(0, 1, 0);
+
+                for (double waypoint = 1; waypoint < 10; waypoint += particleDistance) {
+                    Vector vector = location.getDirection().multiply(waypoint);
+                    location.add(vector);
+                    MathUtil.sendParticle(EnumParticle.REDSTONE, location);
+                    for (Player target : location.getWorld().getPlayers()) {
+                        if (target.getUniqueId() != owner.getUniqueId() && target.getLocation().distance(location) < 1.0) {
+                            if (!damaged.contains(target.getUniqueId())){
+                                damage(target, 6.0, 1, owner, true);
+                                damaged.add(target.getUniqueId());
+                            }
+                        }
+                    }
+                }
+                cancel();
+            }
+
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
     }
 
     @Override
