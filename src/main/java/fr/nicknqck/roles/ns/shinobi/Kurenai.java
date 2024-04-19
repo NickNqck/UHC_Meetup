@@ -15,6 +15,8 @@ import org.bukkit.inventory.ItemStack;
 public class Kurenai extends RoleBase {
     private final ItemStack BoisItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu des bois").setLore("§7Vous permet d'empêcher le joueur viser de bouger").toItemStack();
     private int cdBois = 0;
+    private final ItemStack GenjutsuItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu temporel").setLore("§7Vous permet en ciblant un joueur de créer un pure combat 1v1").toItemStack();
+    private int cdGenjutsu = 0;
     public Kurenai(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
         setChakraType(getRandomChakras());
@@ -43,13 +45,15 @@ public class Kurenai extends RoleBase {
     @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
-                BoisItem
+                BoisItem,
+                GenjutsuItem
         };
     }
 
     @Override
     public void resetCooldown() {
         cdBois = 0;
+        cdGenjutsu = 0;
     }
 
     @Override
@@ -59,6 +63,12 @@ public class Kurenai extends RoleBase {
             cdBois--;
             if (cdBois == 0){
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c Genjutsu des bois§7.");
+            }
+        }
+        if (cdGenjutsu >= 0){
+            cdGenjutsu--;
+            if (cdGenjutsu == 0){
+                owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c Genjutsu temporel§7.");
             }
         }
     }
@@ -84,6 +94,17 @@ public class Kurenai extends RoleBase {
             }, 100);
             cdBois = 60*4+5;
             return true;
+        }
+        if (item.isSimilar(GenjutsuItem)){
+            if (cdGenjutsu > 0){
+                sendCooldown(owner, cdGenjutsu);
+                return true;
+            }
+            Player target = getTargetPlayer(owner, 30);
+            if (target == null) {
+                owner.sendMessage("§cIl faut viser un joueur !");
+                return true;
+            }
         }
         return super.ItemUse(item, gameState);
     }

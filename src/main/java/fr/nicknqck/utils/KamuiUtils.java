@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class KamuiUtils {
 	
-	public static enum Users{
+	public enum Users{
 		obito(null),
 		kakashi(null),
 		cibleObito(null),
@@ -25,7 +25,7 @@ public class KamuiUtils {
 			return loc;
 		}
 	}
-	private static HashMap<Users, Player> Cible = new HashMap<>();
+	private static final HashMap<Users, Player> Cible = new HashMap<>();
 	
 	public static void start(Location Loc,Users user,Player p, boolean tpInKamui) {
 		for (Users L : Users.values()) {
@@ -72,8 +72,6 @@ public class KamuiUtils {
 				}
 			}
 		}
-		if (Cible != null) {
-			Cible.clear();
-		}
-	}
+        Cible.clear();
+    }
 }
