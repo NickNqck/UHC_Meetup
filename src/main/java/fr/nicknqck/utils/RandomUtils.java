@@ -7,7 +7,7 @@ import org.bukkit.ChatColor;
 
 public class RandomUtils {
     public static int getRandomInt(int min, int max) {
-    	int toReturn =min + (new Random()).nextInt(max) - min;
+    	int toReturn =min + (Main.RANDOM).nextInt(max) - min;
     	if (toReturn <min) {
     		toReturn = min;
     	}
@@ -18,7 +18,7 @@ public class RandomUtils {
     }
     public static int getRandomDeviationValue(int value, int min, int max) {
         int i = max - min;
-        int a = (new Random()).nextInt(i * 2) - i;
+        int a = (Main.RANDOM).nextInt(i * 2) - i;
         return a + ((a < value) ? -1 : 1) * min;
     }
     private static final String ALLOWED_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -46,17 +46,16 @@ public class RandomUtils {
             throw new IllegalArgumentException("La longueur doit être supérieure à zéro.");
         }
 
-        Random random = new Random();
         StringBuilder sb = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(ALLOWED_CHARACTERS.length());
+            int randomIndex = Main.RANDOM.nextInt(ALLOWED_CHARACTERS.length());
             char randomChar = ALLOWED_CHARACTERS.charAt(randomIndex);
 
             if (color) {
                 ChatColor randomColor;
                 do {
-                    randomColor = COLORS[random.nextInt(COLORS.length)];
+                    randomColor = COLORS[Main.RANDOM.nextInt(COLORS.length)];
                 } while (randomColor == ChatColor.MAGIC || randomColor == ChatColor.UNDERLINE || randomColor == ChatColor.STRIKETHROUGH);
 
                 sb.append(randomColor.toString());
@@ -67,7 +66,7 @@ public class RandomUtils {
 
         if (color) {
             // Réinitialiser la couleur à la fin de la chaîne générée
-            sb.append(ChatColor.RESET.toString());
+            sb.append(ChatColor.RESET);
         }
 
         return sb.toString();
@@ -76,20 +75,12 @@ public class RandomUtils {
     	return performActionWithProbability(pourcentage/100);
     }
     public static boolean performActionWithProbability(double probability) {
-        // Créez une instance de Random
-        Random random = new Random();
 
         // Générez un nombre aléatoire entre 0 et 1
-        double randomValue = random.nextDouble();
+        double randomValue = Main.RANDOM.nextDouble();
         // Vérifiez si le nombre aléatoire est inférieur ou égal à la probabilité spécifiée
         if (randomValue != 0) {
-        	if (randomValue <= probability) {
-                // L'action a réussi
-                return true;
-            } else {
-                // L'action a échoué
-                return false;
-            }
+            return randomValue <= probability;
         } else {
         	return false;
         }

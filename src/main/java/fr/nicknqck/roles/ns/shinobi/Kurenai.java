@@ -17,6 +17,7 @@ public class Kurenai extends RoleBase {
     private int cdBois = 0;
     public Kurenai(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
+        setChakraType(getRandomChakras());
         owner.sendMessage(Desc());
     }
 
