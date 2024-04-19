@@ -13,6 +13,7 @@ import fr.nicknqck.events.Events;
 import fr.nicknqck.events.essential.EntityDamageEvents;
 import fr.nicknqck.events.essential.JoinEvents;
 import fr.nicknqck.events.essential.QuitEvents;
+import fr.nicknqck.events.essential.WeatherEvents;
 import fr.nicknqck.items.*;
 import fr.nicknqck.pregen.WorldGenCaves;
 import fr.nicknqck.roles.aot.titans.Bestial;
@@ -128,6 +129,7 @@ public class Main extends JavaPlugin implements Listener{
         getScoreboardManager().onEnable();
 	}
 	private void registerEvents(GameState gameState) {
+		getServer().getPluginManager().registerEvents(new WeatherEvents(), this);
 		getServer().getPluginManager().registerEvents(new TimberPvP(), this);
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new JoinEvents(), this);

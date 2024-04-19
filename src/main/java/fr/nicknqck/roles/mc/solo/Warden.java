@@ -13,6 +13,7 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -96,6 +97,7 @@ public class Warden extends RoleBase {
 
     @Override
     public void onMcCommand(String[] args) {
+        MathUtil.drawTornado(owner.getLocation(), 0, 0.05);
         if (args.length == 2){
             if (args[0].equalsIgnoreCase("cible")){
                 Player target = Bukkit.getPlayer(args[1]);
@@ -136,6 +138,12 @@ public class Warden extends RoleBase {
     }
 
     @Override
+    public boolean onBlockBreak(Player player, Block block, GameState gameState) {
+        MathUtil.spawnSimpleWave(owner, 20);
+        return true;
+    }
+
+    @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
                 sword,
@@ -147,6 +155,7 @@ public class Warden extends RoleBase {
     @Override
     public boolean ItemUse(ItemStack item, GameState gameState) {
         if (item.isSimilar(laser)){
+            MathUtil.createLaser(owner, 5);
             if (cdLaser <=0){
                 fireLaser(owner);
                 cdLaser = 120;

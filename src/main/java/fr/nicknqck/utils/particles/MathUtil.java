@@ -1,11 +1,9 @@
 package fr.nicknqck.utils.particles;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
+import fr.nicknqck.Main;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -13,10 +11,9 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
-import fr.nicknqck.Main;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import java.util.*;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -62,13 +59,12 @@ public class MathUtil {
     	return e;
     }
     public static void sendParticleLine(final Location startLocation, final Location endLocation, final EnumParticle particle, final int amount) {
-        int numberOfPoints = amount; // Adjust the number of points to determine the smoothness of the line
 
-        double distanceX = (endLocation.getX() - startLocation.getX()) / numberOfPoints;
-        double distanceY = (endLocation.getY() - startLocation.getY()) / numberOfPoints;
-        double distanceZ = (endLocation.getZ() - startLocation.getZ()) / numberOfPoints;
+        double distanceX = (endLocation.getX() - startLocation.getX()) / amount;
+        double distanceY = (endLocation.getY() - startLocation.getY()) / amount;
+        double distanceZ = (endLocation.getZ() - startLocation.getZ()) / amount;
 
-        for (int i = 0; i < numberOfPoints; i++) {
+        for (int i = 0; i < amount; i++) {
             double x = startLocation.getX() + (distanceX * i);
             double y = startLocation.getY() + (distanceY * i);
             double z = startLocation.getZ() + (distanceZ * i);
@@ -96,16 +92,16 @@ public class MathUtil {
                 for (int z = bZ - radius; z <= bZ + radius; ++z) {
                     final double distance = (bX - x) * (bX - x) + (bZ - z) * (bZ - z) + (bY - y) * (bY - y);
                     if (distance < radius * radius && (!hollow || distance >= (radius - 1) * (radius - 1))) {
-                        circleBlocks.add(new Location(centerBlock.getWorld(), (double) x, (double) y, (double) z));
+                        circleBlocks.add(new Location(centerBlock.getWorld(), x, y, z));
                     }
                 }
             }
         }
         return circleBlocks;
     }
-    private List<FallingBlock> fallingBlocks = new ArrayList<FallingBlock>();
+    private List<FallingBlock> fallingBlocks = new ArrayList<>();
     public Set<Location> sphere(Location location, int radius, boolean hollow){
-        Set<Location> blocks = new HashSet<Location>();
+        Set<Location> blocks = new HashSet<>();
         World world = location.getWorld();
         int X = location.getBlockX();
         int Y = location.getBlockY();
@@ -273,36 +269,88 @@ public class MathUtil {
             }
         }.runTaskTimer(Main.getInstance(), 0, 8);
     }
-    public static void spawnSimpleWave(Player player){
+    public static void spawnSimpleWave(Player player, int maxTimeInTick){
+        /*
+        Origin source code: https://pastebin.com/LRnqmx1J
+         */
         new BukkitRunnable(){
             double t = Math.PI/4;
             Location loc = player.getLocation();
             public void run(){
                 t = t + 0.1*Math.PI;
-                for (double theta = 0; theta <= 2*Math.PI; theta = theta + Math.PI/32){
+                for (double theta = 0; theta <= 2*Math.PI; theta = theta + Math.PI/16){
                     double x = t*cos(theta);
-                    double y = 2*Math.exp(-0.1*t) * sin(t) + 1.5;
+                    double y = Math.exp(-0.1*t) * sin(t) + 1.5;
                     double z = t*sin(theta);
                     loc.add(x,y,z);
-                    sendParticle(EnumParticle.FIREWORKS_SPARK, loc);
- //                   ParticleEffect.FIREWORKS_SPARK.display(loc,0,0,0,0,1);
                     loc.subtract(x,y,z);
 
-                    theta = theta + Math.PI/64;
+                    theta = theta + Math.PI/32;
 
                     x = t*cos(theta);
-                    y = 2*Math.exp(-0.1*t) * sin(t) + 1.5;
+                    y = Math.exp(-0.1*t) * sin(t);
                     z = t*sin(theta);
                     loc.add(x,y,z);
-                    sendParticle(EnumParticle.CRIT_MAGIC, loc);
-               //     ParticleEffect.WITCH_MAGIC.display(loc,0,0,0,0,1);
+                    sendParticle(EnumParticle.VILLAGER_HAPPY, loc);
                     loc.subtract(x,y,z);
                 }
-                if (t > 20){
+                if (t > maxTimeInTick){
                     this.cancel();
                 }
             }
 
         }.runTaskTimer(Main.getInstance(), 0, 1);
+    }
+    public static void createLaser(Player user, int length){
+        new BukkitRunnable() {
+          //  int i = 20;
+            @Override
+            public void run() {
+                double particleDistance = 0.5;
+
+          //      for (Player online : Bukkit.getOnlinePlayers()) {
+               //     ItemStack hand = online.getItemInHand();
+
+             //       if (hand.hasItemMeta() && hand.getItemMeta().getDisplayName().equals(ChatColor.WHITE + "Laser Pointer")) {
+                        Location location = user.getLocation().add(0, 1, 0);
+
+                        for (double waypoint = 1; waypoint < length; waypoint += particleDistance) {
+                            Vector vector = location.getDirection().multiply(waypoint);
+                            location.add(vector);
+
+                            if (location.getBlock().getType() != Material.AIR)
+                                break;
+
+                            sendParticle(EnumParticle.REDSTONE, location);
+                        }
+                        cancel();
+                   // }
+            //    }
+            }
+
+        }.runTaskTimer(Main.getInstance(), 0, 1);
+    }
+    public static void drawTornado(Location loc, double radius,double increase){
+        new BukkitRunnable() {
+            double y = loc.getY();
+            double t = loc.getX();
+            double Finalradius = radius;
+            @Override
+            public void run() {
+                if (t >= loc.getX()+10.0) {
+                    cancel();
+                    return;
+                }
+
+                double x = loc.getX()+(Finalradius*Math.sin(t));
+                double z = loc.getZ()+(Finalradius*Math.cos(t));
+                Location toLoc = new Location(loc.getWorld(), x, y, z);
+                sendParticle(EnumParticle.REDSTONE, toLoc);
+                Bukkit.broadcastMessage(toLoc.toString());
+                y += 0.01;
+                Finalradius+=increase;
+                t+= 0.05;
+            }
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0,1);
     }
 }
