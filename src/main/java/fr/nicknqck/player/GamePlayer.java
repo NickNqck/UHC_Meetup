@@ -1,5 +1,6 @@
 package fr.nicknqck.player;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -33,5 +34,8 @@ public class GamePlayer {
 				}
 			}.runTaskTimer(Main.getInstance(), 0, 1);
 		}
+	}
+	public static GamePlayer get(UUID uuid){
+		return GameState.getInstance().getPlayerRoles().get(Bukkit.getPlayer(uuid)).getGamePlayer();
 	}
 }
