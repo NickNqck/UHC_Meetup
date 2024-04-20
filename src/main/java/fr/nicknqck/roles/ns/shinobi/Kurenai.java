@@ -6,11 +6,15 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Kurenai extends RoleBase {
     private final ItemStack BoisItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu des bois").setLore("§7Vous permet d'empêcher le joueur viser de bouger").toItemStack();
@@ -100,11 +104,21 @@ public class Kurenai extends RoleBase {
                 sendCooldown(owner, cdGenjutsu);
                 return true;
             }
-            Player target = getTargetPlayer(owner, 30);
+            final Player target = getTargetPlayer(owner, 30);
             if (target == null) {
                 owner.sendMessage("§cIl faut viser un joueur !");
                 return true;
             }
+            new BukkitRunnable() {
+                private final Location initLocation = owner.getLocation().clone();
+                private int timeRemaining = 60;
+                @Override
+                public void run() {
+                    MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20);
+                    timeRemaining--;
+                }
+
+            }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
         return super.ItemUse(item, gameState);
     }

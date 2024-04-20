@@ -154,7 +154,7 @@ public class Kokushibo extends RoleBase{
 				if (getTeam().equals(TeamList.Demon)) {
 					if (!gameState.nightTime) {
 						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-						} else if (gameState.nightTime) {
+						} else {
 						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					}
@@ -175,7 +175,7 @@ public class Kokushibo extends RoleBase{
 		}else {
 			if (!gameState.nightTime) {
 				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-				} else if (gameState.nightTime) {
+				} else {
 				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			}

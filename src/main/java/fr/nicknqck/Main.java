@@ -63,13 +63,17 @@ public class Main extends JavaPlugin implements Listener{
 	public final String PLUGIN_NAME = "UHC-Meetup";
 	public World gameWorld;
 	public World nakime;
+	@Getter
 	private ScoreboardManager scoreboardManager;
-    private ScheduledExecutorService executorMonoThread;
-    private ScheduledExecutorService scheduledExecutorService;
+    @Getter
+	private ScheduledExecutorService executorMonoThread;
+    @Getter
+	private ScheduledExecutorService scheduledExecutorService;
     private static WorldFillTask worldfilltask;
 	public boolean gen = false;
 	public static String RH() {return "§c❤§r";}
 	public static List<Chunk> keepChunk = new ArrayList<>();
+//
 
 	@Getter
 	private static Main Instance;
@@ -79,6 +83,7 @@ public class Main extends JavaPlugin implements Listener{
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
+	//	this.databaseManager = new DatabaseManager();
 		GameState gameState = new GameState();
 		this.gameWorld = Bukkit.getWorld("world");
 		gameState.world = gameWorld;
@@ -255,6 +260,7 @@ public class Main extends JavaPlugin implements Listener{
    }
 	@Override
 	public void onDisable() {
+
 		if (getScoreboardManager() != null) {
 			getScoreboardManager().onDisable();
 		}
@@ -295,16 +301,6 @@ public class Main extends JavaPlugin implements Listener{
     }
 
 
-
-	public ScoreboardManager getScoreboardManager() {
-	    return scoreboardManager;
-	}
-	public ScheduledExecutorService getExecutorMonoThread() {
-	     return executorMonoThread;
-	}
-	public ScheduledExecutorService getScheduledExecutorService() {
-		return scheduledExecutorService;
-	}
 	public static void createLoadWorld() throws NoSuchFieldException, IllegalAccessException {
 		getInstance().gen = true;
         deleteWorld("arena");

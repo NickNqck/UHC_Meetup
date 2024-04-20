@@ -13,6 +13,7 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,6 +46,12 @@ public class Warden extends RoleBase {
         super.GiveItems();
         super.giveItem(owner, false, getItems());
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> giveHealedHeartatInt(owner, 5), 20);
+    }
+
+    @Override
+    public boolean onBlockBreak(Player player, Block block, GameState gameState) {
+        MathUtil.spawnSimpleWave(owner, 50);
+        return super.onBlockBreak(player, block, gameState);
     }
 
     @Override

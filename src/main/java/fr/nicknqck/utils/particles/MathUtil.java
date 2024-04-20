@@ -251,8 +251,8 @@ public class MathUtil {
     }
     public static void spawnMoovingCircle(EnumParticle circleParticle,Location center, int maxRadius, int duration) {
         new BukkitRunnable() {
-            int currentRadius = maxRadius;
-            int step = 1;
+            private int currentRadius = maxRadius;
+            private int step = 1;
 
             @Override
             public void run() {
