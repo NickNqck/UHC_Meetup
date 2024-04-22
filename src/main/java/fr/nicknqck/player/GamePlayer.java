@@ -17,6 +17,8 @@ public class GamePlayer {
 	private final UUID uuid;
 	@Setter
 	private boolean isAlive;
+	@Setter
+	private boolean canRevive = false;
 	public GamePlayer(UUID gamePlayer){
 		this.uuid = gamePlayer;
 		setAlive(true);

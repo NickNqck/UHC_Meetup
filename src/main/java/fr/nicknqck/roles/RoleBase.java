@@ -53,6 +53,7 @@ public abstract class RoleBase {
 	private TeamList oldteam;
 	private double Bonusforce = 0;
 	private double Bonusresi = 0;
+	@Getter
 	public GameState gameState;
 	@Getter
 	@Setter
@@ -867,7 +868,9 @@ public abstract class RoleBase {
 	public void onMcCommand(String[] args) {}
 
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
-	public boolean canBeHokage = false;
+	@Setter
+	@Getter
+	private boolean canBeHokage = false;
 	public boolean isCanTentacule() {
 		return false;//Simple methode for only Killer Bee
 	}

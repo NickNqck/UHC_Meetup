@@ -24,7 +24,7 @@ public class Gai extends RoleBase{
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 
 	@Override

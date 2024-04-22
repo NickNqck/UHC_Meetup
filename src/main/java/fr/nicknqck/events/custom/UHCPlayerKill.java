@@ -2,6 +2,7 @@ package fr.nicknqck.events.custom;
 
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;

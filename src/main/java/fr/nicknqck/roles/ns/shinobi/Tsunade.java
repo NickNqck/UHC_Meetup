@@ -29,7 +29,7 @@ public class Tsunade extends RoleBase {
 		super(player, roles, gameState);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
 		owner.sendMessage(Desc());
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 
 	@Override
@@ -121,18 +121,14 @@ public class Tsunade extends RoleBase {
 						if (item.getItemMeta().getDisplayName().contains(p.getName())) {
 							if (inKatsuyu.contains(p)) {
 								inKatsuyu.remove(p);
-								owner.openInventory(KatsuyuInventory());
-								owner.updateInventory();
-								event.setCancelled(true);
-								return;
-							} else {
+                            } else {
 								inKatsuyu.add(p);
-								owner.openInventory(KatsuyuInventory());
-								owner.updateInventory();
-								event.setCancelled(true);
-								return;
-							}
-						}
+                            }
+                            owner.openInventory(KatsuyuInventory());
+                            owner.updateInventory();
+                            event.setCancelled(true);
+                            return;
+                        }
 					}
 				}
 			}
@@ -190,12 +186,11 @@ public class Tsunade extends RoleBase {
 								}
 							}
 						}.runTaskTimer(Main.getInstance(), 0, 1);
-						return true;
-					} else {
+                    } else {
 						owner.sendMessage("§7Vous n'avez pas asser remplis votre§a Byakugo§7 pour faire ceci");
-						return true;
-					}
-				} else {
+                    }
+                    return true;
+                } else {
 					a = true;
 					owner.sendMessage("§7Vous ne partagez plus votre§c vie");
 				}

@@ -76,7 +76,7 @@ public class Hokage {
 		Collections.shuffle(canBeHokage);
 		for (Player p : canBeHokage) {
 			if (!gameState.hasRoleNull(p)) {
-				if (gameState.getPlayerRoles().get(p).canBeHokage) {
+				if (gameState.getPlayerRoles().get(p).isCanBeHokage()) {
 					return p;
 				}
 			}

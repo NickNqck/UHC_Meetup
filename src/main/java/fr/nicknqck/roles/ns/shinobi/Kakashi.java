@@ -38,7 +38,7 @@ public class Kakashi extends RoleBase {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class Asuma extends RoleBase{
 		super(player, roles, gameState);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 	@Override
 	public void GiveItems() {

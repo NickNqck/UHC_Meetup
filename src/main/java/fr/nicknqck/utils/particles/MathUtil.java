@@ -57,6 +57,27 @@ public class MathUtil {
     	}
     	return e;
     }
+    public static void spawnMoovingCircle(EnumParticle circleParticle, Location center, int radius, int duration) {
+        new BukkitRunnable() {
+            private int time = 0;
+            private final double amount = radius*15;
+            final double increment = 6.283185307179586 / amount;
+            private int i = 0;
+            @Override
+            public void run() {
+                if (time == duration){
+                    cancel();
+                    return;
+                }
+                final double angle = i * increment;
+                final double x = center.getX() + radius * cos(angle);
+                final double z = center.getZ() + radius * sin(angle);
+                sendParticle(circleParticle, x, center.getY(), z, center.getWorld());
+                i++;
+                time++;
+            }
+        }.runTaskTimer(Main.getInstance(), 0, 1);
+    }
     public static void sendParticleLine(final Location startLocation, final Location endLocation, final EnumParticle particle, final int amount) {
 
         double distanceX = (endLocation.getX() - startLocation.getX()) / amount;
@@ -237,36 +258,6 @@ public class MathUtil {
             }
         }
         return edge;
-    }
-    public static boolean isEven(int number) {
-        return number % 2 == 0;
-    }
-
-    public static boolean isOdd(int number) {
-        return number % 2 != 0;
-    }
-
-    public static boolean isImpaire(int num) {
-    	return isEven(num);
-    }
-    public static void spawnMoovingCircle(EnumParticle circleParticle,Location center, int maxRadius, int duration) {
-        new BukkitRunnable() {
-            private int currentRadius = maxRadius;
-            private int step = 1;
-
-            @Override
-            public void run() {
-                if (currentRadius <= 0) {
-                    cancel();
-                    return;
-                }
-                List<Location> circle = MathUtil.getCircle(center, currentRadius);
-                for (Location loc : circle) {
-                    MathUtil.sendParticle(circleParticle, loc);
-                }
-                currentRadius -= step;
-            }
-        }.runTaskTimer(Main.getInstance(), 0, 8);
     }
     public static void spawnSimpleWave(Player player, int maxTimeInTick){
         /*

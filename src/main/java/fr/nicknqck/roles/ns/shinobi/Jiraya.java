@@ -33,7 +33,7 @@ public class Jiraya extends RoleBase{
 		owner.sendMessage(Desc());
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "nakime Gamabunta8vzqzZvv189Zbxc:!");
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 
 	@Override

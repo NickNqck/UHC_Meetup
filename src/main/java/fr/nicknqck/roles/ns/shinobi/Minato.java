@@ -31,7 +31,7 @@ public class Minato extends RoleBase{
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 	
 	private Location Kunai = null;

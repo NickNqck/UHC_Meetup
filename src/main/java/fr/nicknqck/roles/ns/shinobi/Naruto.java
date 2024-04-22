@@ -38,7 +38,7 @@ public class Naruto extends RoleBase implements Listener{
 		super(player, roles, gameState);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 
 	@Override

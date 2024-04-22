@@ -20,7 +20,7 @@ public class Sakura extends RoleBase {
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		setForce(20);
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 
 	@Override

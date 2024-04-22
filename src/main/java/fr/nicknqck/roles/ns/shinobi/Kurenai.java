@@ -2,10 +2,13 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCPlayerKill;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
@@ -13,8 +16,15 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.UUID;
 
 public class Kurenai extends RoleBase {
     private final ItemStack BoisItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu des bois").setLore("§7Vous permet d'empêcher le joueur viser de bouger").toItemStack();
@@ -25,6 +35,7 @@ public class Kurenai extends RoleBase {
         super(player, roles, gameState);
         setChakraType(getRandomChakras());
         owner.sendMessage(Desc());
+        setCanBeHokage(true);
     }
 
     @Override
@@ -42,7 +53,17 @@ public class Kurenai extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+"§cGenjutsu des bois§f: Vous permet en ciblant un joueur, de l'empêcher de bouger pendant§c 5 secondes§f puis vous téléporte derrière ce joueur et lui inflige§c 3"+AllDesc.coeur+"§f.§7 (1x/5m)"
+                AllDesc.point+"§cGenjutsu des bois§f: Vous permet en ciblant un joueur, de l'empêcher de bouger pendant§c 5 secondes§f puis vous téléporte derrière ce joueur et lui inflige§c 3"+AllDesc.coeur+"§f.§7 (1x/5m)",
+                "",
+                AllDesc.point+"§cGenjutsu temporel§f: Vous permet en ciblant un joueur, de créer une situation de§c 1v1§f avec cette personne pendant§c 60 secondes§f.§7 (1x/5m)",
+                "",
+                AllDesc.particularite,
+                "",
+                AllDesc.point+"Vous possédez l'effet§c Force I§f proche de§a Asuma",
+                AllDesc.point+"Votre nature de Chakra est aléatoire",
+                "",
+                AllDesc.chakra+getChakras().getShowedName(),
+                AllDesc.bar
         };
     }
 
@@ -92,7 +113,7 @@ public class Kurenai extends RoleBase {
             owner.sendMessage("§7Vous utiliser votre§c Genjutsu§7 sur§a "+target.getDisplayName());
             owner.setGameMode(GameMode.SPECTATOR);
             GamePlayer.get(target.getUniqueId()).stun(5.0);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 owner.setGameMode(GameMode.SURVIVAL);
                 owner.sendMessage("§7Votre§c Genjutsu§7 est terminer.");
             }, 100);
@@ -104,22 +125,90 @@ public class Kurenai extends RoleBase {
                 sendCooldown(owner, cdGenjutsu);
                 return true;
             }
-            final Player target = getTargetPlayer(owner, 30);
+            Player target = getTargetPlayer(owner, 30);
             if (target == null) {
                 owner.sendMessage("§cIl faut viser un joueur !");
                 return true;
             }
-            new BukkitRunnable() {
-                private final Location initLocation = owner.getLocation().clone();
-                private int timeRemaining = 60;
-                @Override
-                public void run() {
-                    MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20);
-                    timeRemaining--;
-                }
-
-            }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            owner.sendMessage("§7Vous avez utiliser votre§c Genjutsu§7 contre§c "+target.getDisplayName());
+            new KurenaiRunnable(owner, this, target).runTaskTimer(Main.getInstance(), 0, 20);
+            cdGenjutsu = 60*6;
+            return true;
         }
         return super.ItemUse(item, gameState);
+    }
+    private static class KurenaiRunnable extends BukkitRunnable implements Listener {
+        private final Location initLocation;
+        private int timeRemaining = 60;
+        private final UUID owner;
+        private final ItemStack[] armors;
+        private final Kurenai kurenai;
+        private final HashMap<Integer, ItemStack> getContents = new LinkedHashMap<>();
+        private final UUID target;
+        private KurenaiRunnable(Player player, Kurenai kurenai, Player target) {
+            this.initLocation = player.getLocation().clone();
+            this.owner = player.getUniqueId();
+            this.target = target.getUniqueId();
+            EventUtils.registerEvents(this, Main.getInstance());
+            this.armors = player.getInventory().getArmorContents();
+            this.kurenai = kurenai;
+            this.kurenai.getGamePlayer().setCanRevive(true);
+            int i = 0;
+            for (ItemStack stack : player.getInventory().getContents()) {
+                if (stack != null && stack.getType() != Material.AIR){
+                    System.out.println("Amount: "+stack.getAmount() + ", hasItemMeta "+stack.hasItemMeta()+", Type: "+stack.getType());
+                    getContents.put(i, stack);
+                }
+                i++;
+            }
+
+        }
+        @Override
+        public void run() {
+            if (kurenai.getGameState().getServerState() != GameState.ServerStates.InGame)return;
+            if (timeRemaining <= 0){
+                if (Bukkit.getPlayer(owner) != null){
+                    Player player = Bukkit.getPlayer(owner);
+                    player.sendMessage("§7Votre§c Genjutsu§7 est maintenant terminé.");
+                    player.setGameMode(GameMode.SURVIVAL);
+                    player.teleport(initLocation);
+                    player.getInventory().clear();
+                    player.getInventory().setArmorContents(armors);
+                    for (int i = 0; i < player.getInventory().getContents().length; i++){
+                        if (getContents.containsKey(i)){
+                            player.getInventory().setItem(i, getContents.get(i));
+                            System.out.println("Amount: "+getContents.get(i).getAmount() + ", hasItemMeta "+getContents.get(i).hasItemMeta()+", Type: "+getContents.get(i).getType());
+                        }
+                    }
+                    kurenai.getGamePlayer().setCanRevive(false);
+                    player.updateInventory();
+                    player.setHealth(player.getMaxHealth());
+                }
+                cancel();
+                return;
+            }
+            MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20);
+            timeRemaining--;
+            kurenai.sendCustomActionBar(kurenai.owner, "§bTemp restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
+        }
+        @EventHandler
+        private void onUHCPlayerDie(UHCPlayerKill e){
+            if (e.getVictim().getUniqueId().equals(owner) && timeRemaining > 0){
+                timeRemaining = 0;
+                e.getGameState().RevivePlayer(e.getVictim());
+                e.getVictim().getInventory().clear();
+                System.out.println(timeRemaining+ "string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
+            }
+        }
+        @EventHandler
+        private void onEntityDamageByEntity(EntityDamageByEntityEvent e){
+            if (timeRemaining <= 0)return;
+            if (e.getEntity().getUniqueId().equals(owner) || e.getDamager().getUniqueId().equals(target)){
+                if (!e.getDamager().getUniqueId().equals(owner) && !e.getDamager().getUniqueId().equals(target)){
+                    e.getDamager().sendMessage("Vous ne pouvez pas vous incrustez dans ce§6 1v1");
+                    e.setCancelled(true);
+                }
+            }
+        }
     }
 }

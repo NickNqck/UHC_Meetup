@@ -64,7 +64,7 @@ public class Sasuke extends RoleBase {
 				owner.sendMessage("§cItachi§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à son kill");
 			}
 		}, 20*5);
-		canBeHokage = true;
+		setCanBeHokage(true);
 	}
 	@Override
 	public String[] Desc() {
