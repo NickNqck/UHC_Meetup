@@ -139,7 +139,7 @@ public class Naruto extends RoleBase implements Listener{
 		        timeVillager = 0;
 		        villager.setProfession(Villager.Profession.PRIEST);
 		        new BukkitRunnable() {
-					Location loc = villager.getLocation().clone();
+					final Location loc = villager.getLocation().clone();
 					@Override
 					public void run() {
 						if (villager == null) {
@@ -160,8 +160,8 @@ public class Naruto extends RoleBase implements Listener{
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*timeVillager, 1, true);
 				timeVillager = 0;
 				owner.sendMessage("§7Vous avez sacrifié votre§a clone§7, vous obtenez donc l'énergie qu'il avait accumulé jusqu'ici");
-				MathUtil.spawnMoovingCircle(EnumParticle.VILLAGER_HAPPY, owner.getLocation(), 5, 10);;
-			}
+				MathUtil.spawnMoovingCircle(EnumParticle.VILLAGER_HAPPY, owner.getLocation(), 5, 10);
+            }
 		}
 	}
 	private int cdRasengan = 0;
@@ -290,7 +290,7 @@ public class Naruto extends RoleBase implements Listener{
 					owner.sendMessage("§aVous commencez a amassé de l'§fénergie naturelle");
 					na = true;
 					new BukkitRunnable() {
-						Location oLoc = owner.getLocation().clone();
+						final Location oLoc = owner.getLocation().clone();
 						@Override
 						public void run() {
 							idleTime++;
@@ -317,12 +317,11 @@ public class Naruto extends RoleBase implements Listener{
 		if (item.isSimilar(RasenganItem())) {
 			if (cdRasengan <= 0) {
 				owner.sendMessage("§7Il faut frapper un joueur pour crée une explosion.");
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdRasengan);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 	private boolean na = false;
