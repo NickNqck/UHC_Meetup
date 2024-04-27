@@ -45,18 +45,6 @@ public class Chat implements Listener{
 			}
 		}
 		if (gameState.getServerState() == ServerStates.InLobby) {
-			/*if (rank.equals(ChatRank.Op)) {
-				opcolor = getopColor();
-				e.setFormat(CC.translate(debut+rank.+"§lAdmin "+opcolor+p.getName()+": §r"+msg));
-			}
-			if (gameState.getHost().contains(p.getUniqueId()) && !p.isOp()) {
-				opcolor = getopColor();
-				e.setFormat(CC.translate(debut+opcolor+"§lHost "+opcolor+p.getName()+": §r"+msg));
-			}
-			if (!p.isOp() && !gameState.getHost().contains(p.getUniqueId())) {
-                ChatColor color = ChatColor.WHITE;
-				e.setFormat(debut+ color +p.getName()+": §r"+msg);
-			}*/
 			e.setFormat(CC.translate(debut+rank.getFullPrefix()+p.getName()+":§r "+msg));
 		}else {
 			if (gameState.getInSpecPlayers().contains(p)) {
@@ -80,27 +68,13 @@ public class Chat implements Listener{
 	}
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void onPlayerChat(AsyncPlayerChatEvent event) {
-		updateRank(event.getPlayer());
+		ChatRank.updateRank(event.getPlayer());
 		String message = event.getMessage();
 		message = message.replace("&", "§");
 		event.setMessage(message);
 	}
 	public static ChatColor getopColor() {return opcolor;}
 	public static void setopColor(ChatColor c) {opcolor = c;}
-	private void updateRank(Player player){
-		ChatRank.resetRank(player.getUniqueId());
-		if (!ChatRank.hasRank(player.getUniqueId())){
-			if (player.isOp()){
-				ChatRank.Op.setPlayer(player);
-				return;
-			}
-			if (gameState.getHost().contains(player.getUniqueId())){
-				ChatRank.Host.setPlayer(player);
-				return;
-			}
-			ChatRank.Joueur.setPlayer(player);
-		}
-	}
 	public static ItemStack getColoritem() {
 		ItemStack stack = new ItemStack(Material.FEATHER, 1);
 		ItemMeta meta = stack.getItemMeta();

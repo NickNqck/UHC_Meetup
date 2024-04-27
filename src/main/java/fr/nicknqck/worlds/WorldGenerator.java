@@ -2,6 +2,7 @@ package fr.nicknqck.worlds;
 
 import java.util.Objects;
 
+import lombok.Getter;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -9,8 +10,10 @@ import org.bukkit.event.Listener;
 
 import fr.nicknqck.GameState;
 
+@Getter
 public class WorldGenerator implements Listener{
-	GameState gameState;	
+
+	private GameState gameState;
 	public WorldGenerator(GameState gameState) {
 		this.gameState = gameState;
 	}

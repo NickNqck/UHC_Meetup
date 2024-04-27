@@ -401,8 +401,8 @@ public class Madara extends RoleBase {
 					owner.sendMessage("§7Votre météorite attérira dans 10s");
 					Loc.getNearbyPlayers(owner, 50).stream().filter(p -> gameState.getInGamePlayers().contains(p)).filter(p -> !gameState.hasRoleNull(p)).forEach(e -> playSound(e, "mob.wither.death"));
 					new BukkitRunnable() {
-						final Location loc = owner.getLocation();
-						int s = 0;
+						private final Location loc = owner.getLocation();
+						private int s = 0;
 						@SuppressWarnings("deprecation")
 						@Override
 						public void run() {

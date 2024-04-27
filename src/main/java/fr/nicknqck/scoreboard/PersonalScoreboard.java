@@ -8,6 +8,7 @@ import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -49,6 +50,7 @@ public class PersonalScoreboard {
 
     public void setLines(String ip){
     	String premsg = this.gameState.premsg;
+		ChatRank.updateRank(this.player);
     	if (this.gameState.getServerState() == ServerStates.InLobby) {
     		 	objectiveSign.setDisplayName(this.gameState.msgBoard);
     	        objectiveSign.setLine(0, premsg+"§1");
@@ -60,15 +62,7 @@ public class PersonalScoreboard {
     	        }
     	        if (FFA.getFFA()) {objectiveSign.setLine(3, premsg+"§fFFA: §6Activer");
  			   } else {objectiveSign.setLine(3, premsg+"§fFFA: §6Désactiver");}
-    	        if (player.isOp()) {
-    	        	objectiveSign.setLine(4, premsg+"§fGrade: §cAdmin");
-    	        } else {
-    	        	if (this.gameState.getHost().contains(player.getUniqueId())) {
-    	        		objectiveSign.setLine(4, premsg+"§fGrade: §cHost");
-    	        	}else {
-    	        		objectiveSign.setLine(4, premsg+"§fGrade: Aucun");
-    	        	}
-    	        }
+				objectiveSign.setLine(4, premsg+"§fGrade: "+ChatRank.getPlayerGrade(this.player).getFullPrefix());
     	        objectiveSign.setLine(5, premsg+"§2");
     	        objectiveSign.setLine(6, premsg+ip);
     	        objectiveSign.removeScore("§c");
@@ -83,7 +77,6 @@ public class PersonalScoreboard {
     			}else {
     				objectiveSign.setLine(1, premsg+"§fRôle: "+role.type.name());
     			}
-    			
     		}
     		objectiveSign.setLine(2, premsg+"§fJoueurs:§c "+this.gameState.getInGamePlayers().size());
     		objectiveSign.setLine(3, premsg+"§fGroupe:§6 "+this.gameState.getGroupe());
@@ -121,7 +114,6 @@ public class PersonalScoreboard {
     				}
     			}
     		}
-    		
     		if (gameState.getJubiCrafter() != null) {
     			if (gameState.getJubiCrafter().getUniqueId().equals(player.getUniqueId())) {
     				gameState.changeTabPseudo("§dJubi "+player.getDisplayName(), player);
@@ -129,20 +121,6 @@ public class PersonalScoreboard {
     				gameState.changeTabPseudo("§d "+player.getDisplayName(), player);
     			}
     		}
-    	}
-    	if (gameState.getServerState() != ServerStates.GameEnded && gameState.getServerState() != ServerStates.InGame && gameState.getServerState() != ServerStates.InLobby) {
-    		objectiveSign.setLine(0, "§c");
-    		objectiveSign.setLine(1, "§a");
-    		objectiveSign.setLine(2, "Scoreboard is glitched");
-    		objectiveSign.setLine(3, "§6");
-    		objectiveSign.setLine(4, "§b");
-    		objectiveSign.setLine(5, "§1");
-			objectiveSign.setLine(6, "§r");
-			objectiveSign.setLine(7, "§m");
-			objectiveSign.setLine(8, "§l");
-    		objectiveSign.setLine(9, "§0");
-    		objectiveSign.setLine(10, "§2");
-    		objectiveSign.setLine(11, "§3");
     	}
         objectiveSign.updateLines();
     }

@@ -1,5 +1,6 @@
 package fr.nicknqck.utils.rank;
 
+import fr.nicknqck.GameState;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 
@@ -8,7 +9,6 @@ import java.util.*;
 @Getter
 public enum ChatRank {
     Spec("§1Spec ","§b"),
-    Dev("§eDev ","§6"),
     Op("§c§lAdmin ","§c"),
     Host("§cHost ", "§c"),
     Joueur("Joueur ", "§r");
@@ -43,12 +43,26 @@ public enum ChatRank {
         }
         return false;
     }
+
     public static void resetRank(UUID player){
         for (ChatRank rank : ChatRank.values()){
             rank.getPlayers().remove(player);
         }
     }
-
+    public static void updateRank(Player player){
+        ChatRank.resetRank(player.getUniqueId());
+        if (!ChatRank.hasRank(player.getUniqueId())){
+            if (player.isOp()){
+                ChatRank.Op.setPlayer(player);
+                return;
+            }
+            if (GameState.getInstance().getHost().contains(player.getUniqueId())){
+                ChatRank.Host.setPlayer(player);
+                return;
+            }
+            ChatRank.Joueur.setPlayer(player);
+        }
+    }
     public static ChatRank getPlayerGrade(Player player){
         return Arrays.stream(ChatRank.values()).filter(chatRank -> chatRank.players.contains(player.getUniqueId())).findAny().get();
     }

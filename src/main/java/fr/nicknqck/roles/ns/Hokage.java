@@ -33,7 +33,7 @@ public class Hokage {
 			int aT = 0;
 			@Override
 			public void run() {
-				if (stopPlease) {
+				if (stopPlease ||!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
 					stopPlease = false;
 					cancel();
 					return;
@@ -101,8 +101,10 @@ public class Hokage {
 			if (killer != null) {
 				if (!gameState.hasRoleNull(killer)) {
 					if (gameState.getPlayerRoles().get(killer).type == GameState.Roles.Danzo) {
-						killer.sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
-						forceHokage = killer;
+						if (this.Hokage != null && player.getUniqueId().equals(this.Hokage)){
+							killer.sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
+							forceHokage = killer;
+						}
 					}
 				}
 			}
