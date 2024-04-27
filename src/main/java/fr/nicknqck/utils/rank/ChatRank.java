@@ -7,10 +7,11 @@ import java.util.*;
 
 @Getter
 public enum ChatRank {
-    Spec("§1[Spec] ","§b"),
-    Dev("§e[Dev] ","§6"),
-    Op("§4§l[Op] ","§c"),
-    Joueur("[Joueur] ", "§r");
+    Spec("§1Spec ","§b"),
+    Dev("§eDev ","§6"),
+    Op("§c§lAdmin ","§c"),
+    Host("§cHost ", "§c"),
+    Joueur("Joueur ", "§r");
 
     private final String prefix;
     private final String color;
@@ -36,11 +37,16 @@ public enum ChatRank {
     }
     public static boolean hasRank(UUID player){
         for (ChatRank chatRank : ChatRank.values()){
-            if (chatRank.players.remove(player)){
+            if (chatRank.players.contains(player)){
                 return true;
             }
         }
         return false;
+    }
+    public static void resetRank(UUID player){
+        for (ChatRank rank : ChatRank.values()){
+            rank.getPlayers().remove(player);
+        }
     }
 
     public static ChatRank getPlayerGrade(Player player){

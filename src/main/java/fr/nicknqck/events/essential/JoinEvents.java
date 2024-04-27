@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -97,6 +98,13 @@ public class JoinEvents implements Listener{
 		}
 		if (uuid.equals(UUID.fromString("93d45061-5e32-4c49-8030-27c1d024505c"))) {
 			Bukkit.broadcastMessage("Ce§n§l§6 rat§r de§b "+player.getName()+"§f est arrivé parmi vous, merci de bien l'accueillir");
+		}
+		if (!ChatRank.hasRank(uuid)){
+			if (player.isOp()){
+				ChatRank.Op.setPlayer(player);
+			} else {
+				ChatRank.Joueur.setPlayer(player);
+			}
 		}
 	}
  	@SuppressWarnings("unchecked")
