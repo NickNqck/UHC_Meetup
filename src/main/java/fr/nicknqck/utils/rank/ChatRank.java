@@ -64,6 +64,11 @@ public enum ChatRank {
         }
     }
     public static ChatRank getPlayerGrade(Player player){
-        return Arrays.stream(ChatRank.values()).filter(chatRank -> chatRank.players.contains(player.getUniqueId())).findAny().get();
+        for (ChatRank rank : ChatRank.values()){
+            if (rank.getPlayers().contains(player.getUniqueId())){
+                return rank;
+            }
+        }
+        return Joueur;
     }
 }

@@ -62,12 +62,6 @@ public class HubListener implements Listener {
 		gameState.Assassin = null;
 		gameState.demonKingTanjiro = false;
 		gameState.canBeAssassin.clear();
-		if (gameState.getMdj() != null && gameState.getMdj().equals(MDJ.NS)){
-			if (gameState.hokage == null){
-				gameState.hokage = new Hokage(90, gameState);
-			}
-			gameState.hokage.run();
-		}
 		for (Events e : Events.values()) {
 			e.setProba(e.getEvent().getProba());
 			e.getEvent().resetCooldown();
@@ -128,6 +122,12 @@ public class HubListener implements Listener {
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
+		if (gameState.getMdj() != null && gameState.getMdj().equals(MDJ.NS)){
+			if (gameState.hokage == null){
+				gameState.hokage = new Hokage(gameState.getMinTimeSpawnBiju(), gameState);
+			}
+			gameState.hokage.run();
+		}
 	}
 	public void giveStartInventory(Player p) {
 		Main.getInstance().getScoreboardManager().update(p);
@@ -378,11 +378,11 @@ public class HubListener implements Listener {
 						}
 						for (MDJ mdj : MDJ.values()) {
 							if (item.isSimilar(mdj.getItem())) {
-								if (mdj.isEnable()) {
+								if (gameState.getMdj().equals(mdj)) {
 									gameState.setAllMDJDesac();
+									gameState.updateGameCanLaunch();
 								}else {
 									gameState.setAllMDJDesac();
-									mdj.setEnable(true);
 									gameState.setMdj(mdj);
 								}
 							}
@@ -2277,7 +2277,9 @@ public class HubListener implements Listener {
 				if (inv.getTitle().equalsIgnoreCase("Séléction du mode de jeu")) {
 					inv.clear();
 					for (MDJ mdj : MDJ.values()) {
-						inv.addItem(mdj.getItem());
+						if (mdj != MDJ.Aucun){
+							inv.addItem(mdj.getItem());
+						}
 					}
 					inv.setItem(8, GUIItems.getSelectBackMenu());
 				}
@@ -2824,7 +2826,7 @@ public class HubListener implements Listener {
 					
 					inv.setItem(7, glass);//haut droite
 					inv.setItem(8, glass);
-					inv.setItem(17, glass);					
+					inv.setItem(17, glass);
 					
 					inv.setItem(45, glass);
 					inv.setItem(46, glass);

@@ -66,12 +66,15 @@ public class GameState{
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
 	@Getter
-	private HashMap<GamePlayer, Class<? extends RoleBase>> GamePlayers = new LinkedHashMap<>();
+	private Map<GamePlayer, Class<? extends RoleBase>> GamePlayers = new LinkedHashMap<>();
 	@Getter
 	private Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
 	@Setter
 	@Getter
 	int groupe = 5;
+	@Getter
+	@Setter
+	private int minTimeSpawnBiju = 90;
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -226,29 +229,24 @@ public class GameState{
 		}
 		}
 	public void setAllMDJDesac() {
-		for (MDJ mdj : MDJ.values()) {
-
-			mdj.setEnable(false);
-		}
+		setMdj(MDJ.Aucun);
 	}
 	@Getter
 	public enum MDJ{
-		DS(false, new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
-		AOT(false, new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
-		NS(false, new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack());
+		Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack()),
+		DS(new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
+		AOT(new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
+		NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack());
 
-		@Setter
-		private boolean enable;
 		private final ItemStack item;
-		MDJ(boolean e, ItemStack item) {
-			this.enable = e;
+		MDJ(ItemStack item) {
 			this.item = item;
 		}
 
 		public ItemStack getItem() {
 			ItemStack itemC = item.clone();
 			ItemMeta iMeta = item.getItemMeta();
-			if (isEnable()) {
+			if (GameState.getInstance().mdj == this){
 				iMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
 				iMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				iMeta.setLore(Collections.singletonList("§r§aActivé"));
@@ -261,17 +259,10 @@ public class GameState{
 	}
 	@Getter
 	@Setter
-	private MDJ mdj = null;
+	private MDJ mdj = MDJ.Aucun;
 
 	public boolean isAllMdjNull() {
-		boolean toReturn = true;
-		for (MDJ mdj : MDJ.values()) {
-			if (mdj.isEnable()) {
-				toReturn = false;
-				break;
-			}
-		}
-		return toReturn;
+		return mdj == MDJ.Aucun;
 	}
 
 	public int roleTimer = 1;

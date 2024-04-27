@@ -55,11 +55,7 @@ public class PersonalScoreboard {
     		 	objectiveSign.setDisplayName(this.gameState.msgBoard);
     	        objectiveSign.setLine(0, premsg+"§1");
     	        objectiveSign.setLine(1, premsg+"§fJoueurs: §c"+this.gameState.getInLobbyPlayers().size()+"§r/§6"+this.gameState.getroleNMB());
-    	        if (gameState.getMdj() == null) {
-    	        	objectiveSign.setLine(2, premsg+"§fMDJ: Aucun");
-    	        } else {
-    	        	objectiveSign.setLine(2, premsg+"§fMDJ: "+gameState.getMdj().getItem().getItemMeta().getDisplayName());
-    	        }
+				objectiveSign.setLine(2, premsg+"§fMDJ: "+gameState.getMdj().getItem().getItemMeta().getDisplayName());
     	        if (FFA.getFFA()) {objectiveSign.setLine(3, premsg+"§fFFA: §6Activer");
  			   } else {objectiveSign.setLine(3, premsg+"§fFFA: §6Désactiver");}
 				objectiveSign.setLine(4, premsg+"§fGrade: "+ChatRank.getPlayerGrade(this.player).getFullPrefix());
