@@ -18,7 +18,7 @@ import fr.nicknqck.GameState;
 
 public class Whitelist implements CommandExecutor, Listener {
 
-	private GameState gameState;
+	private final GameState gameState;
 	public Whitelist(GameState s) {
 		this.gameState = s;
 	}
@@ -27,7 +27,7 @@ public class Whitelist implements CommandExecutor, Listener {
 		if (args.length >= 1) {
 			if (zzzz instanceof Player) {
 				Player sender = (Player)zzzz;
-				if (!isGoodPlayer(sender)) {
+				if (isGoodPlayer(sender)) {
 					sender.sendMessage("§cIl faut être§l HOST§c pour whitelister un joueur");
 					return true;
 				}
@@ -104,12 +104,9 @@ public class Whitelist implements CommandExecutor, Listener {
 		return true;
 	}
 	private boolean isGoodPlayer(Player p) {
-		if (p.isOp() || gameState.getHost().contains(p)) {
-			return true;
-		}
-		return false;
-	}
-	private List<UUID> Whitelisted = new ArrayList<>();
+        return !p.isOp() && !gameState.getHost().contains(p.getUniqueId());
+    }
+	private final List<UUID> Whitelisted = new ArrayList<>();
 	public boolean wlActivated = false;
 	@EventHandler
 	public void onJoin(AsyncPlayerPreLoginEvent e) {
@@ -118,7 +115,7 @@ public class Whitelist implements CommandExecutor, Listener {
 			e.setLoginResult(Result.KICK_BANNED);
 			e.setKickMessage("§cPseudo incorect désolé !");
 		}
-		if (!Whitelisted.contains(e.getUniqueId()) && wlActivated && !isGoodPlayer(Bukkit.getPlayer(e.getUniqueId()))) {
+		if (!Whitelisted.contains(e.getUniqueId()) && wlActivated && isGoodPlayer(Bukkit.getPlayer(e.getUniqueId()))) {
 			e.setLoginResult(Result.KICK_WHITELIST);
 			e.setKickMessage("§cVous n'êtes pas dans la whitelist !");
 		}

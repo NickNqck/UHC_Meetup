@@ -63,7 +63,7 @@ public class AdminCommands implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("name")) {
 				if (sender instanceof Player) {
-					if (sender.isOp() || gameState.getHost().contains(sender)) {
+					if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 						StringBuilder sb = new StringBuilder();
 						for (int i = 1;i<args.length;i++) {
 							sb.append(" ");
@@ -122,8 +122,9 @@ public class AdminCommands implements CommandExecutor{
 						if (gameState.BijusEnable) {
 							for (Bijus bijus : Bijus.values()) {
 								if (bijus.getBiju().getHote() != null){
-									if (bijus.getBiju().getHote().equals(player.getUniqueId()))
-									bijus.getBiju().resetCooldown();
+									if (bijus.getBiju().getHote().equals(player.getUniqueId())){
+										bijus.getBiju().resetCooldown();
+									}
 								}
 							}
 						}
@@ -168,32 +169,30 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
-					if (player.isOp() || gameState.getHost().contains(player)) {
+					if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
 						if (gameState.getServerState() == ServerStates.InLobby) {
 							if (args[0].equalsIgnoreCase("start")) {
 								if (gameState.gameCanLaunch) {
 									HubListener.getInstance().StartGame(player);
 									player.sendMessage("Starting Game !");
-									return true;
-								} else {
+                                } else {
 									player.sendMessage("Impossible de commencer la partie, il manque des rôles");
-									return true;
-								}
-							}
+                                }
+                                return true;
+                            }
 							if (args[0].equalsIgnoreCase("config")) {
 								player.openInventory(GUIItems.getAdminWatchGUI());
 								HubListener.getInstance().updateAdminInventory(player);
 								return true;
 							}
 							if (args[0].equalsIgnoreCase("pregen")) {
-								if (!gameState.pregenNakime) {
-									ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-							        Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
+                                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+                                if (!gameState.pregenNakime) {
+                                    Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
 							        gameState.pregenNakime = true;
 							        sender.sendMessage("Pregen en cours");
 								}else {
-									ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-							        Bukkit.dispatchCommand(console, "nakime delete");
+                                    Bukkit.dispatchCommand(console, "nakime delete");
 							        gameState.pregenNakime = false;
 							        sender.sendMessage("Suppression de la map \"nakime\"");
 								}
@@ -214,7 +213,7 @@ public class AdminCommands implements CommandExecutor{
 							return true;
 						}
 						if (args[0].equalsIgnoreCase("nuit")) {
-							ArrayList<String> message = new ArrayList<String>();
+							ArrayList<String> message = new ArrayList<>();
 									gameState.nightTime = true;
 									message.add("Exécution de la commande !");
 									Bukkit.broadcastMessage("");
@@ -226,19 +225,17 @@ public class AdminCommands implements CommandExecutor{
 									return true;
 									
 						} else if (args[0].equalsIgnoreCase("jour")) {
-							ArrayList<String> message = new ArrayList<String>();					
-								if (sender instanceof Player) {
-									gameState.nightTime = false;
-									message.add("Exécution de la commande !");
-									Bukkit.broadcastMessage("");
-									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant jour");
-									Bukkit.broadcastMessage("");
-									gameState.t = gameState.timeday;
-									Main.getInstance().gameWorld.setTime(0);
-									player.sendMessage(message.toArray(new String[message.size()]));
-									return true;
-								}
-							}
+							ArrayList<String> message = new ArrayList<>();
+                            gameState.nightTime = false;
+                            message.add("Exécution de la commande !");
+                            Bukkit.broadcastMessage("");
+                            Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant jour");
+                            Bukkit.broadcastMessage("");
+                            gameState.t = gameState.timeday;
+                            Main.getInstance().gameWorld.setTime(0);
+                            player.sendMessage(message.toArray(new String[message.size()]));
+                            return true;
+                        }
 					} else {
 						player.sendMessage(ChatColor.RED+"Vous devez être OP ou Hostpour utiliser cette commande.");
 					}
@@ -248,33 +245,30 @@ public class AdminCommands implements CommandExecutor{
 							if (gameState.gameCanLaunch) {
 								HubListener.getInstance().StartGame();
 								System.out.println("Starting Game !");
-								return true;
-							} else {
+                            } else {
 								System.out.println("Impossible de commencer la partie, il manque des rôles");
-								return true;
-							}
-						}
+                            }
+                            return true;
+                        }
 					}
 				}
 				if (args[0].equalsIgnoreCase("giveblade")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							Player p = (Player) sender;
-							ArrayList<String> message = new ArrayList<String>();
+							ArrayList<String> message = new ArrayList<>();
 							message.add("Éxécution de la commande !");
 							p.getInventory().addItem(Items.getLamedenichirin());
 							Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+sender.getName());
 							sender.sendMessage(message.toArray(new String[message.size()]));
-							return true;	
-						} else {
+                        } else {
 							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
-						}
-					}else {
+                        }
+                    }else {
 						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
-					}
-				}
+                    }
+                    return true;
+                }
 			}//args length == 1
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("addRole")) {
@@ -313,7 +307,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("infection") || args[0].equalsIgnoreCase("demon")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -357,7 +351,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("slayer")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -400,7 +394,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("solo")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -443,7 +437,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("jigoro")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -486,7 +480,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("setgroupe")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								if (gameState.getServerState() != null) {
 									if (gameState.getServerState() == ServerStates.InGame) {
@@ -518,116 +512,97 @@ public class AdminCommands implements CommandExecutor{
 					}
 				}
 				if (args[0].equalsIgnoreCase("addHost")) {
-					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp()) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (gameState.getHost().contains(p)) {
+                                } else {
+									if (gameState.getHost().contains(p.getUniqueId())) {
 										sender.sendMessage("Cette personne est déjà host...");
-										return true;
-									} else {
+                                    } else {
 										p.addAttachment(Main.getInstance(), "Host", true);
-										gameState.addHost(p);
+										gameState.getHost().add(p.getUniqueId());
 										sender.sendMessage("Vous avez ajouter "+p.getName()+" à la list(e) des hosts");
 										Bukkit.broadcastMessage(p.getName()+" est maintenant host");
-										return true;
-									}						
-								}					
-							} else {
+                                    }
+                                }
+                            } else {
 								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						} else {
+                            }
+                        } else {
 							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
-						}
-					} else {
-						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
-					}
-					
-				}
+                        }
+                    return true;
+
+                }
 				if (args[0].equalsIgnoreCase("delHost") || args[0].equalsIgnoreCase("removeHost")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (gameState.getHost().contains(p)) {
-										gameState.delHost(p);
+                                } else {
+									if (gameState.getHost().contains(p.getUniqueId())) {
+										gameState.getHost().remove(p.getUniqueId());
 										p.addAttachment(Main.getInstance(), "Host", false);
 										sender.sendMessage(p.getName()+" n'est plus host");
-										return true;
-									} else {
+                                    } else {
 										sender.sendMessage(p.getName()+" n'est pas host");
-										return true;
-									}						
-								}					
-							} else {
+                                    }
+                                }
+                            } else {
 								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						} else {
+                            }
+                        } else {
 							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
-						}
-					}else {
+                        }
+                    }else {
 						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
-					}		
-				}
+                    }
+                    return true;
+                }
 				if (args[0].equalsIgnoreCase("op")) {
 					if (args[1] != null) {
 						Player p = Bukkit.getPlayer(args[1]);
 						if (p == null) {
 							sender.sendMessage("Veuiller indiquer un pseudo correcte");
-							return true;
-						} else {
+                        } else {
 							p.setOp(true);
-							return true;
-						}
-					}
+                        }
+                        return true;
+                    }
 				}
 				if (args[0].equalsIgnoreCase("giveblade")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									ArrayList<String> message = new ArrayList<String>();
+                                } else {
+									ArrayList<String> message = new ArrayList<>();
 									message.add("Éxécution de la commande !");
 									p.getInventory().addItem(Items.getLamedenichirin());
 									Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+p.getName());
 									sender.sendMessage(message.toArray(new String[message.size()]));
-									return true;						
-								}					
-							} else {
+                                }
+                            } else {
 								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						} else {
+                            }
+                        } else {
 							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
-						}
-					}else {
+                        }
+                    }else {
 						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
-					}
-				}
+                    }
+                    return true;
+                }
 				if (args[0].equalsIgnoreCase("cheat")) {
 					if (sender instanceof Player) {
 						Player s = (Player) sender;
-						if (s.isOp() || gameState.getHost().contains(s)) {
+						if (s.isOp() || gameState.getHost().contains(s.getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -637,19 +612,19 @@ public class AdminCommands implements CommandExecutor{
 									if (!gameState.hasRoleNull(p)) {
 										if (gameState.getPlayerRoles().containsKey(p)) {
 											if (gameState.getPlayerRoles().get(p).type == Roles.Slayer) {
-												if (FFA.getFFA()) {
-													RoleBase r = gameState.getPlayerRoles().get(p);
+                                                RoleBase r;
+                                                if (FFA.getFFA()) {
+                                                    r = gameState.getPlayerRoles().get(p);
 													FFA_Pourfendeur fp = (FFA_Pourfendeur) r;
 													fp.cheat = true;
 													fp.owner.sendMessage("Vous avez bien cheater pour obtenir le souffle de l'univers");
-													return true;
-												} else {
-													RoleBase r = gameState.getPlayerRoles().get(s);
+                                                } else {
+                                                    r = gameState.getPlayerRoles().get(s);
 													Pourfendeur fp = (Pourfendeur) r;
 													fp.owner.sendMessage("");
-													return true;
-												}
-											}
+                                                }
+                                                return true;
+                                            }
 										}
 									}						
 								}					
@@ -662,15 +637,15 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("effect")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
-								if (p == null || args.length == 1) {
+								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
 									return true;
 								} else {
 									if (gameState.getPlayerRoles().containsKey(p)) {
-										ArrayList<String> message = new ArrayList<String>();
+										ArrayList<String> message = new ArrayList<>();
 										message.add(ChatColor.AQUA+"Voici les effets du joueur "+p.getName()+ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 										message.add("");
 										message.add(AllDesc.Resi+": "+ gameState.getPlayerRoles().get(p).getResi()+"% + " +gameState.getPlayerRoles().get(p).getBonusResi()+"%");
@@ -690,7 +665,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("role")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -712,7 +687,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("revive")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(sender)) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {

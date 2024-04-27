@@ -25,7 +25,7 @@ public class Say implements CommandExecutor {
 				Bukkit.broadcastMessage("[§cAdmin§f]§c "+sender.getName()+"§f:"+CC.translate(sb.toString()));
 				return true;
 			}
-			if (GameState.getInstance().getHost().contains(sender)) {
+			if (GameState.getInstance().getHost().contains(sender.getUniqueId())) {
 				Bukkit.broadcastMessage(" ");
 				Bukkit.broadcastMessage("[§cHost§f]§c "+sender.getName()+"§f:"+CC.translate(sb.toString()));
 				return true;

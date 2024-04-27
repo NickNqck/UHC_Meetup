@@ -48,11 +48,11 @@ public class Chat implements Listener{
 				opcolor = getopColor();
 				e.setFormat(CC.translate(debut+opcolor+"§lAdmin "+opcolor+p.getName()+": §r"+msg));
 			}
-			if (gameState.getHost().contains(p) && !p.isOp()) {
+			if (gameState.getHost().contains(p.getUniqueId()) && !p.isOp()) {
 				opcolor = getopColor();
-				e.setFormat(CC.translate(debut+opcolor+"§lHost§ "+opcolor+p.getName()+": §r"+msg));
+				e.setFormat(CC.translate(debut+opcolor+"§lHost "+opcolor+p.getName()+": §r"+msg));
 			}
-			if (!p.isOp() && !gameState.getHost().contains(p)) {
+			if (!p.isOp() && !gameState.getHost().contains(p.getUniqueId())) {
                 ChatColor color = ChatColor.WHITE;
 				e.setFormat(debut+ color +p.getName()+": §r"+msg);
 			}

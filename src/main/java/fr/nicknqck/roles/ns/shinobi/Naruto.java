@@ -160,7 +160,7 @@ public class Naruto extends RoleBase implements Listener{
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*timeVillager, 1, true);
 				timeVillager = 0;
 				owner.sendMessage("§7Vous avez sacrifié votre§a clone§7, vous obtenez donc l'énergie qu'il avait accumulé jusqu'ici");
-				MathUtil.spawnMoovingCircle(EnumParticle.VILLAGER_HAPPY, owner.getLocation(), 5, 10);
+				MathUtil.spawnMoovingCircle(EnumParticle.VILLAGER_HAPPY, owner.getLocation(), 5, 10, null);
             }
 		}
 	}

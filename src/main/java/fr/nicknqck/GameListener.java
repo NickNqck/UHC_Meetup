@@ -286,7 +286,9 @@ public class GameListener implements Listener {
 			if (gameState.inGameTime == gameState.roleTimer) {
 				for (Player p : gameState.getInGamePlayers()) {
 					RoleBase role = gameState.GiveRole(p);
-					if (role != null) role.GiveItems();
+					if (role != null){
+						role.GiveItems();
+					}
 				}
 				for (RoleBase r : gameState.getPlayerRoles().values()) {
 					r.RoleGiven(gameState);
@@ -440,22 +442,7 @@ public class GameListener implements Listener {
 										}
 									}
 							}
-						//String kills = ChatColor.GOLD+"[";
-					//	if (gameState.getPlayerKills().get(p).size() == 0) kills += " ";
-				/*		for (Player p1 : gameState.getPlayerKills().get(p).keySet()) {
-							RoleBase role = gameState.getPlayerKills().get(p).get(p1);
-								if (role.getOldRole() == null) { //Ancienne affichage des kills
-									kills += "§d "+role.owner.getDisplayName()+"§5 (§6"+role.type.name()+"§5),";
-								} else {
-									kills += "§d "+role.owner.getDisplayName()+"§5 (§6"+role.getOldRole().name()+"§5 (§6"+role.type.name()+"§5)),";
-								}
-						}
-						kills = kills.substring(0, kills.length() - 1);
-						kills += "§6 ]";
-						if (gameState.getPlayerKills().get(p).size() > 0) {
-							SendToEveryone(kills);
-						}*/
-					}
+                    }
 				}
 
 			System.out.println("end");
@@ -594,8 +581,7 @@ public class GameListener implements Listener {
 					}
 					damager.sendMessage("");
 					damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-					return;
-			}else {
+            }else {
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					if (p != damager) {
 						p.sendMessage(AllDesc.bar);
@@ -619,9 +605,9 @@ public class GameListener implements Listener {
 						damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 					}
 				}
-				return;
-			}
-		}else {
+            }
+            return;
+        }else {
 			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 			SendToEveryone("");
 			SendToEveryone(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+ChatColor.GOLD+gameState.getPlayerRoles().get(victim).type.name());
@@ -795,13 +781,12 @@ public class GameListener implements Listener {
 		e.setDeathMessage(" ");
 		e.setDroppedExp(5);
 	}
-	public static final boolean detectWin(GameState gameState) {
-		List<Player> players = new ArrayList<>();
-		players.addAll(gameState.igPlayers);
+	public static void detectWin(GameState gameState) {
+        List<Player> players = new ArrayList<>(gameState.igPlayers);
 		players.removeAll(gameState.getInSpecPlayers());
 		boolean gameDone = false;
 		TeamList winer = null;
-		if (players.size() == 0) {
+		if (players.isEmpty()) {
 			gameState.sendTitleToAll("§fVictoire de", "§7Personne", false);
             gameDone = true;
         }
@@ -898,7 +883,7 @@ public class GameListener implements Listener {
 		}
 		if (gameDone) {
 			EndGame(gameState, null);
-			return true;
+			return;
 		}
 		if (i == 0) {
 			EndGame(gameState, null);
@@ -914,7 +899,7 @@ public class GameListener implements Listener {
 			}
 			if (Demon) {
 				//win des Demon
-				winer = TeamList.Slayer;
+				winer = TeamList.Demon;
 				gameDone = true;
 			}
 			if (Solo) {
@@ -974,7 +959,6 @@ public class GameListener implements Listener {
 			Bukkit.getServer().getPluginManager().callEvent(new WinEvent(winer));
 			EndGame(gameState, winer);
 		}
-		return gameDone;
 	}
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void OnDamagedEntityByEntity(EntityDamageByEntityEvent event) {
@@ -982,7 +966,7 @@ public class GameListener implements Listener {
 			if (event.getEntity() instanceof Player) {
 				Player player = (Player) event.getEntity();
 				Entity damageur = event.getDamager();
-				Double damage = event.getFinalDamage();
+				double damage = event.getFinalDamage();
 				for (Events e : Events.values()) {
 					e.getEvent().onPlayerDamagedByPlayer(event, player, damageur);
 				}
@@ -996,26 +980,25 @@ public class GameListener implements Listener {
 						 * player = Player victim
 						 * gameState = GameState gameState
 						 */
-						if (player instanceof Player) {
+						if (player != null) {
 							Player attacker = (Player) damageur;
-							Player defender = (Player) player;
-							if (gameState.shutdown.contains(attacker)) {
+                            if (gameState.shutdown.contains(attacker)) {
 								event.setCancelled(true);
 							}
 							if (gameState.getCharmed().contains(attacker)) {
-								if (gameState.getPlayerRoles().get(defender).type == Roles.Mitsuri) {
+								if (gameState.getPlayerRoles().get((Player) player).type == Roles.Mitsuri) {
 									attacker.sendMessage("Vous n'avez pas le pouvoir de tapée l'amour de votre vie");
-									double x = defender.getLocation().getX();
-									double y = defender.getLocation().getY();
-									double z = defender.getLocation().getZ();
+									double x = ((Player) player).getLocation().getX();
+									double y = ((Player) player).getLocation().getY();
+									double z = ((Player) player).getLocation().getZ();
 									MathUtil.sendParticleTo(attacker, EnumParticle.HEART, x, y+2, z);
 									event.setCancelled(true);
 								}
 							}
-						if (gameState.getPlayerRoles().get(defender).type == Roles.Slayer && FFA.getFFA()) {
-							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(defender);
+						if (gameState.getPlayerRoles().get((Player) player).type == Roles.Slayer && FFA.getFFA()) {
+							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get((Player) player);
 							if (f.getPlayerRoles(f.owner).type == Roles.Slayer) {
-								if (f.owner == defender) {
+								if (f.owner == (Player) player) {
 									if (f.Serpent) {
 										if (f.serpentactualtime >= 0) {
 											if (RandomUtils.getOwnRandomProbability(20)) {
@@ -1027,8 +1010,8 @@ public class GameListener implements Listener {
 								}
 							}
 						}
-							gameState.getPlayerRoles().get(defender).neoAttackedByPlayer(attacker, gameState);
-							if (gameState.getPlayerRoles().get(defender).CancelAttack)event.setCancelled(true);
+							gameState.getPlayerRoles().get((Player) player).neoAttackedByPlayer(attacker, gameState);
+							if (gameState.getPlayerRoles().get((Player) player).CancelAttack)event.setCancelled(true);
 						}
 					}
 					if (gameState.getPlayerRoles().containsKey(player)) {

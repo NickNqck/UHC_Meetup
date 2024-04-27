@@ -31,7 +31,6 @@ public class JoinEvents implements Listener{
 		Player player = event.getPlayer();
 		GameState gameState = GameState.getInstance();
 		Main.getInstance().getScoreboardManager().onLogin(player);
-		System.out.println("");
 		System.out.println("new Player: "+player);
 		printConsoleAndRegister(player);
 
@@ -63,9 +62,6 @@ public class JoinEvents implements Listener{
 				gameState.delInGamePlayers(player);
 				gameState.addInSpecPlayers(player);
 				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A quittée la liste des joueurs en jeux pour devenir un Spectateur";
-			} else {
-			//	gameState.addInLobbyPlayers(player);
-				//player.setGameMode(GameMode.SPECTATOR);
 			}
 			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player) || !gameState.getInGamePlayers().contains(player)) {
 				gameState.addInSpecPlayers(player);
@@ -99,11 +95,8 @@ public class JoinEvents implements Listener{
 		if (uuid.equals(UUID.fromString("ae8635a5-1914-4ed7-9c7b-8cdb148309f2")) || player.getName().equals("Zerorapto")){
 			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE+"CramptéBOSS§n " + e.getPlayer().getName()+ChatColor.DARK_PURPLE + " à rejoint la partie");
 		}
-		if (uuid.equals(UUID.fromString("93d45061-5e32-4c49-8030-27c1d024505c")) || player.getName().equals("BoulotTanjiro")) {
+		if (uuid.equals(UUID.fromString("93d45061-5e32-4c49-8030-27c1d024505c"))) {
 			Bukkit.broadcastMessage("Ce§n§l§6 rat§r de§b "+player.getName()+"§f est arrivé parmi vous, merci de bien l'accueillir");
-		}
-		if (uuid.equals(UUID.fromString("73e56d9c-3681-4b56-b272-70db0f25c487")) || player.getName().equals("ania56")) {
-			
 		}
 	}
  	@SuppressWarnings("unchecked")

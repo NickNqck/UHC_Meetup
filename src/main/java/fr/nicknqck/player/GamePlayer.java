@@ -26,9 +26,9 @@ public class GamePlayer {
 	public void stun(double seconds){
 		Player target = Bukkit.getPlayer(getUuid());
 		if (target != null){
-			Location gLoc = target.getLocation().clone();
+			final Location gLoc = target.getLocation().clone();
 			new BukkitRunnable() {
-				double tickRemaining = 20*seconds;
+				private double tickRemaining = 20*seconds;
 				@Override
 				public void run() {
 					if (tickRemaining == 0){

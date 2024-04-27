@@ -34,10 +34,7 @@ import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.scenarios.impl.FFA;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.NMSPacket;
-import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
@@ -70,6 +67,8 @@ public class GameState{
 	public boolean gameCanLaunch = false;
 	@Getter
 	private HashMap<GamePlayer, Class<? extends RoleBase>> GamePlayers = new LinkedHashMap<>();
+	@Getter
+	private Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
 	@Setter
 	@Getter
 	int groupe = 5;
@@ -466,9 +465,7 @@ public class GameState{
 			}
 		}	
 		for (RoleBase r : getPlayerRoles().values()) {
-			if (roles.contains(r.type)) {
-				roles.remove(r.type);
-			}
+            roles.remove(r.type);
 		}
 		
 		Roles roleType = null;
@@ -829,7 +826,9 @@ public class GameState{
 			System.out.println(role.getTeam().name()+" for role "+role.type.name());
 		}
 		addInPlayerRoles(player, role);
-		role.setGamePlayer(new GamePlayer(player.getUniqueId()));
+		fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(player.getUniqueId());
+		role.setGamePlayer(gamePlayer);
+		role.getGameState().getGamePlayer().put(player.getUniqueId(), gamePlayer);
 		this.getGamePlayers().put(role.getGamePlayer(), role.getClass());
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
 			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon && !getPlayerRoles().get(player).type.equals(Roles.Kyogai)) {
@@ -868,23 +867,22 @@ public class GameState{
 	public List<Player> canSeeHealth = new ArrayList<>();
 	public String premsg = "§7§l ┃ §r";
 	public String getFormattedHealth(double hp, String format) {
-		DecimalFormat df = new DecimalFormat(format);
-		return df.format(hp);
+		return new DecimalFormat(format).toString();
 	}
 	public DecimalFormat getDecimalFormat(String format) {
 		return new DecimalFormat(format);
 	}
 	public boolean roleinfo = true;
-	public ArrayList<Player> Host = new ArrayList<Player>();
-	public ArrayList<Player> getHost(){return Host;}
-	public void setHost(ArrayList<Player> h){Host = h;}
-	public void addHost(Player player){Host.add(player);}
-	public void delHost(Player player){Host.remove(player);}
+
+	@Setter
+	@Getter
+	public List<UUID> Host = new ArrayList<>();
+
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (inLobbyPlayers.size() == this.getroleNMB());}
 	public void initEvents(GameState gameState) {
 		for (Events eventType : getAvailableEvents()) {
-			if (new Random().nextInt(1) == 0) {
+			if (RandomUtils.getOwnRandomProbability(50)) {
 				switch (eventType) {
 				case DemonKingTanjiro:
 					addInGameEvents(Events.DemonKingTanjiro.getEvent());
@@ -962,11 +960,16 @@ public class GameState{
     }
 	public List<Player> getNearbyPlayers(Entity entity, int distance) {return Loc.getNearbyPlayers(entity, distance);}
 	public void RevivePlayer(Player player) {
+		if (player == null)return;
 		if (getServerState() == ServerStates.InGame) {
 			if (getPlayerRoles().containsKey(player)) {
 				if (getInSpecPlayers().contains(player)) {
-					delInSpecPlayers(player);
-					addInGamePlayers(player);
+					if (getInSpecPlayers().contains(player)){
+						delInSpecPlayers(player);
+					}
+					if (getInGamePlayers().contains(player)){
+						addInGamePlayers(player);
+					}
 					player.setGameMode(GameMode.SURVIVAL);
 					GameListener.RandomTp(player, this);
 				}
@@ -975,7 +978,7 @@ public class GameState{
 	}
 	public void sendShifterList(Player player) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (Shifter.size() > 0) {
+			if (!Shifter.isEmpty()) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					player.sendMessage(ChatColor.BLUE+"Liste des Shifters: ");
 				}, 20);

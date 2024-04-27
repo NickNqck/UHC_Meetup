@@ -1,14 +1,5 @@
 package fr.nicknqck.scoreboard;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Player;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
@@ -16,10 +7,12 @@ import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
-import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.StringUtils;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
-import net.minecraft.server.v1_8_R3.ScoreboardTeamBase;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 /*
  * This file is part of SamaGamesAPI.
@@ -38,10 +31,10 @@ import net.minecraft.server.v1_8_R3.ScoreboardTeamBase;
  * along with SamaGamesAPI.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class PersonalScoreboard {
-    private Player player;
+    private final Player player;
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
-    private GameState gameState;
+    private final GameState gameState;
     PersonalScoreboard(Player player, GameState gameState){
         this.player = player;
         this.gameState = gameState;
@@ -70,7 +63,7 @@ public class PersonalScoreboard {
     	        if (player.isOp()) {
     	        	objectiveSign.setLine(4, premsg+"§fGrade: §cAdmin");
     	        } else {
-    	        	if (this.gameState.getHost().contains(player)) {
+    	        	if (this.gameState.getHost().contains(player.getUniqueId())) {
     	        		objectiveSign.setLine(4, premsg+"§fGrade: §cHost");
     	        	}else {
     	        		objectiveSign.setLine(4, premsg+"§fGrade: Aucun");
@@ -85,13 +78,6 @@ public class PersonalScoreboard {
     		objectiveSign.setLine(0, "§c");
     		if (!this.gameState.hasRoleNull(player)) {
     			RoleBase role = this.gameState.getPlayerRoles().get(player);
-    	/*		for (UUID u : role.customName.keySet()) {
-    				Player p = Bukkit.getPlayer(u);
-    				if (p != null) {
-    					PacketPlayOutScoreboardTeam plPacket = getPacket(p.getName(), role.customName.get(p.getUniqueId()));
-    			        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(plPacket);
-    				}
-    			}*/
     			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
     				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getTeam().getColor()+role.type.name());
     			}else {
@@ -159,52 +145,6 @@ public class PersonalScoreboard {
     		objectiveSign.setLine(11, "§3");
     	}
         objectiveSign.updateLines();
-    }
-    public static void setTag(Player viewer, String targetName, String prefix) {
-    	PacketPlayOutScoreboardTeam plPacket = getPacket(targetName, prefix);
-    	
-    	((CraftPlayer)viewer).getHandle().playerConnection.sendPacket(plPacket);
-    }
-    private static PacketPlayOutScoreboardTeam getPacket(String playerName, String prefix) {
-        PacketPlayOutScoreboardTeam plPacket = new PacketPlayOutScoreboardTeam();
-     
-        try {
-        	/* "a" is the scoreName
-        	 * "e" is the tag visibility
-        	 * "g" the list of playerNames
-        	 * "c" the prefix
-        	 */
-        	/*
-            Field scoreName = plPacket.getClass().getDeclaredField("a");
-            scoreName.setAccessible(true);
-            scoreName.set(plPacket, "zzzz");
-            scoreName.setAccessible(false);
-         */
-            Field tMode = plPacket.getClass().getDeclaredField("i");
-            tMode.setAccessible(true);
-            tMode.set(plPacket, 0);
-            tMode.setAccessible(false);
-         
-            Field ntVisibility = plPacket.getClass().getDeclaredField("e");
-            ntVisibility.setAccessible(true);
-            ntVisibility.set(plPacket, ScoreboardTeamBase.EnumNameTagVisibility.ALWAYS.e);
-            ntVisibility.setAccessible(false);
-         
-            Field tPList = plPacket.getClass().getDeclaredField("g");
-            tPList.setAccessible(true);
-            tPList.set(plPacket, Arrays.asList(new String[] {playerName}));
-            tPList.setAccessible(false);
-     
-            Field tPrefix = plPacket.getClass().getDeclaredField("c");
-            tPrefix.setAccessible(true);
-            tPrefix.set(plPacket, CC.translate(prefix));
-            tPrefix.setAccessible(false);
-            
-        } catch (Exception e) {
-                e.printStackTrace();
-        }
-     
-        return plPacket;
     }
     public void onLogout(){
         objectiveSign.removeReceiver(Bukkit.getServer().getOfflinePlayer(uuid));

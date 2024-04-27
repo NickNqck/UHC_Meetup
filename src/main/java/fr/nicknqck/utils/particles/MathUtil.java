@@ -3,6 +3,7 @@ package fr.nicknqck.utils.particles;
 import fr.nicknqck.Main;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -57,7 +58,7 @@ public class MathUtil {
     	}
     	return e;
     }
-    public static void spawnMoovingCircle(EnumParticle circleParticle, Location center, int radius, int duration) {
+    public static void spawnMoovingCircle(EnumParticle circleParticle, Location center, int radius, int duration, UUID recever) {
         new BukkitRunnable() {
             private int time = 0;
             private final double amount = radius*15;
@@ -72,7 +73,15 @@ public class MathUtil {
                 final double angle = i * increment;
                 final double x = center.getX() + radius * cos(angle);
                 final double z = center.getZ() + radius * sin(angle);
-                sendParticle(circleParticle, x, center.getY(), z, center.getWorld());
+                if (recever == null){
+                    sendParticle(circleParticle, x, center.getY(), z, center.getWorld());
+                } else {
+                    if (Bukkit.getPlayer(recever) != null){
+                        sendParticleTo(Bukkit.getPlayer(recever), circleParticle, x, center.getY(), z);
+                    } else {
+                        sendParticle(circleParticle, x, center.getY(), z, center.getWorld());
+                    }
+                }
                 i++;
                 time++;
             }

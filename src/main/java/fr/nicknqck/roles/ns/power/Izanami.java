@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.GameState;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -87,8 +88,8 @@ public class Izanami implements Listener{
 			}
 		}
 		String l3 = "";
-		if (Missions.keySet().stream().findFirst().isPresent()){
-			l3 = Missions.keySet().stream().findFirst().get().getMission();
+		if (TargetMissions.keySet().stream().findFirst().isPresent()){
+			l3 = TargetMissions.keySet().stream().findFirst().get().getMission();
 		}
 		return new String[] {
 				"",
@@ -177,6 +178,10 @@ public class Izanami implements Listener{
 				private int timeRemaining = 60*5;
 				@Override
 				public void run() {
+					if (GameState.getInstance().getServerState() != GameState.ServerStates.InGame){
+						cancel();
+						return;
+					}
 					Player user1 = Bukkit.getPlayer(user);
 					Player target1 = Bukkit.getPlayer(target);
 					if (user1 != null && target1 != null) {
@@ -199,6 +204,10 @@ public class Izanami implements Listener{
 				private int timeRemaining = 60;
 				@Override
 				public void run() {
+					if (GameState.getInstance().getServerState() != GameState.ServerStates.InGame){
+						cancel();
+						return;
+					}
 					Player user1 = Bukkit.getPlayer(user);
 					Player target1 = Bukkit.getPlayer(target);
 					if (user1 != null && target1 != null) {

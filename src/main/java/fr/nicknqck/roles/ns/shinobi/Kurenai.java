@@ -7,6 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -18,12 +19,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Kurenai extends RoleBase {
@@ -33,15 +34,20 @@ public class Kurenai extends RoleBase {
     private int cdGenjutsu = 0;
     public Kurenai(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
-        setChakraType(getRandomChakras());
-        owner.sendMessage(Desc());
-        setCanBeHokage(true);
     }
 
     @Override
     public void GiveItems() {
         super.GiveItems();
         super.giveItem(owner, false, getItems());
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        super.RoleGiven(gameState);
+        setChakraType(getRandomChakras());
+        owner.sendMessage(Desc());
+        setCanBeHokage(true);
     }
 
     @Override
@@ -96,6 +102,11 @@ public class Kurenai extends RoleBase {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c Genjutsu temporel§7.");
             }
         }
+        if (getPlayerFromRole(GameState.Roles.Asuma) != null){
+            if (Loc.getNearbyPlayers(getPlayerFromRole(GameState.Roles.Asuma), 15).contains(owner)){
+                givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+            }
+        }
     }
 
     @Override
@@ -143,7 +154,7 @@ public class Kurenai extends RoleBase {
         private final UUID owner;
         private final ItemStack[] armors;
         private final Kurenai kurenai;
-        private final HashMap<Integer, ItemStack> getContents = new LinkedHashMap<>();
+        private final Map<Integer, ItemStack> getContents = new LinkedHashMap<>();
         private final UUID target;
         private KurenaiRunnable(Player player, Kurenai kurenai, Player target) {
             this.initLocation = player.getLocation().clone();
@@ -165,7 +176,10 @@ public class Kurenai extends RoleBase {
         }
         @Override
         public void run() {
-            if (kurenai.getGameState().getServerState() != GameState.ServerStates.InGame)return;
+            if (kurenai.getGameState().getServerState() != GameState.ServerStates.InGame){
+                cancel();
+                return;
+            }
             if (timeRemaining <= 0){
                 if (Bukkit.getPlayer(owner) != null){
                     Player player = Bukkit.getPlayer(owner);
@@ -174,6 +188,7 @@ public class Kurenai extends RoleBase {
                     player.teleport(initLocation);
                     player.getInventory().clear();
                     player.getInventory().setArmorContents(armors);
+
                     for (int i = 0; i < player.getInventory().getContents().length; i++){
                         if (getContents.containsKey(i)){
                             player.getInventory().setItem(i, getContents.get(i));
@@ -187,7 +202,7 @@ public class Kurenai extends RoleBase {
                 cancel();
                 return;
             }
-            MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20);
+            MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20, target);
             timeRemaining--;
             kurenai.sendCustomActionBar(kurenai.owner, "§bTemp restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
         }
@@ -198,16 +213,6 @@ public class Kurenai extends RoleBase {
                 e.getGameState().RevivePlayer(e.getVictim());
                 e.getVictim().getInventory().clear();
                 System.out.println(timeRemaining+ "string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
-            }
-        }
-        @EventHandler
-        private void onEntityDamageByEntity(EntityDamageByEntityEvent e){
-            if (timeRemaining <= 0)return;
-            if (e.getEntity().getUniqueId().equals(owner) || e.getDamager().getUniqueId().equals(target)){
-                if (!e.getDamager().getUniqueId().equals(owner) && !e.getDamager().getUniqueId().equals(target)){
-                    e.getDamager().sendMessage("Vous ne pouvez pas vous incrustez dans ce§6 1v1");
-                    e.setCancelled(true);
-                }
             }
         }
     }
