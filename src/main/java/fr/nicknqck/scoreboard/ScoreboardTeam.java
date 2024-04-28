@@ -4,24 +4,42 @@ package fr.nicknqck.scoreboard;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 /**
  * Created by Alexis on 19/02/2017.
  */
+@Setter
+@Getter
 public class ScoreboardTeam {
 
     private String name;
     private String prefix;
+    @Getter
+    public enum Modes {
+        Creation(0),
+        Removed(1),
+        Updated(2),
+        AddTeam(3),
+        RemoveTeam(4);
+        final int anInt;
+        Modes(int i){
+            this.anInt = i;
+        }
+    }
 
     public ScoreboardTeam(String name, String prefix) {
         this.name = name;
         this.prefix = prefix;
     }
 
-    private PacketPlayOutScoreboardTeam createPacket(int mode){
+    private PacketPlayOutScoreboardTeam createPacket(int i){
         PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam();
 
         // a : team name
@@ -43,7 +61,7 @@ public class ScoreboardTeam {
         // f : chat color
 
         setField(packet, "a", name);
-        setField(packet, "h", mode);
+        setField(packet, "h", i);
         setField(packet, "b", "");
         setField(packet, "c", prefix);
         setField(packet, "d", "");
@@ -94,10 +112,9 @@ public class ScoreboardTeam {
         return packet;
     }
 
-    public static PacketPlayOutPlayerInfo updateDisplayName(EntityPlayer player) {
-        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, player);
-        player.playerConnection.sendPacket(packet);
-        return packet;
+    public static void updateDisplayName(Player player) {
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME, (EntityPlayer) player);
+        ((EntityPlayer)player).playerConnection.sendPacket(packet);
     }
 
     private void setField(Object edit, String fieldName, Object value) {
@@ -110,19 +127,4 @@ public class ScoreboardTeam {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
 }

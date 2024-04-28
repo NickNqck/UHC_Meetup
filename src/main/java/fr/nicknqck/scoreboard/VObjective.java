@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -30,11 +32,51 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardScore;
  */
 public class VObjective
 {
+    /**
+     * -- GETTER --
+     *  Get objective's name
+     *
+     * @return Name
+     */
+    @Getter
     protected String name;
+    /**
+     * -- GETTER --
+     *  Get objective's display name
+     *
+     *
+     * -- SETTER --
+     *  Set objective's display name
+     *
+     @return Display name
+      * @param displayName Display name
+     */
+    @Setter
+    @Getter
     protected String displayName;
     protected IScoreboardCriteria.EnumScoreboardHealthDisplay format = IScoreboardCriteria.EnumScoreboardHealthDisplay.INTEGER;
+    /**
+     * -- GETTER --
+     *  Get objective location
+     *
+     *
+     * -- SETTER --
+     *  Set objective location
+     *
+     @return Location
+      * @param location Location
+     */
+    @Setter
+    @Getter
     protected ObjectiveLocation location = ObjectiveLocation.SIDEBAR;
     protected List<OfflinePlayer> receivers;
+    /**
+     * -- GETTER --
+     *  Get objective's scores
+     *
+     * @return Scores
+     */
+    @Getter
     protected ConcurrentLinkedQueue<VScore> scores;
 
     /**
@@ -49,16 +91,6 @@ public class VObjective
         this.scores = new ConcurrentLinkedQueue<>();
         this.name = name;
         this.displayName = displayName;
-    }
-
-    /**
-     * Set objective location
-     *
-     * @param location Location
-     */
-    public void setLocation(ObjectiveLocation location)
-    {
-        this.location = location;
     }
 
     /**
@@ -175,16 +207,6 @@ public class VObjective
     }
 
     /**
-     * Get objective location
-     *
-     * @return Location
-     */
-    public ObjectiveLocation getLocation()
-    {
-        return this.location;
-    }
-
-    /**
      * Update given players score
      *
      * @param p Player
@@ -291,16 +313,6 @@ public class VObjective
     }
 
     /**
-     * Get objective's scores
-     *
-     * @return Scores
-     */
-    public ConcurrentLinkedQueue<VScore> getScores()
-    {
-        return this.scores;
-    }
-
-    /**
      * Is objective contains a given player's score
      *
      * @param player Player
@@ -317,36 +329,6 @@ public class VObjective
     }
 
     /**
-     * Get objective's name
-     *
-     * @return Name
-     */
-    public String getName()
-    {
-        return this.name;
-    }
-
-    /**
-     * Get objective's display name
-     *
-     * @return Display name
-     */
-    public String getDisplayName()
-    {
-        return this.displayName;
-    }
-
-    /**
-     * Set objective's display name
-     *
-     * @param displayName Display name
-     */
-    public void setDisplayName(String displayName)
-    {
-        this.displayName = displayName;
-    }
-
-    /**
      * Get objective's format
      *
      * @return Format
@@ -356,6 +338,7 @@ public class VObjective
         return this.format;
     }
 
+    @Getter
     public enum ObjectiveLocation
     {
         LIST(0),
@@ -369,10 +352,6 @@ public class VObjective
             this.location = location;
         }
 
-        public int getLocation()
-        {
-            return this.location;
-        }
     }
 
     public static class RawObjective
@@ -518,24 +497,16 @@ public class VObjective
         }
     }
 
-    public class VScore
+    @Getter
+    public static class VScore
     {
         private final String playerName;
+        @Setter
         private int score;
 
         public VScore(String player, int score)
         {
             this.playerName = player;
-            this.score = score;
-        }
-
-        public int getScore()
-        {
-            return this.score;
-        }
-
-        public void setScore(int score)
-        {
             this.score = score;
         }
 
@@ -554,9 +525,5 @@ public class VObjective
             this.setScore(this.getScore() + score);
         }
 
-        public String getPlayerName()
-        {
-            return this.playerName;
-        }
     }
 }

@@ -172,7 +172,6 @@ public class Kurenai extends RoleBase {
                 }
                 i++;
             }
-
         }
         @Override
         public void run() {
@@ -188,13 +187,7 @@ public class Kurenai extends RoleBase {
                     player.teleport(initLocation);
                     player.getInventory().clear();
                     player.getInventory().setArmorContents(armors);
-
-                    for (int i = 0; i < player.getInventory().getContents().length; i++){
-                        if (getContents.containsKey(i)){
-                            player.getInventory().setItem(i, getContents.get(i));
-                            System.out.println("Amount: "+getContents.get(i).getAmount() + ", hasItemMeta "+getContents.get(i).hasItemMeta()+", Type: "+getContents.get(i).getType());
-                        }
-                    }
+                    getContents.keySet().stream().filter(z -> getContents.get(z).getAmount() > 0).filter(z -> getContents.get(z).getAmount() <= 64).forEach(z -> player.getInventory().setItem(z, getContents.get(z)));
                     kurenai.getGamePlayer().setCanRevive(false);
                     player.updateInventory();
                     player.setHealth(player.getMaxHealth());
@@ -202,17 +195,22 @@ public class Kurenai extends RoleBase {
                 cancel();
                 return;
             }
-            MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20, target);
+            MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20, owner);
             timeRemaining--;
             kurenai.sendCustomActionBar(kurenai.owner, "§bTemp restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
         }
         @EventHandler
         private void onUHCPlayerDie(UHCPlayerKill e){
             if (e.getVictim().getUniqueId().equals(owner) && timeRemaining > 0){
-                timeRemaining = 0;
-                e.getGameState().RevivePlayer(e.getVictim());
                 e.getVictim().getInventory().clear();
-                System.out.println(timeRemaining+ "string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
+                Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+                    timeRemaining = 0;
+                    e.getGameState().addInSpecPlayers(e.getVictim());
+                    e.getGameState().RevivePlayer(e.getVictim());
+                    e.getVictim().teleport(initLocation);
+                    e.getVictim().getInventory().clear();
+                    System.out.println(timeRemaining+ " string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
+                }, 55);
             }
         }
     }

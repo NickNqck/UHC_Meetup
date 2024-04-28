@@ -47,13 +47,6 @@ public class Warden extends RoleBase {
         super.giveItem(owner, false, getItems());
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> giveHealedHeartatInt(owner, 5), 20);
     }
-
-    @Override
-    public boolean onBlockBreak(Player player, Block block, GameState gameState) {
-        MathUtil.spawnSimpleWave(owner, 50);
-        return super.onBlockBreak(player, block, gameState);
-    }
-
     @Override
     public String[] Desc() {
         return new String[]{
@@ -82,7 +75,6 @@ public class Warden extends RoleBase {
 
     @Override
     public void onMcCommand(String[] args) {
-        MathUtil.drawTornado(owner.getLocation(), 0.5, 0.015);
         if (args.length == 2){
             if (args[0].equalsIgnoreCase("cible")){
                 Player target = Bukkit.getPlayer(args[1]);

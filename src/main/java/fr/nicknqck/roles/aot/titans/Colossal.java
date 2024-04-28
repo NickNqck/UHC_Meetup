@@ -57,17 +57,14 @@ public class Colossal extends Titan{
 							}
 							if (getPlayerRole(getListener().getColossal()).getResi() == 0) {
 								getPlayerRole(getListener().getColossal()).owner.sendMessage("Vous ne pouvez plus utilisé votre "+Cercle().getItemMeta().getDisplayName());
-								return;
-							}
+                            }
 						}
 					}else {
 						sendCooldown(player, cerclecooldown);
-						return;
-					}
+                    }
 				}else {
 					player.sendMessage("§7Il faut être transformé en§c Titan§7 !");
-					return;
-				}
+                }
 			}
 		}
 	}
@@ -80,6 +77,7 @@ public class Colossal extends Titan{
 				if (getListener().getColossal() == null)return;
 				setTransformedinTitan(true);
 				getPlayerRole(getListener().getColossal()).isTransformedinTitan = true;
+				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 90, 2, true);
 				getPlayerRole(getListener().getColossal()).setResi(40);
 				getListener().setColossalCooldown(60*8);
 				TransfoMessage(getListener().getColossal(), true);
@@ -195,7 +193,7 @@ public class Colossal extends Titan{
 	public UUID getOwner() {
 		return getListener().getColossal();
 	}
-	private List<Player> canVoleColossal = new ArrayList<>();
+	private final List<Player> canVoleColossal = new ArrayList<>();
 	@Override
 	public void onSteal(Player sender, String[] args) {
 		if (getListener().getColossal() == null) {

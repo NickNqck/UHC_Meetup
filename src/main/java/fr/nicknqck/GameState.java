@@ -958,7 +958,7 @@ public class GameState{
 					if (getInSpecPlayers().contains(player)){
 						delInSpecPlayers(player);
 					}
-					if (getInGamePlayers().contains(player)){
+					if (!getInGamePlayers().contains(player)){
 						addInGamePlayers(player);
 					}
 					player.setGameMode(GameMode.SURVIVAL);

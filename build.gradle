@@ -20,12 +20,12 @@ compileJava.options.encoding = "UTF-8"
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
-
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
     implementation 'fr.mrmicky:FastParticles:2.0.0'
   ///  implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.11.3'
-    compileOnly files('T:\\Bureau\\Dev\\Serv\\serveur de test\\spigot.jar')
     //  implementation files('D:\\Directorty\\Nakime Fiesta\\libs\\bukkitapi-1.0.jar')
 }
 
