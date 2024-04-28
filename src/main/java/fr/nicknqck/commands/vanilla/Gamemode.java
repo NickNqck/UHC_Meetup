@@ -13,7 +13,7 @@ public class Gamemode implements CommandExecutor {
 	public boolean onCommand(CommandSender s, Command command, String arg2, String[] args) {
 		if (s.isOp()) {
 			if (args.length >= 1) {
-				GameMode toChange = null;
+				GameMode toChange;
 				if (args[0].equalsIgnoreCase("spectator") || args[0].equalsIgnoreCase("sp") || args[0].equalsIgnoreCase("3")) {
 					toChange = GameMode.SPECTATOR;
 					if (args.length == 2) {
@@ -94,7 +94,7 @@ public class Gamemode implements CommandExecutor {
 		return false;
 	}
 	private void notifyGameModeChange(CommandSender sender, Player changed, GameMode mode) {
-		String goodName = "";
+		String goodName;
 		if (mode == GameMode.ADVENTURE) {
 			goodName = "§cAventure";
 		} else if (mode == GameMode.CREATIVE) {
