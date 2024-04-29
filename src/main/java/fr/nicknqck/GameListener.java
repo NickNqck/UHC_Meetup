@@ -1,10 +1,8 @@
 package fr.nicknqck;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+import fr.nicknqck.utils.*;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,6 +23,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -71,11 +70,6 @@ import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
-import fr.nicknqck.utils.AntiLopsa;
-import fr.nicknqck.utils.KamuiUtils;
-import fr.nicknqck.utils.PotionUtils;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -630,8 +624,8 @@ public class GameListener implements Listener {
 			boolean cantDie = false;
 			if (!gameState.hasRoleNull(player)) {
 				if (gameState.getPlayerRoles().get(player).onPreDie(damager, gameState) || gameState.getPlayerRoles().get(player).getGamePlayer().isCanRevive()) {
-					cantDie = true;
-				}
+                    cantDie = true;
+                }
 				if (!cantDie){
 					gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).type);
 				}
@@ -646,6 +640,19 @@ public class GameListener implements Listener {
 			if (cantDie) {
 				return;
 			}
+            for (ItemStack item : player.getInventory().getContents()){
+                if (item != null){
+                    if (item.getType() != Material.AIR){
+                        if (item.getAmount() <= 64){
+							if (item.getAmount() > 0) {
+								dropItem(player.getLocation().clone(), item.clone());
+							} else {
+								dropItem(player.getLocation().clone(), new ItemBuilder(item).setAmount(1).toItemStack());
+							}
+						}
+                    }
+                }
+            }
 			if (gameState.hokage != null) {
 				gameState.hokage.onDeath(player, damager, gameState);
 			}
@@ -771,10 +778,17 @@ public class GameListener implements Listener {
     }
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void VanillaDeath(PlayerDeathEvent e) {
-		DeathHandler(e.getEntity(), e.getEntity().getKiller(), e.getEntity().getLastDamage(), gameState);
-		e.setDeathMessage(" ");
+		e.setDeathMessage("");
 		e.setDroppedExp(5);
 		e.getEntity().getInventory().clear();
+	}
+	@EventHandler
+	private void onEntityDeath(EntityDeathEvent e){
+		if (e.getEntity() instanceof Player){
+			DeathHandler((Player) e.getEntity(), e.getEntity().getKiller(), e.getEntity().getLastDamage(), gameState);
+			e.setDroppedExp(15);
+			e.getDrops().clear();
+		}
 	}
 	public static void detectWin(GameState gameState) {
         List<Player> players = new ArrayList<>(gameState.igPlayers);

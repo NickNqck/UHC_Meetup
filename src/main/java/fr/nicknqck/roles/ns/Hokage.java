@@ -34,20 +34,24 @@ public class Hokage {
 			@Override
 			public void run() {
 				if (stopPlease ||!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+					System.out.println("Stoping Hokage System");
 					stopPlease = false;
 					cancel();
 					return;
 				}
 				aT++;
 				if (tWait == aT) {
+					System.out.println("Searching Hokage");
 					Player fH = null;
 					int e = 0;
 					if (forceHokage != null) {
 						fH = forceHokage;
+						System.out.println(fH.getDisplayName()+" will be Hokage obvsiously");
 					}
 					while (fH == null && e < 3) {
 						fH = searchHokage();
 						e++;
+						System.out.println("Searched an Hokage "+e+"/3");
 					}
 					GameListener.SendToEveryone(AllDesc.bar);
 					if (fH != null) {
@@ -59,11 +63,13 @@ public class Hokage {
 						Player finalFH = fH;
 						Player finalFH1 = fH;
 						gameState.getInGamePlayers().stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getPlayerRoles().get(p).getClass().equals(Danzo.class)).filter(p -> !p.getUniqueId().equals(finalFH.getUniqueId())).forEach(p -> p.sendMessage("§7Voici le rôle de l'Hokage: "+gameState.getPlayerRoles().get(finalFH1).type.getItem().getItemMeta().getDisplayName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)"));
+						forceHokage = null;
 					} else {
 						GameListener.SendToEveryone("§7Aucun joueur n'a le niveau pour devenir§c hokage§7...");
 					}
 					GameListener.SendToEveryone(AllDesc.bar);
 					cancel();
+					System.out.println("Hokage end");
 				}
 			}
 		}.runTaskTimer(Main.getInstance(), 0, 20);
@@ -72,15 +78,19 @@ public class Hokage {
 		stopPlease = true;
 	}
 	private Player searchHokage() {
+		System.out.println("Research Hokage");
         List<Player> canBeHokage = new ArrayList<>(gameState.getInGamePlayers());
 		Collections.shuffle(canBeHokage);
 		for (Player p : canBeHokage) {
+			System.out.println(p.getDisplayName()+" can be Hokage ?");
 			if (!gameState.hasRoleNull(p)) {
 				if (gameState.getPlayerRoles().get(p).isCanBeHokage()) {
+					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).type.getItem().getItemMeta().getDisplayName());
 					return p;
 				}
 			}
 		}
+		System.out.println("Searched Hokage returned NULL");
 		return null;
 	}
 	public void onDeath(Player player, Entity damager, GameState gameState) {
@@ -109,6 +119,7 @@ public class Hokage {
 				}
 			}
 			if (!gameState.hasRoleNull(player)){
+				this.Hokage = null;
 				gameState.getPlayerRoles().get(player).addBonusforce(-10);
 				gameState.getPlayerRoles().get(player).addBonusResi(-10);
 			}

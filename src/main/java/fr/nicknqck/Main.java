@@ -101,8 +101,10 @@ public class Main extends JavaPlugin implements Listener{
 			p.setGameMode(GameMode.ADVENTURE);
 			p.setPlayerListName(p.getName());
 			p.setDisplayName(p.getName());
-			for (PotionEffect effect : p.getActivePotionEffects())
-                p.removePotionEffect(effect.getType());
+			for (PotionEffect effect : p.getActivePotionEffects()){
+				p.removePotionEffect(effect.getType());
+			}
+			p.getActivePotionEffects().clear();
 			gameState.addInLobbyPlayers(p);
 			ItemsManager.GiveHubItems(p);
 			p.teleport(new Location(p.getWorld(), 0, 151, 0));
@@ -114,8 +116,10 @@ public class Main extends JavaPlugin implements Listener{
 
 		saveDefaultConfig();
         registerRecipes();
+		System.out.println("ENDING ONENABLE");
     }
 	private void registerRecipes() {
+		System.out.println("Starting registering recipes");
 		ItemStack result = Items.getLamedenichirin();
         ShapedRecipe recipe = new ShapedRecipe(result);
         recipe.shape("OId", "GPG", "dIO");
@@ -125,15 +129,19 @@ public class Main extends JavaPlugin implements Listener{
         recipe.setIngredient('G', Material.GOLD_BLOCK);
         recipe.setIngredient('P', Material.IRON_SWORD);
         Bukkit.addRecipe(recipe);
+		System.out.println("Ending registering recipes");
 	}
 	private void EnableScoreboard(GameState gameState) {
+		System.out.println("Enabling scoreboard");
 		scheduledExecutorService = Executors.newScheduledThreadPool(16);
         executorMonoThread = Executors.newScheduledThreadPool(1);
         scoreboardManager = new ScoreboardManager(gameState);
         SchedulerRunnable.register(this);
         getScoreboardManager().onEnable();
+		System.out.println("End enable scoreboard");
 	}
 	private void registerEvents(GameState gameState) {
+		System.out.println("Starting registering events");
 		getServer().getPluginManager().registerEvents(new WeatherEvents(), this);
 		getServer().getPluginManager().registerEvents(new TimberPvP(), this);
 		getServer().getPluginManager().registerEvents(this, this);
@@ -160,8 +168,10 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new TitanListener(), this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
+		System.out.println("Ending registering events");
 	}
 	private void registerCommands(GameState gameState) {
+		System.out.println("Starting registering commands");
 		getCommand("ds").setExecutor(new DSmtpCommands(gameState));
 		getCommand("a").setExecutor(new AdminCommands(gameState));
 		getCommand("desc").setExecutor(new CommandeDesc(gameState));
@@ -177,8 +187,10 @@ public class Main extends JavaPlugin implements Listener{
 		getCommand("whitelist").setExecutor(new Whitelist(gameState));
 		getCommand("mc").setExecutor(new McCommands(gameState));
 		getCommand("discord").setExecutor(new Discord());
+		System.out.println("Ending registering commands");
 	}
 	private void clearMap() {
+		System.out.println("Starting cleaning map");
 		for (int x = -150; x <= 150; x++) {
 			for (int z = -150; z <= 150; z++) {
 				for (int y = 60; y <= 120; y++) {
@@ -191,16 +203,21 @@ public class Main extends JavaPlugin implements Listener{
 				}
 			}
 		}
+		System.out.println("End cleaning blocks");
+		System.out.println("Starting cleaning entities");
 		for (Entity e : gameWorld.getEntities()) {
 			if (e instanceof Player) continue;
 			System.out.println("removing Entity "+e.getName()+" at "+e.getLocation());
 			e.remove();
 		}
+		System.out.println("Ending cleaning entities");
 	}
 	private void initPlugin(GameState gameState) {
+		System.out.println("init Roles");
 		for (GameState.Roles r : GameState.Roles.values()) {
 			gameState.addInAvailableRoles(r, 0);
 		}
+		System.out.println("init Events");
 		for (Events e : Events.values()) {
 			gameState.addInAvailableEvents(e);
 		}
@@ -209,6 +226,7 @@ public class Main extends JavaPlugin implements Listener{
 		}
 	}
 	private void giveTab(GameState gameState) {
+		System.out.println("Starting give tab");
 		Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
 			if (gameState.getServerState() == ServerStates.InLobby) {
 				for (Player p : gameState.getInLobbyPlayers()) {
@@ -244,13 +262,16 @@ public class Main extends JavaPlugin implements Listener{
 				}
 			}
 		}, 1, 1);
+		System.out.println("Ending give tab");
 	}
 	private void spawnPlatform() {
+		System.out.println("Spawning GLASS platform");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				gameWorld.getBlockAt(new Location(gameWorld, x, 150, z)).setType(Material.GLASS);
 			}
 		}
+		System.out.println("Ended GLASS platform");
 	}
 
 	@EventHandler
@@ -260,7 +281,6 @@ public class Main extends JavaPlugin implements Listener{
    }
 	@Override
 	public void onDisable() {
-
 		if (getScoreboardManager() != null) {
 			getScoreboardManager().onDisable();
 		}

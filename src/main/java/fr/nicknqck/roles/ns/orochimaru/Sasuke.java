@@ -559,7 +559,7 @@ public class Sasuke extends RoleBase {
 		}
 	}
 	private class SasukeRunnable extends BukkitRunnable {
-		private final Izanami izanami;
+		private Izanami izanami;
 		public SasukeRunnable(Izanami izanami) {
 			this.izanami = izanami;
 		}
@@ -569,6 +569,11 @@ public class Sasuke extends RoleBase {
 		public void run() {
 			if (gameState.getServerState() != ServerStates.InGame) {
 				cancel();
+				izanami = null;
+				return;
+			}
+			if (izanami == null){
+				return;
 			}
 			if (izanami.isAllTrue()) {
 				Player owner = Bukkit.getPlayer(izanami.getUser());
