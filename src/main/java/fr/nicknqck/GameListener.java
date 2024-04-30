@@ -1,17 +1,40 @@
 package fr.nicknqck;
 
-import java.util.*;
-
+import com.avaje.ebean.validation.NotNull;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.bijus.BijuListener;
+import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.events.EventBase;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.events.custom.DayEvent;
+import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.NightEvent;
+import fr.nicknqck.events.custom.UHCPlayerKill;
+import fr.nicknqck.items.InfectItem;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.aot.titans.TitanListener;
+import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.demons.Susamaru;
+import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
+import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.scenarios.impl.AntiPvP;
+import fr.nicknqck.scenarios.impl.FFA;
+import fr.nicknqck.scenarios.impl.Hastey_Babys;
+import fr.nicknqck.scenarios.impl.Hastey_Boys;
 import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.betteritem.BetterItem;
+import fr.nicknqck.utils.particles.MathUtil;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -33,49 +56,12 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.server.ServerListPingEvent;
-import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.avaje.ebean.validation.NotNull;
-
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.EventBase;
-import fr.nicknqck.events.Events;
-import fr.nicknqck.events.custom.DayEvent;
-import fr.nicknqck.events.custom.EndGameEvent;
-import fr.nicknqck.events.custom.NightEvent;
-import fr.nicknqck.events.custom.UHCPlayerKill;
-import fr.nicknqck.events.custom.WinEvent;
-import fr.nicknqck.items.InfectItem;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
-import fr.nicknqck.roles.aot.titans.TitanListener;
-import fr.nicknqck.roles.aot.titans.Titans;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.Susamaru;
-import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.scenarios.impl.AntiPvP;
-import fr.nicknqck.scenarios.impl.FFA;
-import fr.nicknqck.scenarios.impl.Hastey_Babys;
-import fr.nicknqck.scenarios.impl.Hastey_Boys;
-import fr.nicknqck.utils.betteritem.BetterItem;
-import fr.nicknqck.utils.particles.MathUtil;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.EnumParticle;
+import java.util.*;
 
 public class GameListener implements Listener {
 
@@ -118,7 +104,7 @@ public class GameListener implements Listener {
 					p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 				}
 				if (p.getGameMode() != GameMode.ADVENTURE) {
-					if (!p.isOp() && !gameState.getHost().contains(p)) {
+					if (!p.isOp() && !gameState.getHost().contains(p.getUniqueId())) {
 						p.setGameMode(GameMode.ADVENTURE);
 					}
 				}
@@ -128,21 +114,17 @@ public class GameListener implements Listener {
 				p.getWorld().setStorm(false);
 			}
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (gameState.getInGamePlayers().size() != 0) gameState.getInGamePlayers().clear();
-				if (gameState.getInSpecPlayers().size() != 0)gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
-				if (gameState.getInSleepingPlayers().size() != 0) gameState.getInSleepingPlayers().clear();
-				if (gameState.getLuneSupPlayers().size() != 0)gameState.getLuneSupPlayers().clear();
-				if (gameState.getPillier().size() != 0)gameState.getPillier().clear();
-				if (gameState.getInObiPlayers().size() != 0)gameState.getInObiPlayers().clear();
+				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
+				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
+				if (!gameState.getInSleepingPlayers().isEmpty()) gameState.getInSleepingPlayers().clear();
+				if (!gameState.getLuneSupPlayers().isEmpty())gameState.getLuneSupPlayers().clear();
+				if (!gameState.getPillier().isEmpty())gameState.getPillier().clear();
+				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p))gameState.addInLobbyPlayers(p);
 			}
 			break;
 		case InGame:
-			if (gameState.pvp) {
-				Bukkit.getWorld("world").setPVP(true);
-			} else {
-				Bukkit.getWorld("world").setPVP(false);
-			}
+            Bukkit.getWorld("world").setPVP(gameState.pvp);
 			for (Player p : gameState.getInGamePlayers()) {
 				if (gameState.inGameTime < 10) {
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
@@ -325,8 +307,8 @@ public class GameListener implements Listener {
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(gameState.world, Material.GLASS);
 			gameState.getInGameEvents().clear();
-			gameState.setInObiPlayers(new ArrayList<Player>());
-			gameState.setInSleepingPlayers(new ArrayList<Player>());
+			gameState.setInObiPlayers(new ArrayList<>());
+			gameState.setInSleepingPlayers(new ArrayList<>());
 			gameState.TitansRouge.clear();
 			gameState.infectedbyadmin.clear();
 			TitanListener.getInstance().resetCooldown();
@@ -415,7 +397,7 @@ public class GameListener implements Listener {
 								prole.endRole();
 									String s = "";
 									if (gameState.getPlayerKills().containsKey(p)) {
-										if (gameState.getPlayerKills().get(p).size() > 0) {
+										if (!gameState.getPlayerKills().get(p).isEmpty()) {
 											int i = 0;
 											for (Player k : gameState.getPlayerKills().get(p).keySet()) {
 												i++;
@@ -461,7 +443,8 @@ public class GameListener implements Listener {
 						ItemsManager.GiveHubItems(p);
 						p.teleport(new Location(Bukkit.getWorld("world"), 0.0, 151.0, 0.0));
 					}
-					if (!p.isOnline())gameState.getInLobbyPlayers().remove(p);
+                    assert p != null;
+                    if (!p.isOnline())gameState.getInLobbyPlayers().remove(p);
 				}
 			}
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -604,7 +587,6 @@ public class GameListener implements Listener {
 			SendToEveryone("");
 			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 		}
-		detectWin(gameState);
 	}
 	@NotNull
 	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
@@ -767,7 +749,18 @@ public class GameListener implements Listener {
 			player.setGameMode(GameMode.SPECTATOR);
 			ItemsManager.ClearInventory(player);
 			player.updateInventory();
-			detectWin(gameState);
+			Map<Boolean, TeamList> EZwin = detectWin(gameState);
+			if (!EZwin.keySet().stream().findFirst().isPresent())return;
+			if (EZwin.keySet().stream().findFirst().get()) {
+				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+					Map<Boolean, TeamList> win = detectWin(gameState);
+					if (!win.keySet().stream().findFirst().isPresent())return;
+					final boolean b = win.keySet().stream().findFirst().get();
+					if (b) {
+						EndGame(gameState, win.get(true).getTeam());
+					}
+				}, 60);
+			}
 	}
 	private static int trueCount(boolean... b) {
         int sum = 0;
@@ -790,8 +783,9 @@ public class GameListener implements Listener {
 			e.getDrops().clear();
 		}
 	}
-	public static void detectWin(GameState gameState) {
+	public static Map<Boolean, TeamList> detectWin(GameState gameState) {
         List<Player> players = new ArrayList<>(gameState.igPlayers);
+		Map<Boolean, TeamList> theMap = new HashMap<>();
 		players.removeAll(gameState.getInSpecPlayers());
 		boolean gameDone = false;
 		TeamList winer = null;
@@ -891,8 +885,10 @@ public class GameListener implements Listener {
 			System.out.println("game ending");
 		}
 		if (gameDone) {
+			Map<Boolean, TeamList> maps = new HashMap<>();
 			EndGame(gameState, null);
-			return;
+			maps.put(false, null);
+			return maps;
 		}
 		if (i == 0) {
 			EndGame(gameState, null);
@@ -964,10 +960,8 @@ public class GameListener implements Listener {
 				gameDone = true;
 			}
 		}
-		if (gameDone) {
-			Bukkit.getServer().getPluginManager().callEvent(new WinEvent(winer));
-			EndGame(gameState, winer);
-		}
+		theMap.put(gameDone, winer);
+		return theMap;
 	}
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void OnDamagedEntityByEntity(EntityDamageByEntityEvent event) {
@@ -995,19 +989,19 @@ public class GameListener implements Listener {
 								event.setCancelled(true);
 							}
 							if (gameState.getCharmed().contains(attacker)) {
-								if (gameState.getPlayerRoles().get((Player) player).type == Roles.Mitsuri) {
+								if (gameState.getPlayerRoles().get(player).type == Roles.Mitsuri) {
 									attacker.sendMessage("Vous n'avez pas le pouvoir de tapée l'amour de votre vie");
-									double x = ((Player) player).getLocation().getX();
-									double y = ((Player) player).getLocation().getY();
-									double z = ((Player) player).getLocation().getZ();
+									double x = player.getLocation().getX();
+									double y = player.getLocation().getY();
+									double z = player.getLocation().getZ();
 									MathUtil.sendParticleTo(attacker, EnumParticle.HEART, x, y+2, z);
 									event.setCancelled(true);
 								}
 							}
-						if (gameState.getPlayerRoles().get((Player) player).type == Roles.Slayer && FFA.getFFA()) {
-							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get((Player) player);
+						if (gameState.getPlayerRoles().get(player).type == Roles.Slayer && FFA.getFFA()) {
+							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(player);
 							if (f.getPlayerRoles(f.owner).type == Roles.Slayer) {
-								if (f.owner == (Player) player) {
+								if (f.owner == player) {
 									if (f.Serpent) {
 										if (f.serpentactualtime >= 0) {
 											if (RandomUtils.getOwnRandomProbability(20)) {
@@ -1019,8 +1013,8 @@ public class GameListener implements Listener {
 								}
 							}
 						}
-							gameState.getPlayerRoles().get((Player) player).neoAttackedByPlayer(attacker, gameState);
-							if (gameState.getPlayerRoles().get((Player) player).CancelAttack)event.setCancelled(true);
+							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
+							if (gameState.getPlayerRoles().get(player).CancelAttack)event.setCancelled(true);
 						}
 					}
 					if (gameState.getPlayerRoles().containsKey(player)) {
@@ -1262,7 +1256,7 @@ public class GameListener implements Listener {
     }
     @EventHandler
     public void setMOTD(ServerListPingEvent e) {
-        String motd = "";
+        String motd;
         if (gameState.getServerState() == ServerStates.InLobby) {
             motd = "        §e» §cStatus §f: §aEn Attente §f┃ "+ gameState.getInLobbyPlayers().size() +" §9Joueurs §f┃ "+gameState.getroleNMB()+" §9Rôles §e«\n                      §f§l▶ §r§b" +gameState.getAvailableRoles().size()+ " §aRôles Disponibles §f§l◀";
             // motd = "§rStatut actuelle:§6 Lobby§r, Nombre de joueur: §6"+gameState.getInLobbyPlayers().size()+"\n§rNombre de rôle: §6"+gameState.getroleNMB()+"§r, Nombre de rôle disponnible: §6"+gameState.getAvailableRoles().size();

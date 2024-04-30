@@ -33,4 +33,7 @@ public enum TeamList {
 	public java.util.List<Player> getPlayers(){
 		return list;
 	}
+	public TeamList getTeam(){
+		return this;
+	}
 }
