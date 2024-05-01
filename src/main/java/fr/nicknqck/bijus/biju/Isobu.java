@@ -106,38 +106,7 @@ public class Isobu extends Biju{
 
                     }
                     if (guardian != null) {
-                    	/*boolean changed = false;
-                    	if (spawn == null) return;
-    					if (spawn.getX() >= GameState.getInstance().getBorderSize()) {
-    			        	spawn.setX(spawn.getX()-1);
-    			        	changed = true;
-    			        }
-    			        if (spawn.getZ() >= GameState.getInstance().getBorderSize()) {
-    			        	spawn.setZ(spawn.getZ()-1);
-    			        	changed = true;
-    			        }
-    			        if (-spawn.getX() <= -GameState.getInstance().getBorderSize()) {
-    			        	spawn.setX(spawn.getX()+1);
-    			        	changed = true;
-    			        }
-    			        if (-spawn.getZ() <= -GameState.getInstance().getBorderSize()) {
-    			        	spawn.setZ(spawn.getZ()+1);
-    			        	changed = true;
-    			        }
-    			        spawn = new Location(spawn.getWorld(), spawn.getX(), spawn.getWorld().getHighestBlockYAt(spawn.getBlockX(), spawn.getBlockZ()), spawn.getZ());
-    			        if (guardian.getLocation().getX() > GameState.getInstance().getBorderSize()) {
-    			        	guardian.teleport(spawn);
-    			        }
-    			        if (guardian.getLocation().getZ() > GameState.getInstance().getBorderSize()) {
-    			        	guardian.teleport(spawn);
-    			        }
-    			        if (guardian.getLocation().getX() < -GameState.getInstance().getBorderSize()) {
-    			        	guardian.teleport(spawn);
-    			        }
-    			        if (guardian.getLocation().getZ() < -GameState.getInstance().getBorderSize()) {
-    			        	guardian.teleport(spawn);
-    			        }*/
-                    	if (isOutsideOfBorder(getLivingEntity().getLocation())) {
+                        if (isOutsideOfBorder(getLivingEntity().getLocation())) {
         					spawn = moveToOrigin(spawn);
         					getLivingEntity().teleport(spawn);
         				}
@@ -349,7 +318,7 @@ public class Isobu extends Biju{
 		getListener().setIsobuCooldown(0);
 		getListener().setIsobuDamage(null);
 	}
-	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
+	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
 	@Override
 	public int getTimeSpawn() {
 		return TimeSpawn;

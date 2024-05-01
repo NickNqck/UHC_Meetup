@@ -135,7 +135,7 @@ public class SonGoku extends Biju {
         return Items.SonGoku();
     }
 
-    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
+    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
     @Override
     public int getTimeSpawn() {
     	return TimeSpawn;
@@ -146,7 +146,7 @@ public class SonGoku extends Biju {
         int spawn = getTimeSpawn();
 
         public SonGokuRunnable() {
-        	System.out.println("Spawn Son Goku at "+StringUtils.secondsTowardsBeautiful(spawn+GameState.getInstance().TimeSpawnBiju));
+        	System.out.println("Spawn Son Goku at "+StringUtils.secondsTowardsBeautiful(spawn+TimeSpawn));
 		}
         
         @Override

@@ -326,6 +326,9 @@ public class GameState{
 	public boolean cibletanjiroAssassin = true;
 	private static GameState instance;
 	public int TimeSpawnBiju = 60;
+	@Getter
+	@Setter
+	private int maxTimeSpawnBiju = 60*5;
 	public static GameState getInstance() {return instance;}
 	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();

@@ -133,7 +133,7 @@ public class Saiken extends Biju {
     	}
     }
 
-    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
+    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
     @Override
     public int getTimeSpawn() {
     	return TimeSpawn;

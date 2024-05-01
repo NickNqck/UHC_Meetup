@@ -128,7 +128,7 @@ public class Kokuo extends Biju {
     public ItemStack getItem() {
         return Items.Kokuo();
     }
-    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
+    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
     @Override
     public int getTimeSpawn() {
     	return TimeSpawn;
@@ -138,7 +138,7 @@ public class Kokuo extends Biju {
 		int timer = 0;
 		int spawn = getTimeSpawn();
         public KokuoRunnable() {
-        	System.out.println("Spawn Kokuo at "+StringUtils.secondsTowardsBeautiful(spawn+GameState.getInstance().TimeSpawnBiju));
+        	System.out.println("Spawn Kokuo at "+StringUtils.secondsTowardsBeautiful(spawn+getTimeSpawn()));
 		}
         @Override
         public void run() {
