@@ -349,7 +349,7 @@ public class Isobu extends Biju{
 		getListener().setIsobuCooldown(0);
 		getListener().setIsobuDamage(null);
 	}
-	private int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
+	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
 	@Override
 	public int getTimeSpawn() {
 		return TimeSpawn;

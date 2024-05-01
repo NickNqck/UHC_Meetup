@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -139,10 +139,11 @@ public class Kurenai extends RoleBase {
             Player target = getTargetPlayer(owner, 30);
             if (target == null) {
                 owner.sendMessage("§cIl faut viser un joueur !");
-                return true;
+                target = owner;
+             //   return true;
             }
             owner.sendMessage("§7Vous avez utiliser votre§c Genjutsu§7 contre§c "+target.getDisplayName());
-            new KurenaiRunnable(owner, this, target).runTaskTimer(Main.getInstance(), 0, 20);
+            new KurenaiRunnable(owner, this).runTaskTimer(Main.getInstance(), 0, 20);
             cdGenjutsu = 60*6;
             return true;
         }
@@ -154,12 +155,11 @@ public class Kurenai extends RoleBase {
         private final UUID owner;
         private final ItemStack[] armors;
         private final Kurenai kurenai;
-        private final Map<Integer, ItemStack> getContents = new LinkedHashMap<>();
-        private final UUID target;
-        private KurenaiRunnable(Player player, Kurenai kurenai, Player target) {
+        private final Map<Integer, ItemStack> getContents = new HashMap<>();
+
+        private KurenaiRunnable(Player player, Kurenai kurenai) {
             this.initLocation = player.getLocation().clone();
             this.owner = player.getUniqueId();
-            this.target = target.getUniqueId();
             EventUtils.registerEvents(this, Main.getInstance());
             this.armors = player.getInventory().getArmorContents();
             this.kurenai = kurenai;
@@ -207,10 +207,13 @@ public class Kurenai extends RoleBase {
                     timeRemaining = 0;
                     e.getGameState().addInSpecPlayers(e.getVictim());
                     e.getGameState().RevivePlayer(e.getVictim());
+                    if (e.getVictim().isDead()){
+                        e.getVictim().spigot().respawn();
+                    }
                     e.getVictim().teleport(initLocation);
                     e.getVictim().getInventory().clear();
                     System.out.println(timeRemaining+ " string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
-                }, 55);
+                }, 21);
             }
         }
     }

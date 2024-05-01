@@ -170,7 +170,7 @@ public class Chomei extends Biju {
     public Location getSpawn() {
         return spawn;
     }
-    private int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
+    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
     @Override
     public int getTimeSpawn() {
     	return TimeSpawn;

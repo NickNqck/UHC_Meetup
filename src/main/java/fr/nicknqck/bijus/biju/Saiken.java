@@ -1,21 +1,22 @@
 package fr.nicknqck.bijus.biju;
 
-import java.util.List;
-import java.util.UUID;
-
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.Main;
+import fr.nicknqck.bijus.Biju;
+import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.utils.CC;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.RandomUtils;
+import net.minecraft.server.v1_8_R3.EntityLiving;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Slime;
-import org.bukkit.event.EventHandler;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -28,17 +29,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Biju;
-import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.RandomUtils;
-import net.minecraft.server.v1_8_R3.EntityLiving;
+import java.util.List;
+import java.util.UUID;
 
 public class Saiken extends Biju {
 
@@ -65,9 +57,7 @@ public class Saiken extends Biju {
         changeSpawn();
         this.gameState = gameState;
         new SaikenRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			System.out.println("Saiken will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
-		}, 20);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> System.out.println("Saiken will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ()), 20);
     }
     private void changeSpawn() {
 		spawn = null;
@@ -113,23 +103,6 @@ public class Saiken extends Biju {
 		}.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
-    @EventHandler
-    public void onDamageBiju(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Slime && event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
-            Slime slime = (Slime) event.getDamager();
-            if (slime != null && slime.getUniqueId().equals(this.slime.getUniqueId())) {
-                int value = (int) (Math.random() * 100);
-                if (value <= 25) {
-                    slime.setHealth(Math.min(slime.getHealth() + 2D, slime.getHealth()));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * 2, 0));
-                    player.getWorld().createExplosion(player.getLocation(), 1.5F);
-                    player.sendMessage(CC.prefix(getName() + " &fvous a touché..."));
-                }
-            }
-        }
-    }
-
     @Override
     public Location getSpawn() {
         return spawn;
@@ -155,22 +128,20 @@ public class Saiken extends Biju {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5 * 20 * 60, 0, false, false));
             player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 5 * 20 * 60, 0, false, false));
             getListener().setSaikenUser(player.getUniqueId());
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-            	getListener().setSaikenUser(null);
-            }, 20*60*5);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> getListener().setSaikenUser(null), 20*60*5);
             getListener().setSaikenCooldown(15 * 60);
     	}
     }
 
-    private int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
+    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().TimeSpawnBiju, 60*5)+60;
     @Override
     public int getTimeSpawn() {
     	return TimeSpawn;
     }
     public class SaikenRunnable extends BukkitRunnable {
 
-        int timer = 0;
-        int spawn = getTimeSpawn();
+        private int timer = 0;
+        private final int spawn = getTimeSpawn();
 
         @Override
         public void run() {
@@ -197,13 +168,11 @@ public class Saiken extends Biju {
         	if (entity.getKiller() instanceof Arrow) {
         		Arrow arrow = (Arrow) entity.getKiller();
         		if (arrow.getShooter() instanceof Player) {
-        			Player launcher = (Player) arrow.getShooter();
-        			k = launcher;
+                    k = (Player) arrow.getShooter();
         		}
         	}
-        	if (entity.getKiller() instanceof Player) {
-				Player killer = entity.getKiller();
-				k = killer;
+        	if (entity.getKiller() != null) {
+                k = entity.getKiller();
 			}
         	if (k != null) {
         		if (!gameState.hasRoleNull(k)) {
@@ -250,7 +219,6 @@ public class Saiken extends Biju {
 					}
 				}
 			}.runTaskTimer(Main.getInstance(), 0, 20);
-			return;
         }
 	}
 

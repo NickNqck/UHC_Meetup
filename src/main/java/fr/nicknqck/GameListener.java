@@ -749,18 +749,7 @@ public class GameListener implements Listener {
 			player.setGameMode(GameMode.SPECTATOR);
 			ItemsManager.ClearInventory(player);
 			player.updateInventory();
-			Map<Boolean, TeamList> EZwin = detectWin(gameState);
-			if (!EZwin.keySet().stream().findFirst().isPresent())return;
-			if (EZwin.keySet().stream().findFirst().get()) {
-				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-					Map<Boolean, TeamList> win = detectWin(gameState);
-					if (!win.keySet().stream().findFirst().isPresent())return;
-					final boolean b = win.keySet().stream().findFirst().get();
-					if (b) {
-						EndGame(gameState, win.get(true).getTeam());
-					}
-				}, 60);
-			}
+			detectWin(gameState);
 	}
 	private static int trueCount(boolean... b) {
         int sum = 0;
@@ -783,9 +772,8 @@ public class GameListener implements Listener {
 			e.getDrops().clear();
 		}
 	}
-	public static Map<Boolean, TeamList> detectWin(GameState gameState) {
+	public static void detectWin(GameState gameState) {
         List<Player> players = new ArrayList<>(gameState.igPlayers);
-		Map<Boolean, TeamList> theMap = new HashMap<>();
 		players.removeAll(gameState.getInSpecPlayers());
 		boolean gameDone = false;
 		TeamList winer = null;
@@ -885,10 +873,8 @@ public class GameListener implements Listener {
 			System.out.println("game ending");
 		}
 		if (gameDone) {
-			Map<Boolean, TeamList> maps = new HashMap<>();
 			EndGame(gameState, null);
-			maps.put(false, null);
-			return maps;
+			return;
 		}
 		if (i == 0) {
 			EndGame(gameState, null);
@@ -960,8 +946,9 @@ public class GameListener implements Listener {
 				gameDone = true;
 			}
 		}
-		theMap.put(gameDone, winer);
-		return theMap;
+		if (gameDone){
+			EndGame(gameState, winer);
+		}
 	}
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void OnDamagedEntityByEntity(EntityDamageByEntityEvent event) {
