@@ -1008,10 +1008,10 @@ public class HubListener implements Listener {
 							}
 						}
 						if (item.getType().equals(Material.TNT)) {
-							if (gameState.doTNTGrief) {
-								gameState.doTNTGrief = false;
+							if (gameState.isTNTGrief()) {
+								gameState.setTNTGrief(false);
 							} else {
-								gameState.doTNTGrief = true;
+								gameState.setTNTGrief(true);
 							}
 						}
 						gameState.borderSpeed = Math.max(0.1f, Math.min(gameState.borderSpeed, 5));
@@ -2468,13 +2468,13 @@ public class HubListener implements Listener {
 					inv.addItem(waterTime);
 					inv.addItem(lavaTime);
 					inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(gameState.BijusEnable ? "§aActivé" : "§cDésactivé").toItemStack());
-					inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(new String[] {
+					inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
 							"§fTemp avant infection: ",
 							"§a+5s§f (Clique gauche)",
 							"§c-5s§f (Clique droit)",
 							"§fTemp actuelle:§b "+StringUtils.secondsTowardsBeautiful(GameState.getInstance().timewaitingbeinfected)
-					}).toItemStack());
-					inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(gameState.doTNTGrief ? "§aActivé" : "§cDésactivé").toItemStack());
+					).toItemStack());
+					inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(gameState.isTNTGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
 					inv.setItem(26, GUIItems.getSelectBackMenu());
 				}
 			}

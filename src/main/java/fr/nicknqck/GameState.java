@@ -1100,7 +1100,7 @@ public class GameState{
 	public int nmbArrow = 24;
 	public boolean LaveTitans = true;
 	public String getRolesList() {
-		HashMap<TeamList, List<Roles>> hashMap = new LinkedHashMap<>();
+		Map<TeamList, List<Roles>> hashMap = new LinkedHashMap<>();
 		StringBuilder tr = new StringBuilder();
 		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
@@ -1159,7 +1159,9 @@ public class GameState{
 	@Setter
 	@Getter
 	private Player JubiCrafter;
-	public boolean doTNTGrief = false;
+	@Getter
+	@Setter
+	private boolean TNTGrief = false;
 
 	@Getter
 	@Setter

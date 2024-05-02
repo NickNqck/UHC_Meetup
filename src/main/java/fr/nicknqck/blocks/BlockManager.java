@@ -171,7 +171,7 @@ public class BlockManager implements Listener{
 	@EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
         if (event.getEntityType() == EntityType.MINECART_TNT || event.getEntityType().equals(EntityType.PRIMED_TNT)) {
-        	if (!gameState.doTNTGrief) {
+        	if (!gameState.isTNTGrief()) {
         		event.blockList().clear();
         	}
         }
