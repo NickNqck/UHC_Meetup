@@ -1164,5 +1164,7 @@ public class GameState{
 	@Getter
 	@Setter
 	private boolean minage = false;
-	public Hokage hokage;
+	@Getter
+	@Setter
+	private Hokage hokage;
 }

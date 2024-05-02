@@ -29,8 +29,9 @@ public class Hokage {
 	}
 	
 	public void run() {
+		System.out.println("Starting Hokage");
 		new BukkitRunnable() {
-			int aT = 0;
+			private int aT = 0;
 			@Override
 			public void run() {
 				if (stopPlease ||!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
@@ -75,6 +76,7 @@ public class Hokage {
 		}.runTaskTimer(Main.getInstance(), 0, 20);
 	}
 	public void stop() {
+		System.out.println("stoping Hokage System");
 		stopPlease = true;
 	}
 	private Player searchHokage() {

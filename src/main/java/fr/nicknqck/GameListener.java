@@ -316,8 +316,8 @@ public class GameListener implements Listener {
 			PotionUtils.getNoFalls().clear();
 			fr.nicknqck.utils.AttackUtils.CantAttack.clear();
 			fr.nicknqck.utils.AttackUtils.CantReceveAttack.clear();
-			if (gameState.hokage != null) {
-				gameState.hokage.stop();
+			if (gameState.getHokage() != null) {
+				gameState.getHokage().stop();
 			}
 			gameState.getDeadRoles().clear();
 			for (Chakras ch : Chakras.values()) {
@@ -340,6 +340,7 @@ public class GameListener implements Listener {
 			gameState.DeadRole.clear();
 			gameState.attributedRole.clear();
 			KamuiUtils.resetUtils();
+			gameState.setHokage(null);
 			for (Player p : gameState.getInGamePlayers()) {
 				ItemsManager.ClearInventory(p);
 				if (!gameState.hasRoleNull(p)) {
@@ -635,8 +636,8 @@ public class GameListener implements Listener {
                     }
                 }
             }
-			if (gameState.hokage != null) {
-				gameState.hokage.onDeath(player, damager, gameState);
+			if (gameState.getHokage() != null) {
+				gameState.getHokage().onDeath(player, damager, gameState);
 			}
 			dropItem(player.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 2));
 			if (damager != null) {
