@@ -686,16 +686,13 @@ public static ItemStack getSelectConfigButton() {
 		return inv;
 	}
 	public static Inventory getMahrGui() {
-		Inventory inv = Bukkit.createInventory(null, 54, "§fAOT§7 ->§9 Mahr");
-		return inv;
+        return Bukkit.createInventory(null, 54, "§fAOT§7 ->§9 Mahr");
 		}
 	public static Inventory getSecretTitansGui() {
-		Inventory inv = Bukkit.createInventory(null, 54, "§fAOT§7 ->§c Titans");
-		return inv;
+        return Bukkit.createInventory(null, 54, "§fAOT§7 ->§c Titans");
 	}
 	public static Inventory getSecretSoldatGui() {
-		Inventory inv = Bukkit.createInventory(null, 54, "§fAOT§7 ->§a Soldats");
-		return inv;
+        return Bukkit.createInventory(null, 54, "§fAOT§7 ->§a Soldats");
 	}
 	public static Inventory getConfigurationAOT() {
 		return Bukkit.createInventory(null, 54, "Configuration -> AOT");

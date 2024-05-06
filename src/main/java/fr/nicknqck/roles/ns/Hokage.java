@@ -83,14 +83,21 @@ public class Hokage {
 		System.out.println("Research Hokage");
         List<Player> canBeHokage = new ArrayList<>(gameState.getInGamePlayers());
 		Collections.shuffle(canBeHokage);
+		Player danzo = null;
 		for (Player p : canBeHokage) {
 			System.out.println(p.getDisplayName()+" can be Hokage ?");
 			if (!gameState.hasRoleNull(p)) {
+				if (gameState.getPlayerRoles().get(p) instanceof Danzo){
+					danzo = p;
+				}
 				if (gameState.getPlayerRoles().get(p).isCanBeHokage()) {
 					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).type.getItem().getItemMeta().getDisplayName());
 					return p;
 				}
 			}
+		}
+		if (danzo != null){
+			return danzo;
 		}
 		System.out.println("Searched Hokage returned NULL");
 		return null;

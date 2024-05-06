@@ -43,6 +43,18 @@ public class Danzo extends RoleBase{
 	public void RoleGiven(GameState gameState) {
 		setForce(20);
 		giveHealedHeartatInt(2);
+		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+			int nmbUchiwa = 0;
+			for (Player p : Bukkit.getOnlinePlayers()){
+				if (isUchiwa(p)){
+					nmbUchiwa++;
+				}
+			}
+			if (nmbUchiwa == 0){
+				owner.sendMessage("§7Il n'y a pas de§c Uchiwa§7 dans la partie, vous obtenez donc directement l'effet§c Résistance I permanent");
+				killUchiwa = true;
+			}
+		}, 20*10);
 	}
 	@Override
 	public void GiveItems() {

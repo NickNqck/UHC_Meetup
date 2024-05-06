@@ -1,4 +1,4 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.raytrace;
 
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;

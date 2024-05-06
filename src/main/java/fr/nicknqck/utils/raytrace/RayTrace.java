@@ -1,10 +1,16 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.raytrace;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.Main;
@@ -90,6 +96,24 @@ public class RayTrace
             Vector position = getPostion(d);
             if (position.toLocation(Main.getInstance().gameWorld).getBlock().getType().isSolid()) {
                 return position;
+            }
+        }
+        return null;
+    }
+    public static Player getTargetPlayer(Player player, double distanceMax, Predicate<Player> playerPredicate) {
+        final RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
+        final List<Vector> positions = rayTrace.traverse(distanceMax, 0.2D);
+        for (Vector vector : positions) {
+            final Location position = vector.toLocation(player.getWorld());
+            final Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
+            for (Entity entity : entities) {
+                if (entity instanceof Player && entity != player && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.2D)) {
+                    final Player target = (Player) entity;
+                    if (playerPredicate != null && !playerPredicate.test(target)) {
+                        continue;
+                    }
+                    return target;
+                }
             }
         }
         return null;

@@ -89,7 +89,7 @@ public class Patch implements Listener{
 	}
 	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, boolean effect) {
 		if (effect) {
-			event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f);
+		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); J'ai décider de ne pas patch la l'effet de rési car il est de base dans les valeurs que je veux
 			System.out.println("Resi Damage to "+event.getDamage());
 		} else {
 			if (reiPercent > 0){

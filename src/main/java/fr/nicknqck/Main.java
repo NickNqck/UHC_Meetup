@@ -10,10 +10,7 @@ import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
 import fr.nicknqck.commands.vanilla.Whitelist;
 import fr.nicknqck.events.Events;
-import fr.nicknqck.events.essential.EntityDamageEvents;
-import fr.nicknqck.events.essential.JoinEvents;
-import fr.nicknqck.events.essential.QuitEvents;
-import fr.nicknqck.events.essential.WeatherEvents;
+import fr.nicknqck.events.essential.*;
 import fr.nicknqck.items.*;
 import fr.nicknqck.pregen.WorldGenCaves;
 import fr.nicknqck.roles.aot.titans.Bestial;
@@ -168,6 +165,7 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new TitanListener(), this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
+		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
 		System.out.println("Ending registering events");
 	}
 	private void registerCommands(GameState gameState) {

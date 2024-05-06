@@ -74,7 +74,7 @@ public class GameListener implements Listener {
 		this.gameState = gameState;
 		Instance = this;
 		border = Main.getInstance().gameWorld.getWorldBorder();
-		border.setSize(GameState.getInstance().maxBorderSize);
+		border.setSize(GameState.getInstance().getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
 			UpdateGame();
 			for (Events e : Events.values()) {
@@ -203,7 +203,7 @@ public class GameListener implements Listener {
 			
 			if (gameState.shrinking) {
 				gameState.borderSize -= gameState.borderSpeed*2;
-				border.setSize(Math.max(gameState.minBorderSize, gameState.borderSize), 1);
+				border.setSize(Math.max(gameState.getMinBorderSize(), gameState.borderSize), 1);
 			}
 			if (gameState.inGameTime == 0) {
 				gameState.nightTime = false;
@@ -302,7 +302,7 @@ public class GameListener implements Listener {
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
-			gameState.borderSize = gameState.maxBorderSize;
+			gameState.borderSize = gameState.getMaxBorderSize();
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(gameState.world, Material.GLASS);

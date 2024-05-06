@@ -3,6 +3,8 @@ package fr.nicknqck.commands;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import fr.nicknqck.events.essential.HubInventory;
+import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -54,7 +56,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 			}
 			if (args[0].equalsIgnoreCase("list")) {
-				if (sender.hasPermission("Host")) {
+				if ((sender instanceof Player && ChatRank.hasRank(((Player) sender).getUniqueId()) && ChatRank.isHost(((Player) sender).getUniqueId())) || sender.hasPermission("Host")) {
 					gameState.getPlayerRoles().forEach((key, value) -> {
 						sender.sendMessage("§7 -§f "+key.getName()+"§7 -> "+value.getTeamColor()+value.type.name());
 					});
@@ -101,7 +103,7 @@ public class AdminCommands implements CommandExecutor{
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
 						if (gameState.BijusEnable) {
 							for (Bijus bijus : Bijus.values()) {
-								if (bijus.getBiju().getMaster() != null &&bijus.getBiju().getMaster() == player.getUniqueId()) {
+								if (bijus.getBiju().getHote() != null &&bijus.getBiju().getHote() == player.getUniqueId()) {
 									bijus.getBiju().resetCooldown();
 								}
 							}
@@ -182,7 +184,7 @@ public class AdminCommands implements CommandExecutor{
                             }
 							if (args[0].equalsIgnoreCase("config")) {
 								player.openInventory(GUIItems.getAdminWatchGUI());
-								HubListener.getInstance().updateAdminInventory(player);
+								HubInventory.getInstance().updateAdminInventory(player);
 								return true;
 							}
 							if (args[0].equalsIgnoreCase("pregen")) {
@@ -213,27 +215,21 @@ public class AdminCommands implements CommandExecutor{
 							return true;
 						}
 						if (args[0].equalsIgnoreCase("nuit")) {
-							ArrayList<String> message = new ArrayList<>();
 									gameState.nightTime = true;
-									message.add("Exécution de la commande !");
 									Bukkit.broadcastMessage("");
 									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant nuit");
 									Bukkit.broadcastMessage("");
 									Main.getInstance().gameWorld.setTime(13000);
 									gameState.t = gameState.timeday;
-									player.sendMessage(message.toArray(new String[message.size()]));
 									return true;
 									
 						} else if (args[0].equalsIgnoreCase("jour")) {
-							ArrayList<String> message = new ArrayList<>();
                             gameState.nightTime = false;
-                            message.add("Exécution de la commande !");
                             Bukkit.broadcastMessage("");
                             Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant jour");
                             Bukkit.broadcastMessage("");
                             gameState.t = gameState.timeday;
                             Main.getInstance().gameWorld.setTime(0);
-                            player.sendMessage(message.toArray(new String[message.size()]));
                             return true;
                         }
 					} else {
@@ -256,11 +252,8 @@ public class AdminCommands implements CommandExecutor{
 					if (sender instanceof Player) {
 						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
 							Player p = (Player) sender;
-							ArrayList<String> message = new ArrayList<>();
-							message.add("Éxécution de la commande !");
 							p.getInventory().addItem(Items.getLamedenichirin());
 							Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+sender.getName());
-							sender.sendMessage(message.toArray(new String[message.size()]));
                         } else {
 							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
                         }

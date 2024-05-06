@@ -2,6 +2,6 @@ message: "mumble: <non défini>" #dans les "" y'a le msg que tu reçois quand tu
 enableFeature: true #true = la commande fonctionne, false = l'inverse de true
 cooldownTime: 10 #10 est le temp en seconde entre chaque utilisation du /
 #Pour mettre à jour le message il faut reload le plugin
-mumble: discord.gg/Bk4AjTmcaX
+mumble: <non défini>
 port: 64747
 key: "https://discord.gg/Bk4AjTmcaX"

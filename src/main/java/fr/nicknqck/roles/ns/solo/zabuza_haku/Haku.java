@@ -27,7 +27,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.RayTrace;
+import fr.nicknqck.utils.raytrace.RayTrace;
 
 public class Haku extends RoleBase{
 

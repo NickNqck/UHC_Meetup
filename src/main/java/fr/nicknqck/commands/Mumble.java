@@ -1,10 +1,12 @@
 package fr.nicknqck.commands;
 
+import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import fr.nicknqck.Main;
+import org.bukkit.entity.Player;
 
 public class Mumble implements CommandExecutor {
 
@@ -13,6 +15,10 @@ public class Mumble implements CommandExecutor {
             if(cmd.getName().equalsIgnoreCase("mumble")) {
                 if (args.length == 0) { 
                     sender.sendMessage("§8§m---------------------------------------§r\n \n §7Mumble: §r" + Main.getInstance().getConfig().getString("mumble") + " // " + Main.getInstance().getConfig().getString("port") + "\n \n§8§m---------------------------------------");
+                    return true;
+                }
+                if (sender instanceof Player && !ChatRank.isHost(((Player) sender).getUniqueId())){
+                    sender.sendMessage("§cErreur §l§m|§c Vous n'avez pas les permissions !");
                     return true;
                 }
                 if (args.length == 3 && args[0].equalsIgnoreCase("set")) {

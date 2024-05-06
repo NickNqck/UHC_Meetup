@@ -266,18 +266,21 @@ public class GameState{
 	}
 
 	public int roleTimer = 1;
-	int pvpTimer = 1;
+	public int pvpTimer = 1;
 	public int getPvPTimer() {
 		return pvpTimer;
 	}
 	public int shrinkTimer = 2*60;
-	int maxBorderSize = 100;
+	@Setter
+	private int maxBorderSize = 100;
 	public int getMaxBorderSize() {return (maxBorderSize-10)/2;}
-	int minBorderSize = 50;
+
+	@Setter
+	private int minBorderSize = 50;
 	public int getMinBorderSize() {return minBorderSize-10;}
+	@Getter
 	float borderSize = maxBorderSize;
-	float borderSpeed = 1;
-	public float getBorderSize() {return borderSize;}
+	public float borderSpeed = 1;
 	public boolean JigoroV2Pacte2 = false;
 	public boolean JigoroV2Pacte3 = false;
 	public World world = Main.getInstance().gameWorld;
@@ -899,8 +902,10 @@ public class GameState{
 	}
 	return nmbrole;}
 	public boolean cycleChanged() {return prevNightTime != nightTime;}
-	int nmbGap = 12;
-	int minnmbGap = 12;
+	@Getter
+	@Setter
+	private int nmbGap = 12;
+	public int minnmbGap = 12;
 	public static int sharpness = 3;
 	public static int nmbblock = 1;
 	public static int power = 2;

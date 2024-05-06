@@ -31,6 +31,9 @@ public enum ChatRank {
         ranked.add(player.getUniqueId());
 
     }
+    public static boolean isHost(UUID uuid) {
+        return ChatRank.Op.getPlayers().contains(uuid) || ChatRank.Host.getPlayers().contains(uuid);
+    }
 
     public String getFullPrefix(){
         return prefix + color;

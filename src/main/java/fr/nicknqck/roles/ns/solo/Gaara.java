@@ -89,7 +89,7 @@ public class Gaara extends RoleBase {
             player.getInventory().getItem(player.getInventory().first(material)).setAmount(player.getInventory().getItem(player.getInventory().first(material)).getAmount() - (remove - 64));
         }
     }
- public int getItemAmount(Player player, Material material) {
+    public int getItemAmount(Player player, Material material) {
         int toReturn = 0;
         for (ItemStack content : player.getInventory().getContents()) {
             if (content != null && content.getType() == material) {
@@ -265,12 +265,11 @@ public class Gaara extends RoleBase {
 					if (name.equalsIgnoreCase("§eManipulation du sable") || name.equalsIgnoreCase(Attaque().getItemMeta().getDisplayName()) || name.equals(Defense().getItemMeta().getDisplayName())){
 						if (manipulation != null) {
 							runPower(owner);
-							return;
-						}else {
+                        }else {
 							owner.sendMessage("Veuiller séléctionner un pouvoir avant d'utiliser cette item !");
-							return;
-						}
-					}
+                        }
+                        return;
+                    }
 				}
 			}
 		}
@@ -369,7 +368,7 @@ public class Gaara extends RoleBase {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(direction.getZ(), 0.0, -direction.getX()).normalize();
     }
-    public  class Wave extends BukkitRunnable {
+    private static class Wave extends BukkitRunnable {
 
         private final Vector origin;
         private final List<List<Location>> shape;

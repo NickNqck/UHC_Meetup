@@ -44,4 +44,7 @@ public class GamePlayer {
 	public static GamePlayer get(UUID uuid){
 		return GameState.getInstance().getPlayerRoles().get(Bukkit.getPlayer(uuid)).getGamePlayer();
 	}
+	public static GamePlayer get(Player player){
+		return GameState.getInstance().getGamePlayer().get(player.getUniqueId());
+	}
 }

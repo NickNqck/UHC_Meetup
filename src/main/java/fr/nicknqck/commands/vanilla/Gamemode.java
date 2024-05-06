@@ -108,7 +108,7 @@ public class Gamemode implements CommandExecutor {
 		changed.sendMessage("§7Vous êtes maintenant en "+goodName);
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.isOp() && p.getUniqueId() != changed.getUniqueId()) {
-				if (sender instanceof Player) {
+				if (sender instanceof Player && ((Player) sender).getUniqueId() != changed.getUniqueId()) {
 					p.sendMessage(sender.getName()+"§7 à définit le mode de jeu de§f "+changed.getName()+"§7 sur "+goodName);
 				} else {
 					p.sendMessage(changed.getName()+"§7 est maintenant en "+goodName);
