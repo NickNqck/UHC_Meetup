@@ -74,7 +74,7 @@ public class GameListener implements Listener {
 		this.gameState = gameState;
 		Instance = this;
 		border = Main.getInstance().gameWorld.getWorldBorder();
-		border.setSize(GameState.getInstance().getMaxBorderSize());
+		border.setSize(Border.getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
 			UpdateGame();
 			for (Events e : Events.values()) {
@@ -202,8 +202,8 @@ public class GameListener implements Listener {
 			}
 			
 			if (gameState.shrinking) {
-				gameState.borderSize -= gameState.borderSpeed*2;
-				border.setSize(Math.max(gameState.getMinBorderSize(), gameState.borderSize), 1);
+				gameState.borderSize -= Border.getBorderSpeed()*2;
+				border.setSize(Math.max(Border.getMinBorderSize(), gameState.borderSize), 1);
 			}
 			if (gameState.inGameTime == 0) {
 				gameState.nightTime = false;
@@ -302,7 +302,7 @@ public class GameListener implements Listener {
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
-			gameState.borderSize = gameState.getMaxBorderSize();
+			gameState.borderSize = Border.getMaxBorderSize();
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(gameState.world, Material.GLASS);
@@ -530,7 +530,7 @@ public class GameListener implements Listener {
 	        Float z = gameState.borderSize * random.nextFloat();
 	        loc = world.getHighestBlockAt(new Location(world, x - gameState.borderSize / 2, 0, z - gameState.borderSize / 2)).getLocation();
 	        loc.setY(loc.getY() + 1);
-	    } while (loc.getX() <= -gameState.getMaxBorderSize() || loc.getX() >= gameState.getMaxBorderSize() || loc.getZ() <= -gameState.getMaxBorderSize() || loc.getZ() >= gameState.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
+	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
 	    return loc;
 	}
 	public void DeathMessage(Player damager, Player victim) {

@@ -271,16 +271,10 @@ public class GameState{
 		return pvpTimer;
 	}
 	public int shrinkTimer = 2*60;
-	@Setter
-	private int maxBorderSize = 100;
-	public int getMaxBorderSize() {return (maxBorderSize-10)/2;}
 
-	@Setter
-	private int minBorderSize = 50;
-	public int getMinBorderSize() {return minBorderSize-10;}
 	@Getter
-	float borderSize = maxBorderSize;
-	public float borderSpeed = 1;
+	float borderSize = Border.getMaxBorderSize();
+
 	public boolean JigoroV2Pacte2 = false;
 	public boolean JigoroV2Pacte3 = false;
 	public World world = Main.getInstance().gameWorld;

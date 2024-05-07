@@ -328,7 +328,7 @@ public class Main extends JavaPlugin implements Listener{
         WorldGenCaves.load(getInstance().gameWorld, 600);
         getInstance().gameWorld.getWorldBorder().setCenter(new Location(getInstance().gameWorld, 0.0, getInstance().gameWorld.getHighestBlockYAt(0, 0), 0.0));
         getInstance().gameWorld.getWorldBorder().setSize(GameState.getInstance().getBorderSize() * 2);
-        worldfilltask = new WorldFillTask(getInstance().gameWorld, 20, GameState.getInstance().getMaxBorderSize());
+        worldfilltask = new WorldFillTask(getInstance().gameWorld, 20, Border.getMaxBorderSize());
         worldfilltask.setTaskID(Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), worldfilltask, 1L, 1L));
         getInstance().gameWorld.getEntities().forEach(Entity::remove);
     }

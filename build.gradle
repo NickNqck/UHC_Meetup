@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group 'fr.nicknqck'
@@ -16,7 +16,9 @@ repositories {
 }
 
 compileJava.options.encoding = "UTF-8"
-
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
@@ -32,7 +34,6 @@ dependencies {
 shadowJar {
     relocate 'fr.mrmicky.fastparticles', 'fr.nicknqck.utils.particles'
     // 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
-    relocate 'lombok', 'fr.nicknqck.utils.lombok'
 }
 
 setLibsDirName("T:\\Bureau\\Dev\\Serv\\serveur de test\\plugins")

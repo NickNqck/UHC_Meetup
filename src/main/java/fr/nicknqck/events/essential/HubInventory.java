@@ -1,5 +1,6 @@
 package fr.nicknqck.events.essential;
 
+import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
@@ -145,7 +146,7 @@ public class HubInventory implements Listener {
                             }
                         } else if (item.isSimilar(GUIItems.getPregen(gameState))) {
                             if (!gameState.hasPregen){
-                                new PregenerationTask(Main.getInstance().gameWorld, gameState.getMaxBorderSize());
+                                new PregenerationTask(Main.getInstance().gameWorld, Border.getMaxBorderSize());
                                 gameState.hasPregen = true;
                             }
                         }else if (item.isSimilar(GUIItems.getSelectEventButton())) {
@@ -764,25 +765,25 @@ public class HubInventory implements Listener {
                                     }
                                 }
                             }
-                            if (name.equals("Taille de la Bordure Max")) {
+                            if (name.contains("Taille de la bordure max")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    gameState.setMaxBorderSize(gameState.getMaxBorderSize()+50);
+                                    Border.setMaxBorderSize(Border.getMaxBorderSize()+50);
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                    gameState.setMaxBorderSize(gameState.getMaxBorderSize()+50);
+                                    Border.setMaxBorderSize(Border.getMaxBorderSize()-50);
                                 }
                             }
                             if (name.equals("Taille de la Bordure Min")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    gameState.setMinBorderSize(gameState.getMinBorderSize()+50);
+                                    Border.setMinBorderSize(Math.min(Border.getMinBorderSize()+50, 2400));
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                    gameState.setMinBorderSize(gameState.getMinBorderSize()-50);
+                                    Border.setMinBorderSize(Border.getMinBorderSize()-50);
                                 }
                             }
-                            if (name.equals("Vitesse de la Bordure")) {
+                            if (name.contains("Vitesse de la bordure")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    gameState.borderSpeed += 0.1F;
+                                    Border.setBorderSpeed(Math.min(Border.getBorderSpeed()+1f, 5f));
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                    gameState.borderSpeed -= 0.1F;
+                                    Border.setBorderSpeed(Math.max(Border.getBorderSpeed()-1f, 1f));
                                 }
                             }
                             if (name.equals("Temps avant activation du PVP")) {
@@ -810,23 +811,18 @@ public class HubInventory implements Listener {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
                                     if (gameState.TimingAssassin < 60*5) {
                                         gameState.TimingAssassin+=10;
-                                    }else {
-                                        player.sendMessage("Le timing de l'§cAssassin§r est au maximum");
                                     }
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                                     if (gameState.TimingAssassin > 10) {
                                         gameState.TimingAssassin-=10;
-                                    }else {
-                                        player.sendMessage("Le timing de l'§cAssassin§r est au minimum");
                                     }
                                 }
                             }
                             if (item.getType().equals(Material.TNT)) {
                                 gameState.setTNTGrief(!gameState.isTNTGrief());
                             }
-                            gameState.borderSpeed = Math.max(0.1f, Math.min(gameState.borderSpeed, 5));
-                            gameState.setMaxBorderSize(Math.max(50, Math.min(gameState.getMaxBorderSize(), 2400)));
-                            gameState.setMinBorderSize(Math.max(50, Math.min(gameState.getMinBorderSize(), gameState.getMaxBorderSize())));
+                            Border.setMaxBorderSize(Math.max(50, Math.min(Border.getMaxBorderSize(), 2400)));
+                            Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
                             gameState.pvpTimer = Math.max(0, Math.min(gameState.pvpTimer, 40*60));
                             gameState.roleTimer = Math.max(0, Math.min(gameState.roleTimer, 40*60));
                             gameState.shrinkTimer = Math.max(0, Math.min(gameState.shrinkTimer, 60*60));
@@ -1749,9 +1745,7 @@ public class HubInventory implements Listener {
             if (inv != null) {
                 if (inv.getTitle().equals("Configuration de la partie")) {
                     inv.clear();
-                    ItemStack maxBorderSize = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 5);
                     ItemStack minBorderSize = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 14);
-                    ItemStack borderSpeed = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
                     ItemStack pvpTimer = new ItemStack(Material.IRON_SWORD);
                     ItemStack roleTimer = new ItemStack(Material.SKULL_ITEM);
                     ItemStack shrinkTimer = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 0);
@@ -1777,28 +1771,17 @@ public class HubInventory implements Listener {
                             "[10s < "+StringUtils.secondsTowardsBeautiful(gameState.LavaEmptyTiming)+" > 1m}",
                             "Click Gauche: +1s",
                             "Click Droit: -1s"));
-
-                    ItemMeta maxBSMeta = maxBorderSize.getItemMeta();
-                    maxBSMeta.setDisplayName("Taille de la Bordure Max");
-                    maxBSMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[50b < "+gameState.getMaxBorderSize()+" > 2400b]",
-                            ChatColor.DARK_PURPLE+"Click Gauche : +50b",
-                            ChatColor.DARK_PURPLE+"Click Droit    : -50b"));
-
+                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(5).setName("§r§fTaille de la bordure maximum").setLore(
+                            "§r§f[50b < "+Border.getMaxBorderSize()+" > 2400b",
+                            "§r§fClique gauche: §a+50b",
+                            "§r§fClique droit: §c-50b"
+                    ).toItemStack());
                     ItemMeta minBSMeta = minBorderSize.getItemMeta();
                     minBSMeta.setDisplayName("Taille de la Bordure Min");
                     minBSMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[50b < "+gameState.getMinBorderSize()+"b > "+gameState.getMaxBorderSize()+"b]",
+                            ChatColor.DARK_PURPLE+"[50b < "+Border.getMinBorderSize()+"b > "+Border.getMaxBorderSize()+"b]",
                             ChatColor.DARK_PURPLE+"Click Gauche : +50b",
                             ChatColor.DARK_PURPLE+"Click Droit    : -50b"));
-
-                    ItemMeta BSMeta = borderSpeed.getItemMeta();
-                    BSMeta.setDisplayName("Vitesse de la Bordure");
-                    BSMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[0.1b/s < "+gameState.borderSpeed+"b/s > 5.0b/s]",
-                            ChatColor.DARK_PURPLE+"Click Gauche : +0.1b/s",
-                            ChatColor.DARK_PURPLE+"Click Droit    : -0.1b/s"));
-
                     ItemMeta PTMeta = pvpTimer.getItemMeta();
                     PTMeta.setDisplayName("Temps avant activation du PVP");
                     PTMeta.setLore(Arrays.asList(
@@ -1825,18 +1808,19 @@ public class HubInventory implements Listener {
                     DTMeta.setLore(Collections.singletonList("§r§fTemp actuelle: " + ChatColor.GOLD + StringUtils.secondsTowardsBeautiful(gameState.timeday)));
 
                     daytime.setItemMeta(DTMeta);
-                    maxBorderSize.setItemMeta(maxBSMeta);
                     minBorderSize.setItemMeta(minBSMeta);
-                    borderSpeed.setItemMeta(BSMeta);
                     pvpTimer.setItemMeta(PTMeta);
                     roleTimer.setItemMeta(RTMeta);
                     shrinkTimer.setItemMeta(STMeta);
                     infectTime.setItemMeta(infectMeta);
                     waterTime.setItemMeta(waterMeta);
                     lavaTime.setItemMeta(lavaMeta);
-                    inv.addItem(maxBorderSize);
+
                     inv.addItem(minBorderSize);
-                    inv.addItem(borderSpeed);
+                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(7).setName("§r§fVitesse de la bordure")
+                            .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 5b/s",
+                                    "§r§fClique gauche: §a+1b/s",
+                                    "§r§fClique droit: §c-1b/s").toItemStack());
                     inv.addItem(pvpTimer);
                     inv.addItem(roleTimer);
                     inv.addItem(shrinkTimer);

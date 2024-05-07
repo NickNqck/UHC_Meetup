@@ -3,6 +3,7 @@ package fr.nicknqck.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.Border;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,7 +28,7 @@ public class PlayerPlate {
         this.data = data;
         int b = 0;
         int a = tp.size();
-        CircleMesh mesh = new CircleMesh((GameState.getInstance().getMaxBorderSize() / 1.2D), 160, Main.getInstance().gameWorld);
+        CircleMesh mesh = new CircleMesh((Border.getMaxBorderSize() / 1.2D), 160, Main.getInstance().gameWorld);
         for(int i = 0;i < a;i++){
             b++;
             Player gp = tp.get(0);

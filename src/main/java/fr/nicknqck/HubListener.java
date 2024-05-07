@@ -59,9 +59,9 @@ public class HubListener implements Listener {
 		Events.initEvents();
 		gameState.setPlayerRoles(new HashMap<>());
 		gameState.setPlayerKills(new HashMap<>());
-		gameState.borderSize = gameState.getMaxBorderSize();
+		gameState.borderSize = Border.getMaxBorderSize();
 		gameState.shrinking = false;
-		gameState.world.getWorldBorder().setSize(gameState.getMaxBorderSize());
+		gameState.world.getWorldBorder().setSize(Border.getMaxBorderSize());
 		if (gameState.JigoroV2Pacte2)gameState.JigoroV2Pacte2 = false;
 		if (gameState.JigoroV2Pacte3)gameState.JigoroV2Pacte3 = false;
 		TitanListener.getInstance().onStartGame();
