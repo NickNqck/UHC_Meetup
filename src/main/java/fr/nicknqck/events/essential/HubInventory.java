@@ -786,25 +786,25 @@ public class HubInventory implements Listener {
                                     Border.setBorderSpeed(Math.max(Border.getBorderSpeed()-1f, 1f));
                                 }
                             }
-                            if (name.equals("Temps avant activation du PVP")) {
+                            if (name.contains("Temp avant activation du PVP")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
                                     gameState.pvpTimer += 60;
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                                     gameState.pvpTimer -= 60;
                                 }
                             }
-                            if (name.equals("Temps avant annonce des Roles")) {
+                            if (name.contains("Temp avant annonce des roles")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
                                     gameState.roleTimer+=60;
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                                     gameState.roleTimer-=60;
                                 }
                             }
-                            if (name.equals("Temps avant réduction de Bordure")) {
+                            if (name.contains("Temp avant réduction de la bordure")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    gameState.shrinkTimer += 60;
+                                    Border.setTempReduction(Math.min(Border.getTempReduction()+60, 60*60));
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                    gameState.shrinkTimer -= 60;
+                                    Border.setTempReduction(Math.max(Border.getTempReduction()-60, 0));
                                 }
                             }
                             if (item.getType() == Material.REDSTONE) {
@@ -825,7 +825,6 @@ public class HubInventory implements Listener {
                             Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
                             gameState.pvpTimer = Math.max(0, Math.min(gameState.pvpTimer, 40*60));
                             gameState.roleTimer = Math.max(0, Math.min(gameState.roleTimer, 40*60));
-                            gameState.shrinkTimer = Math.max(0, Math.min(gameState.shrinkTimer, 60*60));
                             if (item.isSimilar(GUIItems.getRoleInfo()) || item.isSimilar(GUIItems.getdisRoleInfo())) {
                                 if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
                                     if (gameState.roleinfo) {
@@ -1745,9 +1744,6 @@ public class HubInventory implements Listener {
             if (inv != null) {
                 if (inv.getTitle().equals("Configuration de la partie")) {
                     inv.clear();
-                    ItemStack pvpTimer = new ItemStack(Material.IRON_SWORD);
-                    ItemStack roleTimer = new ItemStack(Material.SKULL_ITEM);
-                    ItemStack shrinkTimer = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 0);
                     ItemStack daytime = new ItemStack(Material.WATCH);
                     ItemStack infectTime = new ItemStack(Material.REDSTONE, 1);
                     ItemMeta infectMeta = infectTime.getItemMeta();
@@ -1780,45 +1776,33 @@ public class HubInventory implements Listener {
                             "§r§fClique gauche:§a +50b",
                             "§r§fClique droit: §c-50b"
                     ).toItemStack());
-                    ItemMeta PTMeta = pvpTimer.getItemMeta();
-                    PTMeta.setDisplayName("Temps avant activation du PVP");
-                    PTMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[0m < "+gameState.pvpTimer/60+"m > 40m]",
-                            ChatColor.DARK_PURPLE+"Click Gauche : +1m",
-                            ChatColor.DARK_PURPLE+"Click Droit    : -1m"));
-
-                    ItemMeta RTMeta = roleTimer.getItemMeta();
-                    RTMeta.setDisplayName("Temps avant annonce des Roles");
-                    RTMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[0m < "+gameState.roleTimer/60+"m > 40m]",
-                            ChatColor.DARK_PURPLE+"Click Gauche : +1m",
-                            ChatColor.DARK_PURPLE+"Click Droit    : -1m"));
-
-                    ItemMeta STMeta = shrinkTimer.getItemMeta();
-                    STMeta.setDisplayName("Temps avant réduction de Bordure");
-                    STMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[0m < "+gameState.shrinkTimer/60+"m > 60m]",
-                            ChatColor.DARK_PURPLE+"Click Gauche : +1m",
-                            ChatColor.DARK_PURPLE+"Click Droit    : -1m"));
-
+                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(7).setName("§r§fVitesse de la bordure")
+                            .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 10b/s",
+                                    "§r§fClique gauche: §a+1b/s",
+                                    "§r§fClique droit: §c-1b/s").toItemStack());
+                    inv.addItem(new ItemBuilder(Material.IRON_SWORD).setName("§r§fTemp avant activation du PVP").setLore(
+                            "§r§f[0 minute < "+gameState.getPvPTimer()/60+" minutes > 40 minutes]",
+                            "§r§fClique gauche: §a+1 minutes",
+                            "§r§fClique droit: §c-1 minutes"
+                    ).toItemStack());
+                    inv.addItem(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemp avant annonce des roles").setLore(
+                            "§r§f[0 minute < "+gameState.getRoleTimer()/60+" minutes > 40 minutes]",
+                            "§r§fClique gauche: §a+1 minutes",
+                            "§r§fClique droit: §c-1 minutes"
+                    ).toItemStack());
+                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName("§r§fTemp avant réduction de la bordure").setLore(
+                            "§r§f[0 minute < "+Border.getTempReduction()/60+" minutes > 60 minutes]",
+                            "§r§fClique gauche: §a+1 minutes",
+                            "§r§fClique droit: §c-1 minutes"
+                    ).toItemStack());
                     ItemMeta DTMeta = daytime.getItemMeta();
                     DTMeta.setDisplayName("Durée du jour (et de la nuit)");
                     DTMeta.setLore(Collections.singletonList("§r§fTemp actuelle: " + ChatColor.GOLD + StringUtils.secondsTowardsBeautiful(gameState.timeday)));
 
                     daytime.setItemMeta(DTMeta);
-                    pvpTimer.setItemMeta(PTMeta);
-                    roleTimer.setItemMeta(RTMeta);
-                    shrinkTimer.setItemMeta(STMeta);
                     infectTime.setItemMeta(infectMeta);
                     waterTime.setItemMeta(waterMeta);
                     lavaTime.setItemMeta(lavaMeta);
-                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(7).setName("§r§fVitesse de la bordure")
-                            .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 10b/s",
-                                    "§r§fClique gauche: §a+1b/s",
-                                    "§r§fClique droit: §c-1b/s").toItemStack());
-                    inv.addItem(pvpTimer);
-                    inv.addItem(roleTimer);
-                    inv.addItem(shrinkTimer);
                     if (gameState.roleinfo) {inv.addItem(GUIItems.getRoleInfo());} else {
                         inv.addItem(GUIItems.getdisRoleInfo());
                     }

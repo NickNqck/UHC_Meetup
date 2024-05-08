@@ -15,5 +15,8 @@ public class Border {
     @Getter
     @Setter
     private static float borderSpeed = 1f;
+    @Getter
+    @Setter
+    private static int tempReduction = 120;
 
 }

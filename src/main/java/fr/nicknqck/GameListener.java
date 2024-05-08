@@ -196,7 +196,7 @@ public class GameListener implements Listener {
 			}
 			gameState.prevNightTime = gameState.nightTime;
 			
-			if (gameState.inGameTime == gameState.shrinkTimer) {
+			if (gameState.inGameTime == Border.getTempReduction()) {
 				gameState.shrinking = true;
 				SendToEveryone("§7La bordure commence à bouger !");
 			}

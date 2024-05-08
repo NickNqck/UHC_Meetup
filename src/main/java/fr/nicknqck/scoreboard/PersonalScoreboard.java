@@ -1,5 +1,6 @@
 package fr.nicknqck.scoreboard;
 
+import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
@@ -83,8 +84,8 @@ public class PersonalScoreboard {
     		} else {
 				objectiveSign.setLine(6, premsg+"§fPvP:§c "+ StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getActualPvPTimer()));
 			}
-    		if (this.gameState.getInGameTime() < this.gameState.shrinkTimer) {
-    			int time = this.gameState.shrinkTimer-this.gameState.getInGameTime();
+    		if (this.gameState.getInGameTime() < Border.getTempReduction()) {
+    			int time = Border.getTempReduction()-this.gameState.getInGameTime();
 				objectiveSign.setLine(7, premsg+"§fBordure: §c"+StringUtils.secondsTowardsBeautifulinScoreboard(time));
     		} else {
     			objectiveSign.setLine(7, premsg+"§fBordure:§c Activé");

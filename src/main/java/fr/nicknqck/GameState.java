@@ -265,12 +265,12 @@ public class GameState{
 		return mdj == MDJ.Aucun;
 	}
 
+	@Getter
 	public int roleTimer = 1;
 	public int pvpTimer = 1;
 	public int getPvPTimer() {
 		return pvpTimer;
 	}
-	public int shrinkTimer = 2*60;
 
 	@Getter
 	float borderSize = Border.getMaxBorderSize();
