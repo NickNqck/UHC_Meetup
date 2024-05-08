@@ -30,9 +30,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
 
 public class HubInventory implements Listener {
     private final GameState gameState;
@@ -1767,19 +1764,16 @@ public class HubInventory implements Listener {
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
                             "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(gameState.WaterEmptyTiming)+" > 1 minutes",
-                            "§r§Clique gauche: §a+1 secondes",
+                            "§r§fClique gauche: §a+1 secondes",
                             "§r§fClique droit: §c-1 secondes",
                             "§r§f(0 secondes =§c désactiver"
                     ).toItemStack());
-                    ItemStack lavaTime = new ItemStack(Material.LAVA_BUCKET);
-                    ItemMeta lavaMeta = lavaTime.getItemMeta();
-                    lavaMeta.setDisplayName("Temp avant despawn de la§6 Lave");
-                    lavaMeta.setLore(Arrays.asList(
-                            "[10s < "+StringUtils.secondsTowardsBeautiful(gameState.LavaEmptyTiming)+" > 1m}",
-                            "Click Gauche: +1s",
-                            "Click Droit: -1s"));
-                    lavaTime.setItemMeta(lavaMeta);
-                    inv.addItem(lavaTime);
+                    inv.addItem(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemp avant despawn de la§6 Lave").setLore(
+                            "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(gameState.LavaEmptyTiming)+" > 1 minutes",
+                            "§r§fClique gauche: §a+1 seconde",
+                            "§r§fClique droit: §c-1 seconde",
+                            "§r§f(0 secondes =§c désactiver"
+                    ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(gameState.BijusEnable ? "§aActivé" : "§cDésactivé").toItemStack());
                     inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
                             "§fTemp avant infection: ",

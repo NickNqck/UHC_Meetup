@@ -63,6 +63,7 @@ public class BlockManager implements Listener{
 	        	}
 	        }
 	        if (event.getBucket() == Material.LAVA_BUCKET) {
+				if (gameState.LavaEmptyTiming <= 0)return;
 	        	new BukkitRunnable() {
 	        		public void run() {
 	        				block.setType(Material.AIR);
