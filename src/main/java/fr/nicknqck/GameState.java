@@ -863,8 +863,6 @@ public class GameState{
 	public DecimalFormat getDecimalFormat(String format) {
 		return new DecimalFormat(format);
 	}
-	public boolean roleinfo = true;
-
 	@Setter
 	@Getter
 	public List<UUID> Host = new ArrayList<>();

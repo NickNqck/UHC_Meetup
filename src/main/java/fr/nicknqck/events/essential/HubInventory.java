@@ -33,7 +33,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class HubInventory implements Listener {
     private final GameState gameState;
@@ -825,18 +824,7 @@ public class HubInventory implements Listener {
                             Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
                             gameState.pvpTimer = Math.max(0, Math.min(gameState.pvpTimer, 40*60));
                             gameState.roleTimer = Math.max(0, Math.min(gameState.roleTimer, 40*60));
-                            if (item.isSimilar(GUIItems.getRoleInfo()) || item.isSimilar(GUIItems.getdisRoleInfo())) {
-                                if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
-                                    if (gameState.roleinfo) {
-                                        gameState.roleinfo = false;
-                                        player.sendMessage("Désactivation de l'affichage du Role Info");
-                                    } else {
-                                        gameState.roleinfo = true;
-                                        player.sendMessage("Activation de l'affichage du Role Info");
-                                    }
-                                }
-                            }
-                            if (name.equals("Durée du jour (et de la nuit)")) {
+                            if (name.contains("Durée du jour (et de la nuit)")) {
                                 if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
                                     if (action.equals(InventoryAction.PICKUP_ALL)) {
                                         gameState.timeday+=10;
@@ -1795,17 +1783,15 @@ public class HubInventory implements Listener {
                             "§r§fClique gauche: §a+1 minutes",
                             "§r§fClique droit: §c-1 minutes"
                     ).toItemStack());
-                    ItemMeta DTMeta = daytime.getItemMeta();
-                    DTMeta.setDisplayName("Durée du jour (et de la nuit)");
-                    DTMeta.setLore(Collections.singletonList("§r§fTemp actuelle: " + ChatColor.GOLD + StringUtils.secondsTowardsBeautiful(gameState.timeday)));
+                    inv.addItem(new ItemBuilder(Material.WATCH).setName("§r§fDurée du jour (et de la nuit)").setLore(
+                            "§r§fDurée actuel:§6 "+StringUtils.secondsTowardsBeautiful(gameState.timeday),
+                            "§r§fClique gauche: §a+10 secondes",
+                            "§r§fClique droit: §c-10 secondes"
+                    ).toItemStack());
 
-                    daytime.setItemMeta(DTMeta);
                     infectTime.setItemMeta(infectMeta);
                     waterTime.setItemMeta(waterMeta);
                     lavaTime.setItemMeta(lavaMeta);
-                    if (gameState.roleinfo) {inv.addItem(GUIItems.getRoleInfo());} else {
-                        inv.addItem(GUIItems.getdisRoleInfo());
-                    }
                     inv.addItem(daytime);
                     inv.addItem(GUIItems.getTabRoleInfo(gameState));
                     inv.addItem(Items.geteclairmort());
