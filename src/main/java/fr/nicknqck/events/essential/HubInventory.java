@@ -855,17 +855,13 @@ public class HubInventory implements Listener {
                             }
                             if (item.isSimilar(Items.geteclairmort())) {
                                 if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
-                                    if (action.equals(InventoryAction.PICKUP_ALL)) {
                                         if (!gameState.morteclair) {
                                             player.sendMessage("Éclair à la mort est désormais§6 activé");
                                             gameState.morteclair = true;
-                                        }
-                                    } else {
-                                        if (gameState.morteclair) {
+                                        } else {
                                             player.sendMessage("Éclair à la mort est désormais§6 désactivé");
                                             gameState.morteclair = false;
                                         }
-                                    }
                                 }
                             }
                             if (item.getItemMeta().getDisplayName().equals("§fBijus")) {
