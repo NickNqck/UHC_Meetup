@@ -843,10 +843,10 @@ public class HubInventory implements Listener {
                             if (item.isSimilar(GUIItems.getTabRoleInfo(gameState))) {
                                 if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
                                         if (!gameState.roletab) {
-                                            player.sendMessage("Role dans le tab est désormais§6 activé");
+                                            player.sendMessage("Les roles seront maintenant afficher dans le tab");
                                             gameState.roletab = true;
                                         } else {
-                                            player.sendMessage("Role dans le tab est désormais§6 désactivé");
+                                            player.sendMessage("Les roles ne seront plus afficher dans le tab");
                                             gameState.roletab = false;
                                         }
                                     player.updateInventory();
@@ -1724,27 +1724,6 @@ public class HubInventory implements Listener {
             if (inv != null) {
                 if (inv.getTitle().equals("Configuration de la partie")) {
                     inv.clear();
-                    ItemStack infectTime = new ItemStack(Material.REDSTONE, 1);
-                    ItemMeta infectMeta = infectTime.getItemMeta();
-                    infectMeta.setDisplayName("Temp avant l'§cAssassin§r:");
-                    infectMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[10s < "+ StringUtils.secondsTowardsBeautiful(gameState.TimingAssassin)+" > 5m]",
-                            ChatColor.DARK_PURPLE+"Click Gauche: +10s",
-                            ChatColor.DARK_PURPLE+"Click Droit: -10s"));
-                    ItemStack waterTime = new ItemStack(Material.WATER_BUCKET);
-                    ItemMeta waterMeta = waterTime.getItemMeta();
-                    waterMeta.setDisplayName("Temp avant despawn de l'§bEau");
-                    waterMeta.setLore(Arrays.asList(
-                            "[10s < "+StringUtils.secondsTowardsBeautiful(gameState.WaterEmptyTiming)+" > 1m}",
-                            "Click Gauche: +1s",
-                            "Click Droit: -1s"));
-                    ItemStack lavaTime = new ItemStack(Material.LAVA_BUCKET);
-                    ItemMeta lavaMeta = lavaTime.getItemMeta();
-                    lavaMeta.setDisplayName("Temp avant despawn de la§6 Lave");
-                    lavaMeta.setLore(Arrays.asList(
-                            "[10s < "+StringUtils.secondsTowardsBeautiful(gameState.LavaEmptyTiming)+" > 1m}",
-                            "Click Gauche: +1s",
-                            "Click Droit: -1s"));
                     inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(5).setName("§r§fTaille de la bordure maximum").setLore(
                             "§r§f[50b < "+Border.getMaxBorderSize()+" > 2400b",
                             "§r§fClique gauche: §a+50b",
@@ -1779,14 +1758,27 @@ public class HubInventory implements Listener {
                             "§r§fClique gauche: §a+10 secondes",
                             "§r§fClique droit: §c-10 secondes"
                     ).toItemStack());
-
-                    infectTime.setItemMeta(infectMeta);
-                    waterTime.setItemMeta(waterMeta);
-                    lavaTime.setItemMeta(lavaMeta);
                     inv.addItem(GUIItems.getTabRoleInfo(gameState));
                     inv.addItem(Items.geteclairmort());
-                    inv.addItem(infectTime);
-                    inv.addItem(waterTime);
+                    inv.addItem(new ItemBuilder(Material.REDSTONE).setName("§r§fTemp avant l'§cAssassin").setLore(
+                            "§r§f[10 secondes < "+StringUtils.secondsTowardsBeautiful(gameState.getTimingAssassin())+" > 5 minutes",
+                            "§r§fClique gauche: §a+10 secondes",
+                            "§r§fClique droit: §c-10 secondes"
+                    ).toItemStack());
+                    inv.addItem(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
+                            "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(gameState.WaterEmptyTiming)+" > 1 minutes",
+                            "§r§Clique gauche: §a+1 secondes",
+                            "§r§fClique droit: §c-1 secondes",
+                            "§r§f(0 secondes =§c désactiver"
+                    ).toItemStack());
+                    ItemStack lavaTime = new ItemStack(Material.LAVA_BUCKET);
+                    ItemMeta lavaMeta = lavaTime.getItemMeta();
+                    lavaMeta.setDisplayName("Temp avant despawn de la§6 Lave");
+                    lavaMeta.setLore(Arrays.asList(
+                            "[10s < "+StringUtils.secondsTowardsBeautiful(gameState.LavaEmptyTiming)+" > 1m}",
+                            "Click Gauche: +1s",
+                            "Click Droit: -1s"));
+                    lavaTime.setItemMeta(lavaMeta);
                     inv.addItem(lavaTime);
                     inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(gameState.BijusEnable ? "§aActivé" : "§cDésactivé").toItemStack());
                     inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(

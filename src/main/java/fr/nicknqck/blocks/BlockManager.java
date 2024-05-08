@@ -40,6 +40,7 @@ public class BlockManager implements Listener{
 	    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
 	        Block block = event.getBlockClicked().getRelative(event.getBlockFace());
 	        if (event.getBucket() == Material.WATER_BUCKET) {
+				if (gameState.WaterEmptyTiming <= 0)return;
 	            new BukkitRunnable() {
 	                @Override
 	                public void run() {
@@ -48,7 +49,7 @@ public class BlockManager implements Listener{
 	                        cancel();
 	                    }
 	                }
-	            }.runTaskLater(Main.getInstance(), 20*gameState.WaterEmptyTiming);
+	            }.runTaskLater(Main.getInstance(), 20L *gameState.WaterEmptyTiming);
 	        }
 	        if (!gameState.LaveTitans) {
 	        	if (!gameState.hasRoleNull(event.getPlayer())) {
@@ -66,8 +67,8 @@ public class BlockManager implements Listener{
 	        		public void run() {
 	        				block.setType(Material.AIR);
 	        				cancel();
-	        		};
-	        	}.runTaskLater(Main.getInstance(), 20*gameState.LavaEmptyTiming);
+	        		}
+                }.runTaskLater(Main.getInstance(), 20L *gameState.LavaEmptyTiming);
 	        }
 	        if (!gameState.hasRoleNull(event.getPlayer())) {
 	        	event.setCancelled(gameState.getPlayerRoles().get(event.getPlayer()).onBucketEmpty(event.getBucket(), block, gameState, event.getPlayer()));
@@ -111,59 +112,56 @@ public class BlockManager implements Listener{
 		Location loc = block.getLocation();
 		World world = block.getWorld();
 		if (player != null) {
-			if (block != null) {
-				if (block.getType() == Material.PACKED_ICE) {
-					e.setCancelled(true);
-					return;
-				}
-				if (Bukkit.getWorld("Gamabunta") != null) {
-					if (block.getWorld().equals(Bukkit.getWorld("Gamabunta"))) {
-						if (type != Material.BRICK && type != Material.COBBLESTONE && type != Material.OBSIDIAN) {
-							e.setCancelled(true);
-							return;
-						}
-					}
-				}
-				if (Bukkit.getWorld("Kamui") != null) {
-					if (block.getWorld().getName().equals("Kamui")) {
-						if (block.getType().equals(Material.STAINED_CLAY) || block.getType().equals(Material.COAL_BLOCK)) {
-							e.setCancelled(true);
-							block.setType(Material.AIR);
-							return;
-						}
-					}
-				}
-				for (Player p : gameState.getInGamePlayers()) {
-					if (!gameState.hasRoleNull(p)) {
-						if (gameState.getPlayerRoles().get(player).onAllPlayerBlockBreak(e, player, block)) {
-							return;
-						}
-					}
-				}
-				int experience = 0;
-				if (CutClean.isCutClean()) {
-					CutClean(type, loc, world, block, player, experience, gameState);
-				}
-				if (type == Material.STONE) {
-					block.setType(Material.AIR);
-					GameListener.dropItem(loc, new ItemStack(Material.COBBLESTONE));
-				}
-				if (type == Material.DIAMOND_ORE) {
-					ExperienceOrb expOrb = (ExperienceOrb) world.spawnEntity(loc, EntityType.EXPERIENCE_ORB);
-					expOrb.setExperience(xpdiams+gameState.xpdiams);
-					block.setType(Material.AIR);
-					if (DiamondLimit.isLimit()) {
-						if (DiamondLimit.getdiamsmined() >= DiamondLimit.getmaxdiams()) {
-							GameListener.dropItem(loc, new ItemStack(Material.GOLD_INGOT, 1));
-						} else {
-							GameListener.dropItem(loc, new ItemStack(Material.DIAMOND, 1));
-							DiamondLimit.setdiamsmined(DiamondLimit.getdiamsmined() + 1);
-							NMSPacket.sendActionBar(player, ChatColor.AQUA+"Diamond Limite: "+DiamondLimit.getdiamsmined()+"/"+DiamondLimit.getmaxdiams());
-						}
-					}
-				}
-			}
-		}
+            if (block.getType() == Material.PACKED_ICE) {
+                e.setCancelled(true);
+                return;
+            }
+            if (Bukkit.getWorld("Gamabunta") != null) {
+                if (block.getWorld().equals(Bukkit.getWorld("Gamabunta"))) {
+                    if (type != Material.BRICK && type != Material.COBBLESTONE && type != Material.OBSIDIAN) {
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+            if (Bukkit.getWorld("Kamui") != null) {
+                if (block.getWorld().getName().equals("Kamui")) {
+                    if (block.getType().equals(Material.STAINED_CLAY) || block.getType().equals(Material.COAL_BLOCK)) {
+                        e.setCancelled(true);
+                        block.setType(Material.AIR);
+                        return;
+                    }
+                }
+            }
+            for (Player p : gameState.getInGamePlayers()) {
+                if (!gameState.hasRoleNull(p)) {
+                    if (gameState.getPlayerRoles().get(player).onAllPlayerBlockBreak(e, player, block)) {
+                        return;
+                    }
+                }
+            }
+            if (CutClean.isCutClean()) {
+                CutClean(type, loc, world, block, gameState);
+            }
+            if (type == Material.STONE) {
+                block.setType(Material.AIR);
+                GameListener.dropItem(loc, new ItemStack(Material.COBBLESTONE));
+            }
+            if (type == Material.DIAMOND_ORE) {
+                ExperienceOrb expOrb = (ExperienceOrb) world.spawnEntity(loc, EntityType.EXPERIENCE_ORB);
+                expOrb.setExperience(xpdiams+gameState.xpdiams);
+                block.setType(Material.AIR);
+                if (DiamondLimit.isLimit()) {
+                    if (DiamondLimit.getdiamsmined() >= DiamondLimit.getmaxdiams()) {
+                        GameListener.dropItem(loc, new ItemStack(Material.GOLD_INGOT, 1));
+                    } else {
+                        GameListener.dropItem(loc, new ItemStack(Material.DIAMOND, 1));
+                        DiamondLimit.setdiamsmined(DiamondLimit.getdiamsmined() + 1);
+                        NMSPacket.sendActionBar(player, ChatColor.AQUA+"Diamond Limite: "+DiamondLimit.getdiamsmined()+"/"+DiamondLimit.getmaxdiams());
+                    }
+                }
+            }
+        }
 		if (!gameState.hasRoleNull(player)) {
 			e.setCancelled(gameState.getPlayerRoles().get(player).onBlockBreak(player, block, gameState));
 		}
@@ -180,24 +178,25 @@ public class BlockManager implements Listener{
 	public static int xpor =(int)1.5;
 	public static int xpcharbon = 1;
 	public static int xpdiams = 2;
-	private void CutClean(Material type, Location loc, World world, Block block, Player player, int xp, GameState gameState) {
+	private void CutClean(Material type, Location loc, World world, Block block, GameState gameState) {
 		if (type != Material.IRON_ORE && type != Material.GOLD_ORE && type != Material.COAL_ORE)return;
 		ExperienceOrb expOrb = (ExperienceOrb) world.spawnEntity(loc, EntityType.EXPERIENCE_ORB);
+		int xp;
 		if (type == Material.IRON_ORE) {
 			xp = xpfer;
-            expOrb.setExperience(xp+gameState.xpfer);
+            expOrb.setExperience(xp +gameState.xpfer);
 			block.setType(Material.AIR);
 			GameListener.dropItem(loc, new ItemStack(Material.IRON_INGOT, 1));
 		}
 		if (type == Material.GOLD_ORE) {
 			xp = xpor;
-            expOrb.setExperience(xp+gameState.xpor);
+            expOrb.setExperience(xp +gameState.xpor);
 			block.setType(Material.AIR);
 			GameListener.dropItem(loc, new ItemStack(Material.GOLD_INGOT, 1));
 		}
 		if (type == Material.COAL_ORE) {
 			xp = xpcharbon;
-            expOrb.setExperience(xp+gameState.xpcharbon);
+            expOrb.setExperience(xp +gameState.xpcharbon);
 			block.setType(Material.AIR);
 			GameListener.dropItem(loc, new ItemStack(Material.TORCH, 4));
 		}

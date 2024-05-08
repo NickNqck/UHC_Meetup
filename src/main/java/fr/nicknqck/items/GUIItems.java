@@ -1,6 +1,7 @@
 package fr.nicknqck.items;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -403,8 +404,8 @@ public abstract class GUIItems{
 		public static ItemStack getTabRoleInfo(GameState gameState) {
 			ItemStack stack = new ItemStack(Material.SIGN, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Role dans le TAB");
-			meta.setLore(Arrays.asList(ChatColor.RESET+a(gameState)));
+			meta.setDisplayName("§r§fRoles dans le TAB");
+			meta.setLore(Collections.singletonList(ChatColor.RESET+a(gameState)));
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			stack.setItemMeta(meta);

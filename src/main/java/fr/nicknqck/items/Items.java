@@ -1,6 +1,7 @@
 package fr.nicknqck.items;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -925,12 +926,11 @@ public abstract class Items {
 		 		ItemMeta meta = stack.getItemMeta();
 		 		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, true);
 		 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		 		meta.setDisplayName("§rÉclair à la mort: ");
-		 		meta.setLore(Arrays.asList("§rÉclair à la mort: "+l()));
+		 		meta.setDisplayName("§r§fÉclair à la mort: ");
+		 		meta.setLore(Collections.singletonList("§r§fÉclair à la mort: "+(GameState.getInstance().morteclair ? "§aActiver" : "§cDésactiver")));
 		 		stack.setItemMeta(meta);
 		 		return stack;
 		 	}
-		 	static String l() {return GameState.getInstance().morteclair ? "Activé" : "Désactivé";}
 		  
 		  
 		  

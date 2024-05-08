@@ -852,6 +852,7 @@ public class GameState{
 		System.out.println("Starting Assassin System");
 		assa.start(this);
 	}
+	@Getter
 	public int TimingAssassin = 10;
 	public boolean morteclair = true;
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
