@@ -842,17 +842,13 @@ public class HubInventory implements Listener {
 
                             if (item.isSimilar(GUIItems.getTabRoleInfo(gameState))) {
                                 if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
-                                    if (action.equals(InventoryAction.PICKUP_ALL)) {
                                         if (!gameState.roletab) {
                                             player.sendMessage("Role dans le tab est désormais§6 activé");
                                             gameState.roletab = true;
-                                        }
-                                    } else {
-                                        if (gameState.roletab) {
+                                        } else {
                                             player.sendMessage("Role dans le tab est désormais§6 désactivé");
                                             gameState.roletab = false;
                                         }
-                                    }
                                     player.updateInventory();
                                     updateConfigInventory(player);
                                 }
@@ -1732,7 +1728,6 @@ public class HubInventory implements Listener {
             if (inv != null) {
                 if (inv.getTitle().equals("Configuration de la partie")) {
                     inv.clear();
-                    ItemStack daytime = new ItemStack(Material.WATCH);
                     ItemStack infectTime = new ItemStack(Material.REDSTONE, 1);
                     ItemMeta infectMeta = infectTime.getItemMeta();
                     infectMeta.setDisplayName("Temp avant l'§cAssassin§r:");
@@ -1792,7 +1787,6 @@ public class HubInventory implements Listener {
                     infectTime.setItemMeta(infectMeta);
                     waterTime.setItemMeta(waterMeta);
                     lavaTime.setItemMeta(lavaMeta);
-                    inv.addItem(daytime);
                     inv.addItem(GUIItems.getTabRoleInfo(gameState));
                     inv.addItem(Items.geteclairmort());
                     inv.addItem(infectTime);
