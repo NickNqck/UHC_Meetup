@@ -772,7 +772,7 @@ public class HubInventory implements Listener {
                                     Border.setMaxBorderSize(Border.getMaxBorderSize()-50);
                                 }
                             }
-                            if (name.equals("Taille de la Bordure Min")) {
+                            if (name.contains("Taille de la bordure minimum")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
                                     Border.setMinBorderSize(Math.min(Border.getMinBorderSize()+50, 2400));
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
@@ -781,7 +781,7 @@ public class HubInventory implements Listener {
                             }
                             if (name.contains("Vitesse de la bordure")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    Border.setBorderSpeed(Math.min(Border.getBorderSpeed()+1f, 5f));
+                                    Border.setBorderSpeed(Math.min(Border.getBorderSpeed()+1f, 10f));
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                                     Border.setBorderSpeed(Math.max(Border.getBorderSpeed()-1f, 1f));
                                 }
@@ -1745,7 +1745,6 @@ public class HubInventory implements Listener {
             if (inv != null) {
                 if (inv.getTitle().equals("Configuration de la partie")) {
                     inv.clear();
-                    ItemStack minBorderSize = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 14);
                     ItemStack pvpTimer = new ItemStack(Material.IRON_SWORD);
                     ItemStack roleTimer = new ItemStack(Material.SKULL_ITEM);
                     ItemStack shrinkTimer = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 0);
@@ -1776,12 +1775,11 @@ public class HubInventory implements Listener {
                             "§r§fClique gauche: §a+50b",
                             "§r§fClique droit: §c-50b"
                     ).toItemStack());
-                    ItemMeta minBSMeta = minBorderSize.getItemMeta();
-                    minBSMeta.setDisplayName("Taille de la Bordure Min");
-                    minBSMeta.setLore(Arrays.asList(
-                            ChatColor.DARK_PURPLE+"[50b < "+Border.getMinBorderSize()+"b > "+Border.getMaxBorderSize()+"b]",
-                            ChatColor.DARK_PURPLE+"Click Gauche : +50b",
-                            ChatColor.DARK_PURPLE+"Click Droit    : -50b"));
+                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setName("§r§fTaille de la bordure minimum").setDurability(14).setLore(
+                            "§r§f[50b < "+Border.getMinBorderSize()+"b > "+Border.getMaxBorderSize()+"b]",
+                            "§r§fClique gauche:§a +50b",
+                            "§r§fClique droit: §c-50b"
+                    ).toItemStack());
                     ItemMeta PTMeta = pvpTimer.getItemMeta();
                     PTMeta.setDisplayName("Temps avant activation du PVP");
                     PTMeta.setLore(Arrays.asList(
@@ -1808,17 +1806,14 @@ public class HubInventory implements Listener {
                     DTMeta.setLore(Collections.singletonList("§r§fTemp actuelle: " + ChatColor.GOLD + StringUtils.secondsTowardsBeautiful(gameState.timeday)));
 
                     daytime.setItemMeta(DTMeta);
-                    minBorderSize.setItemMeta(minBSMeta);
                     pvpTimer.setItemMeta(PTMeta);
                     roleTimer.setItemMeta(RTMeta);
                     shrinkTimer.setItemMeta(STMeta);
                     infectTime.setItemMeta(infectMeta);
                     waterTime.setItemMeta(waterMeta);
                     lavaTime.setItemMeta(lavaMeta);
-
-                    inv.addItem(minBorderSize);
                     inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(7).setName("§r§fVitesse de la bordure")
-                            .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 5b/s",
+                            .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 10b/s",
                                     "§r§fClique gauche: §a+1b/s",
                                     "§r§fClique droit: §c-1b/s").toItemStack());
                     inv.addItem(pvpTimer);
