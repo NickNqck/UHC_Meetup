@@ -5,3 +5,4 @@ cooldownTime: 10 #10 est le temp en seconde entre chaque utilisation du /
 mumble: <non défini>
 port: 64747
 key: "https://discord.gg/Bk4AjTmcaX"
+debug: false

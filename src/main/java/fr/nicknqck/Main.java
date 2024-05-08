@@ -343,6 +343,9 @@ public class Main extends JavaPlugin implements Listener{
             }
         }
     }
+	public static boolean isDebug(){
+		return getInstance().getConfig().getBoolean("debug");
+	}
 	public static String getBase() {
         return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 600+
         		",\"depthNoiseScaleZ\":" + 600 +

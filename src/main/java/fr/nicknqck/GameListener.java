@@ -334,7 +334,9 @@ public class GameListener implements Listener {
 			for (Bijus b : Bijus.values()) {
 				b.getBiju().resetCooldown();
 				b.getBiju().setHote(null);
-				System.out.println("reseted "+b.name());
+				if (Main.isDebug()){
+					System.out.println("reseted "+b.name());
+				}
 			}
 			BijuListener.getInstance().resetCooldown();
 			gameState.DeadRole.clear();
@@ -1156,7 +1158,9 @@ public class GameListener implements Listener {
 		}
 	}
 	public static final void dropItem(final Location loc,final ItemStack item) {loc.getWorld().dropItem(loc.clone().add(0.5D, 0.3D, 0.5D), item);
-	System.out.println("droped item at x"+loc.getX()+" z"+loc.getZ()+" the item "+item.getType().name()+" x"+item.getAmount());
+		if (Main.isDebug()){
+			System.out.println("droped item at x"+loc.getX()+" z"+loc.getZ()+" the item "+item.getType().name()+" x"+item.getAmount());
+		}
 	}
 	@EventHandler
 	public void OnMoove(PlayerMoveEvent e) {
@@ -1193,7 +1197,9 @@ public class GameListener implements Listener {
     	if (gameState.shutdown.contains(e.getPlayer())) {
     		p.teleport(from);
     		p.setAllowFlight(false);
-    		System.out.println(e.getPlayer().getName()+" peux pas bouger");
+			if (Main.isDebug()){
+				System.out.println(e.getPlayer().getName()+" peux pas bouger");
+			}
     	}
 	}
 	@EventHandler

@@ -73,7 +73,9 @@ public class HubListener implements Listener {
 		int roleNmb = 0;
 		
 		for (Roles r : gameState.getAvailableRoles().keySet()) {
-			System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
+			if (Main.isDebug()){
+				System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
+			}
 			roleNmb += gameState.getAvailableRoles().get(r);
 			if (gameState.getAvailableRoles().get(r) == 0){
 				gameState.getDeadRoles().add(r);

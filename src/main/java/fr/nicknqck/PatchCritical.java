@@ -65,7 +65,9 @@ public class PatchCritical {
         if (e == null)return;
         double d = e.getDamage();
         e.setDamage(e.getDamage() / 1.5 * /*Pour reset le crit*/ (1 + (percent / 100F)));
-        System.out.println("Critical has been patched : " + d + " to " + e.getDamage());
+        if (Main.isDebug()){
+            System.out.println("Critical has been patched : " + d + " to " + e.getDamage());
+        }
     }
 
     private double getAttackDamage(ItemStack itemStack) {//Trouver sur https://www.spigotmc.org/threads/how-to-get-attack-damage-attributemodifier-from-an-itemstack-as-displayed-on-items-in-game.284455/

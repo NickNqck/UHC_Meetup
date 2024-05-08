@@ -62,32 +62,31 @@ public class HomingBow implements Listener {
                  	   Susamaru sam = (Susamaru) role;
                  	   if (sam.Niveau2) {
                  		   if (sam.cooldown <= 0) {
-                     		   Player player = shooter;
-                     		   sam.cooldown = 60;
+                               sam.cooldown = 60;
                      		   arrow.setVelocity(arrow.getVelocity().multiply(1.5)); // Increase arrow speed
 
-                                player.setAllowFlight(true); // Allow the player to fly
-                                player.setFlying(true); // Enable flight mode
+                                shooter.setAllowFlight(true); // Allow the player to fly
+                                shooter.setFlying(true); // Enable flight mode
 
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {
                                         if (!arrow.isValid() || arrow.isOnGround()) {
                                             this.cancel();
-                                            player.setAllowFlight(false); // Disable flight after arrow lands
-                                            player.setFlying(false); // Disable flight mode
+                                            shooter.setAllowFlight(false); // Disable flight after arrow lands
+                                            shooter.setFlying(false); // Disable flight mode
                                             Location arrowLocation = arrow.getLocation();
-                                            player.teleport(arrowLocation); // Teleport player to arrow location
+                                            shooter.teleport(arrowLocation); // Teleport player to arrow location
                                             Vector arrowVelocity = arrow.getVelocity().multiply(1.5); // Increase arrow speed
                                             arrow.setVelocity(arrowVelocity);
                                             arrow.setVelocity(arrowVelocity.multiply(1 / 1.5)); // Reset arrow velocity to normal
                                         } else {
-                                            Vector playerDirection = arrow.getLocation().toVector().subtract(player.getLocation().toVector());
+                                            Vector playerDirection = arrow.getLocation().toVector().subtract(shooter.getLocation().toVector());
                                             playerDirection.setY(0).normalize(); // Calculate the direction vector
 
                                             double distance = 1.5; // Distance behind the arrow
                                             Vector teleportLocation = arrow.getLocation().toVector().add(playerDirection.multiply(-distance));
-                                            player.teleport(teleportLocation.toLocation(player.getWorld())); // Teleport player behind the arrow
+                                            shooter.teleport(teleportLocation.toLocation(shooter.getWorld())); // Teleport player behind the arrow
                                         }
                                     }
                                 }.runTaskTimer(Main.getInstance(), 0L, 1L);

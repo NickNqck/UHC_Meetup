@@ -36,7 +36,9 @@ public class Patch implements Listener{
         Player victim = (Player) event.getEntity();
       if (damager.getItemInHand() == null) return;
       if (damager.getItemInHand().getType() == Material.AIR)return;
-      System.out.println("Original Damage: "+event.getDamage());
+	  if (Main.isDebug()){
+		  System.out.println("Original Damage: "+event.getDamage());
+	  }
       for (Titans titans : Titans.values()) {
     	  titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event);
       }
@@ -51,7 +53,9 @@ public class Patch implements Listener{
     		ApplyForce(event, gameState.getPlayerRoles().get(damager).getBonusForce(), damager, false);
     	}
         if (Titans.Machoire.getTitan().getOwner() != null && Titans.Machoire.getTitan().getOwner() == damager.getUniqueId() && Titans.Machoire.getTitan().isTransformedinTitan()) {
-        	System.out.println(victim.getName()+" has been resi cancelled by Titan Machoire");
+			if (Main.isDebug()){
+				System.out.println(victim.getName()+" has been resi cancelled by Titan Machoire");
+			}
             return;
          }
         if (gameState.getPlayerRoles().get(victim).getAllResi() >= 100) {
@@ -78,24 +82,32 @@ public class Patch implements Listener{
 	private void ApplyForce(EntityDamageByEntityEvent event, double fPercent, Player damager, boolean effect) {
 		if (effect) {
 			event.setDamage((event.getDamage() / 2.3f) *(1 + gameState.getPlayerRoles().get(damager).getForce() / 100.0f));
-			System.out.println("Force Damage to "+event.getDamage());
+			if (Main.isDebug()){
+				System.out.println("Force Damage to "+event.getDamage());
+			}
 		} else {
 			if (fPercent > 0){
 				double rValue = (fPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
-				System.out.println("Force Damage to "+event.getDamage());
+				if (Main.isDebug()){
+					System.out.println("Force Damage to "+event.getDamage());
+				}
 			}
 		}
 	}
 	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, boolean effect) {
 		if (effect) {
 		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); J'ai décider de ne pas patch la l'effet de rési car il est de base dans les valeurs que je veux
-			System.out.println("Resi Damage to "+event.getDamage());
+			if (Main.isDebug()){
+				System.out.println("Resi Damage to "+event.getDamage());
+			}
 		} else {
 			if (reiPercent > 0){
 				double rValue = (reiPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
-				System.out.println("Bonus Resi Damage to "+event.getDamage());
+				if (Main.isDebug()){
+					System.out.println("Bonus Resi Damage to "+event.getDamage());
+				}
 			}
 		}
 	}
