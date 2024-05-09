@@ -145,6 +145,10 @@ public class AdminCommands implements CommandExecutor{
 						sender.sendMessage("§7Vous ne pouvez pas faire ça en dehors du Lobby");
 						return true;
 					}
+					if (!ChatRank.isHost(sender)) {
+						sender.sendMessage("§cVous n'avez pas la permission de faire cette commande !");
+						return true;
+					}
 					sender.sendMessage("Commencement de la suppression des rôles");
 					sender.sendMessage("");
 					new BukkitRunnable() {
@@ -426,6 +430,28 @@ public class AdminCommands implements CommandExecutor{
 					} else {
 						sender.sendMessage("Seul un joueur peut effectuer cette commande");
 						return true;
+					}
+				}
+				if (sender instanceof Player) {
+					if (ChatRank.isHost(((Player) sender).getUniqueId())){
+						Player p = Bukkit.getPlayer(args[1]);
+						if (p != null){
+							if (gameState.getServerState().equals(ServerStates.InGame)){
+								if (!gameState.hasRoleNull(p) && !gameState.getInSpecPlayers().contains(p)){
+									for (TeamList team : TeamList.values()){
+										if (args[0].equalsIgnoreCase(team.name())){
+											if (!gameState.getPlayerRoles().get(p).getTeam().equals(team)){
+												gameState.getPlayerRoles().get(p).setTeam(team);
+												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+team.getColor()+" "+args[0]);
+												p.sendMessage("Vous appartenez maintenant au camp des"+team.getColor()+" "+args[0]);
+												GameListener.SendToEveryone("Un joueur à rejoint le camp des"+team.getColor()+args[0]+"§r par un Administrateur/Host");
+												return true;
+											}
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				if (args[0].equalsIgnoreCase("jigoro")) {

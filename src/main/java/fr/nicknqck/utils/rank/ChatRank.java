@@ -2,6 +2,7 @@ package fr.nicknqck.utils.rank;
 
 import fr.nicknqck.GameState;
 import lombok.Getter;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -31,8 +32,14 @@ public enum ChatRank {
         ranked.add(player.getUniqueId());
 
     }
-    public static boolean isHost(UUID uuid) {
-        return ChatRank.Op.getPlayers().contains(uuid) || ChatRank.Host.getPlayers().contains(uuid);
+    public static boolean isHost(Object uuid) {
+        if (uuid instanceof UUID){
+            return ChatRank.Op.getPlayers().contains(uuid) || ChatRank.Host.getPlayers().contains(uuid);
+        }
+        if (uuid instanceof Player){
+            return ChatRank.Op.getPlayers().contains(((Player) uuid).getUniqueId()) || ChatRank.Host.getPlayers().contains(((Player) uuid).getUniqueId());
+        }
+        return uuid instanceof CommandSender;
     }
 
     public String getFullPrefix(){

@@ -1774,7 +1774,7 @@ public class HubInventory implements Listener {
                             "§r§fClique droit: §c-1 seconde",
                             "§r§f(0 secondes =§c désactiver"
                     ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(gameState.BijusEnable ? "§aActivé" : "§cDésactivé").toItemStack());
+                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(gameState.BijusEnable ? "§aActivé" : "§cDésactivé","§r§fShift + Clique: Permet de configurer les bijus").toItemStack());
                     inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
                             "§fTemp avant infection: ",
                             "§a+5s§f (Clique gauche)",

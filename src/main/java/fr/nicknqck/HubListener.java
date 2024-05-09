@@ -129,9 +129,8 @@ public class HubListener implements Listener {
 			p.getInventory().setItem(2, Items.getbow());
 			if (GameState.pearl == 1) {
 				p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, GameState.pearl));
-			}	
+			}
 			p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
-					
 			p.getInventory().setItem(9, new ItemStack(Material.ARROW, gameState.nmbArrow));
 			p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
 			p.getInventory().setItem(11, Items.getironshovel());
