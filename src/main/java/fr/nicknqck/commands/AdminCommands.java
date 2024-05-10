@@ -1,20 +1,5 @@
 package fr.nicknqck.commands;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
-import fr.nicknqck.events.essential.HubInventory;
-import fr.nicknqck.utils.rank.ChatRank;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -22,6 +7,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.events.essential.HubInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.RoleBase;
@@ -33,6 +19,18 @@ import fr.nicknqck.roles.ds.slayers.Pourfendeur;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.rank.ChatRank;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class AdminCommands implements CommandExecutor{
 
@@ -57,9 +55,7 @@ public class AdminCommands implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("list")) {
 				if ((sender instanceof Player && ChatRank.hasRank(((Player) sender).getUniqueId()) && ChatRank.isHost(((Player) sender).getUniqueId())) || sender.hasPermission("Host")) {
-					gameState.getPlayerRoles().forEach((key, value) -> {
-						sender.sendMessage("§7 -§f "+key.getName()+"§7 -> "+value.getTeamColor()+value.type.name());
-					});
+					gameState.getPlayerRoles().forEach((key, value) -> sender.sendMessage("§7 -§f "+key.getName()+"§7 -> "+value.getTeamColor()+value.type.name()));
 					return true;
 				}
 			}
@@ -302,136 +298,6 @@ public class AdminCommands implements CommandExecutor{
 						return true;
 					}
 				}
-				if (args[0].equalsIgnoreCase("infection") || args[0].equalsIgnoreCase("demon")) {
-					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
-							if (args[1] != null) {
-								Player p = Bukkit.getPlayer(args[1]);
-								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (gameState.getServerState() == ServerStates.InGame) {
-										if (gameState.getPlayerRoles().containsKey(p)) {
-											if (gameState.getPlayerRoles().get(p).getTeam() != TeamList.Demon) {
-												if (gameState.getInSpecPlayers().contains(p)) {
-													sender.sendMessage("Impossible d'infecté un spectateur désolé.");
-													return true;
-												}
-												gameState.getPlayerRoles().get(p).setTeam(TeamList.Demon);
-												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue§c Démon");
-												p.sendMessage("Vous appartenez maintenant au camp des§c Démons§r");
-												GameListener.SendToEveryone("Un joueur à été infecté par un Administrateur/Host");
-												gameState.infectedbyadmin.add(p);
-												return true;
-											}
-										} else {
-											sender.sendMessage(p.getName()+" n'a pas de rôle il ne peux donc pas être infecté");
-										}
-									} else {
-										sender.sendMessage("Il faut être en jeu pour faire cette commande !");
-										return true;
-									}
-								}
-							} else {
-								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						} else {
-							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
-						}
-					} else {
-						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
-					}
-				}
-				if (args[0].equalsIgnoreCase("slayer")) {
-					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
-							if (args[1] != null) {
-								Player p = Bukkit.getPlayer(args[1]);
-								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (gameState.getServerState() == ServerStates.InGame) {
-										if (gameState.getPlayerRoles().containsKey(p)) {
-											if (gameState.getPlayerRoles().get(p).getTeam() != TeamList.Slayer) {
-												if (gameState.getInSpecPlayers().contains(p)) {
-													sender.sendMessage("Impossible d'infecté un spectateur désolé.");
-													return true;
-												}
-												gameState.getPlayerRoles().get(p).setTeam(TeamList.Slayer);
-												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue§a Slayer");
-												p.sendMessage("Vous appartenez maintenant au camp des§a Slayers");
-												GameListener.SendToEveryone("Un joueur à rejoint le camp des§a Slayers§r par un Administrateur/Host");
-												return true;
-											}
-										} else {
-											sender.sendMessage(p.getName()+" n'a pas de rôle il ne peux donc pas devenir§a Slayer");
-										}
-									} else {
-										sender.sendMessage("Il faut être en jeu pour faire cette commande !");
-										return true;
-									}
-								}
-							} else {
-								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						} else {
-							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
-						}
-					} else {
-						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
-					}
-				}
-				if (args[0].equalsIgnoreCase("solo")) {
-					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
-							if (args[1] != null) {
-								Player p = Bukkit.getPlayer(args[1]);
-								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (gameState.getServerState() == ServerStates.InGame) {
-										if (gameState.getPlayerRoles().containsKey(p)) {
-											if (gameState.getPlayerRoles().get(p).getTeam() != TeamList.Solo) {
-												if (gameState.getInSpecPlayers().contains(p)) {
-													sender.sendMessage("Impossible d'infecté un spectateur désolé.");
-													return true;
-												}
-												gameState.getPlayerRoles().get(p).setTeam(TeamList.Solo);
-												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+ChatColor.YELLOW+" Solo");
-												p.sendMessage("Vous appartenez maintenant au camp des"+ChatColor.YELLOW+" Solo");
-												GameListener.SendToEveryone("Un joueur à rejoint le camp des§e Solo§r par un Administrateur/Host");
-												return true;
-											}
-										} else {
-											sender.sendMessage(p.getName()+" n'a pas de rôle il ne peux donc pas devenir§e Solo");
-										}
-									} else {
-										sender.sendMessage("Il faut être en jeu pour faire cette commande !");
-										return true;
-									}
-								}
-							} else {
-								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						} else {
-							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
-						}
-					} else {
-						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
-					}
-				}
 				if (sender instanceof Player) {
 					if (ChatRank.isHost(((Player) sender).getUniqueId())){
 						Player p = Bukkit.getPlayer(args[1]);
@@ -442,59 +308,18 @@ public class AdminCommands implements CommandExecutor{
 										if (args[0].equalsIgnoreCase(team.name())){
 											if (!gameState.getPlayerRoles().get(p).getTeam().equals(team)){
 												gameState.getPlayerRoles().get(p).setTeam(team);
-												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+team.getColor()+" "+args[0]);
-												p.sendMessage("Vous appartenez maintenant au camp des"+team.getColor()+" "+args[0]);
-												GameListener.SendToEveryone("Un joueur à rejoint le camp des"+team.getColor()+args[0]+"§r par un Administrateur/Host");
+												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+team.getColor()+" "+team.name());
+												p.sendMessage("Vous appartenez maintenant au camp des"+team.getColor()+" "+team.name());
+												GameListener.SendToEveryone("Un joueur à rejoint le camp des "+team.getColor()+team.name()+"§r par un Administrateur/Host");
 												return true;
 											}
 										}
 									}
 								}
-							}
-						}
-					}
-				}
-				if (args[0].equalsIgnoreCase("jigoro")) {
-					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
-							if (args[1] != null) {
-								Player p = Bukkit.getPlayer(args[1]);
-								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (gameState.getServerState() == ServerStates.InGame) {
-										if (gameState.getPlayerRoles().containsKey(p)) {
-											if (gameState.getPlayerRoles().get(p).getTeam() != TeamList.Jigoro) {
-												if (gameState.getInSpecPlayers().contains(p)) {
-													sender.sendMessage("Impossible d'infecté un spectateur désolé.");
-													return true;
-												}
-												gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
-												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+ChatColor.GOLD+" Jigoro");
-												p.sendMessage("Vous appartenez maintenant au camp des"+ChatColor.GOLD+" Jigoro");
-												GameListener.SendToEveryone("Un joueur à rejoint le camp des§a Slayers§r par un Administrateur/Host");
-												return true;
-											}
-										} else {
-											sender.sendMessage(p.getName()+" n'a pas de rôle il ne peux donc pas devenir§6 Jigoro");
-										}
-									} else {
-										sender.sendMessage("Il faut être en jeu pour faire cette commande !");
-										return true;
-									}
-								}
-							} else {
-								sender.sendMessage("Il faut préciser un joueur");
-								return true;
 							}
 						} else {
-							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
-							return true;
+							sender.sendMessage(args[1]+"§c n'est pas connecté !");
 						}
-					} else {
-						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-						return true;
 					}
 				}
 				if (args[0].equalsIgnoreCase("setgroupe")) {
@@ -594,18 +419,15 @@ public class AdminCommands implements CommandExecutor{
                     }
 				}
 				if (args[0].equalsIgnoreCase("giveblade")) {
-					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
                                 } else {
-									ArrayList<String> message = new ArrayList<>();
-									message.add("Éxécution de la commande !");
 									p.getInventory().addItem(Items.getLamedenichirin());
 									Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+p.getName());
-									sender.sendMessage(message.toArray(new String[message.size()]));
+									sender.sendMessage("Vous avez donnez une Lame de nichirin a "+p.getDisplayName());
                                 }
                             } else {
 								sender.sendMessage("Il faut préciser un joueur");
@@ -613,9 +435,6 @@ public class AdminCommands implements CommandExecutor{
                         } else {
 							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
                         }
-                    }else {
-						sender.sendMessage("Seul un joueur peut effectuer cette commande");
-                    }
                     return true;
                 }
 				if (args[0].equalsIgnoreCase("cheat")) {
@@ -664,17 +483,17 @@ public class AdminCommands implements CommandExecutor{
 									return true;
 								} else {
 									if (gameState.getPlayerRoles().containsKey(p)) {
-										ArrayList<String> message = new ArrayList<>();
-										message.add(ChatColor.AQUA+"Voici les effets du joueur "+p.getName()+ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-										message.add("");
-										message.add(AllDesc.Resi+": "+ gameState.getPlayerRoles().get(p).getResi()+"% + " +gameState.getPlayerRoles().get(p).getBonusResi()+"%");
-										message.add("");
-										message.add(ChatColor.RED+"Force: "+ gameState.getPlayerRoles().get(p).getForce()+"% + "+gameState.getPlayerRoles().get(p).getBonusForce()+"%");
-										message.add("");
-										message.add(ChatColor.AQUA+"Speed: "+gameState.getPlayerRoles().get(p).owner.getWalkSpeed());
-										message.add("");
-										message.add(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-										sender.sendMessage(message.toArray(new String[message.size()]));
+										sender.sendMessage(new String[] {
+												"§bVoici les effets du joueur "+p.getName()+ChatColor.DARK_GRAY+"§o§m-----------------------------------",
+												"",
+												AllDesc.Resi+": "+ gameState.getPlayerRoles().get(p).getResi()+"% + " +gameState.getPlayerRoles().get(p).getBonusResi()+"%",
+												"",
+												ChatColor.RED+"Force: "+ gameState.getPlayerRoles().get(p).getForce()+"% + "+gameState.getPlayerRoles().get(p).getBonusForce()+"%",
+												"",
+												ChatColor.AQUA+"Speed: "+gameState.getPlayerRoles().get(p).owner.getWalkSpeed(),
+												"",
+												ChatColor.DARK_GRAY+"§o§m-----------------------------------"
+										});
 										return true;					
 										}
 								}
