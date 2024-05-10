@@ -294,6 +294,7 @@ public class GameState{
 	public List<Player> igPlayers = new ArrayList<>();
 	int inGameTime = 0;
 
+	@Getter
 	public boolean nightTime = false;
 	boolean prevNightTime = true;
 	boolean pvp = false;
@@ -805,6 +806,9 @@ public class GameState{
 			break;
 		case Kurenai:
 			role = new Kurenai(player, roleType, this);
+			break;
+		case Shikamaru:
+			role = new Shikamaru(player, roleType, this);
 			break;
 		}
 		if (role == null) return null;

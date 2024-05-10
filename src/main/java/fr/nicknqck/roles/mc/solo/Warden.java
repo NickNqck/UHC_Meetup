@@ -13,7 +13,6 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -162,8 +161,7 @@ public class Warden extends RoleBase {
             @Override
             public void run() {
                 double particleDistance = 0.1;
-                Location location = owner.getLocation().add(0, 1, 0);
-
+                final Location location = owner.getLocation().add(0, 1, 0);
                 for (double waypoint = 1; waypoint < 10; waypoint += particleDistance) {
                     Vector vector = location.getDirection().multiply(waypoint);
                     location.add(vector);
