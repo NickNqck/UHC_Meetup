@@ -1,7 +1,9 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
@@ -49,7 +51,7 @@ public class Shikamaru extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c 25 blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f.§7 (1x/5min)",
+                AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c "+powerDistance+" blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f.§7 (1x/5min)",
                 "§c(Vous et le joueur viser pourrez prendre des dégats pendant le stun)"
         };
     }
@@ -125,9 +127,16 @@ public class Shikamaru extends RoleBase {
                 if (item.getType().equals(Material.SKULL_ITEM)) {
                     if (item.hasItemMeta())return;
                     if (item.getItemMeta().hasDisplayName())return;
-                    Player player = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
+                    final Player player = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                     if (player != null){
-
+                        owner.sendMessage("§7Vous empêchez§c "+player.getDisplayName()+"§7 de bouger");
+                        player.sendMessage("§aShikamaru§7 vous empêche de bouger");
+                        GamePlayer.get(player).stun(10.0);
+                        getGamePlayer().stun(10.0);
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+                            owner.sendMessage("§c"+player.getDisplayName()+"§7 peut à nouveau bouger");
+                            player.sendMessage("§7Vous pouvez à nouveau bouger");
+                        }, 200L);
                     }
                 }
             }
