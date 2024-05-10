@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -98,12 +99,12 @@ public class Tsunade extends RoleBase {
 			owner.updateInventory();
 		}
 	}
-	private List<Player> inKatsuyu = new ArrayList<>();
+	private final List<UUID> inKatsuyu = new ArrayList<>();
 	private Inventory KatsuyuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 54, "§aKatsuyu");
 		for (Player p : getIGPlayers()) {
 			if (!gameState.hasRoleNull(p)) {
-				if (inKatsuyu.contains(p)) {
+				if (inKatsuyu.contains(p.getUniqueId())) {
 					inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName("§a"+p.getName()).toItemStack());
 				} else {
 					inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName("§c"+p.getName()).toItemStack());
@@ -119,10 +120,10 @@ public class Tsunade extends RoleBase {
 				if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
 					for (Player p : getIGPlayers()) {
 						if (item.getItemMeta().getDisplayName().contains(p.getName())) {
-							if (inKatsuyu.contains(p)) {
-								inKatsuyu.remove(p);
+							if (inKatsuyu.contains(p.getUniqueId())) {
+								inKatsuyu.remove(p.getUniqueId());
                             } else {
-								inKatsuyu.add(p);
+								inKatsuyu.add(p.getUniqueId());
                             }
                             owner.openInventory(KatsuyuInventory());
                             owner.updateInventory();
@@ -151,7 +152,7 @@ public class Tsunade extends RoleBase {
 			}
 		}
 		if (item.isSimilar(KatsuyuItem())) {
-			if (inKatsuyu.size() < 1) {
+			if (inKatsuyu.isEmpty()) {
 				owner.sendMessage("§7Il faut d'abord choisir qui vous voulez soigner");
 				return true;
 			}
@@ -168,11 +169,13 @@ public class Tsunade extends RoleBase {
 									a = false;
 									cancel();
 								}
-								if (inKatsuyu.size() <1) {
+								if (inKatsuyu.isEmpty()) {
 									a = true;
 								}
-								for (Player target : inKatsuyu) {
+								for (UUID t : inKatsuyu) {
 									if (SavedHP > 0) {
+										assert (Bukkit.getPlayer(t) != null);
+										Player target = Bukkit.getPlayer(t);
 										if (target.getHealth() <= (target.getMaxHealth()-1)) {
 											target.setHealth(target.getHealth()+1);
 											SavedHP--;
@@ -195,8 +198,7 @@ public class Tsunade extends RoleBase {
 					owner.sendMessage("§7Vous ne partagez plus votre§c vie");
 				}
 			} else {
-				a = true;
-				owner.sendMessage("§7Vous ne partagez plus votre§c vie");
+                owner.sendMessage("§7Vous ne partagez plus votre§c vie");
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 					owner.sendMessage("§7Vous pouvez a nouveau partager votre§c vie");
 					a = false;
