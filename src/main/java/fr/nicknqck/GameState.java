@@ -208,11 +208,9 @@ public class GameState{
 		//KumoGakure
 		Ginkaku(TeamList.Kumogakure, "ns", 0, new ItemBuilder(Material.LADDER).setName("§6Ginkaku").toItemStack(), "§bByC3RV0L3NT"),
 		Kinkaku(TeamList.Kumogakure, "ns", 1, new ItemBuilder(Material.NETHER_STAR).setName("§6Kinkaku").toItemStack(), "§bByC3RV0L3NT"),
-		/*//OverWorld
-        Poulet(TeamList.Overworld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack()),
-        Vache(TeamList.Overworld, "mc", 1, new ItemBuilder(Material.MILK_BUCKET).setName("§aVache").toItemStack()),
-        Zombie(TeamList.Overworld, "mc", 2, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack()),
-        Squelette(TeamList.Overworld, "mc", 3, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack())*/
+		//OverWorld
+        Poulet(TeamList.OverWorld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack(), "§bMega02600"),
+
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
 		Wither(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck");
