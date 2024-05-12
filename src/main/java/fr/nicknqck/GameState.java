@@ -19,6 +19,7 @@ import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.solos.*;
+import fr.nicknqck.roles.mc.overworld.Poulet;
 import fr.nicknqck.roles.mc.solo.Warden;
 import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.Hokage;
@@ -808,6 +809,9 @@ public class GameState{
 		case Shikamaru:
 			role = new Shikamaru(player, roleType, this);
 			break;
+        case Poulet:
+             role = new Poulet(player, roleType, this);
+             break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(player);
