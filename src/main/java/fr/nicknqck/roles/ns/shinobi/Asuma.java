@@ -1,12 +1,5 @@
 package fr.nicknqck.roles.ns.shinobi;
 
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.RoleBase;
@@ -15,6 +8,12 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public class Asuma extends RoleBase{
 
@@ -105,12 +104,11 @@ public class Asuma extends RoleBase{
 						owner.sendMessage("§7§l"+p.getName()+"§7 à été touchée");
 					}
 				}
-				return true;	
-			} else {
+            } else {
 				sendCooldown(owner, cdNuees);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 }

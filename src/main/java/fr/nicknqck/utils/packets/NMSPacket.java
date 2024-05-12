@@ -1,9 +1,10 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.packets;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.text.DecimalFormat;
-
+import fr.nicknqck.Main;
+import net.minecraft.server.v1_8_R3.EntityArmorStand;
+import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,11 +14,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.Main;
-import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
-import net.minecraft.server.v1_8_R3.WorldServer;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 
 public class NMSPacket {
 	//le reste dans Main
@@ -93,6 +92,7 @@ public class NMSPacket {
         footer = footer.replaceAll("%player%", player.getDisplayName());
         try {
             Object tabHeader = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", new Class[] { String.class }).invoke(null, "{\"text\":\"" + header + "\"}");
+            Object tabPlayers = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", new Class[] { String.class }).invoke(null, "{\"text\":\"" + header + "\"}");
             Object tabFooter = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", new Class[] { String.class }).invoke(null, "{\"text\":\"" + footer + "\"}");
             Constructor<?> titleConstructor = getNMSClass("PacketPlayOutPlayerListHeaderFooter").getConstructor();
             Object packet = titleConstructor.newInstance();

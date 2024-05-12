@@ -16,7 +16,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public class HantenguV2 extends RoleBase {

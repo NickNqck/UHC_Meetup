@@ -10,6 +10,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.raytrace.BoundingBox;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;

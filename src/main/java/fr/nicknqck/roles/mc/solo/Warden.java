@@ -219,8 +219,8 @@ public class Warden extends RoleBase {
         @EventHandler
         private void onKill(UHCPlayerKill e){
                 if (e.getPlayerKiller() != null && e.getGamePlayerKiller() != null){
-                    if (e.getGameState().getGamePlayers().containsKey(e.getGamePlayerKiller())){
-                        if (e.getGameState().getGamePlayers().get(e.getGamePlayerKiller()).equals(Warden.class)){
+                    if (e.getGameState().getGamePlayer().containsKey(e.getKiller().getUniqueId())){
+                        if (e.getGameState().getPlayerRoles().get(e.getPlayerKiller()) instanceof Warden){
                             if (e.getVictim().getUniqueId().equals(target) && timeRemaining > 0){
                                 if (warden.getBonusResi() < 30.0 && !cancel){
                                     warden.addBonusResi(5.0);

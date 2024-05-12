@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public abstract class Titan {

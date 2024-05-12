@@ -15,7 +15,7 @@ import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public class WorldFillTask implements Runnable {

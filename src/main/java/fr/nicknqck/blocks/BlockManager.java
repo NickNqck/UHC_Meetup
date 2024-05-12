@@ -26,7 +26,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.scenarios.impl.DiamondLimit;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 
 public class BlockManager implements Listener{
 	

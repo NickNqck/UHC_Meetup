@@ -9,7 +9,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Objective;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -20,7 +19,7 @@ import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public class JigoroV2 extends RoleBase{

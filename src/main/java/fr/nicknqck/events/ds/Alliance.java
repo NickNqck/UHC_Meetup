@@ -20,7 +20,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.slayers.Kyojuro;
 import fr.nicknqck.roles.ds.solos.Shinjuro;
 import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public class Alliance extends EventBase{

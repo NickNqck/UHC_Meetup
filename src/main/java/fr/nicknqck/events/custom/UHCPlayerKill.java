@@ -1,15 +1,13 @@
 package fr.nicknqck.events.custom;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-
-import fr.nicknqck.GameState;
 
 public class UHCPlayerKill extends Event {
 	private static final HandlerList handlers = new HandlerList();

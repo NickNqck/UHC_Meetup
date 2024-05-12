@@ -36,6 +36,7 @@ import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
@@ -66,8 +67,6 @@ public class GameState{
 	public static Roles setPlayerRoles;
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
-	@Getter
-	private Map<GamePlayer, Class<? extends RoleBase>> GamePlayers = new LinkedHashMap<>();
 	@Getter
 	private Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
 	@Setter
@@ -827,7 +826,6 @@ public class GameState{
 		fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(player.getUniqueId());
 		role.setGamePlayer(gamePlayer);
 		role.getGameState().getGamePlayer().put(player.getUniqueId(), gamePlayer);
-		this.getGamePlayers().put(role.getGamePlayer(), role.getClass());
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
 			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon && !getPlayerRoles().get(player).type.equals(Roles.Kyogai)) {
 				canBeAssassin.add(player);

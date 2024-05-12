@@ -31,7 +31,7 @@ import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Cuboid;
 import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.WorldUtils;
 import fr.nicknqck.utils.particles.TapisSableEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;

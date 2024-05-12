@@ -19,10 +19,11 @@ import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.utils.AttackUtils;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.SchedulerRunnable;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
+import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
 import fr.nicknqck.worlds.WorldGenerator;
 import lombok.Getter;
@@ -32,10 +33,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -237,14 +235,14 @@ public class Main extends JavaPlugin implements Listener{
 					if (gameState.roleTimer < gameState.getInGameTime()) {
 		        		if (!gameState.hasRoleNull(player)) {
 		        			if (gameState.getPlayerRoles().get(player).getTeam() != null) {
-				            	NMSPacket.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
+				            	TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
 				         }
 		        		}		        		 
 		        	} else {
 		        		int time = gameState.roleTimer-gameState.getInGameTime();
 				    	String trm = time/60 < 10 ? "0"+time/60 : time/60+"";
 				    	String trs = time%60 < 10 ? "0"+time%60 : time%60+"";
-		        		NMSPacket.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
+		        		TabTitleManager.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
 		        	}
 					if (!gameState.hasRoleNull(player)) {
 		        		gameState.getPlayerRoles().get(player).onTick();
@@ -291,34 +289,6 @@ public class Main extends JavaPlugin implements Listener{
 			}
 		}
 	}
-	@EventHandler(priority = EventPriority.HIGHEST)
-    public void onDamage(EntityDamageEvent e){
-        if (e.getEntity() instanceof Player){
-            Player p = (Player)e.getEntity();
-            if (p.getLocation().getY() <= 124){
-                if (p.getWorld().equals(Bukkit.getWorld("nakime"))){
-                    e.setDamage(0.0);
-                    e.setCancelled(true);
-                }
-            }
-        }
-    }
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void EntityDamage(EntityDamageByEntityEvent e){
-        if (e.getEntity() instanceof Player){
-            if (e.getDamager() instanceof Player){
-                Player damager = (Player)e.getDamager();
-                if (damager.getLocation().getY() <= 124){
-                    if (damager.getWorld().equals(Bukkit.getWorld("nakime")) && damager.getWorld().equals(e.getEntity().getWorld())){
-                        e.setDamage(0.0);
-                        e.setCancelled(true);
-                    }
-                }
-            }
-        }
-    }
-
-
 	public static void createLoadWorld() throws NoSuchFieldException, IllegalAccessException {
 		getInstance().gen = true;
         deleteWorld("arena");

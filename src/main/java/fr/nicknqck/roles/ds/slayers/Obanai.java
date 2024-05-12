@@ -10,7 +10,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public class Obanai extends RoleBase{

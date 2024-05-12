@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
@@ -52,7 +53,7 @@ public class EntityDamageEvents implements Listener{
 			if (event.getEntity() instanceof Player) {
 				Player player = (Player) event.getEntity();
 				Player killer = player.getKiller();
-				Double damage = event.getFinalDamage();
+				double damage = event.getFinalDamage();
 				for (Player p : gameState.getInGamePlayers()) {
 					if (!gameState.hasRoleNull(p)) {
 						gameState.getPlayerRoles().get(p).onALLPlayerDamage(event, player);
@@ -119,6 +120,32 @@ public class EntityDamageEvents implements Listener{
 							GameListener.RandomTp(player, gameState);
 						}
 					}
+				}
+			}
+		}
+	}
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void EntityDamage(EntityDamageByEntityEvent e){
+		if (e.getEntity() instanceof Player){
+			if (e.getDamager() instanceof Player){
+				Player damager = (Player)e.getDamager();
+				if (damager.getLocation().getY() <= 124){
+					if (damager.getWorld().equals(Bukkit.getWorld("nakime")) && damager.getWorld().equals(e.getEntity().getWorld())){
+						e.setDamage(0.0);
+						e.setCancelled(true);
+					}
+				}
+			}
+		}
+	}
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onDamage(EntityDamageEvent e){
+		if (e.getEntity() instanceof Player){
+			Player p = (Player)e.getEntity();
+			if (p.getLocation().getY() <= 124){
+				if (p.getWorld().equals(Bukkit.getWorld("nakime"))){
+					e.setDamage(0.0);
+					e.setCancelled(true);
 				}
 			}
 		}

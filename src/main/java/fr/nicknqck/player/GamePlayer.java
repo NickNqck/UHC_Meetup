@@ -2,6 +2,7 @@ package fr.nicknqck.player;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -19,6 +20,9 @@ public class GamePlayer {
 	private boolean isAlive;
 	@Setter
 	private boolean canRevive = false;
+	@Getter
+	@Setter
+	private RoleBase role;
 	public GamePlayer(UUID gamePlayer){
 		this.uuid = gamePlayer;
 		setAlive(true);

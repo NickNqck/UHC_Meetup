@@ -27,7 +27,7 @@ import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKill;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.NMSPacket;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 
