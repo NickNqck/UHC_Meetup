@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
@@ -12,7 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Poulet extends RoleBase {
 
-    private final ItemStack plumeItem = new ItemBuilder(Material.FEATHER).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§7Permet de voler comme les arabes pendant 3 secondes").setName("§aPlume").toItemStack();
+    private final ItemStack plumeItem = new ItemBuilder(Material.FEATHER).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§7Permet de voler pendant 3 secondes").setName("§aPlume").toItemStack();
     private int cdplume = 0;
     public Poulet(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
@@ -29,11 +30,11 @@ public class Poulet extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+"§aPlume:§rà son activation vous permez de voler pendant 3 secondes. (1x/5mins)",
+                AllDesc.point+"§aPlume :§r A son activation vous permez de voler pendant 3 secondes. (1x/5mins)",
                 "",
                 AllDesc.particularite,
                 "",
-                AllDesc.point+"Vous possédez §aNofall §rpermanent",
+                "Vous possédez §aNofall",
                 "",
                 AllDesc.bar
         };
@@ -62,27 +63,30 @@ public class Poulet extends RoleBase {
             if (cdplume <= 0){
                 owner.setAllowFlight(true);
                 owner.setFlying(true);
+
                 new BukkitRunnable(){
                 private int i = 0;
                     @Override
                     public void run() {
                         if(getIGPlayers().contains(owner)) {
                             i ++;
-                            if (i == 4) {
+                            if (i == 3) {
                                 owner.sendMessage("Vous ne pouvez plus voler.");
                                 owner.setFlying(false);
                                 owner.setAllowFlight(false);
                                 cdplume = 60*5;
                                 cancel();
+
                             }
                         } else {
                             cancel();
                         }
                     }
-                };
+                }.runTaskTimer(Main.getInstance(), 0, 1);
             } else {
                 sendCooldown(owner, cdplume);
             }
+            return true;
         }
         return super.ItemUse(item, gameState);
     }
