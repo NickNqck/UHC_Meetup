@@ -30,7 +30,7 @@ public class Poulet extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+"§aPlume :§r A son activation vous permez de voler pendant 3 secondes.§7 (1x/5min)",
+                AllDesc.point+"§aPlume :§r A son activation vous permez de voler pendant 3 secondes.§7 (1x/5m)",
                 "",
                 AllDesc.particularite,
                 "",
