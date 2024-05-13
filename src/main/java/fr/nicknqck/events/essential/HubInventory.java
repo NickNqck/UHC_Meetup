@@ -32,16 +32,18 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 public class HubInventory implements Listener {
+
     private final GameState gameState;
     @Getter
     private static HubInventory instance;
+
     public HubInventory(GameState gameState) {
         this.gameState = gameState;
         instance = this;
     }
 
     @EventHandler
-    public void OnInventoryClicked(InventoryClickEvent event) {
+    private void OnInventoryClicked(InventoryClickEvent event) {
         if (gameState.getServerState() != GameState.ServerStates.InLobby) return;
         if (event.getWhoClicked() instanceof Player) {
             Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
@@ -49,22 +51,22 @@ public class HubInventory implements Listener {
             InventoryAction action = event.getAction();
             if (inv != null && event.getCurrentItem() != null) {
                 if (event.getCurrentItem().isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
-                ItemStack item = event.getCurrentItem();
-                boolean mahr = item.isSimilar(GUIItems.getSelectMahrButton());
-                boolean sl = item.isSimilar(GUIItems.getSelectSlayersButton());
-                boolean d = item.isSimilar(GUIItems.getSelectDemonButton());
-                boolean solo = item.isSimilar(GUIItems.getSelectSoloButton());
-                boolean titans = item.isSimilar(GUIItems.getSelectTitanButton());
-                boolean soldat = item.isSimilar(GUIItems.getSelectSoldatButton());
-                boolean aotconfig = item.isSimilar(GUIItems.getSelectConfigAotButton());
-                boolean demon = item.isSimilar(GUIItems.getSelectDSButton());
-                boolean aot = item.isSimilar(GUIItems.getSelectAOTButton());
-                boolean ns = item.isSimilar(GUIItems.getSelectNSButton());
-                boolean akatsuki = item.isSimilar(GUIItems.getSelectAkatsukiButton());
-                boolean orochimaru = item.isSimilar(GUIItems.getSelectOrochimaruButton());
-                boolean brume = item.isSimilar(GUIItems.getSelectBrumeButton());
-                boolean shinobi = item.isSimilar(GUIItems.getSelectShinobiButton());
-                boolean kumo = item.isSimilar(GUIItems.getSelectKumogakureButton());
+                final ItemStack item = event.getCurrentItem();
+                final boolean mahr = item.isSimilar(GUIItems.getSelectMahrButton());
+                final boolean sl = item.isSimilar(GUIItems.getSelectSlayersButton());
+                final boolean d = item.isSimilar(GUIItems.getSelectDemonButton());
+                final boolean solo = item.isSimilar(GUIItems.getSelectSoloButton());
+                final boolean titans = item.isSimilar(GUIItems.getSelectTitanButton());
+                final boolean soldat = item.isSimilar(GUIItems.getSelectSoldatButton());
+                final boolean aotconfig = item.isSimilar(GUIItems.getSelectConfigAotButton());
+                final boolean demon = item.isSimilar(GUIItems.getSelectDSButton());
+                final boolean aot = item.isSimilar(GUIItems.getSelectAOTButton());
+                final boolean ns = item.isSimilar(GUIItems.getSelectNSButton());
+                final boolean akatsuki = item.isSimilar(GUIItems.getSelectAkatsukiButton());
+                final boolean orochimaru = item.isSimilar(GUIItems.getSelectOrochimaruButton());
+                final boolean brume = item.isSimilar(GUIItems.getSelectBrumeButton());
+                final boolean shinobi = item.isSimilar(GUIItems.getSelectShinobiButton());
+                final boolean kumo = item.isSimilar(GUIItems.getSelectKumogakureButton());
                 if (!item.hasItemMeta())return;
                 switch(inv.getTitle()) {
                     case "§fConfiguration":
@@ -121,8 +123,19 @@ public class HubInventory implements Listener {
                                 if (c == ChatColor.DARK_GRAY) Chat.setopColor(ChatColor.BLACK);
                                 if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_RED);
                                 if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.RED);
+                                int i = 0;
+                                for (ChatColor colrsfrsf : ChatColor.values()){
+                                    if (colrsfrsf.equals(c)) {
+                                        i++;
+                                    }
+                                    if (i == 1) {
+                                        Chat.setopColor(colrsfrsf);
+                                        break;
+                                    }
+                                }
                             } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                                 ChatColor c = Chat.getopColor();
+                                for (int i = ChatColor.valueOf())
                                 if (c == ChatColor.RED) Chat.setopColor(ChatColor.DARK_RED);
                                 if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.BLACK);
                                 if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_GRAY);
