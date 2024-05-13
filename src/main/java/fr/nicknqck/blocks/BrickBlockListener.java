@@ -16,11 +16,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-//ccvhyhf
+
 public class BrickBlockListener implements Listener {
 
-    private Map<Block, Long> blockMap = new HashMap<>();
-    private List<Block> blocksToDestroy = new ArrayList<>();
+    private final Map<Block, Long> blockMap = new HashMap<>();
+    private final List<Block> blocksToDestroy = new ArrayList<>();
 //toute ce qui concerne cette class a été crée par chatgpt
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
