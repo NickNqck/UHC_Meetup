@@ -123,19 +123,8 @@ public class HubInventory implements Listener {
                                 if (c == ChatColor.DARK_GRAY) Chat.setopColor(ChatColor.BLACK);
                                 if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_RED);
                                 if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.RED);
-                                int i = 0;
-                                for (ChatColor colrsfrsf : ChatColor.values()){
-                                    if (colrsfrsf.equals(c)) {
-                                        i++;
-                                    }
-                                    if (i == 1) {
-                                        Chat.setopColor(colrsfrsf);
-                                        break;
-                                    }
-                                }
                             } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                                 ChatColor c = Chat.getopColor();
-                                for (int i = ChatColor.valueOf())
                                 if (c == ChatColor.RED) Chat.setopColor(ChatColor.DARK_RED);
                                 if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.BLACK);
                                 if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_GRAY);

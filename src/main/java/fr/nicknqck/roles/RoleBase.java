@@ -792,7 +792,7 @@ public abstract class RoleBase {
 	public void damage(Player target, double damage, int delay, Player damager, boolean kill) {
 		if (target != null) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				if (target == null || !target.isOnline()) {
+				if (!target.isOnline()) {
 					return;
 				}
 				if (target.getHealth() < 0) {

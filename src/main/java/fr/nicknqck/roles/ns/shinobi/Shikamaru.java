@@ -12,14 +12,19 @@ import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class Shikamaru extends RoleBase {
     private final ItemStack stunItem = new ItemBuilder(Material.NETHER_STAR).setName("§aStun").setLore("§7Vous permet d'empêcher de bouger un joueur").toItemStack();
     private int cdStun = 0;
     private int powerDistance = 25;
+    private int poisonUse = 0;
     public Shikamaru(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
@@ -51,8 +56,10 @@ public class Shikamaru extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c "+powerDistance+" blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f.§7 (1x/5min)",
-                "§c(Vous et le joueur viser pourrez prendre des dégats pendant le stun)"
+                AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c "+powerDistance+" blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f, de plus si vous lui cliqué dessus avec votre§a clique droit§f vous lui infligerz§c -1/2"+AllDesc.coeur+"§f toute les§c 2 secondes§f.§7 (1x/5min)",
+                "§c(Vous et le joueur viser pourrez prendre des dégats pendant le stun)",
+                "",
+                AllDesc.point+"ez"
         };
     }
 
@@ -80,7 +87,7 @@ public class Shikamaru extends RoleBase {
         return super.ItemUse(item, gameState);
     }
     private void openStunMenu(){
-        Inventory inv = Bukkit.createInventory(owner, 54, "§aShikamaru§7 ->§a Stun");
+        final Inventory inv = Bukkit.createInventory(owner, 54, "§aShikamaru§7 ->§a Stun");
         inv.setItem(0, GUIItems.getGreenStainedGlassPane());
         inv.setItem(1, GUIItems.getGreenStainedGlassPane());
         inv.setItem(9, GUIItems.getGreenStainedGlassPane());
@@ -106,7 +113,7 @@ public class Shikamaru extends RoleBase {
         int i = 10;
         for (Player p : Loc.getNearbyPlayers(owner, this.powerDistance)){
             if (inv.getItem(i).getType().equals(Material.AIR)){
-                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).toItemStack());
+                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse < 2 ? "§aClique droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§7" : "").toItemStack());
                 i++;
             }
         }
@@ -133,6 +140,10 @@ public class Shikamaru extends RoleBase {
                         player.sendMessage("§aShikamaru§7 vous empêche de bouger");
                         GamePlayer.get(player).stun(10.0);
                         getGamePlayer().stun(10.0);
+                        if (event.getAction().equals(InventoryAction.PICKUP_HALF) && poisonUse < 2){
+                            new PoisonPowerRunnable(this, player.getUniqueId()).runTaskTimerAsynchronously(Main.getInstance(), 0, 40);
+                            poisonUse++;
+                        }
                         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                             owner.sendMessage("§c"+player.getDisplayName()+"§7 peut à nouveau bouger");
                             player.sendMessage("§7Vous pouvez à nouveau bouger");
@@ -140,6 +151,27 @@ public class Shikamaru extends RoleBase {
                     }
                 }
             }
+        }
+    }
+    private static class PoisonPowerRunnable extends BukkitRunnable {
+        private final Shikamaru shikamaru;
+        private int timeRemaining = 5;
+        private final UUID uuidTarget;
+        private PoisonPowerRunnable(Shikamaru shikamaru, UUID uuidTarget){
+            this.shikamaru = shikamaru;
+            this.uuidTarget = uuidTarget;
+        }
+        @Override
+        public void run() {
+            if (timeRemaining == 0 || !shikamaru.getGameState().getServerState().equals(GameState.ServerStates.InGame)){
+                cancel();
+                return;
+            }
+            Player target = Bukkit.getPlayer(uuidTarget);
+            if (target != null){
+                shikamaru.damage(target, 1.0, 1, shikamaru.owner, true);
+            }
+            timeRemaining--;
         }
     }
 }
