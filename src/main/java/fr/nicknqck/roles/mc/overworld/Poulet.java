@@ -30,7 +30,7 @@ public class Poulet extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+"§aPlume :§r A son activation vous permez de voler pendant 3 secondes. (1x/5mins)",
+                AllDesc.point+"§aPlume :§r A son activation vous permez de voler pendant 3 secondes.§7 (1x/5min)",
                 "",
                 AllDesc.particularite,
                 "",
@@ -82,7 +82,7 @@ public class Poulet extends RoleBase {
                             cancel();
                         }
                     }
-                }.runTaskTimer(Main.getInstance(), 0, 1);
+                }.runTaskTimer(Main.getInstance(), 0, 20);
             } else {
                 sendCooldown(owner, cdplume);
             }
