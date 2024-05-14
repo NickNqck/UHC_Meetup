@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.utils.AttackUtils;
@@ -146,6 +147,14 @@ public class EntityDamageEvents implements Listener{
 				if (p.getWorld().equals(Bukkit.getWorld("nakime"))){
 					e.setDamage(0.0);
 					e.setCancelled(true);
+				}
+			}
+			if (GamePlayer.get(p) != null){
+				if (GamePlayer.inStun.containsKey(p.getUniqueId())){
+					if (GamePlayer.inStun.get(p.getUniqueId())){
+						e.setDamage(0.0);
+						e.setCancelled(true);
+					}
 				}
 			}
 		}

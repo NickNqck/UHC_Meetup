@@ -123,7 +123,7 @@ public class Kurenai extends RoleBase {
             }
             owner.sendMessage("§7Vous utiliser votre§c Genjutsu§7 sur§a "+target.getDisplayName());
             owner.setGameMode(GameMode.SPECTATOR);
-            GamePlayer.get(target.getUniqueId()).stun(5.0);
+            GamePlayer.get(target.getUniqueId()).stun(5.0, false);
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 owner.setGameMode(GameMode.SURVIVAL);
                 owner.sendMessage("§7Votre§c Genjutsu§7 est terminer.");

@@ -330,7 +330,7 @@ public class Ginkaku extends RoleBase{
 				if (gTarget != null){
 					if (Bukkit.getPlayer(gTarget) != null){
 						if (!gameState.hasRoleNull(Bukkit.getPlayer(gTarget))){
-							gameState.getPlayerRoles().get(Bukkit.getPlayer(gTarget)).getGamePlayer().stun(5.0);
+							gameState.getPlayerRoles().get(Bukkit.getPlayer(gTarget)).getGamePlayer().stun(5.0, false);
 						}
 					}
 					gTarget = null;

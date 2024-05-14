@@ -10,6 +10,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -23,13 +25,15 @@ public class GamePlayer {
 	@Getter
 	@Setter
 	private RoleBase role;
+	public static Map<UUID, Boolean> inStun = new HashMap<>();
 	public GamePlayer(UUID gamePlayer){
 		this.uuid = gamePlayer;
 		setAlive(true);
 	}
-	public void stun(double seconds){
+	public void stun(double seconds, boolean damage){
 		Player target = Bukkit.getPlayer(getUuid());
 		if (target != null){
+			inStun.put(target.getUniqueId(), damage);
 			final Location gLoc = target.getLocation().clone();
 			new BukkitRunnable() {
 				private double tickRemaining = 20*seconds;

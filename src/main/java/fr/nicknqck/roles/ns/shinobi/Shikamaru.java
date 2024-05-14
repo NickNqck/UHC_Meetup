@@ -25,6 +25,8 @@ public class Shikamaru extends RoleBase {
     private int cdStun = 0;
     private int powerDistance = 25;
     private int poisonUse = 0;
+    private final ItemStack zoneItem = new ItemBuilder(Material.NETHER_STAR).setName("§aZone d'ombre").setLore("§7Vous permet d'empêcher tout les joueurs autours de vous de bouger").toItemStack();
+    private int cdZone = 0;
     public Shikamaru(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
@@ -46,6 +48,18 @@ public class Shikamaru extends RoleBase {
         } else {
             powerDistance = 25;
         }
+        if (cdStun >= 0){
+            cdStun--;
+            if (cdStun == 0){
+                owner.sendMessage("§7Vous pouvez à nouveau empêcher un joueur de bouger");
+            }
+        }
+        if (cdZone >= 0){
+            cdZone--;
+            if (cdZone == 0){
+                owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§a Zone d'ombre");
+            }
+        }
     }
     @Override
     public String[] Desc() {
@@ -59,20 +73,23 @@ public class Shikamaru extends RoleBase {
                 AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c "+powerDistance+" blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f, de plus si vous lui cliqué dessus avec votre§a clique droit§f vous lui infligerz§c -1/2"+AllDesc.coeur+"§f toute les§c 2 secondes§f.§7 (1x/5min)",
                 "§c(Vous et le joueur viser pourrez prendre des dégats pendant le stun)",
                 "",
-                AllDesc.point+"ez"
+                AllDesc.point+"§aZone d'ombre§f: Immobilise tout les joueurs étant à moins de§c "+(powerDistance-10)+" blocs§f de vous pendant§c 5 secondes§f, les joueurs touchés prendront§c 20%§f de dégat en moins et seront frappable"
         };
     }
 
     @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
-                stunItem
+                stunItem,
+                this.zoneItem
         };
     }
 
     @Override
     public void resetCooldown() {
         cdStun = 0;
+        cdZone = 0;
+        poisonUse = 0;
     }
 
     @Override
@@ -83,6 +100,16 @@ public class Shikamaru extends RoleBase {
                 return true;
             }
             openStunMenu();
+        } else if (item.isSimilar(zoneItem)){
+            if (cdZone > 0){
+                sendCooldown(owner, cdZone);
+                return true;
+            }
+            for (Player p : Loc.getNearbyPlayersExcept(owner, powerDistance-10)){
+                if (GamePlayer.get(p) != null){
+                    GamePlayer.get(p).stun(5.0, true);
+                }
+            }
         }
         return super.ItemUse(item, gameState);
     }
@@ -112,7 +139,7 @@ public class Shikamaru extends RoleBase {
 
         int i = 10;
         for (Player p : Loc.getNearbyPlayers(owner, this.powerDistance)){
-            if (inv.getItem(i).getType().equals(Material.AIR)){
+            if (inv.getItem(i) != null &&inv.getItem(i).getType().equals(Material.AIR)){
                 inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse < 2 ? "§aClique droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§7" : "").toItemStack());
                 i++;
             }
@@ -138,8 +165,8 @@ public class Shikamaru extends RoleBase {
                     if (player != null){
                         owner.sendMessage("§7Vous empêchez§c "+player.getDisplayName()+"§7 de bouger");
                         player.sendMessage("§aShikamaru§7 vous empêche de bouger");
-                        GamePlayer.get(player).stun(10.0);
-                        getGamePlayer().stun(10.0);
+                        GamePlayer.get(player).stun(10.0, false);
+                        getGamePlayer().stun(10.0, false);
                         if (event.getAction().equals(InventoryAction.PICKUP_HALF) && poisonUse < 2){
                             new PoisonPowerRunnable(this, player.getUniqueId()).runTaskTimerAsynchronously(Main.getInstance(), 0, 40);
                             poisonUse++;
