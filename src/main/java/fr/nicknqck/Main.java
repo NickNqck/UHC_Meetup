@@ -187,6 +187,7 @@ public class Main extends JavaPlugin implements Listener{
 	}
 	private void clearMap() {
 		System.out.println("Starting cleaning map");
+		System.out.println("Starting cleaning blocks");
 		for (int x = -150; x <= 150; x++) {
 			for (int z = -150; z <= 150; z++) {
 				for (int y = 60; y <= 120; y++) {
@@ -207,6 +208,7 @@ public class Main extends JavaPlugin implements Listener{
 			e.remove();
 		}
 		System.out.println("Ending cleaning entities");
+		System.out.println("Ending cleaning map");
 	}
 	private void initPlugin(GameState gameState) {
 		System.out.println("init Roles");

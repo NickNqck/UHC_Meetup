@@ -1395,32 +1395,35 @@ public class HubInventory implements Listener {
                         break;
                 }
                 for (Player p : gameState.getInLobbyPlayers()) {
-                    updateAdminInventory(p);
-                    updateScenarioInventory(p);
-                    updateSelectInventory(p);
-                    updateSlayerInventory(p);
-                    updateDSSoloInventory(p);
-                    updateDemonInventory(p);
-                    updateMahrInventory(p);
-                    updateSecretTitansInventory(p);
-                    updateSoldatInventory(p);
-                    updateEventInventory(p);
-                    updateAOTConfiguration(p);
-                    updateDSInventory(p);
-                    updateAOTConfiguration(p);
-                    updateConfigInventory(p);
-                    updateAOTSoloInventory(p);
-                    updateNSAkatsukiInventory(p);
-                    updateNSInventory(p);
-                    updateNSOrochimaruInventory(p);
-                    updateNSSoloInventory(p);
-                    updateNSJubiInventory(p);
-                    updateNSBrumeInventory(p);
-                    updateNSShinobiInventory(p);
-                    updateNSKumogakure(p);
+                    menuUpdater(p);
                 }
             }
         }
+    }
+    private void menuUpdater(Player p){
+        updateAdminInventory(p);
+        updateScenarioInventory(p);
+        updateSelectInventory(p);
+        updateSlayerInventory(p);
+        updateDSSoloInventory(p);
+        updateDemonInventory(p);
+        updateMahrInventory(p);
+        updateSecretTitansInventory(p);
+        updateSoldatInventory(p);
+        updateEventInventory(p);
+        updateAOTConfiguration(p);
+        updateDSInventory(p);
+        updateAOTConfiguration(p);
+        updateConfigInventory(p);
+        updateAOTSoloInventory(p);
+        updateNSAkatsukiInventory(p);
+        updateNSInventory(p);
+        updateNSOrochimaruInventory(p);
+        updateNSSoloInventory(p);
+        updateNSJubiInventory(p);
+        updateNSBrumeInventory(p);
+        updateNSShinobiInventory(p);
+        updateNSKumogakure(p);
     }
     public void updateSecretTitansInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
@@ -2433,6 +2436,9 @@ public class HubInventory implements Listener {
                     inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
                     inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
                     inv.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(27, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(26, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(35, new ItemBuilder(Material.ANVIL).toItemStack());
                     for (GameState.Roles roles : GameState.Roles.values()) {
                         if (roles.getTeam() == TeamList.Shinobi) {
                             String l1;
@@ -2448,6 +2454,9 @@ public class HubInventory implements Listener {
                     inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
                     inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
                     inv.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(27, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(26, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
                 }
             }
         }
