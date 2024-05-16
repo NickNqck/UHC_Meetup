@@ -20,6 +20,7 @@ import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.mc.overworld.Poulet;
+import fr.nicknqck.roles.mc.overworld.Zombie;
 import fr.nicknqck.roles.mc.solo.Warden;
 import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.Hokage;
@@ -211,10 +212,11 @@ public class GameState{
 		Kinkaku(TeamList.Kumogakure, "ns", 1, new ItemBuilder(Material.NETHER_STAR).setName("§6Kinkaku").toItemStack(), "§bByC3RV0L3NT"),
 		//OverWorld
         Poulet(TeamList.OverWorld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack(), "§bMega02600"),
+		Zombie(TeamList.OverWorld, "mc", 1, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack(), "§bMega02600"),
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
-		Wither(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck");
+		Wither(TeamList.Solo, "mc", 1, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck");
 		private final TeamList team;
 		private final String mdj;
 		private final int nmb;
@@ -814,6 +816,9 @@ public class GameState{
              break;
 		case Ino:
 			role = new Ino(player, roleType, this);
+			break;
+		case Zombie:
+			role = new Zombie(player, roleType, this);
 			break;
 		}
 		if (role == null) return null;
