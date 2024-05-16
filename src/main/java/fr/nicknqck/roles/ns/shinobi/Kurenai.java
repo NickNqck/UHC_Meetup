@@ -3,7 +3,6 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerKill;
-import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
@@ -26,6 +25,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static fr.nicknqck.player.StunManager.stun;
 
 public class Kurenai extends RoleBase {
     private final ItemStack BoisItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu des bois").setLore("§7Vous permet d'empêcher le joueur viser de bouger").toItemStack();
@@ -123,7 +124,7 @@ public class Kurenai extends RoleBase {
             }
             owner.sendMessage("§7Vous utiliser votre§c Genjutsu§7 sur§a "+target.getDisplayName());
             owner.setGameMode(GameMode.SPECTATOR);
-            GamePlayer.get(target.getUniqueId()).stun(5.0, false);
+            stun(target.getUniqueId(), 5.0, false);
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 owner.setGameMode(GameMode.SURVIVAL);
                 owner.sendMessage("§7Votre§c Genjutsu§7 est terminer.");

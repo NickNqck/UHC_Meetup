@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.StunManager;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
@@ -330,7 +331,7 @@ public class Ginkaku extends RoleBase{
 				if (gTarget != null){
 					if (Bukkit.getPlayer(gTarget) != null){
 						if (!gameState.hasRoleNull(Bukkit.getPlayer(gTarget))){
-							gameState.getPlayerRoles().get(Bukkit.getPlayer(gTarget)).getGamePlayer().stun(5.0, false);
+							StunManager.stun(gTarget, 5.0, false);
 						}
 					}
 					gTarget = null;

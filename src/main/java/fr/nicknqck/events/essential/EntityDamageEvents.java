@@ -149,14 +149,6 @@ public class EntityDamageEvents implements Listener{
 					e.setCancelled(true);
 				}
 			}
-			if (GamePlayer.get(p) != null){
-				if (GamePlayer.inStun.containsKey(p.getUniqueId())){
-					if (GamePlayer.inStun.get(p.getUniqueId())){
-						e.setDamage(0.0);
-						e.setCancelled(true);
-					}
-				}
-			}
 		}
 	}
 }

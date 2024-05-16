@@ -3,7 +3,6 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
@@ -19,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
+
+import static fr.nicknqck.player.StunManager.stun;
 
 public class Shikamaru extends RoleBase {
     private final ItemStack stunItem = new ItemBuilder(Material.NETHER_STAR).setName("§aStun").setLore("§7Vous permet d'empêcher de bouger un joueur").toItemStack();
@@ -106,9 +107,8 @@ public class Shikamaru extends RoleBase {
                 return true;
             }
             for (Player p : Loc.getNearbyPlayersExcept(owner, powerDistance-10)){
-                if (GamePlayer.get(p) != null){
-                    GamePlayer.get(p).stun(5.0, true);
-                }
+               stun(p.getUniqueId(), 5.0, true);
+
             }
         }
         return super.ItemUse(item, gameState);
@@ -165,8 +165,8 @@ public class Shikamaru extends RoleBase {
                     if (player != null){
                         owner.sendMessage("§7Vous empêchez§c "+player.getDisplayName()+"§7 de bouger");
                         player.sendMessage("§aShikamaru§7 vous empêche de bouger");
-                        GamePlayer.get(player).stun(10.0, false);
-                        getGamePlayer().stun(10.0, false);
+                        stun(player.getUniqueId(), 10.0, false);
+                        stun(getUuidOwner(), 10.0, false);
                         if (event.getAction().equals(InventoryAction.PICKUP_HALF) && poisonUse < 2){
                             new PoisonPowerRunnable(this, player.getUniqueId()).runTaskTimerAsynchronously(Main.getInstance(), 0, 40);
                             poisonUse++;
