@@ -20,6 +20,8 @@ public class Zombie extends RoleBase {
     private boolean CerveauActive = false;
     public Zombie(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
+        owner.sendMessage(Desc());
+        giveItem(owner, false, getItems());
     }
 
     @Override
@@ -35,15 +37,15 @@ public class Zombie extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+"§cCerveau :§r Si vous l'activer la nuit vous gagnerez 10% de "+AllDesc.Resi+", mais si vous venez à l'utiliser le jour vous gagnerez "+AllDesc.Force+" 1 et perdrez votre "+AllDesc.weak+" 1 pendant 1 minute, cependant après cette minute vous obtiendrez "+AllDesc.slow+" 1 pendant 2 minutes. (1x/3minutes)",
+                AllDesc.point+"§cCerveau :§r Si vous l'activer la §8nuit §rvous gagnerez §410% §rde "+AllDesc.Resi+", mais si vous venez à l'utiliser le §ejour §rvous gagnerez "+AllDesc.Force+" §c1 §ret perdrez votre "+AllDesc.weak+" §71 §rpendant 1 minute, cependant après cette minute vous obtiendrez "+AllDesc.slow+" §41 §rpendant 2 minutes. §7(1x/3minutes)",
                 "",
                 AllDesc.commande,
                 "",
-                AllDesc.point+"§c/mc cerveau :§r vous permez de voir votre nombre d'utilisation(s) restante(s)",
+                AllDesc.point+"§c/mc cerveau :§r vous permez de voir votre nombre §4d'utilisation(s) restante(s)§r, sur votre item §cCerveau",
                 "",
                 AllDesc.particularite,
                 "",
-                "Dès que vous tuez un joueur vous obtenez une utilisation supplémentaire de §cCerveau",
+                "Dès que vous tuez un joueur vous obtenez §cune utilisation supplémentaire §rde §cCerveau",
                 //"La prémière fois que vous croiserez le joueur possédant le rôle skelette vous entendrez un bruit de skelette",
                 "",
                 AllDesc.bar,
@@ -67,7 +69,7 @@ public class Zombie extends RoleBase {
         if (item.isSimilar(CerveauItem)){
             if (cdCerveau <= 0){
                 if (nmbCerveau >= 1){
-                    owner.sendMessage("Vous venez de manger un cerveau et devenez donc plus fort");
+                    owner.sendMessage("Vous venez de manger un §ccerveau §ret devenez donc plus fort");
                     cdCerveau = 180;
                     new BukkitRunnable() {
                         int i = 0;
@@ -75,26 +77,27 @@ public class Zombie extends RoleBase {
                         public void run() {
                             if (gameState.getServerState() == GameState.ServerStates.InGame){
                                 i++;
-                                if (i <= 60) {
-                                    CerveauActive = true;
-                                    if (gameState.nightTime) {
-                                        setResi(10);
-                                        givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 2, 1, false);
-                                    } else {
-                                        givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 2, 1, true);
-                                    }
-                                } else {
-                                    if (i <= 180){
-                                        setResi(20);
-                                        givePotionEffet(PotionEffectType.SLOW, 2, 1 ,true);
-                                        if (i == 61){
-                                            owner.sendMessage("Vous perdez votre puissance et obtenez "+AllDesc.slow+" pendant 2 minutes");
-
+                                if (i <= 180 ) {
+                                    if (i <= 60){
+                                        CerveauActive = true;
+                                        if (gameState.nightTime){
+                                            addBonusResi(10);
+                                        } else {
+                                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 2, 1, true);
                                         }
                                     } else {
-                                        cancel();
+                                        givePotionEffet(PotionEffectType.SLOW, 2 , 1, true);
                                     }
+                                } else {
+                                    owner.sendMessage("Vous perdez votre "+AllDesc.slow+" §41 §ret vous pouvez manger encore §c"+nmbCerveau+" Cerveau");
+                                    cancel();
                                 }
+
+                                if (i == 60){
+                                    owner.sendMessage("Vous perdez la puissance du §cCerveaur dévorrer §ret obtenez donc "+AllDesc.slow+" §41 §rpendant §42 §rminutes");
+                                    CerveauActive = false;
+                                }
+
                             } else {
                                 cancel();
                             }
@@ -129,7 +132,7 @@ public class Zombie extends RoleBase {
         if (cdCerveau >= 0){
             cdCerveau --;
             if (cdCerveau == 0){
-                owner.sendMessage("Vous pouvez de nouveau utiliser §cCerveau");
+                owner.sendMessage("Vous pouvez de nouveau manger un §cCerveau");
             }
         }
         if (gameState.nightTime){
@@ -147,8 +150,6 @@ public class Zombie extends RoleBase {
         if (args.length == 1){
             if (args[0].equalsIgnoreCase("Cerveau")){
                 owner.sendMessage("Il vous reste §c"+nmbCerveau+" Cerveau");
-            } else {
-                owner.sendMessage("Veuillez indiquer une commande correct");
             }
         }
         super.onMcCommand(args);

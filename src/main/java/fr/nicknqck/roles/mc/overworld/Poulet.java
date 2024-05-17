@@ -85,6 +85,7 @@ public class Poulet extends RoleBase {
                 }.runTaskTimer(Main.getInstance(), 0, 20);
             } else {
                 sendCooldown(owner, cdplume);
+                return true;
             }
             return true;
         }
