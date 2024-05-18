@@ -35,6 +35,7 @@ import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
+import fr.nicknqck.roles.valo.agents.Iso;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -216,7 +217,10 @@ public class GameState{
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
-		Wither(TeamList.Solo, "mc", 1, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck");
+		Wither(TeamList.Solo, "mc", 1, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck"),
+		//Agent valorant (il n'y aura que Iso)
+		Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck")
+		;
 		private final TeamList team;
 		private final String mdj;
 		private final int nmb;
@@ -820,6 +824,9 @@ public class GameState{
 		case Zombie:
 			role = new Zombie(player, roleType, this);
 			break;
+			case Iso:
+				role = new Iso(player, roleType, this);
+				break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(player);
@@ -1000,7 +1007,7 @@ public class GameState{
 	}
 	public void sendTitansList(Player player) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (TitansRouge.size() > 0) {
+			if (!TitansRouge.isEmpty()) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					player.sendMessage(ChatColor.RED+"Liste des Titans: ");
 				}, 20);
