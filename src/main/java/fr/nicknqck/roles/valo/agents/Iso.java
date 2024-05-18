@@ -3,10 +3,16 @@ package fr.nicknqck.roles.valo.agents;
 import fr.nicknqck.GameState;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class Iso extends RoleBase {
+    private final ItemStack ProtectionItem = new ItemBuilder(Material.NETHER_STAR).setName("§dProtection couplé").setLore("§7Vous permet de crée un timer visant à ne pas subir de dégat").toItemStack();
+    private int cdProtection = 0;
+    private int stackedCoup = 0;
     public Iso(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
         owner.sendMessage(Desc());
@@ -37,12 +43,53 @@ public class Iso extends RoleBase {
     @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
-
+                ProtectionItem
         };
     }
 
     @Override
     public void resetCooldown() {
+        cdProtection = 0;
+    }
 
+    @Override
+    public boolean ItemUse(ItemStack item, GameState gameState) {
+        if (item.isSimilar(ProtectionItem)){
+            if (cdProtection > 0){
+                sendCooldown(owner, cdProtection);
+                return true;
+            }
+            cdProtection = 60*7+15;
+            owner.sendMessage("§7Le compteur de temp de votre protection commence...");
+            return true;
+        }
+        return super.ItemUse(item, gameState);
+    }
+
+    @Override
+    public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {
+        super.onALLPlayerDamageByEntityAfterPatch(event, victim, damager);
+        if (event.getDamager().getUniqueId().equals(getUuidOwner())){
+            if (cdProtection >= 60*7){
+                stackedCoup++;
+            }
+        }
+    }
+
+    @Override
+    public void Update(GameState gameState) {
+        super.Update(gameState);
+        if (cdProtection >= 0){
+            cdProtection--;
+            if (cdProtection == 0){
+                owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§d Protection couplé");
+            }
+            if (cdProtection >= 60*7){
+                sendCustomActionBar(owner,"Coup accumulé:§c "+stackedCoup);
+                if (cdProtection == 60*7-1) {
+
+                }
+            }
+        }
     }
 }
