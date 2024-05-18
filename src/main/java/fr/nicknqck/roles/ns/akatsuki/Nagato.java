@@ -1,7 +1,9 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.*;
@@ -49,6 +51,21 @@ public class Nagato extends RoleBase {
 
     @Override
     public String[] Desc() {
+        List<Player> mates = new ArrayList<>();
+        for (Player p : getIGPlayers()) {
+            if (!gameState.hasRoleNull(p)) {
+                if (getOldTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
+                    if (getOldTeam(p) == TeamList.Akatsuki || getPlayerRoles(p).type == GameState.Roles.Obito) {
+                        mates.add(p);
+                    }
+                }
+            }
+        }
+        if (!mates.isEmpty()) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+                owner.sendMessage("Voici la liste de vos coéquipier: ");
+                mates.forEach(p -> owner.sendMessage("§7 - §c"+p.getName()));}, 1);
+        }
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§cNagato",

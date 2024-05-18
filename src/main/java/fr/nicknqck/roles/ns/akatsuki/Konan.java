@@ -50,7 +50,7 @@ public class Konan extends RoleBase {
 				}
 			}
 		}
-		if (mates.size() > 0) {
+		if (!mates.isEmpty()) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				owner.sendMessage("Voici la liste de vos coéquipier: ");
 				mates.forEach(p -> owner.sendMessage("§7 - §c"+p.getName()));}, 1);

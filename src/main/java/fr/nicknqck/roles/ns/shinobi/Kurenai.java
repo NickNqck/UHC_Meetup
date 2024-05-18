@@ -140,8 +140,7 @@ public class Kurenai extends RoleBase {
             Player target = getTargetPlayer(owner, 30);
             if (target == null) {
                 owner.sendMessage("§cIl faut viser un joueur !");
-                target = owner;
-             //   return true;
+                return true;
             }
             owner.sendMessage("§7Vous avez utiliser votre§c Genjutsu§7 contre§c "+target.getDisplayName());
             new KurenaiRunnable(owner, this).runTaskTimer(Main.getInstance(), 0, 20);
