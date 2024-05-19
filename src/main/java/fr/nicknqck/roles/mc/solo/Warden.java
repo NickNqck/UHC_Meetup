@@ -171,6 +171,7 @@ public class Warden extends RoleBase {
                             if (!damaged.contains(target.getUniqueId())){
                                 damage(target, 6.0, 1, owner, true);
                                 damaged.add(target.getUniqueId());
+                                target.sendMessage("§7Vous subissez le§c laser§7 du§e Warden");
                             }
                         }
                     }
