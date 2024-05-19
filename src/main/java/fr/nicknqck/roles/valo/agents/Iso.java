@@ -7,10 +7,12 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
+import fr.nicknqck.utils.raytrace.RayTrace;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -18,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +36,8 @@ public class Iso extends RoleBase {
     private int cdBarriereDroite = 0;
     private final List<UUID> LeftBarrieredItem = new ArrayList<>();
     private int cdBarriereGauche = 0;
+    private final ItemStack UltimeItem = new ItemBuilder(Material.NETHER_STAR).setName("§r§fUltime: duel").setLore("§r§fEn visant un joueur, vous permet de vous téléportez avec lui dans un§c 1v1§f dans une arène, le gagnant remporte le nombre de pomme d'or que possédait le perdant (avant la téléportation)").toItemStack();
+    private int cdUltime = 0;
     public Iso(Player player, GameState.Roles roles, GameState gameState) {
         super(player, roles, gameState);
         owner.sendMessage(Desc());
@@ -64,7 +69,8 @@ public class Iso extends RoleBase {
     public ItemStack[] getItems() {
         return new ItemStack[]{
                 ProtectionItem,
-                BarriereItem
+                BarriereItem,
+                UltimeItem
         };
     }
 
@@ -93,6 +99,26 @@ public class Iso extends RoleBase {
             }
             createLaser(true);
             cdBarriereDroite = 60*7;
+            return true;
+        }
+        if (item.isSimilar(UltimeItem)){
+            if (cdUltime > 0) {
+                sendCooldown(owner, cdUltime);
+                return true;
+            }
+            Player target = RayTrace.getTargetPlayer(owner, 30.0, null);
+            if (target != null){
+                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+                Bukkit.dispatchCommand(console, "nakime IenvOfezfSds48v*:!");
+                if (Bukkit.getWorld("IsoUlt") == null){
+                    owner.sendMessage("§7Ce pouvoir est inutilisable, il manque le plugin avec les utilitaires ou ce plugin n'a pas été mis a jour par l'administrateur de votre serveur. (§6/discord§7)");
+                    return true;
+                }
+
+            } else {
+                owner.sendMessage("§cIl faut viser un joueur !");
+                return true;
+            }
         }
         return super.ItemUse(item, gameState);
     }
@@ -101,8 +127,14 @@ public class Iso extends RoleBase {
     public void onLeftClick(PlayerInteractEvent event, GameState gameState) {
         super.onLeftClick(event, gameState);
         if (event.getItem().isSimilar(BarriereItem)){
+            event.setCancelled(true);
+            if (cdBarriereGauche > 0){
+                sendCooldown(owner, cdBarriereGauche);
+                return;
+            }
             createLaser(false);
             cdBarriereGauche = 60*5;
+            event.setCancelled(true);
         }
     }
 
@@ -203,6 +235,12 @@ public class Iso extends RoleBase {
             cdBarriereGauche--;
             if (cdBarriereGauche == 0){
                 owner.sendMessage("§7Vous pouvez a nouveau utiliser votre§l Barrière offensive");
+            }
+        }
+        if (cdUltime >= 0){
+            cdUltime--;
+            if (cdUltime == 0){
+                owner.sendMessage("§7Vous pouvez a nouveau utiliser votre§l Ultime");
             }
         }
     }
