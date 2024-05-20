@@ -2,6 +2,8 @@ package fr.nicknqck.roles.valo.agents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.player.StunManager;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.AttackUtils;
@@ -114,7 +116,12 @@ public class Iso extends RoleBase {
                     owner.sendMessage("§7Ce pouvoir est inutilisable, il manque le plugin avec les utilitaires ou ce plugin n'a pas été mis a jour par l'administrateur de votre serveur. (§6/discord§7)");
                     return true;
                 }
-
+                final Location oLoc = new Location(Bukkit.getWorld("IsoUlt"), 0.5, 33.1, -17.317, -0.1f, -2.0f);
+                final Location tLoc = new Location(Bukkit.getWorld("IsoUlt"), 0.5, 33.1, 19.489, -180f, -0.4f);
+                owner.teleport(oLoc);
+                target.teleport(tLoc);
+                StunManager.stun(target.getUniqueId(), 3.0, false);
+                StunManager.stun(getUuidOwner(), 3.0, false);
             } else {
                 owner.sendMessage("§cIl faut viser un joueur !");
                 return true;
