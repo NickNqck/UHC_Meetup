@@ -1116,13 +1116,16 @@ public class GameListener implements Listener {
 					gameState.getPlayerRoles().get(p).onALLPlayerInteract(event, player);
 				}
 			}
-			if (!gameState.hasRoleNull(player) && event.getAction().name().contains("RIGHT")) {
-				event.setCancelled(gameState.getPlayerRoles().get(player).ItemUse(itemstack, gameState));
+			if (!gameState.hasRoleNull(player)) {
+				if (event.getAction().name().contains("RIGHT")){
+					event.setCancelled(gameState.getPlayerRoles().get(player).ItemUse(itemstack, gameState));
+				} else {
+					gameState.getPlayerRoles().get(player).onLeftClick(event, gameState);
+				}
 			}
 				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 					if (gameState.getInGamePlayers().contains(player)) {
 						if (gameState.getPlayerRoles().containsKey(player)) {
-							gameState.getPlayerRoles().get(player).onLeftClick(event, gameState);
 							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
 			        				RoleBase role = gameState.getPlayerRoles().get(player);
