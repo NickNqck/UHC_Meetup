@@ -2,7 +2,6 @@ package fr.nicknqck.roles.valo.agents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.player.StunManager;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -22,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -116,12 +114,13 @@ public class Iso extends RoleBase {
                     owner.sendMessage("§7Ce pouvoir est inutilisable, il manque le plugin avec les utilitaires ou ce plugin n'a pas été mis a jour par l'administrateur de votre serveur. (§6/discord§7)");
                     return true;
                 }
-                final Location oLoc = new Location(Bukkit.getWorld("IsoUlt"), 0.5, 33.1, -17.317, -0.1f, -2.0f);
+                final Location oLoc = new Location(Bukkit.getWorld("IsoUlt"), 0.5, 33.1, -20, -0.1f, -0.1f);
                 final Location tLoc = new Location(Bukkit.getWorld("IsoUlt"), 0.5, 33.1, 19.489, -180f, -0.4f);
                 owner.teleport(oLoc);
                 target.teleport(tLoc);
-                StunManager.stun(target.getUniqueId(), 3.0, false);
-                StunManager.stun(getUuidOwner(), 3.0, false);
+                StunManager.stun(target.getUniqueId(), 5.0, false);
+                StunManager.stun(getUuidOwner(), 5.0, false);
+                createBuildingTask();
             } else {
                 owner.sendMessage("§cIl faut viser un joueur !");
                 return true;
@@ -129,7 +128,81 @@ public class Iso extends RoleBase {
         }
         return super.ItemUse(item, gameState);
     }
+    private void createBuildingTask(){
+        new BukkitRunnable() {
+            private int time = 6;
+            private int couchPlaced = 0;
+            private boolean wall1 = false;
+            private boolean wall2 = false;
+            private boolean wall3 = false;
+            @Override
+            public void run() {
+                if (time <= 0){
+                    cancel();
+                    return;
+                }
+                for (int x = 8; x >= 2; x--) {
+                    double z = (x > 6 || x < 4) ? -14.0 : -13.0;
 
+                    Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                    Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+
+                    byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
+                    byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
+
+
+                    if (wall1){
+                        setBlockTypeAndData(location, data1);
+                    } else {
+                        setBlockTypeAndData(location1, data2);
+                    }
+                    if (x == 2){
+                        wall1 = !wall1;
+                    }
+                }
+                for (int x = -2; x >= -8; x--) {
+                    double z = (x < -7 || x > -2) ? -13.0 : -14.0;
+
+                    Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                    Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+
+                    byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
+                    byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
+                    if (wall2){
+                        setBlockTypeAndData(location, data1);
+                    } else {
+                        setBlockTypeAndData(location1, data2);
+                    }
+                    if (x == -8){
+                        wall2 = !wall2;
+                    }
+                }
+                for (int x = -3; x <= 3; x++){
+                    double z = (x < -2 || x > 2) ? 13.0 : 14.0;
+
+                    Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                    Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+
+                    byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
+                    byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
+                    if (wall3) {
+                        setBlockTypeAndData(location, data1);
+                    } else {
+                        setBlockTypeAndData(location1, data2);
+                    }
+                    if (x == 3){
+                        wall3 = !wall3;
+                    }
+                }
+                couchPlaced+=1;
+                time--;
+            }
+        }.runTaskTimer(Main.getInstance(), 0, 20);
+    }
+    @SuppressWarnings("deprecation")
+    private void setBlockTypeAndData(Location location, byte data) {
+        owner.getWorld().getBlockAt(location).setTypeIdAndData(95, data, true);
+    }
     @Override
     public void onLeftClick(PlayerInteractEvent event, GameState gameState) {
         super.onLeftClick(event, gameState);
@@ -161,9 +234,13 @@ public class Iso extends RoleBase {
                         if (target.getUniqueId() != getUuidOwner() && target.getLocation().distance(location) < 1.0) {
                             if (!damaged.contains(target.getUniqueId())){
                                 if (right) {
+                                    target.sendMessage("§7Vous ne pouvez plus attaqué§d Iso");
                                     AttackUtils.setCantAttack(target, getUuidOwner());
                                     Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                                         AttackUtils.getCantAttackNobody().remove(target.getUniqueId(), AttackUtils.getCantAttackNobody().get(target.getUniqueId()));
+                                        if (target.isOnline()){
+                                            target.sendMessage("§7Vous pouvez à nouveau attaqué§d Iso");
+                                        }
                                     }, 20*10);
                                 } else {
                                     LeftBarrieredItem.add(target.getUniqueId());
@@ -208,7 +285,7 @@ public class Iso extends RoleBase {
                 stackedCoup++;
             }
         } else if (event.getEntity().getUniqueId().equals(getUuidOwner())){
-            if (stackedCoup > 0){
+            if (stackedCoup > 0 && cdProtection <= 60*7-1){
                 event.setCancelled(true);
                 stackedCoup--;
                 event.getEntity().sendMessage("§7Vous avez esquivez un coup, plus que§c "+stackedCoup+"§7 esquivable");
