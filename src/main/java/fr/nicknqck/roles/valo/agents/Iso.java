@@ -130,7 +130,7 @@ public class Iso extends RoleBase {
     }
     private void createBuildingTask(){
         new BukkitRunnable() {
-            private int time = 6;
+            private int time = 12;
             private int couchPlaced = 0;
             private boolean wall1 = false;
             private boolean wall2 = false;
@@ -141,67 +141,115 @@ public class Iso extends RoleBase {
                     cancel();
                     return;
                 }
-                for (int x = 8; x >= 2; x--) {
-                    double z = (x > 6 || x < 4) ? -14.0 : -13.0;
+                if (time <= 6){//lorsque les murs ce construise
+                    for (int x = 8; x >= 2; x--) {
+                        double z = (x > 6 || x < 4) ? -14.0 : -13.0;
 
-                    Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
-                    Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                        Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                        Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
 
-                    byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
-                    byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
+                        byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
+                        byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
 
 
-                    if (wall1){
-                        setBlockTypeAndData(location, data1);
-                    } else {
-                        setBlockTypeAndData(location1, data2);
+                        if (wall1){
+                            setBlockTypeAndData(location, data1);
+                        } else {
+                            setBlockTypeAndData(location1, data2);
+                        }
+                        if (x == 2){
+                            wall1 = !wall1;
+                        }
                     }
-                    if (x == 2){
-                        wall1 = !wall1;
+                    for (int x = -2; x >= -8; x--) {
+                        double z = (x < -6 || x > -4) ? -14.0 : -13.0;
+
+                        Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                        Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+
+                        byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
+                        byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
+                        if (wall2){
+                            setBlockTypeAndData(location, data1);
+                        } else {
+                            setBlockTypeAndData(location1, data2);
+                        }
+                        if (x == -8){
+                            wall2 = !wall2;
+                        }
                     }
+                    for (int x = -3; x <= 3; x++){
+                        double z = (x < -1 || x > 1) ? 13.0 : 14.0;
+
+                        Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                        Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+
+                        byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
+                        byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
+                        if (wall3) {
+                            setBlockTypeAndData(location, data1);
+                        } else {
+                            setBlockTypeAndData(location1, data2);
+                        }
+                        if (x == 3){
+                            wall3 = !wall3;
+                        }
+                    }
+                    couchPlaced+=1;
+                } else {//Si les murs sont en déconstruction
+                    for (int x = 2; x <= 8; x++) {
+                        double z = (x <4 || x >6) ? -14.0 : -13.0;
+
+                        Location location = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
+                        Location location1 = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
+
+                        if (wall1){
+                            owner.getWorld().getBlockAt(location).setType(Material.AIR);
+                        } else {
+                            owner.getWorld().getBlockAt(location1).setType(Material.AIR);
+                        }
+                        if (x == 2){
+                            wall1 = !wall1;
+                        }
+                    }
+                    for (int x = -8; x <= -2; x++) {
+                        double z = (x < -6 || x > -4) ? -13.0 : -14.0;
+
+                        Location location = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
+                        Location location1 = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
+                        if (wall2){
+                            owner.getWorld().getBlockAt(location).setType(Material.AIR);
+                        } else {
+                            owner.getWorld().getBlockAt(location1).setType(Material.AIR);
+                        }
+                        if (x == -8){
+                            wall2 = !wall2;
+                        }
+                    }
+                    for (int x = 3; x >= -3; x--){
+                        double z = (x < -1 || x > 1) ? 14.0 : 13.0;
+
+                        Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                        Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+
+                        if (wall3) {
+                            owner.getWorld().getBlockAt(location).setType(Material.AIR);
+                        } else {
+                            owner.getWorld().getBlockAt(location1).setType(Material.AIR);
+                        }
+                        if (x == 3){
+                            wall3 = !wall3;
+                        }
+                    }
+                    couchPlaced-=1;
                 }
-                for (int x = -2; x >= -8; x--) {
-                    double z = (x < -7 || x > -2) ? -13.0 : -14.0;
-
-                    Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
-                    Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
-
-                    byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
-                    byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
-                    if (wall2){
-                        setBlockTypeAndData(location, data1);
-                    } else {
-                        setBlockTypeAndData(location1, data2);
-                    }
-                    if (x == -8){
-                        wall2 = !wall2;
-                    }
-                }
-                for (int x = -3; x <= 3; x++){
-                    double z = (x < -2 || x > 2) ? 13.0 : 14.0;
-
-                    Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
-                    Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
-
-                    byte data1 = (x % 2 == 0) ? (byte) 0 : (byte) 2;
-                    byte data2 = (x % 2 == 0) ? (byte) 2 : (byte) 0;
-                    if (wall3) {
-                        setBlockTypeAndData(location, data1);
-                    } else {
-                        setBlockTypeAndData(location1, data2);
-                    }
-                    if (x == 3){
-                        wall3 = !wall3;
-                    }
-                }
-                couchPlaced+=1;
                 time--;
             }
         }.runTaskTimer(Main.getInstance(), 0, 20);
     }
     @SuppressWarnings("deprecation")
     private void setBlockTypeAndData(Location location, byte data) {
-        owner.getWorld().getBlockAt(location).setTypeIdAndData(95, data, true);
+       owner.getWorld().getBlockAt(location).setTypeIdAndData(95, data, true);
     }
     @Override
     public void onLeftClick(PlayerInteractEvent event, GameState gameState) {
