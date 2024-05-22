@@ -551,20 +551,25 @@ public abstract class RoleBase {
 	public void onPlayerInteract(Block clickedBlock, Player player) {}
 	public void onLeftClick(PlayerInteractEvent event, GameState gameState) {}
 	public void KnowRole(Player knower, Roles toknow, int delayinTick) {
-		if (!gameState.attributedRole.contains(toknow))return;
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			if (gameState.getInSpecPlayers().contains(p))return;
-			if (!gameState.hasRoleNull(p)) {
-				if (getListPlayerFromRole(toknow).contains(p)) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+		if (Main.isDebug()){
+			System.out.println("Starting trying to get player who own the role "+toknow.name());
+		}
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+			if (!gameState.attributedRole.contains(toknow)){
+				knower.sendMessage(toknow.getTeam().getColor()+"§f n'est pas présent dans la partie");
+				return;
+			}
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				if (gameState.getInSpecPlayers().contains(p))return;
+				if (!gameState.hasRoleNull(p)) {
+					if (getListPlayerFromRole(toknow).contains(p)) {
 						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p) && getOldTeam(p) != null) {
-							knower.sendMessage("Le joueur possédant le rôle de "+getPlayerRoles(p).getOldTeam().getColor()+toknow.name()+"§f est "+p.getName());
+							knower.sendMessage("Le joueur possédant le rôle de "+toknow.getTeam().getColor()+toknow.name()+"§f est "+p.getName());
 						}
-						
-					}, delayinTick);
+					}
 				}
 			}
-		}
+		}, delayinTick);
 	}
 	public void onProjectileLaunch(Projectile projectile, Player shooter) {}
 
