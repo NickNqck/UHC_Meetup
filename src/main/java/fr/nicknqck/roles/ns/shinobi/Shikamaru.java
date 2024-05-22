@@ -169,7 +169,9 @@ public class Shikamaru extends RoleBase {
             if (e.getWhoClicked().getUniqueId().equals(shikamaru.getUuidOwner())){
                 if (e.getClickedInventory() == null)return;
                 if (e.getClickedInventory().getTitle() == null)return;
-                System.out.println("PULL UIP");
+                if (Main.isDebug()){
+                    System.out.println("PULL UIP");
+                }
                 if (e.getClickedInventory().getTitle().equals("§aShikamaru§7 ->§a Stun")){
                     e.setCancelled(true);
                     ItemStack item = e.getCurrentItem();
@@ -177,6 +179,9 @@ public class Shikamaru extends RoleBase {
                         if (item.getType().equals(Material.SKULL_ITEM)) {
                             if (item.hasItemMeta())return;
                             if (item.getItemMeta().hasDisplayName())return;
+                            if (Main.isDebug()){
+                                System.out.println(item.getItemMeta().getDisplayName());
+                            }
                             final Player player = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                             if (player != null){
                                 e.getWhoClicked().sendMessage("§7Vous empêchez§c "+player.getDisplayName()+"§7 de bouger");
