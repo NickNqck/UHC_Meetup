@@ -126,8 +126,13 @@ public class Kurenai extends RoleBase {
             owner.setGameMode(GameMode.SPECTATOR);
             stun(target.getUniqueId(), 5.0, false);
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+                Location loc = target.getLocation();
+                loc.setX(loc.getX()+Math.cos(Math.toRadians(-target.getEyeLocation().getYaw()+90)));
+                loc.setZ(loc.getZ()+Math.sin(Math.toRadians(target.getEyeLocation().getYaw()-90)));
+                loc.setPitch(0);
                 owner.setGameMode(GameMode.SURVIVAL);
                 owner.sendMessage("§7Votre§c Genjutsu§7 est terminer.");
+                owner.teleport(loc);
             }, 100);
             cdBois = 60*4+5;
             return true;
@@ -212,7 +217,9 @@ public class Kurenai extends RoleBase {
                     }
                     e.getVictim().teleport(initLocation);
                     e.getVictim().getInventory().clear();
-                    System.out.println(timeRemaining+ " string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
+                    if (Main.isDebug()){
+                        System.out.println(timeRemaining+ " string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
+                    }
                 }, 21);
             }
         }
