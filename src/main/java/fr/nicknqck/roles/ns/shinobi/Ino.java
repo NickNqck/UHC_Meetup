@@ -22,10 +22,12 @@ public class Ino extends RoleBase {
         super(player, roles, gameState);
         setChakraType(getRandomChakras());
         owner.sendMessage(Desc());
+        giveItem(owner, false, getItems());
     }
 
     @Override
     public String[] Desc() {
+        KnowRole(owner, GameState.Roles.Shikamaru, 15);
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§aIno",
@@ -35,7 +37,12 @@ public class Ino extends RoleBase {
                 "",
                 AllDesc.point+"§aTransposition§f: En visant un joueur, vous permet de vous mettre en§c Spectateur§f autours du joueur visée pendant§c 1 minute§f, après ce temp vous retournerez à votre ancienne position.§7 (1x/5m)",
                 "",
-                AllDesc.point
+                AllDesc.particularite,
+                "",
+                "Vous connaissez les§c joueurs§f possédent le rôle de§a Shikamaru§f et§a Choji",
+                "",
+                "",
+                AllDesc.bar
 
         };
     }

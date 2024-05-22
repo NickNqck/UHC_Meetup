@@ -68,6 +68,7 @@ public class Shikamaru extends RoleBase {
     }
     @Override
     public String[] Desc() {
+        KnowRole(owner, GameState.Roles.Ino, 15);
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§aShikamaru",
@@ -78,7 +79,16 @@ public class Shikamaru extends RoleBase {
                 AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c "+powerDistance+" blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f, de plus si vous lui cliqué dessus avec votre§a clique droit§f vous lui infligerz§c -1/2"+AllDesc.coeur+"§f toute les§c 2 secondes§f.§7 (1x/5min)",
                 "§c(Vous et le joueur viser pourrez prendre des dégats pendant le stun)",
                 "",
-                AllDesc.point+"§aZone d'ombre§f: Immobilise tout les joueurs étant à moins de§c "+(powerDistance-10)+" blocs§f de vous pendant§c 5 secondes§f, les joueurs touchés prendront§c 20%§f de dégat en moins et seront frappable"
+                AllDesc.point+"§aZone d'ombre§f: Immobilise tout les joueurs étant à moins de§c "+(powerDistance-10)+" blocs§f de vous pendant§c 5 secondes§f, les joueurs touchés prendront§c 20%§f de dégat en moins et seront frappable",
+                "",
+                AllDesc.particularite,
+                "",
+                "Votre nature de chakra est aléatoire",
+                "Vous connaissez le§c joueur§f possédant le rôle de§a Ino",
+                "",
+                AllDesc.chakra+getChakras().getShowedName(),
+                "",
+                AllDesc.bar
         };
     }
 
@@ -143,7 +153,7 @@ public class Shikamaru extends RoleBase {
 
         int i = 10;
         for (Player p : Loc.getNearbyPlayersExcept(owner, this.powerDistance)){
-                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse < 2 ? "§aClique droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§7" : "").setName(p.getName()).toItemStack());
+                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("","§aClique droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2").setName(p.getName()).toItemStack());
                 i++;
                 System.out.println(i+" int");
             System.out.println(inv.getItem(i) != null ? inv.getItem(i).getType().name() : "ez"+i);
@@ -177,8 +187,18 @@ public class Shikamaru extends RoleBase {
                     ItemStack item = e.getCurrentItem();
                     if (item != null) {
                         if (item.getType().equals(Material.SKULL_ITEM)) {
-                            if (item.hasItemMeta())return;
-                            if (item.getItemMeta().hasDisplayName())return;
+                            if (!item.hasItemMeta()){
+                                if (Main.isDebug()){
+                                    System.out.println(item.getType().name()+" has not itemMeta");
+                                }
+                                return;
+                            }
+                            if (!item.getItemMeta().hasDisplayName()){
+                                if (Main.isDebug()){
+                                    System.out.println(item.getType().name()+item.getItemMeta()+" has no display name");
+                                }
+                                return;
+                            }
                             if (Main.isDebug()){
                                 System.out.println(item.getItemMeta().getDisplayName());
                             }
