@@ -79,6 +79,7 @@ public class Main extends JavaPlugin implements Listener{
 		Instance = this;
 		RANDOM = new Random();
 	//	this.databaseManager = new DatabaseManager();
+		System.out.println("Debug is set has "+isDebug());
 		GameState gameState = new GameState();
 		this.gameWorld = Bukkit.getWorld("world");
 		gameState.world = gameWorld;
@@ -194,7 +195,9 @@ public class Main extends JavaPlugin implements Listener{
 					//System.out.println("Calculating Block at "+"x:"+x+", y:"+y+", z:"+z);
 					Block block = gameWorld.getBlockAt(x, y, z);
 					if (block.getType() == Material.BRICK || block.getType() == Material.COBBLESTONE || block.getType() == Material.OBSIDIAN || block.getType() == Material.PACKED_ICE || block.getType() == Material.ICE) {
-						System.out.println(gameWorld.getBlockAt(x, y, z).getType().name()+" -> Air at x:"+x+", y:"+y+", z:"+z);
+						if (isDebug()){
+							System.out.println(gameWorld.getBlockAt(x, y, z).getType().name()+" -> Air at x:"+x+", y:"+y+", z:"+z);
+						}
 						gameWorld.getBlockAt(x, y, z).setType(Material.AIR);
 					}
 				}
@@ -299,7 +302,7 @@ public class Main extends JavaPlugin implements Listener{
         getInstance().gameWorld = creator.createWorld();
         WorldGenCaves.load(getInstance().gameWorld, 600);
         getInstance().gameWorld.getWorldBorder().setCenter(new Location(getInstance().gameWorld, 0.0, getInstance().gameWorld.getHighestBlockYAt(0, 0), 0.0));
-        getInstance().gameWorld.getWorldBorder().setSize(GameState.getInstance().getBorderSize() * 2);
+        getInstance().gameWorld.getWorldBorder().setSize(Border.getActualBorderSize() * 2);
         worldfilltask = new WorldFillTask(getInstance().gameWorld, 20, Border.getMaxBorderSize());
         worldfilltask.setTaskID(Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), worldfilltask, 1L, 1L));
         getInstance().gameWorld.getEntities().forEach(Entity::remove);
@@ -316,7 +319,9 @@ public class Main extends JavaPlugin implements Listener{
         }
     }
 	public static boolean isDebug(){
-		return getInstance().getConfig().getBoolean("debug");
+		boolean debug = getInstance().getConfig().getBoolean("debug");
+		System.out.println("Debug his set at "+debug);
+		return debug;
 	}
 	public static String getBase() {
         return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 600+

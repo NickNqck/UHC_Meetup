@@ -59,7 +59,7 @@ public class HubListener implements Listener {
 		Events.initEvents();
 		gameState.setPlayerRoles(new HashMap<>());
 		gameState.setPlayerKills(new HashMap<>());
-		gameState.borderSize = Border.getMaxBorderSize();
+		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
 		gameState.world.getWorldBorder().setSize(Border.getMaxBorderSize());
 		if (gameState.JigoroV2Pacte2)gameState.JigoroV2Pacte2 = false;
