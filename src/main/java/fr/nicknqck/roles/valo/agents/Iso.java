@@ -79,6 +79,7 @@ public class Iso extends RoleBase {
         cdProtection = 0;
         cdBarriereDroite = 0;
         cdBarriereGauche = 0;
+        cdUltime = 0;
     }
 
     @Override
