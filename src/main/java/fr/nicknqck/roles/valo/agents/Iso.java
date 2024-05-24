@@ -144,13 +144,14 @@ public class Iso extends RoleBase {
             private boolean wall1 = false;
             private boolean wall2 = false;
             private boolean wall3 = false;
+            private int couchRemoved = 6;
             @Override
             public void run() {
                 if (time <= 0){
                     cancel();
                     return;
                 }
-                if (time <= 6){//lorsque les murs ce construise
+                if (time >= 6){//lorsque les murs ce construise
                     for (int x = 8; x >= 2; x--) {
                         double z = (x > 6 || x < 4) ? -14.0 : -13.0;
 
@@ -206,11 +207,11 @@ public class Iso extends RoleBase {
                     }
                     couchPlaced+=1;
                 } else {//Si les murs sont en déconstruction
-                    for (int x = 2; x <= 8; x++) {
-                        double z = (x <4 || x >6) ? -14.0 : -13.0;
+                    for (int x = 8; x >= 2; x--) {
+                        double z = (x > 6 || x < 4) ? -14.0 : -13.0;
 
-                        Location location = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
-                        Location location1 = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
+                        Location location = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
+                        Location location1 = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
 
                         if (wall1){
                             owner.getWorld().getBlockAt(location).setType(Material.AIR);
@@ -224,8 +225,8 @@ public class Iso extends RoleBase {
                     for (int x = -8; x <= -2; x++) {
                         double z = (x < -6 || x > -4) ? -13.0 : -14.0;
 
-                        Location location = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
-                        Location location1 = new Location(owner.getWorld(), x, 39.0 - couchPlaced, z);
+                        Location location = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
+                        Location location1 = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
                         if (wall2){
                             owner.getWorld().getBlockAt(location).setType(Material.AIR);
                         } else {
@@ -238,8 +239,8 @@ public class Iso extends RoleBase {
                     for (int x = 3; x >= -3; x--){
                         double z = (x < -1 || x > 1) ? 14.0 : 13.0;
 
-                        Location location = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
-                        Location location1 = new Location(owner.getWorld(), x, 33.0 + couchPlaced, z);
+                        Location location = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
+                        Location location1 = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
 
                         if (wall3) {
                             owner.getWorld().getBlockAt(location).setType(Material.AIR);
@@ -250,7 +251,7 @@ public class Iso extends RoleBase {
                             wall3 = !wall3;
                         }
                     }
-                    couchPlaced-=1;
+                    couchRemoved-=1;
                 }
                 time--;
             }
