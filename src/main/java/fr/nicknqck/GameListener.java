@@ -202,8 +202,8 @@ public class GameListener implements Listener {
 			}
 			
 			if (gameState.shrinking) {
-				gameState.borderSize -= Border.getBorderSpeed()*2;
-				border.setSize(Math.max(Border.getMinBorderSize(), gameState.borderSize), 1);
+				Border.setActualBorderSize(Border.getActualBorderSize()-Border.getBorderSpeed()*2);
+				border.setSize(Math.max(Border.getMinBorderSize(), Border.getActualBorderSize()), 1);
 			}
 			if (gameState.inGameTime == 0) {
 				gameState.nightTime = false;
@@ -302,7 +302,7 @@ public class GameListener implements Listener {
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
-			gameState.borderSize = Border.getMaxBorderSize();
+			Border.setActualBorderSize(Border.getMaxBorderSize());
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(gameState.world, Material.GLASS);
@@ -484,12 +484,12 @@ public class GameListener implements Listener {
 	}
 	public void SendToEveryoneExcept(String message, Player player) {for (Player p : Bukkit.getOnlinePlayers()) {if (p.equals(player)) continue;p.sendMessage(message);}}
 	public static Location RandomTp(final Entity entity,final GameState gameState) {
-		Random random = new Random();
+		Random random = Main.RANDOM;
 		Location loc = null;
 		while (loc == null || gameState.world.getBlockAt(loc).getType() == Material.WATER || gameState.world.getBlockAt(loc).getType() == Material.LAVA) {
-			Float x = gameState.borderSize*random.nextFloat();
-			Float z = gameState.borderSize*random.nextFloat();
-			loc = gameState.world.getHighestBlockAt(new Location(gameState.world, x-gameState.borderSize/2, 0, z-gameState.borderSize/2)).getLocation();
+			Float x = Border.getActualBorderSize()*random.nextFloat();
+			Float z = Border.getActualBorderSize()*random.nextFloat();
+			loc = gameState.world.getHighestBlockAt(new Location(gameState.world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);
 		if (entity != null) entity.teleport(loc);
@@ -502,9 +502,9 @@ public class GameListener implements Listener {
 		Random random = new Random();
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
-			Float x = gameState.borderSize*random.nextFloat();
-			Float z = gameState.borderSize*random.nextFloat();
-			loc = world.getHighestBlockAt(new Location(world, x-gameState.borderSize/2, 0, z-gameState.borderSize/2)).getLocation();
+			Float x = Border.getActualBorderSize()*random.nextFloat();
+			Float z = Border.getActualBorderSize()*random.nextFloat();
+			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);
 		if (entity != null) entity.teleport(loc);
@@ -517,9 +517,9 @@ public class GameListener implements Listener {
 		Random random = new Random();
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
-			Float x = gameState.borderSize*random.nextFloat();
-			Float z = gameState.borderSize*random.nextFloat();
-			loc = world.getHighestBlockAt(new Location(world, x-gameState.borderSize/2, 0, z-gameState.borderSize/2)).getLocation();
+			Float x = Border.getActualBorderSize()*random.nextFloat();
+			Float z = Border.getActualBorderSize()*random.nextFloat();
+			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);
 		return loc;
@@ -528,9 +528,9 @@ public class GameListener implements Listener {
 	    Random random = new Random();
 	    Location loc;
 	    do {
-	        Float x = gameState.borderSize * random.nextFloat();
-	        Float z = gameState.borderSize * random.nextFloat();
-	        loc = world.getHighestBlockAt(new Location(world, x - gameState.borderSize / 2, 0, z - gameState.borderSize / 2)).getLocation();
+	        Float x = Border.getActualBorderSize() * random.nextFloat();
+	        Float z = Border.getActualBorderSize() * random.nextFloat();
+	        loc = world.getHighestBlockAt(new Location(world, x - Border.getActualBorderSize() / 2, 0, z - Border.getActualBorderSize() / 2)).getLocation();
 	        loc.setY(loc.getY() + 1);
 	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
 	    return loc;
@@ -1116,13 +1116,16 @@ public class GameListener implements Listener {
 					gameState.getPlayerRoles().get(p).onALLPlayerInteract(event, player);
 				}
 			}
-			if (!gameState.hasRoleNull(player) && event.getAction().name().contains("RIGHT")) {
-				event.setCancelled(gameState.getPlayerRoles().get(player).ItemUse(itemstack, gameState));
+			if (!gameState.hasRoleNull(player)) {
+				if (event.getAction().name().contains("RIGHT")){
+					event.setCancelled(gameState.getPlayerRoles().get(player).ItemUse(itemstack, gameState));
+				} else {
+					gameState.getPlayerRoles().get(player).onLeftClick(event, gameState);
+				}
 			}
 				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 					if (gameState.getInGamePlayers().contains(player)) {
 						if (gameState.getPlayerRoles().containsKey(player)) {
-							gameState.getPlayerRoles().get(player).onLeftClick(event, gameState);
 							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
 			        				RoleBase role = gameState.getPlayerRoles().get(player);
@@ -1157,7 +1160,7 @@ public class GameListener implements Listener {
 				event.setCancelled(true);
 		}
 	}
-	public static final void dropItem(final Location loc,final ItemStack item) {loc.getWorld().dropItem(loc.clone().add(0.5D, 0.3D, 0.5D), item);
+	public static void dropItem(final Location loc, final ItemStack item) {loc.getWorld().dropItem(loc.clone().add(0.5D, 0.3D, 0.5D), item);
 		if (Main.isDebug()){
 			System.out.println("droped item at x"+loc.getX()+" z"+loc.getZ()+" the item "+item.getType().name()+" x"+item.getAmount());
 		}

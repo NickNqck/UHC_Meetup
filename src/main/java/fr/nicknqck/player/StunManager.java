@@ -45,6 +45,8 @@ public class StunManager implements Listener {
                     tickRemaining--;
                 }
             }.runTaskTimer(Main.getInstance(), 0, 1);
+        } else {
+            System.err.println(uuid.toString()+" is not connected for the StunManager");
         }
     }
 }

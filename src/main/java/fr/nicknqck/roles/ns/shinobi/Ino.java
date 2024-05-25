@@ -22,10 +22,12 @@ public class Ino extends RoleBase {
         super(player, roles, gameState);
         setChakraType(getRandomChakras());
         owner.sendMessage(Desc());
+        giveItem(owner, false, getItems());
     }
 
     @Override
     public String[] Desc() {
+        KnowRole(owner, GameState.Roles.Shikamaru, 15);
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§aIno",
@@ -35,6 +37,12 @@ public class Ino extends RoleBase {
                 "",
                 AllDesc.point+"§aTransposition§f: En visant un joueur, vous permet de vous mettre en§c Spectateur§f autours du joueur visée pendant§c 1 minute§f, après ce temp vous retournerez à votre ancienne position.§7 (1x/5m)",
                 "",
+                AllDesc.particularite,
+                "",
+                "Vous connaissez les§c joueurs§f possédent le rôle de§a Shikamaru§f et§a Choji",
+                "",
+                "",
+                AllDesc.bar
 
         };
     }
@@ -74,11 +82,10 @@ public class Ino extends RoleBase {
             if (target != null){
                 new TranspositionRunnable(this, target).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 cdTransposition = 60*6;
-                return true;
             } else {
                 owner.sendMessage("§cIl faut viser un joueur !");
-                return true;
             }
+            return true;
         }
         return super.ItemUse(item, gameState);
     }
@@ -99,7 +106,6 @@ public class Ino extends RoleBase {
                 cancel();
                 return;
                 }
-
                 if (!Loc.getNearbyPlayers(target, 15).contains(owner)){
                     owner.teleport(target);
                     owner.sendMessage("§cVous ne pouvez pas vous éloignez de votre cible");

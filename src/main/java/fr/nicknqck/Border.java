@@ -18,5 +18,8 @@ public class Border {
     @Getter
     @Setter
     private static int tempReduction = 120;
+    @Getter
+    @Setter
+    private static float actualBorderSize = getMaxBorderSize();
 
 }
