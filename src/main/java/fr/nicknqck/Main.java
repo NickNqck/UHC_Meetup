@@ -286,7 +286,7 @@ public class Main extends JavaPlugin implements Listener{
 			getScoreboardManager().onDisable();
 		}
 		System.out.println("["+PLUGIN_NAME+"] Disabled");
-		deleteWorld("world_the_end");
+//		deleteWorld("world");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				World world = Bukkit.getWorlds().get(0);
