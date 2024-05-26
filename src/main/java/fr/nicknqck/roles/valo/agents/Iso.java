@@ -133,6 +133,7 @@ public class Iso extends RoleBase {
             StunManager.stun(target.getUniqueId(), 5.0, false);
             StunManager.stun(getUuidOwner(), 5.0, false);
             createBuildingTask();
+            cdUltime = 60*10;
         } else {
             owner.sendMessage("§cIl faut viser un joueur !");
         }
