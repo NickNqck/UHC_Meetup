@@ -24,7 +24,7 @@ public class Furuto extends RoleBase{
 		super(player, roles);
 		owner.sendMessage(AllDesc.Furuto);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(fr.nicknqck.Main.getPlugin(fr.nicknqck.Main.class), () -> {
-			if (lunesup == null) {
+			if (lunesup == null && !gameState.getLuneSupPlayers().isEmpty()) {
 					lunesup = gameState.getLuneSupPlayers().get(0);
 					owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
 				
@@ -48,7 +48,7 @@ public class Furuto extends RoleBase{
 		return "§cFuruto";
 	}
 
-	private List<Player> aP = new ArrayList<>();
+	private final List<Player> aP = new ArrayList<>();
 	@Override
 	public void Update(GameState gameState) {
 		if (cooldown>=1)cooldown--;
@@ -86,8 +86,8 @@ public class Furuto extends RoleBase{
             else {
             	for (Player p : gameState.getInGamePlayers()) {
             		if (cooldown >= 1) {
-            			owner.sendMessage("§8 » §7Vous êtes en §ccooldown §7pendant encore "+fr.nicknqck.utils.StringUtils.secondsTowardsBeautiful(cooldown));
-            			return true;
+            			sendCooldown(event.getPlayer(), cooldown);
+						return true;
             		}
             		if (aP.contains(p)) {
             			int r = RandomUtils.getRandomInt(0, 4);
@@ -181,15 +181,13 @@ public class Furuto extends RoleBase{
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20*60, 0, false, false), true);
                     						p.sendMessage(getTeam().getColor()+"Furuto§r vous à offert Mining Fatigue 1");
                     						owner.sendMessage("Vous avez offrt à§6 "+p.getName()+"§r Mining Fatigue 1 pendant§6 60§rs");
-                    						cooldown = 60*3;
-                    					}
+                                        }
                     				} else {
                     					if (!p.hasPotionEffect(PotionEffectType.CONFUSION)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*30, 0, false, false), true);
                     						p.sendMessage(getTeam().getColor()+"Furuto§r vous à offert Nausee 1");
                     						owner.sendMessage("Vous avez offrt à§6 "+p.getName()+"§r Nausée 1 pendant§6 30§rs");
-                    						cooldown = 60*3;
-                    					}
+                                        }
                     				}
                 				}
                 				cooldown = 60*3;
