@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Intelligence {
 
-    GENIE("Génié"),
+    GENIE("Génie"),
     INTELLIGENT("Intelligent"),
     MOYENNE("Moyenne"),
     PEUINTELLIGENT("Peu intelligent"),

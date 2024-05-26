@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.NSRoles;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -33,6 +32,7 @@ public class Shikamaru extends NSRoles {
     private int poisonUse = 0;
     private final ItemStack zoneItem = new ItemBuilder(Material.NETHER_STAR).setName("§aZone d'ombre").setLore("§7Vous permet d'empêcher tout les joueurs autours de vous de bouger").toItemStack();
     private int cdZone = 0;
+    private int cdShogi = 0;
     public Shikamaru(Player player, GameState.Roles roles) {
         super(player, roles);
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
@@ -88,6 +88,11 @@ public class Shikamaru extends NSRoles {
                 "",
                 AllDesc.point+"§aZone d'ombre§f: Immobilise tout les joueurs étant à moins de§c "+(powerDistance-10)+" blocs§f de vous pendant§c 5 secondes§f, les joueurs touchés prendront§c 20%§f de dégat en moins et seront frappable",
                 "",
+                AllDesc.commande,
+                "",
+                AllDesc.point+"§6/ns shogi <joueur>§f: Vous permet d'obtenir le niveau d'intelligence du joueur viser, si le joueur est§a Ino§f ou§a Choji§f vous obtiendrez directement son rôle.§7 (1x/5min)",
+                "Annexe (§ltemporaire§r) du système d'intelligence:§b  https://discord.com/channels/925124675372208189/1239619280664788993",
+                "",
                 AllDesc.particularite,
                 "",
                 "Votre nature de chakra est aléatoire",
@@ -112,6 +117,37 @@ public class Shikamaru extends NSRoles {
         cdStun = 0;
         cdZone = 0;
         poisonUse = 0;
+    }
+
+    @Override
+    public void onNsCommand(String[] args) {
+        super.onNsCommand(args);
+        if  (args[0].equalsIgnoreCase("shogi")){
+            if (cdShogi > 0){
+                sendCooldown(owner, cdShogi);
+                return;
+            }
+            if (args.length == 2) {
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    if (!gameState.hasRoleNull(target)) {
+                        if (gameState.getPlayerRoles().get(target) instanceof NSRoles){
+                            Intelligence intelligence = ((NSRoles) gameState.getPlayerRoles().get(target)).getIntelligence();
+                            if (intelligence.equals(Intelligence.CONNUE)) {
+                                owner.sendMessage("§7Le rôle de§c "+target.getDisplayName()+"§7 est "+gameState.getPlayerRoles().get(target).getName());
+                            } else {
+                                owner.sendMessage("§c"+target.getDisplayName()+"§7 est§a "+intelligence.getName());
+                            }
+                            cdShogi = 60*5;
+                        } else {
+                            owner.sendMessage("§c"+target.getDisplayName()+"§7 ne viens pas du§a Naruto§2 UHC");
+                        }
+                    }
+                } else {
+                    owner.sendMessage("§b"+args[1]+"§c n'est pas connecter");
+                }
+            }
+        }
     }
 
     @Override
@@ -175,12 +211,10 @@ public class Shikamaru extends NSRoles {
         owner.openInventory(inv);
         owner.updateInventory();
     }
-
     @Override
     public String getName() {
         return "§aShikamaru";
     }
-
     private static class StunExecutable implements Listener{
         private Shikamaru shikamaru;
         private StunExecutable(Shikamaru shikamaru){
