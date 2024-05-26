@@ -4,9 +4,11 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -27,13 +29,18 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class Naruto extends RoleBase implements Listener{
+public class Naruto extends NSRoles implements Listener{
 
 	public Naruto(Player player, Roles roles) {
 		super(player, roles);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
 		setCanBeHokage(true);
+	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
 	}
 
 	@Override
@@ -392,5 +399,10 @@ public class Naruto extends RoleBase implements Listener{
 		cdClone = 0;
 		timeVillager = 0;
 		villager = null;
+	}
+
+	@Override
+	public String getName() {
+		return "§aNaruto";
 	}
 }

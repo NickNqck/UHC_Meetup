@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.GlobalUtils;
@@ -119,8 +120,7 @@ public class Kakashi extends RoleBase {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target == null) {
 					owner.sendMessage("§CVeuiller cibler un joueur éxistant !");
-					return;
-				}else {
+                }else {
 					KamuiUtils.end(target);
 				}
 			}
@@ -131,7 +131,7 @@ public class Kakashi extends RoleBase {
 		if (clicker.getUniqueId() == owner.getUniqueId()) {
 			if (inv != null && item != null && item.getType() != Material.AIR) {
 				if (inv.getTitle().equals("§cKamui§7 ->§d Sonohaka")) {
-					if (item != null && item.getType() != Material.AIR) {
+					if (item.getType() != Material.AIR) {
 						if (item.isSimilar(GUIItems.getSelectBackMenu())) {
 							owner.openInventory(KamuiInventory());
 							event.setCancelled(true);
@@ -156,8 +156,7 @@ public class Kakashi extends RoleBase {
 											}
 											if (clicked.getWorld() != Bukkit.getWorld("Kamui")) {
 												cancel();
-												return;
-											}
+                                            }
 										}
 									}.runTaskTimer(Main.getInstance(), 0, 20);
 									cdSonohoka = 60*15;
@@ -194,7 +193,7 @@ public class Kakashi extends RoleBase {
 											return;
 										}
 										i++;
-										if (owner.getWorld().getName() != "Kamui") {
+										if (!Objects.equals(owner.getWorld().getName(), "Kamui")) {
 											cancel();
 											return;
 										}
@@ -202,28 +201,24 @@ public class Kakashi extends RoleBase {
 											owner.sendMessage("§7Vous sortez du§d Kamui§7 !");
 											KamuiUtils.end(owner);
 											cancel();
-											return;
-										} else {
+                                        } else {
 											sendCustomActionBar(owner, "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful((60*3)-i));
 										}
 									}
 								}.runTaskTimer(Main.getInstance(), 0, 20);
-								return;
-						} else {
+                        } else {
 							sendCooldown(clicker, cdArimasu);
-							return;
-						}
-					}
+                        }
+                        return;
+                    }
 					if (event.getSlot() == 7) {
 						event.setCancelled(true);
 						owner.closeInventory();
 						if (cdSonohoka <= 0) {
 								openSonohakaInventory();
-								return;
-						} else {
+                        } else {
 							sendCooldown(clicker, cdSonohoka);
-							return;
-						}
+                        }
 					}
 				}
 			}
@@ -274,6 +269,7 @@ public class Kakashi extends RoleBase {
 				owner.sendMessage("§7La copie de "+inCopy.getName()+" est maintenant terminé");
 				Copied.put(inCopy.getName(), getPermanentPotionEffects(inCopy));
 				inCopy = null;
+				Coping = false;
 				actualPoint = 0;
 			}
 		}
@@ -305,6 +301,7 @@ public class Kakashi extends RoleBase {
 					owner.closeInventory();
 					owner.sendMessage("§7Vous copier maintenant les effets de "+target.getDisplayName());
 					actualPoint = 0;
+					Coping = true;
 				}
 			}
 		}
@@ -314,7 +311,7 @@ public class Kakashi extends RoleBase {
 				owner.getActivePotionEffects().stream().filter(e -> getPermanentPotionEffects(owner).contains(e.getType())).forEach(e -> owner.removePotionEffect(e.getType()));
 				setForce(0);
 				setResi(0);
-				if (Copied.keySet().contains(target)) {
+				if (Copied.containsKey(target)) {
 					for (PotionEffectType po : Copied.get(target)) {
 						givePotionEffet(po, Integer.MAX_VALUE, 1, true);
 					}
@@ -338,7 +335,7 @@ public class Kakashi extends RoleBase {
 	private Player inCopy = null;
 	private int actualPoint = 0;
 	private boolean Coping = false;
-	private HashMap<String, List<PotionEffectType>> Copied = new HashMap<>();
+	private final HashMap<String, List<PotionEffectType>> Copied = new HashMap<>();
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(SharinganItem())) {
@@ -355,7 +352,7 @@ public class Kakashi extends RoleBase {
 	private Inventory CopieInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 54, "§aCopie");
 		for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-			if (!Copied.keySet().contains(p.getName())) {
+			if (!Copied.containsKey(p.getName())) {
 				inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getName())).setName(p.getName()).toItemStack());
 			}
 		}
@@ -365,5 +362,10 @@ public class Kakashi extends RoleBase {
 	public void resetCooldown() {
 		cdArimasu =0;
 		cdSonohoka = 0;
+	}
+
+	@Override
+	public String getName() {
+		return "§aKakashi";
 	}
 }

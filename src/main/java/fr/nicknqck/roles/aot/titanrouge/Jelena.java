@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Jelena extends RoleBase {
@@ -34,6 +34,12 @@ public class Jelena extends RoleBase {
 				AllDesc.bar,
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§cJelena";
+	}
+
 	private int invuse = 2;
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {

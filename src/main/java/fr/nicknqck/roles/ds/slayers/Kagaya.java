@@ -17,7 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
@@ -33,6 +33,12 @@ public class Kagaya extends RoleBase {
 	public String[] Desc() {
 		return AllDesc.Kagaya;
 	}
+
+	@Override
+	public String getName() {
+		return "§aKagaya";
+	}
+
 	enum Pacte{
 		Pacte1,
 		Pacte2,

@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,14 +19,13 @@ import org.bukkit.util.Vector;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Minato extends RoleBase{
+public class Minato extends NSRoles {
 
 	public Minato(Player player, Roles roles) {
 		super(player, roles);
@@ -107,23 +108,21 @@ public class Minato extends RoleBase{
 		if (item.isSimilar(RasenganItem())) {
 			if (cdRasengan <= 0) {
 				owner.sendMessage("§7Il faut frapper un joueur pour créer une explosion.");
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdRasengan);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(KyubiItem())) {
 			if (cdKyubi <= 0) {
 			givePotionEffet(PotionEffectType.SPEED, 20*180, 2, true);
 			owner.sendMessage("Vous venez d'utiliser §6Kyûbi");
 			cdKyubi = 60*10;
-			return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdKyubi);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(HiraishinNoJutsuItem())) {
 			if (cdHiraishin <= 0) {
 				if (Kunai != null) {
@@ -131,16 +130,14 @@ public class Minato extends RoleBase{
 				owner.sendMessage("Vous venez d'être téléportez sur votre Kunai");
 				cdHiraishin = 30;
 				Kunai = null;
-				return true;
-				} else {
+                } else {
 					owner.sendMessage("Vous n'avez pas tirez de Kunai");
-					return true;
-				}
-			} else {
+                }
+            } else {
 				sendCooldown(owner, cdHiraishin);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 	
@@ -190,7 +187,12 @@ public class Minato extends RoleBase{
 			}
 		}
 	}
-	
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.GENIE;
+	}
+
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
@@ -228,7 +230,7 @@ public class Minato extends RoleBase{
 					Kunai = projectile.getLocation();
 					projectile.setMetadata("KunaiArrow", new FixedMetadataValue(Main.getInstance(), shooter.getLocation()));
 					new BukkitRunnable() {
-					Arrow fleche = (Arrow)projectile;
+					final Arrow fleche = (Arrow)projectile;
 						@Override
 						public void run() {
 							if (!fleche.hasMetadata("KunaiArrow")) {
@@ -245,5 +247,10 @@ public class Minato extends RoleBase{
 				}
 			}
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§aMinato";
 	}
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,13 +20,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.ItemBuilder;
 
-public class Tsunade extends RoleBase {
+public class Tsunade extends NSRoles {
 
 	public Tsunade(Player player, Roles roles) {
 		super(player, roles);
@@ -135,6 +136,12 @@ public class Tsunade extends RoleBase {
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(ByakugoItem())) {
@@ -224,5 +231,10 @@ public class Tsunade extends RoleBase {
 				}
 			}
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§aTsunade";
 	}
 }

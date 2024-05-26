@@ -13,7 +13,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -153,5 +153,10 @@ public class Nezuko extends RoleBase{
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim == owner) {victim.getInventory().remove(Items.getPouvoirSanginaire());}
 		super.PlayerKilled(killer, victim, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§aNezuko";
 	}
 }

@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.Material;
@@ -38,6 +38,11 @@ public class Squelette extends RoleBase {
                 AllDesc.bar,
 
         };
+    }
+
+    @Override
+    public String getName() {
+        return "§aSquelette";
     }
 
     @Override

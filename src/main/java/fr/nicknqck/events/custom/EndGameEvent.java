@@ -4,7 +4,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 
 public class EndGameEvent extends Event{
 	

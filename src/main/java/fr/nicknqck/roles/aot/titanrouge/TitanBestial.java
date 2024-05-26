@@ -14,8 +14,8 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.aot.soldats.Soldat;
 import fr.nicknqck.roles.aot.titans.TitanListener;
 import fr.nicknqck.roles.aot.titans.Titans;
@@ -178,5 +178,10 @@ public class TitanBestial extends RoleBase{
 	@Override
 	public void resetCooldown() {
 		
+	}
+
+	@Override
+	public String getName() {
+		return "§cTitan Bestial";
 	}
 }

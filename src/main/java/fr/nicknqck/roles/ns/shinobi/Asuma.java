@@ -2,9 +2,10 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -15,7 +16,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-public class Asuma extends RoleBase{
+public class Asuma extends NSRoles {
 
 	public Asuma(Player player, Roles roles) {
 		super(player, roles);
@@ -90,6 +91,12 @@ public class Asuma extends RoleBase{
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return null;
+	}
+
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(NueesItem())) {
@@ -110,5 +117,10 @@ public class Asuma extends RoleBase{
             return true;
         }
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§aAsuma";
 	}
 }

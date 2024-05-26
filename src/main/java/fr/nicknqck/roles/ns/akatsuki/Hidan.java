@@ -2,6 +2,8 @@ package fr.nicknqck.roles.ns.akatsuki;
 
 import java.util.HashMap;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -15,19 +17,24 @@ import org.bukkit.util.Vector;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Hidan extends RoleBase {
+public class Hidan extends NSRoles {
 
 	public Hidan(Player player, Roles roles) {
 		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
+	}
+
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
@@ -72,7 +79,7 @@ public class Hidan extends RoleBase {
 		FauxTaped.clear();
 		cdJashin = 0;
 	}
-	private HashMap<Player, Integer> FauxTaped = new HashMap<>();
+	private final HashMap<Player, Integer> FauxTaped = new HashMap<>();
 	private Player Fautiste = null;
 	private boolean canFautiser = false;
 	@Override
@@ -106,23 +113,21 @@ public class Hidan extends RoleBase {
 				if (cdJashin > 0) {
 					return;
 				}
-				if (FauxTaped.keySet().contains(victim)) {
+				if (FauxTaped.containsKey(victim)) {
 					int i = FauxTaped.get(victim);
 					if (i >= 9 && !canFautiser) {
 						canFautiser = true;
 						Fautiste = victim;
 						owner.sendMessage("§c"+victim.getDisplayName()+"§7 peut maintenant subir le§c Rituel de Jashin");
-						return;
-					} else {
+                    } else {
 						i++;
 						FauxTaped.clear();
 						FauxTaped.put(victim, i);
 						sendCustomActionBar(owner, "§7Coups contre "+victim.getDisplayName()+": "+i+"/§c10");
-						return;
-					}
+                    }
 				} else {
 					if (jLoc == null) {
-						if (FauxTaped.size() > 0) {
+						if (!FauxTaped.isEmpty()) {
 							owner.sendMessage("§7Fin du§c Rituel§7 contre "+FauxTaped.keySet().stream().findFirst().get().getDisplayName());
 						}
 						FauxTaped.clear();
@@ -130,8 +135,7 @@ public class Hidan extends RoleBase {
 						canFautiser = false;
 						FauxTaped.put(victim, 1);
 						owner.sendMessage("§7Début du§c Rituel§7 contre§c "+victim.getDisplayName());
-						return;
-					}
+                    }
 				}
 			}
 		}
@@ -168,8 +172,7 @@ public class Hidan extends RoleBase {
 							i--;
 						}
 					}.runTaskTimer(Main.getInstance(), 0, 1);
-					return true;
-			} else {
+            } else {
 				owner.sendMessage("§7Vous n'avez pas asser de§c sang§7 pour faire un§c rituel§7.");
 				if (!canFautiser) {
 					owner.sendMessage("§7Vous n'avez pas l'autorisation de Fautiser");
@@ -177,9 +180,14 @@ public class Hidan extends RoleBase {
 				if (Fautiste == null) {
 					owner.sendMessage("§7Aucun cible trouver");
 				}
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§cHidan";
 	}
 }

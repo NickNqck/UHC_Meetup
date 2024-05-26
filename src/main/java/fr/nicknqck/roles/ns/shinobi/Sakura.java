@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -9,11 +11,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 
-public class Sakura extends RoleBase {
+public class Sakura extends NSRoles {
 
 	public Sakura(Player player, Roles roles) {
 		super(player, roles);
@@ -107,5 +108,15 @@ public class Sakura extends RoleBase {
 				}
 			}
 		}
+	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
+	@Override
+	public String getName() {
+		return "§aSakura";
 	}
 }

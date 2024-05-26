@@ -13,8 +13,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
@@ -39,6 +39,11 @@ public class HantenguV2 extends RoleBase {
 
 	enum Clone {
 		Hantengu, Karaku, Sekido, Urogi, Urami, Aizetsu, Zohakuten
+	}
+
+	@Override
+	public String getName() {
+		return "§cHantengu§7 (§6V2§7)";
 	}
 
 	@Override

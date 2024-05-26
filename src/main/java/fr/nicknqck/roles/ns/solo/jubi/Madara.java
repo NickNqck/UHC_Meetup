@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,7 +31,6 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.CC;
@@ -39,7 +40,7 @@ import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.particles.MathUtil;
 
-public class Madara extends RoleBase {
+public class Madara extends NSRoles {
 
 	private int BenshoCD = 0;
 	private int ShinraCD = 0;
@@ -336,6 +337,12 @@ public class Madara extends RoleBase {
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.GENIE;
+	}
+
 	@SuppressWarnings("deprecation")
 	private void setOldBlockwMap() {
 		map.keySet().stream().filter(n -> n.getTypeId() != 162).filter(e -> e.getTypeId() != 161).forEach(loc -> loc.setType(Material.getMaterial(map.get(loc))));
@@ -487,5 +494,10 @@ public class Madara extends RoleBase {
 			toOpen.addItem(new ItemBuilder(Material.SKULL_ITEM).setDurability(((short)3)).setSkullOwner(p.getName()).setName(p.getDisplayName()).toItemStack());
 		}
 		owner.openInventory(toOpen);
+	}
+
+	@Override
+	public String getName() {
+		return "§dMadara";
 	}
 }

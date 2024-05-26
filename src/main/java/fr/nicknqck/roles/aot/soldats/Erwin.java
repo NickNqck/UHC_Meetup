@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
@@ -32,6 +32,12 @@ public class Erwin extends RoleBase{
 	}
 	private int cmdUse = 0;
 	private int maxcmdUse = 2;
+
+	@Override
+	public String getName() {
+		return "§aErwin";
+	}
+
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("camp")) {

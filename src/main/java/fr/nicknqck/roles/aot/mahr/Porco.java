@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 
@@ -28,6 +28,12 @@ public class Porco extends RoleBase{
 		owner.getInventory().addItem(getItems());
 		super.GiveItems();
 	}
+
+	@Override
+	public String getName() {
+		return "§9Porco";
+	}
+
 	@Override
 	public String[] Desc() {
 		gameState.sendShifterList(owner);

@@ -14,8 +14,8 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.WorldUtils;
@@ -246,4 +246,9 @@ boolean dance = false;
 		cd = 0;
 		actualuse = 0;
 		}
+
+	@Override
+	public String getName() {
+		return "§aTanjiro";
+	}
 }

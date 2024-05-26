@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ns.orochimaru;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -25,15 +27,14 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 
-public class Sasuke extends RoleBase {
+public class Sasuke extends NSRoles {
 
 	private Izanami izanami;
 	private boolean mortOrochimaru = false;
@@ -265,6 +266,12 @@ public class Sasuke extends RoleBase {
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	private void openIzanamiInventory() {
 		owner.closeInventory();
 		if (this.izanami == null) {
@@ -558,6 +565,12 @@ public class Sasuke extends RoleBase {
 			moover.teleport(e.getFrom());
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "§5Sasuke";
+	}
+
 	private class SasukeRunnable extends BukkitRunnable {
 		private Izanami izanami;
 		public SasukeRunnable(Izanami izanami) {

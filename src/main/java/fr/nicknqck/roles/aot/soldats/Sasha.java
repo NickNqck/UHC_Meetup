@@ -11,11 +11,10 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Sasha extends RoleBase{
@@ -63,6 +62,12 @@ public class Sasha extends RoleBase{
 		}
 		super.onProjectileLaunch(projectile, shooter);
 	}
+
+	@Override
+	public String getName() {
+		return "§aSasha";
+	}
+
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
 		if (entity instanceof Arrow) {

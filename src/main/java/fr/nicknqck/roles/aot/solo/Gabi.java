@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gabi extends RoleBase {
@@ -113,6 +113,12 @@ public class Gabi extends RoleBase {
 					AllDesc.bar,
 			};
 	}
+
+	@Override
+	public String getName() {
+		return "§eGabi";
+	}
+
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(owner, 5);

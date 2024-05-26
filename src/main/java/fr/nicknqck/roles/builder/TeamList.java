@@ -1,4 +1,4 @@
-package fr.nicknqck.roles;
+package fr.nicknqck.roles.builder;
 
 import lombok.Getter;
 import org.bukkit.entity.Player;

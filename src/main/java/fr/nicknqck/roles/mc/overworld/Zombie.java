@@ -2,7 +2,7 @@ package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.Material;
@@ -57,6 +57,11 @@ public class Zombie extends RoleBase {
         return new ItemStack[]{
                 CerveauItem,
         };
+    }
+
+    @Override
+    public String getName() {
+        return "§aZombie";
     }
 
     @Override

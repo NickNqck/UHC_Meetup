@@ -11,7 +11,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
@@ -109,12 +109,11 @@ public class Gai extends RoleBase{
 				givePotionEffet(PotionEffectType.SPEED, 20*90, 1, true);
 				owner.damage(1.0, owner);
 				cdTroisPortes = 60*3;
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdTroisPortes);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(SixPortesItem())) {
 			if (cdSixPortes <= 0) {
 				owner.sendMessage("Vous venez d'ouvrir la §aSixième Porte");
@@ -143,12 +142,11 @@ public class Gai extends RoleBase{
 						}
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdSixPortes);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(HuitPortesItem())) {
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, true);
 				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, true);
@@ -210,7 +208,10 @@ public class Gai extends RoleBase{
 		}
 		return super.ItemUse(item, gameState);
 	}
-	
-	
 
+
+	@Override
+	public String getName() {
+		return "§aGaï";
+	}
 }

@@ -5,8 +5,10 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.StunManager;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
@@ -29,7 +31,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
-public class Ginkaku extends RoleBase{
+public class Ginkaku extends NSRoles {
 	
 	private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
 	private int cdKyubi = 0;
@@ -52,6 +54,12 @@ public class Ginkaku extends RoleBase{
 			}
 		}, 100);
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
+	}
+
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
@@ -320,6 +328,12 @@ public class Ginkaku extends RoleBase{
 			}
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "§6Ginkaku";
+	}
+
 	private class TargetFallChecker implements Listener {
 		private UUID gTarget;
 		TargetFallChecker(){

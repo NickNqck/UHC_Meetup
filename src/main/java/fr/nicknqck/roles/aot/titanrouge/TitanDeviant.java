@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class TitanDeviant extends RoleBase {
@@ -63,5 +63,10 @@ public class TitanDeviant extends RoleBase {
 	@Override
 	public void resetCooldown() {
 		
+	}
+
+	@Override
+	public String getName() {
+		return "§cTitan Deviant";
 	}
 }

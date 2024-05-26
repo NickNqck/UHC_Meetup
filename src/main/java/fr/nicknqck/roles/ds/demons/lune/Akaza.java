@@ -6,7 +6,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Akaza extends RoleBase{
@@ -56,6 +56,12 @@ public class Akaza extends RoleBase{
 		}
 		givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 80, 1, true);
 	}
+
+	@Override
+	public String getName() {
+		return "§cAkaza";
+	}
+
 	@Override
 	public void resetCooldown() {
 		regencooldown = 0;

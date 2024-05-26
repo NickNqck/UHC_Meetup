@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -11,13 +13,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Jugo extends RoleBase {
+public class Jugo extends NSRoles {
 
 	public Jugo(Player player, Roles roles) {
 		super(player, roles);
@@ -34,6 +35,12 @@ public class Jugo extends RoleBase {
 			}
 		}, 20*5);
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
+	}
+
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
@@ -136,8 +143,7 @@ public class Jugo extends RoleBase {
 				if (RandomUtils.getOwnRandomProbability(70)) {
 					owner.sendMessage("§7Vous obtenez l'effet§e Speed 1");
 					givePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
-					return true;
-				} else {
+                } else {
 					owner.sendMessage("§7Vous obtenez l'effet§e Speed 1§7 et l'effet§9 Résistance 1");
 					givePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
 					givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
@@ -159,17 +165,21 @@ public class Jugo extends RoleBase {
 							}
 						}
 					}.runTaskTimer(Main.getInstance(), 0, 20);
-					return true;
-				}
-			}else {
+                }
+            }else {
 				sendCooldown(owner, marqueCD);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 	@Override
 	public void resetCooldown() {
 		marqueCD = 0;
+	}
+
+	@Override
+	public String getName() {
+		return "§5Jugo";
 	}
 }

@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gyomei extends RoleBase{
@@ -128,5 +128,10 @@ public class Gyomei extends RoleBase{
 		return new ItemStack[] {
 				Items.getSoufleDeLaRoche()
 		};
+	}
+
+	@Override
+	public String getName() {
+		return "§aGyomei";
 	}
 }

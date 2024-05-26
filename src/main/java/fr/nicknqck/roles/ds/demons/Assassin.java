@@ -7,7 +7,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 
 public class Assassin {
 	@SuppressWarnings("deprecation")

@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Yahaba extends RoleBase {
@@ -90,4 +90,9 @@ public class Yahaba extends RoleBase {
 	@Override
 	public void resetCooldown() {
 	}
-}    
+
+	@Override
+	public String getName() {
+		return "§cYahaba";
+	}
+}

@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
@@ -118,5 +118,10 @@ public class Sabito extends RoleBase{
 		}
 	}
 		super.PlayerKilled(killer, victim, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§aSabito";
 	}
 }

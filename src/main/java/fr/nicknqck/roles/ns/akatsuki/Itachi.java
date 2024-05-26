@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ns.akatsuki;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -21,14 +23,13 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 
-public class Itachi extends RoleBase {
+public class Itachi extends NSRoles {
 
 	private Izanami izanami;
 	private int SusanoCD = 0;
@@ -221,6 +222,12 @@ public class Itachi extends RoleBase {
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.GENIE;
+	}
+
 	private void openIzanamiInventory() {
 		owner.closeInventory();
 		if (izanami == null) {
@@ -437,6 +444,12 @@ public class Itachi extends RoleBase {
 			moover.teleport(e.getFrom());
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "§cItachi";
+	}
+
 	private class ItachiRunnable extends BukkitRunnable {
 
 		@SuppressWarnings("deprecation")

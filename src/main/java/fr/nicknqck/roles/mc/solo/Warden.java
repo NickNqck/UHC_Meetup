@@ -3,7 +3,7 @@ package fr.nicknqck.roles.mc.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerKill;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -38,6 +38,11 @@ public class Warden extends RoleBase {
         super(player, roles);
         addBonusResi(10.0);
         owner.sendMessage(Desc());
+    }
+
+    @Override
+    public String getName() {
+        return "§eWarden";
     }
 
     @Override

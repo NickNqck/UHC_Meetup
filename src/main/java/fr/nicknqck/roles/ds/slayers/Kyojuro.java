@@ -11,7 +11,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Kyojuro extends RoleBase{
@@ -90,5 +90,10 @@ public String[] Desc() {
 	}
 	@Override
 	public void resetCooldown() {
+	}
+
+	@Override
+	public String getName() {
+		return "§aKyojuro";
 	}
 }

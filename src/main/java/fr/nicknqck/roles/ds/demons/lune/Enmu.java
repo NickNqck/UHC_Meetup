@@ -10,8 +10,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Enmu extends RoleBase {
@@ -39,6 +39,12 @@ public class Enmu extends RoleBase {
 				Items.getPouvoirSanginaire()
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§cEnmu";
+	}
+
 	@Override
 	public void GiveItems() {owner.getInventory().addItem(Items.getPouvoirSanginaire());super.GiveItems();}
 	private int itemcooldown = 0;

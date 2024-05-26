@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,14 +21,13 @@ import org.bukkit.util.Vector;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Danzo extends RoleBase{
+public class Danzo extends NSRoles {
 
 	private int futonCD = 0;
 	private int izanagiItemCD = 0;
@@ -172,6 +173,12 @@ public class Danzo extends RoleBase{
 	}
 
 	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
+
+	@Override
+	public String getName() {
+		return "§eDanzo";
+	}
+
 	private enum SceauAction {
 		Wither(),
 		AntiAbso()
@@ -237,6 +244,12 @@ public class Danzo extends RoleBase{
 			}, 1);
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(SceauItem())) {

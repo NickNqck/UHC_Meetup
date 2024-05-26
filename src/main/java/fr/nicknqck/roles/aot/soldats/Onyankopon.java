@@ -9,7 +9,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
@@ -57,6 +57,12 @@ public class Onyankopon extends RoleBase{
 				}).setDespawnable(false).setDroppable(false).getItemStack()
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§aOnyankopon";
+	}
+
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("fuite")) {

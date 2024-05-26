@@ -2,7 +2,7 @@ package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -33,6 +33,11 @@ public class WitherBoss extends RoleBase {
         super.GiveItems();
         super.giveItem(owner, false, getItems());
         super.giveHealedHeartatInt(2.0);
+    }
+
+    @Override
+    public String getName() {
+        return "§eWither Boss";
     }
 
     @Override

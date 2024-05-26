@@ -19,7 +19,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 
 public class JoinEvents implements Listener{
 	private final GameState gameState;

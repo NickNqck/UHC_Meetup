@@ -9,8 +9,8 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.aot.titans.Titan;
 import fr.nicknqck.roles.desc.AllDesc;
 
@@ -40,6 +40,12 @@ public class Hansi extends RoleBase {
 	private int actualtorture = 0;
 	private int actualseringue = 0;
 	private List<Player> tortured = new ArrayList<>();
+
+	@Override
+	public String getName() {
+		return "§aHansi";
+	}
+
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("torture")) {

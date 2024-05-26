@@ -3,7 +3,7 @@ package fr.nicknqck.roles.valo.agents;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.StunManager;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.GlobalUtils;
@@ -405,5 +405,10 @@ public class Iso extends RoleBase {
                 }
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return "§dIso";
     }
 }

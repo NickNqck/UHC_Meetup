@@ -2,6 +2,8 @@ package fr.nicknqck.roles.ns.orochimaru;
 
 import java.util.HashMap;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,13 +21,13 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.ItemBuilder;
 
-public class Kabuto extends RoleBase{
+public class Kabuto extends NSRoles {
 
 	public Kabuto(Player player, Roles roles) {
 		super(player, roles);
@@ -102,7 +104,7 @@ public class Kabuto extends RoleBase{
 		return new ItemBuilder(Material.NETHER_STAR).setName("§aNinjutsu Médical").setLore("§7Permet de vous soignez vous ou un autre joueur").toItemStack();
 	}
 	private int ninjutsuCD = 0;
-	private HashMap<Player, RoleBase> edoTensei = new HashMap<>();
+	private final HashMap<Player, RoleBase> edoTensei = new HashMap<>();
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (edoTensei.containsKey(player)) {
@@ -131,7 +133,7 @@ public class Kabuto extends RoleBase{
 			owner.sendMessage("§7C'est terrible !§5 Orochimaru§7 est§c mort§7, en son homage vous récupérez sa plus puissante technique, l'§5Edo Tensei§7.");
 		}
 	}
-	private HashMap<Player, Location> killLoc = new HashMap<>();
+	private final HashMap<Player, Location> killLoc = new HashMap<>();
 	private boolean mortOrochimaru = false;
 	@Override
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
@@ -170,15 +172,21 @@ public class Kabuto extends RoleBase{
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (mortOrochimaru) {
 			if (item.isSimilar(EdoTenseiItem())) {
-				if (killLoc.size() < 1) {
+				if (killLoc.isEmpty()) {
 					owner.sendMessage("§7Il faut avoir tué au moins§n 1 joueurs§7 pour utiliser cette technique");
 					return true;
 				}
-				if (edoTensei.size() != 0) {
+				if (!edoTensei.isEmpty()) {
 					owner.sendMessage("§7Vous avez déjà§5 Edo Tensei");
 					return true;
 				}
@@ -237,5 +245,10 @@ public class Kabuto extends RoleBase{
 				}
 			}
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§5Kabuto";
 	}
 }

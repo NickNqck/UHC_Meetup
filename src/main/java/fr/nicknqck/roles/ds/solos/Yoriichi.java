@@ -17,7 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
@@ -184,5 +184,10 @@ public class Yoriichi extends RoleBase{
 		return new ItemStack[] {
 			Items.getSoufleduSoleil()	
 		};
+	}
+
+	@Override
+	public String getName() {
+		return "§eYoriichi";
 	}
 }

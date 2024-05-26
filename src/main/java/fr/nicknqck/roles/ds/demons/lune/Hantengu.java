@@ -14,7 +14,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.particles.WingsEffect;
@@ -84,6 +84,12 @@ private int killforce = 0;
 		urotime = 0;
 		karakutime = 0;
 	}
+
+	@Override
+	public String getName() {
+		return "§cHantengu";
+	}
+
 	@Override
 		public void GiveItems() {
 			owner.getInventory().addItem(Items.getHantenguZohakuten());

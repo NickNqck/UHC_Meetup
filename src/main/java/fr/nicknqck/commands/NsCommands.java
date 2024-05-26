@@ -16,7 +16,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 
 public class NsCommands implements CommandExecutor {
 	final GameState gameState;

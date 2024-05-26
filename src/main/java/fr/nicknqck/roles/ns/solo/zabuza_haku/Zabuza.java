@@ -2,6 +2,9 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 
 import java.util.HashMap;
 
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,7 +16,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.AttackUtils;
@@ -24,13 +26,19 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Zabuza extends RoleBase{
+public class Zabuza extends NSRoles {
 
 	public Zabuza(Player player, Roles roles) {
 		super(player, roles);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+			if (!gameState.attributedRole.contains(Roles.Haku)) {
+				onHakuDeath(false);
+				owner.sendMessage("§bHaku§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
+			}
+		}, 20*10);
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {
@@ -51,7 +59,7 @@ public class Zabuza extends RoleBase{
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point+KubikiribôchôItem().getItemMeta().getDisplayName()+" §f: Épée en diamant§7 Tranchant IV",
+                AllDesc.point+ KubikiribochoItem().getItemMeta().getDisplayName()+" §f: Épée en diamant§7 Tranchant IV",
                 "",
                 AllDesc.point+KirigakureNoJutsuItem().getItemMeta().getDisplayName()+"§f: Vous devenez §ainvisible §fen portant votre armure jusqu'à votre prochain coup (§c5 minutes maximum§f). De plus, lorsque vous êtes §ainvisible§f, vous laissez apparaître des §7particules blanches §fsur vos pas que seuls vous et §bHaku §fpeuvent voir.§7 (1x/5m)",
                 "",
@@ -80,10 +88,16 @@ public class Zabuza extends RoleBase{
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				KubikiribôchôItem(),
+				KubikiribochoItem(),
 				KirigakureNoJutsuItem()
 		};
 	}
@@ -93,7 +107,7 @@ public class Zabuza extends RoleBase{
 		cdKirigakureNoJutsu = 0;
 	}
 	
-	private ItemStack KubikiribôchôItem () {
+	private ItemStack KubikiribochoItem() {
 		return new ItemBuilder(Material.DIAMOND_SWORD).setName("§bKubikiribôchô").setLore("§7La légéndaire épée de §bZabuza").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).hideEnchantAttributes().toItemStack();
 	}
 	private ItemStack KirigakureNoJutsuItem() {
@@ -104,9 +118,9 @@ public class Zabuza extends RoleBase{
 		if (entity.getUniqueId() == owner.getUniqueId()) {
 			if (getIGPlayers().contains(victim)) {
 				if (Invisible) {
-					removeInvisibility(timeInv);
+					removeInvisibility();
 				}
-				if (owner.getItemInHand().isSimilar(KubikiribôchôItem())) {
+				if (owner.getItemInHand().isSimilar(KubikiribochoItem())) {
 						if (RandomUtils.getOwnRandomProbability(5)) {
 							Heal(owner, 4.0);
 							owner.sendMessage("Vous venez de vous §drégénerez§r de§c 2"+AllDesc.coeur);
@@ -129,7 +143,7 @@ public class Zabuza extends RoleBase{
 			timeInv++;
 			sendCustomActionBar(owner, "§bTemp d'invisibilité:§c "+(StringUtils.secondsTowardsBeautiful((60*5)-timeInv)));
 			if (timeInv == 60*5) {
-				removeInvisibility(timeInv);
+				removeInvisibility();
 			}
 		}
 	}
@@ -159,7 +173,7 @@ public class Zabuza extends RoleBase{
 	}
 	private int cdKirigakureNoJutsu = 0;
 	private boolean Invisible = false;
-	private HashMap<Integer, ItemStack> armorContents = new HashMap<>();
+	private final HashMap<Integer, ItemStack> armorContents = new HashMap<>();
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(KirigakureNoJutsuItem())) {
@@ -186,20 +200,18 @@ public class Zabuza extends RoleBase{
 					owner.sendMessage("§aVous êtes maintenant invisible.");
 					AttackUtils.CantAttack.add(owner.getUniqueId());
 					AttackUtils.CantReceveAttack.add(owner.getUniqueId());
-					return true;
-				} else {
-					removeInvisibility(timeInv);
-					return true;
-				}
-			} else {
+                } else {
+					removeInvisibility();
+                }
+            } else {
 				sendCooldown(owner, cdKirigakureNoJutsu);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 	private int timeInv = 0;
-	private void removeInvisibility(int invitime) {
+	private void removeInvisibility() {
 		Invisible = false;
 		AttackUtils.CantAttack.remove(owner.getUniqueId());
 		AttackUtils.CantReceveAttack.remove(owner.getUniqueId());
@@ -219,5 +231,10 @@ public class Zabuza extends RoleBase{
 		if (armorContents.get(4) != null) {
 			owner.getInventory().setBoots(armorContents.get(4));
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§bZabuza";
 	}
 }

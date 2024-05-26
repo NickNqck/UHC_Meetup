@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
@@ -48,6 +48,12 @@ public class Conny extends RoleBase{
 	private boolean Sasha = false;
 	private boolean cmd = false;
 	private boolean protegerdead = false;
+
+	@Override
+	public String getName() {
+		return "§aConny";
+	}
+
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {

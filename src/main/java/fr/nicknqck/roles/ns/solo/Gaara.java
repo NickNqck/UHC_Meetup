@@ -1,16 +1,17 @@
 package fr.nicknqck.roles.ns.solo;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -27,16 +28,14 @@ import org.bukkit.util.Vector;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Cuboid;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.WorldUtils;
 import fr.nicknqck.utils.particles.TapisSableEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Gaara extends RoleBase {
+public class Gaara extends NSRoles {
 
     public Gaara(Player player, Roles roles) {
 		super(player, roles);
@@ -193,7 +192,7 @@ public class Gaara extends RoleBase {
     	}
     	super.FormChoosen(item, gameState);
     }
-    private void openDefense(GameState gameState) {
+    private void openDefense() {
     	selectedmeni = 2;
     	Inventory inv = Bukkit.createInventory(owner, 9, "Défense");
         inv.setItem(3, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setName("§6Armure de Sable").setLore(
@@ -221,7 +220,7 @@ public class Gaara extends RoleBase {
         owner.openInventory(inv);
 		
 	}
-    private void openAttaque(GameState gameState) {
+    private void openAttaque() {
      selectedmeni = 1;
 	 Inventory inv = Bukkit.createInventory(owner, 9, "Attaque");
      inv.setItem(3, new ItemBuilder(Material.WATER_BUCKET).setName("§6Tsunami de Sable").setLore(
@@ -256,7 +255,13 @@ public class Gaara extends RoleBase {
     	}
     	super.onNsCommand(args);
     }
-	@Override
+
+    @Override
+    public Intelligence getIntelligence() {
+        return Intelligence.MOYENNE;
+    }
+
+    @Override
 	public void onLeftClick(PlayerInteractEvent event, GameState gameState) {
 		if (event.getItem() != null) {
 			if (event.getItem().hasItemMeta()) {
@@ -283,10 +288,10 @@ public class Gaara extends RoleBase {
     if (item.getType().equals(Material.NETHER_STAR)) {
     	String name = item.getItemMeta().getDisplayName();
     	if (item.isSimilar(Attaque())) {
-    		openAttaque(gameState);
+    		openAttaque();
     	}
     	if (item.isSimilar(Defense())) {
-    		openDefense(gameState);
+    		openDefense();
     	}
     	if (name.equalsIgnoreCase("§eManipulation du sable")) {
     		if(manipulation != Manipulation.AUCUN) {
@@ -304,9 +309,7 @@ public class Gaara extends RoleBase {
         usingShukaku = true;
         givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, true);
         setForce(20);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-        	usingShukaku = false;
-        }, 5*20*60);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> usingShukaku = false, 5*20*60);
         shukakuCooldown = 20*60;
 	}
     	return super.ItemUse(item, gameState);
@@ -318,7 +321,7 @@ public class Gaara extends RoleBase {
 		  meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 		  meta.spigot().setUnbreakable(true);
 		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§7"+StringID));
+		  meta.setLore(Collections.singletonList(("§7"+StringID)));
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
@@ -329,7 +332,7 @@ public class Gaara extends RoleBase {
 		  meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
 		  meta.spigot().setUnbreakable(true);
 		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§7"+StringID));
+		  meta.setLore(Collections.singletonList("§7"+StringID));
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
@@ -368,6 +371,12 @@ public class Gaara extends RoleBase {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(direction.getZ(), 0.0, -direction.getX()).normalize();
     }
+
+    @Override
+    public String getName() {
+        return "§eGaara";
+    }
+
     private static class Wave extends BukkitRunnable {
 
         private final Vector origin;
@@ -409,7 +418,7 @@ public class Gaara extends RoleBase {
             index++;
         }
     }
-    public void useSarcophage(Player player) {
+   /* public void useSarcophage(Player player) {
         Player target = getTargetPlayer(player, 10);
         if(target != null){
             Location min = target.getLocation().clone().subtract(2, 1, 2), max = target.getLocation().clone().add(2, 5, 2);
@@ -418,15 +427,15 @@ public class Gaara extends RoleBase {
             sarcophage.getBlocks().forEach(block -> block.setType(Material.SAND));
         }
         player.updateInventory();
-    }
+    }*/
     public  void useLance(Player player) {
         ItemBuilder itemBuilder = new ItemBuilder(Material.DIAMOND_SWORD);
         itemBuilder.addEnchant(Enchantment.DAMAGE_ALL, 4);
         itemBuilder.setDurability((short) (Material.DIAMOND_SWORD.getMaxDurability() - 25));
         player.getInventory().addItem(itemBuilder.toItemStack());
         player.updateInventory();
-    }
-    public  List<Block> getBlocks(Location center, int radius, boolean hollow, boolean sphere) {
+    }/*
+    public List<Block> getBlocks(Location center, int radius, boolean hollow, boolean sphere) {
         List<Location> locs = circle(center, radius, radius, hollow, sphere, 0);
         List<Block> blocks = new ArrayList<>();
 
@@ -460,7 +469,7 @@ public class Gaara extends RoleBase {
         }
 
         return circleblocks;
-    }
+    }*/
     public void useArmure(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
         setResi(40);
@@ -509,7 +518,7 @@ public class Gaara extends RoleBase {
     	AUCUN,
     	LANCE,
     	ARMURE,
-    	SUSPENSION;
+    	SUSPENSION
     }
     int sablenmb = 128;
     public void runPower(Player player) {

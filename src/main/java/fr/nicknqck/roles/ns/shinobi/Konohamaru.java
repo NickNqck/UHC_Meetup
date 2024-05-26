@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -15,7 +17,6 @@ import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
@@ -23,7 +24,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Konohamaru extends RoleBase{
+public class Konohamaru extends NSRoles {
 
 	public Konohamaru(Player player, Roles roles) {
 		super(player, roles);
@@ -31,6 +32,11 @@ public class Konohamaru extends RoleBase{
 		giveItem(owner, false, getItems());
 		owner.sendMessage(Desc());
 		
+	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
 	}
 
 	@Override
@@ -104,12 +110,11 @@ public class Konohamaru extends RoleBase{
 		if (item.isSimilar(RasenganItem())) {
 			if (cdRasengan <= 0) {
 				owner.sendMessage("§7Il faut frapper un joueur pour créer une explosion.");
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdRasengan);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(NueesArdentesItem())) {
 			if (cdNueesArdentes <= 0) {
 				owner.sendMessage("§aNuées Ardentes!");
@@ -121,15 +126,14 @@ public class Konohamaru extends RoleBase{
 						owner.sendMessage("§7§l"+p.getName()+"§7 à été touchée");
 					}
 				}
-				return true;	
-				} else {
+            } else {
 					sendCooldown(owner, cdNueesArdentes);
-					return true;
-				}
-			}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
-	private Map<UUID, Integer> timePassedNearby = new HashMap<>();
+	private final Map<UUID, Integer> timePassedNearby = new HashMap<>();
 	private boolean KnowNaruto = false;
 	@Override
 	public void Update(GameState gameState) {
@@ -149,9 +153,9 @@ public class Konohamaru extends RoleBase{
 		if (p != null) {
 			if (timePassedNearby.containsKey(p.getUniqueId())) {
 				int i = timePassedNearby.get(p.getUniqueId());
-				timePassedNearby.remove(p, i);
+				timePassedNearby.remove(p.getUniqueId(), i);
 				timePassedNearby.put(p.getUniqueId(), i+1);
-					if (timePassedNearby.get(p.getUniqueId()).intValue() == 60*2) {
+					if (timePassedNearby.get(p.getUniqueId()) == 60*2) {
 						owner.sendMessage("§a"+p.getDisplayName()+"§f est §aNaruto");
 						KnowNaruto = true;
 					}
@@ -159,5 +163,10 @@ public class Konohamaru extends RoleBase{
 				timePassedNearby.put(p.getUniqueId(), 1);
 			}
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§aKonohamaru";
 	}
 }

@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 
@@ -43,6 +43,12 @@ public class Magath extends RoleBase{
 		}
 		super.Update(gameState);
 	}
+
+	@Override
+	public String getName() {
+		return "§9Magath";
+	}
+
 	@Override
 	public String[] Desc() {
 		gameState.sendShifterList(owner);

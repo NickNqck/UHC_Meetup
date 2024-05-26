@@ -2,8 +2,9 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.raytrace.RayTrace;
@@ -15,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class Ino extends RoleBase {
+public class Ino extends NSRoles {
     private final ItemStack transpositionItem = new ItemBuilder(Material.NETHER_STAR).setName("§aTransposition").setLore("§7Vous permet de suivre très discrètement un joueur").toItemStack();
     private int cdTransposition = 0;
     public Ino(Player player, GameState.Roles roles) {
@@ -23,6 +24,11 @@ public class Ino extends RoleBase {
         setChakraType(getRandomChakras());
         owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
+    }
+
+    @Override
+    public Intelligence getIntelligence() {
+        return Intelligence.CONNUE;
     }
 
     @Override
@@ -89,6 +95,12 @@ public class Ino extends RoleBase {
         }
         return super.ItemUse(item, gameState);
     }
+
+    @Override
+    public String getName() {
+        return "§aIno";
+    }
+
     private static class TranspositionRunnable extends BukkitRunnable {
         private final Ino ino;
         private final UUID uuidTarget;

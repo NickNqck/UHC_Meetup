@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
@@ -78,8 +78,7 @@ public class YondaimeRaikage extends RoleBase {
 		if (killer.getUniqueId() != owner.getUniqueId())return;
 		timeLeft+=60;
 		owner.sendMessage("§7Vous avez gagnez§c 60s§7 d'utilisation de votre§e Armure Raiton§7, il vous reste maintenant§c "+StringUtils.secondsTowardsBeautifulinScoreboard(timeLeft)+"§7 de temp d'utilisation");
-		return ;
-	}
+    }
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(ArmureItem())) {
@@ -106,19 +105,22 @@ public class YondaimeRaikage extends RoleBase {
 							givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 						}
 					}.runTaskTimer(Main.getInstance(), 0, 20);
-					return true;
-				} else {
+                } else {
 					armureActived = false;
 					owner.sendMessage("§7Désactivation de votre§e Armure Raiton");
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 					givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
-					return true;
-				}
-			} else {
+                }
+            } else {
 				owner.sendMessage("§7Vous n'avez pas asser de chakra pour utiliser cette technique.");
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§aYondaime Raikage";
 	}
 }

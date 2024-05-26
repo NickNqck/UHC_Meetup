@@ -18,7 +18,7 @@ import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.PotionUtils;
 

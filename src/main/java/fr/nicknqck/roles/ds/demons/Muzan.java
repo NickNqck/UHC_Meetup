@@ -13,8 +13,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Muzan extends RoleBase {
@@ -160,5 +160,10 @@ public class Muzan extends RoleBase {
 	}
 	@Override
 	public void resetCooldown() {
+	}
+
+	@Override
+	public String getName() {
+		return "§cMuzan";
 	}
 }

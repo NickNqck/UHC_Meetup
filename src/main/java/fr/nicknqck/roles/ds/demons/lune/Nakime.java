@@ -17,7 +17,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.ItemBuilder;
@@ -195,5 +195,10 @@ public class Nakime extends RoleBase{
 			ejectPlayerinCage();
 		}
 		super.PlayerKilled(killer, victim, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§cNakime";
 	}
 }

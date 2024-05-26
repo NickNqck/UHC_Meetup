@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.betteritem.BetterItemEvent;
@@ -60,7 +60,13 @@ public class Livai extends RoleBase{
 					Items.getsugar()
 			};
 		}
-		private int cdsugar = 0;
+
+	@Override
+	public String getName() {
+		return "§aLivai";
+	}
+
+	private int cdsugar = 0;
 		private int nbsugar = 0;
 		@Override
 		public boolean ItemUse(ItemStack item, GameState gameState) {

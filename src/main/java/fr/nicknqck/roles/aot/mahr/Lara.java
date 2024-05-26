@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 
@@ -23,6 +23,12 @@ public class Lara extends RoleBase {
 		canShift = true;
 		super.RoleGiven(gameState);
 	}
+
+	@Override
+	public String getName() {
+		return "§9Lara";
+	}
+
 	@Override
 	public String[] Desc() {
 		gameState.sendShifterList(owner);

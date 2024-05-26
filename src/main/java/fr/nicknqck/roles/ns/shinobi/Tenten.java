@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -95,7 +95,7 @@ public class Tenten extends RoleBase{
 			owner.sendMessage("§7Vous activez votre zone de§a parchemin");
 			cdParchemin+=45;
 			new BukkitRunnable() {
-				Location initLoc = owner.getLocation().clone();
+				final Location initLoc = owner.getLocation().clone();
 				int i = 20;
 				@Override
 				public void run() {
@@ -162,5 +162,10 @@ public class Tenten extends RoleBase{
 				}
 			}
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§aTenten";
 	}
 }

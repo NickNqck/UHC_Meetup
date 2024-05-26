@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -201,5 +201,10 @@ public class Muichiro extends RoleBase{
 			}
 		}
 		super.PlayerKilled(killer, victim, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§aMuichiro";
 	}
 }

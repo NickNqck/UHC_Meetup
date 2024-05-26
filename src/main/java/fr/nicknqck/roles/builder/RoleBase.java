@@ -1,4 +1,4 @@
-package fr.nicknqck.roles;
+package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
@@ -35,7 +35,7 @@ import org.bukkit.util.Vector;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public abstract class RoleBase {
+public abstract class RoleBase implements Role{
 
 	public boolean canShift = false;
 	public Player owner;
@@ -65,7 +65,10 @@ public abstract class RoleBase {
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
-	public ArrayList<Player> getIGPlayers() {return gameState.getInGamePlayers();}
+
+	public ArrayList<Player> getIGPlayers() {
+		return gameState.getInGamePlayers();
+	}
 
 	public int maxduralame = 40;
 	boolean lameincassable = false;
@@ -77,6 +80,9 @@ public abstract class RoleBase {
 	private UUID uuidOwner;
 	public RoleBase(Player player, Roles roles) {
 		owner = player;
+		if (gameState == null){
+			this.gameState = GameState.getInstance();
+		}
 		speedBase = 0.20f;
 		owner.setWalkSpeed(speedBase*(bonusSpeedMultiplier+1));
 		type = roles;
@@ -121,6 +127,12 @@ public abstract class RoleBase {
 			}
 		}.runTaskTimer(Main.getInstance(), 0, 1);
 	}
+
+	@Override
+	public UUID getPlayer() {
+		return getUuidOwner();
+	}
+
 	public abstract void resetCooldown();
 	public boolean HisUnbreak() {return lameincassable;}
 	public void setLameIncassable(Player target, boolean a) {

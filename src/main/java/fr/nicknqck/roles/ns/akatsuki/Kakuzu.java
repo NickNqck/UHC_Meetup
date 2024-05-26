@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,13 +20,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 
-public class Kakuzu extends RoleBase{
+public class Kakuzu extends NSRoles {
 
 	public Kakuzu(Player player, Roles roles) {
 		super(player, roles);
@@ -33,6 +34,11 @@ public class Kakuzu extends RoleBase{
 		ChakrasOwned.put(getChakras(), true);
 		setForce(20);
 		giveItem(owner, false, getItems());
+	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.MOYENNE;
 	}
 
 	@Override
@@ -208,5 +214,10 @@ public class Kakuzu extends RoleBase{
 	public void resetCooldown() {
 		changeCD = 0;
 	}
-	private HashMap<Chakras, Boolean> ChakrasOwned = new HashMap<>();
+	private final HashMap<Chakras, Boolean> ChakrasOwned = new HashMap<>();
+
+	@Override
+	public String getName() {
+		return "§cKakuzu";
+	}
 }

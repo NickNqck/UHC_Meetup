@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ns.orochimaru;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,13 +22,12 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Suigetsu extends RoleBase {
+public class Suigetsu extends NSRoles {
 
 	public Suigetsu(Player player, Roles roles) {
 		super(player, roles);
@@ -39,6 +40,12 @@ public class Suigetsu extends RoleBase {
 			}
 		}, 20*10);
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
+	}
+
 	private boolean orochimaruDeath = false;
 	private void onOrochimaruDeath(boolean message) {
 		if (message) {
@@ -103,10 +110,8 @@ public class Suigetsu extends RoleBase {
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (getPlayerRoles(player).type.equals(Roles.Orochimaru)) {
 			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
-			boolean KarinAlive = false;
-			if (getListPlayerFromRole(Roles.Karin).size() > 0) {
-				KarinAlive = true;
-			}
+			boolean KarinAlive = !getListPlayerFromRole(Roles.Karin).isEmpty();
+            onOrochimaruDeath(true);
 			owner.sendMessage("§5Orochimaru§7 vient de mourir vous obtenez donc "+AllDesc.Force+"§c 1§7 ainsi que le nom du joueur possédant le rôle §5Karin§7 qui est "+(KarinAlive ? "§5"+getPlayerFromRole(Roles.Karin).getDisplayName() : "§cMort"));
 		}
 	}
@@ -152,13 +157,11 @@ public class Suigetsu extends RoleBase {
 		if (victim.getUniqueId() == owner.getUniqueId()) {
 			if (Invisible) {
 				event.setCancelled(true);
-				return;
-			} else {
+            } else {
 				int r = RandomUtils.getRandomInt(1, 10);
 				if (r == 5) {
 					event.setCancelled(true);
-					return;
-				}
+                }
 			}
 		}
 	}
@@ -170,8 +173,7 @@ public class Suigetsu extends RoleBase {
 				Location toTP = null;
 				for (Block b : obtenirBlocsEntreDeuxPositions(owner, getTargetLocation(owner, 20))) {
 					if (b.getType().name().contains("WATER")) {
-						Location t = new Location(b.getWorld(), b.getX(), b.getY(), b.getZ());
-						toTP = t;
+                        toTP = new Location(b.getWorld(), b.getX(), b.getY(), b.getZ());
 						break;
 					}
 				}
@@ -180,12 +182,11 @@ public class Suigetsu extends RoleBase {
 					return true;
 				}
 				owner.teleport(toTP);
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, suikaCD);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 	public List<Block> obtenirBlocsEntreDeuxPositions(Player joueur, Location positionVoulue) {
@@ -211,35 +212,14 @@ public class Suigetsu extends RoleBase {
         }
         return tr;
     }
-	/*private List<Location> getListBlock(Location l1, Location l2){
-		List<Location> tr = new ArrayList<>();
-		for (Block b : getAllBlockInDistance(l1, l2)) {
-			tr.add(b.getLocation().clone());
-		}
-		return tr;
+
+	@Override
+	public String getName() {
+		return "§5Suigetsu";
 	}
-	private List<Block> getAllBlockInDistance(Location l1, Location l2){
-		if (l1.getWorld() != l2.getWorld()) {
-			return null;
-		}
-		List<Block> tr = new ArrayList<>();
-		int distance = (int)l1.distance(l2);
-		if (l2.getBlockX() > 0) {
-			for (int x1 = l1.getBlockX(); x1 < l2.getBlockX(); x1++) {
-				if (l2.getBlockZ() > 0) {
-					for (int z = l1.getBlockZ(); z < l2.getBlockZ(); z++) {
-						for (int y = l1.getBlockY(); y < l2.getBlockY(); y++) {
-							Location loc = new Location(l1.getWorld(), x1, y, z);
-							if (loc.distance(l2) < distance) {
-								if ((int)loc.distance(l2)  == (distance-1)) {
-									tr.add(loc.getBlock());
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return tr;
-	}*/
+
+	@Override
+	public void OnAPlayerKillAnotherPlayer(Player player, Player damager, GameState gameState) {
+		super.OnAPlayerKillAnotherPlayer(player, damager, gameState);
+	}
 }

@@ -1,22 +1,25 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.util.Random;
-
+import fr.nicknqck.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Objective;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
 public class Pourfendeur extends RoleBase {
+	@Override
+	public String getName() {
+		return "§aPourfendeur Simple";
+	}
+
 	public enum Soufle {
 		Soleil,
 		Lune,
@@ -32,8 +35,7 @@ public class Pourfendeur extends RoleBase {
 		super(player, roles);
 		for (String desc : AllDesc.Pourfendeur) owner.sendMessage(desc);
         this.setCanUseBlade(true);
-        Random random = new Random();
-        int rint = random.nextInt(5);
+        int rint = Main.RANDOM.nextInt(5);
         if (rint == 0) {
         form = Soufle.Eau;	
         Eau1 = true;

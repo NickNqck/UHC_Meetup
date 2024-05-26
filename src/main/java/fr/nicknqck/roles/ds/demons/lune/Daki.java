@@ -6,15 +6,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Objective;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Daki extends RoleBase{
@@ -38,7 +37,12 @@ public class Daki extends RoleBase{
 			}
 		}, 20);
 	}
-	
+
+	@Override
+	public String getName() {
+		return "§cDaki";
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Daki, 5);

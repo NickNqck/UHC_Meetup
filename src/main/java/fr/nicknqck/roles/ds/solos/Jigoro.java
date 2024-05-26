@@ -12,7 +12,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -27,6 +27,12 @@ public class Jigoro extends RoleBase{
 	private int cooldownpremiermouvement = 0;
 	private int cooldownquatriememouvement = 0;
 	private boolean killtwo = false;
+
+	@Override
+	public String getName() {
+		return "§eJigoro";
+	}
+
 	enum Status {
 		Min1,
 		Min2,

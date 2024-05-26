@@ -10,7 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Hotaru extends RoleBase{
@@ -26,6 +26,12 @@ public class Hotaru extends RoleBase{
 	public int actualdslameuse = 0;
 	public boolean hasdsunbreak = false;
 	public int actualdsrepair = 0;
+
+	@Override
+	public String getName() {
+		return "§aHotaru";
+	}
+
 	private enum Lame {
 		Force,
 		Resi,

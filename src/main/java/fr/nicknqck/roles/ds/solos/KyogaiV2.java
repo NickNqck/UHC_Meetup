@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -56,6 +56,12 @@ public class KyogaiV2 extends RoleBase{
 				AllDesc.bar
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§cKyogai§7 (§6V2§7)";
+	}
+
 	public enum Model {
 		Back,
 		Leg,

@@ -2,10 +2,11 @@ package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Nagato extends RoleBase {
+public class Nagato extends NSRoles {
     private final ItemStack ShuradoItem = new ItemBuilder(Material.DIAMOND_SWORD).hideEnchantAttributes().addEnchant(Enchantment.DAMAGE_ALL, 4).setName("§7Shuradô").setLore("§7Sharpness IV").toItemStack();
     private int useJikogudo = 0;
     private final ItemStack ShikushodoItem = new ItemBuilder(Material.NETHER_STAR).setName("§fShikushodo").setLore(
@@ -245,6 +246,11 @@ public class Nagato extends RoleBase {
     }
 
     @Override
+    public Intelligence getIntelligence() {
+        return Intelligence.INTELLIGENT;
+    }
+
+    @Override
     public void onALLPlayerDamage(EntityDamageEvent e, Player victim) {
         super.onALLPlayerDamage(e, victim);
         if (!NF.isEmpty()){
@@ -260,5 +266,10 @@ public class Nagato extends RoleBase {
                 victim.sendMessage("§aGakido§7 vous à protégez des dégats, vous avez donc subit§c 25% de dégat en moins");
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return "§cNagato";
     }
 }

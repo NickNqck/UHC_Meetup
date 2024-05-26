@@ -1,7 +1,7 @@
 package fr.nicknqck.player;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;

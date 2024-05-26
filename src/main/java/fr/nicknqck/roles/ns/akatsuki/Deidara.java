@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,7 +33,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
@@ -39,12 +41,17 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Deidara extends RoleBase{
+public class Deidara extends NSRoles {
 
 	public Deidara(Player player, Roles roles) {
 		super(player, roles);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON));
 		owner.sendMessage(Desc());
+	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.MOYENNE;
 	}
 
 	@Override
@@ -220,6 +227,12 @@ public class Deidara extends RoleBase{
 		hasArtUltime = false;
 		setOldBlockwMap();
 	}
+
+	@Override
+	public String getName() {
+		return "§cDeidara";
+	}
+
 	private enum Mode {
 		C1(new ItemBuilder(Material.SULPHUR).setName("§cC1").toItemStack()),
 		C2(new ItemBuilder(Material.FEATHER).setName("§cC2").toItemStack()),

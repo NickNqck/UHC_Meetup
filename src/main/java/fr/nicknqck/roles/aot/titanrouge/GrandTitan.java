@@ -8,7 +8,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -36,6 +36,12 @@ public class GrandTitan extends RoleBase{
 				AllDesc.bar
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§cGrand Titan";
+	}
+
 	@Override
 	public void GiveItems() {
 		owner.getInventory().addItem(getItems());

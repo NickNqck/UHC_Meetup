@@ -12,7 +12,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
@@ -77,6 +77,12 @@ public class Kaigaku extends RoleBase{
 		owner.getInventory().addItem(Items.getLamedenichirin());
 		super.GiveItems();
 	}
+
+	@Override
+	public String getName() {
+		return "§cKaigaku";
+	}
+
 	@Override
 	public void Update(GameState gameState) {
 		if (owner.getItemInHand().isSimilar(Items.getSoufleFoudre4iememouvement())) {

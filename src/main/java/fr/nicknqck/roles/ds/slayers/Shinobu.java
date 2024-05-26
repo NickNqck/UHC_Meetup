@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Shinobu extends RoleBase{
@@ -148,5 +148,10 @@ public class Shinobu extends RoleBase{
 		
 		}
 	super.PlayerKilled(killer, victim, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§aShinobu";
 	}
 }

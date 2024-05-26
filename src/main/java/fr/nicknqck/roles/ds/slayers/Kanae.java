@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -96,5 +96,10 @@ public class Kanae extends RoleBase {
 		String msg = ChatColor.GREEN+"Votre coup à infliger: "+d+" au joueur: "+ChatColor.GOLD+victim.getName();
 		owner.sendMessage(msg);
 		super.ItemUseAgainst(item, victim, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§aKanae";
 	}
 }

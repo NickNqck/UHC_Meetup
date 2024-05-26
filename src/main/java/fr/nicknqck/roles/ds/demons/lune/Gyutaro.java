@@ -13,7 +13,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gyutaro extends RoleBase{
@@ -63,6 +63,12 @@ public class Gyutaro extends RoleBase{
 				Items.getPouvoirSanginaire()
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§cGyutaro";
+	}
+
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim == owner) {			

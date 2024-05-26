@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class DemonMain extends RoleBase{
@@ -19,6 +19,11 @@ public class DemonMain extends RoleBase{
 		this.setForce(20);
 		 this.setResi(20);
 		 owner.sendMessage(Desc());
+	}
+
+	@Override
+	public String getName() {
+		return "§cDemon Main";
 	}
 
 	@Override

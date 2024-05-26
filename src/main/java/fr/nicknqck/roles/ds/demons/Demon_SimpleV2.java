@@ -9,7 +9,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -39,6 +39,12 @@ public class Demon_SimpleV2 extends RoleBase {
         }, 20);		
 		return AllDesc.Demon_SimpleV2;
 	}
+
+	@Override
+	public String getName() {
+		return "§cDemon Simple§7 (§6V2§7)";
+	}
+
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[0];

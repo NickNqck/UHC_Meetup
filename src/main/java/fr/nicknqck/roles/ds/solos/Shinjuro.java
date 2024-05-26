@@ -13,7 +13,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 
@@ -127,7 +127,7 @@ public class Shinjuro extends RoleBase {
 			if (item.isSimilar(Items.getSake())) {
 				if (cooldownsake <= 0) {
 						owner.sendMessage("§7Vous venez de boire de l'alcool");
-						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*(1*(60+30)), 0, false, false));
+						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*((60 + 30)), 0, false, false));
 						setForce(20);
 						cooldownsake = 60*5;
 				}else {
@@ -139,13 +139,12 @@ public class Shinjuro extends RoleBase {
 					if (!usesoufle) {
 						owner.sendMessage("Vous venez d'activer le Soufle du Feu");
 						usesoufle = true;
-						souflecooldown = 3;
-					} else {
+                    } else {
 						owner.sendMessage("Vous venez de désactiver le Soufle du Feu");
 						usesoufle = false;
-						souflecooldown = 3;
-					}
-				} else {
+                    }
+                    souflecooldown = 3;
+                } else {
 					sendCooldown(owner, souflecooldown);
 				}
 			}
@@ -176,9 +175,12 @@ public class Shinjuro extends RoleBase {
 		if (victim == owner) return;
 		if (!usesoufle) return;
 		int x = 10 * 20;
-        if (victim instanceof Player) {
-            victim.setFireTicks(x);
-        }
-		super.ItemUseAgainst(item, victim, gameState);
+        victim.setFireTicks(x);
+        super.ItemUseAgainst(item, victim, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§eShinjuro";
 	}
 }

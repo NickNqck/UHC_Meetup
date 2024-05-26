@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,14 +15,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 
-public class Karin extends RoleBase {
+public class Karin extends NSRoles {
 
 	public Karin(Player player, Roles roles) {
 		super(player, roles);
@@ -90,7 +91,7 @@ public class Karin extends RoleBase {
 									if (gameState.getServerState() != ServerStates.InGame) {
 										cancel();
 									}
-									if (i < 90 && target != null && target.isOnline()) {
+									if (i < 90 && target.isOnline()) {
 										sendCustomActionBar(owner, Loc.getDirectionMate(owner, target, 100));
 									}
 									if (i == 90) {
@@ -111,6 +112,12 @@ public class Karin extends RoleBase {
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public void resetCooldown() {
 		morsureCD = 0;
@@ -118,7 +125,7 @@ public class Karin extends RoleBase {
 	}
 	private int morsureCD = 0;
 	private int kaguraCD = 0;
-	private Map<UUID, Integer> timePassedNearby = new HashMap<>();
+	private final Map<UUID, Integer> timePassedNearby = new HashMap<>();
 	@Override
 	public void Update(GameState gameState) {
 		if (timeLastUseHeal > 0)timeLastUseHeal--;
@@ -134,14 +141,14 @@ public class Karin extends RoleBase {
 			}
 			if (timePassedNearby.containsKey(p.getUniqueId())) {
 				int i = timePassedNearby.get(p.getUniqueId());
-				timePassedNearby.remove(p, i);
+				timePassedNearby.remove(p.getUniqueId(), i);
 				timePassedNearby.put(p.getUniqueId(), i+1);
 				if (getPlayerRoles(p).getTeam() == TeamList.Orochimaru) {
-					if (timePassedNearby.get(p.getUniqueId()).intValue() == 60*2) {
+					if (timePassedNearby.get(p.getUniqueId()) == 60*2) {
 						owner.sendMessage("§5"+p.getDisplayName()+"§f est dans le camp§5 Orochimaru");
 					}
 				}else {
-					if (timePassedNearby.get(p.getUniqueId()).intValue() == 60*5) {
+					if (timePassedNearby.get(p.getUniqueId()) == 60*5) {
 						owner.sendMessage(getTeamColor(p)+p.getDisplayName()+"§f est dans le camp "+getTeamColor(p)+getTeam(p).name());
 					}
 				}
@@ -185,5 +192,10 @@ public class Karin extends RoleBase {
 			return true;
 		}
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§5Karin";
 	}
 }

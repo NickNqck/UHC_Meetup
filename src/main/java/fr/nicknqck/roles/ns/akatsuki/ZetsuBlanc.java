@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,20 +14,24 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 
-public class ZetsuBlanc extends RoleBase{
+public class ZetsuBlanc extends NSRoles {
 
 	public ZetsuBlanc(Player player, Roles roles) {
 		super(player, roles);
 		setChakraType(Chakras.DOTON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
+	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
 	}
 
 	@Override
@@ -137,5 +143,10 @@ public class ZetsuBlanc extends RoleBase{
 			}
 		}
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§cZetsu Blanc";
 	}
 }

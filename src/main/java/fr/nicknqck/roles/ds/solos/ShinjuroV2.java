@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -76,6 +76,12 @@ public class ShinjuroV2 extends RoleBase{
 		cooldownsake = 0;
 		regencooldown = 0;
 	}
+
+	@Override
+	public String getName() {
+		return "§eShinjuro§7 (§6V2§7)";
+	}
+
 	private enum Stade {
 		Stade0,
 		Stade1,

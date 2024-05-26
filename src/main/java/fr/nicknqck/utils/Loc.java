@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 
 public class Loc {
 

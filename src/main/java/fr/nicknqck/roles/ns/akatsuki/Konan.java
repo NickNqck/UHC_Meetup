@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ns.akatsuki;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,8 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
@@ -25,7 +26,7 @@ import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.particles.WingsEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Konan extends RoleBase {
+public class Konan extends NSRoles {
 
 	public Konan(Player player, Roles roles) {
 		super(player, roles);
@@ -148,11 +149,16 @@ public class Konan extends RoleBase {
 					}.runTaskTimer(Main.getInstance(), 0, 20);
 					aileGaucheCD = 60*6;
 					event.setCancelled(true);
-					return;
-				}
+                }
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(AileItem())) {
@@ -165,8 +171,8 @@ public class Konan extends RoleBase {
 				owner.sendMessage("§cIl faut viser un joueur !");
 				return true;
 			}
-			new PropulserUtils(owner, 30).applyPropulsion(target);;
-			aileDroiteCD = 60*5;
+			new PropulserUtils(owner, 30).applyPropulsion(target);
+            aileDroiteCD = 60*5;
 			return true;
 		}
 		if (item.isSimilar(DiversionItem())) {
@@ -187,5 +193,10 @@ public class Konan extends RoleBase {
 			return true;
 		}
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§cKonan";
 	}
 }

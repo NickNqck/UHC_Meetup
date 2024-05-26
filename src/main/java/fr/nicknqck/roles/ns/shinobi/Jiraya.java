@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,7 +19,6 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
@@ -25,7 +26,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Jiraya extends RoleBase{
+public class Jiraya extends NSRoles {
 
 	public Jiraya(Player player, Roles roles) {
 		super(player, roles);
@@ -140,7 +141,7 @@ public class Jiraya extends RoleBase{
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(CrapaudItem())) {
 			if (cdGamabunta <= 0) {
-				if (Loc.getNearbyPlayersExcept(owner, 25).size() > 0) {
+				if (!Loc.getNearbyPlayersExcept(owner, 25).isEmpty()) {
 					World g = Bukkit.getWorld("Gamabunta");
 					if (g != null) {
 						fr.nicknqck.utils.GamabuntaLoc gLoc = new fr.nicknqck.utils.GamabuntaLoc();
@@ -185,21 +186,19 @@ public class Jiraya extends RoleBase{
 				setResi(20);
 				setForce(20);
 				cdSenjutsu = 480;
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdSenjutsu);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(RasenganItem())) {
 			if (cdRasengan <= 0) {
 				owner.sendMessage("§7Il faut frapper un joueur pour crée une explosion.");
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdRasengan);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 	@Override
@@ -220,6 +219,12 @@ public class Jiraya extends RoleBase{
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (Bukkit.getWorld("Gamabunta")!=null) {
@@ -235,5 +240,10 @@ public class Jiraya extends RoleBase{
 				}
 			}
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§aJiraya";
 	}
 }

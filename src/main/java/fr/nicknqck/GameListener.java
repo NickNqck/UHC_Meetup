@@ -14,8 +14,8 @@ import fr.nicknqck.events.custom.UHCPlayerKill;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.aot.titans.TitanListener;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -538,24 +538,22 @@ public class GameListener implements Listener {
 	public void DeathMessage(Player damager, Player victim) {
 		if (damager != null) {
 			if (victim.getWorld() != Bukkit.getWorld("nakime")) {
-					SendToEveryoneExcept(ChatColor.DARK_GRAY+"§o§m-----------------------------------", (Player) damager);
-					SendToEveryoneExcept("", damager);
+					SendToEveryoneExcept(ChatColor.DARK_GRAY+"§o§m-----------------------------------", damager);
+					SendToEveryoneExcept(victim.getDisplayName()+"§7 est mort,", damager);
 					if (!gameState.hasRoleNull(victim)) {
-						SendToEveryoneExcept(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+ChatColor.GOLD+gameState.getPlayerRoles().get(victim).type.name(), damager);
+						SendToEveryoneExcept("§7Son rôle était: "+gameState.getPlayerRoles().get(victim).getName(), damager);
 					} else {
 						SendToEveryoneExcept(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle", damager);
 					}
-					SendToEveryoneExcept("", damager);
-					SendToEveryoneExcept(ChatColor.DARK_GRAY+"§o§m-----------------------------------", (Player) damager);
+					SendToEveryoneExcept(ChatColor.DARK_GRAY+"§o§m-----------------------------------", damager);
 					
 					damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-					damager.sendMessage("");
 					if (!gameState.hasRoleNull(victim)) {
-						damager.sendMessage(ChatColor.RED+"Vous avez tué: "+ChatColor.RESET+victim.getDisplayName()+ChatColor.RED+" son rôle était "+ChatColor.GOLD+gameState.getPlayerRoles().get(victim).type.name());
+						damager.sendMessage("§7Vous avez tué:§f "+victim.getDisplayName()+"§7,");
+						damager.sendMessage("§7Son rôle était "+gameState.getPlayerRoles().get(victim).getName());
 					} else {
 						damager.sendMessage("§cVous avez tué:§f "+victim.getDisplayName()+"§c, il n'avait pas de rôle.");
 					}
-					damager.sendMessage("");
 					damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
             }else {
 				for (Player p : Bukkit.getOnlinePlayers()) {

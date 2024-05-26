@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,15 +24,14 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.raytrace.RayTrace;
 
-public class Haku extends RoleBase{
-
+public class Haku extends NSRoles {
+	private int maxCDHaku = 60*8;
 	public Haku(Player player, Roles roles) {
 		super(player, roles);
 		setChakraType(Chakras.SUITON);
@@ -104,6 +105,7 @@ public class Haku extends RoleBase{
 		if (msg) {
 			owner.sendMessage("§bZabuza§7 est mort, le cooldown de votre§b Bulle§7 diminue");
 		}
+		maxCDHaku = 60*3;
 	}
 	@Override
 	public void resetCooldown() {
@@ -147,16 +149,16 @@ public class Haku extends RoleBase{
 
 	    return blocksInFront;
 	}
-	private Location getHakuTargetLocation(Player player, double maxDistance) {
+	private Location getHakuTargetLocation(Player player) {
         Vector origin = player.getEyeLocation().toVector();
         Vector direction = player.getEyeLocation().getDirection();
 
         RayTrace rayTrace = new RayTrace(origin, direction);
-        Vector targetPosition = rayTrace.positionOfIntersection(maxDistance, 0.1);
+        Vector targetPosition = rayTrace.positionOfIntersection(50, 0.1);
         if (targetPosition != null) {
             return targetPosition.toLocation(player.getWorld());
         }
-        return origin.clone().add(direction.clone().multiply(maxDistance)).toLocation(player.getWorld());
+        return origin.clone().add(direction.clone().multiply((double) 50)).toLocation(player.getWorld());
     }
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
@@ -166,7 +168,7 @@ public class Haku extends RoleBase{
 					Location precedentB = null;
 					HashMap<Integer, Location> Integers = new HashMap<>();
 					int i = 0;
-					for (Block b : getBlocksInFrontOfPlayer(owner, getHakuTargetLocation(owner, 50))) {
+					for (Block b : getBlocksInFrontOfPlayer(owner, getHakuTargetLocation(owner))) {
 						i++;
 						precedentB = b.getLocation();
 						Integers.put(i, precedentB);
@@ -188,8 +190,8 @@ public class Haku extends RoleBase{
 				sendCooldown(owner, bulleHakuCD);
 				return true;
 			}
-			HashMap<Block, Material> map = new HashMap<>();
-            for(Location location : sphere(owner.getLocation(), 20, true)) {
+			final HashMap<Block, Material> map = new HashMap<>();
+            for(Location location : sphere(owner.getLocation())) {
                 if(location.getBlock().getType() == Material.AIR || location.getBlock().getType() == Material.WATER || location.getBlock().getType() == Material.STATIONARY_WATER) {
                     map.put(location.getBlock(), location.getBlock().getType());
                     location.getBlock().setType(Material.PACKED_ICE);
@@ -197,7 +199,7 @@ public class Haku extends RoleBase{
             }
             
             this.fMap.putAll(map);
-            bulleHakuCD = 60*10;
+            bulleHakuCD = maxCDHaku+120;
             setForce(20);
             setNoFall(true);
             new BukkitRunnable() {
@@ -209,7 +211,7 @@ public class Haku extends RoleBase{
 					}
 					givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 					
-					if (bulleHakuCD <= 60*8) {
+					if (bulleHakuCD <= (maxCDHaku-120)) {
 						owner.sendMessage("§7Votre bulle disparait");
 						setForce(0);
 						owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
@@ -222,7 +224,7 @@ public class Haku extends RoleBase{
 		}
 		return super.ItemUse(item, gameState);
 	}
-	private HashMap<Block, Material> fMap = new HashMap<>();
+	private final HashMap<Block, Material> fMap = new HashMap<>();
 	private void resetBulleHaku() {
 		setNoFall(false);
 		fMap.keySet().forEach(location -> location.setType(fMap.get(location)));
@@ -233,76 +235,66 @@ public class Haku extends RoleBase{
 		resetBulleHaku();
 		return super.onPreDie(damager, gameState2);
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.MOYENNE;
+	}
+
 	@Override
 	public void onEndGame() {
 		resetBulleHaku();
 	}
-	private Set<Location> sphere(Location location, int radius, boolean hollow){
-	       Set<Location> blocks = new HashSet<Location>();
+	private Set<Location> sphere(Location location){
+	       Set<Location> blocks = new HashSet<>();
 	        World world = location.getWorld();
 	        int X = location.getBlockX();
 	        int Y = location.getBlockY();
 	        int Z = location.getBlockZ();
-	        int radiusSquared = radius * radius;
-	        if(hollow){
-	            for (int x = X - radius; x <= X + radius; x++) {
-	                for (int y = Y - radius; y <= Y + radius; y++) {
-	                    for (int z = Z - radius; z <= Z + radius; z++) {
-	                        if ((X - x) * (X - x) + (Y - y) * (Y - y) + (Z - z) * (Z - z) <= radiusSquared) {
-	                            Location block = new Location(world, x, y, z);
-	                            blocks.add(block);
-	                        }
-	                    }
-	                }
-	            }
-	            return makeHollow(blocks, true);
-	        } else {
-	            for (int x = X - radius; x <= X + radius; x++) {
-	                for (int y = Y - radius; y <= Y + radius; y++) {
-	                    for (int z = Z - radius; z <= Z + radius; z++) {
-	                        if ((X - x) * (X - x) + (Y - y) * (Y - y) + (Z - z) * (Z - z) <= radiusSquared) {
-	                            Location block = new Location(world, x, y, z);
-	                            blocks.add(block);
-	                        }
-	                    }
-	                }
-	            }
-	            return blocks;
-	        }
-	    }
-	private Set<Location> makeHollow(Set<Location> blocks, boolean sphere){
-	        Set<Location> edge = new HashSet<Location>();
-	        if(!sphere){
-	            for(Location l : blocks){
-	                World w = l.getWorld();
-	                int X = l.getBlockX();
-	                int Y = l.getBlockY();
-	                int Z = l.getBlockZ();
-	                Location front = new Location(w, X + 1, Y, Z);
-	                Location back = new Location(w, X - 1, Y, Z);
-	                Location left = new Location(w, X, Y, Z + 1);
-	                Location right = new Location(w, X, Y, Z - 1);
-	                if(!(blocks.contains(front) && blocks.contains(back) && blocks.contains(left) && blocks.contains(right))){
-	                    edge.add(l);
-	                }
-	            }
-	        } else {
-	            for(Location l : blocks){
-	                World w = l.getWorld();
-	                int X = l.getBlockX();
-	                int Y = l.getBlockY();
-	                int Z = l.getBlockZ();
-	                Location front = new Location(w, X + 1, Y, Z);
-	                Location back = new Location(w, X - 1, Y, Z);
-	                Location left = new Location(w, X, Y, Z + 1);
-	                Location right = new Location(w, X, Y, Z - 1);
-	                Location top = new Location(w, X, Y + 1, Z);
-	                Location bottom = new Location(w, X, Y - 1, Z);
-	                if(!(blocks.contains(front) && blocks.contains(back) && blocks.contains(left) && blocks.contains(right) && blocks.contains(top) && blocks.contains(bottom))){
-	                    edge.add(l);
-	                }
-	            }
-	        }
-	        return edge;
+	        int radiusSquared = 20 * 20;
+        for (int x = X - 20; x <= X + 20; x++) {
+            for (int y = Y - 20; y <= Y + 20; y++) {
+                for (int z = Z - 20; z <= Z + 20; z++) {
+                    if ((X - x) * (X - x) + (Y - y) * (Y - y) + (Z - z) * (Z - z) <= radiusSquared) {
+                        Location block = new Location(world, x, y, z);
+                        blocks.add(block);
+                    }
+                }
+            }
+        }
+        return makeHollow(blocks);
+    }
+	private Set<Location> makeHollow(Set<Location> blocks){
+	        Set<Location> edge = new HashSet<>();
+        for (Location l : blocks) {
+            World w = l.getWorld();
+            int X = l.getBlockX();
+            int Y = l.getBlockY();
+            int Z = l.getBlockZ();
+            Location front = new Location(w, X + 1, Y, Z);
+            Location back = new Location(w, X - 1, Y, Z);
+            Location left = new Location(w, X, Y, Z + 1);
+            Location right = new Location(w, X, Y, Z - 1);
+            Location top = new Location(w, X, Y + 1, Z);
+            Location bottom = new Location(w, X, Y - 1, Z);
+            if (!(blocks.contains(front) && blocks.contains(back) && blocks.contains(left) && blocks.contains(right) && blocks.contains(top) && blocks.contains(bottom))) {
+                edge.add(l);
+            }
+        }
+        return edge;
+	}
+	@Override
+	public String getName() {
+		return "§bHaku";
+	}
+
+	@Override
+	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
+		super.PlayerKilled(killer, victim, gameState);
+		if (!gameState.hasRoleNull(victim)){
+			if (gameState.getPlayerRoles().get(victim) instanceof Zabuza && maxCDHaku != 60*3) {
+				onZabuzaDeath(true);
+			}
+		}
 	}
 }

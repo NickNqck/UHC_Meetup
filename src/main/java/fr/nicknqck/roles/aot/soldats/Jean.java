@@ -16,8 +16,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 
@@ -41,6 +41,12 @@ public class Jean extends RoleBase{
 		};
 	}
 	private int actualuse = 0;
+
+	@Override
+	public String getName() {
+		return "§aJean";
+	}
+
 	private void createFirework(Player player, Color color) {
         Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
         FireworkMeta meta = firework.getFireworkMeta();

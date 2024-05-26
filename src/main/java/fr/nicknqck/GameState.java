@@ -5,8 +5,8 @@ import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.Eren;
@@ -108,7 +108,7 @@ public class GameState{
 		Kyogai(TeamList.Demon, "ds", 3, new ItemBuilder(Material.DISPENSER).setName("Kyogai").toItemStack(), "§bNickNqck"),
 		Susamaru(TeamList.Demon, "ds", 9, new ItemBuilder(Material.BOW).setName("Susamaru").toItemStack(), "§bNickNqck"),
 		Furuto(TeamList.Demon, "ds", 10, new ItemBuilder(Material.NETHER_BRICK).setName("Furuto").toItemStack(), "§bNickNqck"),
-		DemonSimpleV2(TeamList.Demon, "ds", 12, new ItemBuilder(Material.NETHER_STALK).setName("DemonSimpleV2").toItemStack(), "§bNickNqck"),
+		DemonSimpleV2(TeamList.Demon, "ds", 12, new ItemBuilder(Material.NETHER_STALK).setName("DemonSimpleV2").toItemStack(), "§bMega02600"),
 		Yahaba(TeamList.Demon, "ds", 13, new ItemBuilder(Material.COMPASS).setName("Yahaba").toItemStack(), "§bNickNqck"),
 		DemonMain(TeamList.Demon, "ds", 14, new ItemBuilder(Material.SKULL_ITEM).setName("DemonMain").setDurability(3).toItemStack(), "§bNickNqck"),
 		Demon(TeamList.Demon, "ds", 15, new ItemBuilder(Material.NETHER_FENCE).setName("Demon").toItemStack(), "§bNickNqck"),
@@ -162,7 +162,7 @@ public class GameState{
 		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("Titan Ultime").toItemStack(), "§bNickNqck"),
 		Hansi(TeamList.Soldat, "aot", 7, new ItemBuilder(Material.THIN_GLASS).setName("Hansi").toItemStack(), "§bNickNqck"),
 		Sasha(TeamList.Soldat, "aot", 8, new ItemBuilder(Material.BOW).setName("Sasha").toItemStack(), "§bNickNqck"),
-		Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("Conny").toItemStack(), "§bNickNqck"),
+		Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("Conny").toItemStack(), "§bMega02600"),
 		
 		//Jubi ns
 		Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("Madara").toItemStack(), "§aYukan"),
@@ -197,7 +197,7 @@ public class GameState{
 		Tsunade(TeamList.Shinobi, "ns", 5, new ItemBuilder(Material.POTION).setDurability(16421).setName("§aTsunade").toItemStack(), "§bNickNqck"),
 		Konohamaru(TeamList.Shinobi, "ns", 6, new ItemBuilder(Material.SULPHUR).setName("§aKonohamaru").toItemStack(), "§bNickNqck"),
 		RockLee(TeamList.Shinobi, "ns", 7, new ItemBuilder(Material.GLASS_BOTTLE).setName("§aRock Lee").toItemStack(), "§aYukan"),
-		Gaï(TeamList.Shinobi, "ns", 8, new ItemBuilder(Material.NETHER_STAR).setName("§aGaï").toItemStack(), "§aYukan"),
+		Gai(TeamList.Shinobi, "ns", 8, new ItemBuilder(Material.NETHER_STAR).setName("§aGaï").toItemStack(), "§aYukan"),
 		Asuma(TeamList.Shinobi, "ns", 9, new ItemBuilder(Material.FIREBALL).setName("§aAsuma").toItemStack(), "§bNickNqck"),
 		KillerBee(TeamList.Shinobi, "ns", 10, new ItemBuilder(Material.INK_SACK).setName("§aKiller Bee").toItemStack(), "§aYukan"),
 		Raikage(TeamList.Shinobi, "ns", 11, new ItemBuilder(Material.NETHER_STAR).setName("§aYondaime Raikage").toItemStack(), "§aYukan"),
@@ -284,9 +284,9 @@ public class GameState{
 	private ServerStates serverState = ServerStates.InLobby;
 	private HashMap<Roles, Integer> availableRoles = new HashMap<Roles, Integer>();
 	private ArrayList<Events> availableEvents = new ArrayList<Events>();
-	private ArrayList<EventBase> inGameEvents = new ArrayList<EventBase>();
-	private ArrayList<Player> inLobbyPlayers = new ArrayList<Player>();
-	private ArrayList<Player> inGamePlayers = new ArrayList<Player>();
+	private ArrayList<EventBase> inGameEvents = new ArrayList<>();
+	private ArrayList<Player> inLobbyPlayers = new ArrayList<>();
+	private ArrayList<Player> inGamePlayers = new ArrayList<>();
 	private ArrayList<Player> inSpecPlayers = new ArrayList<Player>();
 	
 	public ArrayList<Player> Charmed = new ArrayList<Player>();
@@ -770,7 +770,7 @@ public class GameState{
 		case Deidara:
 			role = new Deidara(player, roleType);
 			break;
-		case Gaï:
+		case Gai:
 			role = new Gai(player, roleType);
 			break;
 		case RockLee:

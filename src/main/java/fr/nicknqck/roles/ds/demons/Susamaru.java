@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Susamaru extends RoleBase {
@@ -54,5 +54,10 @@ public class Susamaru extends RoleBase {
 	public void resetCooldown() {
 		cooldown = 0;
 		changecd = 0;
+	}
+
+	@Override
+	public String getName() {
+		return "§cSusamaru";
 	}
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,15 +23,15 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Orochimaru extends RoleBase {
+public class Orochimaru extends NSRoles {
 
 	public Orochimaru(Player player, Roles roles) {
 		super(player, roles);
@@ -45,7 +47,7 @@ public class Orochimaru extends RoleBase {
 	public void RoleGiven(GameState gameState) {
 		setResi(20);
 	}
-	private List<Chakras> chakrasVoled = new ArrayList<>();
+	private final List<Chakras> chakrasVoled = new ArrayList<>();
 	@Override
 	public String[] Desc() {
 		StringBuilder sb = new StringBuilder();
@@ -53,9 +55,9 @@ public class Orochimaru extends RoleBase {
 		for (Chakras chakras : chakrasVoled) {
 			i++;
 			if (i + 1 != chakrasVoled.size()+1) {
-				sb.append(chakras.getShowedName()+"§f,");
+				sb.append(chakras.getShowedName()).append("§f,");
 			}else {
-				sb.append(chakras.getShowedName()+"§f.");
+				sb.append(chakras.getShowedName()).append("§f.");
 			}
 		}
 		List<Player> mates = new ArrayList<>();
@@ -68,7 +70,7 @@ public class Orochimaru extends RoleBase {
 				}
 			}
 		}
-		if (mates.size() > 0) {
+		if (!mates.isEmpty()) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				owner.sendMessage("Voici la liste de vos coéquipier: ");
 				mates.forEach(p -> owner.sendMessage("§7 - §5"+p.getName()));}, 1);
@@ -95,7 +97,7 @@ public class Orochimaru extends RoleBase {
 				"En mangeant une§e pomme d'or§f vous obtenez§e 3"+AllDesc.Coeur("§e")+"§e d'absorbtion§f au lieu de§e 2"+AllDesc.Coeur("§e"),
 				"Vous possédez une nature de Chakra aléatoire",
 				"",
-				"Vos natures de Chakras: "+sb.toString(),
+				"Vos natures de Chakras: "+ sb,
 				AllDesc.bar
 		};
 	}
@@ -109,7 +111,7 @@ public class Orochimaru extends RoleBase {
 	private ItemStack KusanagiItem() {
 		return new ItemBuilder(Material.DIAMOND_SWORD).setName("§5Kusanagi").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("§7L'épée légendaire en possession du§5 Orochimaru").toItemStack();
 	}
-	private HashMap<Player, RoleBase> edoTensei = new HashMap<>();
+	private final HashMap<Player, RoleBase> edoTensei = new HashMap<>();
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (edoTensei.containsKey(player)) {
@@ -151,15 +153,15 @@ public class Orochimaru extends RoleBase {
 			}, 1);
 		}
 	}
-	private HashMap<Player, Location> killLoc = new HashMap<>();
+	private final HashMap<Player, Location> killLoc = new HashMap<>();
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(EdoTenseiItem())) {
-			if (killLoc.size() < 1) {
+			if (killLoc.isEmpty()) {
 				owner.sendMessage("§7Il faut avoir tué au moins§n 1 joueurs§7 pour utiliser cette technique");
 				return true;
 			}
-			if (edoTensei.size() != 0) {
+			if (!edoTensei.isEmpty()) {
 				owner.sendMessage("§7Vous avez déjà§5 Edo Tensei");
 				return true;
 			}
@@ -220,7 +222,18 @@ public class Orochimaru extends RoleBase {
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.GENIE;
+	}
+
 	@Override
 	public void resetCooldown() {
+	}
+
+	@Override
+	public String getName() {
+		return "§5Orochimaru";
 	}
 }

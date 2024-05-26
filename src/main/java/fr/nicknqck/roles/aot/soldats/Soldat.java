@@ -8,7 +8,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
@@ -36,6 +36,12 @@ public class Soldat extends RoleBase {
 				
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§aSoldat";
+	}
+
 	private String[] Garnison = new String[] {
             AllDesc.bar,
             "§lkit :§r Garnison",

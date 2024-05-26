@@ -6,9 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -51,5 +50,10 @@ public class TitanSouriant extends RoleBase{
 	}
 	@Override
 	public void resetCooldown() {
+	}
+
+	@Override
+	public String getName() {
+		return "§cTitan Souriant";
 	}
 }

@@ -17,7 +17,7 @@ import org.bukkit.util.Vector;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.demons.Susamaru;
 
 public class HomingBow implements Listener {

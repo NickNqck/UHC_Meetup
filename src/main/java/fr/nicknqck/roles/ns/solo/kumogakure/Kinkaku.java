@@ -2,8 +2,9 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -27,7 +28,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class Kinkaku extends RoleBase {
+public class Kinkaku extends NSRoles {
     private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
     private int cdKyubi = 0;
     private final ItemStack EventailItem = new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aEventail de bananier").setLore("§7Vous permet de cumulé la nature de chakra des joueurs tués avec la votre").toItemStack();
@@ -42,6 +43,11 @@ public class Kinkaku extends RoleBase {
                 givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
             }
         }, 100);
+    }
+
+    @Override
+    public Intelligence getIntelligence() {
+        return Intelligence.PEUINTELLIGENT;
     }
 
     @Override
@@ -195,6 +201,12 @@ public class Kinkaku extends RoleBase {
         }
         return super.ItemUse(item, gameState);
     }
+
+    @Override
+    public String getName() {
+        return "§6Kinkaku";
+    }
+
     private static class KinkakuMissions implements Listener {
         private UUID user;
         private UUID target;

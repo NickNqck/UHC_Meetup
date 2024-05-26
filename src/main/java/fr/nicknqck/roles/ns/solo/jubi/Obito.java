@@ -6,9 +6,10 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.KamuiUtils.Users;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Obito extends RoleBase {
+public class Obito extends NSRoles {
 	public List<Player> Tsukuyomi = new ArrayList<>();
 	private fr.nicknqck.roles.ns.power.Izanami izanami;
 	public Obito(Player player, Roles roles) {
@@ -47,6 +48,12 @@ public class Obito extends RoleBase {
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "§dObito";
+	}
+
 	private static class ObitoRunnable extends BukkitRunnable{
 		private final Obito obito;
 		ObitoRunnable(Obito owner){
@@ -302,6 +309,12 @@ public class Obito extends RoleBase {
 			}
 		}
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.GENIE;
+	}
+
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);

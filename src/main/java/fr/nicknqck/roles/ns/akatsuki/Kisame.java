@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ns.akatsuki;
 import java.util.HashMap;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +20,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.CC;
@@ -26,13 +27,19 @@ import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 
-public class Kisame extends RoleBase {
+public class Kisame extends NSRoles {
 
 	public Kisame(Player player, Roles roles) {
 		super(player, roles);
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.MOYENNE;
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Itachi, 1);
@@ -92,7 +99,7 @@ public class Kisame extends RoleBase {
 		setResi(20);
 	}
 	private int SuibunCD = 0;
-	private HashMap<UUID, Integer> nmbCoup = new HashMap<>();
+	private final HashMap<UUID, Integer> nmbCoup = new HashMap<>();
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
@@ -109,7 +116,7 @@ public class Kisame extends RoleBase {
 		if (damager.getUniqueId() == owner.getUniqueId()) {
 			if (nmbCoup.containsKey(player.getUniqueId())) {
 				if (owner.getItemInHand().isSimilar(SamehadaItem())) {
-					int i = nmbCoup.get(player.getUniqueId()).intValue();
+					int i = nmbCoup.get(player.getUniqueId());
 					if (i == 25) {
 						nmbCoup.remove(player.getUniqueId(),i);
 						sendCustomActionBar(owner, "§6§l"+player.getDisplayName()+"§r§c à subit les effets de §nSamehada§r§c !");
@@ -202,5 +209,10 @@ public class Kisame extends RoleBase {
 			}.runTaskTimer(Main.getInstance(), 0, 20);
 		}
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§cKisame";
 	}
 }

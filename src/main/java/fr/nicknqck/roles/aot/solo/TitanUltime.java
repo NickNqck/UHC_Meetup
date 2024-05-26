@@ -11,8 +11,8 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -99,7 +99,13 @@ public class TitanUltime extends RoleBase{
 				};
 		}
 	}
-	boolean invvide = false;
+	private boolean invvide = false;
+
+	@Override
+	public String getName() {
+		return "§eTitan Ultime";
+	}
+
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {

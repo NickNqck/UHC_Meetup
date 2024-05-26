@@ -15,19 +15,18 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public class JigoroV2 extends RoleBase{
-GameState gameState;
+
 	public JigoroV2(Player player, Roles roles) {
 		super(player, roles);
 		owner.sendMessage(AllDesc.JigoroV2);
-		this.gameState = gameState;
 		pacte = Pacte.Non_Choisis;
 		setCanUseBlade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -66,6 +65,12 @@ GameState gameState;
 		}
 		return AllDesc.JigoroV2;
 	}
+
+	@Override
+	public String getName() {
+		return "§eJigoroS7 (§6V2§7)";
+	}
+
 	enum Pacte{
 		Non_Choisis,
 		Pacte1,
@@ -184,11 +189,7 @@ GameState gameState;
 					addresi(20);
 					zresi = true;
 				}
-				if (!zresi) {
-					getPlayerRoles(zen).addresi(20);
-					zresi = true;
-				}
-				if (gameState.getInGamePlayers().contains(zen)) {
+                if (gameState.getInGamePlayers().contains(zen)) {
 					DecimalFormat df = new DecimalFormat("0");
 					NMSPacket.sendActionBar(owner, "§aZenItsu§r: "+df.format(owner.getLocation().distance(zen.getLocation()))+ArrowTargetUtils.calculateArrow(owner, zen.getLocation()));
 					NMSPacket.sendActionBar(zen, "§6Jigoro§r: "+df.format(zen.getLocation().distance(owner.getLocation()))+ArrowTargetUtils.calculateArrow(zen, owner.getLocation()));	

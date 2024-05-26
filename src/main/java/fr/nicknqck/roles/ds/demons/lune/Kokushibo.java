@@ -16,8 +16,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ItemBuilder;
@@ -286,7 +286,7 @@ public boolean killtanjiro = false;
 			if (itemcooldown <= 0) {
 				owner.sendMessage("Activation de votre:"+ChatColor.BOLD+" Pouvoir Sanginaire");
 				gameState.nightTime = true;
-				gameState.t =0;
+				gameState.t = gameState.timeday;
 				GameListener.SendToEveryone("§6Kokushibo §rà mis la §9nuit");
 				owner.getInventory().addItem(Items.getkokushibosword());
 				itemcooldown = gameState.timeday*2;
@@ -300,5 +300,10 @@ public boolean killtanjiro = false;
 			}
 		}
 		return super.ItemUse(item, gameState);
+	}
+
+	@Override
+	public String getName() {
+		return "§cKokushibo";
 	}
 }

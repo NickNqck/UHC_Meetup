@@ -4,9 +4,11 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
@@ -24,7 +26,7 @@ import java.util.UUID;
 
 import static fr.nicknqck.player.StunManager.stun;
 
-public class Shikamaru extends RoleBase {
+public class Shikamaru extends NSRoles {
     private final ItemStack stunItem = new ItemBuilder(Material.NETHER_STAR).setName("§aStun").setLore("§7Vous permet d'empêcher de bouger un joueur").toItemStack();
     private int cdStun = 0;
     private int powerDistance = 25;
@@ -36,6 +38,11 @@ public class Shikamaru extends RoleBase {
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
         owner.sendMessage(Desc());
         new StunExecutable(this);
+    }
+
+    @Override
+    public Intelligence getIntelligence() {
+        return Intelligence.GENIE;
     }
 
     @Override
@@ -155,8 +162,10 @@ public class Shikamaru extends RoleBase {
         for (Player p : Loc.getNearbyPlayersExcept(owner, this.powerDistance)){
                 inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("","§aClique droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2").setName(p.getName()).toItemStack());
                 i++;
-                System.out.println(i+" int");
-            System.out.println(inv.getItem(i) != null ? inv.getItem(i).getType().name() : "ez"+i);
+                if (Main.isDebug()) {
+                    System.out.println(i + " int");
+                    System.out.println(inv.getItem(i) != null ? inv.getItem(i).getType().name() : "ez" + i);
+                }
         }
         inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
         inv.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
@@ -165,6 +174,11 @@ public class Shikamaru extends RoleBase {
         inv.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
         owner.openInventory(inv);
         owner.updateInventory();
+    }
+
+    @Override
+    public String getName() {
+        return "§aShikamaru";
     }
 
     private static class StunExecutable implements Listener{

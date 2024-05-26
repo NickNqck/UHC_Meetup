@@ -10,7 +10,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Inosuke extends RoleBase{
@@ -170,5 +170,10 @@ public class Inosuke extends RoleBase{
 				Items.getSoufledelaBêtePerforation(),
 				Items.getSoufledelaBêteTailladeOndulanceDivine()
 		};
+	}
+
+	@Override
+	public String getName() {
+		return "§aInosuke";
 	}
 }

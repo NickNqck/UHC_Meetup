@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -14,11 +16,10 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 
-public class Kimimaro extends RoleBase{
+public class Kimimaro extends NSRoles {
 
 	public Kimimaro(Player player, Roles roles) {
 		super(player, roles);
@@ -26,6 +27,12 @@ public class Kimimaro extends RoleBase{
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.MOYENNE;
+	}
+
 	public String[] Desc(){
 		KnowRole(owner, Roles.Orochimaru, 1);
 		return new String[] {
@@ -107,12 +114,11 @@ public class Kimimaro extends RoleBase{
 				}
 				
 			}.runTaskTimer(Main.getInstance(), 0, 20);
-			return true;
-			} else {
+            } else {
 			sendCooldown(owner, Marquecd);
-			return true;
-		}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
 	private int Kencoup =0;
@@ -154,5 +160,10 @@ public class Kimimaro extends RoleBase{
 		if (!owner.hasPotionEffect(PotionEffectType.WEAKNESS)) {
 			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		}
+	}
+
+	@Override
+	public String getName() {
+		return "§5Kimimaro";
 	}
 }

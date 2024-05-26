@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -11,20 +13,25 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 
-public class KillerBee extends RoleBase{
+public class KillerBee extends NSRoles {
 
 	public KillerBee(Player player, Roles roles) {
 		super(player, roles);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
+	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.MOYENNE;
 	}
 
 	@Override
@@ -152,5 +159,10 @@ public class KillerBee extends RoleBase{
 	public void onTentaculeEnd(double distanceSquared) {
 		cdTentacule = 30;
 		owner.sendMessage("§7Pouvoir de la §aTentacule§7.");
+	}
+
+	@Override
+	public String getName() {
+		return "§aKiller Bee";
 	}
 }

@@ -13,7 +13,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -28,7 +28,7 @@ public class RockLee extends RoleBase{
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () ->{
-			if (!gameState.attributedRole.contains(Roles.Gaï)) {
+			if (!gameState.attributedRole.contains(Roles.Gai)) {
 				giveItem(owner, false, HuitPortesItem());
 			} 
 		}, cdDrunkenFist);
@@ -36,7 +36,7 @@ public class RockLee extends RoleBase{
 
 	@Override
 	public String[] Desc() {
-		KnowRole(owner, Roles.Gaï, 5);
+		KnowRole(owner, Roles.Gai, 5);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"§aRock Lee",
@@ -121,7 +121,7 @@ public class RockLee extends RoleBase{
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (getIGPlayers().contains(owner)) {
-			if (getListPlayerFromRole(Roles.Gaï).contains(player)) {
+			if (getListPlayerFromRole(Roles.Gai).contains(player)) {
 				owner.sendMessage("§aGaï Maito §rviens de mourir vous obtenez désormais la §cHuitième porte");
 				giveItem(owner, false, HuitPortesItem());
 			}
@@ -130,7 +130,7 @@ public class RockLee extends RoleBase{
 	
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
-		if (victim.getUniqueId() == owner.getUniqueId()) {
+		if (victim.getUniqueId() == owner.getUniqueId() && entity instanceof Player) {
 			if (DrunkenFist) {
 				if (getIGPlayers().contains(entity)) {
 					if (RandomUtils.getOwnRandomProbability(20)) {
@@ -151,12 +151,11 @@ public class RockLee extends RoleBase{
 				givePotionEffet(PotionEffectType.SPEED, 20*90, 1, true);
 				owner.damage(1.0, owner);
 				cdTroisPortes = 60*3;
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdTroisPortes);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(SixPortesItem())) {
 			if (cdSixPortes <= 0) {
 				owner.sendMessage("Vous venez d'ouvrir la §aSixième Porte");
@@ -185,12 +184,11 @@ public class RockLee extends RoleBase{
 						}
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdSixPortes);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		if (item.isSimilar(HuitPortesItem())) {
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, true);
 				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, true);
@@ -246,15 +244,17 @@ public class RockLee extends RoleBase{
 						
 					}
 				};
-				return true;
-			} else {
+            } else {
 				sendCooldown(owner, cdDrunkenFist);
-				return true;
-			}
-		}
+            }
+            return true;
+        }
 		return super.ItemUse(item, gameState);
 	}
-	
-	
 
+
+	@Override
+	public String getName() {
+		return "§aRock Lee";
+	}
 }

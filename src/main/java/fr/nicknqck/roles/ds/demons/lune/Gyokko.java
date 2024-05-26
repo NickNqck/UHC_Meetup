@@ -14,7 +14,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.BulleGyokko;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 
@@ -41,6 +41,12 @@ public class Gyokko extends RoleBase{
 				BulleGyokko.getBulleGyokko()
 		};
 	}
+
+	@Override
+	public String getName() {
+		return "§cGyokko";
+	}
+
 	private int pouvoircooldown = 0;
 	private int formecooldown = 0;
 	private boolean formedemoniaque = false;

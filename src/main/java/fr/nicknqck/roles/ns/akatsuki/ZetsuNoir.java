@@ -4,19 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.Loc;
 
-public class ZetsuNoir extends RoleBase{
+public class ZetsuNoir extends NSRoles {
 
 	public ZetsuNoir(Player player, Roles roles) {
 		super(player, roles);
@@ -59,7 +60,7 @@ public class ZetsuNoir extends RoleBase{
 		regencooldown = 0;
 	}
 	private int regencooldown = 0;
-	private Map<UUID, Integer> timePassedNearby = new HashMap<>();
+	private final Map<UUID, Integer> timePassedNearby = new HashMap<>();
 	@Override
 	public void Update(GameState gameState) {
 		if (regencooldown >= 0) {
@@ -78,9 +79,9 @@ public class ZetsuNoir extends RoleBase{
 				} 
 			if (timePassedNearby.containsKey(p.getUniqueId())) {
 				int i = timePassedNearby.get(p.getUniqueId());
-				timePassedNearby.remove(p, i);
+				timePassedNearby.remove(p.getUniqueId(), i);
 				timePassedNearby.put(p.getUniqueId(), i+1);
-					if (timePassedNearby.get(p.getUniqueId()).intValue() == 60*3) {
+					if (timePassedNearby.get(p.getUniqueId()) == 60*3) {
 					owner.sendMessage("le rôle du joueur "+p.getName()+" est §c"+getPlayerRoles(p));
 					}
 			} else {
@@ -129,4 +130,13 @@ public class ZetsuNoir extends RoleBase{
 		}
 	}
 
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.GENIE;
+	}
+
+	@Override
+	public String getName() {
+		return "§cZetsu Noir";
+	}
 }

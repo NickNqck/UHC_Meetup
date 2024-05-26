@@ -6,7 +6,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.RoleBase;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Demon_Simple extends RoleBase{
@@ -21,7 +21,12 @@ public class Demon_Simple extends RoleBase{
 	public String[] Desc() {
 		return AllDesc.Demon_Simple;
 	}
-	
+
+	@Override
+	public String getName() {
+		return "§cDemon Simple";
+	}
+
 	@Override
 	public void Update(GameState gameState) {
 		if (gameState.nightTime) {

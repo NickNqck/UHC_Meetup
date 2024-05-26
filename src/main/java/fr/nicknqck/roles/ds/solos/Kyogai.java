@@ -13,8 +13,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.RoleBase;
-import fr.nicknqck.roles.TeamList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.Loc;
@@ -39,7 +39,12 @@ public class Kyogai extends RoleBase{
 		}
 		return AllDesc.Kyogai;
 	}
-	
+
+	@Override
+	public String getName() {
+		return "§cKyogai";
+	}
+
 	private enum Camp{
 		Solo,
 		Démon
