@@ -13,8 +13,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Mitsuri extends RoleBase {
-    public Mitsuri(Player player, Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Mitsuri(Player player, Roles roles) {
+        super(player, roles);
         for (String desc : AllDesc.Mitsuri)owner.sendMessage(desc);
         gameState.addPillier(owner);
         setCanUseBlade(true);

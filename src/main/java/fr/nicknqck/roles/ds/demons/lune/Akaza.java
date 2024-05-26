@@ -11,8 +11,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Akaza extends RoleBase{
 	
-	public Akaza(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Akaza(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		gameState.addLuneSupPlayers(owner);

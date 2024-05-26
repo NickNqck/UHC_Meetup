@@ -11,8 +11,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Eclaireur extends RoleBase{
 
-	public Eclaireur(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Eclaireur(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

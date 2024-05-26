@@ -37,8 +37,8 @@ import java.util.List;
 public class Obito extends RoleBase {
 	public List<Player> Tsukuyomi = new ArrayList<>();
 	private fr.nicknqck.roles.ns.power.Izanami izanami;
-	public Obito(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Obito(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());

@@ -22,8 +22,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class RockLee extends RoleBase{
 
-	public RockLee(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public RockLee(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());

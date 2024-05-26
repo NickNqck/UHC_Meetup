@@ -24,8 +24,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class JigoroV2 extends RoleBase{
 GameState gameState;
-	public JigoroV2(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public JigoroV2(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.JigoroV2);
 		this.gameState = gameState;
 		pacte = Pacte.Non_Choisis;

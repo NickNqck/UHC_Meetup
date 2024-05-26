@@ -20,8 +20,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class Gyokko extends RoleBase{
 
-	public Gyokko(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Gyokko(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setResi(20);

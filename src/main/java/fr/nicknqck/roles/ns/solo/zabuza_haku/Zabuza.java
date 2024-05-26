@@ -26,8 +26,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Zabuza extends RoleBase{
 
-	public Zabuza(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Zabuza(Player player, Roles roles) {
+		super(player, roles);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());

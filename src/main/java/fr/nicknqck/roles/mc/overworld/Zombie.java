@@ -18,8 +18,8 @@ public class Zombie extends RoleBase {
     private int cdCerveau = 0;
     private int nmbCerveau = 1;
     private boolean CerveauActive = false;
-    public Zombie(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Zombie(Player player, GameState.Roles roles) {
+        super(player, roles);
         owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
     }

@@ -19,8 +19,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Gai extends RoleBase{
 
-	public Gai(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Gai(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());

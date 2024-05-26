@@ -14,8 +14,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class DemonMain extends RoleBase{
 
-	public DemonMain(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public DemonMain(Player player, Roles roles) {
+		super(player, roles);
 		this.setForce(20);
 		 this.setResi(20);
 		 owner.sendMessage(Desc());

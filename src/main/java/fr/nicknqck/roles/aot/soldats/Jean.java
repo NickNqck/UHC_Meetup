@@ -23,8 +23,8 @@ import fr.nicknqck.utils.Loc;
 
 public class Jean extends RoleBase{
 
-	public Jean(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Jean(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

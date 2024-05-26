@@ -20,8 +20,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 public class Muzan extends RoleBase {
 	boolean killnez = false;
 	int regencooldown = 0;
-	public Muzan(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Muzan(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Muzan);
 		regencooldown = 10;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

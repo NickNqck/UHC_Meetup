@@ -21,8 +21,8 @@ import fr.nicknqck.utils.Loc;
 
 public class ZetsuBlanc extends RoleBase{
 
-	public ZetsuBlanc(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public ZetsuBlanc(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.DOTON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());

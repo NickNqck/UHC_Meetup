@@ -29,8 +29,8 @@ import org.bukkit.util.Vector;
 
 public class Naruto extends RoleBase implements Listener{
 
-	public Naruto(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Naruto(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
 		setCanBeHokage(true);

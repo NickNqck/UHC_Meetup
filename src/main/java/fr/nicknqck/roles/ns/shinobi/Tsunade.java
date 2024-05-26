@@ -26,8 +26,8 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Tsunade extends RoleBase {
 
-	public Tsunade(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Tsunade(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
 		owner.sendMessage(Desc());
 		setCanBeHokage(true);

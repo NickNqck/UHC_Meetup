@@ -27,8 +27,8 @@ public class Tanjiro extends RoleBase{
 int itemcooldown = 0;
 boolean killassa = false;
 boolean dance = false;
-	public Tanjiro(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Tanjiro(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Tanjiro) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setLameFr(true);

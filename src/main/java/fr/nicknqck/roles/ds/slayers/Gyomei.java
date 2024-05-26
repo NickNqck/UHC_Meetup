@@ -14,8 +14,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gyomei extends RoleBase{
 
-	public Gyomei(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Gyomei(Player player, Roles roles) {
+		super(player, roles);
 		for (String s : AllDesc.Gyomei) owner.sendMessage(s);
 		this.setForce(20);
 		setMaxHealth(24.0);

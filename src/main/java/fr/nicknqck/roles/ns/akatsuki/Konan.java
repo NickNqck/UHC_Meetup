@@ -27,8 +27,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Konan extends RoleBase {
 
-	public Konan(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Konan(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.SUITON);
 		setTeam(TeamList.Akatsuki);
 		owner.sendMessage(Desc());

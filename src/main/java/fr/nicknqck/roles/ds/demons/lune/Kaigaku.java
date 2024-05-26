@@ -21,8 +21,8 @@ public class Kaigaku extends RoleBase{
 	private boolean killzen = false;
 	private int cooldownquatriememouvement = 0;
 	private int cooldowntroisiememouvement = 0;
-	public Kaigaku(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kaigaku(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Kaigaku);
 		this.setForce(20);
 		this.setCanUseBlade(true);

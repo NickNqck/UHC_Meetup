@@ -31,8 +31,8 @@ public class Shikamaru extends RoleBase {
     private int poisonUse = 0;
     private final ItemStack zoneItem = new ItemBuilder(Material.NETHER_STAR).setName("§aZone d'ombre").setLore("§7Vous permet d'empêcher tout les joueurs autours de vous de bouger").toItemStack();
     private int cdZone = 0;
-    public Shikamaru(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Shikamaru(Player player, GameState.Roles roles) {
+        super(player, roles);
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
         owner.sendMessage(Desc());
         new StunExecutable(this);

@@ -19,8 +19,8 @@ public class Soldat extends RoleBase {
 		Bataillon,
 	}
 	public kit form = null;
-	public Soldat(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState); 
+	public Soldat(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

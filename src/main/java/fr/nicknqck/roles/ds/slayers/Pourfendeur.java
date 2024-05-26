@@ -28,8 +28,8 @@ public class Pourfendeur extends RoleBase {
 	}
 	Soufle form = null;
 	ChatColor color = null;
-	public Pourfendeur(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Pourfendeur(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Pourfendeur) owner.sendMessage(desc);
         this.setCanUseBlade(true);
         Random random = new Random();

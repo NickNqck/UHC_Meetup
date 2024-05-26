@@ -48,10 +48,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 /*
-[DS-MTP UHC Plugin Credits]
-Ideas and Game Design: NickNack, Egaly inspirated by goldenuhc.eu
-Programming: NickNack
-Roles: NickNack
+[UHC-MTP UHC Plugin Credits]
+Ideas and Game Design: NickNack, Mega02600, Egaly inspirated by goldenuhc.eu and yukanmc
+Programming: NickNack, Mega02600
+Roles: NickNack, Mega02600
 */
 
 public class Main extends JavaPlugin implements Listener{
@@ -286,7 +286,7 @@ public class Main extends JavaPlugin implements Listener{
 			getScoreboardManager().onDisable();
 		}
 		System.out.println("["+PLUGIN_NAME+"] Disabled");
-		//deleteWorld("world");
+		deleteWorld("world_the_end");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				World world = Bukkit.getWorlds().get(0);
@@ -319,9 +319,7 @@ public class Main extends JavaPlugin implements Listener{
         }
     }
 	public static boolean isDebug(){
-		boolean debug = getInstance().getConfig().getBoolean("debug");
-		System.out.println("Debug his set at "+debug);
-		return debug;
+		return getInstance().getConfig().getBoolean("debug");
 	}
 	public static String getBase() {
         return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 600+

@@ -24,8 +24,8 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Hantengu extends RoleBase {
 private int killforce = 0;
-	public Hantengu(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Hantengu(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Hantengu) owner.sendMessage(desc);
 		this.setForce(20 + killforce);
 		gameState.addLuneSupPlayers(owner);

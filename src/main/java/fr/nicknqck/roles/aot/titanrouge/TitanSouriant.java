@@ -16,8 +16,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class TitanSouriant extends RoleBase{
 
-	public TitanSouriant(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public TitanSouriant(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

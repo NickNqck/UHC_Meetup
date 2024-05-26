@@ -20,8 +20,8 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Kimimaro extends RoleBase{
 
-	public Kimimaro(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kimimaro(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());

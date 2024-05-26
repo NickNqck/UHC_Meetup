@@ -23,8 +23,8 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Kyogai extends RoleBase{
 
-	public Kyogai(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kyogai(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Kyogai);
 		owner.sendMessage("Pour choisir votre camp il faudra faire la commande: "+ChatColor.GOLD+"/ds role");
 	}

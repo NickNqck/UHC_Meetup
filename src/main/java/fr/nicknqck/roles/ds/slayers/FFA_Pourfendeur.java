@@ -37,8 +37,8 @@ public class FFA_Pourfendeur extends RoleBase {
 		Fleur
 	}
 	Soufle form = null;
-	public FFA_Pourfendeur(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public FFA_Pourfendeur(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Pourfendeur)owner.sendMessage(desc);
 		owner.sendMessage("Vue que nous somme en FFA vous devez vous-même choisir votre Soufle via la commmande§6 /ds role");
         setCanUseBlade(true);

@@ -18,8 +18,8 @@ public class Demon_SimpleV2 extends RoleBase {
 	
 	private Player lunesup;
 	
-	public Demon_SimpleV2(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Demon_SimpleV2(Player player, Roles roles) {
+		super(player, roles);
 		setForce(20);
 		owner.sendMessage(AllDesc.Demon_SimpleV2);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

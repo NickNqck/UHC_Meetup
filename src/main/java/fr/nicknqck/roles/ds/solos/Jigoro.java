@@ -33,8 +33,8 @@ public class Jigoro extends RoleBase{
 		Min3
 	}
 	private Status status = null;
-	public Jigoro(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Jigoro(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Jigoro) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setResi(20);

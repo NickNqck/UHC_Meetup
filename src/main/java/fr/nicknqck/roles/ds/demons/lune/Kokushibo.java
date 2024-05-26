@@ -27,8 +27,8 @@ public class Kokushibo extends RoleBase{
 	private int itemcooldown = 0;
 	private int regencooldown = 0;
 	public boolean solo = false;
-	public Kokushibo(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kokushibo(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Kokushibo) owner.sendMessage(desc);
 		this.setForce(20);
 		regencooldown = 15;

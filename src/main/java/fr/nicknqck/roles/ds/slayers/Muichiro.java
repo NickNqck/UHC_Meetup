@@ -19,8 +19,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Muichiro extends RoleBase{
 
-	public Muichiro(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Muichiro(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Muichiro) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);

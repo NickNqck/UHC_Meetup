@@ -12,8 +12,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
 public class Erwin extends RoleBase{
-	public Erwin(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Erwin(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

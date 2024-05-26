@@ -21,8 +21,8 @@ import fr.nicknqck.utils.Cuboid;
 
 public class Tomioka extends RoleBase{
 
-	public Tomioka(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Tomioka(Player player, Roles roles) {
+		super(player, roles);
 	for (String desc : AllDesc.Tomioka) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);

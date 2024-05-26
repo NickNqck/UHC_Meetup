@@ -25,8 +25,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class TitanBestial extends RoleBase{
 
-	public TitanBestial(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public TitanBestial(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		canShift = true;
 		gameState.GiveRodTridi(owner);

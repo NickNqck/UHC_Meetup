@@ -17,8 +17,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class YondaimeRaikage extends RoleBase {
 
-	public YondaimeRaikage(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public YondaimeRaikage(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 	}

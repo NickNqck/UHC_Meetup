@@ -13,8 +13,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Pieck extends RoleBase{
 
-	public Pieck(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Pieck(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		if (owner.getName().equalsIgnoreCase("BoulotPieck")) {

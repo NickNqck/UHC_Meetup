@@ -18,8 +18,8 @@ import fr.nicknqck.utils.Loc;
 
 public class ZetsuNoir extends RoleBase{
 
-	public ZetsuNoir(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public ZetsuNoir(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.DOTON);
 		owner.sendMessage(Desc());
 	}

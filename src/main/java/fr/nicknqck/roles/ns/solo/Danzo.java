@@ -34,8 +34,8 @@ public class Danzo extends RoleBase{
 	private int coupToScelled = 0;
 	private boolean SceauActived = false;
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
-	public Danzo(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Danzo(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
 	}

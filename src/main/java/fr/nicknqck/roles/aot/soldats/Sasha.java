@@ -20,8 +20,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Sasha extends RoleBase{
 
-	public Sasha(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Sasha(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

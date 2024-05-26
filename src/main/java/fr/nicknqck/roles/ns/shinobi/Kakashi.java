@@ -30,8 +30,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class Kakashi extends RoleBase {
 
-	public Kakashi(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kakashi(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 		if (!gameState.attributedRole.contains(Roles.Obito)) {

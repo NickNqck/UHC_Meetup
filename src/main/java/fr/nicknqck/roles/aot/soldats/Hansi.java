@@ -16,8 +16,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Hansi extends RoleBase {
 
-	public Hansi(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Hansi(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

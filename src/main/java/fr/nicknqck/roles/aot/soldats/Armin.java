@@ -13,8 +13,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Armin extends RoleBase{
 
-	public Armin(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Armin(Player player, Roles roles) {
+		super(player, roles);
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

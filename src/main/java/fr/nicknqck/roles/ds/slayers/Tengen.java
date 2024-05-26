@@ -28,8 +28,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Tengen extends RoleBase{
 
-	public Tengen(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Tengen(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Tengen);
 		this.setCanUseBlade(true);
 		this.setForce(20);

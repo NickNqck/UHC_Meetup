@@ -16,8 +16,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Doma extends RoleBase{
 
-	public Doma(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Doma(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Doma) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setResi(20);

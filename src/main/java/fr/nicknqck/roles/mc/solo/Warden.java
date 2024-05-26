@@ -34,8 +34,8 @@ public class Warden extends RoleBase {
     private final ItemStack darkness = new ItemBuilder(Material.NETHER_STAR).setLore("§7").setUnbreakable(true).setName("§9Darkness").toItemStack();
     private int cdDarkness = 0;
     private int cdCible = 0;
-    public Warden(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Warden(Player player, GameState.Roles roles) {
+        super(player, roles);
         addBonusResi(10.0);
         owner.sendMessage(Desc());
     }

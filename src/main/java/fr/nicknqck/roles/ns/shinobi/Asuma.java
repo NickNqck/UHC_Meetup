@@ -17,8 +17,8 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Asuma extends RoleBase{
 
-	public Asuma(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Asuma(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
 		setCanBeHokage(true);

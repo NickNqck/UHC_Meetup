@@ -25,8 +25,8 @@ public class Eren extends RoleBase {
 	private boolean killPorco = false;
 	private boolean killBertolt = false;
 
-	public Eren(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Eren(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		canShift = true;
 		gameState.GiveRodTridi(owner);

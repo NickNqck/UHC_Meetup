@@ -16,8 +16,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Mikasa extends RoleBase{
 
-	public Mikasa(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Mikasa(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setAckerMan(true);

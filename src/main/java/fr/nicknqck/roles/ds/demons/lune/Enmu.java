@@ -15,8 +15,8 @@ import fr.nicknqck.roles.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Enmu extends RoleBase {
-	public Enmu(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Enmu(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Enmu);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {

@@ -27,8 +27,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Nakime extends RoleBase{
 
-	public Nakime(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Nakime(Player player, Roles roles) {
+		super(player, roles);
 		if (!gameState.pregenNakime) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 	        Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");

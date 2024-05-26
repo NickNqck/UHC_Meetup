@@ -35,8 +35,8 @@ public class Nagato extends RoleBase {
     private int cdTpMe = 0;
     private int cdRepousser = 0;
     private final List<UUID> NF = new ArrayList<>();
-    public Nagato(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Nagato(Player player, GameState.Roles roles) {
+        super(player, roles);
         setChakraType(Chakras.SUITON);
         player.sendMessage(Desc());
         super.setForce(20.0);

@@ -13,8 +13,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Jelena extends RoleBase {
 
-	public Jelena(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Jelena(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}

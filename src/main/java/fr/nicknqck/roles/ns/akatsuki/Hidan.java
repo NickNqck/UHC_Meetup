@@ -23,8 +23,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Hidan extends RoleBase {
 
-	public Hidan(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Hidan(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 	}

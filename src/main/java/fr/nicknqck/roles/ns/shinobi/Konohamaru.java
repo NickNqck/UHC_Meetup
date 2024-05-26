@@ -25,8 +25,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Konohamaru extends RoleBase{
 
-	public Konohamaru(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Konohamaru(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.KATON);
 		giveItem(owner, false, getItems());
 		owner.sendMessage(Desc());

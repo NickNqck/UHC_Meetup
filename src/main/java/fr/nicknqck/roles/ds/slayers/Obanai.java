@@ -15,8 +15,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class Obanai extends RoleBase{
 
-	public Obanai(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Obanai(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Obanai) owner.sendMessage(desc);
 		this.setCanUseBlade(true);		
 		gameState.addPillier(owner);

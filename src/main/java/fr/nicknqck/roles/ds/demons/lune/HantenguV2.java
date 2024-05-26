@@ -21,8 +21,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class HantenguV2 extends RoleBase {
 
-	public HantenguV2(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public HantenguV2(Player player, Roles roles) {
+		super(player, roles);
 		gameState.lunesup.add(owner);
 		gameState.addLuneSupPlayers(owner);
 		clone = Clone.Hantengu;

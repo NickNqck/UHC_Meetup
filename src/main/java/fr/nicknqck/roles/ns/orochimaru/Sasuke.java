@@ -48,8 +48,8 @@ public class Sasuke extends RoleBase {
 	private boolean infectFinish = false;
 	private final List<Player> Tsukuyomi = new ArrayList<>();
 	
-	public Sasuke(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Sasuke(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

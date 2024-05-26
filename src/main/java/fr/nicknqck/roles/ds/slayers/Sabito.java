@@ -18,8 +18,8 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Sabito extends RoleBase{
 
-	public Sabito(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Sabito(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Sabito) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setResi(20);

@@ -17,8 +17,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Kanao extends RoleBase{
 
-	public Kanao(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kanao(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Kanao) owner.sendMessage(desc);
 		this.setForce(20);
 		setNoFall(true);

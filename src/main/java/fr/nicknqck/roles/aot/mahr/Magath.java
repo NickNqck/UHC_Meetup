@@ -15,8 +15,8 @@ import fr.nicknqck.utils.ArrowTargetUtils;
 
 public class Magath extends RoleBase{
 
-	public Magath(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Magath(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		setMaxHealth(getMaxHealth()+4);
 		owner.setMaxHealth(getMaxHealth());

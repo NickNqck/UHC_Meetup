@@ -41,8 +41,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Deidara extends RoleBase{
 
-	public Deidara(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Deidara(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON));
 		owner.sendMessage(Desc());
 	}

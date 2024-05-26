@@ -26,8 +26,8 @@ public class Nezuko extends RoleBase{
 	boolean nuit = false;
 	boolean jour = false;
 	Random random = new Random();
-	public Nezuko(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Nezuko(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Nezuko) owner.sendMessage(desc);
 		regencooldown = 20;
 		this.setForce(20);

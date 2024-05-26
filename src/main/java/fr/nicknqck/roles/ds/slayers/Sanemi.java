@@ -19,8 +19,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Sanemi extends RoleBase {
 
-	public Sanemi(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Sanemi(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Sanemi) owner.sendMessage(desc);
 		setCanUseBlade(true);
 		gameState.addPillier(owner);

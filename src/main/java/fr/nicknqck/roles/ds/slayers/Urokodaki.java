@@ -17,8 +17,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Urokodaki extends RoleBase{
 
-	public Urokodaki(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Urokodaki(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Urokodaki) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		setForce(20);

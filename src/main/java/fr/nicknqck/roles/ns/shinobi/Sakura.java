@@ -15,8 +15,8 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Sakura extends RoleBase {
 
-	public Sakura(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Sakura(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		setForce(20);

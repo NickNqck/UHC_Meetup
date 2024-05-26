@@ -468,361 +468,361 @@ public class GameState{
 		RoleBase role = null;
 		switch(roleType) {
 		case Muzan:
-			role = new Muzan(player, roleType, this);
+			role = new Muzan(player, roleType);
 			break;
 		case Nezuko:
-			role = new Nezuko(player, roleType, this);
+			role = new Nezuko(player, roleType);
 			break;
 		case Tanjiro:
-			role = new Tanjiro(player, roleType, this);
+			role = new Tanjiro(player, roleType);
 			break;
 		case Kokushibo:
-			role = new Kokushibo(player, roleType, this);
+			role = new Kokushibo(player, roleType);
 			break;
 		case Jigoro:
-			role = new Jigoro(player, roleType, this);
+			role = new Jigoro(player, roleType);
 			break;
 		case ZenItsu:
-			role = new ZenItsu(player, roleType, this);
+			role = new ZenItsu(player, roleType);
 			break;
 		case Kaigaku:
-			role = new Kaigaku(player, roleType, this);
+			role = new Kaigaku(player, roleType);
 			break;
 		case Tomioka:
-			role = new Tomioka(player, roleType, this);
+			role = new Tomioka(player, roleType);
 			break;
 		case Akaza:
-			role = new Akaza(player, roleType, this);
+			role = new Akaza(player, roleType);
 			break;
 		case Kyojuro:
-			role = new Kyojuro(player, roleType, this);
+			role = new Kyojuro(player, roleType);
 			break;
 		case Gyokko:
-			role = new Gyokko(player, roleType, this);
+			role = new Gyokko(player, roleType);
 			break;
 		case Muichiro:
-			role = new Muichiro(player, roleType, this);
+			role = new Muichiro(player, roleType);
 		break;
 		case Gyomei:
-			role = new Gyomei(player, roleType, this);
+			role = new Gyomei(player, roleType);
 			break;
 		case Daki:
-			role = new Daki(player, roleType, this);
+			role = new Daki(player, roleType);
 			break;
 		case Gyutaro:
-			role = new Gyutaro(player, roleType, this);
+			role = new Gyutaro(player, roleType);
 			break;
 		case Inosuke:
-			role = new Inosuke(player, roleType, this);
+			role = new Inosuke(player, roleType);
 			break;
 		case Tengen:
-			role = new Tengen(player, roleType, this);
+			role = new Tengen(player, roleType);
 			break;
 		case Doma:
-			role = new Doma(player, roleType, this);
+			role = new Doma(player, roleType);
 			break;
 		case Shinobu:
-			role = new Shinobu(player, roleType, this);
+			role = new Shinobu(player, roleType);
 			break;
 		case Kanao:
-			role = new Kanao(player, roleType, this);
+			role = new Kanao(player, roleType);
 			break;
 		case Obanai:
-			role = new Obanai(player, roleType, this);
+			role = new Obanai(player, roleType);
 			break;
 		case Yoriichi:
-			role = new Yoriichi(player, roleType, this);
+			role = new Yoriichi(player, roleType);
 			break;
 		case Slayer:
 			if (!FFA.getFFA()) {
-				role = new Pourfendeur(player, roleType, this);
+				role = new Pourfendeur(player, roleType);
 				role.setTeam(TeamList.Slayer);
 			} else {
-				role = new FFA_Pourfendeur(player, roleType, this);
+				role = new FFA_Pourfendeur(player, roleType);
 				role.setTeam(TeamList.Solo);
 			}
 			break;
 		case DemonMain:
-			role = new DemonMain(player, roleType, this);
+			role = new DemonMain(player, roleType);
 			break;
 		case Sabito:
-			role = new Sabito(player, roleType, this);
+			role = new Sabito(player, roleType);
 			break;
 		case Urokodaki:
-			role = new Urokodaki(player, roleType, this);
+			role = new Urokodaki(player, roleType);
 			break;
 		case Makomo:
-			role = new Makomo(player, roleType, this);
+			role = new Makomo(player, roleType);
 			break;
 		case Hantengu:
-			role = new Hantengu(player, roleType, this);
+			role = new Hantengu(player, roleType);
 			break;
 		case Demon:
-			role = new Demon_Simple(player, roleType, this);
+			role = new Demon_Simple(player, roleType);
 			break;
 		case Sanemi:
-			role = new Sanemi(player, roleType, this);
+			role = new Sanemi(player, roleType);
 			break;
 		case Shinjuro:
-			role = new Shinjuro(player, roleType, this);
+			role = new Shinjuro(player, roleType);
 			break;			
 		case Kyogai:
-			role = new Kyogai(player, roleType, this);
+			role = new Kyogai(player, roleType);
 			break;
 		case Kanae:
-			role = new Kanae(player, roleType, this);
+			role = new Kanae(player, roleType);
 			break;
 		case Rui:
-			role = new Rui(player, roleType, this);
+			role = new Rui(player, roleType);
 			break;
 		case Enmu:
-			role = new Enmu(player, roleType, this);
+			role = new Enmu(player, roleType);
 			break;
 		case Mitsuri:
-			role = new Mitsuri(player, roleType, this);
+			role = new Mitsuri(player, roleType);
 			break;
 		case Kagaya:
-			role = new Kagaya(player, roleType, this);
+			role = new Kagaya(player, roleType);
 			break;
 		case Susamaru:
-			role = new Susamaru(player, roleType, this);
+			role = new Susamaru(player, roleType);
 			break;
 		case Furuto:
-			role = new Furuto(player, roleType, this);
+			role = new Furuto(player, roleType);
 			break;
 		case JigoroV2:
-			role = new JigoroV2(player, roleType, this);
+			role = new JigoroV2(player, roleType);
 			break;
 		case HantenguV2:
-			role = new HantenguV2(player, roleType, this);
+			role = new HantenguV2(player, roleType);
 			break;
 		case DemonSimpleV2:
-			role = new Demon_SimpleV2(player, roleType, this);
+			role = new Demon_SimpleV2(player, roleType);
 			break;
 		case Yahaba:
-			role = new Yahaba(player, roleType, this);
+			role = new Yahaba(player, roleType);
 			break;
 		case Hotaru:
-			role = new Hotaru(player, roleType, this);
+			role = new Hotaru(player, roleType);
 			break;
 		case Kumo:
-			role = new Kumo(player, roleType, this);
+			role = new Kumo(player, roleType);
 		break;
 		case Reiner:
-			role = new Reiner(player, roleType, this);
+			role = new Reiner(player, roleType);
 			break;
 		case Pieck:
-			role = new Pieck(player, roleType, this);
+			role = new Pieck(player, roleType);
 			break;
 		case Bertolt:
-			role = new Bertolt(player, roleType, this);
+			role = new Bertolt(player, roleType);
 			break;
 		case Porco:
-			role = new Porco(player, roleType, this);
+			role = new Porco(player, roleType);
 			break;
 		case Magath:
-			role = new Magath(player, roleType, this);
+			role = new Magath(player, roleType);
 			break;
 		case Lara:
-			role = new Lara(player, roleType, this);
+			role = new Lara(player, roleType);
 			break;
 		case PetitTitan:
-			role = new PetitTitan(player, roleType, this);
+			role = new PetitTitan(player, roleType);
 			break;
 		case GrandTitan:
-			role = new GrandTitan(player, roleType, this);
+			role = new GrandTitan(player, roleType);
 			break;
 		case Gaara:
-			role = new Gaara(player, roleType, this);
+			role = new Gaara(player, roleType);
 			break;
 		case Livai:
-			role = new Livai(player, roleType, this);
+			role = new Livai(player, roleType);
 			break;
 		case TitanBestial:
-			role = new TitanBestial(player, roleType, this);	
+			role = new TitanBestial(player, roleType);
 			break;
 		case Soldat:
-			role = new Soldat(player, roleType, this);
+			role = new Soldat(player, roleType);
 			break;
 		case Erwin:
-			role = new Erwin(player, roleType, this);
+			role = new Erwin(player, roleType);
 			break;
 		case Gabi:
-			role = new Gabi(player, roleType, this);
+			role = new Gabi(player, roleType);
 			break;
 		case Nakime:
-			role = new Nakime(player, roleType, this);
+			role = new Nakime(player, roleType);
 			break;
 		case Armin:
-			role = new Armin(player, roleType, this);
+			role = new Armin(player, roleType);
 			break;
 		case Eren:
-			role = new Eren(player, roleType, this);
+			role = new Eren(player, roleType);
 			break;
 		case Eclaireur:
-			role = new Eclaireur(player, roleType, this);
+			role = new Eclaireur(player, roleType);
 			break;
 		case Jean:
-			role = new Jean(player, roleType, this);
+			role = new Jean(player, roleType);
 			break;
 		case Jelena:
-			role = new Jelena(player, roleType, this);
+			role = new Jelena(player, roleType);
 			break;
 		case TitanDeviant:
-			role = new TitanDeviant(player, roleType, this);
+			role = new TitanDeviant(player, roleType);
 			break;
 		case Onyankopon:
-			role = new Onyankopon(player, roleType, this);
+			role = new Onyankopon(player, roleType);
 			break;
 		case Hansi:
-			role = new Hansi(player, roleType, this);
+			role = new Hansi(player, roleType);
 			break;
 		case TitanUltime:
-			role = new TitanUltime(player, roleType, this);
+			role = new TitanUltime(player, roleType);
 			break;
 		case Sasha:
-			role = new Sasha(player, roleType, this);
+			role = new Sasha(player, roleType);
 			break;
 		case Conny:
-			role = new Conny(player, roleType, this);
+			role = new Conny(player, roleType);
 			break;
 		case KyogaiV2:
-			role = new KyogaiV2(player, roleType, this);
+			role = new KyogaiV2(player, roleType);
 			break;
 		case Itachi:
-			role = new Itachi(player, roleType, this);
+			role = new Itachi(player, roleType);
 			break;
 		case ShinjuroV2:
-			role = new ShinjuroV2(player, roleType, this);
+			role = new ShinjuroV2(player, roleType);
 			break;
 		case Madara:
-			role = new Madara(player, roleType, this);
+			role = new Madara(player, roleType);
 			break;
 		case Obito:
-			role = new Obito(player, roleType, this);
+			role = new Obito(player, roleType);
 			break;
 		case Danzo:
-			role = new Danzo(player, roleType, this);
+			role = new Danzo(player, roleType);
 			break;
 		case Orochimaru:
-			role = new Orochimaru(player, roleType, this);
+			role = new Orochimaru(player, roleType);
 			break;
 		case Sasuke:
-			role = new Sasuke(player, roleType, this);
+			role = new Sasuke(player, roleType);
 			break;
 		case Kabuto:
-			role = new Kabuto(player, roleType, this);
+			role = new Kabuto(player, roleType);
 			break;
 		case Kisame:
-			role = new Kisame(player, roleType, this);
+			role = new Kisame(player, roleType);
 			break;
 		case Karin:
-			role = new Karin(player, roleType, this);
+			role = new Karin(player, roleType);
 			break;
 		case Kimimaro:
-			role = new Kimimaro(player, roleType, this);
+			role = new Kimimaro(player, roleType);
 			break;
 		case ZetsuNoir:
-			role = new ZetsuNoir(player, roleType, this);
+			role = new ZetsuNoir(player, roleType);
 			break;
 		case ZetsuBlanc:
-			role = new ZetsuBlanc(player, roleType, this);
+			role = new ZetsuBlanc(player, roleType);
 			break;
 		case Konan:
-			role = new Konan(player, roleType, this);
+			role = new Konan(player, roleType);
 			break;
 		case Kakuzu:
-			role = new Kakuzu(player, roleType, this);
+			role = new Kakuzu(player, roleType);
 			break;
 		case Suigetsu:
-			role = new Suigetsu(player, roleType, this);
+			role = new Suigetsu(player, roleType);
 			break;
 		case Haku:
-			role = new Haku(player, roleType, this);
+			role = new Haku(player, roleType);
 			break;
 		case Zabuza:
-			role = new Zabuza(player, roleType, this);
+			role = new Zabuza(player, roleType);
 			break;
 		case Jugo:
-			role = new Jugo(player, roleType, this);
+			role = new Jugo(player, roleType);
 			break;
 		case Kakashi:
-			role = new Kakashi(player, roleType, this);
+			role = new Kakashi(player, roleType);
 			break;
 		case Naruto:
-			role = new Naruto(player, roleType, this);
+			role = new Naruto(player, roleType);
 			break;
 		case Sakura:
-			role = new Sakura(player, roleType, this);
+			role = new Sakura(player, roleType);
 			break;
 		case Jiraya:
-			role = new Jiraya(player, roleType, this);
+			role = new Jiraya(player, roleType);
 			break;
 		case Minato:
-			role = new Minato(player, roleType, this);
+			role = new Minato(player, roleType);
 			break;
 		case Tsunade:
-			role = new Tsunade(player, roleType, this);
+			role = new Tsunade(player, roleType);
 			break;
 		case Konohamaru:
-			role = new Konohamaru(player, roleType, this);
+			role = new Konohamaru(player, roleType);
 			break;
 		case Deidara:
-			role = new Deidara(player, roleType, this);
+			role = new Deidara(player, roleType);
 			break;
 		case Gaï:
-			role = new Gai(player, roleType, this);
+			role = new Gai(player, roleType);
 			break;
 		case RockLee:
-			role = new RockLee(player, roleType, this);
+			role = new RockLee(player, roleType);
 			break;
 		case Hidan:
-			role = new Hidan(player, roleType, this);
+			role = new Hidan(player, roleType);
 			break;
 		case Asuma:
-			role = new Asuma(player, roleType, this);
+			role = new Asuma(player, roleType);
 			break;
 		case KillerBee:
-			role = new KillerBee(player, roleType, this);
+			role = new KillerBee(player, roleType);
 			break;
 		case TenTen:
-			role = new Tenten(player, roleType, this);
+			role = new Tenten(player, roleType);
 			break;
 		case Raikage:
-			role = new YondaimeRaikage(player, roleType, this);
+			role = new YondaimeRaikage(player, roleType);
 			break;
 		case Ginkaku:
-			role = new Ginkaku(player, roleType, this);
+			role = new Ginkaku(player, roleType);
 			break;
 		case Warden:
-			role = new Warden(player, roleType, this);
+			role = new Warden(player, roleType);
 			break;
 		case Kinkaku:
-			role = new Kinkaku(player, roleType, this);
+			role = new Kinkaku(player, roleType);
 			break;
 		case Nagato:
-			role = new Nagato(player, roleType, this);
+			role = new Nagato(player, roleType);
 			break;
 		case Wither:
-			role = new WitherBoss(player, roleType, this);
+			role = new WitherBoss(player, roleType);
 			break;
 		case Kurenai:
-			role = new Kurenai(player, roleType, this);
+			role = new Kurenai(player, roleType);
 			break;
 		case Shikamaru:
-			role = new Shikamaru(player, roleType, this);
+			role = new Shikamaru(player, roleType);
 			break;
         case Poulet:
-             role = new Poulet(player, roleType, this);
+             role = new Poulet(player, roleType);
              break;
 		case Ino:
-			role = new Ino(player, roleType, this);
+			role = new Ino(player, roleType);
 			break;
 		case Zombie:
-			role = new Zombie(player, roleType, this);
+			role = new Zombie(player, roleType);
 			break;
 			case Iso:
-				role = new Iso(player, roleType, this);
+				role = new Iso(player, roleType);
 				break;
 		}
 		if (role == null) return null;
@@ -835,6 +835,7 @@ public class GameState{
 			}
 			System.out.println(role.getTeam().name()+" for role "+role.type.name());
 		}
+		role.gameState = this;
 		addInPlayerRoles(player, role);
 		fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(player.getUniqueId());
 		role.setGamePlayer(gamePlayer);

@@ -19,8 +19,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Jugo extends RoleBase {
 
-	public Jugo(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Jugo(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

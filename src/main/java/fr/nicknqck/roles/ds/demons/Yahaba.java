@@ -18,8 +18,8 @@ public class Yahaba extends RoleBase {
 	private Player cible;
 	private boolean killcible = false;
 
-	public Yahaba(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Yahaba(Player player, Roles roles) {
+		super(player, roles);
 		setForce(20);
 		owner.sendMessage(AllDesc.Yahaba);
 		owner.sendMessage("Une cible vous sera attribué dans§6 10s");

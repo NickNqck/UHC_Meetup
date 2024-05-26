@@ -15,8 +15,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Hotaru extends RoleBase{
 
-	public Hotaru(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Hotaru(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Hotaru);
 		setLameIncassable(owner, true);
 		lame = null;

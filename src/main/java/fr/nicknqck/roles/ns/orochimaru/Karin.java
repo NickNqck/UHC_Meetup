@@ -22,8 +22,8 @@ import fr.nicknqck.utils.Loc;
 
 public class Karin extends RoleBase {
 
-	public Karin(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Karin(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		timePassedNearby.clear();

@@ -19,8 +19,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Daki extends RoleBase{
 
-	public Daki(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Daki(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Daki) owner.sendMessage(desc);
 		this.setForce(20);
 		setCanRespawn(true);

@@ -15,8 +15,8 @@ public class Poulet extends RoleBase {
 
     private final ItemStack plumeItem = new ItemBuilder(Material.FEATHER).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§7Permet de voler pendant 3 secondes").setName("§aPlume").toItemStack();
     private int cdplume = 0;
-    public Poulet(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Poulet(Player player, GameState.Roles roles) {
+        super(player, roles);
         owner.sendMessage(Desc());
         giveItem(owner,false,getItems());
     }

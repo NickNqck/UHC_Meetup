@@ -25,8 +25,8 @@ import fr.nicknqck.utils.WorldUtils;
 
 public class Yoriichi extends RoleBase{
 
-	public Yoriichi(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Yoriichi(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Yoriichi) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);

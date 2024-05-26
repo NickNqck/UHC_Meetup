@@ -41,8 +41,8 @@ public class Itachi extends RoleBase {
 	private int cdAttaque = 0;
 	private boolean Izanami = false;
 	
-	public Itachi(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Itachi(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 	}

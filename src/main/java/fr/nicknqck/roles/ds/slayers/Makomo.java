@@ -18,8 +18,8 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Makomo extends RoleBase{
 
-	public Makomo(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Makomo(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Makomo) owner.sendMessage(desc);
 		setCanUseBlade(true);
 	}

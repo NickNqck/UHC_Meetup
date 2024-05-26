@@ -22,8 +22,8 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Rui extends RoleBase {
 
-	public Rui(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Rui(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Rui);
 		gameState.lunesup.add(owner);
 		gameState.addLuneSupPlayers(owner);

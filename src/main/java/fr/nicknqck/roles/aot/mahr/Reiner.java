@@ -11,8 +11,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Reiner extends RoleBase{
 
-	public Reiner(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Reiner(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);

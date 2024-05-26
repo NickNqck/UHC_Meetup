@@ -16,8 +16,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Kyojuro extends RoleBase{
 
-	public Kyojuro(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kyojuro(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(AllDesc.Kyojuro);
 		this.setForce(20);
 		this.setCanUseBlade(true);

@@ -21,8 +21,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class ShinjuroV2 extends RoleBase{
 
-	public ShinjuroV2(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public ShinjuroV2(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		setCanUseBlade(true);
 		setLameIncassable(owner, true);

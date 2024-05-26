@@ -20,8 +20,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class TitanUltime extends RoleBase{
 
-	public TitanUltime(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public TitanUltime(Player player, Roles roles) {
+		super(player, roles);
 		gameState.TitansRouge.add(owner);
 		owner.sendMessage(Desc());
 		setForce(30);

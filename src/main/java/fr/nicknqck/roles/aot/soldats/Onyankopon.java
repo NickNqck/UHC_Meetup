@@ -16,8 +16,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Onyankopon extends RoleBase{
 
-	public Onyankopon(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Onyankopon(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		owner.getInventory().addItem(getItems());

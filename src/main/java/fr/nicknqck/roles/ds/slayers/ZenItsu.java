@@ -1,7 +1,5 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.util.Random;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,16 +11,13 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.WorldUtils;
 
 public class ZenItsu extends RoleBase{
-	Random random = new Random();
-	private boolean killjig = false;
-	private boolean killkai = false;
+
 	private int cooldownpremiermouvement = 0;
 	private int cooldowntroisiememouvement = 0;
-	public ZenItsu(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public ZenItsu(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.ZenItsu) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setForce(20);
@@ -88,14 +83,11 @@ public class ZenItsu extends RoleBase{
 				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			}
 			givePotionEffet(owner, PotionEffectType.SPEED, 60, 3, true);
-			if (killjig) {
-				givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-			}
 		}
 		if (cooldownpremiermouvement >= 1) {cooldownpremiermouvement--;}
 		if (cooldowntroisiememouvement >= 1) {cooldowntroisiememouvement--;}
 		if (cooldownpremiermouvement == 60*3) {
-			if (!killjig && !gameState.JigoroV2Pacte3) {
+			if (!gameState.JigoroV2Pacte3) {
 				givePotionEffet(owner, PotionEffectType.SLOW, 20*60, 2, true);
 				givePotionEffet(owner, PotionEffectType.WEAKNESS, 20*60, 2, true);
 			}
@@ -112,14 +104,8 @@ public class ZenItsu extends RoleBase{
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(Items.getJoueurZenItsuSpeed())) {
 			if (cooldownpremiermouvement <= 0) {
-			if (killjig) {
-				givePotionEffet(owner, PotionEffectType.SPEED, 100, 2, true);
-				givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 800, 1, true);
-				cooldownpremiermouvement = 60*4;
-			} else {
 				givePotionEffet(owner, PotionEffectType.SPEED, 60, 2, true);
 				cooldownpremiermouvement = 60*4;
-			}
 		}  else {
 			sendCooldown(owner, cooldownpremiermouvement);
 		}
@@ -129,23 +115,6 @@ public class ZenItsu extends RoleBase{
 				owner.sendMessage(ChatColor.RED+"Votre pouvoir est désactivé.");
 				return false;
 			}
-			if (killkai) {
-				if (cooldowntroisiememouvement <= 0) {
-					cooldowntroisiememouvement = 5*60;
-					owner.sendMessage(ChatColor.GREEN+"Exécution du"+ChatColor.GOLD+" Troisème mouvement du soufle de la foudre.");
-					for(Player p : gameState.getInGamePlayers())
-						if (p != owner) {
-							  if(p.getLocation().distance(owner.getLocation()) <= 30) {
-							    	p.damage(4.0);
-							    	owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + p.getName());
-							    	p.sendMessage(ChatColor.GREEN+"Vous avez été touchez le Troisième mouvement du soufle de la foudre de:"+ChatColor.RED+" Kaigaku");
-							        WorldUtils.spawnFakeLightning(owner, owner.getLocation(), true);
-							    }
-						}
-				}  else {
-					sendCooldown(owner, cooldowntroisiememouvement);
-				}
-			}			
 		}
 		return super.ItemUse(item, gameState);
 	}

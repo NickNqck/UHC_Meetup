@@ -33,8 +33,8 @@ public class Kinkaku extends RoleBase {
     private final ItemStack EventailItem = new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aEventail de bananier").setLore("§7Vous permet de cumulé la nature de chakra des joueurs tués avec la votre").toItemStack();
     private final ItemStack MissionItem = new ItemBuilder(Material.NETHER_STAR).setName("§aMission").setLore("§7Vous permet en ayant cibler un joueur de lui donner une mission").toItemStack();
     private final List<UUID> cantBeMission = new ArrayList<>();
-    public Kinkaku(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Kinkaku(Player player, GameState.Roles roles) {
+        super(player, roles);
         super.setChakraType(super.getRandomChakras());
         owner.sendMessage(Desc());
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

@@ -75,8 +75,7 @@ public abstract class RoleBase {
 	public String StringID = "";
 	@Getter
 	private UUID uuidOwner;
-	public RoleBase(Player player, Roles roles, GameState gameState) {
-		this.gameState = gameState;
+	public RoleBase(Player player, Roles roles) {
 		owner = player;
 		speedBase = 0.20f;
 		owner.setWalkSpeed(speedBase*(bonusSpeedMultiplier+1));

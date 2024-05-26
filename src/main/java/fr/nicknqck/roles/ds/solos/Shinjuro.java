@@ -19,8 +19,8 @@ import fr.nicknqck.utils.Loc;
 
 public class Shinjuro extends RoleBase {
 
-	public Shinjuro(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Shinjuro(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		setCanUseBlade(true);
 		setLameFr(true);

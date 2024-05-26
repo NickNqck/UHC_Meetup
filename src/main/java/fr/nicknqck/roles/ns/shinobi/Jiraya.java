@@ -27,8 +27,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Jiraya extends RoleBase{
 
-	public Jiraya(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Jiraya(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();

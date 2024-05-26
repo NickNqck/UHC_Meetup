@@ -14,9 +14,9 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Shinobu extends RoleBase{
 
-	public Shinobu(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
-		for (String desc : AllDesc.Shinobu) owner.sendMessage(desc);
+	public Shinobu(Player player, Roles roles) {
+		super(player, roles);
+		owner.sendMessage(Desc());
         this.setCanUseBlade(true);
         gameState.addPillier(owner);
 	}

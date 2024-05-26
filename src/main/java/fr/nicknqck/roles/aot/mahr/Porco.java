@@ -11,8 +11,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Porco extends RoleBase{
 
-	public Porco(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Porco(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);

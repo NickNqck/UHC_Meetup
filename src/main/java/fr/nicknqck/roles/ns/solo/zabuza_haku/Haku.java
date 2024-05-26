@@ -31,8 +31,8 @@ import fr.nicknqck.utils.raytrace.RayTrace;
 
 public class Haku extends RoleBase{
 
-	public Haku(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Haku(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
 		setResi(20);

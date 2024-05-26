@@ -18,8 +18,8 @@ import java.util.UUID;
 public class Ino extends RoleBase {
     private final ItemStack transpositionItem = new ItemBuilder(Material.NETHER_STAR).setName("§aTransposition").setLore("§7Vous permet de suivre très discrètement un joueur").toItemStack();
     private int cdTransposition = 0;
-    public Ino(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Ino(Player player, GameState.Roles roles) {
+        super(player, roles);
         setChakraType(getRandomChakras());
         owner.sendMessage(Desc());
         giveItem(owner, false, getItems());

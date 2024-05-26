@@ -16,8 +16,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class PetitTitan extends RoleBase{
 
-	public PetitTitan(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public PetitTitan(Player player, Roles roles) {
+		super(player, roles);
 		gameState.TitansRouge.add(owner);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);

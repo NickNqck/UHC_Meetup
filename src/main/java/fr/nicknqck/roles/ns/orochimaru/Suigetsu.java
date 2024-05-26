@@ -28,8 +28,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Suigetsu extends RoleBase {
 
-	public Suigetsu(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Suigetsu(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {

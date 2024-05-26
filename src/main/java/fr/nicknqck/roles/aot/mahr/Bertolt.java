@@ -11,8 +11,8 @@ import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;;
 
 public class Bertolt extends RoleBase{
-	public Bertolt(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Bertolt(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);

@@ -28,8 +28,8 @@ import fr.nicknqck.utils.particles.MathUtil;
 
 public class Kisame extends RoleBase {
 
-	public Kisame(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kisame(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
 	}

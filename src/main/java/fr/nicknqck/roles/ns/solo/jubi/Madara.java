@@ -47,8 +47,8 @@ public class Madara extends RoleBase {
 	private int SusanoCD = 0;
 	private boolean hasIzanagi = false;
 
-	public Madara(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Madara(Player player, Roles roles) {
+		super(player, roles);
 		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 		setChakraType(Chakras.KATON);
 		giveItem(owner, false, getItems());

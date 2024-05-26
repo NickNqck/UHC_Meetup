@@ -11,8 +11,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Susamaru extends RoleBase {
 
-	public Susamaru(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Susamaru(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Susamaru)owner.sendMessage(desc);
 	}
 	

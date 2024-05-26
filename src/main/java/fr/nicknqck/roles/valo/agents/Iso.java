@@ -30,18 +30,18 @@ public class Iso extends RoleBase {
     private int cdProtection = 0;
     private int stackedCoup = 0;
     private final ItemStack BarriereItem = new ItemBuilder(Material.NETHER_STAR).setName("§5Barrière").setLore("§fVous permet de tier un laser de particule, les joueurs touchés auront un effet différent en fonction du clique utiliser:",
-            "§cClique gauche§f: Les joueurs touchés par le laser subiront§c +25%§f de dégat de votre pars pendant§c 1 minute§f",
-            "§aClique droit§f: Les joueurs touchés par le laser ne pourront plus vous tapez durant les§c 10 secondes§f qui suive."
+            "§cClique gauche§f: Les jououeurs subiront§c +25%§f de dégat de votre pars pendant§c 1 minute§f",
+            "§aClique droit§f: Les joueurs ne pourront plus vous tapez durant les§c 10 secondes§f qui suive."
     ).toItemStack();
     private int cdBarriereDroite = 0;
     private final List<UUID> LeftBarrieredItem = new ArrayList<>();
     private int cdBarriereGauche = 0;
-    private final ItemStack UltimeItem = new ItemBuilder(Material.NETHER_STAR).setName("§r§fUltime: duel").setLore("§r§fEn visant un joueur, vous permet de vous téléportez avec lui dans un§c 1v1§f dans une arène, le gagnant remporte le nombre de pomme d'or que possédait le perdant (avant la téléportation)").toItemStack();
+    private final ItemStack UltimeItem = new ItemBuilder(Material.NETHER_STAR).setName("§r§fUltime: duel").setLore("§r§fEn visant un joueur, vous permet de vous téléportez avec lui dans un§c 1v1§f dans une arène,","§r§fle gagnant remporte le nombre de pomme d'or que possédait le perdant (avant la téléportation)").toItemStack();
     private int cdUltime = 0;
     private final Map<UUID, Integer> ultimateGap = new HashMap<>();
     private final Map<UUID, Location> ultimeLocation = new HashMap<>();
-    public Iso(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Iso(Player player, GameState.Roles roles) {
+        super(player, roles);
         owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
     }

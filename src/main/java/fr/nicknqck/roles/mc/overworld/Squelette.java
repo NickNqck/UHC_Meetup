@@ -16,8 +16,8 @@ public class Squelette extends RoleBase {
     private final ItemStack KorosuItem = new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§71 flèche sur deux que vous tirez ira directement sur votre cible").setName("§aKorosu shi no yumi").toItemStack();
     private final ItemStack BontoutouItem = new ItemBuilder(Material.BONE).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("§aBon TouTou").setLore("§7Vous permez d'apprivoiser un loup").toItemStack();
     private int KorosuCount = 0;
-    public Squelette(Player player, GameState.Roles roles, GameState gameState) {
-        super(player, roles, gameState);
+    public Squelette(Player player, GameState.Roles roles) {
+        super(player, roles);
     }
 
     @Override

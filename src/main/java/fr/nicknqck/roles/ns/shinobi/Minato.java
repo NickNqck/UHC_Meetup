@@ -26,8 +26,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Minato extends RoleBase{
 
-	public Minato(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Minato(Player player, Roles roles) {
+		super(player, roles);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());

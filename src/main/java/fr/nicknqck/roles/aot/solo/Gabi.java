@@ -17,8 +17,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gabi extends RoleBase {
 	private boolean killshifter = false;
-	public Gabi(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Gabi(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setCanVoleTitan(true);

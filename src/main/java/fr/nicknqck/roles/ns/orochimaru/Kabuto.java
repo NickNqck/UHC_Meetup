@@ -27,8 +27,8 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Kabuto extends RoleBase{
 
-	public Kabuto(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Kabuto(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

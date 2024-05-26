@@ -16,8 +16,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Conny extends RoleBase{
 
-	public Conny(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Conny(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 	}
 	@Override

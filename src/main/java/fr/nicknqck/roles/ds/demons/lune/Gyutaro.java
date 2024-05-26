@@ -18,8 +18,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gyutaro extends RoleBase{
 
-	public Gyutaro(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Gyutaro(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		setCanRespawn(true);

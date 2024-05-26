@@ -25,8 +25,8 @@ import fr.nicknqck.utils.Loc;
 
 public class Tenten extends RoleBase{
 
-	public Tenten(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Tenten(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());

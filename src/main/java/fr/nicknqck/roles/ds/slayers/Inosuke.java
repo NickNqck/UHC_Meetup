@@ -15,8 +15,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Inosuke extends RoleBase{
 
-	public Inosuke(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Inosuke(Player player, Roles roles) {
+		super(player, roles);
 		for (String desc : AllDesc.Inosuke) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);

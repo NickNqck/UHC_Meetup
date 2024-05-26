@@ -38,8 +38,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Gaara extends RoleBase {
 
-    public Gaara(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+    public Gaara(Player player, Roles roles) {
+		super(player, roles);
 		owner.sendMessage(Desc());
 		setNoFall(true);
 		resetCooldown();

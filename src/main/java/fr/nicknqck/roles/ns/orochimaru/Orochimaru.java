@@ -31,8 +31,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Orochimaru extends RoleBase {
 
-	public Orochimaru(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public Orochimaru(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(getRandomChakras());
 		chakrasVoled.add(getChakras());
 		owner.sendMessage(Desc());

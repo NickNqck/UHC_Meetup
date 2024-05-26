@@ -20,8 +20,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class KillerBee extends RoleBase{
 
-	public KillerBee(Player player, Roles roles, GameState gameState) {
-		super(player, roles, gameState);
+	public KillerBee(Player player, Roles roles) {
+		super(player, roles);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
