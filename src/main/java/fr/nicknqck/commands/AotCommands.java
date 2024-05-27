@@ -20,10 +20,8 @@ GameState gameState;
 			Player player = (Player) sender;
 			if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("roles")) {
-					if (sender instanceof Player) {
-						sender.sendMessage(gameState.getRolesList());
-					}
-				}
+                    sender.sendMessage(gameState.getRolesList());
+                }
 				if (gameState.getPlayerRoles().containsKey(player)) {
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
 						player.sendMessage(gameState.getDescription(player));

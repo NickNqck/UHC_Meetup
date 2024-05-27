@@ -2,6 +2,7 @@ package fr.nicknqck;
 
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
+import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
@@ -282,9 +283,9 @@ public class GameState{
 	public boolean JigoroV2Pacte3 = false;
 	public World world = Main.getInstance().gameWorld;
 	private ServerStates serverState = ServerStates.InLobby;
-	private HashMap<Roles, Integer> availableRoles = new HashMap<Roles, Integer>();
-	private ArrayList<Events> availableEvents = new ArrayList<Events>();
-	private ArrayList<EventBase> inGameEvents = new ArrayList<>();
+	private final HashMap<Roles, Integer> availableRoles = new HashMap<Roles, Integer>();
+	private final ArrayList<Events> availableEvents = new ArrayList<Events>();
+	private final ArrayList<EventBase> inGameEvents = new ArrayList<>();
 	private ArrayList<Player> inLobbyPlayers = new ArrayList<>();
 	private ArrayList<Player> inGamePlayers = new ArrayList<>();
 	private ArrayList<Player> inSpecPlayers = new ArrayList<Player>();
@@ -292,7 +293,7 @@ public class GameState{
 	public ArrayList<Player> Charmed = new ArrayList<Player>();
 	public ArrayList<Player> LuneSuperieur = new ArrayList<Player>();
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<Player, RoleBase>();
-	private HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<Player, HashMap<Player, RoleBase>>();
+	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<Player, HashMap<Player, RoleBase>>();
 	public List<Player> igPlayers = new ArrayList<>();
 	int inGameTime = 0;
 
@@ -827,7 +828,7 @@ public class GameState{
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(player);
-		if (role.type != Roles.Slayer && role.type != Roles.Kyogai) {
+		if (role.type != Roles.Slayer) {
 			if (!FFA.getFFA()) {
 				role.setTeam(roleType.getTeam());
 			} else {
@@ -857,6 +858,7 @@ public class GameState{
 			}
 		}
 		attributedRole.add(roleType);
+		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer));
 		return role;
 	}
 	@Getter
@@ -1119,14 +1121,24 @@ public class GameState{
 	public String getRolesList() {
 		Map<TeamList, List<Roles>> hashMap = new LinkedHashMap<>();
 		StringBuilder tr = new StringBuilder();
+		if (Main.isDebug()) {
+			System.out.println("getRolesList used");
+		}
+		System.out.println(Main.isDebug());
 		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
 			for (RoleBase e : getPlayerRoles().values()) {
-				if (e.type != null && e.getOldTeam() != null) {
-					if (e.owner != null && !getInSpecPlayers().contains(e.owner) && getInGamePlayers().contains(e.owner)) {
+				if (e.getOldTeam() == null){
+					e.setOldTeamList(e.type.getTeam());
+				}
+				if (e.getOldTeam() != null) {
+					if (e.owner != null && !e.owner.getGameMode().equals(GameMode.SPECTATOR)) {
 						if (hashMap.get(e.getOldTeam()) == null){
 							List<Roles> r = new ArrayList<>();
 							hashMap.put(e.getOldTeam(), r);
+						}
+						if (Main.isDebug()){
+							System.out.println(e+" zzz "+e.getName()+" aaa "+e.type);
 						}
 						List<Roles> aList = hashMap.get(e.getOldTeam());
 						aList.add(e.type);
