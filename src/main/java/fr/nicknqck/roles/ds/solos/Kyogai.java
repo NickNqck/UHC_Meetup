@@ -79,31 +79,29 @@ public class Kyogai extends RoleBase{
 					if (gameState.getPlayerRoles().get(e) != null) {
 						if (gameState.getPlayerRoles().get(e).type != null) {
 							for (Player s : gameState.getInGamePlayers()) {
-								s = owner;
-								if (gameState.getPlayerRoles().get(s) != null) {
-									if (gameState.getPlayerRoles().get(s).type != null) {
+								if (!gameState.hasRoleNull(s)) {
 										if (gameState.getAvailableRoles().containsKey(Roles.Muzan)) {
 											if (gameState.getLuneSupPlayers().contains(s)) {
 												if (gameState.getPlayerRoles().get(e).type == Roles.Muzan) {
-													s.sendMessage("Le joueur "+ChatColor.GOLD+s.getName()+"§r est "+ChatColor.GOLD+gameState.getPlayerRoles().get(e).type.name());
-													setTeam(TeamList.Demon);
-													owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+													s.sendMessage("Le joueur §6"+s.getName()+"§r est§6 "+gameState.getPlayerRoles().get(e).type.name());
 												}
 											}
 										} else {
 											s.sendMessage("Aucun joueur ne possède le rôle§6 Muzan");
-										}										
-									}
+										}
 								}
 							}
 						}
 					}
 				}
+				setTeam(TeamList.Demon);
+				setOldTeamList(TeamList.Demon);
+				owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 			} else {
 				setTeam(TeamList.Solo);
 				owner.sendMessage("Malgré votre choix vue que le mode FFA est activé vous devez tout de même gagner en temp que rôle solitaire");
 			}
-			System.out.println(owner.getName()+" = "+getTeam());
+			System.out.println(owner.getName()+" = "+getTeam()+", OldTeam = "+getOldTeam());
 			System.out.println(owner.getName()+" = "+type.name());
 			owner.getInventory().addItem(Items.getTambour());
 			camp = Camp.Démon;
@@ -111,6 +109,7 @@ public class Kyogai extends RoleBase{
 		}
 		if (item.isSimilar(GUIItems.getKyogaiSolo())) {
 			setTeam(TeamList.Solo);
+			setOldTeamList(getTeam());
 			owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 			System.out.println(owner.getName()+" = "+getTeam());
 			System.out.println(owner.getName()+" = "+type.name());
