@@ -9,6 +9,7 @@ import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -111,9 +112,17 @@ public class Ino extends NSRoles {
 
         @Override
         public void run() {
+            if (GameState.getInstance().getServerState() != GameState.ServerStates.InGame) {
+                cancel();
+                return;
+            }
             Player target = Bukkit.getPlayer(uuidTarget);
             Player owner = Bukkit.getPlayer(ino.getUuidOwner());
             if (target != null && owner != null){
+                if (target.getGameMode() == GameMode.SPECTATOR ||owner.getGameMode() != GameMode.SPECTATOR){
+                    cancel();
+                    return;
+                }
                 if (ino.cdTransposition <= 60*5){
                 cancel();
                 return;

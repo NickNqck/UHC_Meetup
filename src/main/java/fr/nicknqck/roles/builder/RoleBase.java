@@ -566,10 +566,6 @@ public abstract class RoleBase implements Role{
 			System.out.println("Starting trying to get player who own the role "+toknow.name());
 		}
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(toknow)){
-				knower.sendMessage(toknow.getTeam().getColor()+"§f n'est pas présent dans la partie");
-				return;
-			}
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (gameState.getInSpecPlayers().contains(p))return;
 				if (!gameState.hasRoleNull(p)) {
