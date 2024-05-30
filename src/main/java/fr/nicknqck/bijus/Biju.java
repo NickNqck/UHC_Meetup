@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.Border;
+import fr.nicknqck.Main;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -49,10 +53,6 @@ public abstract class Biju {
 	public Location moveToOrigin(Location location) {
 	    double x = location.getX();
 	    double z = location.getZ();
-
-	    // Calculer la distance par rapport aux coordonnées (0.0, 0.0)
-
-	    // Si la distance est supérieure à 1, déplacer la location vers (0.0, 0.0)
 	        if (x < 0.0) {
 	        	return new Location(location.getWorld(), x+1, location.getWorld().getHighestBlockYAt(location.getBlockX()+1, location.getBlockZ()), z, location.getYaw(), location.getPitch());
 	        }
@@ -64,6 +64,21 @@ public abstract class Biju {
 	        }else {
 	        	return new Location(location.getWorld(), x, location.getWorld().getHighestBlockYAt(location.getBlockX(), location.getBlockZ()-1), z-1, location.getYaw(), location.getPitch());
 			}
+	}
+	public Location getRandomSpawn(){
+		Location spawn = new Location(Main.getInstance().gameWorld, 0.0, Main.getInstance().gameWorld.getHighestBlockYAt(0, 0), 0.0);
+		int x = -8616841;
+		int z = -4987487;
+		while (x > Border.getMaxBijuSpawn() || x < -Border.getMaxBijuSpawn()){//Just use Math for obtain a good X position
+			x = RandomUtils.getRandomDeviationValue(10, -Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
+		}
+		while (z > Border.getMaxBijuSpawn() || z < Border.getMaxBijuSpawn()){
+			z = RandomUtils.getRandomDeviationValue(10, -Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
+		}
+		spawn.setX(x);
+		spawn.setZ(z);
+		spawn.setY(spawn.getWorld().getHighestBlockYAt(x, z));
+		return spawn;
 	}
 	public UUID getMaster() {
         UUID toReturn = null;

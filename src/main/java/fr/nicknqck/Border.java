@@ -21,5 +21,10 @@ public class Border {
     @Getter
     @Setter
     private static float actualBorderSize = getMaxBorderSize();
-
+    @Getter
+    @Setter
+    private static int maxBijuSpawn = 300;
+    @Getter
+    @Setter
+    private static int minBijuSpawn = 100;
 }
