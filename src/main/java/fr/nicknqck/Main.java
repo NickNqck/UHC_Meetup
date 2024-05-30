@@ -286,7 +286,7 @@ public class Main extends JavaPlugin implements Listener{
 			getScoreboardManager().onDisable();
 		}
 		System.out.println("["+PLUGIN_NAME+"] Disabled");
-//		deleteWorld("world");
+		//deleteWorld("world");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				World world = Bukkit.getWorlds().get(0);
@@ -319,7 +319,9 @@ public class Main extends JavaPlugin implements Listener{
         }
     }
 	public static boolean isDebug(){
-		return getInstance().getConfig().getBoolean("debug");
+		boolean debug = getInstance().getConfig().getBoolean("debug");
+		System.out.println("Debug is set at "+debug);
+		return debug;
 	}
 	public static String getBase() {
         return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 600+

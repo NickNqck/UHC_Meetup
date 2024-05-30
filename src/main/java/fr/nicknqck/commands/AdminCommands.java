@@ -22,6 +22,7 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -44,6 +45,14 @@ public class AdminCommands implements CommandExecutor{
 			this.gameState = GameState.getInstance();
 		}
 		if (args.length >= 1) {
+			if (args[0].equalsIgnoreCase("createloadworld")){
+                try {
+                    Main.createLoadWorld();
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+				return true;
+			}
 			if (args[0].equalsIgnoreCase("vie")){
 				if (args.length == 3){
 					Player target = Bukkit.getPlayer(args[1]);
