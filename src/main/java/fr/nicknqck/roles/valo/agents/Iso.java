@@ -223,11 +223,12 @@ public class Iso extends RoleBase {
                             wall1 = !wall1;
                         }
                     }
-                    for (int x = -8; x <= -2; x++) {
-                        double z = (x < -6 || x > -4) ? -13.0 : -14.0;
+                    for (int x = -2; x >= -8; x--) {
+                        double z = (x < -6 || x > -4) ? -14.0 : -13.0;
 
                         Location location = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
                         Location location1 = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
+
                         if (wall2){
                             owner.getWorld().getBlockAt(location).setType(Material.AIR);
                         } else {
@@ -237,8 +238,8 @@ public class Iso extends RoleBase {
                             wall2 = !wall2;
                         }
                     }
-                    for (int x = 3; x >= -3; x--){
-                        double z = (x < -1 || x > 1) ? 14.0 : 13.0;
+                    for (int x = -3; x <= 3; x++){
+                        double z = (x < -1 || x > 1) ? 13.0 : 14.0;
 
                         Location location = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
                         Location location1 = new Location(owner.getWorld(), x, 39.0 - couchRemoved, z);
