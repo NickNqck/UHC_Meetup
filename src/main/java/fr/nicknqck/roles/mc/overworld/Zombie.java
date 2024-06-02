@@ -88,10 +88,10 @@ public class Zombie extends RoleBase {
                                         if (gameState.nightTime){
                                             addBonusResi(10);
                                         } else {
-                                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 2, 1, true);
+                                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 2*20, 1, true);
                                         }
                                     } else {
-                                        givePotionEffet(PotionEffectType.SLOW, 2 , 1, true);
+                                        givePotionEffet(PotionEffectType.SLOW, 2*20, 1, true);
                                     }
                                 } else {
                                     owner.sendMessage("Vous perdez votre "+AllDesc.slow+" §41 §ret vous pouvez manger encore §c"+nmbCerveau+" Cerveau");
@@ -141,10 +141,10 @@ public class Zombie extends RoleBase {
             }
         }
         if (gameState.nightTime){
-            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 2 , 1 ,false);
+            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 3*20 , 1 ,false);
         } else {
             if (!CerveauActive){
-                givePotionEffet(PotionEffectType.WEAKNESS, 2,1,false);
+                givePotionEffet(PotionEffectType.WEAKNESS, 3*20,1,false);
             }
         }
         super.Update(gameState);

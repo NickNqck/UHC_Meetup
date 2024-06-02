@@ -68,14 +68,14 @@ public class Poulet extends RoleBase {
             if (cdplume <= 0){
                 owner.setAllowFlight(true);
                 owner.setFlying(true);
-
+                owner.sendMessage("Vous pouvez désormais voler");
                 new BukkitRunnable(){
                 private int i = 0;
                     @Override
                     public void run() {
                         if(getIGPlayers().contains(owner)) {
                             i ++;
-                            if (i == 3) {
+                            if (i == 4) {
                                 owner.sendMessage("Vous ne pouvez plus voler.");
                                 owner.setFlying(false);
                                 owner.setAllowFlight(false);
