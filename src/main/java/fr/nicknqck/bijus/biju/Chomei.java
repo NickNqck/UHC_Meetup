@@ -289,7 +289,7 @@ public class Chomei extends Biju {
 				chomeiUser = null;
 			}
 		}
-		if (getListener().getChomeiCooldown() == 0 && getHote() != null) {
+		if (BijuListener.getInstance().getChomeiCooldown() == 0 && getHote() != null) {
 			Bukkit.getPlayer(getHote()).sendMessage(getName()+"§7 est à nouveau utilisable");
 		}
 	}
@@ -341,7 +341,7 @@ public class Chomei extends Biju {
 	}
 	@Override
 	public void resetCooldown() {
-		getListener().setChomeiCooldown(0);
+		BijuListener.getInstance().setChomeiCooldown(0);
 	}
 	@Override
 	public void onJubiInvoc(Player invoquer) {

@@ -228,7 +228,7 @@ public class Kokuo extends Biju {
 				}
 			}
 		}
-		if (getListener().getKokuoCooldown() ==0 && getHote() != null) {
+		if (BijuListener.getInstance().getKokuoCooldown() ==0 && getHote() != null) {
 			Bukkit.getPlayer(getHote()).sendMessage(getName()+"§7 est à nouveau utilisable");
 		}
 	}
@@ -277,8 +277,8 @@ public class Kokuo extends Biju {
 	}
 	@Override
 	public void resetCooldown() {
-		getListener().setKokuoCooldown(0);
-		getListener().setKokuoUser(null);
+		BijuListener.getInstance().setKokuoCooldown(0);
+		BijuListener.getInstance().setKokuoUser(null);
 	}
 	@Override
 	public boolean onDrop(PlayerDropItemEvent event, Player player, ItemStack item) {

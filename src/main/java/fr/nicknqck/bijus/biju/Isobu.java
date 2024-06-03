@@ -257,7 +257,7 @@ public class Isobu extends Biju{
 				}
 			}
 		}
-		if (getListener().getIsobuCooldown() == 0 && getHote() != null) {
+		if (BijuListener.getInstance().getIsobuCooldown() == 0 && getHote() != null) {
 			Bukkit.getPlayer(getHote()).sendMessage(getName()+"§7 est à nouveau utilisable !");
 		}
 	}
@@ -306,8 +306,8 @@ public class Isobu extends Biju{
 	}
 	@Override
 	public void resetCooldown() {
-		getListener().setIsobuCooldown(0);
-		getListener().setIsobuDamage(null);
+		BijuListener.getInstance().setIsobuCooldown(0);
+		BijuListener.getInstance().setIsobuDamage(null);
 	}
 	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
 	@Override

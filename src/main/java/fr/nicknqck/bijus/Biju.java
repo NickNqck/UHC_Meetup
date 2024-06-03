@@ -6,7 +6,6 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
-import fr.nicknqck.utils.particles.MathUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -66,10 +65,42 @@ public abstract class Biju {
 	}
 	public Location getRandomSpawn(){
 		Location spawn = new Location(Main.getInstance().gameWorld, 0.0, Main.getInstance().gameWorld.getHighestBlockYAt(0, 0), 0.0);
-
 		if (Main.isDebug()){
 			System.err.println("Final Spawn:     "+spawn);
 		}
+		int x = 0;
+		int z = 0;
+		while (x == 0 || x < -948015) {
+			int rdm = RandomUtils.getRandomInt(-Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
+			if (rdm < 0){
+				if (rdm <= -Border.getMaxBijuSpawn()) {
+					x = -9999999;
+				} else {
+					if (rdm >= -Border.getMinBijuSpawn()){
+						x = -999999;
+					} else {
+						x = rdm;
+					}
+				}
+			}
+		}
+		while (z == 0 || z < -948015){
+			int rdm = RandomUtils.getRandomInt(-Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
+			if (rdm < 0){
+				if (rdm <= -Border.getMaxBijuSpawn()) {//Le code est dégeulasse mais flm d'opti
+					z = -9999999;
+				} else {
+					if (rdm >= -Border.getMinBijuSpawn()){
+						z = -999999;
+					} else {
+						z = rdm;
+					}
+				}
+			}
+		}
+		spawn.setX(x);
+		spawn.setZ(z);
+		spawn.setY(spawn.getWorld().getHighestBlockYAt(x, z));
 		return spawn;
 	}
 	public UUID getMaster() {
@@ -139,7 +170,6 @@ public abstract class Biju {
 		}
         return !bijus.isEmpty();
 	}
-
     public static Biju getBiju(Player player) {
         Biju toReturn = null;
         for (Bijus biju : Bijus.values()) {
@@ -159,9 +189,6 @@ public abstract class Biju {
 	public abstract void onBucketEmpty(PlayerBucketEmptyEvent event, Player player);
 	public abstract void onProjectileHit(ProjectileHitEvent e, Bijus bijus, Projectile projectile);
 	public abstract Bijus getBijus();
-	public BijuListener getListener() {
-		return BijuListener.getInstance();
-	}
 	public abstract void resetCooldown();
 	public abstract boolean onDrop(PlayerDropItemEvent event, Player player, ItemStack item);
 	public abstract void onJubiInvoc(Player invoquer);

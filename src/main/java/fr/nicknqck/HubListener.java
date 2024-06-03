@@ -3,6 +3,7 @@ package fr.nicknqck;
 import fr.nicknqck.GameState.MDJ;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.StartGameEvent;
@@ -106,8 +107,8 @@ public class HubListener implements Listener {
 		for (Bijus b : Bijus.values()) {
 			b.getBiju().setHote(null);
 			b.getBiju().resetCooldown();
-			b.getBiju().getListener().resetCooldown();
 		}
+		BijuListener.getInstance().resetCooldown();
 		Bijus.initBiju(gameState);
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());

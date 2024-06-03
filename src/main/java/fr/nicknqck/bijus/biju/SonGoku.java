@@ -298,8 +298,8 @@ public class SonGoku extends Biju {
 	}
 	@Override
 	public void resetCooldown() {
-		getListener().setSonGokuCooldown(0);
-		getListener().setSonGokuUser(null);
+		BijuListener.getInstance().setSonGokuCooldown(0);
+		BijuListener.getInstance().setSonGokuUser(null);
 	}
 	@Override
 	public boolean onDrop(PlayerDropItemEvent event, Player player, ItemStack item) {

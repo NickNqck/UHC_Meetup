@@ -68,7 +68,7 @@ public class Matatabi extends Biju{
 		}
 		if (getHote().equals(player.getUniqueId())) {
 			if (BijuListener.getInstance().getMatatabiCooldown() > 0) {
-				sendCooldown(player, getListener().getMatatabiCooldown());
+				sendCooldown(player, BijuListener.getInstance().getMatatabiCooldown());
 				return;
 			}
 			player.sendMessage("§7Activation de "+getName());
@@ -267,7 +267,7 @@ public class Matatabi extends Biju{
 			BijuListener.getInstance().setMatatabiFire(null);
 			Bukkit.getPlayer(getMaster()).sendMessage("§7Vous n'êtes plus sous l'effet de "+getName());
 		}
-		if (getListener().getMatatabiCooldown() == 0 && getHote() != null) {
+		if (BijuListener.getInstance().getMatatabiCooldown() == 0 && getHote() != null) {
 			Bukkit.getPlayer(getHote()).sendMessage(getName()+"§7 est à nouveau utilisable	");
 		}
 	}
@@ -317,8 +317,8 @@ public class Matatabi extends Biju{
 	}
 	@Override
 	public void resetCooldown() {
-		getListener().setMatatabiCooldown(0);
-		getListener().setMatatabiFire(null);
+		BijuListener.getInstance().setMatatabiCooldown(0);
+		BijuListener.getInstance().setMatatabiFire(null);
 	}
 	@Override
 	public boolean onDrop(PlayerDropItemEvent event, Player player, ItemStack item) {

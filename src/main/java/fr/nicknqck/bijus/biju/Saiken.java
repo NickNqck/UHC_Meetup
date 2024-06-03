@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Biju;
+import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.utils.CC;
@@ -114,16 +115,16 @@ public class Saiken extends Biju {
     		return;
     	}
     	if (getHote().equals(player.getUniqueId())) {
-    		if (getListener().getSaikenCooldown() > 0) {
-    			sendCooldown(player, getListener().getSaikenCooldown());
+    		if (BijuListener.getInstance().getSaikenCooldown() > 0) {
+    			sendCooldown(player, BijuListener.getInstance().getSaikenCooldown());
                 return;
             }
 
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5 * 20 * 60, 0, false, false));
             player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 5 * 20 * 60, 0, false, false));
-            getListener().setSaikenUser(player.getUniqueId());
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> getListener().setSaikenUser(null), 20*60*5);
-            getListener().setSaikenCooldown(15 * 60);
+            BijuListener.getInstance().setSaikenUser(player.getUniqueId());
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> BijuListener.getInstance().setSaikenUser(null), 20*60*5);
+            BijuListener.getInstance().setSaikenCooldown(15 * 60);
     	}
     }
 
