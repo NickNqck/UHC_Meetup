@@ -4,11 +4,13 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class Squelette extends RoleBase {
@@ -16,6 +18,7 @@ public class Squelette extends RoleBase {
     private final ItemStack KorosuItem = new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§71 flèche sur deux que vous tirez ira directement sur votre cible").setName("§aKorosu shi no yumi").toItemStack();
     private final ItemStack BontoutouItem = new ItemBuilder(Material.BONE).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("§aBon TouTou").setLore("§7Vous permez d'apprivoiser un loup").toItemStack();
     private int KorosuCount = 0;
+    private boolean ZombieSound = false;
     public Squelette(Player player, GameState.Roles roles) {
         super(player, roles);
     }
@@ -82,5 +85,20 @@ public class Squelette extends RoleBase {
             }
         }
         super.onProjectileLaunch(entity, shooter);
+    }
+
+    @Override
+    public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {
+        if (moover.getUniqueId() == owner.getUniqueId()){
+            if (!ZombieSound) {
+                for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
+                    if (getPlayerRoles(p).type == GameState.Roles.Zombie) {
+                    playSound(owner, "entity.zombie.ambient");
+                    ZombieSound = true;
+                    }
+                }
+            }
+        }
+        super.onAllPlayerMoove(e, moover);
     }
 }

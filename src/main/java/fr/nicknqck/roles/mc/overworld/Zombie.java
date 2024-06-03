@@ -5,9 +5,11 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,6 +20,7 @@ public class Zombie extends RoleBase {
     private int cdCerveau = 0;
     private int nmbCerveau = 1;
     private boolean CerveauActive = false;
+    private boolean SqueletteSound = false;
     public Zombie(Player player, GameState.Roles roles) {
         super(player, roles);
         owner.sendMessage(Desc());
@@ -158,5 +161,19 @@ public class Zombie extends RoleBase {
             }
         }
         super.onMcCommand(args);
+    }
+    @Override
+    public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {
+        if (moover.getUniqueId() == owner.getUniqueId()){
+            if (!SqueletteSound) {
+                for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
+                    if (getPlayerRoles(p).type == GameState.Roles.Zombie) {
+                        playSound(owner, "entity.squelette.ambient");
+                        SqueletteSound = true;
+                    }
+                }
+            }
+        }
+        super.onAllPlayerMoove(e, moover);
     }
 }
