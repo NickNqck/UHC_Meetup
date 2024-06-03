@@ -20,6 +20,7 @@ import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.mc.overworld.Poulet;
+import fr.nicknqck.roles.mc.overworld.Squelette;
 import fr.nicknqck.roles.mc.overworld.Zombie;
 import fr.nicknqck.roles.mc.solo.Warden;
 import fr.nicknqck.roles.mc.solo.WitherBoss;
@@ -214,6 +215,7 @@ public class GameState{
 		//OverWorld
         Poulet(TeamList.OverWorld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack(), "§bMega02600"),
 		Zombie(TeamList.OverWorld, "mc", 1, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack(), "§bMega02600"),
+		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack(), "§bMega02600"),
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
@@ -821,9 +823,12 @@ public class GameState{
 		case Zombie:
 			role = new Zombie(player, roleType, this);
 			break;
-			case Iso:
-				role = new Iso(player, roleType, this);
-				break;
+		case Iso:
+			role = new Iso(player, roleType, this);
+			break;
+		case Squelette:
+			role = new Squelette(player,roleType, this);
+			break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(player);
