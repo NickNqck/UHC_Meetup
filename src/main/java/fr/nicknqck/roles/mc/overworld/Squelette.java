@@ -37,6 +37,7 @@ public class Squelette extends RoleBase {
                 AllDesc.particularite,
                 "",
                 "1 flèche sur deux que vous tirerez avec §aKorosu shi no yumi§r touchera directement le joueur le plus proche",
+                "La prémière fois que vous croiserez le joueur possédant le rôle zombie vous entendrez un bruit de zombie",
                 "",
                 AllDesc.bar,
 
