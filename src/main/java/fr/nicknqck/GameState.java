@@ -822,9 +822,9 @@ public class GameState{
 		case Zombie:
 			role = new Zombie(player, roleType);
 			break;
-			case Iso:
-				role = new Iso(player, roleType);
-				break;
+		case Iso:
+			role = new Iso(player, roleType);
+			break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(player);
