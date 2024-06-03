@@ -1,24 +1,18 @@
 package fr.nicknqck.bijus.biju;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.Main;
+import fr.nicknqck.bijus.Biju;
+import fr.nicknqck.bijus.BijuListener;
+import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.utils.*;
+import net.minecraft.server.v1_8_R3.EntityLiving;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -31,21 +25,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Biju;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PotionUtils;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
-import net.minecraft.server.v1_8_R3.EntityLiving;
+import java.util.List;
+import java.util.UUID;
 
 public class Chomei extends Biju {
 
@@ -65,18 +46,10 @@ public class Chomei extends Biju {
     public void setupBiju(GameState gameState) {
         World world = Main.getInstance().gameWorld;
         this.gameState = gameState;
-        spawn = changeSpawn();
+        spawn = getRandomSpawn();
         new ChomeiRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			System.out.println("Chomei will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
-		}, 20);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> System.out.println("Chomei will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ()), 20);
     }
-    public Location changeSpawn() {
-		spawn = null;
-		spawn = GameListener.generateRandomLocation(GameState.getInstance(), Main.getInstance().gameWorld);
-		spawn = new Location(spawn.getWorld(), spawn.getX(), spawn.getWorld().getHighestBlockYAt(spawn), spawn.getZ());
-		return spawn;
-	}
     @Override
     public String getName() {
         return "§aChômei";
@@ -111,7 +84,7 @@ public class Chomei extends Biju {
 						p.playSound(ghast.getLocation(), Sound.GHAST_MOAN, 1, 10);
 						e++;
 					}
-					i = 0-e;
+					i = -e;
 				}
 				if (spawn == null) return;
 				if (isOutsideOfBorder(ghast.getLocation())) {
@@ -208,25 +181,8 @@ public class Chomei extends Biju {
     @Override
 	public void onDeath(LivingEntity entity, List<ItemStack> drops) {
         if (this.ghast != null && entity.getUniqueId().equals(this.ghast.getUniqueId())) {
-        	Player k = null;
-        	if (entity.getKiller() instanceof Arrow) {
-        		Arrow arrow = (Arrow) entity.getKiller();
-        		if (arrow.getShooter() instanceof Player) {
-        			Player launcher = (Player) arrow.getShooter();
-        			k = launcher;
-        		}
-        	}
-        	if (entity.getKiller() instanceof Fireball) {
-        		Fireball ball = (Fireball) entity.getKiller();
-        		if (ball.getShooter() instanceof Player) {
-        			k = ((Player) ball.getShooter());
-        		}
-        	}
-        	if (entity.getKiller() instanceof Player) {
-				Player killer = entity.getKiller();
-				k = killer;
-			}
-        	if (k != null) {
+			Player k = getPlayer(entity);
+			if (k != null) {
         		if (!gameState.hasRoleNull(k)) {
         			gameState.getPlayerRoles().get(k).giveItem(k, true, getItem());
         			Bukkit.broadcastMessage("§a" + getName() + " §fa été tué.");
@@ -271,6 +227,26 @@ public class Chomei extends Biju {
 				}
 			}.runTaskTimer(Main.getInstance(), 0, 20);
         }
+	}
+
+	private static Player getPlayer(LivingEntity entity) {
+		Player k = null;
+		if (entity.getKiller() instanceof Arrow) {
+			Arrow arrow = (Arrow) entity.getKiller();
+			if (arrow.getShooter() instanceof Player) {
+                k = (Player) arrow.getShooter();
+			}
+		}
+		if (entity.getKiller() instanceof Fireball) {
+			Fireball ball = (Fireball) entity.getKiller();
+			if (ball.getShooter() instanceof Player) {
+				k = ((Player) ball.getShooter());
+			}
+		}
+		if (entity.getKiller() != null) {
+            k = entity.getKiller();
+		}
+		return k;
 	}
 
 	@Override

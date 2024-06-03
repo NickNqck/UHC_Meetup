@@ -1,13 +1,12 @@
 package fr.nicknqck.bijus;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import fr.nicknqck.Border;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.particles.MathUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -25,9 +24,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.utils.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public abstract class Biju {
 	public abstract void setupBiju(GameState gameState);	
@@ -67,17 +66,10 @@ public abstract class Biju {
 	}
 	public Location getRandomSpawn(){
 		Location spawn = new Location(Main.getInstance().gameWorld, 0.0, Main.getInstance().gameWorld.getHighestBlockYAt(0, 0), 0.0);
-		int x = -8616841;
-		int z = -4987487;
-		while (x > Border.getMaxBijuSpawn() || x < -Border.getMaxBijuSpawn()){//Just use Math for obtain a good X position
-			x = RandomUtils.getRandomDeviationValue(10, -Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
+
+		if (Main.isDebug()){
+			System.err.println("Final Spawn:     "+spawn);
 		}
-		while (z > Border.getMaxBijuSpawn() || z < Border.getMaxBijuSpawn()){
-			z = RandomUtils.getRandomDeviationValue(10, -Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
-		}
-		spawn.setX(x);
-		spawn.setZ(z);
-		spawn.setY(spawn.getWorld().getHighestBlockYAt(x, z));
 		return spawn;
 	}
 	public UUID getMaster() {
@@ -145,11 +137,7 @@ public abstract class Biju {
 				bijus.add(value);
 			}
 		}
-		if (bijus.size() <= 0) {
-			return false;
-		}else {
-			return true;
-		}
+        return !bijus.isEmpty();
 	}
 
     public static Biju getBiju(Player player) {

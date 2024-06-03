@@ -1,33 +1,5 @@
 package fr.nicknqck.bijus.biju;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Horse;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
@@ -40,6 +12,23 @@ import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
+import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
+import java.util.UUID;
 
 public class Kokuo extends Biju {
 
@@ -56,11 +45,6 @@ public class Kokuo extends Biju {
     public UUID getHote() {
     	return Hote;
     }
-    public void changeSpawn() {
-		spawn = null;
-		spawn = GameListener.generateRandomLocation(GameState.getInstance(), Bukkit.getWorld("world"));
-		spawn = new Location(spawn.getWorld(), spawn.getX(), spawn.getWorld().getHighestBlockYAt(spawn), spawn.getZ());
-	}
     @Override
     public void setHote(UUID u) {
     	this.Hote = u;
@@ -79,16 +63,14 @@ public class Kokuo extends Biju {
             player.sendMessage("§7Vous venez d'activé: "+getName());
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5 * 20 * 60, 1, false, false), true);
             BijuListener.getInstance().setKokuoUser(player.getUniqueId());
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-            	BijuListener.getInstance().setKokuoUser(null);
-            }, 5*20*60);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> BijuListener.getInstance().setKokuoUser(null), 5*20*60);
             BijuListener.getInstance().setKokuoCooldown(20 * 60);
     	}
     }
 
     @Override
     public void setupBiju(GameState gameState) {
-    	changeSpawn();
+    	this.spawn=getRandomSpawn();
     	this.gameState = gameState;
         World world = Main.getInstance().gameWorld;
         new KokuoRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
@@ -164,13 +146,11 @@ public class Kokuo extends Biju {
         	if (entity.getKiller() instanceof Arrow) {
         		Arrow arrow = (Arrow) entity.getKiller();
         		if (arrow.getShooter() instanceof Player) {
-        			Player launcher = (Player) arrow.getShooter();
-        			k = launcher;
+                    k = (Player) arrow.getShooter();
         		}
         	}
-        	if (entity.getKiller() instanceof Player) {
-				Player killer = entity.getKiller();
-				k = killer;
+        	if (entity.getKiller() != null) {
+                k = entity.getKiller();
 			}
         	if (k != null) {
         		if (!gameState.hasRoleNull(k)) {

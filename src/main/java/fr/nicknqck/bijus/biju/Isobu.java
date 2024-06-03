@@ -52,20 +52,13 @@ public class Isobu extends Biju{
 		World world = Main.getInstance().gameWorld;
 		this.gameState = gameState;
 		new IsobuRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
-		changeSpawn();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			System.out.println("Isobu will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
-		}, 20);
+		this.spawn = getRandomSpawn();
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> System.out.println("Isobu will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ()), 20);
 	}
 	@Override
     public void setHote(UUID u) {
     	this.Hote = u;
     }
-	public void changeSpawn() {
-		spawn = null;
-		spawn = GameListener.generateRandomLocation(GameState.getInstance(), Main.getInstance().gameWorld);
-		spawn = new Location(spawn.getWorld(), spawn.getX(), spawn.getWorld().getHighestBlockYAt(spawn), spawn.getZ());
-	}
 	@Override
 	public LivingEntity getLivingEntity() {
 		return this.guardian;
@@ -134,13 +127,11 @@ public class Isobu extends Biju{
         	if (entity.getKiller() instanceof Arrow) {
         		Arrow arrow = (Arrow) entity.getKiller();
         		if (arrow.getShooter() instanceof Player) {
-        			Player launcher = (Player) arrow.getShooter();
-        			k = launcher;
+                    k = (Player) arrow.getShooter();
         		}
         	}
-        	if (entity.getKiller() instanceof Player) {
-				Player killer = entity.getKiller();
-				k = killer;
+        	if (entity.getKiller() != null) {
+                k = entity.getKiller();
 			}
         	if (k != null) {
         		if (!gameState.hasRoleNull(k)) {

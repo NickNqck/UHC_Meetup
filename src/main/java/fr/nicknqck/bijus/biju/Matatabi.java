@@ -44,183 +44,174 @@ import net.minecraft.server.v1_8_R3.EntityLiving;
 
 public class Matatabi extends Biju{
 
-    private Blaze blaze;
-    private Location spawn;
-    private GameState gameState;
-    @Override
-    public LivingEntity getLivingEntity() {
-        return blaze;
-    }
-    private UUID Hote = null;
-    @Override
-    public UUID getHote() {
-    	return Hote;
-    }
-    @Override
-    public void setHote(UUID u) {
-    	this.Hote = u;
-    }
-    @Override
-    public void getItemInteraction(PlayerInteractEvent event, Player player) {
-    	if (getHote() == null) {
-    		player.sendMessage("§7Vous n'êtes pas l'hôte de "+getName());
-    		return;
-    	}
-    	if (getHote().equals(player.getUniqueId())) {
-    		if (BijuListener.getInstance().getMatatabiCooldown() > 0) {
-    			sendCooldown(player, getListener().getMatatabiCooldown());
-                return;
-            }
-            player.sendMessage("§7Activation de "+getName());
-            player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 5 * 20 * 60, 0, false, false), true);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5 * 20 * 60, 0, false, false), true);
-            BijuListener.getInstance().setMatatabiFire(player.getUniqueId());
-            BijuListener.getInstance().setMatatabiCooldown(20 * 60);
-    	}
-    }
-
-    @Override
-    public void setupBiju(GameState gameState) {
-        World world = Main.getInstance().gameWorld;
-        this.gameState = gameState;
-        new MatatabiRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
-        changeSpawn();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			System.out.println("Matatabi will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
-		}, 20);
-    }
-    
-    public void changeSpawn() {
-		spawn = null;
-		spawn = GameListener.generateRandomLocation(GameState.getInstance(), Bukkit.getWorld("world"));
-		spawn = new Location(spawn.getWorld(), spawn.getX(), spawn.getWorld().getHighestBlockYAt(spawn), spawn.getZ());
+	private Blaze blaze;
+	private Location spawn;
+	private GameState gameState;
+	@Override
+	public LivingEntity getLivingEntity() {
+		return blaze;
 	}
-    
-    @Override
-    public String getName() {
-        return "§aMatatabi";
-    }
-
-    @Override
-    public void spawnBiju() {
-        this.blaze = (Blaze) Main.getInstance().gameWorld.spawnEntity(this.spawn, EntityType.BLAZE);
-        blaze.setCustomName(this.getName());
-        blaze.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
-        blaze.setMaxHealth(2D * 100D);
-        blaze.setHealth(blaze.getMaxHealth());
-        blaze.setCustomNameVisible(true);
-        EntityLiving nmsEntity = ((CraftLivingEntity) blaze).getHandle();
-        ((CraftLivingEntity) nmsEntity.getBukkitEntity()).setRemoveWhenFarAway(false);
-
-        new BukkitRunnable() {
-            int timeAttack = 60;
-
-            @Override
-            public void run() {
-            	if (blaze == null) {
-            		cancel();
-            		return;
-            	}
-                if (!blaze.isDead()) {
-                	if (spawn == null) return;
-                	if (isOutsideOfBorder(getLivingEntity().getLocation())) {
-    					spawn = moveToOrigin(spawn);
-    					getLivingEntity().teleport(spawn);
-    				}
-			        if (blaze.getLocation().distance(spawn) > 30) {
-			        	blaze.teleport(spawn);
-			        }
-                    if (timeAttack == 0) {
-                        for (Entity entity : blaze.getNearbyEntities(15, 15, 15)) {
-                            if (!(entity instanceof Player)) continue;
-                            Player player = (Player) entity;
-                            player.setFireTicks(20 * 16);
-                            player.sendMessage(CC.prefix(getName() + " &fvient de vous mettre en &cfeu&f."));
-                        }
-                        timeAttack = 10;
-                    }
-                } else {
-                    cancel();
-                }
-                timeAttack--;
-
-            }
-        }.runTaskTimer(Main.getInstance(), 20, 20);
-
-    }
-
-    @Override
-    public Location getSpawn() {
-        return spawn;
-    }
-    @Override
-    public ItemStack getItem() {
-        return Items.Matatabi();
-    }
-    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
-    @Override
-    public int getTimeSpawn() {
-    	return TimeSpawn;
-    }
-    public class MatatabiRunnable extends BukkitRunnable {
-    	int timer = 0;
-        int spawn = getTimeSpawn();
-        public MatatabiRunnable() {
-         	System.out.println("Spawn Matatabi at "+StringUtils.secondsTowardsBeautiful(spawn));
+	private UUID Hote = null;
+	@Override
+	public UUID getHote() {
+		return Hote;
+	}
+	@Override
+	public void setHote(UUID u) {
+		this.Hote = u;
+	}
+	@Override
+	public void getItemInteraction(PlayerInteractEvent event, Player player) {
+		if (getHote() == null) {
+			player.sendMessage("§7Vous n'êtes pas l'hôte de "+getName());
+			return;
 		}
-        @Override
-        public void run() {
-        	timer++;
-        	if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
-            	cancel();
-            	return;
-            }
-            if (this.timer == (spawn) - 30) {
-                Bukkit.broadcastMessage(getName()+" §fva apparaître dans §a30 §fsecondes.");
-            }
-            if (this.timer == (spawn)) {
-                spawnBiju();
-                Bukkit.broadcastMessage(getName()+" §fvient d'apparaître.");
-                cancel();
-            }
-        }
-    }
+		if (getHote().equals(player.getUniqueId())) {
+			if (BijuListener.getInstance().getMatatabiCooldown() > 0) {
+				sendCooldown(player, getListener().getMatatabiCooldown());
+				return;
+			}
+			player.sendMessage("§7Activation de "+getName());
+			player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 5 * 20 * 60, 0, false, false), true);
+			player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5 * 20 * 60, 0, false, false), true);
+			BijuListener.getInstance().setMatatabiFire(player.getUniqueId());
+			BijuListener.getInstance().setMatatabiCooldown(20 * 60);
+		}
+	}
+
+	@Override
+	public void setupBiju(GameState gameState) {
+		World world = Main.getInstance().gameWorld;
+		this.gameState = gameState;
+		new MatatabiRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
+		this.spawn = getRandomSpawn();
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> System.out.println("Matatabi will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ()), 20);
+	}
+
+
+	@Override
+	public String getName() {
+		return "§aMatatabi";
+	}
+
+	@Override
+	public void spawnBiju() {
+		this.blaze = (Blaze) Main.getInstance().gameWorld.spawnEntity(this.spawn, EntityType.BLAZE);
+		blaze.setCustomName(this.getName());
+		blaze.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
+		blaze.setMaxHealth(2D * 100D);
+		blaze.setHealth(blaze.getMaxHealth());
+		blaze.setCustomNameVisible(true);
+		EntityLiving nmsEntity = ((CraftLivingEntity) blaze).getHandle();
+		((CraftLivingEntity) nmsEntity.getBukkitEntity()).setRemoveWhenFarAway(false);
+
+		new BukkitRunnable() {
+			int timeAttack = 60;
+
+			@Override
+			public void run() {
+				if (blaze == null) {
+					cancel();
+					return;
+				}
+				if (!blaze.isDead()) {
+					if (spawn == null) return;
+					if (isOutsideOfBorder(getLivingEntity().getLocation())) {
+						spawn = moveToOrigin(spawn);
+						getLivingEntity().teleport(spawn);
+					}
+					if (blaze.getLocation().distance(spawn) > 30) {
+						blaze.teleport(spawn);
+					}
+					if (timeAttack == 0) {
+						for (Entity entity : blaze.getNearbyEntities(15, 15, 15)) {
+							if (!(entity instanceof Player)) continue;
+							Player player = (Player) entity;
+							player.setFireTicks(20 * 16);
+							player.sendMessage(CC.prefix(getName() + " &fvient de vous mettre en &cfeu&f."));
+						}
+						timeAttack = 10;
+					}
+				} else {
+					cancel();
+				}
+				timeAttack--;
+
+			}
+		}.runTaskTimer(Main.getInstance(), 20, 20);
+
+	}
+
+	@Override
+	public Location getSpawn() {
+		return spawn;
+	}
+	@Override
+	public ItemStack getItem() {
+		return Items.Matatabi();
+	}
+	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
+	@Override
+	public int getTimeSpawn() {
+		return TimeSpawn;
+	}
+	public class MatatabiRunnable extends BukkitRunnable {
+		int timer = 0;
+		int spawn = getTimeSpawn();
+		public MatatabiRunnable() {
+			System.out.println("Spawn Matatabi at "+StringUtils.secondsTowardsBeautiful(spawn));
+		}
+		@Override
+		public void run() {
+			timer++;
+			if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+				cancel();
+				return;
+			}
+			if (this.timer == (spawn) - 30) {
+				Bukkit.broadcastMessage(getName()+" §fva apparaître dans §a30 §fsecondes.");
+			}
+			if (this.timer == (spawn)) {
+				spawnBiju();
+				Bukkit.broadcastMessage(getName()+" §fvient d'apparaître.");
+				cancel();
+			}
+		}
+	}
 	@Override
 	public void onDeath(LivingEntity entity, List<ItemStack> drops) {
 		if (blaze != null && entity.getUniqueId() == blaze.getUniqueId()) {
 			Player k = null;
-        	if (entity.getKiller() instanceof Arrow) {
-        		Arrow arrow = (Arrow) entity.getKiller();
-        		if (arrow.getShooter() instanceof Player) {
-        			Player launcher = (Player) arrow.getShooter();
-        			k = launcher;
-        		}
-        	}
-        	if (entity.getKiller() instanceof Player) {
-				Player killer = entity.getKiller();
-				k = killer;
+			if (entity.getKiller() instanceof Arrow) {
+				Arrow arrow = (Arrow) entity.getKiller();
+				if (arrow.getShooter() instanceof Player) {
+                    k = (Player) arrow.getShooter();
+				}
 			}
-        	if (k != null) {
-        		if (!gameState.hasRoleNull(k)) {
-        			gameState.getPlayerRoles().get(k).giveItem(k, true, getItem());
-        			Bukkit.broadcastMessage("§a" + getName() + " §fa été tué.");
-        			if (hisMaster(k)) {
-        				k.sendMessage("§7Vous avez récupéré "+getName());
-        			} else {
-        				k.sendMessage("§7Vous êtes devenue l'hôte de "+getName());
-        				Hote = k.getUniqueId();
-        			}
-        		} else {
+			if (entity.getKiller() != null) {
+                k = entity.getKiller();
+			}
+			if (k != null) {
+				if (!gameState.hasRoleNull(k)) {
+					gameState.getPlayerRoles().get(k).giveItem(k, true, getItem());
+					Bukkit.broadcastMessage("§a" + getName() + " §fa été tué.");
+					if (hisMaster(k)) {
+						k.sendMessage("§7Vous avez récupéré "+getName());
+					} else {
+						k.sendMessage("§7Vous êtes devenue l'hôte de "+getName());
+						Hote = k.getUniqueId();
+					}
+				} else {
 					spawnBiju();
 					return;
 				}
-        	} else {
-        		spawnBiju();
-        		return;
-        	}
-            this.blaze = null;
-            drops.clear();
-            new BukkitRunnable() {
+			} else {
+				spawnBiju();
+				return;
+			}
+			this.blaze = null;
+			drops.clear();
+			new BukkitRunnable() {
 				int i = 0;
 				@Override
 				public void run() {
@@ -235,10 +226,10 @@ public class Matatabi extends Biju{
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage(CC.prefix(getName() + " &fvient de réapparaître."));
-		                } else {
-		                	cancel();
-		                }
+							Bukkit.broadcastMessage(CC.prefix(getName() + " &fvient de réapparaître."));
+						} else {
+							cancel();
+						}
 					}
 				}
 			}.runTaskTimer(Main.getInstance(), 0, 20);

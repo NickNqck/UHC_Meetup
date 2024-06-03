@@ -1,6 +1,5 @@
 package fr.nicknqck.bijus.biju;
 
-import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
@@ -54,16 +53,11 @@ public class Saiken extends Biju {
     @Override
     public void setupBiju(GameState gameState) {
         World world = Main.getInstance().gameWorld;
-        changeSpawn();
+		this.spawn = getRandomSpawn();
         this.gameState = gameState;
         new SaikenRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> System.out.println("Saiken will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ()), 20);
     }
-    private void changeSpawn() {
-		spawn = null;
-		spawn = GameListener.generateRandomLocation(GameState.getInstance(), Bukkit.getWorld("world"));
-		spawn = new Location(spawn.getWorld(), spawn.getX(), spawn.getWorld().getHighestBlockYAt(spawn), spawn.getZ());
-	}
     @Override
     public String getName() {
         return "§5Saiken";

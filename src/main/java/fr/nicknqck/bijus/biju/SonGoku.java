@@ -1,35 +1,5 @@
 package fr.nicknqck.bijus.biju;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.MagmaCube;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
@@ -42,6 +12,24 @@ import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.EntityLiving;
+import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
+import java.util.UUID;
 
 public class SonGoku extends Biju {
 
@@ -78,16 +66,10 @@ public class SonGoku extends Biju {
             BijuListener.getInstance().setSonGokuCooldown(60*20);
     	}
     }
-
-    public void changeSpawn() {
-		spawn = null;
-		spawn = GameListener.generateRandomLocation(GameState.getInstance(), Bukkit.getWorld("world"));
-		spawn = new Location(spawn.getWorld(), spawn.getX(), spawn.getWorld().getHighestBlockYAt(spawn), spawn.getZ());
-	}
     private GameState gameState;
     @Override
     public void setupBiju(GameState gameState) {
-        changeSpawn();
+        this.spawn = getRandomSpawn();
         this.gameState = gameState;
         new SonGokuRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
         World world = spawn.getWorld();
@@ -175,13 +157,11 @@ public class SonGoku extends Biju {
         	if (entity.getKiller() instanceof Arrow) {
         		Arrow arrow = (Arrow) entity.getKiller();
         		if (arrow.getShooter() instanceof Player) {
-        			Player launcher = (Player) arrow.getShooter();
-        			k = launcher;
+                    k = (Player) arrow.getShooter();
         		}
         	}
-        	if (entity.getKiller() instanceof Player) {
-				Player killer = entity.getKiller();
-				k = killer;
+        	if (entity.getKiller() != null) {
+                k = entity.getKiller();
 			}
         	if (k != null) {
         		if (!gameState.hasRoleNull(k)) {
@@ -228,8 +208,7 @@ public class SonGoku extends Biju {
 					}
 				}
 			}.runTaskTimer(Main.getInstance(), 0, 20);
-			return;
-		}
+        }
 	}
 
 	@Override

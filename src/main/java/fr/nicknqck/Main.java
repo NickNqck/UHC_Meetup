@@ -320,7 +320,9 @@ public class Main extends JavaPlugin implements Listener{
     }
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");
-		System.out.println("Debug is set at "+debug);
+		if (debug){
+			System.out.println("Debug is enable");
+		}
 		return debug;
 	}
 	public static String getBase() {
