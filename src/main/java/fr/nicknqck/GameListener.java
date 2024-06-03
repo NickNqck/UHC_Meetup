@@ -124,12 +124,12 @@ public class GameListener implements Listener {
 			}
 			break;
 		case InGame:
-            Bukkit.getWorld("world").setPVP(gameState.pvp);
+			Main.getInstance().gameWorld.setPVP(gameState.pvp);
 			for (Player p : gameState.getInGamePlayers()) {
 				if (gameState.inGameTime < 10) {
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
 				}
-				if (gameState.infected == p) {
+				if (gameState.infected != null && gameState.infected.getUniqueId() == p.getUniqueId()) {
 					if (gameState.nightTime) {
 						gameState.getPlayerRoles().get(p).givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
 						if (!infectedgiveforce) {							
@@ -171,7 +171,6 @@ public class GameListener implements Listener {
 							}
 						}
 					}
-			
 			if (Hastey_Babys.isHasteyBabys()) {
 				for (Player p : gameState.getInGamePlayers()) {
 					ItemStack is = p.getItemInHand();
@@ -202,7 +201,7 @@ public class GameListener implements Listener {
 			}
 			
 			if (gameState.shrinking) {
-				Border.setActualBorderSize(Border.getActualBorderSize()-Border.getBorderSpeed()*2);
+				Border.setActualBorderSize((Border.getActualBorderSize()-Border.getBorderSpeed()*2)*2);
 				border.setSize(Math.max(Border.getMinBorderSize(), Border.getActualBorderSize()), 1);
 			}
 			if (gameState.inGameTime == 0) {
