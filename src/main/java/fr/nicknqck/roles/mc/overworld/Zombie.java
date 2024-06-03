@@ -46,7 +46,7 @@ public class Zombie extends RoleBase {
                 AllDesc.particularite,
                 "",
                 "Dès que vous tuez un joueur vous obtenez §cune utilisation supplémentaire §rde §cCerveau",
-                "La prémière fois que vous croiserez le joueur possédant le rôle sqelette vous entendrez un bruit de sqelette",
+                "La prémière fois que vous croiserez le joueur possédant le rôle squelette vous entendrez un bruit de squelette",
                 "",
                 AllDesc.bar,
         };
