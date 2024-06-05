@@ -1,4 +1,4 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.vectors;
 
 public final class MathL {
 

@@ -1,5 +1,6 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.powers;
 
+import fr.nicknqck.utils.Loc;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -11,7 +12,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Dash {
-	private Player target;
+	private final Player target;
 	private int distance;
 	private boolean degat;
 	private double degats;

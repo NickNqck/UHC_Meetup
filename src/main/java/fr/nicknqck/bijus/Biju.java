@@ -68,36 +68,35 @@ public abstract class Biju {
 		if (Main.isDebug()){
 			System.err.println("Final Spawn:     "+spawn);
 		}
-		int x = 0;
-		int z = 0;
+		int x = -999999;
+		int z = -999999;
+		System.out.println("-Border: "+-Border.getMaxBijuSpawn());
 		while (x == 0 || x < -948015) {
-			int rdm = RandomUtils.getRandomInt(-Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
-			if (rdm < 0){
-				if (rdm <= -Border.getMaxBijuSpawn()) {
-					x = -9999999;
+			int rdm = Main.RANDOM.nextInt(Border.getMaxBijuSpawn()+1);
+			if (rdm >= Border.getMaxBijuSpawn()){
+				x = -999999;
+			} else {
+				if (rdm <= Border.getMinBijuSpawn()){
+					x = -999999;
 				} else {
-					if (rdm >= -Border.getMinBijuSpawn()){
-						x = -999999;
-					} else {
-						x = rdm;
-					}
+					x = rdm;
 				}
 			}
 		}
 		while (z == 0 || z < -948015){
-			int rdm = RandomUtils.getRandomInt(-Border.getMaxBijuSpawn(), Border.getMaxBijuSpawn());
-			if (rdm < 0){
-				if (rdm <= -Border.getMaxBijuSpawn()) {//Le code est dégeulasse mais flm d'opti
-					z = -9999999;
+			int rdm = Main.RANDOM.nextInt(Border.getMaxBijuSpawn()+1);
+			if (rdm >= Border.getMaxBijuSpawn()){
+				z = -999999;
+			} else {
+				if (rdm <= Border.getMinBijuSpawn()){
+					z = -999999;
 				} else {
-					if (rdm >= -Border.getMinBijuSpawn()){
-						z = -999999;
-					} else {
-						z = rdm;
-					}
+					z = rdm;
 				}
 			}
 		}
+		if (RandomUtils.getOwnRandomProbability(50.0)) x = -x;
+		if (RandomUtils.getOwnRandomProbability(50.0)) z = -z;
 		spawn.setX(x);
 		spawn.setZ(z);
 		spawn.setY(spawn.getWorld().getHighestBlockYAt(x, z));

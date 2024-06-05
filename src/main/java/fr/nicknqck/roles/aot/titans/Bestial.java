@@ -21,7 +21,7 @@ import org.bukkit.util.Vector;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Dash;
+import fr.nicknqck.utils.powers.Dash;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PotionUtils;

@@ -866,7 +866,7 @@ public class HubInventory implements Listener {
                             if (item.getItemMeta().getDisplayName().equals("§fBijus")) {
                                 if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
                                     player.closeInventory();
-                                    player.openInventory(Bukkit.createInventory(player, 9, "Configuration ->§6 Bijus"));
+                                    player.openInventory(Bukkit.createInventory(player, 54, "Configuration ->§6 Bijus"));
                                     openConfigBijusInventory(player);
                                 } else {
                                     gameState.BijusEnable = !gameState.BijusEnable;
@@ -2520,7 +2520,7 @@ public class HubInventory implements Listener {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
                 if (inv.getTitle().equalsIgnoreCase("Configuration ->§6 Bijus")) {
-                    inv.setItem(8, GUIItems.getSelectBackMenu());
+                    inv.setItem(inv.getSize()-1, GUIItems.getSelectBackMenu());
                     for (Bijus bijus : Bijus.values()) {
                         inv.addItem( bijus.getBiju().getItemInMenu());
                     }

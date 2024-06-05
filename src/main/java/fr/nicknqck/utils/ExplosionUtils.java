@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -24,13 +25,15 @@ public class ExplosionUtils {
 			@Override
 			public void run() {
 				if (i >= tick) {
-					createExplosion(loc);
+					Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+						createExplosion(loc);
+					});
 					cancel();
 					return;
 				}
 				i++;
 			}
-		}.runTaskTimer(Main.getInstance(), 0, 1);
+		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	public static void createExplosion(Location loc, double damage, double range, UUID... imun) {
 		createExplosion(loc);

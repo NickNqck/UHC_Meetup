@@ -22,7 +22,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.LocPlayer;
+import fr.nicknqck.utils.powers.LocPlayer;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Nakime extends RoleBase{

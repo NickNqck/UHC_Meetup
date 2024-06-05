@@ -7,8 +7,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.utils.MathL;
-import fr.nicknqck.utils.VectorUtils;
+import fr.nicknqck.utils.vectors.MathL;
+import fr.nicknqck.utils.vectors.VectorUtils;
 import fr.nicknqck.utils.WorldUtils;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 

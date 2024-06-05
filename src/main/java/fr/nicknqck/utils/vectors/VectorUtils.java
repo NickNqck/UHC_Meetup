@@ -1,4 +1,4 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.vectors;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

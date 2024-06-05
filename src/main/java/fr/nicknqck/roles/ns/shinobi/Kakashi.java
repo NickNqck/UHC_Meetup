@@ -24,8 +24,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.KamuiUtils;
-import fr.nicknqck.utils.KamuiUtils.Users;
+import fr.nicknqck.utils.powers.KamuiUtils;
+import fr.nicknqck.utils.powers.KamuiUtils.Users;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 

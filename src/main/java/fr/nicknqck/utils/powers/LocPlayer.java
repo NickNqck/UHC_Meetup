@@ -1,4 +1,4 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.powers;
 
 import java.util.ArrayList;
 import java.util.Collections;
