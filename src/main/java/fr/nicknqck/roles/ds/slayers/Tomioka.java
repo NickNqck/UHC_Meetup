@@ -21,12 +21,16 @@ import fr.nicknqck.utils.Cuboid;
 
 public class Tomioka extends RoleBase{
 
-	public Tomioka(Player player, Roles roles) {
-		super(player, roles);
+	public Tomioka(Player player) {
+		super(player);
 	for (String desc : AllDesc.Tomioka) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		gameState.addPillier(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Tomioka;
 	}
 	@Override
 	public String[] Desc() {

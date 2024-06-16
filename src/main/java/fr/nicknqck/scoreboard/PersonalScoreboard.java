@@ -70,9 +70,9 @@ public class PersonalScoreboard {
     		if (!this.gameState.hasRoleNull(player)) {
     			RoleBase role = this.gameState.getPlayerRoles().get(player);
     			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
-    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getTeam().getColor()+role.type.name());
+    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getTeam().getColor()+role.getRoles().name());
     			}else {
-    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.type.name());
+    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getRoles().name());
     			}
     		}
     		objectiveSign.setLine(2, premsg+"§fJoueurs:§c "+this.gameState.getInGamePlayers().size());
@@ -104,9 +104,9 @@ public class PersonalScoreboard {
     			if (this.gameState.roleTimer < this.gameState.getInGameTime()) {
     				if (!this.gameState.hasRoleNull(player)) {
     					if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
-    						this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).getTeam().getColor()+this.gameState.getPlayerRoles().get(player).type.name()+" "+player.getDisplayName(), player);	
+    						this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).getTeam().getColor()+this.gameState.getPlayerRoles().get(player).getRoles().name()+" "+player.getDisplayName(), player);
 						}else {
-							this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).type.name()+" "+player.getDisplayName(), player);
+							this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).getRoles().name()+" "+player.getDisplayName(), player);
 						}
     				}
     			}

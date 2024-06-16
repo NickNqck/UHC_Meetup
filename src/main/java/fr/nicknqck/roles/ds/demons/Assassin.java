@@ -27,13 +27,13 @@ public class Assassin {
 	             for (Player p : gameState.getInGamePlayers()) {
 	            	 if (!gameState.hasRoleNull(p)) {
 	            		 if (gameState.getPlayerRoles().get(p).hasTeam(p)) {	            			 
-	            			 if (gameState.getPlayerRoles().get(p).getTeam() == TeamList.Demon || gameState.getPlayerRoles().get(p).type == Roles.Tanjiro) {
+	            			 if (gameState.getPlayerRoles().get(p).getTeam() == TeamList.Demon || gameState.getPlayerRoles().get(p).getRoles() == Roles.Tanjiro) {
 		            			 p.sendMessage("§cL'Assassin à été désigné");
 		            		 }
 	            		 }
 	            	 }
 	             }
 	         }
-		}, 20*gameState.TimingAssassin);
+		}, 20L *gameState.TimingAssassin);
 	}
 }

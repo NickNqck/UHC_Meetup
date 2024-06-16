@@ -15,12 +15,16 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Hotaru extends RoleBase{
 
-	public Hotaru(Player player, Roles roles) {
-		super(player, roles);
+	public Hotaru(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.Hotaru);
 		setLameIncassable(owner, true);
 		lame = null;
-		}
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Hotaru;
+	}
 	@Override
 	public String[] Desc() {return AllDesc.Hotaru;}
 	public int actualdslameuse = 0;

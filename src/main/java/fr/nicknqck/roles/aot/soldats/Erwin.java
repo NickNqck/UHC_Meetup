@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.aot.soldats;
 
+import fr.nicknqck.roles.aot.solo.Eren;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,10 +13,14 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
 public class Erwin extends RoleBase{
-	public Erwin(Player player, Roles roles) {
-		super(player, roles);
+	public Erwin(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Erwin;
 	}
 	@Override
 	public String[] Desc() {
@@ -52,7 +57,7 @@ public class Erwin extends RoleBase{
 								owner.sendMessage("La personne visée ne possède pas de rôle veuiller visée quelqu'un d'autre");
 							}else {
 								if (gameState.getPlayerRoles().get(target).getTeam() != null) {
-									if (getPlayerRoles(target).type == Roles.Eren) {
+									if (getPlayerRoles(target) instanceof Eren) {
 										owner.sendMessage(getTeamColor(target)+target.getName()+"§r appartient au camp des§a "+TeamList.Soldat.name());
 										cmdUse+=1;
 										int r = RandomUtils.getRandomInt(0, 2);

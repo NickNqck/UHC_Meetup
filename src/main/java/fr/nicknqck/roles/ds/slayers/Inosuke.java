@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,14 +16,17 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Inosuke extends RoleBase{
 
-	public Inosuke(Player player, Roles roles) {
-		super(player, roles);
+	public Inosuke(Player player) {
+		super(player);
 		for (String desc : AllDesc.Inosuke) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		this.setResi(20);
 	}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.Inosuke;
+	}
 	@Override
 	public String[] Desc() {return AllDesc.Inosuke;}
 	
@@ -130,9 +134,9 @@ public class Inosuke extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Doma) {
+						if (role instanceof Doma) {
 							killdoma = true;						
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.type +ChatColor.GRAY+" vous ne prendrez plus de mallus avec votre: "+ChatColor.GOLD+"Taillade Ondulante Divine");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous ne prendrez plus de mallus avec votre: "+ChatColor.GOLD+"Taillade Ondulante Divine");
 						
 						}
 					}

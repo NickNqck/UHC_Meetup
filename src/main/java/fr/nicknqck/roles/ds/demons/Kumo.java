@@ -23,9 +23,13 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Kumo extends RoleBase{
 
-	public Kumo(Player player, Roles roles) {
-		super(player, roles);
+	public Kumo(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.Kumo);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Kumo;
 	}
 	@Override
 	public ItemStack[] getItems() {

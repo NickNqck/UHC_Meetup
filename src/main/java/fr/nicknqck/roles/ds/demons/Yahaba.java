@@ -18,8 +18,8 @@ public class Yahaba extends RoleBase {
 	private Player cible;
 	private boolean killcible = false;
 
-	public Yahaba(Player player, Roles roles) {
-		super(player, roles);
+	public Yahaba(Player player) {
+		super(player);
 		setForce(20);
 		owner.sendMessage(AllDesc.Yahaba);
 		owner.sendMessage("Une cible vous sera attribué dans§6 10s");
@@ -34,9 +34,13 @@ public class Yahaba extends RoleBase {
 			 if (cible == null) {
 	             cible = canBeCibleYahaba.get(0);
 	             owner.sendMessage("Pour connaitre votre cible faite§6 /ds me");
-	            }
-			}, 20*10);
-		}
+	         }
+		}, 20*10);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Yahaba;
+	}
 	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

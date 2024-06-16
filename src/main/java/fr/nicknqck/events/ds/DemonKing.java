@@ -1,5 +1,6 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class DemonKing extends EventBase{
 					RoleBase role = gameState.getPlayerRoles().get(p);
 					if (gameState.attributedRole.contains(Roles.Tanjiro) && gameState.attributedRole.contains(Roles.Muzan)) {
 						if (gameState.DeadRole.contains(Roles.Muzan) && !gameState.DeadRole.contains(Roles.Tanjiro)) {
-							if (role.type.equals(Roles.Tanjiro)) {
+							if (role instanceof Tanjiro) {
 								setActivated(true);
 								role.setTeam(TeamList.Demon);
 								role.owner.sendMessage("§cLa liste des démons est : ");
@@ -50,7 +51,7 @@ public class DemonKing extends EventBase{
 									for (Player k : gameState.getInGamePlayers()) {
 										if (gameState.attributedRole.contains(Roles.Kokushibo)) {
 											if (!gameState.hasRoleNull(k)) {
-												if (gameState.getPlayerRoles().get(k).type.equals(Roles.Kokushibo)) {
+												if (gameState.getPlayerRoles().get(k) instanceof Kokushibo) {
 													RoleBase koku = gameState.getPlayerRoles().get(k);
 													Kokushibo ko = (Kokushibo) koku;
 													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

@@ -43,12 +43,15 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Deidara extends NSRoles {
 
-	public Deidara(Player player, Roles roles) {
-		super(player, roles);
+	public Deidara(Player player) {
+		super(player);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON));
 		owner.sendMessage(Desc());
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Deidara;
+	}
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;

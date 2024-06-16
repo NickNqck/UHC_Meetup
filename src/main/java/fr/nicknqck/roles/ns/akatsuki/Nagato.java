@@ -7,6 +7,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -36,13 +37,16 @@ public class Nagato extends NSRoles {
     private int cdTpMe = 0;
     private int cdRepousser = 0;
     private final List<UUID> NF = new ArrayList<>();
-    public Nagato(Player player, GameState.Roles roles) {
-        super(player, roles);
+    public Nagato(Player player) {
+        super(player);
         setChakraType(Chakras.SUITON);
         player.sendMessage(Desc());
         super.setForce(20.0);
     }
-
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Nagato;
+    }
     @Override
     public void GiveItems() {
         super.GiveItems();
@@ -56,7 +60,7 @@ public class Nagato extends NSRoles {
         for (Player p : getIGPlayers()) {
             if (!gameState.hasRoleNull(p)) {
                 if (getOldTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
-                    if (getOldTeam(p) == TeamList.Akatsuki || getPlayerRoles(p).type == GameState.Roles.Obito) {
+                    if (getOldTeam(p) == TeamList.Akatsuki || getPlayerRoles(p) instanceof Obito) {
                         mates.add(p);
                     }
                 }
@@ -110,7 +114,7 @@ public class Nagato extends NSRoles {
                 if (target != null){
                     if (Loc.getNearbyPlayersExcept(owner, 15).contains(target)){
                         if (!gameState.hasRoleNull(target)){
-                            owner.sendMessage(getPlayerRoles(target).type.getTeam().getColor()+target.getDisplayName()+"§f possède le rôle: "+getPlayerRoles(target).type.getItem().getItemMeta().getDisplayName());
+                            owner.sendMessage(getPlayerRoles(target).getRoles().getTeam().getColor()+target.getDisplayName()+"§f possède le rôle: "+getPlayerRoles(target).getRoles().getItem().getItemMeta().getDisplayName());
                             useJikogudo++;
                         }
                     } else {

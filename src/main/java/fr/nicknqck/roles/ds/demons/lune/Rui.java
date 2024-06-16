@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -21,25 +22,28 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Rui extends RoleBase {
 
-	public Rui(Player player, Roles roles) {
-		super(player, roles);
-		owner.sendMessage(AllDesc.Rui);
+	public Rui(Player player) {
+		super(player);
+		owner.sendMessage(Desc());
 		gameState.lunesup.add(owner);
 		gameState.addLuneSupPlayers(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.RockLee;
+	}
 	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}

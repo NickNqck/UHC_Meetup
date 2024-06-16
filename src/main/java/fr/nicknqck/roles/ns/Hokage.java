@@ -63,7 +63,7 @@ public class Hokage {
 						gameState.getPlayerRoles().get(fH).addBonusResi(10);
 						Player finalFH = fH;
 						Player finalFH1 = fH;
-						gameState.getInGamePlayers().stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getPlayerRoles().get(p).getClass().equals(Danzo.class)).filter(p -> !p.getUniqueId().equals(finalFH.getUniqueId())).forEach(p -> p.sendMessage("§7Voici le rôle de l'Hokage: "+gameState.getPlayerRoles().get(finalFH1).type.getItem().getItemMeta().getDisplayName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)"));
+						gameState.getInGamePlayers().stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getPlayerRoles().get(p).getClass().equals(Danzo.class)).filter(p -> !p.getUniqueId().equals(finalFH.getUniqueId())).forEach(p -> p.sendMessage("§7Voici le rôle de l'Hokage: "+gameState.getPlayerRoles().get(finalFH1).getRoles().getItem().getItemMeta().getDisplayName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)"));
 						forceHokage = null;
 					} else {
 						GameListener.SendToEveryone("§7Aucun joueur n'a le niveau pour devenir§c hokage§7...");
@@ -91,7 +91,7 @@ public class Hokage {
 					danzo = p;
 				}
 				if (gameState.getPlayerRoles().get(p).isCanBeHokage()) {
-					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).type.getItem().getItemMeta().getDisplayName());
+					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).getRoles().getItem().getItemMeta().getDisplayName());
 					return p;
 				}
 			}
@@ -119,7 +119,7 @@ public class Hokage {
 			}
 			if (killer != null) {
 				if (!gameState.hasRoleNull(killer)) {
-					if (gameState.getPlayerRoles().get(killer).type == GameState.Roles.Danzo) {
+					if (gameState.getPlayerRoles().get(killer) instanceof Danzo) {
 						if (this.Hokage != null && player.getUniqueId().equals(this.Hokage)){
 							killer.sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
 							forceHokage = killer;

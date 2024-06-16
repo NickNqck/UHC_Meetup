@@ -19,10 +19,14 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Sasha extends RoleBase{
 
-	public Sasha(Player player, Roles roles) {
-		super(player, roles);
+	public Sasha(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Sasha;
 	}
 	@Override
 	public String[] Desc() {

@@ -16,9 +16,13 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Conny extends RoleBase{
 
-	public Conny(Player player, Roles roles) {
-		super(player, roles);
+	public Conny(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Conny;
 	}
 	@Override
 	public String[] Desc() {
@@ -98,7 +102,7 @@ public class Conny extends RoleBase{
 			if (!cmd) {
 			if (args[1].equalsIgnoreCase("Jean")) {
 				for (Player p : getIGPlayers()) {
-					if (getPlayerRoles(p).type == Roles.Jean) {
+					if (getPlayerRoles(p) instanceof Jean) {
 				Jean = true;
 				cmd = true;
 				owner.sendMessage("Vous protegez désormais Jean vous obtenez donc le pseudo du Jean "+p.getName());
@@ -107,7 +111,7 @@ public class Conny extends RoleBase{
 				} else {
 				if (args[1].equalsIgnoreCase("Sasha")) {
 					for (Player p : getIGPlayers()) {
-						if (getPlayerRoles(p).type == Roles.Sasha) {
+						if (getPlayerRoles(p) instanceof Sasha) {
 					Sasha = true;
 					cmd = true;
 					owner.sendMessage("Vous protegez désormais Sasha vous obtenez donc le pseudo du Sasha "+p.getName());
@@ -130,7 +134,7 @@ public class Conny extends RoleBase{
 			if (killer != null) {
 				if (Jean) {
 				for (Player p : getIGPlayers()) {
-					if (getPlayerRoles(p).type == Roles.Jean) {
+					if (getPlayerRoles(p) instanceof Jean) {
 						owner.sendMessage("Votre proteger viens de mourir vous obtenez désormais Weakness 1 ansi que speed 1 lors de votre utilisation de votre sucre");
 						givePotionEffet(owner, PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 1, true);
 					}
@@ -138,7 +142,7 @@ public class Conny extends RoleBase{
 			} else {
 				if (Sasha) {
 					for (Player p : getIGPlayers()) {
-						if (getPlayerRoles(p).type == Roles.Sasha) {
+						if (getPlayerRoles(p) instanceof Sasha) {
 							owner.sendMessage("Votre proteger viens de mourir vous obtenez désormais Weakness 1 ansi que speed 1 lors de votre utilisation de votre sucre");
 							givePotionEffet(owner, PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 1, true);
 						}

@@ -16,11 +16,15 @@ import fr.nicknqck.utils.betteritem.BetterItemEvent;
 
 public class Livai extends RoleBase{
 
-	public Livai(Player player, Roles roles) {
-		super(player, roles);
+	public Livai(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setAckerMan(true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Livai;
 	}
 	@Override
 	public String[] Desc() {

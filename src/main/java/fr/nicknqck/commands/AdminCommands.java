@@ -10,9 +10,9 @@ import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.essential.HubInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
 import fr.nicknqck.roles.ds.slayers.Pourfendeur;
@@ -22,7 +22,6 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -64,7 +63,7 @@ public class AdminCommands implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("list")) {
 				if ((sender instanceof Player && ChatRank.hasRank(((Player) sender).getUniqueId()) && ChatRank.isHost(((Player) sender).getUniqueId())) || sender.hasPermission("Host")) {
-					gameState.getPlayerRoles().forEach((key, value) -> sender.sendMessage("§7 -§f "+key.getName()+"§7 -> "+value.getTeamColor()+value.type.name()));
+					gameState.getPlayerRoles().forEach((key, value) -> sender.sendMessage("§7 -§f "+key.getName()+"§7 -> "+value.getTeamColor()+value.getRoles().name()));
 					return true;
 				}
 			}
@@ -458,7 +457,7 @@ public class AdminCommands implements CommandExecutor{
 								} else {
 									if (!gameState.hasRoleNull(p)) {
 										if (gameState.getPlayerRoles().containsKey(p)) {
-											if (gameState.getPlayerRoles().get(p).type == Roles.Slayer) {
+											if (gameState.getPlayerRoles().get(p).getRoles() == Roles.Slayer) {
                                                 RoleBase r;
                                                 if (FFA.getFFA()) {
                                                     r = gameState.getPlayerRoles().get(p);
@@ -521,7 +520,7 @@ public class AdminCommands implements CommandExecutor{
 								} else {
 									if (gameState.getPlayerRoles().containsKey(p)) {
 									Bukkit.broadcastMessage("Le joueur: "+sender.getName()+" connais maintenant le rôle du joueur: "+p.getName());
-									sender.sendMessage("Le rôle de la personne: "+p.getName()+" est "+gameState.getPlayerRoles().get(p).getTeam().getColor()+gameState.getPlayerRoles().get(p).type.name());
+									sender.sendMessage("Le rôle de la personne: "+p.getName()+" est "+gameState.getPlayerRoles().get(p).getTeam().getColor()+gameState.getPlayerRoles().get(p).getRoles().name());
 									return true;
 									}
 								}

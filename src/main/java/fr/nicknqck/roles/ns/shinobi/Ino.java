@@ -20,13 +20,16 @@ import java.util.UUID;
 public class Ino extends NSRoles {
     private final ItemStack transpositionItem = new ItemBuilder(Material.NETHER_STAR).setName("§aTransposition").setLore("§7Vous permet de suivre très discrètement un joueur").toItemStack();
     private int cdTransposition = 0;
-    public Ino(Player player, GameState.Roles roles) {
-        super(player, roles);
+    public Ino(Player player) {
+        super(player);
         setChakraType(getRandomChakras());
         owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
     }
-
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Ino;
+    }
     @Override
     public Intelligence getIntelligence() {
         return Intelligence.CONNUE;

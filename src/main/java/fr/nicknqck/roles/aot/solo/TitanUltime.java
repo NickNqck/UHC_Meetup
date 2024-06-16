@@ -20,12 +20,16 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class TitanUltime extends RoleBase{
 
-	public TitanUltime(Player player, Roles roles) {
-		super(player, roles);
+	public TitanUltime(Player player) {
+		super(player);
 		gameState.TitansRouge.add(owner);
 		owner.sendMessage(Desc());
 		setForce(30);
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.TitanUltime;
 	}
 	@Override
 	public String[] Desc() {

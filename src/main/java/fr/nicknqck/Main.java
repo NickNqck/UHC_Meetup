@@ -79,10 +79,10 @@ public class Main extends JavaPlugin implements Listener{
 		Instance = this;
 		RANDOM = new Random();
 	//	this.databaseManager = new DatabaseManager();
-		System.out.println("Debug is set has "+isDebug());
 		GameState gameState = new GameState();
-		this.gameWorld = Bukkit.getWorld("world");
+		this.gameWorld = Bukkit.getWorld(getConfig().getString("gameworld"));
 		gameState.world = gameWorld;
+
 		gameWorld.setGameRuleValue("randomTickSpeed", "3");
 		gameWorld.setGameRuleValue("doMobSpawning", "false");
 		gameWorld.setGameRuleValue("doFireTick", "false");
@@ -225,6 +225,7 @@ public class Main extends JavaPlugin implements Listener{
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
 		}
+		System.out.println("init FastInv");
 	}
 	private void giveTab(GameState gameState) {
 		System.out.println("Starting give tab");
@@ -320,7 +321,7 @@ public class Main extends JavaPlugin implements Listener{
     }
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");
-		if (debug){
+		if (getInstance().getConfig().getString("debug").equalsIgnoreCase("ultra")){
 			System.out.println("Debug is enable");
 		}
 		return debug;

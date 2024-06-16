@@ -264,12 +264,16 @@ public class Izanami implements Listener{
 	}
 	@EventHandler
 	private void onEndGame(EndGameEvent e) {
+		for (BukkitRunnable runnable : runnables){
+			runnable.cancel();
+		}
 		runnables.clear();
 		Missions.clear();
 		TargetMissions.clear();
 		gapEatingRemaining = 5;
 		FraperCoupRemaining = 15;
 		taperCoupRemaining = 15;
+		this.color = null;
 	}
 	@EventHandler
 	private void onKill(UHCPlayerKill e) {

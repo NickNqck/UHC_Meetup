@@ -3,6 +3,9 @@ package fr.nicknqck.roles.aot.soldats;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.aot.solo.Eren;
+import fr.nicknqck.roles.aot.solo.Gabi;
+import fr.nicknqck.roles.aot.titanrouge.Jelena;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,10 +19,14 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Hansi extends RoleBase {
 
-	public Hansi(Player player, Roles roles) {
-		super(player, roles);
+	public Hansi(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Hansi;
 	}
 	@Override
 	public String[] Desc() {
@@ -58,17 +65,17 @@ public class Hansi extends RoleBase {
 									owner.sendMessage("§7Ce joueur à déjà été torturé par vos soins");
 									return;
 								}
-								if (getPlayerRoles(target).type == Roles.Eren) {
+								if (getPlayerRoles(target) instanceof Eren) {
 									target.sendMessage("§7Vous avez censé avoir perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 mais à la place vous avez gagner 1"+AllDesc.coeur+" permanent, elle à appris que vous êtes dans le camp des §a Soldats");
 									owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 									giveHeartatInt(target, 1);
 								}else {
-									if (getPlayerRoles(target).type == Roles.Gabi) {
+									if (getPlayerRoles(target) instanceof Gabi) {
 										target.sendMessage("§7Vous avez censé avoir perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 mais à la place vous avez gagner 1"+AllDesc.coeur+" permanent, elle à appris que vous êtes dans le camp des §a Soldats");
 										owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 										giveHeartatInt(target, 1);
 									}else {
-										if (getPlayerRoles(target).type == Roles.Jelena) {
+										if (getPlayerRoles(target) instanceof Jelena) {
 											target.sendMessage("§7Vous avez perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous étiez dans le camp§a Soldat");
 											owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 											giveHeartatInt(target, -2);

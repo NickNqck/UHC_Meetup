@@ -16,11 +16,15 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Mikasa extends RoleBase{
 
-	public Mikasa(Player player, Roles roles) {
-		super(player, roles);
+	public Mikasa(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setAckerMan(true);
+	}
+	@Override
+	public Roles getRoles() {
+		return null;
 	}
 	@Override
 	public String[] Desc() {

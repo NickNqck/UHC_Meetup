@@ -1,9 +1,11 @@
 package fr.nicknqck.roles.aot.titans;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.roles.aot.solo.Gabi;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.powers.Dash;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -18,15 +20,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.powers.Dash;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PotionUtils;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Bestial extends Titan{
 
@@ -36,17 +32,16 @@ public class Bestial extends Titan{
 		Crocodile("§b", 2, getInstance().Items()),
 		Oiseau("§a", 3, getInstance().FlyItem(), getInstance().AileItem()),
 		Okapi("§2", 4, getInstance().LangueItem());
-		private String color;
-		private int number;
-		private ItemStack[] item;
+		@Getter
+		private final String color;
+		private final int number;
+		private final ItemStack[] item;
 		Animal(String color, int i, ItemStack... items) {
 			this.color = color;
 			this.number = i;
 			this.item = items;
 		}
-		public String getColor() {
-			return color;
-		}
+
 		public ItemStack[] getItems(){
 			return item;
 		}
@@ -136,10 +131,9 @@ public class Bestial extends Titan{
 	}
 	private int FlyCooldown = 0;
 	private int LangueCooldown = 0;
+	@Getter
 	private static Bestial instance;
-	public static Bestial getInstance() {
-		return instance;
-	}
+
 	public Bestial() {
 		instance = this;
 	}
@@ -389,7 +383,7 @@ public class Bestial extends Titan{
 		if (canSteal.contains(sender)) {
 			if (getOwner() == null) {
 				if (getPlayerRole(sender.getUniqueId()).isCanVoleTitan()) {
-					if (getPlayerRole(sender.getUniqueId()).type == Roles.Gabi) {
+					if (getPlayerRole(sender.getUniqueId()) instanceof Gabi) {
 						getPlayerRole(sender.getUniqueId()).setMaxHealth(20.0);
 						sender.setMaxHealth(getPlayerRole(sender.getUniqueId()).getMaxHealth());
 						sender.updateInventory();

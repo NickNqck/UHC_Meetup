@@ -14,7 +14,9 @@ public class RandomUtils {
     	if (toReturn > max) {
     		toReturn = max;
     	}
-        System.out.println("toReturn: "+toReturn);
+        if (Main.isDebug()){
+            System.out.println("toReturn: "+toReturn);
+        }
         return toReturn;
     }
     public static int getRandomDeviationValue(int value, int min, int max) {

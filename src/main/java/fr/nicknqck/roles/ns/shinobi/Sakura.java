@@ -16,14 +16,17 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Sakura extends NSRoles {
 
-	public Sakura(Player player, Roles roles) {
-		super(player, roles);
+	public Sakura(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		setForce(20);
 		setCanBeHokage(true);
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Sakura;
+	}
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());

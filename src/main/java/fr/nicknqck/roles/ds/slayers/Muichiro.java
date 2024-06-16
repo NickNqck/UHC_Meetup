@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.lune.Gyokko;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,12 +20,16 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Muichiro extends RoleBase{
 
-	public Muichiro(Player player, Roles roles) {
-		super(player, roles);
+	public Muichiro(Player player) {
+		super(player);
 		for (String desc : AllDesc.Muichiro) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		gameState.addPillier(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Muichiro;
 	}
 	@Override
 	public String[] Desc() {
@@ -191,10 +196,10 @@ public class Muichiro extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Gyokko) {
+						if (role instanceof Gyokko) {
 							killgyokko = true;
 							this.addresi(20);
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.type +ChatColor.GRAY+" vous obtenez donc la marque des pourfendeurs de démon qui vous donnera aléatoirement résistance 1 ou speed 1 pendant 3 minutes");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc la marque des pourfendeurs de démon qui vous donnera aléatoirement résistance 1 ou speed 1 pendant 3 minutes");
 						}
 					}
 				}

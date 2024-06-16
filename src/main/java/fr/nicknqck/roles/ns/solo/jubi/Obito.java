@@ -39,8 +39,8 @@ import java.util.List;
 public class Obito extends NSRoles {
 	public List<Player> Tsukuyomi = new ArrayList<>();
 	private fr.nicknqck.roles.ns.power.Izanami izanami;
-	public Obito(Player player, Roles roles) {
-		super(player, roles);
+	public Obito(Player player) {
+		super(player);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
@@ -49,7 +49,10 @@ public class Obito extends NSRoles {
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}
 	}
-
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Obito;
+	}
 	@Override
 	public String getName() {
 		return "§dObito";
@@ -88,7 +91,7 @@ public class Obito extends NSRoles {
 		return new String[] {
 				AllDesc.bar,
 			    AllDesc.role+"Obito",
-			    "§fVotre objectif est de gagner avec le camp "+type.getTeam().getColor()+type.getTeam().name(),
+			    "§fVotre objectif est de gagner avec le camp "+getRoles().getTeam().getColor()+getRoles().getTeam().name(),
 				"",
 				AllDesc.items,
 				"",

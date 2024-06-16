@@ -31,8 +31,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class Kakashi extends RoleBase {
 
-	public Kakashi(Player player, Roles roles) {
-		super(player, roles);
+	public Kakashi(Player player) {
+		super(player);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 		if (!gameState.attributedRole.contains(Roles.Obito)) {
@@ -41,7 +41,10 @@ public class Kakashi extends RoleBase {
 		}
 		setCanBeHokage(true);
 	}
-
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Kakashi;
+	}
 	@Override
 	public String[] Desc() {
 		return new String[] {

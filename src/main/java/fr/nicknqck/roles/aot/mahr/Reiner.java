@@ -11,12 +11,16 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Reiner extends RoleBase{
 
-	public Reiner(Player player, Roles roles) {
-		super(player, roles);
+	public Reiner(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		Titans.Cuirasse.getTitan().getListener().setCuirasse(owner.getUniqueId());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Reiner;
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {

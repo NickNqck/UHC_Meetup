@@ -32,8 +32,8 @@ import fr.nicknqck.utils.raytrace.RayTrace;
 
 public class Haku extends NSRoles {
 	private int maxCDHaku = 60*8;
-	public Haku(Player player, Roles roles) {
-		super(player, roles);
+	public Haku(Player player) {
+		super(player);
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
 		setResi(20);
@@ -43,6 +43,10 @@ public class Haku extends NSRoles {
 				owner.sendMessage("§bZabuza§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
 			}
 		}, 20*10);
+	}
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Haku;
 	}
 	@Override
 	public void GiveItems() {

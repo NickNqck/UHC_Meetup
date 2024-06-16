@@ -11,12 +11,16 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Porco extends RoleBase{
 
-	public Porco(Player player, Roles roles) {
-		super(player, roles);
+	public Porco(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		Titans.Machoire.getTitan().getListener().setMachoire(owner.getUniqueId());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Porco;
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {

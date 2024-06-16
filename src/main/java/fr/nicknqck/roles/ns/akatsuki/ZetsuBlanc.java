@@ -22,11 +22,15 @@ import fr.nicknqck.utils.Loc;
 
 public class ZetsuBlanc extends NSRoles {
 
-	public ZetsuBlanc(Player player, Roles roles) {
-		super(player, roles);
+	public ZetsuBlanc(Player player) {
+		super(player);
 		setChakraType(Chakras.DOTON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.ZetsuBlanc;
 	}
 
 	@Override

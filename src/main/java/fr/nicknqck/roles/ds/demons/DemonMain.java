@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.roles.ds.slayers.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,13 +15,16 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class DemonMain extends RoleBase{
 
-	public DemonMain(Player player, Roles roles) {
-		super(player, roles);
+	public DemonMain(Player player) {
+		super(player);
 		this.setForce(20);
 		 this.setResi(20);
 		 owner.sendMessage(Desc());
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.DemonMain;
+	}
 	@Override
 	public String getName() {
 		return "§cDemon Main";
@@ -90,13 +94,13 @@ public class DemonMain extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Urokodaki) {
+						if (role instanceof Urokodaki) {
 							killurokodaki = true;						
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.type +ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"force 1 le jour");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"force 1 le jour");
 						}
-						if (role.type == Roles.Tanjiro || role.type == Roles.Sabito || role.type == Roles.Tomioka || role.type == Roles.Makomo) {
+						if (role instanceof Tanjiro || role instanceof Sabito || role instanceof Tomioka || role instanceof Makomo) {
 							owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*2, 0, false, false), true);							
-							owner.sendMessage("Vous venez de tuez: "+victim.getName()+" qui était: "+role.type+" ce qui vous fait gagner résistance 1 pendant 2 minutes");
+							owner.sendMessage("Vous venez de tuez: "+victim.getName()+" qui était: "+role.getRoles()+" ce qui vous fait gagner résistance 1 pendant 2 minutes");
 						}
 					}
 				}

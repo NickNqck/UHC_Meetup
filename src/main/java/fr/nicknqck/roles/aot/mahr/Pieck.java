@@ -13,8 +13,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Pieck extends RoleBase{
 
-	public Pieck(Player player, Roles roles) {
-		super(player, roles);
+	public Pieck(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		if (owner.getName().equalsIgnoreCase("BoulotPieck")) {
@@ -22,6 +22,10 @@ public class Pieck extends RoleBase{
 		}
 		gameState.GiveRodTridi(owner);
 		Titans.Charette.getTitan().getListener().setCharette(owner.getUniqueId());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Pieck;
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {

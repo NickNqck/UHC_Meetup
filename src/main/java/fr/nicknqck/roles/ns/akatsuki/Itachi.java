@@ -42,10 +42,14 @@ public class Itachi extends NSRoles {
 	private int cdAttaque = 0;
 	private boolean Izanami = false;
 	
-	public Itachi(Player player, Roles roles) {
-		super(player, roles);
+	public Itachi(Player player) {
+		super(player);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Itachi;
 	}
 	@Override
 	public String[] Desc() {

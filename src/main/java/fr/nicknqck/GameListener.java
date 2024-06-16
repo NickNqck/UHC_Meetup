@@ -20,7 +20,10 @@ import fr.nicknqck.roles.aot.titans.TitanListener;
 import fr.nicknqck.roles.aot.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Susamaru;
+import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
+import fr.nicknqck.roles.ds.slayers.Mitsuri;
+import fr.nicknqck.roles.ds.slayers.Nezuko;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.FFA;
@@ -375,8 +378,8 @@ public class GameListener implements Listener {
 					if (gameState.getInGamePlayers().get(0) != null) {
 						Player winer = gameState.getInGamePlayers().get(0);
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+winer.getName();
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).type+"§f avec§6 "+gameState.getPlayerKills().get(winer).size()+"§f kill(s)";
-						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).type.name();
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer).size()+"§f kill(s)";
+						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles().name();
 						title = title.substring(0, title.length());
 						SendToEveryone(Vainqueurs);
 					}
@@ -405,15 +408,15 @@ public class GameListener implements Listener {
 											for (Player k : gameState.getPlayerKills().get(p).keySet()) {
 												i++;
 												if (i != gameState.getPlayerKills().get(p).size()) {
-													s+= "§7 - §f"+prole.getTeamColor(k)+k.getName()+"§7 ("+prole.getTeamColor(k)+prole.getPlayerRoles(k).type.name()+"§7)\n";
+													s+= "§7 - §f"+prole.getTeamColor(k)+k.getName()+"§7 ("+prole.getTeamColor(k)+prole.getPlayerRoles(k).getRoles().name()+"§7)\n";
 													
 												} else {
-													s+="§7 - §f"+prole.getTeamColor(k)+k.getName()+"§7 ("+prole.getTeamColor(k)+prole.getPlayerRoles(k).type.name()+"§7)";
+													s+="§7 - §f"+prole.getTeamColor(k)+k.getName()+"§7 ("+prole.getTeamColor(k)+prole.getPlayerRoles(k).getRoles().name()+"§7)";
 												}
 											}
-											SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.type.name(), s, "§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill(s)");
+											SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s, "§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill(s)");
 										} else {
-											SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.type.name()+"§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill");
+											SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill");
 										}
 									}
 							}
@@ -560,20 +563,20 @@ public class GameListener implements Listener {
 					if (p != damager) {
 						p.sendMessage(AllDesc.bar);
 						p.sendMessage(" ");
-						if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p).type.equals(Roles.Nakime)) {
-							p.sendMessage(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+gameState.getPlayerRoles().get(victim).getTeamColor()+gameState.getPlayerRoles().get(victim).type.name());
+						if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p).getRoles().equals(Roles.Nakime)) {
+							p.sendMessage(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+gameState.getPlayerRoles().get(victim).getTeamColor()+gameState.getPlayerRoles().get(victim).getRoles().name());
 						}else {
-							p.sendMessage(victim.getDisplayName()+ChatColor.RED+" est mort son role était §6§k"+gameState.getPlayerRoles().get(victim).type.name()+"§c (§lMasqué§c)");
+							p.sendMessage(victim.getDisplayName()+ChatColor.RED+" est mort son role était §6§k"+gameState.getPlayerRoles().get(victim).getRoles().name()+"§c (§lMasqué§c)");
 						}
 						p.sendMessage(" ");
 						p.sendMessage(AllDesc.bar);
 					}else {
 						damager.sendMessage(AllDesc.bar);
 						damager.sendMessage("");
-						if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p).type.equals(Roles.Nakime)) {
-							damager.sendMessage("§cVous avez tué:§r "+victim.getDisplayName()+"§c son rôle était "+gameState.getPlayerRoles().get(victim).getTeam().getColor()+gameState.getPlayerRoles().get(victim).type.name());
+						if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p).getRoles().equals(Roles.Nakime)) {
+							damager.sendMessage("§cVous avez tué:§r "+victim.getDisplayName()+"§c son rôle était "+gameState.getPlayerRoles().get(victim).getTeam().getColor()+gameState.getPlayerRoles().get(victim).getRoles().name());
 						}else {
-							damager.sendMessage("§cVous avez tué:§r "+victim.getDisplayName()+"§c son rôle était §6§k"+gameState.getPlayerRoles().get(victim).type.name()+"§c (§lMasqué§c)");
+							damager.sendMessage("§cVous avez tué:§r "+victim.getDisplayName()+"§c son rôle était §6§k"+gameState.getPlayerRoles().get(victim).getRoles().name()+"§c (§lMasqué§c)");
 						}
 						damager.sendMessage(" ");
 						damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
@@ -584,7 +587,7 @@ public class GameListener implements Listener {
         }else {
 			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 			SendToEveryone("");
-			SendToEveryone(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+ChatColor.GOLD+gameState.getPlayerRoles().get(victim).type.name());
+			SendToEveryone(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+ChatColor.GOLD+gameState.getPlayerRoles().get(victim).getRoles().name());
 			SendToEveryone("");
 			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 		}
@@ -610,7 +613,7 @@ public class GameListener implements Listener {
                     cantDie = true;
                 }
 				if (!cantDie){
-					gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).type);
+					gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
 				}
 				if (gameState.getPlayerRoles().get(player).getItems() != null) {
 					for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
@@ -653,11 +656,11 @@ public class GameListener implements Listener {
                     }
                     if (gameState.getPlayerRoles().containsKey(damager)) {
                         RoleBase role = gameState.getPlayerRoles().get(damager);
-                        if (role.getTeam() == TeamList.Demon || role.type == Roles.Kaigaku || role.type == Roles.Nezuko) {
+                        if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
                             for (Player p : gameState.getInGamePlayers()) {
                                 if (!gameState.hasRoleNull(p)) {
                                     RoleBase role2 = gameState.getPlayerRoles().get(p);
-                                    if (role2.getTeam() == TeamList.Demon || role2.type == Roles.Kaigaku) {
+                                    if (role2.getTeam() == TeamList.Demon || role2.getRoles() == Roles.Kaigaku) {
                                         p.sendMessage("§cLe joueur§4 "+damager.getName()+"§c à tué quelqu'un....");
                                     }
                                 }
@@ -692,11 +695,11 @@ public class GameListener implements Listener {
                             }
                             if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
                                 RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
-                                if (role.getTeam() == TeamList.Demon || role.type == Roles.Kaigaku || role.type == Roles.Nezuko) {
+                                if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
                                     for (Player p : gameState.getInGamePlayers()) {
                                         if (!gameState.hasRoleNull(p)) {
                                             RoleBase role2 = gameState.getPlayerRoles().get(p);
-                                            if (role2.getOldTeam() == TeamList.Demon || role2.type == Roles.Kaigaku) {
+                                            if (role2.getOldTeam() == TeamList.Demon || role2 instanceof Kaigaku) {
                                                 p.sendMessage("§cLe joueur§4 "+damager.getName()+"§c à tué quelqu'un....");
                                             }
                                         }
@@ -977,7 +980,7 @@ public class GameListener implements Listener {
 								event.setCancelled(true);
 							}
 							if (gameState.getCharmed().contains(attacker)) {
-								if (gameState.getPlayerRoles().get(player).type == Roles.Mitsuri) {
+								if (gameState.getPlayerRoles().get(player) instanceof Mitsuri) {
 									attacker.sendMessage("Vous n'avez pas le pouvoir de tapée l'amour de votre vie");
 									double x = player.getLocation().getX();
 									double y = player.getLocation().getY();
@@ -986,9 +989,9 @@ public class GameListener implements Listener {
 									event.setCancelled(true);
 								}
 							}
-						if (gameState.getPlayerRoles().get(player).type == Roles.Slayer && FFA.getFFA()) {
+						if (gameState.getPlayerRoles().get(player).getRoles().equals(Roles.Slayer) && FFA.getFFA()) {
 							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(player);
-							if (f.getPlayerRoles(f.owner).type == Roles.Slayer) {
+							if (f.getPlayerRoles(f.owner).getRoles() == Roles.Slayer) {
 								if (f.owner == player) {
 									if (f.Serpent) {
 										if (f.serpentactualtime >= 0) {
@@ -1128,7 +1131,7 @@ public class GameListener implements Listener {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
 			        				RoleBase role = gameState.getPlayerRoles().get(player);
 		                			Susamaru sam = (Susamaru) role;
-		                			if (role.getPlayerRoles(player).type != Roles.Susamaru)return;
+		                			if (role.getPlayerRoles(player).getRoles() != Roles.Susamaru)return;
 		                			if (player != sam.owner)return;
 		                			if (sam.Niveau1 && !sam.Niveau2 && sam.changecd <= 0) {
 		                				sam.Niveau1 = false;
@@ -1154,7 +1157,7 @@ public class GameListener implements Listener {
 		Player player = event.getPlayer();
 		if (gameState.getInGamePlayers().contains(player))
 		if (gameState.getPlayerRoles().containsKey(player))
-		if (gameState.getPlayerRoles().get(player).type == null) {
+		if (gameState.getPlayerRoles().get(player).getRoles() == null) {
 				event.setCancelled(true);
 		}
 	}

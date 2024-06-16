@@ -39,13 +39,12 @@ public abstract class RoleBase implements Role{
 
 	public boolean canShift = false;
 	public Player owner;
-	public Roles type;
 	private Double maxHealth = 20.0;
 	public Float bonusSpeedMultiplier = 0.00f;
 	private boolean canRespawn = false;
 	private boolean hasNoFall = false;
 	private ArrayList<Player> linkWith = new ArrayList<>();
-	private Roles oldRole = null;	
+	private Roles oldRole = null;
 	float speedBase;
 	private boolean powerEnabled = true;
 	private boolean invincible = false;
@@ -78,14 +77,13 @@ public abstract class RoleBase implements Role{
 	public String StringID = "";
 	@Getter
 	private UUID uuidOwner;
-	public RoleBase(Player player, Roles roles) {
+	public RoleBase(Player player) {
 		owner = player;
 		if (gameState == null){
 			this.gameState = GameState.getInstance();
 		}
 		speedBase = 0.20f;
 		owner.setWalkSpeed(speedBase*(bonusSpeedMultiplier+1));
-		type = roles;
 		canBeCibleYahaba.clear();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				if (this.getTeam() != null) {
@@ -93,8 +91,8 @@ public abstract class RoleBase implements Role{
 					System.out.println(owner.getName() +" Team: "+ this.getTeam());
 					oldteam = team;
 				}
-				if (this.type != null) {
-					System.out.println(owner.getName() +" Role: "+ type.name());
+				if (this.getRoles() != null) {
+					System.out.println(owner.getName() +" Role: "+ getRoles().name());
 				}
 
         }, 20);
@@ -402,7 +400,7 @@ public abstract class RoleBase implements Role{
 								getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.RED+"Force");
 							}
 							if (getPlayerRoles(p).hasLameFr()) {
-								if (getPlayerRoles(p).type != Roles.Tanjiro) {
+								if (getPlayerRoles(p).getRoles() != Roles.Tanjiro) {
 									getPlayerRoles(p).owner.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
 									getPlayerRoles(p).setLameFr(false);
 									getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.GOLD+"Fire Résistance");
@@ -419,7 +417,7 @@ public abstract class RoleBase implements Role{
 								getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.AQUA+"Speed");
 							}
 							if (getPlayerRoles(p).isHasNoFall()) {
-								if (getPlayerRoles(p).type != Roles.Kanao) {
+								if (getPlayerRoles(p).getRoles() != Roles.Kanao) {
 									getPlayerRoles(p).setNoFall(false);
 									getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.GREEN+"NoFall");
 								}
@@ -464,7 +462,7 @@ public abstract class RoleBase implements Role{
 			}, 20);
 		}
 		if (!gameState.hasRoleNull(player)){
-			if (getPlayerRoles(player).type == Roles.Nakime) {
+			if (getPlayerRoles(player).getRoles() == Roles.Nakime) {
 				for (Player p : gameState.getOnlinePlayers()) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
 						GameListener.RandomTp(p, gameState, Main.getInstance().gameWorld);
@@ -492,7 +490,7 @@ public abstract class RoleBase implements Role{
 					}
 				}
 			}
-			gameState.DeadRole.add(getPlayerRoles(player).type);
+			gameState.DeadRole.add(getPlayerRoles(player).getRoles());
 		}
 	}
 	public boolean onBucketEmpty(Material bucket, Block block, GameState gameState, Player player) {return false;}
@@ -745,8 +743,8 @@ public abstract class RoleBase implements Role{
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {}
 	public Player getPlayerFromRole(Roles roles) {
 		List<Player> toReturn = new ArrayList<>();
-		getIGPlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).type == roles).forEach(e -> toReturn.add(e));
-		if (toReturn.size() == 0) {
+		getIGPlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).forEach(e -> toReturn.add(e));
+		if (toReturn.isEmpty()) {
 			return null;
 		}
 		Player PlayerRoles = toReturn.get(0);
@@ -754,7 +752,7 @@ public abstract class RoleBase implements Role{
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).type == roles).filter(p -> gameState.getInGamePlayers().contains(p)).forEach(e -> toReturn.add(e));
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p)).forEach(e -> toReturn.add(e));
 		return toReturn;
 	}
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {}

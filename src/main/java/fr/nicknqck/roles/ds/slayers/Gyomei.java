@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,14 +15,18 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gyomei extends RoleBase{
 
-	public Gyomei(Player player, Roles roles) {
-		super(player, roles);
+	public Gyomei(Player player) {
+		super(player);
 		for (String s : AllDesc.Gyomei) owner.sendMessage(s);
 		this.setForce(20);
 		setMaxHealth(24.0);
 		this.setCanUseBlade(true);
 		this.setResi(20);
 		gameState.addPillier(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Gyomei;
 	}
 	@Override
 	public String[] Desc() {return AllDesc.Gyomei;}
@@ -106,7 +111,7 @@ public class Gyomei extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Kokushibo && !killkoku) {
+						if (role instanceof Kokushibo && !killkoku) {
 							killkoku = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Kokushibo "+ChatColor.GRAY+"vous obtenez donc la marque des pourfendeurs ce qui vous donnera speed 1 pendant 3 minutes");
 							owner.getInventory().addItem(Items.getSlayerMark());

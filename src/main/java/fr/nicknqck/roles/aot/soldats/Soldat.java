@@ -13,16 +13,20 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
 public class Soldat extends RoleBase {
-	public static enum kit {
+	public enum kit {
 		Garnison,
 		Brigade,
 		Bataillon,
 	}
 	public kit form = null;
-	public Soldat(Player player, Roles roles) {
-		super(player, roles);
+	public Soldat(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Soldat;
 	}
 	@Override
 	public String[] Desc() {

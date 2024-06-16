@@ -27,14 +27,18 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Nakime extends RoleBase{
 
-	public Nakime(Player player, Roles roles) {
-		super(player, roles);
+	public Nakime(Player player) {
+		super(player);
 		if (!gameState.pregenNakime) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 	        Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
 		}
         owner.sendMessage(Desc());
         Main.getInstance().nakime = Bukkit.getWorld("nakime");
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Nakime;
 	}
 	@Override
 	public String[] Desc() {
@@ -61,7 +65,7 @@ public class Nakime extends RoleBase{
 							for (Player p : Bukkit.getOnlinePlayers()) {
 								if (p.getWorld().equals(Main.getInstance().nakime)) {
 									if (!gameState.hasRoleNull(p)) {
-										if (getPlayerRoles(p).type != Roles.Nakime) {
+										if (getPlayerRoles(p).getRoles() != Roles.Nakime) {
 											LocPlayer loc = new LocPlayer();
 											p.teleport(loc.getRandomPositionRespawn());
 											p.sendMessage("§7Vous avez été téléporté de manière aléatoire par§c Nakime");
@@ -76,13 +80,12 @@ public class Nakime extends RoleBase{
 						}
 					}else if (owner.getWorld().equals(Main.getInstance().gameWorld)) {
 						if (cooldown <= 0) {
-							EnterinNakime();	
-							return true;
-						}else {
+							EnterinNakime();
+                        }else {
 							sendCooldown(owner, cooldown);
-							return true;
-						}
-					}
+                        }
+                        return true;
+                    }
 					return true;
 				}).setDroppable(false).setDespawnable(false).setMovableOther(false).getItemStack()
 		};

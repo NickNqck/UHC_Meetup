@@ -34,8 +34,8 @@ public class Kurenai extends NSRoles {
     private int cdBois = 0;
     private final ItemStack GenjutsuItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu temporel").setLore("§7Vous permet en ciblant un joueur de créer un pure combat 1v1").toItemStack();
     private int cdGenjutsu = 0;
-    public Kurenai(Player player, GameState.Roles roles) {
-        super(player, roles);
+    public Kurenai(Player player) {
+        super(player);
     }
 
     @Override
@@ -43,7 +43,10 @@ public class Kurenai extends NSRoles {
         super.GiveItems();
         super.giveItem(owner, false, getItems());
     }
-
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Kurenai;
+    }
     @Override
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);

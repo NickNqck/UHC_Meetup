@@ -85,7 +85,7 @@ public class BulleGyokko implements Listener{
 		if (gameState.getServerState() != ServerStates.InGame)return;
 		Player player = e.getPlayer();
 		if (gameState.getPlayerRoles().containsKey(player)) {
-			if (gameState.getPlayerRoles().get(player).type == Roles.Gyokko) {
+			if (gameState.getPlayerRoles().get(player) instanceof Gyokko) {
 				Gyokko gyokko = (Gyokko)gameState.getPlayerRoles().get(player);
 				player = gyokko.owner;
 				if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -109,48 +109,7 @@ public class BulleGyokko implements Listener{
 						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 							water.keySet().forEach(ez -> ez.setType(water.get(ez)));
 		                }, 1190);//1190 = 20*59+10
-					/*	Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				                map.keySet().forEach(location -> location.setType(map.get(location)));
-				                water.keySet().forEach(location -> location.setType(Material.AIR));
-				            }, 20*60);
-						 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				                air.keySet().forEach(location -> location.setType(map.get(location)));
-				                for(Location location : sphere(loc, 6, true)) {
-					                if(location.getBlock() != null && location.getBlock().getType() == Material.WATER || location.getBlock().getType() == Material.STATIONARY_WATER || location.getBlock().getType() == Material.IRON_BLOCK) {
-					                    location.getBlock().setType(Material.AIR);
-					                }
-					            }
-				            }, 20*65);
-						 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				                for(Location location : sphere(gyokko.owner.getLocation(), 6, true)) {
-					                if(location.getBlock() != null && location.getBlock().getType() == Material.WATER || location.getBlock().getType() == Material.STATIONARY_WATER || location.getBlock().getType() == Material.IRON_BLOCK) {
-					                    location.getBlock().setType(Material.AIR);
-					                }
-					            }
-				            }, 20*61);
-						 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				                for(Location location : sphere(loc, 6, true)) {
-					                if(location.getBlock() != null && location.getBlock().getType() == Material.WATER || location.getBlock().getType() == Material.STATIONARY_WATER || location.getBlock().getType() == Material.IRON_BLOCK) {
-					                    location.getBlock().setType(Material.AIR);
-					                }
-					            }
-				            }, 20*62);
-						 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				                for(Location location : sphere(loc, 6, true)) {
-					                if(location.getBlock() != null && location.getBlock().getType() == Material.WATER || location.getBlock().getType() == Material.STATIONARY_WATER || location.getBlock().getType() == Material.IRON_BLOCK) {
-					                    location.getBlock().setType(Material.AIR);
-					                }
-					            }
-				            }, 20*63);
-						 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				                for(Location location : sphere(loc, 6, true)) {
-					                if(location.getBlock() != null && location.getBlock().getType() == Material.WATER || location.getBlock().getType() == Material.STATIONARY_WATER || location.getBlock().getType() == Material.IRON_BLOCK) {
-					                    location.getBlock().setType(Material.AIR);
-					                }
-					            }
-				            }, 20*64);
-				            */
-						 gyokko.bullecooldown = 60*7;
+                        gyokko.bullecooldown = 60*7;
 					}else {
 						gyokko.sendCooldown(gyokko.owner, gyokko.bullecooldown);
 					}

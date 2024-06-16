@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.roles.ds.slayers.Kyojuro;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,13 +20,17 @@ import fr.nicknqck.utils.Loc;
 
 public class Shinjuro extends RoleBase {
 
-	public Shinjuro(Player player, Roles roles) {
-		super(player, roles);
+	public Shinjuro(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		setCanUseBlade(true);
 		setLameFr(true);
 		setMaxHealth(24.0);
 		setLameIncassable(owner, true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Shinjuro;
 	}
 	@Override
 	public String[] Desc() {
@@ -158,9 +163,9 @@ public class Shinjuro extends RoleBase {
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Kyojuro) {
+						if (role instanceof Kyojuro) {
 							killkyojuro = true;
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.type.name()+ChatColor.GRAY+" maintenant en utilisant le Soufle du Feu vous obtiendrez l'effet: "+ChatColor.RED+"Speed 1"+ChatColor.GRAY+" permanent");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles().name()+ChatColor.GRAY+" maintenant en utilisant le Soufle du Feu vous obtiendrez l'effet: "+ChatColor.RED+"Speed 1"+ChatColor.GRAY+" permanent");
 						}
 					}
 				}

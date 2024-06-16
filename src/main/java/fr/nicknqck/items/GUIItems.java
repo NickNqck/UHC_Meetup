@@ -481,7 +481,7 @@ public static ItemStack getSelectConfigButton() {
 		ItemStack stack = new ItemStack(Material.WATCH, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§fConfiguration§7 ->§6 Partie");
-		meta.setLore(Arrays.asList("§r"+"Configurez l'entièretée de la partie"));
+		meta.setLore(Collections.singletonList("§r"+"Configurez l'entièretée de la partie"));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -489,7 +489,7 @@ public static ItemStack getSelectConfigButton() {
 		ItemStack stack = new ItemStack(Material.CHEST, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§fConfiguration§7 ->§6 Inventaire");
-		meta.setLore(Arrays.asList("§7Configurez l'inventaire"));
+		meta.setLore(Collections.singletonList("§7Configurez l'inventaire"));
 		stack.setItemMeta(meta);
 		return stack;
 	}

@@ -48,13 +48,17 @@ public class Madara extends NSRoles {
 	private int SusanoCD = 0;
 	private boolean hasIzanagi = false;
 
-	public Madara(Player player, Roles roles) {
-		super(player, roles);
+	public Madara(Player player) {
+		super(player);
 		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 		setChakraType(Chakras.KATON);
 		giveItem(owner, false, getItems());
 		owner.sendMessage(Desc());
 		map.clear();
+	}
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Madara;
 	}
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
@@ -67,8 +71,8 @@ public class Madara extends NSRoles {
 		KnowRole(owner, Roles.Obito, 1);
 		return new String[] {
 				AllDesc.bar,
-				AllDesc.role+type.getTeam().getColor()+"Madara",
-				"§fVotre objectif est de gagner avec le camp "+type.getTeam().getColor()+type.getTeam().name(),
+				AllDesc.role+getRoles().getTeam().getColor()+"Madara",
+				"§fVotre objectif est de gagner avec le camp "+getRoles().getTeam().getColor()+getRoles().getTeam().name(),
 				"",
 				AllDesc.effet,
 				"",

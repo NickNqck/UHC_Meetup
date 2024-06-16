@@ -2,6 +2,8 @@ package fr.nicknqck.roles.ds.solos;
 
 import java.text.DecimalFormat;
 
+import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -24,32 +26,35 @@ import fr.nicknqck.utils.StringUtils;
 
 public class JigoroV2 extends RoleBase{
 
-	public JigoroV2(Player player, Roles roles) {
-		super(player, roles);
+	public JigoroV2(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.JigoroV2);
 		pacte = Pacte.Non_Choisis;
 		setCanUseBlade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.ZenItsu) {
+				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
-				if (getPlayerRoles(p).type == Roles.Kaigaku) {
+				if (getPlayerRoles(p) instanceof Kaigaku) {
 					owner.sendMessage("La personne possédant le rôle de§c Kaigaku§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
 		setLameIncassable(owner, true);
 	}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.JigoroV2;
+	}
 	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.ZenItsu) {
+				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
-				if (getPlayerRoles(p).type == Roles.Kaigaku) {
+				if (getPlayerRoles(p) instanceof Kaigaku) {
 					owner.sendMessage("La personne possédant le rôle de§c Kaigaku§r est:§c "+p.getName());
 				}
 			}
@@ -128,7 +133,7 @@ public class JigoroV2 extends RoleBase{
 				owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
 				for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
 					if (!gameState.hasRoleNull(p)) {//vérifie que p a un role
-						if (gameState.getPlayerRoles().get(p).type == Roles.Kaigaku) {//si p est kaigaku
+						if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {//si p est kaigaku
 							owner.sendMessage(p.getName()+" est§c Kaigaku");
 							kaigaku = p;
 							gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
@@ -150,7 +155,7 @@ public class JigoroV2 extends RoleBase{
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
 				for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
 					if (gameState.getPlayerRoles().containsKey(p)) {//vérifie que p a un role
-						if (gameState.getPlayerRoles().get(p).type == Roles.ZenItsu) {//si p est ZenItsu
+						if (gameState.getPlayerRoles().get(p) instanceof ZenItsu) {//si p est ZenItsu
 							owner.sendMessage(p.getName()+" est§a ZenItsu");
 							zen = p;
 							gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
@@ -215,7 +220,7 @@ public class JigoroV2 extends RoleBase{
 			if (speedCD >= 1)speedCD--;
 			if (kaigaku != null) {
 				if (!gameState.hasRoleNull(kaigaku)) {
-					if (gameState.getPlayerRoles().get(kaigaku).type == Roles.Kaigaku) {
+					if (gameState.getPlayerRoles().get(kaigaku) instanceof Kaigaku) {
 						if (gameState.getPlayerRoles().get(kaigaku).getTeam() == TeamList.Jigoro) {
 							if (gameState.getInGamePlayers().contains(kaigaku) && gameState.getInGamePlayers().contains(owner)) {
 								if (owner.getLocation().distance(owner.getLocation()) <= 50) {
@@ -304,7 +309,7 @@ public class JigoroV2 extends RoleBase{
 					if (gameState.getInGamePlayers().contains(victim)) {
 						if (gameState.getPlayerRoles().containsKey(victim)) {
 							RoleBase role = gameState.getPlayerRoles().get(victim);
-							if (role.type == Roles.ZenItsu) {
+							if (role instanceof ZenItsu) {
 								if (!killzen) {
 									addSpeedAtInt(owner, 10);
 									owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Zen'Itsu "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"résistance 1 le jour"+ChatColor.GRAY+", ainsi que "+ChatColor.GOLD+"10% de Speed");
@@ -315,7 +320,7 @@ public class JigoroV2 extends RoleBase{
 									}
 								}					
 							}
-							if (role.type == Roles.Kaigaku) {
+							if (role instanceof Kaigaku) {
 								if (!killkai) {
 									killkai = true;
 									owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Kaigaku "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"résistance 1 la nuit"+ChatColor.GRAY+", ainsi que "+ChatColor.GOLD+"10% de Speed");
@@ -349,7 +354,7 @@ public class JigoroV2 extends RoleBase{
 		if (pacte == Pacte.Pacte3) {
 			if (killer == owner || killer == zen) {
 				if (!killkai) {
-					if (getPlayerRoles(victim).type == Roles.Kaigaku) {
+					if (getPlayerRoles(victim) instanceof Kaigaku) {
 						owner.sendMessage(ChatColor.GOLD+killer.getName()+"§r à tué§c Kaigaku§r ce qui vous permet d'avoir§6 Speed 2 en dessous de 5§c❤§r");
 						killkai = true;
 					}

@@ -40,10 +40,15 @@ public class Iso extends RoleBase {
     private int cdUltime = 0;
     private final Map<UUID, Integer> ultimateGap = new HashMap<>();
     private final Map<UUID, Location> ultimeLocation = new HashMap<>();
-    public Iso(Player player, GameState.Roles roles) {
-        super(player, roles);
+    public Iso(Player player) {
+        super(player);
         owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
+    }
+
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Iso;
     }
 
     @Override

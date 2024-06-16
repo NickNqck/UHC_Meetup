@@ -17,14 +17,18 @@ import fr.nicknqck.utils.StringUtils;
 
 public class YondaimeRaikage extends RoleBase {
 
-	public YondaimeRaikage(Player player, Roles roles) {
-		super(player, roles);
+	public YondaimeRaikage(Player player) {
+		super(player);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 	}
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Raikage;
 	}
 	@Override
 	public String[] Desc() {

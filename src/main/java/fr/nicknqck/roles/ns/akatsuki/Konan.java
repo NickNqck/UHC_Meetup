@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.nicknqck.roles.builder.NSRoles;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,12 +29,16 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Konan extends NSRoles {
 
-	public Konan(Player player, Roles roles) {
-		super(player, roles);
+	public Konan(Player player) {
+		super(player);
 		setChakraType(Chakras.SUITON);
 		setTeam(TeamList.Akatsuki);
 		owner.sendMessage(Desc());
 		setNoFall(true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Konan;
 	}
 	@Override
 	public void GiveItems() {
@@ -45,7 +50,7 @@ public class Konan extends NSRoles {
 		for (Player p : getIGPlayers()) {
 			if (!gameState.hasRoleNull(p)) {
 				if (getOldTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
-					if (getOldTeam(p) == TeamList.Akatsuki || getPlayerRoles(p).type == Roles.Obito) {
+					if (getOldTeam(p) == TeamList.Akatsuki || getPlayerRoles(p) instanceof Obito) {
 						mates.add(p);
 					}
 				}

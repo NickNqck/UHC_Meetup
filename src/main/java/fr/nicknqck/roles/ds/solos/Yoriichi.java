@@ -25,13 +25,17 @@ import fr.nicknqck.utils.WorldUtils;
 
 public class Yoriichi extends RoleBase{
 
-	public Yoriichi(Player player, Roles roles) {
-		super(player, roles);
+	public Yoriichi(Player player) {
+		super(player);
 		for (String desc : AllDesc.Yoriichi) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		this.setResi(20);
 		setLameIncassable(owner, true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Yoriichi;
 	}
 	@Override
 	public String[] Desc() {
@@ -169,9 +173,9 @@ public class Yoriichi extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Kokushibo && !killkoku) {
-							killkoku = false;
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.type+ChatColor.GRAY+" maintenant la nuit vous posséderez l'effet: "+AllDesc.Resi+" 1");
+						if (role.getRoles() == Roles.Kokushibo && !killkoku) {
+							killkoku = true;
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles()+ChatColor.GRAY+" maintenant la nuit vous posséderez l'effet: "+AllDesc.Resi+" 1");
 						}
 					}
 				}

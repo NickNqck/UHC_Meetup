@@ -16,8 +16,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Kyojuro extends RoleBase{
 
-	public Kyojuro(Player player, Roles roles) {
-		super(player, roles);
+	public Kyojuro(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.Kyojuro);
 		this.setForce(20);
 		this.setCanUseBlade(true);
@@ -25,8 +25,12 @@ public class Kyojuro extends RoleBase{
 		this.setResi(20);
 		gameState.addPillier(owner);
 	}
-@Override
-public String[] Desc() {
+	@Override
+	public Roles getRoles() {
+		return Roles.Kyojuro;
+	}
+	@Override
+	public String[] Desc() {
 	return AllDesc.Kyojuro;
 }	private int itemcooldown = 0;
 	private boolean killakaza = false;

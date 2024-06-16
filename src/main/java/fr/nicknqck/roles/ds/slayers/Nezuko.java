@@ -26,8 +26,8 @@ public class Nezuko extends RoleBase{
 	boolean nuit = false;
 	boolean jour = false;
 	Random random = new Random();
-	public Nezuko(Player player, Roles roles) {
-		super(player, roles);
+	public Nezuko(Player player) {
+		super(player);
 		for (String desc : AllDesc.Nezuko) owner.sendMessage(desc);
 		regencooldown = 20;
 		this.setForce(20);
@@ -35,17 +35,21 @@ public class Nezuko extends RoleBase{
 		gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Tanjiro) {
+				if (getPlayerRoles(p) instanceof Tanjiro) {
 					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
 				}
 			}
 		}, 20);
 	}
 	@Override
+	public Roles getRoles() {
+		return Roles.Nezuko;
+	}
+	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Tanjiro) {
+				if (getPlayerRoles(p) instanceof Tanjiro) {
 					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
 				}
 			}
@@ -101,7 +105,7 @@ public class Nezuko extends RoleBase{
 		}
 		for (RoleBase r : gameState.getPlayerRoles().values()) {
 			if (!gameState.getInGamePlayers().contains(r.owner)) continue;
-			if (r.type == Roles.Tanjiro && r.owner.getWorld().equals(owner.getWorld())) {
+			if (r instanceof Tanjiro && r.owner.getWorld().equals(owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*2, 0, false, false));
 			}

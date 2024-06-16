@@ -18,11 +18,15 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class KyogaiV2 extends RoleBase{
 
-	public KyogaiV2(Player player, Roles roles) {
-		super(player, roles);
+	public KyogaiV2(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		owner.getInventory().addItem(getItems());
 		addforce(20);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.KyogaiV2;
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {

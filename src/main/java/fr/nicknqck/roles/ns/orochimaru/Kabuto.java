@@ -29,8 +29,8 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Kabuto extends NSRoles {
 
-	public Kabuto(Player player, Roles roles) {
-		super(player, roles);
+	public Kabuto(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -39,6 +39,10 @@ public class Kabuto extends NSRoles {
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la partie vous avez tout de même reçus les bonus dû à sa mort !");
 			}
 		}, 20*5);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Kabuto;
 	}
 	@Override
 	public void GiveItems() {
@@ -110,7 +114,7 @@ public class Kabuto extends NSRoles {
 		if (edoTensei.containsKey(player)) {
 			edoTensei.remove(player, getPlayerRoles(player));
 		}
-		if (getPlayerRoles(player).type == Roles.Orochimaru) {
+		if (getPlayerRoles(player) instanceof Orochimaru) {
 			if (!mortOrochimaru) {
 				onOrochimaruDeath(true);
 			}

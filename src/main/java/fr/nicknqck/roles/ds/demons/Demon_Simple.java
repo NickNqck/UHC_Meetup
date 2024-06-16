@@ -11,12 +11,15 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Demon_Simple extends RoleBase{
 
-	public Demon_Simple(Player player, Roles roles) {
-		super(player, roles);
+	public Demon_Simple(Player player) {
+		super(player);
 		setForce(20);
 		owner.sendMessage(Desc());
 		}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.Demon;
+	}
 	@Override
 	public String[] Desc() {
 		return AllDesc.Demon_Simple;

@@ -25,13 +25,17 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class TitanBestial extends RoleBase{
 
-	public TitanBestial(Player player, Roles roles) {
-		super(player, roles);
+	public TitanBestial(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		canShift = true;
 		gameState.GiveRodTridi(owner);
 		TitanListener.getInstance().setBestial(owner.getUniqueId());
 		giveItem(owner, true, Titans.Bestial.getTitan().Items());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.TitanBestial;
 	}
 	@Override
 	public String[] Desc() {
@@ -59,7 +63,7 @@ public class TitanBestial extends RoleBase{
 			if (!cri) {
 				owner.sendMessage("§7Votre cri s'apprête à retentir...");
 				for (Player p : canBeTransformed) {
-					if (getPlayerRoles(p).type.equals(Roles.Soldat)) {
+					if (getPlayerRoles(p) instanceof Soldat) {
 						Soldat soldat = (Soldat) getPlayerRoles(p);
 						if (soldat.form == Soldat.kit.Brigade || soldat.form.equals(Soldat.kit.Garnison)) {
 							p.sendMessage("§7Vous sentez l'alcool vous montez à la tête...");
@@ -133,7 +137,7 @@ public class TitanBestial extends RoleBase{
 		if (owner.getWorld().equals(Main.getInstance().gameWorld)){
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
 				if (!gameState.hasRoleNull(p)) {
-					if (getPlayerRoles(p).type == Roles.Soldat) {
+					if (getPlayerRoles(p) instanceof Soldat) {
 						if (!canBeTransformed.contains(p)) {
 							if (timePassed.containsKey(p.getUniqueId())) {
 								int time = timePassed.get(p.getUniqueId());
@@ -158,7 +162,7 @@ public class TitanBestial extends RoleBase{
 				if (!gameState.hasRoleNull(p)) {
 					RoleBase role = gameState.getPlayerRoles().get(p);
 					if (role.isTransformedinTitan) {
-						if (role.type.equals(Roles.PetitTitan) || role.type.equals(Roles.GrandTitan)) {
+						if (role instanceof PetitTitan || role instanceof GrandTitan) {
 								role.setForce(20);
 								role.givePotionEffet(role.owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 							}

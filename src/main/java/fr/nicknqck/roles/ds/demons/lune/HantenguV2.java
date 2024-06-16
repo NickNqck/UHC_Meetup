@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -21,8 +22,8 @@ import fr.nicknqck.utils.StringUtils;
 
 public class HantenguV2 extends RoleBase {
 
-	public HantenguV2(Player player, Roles roles) {
-		super(player, roles);
+	public HantenguV2(Player player) {
+		super(player);
 		gameState.lunesup.add(owner);
 		gameState.addLuneSupPlayers(owner);
 		clone = Clone.Hantengu;
@@ -30,13 +31,16 @@ public class HantenguV2 extends RoleBase {
 		owner.sendMessage(AllDesc.HantenguV2);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.HantenguV2;
+	}
 	enum Clone {
 		Hantengu, Karaku, Sekido, Urogi, Urami, Aizetsu, Zohakuten
 	}
@@ -50,7 +54,7 @@ public class HantenguV2 extends RoleBase {
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}

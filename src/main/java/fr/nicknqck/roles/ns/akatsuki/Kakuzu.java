@@ -27,15 +27,18 @@ import fr.nicknqck.utils.Loc;
 
 public class Kakuzu extends NSRoles {
 
-	public Kakuzu(Player player, Roles roles) {
-		super(player, roles);
+	public Kakuzu(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		ChakrasOwned.put(getChakras(), true);
 		setForce(20);
 		giveItem(owner, false, getItems());
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Kakuzu;
+	}
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;

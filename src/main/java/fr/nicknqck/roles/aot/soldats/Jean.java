@@ -23,10 +23,14 @@ import fr.nicknqck.utils.Loc;
 
 public class Jean extends RoleBase{
 
-	public Jean(Player player, Roles roles) {
-		super(player, roles);
+	public Jean(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Jean;
 	}
 	@Override
 	public String[] Desc() {
@@ -74,7 +78,7 @@ public class Jean extends RoleBase{
 				List<Player> inZone = new ArrayList<>();
 				for (Player p : Loc.getNearbyPlayers(owner, 25)) {//Pour chaque joueur étant à moins de 25 blocs du l'owner du rôle
 					if (!gameState.hasRoleNull(p)) {//si ce même joueur possède un rôle
-						if (getPlayerRoles(p).type != Roles.Gabi && getPlayerRoles(p).type != Roles.Eren && getPlayerRoles(p).type != Roles.Jelena) {//S'il n'est pas Gabi ou Eren ou Jelena
+						if (getPlayerRoles(p).getRoles() != Roles.Gabi && getPlayerRoles(p).getRoles() != Roles.Eren && getPlayerRoles(p).getRoles() != Roles.Jelena) {//S'il n'est pas Gabi ou Eren ou Jelena
 							if (getPlayerRoles(p).getTeam() != TeamList.Soldat) {//S'il n'est pas dans la team Soldat
 								mechant.add(p);//alors il est ajouté en temp que méchant
 							}
@@ -85,7 +89,7 @@ public class Jean extends RoleBase{
 				actualuse+=1;
 				owner.sendMessage("§7Votre fusée sera lancée au yeux de tous dans§c 15s");
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-					if (mechant.size() > 0) {
+					if (!mechant.isEmpty()) {
 						createFirework(owner, Color.RED);
 						setResi(20);
 						givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60*5), 1, true);
@@ -97,13 +101,11 @@ public class Jean extends RoleBase{
 					inZone.forEach(e -> owner.sendMessage("§7 -§l "+e.getName()));
 				}, 20*15);//20(tick)*15(seconde)
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-					if (mechant.size() > 0) {
+					if (!mechant.isEmpty()) {
 						setResi(0);
 						owner.sendMessage("§7Vous venez de perdre votre effet de "+AllDesc.Resi);
 					}
 				}, 20*(60*5));//20(tick)*60*5(seconde)	
-			}else {
-				
 			}
 		}
 	}

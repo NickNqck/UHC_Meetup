@@ -21,12 +21,16 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class ShinjuroV2 extends RoleBase{
 
-	public ShinjuroV2(Player player, Roles roles) {
-		super(player, roles);
+	public ShinjuroV2(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		setCanUseBlade(true);
 		setLameIncassable(owner, true);
 		setLameFr(true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.ShinjuroV2;
 	}
 	@Override
 	public String[] Desc() {

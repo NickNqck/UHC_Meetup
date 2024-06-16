@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,15 +18,18 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Kanao extends RoleBase{
 
-	public Kanao(Player player, Roles roles) {
-		super(player, roles);
+	public Kanao(Player player) {
+		super(player);
 		for (String desc : AllDesc.Kanao) owner.sendMessage(desc);
 		this.setForce(20);
 		setNoFall(true);
 		this.setCanUseBlade(true);
 		invuse = 3;
 	}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.Kanao;
+	}
 	@Override
 	public String[] Desc() {return AllDesc.Kanao;}
 	
@@ -134,9 +138,9 @@ public class Kanao extends RoleBase{
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
 					if (killer == owner) {
-						if (r.type == Roles.Doma && !killdoma) {
+						if (r instanceof Doma && !killdoma) {
 							killdoma = true;
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+r.type+" "+ChatColor.GRAY+"vous obtenez donc l'item de poison de shinobu");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+r.getRoles()+" "+ChatColor.GRAY+"vous obtenez donc l'item de poison de shinobu");
 						}
 					}
 				}

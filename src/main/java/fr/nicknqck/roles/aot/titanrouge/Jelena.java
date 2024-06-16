@@ -13,10 +13,14 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Jelena extends RoleBase {
 
-	public Jelena(Player player, Roles roles) {
-		super(player, roles);
+	public Jelena(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Jelena;
 	}
 	@Override
 	public String[] Desc() {
@@ -54,7 +58,7 @@ public class Jelena extends RoleBase {
 				        // Copier le contenu de l'inventaire du joueur cible dans l'inventaire double coffre
 				        for (int i = 0; i < target.getInventory().getSize(); i++) {
 				            ItemStack item = target.getInventory().getItem(i);
-				            if (getPlayerRoles(target).type != Roles.Eren) {
+				            if (getPlayerRoles(target).getRoles() != Roles.Eren) {
 				            	if (item != null && item.getType() != Material.AIR) {
 					            	doubleChest.setItem(i, item.clone());
 					            }

@@ -1,7 +1,15 @@
 package fr.nicknqck.roles.ns.shinobi;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -10,25 +18,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
-
 public class KillerBee extends NSRoles {
 
-	public KillerBee(Player player, Roles roles) {
-		super(player, roles);
+	public KillerBee(Player player) {
+		super(player);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 	}
-
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.KillerBee;
+	}
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;

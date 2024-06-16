@@ -2,6 +2,10 @@ package fr.nicknqck.commands;
 
 import java.util.ArrayList;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
+import fr.nicknqck.roles.ds.solos.JigoroV2;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -75,14 +79,10 @@ public class DSmtpCommands implements CommandExecutor {
 							}
 							return true;
 						}
-						/*if (gameState.getPlayerRoles().size() < 1) {
-							player.sendMessage(ChatColor.RED+"Les rôles n'ont pas encore été attribués");
-							return true;
-						}*/
-						for (Roles r : gameState.getAvailableRoles().keySet()) {
+                        for (Roles r : gameState.getAvailableRoles().keySet()) {
 							int nmb = 0;
 							for (RoleBase role : gameState.getPlayerRoles().values()) {
-								if (role.getOldRole() == r || role.type == r) {
+								if (role.getOldRole() == r || role.getRoles() == r) {
 									nmb += 1;
 								}
 							}
@@ -96,15 +96,10 @@ public class DSmtpCommands implements CommandExecutor {
 				} else if (args[0].equalsIgnoreCase("roles")) {
 					if (sender instanceof Player) {
 						//ArrayList<String> message = new ArrayList<String>();
-						if (gameState.getServerState() == ServerStates.InGame) {
-							sender.sendMessage(gameState.getRolesList());
-							return true;
-						} else {//donc serverStates n'est pas ig
-							sender.sendMessage(gameState.getRolesList());
-							return true;
-						}
-						
-					}
+                        sender.sendMessage(gameState.getRolesList());
+                        return true;
+
+                    }
 				} else if (args[0].equalsIgnoreCase("doc")){
 					if (sender instanceof Player) {
 						Player player = (Player) sender;
@@ -116,13 +111,7 @@ public class DSmtpCommands implements CommandExecutor {
 				} else if (args[0].equalsIgnoreCase("lame")){
 					if (sender instanceof Player) {
 						Player player = (Player) sender;
-						ArrayList<String> message = new ArrayList<String>();
-						message.add(ChatColor.GOLD+"List des lames possibles : ");
-						message.add(ChatColor.GOLD + "Lame Coeur :" + ChatColor.LIGHT_PURPLE + " Donne 2 coeurs en plus permanent jusqu'a la fin de la partit.");
-						message.add(ChatColor.GOLD+"Lame de Résistance :"+ChatColor.GRAY+" Donne + 10% de résistance jusqu'a la fin de la partit.");
-						message.add(ChatColor.GOLD+"Lame de Speed :"+ ChatColor.GREEN+ " Donne + 10% de speed jusqu'a la fin de la partit.");
-						message.add("§6Lame de Force:§c Donne +10% de force jusqu'a la fin de la partit");
-						message.add(ChatColor.GOLD+"Lame de Fire Résistance :"+ ChatColor.YELLOW+" Donne l'effet fire résistance 1 jusqu'a la fin de la partit.");
+						ArrayList<String> message = getStrings();
 						player.sendMessage(message.toArray(new String[message.size()]));
 						return true;
 					}
@@ -150,7 +139,7 @@ public class DSmtpCommands implements CommandExecutor {
 									if (!gameState.hasRoleNull(s)) {
 										if (gameState.getPlayerRoles().containsKey(s)) {
 											if (gameState.getPlayerRoles().containsKey(e)) {
-												if (gameState.getPlayerRoles().get(s).type == Roles.Kagaya) {
+												if (gameState.getPlayerRoles().get(s) instanceof Kagaya) {
 													RoleBase r = gameState.getPlayerRoles().get(s);
 													Kagaya k = (Kagaya) r;
 													if (k.pacte3) {
@@ -198,25 +187,25 @@ public class DSmtpCommands implements CommandExecutor {
 					if (gameState.getPlayerRoles().containsKey(sender)) {
 						if (!gameState.getInGamePlayers().contains(sender))return false;
 						//Debut chat muzan kokushibo
-						if (gameState.getPlayerRoles().get(sender).type == Roles.Kokushibo || gameState.getPlayerRoles().get(sender).type == Roles.Muzan) {
+						if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo || gameState.getPlayerRoles().get(sender) instanceof Muzan) {
 							StringBuilder sb = new StringBuilder();
 							for (int i = 1;i<args.length;i++) {
 								sb.append(" ");
 								sb.append(args[i]);
 							}
 							String name2 = sb.toString();
-							String uwu = "(§c"+gameState.getPlayerRoles().get(sender).type.name()+"§r)§c§l "+sender.getName()+"§r : "+name2;
+							String uwu = "(§c"+gameState.getPlayerRoles().get(sender).getRoles().name()+"§r)§c§l "+sender.getName()+"§r : "+name2;
 							for (Player p : gameState.getInGamePlayers()) {
 								if (gameState.getPlayerRoles().containsKey(p)) {
-									if (gameState.getPlayerRoles().get(sender).type == Roles.Kokushibo) {
-										if (gameState.getPlayerRoles().get(p).type == Roles.Muzan) {
+									if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo) {
+										if (gameState.getPlayerRoles().get(p) instanceof Muzan) {
 											p.sendMessage(uwu);
 											sender.sendMessage(uwu);
 											return true;
 										}									
 									}
-									if (gameState.getPlayerRoles().get(sender).type == Roles.Muzan) {
-										if (gameState.getPlayerRoles().get(p).type == Roles.Kokushibo) {
+									if (gameState.getPlayerRoles().get(sender) instanceof Muzan) {
+										if (gameState.getPlayerRoles().get(p) instanceof Kokushibo) {
 											p.sendMessage(uwu);
 											sender.sendMessage(uwu);
 											return true;
@@ -226,26 +215,26 @@ public class DSmtpCommands implements CommandExecutor {
 							}
 						}//Fin chat muzan kokushibo
 						//Debut chat JigoroV2 Kaigaku
-						if (gameState.getPlayerRoles().get(sender).type == Roles.JigoroV2 || gameState.getPlayerRoles().get(sender).type == Roles.Kaigaku) {//vérifie si le rôle du sender
+						if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2 || gameState.getPlayerRoles().get(sender) instanceof Kaigaku) {//vérifie si le rôle du sender
 							StringBuilder sb = new StringBuilder();
 							for (int i =1;i<args.length;i++) {
 								sb.append(" ");
 								sb.append(args[i]);
 							}
 							String name2 = sb.toString();
-							String owo = "(§6"+gameState.getPlayerRoles().get(sender).type.name()+"§r)§6§l "+sender.getName()+"§r : "+name2;
+							String owo = "(§6"+gameState.getPlayerRoles().get(sender).getRoles().name()+"§r)§6§l "+sender.getName()+"§r : "+name2;
 							if (gameState.JigoroV2Pacte2) {
 								for (Player p : gameState.getInGamePlayers()) {
 									if (gameState.getPlayerRoles().containsKey(p)) {
-										if (gameState.getPlayerRoles().get(sender).type == Roles.JigoroV2) {
-											if (gameState.getPlayerRoles().get(p).type == Roles.Kaigaku) {
+										if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2) {
+											if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {
 												p.sendMessage(owo);
 												sender.sendMessage(owo);
 												return true;
 											}									
 										}
-										if (gameState.getPlayerRoles().get(sender).type == Roles.Kaigaku) {
-											if (gameState.getPlayerRoles().get(p).type == Roles.JigoroV2) {
+										if (gameState.getPlayerRoles().get(sender) instanceof Kaigaku) {
+											if (gameState.getPlayerRoles().get(p) instanceof JigoroV2) {
 												p.sendMessage(owo);
 												sender.sendMessage(owo);
 												return true;
@@ -282,6 +271,17 @@ public class DSmtpCommands implements CommandExecutor {
 		} 
 		sender.sendMessage("§cCommande inconnu !");
 		return true;
+	}
+
+	private static ArrayList<String> getStrings() {
+		ArrayList<String> message = new ArrayList<String>();
+		message.add(ChatColor.GOLD+"List des lames possibles : ");
+		message.add(ChatColor.GOLD + "Lame Coeur :" + ChatColor.LIGHT_PURPLE + " Donne 2 coeurs en plus permanent jusqu'a la fin de la partit.");
+		message.add(ChatColor.GOLD+"Lame de Résistance :"+ChatColor.GRAY+" Donne + 10% de résistance jusqu'a la fin de la partit.");
+		message.add(ChatColor.GOLD+"Lame de Speed :"+ ChatColor.GREEN+ " Donne + 10% de speed jusqu'a la fin de la partit.");
+		message.add("§6Lame de Force:§c Donne +10% de force jusqu'a la fin de la partit");
+		message.add(ChatColor.GOLD+"Lame de Fire Résistance :"+ ChatColor.YELLOW+" Donne l'effet fire résistance 1 jusqu'a la fin de la partit.");
+		return message;
 	}
 
 }	

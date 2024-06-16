@@ -24,12 +24,15 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Hidan extends NSRoles {
 
-	public Hidan(Player player, Roles roles) {
-		super(player, roles);
+	public Hidan(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Hidan;
+	}
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;

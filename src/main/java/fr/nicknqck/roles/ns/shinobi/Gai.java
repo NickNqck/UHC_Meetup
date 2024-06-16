@@ -19,14 +19,17 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Gai extends RoleBase{
 
-	public Gai(Player player, Roles roles) {
-		super(player, roles);
+	public Gai(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 		setCanBeHokage(true);
 	}
-
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Gai;
+	}
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.RockLee, 5);

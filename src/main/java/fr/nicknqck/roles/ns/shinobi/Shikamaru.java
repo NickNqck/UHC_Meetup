@@ -33,13 +33,16 @@ public class Shikamaru extends NSRoles {
     private final ItemStack zoneItem = new ItemBuilder(Material.NETHER_STAR).setName("§aZone d'ombre").setLore("§7Vous permet d'empêcher tout les joueurs autours de vous de bouger").toItemStack();
     private int cdZone = 0;
     private int cdShogi = 0;
-    public Shikamaru(Player player, GameState.Roles roles) {
-        super(player, roles);
+    public Shikamaru(Player player) {
+        super(player);
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
         owner.sendMessage(Desc());
         new StunExecutable(this);
     }
-
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Shikamaru;
+    }
     @Override
     public Intelligence getIntelligence() {
         return Intelligence.GENIE;

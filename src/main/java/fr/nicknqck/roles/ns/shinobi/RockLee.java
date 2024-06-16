@@ -22,8 +22,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class RockLee extends RoleBase{
 
-	public RockLee(Player player, Roles roles) {
-		super(player, roles);
+	public RockLee(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
@@ -33,7 +33,10 @@ public class RockLee extends RoleBase{
 			} 
 		}, cdDrunkenFist);
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.RockLee;
+	}
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Gai, 5);

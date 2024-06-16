@@ -29,12 +29,15 @@ import fr.nicknqck.utils.particles.MathUtil;
 
 public class Kisame extends NSRoles {
 
-	public Kisame(Player player, Roles roles) {
-		super(player, roles);
+	public Kisame(Player player) {
+		super(player);
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Kisame;
+	}
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;

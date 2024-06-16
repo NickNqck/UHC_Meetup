@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,26 +17,30 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Doma extends RoleBase{
 
-	public Doma(Player player, Roles roles) {
-		super(player, roles);
-		for (String desc : AllDesc.Doma) owner.sendMessage(desc);
+	public Doma(Player player) {
+		super(player);
+		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setResi(20);
 		gameState.addLuneSupPlayers(owner);
 		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
 	}
 	@Override
+	public Roles getRoles() {
+		return Roles.Doma;
+	}
+	@Override
 	public String[] Desc() {
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}

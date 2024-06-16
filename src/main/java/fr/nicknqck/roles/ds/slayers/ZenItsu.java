@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.solos.JigoroV2;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,18 +17,22 @@ public class ZenItsu extends RoleBase{
 
 	private int cooldownpremiermouvement = 0;
 	private int cooldowntroisiememouvement = 0;
-	public ZenItsu(Player player, Roles roles) {
-		super(player, roles);
+	public ZenItsu(Player player) {
+		super(player);
 		for (String desc : AllDesc.ZenItsu) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setForce(20);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.ZenItsu;
 	}
 	@Override
 		public String[] Desc() {
 		if (gameState.JigoroV2Pacte3) {
 			for (Player p : getIGPlayers()) {
 				if (gameState.getPlayerRoles().containsKey(p)) {
-					if (getPlayerRoles(p).type == Roles.JigoroV2) {
+					if (getPlayerRoles(p) instanceof JigoroV2) {
 						sendMessageAfterXseconde(owner, "§6Jigoro§r: "+p.getName(), 1);
 					}
 				}

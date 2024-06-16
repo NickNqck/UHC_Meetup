@@ -1,5 +1,10 @@
 package fr.nicknqck.items;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.slayers.Nezuko;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,12 +19,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.utils.Loc;
 
 public class InfectItem implements Listener{
 	GameState gameState;
@@ -47,7 +46,7 @@ public class InfectItem implements Listener{
 						for (Player p : Loc.getNearbyPlayers(a, 30)) {
 									if (!gameState.hasRoleNull(p)) {
 										if (gameState.getInGamePlayers().contains(p)) {
-											if (gameState.getPlayerRoles().get(p).getOldTeam() != TeamList.Demon && !gameState.getPlayerRoles().get(p).getPlayerRoles(p).type.equals(Roles.Nezuko)) {
+											if (gameState.getPlayerRoles().get(p).getOldTeam() != TeamList.Demon && !(gameState.getPlayerRoles().get(p).getPlayerRoles(p) instanceof Nezuko)) {
 												ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
 												SkullMeta meta = (SkullMeta) skull.getItemMeta();
 												meta.setOwner(p.getDisplayName());

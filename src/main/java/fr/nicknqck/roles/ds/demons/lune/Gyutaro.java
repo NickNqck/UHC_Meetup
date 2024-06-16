@@ -18,8 +18,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gyutaro extends RoleBase{
 
-	public Gyutaro(Player player, Roles roles) {
-		super(player, roles);
+	public Gyutaro(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		setCanRespawn(true);
@@ -27,6 +27,10 @@ public class Gyutaro extends RoleBase{
 		gameState.addLuneSupPlayers(owner);
 		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		}
+	@Override
+	public Roles getRoles() {
+		return Roles.Gyutaro;
+	}
 	private boolean killtengen = false;
 	private boolean diedaki = false;
 	private int faucillecooldown = 0;	
@@ -86,19 +90,19 @@ public class Gyutaro extends RoleBase{
 			if (gameState.getInGamePlayers().contains(victim)) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
-					if (r.type == Roles.Daki && !diedaki) {
+					if (r instanceof Daki && !diedaki) {
 						diedaki = true;
 						giveItem(owner, false, Items.getTroisièmeOeil());
-						owner.sendMessage(ChatColor.GOLD+""+ r.type+ChatColor.GRAY+" est morte vous récupérez donc votre troisième oeil qui vous donnera speed 1 en l'activant");
+						owner.sendMessage(ChatColor.GOLD+""+ r.getRoles()+ChatColor.GRAY+" est morte vous récupérez donc votre troisième oeil qui vous donnera speed 1 en l'activant");
 						}
 					if (killer == owner) {
-						if (r.type == Roles.Tengen && killtengen == false) {
+						if (r.getRoles() == Roles.Tengen && !killtengen) {
 							killtengen = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+"Tengen "+ChatColor.GRAY+"vous obtenez donc force 1 le jour");
 							}
-						if (r.type == Roles.Tengen || r.type == Roles.Tanjiro || r.type == Roles.Inosuke || r.type == Roles.ZenItsu || r.type == Roles.Nezuko) {
+						if (r.getRoles() == Roles.Tengen || r.getRoles() == Roles.Tanjiro || r.getRoles() == Roles.Inosuke || r.getRoles() == Roles.ZenItsu || r.getRoles() == Roles.Nezuko) {
 							if (owner.getMaxHealth() <= 18.0) {
-								owner.sendMessage(ChatColor.WHITE+"Vous venez de tué le joueur: "+ChatColor.GOLD + victim.getName() + ChatColor.WHITE+", il possédait le rôle de: "+ChatColor.GOLD+ r.type+ ChatColor.WHITE+" vous augmenter donc vos point de vie à: "+ChatColor.GOLD+ (getMaxHealth() / 2) +" coeur");
+								owner.sendMessage(ChatColor.WHITE+"Vous venez de tué le joueur: "+ChatColor.GOLD + victim.getName() + ChatColor.WHITE+", il possédait le rôle de: "+ChatColor.GOLD+ r.getRoles()+ ChatColor.WHITE+" vous augmenter donc vos point de vie à: "+ChatColor.GOLD+ (getMaxHealth() / 2) +" coeur");
 							}
 						}
 					}
@@ -125,7 +129,7 @@ public class Gyutaro extends RoleBase{
 		}
 		for (RoleBase r : gameState.getPlayerRoles().values()) {
 			if (!gameState.getInGamePlayers().contains(r.owner)) continue;
-			if (r.type == Roles.Daki && owner.getWorld().equals(r.owner.getWorld())) {
+			if (r instanceof Daki && owner.getWorld().equals(r.owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*2, 0, false, false), true);
 			}
@@ -194,7 +198,7 @@ public class Gyutaro extends RoleBase{
 					Player player = p;
 					if (player != owner) {
 						if(p.getLocation().distance(owner.getLocation()) <= 30) {
-							if (gameState.getPlayerRoles().get(player).type != Roles.Daki ) {
+							if (gameState.getPlayerRoles().get(player).getRoles() != Roles.Daki ) {
 								Random random = new Random();
 								int rint = random.nextInt(2);
 								if (rint == 0) {

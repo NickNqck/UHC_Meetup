@@ -25,7 +25,7 @@ public class NsCommands implements CommandExecutor {
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> gameState.getPlayerRoles().get(e).type == roles).forEach(e -> toReturn.add(e));
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> gameState.getPlayerRoles().get(e).getRoles() == roles).forEach(e -> toReturn.add(e.getPlayer()));
 		return toReturn;
 	}
 	@Override
@@ -53,7 +53,7 @@ public class NsCommands implements CommandExecutor {
 										break;
 									}
 								}
-								if (toRegister.equals("")) {
+								if (toRegister.isEmpty()) {
 									for (TeamList t : TeamList.values()) {
 										if (args[2].equalsIgnoreCase(t.name())) {
 											toRegister = t.getColor()+t.name()+" ";
@@ -62,21 +62,17 @@ public class NsCommands implements CommandExecutor {
 									}
 								}
 						//		gameState.getPlayerRoles().get(sender).customName.remove(target.getUniqueId(), gameState.getPlayerRoles().get(sender));
-								if (!toRegister.equals("")) {
-						//			gameState.getPlayerRoles().get(sender).customName.put(target.getUniqueId(), toRegister);
-							//		PersonalScoreboard.setTag(sender, target.getName(), toRegister);
-									sender.sendMessage("§7Feature non dev sorry");
+								if (!toRegister.isEmpty()) {
+                                    sender.sendMessage("§7Feature non dev sorry");
 								}
-								return true;
-							} else {
+                            } else {
 								sender.sendMessage("§7Le joueur ciblé n'existe pas.");
-								return true;
-							}
-						} else {
+                            }
+                        } else {
 							sender.sendMessage("§7La commande est§6 /ns see <joueur> <role/camp>");
-							return true;
-						}
-					}
+                        }
+                        return true;
+                    }
 					if (args[0].equalsIgnoreCase("jubicraft")) {
 						if (getListPlayerFromRole(Roles.Obito).contains(sender) || getListPlayerFromRole(Roles.Madara).contains(sender)) {
 							int countBiju = 0;
@@ -119,16 +115,14 @@ public class NsCommands implements CommandExecutor {
 								//Pour la liste des sons
 								//https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/mapping-and-modding-tutorials/2213619-1-8-all-playsound-sound-arguments
 								gameState.getPlayerRoles().get(sender).giveItem(sender, true, BijuListener.getInstance().JubiItem());
-								return true;
-							} else {
+                            } else {
 								send.sendMessage("§7Vous n'avez pas asser de§d Biju");
-								return true;
-							}
-						} else {
+                            }
+                        } else {
 							send.sendMessage("§7Vous n'avez pas la puissance pour devenir l'hôte de§d Jûbi");
-							return true;
-						}
-					}
+                        }
+                        return true;
+                    }
 					if (gameState.getInGamePlayers().contains(sender) && !gameState.hasRoleNull(sender)){
 						gameState.getPlayerRoles().get(sender).onNsCommand(args);
 					}

@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,19 +16,23 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Enmu extends RoleBase {
-	public Enmu(Player player, Roles roles) {
-		super(player, roles);
+	public Enmu(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.Enmu);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
 		gameState.addLuneSupPlayers(owner);
 		gameState.lunesup.add(owner);
-		}
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Enmu;
+	}
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Muzan, 1);
@@ -81,7 +86,7 @@ public class Enmu extends RoleBase {
 					if (gameState.getInGamePlayers().contains(p)) {
 						for (RoleBase r : gameState.getPlayerRoles().values()) {
 							if (r.getTeam() != TeamList.Demon) {
-								if (r.type != Roles.Nezuko) {
+								if (r.getRoles() != Roles.Nezuko) {
 									if (p != owner) {
 										double min = 10;
 										Player target = null;

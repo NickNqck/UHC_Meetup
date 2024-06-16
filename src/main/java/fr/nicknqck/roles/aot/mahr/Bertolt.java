@@ -1,23 +1,30 @@
 package fr.nicknqck.roles.aot.mahr;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.aot.titans.TitanListener;
+import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.aot.titans.TitanListener;
-import fr.nicknqck.roles.aot.titans.Titans;
-import fr.nicknqck.roles.desc.AllDesc;;
+;
 
 public class Bertolt extends RoleBase{
-	public Bertolt(Player player, Roles roles) {
-		super(player, roles);
+	public Bertolt(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		TitanListener.getInstance().setColossal(owner.getUniqueId());
 	}
+
+	@Override
+	public Roles getRoles() {
+		return Roles.Bertolt;
+	}
+
 	@Override
 	public void RoleGiven(GameState gameState) {
 		canShift = true;

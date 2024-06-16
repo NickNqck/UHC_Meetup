@@ -35,17 +35,17 @@ public class Alliance extends EventBase{
 					for (Player p : gameState.getInGamePlayers()) {
 						if (!gameState.hasRoleNull(p)) {
 							RoleBase role = gameState.getPlayerRoles().get(p);
-							if (role.type == Roles.Kyojuro || role.type == Roles.Shinjuro) {
+							if (role instanceof Kyojuro || role instanceof Shinjuro) {
 								role.setTeam(TeamList.Alliance);
 								role.setOldTeamList(TeamList.Alliance);
-								if (role.type == Roles.Kyojuro) {
+								if (role instanceof Kyojuro) {
 									Kyojuro k = (Kyojuro) role;
 									k.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
 									k.owner.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
 									k.giveHealedHeartatInt(2);
 									this.kyojuro = k.owner;
 								}
-								if (role.type == Roles.Shinjuro) {
+								if (role instanceof Shinjuro) {
 									Shinjuro s = (Shinjuro) role;
 									s.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Kyojuro).getName());
 									s.owner.sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");

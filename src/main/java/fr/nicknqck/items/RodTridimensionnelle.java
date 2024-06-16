@@ -3,6 +3,7 @@ package fr.nicknqck.items;
 import java.text.DecimalFormat;
 import java.util.Random;
 
+import fr.nicknqck.roles.ns.shinobi.KillerBee;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,18 +45,17 @@ public class RodTridimensionnelle implements Listener {
         Player player = (Player) event.getEntity().getShooter();
         if (!gameState.hasRoleNull(player)) {
         	RoleBase role = gameState.getPlayerRoles().get(player);
-        	if (role.type.equals(GameState.Roles.KillerBee)) {
+        	if (role instanceof KillerBee) {
         		if (role.isCanTentacule()) {
         			FishHook fishHook = (FishHook) event.getEntity();
         	        Location eyeLocation = player.getEyeLocation().clone();
         	        fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
         	        (new LaunchFishHook(fishHook, player, false)).runTaskTimer(Main.getInstance(), 1L, 1L);
-        	        return;
-        		} else {
+                } else {
 					event.setCancelled(true);
-					return;
-				}
-        	}
+                }
+                return;
+            }
         	if (player.getItemInHand().isSimilar(getItem())) {
         		if (role.gazAmount > 0) {
             		if (role.actualTridiCooldown <= 0) {
@@ -174,11 +174,10 @@ public class RodTridimensionnelle implements Listener {
                 DecimalFormat df = new DecimalFormat("0.0");
                 this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(gameState.getPlayerRoles().get(this.player).gazAmount)+"%");  
                 gameState.getPlayerRoles().get(this.player).actualTridiCooldown = gameState.TridiCooldown;
-                return;
             } else {
 				gameState.getPlayerRoles().get(player).onTentaculeEnd(r);
-				return;
-			}
+            }
+            return;
         }
     }
 }

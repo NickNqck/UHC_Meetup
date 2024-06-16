@@ -28,8 +28,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Zabuza extends NSRoles {
 
-	public Zabuza(Player player, Roles roles) {
-		super(player, roles);
+	public Zabuza(Player player) {
+		super(player);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
@@ -39,6 +39,10 @@ public class Zabuza extends NSRoles {
 				owner.sendMessage("§bHaku§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
 			}
 		}, 20*10);
+	}
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Zabuza;
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {
@@ -160,7 +164,7 @@ public class Zabuza extends NSRoles {
 	private boolean HakuDeath = false;
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (getPlayerRoles(player).type == Roles.Haku && !HakuDeath) {
+		if (getPlayerRoles(player) instanceof Haku && !HakuDeath) {
 			onHakuDeath(true);
 		}
 	}

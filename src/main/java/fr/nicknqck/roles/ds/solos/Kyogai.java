@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,12 +25,15 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Kyogai extends RoleBase{
 
-	public Kyogai(Player player, Roles roles) {
-		super(player, roles);
+	public Kyogai(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.Kyogai);
 		owner.sendMessage("Pour choisir votre camp il faudra faire la commande: "+ChatColor.GOLD+"/ds role");
 	}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.Kyogai;
+	}
 	@Override
 	public String[] Desc() {
 		if (camp == Camp.Démon) {
@@ -77,13 +82,13 @@ public class Kyogai extends RoleBase{
 			if (!FFA.getFFA()) {
 				for (Player e : gameState.getInGamePlayers()) {
 					if (gameState.getPlayerRoles().get(e) != null) {
-						if (gameState.getPlayerRoles().get(e).type != null) {
+						if (!gameState.hasRoleNull(e)) {
 							for (Player s : gameState.getInGamePlayers()) {
 								if (!gameState.hasRoleNull(s)) {
 										if (gameState.getAvailableRoles().containsKey(Roles.Muzan)) {
 											if (gameState.getLuneSupPlayers().contains(s)) {
-												if (gameState.getPlayerRoles().get(e).type == Roles.Muzan) {
-													s.sendMessage("Le joueur §6"+s.getName()+"§r est§6 "+gameState.getPlayerRoles().get(e).type.name());
+												if (gameState.getPlayerRoles().get(e) instanceof Muzan) {
+													s.sendMessage("Le joueur §6"+s.getName()+"§r est§6 "+gameState.getPlayerRoles().get(e).getRoles().name());
 												}
 											}
 										} else {
@@ -102,7 +107,7 @@ public class Kyogai extends RoleBase{
 				owner.sendMessage("Malgré votre choix vue que le mode FFA est activé vous devez tout de même gagner en temp que rôle solitaire");
 			}
 			System.out.println(owner.getName()+" = "+getTeam()+", OldTeam = "+getOldTeam());
-			System.out.println(owner.getName()+" = "+type.name());
+			System.out.println(owner.getName()+" = "+getRoles().name());
 			owner.getInventory().addItem(Items.getTambour());
 			camp = Camp.Démon;
 			setForce(20);
@@ -112,7 +117,7 @@ public class Kyogai extends RoleBase{
 			setOldTeamList(getTeam());
 			owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 			System.out.println(owner.getName()+" = "+getTeam());
-			System.out.println(owner.getName()+" = "+type.name());
+			System.out.println(owner.getName()+" = "+getRoles().name());
 			owner.getInventory().addItem(Items.getTambour());
 			owner.getInventory().addItem(Items.getPercussionRapide());
 			camp = Camp.Solo;
@@ -284,15 +289,15 @@ public class Kyogai extends RoleBase{
 			if (gameState.getPlayerRoles().containsKey(victim)) {
 				RoleBase role = gameState.getPlayerRoles().get(victim);
 		if (camp == Camp.Solo) {		
-			if (role.type == Roles.Muzan && !killmuzan) {
+			if (role instanceof Muzan && !killmuzan) {
 				killmuzan = true;
 				setMaxHealth(getMaxHealth() + 4.0);
-				owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.type+ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"2 coeur permanent"+ChatColor.GRAY+" supplémentaire, également l'objet "+ChatColor.GOLD+"Tambour"+ChatColor.GRAY+" à été améliorer car maintenant il retournera tout les joueurs (sauf vous) étant dans une zone de 30 blocs au tours de vous");
+				owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.getRoles()+ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"2 coeur permanent"+ChatColor.GRAY+" supplémentaire, également l'objet "+ChatColor.GOLD+"Tambour"+ChatColor.GRAY+" à été améliorer car maintenant il retournera tout les joueurs (sauf vous) étant dans une zone de 30 blocs au tours de vous");
 					}
 				} else if (camp == Camp.Démon) {
-					if (role.type == Roles.Tanjiro && !killtanjiro) {
-						killtanjiro = false;
-						owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.type+ChatColor.GRAY+" vous obtenez donc l'item "+ChatColor.GOLD+"Percussion Rapide"+ChatColor.GRAY+" vous obtiendrez l'item §6Percussion Rapide"+ChatColor.GRAY+" vous activerez un passif d'une durée de 10 secondes qui vous permettra de faire que quand vous tapez un joueur il y aura 1 chance sur 5 qu'elle sois retourner");
+					if (role instanceof Tanjiro && !killtanjiro) {
+						killtanjiro = true;
+						owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.getRoles()+ChatColor.GRAY+" vous obtenez donc l'item "+ChatColor.GOLD+"Percussion Rapide"+ChatColor.GRAY+" vous obtiendrez l'item §6Percussion Rapide"+ChatColor.GRAY+" vous activerez un passif d'une durée de 10 secondes qui vous permettra de faire que quand vous tapez un joueur il y aura 1 chance sur 5 qu'elle sois retourner");
 					}
 				}
 			}

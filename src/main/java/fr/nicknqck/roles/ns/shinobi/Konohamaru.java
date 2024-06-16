@@ -26,14 +26,17 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Konohamaru extends NSRoles {
 
-	public Konohamaru(Player player, Roles roles) {
-		super(player, roles);
+	public Konohamaru(Player player) {
+		super(player);
 		setChakraType(Chakras.KATON);
 		giveItem(owner, false, getItems());
 		owner.sendMessage(Desc());
 		
 	}
-
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Konohamaru;
+	}
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;

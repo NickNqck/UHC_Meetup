@@ -17,11 +17,15 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Gabi extends RoleBase {
 	private boolean killshifter = false;
-	public Gabi(Player player, Roles roles) {
-		super(player, roles);
+	public Gabi(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setCanVoleTitan(true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Gabi;
 	}
 	private	List<Player> inList = new ArrayList<>();
 	@Override

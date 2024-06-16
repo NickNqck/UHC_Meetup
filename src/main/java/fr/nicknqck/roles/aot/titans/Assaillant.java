@@ -66,7 +66,7 @@ public class Assaillant extends Titan {
 				ShutDownCooldown--;
 			}
 			if (isTransformedinTitan()) {
-				if (getPlayerRole(getOwner()).type != Roles.Eren) {
+				if (getPlayerRole(getOwner()).getRoles() != Roles.Eren) {
 					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);

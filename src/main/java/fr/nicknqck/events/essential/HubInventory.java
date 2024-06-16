@@ -866,7 +866,7 @@ public class HubInventory implements Listener {
                             if (item.getItemMeta().getDisplayName().equals("§fBijus")) {
                                 if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
                                     player.closeInventory();
-                                    player.openInventory(Bukkit.createInventory(player, 54, "Configuration ->§6 Bijus"));
+                                    player.openInventory(Bukkit.createInventory(player, 9*4, "Configuration ->§6 Bijus"));
                                     openConfigBijusInventory(player);
                                 } else {
                                     gameState.BijusEnable = !gameState.BijusEnable;
@@ -1192,10 +1192,28 @@ public class HubInventory implements Listener {
                         if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                             player.openInventory(GUIItems.getConfigSelectGUI());
                             updateConfigInventory(player);
-                        } else {
-                            for (Bijus bijus : Bijus.values()) {
-                                if (item.isSimilar(bijus.getBiju().getItemInMenu())) {
-                                    bijus.setEnable(!bijus.isEnable());
+                            event.setCancelled(true);
+                            return;
+                        }
+                        for (Bijus bijus : Bijus.values()) {
+                           if (item.isSimilar(bijus.getBiju().getItemInMenu())) {
+                              bijus.setEnable(!bijus.isEnable());
+                           }
+                        }
+
+                        if (item.getItemMeta().hasDisplayName()){
+                            if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée minimal de spawn des bijus")){
+                                if (action == InventoryAction.PICKUP_ALL){
+                                    Border.setMinBijuSpawn(Math.min(Border.getMinBijuSpawn()+50, Border.getMaxBijuSpawn()-50));
+                                } else {
+                                    Border.setMinBijuSpawn(Math.max(Border.getMinBijuSpawn()-50, Border.getMinBorderSize()+50));
+                                }
+                            }
+                            if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée maximal de spawn des bijus")){
+                                if (action == InventoryAction.PICKUP_ALL){
+                                    Border.setMaxBijuSpawn(Math.min(Border.getMaxBijuSpawn()+50, Border.getMaxBorderSize()-50));
+                                } else {
+                                    Border.setMaxBijuSpawn(Math.max(Border.getMaxBijuSpawn()-50, Border.getMinBijuSpawn()+50));
                                 }
                             }
                         }
@@ -2520,10 +2538,43 @@ public class HubInventory implements Listener {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
                 if (inv.getTitle().equalsIgnoreCase("Configuration ->§6 Bijus")) {
-                    inv.setItem(inv.getSize()-1, GUIItems.getSelectBackMenu());
-                    for (Bijus bijus : Bijus.values()) {
-                        inv.addItem( bijus.getBiju().getItemInMenu());
+                    for (int i = 0; i <= 8; i+=7){
+                        inv.setItem(i, GUIItems.getOrangeStainedGlassPane());
+                        inv.setItem(i+1, GUIItems.getOrangeStainedGlassPane());
                     }
+                    for (int i = 27; i <= 35; i+=7){
+                        inv.setItem(i, GUIItems.getOrangeStainedGlassPane());
+                        inv.setItem(i+1, GUIItems.getOrangeStainedGlassPane());
+                    }
+                    for (int i = 9; i <= 18; i+=9){
+                        inv.setItem(i, GUIItems.getOrangeStainedGlassPane());
+                    }
+                    for (int i = 9; i <= 18; i+=9){
+                        inv.setItem(i, GUIItems.getOrangeStainedGlassPane());
+                    }
+                    for (int i = 17; i <= 26; i+=9){
+                        inv.setItem(i, GUIItems.getOrangeStainedGlassPane());
+                    }
+                    inv.setItem(10, new ItemBuilder(Material.STAINED_GLASS)
+                            .setAmount(1)
+                            .setDurability(3)
+                            .setLore("§f"+(Border.getMinBorderSize()+50)+" <§b "+Border.getMinBijuSpawn()+"§f > "+(Border.getMaxBijuSpawn()-50),"","§aClique gauche§f: §a+50 blocs", "§cClique droit§f: §c-50 blocs")
+                            .setName("§r§fCoordonnée minimal de spawn des bijus")
+                            .toItemStack());
+                    inv.setItem(11, new ItemBuilder(Material.STAINED_GLASS)
+                            .setAmount(1)
+                            .setDurability(11)
+                            .setLore("§f"+(Border.getMinBijuSpawn()+50)+" <§b "+Border.getMaxBijuSpawn()+"§f > "+(Border.getMaxBorderSize()-50),"","§aClique gauche§f: §a+50 blocs", "§cClique droit§f: §c-50 blocs")
+                            .setName("§r§fCoordonnée maximal de spawn des bijus")
+                            .toItemStack());
+                    int i = 19;
+                    for (Bijus bijus : Bijus.values()) {
+                        ItemStack item = bijus.getBiju().getItemInMenu();
+                        item.setAmount(bijus.isEnable() ? 1 : 0);
+                        inv.setItem(i, item);
+                        i++;
+                    }
+                    inv.setItem(31, GUIItems.getSelectBackMenu());
                 }
             }
         }

@@ -160,12 +160,8 @@ public class HomingBow implements Listener {
     // Vérifie si le joueur est spécial selon vos critères
 	if (gameState.getServerState().equals(ServerStates.InGame)) {
 		if (gameState.getInGamePlayers().contains(player)) {
-			if (gameState.getPlayerRoles().get(player).type != null) {
-				if (gameState.getPlayerRoles().get(player).type == Roles.Susamaru) {
-					return true;
-					} else {
-						return false;
-					}
+			if (!gameState.hasRoleNull(player)) {
+                return gameState.getPlayerRoles().get(player) instanceof Susamaru;
 				} else {
 					return false;
 				}

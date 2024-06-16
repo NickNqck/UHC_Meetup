@@ -15,14 +15,18 @@ import fr.nicknqck.utils.ArrowTargetUtils;
 
 public class Magath extends RoleBase{
 
-	public Magath(Player player, Roles roles) {
-		super(player, roles);
+	public Magath(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		setMaxHealth(getMaxHealth()+4);
 		owner.setMaxHealth(getMaxHealth());
 		owner.setHealth(getMaxHealth());
 		toSearch = null;
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Magath;
 	}
 	private Player toSearch =null;
 	@Override
@@ -80,7 +84,7 @@ public class Magath extends RoleBase{
 					}else {
 						if (!gameState.hasRoleNull(target)) {
 							RoleBase role = getPlayerRoles(target);
-							if (role.type == Roles.Bertolt || role.type == Roles.Lara || role.type == Roles.Pieck || role.type == Roles.Porco || role.type == Roles.Reiner || role.type == Roles.Magath) {
+							if (role instanceof Bertolt || role instanceof Lara || role instanceof Pieck || role instanceof Porco || role instanceof Reiner || role instanceof Magath) {
 								if (toSearch == null) {
 									toSearch = target;
 									owner.sendMessage("Commencement de la traque de "+target.getName());

@@ -29,8 +29,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Suigetsu extends NSRoles {
 
-	public Suigetsu(Player player, Roles roles) {
-		super(player, roles);
+	public Suigetsu(Player player) {
+		super(player);
 		setChakraType(Chakras.SUITON);
 		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
@@ -39,6 +39,10 @@ public class Suigetsu extends NSRoles {
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie, vous avez quand même obtenue les bonus dû à sa mort");
 			}
 		}, 20*10);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Suigetsu;
 	}
 
 	@Override
@@ -108,7 +112,7 @@ public class Suigetsu extends NSRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (getPlayerRoles(player).type.equals(Roles.Orochimaru)) {
+		if (getPlayerRoles(player) instanceof Orochimaru) {
 			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 			boolean KarinAlive = !getListPlayerFromRole(Roles.Karin).isEmpty();
             onOrochimaruDeath(true);

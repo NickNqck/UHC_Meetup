@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -24,19 +25,23 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Hantengu extends RoleBase {
 private int killforce = 0;
-	public Hantengu(Player player, Roles roles) {
-		super(player, roles);
+	public Hantengu(Player player) {
+		super(player);
 		for (String desc : AllDesc.Hantengu) owner.sendMessage(desc);
 		this.setForce(20 + killforce);
 		gameState.addLuneSupPlayers(owner);
 		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Hantengu;
 	}
 	private enum Form{
 		Zohakuten,
@@ -50,7 +55,7 @@ private int killforce = 0;
 		public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
@@ -442,7 +447,7 @@ private int killforce = 0;
 							this.killforce++;
 							this.killforce++;
 							this.killforce++;
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.type +ChatColor.GRAY+" vous obtenez donc 5% de Force");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 5% de Force");
 							this.addforce(killforce);
 							System.out.println("Force Hantengu [2] "+this.getForce());
 						

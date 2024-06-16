@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.lune.Doma;
+import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,11 +21,15 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Sanemi extends RoleBase {
 
-	public Sanemi(Player player, Roles roles) {
-		super(player, roles);
+	public Sanemi(Player player) {
+		super(player);
 		for (String desc : AllDesc.Sanemi) owner.sendMessage(desc);
 		setCanUseBlade(true);
 		gameState.addPillier(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Sanemi;
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {
@@ -107,7 +113,7 @@ public class Sanemi extends RoleBase {
 							for (Player p : getIGPlayers()) {
 								if (p != null && p != owner) {
 									if (!gameState.hasRoleNull(p)) {
-										if (!getPlayerRoles(p).type.equals(Roles.Doma)) {
+										if (!(getPlayerRoles(p) instanceof Doma)) {
 											if (owner.getWorld().equals(Main.getInstance().gameWorld)) {
 												if (owner.getWorld().equals(p.getWorld())) {
 													Location loc = GameListener.generateRandomLocation(gameState, owner.getWorld());
@@ -149,17 +155,16 @@ public class Sanemi extends RoleBase {
 							giveforce = true;
 						}
 						owner.sendMessage("Votre marque des§a Pourfendeurs de démons§r vous à donnez l'effet§c force 1§r pendant 2 minutes");
-						marquecooldown = 60*7;
-					} else {
+                    } else {
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*120, 0, false, false));
 						if (!giveresi) {
 							addresi(20);
 							giveresi = true;
 						}
 						owner.sendMessage("Votre marque des§a Pourfendeurs de démons§r vous à donnez l'effet§3 résistance 1§r pendant 2 minutes");
-						marquecooldown = 60*7;
-					}
-				}
+                    }
+                    marquecooldown = 60*7;
+                }
 			}
 		}
 		return super.ItemUse(item, gameState);
@@ -171,7 +176,7 @@ public class Sanemi extends RoleBase {
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Kokushibo && !killkoku) {
+						if (role instanceof Kokushibo && !killkoku) {
 							killkoku = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Kokushibo "+ChatColor.GRAY+"vous obtenez donc la marque des pourfendeurs ce qui vous donnera force 1 pendant 2 minutes");
 							owner.getInventory().addItem(Items.getSlayerMark());

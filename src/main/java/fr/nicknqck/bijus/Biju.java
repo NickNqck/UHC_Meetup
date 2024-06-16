@@ -121,7 +121,7 @@ public abstract class Biju {
 	
 	public static boolean hisMaster(Player player) {
 		if (!GameState.getInstance().hasRoleNull(player)) {
-			if (GameState.getInstance().getPlayerRoles().get(player).type.equals(Roles.KillerBee) || GameState.getInstance().getPlayerRoles().get(player).type.equals(Roles.Naruto)) {
+			if (GameState.getInstance().getPlayerRoles().get(player).getRoles().equals(Roles.KillerBee) || GameState.getInstance().getPlayerRoles().get(player).getRoles().equals(Roles.Naruto)) {
 				return true;
 			}
 		}

@@ -1,6 +1,7 @@
 
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.DemonMain;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -18,11 +19,15 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Sabito extends RoleBase{
 
-	public Sabito(Player player, Roles roles) {
-		super(player, roles);
+	public Sabito(Player player) {
+		super(player);
 		for (String desc : AllDesc.Sabito) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setResi(20);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Sabito;
 	}
 	private int souflecooldown = 0;
 	private boolean killdemon = false;
@@ -70,23 +75,23 @@ public class Sabito extends RoleBase{
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(Items.getSoufleDeLeau())) {
 			if (souflecooldown <= 0) {
-				if (dietomioka == true) {
+				if (dietomioka) {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*2, 1, false, false));
 					System.out.println("give speed 2");
 				} else {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*2, 0, false, false));
 					System.out.println("give speed 1");
 				}
-				if (killdemon == true) {
+				if (killdemon) {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 0, 20*180, false, false));
 				}
-				if (dietomioka == true && killdemon == true) {
+				if (dietomioka && killdemon) {
 					souflecooldown = 60*4;
-				} else if (dietomioka == true && killdemon == false) {
+				} else if (dietomioka && !killdemon) {
 					souflecooldown = 60*4+30;
-				} else if (dietomioka == false && killdemon == true) {
+				} else if (killdemon) {
 					souflecooldown = 60*4+30;
-				} else if (dietomioka == false && killdemon == false) {
+				} else {
 					souflecooldown = 60*5;
 				}
 			}  else {
@@ -104,12 +109,12 @@ public class Sabito extends RoleBase{
 			if (gameState.getInGamePlayers().contains(victim)) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
-					if (r.type == Roles.Tomioka && dietomioka == false) {
+					if (r instanceof Tomioka && !dietomioka) {
 						dietomioka = true;
-						owner.sendMessage(ChatColor.GOLD+""+ r.type+ChatColor.GRAY+" est mort vous gagnez donc en utilisant votre Soufle de L'eau Speed 2 pendant 2 minutes au lieu de Speed 1 pendant 2 minutes, également le cooldown est réduit de 30 secondes");
+						owner.sendMessage(ChatColor.GOLD+""+ r.getRoles()+ChatColor.GRAY+" est mort vous gagnez donc en utilisant votre Soufle de L'eau Speed 2 pendant 2 minutes au lieu de Speed 1 pendant 2 minutes, également le cooldown est réduit de 30 secondes");
 						}
 					if (killer == owner) {
-						if (r.type == Roles.DemonMain && killdemon == false) {
+						if (r instanceof DemonMain && !killdemon) {
 							killdemon = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+"Demon Main "+ChatColor.GRAY+"vous obtenez donc force 1 en utilisant votre Soufle de L'eau également son cooldown est réduit de 30 secondes");
 							}

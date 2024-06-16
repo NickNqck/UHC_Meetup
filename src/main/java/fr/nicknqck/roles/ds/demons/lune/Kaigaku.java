@@ -1,5 +1,8 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.slayers.ZenItsu;
+import fr.nicknqck.roles.ds.solos.JigoroV2;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -21,18 +24,17 @@ public class Kaigaku extends RoleBase{
 	private boolean killzen = false;
 	private int cooldownquatriememouvement = 0;
 	private int cooldowntroisiememouvement = 0;
-	public Kaigaku(Player player, Roles roles) {
-		super(player, roles);
+	public Kaigaku(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.Kaigaku);
 		this.setForce(20);
 		this.setCanUseBlade(true);
-		this.gameState = gameState;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.ZenItsu) {
+				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
@@ -40,6 +42,10 @@ public class Kaigaku extends RoleBase{
 		gameState.lunesup.add(owner);
 		gameState.addLuneSupPlayers(owner);
 		setLameIncassable(owner, true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Kaigaku;
 	}
 	@Override
 	public void resetCooldown() {
@@ -57,13 +63,13 @@ public class Kaigaku extends RoleBase{
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
-				if (getPlayerRoles(p).type == Roles.ZenItsu) {
+				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
-				if (getPlayerRoles(p).type == Roles.JigoroV2 && gameState.JigoroV2Pacte2) {
+				if (getPlayerRoles(p) instanceof JigoroV2 && gameState.JigoroV2Pacte2) {
 					owner.sendMessage("La personne possédant le rôle de§6 Jigoro§r est:§6 "+p.getName());
 				}
 			}
@@ -108,9 +114,9 @@ public class Kaigaku extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.ZenItsu) {
+						if (role instanceof ZenItsu) {
 							killzen = true;						
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.type+" "+ChatColor.GRAY+"vous obtenez donc sa capacité qui est que quand vous mettez un coup avec votre épée il y à 1 chance sur 10 que la cible ce prenne "+ChatColor.RED+"1 coeur de dégat"+ChatColor.GRAY+" via un éclair");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.getRoles()+" "+ChatColor.GRAY+"vous obtenez donc sa capacité qui est que quand vous mettez un coup avec votre épée il y à 1 chance sur 10 que la cible ce prenne "+ChatColor.RED+"1 coeur de dégat"+ChatColor.GRAY+" via un éclair");
 						
 						}
 					}
@@ -126,7 +132,7 @@ public class Kaigaku extends RoleBase{
 							owner.updateInventory();
 							for (Player p : gameState.getInGamePlayers()) {
 								if (gameState.getPlayerRoles().containsKey(p)) {
-									if (gameState.getPlayerRoles().get(p).type == Roles.JigoroV2) {
+									if (gameState.getPlayerRoles().get(p) instanceof JigoroV2) {
 										Player jigoro = gameState.getPlayerRoles().get(p).owner;
 										jigoro.sendMessage(msg);
 										getPlayerRoles(jigoro).setMaxHealth(getPlayerRoles(jigoro).getMaxHealth()+1.0);

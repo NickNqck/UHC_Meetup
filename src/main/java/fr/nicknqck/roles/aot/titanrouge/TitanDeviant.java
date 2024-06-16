@@ -13,10 +13,14 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class TitanDeviant extends RoleBase {
-	public TitanDeviant(Player player, Roles roles) {
-		super(player, roles);
+	public TitanDeviant(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.TitanDeviant;
 	}
 	@Override
 	public String[] Desc() {

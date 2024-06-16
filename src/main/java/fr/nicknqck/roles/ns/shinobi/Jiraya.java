@@ -28,15 +28,18 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Jiraya extends NSRoles {
 
-	public Jiraya(Player player, Roles roles) {
-		super(player, roles);
+	public Jiraya(Player player) {
+		super(player);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "nakime Gamabunta8vzqzZvv189Zbxc:!");
 		setCanBeHokage(true);
 	}
-
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Jiraya;
+	}
 	@Override
 	public String[] Desc() {
 		return new String[] {

@@ -21,8 +21,8 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Kimimaro extends NSRoles {
 
-	public Kimimaro(Player player, Roles roles) {
-		super(player, roles);
+	public Kimimaro(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
@@ -31,6 +31,10 @@ public class Kimimaro extends NSRoles {
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Kimimaro;
 	}
 
 	public String[] Desc(){

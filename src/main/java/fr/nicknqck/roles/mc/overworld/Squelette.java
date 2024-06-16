@@ -19,8 +19,8 @@ public class Squelette extends RoleBase {
     private final ItemStack BontoutouItem = new ItemBuilder(Material.BONE).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("§aBon TouTou").setLore("§7Vous permez d'apprivoiser un loup").toItemStack();
     private int KorosuCount = 0;
     private boolean ZombieSound = false;
-    public Squelette(Player player, GameState.Roles roles) {
-        super(player, roles);
+    public Squelette(Player player) {
+        super(player);
     }
 
     @Override
@@ -42,6 +42,10 @@ public class Squelette extends RoleBase {
                 AllDesc.bar,
 
         };
+    }
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Squelette;
     }
 
     @Override
@@ -92,7 +96,7 @@ public class Squelette extends RoleBase {
         if (moover.getUniqueId() == owner.getUniqueId()){
             if (!ZombieSound) {
                 for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
-                    if (getPlayerRoles(p).type == GameState.Roles.Zombie) {
+                    if (getPlayerRoles(p) instanceof Zombie) {
                     playSound(owner, "entity.zombie.ambient");
                     ZombieSound = true;
                     }

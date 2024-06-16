@@ -37,8 +37,8 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Gaara extends NSRoles {
 
-    public Gaara(Player player, Roles roles) {
-		super(player, roles);
+    public Gaara(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		setNoFall(true);
 		resetCooldown();
@@ -56,6 +56,10 @@ public class Gaara extends NSRoles {
     public void resetCooldown() {
     	fixCooldown = 0;
         shukakuCooldown = 0;
+    }
+    @Override
+    public GameState.Roles getRoles() {
+        return Roles.Gaara;
     }
     int timingsable = 15;
     @Override

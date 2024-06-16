@@ -27,13 +27,16 @@ import fr.nicknqck.utils.ItemBuilder;
 
 public class Tsunade extends NSRoles {
 
-	public Tsunade(Player player, Roles roles) {
-		super(player, roles);
+	public Tsunade(Player player) {
+		super(player);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
 		owner.sendMessage(Desc());
 		setCanBeHokage(true);
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Tsunade;
+	}
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Sakura, 15);

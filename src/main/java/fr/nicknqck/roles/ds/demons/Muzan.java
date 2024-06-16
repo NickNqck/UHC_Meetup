@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.ds.slayers.Nezuko;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -20,9 +21,9 @@ import fr.nicknqck.roles.desc.AllDesc;
 public class Muzan extends RoleBase {
 	boolean killnez = false;
 	int regencooldown = 0;
-	public Muzan(Player player, Roles roles) {
-		super(player, roles);
-		owner.sendMessage(AllDesc.Muzan);
+	public Muzan(Player player) {
+		super(player);
+		owner.sendMessage(Desc());
 		regencooldown = 10;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			owner.sendMessage("§cLa liste des démons est : ");
@@ -30,6 +31,10 @@ public class Muzan extends RoleBase {
 		}, 20);
 		addforce(20);//pour contre balancer le onday qui retire 20% de force
 		}
+	@Override
+	public Roles getRoles() {
+		return Roles.RockLee;
+	}
 	@Override
 	public String[] Desc() {
 		List<Player> a = new ArrayList<>();
@@ -95,7 +100,7 @@ public class Muzan extends RoleBase {
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Nezuko) {
+						if (role instanceof Nezuko) {
 							killnez = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Nezuko "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour ainsi que speed 1 la nuit"+ChatColor.GRAY+", votre "+ChatColor.GOLD+"PouvoirSanginaire "+ChatColor.GRAY+"c'est également amélioré vous offrant"+ChatColor.RED+" Speed 1 le jour et Résistance 2 la nuit");
 						}
@@ -140,7 +145,7 @@ public class Muzan extends RoleBase {
 					Player player = Bukkit.getPlayer(args[1]);
 						if (gameState.getInGamePlayers().contains(player) && !gameState.hasRoleNull(player)) {
 							if (gameState.infected == null && gameState.infecteur == null) {
-								if (getPlayerRoles(player).getOldTeam() == TeamList.Demon || getPlayerRoles(player).type == Roles.Nezuko) {
+								if (getPlayerRoles(player).getOldTeam() == TeamList.Demon || getPlayerRoles(player) instanceof Nezuko) {
 									giveItem(player, false, Items.getInfection());
 									owner.sendMessage("Vous avez donné le Pouvoir de l'infection à§c "+player.getName());
 									player.sendMessage("Le grand§c Muzan§r vous à donné le pouvoir de l'infection, faite s'en bonne usage...");

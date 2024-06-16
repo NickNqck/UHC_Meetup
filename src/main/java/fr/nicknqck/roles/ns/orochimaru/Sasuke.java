@@ -49,8 +49,8 @@ public class Sasuke extends NSRoles {
 	private boolean infectFinish = false;
 	private final List<Player> Tsukuyomi = new ArrayList<>();
 	
-	public Sasuke(Player player, Roles roles) {
-		super(player, roles);
+	public Sasuke(Player player) {
+		super(player);
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -66,6 +66,10 @@ public class Sasuke extends NSRoles {
 			}
 		}, 20*5);
 		setCanBeHokage(true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Sasuke;
 	}
 	@Override
 	public String[] Desc() {

@@ -27,13 +27,16 @@ public class Tanjiro extends RoleBase{
 int itemcooldown = 0;
 boolean killassa = false;
 boolean dance = false;
-	public Tanjiro(Player player, Roles roles) {
-		super(player, roles);
+	public Tanjiro(Player player) {
+		super(player);
 		for (String desc : AllDesc.Tanjiro) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setLameFr(true);
 	}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.Tanjiro;
+	}
 	public int actualuse = 0;
 	@Override
 		public void RoleGiven(GameState gameState) {
@@ -80,21 +83,17 @@ boolean dance = false;
 			}
 			for (Player p : gameState.getInGamePlayers()) {
 				if (gameState.getPlayerRoles().containsKey(p)) {
-					if (getPlayerRoles(p).type == Roles.Nezuko || getPlayerRoles(p).getOldTeam() == TeamList.Demon) {
+					if (getPlayerRoles(p) instanceof Nezuko || getPlayerRoles(p).getOldTeam() == TeamList.Demon) {
 						if (p.getWorld().equals(owner.getWorld())) {
 							if (p.getLocation().distance(owner.getLocation()) <= 30) {
 								if (!gameState.aroundTanjiro.contains(p)) {
 									gameState.aroundTanjiro.add(p);
 								}
 							} else {
-								if (gameState.aroundTanjiro.contains(p)) {
-									gameState.aroundTanjiro.remove(p);
-								}
+                                gameState.aroundTanjiro.remove(p);
 							}	
 						} else {
-							if (gameState.aroundTanjiro.contains(p)) {
-								gameState.aroundTanjiro.remove(p);
-							}
+                            gameState.aroundTanjiro.remove(p);
 						}	
 					}
 				}				
@@ -125,7 +124,7 @@ boolean dance = false;
 					} else {
 						if (!gameState.hasRoleNull(target)) {
 							actualuse++;
-							if (getPlayerRoles(target).getOldTeam() == TeamList.Demon || getPlayerRoles(target).type == Roles.Nezuko) {
+							if (getPlayerRoles(target).getOldTeam() == TeamList.Demon || getPlayerRoles(target) instanceof Nezuko) {
 								owner.sendMessage("§7§l"+target.getName()+"§7 sens le§c§l §nDémon");
 							} else {
 								owner.sendMessage("§7§l"+target.getName()+"§7 ne sens pas spécialement le§c Démon");
@@ -133,7 +132,7 @@ boolean dance = false;
 						}
 					}
 				} else {
-					if (gameState.aroundTanjiro.size() == 0) {
+					if (gameState.aroundTanjiro.isEmpty()) {
 						owner.sendMessage("§cIl n'y à aucun démon autours de vous");
 						actualuse++;
 						owner.sendMessage("Il ne vous reste que "+(3 - actualuse)+" utilisation du§6 /ds sentir");
@@ -189,7 +188,7 @@ boolean dance = false;
 					itemcooldown = 60*8;
 					for (Player p : gameState.getInGamePlayers()) {
 						if (gameState.getPlayerRoles().containsKey(p)) {
-							if (gameState.getPlayerRoles().get(p).type == Roles.Nezuko) {
+							if (gameState.getPlayerRoles().get(p) instanceof Nezuko) {
 								gameState.getPlayerRoles().get(p).owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*3, 1, false, false));
 								gameState.getPlayerRoles().get(p).owner.sendMessage("Votre frère§a Tanjiro§r (§a"+owner.getName()+"§r) à activer sa§6 Danse du Dieu du Feu§r");
 								DecimalFormat df = new DecimalFormat("0");

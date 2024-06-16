@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,11 +15,15 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Shinobu extends RoleBase{
 
-	public Shinobu(Player player, Roles roles) {
-		super(player, roles);
+	public Shinobu(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
         this.setCanUseBlade(true);
         gameState.addPillier(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Shinobu;
 	}
 	@Override
 	public String[] Desc() {
@@ -121,7 +126,7 @@ public class Shinobu extends RoleBase{
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
 					if (killer == owner) {
-						if (r.type == Roles.Doma && !killdoma) {
+						if (r instanceof Doma && !killdoma) {
 							killdoma = true;
 							owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 0, false, false));
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+"Doma "+ChatColor.GRAY+"vous obtenez donc Speed 1 le jour");
@@ -135,7 +140,7 @@ public class Shinobu extends RoleBase{
 					if (gameState.getPlayerRoles().containsKey(killer)) {
 						RoleBase r = gameState.getPlayerRoles().get(killer);
 						if (killer != null) {
-							if (r.type == Roles.Doma) {
+							if (r instanceof Doma) {
 								killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*30, 0, false, false));
 								killer.sendMessage("En tuant le joueur: "+ChatColor.GOLD+ owner.getName() +ChatColor.WHITE+" vous recevez poison 1 pendant 30 secondes");
 							} else {

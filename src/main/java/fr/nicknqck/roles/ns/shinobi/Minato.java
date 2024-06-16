@@ -27,16 +27,18 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Minato extends NSRoles {
 
-	public Minato(Player player, Roles roles) {
-		super(player, roles);
+	public Minato(Player player) {
+		super(player);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.KATON);
 		owner.sendMessage(Desc());
 		setCanBeHokage(true);
 	}
-	
 	private Location Kunai = null;
-
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Minato;
+	}
 	@Override
     public String[] Desc() {
         KnowRole(owner, Roles.Naruto, 5);

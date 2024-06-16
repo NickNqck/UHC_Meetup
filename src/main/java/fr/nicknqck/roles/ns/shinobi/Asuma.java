@@ -18,8 +18,8 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Asuma extends NSRoles {
 
-	public Asuma(Player player, Roles roles) {
-		super(player, roles);
+	public Asuma(Player player) {
+		super(player);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
 		setCanBeHokage(true);
@@ -27,6 +27,10 @@ public class Asuma extends NSRoles {
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
+	}
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Asuma;
 	}
 	@Override
 	public String[] Desc() {

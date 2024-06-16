@@ -13,13 +13,16 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Mitsuri extends RoleBase {
-    public Mitsuri(Player player, Roles roles) {
-        super(player, roles);
+    public Mitsuri(Player player) {
+        super(player);
         for (String desc : AllDesc.Mitsuri)owner.sendMessage(desc);
         gameState.addPillier(owner);
         setCanUseBlade(true);
     }
-
+    @Override
+    public Roles getRoles() {
+        return Roles.Mitsuri;
+    }
     @Override
     public String[] Desc() {return AllDesc.Mitsuri;}
     @Override
@@ -72,7 +75,7 @@ public class Mitsuri extends RoleBase {
                 for (Player p : gameState.getInGamePlayers()){
                     if (gameState.getInGamePlayers().contains(p)){
                         for (RoleBase r : gameState.getPlayerRoles().values()){
-                            if (r.type != Roles.Mitsuri && r.type != null && p != owner){
+                            if (r.getRoles() != Roles.Mitsuri && r.getRoles() != null && p != owner){
                                 if (!gameState.getCharmed().contains(p)){
                                     if (r.owner == p){
                                         if (p.getLocation().distance(owner.getLocation()) <= 10 && owner.canSee(p)){

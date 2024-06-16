@@ -16,10 +16,14 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Kanae extends RoleBase {
 
-	public Kanae(Player player, Roles roles) {
-		super(player, roles);
+	public Kanae(Player player) {
+		super(player);
 		for (String desc : AllDesc.Kanae) owner.sendMessage(desc);
 		setCanUseBlade(true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Kanae;
 	}
 	@Override
 	public String[] Desc() {

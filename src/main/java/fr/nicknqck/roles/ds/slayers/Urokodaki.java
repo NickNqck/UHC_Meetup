@@ -17,11 +17,15 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Urokodaki extends RoleBase{
 
-	public Urokodaki(Player player, Roles roles) {
-		super(player, roles);
+	public Urokodaki(Player player) {
+		super(player);
 		for (String desc : AllDesc.Urokodaki) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		setForce(20);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Urokodaki;
 	}
 	private int souflecooldown = 0;
 	@Override
@@ -82,18 +86,18 @@ public class Urokodaki extends RoleBase{
 			if (gameState.getInGamePlayers().contains(victim)) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase role = gameState.getPlayerRoles().get(victim);
-					if (role.type == Roles.Tomioka || role.type == Roles.Tanjiro || role.type == Roles.Makomo || role.type == Roles.Sabito) {
+					if (role instanceof Tomioka || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
 						Random random = new Random();
 						int rint = random.nextInt(2);
 						System.out.println("Force Urokodaki 1 "+getForce());
 						System.out.println("Speed Urokodaki 1"+ owner.getWalkSpeed());
 						if (rint == 0) {
 							this.addBonusforce(5);
-							owner.sendMessage(ChatColor.GRAY+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.type +ChatColor.GRAY+" vous obtenez donc 5% de Force");
+							owner.sendMessage(ChatColor.GRAY+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 5% de Force");
 						}
 						if (rint == 1) {
 						addSpeedAtInt(owner, 5);
-						owner.sendMessage(ChatColor.GRAY+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.type +ChatColor.GRAY+" vous obtenez donc 5% de Speed");
+						owner.sendMessage(ChatColor.GRAY+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 5% de Speed");
 						}
 						System.out.println("Force Urokodaki 2 "+getForce());
 						System.out.println("Speed Urokodaki 2"+ owner.getWalkSpeed());

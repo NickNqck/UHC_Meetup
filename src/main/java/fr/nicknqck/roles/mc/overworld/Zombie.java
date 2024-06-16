@@ -21,12 +21,15 @@ public class Zombie extends RoleBase {
     private int nmbCerveau = 1;
     private boolean CerveauActive = false;
     private boolean SqueletteSound = false;
-    public Zombie(Player player, GameState.Roles roles) {
-        super(player, roles);
+    public Zombie(Player player) {
+        super(player);
         owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
     }
-
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Zombie;
+    }
     @Override
     public String[] Desc() {
         return new String[]{
@@ -167,7 +170,7 @@ public class Zombie extends RoleBase {
         if (moover.getUniqueId() == owner.getUniqueId()){
             if (!SqueletteSound) {
                 for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
-                    if (getPlayerRoles(p).type == GameState.Roles.Zombie) {
+                    if (getPlayerRoles(p) instanceof Zombie) {
                         playSound(owner, "entity.squelette.ambient");
                         SqueletteSound = true;
                     }

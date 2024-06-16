@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.ds.demons.DemonMain;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -18,12 +19,15 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 public class Makomo extends RoleBase{
 
-	public Makomo(Player player, Roles roles) {
-		super(player, roles);
+	public Makomo(Player player) {
+		super(player);
 		for (String desc : AllDesc.Makomo) owner.sendMessage(desc);
 		setCanUseBlade(true);
 	}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.Makomo;
+	}
 	@Override
 	public String[] Desc() {
 		return AllDesc.Makomo;
@@ -99,9 +103,9 @@ public class Makomo extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.DemonMain) {
+						if (role instanceof DemonMain) {
 							System.out.println("Speed Makomo [1] "+ owner.getWalkSpeed());
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.type +ChatColor.GRAY+" vous obtenez donc 10% de Speed");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 10% de Speed");
 							addSpeedAtInt(owner, 10);
 							System.out.println("Speed Makomo [2] "+owner.getWalkSpeed());
 						}

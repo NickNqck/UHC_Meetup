@@ -25,9 +25,13 @@ import fr.nicknqck.utils.WorldUtils;
 
 public class Kagaya extends RoleBase {
 
-	public Kagaya(Player player, Roles roles) {
-		super(player, roles);
+	public Kagaya(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Kagaya;
 	}
 	@Override
 	public String[] Desc() {

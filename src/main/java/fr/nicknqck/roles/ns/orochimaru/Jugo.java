@@ -20,8 +20,8 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Jugo extends NSRoles {
 
-	public Jugo(Player player, Roles roles) {
-		super(player, roles);
+	public Jugo(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
@@ -35,7 +35,10 @@ public class Jugo extends NSRoles {
 			}
 		}, 20*5);
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Jugo;
+	}
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;

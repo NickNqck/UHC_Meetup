@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import java.util.Random;
 
+import fr.nicknqck.roles.ds.slayers.Muichiro;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -20,13 +21,17 @@ import fr.nicknqck.utils.StringUtils;
 
 public class Gyokko extends RoleBase{
 
-	public Gyokko(Player player, Roles roles) {
-		super(player, roles);
+	public Gyokko(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setResi(20);
 		gameState.addLuneSupPlayers(owner);
 		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Gyokko;
 	}
 	@Override
 	public String[] Desc() {
@@ -143,10 +148,10 @@ public class Gyokko extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.Muichiro) {
+						if (role instanceof Muichiro) {
 							killmuichiro = true;
 							giveItem(owner, false, Items.getGyokkoBoots());
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.type +ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour"+ChatColor.GRAY+", ainsi que des bottes en diamant enchantée avec: "+ChatColor.GOLD+"Depht Strider 2");
+							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour"+ChatColor.GRAY+", ainsi que des bottes en diamant enchantée avec: "+ChatColor.GOLD+"Depht Strider 2");
 						}
 					}
 				}

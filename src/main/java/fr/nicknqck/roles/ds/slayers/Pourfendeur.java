@@ -31,8 +31,8 @@ public class Pourfendeur extends RoleBase {
 	}
 	Soufle form = null;
 	ChatColor color = null;
-	public Pourfendeur(Player player, Roles roles) {
-		super(player, roles);
+	public Pourfendeur(Player player) {
+		super(player);
 		for (String desc : AllDesc.Pourfendeur) owner.sendMessage(desc);
         this.setCanUseBlade(true);
         int rint = Main.RANDOM.nextInt(5);
@@ -79,7 +79,10 @@ public class Pourfendeur extends RoleBase {
         }
         owner.sendMessage("Vous avez obtenue le Soufle: "+color+ form.name());
 	}
-	
+	@Override
+	public Roles getRoles() {
+		return Roles.Slayer;
+	}
 	@Override
 	public String[] Desc() {
 		return AllDesc.Pourfendeur;

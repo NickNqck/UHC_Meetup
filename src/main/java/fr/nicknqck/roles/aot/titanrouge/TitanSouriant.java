@@ -15,10 +15,14 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class TitanSouriant extends RoleBase{
 
-	public TitanSouriant(Player player, Roles roles) {
-		super(player, roles);
+	public TitanSouriant(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return null;
 	}
 	@Override
 	public String[] Desc() {

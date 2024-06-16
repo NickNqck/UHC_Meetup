@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -39,22 +41,26 @@ public class Jigoro extends RoleBase{
 		Min3
 	}
 	private Status status = null;
-	public Jigoro(Player player, Roles roles) {
-		super(player, roles);
+	public Jigoro(Player player) {
+		super(player);
 		for (String desc : AllDesc.Jigoro) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.ZenItsu) {
+				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
-				if (getPlayerRoles(p).type == Roles.Kaigaku) {
+				if (getPlayerRoles(p) instanceof Kaigaku) {
 					owner.sendMessage("La personne possédant le rôle de§c Kaigaku§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
 		setLameIncassable(owner, true);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Jigoro;
 	}
 	@Override
 	public void resetCooldown() {
@@ -173,7 +179,7 @@ public class Jigoro extends RoleBase{
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role.type == Roles.ZenItsu && !killzen) {
+						if (role instanceof ZenItsu && !killzen) {
 							giveItem(owner, false, Items.getJoueurZenItsuSpeed());
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Zen'Itsu "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour"+ChatColor.GRAY+", ainsi que l'accès au: "+ChatColor.GOLD+"Premier Mouvement du Soufle de la Foudre"+ChatColor.GRAY+" qui vous donnera Speed 3 pendant 1 minutes");
 							killzen = true;
@@ -181,7 +187,7 @@ public class Jigoro extends RoleBase{
 								addforce(20);
 							}
 						}
-						if (role.type == Roles.Kaigaku && !killkai) {
+						if (role instanceof Kaigaku && !killkai) {
 							killkai = true;
 							giveItem(owner, false, Items.getSoufleFoudre4iememouvement());
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Kaigaku "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 la nuit"+ChatColor.GRAY+", ainsi que l'accès au: "+ChatColor.GOLD+"Quatrième Mouvement du Soufle de la Foudre"+ChatColor.GRAY+" qui vous téléportera à la personne la plus proche que vous pouvez voir dans un rayon maximum de 30 blocs");

@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -18,8 +19,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Daki extends RoleBase{
 
-	public Daki(Player player, Roles roles) {
-		super(player, roles);
+	public Daki(Player player) {
+		super(player);
 		for (String desc : AllDesc.Daki) owner.sendMessage(desc);
 		this.setForce(20);
 		setCanRespawn(true);
@@ -28,16 +29,19 @@ public class Daki extends RoleBase{
 		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
-				if (getPlayerRoles(p).type == Roles.Gyutaro) {
+				if (getPlayerRoles(p) instanceof Gyutaro) {
 					owner.sendMessage("La personne possédant le rôle de§c Gyutaro§r est:§c "+p.getName());
 				}
 			}
 		}, 20);
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.Daki;
+	}
 	@Override
 	public String getName() {
 		return "§cDaki";
@@ -101,12 +105,12 @@ public class Daki extends RoleBase{
 		}
 		for (RoleBase r : gameState.getPlayerRoles().values()) {
 			if (!gameState.getInGamePlayers().contains(r.owner))continue;
-			if (r.type == Roles.Gyutaro && r.owner.getWorld().equals(owner.getWorld())) {
+			if (r.getRoles() == Roles.Gyutaro && r.owner.getWorld().equals(owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*3, 0, false, false), true);
 			}
-			if (dietizt == false) {
-			if (r.type == Roles.Tanjiro || r.type == Roles.Tengen || r.type == Roles.Inosuke || r.type == Roles.ZenItsu || r.type == Roles.Nezuko) {
+			if (!dietizt) {
+			if (r.getRoles() == Roles.Tanjiro || r.getRoles() == Roles.Tengen || r.getRoles() == Roles.Inosuke || r.getRoles() == Roles.ZenItsu || r.getRoles() == Roles.Nezuko) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 15) {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*2, 0, false, false), true);
 					}
@@ -139,7 +143,7 @@ public class Daki extends RoleBase{
 				for (Player pl : gameState.getInGamePlayers()) {
 					RoleBase p = gameState.getPlayerRoles().get(pl);
 					if (pl != owner) {
-						if (p.type != Roles.Tanjiro && p.getTeam() != TeamList.Demon && p.type != Roles.Inosuke && p.type != Roles.Tengen && p.type != Roles.ZenItsu && p.type != Roles.Daki && p.type != Roles.Gyutaro) {
+						if (p.getRoles() != Roles.Tanjiro && p.getTeam() != TeamList.Demon && p.getRoles() != Roles.Inosuke && p.getRoles() != Roles.Tengen && p.getRoles() != Roles.ZenItsu && p.getRoles() != Roles.Daki && p.getRoles() != Roles.Gyutaro) {
 							Player player = p.owner;
 							if (player.getLocation().distance(owner.getLocation()) <= 30) {
 								if (!gameState.getInObiPlayers().contains(player)) {
@@ -153,12 +157,11 @@ public class Daki extends RoleBase{
 						} else {
 							if (p.getTeam() == TeamList.Demon) {
 								pl.sendMessage("§6Daki§r à utilisé ses Obis mais vous y êtes visiblement autorisé car vous êtes dans le camp des§6 "+p.getTeam().name());
-								return true;
-							} else {
-								pl.sendMessage("§6Daki§r à utilisé ses Obis mais vous y êtes visiblement autorisé car vous possédez le rôle:§6 "+p.type.name());
-								return true;
-							}
-						}
+                            } else {
+								pl.sendMessage("§6Daki§r à utilisé ses Obis mais vous y êtes visiblement autorisé car vous possédez le rôle:§6 "+p.getRoles().name());
+                            }
+                            return true;
+                        }
 					}
 				}		
 			}  else {
@@ -190,14 +193,14 @@ public class Daki extends RoleBase{
 			if (gameState.getInGamePlayers().contains(victim)) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
-					if (r.type == Roles.Gyutaro) {
+					if (r instanceof Gyutaro) {
 						diegyutaro = true;
 						owner.sendMessage(ChatColor.GOLD+"Gyutaro "+ChatColor.GRAY+"est mort définitivement ce qui viens de vous octroyez l'effet: "+ChatColor.RED+"résistance 1 permanent");
 					}
-					if (r.type == Roles.Tanjiro || r.type == Roles.Tengen || r.type == Roles.Inosuke || r.type == Roles.ZenItsu || r.type == Roles.Nezuko) {
-						if (dietizt == false) {
+					if (r.getRoles() == Roles.Tanjiro || r.getRoles() == Roles.Tengen || r.getRoles() == Roles.Inosuke || r.getRoles() == Roles.ZenItsu || r.getRoles() == Roles.Nezuko) {
+						if (!dietizt) {
 							dietizt = true;
-							owner.sendMessage(ChatColor.WHITE+"Suite à la mort de: "+ChatColor.GOLD+ victim.getName() + ChatColor.WHITE+" qui possédait le rôle: "+ChatColor.GOLD+ r.type + ChatColor.WHITE+" vous perdez donc le fait d'avoir weakness 1 proche de certain rôle");
+							owner.sendMessage(ChatColor.WHITE+"Suite à la mort de: "+ChatColor.GOLD+ victim.getName() + ChatColor.WHITE+" qui possédait le rôle: "+ChatColor.GOLD+ r.getRoles() + ChatColor.WHITE+" vous perdez donc le fait d'avoir weakness 1 proche de certain rôle");
 						}
 					}
 				}

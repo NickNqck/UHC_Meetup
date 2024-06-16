@@ -20,8 +20,8 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class Furuto extends RoleBase{
 
-	public Furuto(Player player, Roles roles) {
-		super(player, roles);
+	public Furuto(Player player) {
+		super(player);
 		owner.sendMessage(AllDesc.Furuto);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(fr.nicknqck.Main.getPlugin(fr.nicknqck.Main.class), () -> {
 			if (lunesup == null && !gameState.getLuneSupPlayers().isEmpty()) {
@@ -30,6 +30,10 @@ public class Furuto extends RoleBase{
 				
 			}
 		}, 20);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Furuto;
 	}
 	private Player lunesup;
 	@Override

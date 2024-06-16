@@ -33,11 +33,15 @@ import fr.nicknqck.utils.RandomUtils;
 
 public class Orochimaru extends NSRoles {
 
-	public Orochimaru(Player player, Roles roles) {
-		super(player, roles);
+	public Orochimaru(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		chakrasVoled.add(getChakras());
 		owner.sendMessage(Desc());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Orochimaru;
 	}
 	@Override
 	public void GiveItems() {
@@ -64,7 +68,7 @@ public class Orochimaru extends NSRoles {
 		for (Player p : getIGPlayers()) {
 			if (!gameState.hasRoleNull(p)) {
 				if (getTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
-					if (getTeam(p) == TeamList.Orochimaru || getPlayerRoles(p).type == Roles.Sasuke) {
+					if (getTeam(p) == TeamList.Orochimaru || getPlayerRoles(p) instanceof Sasuke) {
 						mates.add(p);
 					}
 				}

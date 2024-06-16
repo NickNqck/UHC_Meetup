@@ -35,8 +35,8 @@ public class Danzo extends NSRoles {
 	private int coupToScelled = 0;
 	private boolean SceauActived = false;
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
-	public Danzo(Player player, Roles roles) {
-		super(player, roles);
+	public Danzo(Player player) {
+		super(player);
 		setChakraType(Chakras.FUTON);
 		owner.sendMessage(Desc());
 	}
@@ -60,6 +60,10 @@ public class Danzo extends NSRoles {
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
+	}
+	@Override
+	public GameState.Roles getRoles() {
+		return Roles.Danzo;
 	}
 	@Override
 	public String[] Desc() {

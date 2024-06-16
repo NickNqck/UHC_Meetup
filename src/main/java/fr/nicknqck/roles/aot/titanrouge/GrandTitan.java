@@ -16,11 +16,15 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 
 public class GrandTitan extends RoleBase{
 
-	public GrandTitan(Player player, Roles roles) {
-		super(player, roles);
+	public GrandTitan(Player player) {
+		super(player);
 		gameState.TitansRouge.add(owner);
 		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.GrandTitan;
 	}
 	@Override
 	public String[] Desc() {

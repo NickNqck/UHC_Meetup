@@ -19,12 +19,15 @@ import fr.nicknqck.utils.Loc;
 
 public class ZetsuNoir extends NSRoles {
 
-	public ZetsuNoir(Player player, Roles roles) {
-		super(player, roles);
+	public ZetsuNoir(Player player) {
+		super(player);
 		setChakraType(Chakras.DOTON);
 		owner.sendMessage(Desc());
 	}
-
+	@Override
+	public Roles getRoles() {
+		return Roles.ZetsuNoir;
+	}
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.ZetsuBlanc, 1);

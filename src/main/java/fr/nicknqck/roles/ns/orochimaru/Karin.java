@@ -23,11 +23,15 @@ import fr.nicknqck.utils.Loc;
 
 public class Karin extends NSRoles {
 
-	public Karin(Player player, Roles roles) {
-		super(player, roles);
+	public Karin(Player player) {
+		super(player);
 		setChakraType(getRandomChakras());
 		owner.sendMessage(Desc());
 		timePassedNearby.clear();
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Karin;
 	}
 	@Override
 	public String[] Desc() {

@@ -13,9 +13,13 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Armin extends RoleBase{
 
-	public Armin(Player player, Roles roles) {
-		super(player, roles);
+	public Armin(Player player) {
+		super(player);
 		gameState.GiveRodTridi(owner);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Armin;
 	}
 	@Override
 	public String[] Desc() {
@@ -55,7 +59,7 @@ public class Armin extends RoleBase{
 				        Inventory doubleChest = Bukkit.createInventory(owner, 54, "Inventaire de " + target.getName());
 				        for (int i = 0; i < target.getInventory().getSize(); i++) {
 				        	   ItemStack item = target.getInventory().getItem(i);
-					            if (getPlayerRoles(target).type != Roles.Eren) {
+					            if (getPlayerRoles(target).getRoles() != Roles.Eren) {
 					            	if (item != null && item.getType() != Material.AIR) {
 						            	doubleChest.setItem(i, item.clone());
 						            }

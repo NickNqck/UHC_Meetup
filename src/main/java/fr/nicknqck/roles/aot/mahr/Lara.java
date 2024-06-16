@@ -11,12 +11,16 @@ import fr.nicknqck.roles.desc.AllDesc;
 
 public class Lara extends RoleBase {
 
-	public Lara(Player player, Roles roles) {
-		super(player, roles);
+	public Lara(Player player) {
+		super(player);
 		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		Titans.WarHammer.getTitan().getListener().setWarHammer(owner.getUniqueId());
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Lara;
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {

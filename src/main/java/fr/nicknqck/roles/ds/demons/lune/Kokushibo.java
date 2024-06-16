@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -27,8 +29,8 @@ public class Kokushibo extends RoleBase{
 	private int itemcooldown = 0;
 	private int regencooldown = 0;
 	public boolean solo = false;
-	public Kokushibo(Player player, Roles roles) {
-		super(player, roles);
+	public Kokushibo(Player player) {
+		super(player);
 		for (String desc : AllDesc.Kokushibo) owner.sendMessage(desc);
 		this.setForce(20);
 		regencooldown = 15;
@@ -38,7 +40,7 @@ public class Kokushibo extends RoleBase{
 		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
-				if (getPlayerRoles(p).type == Roles.Muzan) {
+				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 			}
@@ -48,11 +50,15 @@ public class Kokushibo extends RoleBase{
 		killtanjiro = false;
 	}
 	@Override
+	public Roles getRoles() {
+		return Roles.Kokushibo;
+	}
+	@Override
 	public String[] Desc() {
 		if (!gameState.demonKingTanjiro) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				for (Player p : getIGPlayers()) {
-					if (getPlayerRoles(p).type == Roles.Muzan) {
+					if (getPlayerRoles(p) instanceof Muzan) {
 						owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 					}
 				}
@@ -261,7 +267,7 @@ public boolean killtanjiro = false;
 					owner.sendMessage("Vous venez de tuez:§l "+victim.getName()+"§r vous gagnez donc "+AllDesc.Resi+" 1 pendant 3minutes");
 					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
-					if (getPlayerRoles(victim).type.equals(Roles.Tanjiro)) {
+					if (getPlayerRoles(victim) instanceof Tanjiro) {
 						owner.sendMessage("§7Vous avez réussis à vaincre cette imposteur de§a Tanjiro§7, vous avez maintenant un choix qui s'offre à vous... (§l/ds role§7)");
 						killtanjiro = true;
 					}
