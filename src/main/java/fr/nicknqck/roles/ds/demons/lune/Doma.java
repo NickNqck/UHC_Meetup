@@ -1,21 +1,21 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.RandomUtils;
-
-public class Doma extends RoleBase{
+public class Doma extends DemonsRoles {
 
 	public Doma(Player player) {
 		super(player);
@@ -32,6 +32,12 @@ public class Doma extends RoleBase{
 			}
 		}, 20);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Doma;

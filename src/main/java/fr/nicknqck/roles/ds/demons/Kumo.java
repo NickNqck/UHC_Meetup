@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,12 +23,18 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
-public class Kumo extends RoleBase{
+public class Kumo extends DemonsRoles {
 
 	public Kumo(Player player) {
 		super(player);
 		owner.sendMessage(AllDesc.Kumo);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Kumo;

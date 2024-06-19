@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -14,7 +16,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import net.md_5.bungee.api.ChatColor;
 
-public class Demon_SimpleV2 extends RoleBase {
+public class Demon_SimpleV2 extends DemonsRoles {
 	
 	private Player lunesup;
 	
@@ -29,7 +31,13 @@ public class Demon_SimpleV2 extends RoleBase {
 
             }
         }, 20);
-		}
+	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.DemonSimpleV2;

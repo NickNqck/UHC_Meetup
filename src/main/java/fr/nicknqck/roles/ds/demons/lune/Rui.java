@@ -1,6 +1,16 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
+import net.minecraft.server.v1_8_R3.ChatComponentText;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -10,17 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-
-public class Rui extends RoleBase {
+public class Rui extends DemonsRoles {
 
 	public Rui(Player player) {
 		super(player);
@@ -35,6 +35,12 @@ public class Rui extends RoleBase {
 			}
 		}, 20);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneInferieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.RockLee;
@@ -92,7 +98,7 @@ public class Rui extends RoleBase {
 		usefilspeed = 0;
 	}
 	
-	private int allcdfil = cdfilforce+cdfilspeed+cdfilresi+cdfilregen;
+	private int allcdfil = 0;
 
 	@Override
 	public void Update(GameState gameState) {

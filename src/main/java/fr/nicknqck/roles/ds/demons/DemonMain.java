@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,7 +15,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
-public class DemonMain extends RoleBase{
+public class DemonMain extends DemonsRoles {
 
 	public DemonMain(Player player) {
 		super(player);
@@ -28,6 +30,11 @@ public class DemonMain extends RoleBase{
 	@Override
 	public String getName() {
 		return "§cDemon Main";
+	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
 	}
 
 	@Override

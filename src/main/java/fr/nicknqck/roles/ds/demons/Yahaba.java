@@ -1,18 +1,18 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Yahaba extends RoleBase {
+public class Yahaba extends DemonsRoles {
 	
 	private Player lunesup;
 	private Player cible;
@@ -25,7 +25,7 @@ public class Yahaba extends RoleBase {
 		owner.sendMessage("Une cible vous sera attribué dans§6 10s");
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
             if (lunesup == null) {
-            	if (gameState.getLuneSupPlayers().size() < 1)return;
+            	if (gameState.getLuneSupPlayers().isEmpty())return;
                     lunesup = gameState.getLuneSupPlayers().get(0);
                     owner.sendMessage("Votre lune supérieure est "+lunesup.getName());      
             }
@@ -37,6 +37,12 @@ public class Yahaba extends RoleBase {
 	         }
 		}, 20*10);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Yahaba;

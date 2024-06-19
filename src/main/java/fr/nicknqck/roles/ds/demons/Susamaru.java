@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,12 +11,18 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
-public class Susamaru extends RoleBase {
+public class Susamaru extends DemonsRoles {
 
 	public Susamaru(Player player) {
 		super(player);
 		for (String desc : AllDesc.Susamaru)owner.sendMessage(desc);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Susamaru;

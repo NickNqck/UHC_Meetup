@@ -2,6 +2,8 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import java.util.Random;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.Muichiro;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,7 +21,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 
-public class Gyokko extends RoleBase{
+public class Gyokko extends DemonsRoles {
 
 	public Gyokko(Player player) {
 		super(player);
@@ -33,6 +35,12 @@ public class Gyokko extends RoleBase{
 	public Roles getRoles() {
 		return Roles.Gyokko;
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Muzan, 1);

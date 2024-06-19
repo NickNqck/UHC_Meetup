@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
@@ -19,7 +21,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Kaigaku extends RoleBase{
+public class Kaigaku extends DemonsRoles {
 
 	private boolean killzen = false;
 	private int cooldownquatriememouvement = 0;
@@ -43,6 +45,12 @@ public class Kaigaku extends RoleBase{
 		gameState.addLuneSupPlayers(owner);
 		setLameIncassable(owner, true);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Kaigaku;

@@ -1,8 +1,17 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ArrowTargetUtils;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.betteritem.BetterItem;
+import fr.nicknqck.utils.powers.LocPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -13,19 +22,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ArrowTargetUtils;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.powers.LocPlayer;
-import fr.nicknqck.utils.betteritem.BetterItem;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Nakime extends RoleBase{
+public class Nakime extends DemonsRoles {
 
 	public Nakime(Player player) {
 		super(player);
@@ -36,6 +36,12 @@ public class Nakime extends RoleBase{
         owner.sendMessage(Desc());
         Main.getInstance().nakime = Bukkit.getWorld("nakime");
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Nakime;
@@ -44,9 +50,7 @@ public class Nakime extends RoleBase{
 	public String[] Desc() {
 		gameState.addLuneSupPlayers(owner);
 		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			KnowRole(owner, Roles.Muzan, 20);
-		}, 20);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> KnowRole(owner, Roles.Muzan, 20), 20);
 		return AllDesc.Nakime;
 	}
 	private int cooldown =0;
@@ -145,7 +149,7 @@ public class Nakime extends RoleBase{
 						p.teleport(locPlayer.getRandomPositionRespawn());
 						p.sendMessage("§7Vous avez été téléporter aléatoirement");
 						getPlayerRoles(p).setInvincible(true);
-						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {getPlayerRoles(p).setInvincible(false);}, 40);
+						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getPlayerRoles(p).setInvincible(false), 40);
 					}
 				}
 			}

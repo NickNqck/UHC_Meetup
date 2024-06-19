@@ -1,7 +1,19 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
+import fr.nicknqck.scenarios.impl.FFA;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -13,19 +25,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.scenarios.impl.FFA;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.betteritem.BetterItem;
-
-public class Kokushibo extends RoleBase{
+public class Kokushibo extends DemonsRoles {
 	private int itemcooldown = 0;
 	private int regencooldown = 0;
 	public boolean solo = false;
@@ -49,6 +49,12 @@ public class Kokushibo extends RoleBase{
 		solo = false;
 		killtanjiro = false;
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Kokushibo;

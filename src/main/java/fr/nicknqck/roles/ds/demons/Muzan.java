@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ds.demons;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +20,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
-public class Muzan extends RoleBase {
+public class Muzan extends DemonsRoles {
 	boolean killnez = false;
 	int regencooldown = 0;
 	public Muzan(Player player) {
@@ -30,7 +32,13 @@ public class Muzan extends RoleBase {
             gameState.lunesup.forEach(lambda -> owner.sendMessage("§c" + lambda.getName()));
 		}, 20);
 		addforce(20);//pour contre balancer le onday qui retire 20% de force
-		}
+	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.RockLee;

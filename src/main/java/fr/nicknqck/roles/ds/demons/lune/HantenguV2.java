@@ -1,6 +1,17 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.packets.NMSPacket;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -9,18 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.packets.NMSPacket;
-import fr.nicknqck.utils.StringUtils;
-
-public class HantenguV2 extends RoleBase {
+public class HantenguV2 extends DemonsRoles {
 
 	public HantenguV2(Player player) {
 		super(player);
@@ -37,6 +37,12 @@ public class HantenguV2 extends RoleBase {
 			}
 		}, 20);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.HantenguV2;

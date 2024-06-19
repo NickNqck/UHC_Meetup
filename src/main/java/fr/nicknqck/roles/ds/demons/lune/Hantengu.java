@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,7 +25,7 @@ import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
-public class Hantengu extends RoleBase {
+public class Hantengu extends DemonsRoles {
 private int killforce = 0;
 	public Hantengu(Player player) {
 		super(player);
@@ -39,6 +41,12 @@ private int killforce = 0;
 			}
 		}, 20);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Hantengu;

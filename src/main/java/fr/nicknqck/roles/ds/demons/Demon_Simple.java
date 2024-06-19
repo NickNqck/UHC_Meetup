@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -9,13 +11,19 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
-public class Demon_Simple extends RoleBase{
+public class Demon_Simple extends DemonsRoles {
 
 	public Demon_Simple(Player player) {
 		super(player);
 		setForce(20);
 		owner.sendMessage(Desc());
-		}
+	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Demon;

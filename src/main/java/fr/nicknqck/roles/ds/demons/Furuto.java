@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ds.demons;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +20,7 @@ import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
-public class Furuto extends RoleBase{
+public class Furuto extends DemonsRoles {
 
 	public Furuto(Player player) {
 		super(player);
@@ -31,6 +33,12 @@ public class Furuto extends RoleBase{
 			}
 		}, 20);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Furuto;

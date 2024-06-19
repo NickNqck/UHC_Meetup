@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,7 +17,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
-public class Enmu extends RoleBase {
+public class Enmu extends DemonsRoles {
 	public Enmu(Player player) {
 		super(player);
 		owner.sendMessage(AllDesc.Enmu);
@@ -29,6 +31,12 @@ public class Enmu extends RoleBase {
 		gameState.addLuneSupPlayers(owner);
 		gameState.lunesup.add(owner);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneInferieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Enmu;
