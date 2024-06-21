@@ -184,7 +184,7 @@ public class Nakime extends DemonsRoles {
 	public void ejectPlayerinCage() {
 		for (Player p : gameState.getOnlinePlayers()) {
 			if (p.getWorld().equals(Main.getInstance().nakime)) {
-				GameListener.RandomTp(p, gameState, Main.getInstance().gameWorld);
+				GameListener.RandomTp(p, Main.getInstance().gameWorld);
 				p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime");
 				owner.sendMessage(p.getName()+"§7 est sortie de votre cage");
 			}

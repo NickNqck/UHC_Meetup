@@ -503,8 +503,8 @@ public class GameListener implements Listener {
 		Random random = new Random();
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
-			Float x = Border.getActualBorderSize()*random.nextFloat();
-			Float z = Border.getActualBorderSize()*random.nextFloat();
+			float x = Border.getActualBorderSize()*random.nextFloat();
+			float z = Border.getActualBorderSize()*random.nextFloat();
 			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);

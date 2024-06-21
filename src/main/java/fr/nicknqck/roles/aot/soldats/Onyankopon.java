@@ -93,7 +93,7 @@ public class Onyankopon extends RoleBase{
 	}
 	private void fuite() {
 		for (Player p:gameState.getNearbyPlayers(owner, 20)) {
-			GameListener.RandomTp(p, gameState, Main.getInstance().gameWorld);
+			GameListener.RandomTp(p, Main.getInstance().gameWorld);
 			cd = 60;
 		}
 		use += 1;

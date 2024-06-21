@@ -458,14 +458,14 @@ public abstract class RoleBase implements Role{
 		}
 		if (!player.getWorld().equals(Main.getInstance().gameWorld)) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				GameListener.RandomTp(player, gameState, Main.getInstance().gameWorld);
+				GameListener.RandomTp(player, Main.getInstance().gameWorld);
 			}, 20);
 		}
 		if (!gameState.hasRoleNull(player)){
 			if (getPlayerRoles(player).getRoles() == Roles.Nakime) {
 				for (Player p : gameState.getOnlinePlayers()) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
-						GameListener.RandomTp(p, gameState, Main.getInstance().gameWorld);
+						GameListener.RandomTp(p, Main.getInstance().gameWorld);
 						p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime§7 du à la mort de cette dernière");
 						player.sendMessage(p.getName()+"§7 est sortie de votre cage");
 					}
