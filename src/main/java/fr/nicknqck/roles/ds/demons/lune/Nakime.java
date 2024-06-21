@@ -48,8 +48,6 @@ public class Nakime extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> KnowRole(owner, Roles.Muzan, 20), 20);
 		return AllDesc.Nakime;
 	}

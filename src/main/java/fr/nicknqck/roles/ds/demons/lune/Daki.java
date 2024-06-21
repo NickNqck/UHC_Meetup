@@ -27,8 +27,6 @@ public class Daki extends DemonsRoles {
 		this.setForce(20);
 		setCanRespawn(true);
 		this.setResi(20);
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {

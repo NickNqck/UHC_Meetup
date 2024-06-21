@@ -24,8 +24,6 @@ public class HantenguV2 extends DemonsRoles {
 
 	public HantenguV2(Player player) {
 		super(player);
-		gameState.lunesup.add(owner);
-		gameState.addLuneSupPlayers(owner);
 		clone = Clone.Hantengu;
 		owner.getInventory().addItem(Items.getMaterialisationEmotion());
 		owner.sendMessage(AllDesc.HantenguV2);

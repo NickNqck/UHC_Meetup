@@ -24,8 +24,6 @@ public class Gyutaro extends RoleBase{
 		this.setForce(20);
 		setCanRespawn(true);
 		this.setResi(20);
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		}
 	@Override
 	public Roles getRoles() {

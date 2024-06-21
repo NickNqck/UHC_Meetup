@@ -15,8 +15,6 @@ public class Akaza extends DemonsRoles {
 		super(player);
 		owner.sendMessage(Desc());
 		this.setForce(20);
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 	}
 
 	@Override

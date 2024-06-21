@@ -24,13 +24,6 @@ public class Yahaba extends DemonsRoles {
 		owner.sendMessage(AllDesc.Yahaba);
 		owner.sendMessage("Une cible vous sera attribué dans§6 10s");
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-            if (lunesup == null) {
-            	if (gameState.getLuneSupPlayers().isEmpty())return;
-                    lunesup = gameState.getLuneSupPlayers().get(0);
-                    owner.sendMessage("Votre lune supérieure est "+lunesup.getName());      
-            }
-        }, 20);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			 if (cible == null) {
 	             cible = canBeCibleYahaba.get(0);
 	             owner.sendMessage("Pour connaitre votre cible faite§6 /ds me");

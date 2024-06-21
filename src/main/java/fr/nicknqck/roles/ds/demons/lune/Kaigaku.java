@@ -41,8 +41,6 @@ public class Kaigaku extends DemonsRoles {
 				}
 			}
 		}, 20);
-		gameState.lunesup.add(owner);
-		gameState.addLuneSupPlayers(owner);
 		setLameIncassable(owner, true);
 	}
 

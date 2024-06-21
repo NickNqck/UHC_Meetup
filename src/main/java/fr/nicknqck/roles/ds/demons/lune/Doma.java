@@ -22,8 +22,6 @@ public class Doma extends DemonsRoles {
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setResi(20);
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {

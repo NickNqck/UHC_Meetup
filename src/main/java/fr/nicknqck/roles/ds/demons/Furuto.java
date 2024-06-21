@@ -1,37 +1,28 @@
 package fr.nicknqck.roles.ds.demons;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.builder.DemonType;
 import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.betteritem.BetterItem;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Furuto extends DemonsRoles {
 
 	public Furuto(Player player) {
 		super(player);
 		owner.sendMessage(AllDesc.Furuto);
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(fr.nicknqck.Main.getPlugin(fr.nicknqck.Main.class), () -> {
-			if (lunesup == null && !gameState.getLuneSupPlayers().isEmpty()) {
-					lunesup = gameState.getLuneSupPlayers().get(0);
-					owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
-				
-			}
-		}, 20);
 	}
 
 	@Override

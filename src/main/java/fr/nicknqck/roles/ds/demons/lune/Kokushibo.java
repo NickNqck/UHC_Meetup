@@ -36,8 +36,6 @@ public class Kokushibo extends DemonsRoles {
 		regencooldown = 15;
 		this.setCanUseBlade(true);
 		orginalMaxHealth = owner.getMaxHealth();
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {

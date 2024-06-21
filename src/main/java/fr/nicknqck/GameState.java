@@ -293,7 +293,6 @@ public class GameState{
 	private ArrayList<Player> inSpecPlayers = new ArrayList<Player>();
 	
 	public ArrayList<Player> Charmed = new ArrayList<Player>();
-	public ArrayList<Player> LuneSuperieur = new ArrayList<Player>();
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<Player, RoleBase>();
 	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<Player, HashMap<Player, RoleBase>>();
 	public List<Player> igPlayers = new ArrayList<>();
@@ -319,7 +318,6 @@ public class GameState{
 	public int xpor = 0;
 	public int xpcharbon = 0;
 	public int xpdiams =0;
-	public List<Player> lunesup = new ArrayList<>();
 	public List<Player> aroundTanjiro = new ArrayList<>();
 	public Player infected = null;
 	public int timewaitingbeinfected = 60;
@@ -354,11 +352,6 @@ public class GameState{
 	public void setCharmed(ArrayList<Player> CharmedPlayers){Charmed = CharmedPlayers;}
 	public void addCharmed(Player player){Charmed.add(player);}
 	public void delCharmed(Player player){Charmed.remove(player);}
-	
-	public ArrayList<Player> getLuneSupPlayers() {return LuneSuperieur;}
-	public void setLuneSupPlayers(ArrayList<Player> SleepingPlayers) {LuneSuperieur = SleepingPlayers;}
-	public void addLuneSupPlayers(Player player) {LuneSuperieur.add(player);}
-	public void delLuneSupPlayers(Player player) {LuneSuperieur.remove(player);}
 	
 	public ArrayList<Player> SleepingPlayer = new ArrayList<Player>();
 	public ArrayList<Player> getInSleepingPlayers() {return SleepingPlayer;}

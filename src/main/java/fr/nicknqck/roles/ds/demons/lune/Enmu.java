@@ -28,8 +28,6 @@ public class Enmu extends DemonsRoles {
 				}
 			}
 		}, 20);
-		gameState.addLuneSupPlayers(owner);
-		gameState.lunesup.add(owner);
 	}
 
 	@Override

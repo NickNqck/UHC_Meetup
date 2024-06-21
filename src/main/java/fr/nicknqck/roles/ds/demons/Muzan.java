@@ -1,24 +1,19 @@
 package fr.nicknqck.roles.ds.demons;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.DemonType;
 import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
-
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
 
 public class Muzan extends DemonsRoles {
 	boolean killnez = false;
@@ -27,34 +22,21 @@ public class Muzan extends DemonsRoles {
 		super(player);
 		owner.sendMessage(Desc());
 		regencooldown = 10;
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			owner.sendMessage("§cLa liste des démons est : ");
-            gameState.lunesup.forEach(lambda -> owner.sendMessage("§c" + lambda.getName()));
-		}, 20);
 		addforce(20);//pour contre balancer le onday qui retire 20% de force
 	}
 
 	@Override
 	public DemonType getRank() {
-		return DemonType.Demon;
+		return DemonType.LuneSuperieur;
 	}
 
 	@Override
 	public Roles getRoles() {
-		return Roles.RockLee;
+		return Roles.Muzan;
 	}
 	@Override
 	public String[] Desc() {
-		List<Player> a = new ArrayList<>();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			owner.sendMessage("§cLa liste des démons est : ");
-			for (Player p : gameState.lunesup) {
-				if (!gameState.getInSpecPlayers().contains(p)) {
-					 a.add(p);
-				}
-			} //gameState.lunesup.forEach(lambda -> owner.sendMessage("§c" + lambda.getName()));
-			a.forEach(ee -> owner.sendMessage("§c"+ee.getName()));
-		}, 20);
+		fr.nicknqck.roles.builder.GetterList.getDemonList(owner);
 		return AllDesc.Muzan;
 	}
 	private boolean hasBoost = false;

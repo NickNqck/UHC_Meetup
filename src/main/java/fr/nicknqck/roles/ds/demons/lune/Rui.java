@@ -25,8 +25,6 @@ public class Rui extends DemonsRoles {
 	public Rui(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
-		gameState.lunesup.add(owner);
-		gameState.addLuneSupPlayers(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {

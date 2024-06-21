@@ -44,7 +44,6 @@ public class HubListener implements Listener {
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		gameState.setInLobbyPlayers(new ArrayList<>());
 		gameState.igPlayers.addAll(gameState.getInGamePlayers());
-		gameState.lunesup.clear();
 		spawnPlatform(Bukkit.getWorld("world"), Material.AIR);
 		gameState.infected = null;
 		gameState.infecteur = null;

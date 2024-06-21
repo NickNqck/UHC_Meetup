@@ -14,11 +14,10 @@ import fr.nicknqck.events.custom.UHCPlayerKill;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.aot.titans.TitanListener;
 import fr.nicknqck.roles.aot.titans.Titans;
-import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.Susamaru;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
@@ -121,7 +120,6 @@ public class GameListener implements Listener {
 				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
 				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
 				if (!gameState.getInSleepingPlayers().isEmpty()) gameState.getInSleepingPlayers().clear();
-				if (!gameState.getLuneSupPlayers().isEmpty())gameState.getLuneSupPlayers().clear();
 				if (!gameState.getPillier().isEmpty())gameState.getPillier().clear();
 				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p))gameState.addInLobbyPlayers(p);
@@ -486,7 +484,7 @@ public class GameListener implements Listener {
 		}
 	}
 	public void SendToEveryoneExcept(String message, Player player) {for (Player p : Bukkit.getOnlinePlayers()) {if (p.equals(player)) continue;p.sendMessage(message);}}
-	public static Location RandomTp(final Entity entity,final GameState gameState) {
+	public static Location RandomTp(final Entity entity, final GameState gameState) {
 		Random random = Main.RANDOM;
 		Location loc = null;
 		while (loc == null || gameState.world.getBlockAt(loc).getType() == Material.WATER || gameState.world.getBlockAt(loc).getType() == Material.LAVA) {
@@ -501,7 +499,7 @@ public class GameListener implements Listener {
 		}
 		return loc;
 	}
-	public static Location RandomTp(final Entity entity,final GameState gameState, final World world) {
+	public static Location RandomTp(final Entity entity, final World world) {
 		Random random = new Random();
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
@@ -516,7 +514,7 @@ public class GameListener implements Listener {
 		}
 		return loc;
 	}
-	public static Location RandomLocation(final GameState gameState, final World world) {
+	public static Location RandomLocation(final World world) {
 		Random random = new Random();
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
@@ -538,59 +536,20 @@ public class GameListener implements Listener {
 	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
 	    return loc;
 	}
-	public void DeathMessage(Player damager, Player victim) {
-		if (damager != null) {
-			if (victim.getWorld() != Bukkit.getWorld("nakime")) {
-					SendToEveryoneExcept(ChatColor.DARK_GRAY+"§o§m-----------------------------------", damager);
-					SendToEveryoneExcept(victim.getDisplayName()+"§7 est mort,", damager);
-					if (!gameState.hasRoleNull(victim)) {
-						SendToEveryoneExcept("§7Son rôle était: "+gameState.getPlayerRoles().get(victim).getName(), damager);
-					} else {
-						SendToEveryoneExcept(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle", damager);
-					}
-					SendToEveryoneExcept(ChatColor.DARK_GRAY+"§o§m-----------------------------------", damager);
-					
-					damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-					if (!gameState.hasRoleNull(victim)) {
-						damager.sendMessage("§7Vous avez tué:§f "+victim.getDisplayName()+"§7,");
-						damager.sendMessage("§7Son rôle était "+gameState.getPlayerRoles().get(victim).getName());
-					} else {
-						damager.sendMessage("§cVous avez tué:§f "+victim.getDisplayName()+"§c, il n'avait pas de rôle.");
-					}
-					damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-            }else {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					if (p != damager) {
-						p.sendMessage(AllDesc.bar);
-						p.sendMessage(" ");
-						if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p).getRoles().equals(Roles.Nakime)) {
-							p.sendMessage(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+gameState.getPlayerRoles().get(victim).getTeamColor()+gameState.getPlayerRoles().get(victim).getRoles().name());
-						}else {
-							p.sendMessage(victim.getDisplayName()+ChatColor.RED+" est mort son role était §6§k"+gameState.getPlayerRoles().get(victim).getRoles().name()+"§c (§lMasqué§c)");
-						}
-						p.sendMessage(" ");
-						p.sendMessage(AllDesc.bar);
-					}else {
-						damager.sendMessage(AllDesc.bar);
-						damager.sendMessage("");
-						if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p).getRoles().equals(Roles.Nakime)) {
-							damager.sendMessage("§cVous avez tué:§r "+victim.getDisplayName()+"§c son rôle était "+gameState.getPlayerRoles().get(victim).getTeam().getColor()+gameState.getPlayerRoles().get(victim).getRoles().name());
-						}else {
-							damager.sendMessage("§cVous avez tué:§r "+victim.getDisplayName()+"§c son rôle était §6§k"+gameState.getPlayerRoles().get(victim).getRoles().name()+"§c (§lMasqué§c)");
-						}
-						damager.sendMessage(" ");
-						damager.sendMessage(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-					}
+	public void DeathMessage(Player victim) {
+			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
+			SendToEveryone(victim.getDisplayName()+"§7 est mort,");
+			if (!gameState.hasRoleNull(victim)) {
+				World world = Bukkit.getWorld("nakime");
+				if (world != null){
+					SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? gameState.getPlayerRoles().get(victim).getName() : "§k"+victim.getDisplayName()));
+				} else {
+					SendToEveryone("§7Son rôle était: "+gameState.getPlayerRoles().get(victim).getName());
 				}
-            }
-            return;
-        }else {
+			} else {
+				SendToEveryone(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");
+			}
 			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-			SendToEveryone("");
-			SendToEveryone(victim.getDisplayName()+ChatColor.RED+" est mort son role était "+ChatColor.GOLD+gameState.getPlayerRoles().get(victim).getRoles().name());
-			SendToEveryone("");
-			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-		}
 	}
 	@NotNull
 	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
@@ -648,7 +607,7 @@ public class GameListener implements Listener {
                 //player = la victim/le mort
                 if (damager instanceof Player) {
                     Player killer = (Player) damager;
-                    DeathMessage(killer, player);
+                    DeathMessage(player);
                     for (Player p : gameState.getInGamePlayers()) {
                         if (gameState.getPlayerRoles().containsKey(p)) {
                             gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
@@ -687,7 +646,7 @@ public class GameListener implements Listener {
                         Arrow arr = (Arrow) damager;
                         if (arr.getShooter() instanceof Player) {
                             Player killer = (Player) arr.getShooter();
-                            DeathMessage(killer, player);
+                            DeathMessage(player);
                             for (Player p : gameState.getInGamePlayers()) {
                                 if (gameState.getPlayerRoles().containsKey(p)) {
                                     gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
@@ -721,17 +680,17 @@ public class GameListener implements Listener {
                                 }
                             }
                         }else {
-                            DeathMessage(null, player);
+                            DeathMessage(player);
                         }
                     }else {
-                        DeathMessage(null, player);
+                        DeathMessage(player);
                     }
                 }
                 for (Titans t : Titans.values()) {
                     t.getTitan().PlayerKilled(player, damager);
                 }
             } else {//Fin du if damager != null
-                DeathMessage(null, player);
+                DeathMessage(player);
             }
 			for (Events event : Events.values()) {
 				event.getEvent().onPlayerKilled(damager, player, gameState);
@@ -1257,10 +1216,8 @@ public class GameListener implements Listener {
         String motd;
         if (gameState.getServerState() == ServerStates.InLobby) {
             motd = "        §e» §cStatus §f: §aEn Attente §f┃ "+ gameState.getInLobbyPlayers().size() +" §9Joueurs §f┃ "+gameState.getroleNMB()+" §9Rôles §e«\n                      §f§l▶ §r§b" +gameState.getAvailableRoles().size()+ " §aRôles Disponibles §f§l◀";
-            // motd = "§rStatut actuelle:§6 Lobby§r, Nombre de joueur: §6"+gameState.getInLobbyPlayers().size()+"\n§rNombre de rôle: §6"+gameState.getroleNMB()+"§r, Nombre de rôle disponnible: §6"+gameState.getAvailableRoles().size();
         } else {
             motd = "        §e» §cStatus §f: §6En Cours §f┃ " + gameState.getInGamePlayers().size() +" §9Joueurs §f┃ "+gameState.getroleNMB()+" §9Rôles §e«\n                      §f§l▶ §r§b" +gameState.getAvailableRoles().size()+ " §aRôles Disponibles §f§l◀";
-            // motd = "§rStatut actuelle:§6 En jeu\n§rNombre de joueur en jeu: §6"+gameState.getInGamePlayers().size();
         }
         e.setMotd(motd);
     }

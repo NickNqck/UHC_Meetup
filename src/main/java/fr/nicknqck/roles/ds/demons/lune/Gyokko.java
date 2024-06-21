@@ -28,8 +28,6 @@ public class Gyokko extends DemonsRoles {
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setResi(20);
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 	}
 	@Override
 	public Roles getRoles() {

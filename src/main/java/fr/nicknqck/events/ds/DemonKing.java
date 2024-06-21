@@ -34,7 +34,7 @@ public class DemonKing extends EventBase{
 								setActivated(true);
 								role.setTeam(TeamList.Demon);
 								role.owner.sendMessage("§cLa liste des démons est : ");
-					            gameState.lunesup.forEach(lambda -> role.owner.sendMessage("§7 - §c" + lambda.getName()));
+
 								role.owner.sendMessage("Vous venez de devenir le Démon le plus puissant de toute l'éxistance !");
 								role.owner.getInventory().remove(Items.getDSTanjiroDance());
 								role.setLameIncassable(role.owner, true);

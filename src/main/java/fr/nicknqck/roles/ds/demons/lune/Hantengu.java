@@ -31,8 +31,6 @@ private int killforce = 0;
 		super(player);
 		for (String desc : AllDesc.Hantengu) owner.sendMessage(desc);
 		this.setForce(20 + killforce);
-		gameState.addLuneSupPlayers(owner);
-		if (!gameState.lunesup.contains(owner))gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {

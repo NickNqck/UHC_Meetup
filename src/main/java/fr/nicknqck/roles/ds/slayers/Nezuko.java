@@ -1,7 +1,15 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.util.Random;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.DemonType;
+import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.particles.DoubleCircleEffect;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -9,30 +17,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.particles.DoubleCircleEffect;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-
-public class Nezuko extends RoleBase{
-	int itemcooldown = 0;
-	int regencooldown = 0;
+public class Nezuko extends DemonsRoles {
+	private int itemcooldown = 0;
+	private int regencooldown;
 	boolean PouvoirSanginaireNez = false;
 	boolean firezone = false;
 	boolean nuit = false;
 	boolean jour = false;
-	Random random = new Random();
 	public Nezuko(Player player) {
 		super(player);
 		for (String desc : AllDesc.Nezuko) owner.sendMessage(desc);
 		regencooldown = 20;
 		this.setForce(20);
 		this.setResi(20);
-		gameState.lunesup.add(owner);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof Tanjiro) {
@@ -41,6 +38,12 @@ public class Nezuko extends RoleBase{
 			}
 		}, 20);
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneInferieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Nezuko;

@@ -24,13 +24,6 @@ public class Demon_SimpleV2 extends DemonsRoles {
 		super(player);
 		setForce(20);
 		owner.sendMessage(AllDesc.Demon_SimpleV2);
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-            if (lunesup == null) {
-                    lunesup = gameState.getLuneSupPlayers().get(0);
-                    owner.sendMessage("Votre lune supérieure est "+lunesup.getName());
-
-            }
-        }, 20);
 	}
 
 	@Override

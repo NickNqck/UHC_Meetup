@@ -86,10 +86,8 @@ public class Kyogai extends RoleBase{
 							for (Player s : gameState.getInGamePlayers()) {
 								if (!gameState.hasRoleNull(s)) {
 										if (gameState.getAvailableRoles().containsKey(Roles.Muzan)) {
-											if (gameState.getLuneSupPlayers().contains(s)) {
-												if (gameState.getPlayerRoles().get(e) instanceof Muzan) {
-													s.sendMessage("Le joueur §6"+s.getName()+"§r est§6 "+gameState.getPlayerRoles().get(e).getRoles().name());
-												}
+											if (gameState.getPlayerRoles().get(e) instanceof Muzan) {
+												s.sendMessage("Le joueur §6"+s.getName()+"§r est§6 "+gameState.getPlayerRoles().get(e).getRoles().name());
 											}
 										} else {
 											s.sendMessage("Aucun joueur ne possède le rôle§6 Muzan");
