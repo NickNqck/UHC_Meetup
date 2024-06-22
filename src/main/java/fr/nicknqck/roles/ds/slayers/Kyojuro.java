@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -24,6 +25,10 @@ public class Kyojuro extends RoleBase{
 		this.setLameFr(true);
 		this.setResi(20);
 		gameState.addPillier(owner);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

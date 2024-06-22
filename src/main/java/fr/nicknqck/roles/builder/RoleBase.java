@@ -7,7 +7,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -94,7 +94,6 @@ public abstract class RoleBase implements Role{
 				if (this.getRoles() != null) {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
 				}
-
         }, 20);
 		if (owner != null) {
 			this.uuidOwner = owner.getUniqueId();
@@ -171,7 +170,7 @@ public abstract class RoleBase implements Role{
 	public void sendMessageAfterXseconde(Player player, String message, int seconde) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			player.sendMessage(message);
-		}, 20*seconde);
+		}, 20L *seconde);
 	}
 	public String getTeamColor(Player target) {
 		if (!gameState.hasRoleNull(target)) {
@@ -233,7 +232,6 @@ public abstract class RoleBase implements Role{
 			}
 		}
 	}
-	public TeamList getTeam() {return team;}
 	public TeamList getTeam(Player player) {
 		TeamList team = null;
 		if (!gameState.hasRoleNull(player)) {

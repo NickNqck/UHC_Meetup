@@ -1,5 +1,11 @@
 package fr.nicknqck.roles.aot.soldats;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.aot.builders.SoldatsRoles;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -7,14 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.betteritem.BetterItem;
-
-public class Conny extends RoleBase{
+public class Conny extends SoldatsRoles {
 
 	public Conny(Player player) {
 		super(player);

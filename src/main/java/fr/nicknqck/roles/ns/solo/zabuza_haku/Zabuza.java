@@ -3,7 +3,8 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 import java.util.HashMap;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -78,6 +79,12 @@ public class Zabuza extends NSRoles {
                 AllDesc.bar
         };
     }
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Zabuza_et_Haku;
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {

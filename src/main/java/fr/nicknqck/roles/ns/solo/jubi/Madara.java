@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -66,6 +67,12 @@ public class Madara extends NSRoles {
 			System.out.println(event.getDamage());
 		}
 	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Jubi;
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Obito, 1);

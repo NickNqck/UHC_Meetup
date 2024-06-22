@@ -1,6 +1,14 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.slayers.Kyojuro;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,15 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.events.Events;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Loc;
-
-public class Shinjuro extends RoleBase {
+public class Shinjuro extends SoloRoles {
 
 	public Shinjuro(Player player) {
 		super(player);

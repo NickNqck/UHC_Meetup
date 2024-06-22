@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -29,7 +30,10 @@ public class Shinobu extends RoleBase{
 	public String[] Desc() {
 		return AllDesc.Shinobu;
 	}
-	
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
+	}
 	private int MedicamentCooldown = 0;
 	private int InjectionCooldown = 0;
 	private boolean Injection = false;

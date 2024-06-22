@@ -9,5 +9,5 @@ public interface Role {
     UUID getPlayer();
     String getName();
     GameState.Roles getRoles();
-
+    TeamList getTeam();
 }

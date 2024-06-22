@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -41,6 +42,10 @@ public class Obanai extends RoleBase{
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getSoufleduSerpent());
 		owner.getInventory().addItem(Items.getLamedenichirin());
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public ItemStack[] getItems() {

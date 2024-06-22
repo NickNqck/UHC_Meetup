@@ -10,7 +10,7 @@ import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.essential.HubInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;

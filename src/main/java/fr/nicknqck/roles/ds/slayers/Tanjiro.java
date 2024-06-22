@@ -34,6 +34,10 @@ boolean dance = false;
 		this.setLameFr(true);
 	}
 	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
+	}
+	@Override
 	public Roles getRoles() {
 		return Roles.Tanjiro;
 	}

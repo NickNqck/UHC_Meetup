@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -50,8 +51,12 @@ public class Gaara extends NSRoles {
     private boolean usingArmure = false;
     private Manipulation manipulation = Manipulation.AUCUN;
     private boolean tookDamage = false;
-    
-    
+
+    @Override
+    public TeamList getTeam() {
+        return TeamList.Solo;
+    }
+
     @Override
     public void resetCooldown() {
     	fixCooldown = 0;

@@ -1,5 +1,14 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -7,16 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.betteritem.BetterItem;
-
-public class KyogaiV2 extends RoleBase{
+public class KyogaiV2 extends SoloRoles {
 
 	public KyogaiV2(Player player) {
 		super(player);
@@ -31,6 +31,10 @@ public class KyogaiV2 extends RoleBase{
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(owner, 3);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Solo;
 	}
 	@Override
 	public String[] Desc() {

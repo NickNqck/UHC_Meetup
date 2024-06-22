@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import java.util.Random;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -56,6 +57,12 @@ public class FFA_Pourfendeur extends RoleBase {
 	public String[] Desc() {
 		return AllDesc.Pourfendeur;
 	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Solo;
+	}
+
 	public boolean cheat = false;
 	boolean Soleil = false;
 	boolean Lune = false;

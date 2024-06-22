@@ -2,8 +2,8 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
@@ -24,7 +24,10 @@ public class Furuto extends DemonsRoles {
 		super(player);
 		owner.sendMessage(AllDesc.Furuto);
 	}
-
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
+	}
 	@Override
 	public DemonType getRank() {
 		return DemonType.Demon;

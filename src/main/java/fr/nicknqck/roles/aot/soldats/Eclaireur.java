@@ -1,15 +1,14 @@
 package fr.nicknqck.roles.aot.soldats;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.aot.builders.SoldatsRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Eclaireur extends RoleBase{
+public class Eclaireur extends SoldatsRoles {
 
 	public Eclaireur(Player player) {
 		super(player);

@@ -4,8 +4,9 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
@@ -38,7 +39,10 @@ public class Nezuko extends DemonsRoles {
 			}
 		}, 20);
 	}
-
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
+	}
 	@Override
 	public DemonType getRank() {
 		return DemonType.LuneInferieur;

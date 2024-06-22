@@ -2,7 +2,6 @@ package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -14,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class Zombie extends RoleBase {
+public class Zombie extends OverWorldRoles {
 
     private final ItemStack CerveauItem = new ItemBuilder(Material.ROTTEN_FLESH).setName("§cCerveau").setLore("§7Vous permez de dévorrez un cerveau pour vous rendre plus fort").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
     private int cdCerveau = 0;

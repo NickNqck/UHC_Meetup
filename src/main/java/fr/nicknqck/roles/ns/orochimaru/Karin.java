@@ -1,27 +1,26 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.utils.ArrowTargetUtils;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ArrowTargetUtils;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-public class Karin extends NSRoles {
+public class Karin extends OrochimaruRoles {
 
 	public Karin(Player player) {
 		super(player);

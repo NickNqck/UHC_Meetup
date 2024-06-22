@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -37,7 +38,10 @@ public class Kagaya extends RoleBase {
 	public String[] Desc() {
 		return AllDesc.Kagaya;
 	}
-
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
+	}
 	@Override
 	public String getName() {
 		return "§aKagaya";

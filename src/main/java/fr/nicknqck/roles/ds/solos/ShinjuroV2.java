@@ -1,5 +1,13 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -10,16 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.betteritem.BetterItem;
-
-public class ShinjuroV2 extends RoleBase{
+public class ShinjuroV2 extends SoloRoles {
 
 	public ShinjuroV2(Player player) {
 		super(player);

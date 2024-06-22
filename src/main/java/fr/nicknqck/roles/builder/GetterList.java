@@ -2,6 +2,7 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

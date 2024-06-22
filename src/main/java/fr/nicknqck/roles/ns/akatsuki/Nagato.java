@@ -2,11 +2,11 @@ package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.utils.*;
 import org.bukkit.Bukkit;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Nagato extends NSRoles {
+public class Nagato extends AkatsukiRoles {
     private final ItemStack ShuradoItem = new ItemBuilder(Material.DIAMOND_SWORD).hideEnchantAttributes().addEnchant(Enchantment.DAMAGE_ALL, 4).setName("§7Shuradô").setLore("§7Sharpness IV").toItemStack();
     private int useJikogudo = 0;
     private final ItemStack ShikushodoItem = new ItemBuilder(Material.NETHER_STAR).setName("§fShikushodo").setLore(

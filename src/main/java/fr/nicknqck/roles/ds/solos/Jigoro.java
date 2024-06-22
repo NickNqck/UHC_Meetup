@@ -1,7 +1,17 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.particles.MathUtil;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -10,17 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.particles.MathUtil;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-
-public class Jigoro extends RoleBase{
+public class Jigoro extends SoloRoles {
 	private boolean Zoneactiver2 = false;
 	private boolean killzen = false;
 	private boolean killkai = false;

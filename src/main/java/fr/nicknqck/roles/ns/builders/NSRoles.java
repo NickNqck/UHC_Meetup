@@ -1,9 +1,10 @@
-package fr.nicknqck.roles.builder;
+package fr.nicknqck.roles.ns.builders;
 
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.entity.Player;
 
-public abstract class NSRoles extends RoleBase{
+public abstract class NSRoles extends RoleBase {
     public NSRoles(Player player) {
         super(player);
     }

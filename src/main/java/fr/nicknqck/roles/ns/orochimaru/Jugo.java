@@ -1,7 +1,13 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -10,15 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.RandomUtils;
-
-public class Jugo extends NSRoles {
+public class Jugo extends Orochimaru {
 
 	public Jugo(Player player) {
 		super(player);

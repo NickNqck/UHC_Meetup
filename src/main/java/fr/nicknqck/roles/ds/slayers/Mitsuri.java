@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,6 +33,10 @@ public class Mitsuri extends RoleBase {
     				return true;
     			}).setPosable(false).setDroppable(false).getItemStack()
     	};
+    }
+    @Override
+    public TeamList getTeam() {
+        return TeamList.Slayer;
     }
     @Override
     public void GiveItems() {

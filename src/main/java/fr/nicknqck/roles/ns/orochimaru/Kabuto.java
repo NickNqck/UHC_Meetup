@@ -1,9 +1,17 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
-import java.util.HashMap;
-
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.HubListener;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.utils.GlobalUtils;
+import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,18 +24,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.HubListener;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.GlobalUtils;
-import fr.nicknqck.utils.ItemBuilder;
+import java.util.HashMap;
 
-public class Kabuto extends NSRoles {
+public class Kabuto extends OrochimaruRoles {
 
 	public Kabuto(Player player) {
 		super(player);

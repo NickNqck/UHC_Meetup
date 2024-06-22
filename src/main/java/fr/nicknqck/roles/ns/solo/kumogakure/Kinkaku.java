@@ -2,7 +2,8 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
@@ -44,6 +45,12 @@ public class Kinkaku extends NSRoles {
             }
         }, 100);
     }
+
+    @Override
+    public TeamList getTeam() {
+        return TeamList.Kumogakure;
+    }
+
     @Override
     public GameState.Roles getRoles() {
         return GameState.Roles.Kinkaku;

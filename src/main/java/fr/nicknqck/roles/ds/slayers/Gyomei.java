@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -24,6 +25,11 @@ public class Gyomei extends RoleBase{
 		this.setResi(20);
 		gameState.addPillier(owner);
 	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Gyomei;

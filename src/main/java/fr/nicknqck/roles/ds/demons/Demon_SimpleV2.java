@@ -1,7 +1,8 @@
 package fr.nicknqck.roles.ds.demons;
 
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -11,7 +12,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -25,7 +25,10 @@ public class Demon_SimpleV2 extends DemonsRoles {
 		setForce(20);
 		owner.sendMessage(AllDesc.Demon_SimpleV2);
 	}
-
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
+	}
 	@Override
 	public DemonType getRank() {
 		return DemonType.Demon;

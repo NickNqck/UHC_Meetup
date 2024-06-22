@@ -1,17 +1,16 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.aot.builders.TitansRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Jelena extends RoleBase {
+public class Jelena extends TitansRoles {
 
 	public Jelena(Player player) {
 		super(player);

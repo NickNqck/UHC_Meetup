@@ -1,23 +1,22 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import fr.nicknqck.roles.builder.NSRoles;
-import fr.nicknqck.roles.ns.Intelligence;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.Loc;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
-public class ZetsuNoir extends NSRoles {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+public class ZetsuNoir extends AkatsukiRoles {
 
 	public ZetsuNoir(Player player) {
 		super(player);

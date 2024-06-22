@@ -1,7 +1,8 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
@@ -64,6 +65,10 @@ public class Kaigaku extends DemonsRoles {
 				Items.getSoufleFoudre3iememouvement(),
 				Items.getSoufleFoudre4iememouvement()
 		};
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
 	}
 	@Override
 	public String[] Desc() {

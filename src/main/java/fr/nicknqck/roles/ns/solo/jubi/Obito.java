@@ -6,7 +6,8 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -56,6 +57,11 @@ public class Obito extends NSRoles {
 	@Override
 	public String getName() {
 		return "§dObito";
+	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Jubi;
 	}
 
 	private static class ObitoRunnable extends BukkitRunnable{

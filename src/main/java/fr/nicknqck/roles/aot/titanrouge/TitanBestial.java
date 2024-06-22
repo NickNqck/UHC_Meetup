@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import fr.nicknqck.roles.aot.builders.TitansRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,13 +18,13 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.aot.soldats.Soldat;
-import fr.nicknqck.roles.aot.titans.TitanListener;
-import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.aot.builders.titans.TitanListener;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 
-public class TitanBestial extends RoleBase{
+public class TitanBestial extends TitansRoles {
 
 	public TitanBestial(Player player) {
 		super(player);

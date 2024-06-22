@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import java.util.Random;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,6 +35,10 @@ public class Tengen extends RoleBase{
 		this.setCanUseBlade(true);
 		this.setForce(20);
 		gameState.addPillier(owner);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,6 +23,10 @@ public class Inosuke extends RoleBase{
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		this.setResi(20);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

@@ -3,7 +3,7 @@ package fr.nicknqck.roles.mc.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerKill;
-import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.SoloRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Warden extends RoleBase {
+public class Warden extends SoloRoles {
 
     private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("§c").toItemStack();
     private final ItemStack laser = new ItemBuilder(Material.NETHER_STAR).setLore("§7").setUnbreakable(true).setName("§bLaser").toItemStack();

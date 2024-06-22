@@ -1,9 +1,20 @@
 package fr.nicknqck.roles.ns.shinobi;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.utils.GlobalUtils;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.powers.KamuiUtils;
+import fr.nicknqck.utils.powers.KamuiUtils.Users;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
@@ -14,22 +25,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.GlobalUtils;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.powers.KamuiUtils;
-import fr.nicknqck.utils.powers.KamuiUtils.Users;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.StringUtils;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
-public class Kakashi extends RoleBase {
+public class Kakashi extends ShinobiRoles {
 
 	public Kakashi(Player player) {
 		super(player);
@@ -41,6 +41,12 @@ public class Kakashi extends RoleBase {
 		}
 		setCanBeHokage(true);
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.GENIE;
+	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.Kakashi;

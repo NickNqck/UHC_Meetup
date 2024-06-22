@@ -1,21 +1,21 @@
 package fr.nicknqck.roles.aot.solo;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Gabi extends RoleBase {
+public class Gabi extends AotRoles {
 	private boolean killshifter = false;
 	public Gabi(Player player) {
 		super(player);
@@ -27,6 +27,12 @@ public class Gabi extends RoleBase {
 	public Roles getRoles() {
 		return Roles.Gabi;
 	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Solo;
+	}
+
 	private	List<Player> inList = new ArrayList<>();
 	@Override
 	public String[] Desc() {

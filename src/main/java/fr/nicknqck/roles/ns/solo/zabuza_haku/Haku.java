@@ -6,7 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -81,6 +82,12 @@ public class Haku extends NSRoles {
                 AllDesc.bar
         };
     }
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Zabuza_et_Haku;
+	}
+
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {

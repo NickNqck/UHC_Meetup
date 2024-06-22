@@ -1,10 +1,14 @@
 package fr.nicknqck.roles.ds.solos;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.PacketDisplay;
+import fr.nicknqck.utils.WorldUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -14,20 +18,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PacketDisplay;
-import fr.nicknqck.utils.WorldUtils;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-public class Yoriichi extends RoleBase{
+public class Yoriichi extends SoloRoles {
 
 	public Yoriichi(Player player) {
 		super(player);
-		for (String desc : AllDesc.Yoriichi) owner.sendMessage(desc);
+		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		this.setResi(20);

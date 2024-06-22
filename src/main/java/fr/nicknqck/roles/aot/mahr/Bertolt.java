@@ -2,16 +2,16 @@ package fr.nicknqck.roles.aot.mahr;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.aot.titans.TitanListener;
-import fr.nicknqck.roles.aot.titans.Titans;
-import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.aot.builders.MahrRoles;
+import fr.nicknqck.roles.aot.builders.titans.TitanListener;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 ;
 
-public class Bertolt extends RoleBase{
+public class Bertolt extends MahrRoles {
 	public Bertolt(Player player) {
 		super(player);
 		owner.sendMessage(Desc());

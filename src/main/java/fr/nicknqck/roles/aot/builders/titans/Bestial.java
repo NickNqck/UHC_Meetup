@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.aot.titans;
+package fr.nicknqck.roles.aot.builders.titans;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.roles.aot.solo.Gabi;

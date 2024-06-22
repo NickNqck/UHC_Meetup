@@ -11,7 +11,7 @@ import fr.nicknqck.events.essential.HubInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.aot.titans.TitanListener;
+import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.ns.Hokage;
 import lombok.Getter;
 import lombok.Setter;

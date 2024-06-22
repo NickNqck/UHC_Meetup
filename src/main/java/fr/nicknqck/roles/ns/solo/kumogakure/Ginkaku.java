@@ -5,8 +5,8 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.StunManager;
-import fr.nicknqck.roles.builder.NSRoles;
-import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.ItemBuilder;
@@ -67,6 +67,12 @@ public class Ginkaku extends NSRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Kumogakure;
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Kinkaku, 16);

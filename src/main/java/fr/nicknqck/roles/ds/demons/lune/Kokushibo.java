@@ -5,8 +5,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
@@ -47,7 +47,10 @@ public class Kokushibo extends DemonsRoles {
 		solo = false;
 		killtanjiro = false;
 	}
-
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
+	}
 	@Override
 	public DemonType getRank() {
 		return DemonType.LuneSuperieur;

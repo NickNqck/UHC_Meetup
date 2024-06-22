@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import java.util.Random;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,6 +23,10 @@ public class Urokodaki extends RoleBase{
 		for (String desc : AllDesc.Urokodaki) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		setForce(20);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import java.util.HashMap;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,6 +28,10 @@ public class Tomioka extends RoleBase{
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		gameState.addPillier(owner);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

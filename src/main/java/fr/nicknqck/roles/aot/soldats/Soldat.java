@@ -1,18 +1,17 @@
 package fr.nicknqck.roles.aot.soldats;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.aot.builders.SoldatsRoles;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.RandomUtils;
-
-public class Soldat extends RoleBase {
+public class Soldat extends SoldatsRoles {
 	public enum kit {
 		Garnison,
 		Brigade,

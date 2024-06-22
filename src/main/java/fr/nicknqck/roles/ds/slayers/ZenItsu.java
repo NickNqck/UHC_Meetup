@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -22,6 +23,10 @@ public class ZenItsu extends RoleBase{
 		for (String desc : AllDesc.ZenItsu) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setForce(20);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

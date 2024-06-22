@@ -1,7 +1,8 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -56,7 +57,10 @@ private int killforce = 0;
 		Karaku,
 		Hantengu
 	}
-	
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
+	}
 	@Override
 		public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

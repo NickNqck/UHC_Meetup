@@ -3,7 +3,7 @@ package fr.nicknqck.roles.valo.agents;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.StunManager;
-import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.SoloRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.GlobalUtils;
@@ -25,7 +25,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class Iso extends RoleBase {
+public class Iso extends SoloRoles {
     private final ItemStack ProtectionItem = new ItemBuilder(Material.NETHER_STAR).setName("§dProtection couplé").setLore("§7Vous permet de crée un timer visant à ne pas subir de dégat").toItemStack();
     private int cdProtection = 0;
     private int stackedCoup = 0;

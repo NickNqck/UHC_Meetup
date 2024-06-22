@@ -1,27 +1,33 @@
 package fr.nicknqck.roles.ns.shinobi;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.StringUtils;
-
-public class YondaimeRaikage extends RoleBase {
+public class YondaimeRaikage extends ShinobiRoles {
 
 	public YondaimeRaikage(Player player) {
 		super(player);
 		setChakraType(Chakras.RAITON);
 		owner.sendMessage(Desc());
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.INTELLIGENT;
+	}
+
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());

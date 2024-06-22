@@ -4,10 +4,11 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
@@ -25,7 +26,7 @@ import java.util.UUID;
 
 import static fr.nicknqck.player.StunManager.stun;
 
-public class Shikamaru extends NSRoles {
+public class Shikamaru extends ShinobiRoles {
     private final ItemStack stunItem = new ItemBuilder(Material.NETHER_STAR).setName("§aStun").setLore("§7Vous permet d'empêcher de bouger un joueur").toItemStack();
     private int cdStun = 0;
     private int powerDistance = 25;

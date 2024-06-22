@@ -1,5 +1,15 @@
 package fr.nicknqck.roles.aot.solo;
 
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -7,18 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.betteritem.BetterItem;
-
-public class TitanUltime extends RoleBase{
+public class TitanUltime extends AotRoles {
 
 	public TitanUltime(Player player) {
 		super(player);
@@ -31,6 +30,12 @@ public class TitanUltime extends RoleBase{
 	public Roles getRoles() {
 		return Roles.TitanUltime;
 	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Solo;
+	}
+
 	@Override
 	public String[] Desc() {
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

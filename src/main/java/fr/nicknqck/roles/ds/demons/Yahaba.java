@@ -3,14 +3,19 @@ package fr.nicknqck.roles.ds.demons;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Yahaba extends DemonsRoles {
 	
@@ -21,14 +26,27 @@ public class Yahaba extends DemonsRoles {
 	public Yahaba(Player player) {
 		super(player);
 		setForce(20);
-		owner.sendMessage(AllDesc.Yahaba);
-		owner.sendMessage("Une cible vous sera attribué dans§6 10s");
+		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			 if (cible == null) {
-	             cible = canBeCibleYahaba.get(0);
-	             owner.sendMessage("Pour connaitre votre cible faite§6 /ds me");
-	         }
-		}, 20*10);
+            List<Player> Ciblable = new ArrayList<>(getIGPlayers());
+			Collections.shuffle(Ciblable, Main.RANDOM);
+			for (Player p : Ciblable) {
+				if (!gameState.hasRoleNull(p)) {
+					if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles) {
+
+					} else {
+						
+					}
+				}
+			}
+			Ciblable.stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getPlayerRoles().get(p).getRoles().getTeam().equals(TeamList.Slayer));
+			owner.sendMessage("§7Votre §ccible§7 est "+(cible != null ? cible.getDisplayName() : "inexistante"));
+		}, 60L);
+	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
 	}
 
 	@Override
@@ -44,8 +62,7 @@ public class Yahaba extends DemonsRoles {
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
             if (lunesup != null) {
-                    owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
-
+                owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
             }
             if (cible != null && !killcible) {
             	owner.sendMessage("§cVotre cible est:§r "+cible.getName());

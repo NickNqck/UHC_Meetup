@@ -1,6 +1,7 @@
 
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.DemonMain;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -24,6 +25,10 @@ public class Sabito extends RoleBase{
 		for (String desc : AllDesc.Sabito) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setResi(20);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

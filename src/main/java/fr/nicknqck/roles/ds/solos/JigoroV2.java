@@ -44,6 +44,10 @@ public class JigoroV2 extends RoleBase{
 		setLameIncassable(owner, true);
 	}
 	@Override
+	public TeamList getTeam() {
+		return TeamList.Solo;
+	}
+	@Override
 	public Roles getRoles() {
 		return Roles.JigoroV2;
 	}

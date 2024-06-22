@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.mahr;
 
 import java.text.DecimalFormat;
 
+import fr.nicknqck.roles.aot.builders.MahrRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +14,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 
-public class Magath extends RoleBase{
+public class Magath extends MahrRoles {
 
 	public Magath(Player player) {
 		super(player);

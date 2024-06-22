@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,7 +38,10 @@ public class Daki extends DemonsRoles {
 			}
 		}, 20);
 	}
-
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
+	}
 	@Override
 	public DemonType getRank() {
 		return DemonType.LuneSuperieur;

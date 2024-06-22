@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
+import fr.nicknqck.roles.aot.builders.TitansRoles;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
-public class PetitTitan extends RoleBase{
+public class PetitTitan extends TitansRoles {
 
 	public PetitTitan(Player player) {
 		super(player);

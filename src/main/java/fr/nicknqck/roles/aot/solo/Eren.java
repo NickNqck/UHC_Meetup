@@ -3,8 +3,10 @@ package fr.nicknqck.roles.aot.solo;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,14 +16,14 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Eren extends RoleBase {
+public class Eren extends AotRoles {
 	private boolean killBestial = false;
 	private boolean killPieck = false;
 	private boolean killPorco = false;
@@ -38,6 +40,12 @@ public class Eren extends RoleBase {
 	public Roles getRoles() {
 		return Roles.Eren;
 	}
+
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Solo;
+	}
+
 	@Override
 	public void GiveItems() {
 		owner.getInventory().addItem(getItems());

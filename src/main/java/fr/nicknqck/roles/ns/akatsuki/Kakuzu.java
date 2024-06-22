@@ -1,11 +1,14 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,15 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class Kakuzu extends NSRoles {
+public class Kakuzu extends AkatsukiRoles {
 
 	public Kakuzu(Player player) {
 		super(player);

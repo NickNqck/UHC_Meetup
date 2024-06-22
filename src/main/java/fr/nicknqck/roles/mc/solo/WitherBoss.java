@@ -2,7 +2,7 @@ package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.SoloRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class WitherBoss extends RoleBase {
+public class WitherBoss extends SoloRoles {
     private boolean isFlying = false;
     private final ItemStack FlyItem = new ItemBuilder(Material.FEATHER).setName("§aFly").setLore("§7Vous permet de voler pendant un temp maximum de§c 15s").toItemStack();
     private int cdFly = 0;

@@ -1,18 +1,17 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.aot.builders.TitansRoles;
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TitanDeviant extends RoleBase {
+public class TitanDeviant extends TitansRoles {
 	public TitanDeviant(Player player) {
 		super(player);
 		owner.sendMessage(Desc());

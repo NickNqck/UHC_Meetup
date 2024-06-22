@@ -1,14 +1,14 @@
 package fr.nicknqck.roles.ds.demons;
 
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
 public class Susamaru extends DemonsRoles {
@@ -35,7 +35,11 @@ public class Susamaru extends DemonsRoles {
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getSusamaruBow());
 		super.GiveItems();
-	}	
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
+	}
 	public boolean Niveau1 = true;
 	public boolean Niveau2 = false;
 	public int cooldown = -1;

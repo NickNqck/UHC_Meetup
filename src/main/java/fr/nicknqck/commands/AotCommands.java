@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.aot.titans.Titans;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
 
 public class AotCommands implements CommandExecutor {
 GameState gameState;

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import java.util.Random;
 
+import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,6 +41,10 @@ public class Gyutaro extends RoleBase{
 		faucillecooldown = 0;
 		itemcooldown = 0;
 		troisiemeoeilcooldown = 0;
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
 	}
 	@Override
 	public String[] Desc() {

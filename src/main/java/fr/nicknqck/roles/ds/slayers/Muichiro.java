@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.Gyokko;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,6 +43,10 @@ public class Muichiro extends RoleBase{
 	private int marquecooldown = 0;
 	private int dsbrumeuse =0;
 	private int dsbrumecd = 0;
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
+	}
 	@Override
 	public void resetCooldown() {
 		marquecooldown = 0;

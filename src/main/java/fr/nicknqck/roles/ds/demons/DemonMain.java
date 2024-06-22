@@ -1,7 +1,8 @@
 package fr.nicknqck.roles.ds.demons;
 
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -22,6 +23,10 @@ public class DemonMain extends DemonsRoles {
 		this.setForce(20);
 		 this.setResi(20);
 		 owner.sendMessage(Desc());
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
 	}
 	@Override
 	public Roles getRoles() {

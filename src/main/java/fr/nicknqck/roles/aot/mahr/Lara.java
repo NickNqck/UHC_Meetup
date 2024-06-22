@@ -1,15 +1,14 @@
 package fr.nicknqck.roles.aot.mahr;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.aot.builders.MahrRoles;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.aot.titans.Titans;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Lara extends RoleBase {
+public class Lara extends MahrRoles {
 
 	public Lara(Player player) {
 		super(player);

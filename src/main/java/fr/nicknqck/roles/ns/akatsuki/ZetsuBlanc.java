@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,7 +21,7 @@ import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 
-public class ZetsuBlanc extends NSRoles {
+public class ZetsuBlanc extends AkatsukiRoles {
 
 	public ZetsuBlanc(Player player) {
 		super(player);

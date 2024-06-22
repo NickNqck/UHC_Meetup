@@ -44,7 +44,10 @@ public class Kyogai extends RoleBase{
 		}
 		return AllDesc.Kyogai;
 	}
-
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Solo;
+	}
 	@Override
 	public String getName() {
 		return "§cKyogai";

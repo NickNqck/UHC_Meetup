@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.aot.titans;
+package fr.nicknqck.roles.aot.builders.titans;
 
 public enum Titans {
 	

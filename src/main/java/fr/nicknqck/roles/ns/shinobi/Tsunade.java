@@ -1,11 +1,14 @@
 package fr.nicknqck.roles.ns.shinobi;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.utils.GlobalUtils;
+import fr.nicknqck.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,15 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.GlobalUtils;
-import fr.nicknqck.utils.ItemBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-public class Tsunade extends NSRoles {
+public class Tsunade extends ShinobiRoles {
 
 	public Tsunade(Player player) {
 		super(player);

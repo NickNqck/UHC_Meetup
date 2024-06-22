@@ -4,8 +4,9 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.DemonType;
-import fr.nicknqck.roles.builder.DemonsRoles;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.ItemBuilder;
@@ -193,7 +194,11 @@ public class Nakime extends DemonsRoles {
 		setResi(0);
 		setNoFall(false);
 		cooldown = 60*8;
-		}
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Demon;
+	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim == owner) {

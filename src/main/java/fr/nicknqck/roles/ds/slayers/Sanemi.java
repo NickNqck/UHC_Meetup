@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import org.bukkit.Bukkit;
@@ -34,6 +35,10 @@ public class Sanemi extends RoleBase {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
+	}
+	@Override
+	public TeamList getTeam() {
+		return TeamList.Slayer;
 	}
 	@Override
 	public String[] Desc() {

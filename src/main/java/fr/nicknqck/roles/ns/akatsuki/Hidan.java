@@ -1,9 +1,14 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
-import java.util.HashMap;
-
-import fr.nicknqck.roles.builder.NSRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -14,15 +19,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.particles.MathUtil;
-import net.minecraft.server.v1_8_R3.EnumParticle;
+import java.util.HashMap;
 
-public class Hidan extends NSRoles {
+public class Hidan extends AkatsukiRoles {
 
 	public Hidan(Player player) {
 		super(player);

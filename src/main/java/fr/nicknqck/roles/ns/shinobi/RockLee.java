@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
+import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -20,7 +22,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class RockLee extends RoleBase{
+public class RockLee extends ShinobiRoles {
 
 	public RockLee(Player player) {
 		super(player);
@@ -33,6 +35,12 @@ public class RockLee extends RoleBase{
 			} 
 		}, cdDrunkenFist);
 	}
+
+	@Override
+	public Intelligence getIntelligence() {
+		return Intelligence.PEUINTELLIGENT;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.RockLee;
