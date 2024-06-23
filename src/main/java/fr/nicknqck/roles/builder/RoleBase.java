@@ -67,10 +67,7 @@ public abstract class RoleBase implements Role{
 	public ArrayList<Player> getIGPlayers() {
 		return gameState.getInGamePlayers();
 	}
-
-	public int maxduralame = 40;
 	boolean lameincassable = false;
-	public int actualduralame = 0;
 	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
@@ -350,57 +347,7 @@ public abstract class RoleBase implements Role{
 	public void addSpeedAtInt(Player player, float speedpercent) {player.setWalkSpeed(player.getWalkSpeed()+(speedpercent/500));}
 
 	public void neoItemUseAgainst(ItemStack itemInHand, Player player, GameState gameState, Player damager) {
-		Player p = damager;
 		ItemUseAgainst(itemInHand, player, gameState);
-		if (gameState.getInGamePlayers().contains(p)) {
-			if (gameState.getPlayerRoles().containsKey(p)) {
-				if (getPlayerRoles(p).hasblade) {
-					if (getPlayerRoles(p).lameincassable)return;
-					if (getPlayerRoles(p).actualduralame <= 0)return;
-					int r = RandomUtils.getRandomInt(0, 5);
-					System.out.println("Dura -1 "+getPlayerRoles(p).owner.getName()+" + "+getPlayerRoles(p).actualduralame+" / "+getPlayerRoles(p).maxduralame);
-					if (r < 1) {
-						getPlayerRoles(p).actualduralame-=1;
-						if (getPlayerRoles(p).actualduralame == 0) {
-							getPlayerRoles(p).owner.sendMessage("Votre lame c'est cassé vous perdez donc les effets dû à votre lame");
-							if (getPlayerRoles(p).hasLamecoeur()) {
-								getPlayerRoles(p).setMaxHealth(getPlayerRoles(p).getMaxHealth()-4.0);
-								getPlayerRoles(p).setLamecoeur(false);
-								getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.LIGHT_PURPLE+"Coeur");
-							}
-							if (getPlayerRoles(p).hasLameForce()) {
-								getPlayerRoles(p).addBonusforce(-10);
-								getPlayerRoles(p).setLameForce(false);
-								getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.RED+"Force");
-							}
-							if (getPlayerRoles(p).hasLameFr()) {
-								if (getPlayerRoles(p).getRoles() != Roles.Tanjiro) {
-									getPlayerRoles(p).owner.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-									getPlayerRoles(p).setLameFr(false);
-									getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.GOLD+"Fire Résistance");
-								}
-							}
-							if (getPlayerRoles(p).hasLameresi()) {
-								getPlayerRoles(p).addBonusResi(-10);
-								getPlayerRoles(p).setLameresi(false);
-								getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.GRAY+"Résistance");
-							}
-							if (getPlayerRoles(p).hasLameSpeed()) {
-								getPlayerRoles(p).addSpeedAtInt(p, -10);
-								getPlayerRoles(p).setLameSpeed(false);
-								getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.AQUA+"Speed");
-							}
-							if (getPlayerRoles(p).isHasNoFall()) {
-								if (getPlayerRoles(p).getRoles() != Roles.Kanao) {
-									getPlayerRoles(p).setNoFall(false);
-									getPlayerRoles(p).owner.sendMessage("Vous avez perdu votre Lame de "+ChatColor.GREEN+"NoFall");
-								}
-							}
-						}
-					}
-				}
-			}
-		}	
 	}
 	public void onEat(ItemStack item, GameState gameState) {}
 	public void onDSCommandSend(String[] args, GameState gameState) {}

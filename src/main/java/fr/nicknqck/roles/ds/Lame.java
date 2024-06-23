@@ -41,10 +41,8 @@ public class Lame implements Listener{
 									}
 								}
 							}
-							toGett.getUsers().put(p.getUniqueId(), 40);
 							toGett.getConsumer().accept(e);
-							role.setLames(toGett);
-							p.sendMessage("§7Vous avez obtenue la lame de "+toGett.name());
+							giveLame(role, toGett);
 						}
 					}
 				} else {
@@ -54,5 +52,10 @@ public class Lame implements Listener{
 				p.sendMessage("Il faut avoir un rôle pour obtenir une lame");
 			}
 		}
+	}
+	public static void giveLame(DemonsSlayersRoles role, Lames lames){
+		lames.getUsers().put(role.getUuidOwner(), 40);
+		role.setLames(lames);
+		role.owner.sendMessage("§7Vous avez obtenue la lame de "+lames.name());
 	}
 }
