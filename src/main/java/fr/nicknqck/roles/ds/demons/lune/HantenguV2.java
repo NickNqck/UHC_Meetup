@@ -416,7 +416,7 @@ public class HantenguV2 extends DemonsRoles {
 					if (cdsekido <= 0) {
 						for (Player p : gameState.getInGamePlayers()) {
 							if (p != owner) {
-								if (getPlayerRoles(p).getTeam() != TeamList.Demon) {
+								if (getPlayerRoles(p).getOriginTeam() != TeamList.Demon) {
 									if (p.getLocation().distance(owner.getLocation()) <= 25) {
 										if (p.getHealth() > 4.0) {
 											p.setHealth(p.getHealth() - 4.0);
@@ -478,7 +478,7 @@ public class HantenguV2 extends DemonsRoles {
 				if (clone == Clone.Urogi || clone == Clone.Zohakuten) {
 					if (cdcri <= 0) {
 						Player t = getRightClicked(30, 1);
-						if (t == null || getPlayerRoles(t).getTeam() == TeamList.Demon) {
+						if (t == null || getPlayerRoles(t).getOriginTeam() == TeamList.Demon) {
 							owner.sendMessage("§cVeuiller viser un joueur");
 						} else {
 							Player player = (Player) t;
@@ -680,7 +680,7 @@ public class HantenguV2 extends DemonsRoles {
 		super.PlayerKilled(killer, victim, gameState);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 }

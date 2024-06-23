@@ -45,7 +45,7 @@ public class Enmu extends DemonsRoles {
 		return AllDesc.Enmu;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
@@ -95,7 +95,7 @@ public class Enmu extends DemonsRoles {
 				for (Player p : gameState.getInGamePlayers()) {
 					if (gameState.getInGamePlayers().contains(p)) {
 						for (RoleBase r : gameState.getPlayerRoles().values()) {
-							if (r.getTeam() != TeamList.Demon) {
+							if (r.getOriginTeam() != TeamList.Demon) {
 								if (r.getRoles() != Roles.Nezuko) {
 									if (p != owner) {
 										double min = 10;

@@ -29,7 +29,7 @@ public class Gabi extends AotRoles {
 	}
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 

@@ -31,7 +31,7 @@ public class Pourfendeur extends RoleBase {
 		Foudre;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	Soufle form = null;

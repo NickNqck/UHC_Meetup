@@ -39,7 +39,7 @@ public class Daki extends DemonsRoles {
 		}, 20);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
@@ -152,7 +152,7 @@ public class Daki extends DemonsRoles {
 				for (Player pl : gameState.getInGamePlayers()) {
 					RoleBase p = gameState.getPlayerRoles().get(pl);
 					if (pl != owner) {
-						if (p.getRoles() != Roles.Tanjiro && p.getTeam() != TeamList.Demon && p.getRoles() != Roles.Inosuke && p.getRoles() != Roles.Tengen && p.getRoles() != Roles.ZenItsu && p.getRoles() != Roles.Daki && p.getRoles() != Roles.Gyutaro) {
+						if (p.getRoles() != Roles.Tanjiro && p.getOriginTeam() != TeamList.Demon && p.getRoles() != Roles.Inosuke && p.getRoles() != Roles.Tengen && p.getRoles() != Roles.ZenItsu && p.getRoles() != Roles.Daki && p.getRoles() != Roles.Gyutaro) {
 							Player player = p.owner;
 							if (player.getLocation().distance(owner.getLocation()) <= 30) {
 								if (!gameState.getInObiPlayers().contains(player)) {
@@ -164,8 +164,8 @@ public class Daki extends DemonsRoles {
 								}//getobi
 							} //location
 						} else {
-							if (p.getTeam() == TeamList.Demon) {
-								pl.sendMessage("§6Daki§r à utilisé ses Obis mais vous y êtes visiblement autorisé car vous êtes dans le camp des§6 "+p.getTeam().name());
+							if (p.getOriginTeam() == TeamList.Demon) {
+								pl.sendMessage("§6Daki§r à utilisé ses Obis mais vous y êtes visiblement autorisé car vous êtes dans le camp des§6 "+p.getOriginTeam().name());
                             } else {
 								pl.sendMessage("§6Daki§r à utilisé ses Obis mais vous y êtes visiblement autorisé car vous possédez le rôle:§6 "+p.getRoles().name());
                             }

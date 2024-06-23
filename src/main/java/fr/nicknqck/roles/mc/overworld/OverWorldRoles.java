@@ -10,7 +10,7 @@ public abstract class OverWorldRoles extends RoleBase {
     }
 
     @Override
-    public TeamList getTeam() {
+    public TeamList getOriginTeam() {
         return TeamList.OverWorld;
     }
 }

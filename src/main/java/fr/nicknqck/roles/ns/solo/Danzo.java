@@ -59,7 +59,7 @@ public class Danzo extends NSRoles {
 	}
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 

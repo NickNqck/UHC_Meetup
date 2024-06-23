@@ -44,7 +44,7 @@ public class Muichiro extends RoleBase{
 	private int dsbrumeuse =0;
 	private int dsbrumecd = 0;
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

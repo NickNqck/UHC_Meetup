@@ -23,7 +23,7 @@ public class Akaza extends DemonsRoles {
 		return DemonType.LuneSuperieur;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

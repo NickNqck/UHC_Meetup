@@ -615,11 +615,11 @@ public class GameListener implements Listener {
                     }
                     if (gameState.getPlayerRoles().containsKey(damager)) {
                         RoleBase role = gameState.getPlayerRoles().get(damager);
-                        if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
+                        if (role.getOriginTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
                             for (Player p : gameState.getInGamePlayers()) {
                                 if (!gameState.hasRoleNull(p)) {
                                     RoleBase role2 = gameState.getPlayerRoles().get(p);
-                                    if (role2.getTeam() == TeamList.Demon || role2.getRoles() == Roles.Kaigaku) {
+                                    if (role2.getOriginTeam() == TeamList.Demon || role2.getRoles() == Roles.Kaigaku) {
                                         p.sendMessage("§cLe joueur§4 "+damager.getName()+"§c à tué quelqu'un....");
                                     }
                                 }
@@ -654,7 +654,7 @@ public class GameListener implements Listener {
                             }
                             if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
                                 RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
-                                if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
+                                if (role.getOriginTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
                                     for (Player p : gameState.getInGamePlayers()) {
                                         if (!gameState.hasRoleNull(p)) {
                                             RoleBase role2 = gameState.getPlayerRoles().get(p);
@@ -777,7 +777,7 @@ public class GameListener implements Listener {
 		for (Player player2 : gameState.getInGamePlayers()) {
 			if (gameState.getPlayerRoles().get(player2) != null) {
 				RoleBase role = gameState.getPlayerRoles().get(player2);
-				switch (role.getTeam()) {
+				switch (role.getOriginTeam()) {
 				case Akatsuki:
 					Akatsuki = true;
 					break;

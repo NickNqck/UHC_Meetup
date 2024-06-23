@@ -28,7 +28,7 @@ public class Kanao extends RoleBase{
 		invuse = 3;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

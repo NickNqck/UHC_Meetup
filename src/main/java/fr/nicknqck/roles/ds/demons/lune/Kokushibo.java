@@ -48,7 +48,7 @@ public class Kokushibo extends DemonsRoles {
 		killtanjiro = false;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
@@ -72,10 +72,10 @@ public class Kokushibo extends DemonsRoles {
 			}, 20);
 			return AllDesc.Kokushibo;
 		}else {
-			if (getTeam().equals(TeamList.Solo)) {
+			if (getOriginTeam().equals(TeamList.Solo)) {
 				return AllDesc.KokushiboSolo;
 			}else {
-				if (getTeam() == TeamList.Demon) {
+				if (getOriginTeam() == TeamList.Demon) {
 					return new String[] {
 							AllDesc.bar,
 							"§lRôle: §r§cKokushibo",
@@ -127,7 +127,7 @@ public class Kokushibo extends DemonsRoles {
 	@Override
 	public ItemStack[] getItems() {
 		if (killtanjiro) {
-			if (getTeam().equals(TeamList.Demon)) {
+			if (getOriginTeam().equals(TeamList.Demon)) {
 				return new ItemStack[] {
 						BetterItem.of(new ItemBuilder(Material.NETHER_STAR).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("§f§lBoule d'énergie").setLore("§7» Crée une explosion sur le prochaine adversaire que vous taperez","§7"+StringID).toItemStack(), event -> {
 							if (cd <= 0) {
@@ -164,14 +164,14 @@ public class Kokushibo extends DemonsRoles {
 		}
 		if (!FFA.getFFA()) {
 			if (!solo) {
-				if (getTeam().equals(TeamList.Demon)) {
+				if (getOriginTeam().equals(TeamList.Demon)) {
 					if (!gameState.nightTime) {
 						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 						} else {
 						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					}
-				}else if (getTeam().equals(TeamList.Slayer)) {
+				}else if (getOriginTeam().equals(TeamList.Slayer)) {
 					if (gameState.nightTime) {
 						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 100, 1, true);
 					}else {
@@ -285,7 +285,7 @@ public boolean killtanjiro = false;
 	}
 	@Override
 	public void onDay(GameState gameState) {
-		if (getTeam() != TeamList.Slayer) {
+		if (getOriginTeam() != TeamList.Slayer) {
 			if (owner.getInventory().contains(Items.getkokushibosword())) {
 				owner.getInventory().remove(Items.getkokushibosword());
 				owner.sendMessage("Vous avez perdu votre§b Épée de la nuit");

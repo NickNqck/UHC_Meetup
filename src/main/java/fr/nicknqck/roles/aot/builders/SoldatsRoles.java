@@ -9,7 +9,7 @@ public abstract class SoldatsRoles extends AotRoles{
     }
 
     @Override
-    public TeamList getTeam() {
+    public TeamList getOriginTeam() {
         return TeamList.Soldat;
     }
 }

@@ -31,7 +31,7 @@ public class Shinobu extends RoleBase{
 		return AllDesc.Shinobu;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	private int MedicamentCooldown = 0;

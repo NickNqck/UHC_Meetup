@@ -25,7 +25,7 @@ public class DemonMain extends DemonsRoles {
 		 owner.sendMessage(Desc());
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

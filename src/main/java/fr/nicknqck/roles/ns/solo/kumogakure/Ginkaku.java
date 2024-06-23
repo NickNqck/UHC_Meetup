@@ -69,7 +69,7 @@ public class Ginkaku extends NSRoles {
 	}
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Kumogakure;
 	}
 

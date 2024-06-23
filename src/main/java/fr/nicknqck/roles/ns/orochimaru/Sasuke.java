@@ -596,10 +596,10 @@ public class Sasuke extends OrochimaruRoles {
 				Player toIzanami = Bukkit.getPlayer(izanami.getTarget());
 				if (owner != null && toIzanami != null) {
 					owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
-					getPlayerRoles(toIzanami).setOldTeamList(getPlayerRoles(toIzanami).getTeam());
-					getPlayerRoles(toIzanami).setTeam(getPlayerRoles(owner).getTeam());
+					getPlayerRoles(toIzanami).setOldTeamList(getPlayerRoles(toIzanami).getOriginTeam());
+					getPlayerRoles(toIzanami).setTeam(getPlayerRoles(owner).getOriginTeam());
 					toIzanami.resetTitle();
-					toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+getTeamColor(owner)+getTeam().name());
+					toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+getTeamColor(owner)+ getOriginTeam().name());
 					toIzanami.sendMessage("§7Voici l'identité de votre coéquipier§e Sasuke: "+(getPlayerFromRole(Roles.Sasuke) != null ? getPlayerFromRole(Roles.Sasuke).getName() : "§cMort"));
 					infectFinish = true;
 					cancel();

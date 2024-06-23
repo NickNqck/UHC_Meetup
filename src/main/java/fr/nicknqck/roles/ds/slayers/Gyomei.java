@@ -26,7 +26,7 @@ public class Gyomei extends RoleBase{
 		gameState.addPillier(owner);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 

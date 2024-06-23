@@ -98,7 +98,7 @@ public class TitanBestial extends TitansRoles {
 				cri = true;
 				for (Player p : getIGPlayers()) {
 					if (!gameState.hasRoleNull(p)) {
-						if (getPlayerRoles(p).getTeam().equals(TeamList.Titan)) {
+						if (getPlayerRoles(p).getOriginTeam().equals(TeamList.Titan)) {
 							Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 								DecimalFormat df = new DecimalFormat("0");
 								String x = df.format(owner.getLocation().getX());

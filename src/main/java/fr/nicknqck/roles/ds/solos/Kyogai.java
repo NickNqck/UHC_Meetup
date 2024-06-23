@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.solos;
 
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import org.bukkit.Bukkit;
@@ -23,13 +25,19 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import net.md_5.bungee.api.ChatColor;
 
-public class Kyogai extends RoleBase{
+public class Kyogai extends DemonsRoles {
 
 	public Kyogai(Player player) {
 		super(player);
 		owner.sendMessage(AllDesc.Kyogai);
 		owner.sendMessage("Pour choisir votre camp il faudra faire la commande: "+ChatColor.GOLD+"/ds role");
 	}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.Demon;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Kyogai;
@@ -45,7 +53,7 @@ public class Kyogai extends RoleBase{
 		return AllDesc.Kyogai;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 	@Override
@@ -107,7 +115,7 @@ public class Kyogai extends RoleBase{
 				setTeam(TeamList.Solo);
 				owner.sendMessage("Malgré votre choix vue que le mode FFA est activé vous devez tout de même gagner en temp que rôle solitaire");
 			}
-			System.out.println(owner.getName()+" = "+getTeam()+", OldTeam = "+getOldTeam());
+			System.out.println(owner.getName()+" = "+ getOriginTeam()+", OldTeam = "+getOldTeam());
 			System.out.println(owner.getName()+" = "+getRoles().name());
 			owner.getInventory().addItem(Items.getTambour());
 			camp = Camp.Démon;
@@ -115,9 +123,9 @@ public class Kyogai extends RoleBase{
 		}
 		if (item.isSimilar(GUIItems.getKyogaiSolo())) {
 			setTeam(TeamList.Solo);
-			setOldTeamList(getTeam());
+			setOldTeamList(getOriginTeam());
 			owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
-			System.out.println(owner.getName()+" = "+getTeam());
+			System.out.println(owner.getName()+" = "+ getOriginTeam());
 			System.out.println(owner.getName()+" = "+getRoles().name());
 			owner.getInventory().addItem(Items.getTambour());
 			owner.getInventory().addItem(Items.getPercussionRapide());
@@ -136,7 +144,7 @@ public class Kyogai extends RoleBase{
 			sendActionBarCooldown(owner, cooldownpercu);
 		}
 		if (camp == Camp.Démon) {
-			if (getTeam() != TeamList.Demon && !FFA.getFFA())setTeam(TeamList.Demon);
+			if (getOriginTeam() != TeamList.Demon && !FFA.getFFA())setTeam(TeamList.Demon);
 			if (cooldowntambour >= 1) cooldowntambour--;
 			if (killtanjiro) if (cooldownpercu >= 1) cooldownpercu--;
 			if (gameState.nightTime) owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
@@ -146,7 +154,7 @@ public class Kyogai extends RoleBase{
 			
 		}
 		if (camp == Camp.Solo) {
-			if (getTeam() != TeamList.Solo)setTeam(TeamList.Solo);
+			if (getOriginTeam() != TeamList.Solo)setTeam(TeamList.Solo);
 			if (cooldowntambour >= 1) cooldowntambour--;
 			if (cooldownpercu >= 1) cooldownpercu--;
 			if (gameState.nightTime) owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*3, 0, false, false), true);

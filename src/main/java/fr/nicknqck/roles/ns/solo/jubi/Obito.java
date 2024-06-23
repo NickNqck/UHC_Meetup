@@ -60,7 +60,7 @@ public class Obito extends NSRoles {
 	}
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Jubi;
 	}
 
@@ -80,10 +80,10 @@ public class Obito extends NSRoles {
 				Player toIzanami = Bukkit.getPlayer(obito.izanami.getTarget());
 				if (owner != null && toIzanami != null) {
 					owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
-					obito.getPlayerRoles(toIzanami).setOldTeamList(obito.getPlayerRoles(toIzanami).getTeam());
-					obito.getPlayerRoles(toIzanami).setTeam(obito.getPlayerRoles(owner).getTeam());
+					obito.getPlayerRoles(toIzanami).setOldTeamList(obito.getPlayerRoles(toIzanami).getOriginTeam());
+					obito.getPlayerRoles(toIzanami).setTeam(obito.getPlayerRoles(owner).getOriginTeam());
 					obito.toIzanami.resetTitle();
-					obito.toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+obito.getTeamColor(owner)+obito.getTeam().name());
+					obito.toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+obito.getTeamColor(owner)+obito.getOriginTeam().name());
 					obito.toIzanami.sendMessage("§7Voici l'identité de votre coéquipier§e Sasuke: "+(obito.getPlayerFromRole(Roles.Obito) != null ? obito.getPlayerFromRole(Roles.Obito).getName() : "§cMort"));
 					obito.hasIzanami = true;
 					cancel();

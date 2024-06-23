@@ -149,7 +149,7 @@ public class Jugo extends Orochimaru {
 					givePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
 					givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
-					TeamList oldTeam = getTeam();
+					TeamList oldTeam = getOriginTeam();
 					setTeam(TeamList.Solo);
 					owner.resetTitle();
 					owner.sendTitle("Vous gagnez maintenant§e Seul", "Pendant 3 minutes");

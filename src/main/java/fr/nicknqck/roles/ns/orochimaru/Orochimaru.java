@@ -210,7 +210,7 @@ public class Orochimaru extends OrochimaruRoles {
 						clicker.closeInventory();
 						clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
 						clicker.sendMessage("§5Edo Tensei !");
-						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getTeam());
+						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getOriginTeam());
 						HubListener.getInstance().giveStartInventory(clicked);
 						gameState.RevivePlayer(clicked);
 						setMaxHealth(getMaxHealth()-4.0);

@@ -25,7 +25,7 @@ public class ZenItsu extends RoleBase{
 		this.setForce(20);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

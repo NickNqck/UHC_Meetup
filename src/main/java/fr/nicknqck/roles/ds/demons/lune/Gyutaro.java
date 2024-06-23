@@ -43,7 +43,7 @@ public class Gyutaro extends RoleBase{
 		troisiemeoeilcooldown = 0;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

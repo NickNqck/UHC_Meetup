@@ -9,7 +9,7 @@ public abstract class AkatsukiRoles extends NSRoles{
     }
 
     @Override
-    public TeamList getTeam() {
+    public TeamList getOriginTeam() {
         return TeamList.Akatsuki;
     }
 }

@@ -58,7 +58,7 @@ private int killforce = 0;
 		Hantengu
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

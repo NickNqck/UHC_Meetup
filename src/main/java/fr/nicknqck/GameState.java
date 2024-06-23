@@ -832,7 +832,7 @@ public class GameState{
 			} else {
 				role.setTeam(TeamList.Solo);
 			}
-			System.out.println(role.getTeam().name()+" for role "+role.getRoles().name());
+			System.out.println(role.getOriginTeam().name()+" for role "+role.getRoles().name());
 		}
 		role.gameState = this;
 		addInPlayerRoles(player, role);
@@ -840,7 +840,7 @@ public class GameState{
 		role.setGamePlayer(gamePlayer);
 		role.getGameState().getGamePlayer().put(player.getUniqueId(), gamePlayer);
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
-			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon && !getPlayerRoles().get(player).getRoles().equals(Roles.Kyogai)) {
+			if (getPlayerRoles().get(player).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(player).getRoles().equals(Roles.Kyogai)) {
 				canBeAssassin.add(player);
 				System.out.println(player.getName()+" added to canBeAssassinList, size: "+canBeAssassin.size());
 			}
@@ -850,7 +850,7 @@ public class GameState{
 			OnEndGiveRole(assassin);
 		} else {
 			System.out.println("Giving Role: "+getPlayerRoles().size()+"/"+getInGamePlayers().size());
-			if (getPlayerRoles().get(player).getTeam() == TeamList.Demon) {
+			if (getPlayerRoles().get(player).getOriginTeam() == TeamList.Demon) {
 				canBeAssassin.add(player);
 				System.out.println(player.getName()+" added to canBeAssassinList "+canBeAssassin.size());
 			}

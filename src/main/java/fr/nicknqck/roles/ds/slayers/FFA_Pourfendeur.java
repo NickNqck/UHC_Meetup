@@ -59,7 +59,7 @@ public class FFA_Pourfendeur extends RoleBase {
 	}
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 

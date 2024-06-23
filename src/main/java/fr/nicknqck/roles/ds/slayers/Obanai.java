@@ -44,7 +44,7 @@ public class Obanai extends RoleBase{
 		owner.getInventory().addItem(Items.getLamedenichirin());
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

@@ -34,7 +34,7 @@ boolean dance = false;
 		this.setLameFr(true);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

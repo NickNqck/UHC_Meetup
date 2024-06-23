@@ -32,7 +32,7 @@ public class TitanUltime extends AotRoles {
 	}
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 
@@ -120,7 +120,7 @@ public class TitanUltime extends AotRoles {
 		if (killer == owner) {
 			if (victim != null) {
 				if (killtitan)return;
-				if (getPlayerRoles(victim).getTeam() == TeamList.Titan) {
+				if (getPlayerRoles(victim).getOriginTeam() == TeamList.Titan) {
 					killtitan = true;
 					if (countEmptySlots(owner) > 0 ) {
 						owner.getInventory().addItem(getItems());

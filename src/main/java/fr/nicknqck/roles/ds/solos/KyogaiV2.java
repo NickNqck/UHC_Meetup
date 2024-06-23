@@ -33,7 +33,7 @@ public class KyogaiV2 extends SoloRoles {
 		giveHealedHeartatInt(owner, 3);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 	@Override

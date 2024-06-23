@@ -63,7 +63,7 @@ public class Konan extends AkatsukiRoles {
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"§cKonan",
-				AllDesc.objectifteam+getTeam().getColor()+getTeam().name(),
+				AllDesc.objectifteam+ getOriginTeam().getColor()+ getOriginTeam().name(),
 				"",
 				AllDesc.items,
 				"",

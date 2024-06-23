@@ -40,18 +40,15 @@ public abstract class RoleBase implements Role{
 	public boolean canShift = false;
 	public Player owner;
 	private Double maxHealth = 20.0;
-	public Float bonusSpeedMultiplier = 0.00f;
 	private boolean canRespawn = false;
 	private boolean hasNoFall = false;
 	private ArrayList<Player> linkWith = new ArrayList<>();
 	private Roles oldRole = null;
-	float speedBase;
 	private boolean powerEnabled = true;
 	private boolean invincible = false;
 	private boolean canuseblade = false;
 	private double force = 0;
 	private double resi = 0;
-	private TeamList team;
 	private TeamList oldteam;
 	private double Bonusforce = 0;
 	private double Bonusresi = 0;
@@ -60,6 +57,8 @@ public abstract class RoleBase implements Role{
 	@Getter
 	@Setter
 	private GamePlayer gamePlayer;
+	@Getter
+	private TeamList team;
 	public ArrayList<Player> canBeCibleYahaba = new ArrayList<>();
 	public abstract String[] Desc();
 	
@@ -82,14 +81,15 @@ public abstract class RoleBase implements Role{
 		if (gameState == null){
 			this.gameState = GameState.getInstance();
 		}
-		speedBase = 0.20f;
-		owner.setWalkSpeed(speedBase*(bonusSpeedMultiplier+1));
+		owner.setWalkSpeed(0.2f);
+		owner.resetPlayerTime();
+		owner.resetMaxHealth();
 		canBeCibleYahaba.clear();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				if (this.getTeam() != null) {
-					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
-					System.out.println(owner.getName() +" Team: "+ this.getTeam());
-					oldteam = team;
+				if (this.getOriginTeam() != null) {
+					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getOriginTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getOriginTeam().name()));
+					System.out.println(owner.getName() +" Team: "+ this.getOriginTeam());
+					oldteam = getOriginTeam();
 				}
 				if (this.getRoles() != null) {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
@@ -174,8 +174,8 @@ public abstract class RoleBase implements Role{
 	}
 	public String getTeamColor(Player target) {
 		if (!gameState.hasRoleNull(target)) {
-			if (getPlayerRoles(target).getTeam() != null) {
-				return getPlayerRoles(target).getTeam().getColor();
+			if (getPlayerRoles(target).getOriginTeam() != null) {
+				return getPlayerRoles(target).getOriginTeam().getColor();
 			}else {
 				return "";
 			}
@@ -184,7 +184,7 @@ public abstract class RoleBase implements Role{
 		}
 	}
 	public String getTeamColor() {
-		return getTeam().getColor();
+		return getOriginTeam().getColor();
 	}
 	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
 		player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force);
@@ -192,32 +192,8 @@ public abstract class RoleBase implements Role{
 	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {givePotionEffet(owner, type, time, level, force);}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
-	public Player getRightClicked(double maxDistance, int radius) {
-		 Player player = owner;
-	        Vector lineOfSight = player.getEyeLocation().getDirection().normalize();
-	        for (double i = 0; i < maxDistance; ++i) {
-	            Location add = player.getEyeLocation().add(lineOfSight.clone().multiply(i));
-	            Block block = add.getBlock();
-	            if (!block.getType().isSolid()) {
-	                Collection<Entity> nearbyEntities = add.getWorld().getNearbyEntities(add, radius, radius, radius);
-	                if (nearbyEntities.isEmpty()) {
-	                    continue;
-	                }
-
-	                Entity next = nearbyEntities.iterator().next();
-	                if (next instanceof Player) {
-	                    Player nextPlayer = (Player) next;
-	                    if (nextPlayer.getUniqueId().equals(player.getUniqueId()) || nextPlayer.getGameMode() == GameMode.SPECTATOR) continue;
-	                    return nextPlayer;
-	                }
-	                continue;
-	            }
-
-	            return null;
-	        }
-	        return null;
-	    }
 	public void setTeam(TeamList team) {
+		this.team.getPlayers().remove(this.owner);
 		this.team = team;
 		this.team.addPlayer(this.owner);	
 	}
@@ -225,7 +201,7 @@ public abstract class RoleBase implements Role{
 		if (gameState.hasRoleNull(player)) {
 			return false;
 		}else {
-			if (getPlayerRoles(player).getTeam() != null) {
+			if (getPlayerRoles(player).getOriginTeam() != null) {
 				return true;
 			}else {
 				return false;
@@ -235,7 +211,7 @@ public abstract class RoleBase implements Role{
 	public TeamList getTeam(Player player) {
 		TeamList team = null;
 		if (!gameState.hasRoleNull(player)) {
-			team = getPlayerRoles(player).getTeam();
+			team = getPlayerRoles(player).getOriginTeam();
 		}
 		return team;
 	}
@@ -293,7 +269,7 @@ public abstract class RoleBase implements Role{
 		}
 			for (Player p : gameState.getInGamePlayers()) {
 				if (gameState.getPlayerRoles().containsKey(p)) {
-					if (gameState.getPlayerRoles().get(p).getTeam() == TeamList.Slayer) {
+					if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Slayer) {
 						if (!canBeCibleYahaba.contains(p)) {
 							canBeCibleYahaba.add(p);
 						}

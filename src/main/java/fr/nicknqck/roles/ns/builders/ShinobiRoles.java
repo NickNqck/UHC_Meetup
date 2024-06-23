@@ -9,7 +9,7 @@ public abstract class ShinobiRoles extends NSRoles {
     }
 
     @Override
-    public TeamList getTeam() {
+    public TeamList getOriginTeam() {
         return TeamList.Shinobi;
     }
 }

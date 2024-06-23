@@ -37,7 +37,7 @@ public class Tengen extends RoleBase{
 		gameState.addPillier(owner);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

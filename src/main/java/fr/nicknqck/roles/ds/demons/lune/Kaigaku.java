@@ -67,7 +67,7 @@ public class Kaigaku extends DemonsRoles {
 		};
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
@@ -170,7 +170,7 @@ public class Kaigaku extends DemonsRoles {
 				owner.sendMessage(ChatColor.GREEN+"Exécution du"+ChatColor.GOLD+" Troisème mouvement du soufle de la foudre.");
 				for(Player p : gameState.getInGamePlayers()) {
 					if (p != owner) {
-						if (getPlayerRoles(p).getTeam() != getPlayerRoles(owner).getTeam()) {
+						if (getPlayerRoles(p).getOriginTeam() != getPlayerRoles(owner).getOriginTeam()) {
 							  if(p.getLocation().distance(owner.getLocation()) <= 30) {
 								  if (p.getHealth() > 4.0) {
 										p.setHealth(p.getHealth() - 4.0);

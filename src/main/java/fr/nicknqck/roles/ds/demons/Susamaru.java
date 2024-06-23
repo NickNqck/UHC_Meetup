@@ -37,7 +37,7 @@ public class Susamaru extends DemonsRoles {
 		super.GiveItems();
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	public boolean Niveau1 = true;

@@ -104,7 +104,7 @@ public class Kakuzu extends AkatsukiRoles {
 				HashMap<Player, Location> rap = new HashMap<>();
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 					if (!gameState.hasRoleNull(p)) {
-						if (getTeam(p) != getTeam()) {
+						if (getTeam(p) != getOriginTeam()) {
 							rap.put(p, p.getLocation());
 							owner.sendMessage("§7Vos§c Corps Rapiécé§7 on touché§c "+p.getDisplayName());
 						}

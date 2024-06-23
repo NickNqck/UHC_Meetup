@@ -1,19 +1,18 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
-public class Mitsuri extends RoleBase {
+public class Mitsuri extends SlayerRoles {
     public Mitsuri(Player player) {
         super(player);
         for (String desc : AllDesc.Mitsuri)owner.sendMessage(desc);
@@ -34,10 +33,7 @@ public class Mitsuri extends RoleBase {
     			}).setPosable(false).setDroppable(false).getItemStack()
     	};
     }
-    @Override
-    public TeamList getTeam() {
-        return TeamList.Slayer;
-    }
+
     @Override
     public void GiveItems() {
         owner.getInventory().addItem(Items.getCharm());

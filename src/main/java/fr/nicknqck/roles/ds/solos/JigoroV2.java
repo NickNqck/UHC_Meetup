@@ -44,7 +44,7 @@ public class JigoroV2 extends RoleBase{
 		setLameIncassable(owner, true);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 	@Override
@@ -144,7 +144,7 @@ public class JigoroV2 extends RoleBase{
 							setTeam(TeamList.Jigoro);
 							p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
 							kaigaku.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
-							p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getTeam().name());
+							p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getOriginTeam().name());
 							kaigaku.sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
 							gameState.JigoroV2Pacte2 = true;
 							owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
@@ -165,7 +165,7 @@ public class JigoroV2 extends RoleBase{
 							gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
 							setTeam(TeamList.Jigoro);
 							p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
-							p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getTeam().name());
+							p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getOriginTeam().name());
 							
 							p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
 							owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
@@ -225,7 +225,7 @@ public class JigoroV2 extends RoleBase{
 			if (kaigaku != null) {
 				if (!gameState.hasRoleNull(kaigaku)) {
 					if (gameState.getPlayerRoles().get(kaigaku) instanceof Kaigaku) {
-						if (gameState.getPlayerRoles().get(kaigaku).getTeam() == TeamList.Jigoro) {
+						if (gameState.getPlayerRoles().get(kaigaku).getOriginTeam() == TeamList.Jigoro) {
 							if (gameState.getInGamePlayers().contains(kaigaku) && gameState.getInGamePlayers().contains(owner)) {
 								if (owner.getLocation().distance(owner.getLocation()) <= 50) {
 									owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*3, 0, false, false));

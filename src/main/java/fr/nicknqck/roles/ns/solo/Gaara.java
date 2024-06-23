@@ -53,7 +53,7 @@ public class Gaara extends NSRoles {
     private boolean tookDamage = false;
 
     @Override
-    public TeamList getTeam() {
+    public TeamList getOriginTeam() {
         return TeamList.Solo;
     }
 

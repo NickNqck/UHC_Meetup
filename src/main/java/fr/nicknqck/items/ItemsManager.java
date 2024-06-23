@@ -108,7 +108,7 @@ public class ItemsManager implements Listener {
 					if (s.getItemMeta().hasDisplayName()) {
 						if (s.getItemMeta().getDisplayName().equalsIgnoreCase("§dGyûki") || s.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kyubi")) {
 							if (!gameState.hasRoleNull(e.getPlayer())) {
-								if (gameState.getPlayerRoles().get(e.getPlayer()).getTeam().equals(TeamList.Jubi)) {
+								if (gameState.getPlayerRoles().get(e.getPlayer()).getOriginTeam().equals(TeamList.Jubi)) {
 									return;
 								}
 							}

@@ -37,7 +37,7 @@ public class Sanemi extends RoleBase {
 		givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

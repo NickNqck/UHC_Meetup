@@ -23,7 +23,7 @@ public class Kanae extends RoleBase {
 		setCanUseBlade(true);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

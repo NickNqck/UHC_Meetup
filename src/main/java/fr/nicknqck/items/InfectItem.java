@@ -112,16 +112,16 @@ public class InfectItem implements Listener{
 							
 							gameState.infecteur.sendMessage(p.getName()+" à été infecté");
 							for (Player z : gameState.getInGamePlayers()) {
-								if (gameState.getPlayerRoles().get(z).getTeam() == TeamList.Demon) {
+								if (gameState.getPlayerRoles().get(z).getOriginTeam() == TeamList.Demon) {
 									z.sendMessage("§4Un joueur à été infecté et à rejoins le camp des§c Démons");
 								}
 							}
 							gameState.infected = p;
 							clicker.sendMessage(p.getName()+" à été infecté");
-							if (gameState.getPlayerRoles().get(p).getTeam() != TeamList.Slayer) {
+							if (gameState.getPlayerRoles().get(p).getOriginTeam() != TeamList.Slayer) {
 								p.sendMessage("Vous avez été infecté mais comme vous n'étiez pas du camp§a Slayer§r vous n'avez pas pus être infecté, vous restez donc dnas votre camp d'origine");
 							}
-							if (gameState.getPlayerRoles().get(p).getTeam() == TeamList.Slayer) {
+							if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Slayer) {
 								gameState.getPlayerRoles().get(p).setTeam(TeamList.Demon);
 								p.sendMessage("Voici l'identité de votre§c infecteur§f:§c§l "+gameState.infecteur.getName());
 							}

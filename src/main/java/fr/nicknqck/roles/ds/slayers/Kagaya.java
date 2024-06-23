@@ -39,7 +39,7 @@ public class Kagaya extends RoleBase {
 		return AllDesc.Kagaya;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

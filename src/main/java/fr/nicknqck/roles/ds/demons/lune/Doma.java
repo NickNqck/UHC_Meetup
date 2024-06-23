@@ -32,7 +32,7 @@ public class Doma extends DemonsRoles {
 		}, 20);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

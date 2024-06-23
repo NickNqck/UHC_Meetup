@@ -45,7 +45,7 @@ public class Yahaba extends DemonsRoles {
 	}
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 

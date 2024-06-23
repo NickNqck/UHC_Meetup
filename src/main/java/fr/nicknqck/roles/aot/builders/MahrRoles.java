@@ -9,7 +9,7 @@ public abstract class MahrRoles extends AotRoles{
     }
 
     @Override
-    public TeamList getTeam() {
+    public TeamList getOriginTeam() {
         return TeamList.Mahr;
     }
 }

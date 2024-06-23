@@ -24,7 +24,7 @@ public class Demon_Simple extends DemonsRoles {
 		return DemonType.Demon;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

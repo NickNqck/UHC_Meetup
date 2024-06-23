@@ -46,7 +46,7 @@ public class Gyokko extends DemonsRoles {
 		return AllDesc.Gyokko;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

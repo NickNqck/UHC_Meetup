@@ -314,7 +314,7 @@ public class AdminCommands implements CommandExecutor{
 								if (!gameState.hasRoleNull(p) && !gameState.getInSpecPlayers().contains(p)){
 									for (TeamList team : TeamList.values()){
 										if (args[0].equalsIgnoreCase(team.name())){
-											if (!gameState.getPlayerRoles().get(p).getTeam().equals(team)){
+											if (!gameState.getPlayerRoles().get(p).getOriginTeam().equals(team)){
 												gameState.getPlayerRoles().get(p).setTeam(team);
 												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+team.getColor()+" "+team.name());
 												p.sendMessage("Vous appartenez maintenant au camp des"+team.getColor()+" "+team.name());
@@ -520,7 +520,7 @@ public class AdminCommands implements CommandExecutor{
 								} else {
 									if (gameState.getPlayerRoles().containsKey(p)) {
 									Bukkit.broadcastMessage("Le joueur: "+sender.getName()+" connais maintenant le rôle du joueur: "+p.getName());
-									sender.sendMessage("Le rôle de la personne: "+p.getName()+" est "+gameState.getPlayerRoles().get(p).getTeam().getColor()+gameState.getPlayerRoles().get(p).getRoles().name());
+									sender.sendMessage("Le rôle de la personne: "+p.getName()+" est "+gameState.getPlayerRoles().get(p).getOriginTeam().getColor()+gameState.getPlayerRoles().get(p).getRoles().name());
 									return true;
 									}
 								}

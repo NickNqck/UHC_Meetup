@@ -25,7 +25,7 @@ public class Inosuke extends RoleBase{
 		this.setResi(20);
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

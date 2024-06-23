@@ -146,7 +146,7 @@ public class Karin extends OrochimaruRoles {
 				int i = timePassedNearby.get(p.getUniqueId());
 				timePassedNearby.remove(p.getUniqueId(), i);
 				timePassedNearby.put(p.getUniqueId(), i+1);
-				if (getPlayerRoles(p).getTeam() == TeamList.Orochimaru) {
+				if (getPlayerRoles(p).getOriginTeam() == TeamList.Orochimaru) {
 					if (timePassedNearby.get(p.getUniqueId()) == 60*2) {
 						owner.sendMessage("§5"+p.getDisplayName()+"§f est dans le camp§5 Orochimaru");
 					}

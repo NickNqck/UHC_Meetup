@@ -6,7 +6,9 @@ import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.utils.Loc;
@@ -20,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Jigoro extends SoloRoles {
+public class Jigoro extends DemonsSlayersRoles {
 	private boolean Zoneactiver2 = false;
 	private boolean killzen = false;
 	private boolean killkai = false;
@@ -62,6 +64,12 @@ public class Jigoro extends SoloRoles {
 	public Roles getRoles() {
 		return Roles.Jigoro;
 	}
+
+	@Override
+	public TeamList getOriginTeam() {
+		return TeamList.Solo;
+	}
+
 	@Override
 	public void resetCooldown() {
 		cooldowndegat = 0;

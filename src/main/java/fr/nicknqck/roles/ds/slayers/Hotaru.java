@@ -23,7 +23,7 @@ public class Hotaru extends RoleBase{
 		lame = null;
 	}
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

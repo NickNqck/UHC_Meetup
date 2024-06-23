@@ -36,7 +36,7 @@ public class Makomo extends RoleBase{
 	private int souflecooldown = 0;
 	private boolean fuse = false;
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override

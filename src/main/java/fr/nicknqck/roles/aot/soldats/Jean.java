@@ -78,7 +78,7 @@ public class Jean extends SoldatsRoles {
 				for (Player p : Loc.getNearbyPlayers(owner, 25)) {//Pour chaque joueur étant à moins de 25 blocs du l'owner du rôle
 					if (!gameState.hasRoleNull(p)) {//si ce même joueur possède un rôle
 						if (getPlayerRoles(p).getRoles() != Roles.Gabi && getPlayerRoles(p).getRoles() != Roles.Eren && getPlayerRoles(p).getRoles() != Roles.Jelena) {//S'il n'est pas Gabi ou Eren ou Jelena
-							if (getPlayerRoles(p).getTeam() != TeamList.Soldat) {//S'il n'est pas dans la team Soldat
+							if (getPlayerRoles(p).getOriginTeam() != TeamList.Soldat) {//S'il n'est pas dans la team Soldat
 								mechant.add(p);//alors il est ajouté en temp que méchant
 							}
 						}

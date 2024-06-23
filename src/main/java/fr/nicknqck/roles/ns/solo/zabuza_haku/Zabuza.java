@@ -81,7 +81,7 @@ public class Zabuza extends NSRoles {
     }
 
 	@Override
-	public TeamList getTeam() {
+	public TeamList getOriginTeam() {
 		return TeamList.Zabuza_et_Haku;
 	}
 
