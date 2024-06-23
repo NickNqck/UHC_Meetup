@@ -1,7 +1,15 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Gyokko;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.particles.MathUtil;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -10,20 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.particles.MathUtil;
-import net.minecraft.server.v1_8_R3.EnumParticle;
-
-public class Muichiro extends RoleBase{
+public class Muichiro extends SlayerRoles {
 
 	public Muichiro(Player player) {
 		super(player);
-		for (String desc : AllDesc.Muichiro) owner.sendMessage(desc);
+		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		gameState.addPillier(owner);
@@ -43,10 +42,6 @@ public class Muichiro extends RoleBase{
 	private int marquecooldown = 0;
 	private int dsbrumeuse =0;
 	private int dsbrumecd = 0;
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
 	@Override
 	public void resetCooldown() {
 		marquecooldown = 0;

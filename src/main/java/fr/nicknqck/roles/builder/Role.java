@@ -10,4 +10,5 @@ public interface Role {
     String getName();
     GameState.Roles getRoles();
     TeamList getOriginTeam();
+    TeamList getTeam();
 }

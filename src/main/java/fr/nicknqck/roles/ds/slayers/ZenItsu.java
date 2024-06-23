@@ -1,20 +1,18 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.RandomUtils;
-
-public class ZenItsu extends RoleBase{
+public class ZenItsu extends SlayerRoles {
 
 	private int cooldownpremiermouvement = 0;
 	private int cooldowntroisiememouvement = 0;
@@ -24,11 +22,8 @@ public class ZenItsu extends RoleBase{
 		this.setCanUseBlade(true);
 		this.setForce(20);
 	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
-	@Override
+
+    @Override
 	public Roles getRoles() {
 		return Roles.ZenItsu;
 	}

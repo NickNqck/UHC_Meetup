@@ -4,8 +4,9 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Yoriichi extends SoloRoles {
+public class Yoriichi extends DemonsSlayersRoles {
 
 	public Yoriichi(Player player) {
 		super(player);
@@ -37,6 +38,12 @@ public class Yoriichi extends SoloRoles {
 	public Roles getRoles() {
 		return Roles.Yoriichi;
 	}
+
+	@Override
+	public TeamList getOriginTeam() {
+		return TeamList.Solo;
+	}
+
 	@Override
 	public String[] Desc() {
 		return AllDesc.Yoriichi;

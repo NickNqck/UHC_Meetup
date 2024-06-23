@@ -1,8 +1,14 @@
-
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.DemonMain;
+import net.minecraft.server.v1_8_R3.ChatComponentText;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -10,25 +16,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-
-public class Sabito extends RoleBase{
+public class Sabito extends SlayerRoles {
 
 	public Sabito(Player player) {
 		super(player);
 		for (String desc : AllDesc.Sabito) owner.sendMessage(desc);
 		this.setCanUseBlade(true);
 		this.setResi(20);
-	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

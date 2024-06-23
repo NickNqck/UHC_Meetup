@@ -3,8 +3,9 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.SoloRoles;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
@@ -18,7 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-public class ShinjuroV2 extends SoloRoles {
+public class ShinjuroV2 extends DemonsSlayersRoles {
 
 	public ShinjuroV2(Player player) {
 		super(player);
@@ -31,6 +32,12 @@ public class ShinjuroV2 extends SoloRoles {
 	public Roles getRoles() {
 		return Roles.ShinjuroV2;
 	}
+
+	@Override
+	public TeamList getOriginTeam() {
+		return TeamList.Solo;
+	}
+
 	@Override
 	public String[] Desc() {
 		return new String[] {

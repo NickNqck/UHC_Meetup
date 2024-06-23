@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import java.text.DecimalFormat;
 
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,7 +24,7 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class Tanjiro extends RoleBase{
+public class Tanjiro extends SlayerRoles {
 int itemcooldown = 0;
 boolean killassa = false;
 boolean dance = false;
@@ -33,11 +34,8 @@ boolean dance = false;
 		this.setCanUseBlade(true);
 		this.setLameFr(true);
 	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
-	@Override
+
+    @Override
 	public Roles getRoles() {
 		return Roles.Tanjiro;
 	}
@@ -211,7 +209,7 @@ boolean dance = false;
 		if (item.getType() != Material.DIAMOND_SWORD)return;
 		if (dance) {
 			if (victim != owner) {
-			   if (victim instanceof Player) {
+			   if (victim != null) {
 			      victim.setFireTicks(200);
 			   }
 			}
@@ -219,10 +217,18 @@ boolean dance = false;
 		}
 		if (gameState.demonKingTanjiro) {
 			if (a) {
-				WorldUtils.createBeautyExplosion(victim.getLocation(), 2);
-				owner.sendMessage("Vous avez touchez: "+ victim.getName()+" avec votre§l Boule d'énergie");
-				victim.sendMessage("Vous avez été toucher par la§l Boulot d'énergie§r de§c Tanjiro");
-				Heal(victim, -2.0);
+                if (victim != null) {
+                    WorldUtils.createBeautyExplosion(victim.getLocation(), 2);
+                }
+                if (owner != null) {
+                    if (victim != null) {
+                        owner.sendMessage("Vous avez touchez: "+ victim.getName()+" avec votre§l Boule d'énergie");
+                    }
+                }
+                if (victim != null) {
+                    victim.sendMessage("Vous avez été toucher par la§l Boulot d'énergie§r de§c Tanjiro");
+                }
+                Heal(victim, -2.0);
 				a = false;
 			}
 		}

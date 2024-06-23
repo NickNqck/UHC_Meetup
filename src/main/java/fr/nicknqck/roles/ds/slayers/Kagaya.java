@@ -1,11 +1,14 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.PacketDisplay;
+import fr.nicknqck.utils.WorldUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -15,16 +18,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PacketDisplay;
-import fr.nicknqck.utils.WorldUtils;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
-public class Kagaya extends RoleBase {
+public class Kagaya extends SlayerRoles {
 
 	public Kagaya(Player player) {
 		super(player);
@@ -39,10 +38,6 @@ public class Kagaya extends RoleBase {
 		return AllDesc.Kagaya;
 	}
 	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
-	@Override
 	public String getName() {
 		return "§aKagaya";
 	}
@@ -50,7 +45,7 @@ public class Kagaya extends RoleBase {
 	enum Pacte{
 		Pacte1,
 		Pacte2,
-		Pacte3;
+		Pacte3
 	}
 	Pacte pacte;
 	boolean pacte1 = false;
@@ -58,7 +53,7 @@ public class Kagaya extends RoleBase {
 	public boolean pacte3 = false;
 	public Player pillier= null;
 	public boolean access = false;
-	private Map<UUID, PacketDisplay> seeHealth = new HashMap<>();
+	private final Map<UUID, PacketDisplay> seeHealth = new HashMap<>();
 	@Override
 	public void resetCooldown() {
 	}
@@ -91,7 +86,7 @@ public class Kagaya extends RoleBase {
 				pacte = Pacte.Pacte3;
 				pacte3 = true;				
 				owner.sendMessage("Vous venez de choisir le pacte: "+pacte.name());
-				if (gameState.getPillier().size() > 0) {					
+				if (!gameState.getPillier().isEmpty()) {
 						owner.sendMessage("Pour obtenir votre pillier faite la commande:§6 /ds getPillier");
 						access = true;
 				} else {

@@ -2,9 +2,9 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.SoloRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.utils.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-public class KyogaiV2 extends SoloRoles {
+public class KyogaiV2 extends DemonsSlayersRoles {
 
 	public KyogaiV2(Player player) {
 		super(player);
@@ -73,8 +73,8 @@ public class KyogaiV2 extends SoloRoles {
 	public enum Model {
 		Back,
 		Leg,
-		Head;
-	}
+		Head
+    }
 	private Model model = Model.Back;
 	private int cooldownShoulder = 0;
 	private int cooldownLeg = 0;
@@ -101,16 +101,14 @@ public class KyogaiV2 extends SoloRoles {
 							owner.sendMessage("§7Vous échangez votre place avec§l "+target.getName());
 							target.sendMessage("§eKyogaiV2§7 à échanger sa place avec vous !");
 							cooldownTP = 90;
-							return true;
-						}else {
+                        }else {
 							owner.sendMessage("§cVeuillez visée quelqu'un");
-							return true;
-						}
-					} else {
+                        }
+                    } else {
 						sendCooldown(owner, cooldownTP);
-						return true;
-					}
-				}else {
+                    }
+                    return true;
+                }else {
 					if (model == Model.Back) {
 						if (cooldownShoulder <= 0) {
 							Player target = event.getRightClicked(20);
@@ -230,7 +228,6 @@ public class KyogaiV2 extends SoloRoles {
 					player.sendMessage("§eKyogai§7 vous à fait subir 1"+AllDesc.coeur+"§7 de dégat supplémentaire");
 				}
 			}
-		}else {
 		}
 	}
 	@Override

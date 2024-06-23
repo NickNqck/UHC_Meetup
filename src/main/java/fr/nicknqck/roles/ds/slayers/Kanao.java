@@ -1,6 +1,11 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,13 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Kanao extends RoleBase{
+public class Kanao extends SlayerRoles {
 
 	public Kanao(Player player) {
 		super(player);
@@ -26,10 +25,6 @@ public class Kanao extends RoleBase{
 		setNoFall(true);
 		this.setCanUseBlade(true);
 		invuse = 3;
-	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {

@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
-public class Shinobu extends RoleBase{
+public class Shinobu extends SlayerRoles {
 
 	public Shinobu(Player player) {
 		super(player);
@@ -30,11 +31,8 @@ public class Shinobu extends RoleBase{
 	public String[] Desc() {
 		return AllDesc.Shinobu;
 	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
-	private int MedicamentCooldown = 0;
+
+    private int MedicamentCooldown = 0;
 	private int InjectionCooldown = 0;
 	private boolean Injection = false;
 	private boolean killdoma = false;

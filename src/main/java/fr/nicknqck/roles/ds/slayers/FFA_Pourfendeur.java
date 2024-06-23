@@ -1,8 +1,14 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.util.Random;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import net.minecraft.server.v1_8_R3.ChatComponentText;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -12,16 +18,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
+import java.util.Random;
 
-public class FFA_Pourfendeur extends RoleBase {
+public class FFA_Pourfendeur extends SlayerRoles {
 	@Override
 	public String getName() {
 		return "§aPourfendeur de démon§7 (§eSolo§7)";
@@ -143,17 +142,14 @@ public class FFA_Pourfendeur extends RoleBase {
 					form = Soufle.Soleil;
 					Soleil = true;
 					owner.sendMessage("Ce soufle est temporairement désactivé, pour cause d'équilibrage");
-					/*owner.sendMessage("Vous avez choisis le soufle du: "+ChatColor.GOLD+ form);
-					owner.sendMessage("Vous avez maintenant accès à l'item: "+ChatColor.GOLD+"Soufle du Soleil: "+ChatColor.WHITE+"Pendant 2 minutes, quand vous tapez un joueur il perd son absorbtion");
-					owner.getInventory().addItem(Items.getSoufleduSoleil());*/
-					nombredesoufle++;
+                    nombredesoufle++;
 					kill--;
 				} else {
 					owner.sendMessage(ChatColor.RED+"Vous avez déjà maitriser ce soufle....");
 				}
 			}
 			if (item.isSimilar(GUIItems.getSouffleLune())) {
-				if (Lune == false) {
+				if (!Lune) {
 					form = Soufle.Lune;
 					Lune = true;
 					owner.sendMessage(ChatColor.WHITE+"Vous avez choisis le soufle de la: "+ChatColor.GOLD+ form);
@@ -166,7 +162,7 @@ public class FFA_Pourfendeur extends RoleBase {
 				}				
 			}
 			if (item.isSimilar(GUIItems.getSouffleFeu())) {
-				if (Feu == false) {
+				if (!Feu) {
 					form = Soufle.Feu;
 					Feu = true;
 					owner.sendMessage(ChatColor.WHITE+"Vous avez choisis le soufle du: "+ChatColor.GOLD+ form);
@@ -206,7 +202,7 @@ public class FFA_Pourfendeur extends RoleBase {
 				}				
 			}
 			if (item.isSimilar(GUIItems.getSouffleVent())) {
-				if (Vent == false) {
+				if (!Vent) {
 					form = Soufle.Vent;
 					Vent = true;
 					owner.sendMessage(ChatColor.WHITE+"Vous avez choisis le soufle du: "+ChatColor.GOLD+ form);
@@ -443,7 +439,7 @@ public class FFA_Pourfendeur extends RoleBase {
 			 Random random = new Random();
 			 int rint = random.nextInt(5);
 				if (rint == 0) {
-					 if (victim instanceof Player) {
+					 if (victim != null) {
 				            victim.setFireTicks(x);
 				        }
 				}
@@ -453,22 +449,24 @@ public class FFA_Pourfendeur extends RoleBase {
 			if (usefoudre) {
 				for(Player p : gameState.getInGamePlayers())
 					if (p != owner && p == victim) {
-						if (victim.getHealth() > 4.0) {
+                        assert victim != null;
+                        if (victim.getHealth() > 4.0) {
 							victim.setHealth(victim.getHealth() - 4.0);
 						} else {
 							victim.setHealth(1.0);
 						}			
 						victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false));
 							victim.damage(0.0);
-					    	owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + victim.getName() + "");
+					    	owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + victim.getName());
 					    	victim.sendMessage(ChatColor.GREEN+"Vous avez été foudroyez par un simple "+ChatColor.GOLD+"Pourfendeur de Démon...");
 					        victim.getWorld().strikeLightningEffect(victim.getLocation());
 						}
 				usefoudre = false;
 			}
 		}
-		if (Soleil == true && usesoleil == true) {
-			if (victim.hasPotionEffect(PotionEffectType.ABSORPTION)) {
+		if (Soleil && usesoleil) {
+            assert victim != null;
+            if (victim.hasPotionEffect(PotionEffectType.ABSORPTION)) {
 				victim.removePotionEffect(PotionEffectType.ABSORPTION);
 				victim.sendMessage(ChatColor.WHITE+"un simple "+ChatColor.GOLD+"Pourfendeur de Démon"+ChatColor.WHITE+" vous à retirer votre absorbtion");
 				owner.sendMessage(ChatColor.WHITE+"Vous venez de retirer l'absorbtion de: "+ChatColor.GOLD+ChatColor.BOLD+ victim.getName());

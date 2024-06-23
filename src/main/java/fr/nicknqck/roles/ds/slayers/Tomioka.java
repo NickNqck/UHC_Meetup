@@ -1,8 +1,12 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.util.HashMap;
-
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.utils.Cuboid;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,26 +16,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Cuboid;
+import java.util.HashMap;
 
-public class Tomioka extends RoleBase{
+public class Tomioka extends SlayerRoles {
 
 	public Tomioka(Player player) {
 		super(player);
-	for (String desc : AllDesc.Tomioka) owner.sendMessage(desc);
+		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		gameState.addPillier(owner);
-	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {
@@ -66,9 +60,7 @@ public class Tomioka extends RoleBase{
 			itemcooldown--;
 		}
 		if (itemcooldown > 60*4+20) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				SpawnWater(5);
-			}, 1);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), this::SpawnWater, 1);
 		}
 		givePotionEffet(owner, PotionEffectType.SPEED, 100, 1, true);
 	}
@@ -78,7 +70,7 @@ public class Tomioka extends RoleBase{
 			if (itemcooldown <= 0) {
 				owner.sendMessage("Vous venez d'activer votre Soufle de L'eau");
 				itemcooldown = 60*5;
-				SpawnWater(5);
+				SpawnWater();
 			} else {
 				sendCooldown(owner, itemcooldown);
 			}
@@ -86,11 +78,11 @@ public class Tomioka extends RoleBase{
 		return super.ItemUse(item, gameState);
 	}
 	@SuppressWarnings("deprecation")
-	private void SpawnWater(int size) {
+	private void SpawnWater() {
 		HashMap<Block, Location> BL = new HashMap<>();
 		World w = owner.getWorld();
-		Location l1 = new Location(w, owner.getLocation().getBlockX()+size, owner.getLocation().getBlockY(), owner.getLocation().getBlockZ()+size);
-		Location l2 = new Location(w, owner.getLocation().getBlockX()-size, owner.getLocation().getBlockY(), owner.getLocation().getBlockZ()-size);
+		Location l1 = new Location(w, owner.getLocation().getBlockX()+ 5, owner.getLocation().getBlockY(), owner.getLocation().getBlockZ()+ 5);
+		Location l2 = new Location(w, owner.getLocation().getBlockX()- 5, owner.getLocation().getBlockY(), owner.getLocation().getBlockZ()- 5);
 		Cuboid cube = new Cuboid(l1, l2);
 		for (int x = cube.getLowerX(); x < cube.getUpperX(); x++) {
 			for (int z = cube.getLowerZ(); z < cube.getUpperZ(); z++) {
@@ -101,9 +93,7 @@ public class Tomioka extends RoleBase{
 				}
 			}
 		}
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			BL.keySet().stream().filter(e -> e.getTypeId() == 9 || e.getType().equals(Material.WATER) || e.getType().equals(Material.STATIONARY_WATER)).forEachOrdered(e -> e.setType(Material.AIR));
-		}, 20);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> BL.keySet().stream().filter(e -> e.getTypeId() == 9 || e.getType().equals(Material.WATER) || e.getType().equals(Material.STATIONARY_WATER)).forEachOrdered(e -> e.setType(Material.AIR)), 20);
 	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {

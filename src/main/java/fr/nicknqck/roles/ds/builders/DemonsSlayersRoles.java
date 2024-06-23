@@ -17,6 +17,7 @@ import java.util.Collection;
 public abstract class DemonsSlayersRoles extends RoleBase {
 
     private Lames lames;
+    private boolean lameincassable = false;
     public DemonsSlayersRoles(Player player) {
         super(player);
     }

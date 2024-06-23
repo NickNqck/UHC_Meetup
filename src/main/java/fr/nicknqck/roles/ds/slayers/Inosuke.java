@@ -1,6 +1,11 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,13 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Inosuke extends RoleBase{
+public class Inosuke extends SlayerRoles {
 
 	public Inosuke(Player player) {
 		super(player);
@@ -23,10 +22,6 @@ public class Inosuke extends RoleBase{
 		this.setForce(20);
 		this.setCanUseBlade(true);
 		this.setResi(20);
-	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
 	}
 	@Override
 	public Roles getRoles() {
@@ -110,8 +105,7 @@ public class Inosuke extends RoleBase{
 			if (tailladecooldown <= 0) {
 				owner.sendMessage(ChatColor.WHITE+"Activation de votre: "+ChatColor.GOLD+"Neuvième Croc: Taillade Ondulante Divine");
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*120, 0, false, false));
-				if (killdoma == true) {
-				} else {
+				if (!killdoma) {
 					owner.setHealth(owner.getHealth() - 4.0);
 				}
 				tailladecooldown = 60*5;

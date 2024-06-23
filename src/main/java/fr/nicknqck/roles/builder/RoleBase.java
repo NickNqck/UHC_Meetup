@@ -8,6 +8,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -59,7 +60,6 @@ public abstract class RoleBase implements Role{
 	private GamePlayer gamePlayer;
 	@Getter
 	private TeamList team;
-	public ArrayList<Player> canBeCibleYahaba = new ArrayList<>();
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
@@ -67,7 +67,7 @@ public abstract class RoleBase implements Role{
 	public ArrayList<Player> getIGPlayers() {
 		return gameState.getInGamePlayers();
 	}
-	boolean lameincassable = false;
+
 	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
@@ -81,7 +81,6 @@ public abstract class RoleBase implements Role{
 		owner.setWalkSpeed(0.2f);
 		owner.resetPlayerTime();
 		owner.resetMaxHealth();
-		canBeCibleYahaba.clear();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				if (this.getOriginTeam() != null) {
 					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getOriginTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getOriginTeam().name()));
@@ -109,17 +108,18 @@ public abstract class RoleBase implements Role{
 			
 			@Override
 			public void run() {
+				if (gameState.getServerState() != ServerStates.InGame) {
+					cancel();
+					return;
+				}
 				if (owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && getForce() < 20) {
 					setForce(20);
 				}
 				if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() < 20) {
 					setResi(20);
 				}
-				if (gameState.getServerState() != ServerStates.InGame) {
-					cancel();
-				}
 			}
-		}.runTaskTimer(Main.getInstance(), 0, 1);
+		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 
 	@Override
@@ -128,16 +128,18 @@ public abstract class RoleBase implements Role{
 	}
 
 	public abstract void resetCooldown();
-	public boolean HisUnbreak() {return lameincassable;}
 	public void setLameIncassable(Player target, boolean a) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (!gameState.hasRoleNull(target)) {
-				getPlayerRoles(target).lameincassable = a;
-				if (a) {
-					sendMessageAfterXseconde(target, "Votre lame est devenue incassable", 1);
-				} else {
-					sendMessageAfterXseconde(target, "Votre lame n'est plus incassable", 1);
-				}	
+				if (getPlayerRoles(target) instanceof DemonsSlayersRoles) {
+					DemonsSlayersRoles role = (DemonsSlayersRoles) getPlayerRoles(target);
+					role.setLameincassable(a);
+					if (a) {
+						sendMessageAfterXseconde(target, "Votre lame est devenue incassable", 1);
+					} else {
+						sendMessageAfterXseconde(target, "Votre lame n'est plus incassable", 1);
+					}
+				}
 			} else {
 				target.sendMessage("On dirait qu'on à essayer de donner une lame incassable cependant au moment ou on vous l'a donné vous n'aviez pas de rôle");
 			}
@@ -264,15 +266,6 @@ public abstract class RoleBase implements Role{
 				sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"% "+"§7§lArc Tridimentionnel§r:§6 Utilisable");
 			}
 		}
-			for (Player p : gameState.getInGamePlayers()) {
-				if (gameState.getPlayerRoles().containsKey(p)) {
-					if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Slayer) {
-						if (!canBeCibleYahaba.contains(p)) {
-							canBeCibleYahaba.add(p);
-						}
-					}
-				}
-			}
 		}
 		if (owner.getWorld().getGameRuleValue("doMobSpawning") != "false") owner.getWorld().setGameRuleValue("doMobSpawning", "false");
 		if (owner.getWorld().getGameRuleValue("doFireTick") != "false")owner.getWorld().setGameRuleValue("doFireTick", "false");

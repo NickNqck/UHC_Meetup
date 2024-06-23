@@ -1,8 +1,16 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,16 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.RandomUtils;
-
-public class Sanemi extends RoleBase {
+public class Sanemi extends SlayerRoles {
 
 	public Sanemi(Player player) {
 		super(player);
@@ -35,10 +34,6 @@ public class Sanemi extends RoleBase {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
-	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
 	}
 	@Override
 	public String[] Desc() {

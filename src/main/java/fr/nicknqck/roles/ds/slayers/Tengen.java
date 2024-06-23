@@ -1,8 +1,15 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.util.Random;
-
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.particles.MathUtil;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,18 +23,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.particles.MathUtil;
-import net.minecraft.server.v1_8_R3.EnumParticle;
+import java.util.Random;
 
-public class Tengen extends RoleBase{
+public class Tengen extends SlayerRoles {
 
 	public Tengen(Player player) {
 		super(player);
@@ -36,11 +34,8 @@ public class Tengen extends RoleBase{
 		this.setForce(20);
 		gameState.addPillier(owner);
 	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
-	@Override
+
+    @Override
 	public Roles getRoles() {
 		return Roles.Tengen;
 	}

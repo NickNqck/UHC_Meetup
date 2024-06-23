@@ -1,20 +1,18 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.packets.NMSPacket;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.packets.NMSPacket;
-import fr.nicknqck.utils.StringUtils;
-
-public class Obanai extends RoleBase{
+public class Obanai extends SlayerRoles {
 
 	public Obanai(Player player) {
 		super(player);
@@ -32,7 +30,7 @@ public class Obanai extends RoleBase{
 	}
 	
 	private boolean soufle = false;
-	private boolean apoil = false;
+
 	private int souflecooldown = 0 ;
 	@Override
 	public void resetCooldown() {
@@ -42,10 +40,6 @@ public class Obanai extends RoleBase{
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getSoufleduSerpent());
 		owner.getInventory().addItem(Items.getLamedenichirin());
-	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
 	}
 	@Override
 	public ItemStack[] getItems() {
@@ -63,15 +57,10 @@ public class Obanai extends RoleBase{
 			}
 		}
 		if (gameState.isApoil(owner)) {
-			apoil = true;
-		}else {
-			apoil = false;
-		}			
-		if (apoil) {
 			givePotionEffet(owner, PotionEffectType.SPEED, 20*3, 2, true);
 			givePotionEffet(owner, PotionEffectType.INVISIBILITY, 20*3, 1, true);
 		}
-		setNoFall(apoil);
+		setNoFall(gameState.isApoil(owner));
 		if (souflecooldown>=1) {souflecooldown--;}
 		if (souflecooldown == 60*3) {
 			owner.sendMessage("Désactivation du Soufle du Serpent");

@@ -1,21 +1,19 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.events.Events;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Kyojuro extends RoleBase{
+public class Kyojuro extends SlayerRoles {
 
 	public Kyojuro(Player player) {
 		super(player);
@@ -27,10 +25,6 @@ public class Kyojuro extends RoleBase{
 		gameState.addPillier(owner);
 	}
 	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
-	@Override
 	public Roles getRoles() {
 		return Roles.Kyojuro;
 	}
@@ -38,7 +32,7 @@ public class Kyojuro extends RoleBase{
 	public String[] Desc() {
 	return AllDesc.Kyojuro;
 }	private int itemcooldown = 0;
-	private boolean killakaza = false;
+
 	@Override
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getLamedenichirin());
@@ -87,11 +81,6 @@ public class Kyojuro extends RoleBase{
 		}
 		givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 20*3, 1, true);
 		if (itemcooldown >= 1) {itemcooldown--;}
-		if (killakaza) {
-			if (gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*3, 1, true);
-			}
-		}
 	}
 	@Override
 	public ItemStack[] getItems() {

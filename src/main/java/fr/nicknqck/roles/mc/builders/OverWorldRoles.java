@@ -1,10 +1,9 @@
-package fr.nicknqck.roles.mc.overworld;
+package fr.nicknqck.roles.mc.builders;
 
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.entity.Player;
 
-public abstract class OverWorldRoles extends RoleBase {
+public abstract class OverWorldRoles extends UHCMcRoles {
     public OverWorldRoles(Player player) {
         super(player);
     }

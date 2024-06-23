@@ -1,21 +1,19 @@
 package fr.nicknqck.roles.ds.slayers;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.RandomUtils;
-
-public class Pourfendeur extends RoleBase {
+public class Pourfendeur extends SlayerRoles {
 	@Override
 	public String getName() {
 		return "§aPourfendeur Simple";
@@ -28,12 +26,8 @@ public class Pourfendeur extends RoleBase {
 		Eau,
 		Roche,
 		Vent,
-		Foudre;
-	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
+		Foudre
+    }
 	Soufle form = null;
 	ChatColor color = null;
 	public Pourfendeur(Player player) {

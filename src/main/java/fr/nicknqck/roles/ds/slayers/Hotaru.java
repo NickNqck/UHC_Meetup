@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.Bukkit;
@@ -189,8 +190,10 @@ public class Hotaru extends SlayerRoles {
 							if (!gameState.getInGamePlayers().contains(cible)) {
 							owner.sendMessage("Impossible de rendre la lame d'un mort incassable !");
 							}
-						if (!gameState.getPlayerRoles().get(cible).HisUnbreak()) {
-							gameState.getPlayerRoles().get(cible).setLameIncassable(cible, true);
+						if (!gameState.hasRoleNull(cible)) {
+							if (gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles){
+								gameState.getPlayerRoles().get(cible).setLameIncassable(cible, true);
+							}
                         }
                             gameState.getPlayerRoles().get(cible).sendMessageAfterXseconde(cible, "§aHotaru§f à rendu votre Lame de Nichirin incassable", 1);
                             sendMessageAfterXseconde(owner, "Vous avez rendu la lame de "+cible.getName()+" incassable", 1);

@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Mitsuri extends SlayerRoles {
     public Mitsuri(Player player) {
         super(player);
-        for (String desc : AllDesc.Mitsuri)owner.sendMessage(desc);
+        owner.sendMessage(Desc());
         gameState.addPillier(owner);
         setCanUseBlade(true);
     }
@@ -28,9 +28,7 @@ public class Mitsuri extends SlayerRoles {
     @Override
     public ItemStack[] getItems() {
     	return new ItemStack[] {
-    			BetterItem.of(Items.getCharm(), event-> {
-    				return true;
-    			}).setPosable(false).setDroppable(false).getItemStack()
+    			BetterItem.of(Items.getCharm(), event-> true).setPosable(false).setDroppable(false).getItemStack()
     	};
     }
 

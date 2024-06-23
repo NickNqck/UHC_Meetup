@@ -1,8 +1,11 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.util.Random;
-
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,13 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
+import java.util.Random;
 
-public class Urokodaki extends RoleBase{
+public class Urokodaki extends SlayerRoles {
 
 	public Urokodaki(Player player) {
 		super(player);
@@ -24,11 +23,8 @@ public class Urokodaki extends RoleBase{
 		this.setCanUseBlade(true);
 		setForce(20);
 	}
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Slayer;
-	}
-	@Override
+
+    @Override
 	public Roles getRoles() {
 		return Roles.Urokodaki;
 	}
