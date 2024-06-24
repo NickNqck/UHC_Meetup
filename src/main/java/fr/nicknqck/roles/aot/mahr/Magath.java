@@ -1,19 +1,18 @@
 package fr.nicknqck.roles.aot.mahr;
 
-import java.text.DecimalFormat;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
-import fr.nicknqck.roles.builder.GetterList;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.ArrowTargetUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ArrowTargetUtils;
+import java.text.DecimalFormat;
 
 public class Magath extends MahrRoles {
 
@@ -54,7 +53,7 @@ public class Magath extends MahrRoles {
 
 	@Override
 	public String[] Desc() {
-		GetterList.getMahrList(owner);
+		Main.getInstance().getGetterList().getMahrList(owner);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"Magath",
@@ -65,7 +64,7 @@ public class Magath extends MahrRoles {
 				"",
 				AllDesc.commande,
 				"",
-				AllDesc.point+"§6/aot search§r: Permet de chercher un de vos allier§9 Mahr§r possédant un Titan, de plus si la personne visée est transformée en Titan et que vous êtes proche (15blocs) de cette dernière vous obtiendrez "+AllDesc.Resi+" 1",
+				AllDesc.point+"§6/aot search§r: Permet de chercher un de vos allier§9 Mahr§r possédant un Titan, de plus si la personne visée est transformée en Titan et que vous êtes proche (15blocs) de cette dernière vous obtiendrez "+AllDesc.Resi+" §9I",
 				"",
 				AllDesc.bar
 		};	
@@ -81,9 +80,13 @@ public class Magath extends MahrRoles {
 					if (target == null) {
 						owner.sendMessage("Veuiller écrire un pseudo correcte");
 					}else {
+						if (target.getUniqueId().equals(getPlayer())) {
+							target.sendMessage("§cVous ne pouvez pas vous traquer vous même !");
+							return;
+						}
 						if (!gameState.hasRoleNull(target)) {
 							RoleBase role = getPlayerRoles(target);
-							if (role instanceof Bertolt || role instanceof Lara || role instanceof Pieck || role instanceof Porco || role instanceof Reiner || role instanceof Magath) {
+							if (role instanceof MahrRoles) {
 								if (toSearch == null) {
 									toSearch = target;
 									owner.sendMessage("Commencement de la traque de "+target.getName());
@@ -91,7 +94,7 @@ public class Magath extends MahrRoles {
 									if (toSearch == target) {
 										toSearch = null;
 										owner.sendMessage("Fin de la traque de "+target.getName());
-									}else {
+									} else {
 										owner.sendMessage("Fin de la traque de "+toSearch.getName());
 										toSearch = target;
 										owner.sendMessage("Commencement de la traque de "+target.getName());

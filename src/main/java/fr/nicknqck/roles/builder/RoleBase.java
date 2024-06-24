@@ -103,7 +103,6 @@ public abstract class RoleBase implements Role{
 			System.out.println(owner.getName()+", RoleID: "+roleID);
 			StringID = RandomUtils.generateRandomString(24);
 			System.out.println(owner.getName()+", StringID: "+StringID);
-			Desc();
 		}
 		new BukkitRunnable() {
 			
@@ -193,7 +192,9 @@ public abstract class RoleBase implements Role{
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 	public void setTeam(TeamList team) {
-		this.team.getPlayers().remove(this.owner);
+		if (this.team != null){
+			this.team.getPlayers().remove(this.owner);
+		}
 		this.team = team;
 		this.team.addPlayer(this.owner);	
 	}

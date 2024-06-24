@@ -43,22 +43,10 @@ public class TitanDeviant extends TitansRoles {
 			if (gameState.TitansRouge.contains(p)) {
 				List<Player> istitanaroundofTitanDéviant = new ArrayList<>();
 				istitanaroundofTitanDéviant.add(p);
-				if (istitanaroundofTitanDéviant.size() < 1) {
-					isTransformedinTitan = false;
-				}else {
-					isTransformedinTitan = true;
-				}
-				if (istitanaroundofTitanDéviant.size() == 1) {
-					givePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
-				} else {
-					if (istitanaroundofTitanDéviant.size() >= 2) {
-						setResi(20);
-						givePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
-						givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 40, 1, true);
-					}
-				}
-				
-			}
+                isTransformedinTitan = true;
+                givePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
+
+            }
 		}
 	}
 	@Override

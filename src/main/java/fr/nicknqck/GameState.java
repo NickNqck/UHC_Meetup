@@ -987,38 +987,6 @@ public class GameState{
 			}
 		}
 	}
-	public void sendShifterList(Player player) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (!Shifter.isEmpty()) {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					player.sendMessage(ChatColor.BLUE+"Liste des Shifters: ");
-				}, 20);
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					Shifter.forEach(e -> player.sendMessage("- §9"+e.getName()));
-				}, 20*2);
-			}else {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					player.sendMessage("§cAucun Shifter trouvée !");
-		        }, 20);
-			}
-		}, 20);
-	}
-	public void sendTitansList(Player player) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (!TitansRouge.isEmpty()) {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					player.sendMessage(ChatColor.RED+"Liste des Titans: ");
-				}, 20);
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					TitansRouge.forEach(e -> player.sendMessage("- §c"+e.getName()));
-				}, 20);
-			}else {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					player.sendMessage("§cAucun Titans trouvée !");
-		        }, 20);	//40ticks donc 2s
-			}
-		}, 20);
-	}
 	public int countEmptySlots(Player player) {
         int emptySlots = 0;
         ItemStack[] contents = player.getInventory().getContents();
@@ -1122,7 +1090,6 @@ public class GameState{
 		if (Main.isDebug()) {
 			System.out.println("getRolesList used");
 		}
-		System.out.println(Main.isDebug());
 		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
 			for (RoleBase e : getPlayerRoles().values()) {
@@ -1172,7 +1139,7 @@ public class GameState{
 				for (Roles roles : hashMap.get(t)){
 					i++;
 					if (i != hashMap.get(t).size()){
-						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("§f,");
+						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("§f, ");
 					} else {
 						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("\n");
 					}

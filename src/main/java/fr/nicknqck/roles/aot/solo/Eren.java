@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.solo;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
@@ -54,7 +55,7 @@ public class Eren extends AotRoles {
 	@Override
 	public String[] Desc() {
 		if (killBestial) {
-			gameState.sendTitansList(owner);
+			Main.getInstance().getGetterList().getTitanRougeList(owner);
 		}
 		KnowRole(owner, Roles.Gabi, 20);
 		return new String[] {

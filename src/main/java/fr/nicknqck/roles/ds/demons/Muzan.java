@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -39,7 +40,7 @@ public class Muzan extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		fr.nicknqck.roles.builder.GetterList.getDemonList(owner);
+		Main.getInstance().getGetterList().getDemonList(owner);
 		return AllDesc.Muzan;
 	}
 	private boolean hasBoost = false;

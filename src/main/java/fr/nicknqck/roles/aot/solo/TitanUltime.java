@@ -4,7 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-public class TitanUltime extends AotRoles {
+public class TitanUltime extends TitansRoles {
 
 	public TitanUltime(Player player) {
 		super(player);
@@ -38,10 +38,8 @@ public class TitanUltime extends AotRoles {
 
 	@Override
 	public String[] Desc() {
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-		gameState.sendTitansList(owner);
-		KnowRole(owner, Roles.TitanBestial, 20);
-		},20);
+		KnowRole(owner, Roles.TitanBestial, 2);
+		Main.getInstance().getGetterList().getTitanRougeList(owner);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"Titan Ultime",

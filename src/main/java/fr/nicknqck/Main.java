@@ -15,14 +15,15 @@ import fr.nicknqck.items.*;
 import fr.nicknqck.pregen.WorldGenCaves;
 import fr.nicknqck.roles.aot.builders.titans.Bestial;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
+import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.utils.AttackUtils;
-import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.SchedulerRunnable;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
 import fr.nicknqck.worlds.WorldGenerator;
@@ -68,7 +69,8 @@ public class Main extends JavaPlugin implements Listener{
 	public boolean gen = false;
 	public static String RH() {return "§c❤§r";}
 	public static List<Chunk> keepChunk = new ArrayList<>();
-//
+	@Getter
+	private GetterList getterList;
 
 	@Getter
 	private static Main Instance;
@@ -80,6 +82,7 @@ public class Main extends JavaPlugin implements Listener{
 		RANDOM = new Random();
 	//	this.databaseManager = new DatabaseManager();
 		GameState gameState = new GameState();
+		this.getterList = new GetterList(gameState);
 		this.gameWorld = Bukkit.getWorld(getConfig().getString("gameworld"));
 		gameState.world = gameWorld;
 
