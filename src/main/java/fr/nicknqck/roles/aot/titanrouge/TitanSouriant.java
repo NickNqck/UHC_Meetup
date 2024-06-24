@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ItemBuilder;
@@ -25,7 +26,7 @@ public class TitanSouriant extends TitansRoles {
 	}
 	@Override
 	public String[] Desc() {
-		gameState.sendTitansList(owner);
+		Main.getInstance().getGetterList().getTitanRougeList(owner);
 		return new String[] {
 			AllDesc.bar,
 			AllDesc.role+"Titan Souriant",

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.mahr;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -34,7 +35,7 @@ public class Reiner extends MahrRoles {
 
 	@Override
 	public String[] Desc() {
-		gameState.sendShifterList(owner);
+		Main.getInstance().getGetterList().getMahrList(owner);
 		return new String[] {AllDesc.bar,
 				AllDesc.role+"§9Reiner",
 				AllDesc.objectifteam+"§9Mahrs",

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.Bukkit;
@@ -23,6 +24,7 @@ public class Jelena extends TitansRoles {
 	}
 	@Override
 	public String[] Desc() {
+		Main.getInstance().getGetterList().getTitanRougeList(owner);
 		KnowRole(owner, Roles.TitanBestial, 20);
 		return new String[] {
 				AllDesc.bar,

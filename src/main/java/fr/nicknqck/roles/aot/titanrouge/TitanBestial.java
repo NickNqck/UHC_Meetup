@@ -40,7 +40,7 @@ public class TitanBestial extends TitansRoles {
 	}
 	@Override
 	public String[] Desc() {
-		gameState.sendTitansList(owner);
+		Main.getInstance().getGetterList().getTitanRougeList(owner);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"Titan Bestial",

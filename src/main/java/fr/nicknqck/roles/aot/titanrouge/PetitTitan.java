@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -29,7 +30,7 @@ public class PetitTitan extends TitansRoles {
 	}
 	@Override
 	public String[] Desc() {
-		gameState.sendTitansList(owner);
+	Main.getInstance().getGetterList().getTitanRougeList(owner);
 	return new String[] {
 			AllDesc.bar,
 			AllDesc.role+"Petit Titan",

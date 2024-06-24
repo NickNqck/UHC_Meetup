@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Player;
@@ -23,6 +24,7 @@ public class TitanDeviant extends TitansRoles {
 	}
 	@Override
 	public String[] Desc() {
+		Main.getInstance().getGetterList().getTitanRougeList(owner);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"Titan Déviant",
