@@ -999,7 +999,7 @@ public class GameState{
 			}else {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					player.sendMessage("§cAucun Shifter trouvée !");
-		        }, 20);	//40ticks donc 2s
+		        }, 20);
 			}
 		}, 20);
 	}

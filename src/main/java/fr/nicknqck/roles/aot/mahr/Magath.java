@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.mahr;
 import java.text.DecimalFormat;
 
 import fr.nicknqck.roles.aot.builders.MahrRoles;
+import fr.nicknqck.roles.builder.GetterList;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,9 +20,7 @@ public class Magath extends MahrRoles {
 	public Magath(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
-		setMaxHealth(getMaxHealth()+4);
-		owner.setMaxHealth(getMaxHealth());
-		owner.setHealth(getMaxHealth());
+		giveHealedHeartatInt(4.0);
 		toSearch = null;
 		gameState.GiveRodTridi(owner);
 	}
@@ -43,10 +42,9 @@ public class Magath extends MahrRoles {
 					setResi(0);
 				}
 			}			
-		}else {
+		} else {
 			setResi(0);
 		}
-		super.Update(gameState);
 	}
 
 	@Override
@@ -56,7 +54,7 @@ public class Magath extends MahrRoles {
 
 	@Override
 	public String[] Desc() {
-		gameState.sendShifterList(owner);
+		GetterList.getMahrList(owner);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"Magath",
@@ -109,7 +107,6 @@ public class Magath extends MahrRoles {
 				}
 			}			
 		}
-		super.onAotCommands(arg, args, gameState);
 	}
 	@Override
 	public ItemStack[] getItems() {

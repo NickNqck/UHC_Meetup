@@ -103,6 +103,7 @@ public abstract class RoleBase implements Role{
 			System.out.println(owner.getName()+", RoleID: "+roleID);
 			StringID = RandomUtils.generateRandomString(24);
 			System.out.println(owner.getName()+", StringID: "+StringID);
+			Desc();
 		}
 		new BukkitRunnable() {
 			

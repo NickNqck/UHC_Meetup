@@ -2,6 +2,8 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -26,5 +28,19 @@ public class GetterList {
             Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.spigot().sendMessage(text), 1L);
         }
     }
-
+    public static void getMahrList(Player player){
+        if (!GameState.getInstance().getPlayerRoles().isEmpty()){
+            TextComponent text = new TextComponent("§9Liste des Mahrs:\n");
+            for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
+                if (role instanceof MahrRoles) {
+                    MahrRoles mahr = (MahrRoles ) role;
+                    Player list = Bukkit.getPlayer(mahr.getUuidOwner());
+                    if (list != null){
+                        text.addExtra("\n§7 - §c"+list.getName());
+                    }
+                }
+            }
+            Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.spigot().sendMessage(text), 1L);
+        }
+    }
 }
