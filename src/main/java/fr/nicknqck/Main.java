@@ -23,6 +23,7 @@ import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.SchedulerRunnable;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
+import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
@@ -75,6 +76,8 @@ public class Main extends JavaPlugin implements Listener{
 	@Getter
 	private static Main Instance;
 	public static Random RANDOM;
+	@Getter
+	private Inventories inventories;
 
 	@Override
 	public void onEnable() {
@@ -82,6 +85,7 @@ public class Main extends JavaPlugin implements Listener{
 		RANDOM = new Random();
 	//	this.databaseManager = new DatabaseManager();
 		GameState gameState = new GameState();
+		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
 		this.gameWorld = Bukkit.getWorld(getConfig().getString("gameworld"));
 		gameState.world = gameWorld;

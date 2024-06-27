@@ -209,10 +209,10 @@ public class HubListener implements Listener {
 				if (itemstack.isSimilar(ItemsManager.adminWatch)) {
 					if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
 						player.openInventory(GUIItems.getAdminWatchGUI());
-		    			HubInventory.getInstance().updateAdminInventory(player);
+		    			Main.getInstance().getInventories().updateAdminInventory(player);
 					} else {
 						player.openInventory(GUIItems.getRoleSelectGUI());
-						HubInventory.getInstance().updateRoleInventory(player);
+						Main.getInstance().getInventories().updateRoleInventory(player);
 					}
 				}
 			}

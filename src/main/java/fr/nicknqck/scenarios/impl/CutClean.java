@@ -1,12 +1,11 @@
 package fr.nicknqck.scenarios.impl;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.blocks.BlockManager;
-import fr.nicknqck.events.essential.HubInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.ItemBuilder;
-import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -43,7 +42,7 @@ public class CutClean extends BasicScenarios {
 	public void onClick(Player player) {
 		if (getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 			player.openInventory(GUIItems.getCutCleanConfigGUI());
-			HubInventory.getInstance().updateCutCleanInventory(player);
+			Main.getInstance().getInventories().updateCutCleanInventory(player);
 			player.updateInventory();
 		} else {
 			if (CutClean) {

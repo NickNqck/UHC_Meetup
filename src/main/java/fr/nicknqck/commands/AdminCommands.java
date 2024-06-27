@@ -7,7 +7,6 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.essential.HubInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
@@ -192,7 +191,7 @@ public class AdminCommands implements CommandExecutor{
                             }
 							if (args[0].equalsIgnoreCase("config")) {
 								player.openInventory(GUIItems.getAdminWatchGUI());
-								HubInventory.getInstance().updateAdminInventory(player);
+								Main.getInstance().getInventories().updateAdminInventory(player);
 								return true;
 							}
 							if (args[0].equalsIgnoreCase("pregen")) {
