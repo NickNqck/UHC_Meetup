@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Kanae extends SlayerRoles implements Listener {
-    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aLame végétal").toItemStack();
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aLame végétal").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cooldown = 0;
     public Kanae(Player player) {
         super(player);
