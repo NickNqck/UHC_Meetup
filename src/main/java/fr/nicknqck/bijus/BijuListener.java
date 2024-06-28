@@ -30,7 +30,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;

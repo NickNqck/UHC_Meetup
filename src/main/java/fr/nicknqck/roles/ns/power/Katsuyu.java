@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ns.power;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

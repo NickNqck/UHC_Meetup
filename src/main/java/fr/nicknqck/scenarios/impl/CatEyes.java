@@ -4,7 +4,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.scenarios.BasicScenarios;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

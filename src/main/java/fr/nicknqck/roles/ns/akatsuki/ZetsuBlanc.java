@@ -1,7 +1,6 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
-import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,7 +17,7 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 
 public class ZetsuBlanc extends AkatsukiRoles {

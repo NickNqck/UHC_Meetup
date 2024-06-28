@@ -8,7 +8,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Material;

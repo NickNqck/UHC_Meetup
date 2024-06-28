@@ -12,7 +12,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.scenarios.impl.FFA;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

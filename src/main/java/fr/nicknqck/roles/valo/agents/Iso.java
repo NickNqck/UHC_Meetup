@@ -8,7 +8,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.GlobalUtils;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import net.minecraft.server.v1_8_R3.EnumParticle;

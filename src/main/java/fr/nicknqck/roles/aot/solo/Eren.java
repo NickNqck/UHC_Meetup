@@ -16,10 +16,9 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;

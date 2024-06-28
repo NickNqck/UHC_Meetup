@@ -9,7 +9,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.powers.LocPlayer;

@@ -5,7 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.blocks.BlockManager;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.scenarios.BasicScenarios;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

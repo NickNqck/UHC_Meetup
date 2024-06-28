@@ -1,7 +1,7 @@
 package fr.nicknqck.scenarios.impl;
 
 import fr.nicknqck.scenarios.BasicScenarios;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.ChatColor;

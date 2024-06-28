@@ -1,4 +1,4 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.itembuilder;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -354,6 +354,16 @@ public class ItemBuilder {
             potion.setSplash(true);
             potion.apply(is);
         }catch (ClassCastException ignored){}
+        return this;
+    }
+    public ItemBuilder setDroppable(boolean droppable) {
+        if (!droppable){
+            if (!ItemBuilderListener.getInstance().getCantBeDroppable().contains(toItemStack())) {
+                ItemBuilderListener.getInstance().getCantBeDroppable().add(toItemStack());
+            }
+        } else {
+            ItemBuilderListener.getInstance().getCantBeDroppable().remove(toItemStack());
+        }
         return this;
     }
 }

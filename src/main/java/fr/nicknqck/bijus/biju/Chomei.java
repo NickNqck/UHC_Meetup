@@ -8,6 +8,7 @@ import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;

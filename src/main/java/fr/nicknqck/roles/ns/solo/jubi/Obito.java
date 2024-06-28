@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import fr.nicknqck.utils.powers.KamuiUtils.Users;
 import fr.nicknqck.utils.particles.MathUtil;

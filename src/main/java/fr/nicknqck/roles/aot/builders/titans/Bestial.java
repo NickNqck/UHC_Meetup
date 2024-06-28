@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Dash;
 import lombok.Getter;
 import org.bukkit.Bukkit;

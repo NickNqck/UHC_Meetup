@@ -37,7 +37,7 @@ import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.EntityLiving;

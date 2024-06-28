@@ -24,6 +24,7 @@ import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.SchedulerRunnable;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.inventories.Inventories;
+import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
@@ -172,6 +173,7 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
+		getServer().getPluginManager().registerEvents(new ItemBuilderListener(), this);
 		System.out.println("Ending registering events");
 	}
 	private void registerCommands(GameState gameState) {

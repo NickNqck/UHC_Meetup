@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 
 public abstract class GUIItems{
 	

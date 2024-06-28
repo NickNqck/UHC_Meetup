@@ -3,7 +3,7 @@ package fr.nicknqck.scenarios.impl;
 import java.util.Arrays;
 
 import fr.nicknqck.scenarios.BasicScenarios;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

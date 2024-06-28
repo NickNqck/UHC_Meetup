@@ -17,7 +17,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 

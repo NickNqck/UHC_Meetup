@@ -2,7 +2,7 @@ package fr.nicknqck.scenarios.impl;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.scenarios.BasicScenarios;
-import fr.nicknqck.utils.ItemBuilder;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
