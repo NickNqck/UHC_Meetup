@@ -23,7 +23,7 @@ public class Kanao extends SlayerRoles {
 		for (String desc : AllDesc.Kanao) owner.sendMessage(desc);
 		this.setForce(20);
 		setNoFall(true);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		invuse = 3;
 	}
 	@Override

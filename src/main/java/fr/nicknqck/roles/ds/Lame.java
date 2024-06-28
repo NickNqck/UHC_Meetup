@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import fr.nicknqck.utils.RandomUtils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,6 +44,7 @@ public class Lame implements Listener{
 							}
 							toGett.getConsumer().accept(e);
 							giveLame(role, toGett);
+							e.getPlayer().getItemInHand().setType(Material.AIR);
 						}
 					}
 				} else {

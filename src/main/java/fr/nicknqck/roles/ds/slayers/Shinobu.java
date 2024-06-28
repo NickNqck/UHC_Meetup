@@ -20,7 +20,7 @@ public class Shinobu extends SlayerRoles {
 	public Shinobu(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
-        this.setCanUseBlade(true);
+        this.setCanuseblade(true);
         gameState.addPillier(owner);
 	}
 	@Override

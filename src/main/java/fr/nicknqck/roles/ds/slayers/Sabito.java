@@ -21,7 +21,7 @@ public class Sabito extends SlayerRoles {
 	public Sabito(Player player) {
 		super(player);
 		for (String desc : AllDesc.Sabito) owner.sendMessage(desc);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		this.setResi(20);
 	}
 	@Override

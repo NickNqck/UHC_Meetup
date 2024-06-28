@@ -19,7 +19,7 @@ public class ZenItsu extends SlayerRoles {
 	public ZenItsu(Player player) {
 		super(player);
 		for (String desc : AllDesc.ZenItsu) owner.sendMessage(desc);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		this.setForce(20);
 	}
 

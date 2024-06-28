@@ -34,7 +34,7 @@ public class Kokushibo extends DemonsRoles {
 		for (String desc : AllDesc.Kokushibo) owner.sendMessage(desc);
 		this.setForce(20);
 		regencooldown = 15;
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {

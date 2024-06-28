@@ -47,7 +47,6 @@ public abstract class RoleBase implements Role{
 	private Roles oldRole = null;
 	private boolean powerEnabled = true;
 	private boolean invincible = false;
-	private boolean canuseblade = false;
 	private double force = 0;
 	private double resi = 0;
 	private TeamList oldteam;
@@ -287,9 +286,6 @@ public abstract class RoleBase implements Role{
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
 	// Fonction appelée a la fin d'une partie, utiliser pour supprimer des variables ou données spécifiques.
 	public void endRole() {}
-	
-	public void setCanUseBlade(boolean canuseblade) {this.canuseblade = canuseblade;}
-	public boolean isCanUseBlade() {return canuseblade;}
 	public boolean hasLameForce() {return haslameforce;}
 	public void setLameForce(boolean haslameforce) {this.haslameforce = haslameforce;}
 	public boolean isHasNoFall() {return hasNoFall;}

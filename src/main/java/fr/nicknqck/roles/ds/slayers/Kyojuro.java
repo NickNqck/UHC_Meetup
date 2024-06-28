@@ -19,7 +19,7 @@ public class Kyojuro extends SlayerRoles {
 		super(player);
 		owner.sendMessage(AllDesc.Kyojuro);
 		this.setForce(20);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		this.setLameFr(true);
 		this.setResi(20);
 		gameState.addPillier(owner);

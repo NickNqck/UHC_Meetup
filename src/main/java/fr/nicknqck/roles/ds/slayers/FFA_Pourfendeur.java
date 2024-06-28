@@ -45,7 +45,7 @@ public class FFA_Pourfendeur extends SlayerRoles {
 		super(player);
 		for (String desc : AllDesc.Pourfendeur)owner.sendMessage(desc);
 		owner.sendMessage("Vue que nous somme en FFA vous devez vous-même choisir votre Soufle via la commmande§6 /ds role");
-        setCanUseBlade(true);
+		setCanuseblade(true);
         setLameIncassable(owner, true);
 	}
 	@Override

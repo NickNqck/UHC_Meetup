@@ -24,7 +24,7 @@ public class Muichiro extends SlayerRoles {
 		super(player);
 		owner.sendMessage(Desc());
 		this.setForce(20);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		gameState.addPillier(owner);
 	}
 	@Override

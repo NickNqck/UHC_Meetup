@@ -17,7 +17,7 @@ public class Obanai extends SlayerRoles {
 	public Obanai(Player player) {
 		super(player);
 		for (String desc : AllDesc.Obanai) owner.sendMessage(desc);
-		this.setCanUseBlade(true);		
+		this.setCanuseblade(true);
 		gameState.addPillier(owner);
 	}
 	@Override

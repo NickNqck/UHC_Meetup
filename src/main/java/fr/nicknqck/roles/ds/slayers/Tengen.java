@@ -30,7 +30,7 @@ public class Tengen extends SlayerRoles {
 	public Tengen(Player player) {
 		super(player);
 		owner.sendMessage(AllDesc.Tengen);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		this.setForce(20);
 		gameState.addPillier(owner);
 	}

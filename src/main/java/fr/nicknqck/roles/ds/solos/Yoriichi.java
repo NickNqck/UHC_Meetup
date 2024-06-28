@@ -30,7 +30,7 @@ public class Yoriichi extends DemonsSlayersRoles {
 		super(player);
 		owner.sendMessage(Desc());
 		this.setForce(20);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		this.setResi(20);
 		setLameIncassable(owner, true);
 	}

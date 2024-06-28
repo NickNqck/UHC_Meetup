@@ -24,7 +24,7 @@ public class Sanemi extends SlayerRoles {
 	public Sanemi(Player player) {
 		super(player);
 		for (String desc : AllDesc.Sanemi) owner.sendMessage(desc);
-		setCanUseBlade(true);
+		setCanuseblade(true);
 		gameState.addPillier(owner);
 	}
 	@Override

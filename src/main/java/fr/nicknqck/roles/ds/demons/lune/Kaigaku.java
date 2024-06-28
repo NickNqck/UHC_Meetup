@@ -31,7 +31,7 @@ public class Kaigaku extends DemonsRoles {
 		super(player);
 		owner.sendMessage(AllDesc.Kaigaku);
 		this.setForce(20);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof ZenItsu) {

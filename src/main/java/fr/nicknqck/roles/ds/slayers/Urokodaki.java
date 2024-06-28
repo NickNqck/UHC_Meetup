@@ -20,7 +20,7 @@ public class Urokodaki extends SlayerRoles {
 	public Urokodaki(Player player) {
 		super(player);
 		for (String desc : AllDesc.Urokodaki) owner.sendMessage(desc);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		setForce(20);
 	}
 

@@ -17,7 +17,7 @@ public class Mitsuri extends SlayerRoles {
         super(player);
         owner.sendMessage(Desc());
         gameState.addPillier(owner);
-        setCanUseBlade(true);
+        setCanuseblade(true);
     }
     @Override
     public Roles getRoles() {

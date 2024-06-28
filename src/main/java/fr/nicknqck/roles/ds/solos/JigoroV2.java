@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import java.text.DecimalFormat;
 
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import org.bukkit.Bukkit;
@@ -24,13 +25,13 @@ import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
-public class JigoroV2 extends RoleBase{
+public class JigoroV2 extends DemonsSlayersRoles {
 
 	public JigoroV2(Player player) {
 		super(player);
 		owner.sendMessage(AllDesc.JigoroV2);
 		pacte = Pacte.Non_Choisis;
-		setCanUseBlade(true);
+		setCanuseblade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : getIGPlayers()) {
 				if (getPlayerRoles(p) instanceof ZenItsu) {

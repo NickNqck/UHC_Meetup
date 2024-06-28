@@ -31,7 +31,7 @@ boolean dance = false;
 	public Tanjiro(Player player) {
 		super(player);
 		for (String desc : AllDesc.Tanjiro) owner.sendMessage(desc);
-		this.setCanUseBlade(true);
+		this.setCanuseblade(true);
 		this.setLameFr(true);
 	}
 

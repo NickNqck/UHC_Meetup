@@ -33,7 +33,7 @@ public class Pourfendeur extends SlayerRoles {
 	public Pourfendeur(Player player) {
 		super(player);
 		for (String desc : AllDesc.Pourfendeur) owner.sendMessage(desc);
-        this.setCanUseBlade(true);
+        this.setCanuseblade(true);
         int rint = Main.RANDOM.nextInt(5);
         if (rint == 0) {
         form = Soufle.Eau;	

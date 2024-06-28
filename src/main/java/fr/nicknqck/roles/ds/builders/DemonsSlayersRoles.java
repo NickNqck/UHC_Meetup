@@ -18,6 +18,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
 
     private Lames lames;
     private boolean lameincassable = false;
+    private boolean canuseblade = false;
     public DemonsSlayersRoles(Player player) {
         super(player);
     }

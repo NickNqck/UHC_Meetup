@@ -24,7 +24,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
 	public ShinjuroV2(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
-		setCanUseBlade(true);
+		setCanuseblade(true);
 		setLameIncassable(owner, true);
 		setLameFr(true);
 	}
