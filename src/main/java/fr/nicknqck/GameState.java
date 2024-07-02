@@ -690,7 +690,7 @@ public class GameState{
 			role = new Itachi(player);
 			break;
 		case ShinjuroV2:
-			role = new ShinjuroV2(player);
+			role = new ShinjuroV(player);
 			break;
 		case Madara:
 			role = new Madara(player);

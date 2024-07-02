@@ -185,7 +185,8 @@ public abstract class RoleBase implements Role{
 		return getOriginTeam().getColor();
 	}
 	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
-		player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force);
+		Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force));
+
 	}
 	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {givePotionEffet(owner, type, time, level, force);}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
@@ -201,11 +202,7 @@ public abstract class RoleBase implements Role{
 		if (gameState.hasRoleNull(player)) {
 			return false;
 		}else {
-			if (getPlayerRoles(player).getOriginTeam() != null) {
-				return true;
-			}else {
-				return false;
-			}
+            return getPlayerRoles(player).getOriginTeam() != null;
 		}
 	}
 	public TeamList getTeam(Player player) {
@@ -353,13 +350,6 @@ public abstract class RoleBase implements Role{
     }
 	public boolean isTransformedinTitan = false;
 	public boolean onPickupItem(Item item) {
-		for (ItemStack stack : getItems()) {
-			if (item.getItemStack().isSimilar(stack)) {
-				return true;
-			}else {
-				return false;
-			}
-		}
 		return false;}
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		for (Bijus value : Bijus.values()) {

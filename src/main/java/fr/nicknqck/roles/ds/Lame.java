@@ -5,9 +5,6 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,7 +26,7 @@ public class Lame implements Listener{
 			if (!gameState.hasRoleNull(p)) {
 				if (gameState.getPlayerRoles().get(p) instanceof DemonsSlayersRoles) {
 					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getPlayerRoles().get(p);
-					if (role instanceof SlayerRoles || role instanceof Kokushibo || role instanceof Kaigaku) {
+					if (role.isCanuseblade()) {
 						if (role.getLames() != null) {
 							p.sendMessage("§cVous avez déjà une lame de nichirin");
 						} else {
@@ -44,7 +41,7 @@ public class Lame implements Listener{
 							}
 							toGett.getConsumer().accept(e);
 							giveLame(role, toGett);
-							e.getPlayer().getItemInHand().setType(Material.AIR);
+							e.getPlayer().setItemInHand(new ItemStack(Material.AIR));
 						}
 					}
 				} else {

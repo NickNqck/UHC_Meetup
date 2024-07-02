@@ -187,8 +187,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
 	                owner.sendMessage("§7Vous avez rempli votre fiole de §6Sake");
 	                giveItem(owner, false, SakeRemplieItem());
 	                event.setCancelled(true);
-	                return;
-	            }
+                }
 	        }
 	    }
 	}

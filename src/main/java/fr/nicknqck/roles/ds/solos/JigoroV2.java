@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.solos;
 import java.text.DecimalFormat;
 
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import org.bukkit.Bukkit;
