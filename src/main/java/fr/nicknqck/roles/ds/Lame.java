@@ -5,6 +5,10 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.roles.ds.slayers.Kyojuro;
+import fr.nicknqck.roles.ds.slayers.Tanjiro;
+import fr.nicknqck.roles.ds.solos.Shinjuro;
+import fr.nicknqck.roles.ds.solos.ShinjuroV2;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -34,8 +38,15 @@ public class Lame implements Listener{
 							while (toGett == null){
 								for (Lames lames : Lames.values()){
 									if (RandomUtils.getOwnRandomProbability(15)){
-										toGett = lames;
-										break;
+										if (role instanceof Tanjiro || role instanceof Kyojuro || role instanceof ShinjuroV2 || role instanceof Shinjuro) {
+											if (lames != Lames.FireResistance) {
+												toGett = lames;
+												break;
+											}
+										} else {
+											toGett = lames;
+											break;
+										}
 									}
 								}
 							}

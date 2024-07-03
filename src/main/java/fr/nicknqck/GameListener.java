@@ -778,7 +778,7 @@ public class GameListener implements Listener {
 		for (Player player2 : gameState.getInGamePlayers()) {
 			if (gameState.getPlayerRoles().get(player2) != null) {
 				RoleBase role = gameState.getPlayerRoles().get(player2);
-				switch (role.getOriginTeam()) {
+				switch (role.getTeam()) {
 				case Akatsuki:
 					Akatsuki = true;
 					break;

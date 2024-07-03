@@ -69,8 +69,8 @@ public class PersonalScoreboard {
     		objectiveSign.setLine(0, "§c");
     		if (!this.gameState.hasRoleNull(player)) {
     			RoleBase role = this.gameState.getPlayerRoles().get(player);
-    			if (this.gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
-    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getOriginTeam().getColor()+role.getRoles().name());
+    			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
+    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getTeam().getColor()+role.getRoles().name());
     			}else {
     				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getRoles().name());
     			}
