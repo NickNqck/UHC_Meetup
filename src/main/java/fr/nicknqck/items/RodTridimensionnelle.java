@@ -3,6 +3,7 @@ package fr.nicknqck.items;
 import java.text.DecimalFormat;
 import java.util.Random;
 
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.ns.shinobi.KillerBee;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -44,9 +45,9 @@ public class RodTridimensionnelle implements Listener {
         }
         Player player = (Player) event.getEntity().getShooter();
         if (!gameState.hasRoleNull(player)) {
-        	RoleBase role = gameState.getPlayerRoles().get(player);
-        	if (role instanceof KillerBee) {
-        		if (role.isCanTentacule()) {
+        	RoleBase roleBase = gameState.getPlayerRoles().get(player);
+        	if (roleBase instanceof KillerBee) {
+        		if (roleBase.isCanTentacule()) {
         			FishHook fishHook = (FishHook) event.getEntity();
         	        Location eyeLocation = player.getEyeLocation().clone();
         	        fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
@@ -57,6 +58,8 @@ public class RodTridimensionnelle implements Listener {
                 return;
             }
         	if (player.getItemInHand().isSimilar(getItem())) {
+                if (!(roleBase instanceof AotRoles))return;
+                AotRoles role = (AotRoles) roleBase;
         		if (role.gazAmount > 0) {
             		if (role.actualTridiCooldown <= 0) {
             			if (!role.isTransformedinTitan) {
@@ -143,13 +146,23 @@ public class RodTridimensionnelle implements Listener {
                 cancel();
                 return;
             }
+            if (gameState.hasRoleNull(player)) {
+                cancel();
+                return;
+            }
             this.fishHook.setVelocity(new Vector(0, 0, 0));
             double vectorX = this.loc.getX() - this.player.getLocation().getX();
             double vectorY = this.loc.getY() - this.player.getLocation().getY();
             double vectorZ = this.loc.getZ() - this.player.getLocation().getZ();
             Vector v = (new Vector(vectorX, vectorY, vectorZ)).add(new Vector(0, 3, 0)).multiply(0.02D);
             if (this.player.getLocation().distance(this.fishHook.getLocation()) > 10.0D) {
-                v.multiply(0.85D+gameState.getPlayerRoles().get(this.player).RodSpeedMultipliyer);
+                double speedMultiplier = 0;
+                if (gameState.getPlayerRoles().get(player) instanceof AotRoles){
+                    speedMultiplier = ((AotRoles) gameState.getPlayerRoles().get(player)).RodSpeedMultipliyer;
+                } else if (gameState.getPlayerRoles().get(player) instanceof KillerBee) {
+                    speedMultiplier = 0;
+                }
+                v.multiply(0.85D+speedMultiplier);
             }
             this.player.setVelocity(this.player.getVelocity().add(v));
             if (!this.fishHook.isDead() && this.player.getLocation().distance(this.fishHook.getLocation()) >= 3.0D) {
@@ -166,18 +179,19 @@ public class RodTridimensionnelle implements Listener {
             cancel();
             double r = loc.distance(initLoc)/2;
             if (bool) {
-            	if (gameState.getPlayerRoles().get(this.player).gazAmount - r <= 0) {
-                	gameState.getPlayerRoles().get(this.player).gazAmount = 0;
+                if (!(gameState.getPlayerRoles().get(player) instanceof AotRoles))return;
+                AotRoles role = (AotRoles) gameState.getPlayerRoles().get(player);
+            	if (role.gazAmount - r <= 0) {
+                	role.gazAmount = 0;
                 }else{
-                	gameState.getPlayerRoles().get(this.player).gazAmount -= r;
+                	role.gazAmount -= r;
                 }
                 DecimalFormat df = new DecimalFormat("0.0");
-                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(gameState.getPlayerRoles().get(this.player).gazAmount)+"%");  
+                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(role.gazAmount)+"%");
                 gameState.getPlayerRoles().get(this.player).actualTridiCooldown = gameState.TridiCooldown;
             } else {
 				gameState.getPlayerRoles().get(player).onTentaculeEnd(r);
             }
-            return;
         }
     }
 }

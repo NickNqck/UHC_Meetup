@@ -3,7 +3,9 @@ package fr.nicknqck.roles.aot.soldats;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
+import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.ChatColor;
@@ -178,19 +180,19 @@ public void resetCooldown() {
 public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 	if (killer == owner) {
 		if (victim != null) {
-			if (getPlayerRoles(victim).isTransformedinTitan) {
+			if (getPlayerRoles(victim) instanceof TitansRoles || getPlayerRoles(victim) instanceof MahrRoles) {
 				int rint = RandomUtils.getRandomInt(0, 2);
 				if (rint == 0) {
 					addBonusResi(7);
-				    owner.sendMessage("Vous venez de tuez un titan transformé et avez obtenue 7% de "+AllDesc.Resi);
+				    owner.sendMessage("Vous venez de tuez un titan et avez obtenue 7% de "+AllDesc.Resi);
 				}
 				if (rint == 1) {
 					addBonusforce(7);
-					owner.sendMessage("Vous venez de tuez un titan transformé et avez obtenue 7% de "+AllDesc.Force);
+					owner.sendMessage("Vous venez de tuez un titan et avez obtenue 7% de "+AllDesc.Force);
 				}
 				if (rint == 2) {
 					addSpeedAtInt(owner, 7);
-					owner.sendMessage("Vous venez de tuez un titan transformé et avez obtenue 7% de "+AllDesc.Speed);
+					owner.sendMessage("Vous venez de tuez un titan et avez obtenue 7% de "+AllDesc.Speed);
 				}
 			}
 		}

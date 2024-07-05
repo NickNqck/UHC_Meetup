@@ -45,7 +45,7 @@ public class Rui extends DemonsRoles {
 
 	@Override
 	public Roles getRoles() {
-		return Roles.RockLee;
+		return Roles.Rui;
 	}
 	@Override
 	public String[] Desc() {

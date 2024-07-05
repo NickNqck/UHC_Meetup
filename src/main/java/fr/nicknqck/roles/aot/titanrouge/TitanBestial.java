@@ -1,31 +1,30 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
-
+import fr.nicknqck.GameListener;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
+import fr.nicknqck.roles.aot.builders.titans.TitanListener;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
+import fr.nicknqck.roles.aot.soldats.Soldat;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.aot.soldats.Soldat;
-import fr.nicknqck.roles.aot.builders.titans.TitanListener;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.RandomUtils;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TitanBestial extends TitansRoles {
-
+	private final HashMap<UUID, Integer> timePassed = new HashMap<>();
 	public TitanBestial(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
@@ -56,7 +55,7 @@ public class TitanBestial extends TitansRoles {
 				"§c§lATTENTION§f vous possédez la liste des§c Titans rouge§f mais vous n'apparaissez pas dedans"
 		};
 	}
-	private java.util.List<Player> canBeTransformed = new ArrayList<>();
+	private final java.util.List<Player> canBeTransformed = new ArrayList<>();
 	private boolean cri = false;
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
@@ -115,26 +114,8 @@ public class TitanBestial extends TitansRoles {
 		}
 		super.onAotCommands(arg, args, gameState);
 	}
-	private HashMap<UUID, Integer> timePassed = new HashMap<>();
 	@Override
 	public void Update(GameState gameState) {
-		if (actualTridiCooldown > 0) {
-			actualTridiCooldown--;
-			if (owner.getItemInHand().isSimilar(gameState.EquipementTridi())) {
-				DecimalFormat df = new DecimalFormat("0.0");
-			//	sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"%"+aqua+" Cooldown:§6 "+actualTridiCooldown+"s");
-				sendCustomActionBar(owner, "Gaz restant§8»"+gameState.sendGazBar(gazAmount, 2)+"§7("+aqua+df.format(gazAmount)+"%§7), Cooldown:§b "+cd(actualTridiCooldown));
-			}
-		}else if (actualTridiCooldown == 0){
-			owner.sendMessage("§7§l"+gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 utilisable !");
-			actualTridiCooldown--;
-		}
-		if (actualTridiCooldown <= 0) {
-			if (owner.getItemInHand().isSimilar(gameState.EquipementTridi())) {
-				DecimalFormat df = new DecimalFormat("0.0");
-				sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"% "+"§7§lArc Tridimentionnel§r:§6 Utilisable");
-			}
-		}
 		if (owner.getWorld().equals(Main.getInstance().gameWorld)){
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
 				if (!gameState.hasRoleNull(p)) {
@@ -160,8 +141,8 @@ public class TitanBestial extends TitansRoles {
 		if (isTransformedinTitan) {
 		if (owner.getWorld().equals(Main.getInstance().gameWorld)) {
 			for (Player p : gameState.getNearbyPlayers(owner, 20)) {
-				if (!gameState.hasRoleNull(p)) {
-					RoleBase role = gameState.getPlayerRoles().get(p);
+				if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof AotRoles) {
+					AotRoles role = (AotRoles) gameState.getPlayerRoles().get(p);
 					if (role.isTransformedinTitan) {
 						if (role instanceof PetitTitan || role instanceof GrandTitan) {
 								role.setForce(20);

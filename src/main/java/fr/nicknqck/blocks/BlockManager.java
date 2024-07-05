@@ -2,6 +2,7 @@ package fr.nicknqck.blocks;
 
 import java.util.Arrays;
 
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -53,7 +54,7 @@ public class BlockManager implements Listener{
 	        }
 	        if (!gameState.LaveTitans) {
 	        	if (!gameState.hasRoleNull(event.getPlayer())) {
-	        		if (gameState.getPlayerRoles().get(event.getPlayer()).isTransformedinTitan) {
+	        		if (gameState.getPlayerRoles().get(event.getPlayer()) instanceof AotRoles && ((AotRoles) gameState.getPlayerRoles().get(event.getPlayer())).isTransformedinTitan) {
 	        			if (event.getBucket() == Material.LAVA_BUCKET) {
 	            			event.getPlayer().sendMessage("§7Impossible de poser de la§c§l lave§7 lorsque vous êtes§l transformé en titan§7 !");
 		        			event.setCancelled(true);

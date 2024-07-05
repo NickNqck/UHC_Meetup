@@ -41,7 +41,7 @@ public class Gabi extends AotRoles {
 					List<Player> canBeinList = new ArrayList<>();
 					for (Player p : getIGPlayers()) {
 						if (!gameState.hasRoleNull(p)) {
-							if (getPlayerRoles(p).canShift) {
+							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);
@@ -61,7 +61,7 @@ public class Gabi extends AotRoles {
 					List<Player> canBeinList = new ArrayList<>();
 					for (Player p : getIGPlayers()) {
 						if (!gameState.hasRoleNull(p)) {
-							if (getPlayerRoles(p).canShift) {
+							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);
@@ -85,7 +85,7 @@ public class Gabi extends AotRoles {
 					List<Player> canBeinList = new ArrayList<>();
 					for (Player p : getIGPlayers()) {
 						if (!gameState.hasRoleNull(p)) {
-							if (getPlayerRoles(p).canShift) {
+							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);

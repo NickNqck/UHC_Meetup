@@ -485,9 +485,7 @@ public class Bestial extends Titan{
 
 	@Override
 	public void onSubCommand(Player player, String[] args) {
-		if (args[0].equalsIgnoreCase("oiseau")) {
-			form = Animal.Oiseau;
-		}
+
 	}
 
 	@Override

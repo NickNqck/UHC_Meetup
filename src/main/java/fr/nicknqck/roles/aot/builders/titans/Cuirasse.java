@@ -106,7 +106,7 @@ public class Cuirasse extends Titan{
 		if (!isTransformedinTitan()) {
 			if (getListener().getCuirasseCooldown() <= 0) {
 				setTransformedinTitan(true);
-				getState().getPlayerRoles().get(p).isTransformedinTitan  = true;
+				getPlayerRole(p.getUniqueId()).isTransformedinTitan  = true;
 				TransfoMessage(getListener().getCuirasse(), true);
 				p.sendMessage("§7Transformation en Titan§9 Cuirassé");
 				getListener().setCuirasseCooldown(60*8);

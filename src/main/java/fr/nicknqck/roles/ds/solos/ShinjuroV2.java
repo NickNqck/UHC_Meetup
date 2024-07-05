@@ -13,9 +13,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -87,7 +88,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
                 AllDesc.tab+"§b60%§r: §c+50%§f de§c chance§f d'infliger des§c coups enflammé§f et§c +25%§f de§c chance§f que vos§c flèches§f enflamme le§c joueur§f toucher",
                 AllDesc.tab+"§b80%§r: §c+25%§f de§c chance§f que vos§c flèches§f enflamme§f le§c joueur§f toucher et vous vous§c régénérerez§f de§c 1/2"+AllDesc.coeur+"§f toute les§c 6 secondes§f en§c feu",
                 "",
-                "§7(Vous perdez§c 1%§7 d'§calcool§7 toute les§c 10 secondes§7)",
+                "§7(Vous perdez§c 1%§7 d'§calcool§7 toute les§c 6 secondes§7)",
                 "",
                 "§lCommande:",
                 "",
@@ -202,6 +203,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
         private void onEndGame(EndGameEvent event){
             this.gameEnded = true;
             this.shinjuro.flamme = false;
+            HandlerList.unregisterAll(this);
         }
         @EventHandler
         private void onPlayerInteract(PlayerInteractEvent event) {
@@ -240,14 +242,22 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
         }
         @EventHandler
         private void onBattle(EntityDamageByEntityEvent event){
-            if (!gameEnded && !shinjuro.flamme) {
-                if (event.getDamager().getUniqueId().equals(shinjuro.getPlayer())) {
-                    if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) && RandomUtils.getOwnRandomProbability(shinjuro.state.melee)) {
-                    //    event.getEntity().setFireTicks(150);
-                        ((CraftEntity)event.getEntity()).getHandle().setOnFire(150);
+            if (!gameEnded && shinjuro.flamme) {
+                if (event.getDamager() instanceof Player) {
+                    Player damager = (Player) event.getDamager();
+                    if (damager.getUniqueId().equals(shinjuro.getPlayer())) {
+                        if (event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) && RandomUtils.getOwnRandomProbability(shinjuro.state.melee)) {
+                            event.getEntity().setFireTicks(15*20);
+                        }
                     }
-                    if (event.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE) && RandomUtils.getOwnRandomProbability(shinjuro.state.distance)) {
-                        event.getEntity().setFireTicks(150);
+                } else if (event.getDamager() instanceof Projectile) {
+                    if (((Projectile) event.getDamager()).getShooter() instanceof Player) {
+                        Player shooter = (Player) ((Projectile) event.getDamager()).getShooter();
+                        if (shooter.getUniqueId().equals(shinjuro.getPlayer())) {
+                            if (RandomUtils.getOwnRandomProbability(shinjuro.state.distance)) {
+                                event.getEntity().setFireTicks(15*20);
+                            }
+                        }
                     }
                 }
             }

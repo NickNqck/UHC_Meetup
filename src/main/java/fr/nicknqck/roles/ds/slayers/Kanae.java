@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -10,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -28,6 +30,7 @@ public class Kanae extends SlayerRoles implements Listener {
         this.runnable = new KanaeRunnable(this);
         this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0 ,20);
         giveItem(player, false, getItems());
+        giveItem(player, false, Items.getLamedenichirin());
         owner.sendMessage(Desc());
     }
 
@@ -92,35 +95,37 @@ public class Kanae extends SlayerRoles implements Listener {
                 StringBuilder toKanae = new StringBuilder("§c"+((Player) event.getEntity()).getDisplayName()+"§7 à reçus§c ");
                 StringBuilder toVictim = new StringBuilder("§7Vous avez reçus§c ");
                 int rdm = Main.RANDOM.nextInt(100);
-                if (rdm <= 25) {
+                System.out.println("rdm "+rdm);
+                if (rdm < 25) {
                     toKanae = null;
                     toVictim = null;
-                    System.out.println("Kanae a flop");
-                } else if (rdm <= 50) {//Weakness
+                }
+                if (rdm >= 25 && rdm < 50) {
+                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*15, 0, false, false), true);
                     toKanae.append("15 secondes§7 de§c Weakness§7.");
                     toVictim.append("15 secondes§7 de§c Weakness§7");
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*15, 0, false, false), true);
-                } else if (rdm <= 70) {//Slowness
-                    toKanae.append("12 secondes§7 de§c Slowness§7");
-                    toVictim.append("12 secondes§7 de§c Slowness");
+                } else if (rdm >= 50 && rdm < 70) {
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*12, 0, false, false), true);
-                } else if (rdm <= 85) {//Poison
-                    toKanae.append("10 secondes§7 de§c Poison§7");
-                    toVictim.append("10 secondes§7 de§c Poison");
+                    toKanae.append("12 secondes§7 de§c Slowness§7.");
+                    toVictim.append("12 secondes§7 de§c Slowness§7");
+                } else if (rdm >= 70 && rdm < 85) {
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*10, 0, false, false), true);
-                } else if (rdm <= 95) {//Heal
+                    toKanae.append("10 secondes§7 de§c Poison§7.");
+                    toVictim.append("10 secondes§7 de§c Poison§7");
+                } else if (rdm >= 85 && rdm < 95){
                     toKanae = null;
                     toVictim = null;
-                    kanae.Heal((Player) event.getDamager(), 4.0);
-                } else {//TOUT (presque)
-                    toKanae.append("10 secondes§7 de§c Weakness§7,§c Slowness§7 et§c Poison");
+                    kanae.Heal((Player) event.getDamager(), 4);
+                    event.getDamager().sendMessage("§7Vous vous êtes soigner de§c 2"+AllDesc.coeur+"§7.");
+                } else if (rdm >= 95) {
+                    toKanae.append("10 secondes§7 de§c Weakness§7,§c Slowness§7 et§c Poison§7.");
                     toVictim.append("10 secondes§7 de§c Weakness§7,§c Slowness§7 et§c Poison");
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*10, 0, false, false), true);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*10, 0, false, false), true);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*10, 0, false, false), true);
+                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*10, 0, false, false), true);
                 }
                 kanae.cooldown = 40;
-                if (toVictim != null){
+                if (toVictim != null && !toVictim.toString().equals("§7Vous avez reçus§c ")) {
                     toVictim.append("§7 de la part de§a Kanae");
                     event.getEntity().sendMessage(toVictim.toString());
                     event.getDamager().sendMessage(toKanae.toString());
@@ -131,6 +136,7 @@ public class Kanae extends SlayerRoles implements Listener {
         private void onEndGame(EndGameEvent event){
             kanae.runnable.cancel();
             ended = true;
+            HandlerList.unregisterAll(this);
         }
     }
     private static class KanaeRunnable extends BukkitRunnable {
@@ -144,7 +150,7 @@ public class Kanae extends SlayerRoles implements Listener {
                 kanae.cooldown--;
                 if (kanae.cooldown == 0){
                     assert kanae.owner != null;
-                    kanae.owner.sendMessage("§7Vous pouvez à nouveau le poison de votre "+kanae.sword.getItemMeta().getDisplayName());
+                    kanae.owner.sendMessage("§7Vous pouvez à nouveau utiliser le poison de votre "+kanae.sword.getItemMeta().getDisplayName());
                 }
             }
         }

@@ -25,7 +25,7 @@ public class WinEvent extends Event{
 		return WinTeam.getColor();
 	}
 	public List<Player> getWiners(){
-		return WinTeam.getPlayers();
+		return WinTeam.getList();
 	}
 	public static HandlerList getHandlerList() {
 	    return handlers;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -33,11 +34,11 @@ public abstract class Titan {
 		this.isTransformed = t;
 	}
 	public abstract void Transfo();
-	public RoleBase getPlayerRole(UUID uuid) {
+	public AotRoles getPlayerRole(UUID uuid) {
 		Player target = Bukkit.getPlayer(uuid);
 		if (target == null)return null;
-		if (!GameState.getInstance().hasRoleNull(target)) {
-			return GameState.getInstance().getPlayerRoles().get(target);
+		if (!GameState.getInstance().hasRoleNull(target) && GameState.getInstance().getPlayerRoles().get(target) instanceof AotRoles) {
+			return (AotRoles) GameState.getInstance().getPlayerRoles().get(target);
 		}
 		return null;
 	}

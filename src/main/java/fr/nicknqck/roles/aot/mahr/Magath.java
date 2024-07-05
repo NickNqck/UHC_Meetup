@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.mahr;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -33,7 +34,7 @@ public class Magath extends MahrRoles {
 		if (toSearch != null) {
 			DecimalFormat df = new DecimalFormat("0");
 			sendCustomActionBar(owner, toSearch.getName()+ArrowTargetUtils.calculateArrow(owner, toSearch.getLocation())+"("+df.format(owner.getLocation().distance(toSearch.getLocation()))+")");
-			if (getPlayerRoles(toSearch).isTransformedinTitan && toSearch.getWorld().equals(owner.getWorld())) {
+			if (getPlayerRoles(toSearch) instanceof AotRoles && ((AotRoles) getPlayerRoles(toSearch)).isTransformedinTitan && toSearch.getWorld().equals(owner.getWorld())) {
 				if (owner.getLocation().distance(toSearch.getLocation()) <= 15){
 					setResi(20);
 					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
@@ -48,7 +49,7 @@ public class Magath extends MahrRoles {
 
 	@Override
 	public String getName() {
-		return "§9Magath";
+		return "Magath";
 	}
 
 	@Override

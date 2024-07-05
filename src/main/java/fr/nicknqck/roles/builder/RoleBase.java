@@ -38,7 +38,6 @@ import java.util.*;
 
 public abstract class RoleBase implements Role{
 
-	public boolean canShift = false;
 	public Player owner;
 	private Double maxHealth = 20.0;
 	private boolean canRespawn = false;
@@ -96,7 +95,6 @@ public abstract class RoleBase implements Role{
 			owner.setAllowFlight(false);
 			owner.setFlying(false);
 			owner.setGameMode(GameMode.SURVIVAL);
-			gazAmount= 100.0;
 			actualTridiCooldown = -1;
 			roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
 			System.out.println(owner.getName()+", RoleID: "+roleID);
@@ -193,7 +191,7 @@ public abstract class RoleBase implements Role{
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 	public void setTeam(TeamList team) {
 		if (this.team != null){
-			this.team.getPlayers().remove(this.owner);
+			this.team.getList().remove(this.owner);
 		}
 		this.team = team;
 		this.team.addPlayer(this.owner);	
@@ -237,39 +235,25 @@ public abstract class RoleBase implements Role{
         }, 20*10);//20ticks* le nombre de seconde voulue
 	}
 	public void Update(GameState gameState) {    //Update every 1s (20ticks)
-		allforce = getForce()+getBonusForce();
-		allresi = getResi()+getBonusResi();
+		allforce = getForce() + getBonusForce();
+		allresi = getResi() + getBonusResi();
 		if (owner != null) {
-		owner.setMaxHealth(getMaxHealth());
-		if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)){
-			setResi(0.0);
-		}
-		if (!owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)){
-			setForce(0.0);
-		}
-		if (actualTridiCooldown > 0) {
-			actualTridiCooldown--;
-			if (owner.getItemInHand().isSimilar(gameState.EquipementTridi())) {
-				DecimalFormat df = new DecimalFormat("0.0");
-			//	sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"%"+aqua+" Cooldown:§6 "+actualTridiCooldown+"s");
-				sendCustomActionBar(owner, "Gaz restant§8»"+gameState.sendGazBar(gazAmount, 2)+"§7("+aqua+df.format(gazAmount)+"%§7), Cooldown:§b "+cd(actualTridiCooldown));
+			owner.setMaxHealth(getMaxHealth());
+			if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
+				setResi(0.0);
 			}
-		}else if (actualTridiCooldown == 0){
-			owner.sendMessage("§7§l"+gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 utilisable !");
-			actualTridiCooldown--;
-		}
-		if (actualTridiCooldown <= 0) {
-			if (owner.getItemInHand().isSimilar(gameState.EquipementTridi())) {
-				DecimalFormat df = new DecimalFormat("0.0");
-				sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"% "+"§7§lArc Tridimentionnel§r:§6 Utilisable");
+			if (!owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
+				setForce(0.0);
 			}
+		if (!Objects.equals(owner.getWorld().getGameRuleValue("doMobSpawning"), "false"))
+			owner.getWorld().setGameRuleValue("doMobSpawning", "false");
+		if (!Objects.equals(owner.getWorld().getGameRuleValue("doFireTick"), "false")){
+			owner.getWorld().setGameRuleValue("doFireTick", "false");
 		}
+		if (owner.getWorld().hasStorm()) owner.getWorld().setStorm(false);
+		if (owner.getWorld().isThundering()) owner.getWorld().setThundering(false);
 		}
-		if (owner.getWorld().getGameRuleValue("doMobSpawning") != "false") owner.getWorld().setGameRuleValue("doMobSpawning", "false");
-		if (owner.getWorld().getGameRuleValue("doFireTick") != "false")owner.getWorld().setGameRuleValue("doFireTick", "false");
-		if (owner.getWorld().hasStorm())owner.getWorld().setStorm(false);
-		if (owner.getWorld().isThundering())owner.getWorld().setThundering(false);
-		}	
+	}
 	public int getActualCooldownArc() {return actualTridiCooldown;}
 	private boolean haslamecoeur = false;
 	private boolean haslamefr = false;
@@ -339,16 +323,7 @@ public abstract class RoleBase implements Role{
 	}
 	public void onEat(ItemStack item, GameState gameState) {}
 	public void onDSCommandSend(String[] args, GameState gameState) {}
-	public boolean hasItemInHotbar(Player player, Material mat) {
-        for (int slot = 0; slot < 9; slot++) {
-            ItemStack item = player.getInventory().getItem(slot);
-            if (item != null && item.getType() == mat) {
-                return true;
-            }
-        }
-        return false;
-    }
-	public boolean isTransformedinTitan = false;
+
 	public boolean onPickupItem(Item item) {
 		return false;}
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
@@ -370,25 +345,6 @@ public abstract class RoleBase implements Role{
 						GameListener.RandomTp(p, Main.getInstance().gameWorld);
 						p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime§7 du à la mort de cette dernière");
 						player.sendMessage(p.getName()+"§7 est sortie de votre cage");
-					}
-				}
-			}
-			if (killer instanceof Player) {
-				if (!gameState.hasRoleNull((Player) killer)) {
-					Player k = (Player) killer;
-					if (getPlayerRoles(k).gazAmount < 100.0) {
-						double victimgaz = getPlayerRoles(player).gazAmount;
-						if (victimgaz > 1.0) {
-							double killergaz = getPlayerRoles(k).gazAmount;
-							DecimalFormat df = new DecimalFormat("0.0");
-							if (killergaz + victimgaz > 100.0) {
-								k.sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
-								getPlayerRoles(k).gazAmount = 100;
-							}else {
-								k.sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
-								getPlayerRoles(k).gazAmount += victimgaz/3;
-							}
-						}
 					}
 				}
 			}
@@ -456,8 +412,6 @@ public abstract class RoleBase implements Role{
 		}, 5);
 	}
 	public static final String aqua = ChatColor.AQUA+"";
-	public double RodSpeedMultipliyer = 0;
-	public double gazAmount = 0;
 	public void onAsyncChat(Player p, AsyncPlayerChatEvent e) {}
 	public void onPlayerInteract(Block clickedBlock, Player player) {}
 	public void onLeftClick(PlayerInteractEvent event, GameState gameState) {}

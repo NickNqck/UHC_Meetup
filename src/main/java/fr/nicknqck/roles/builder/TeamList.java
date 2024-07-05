@@ -32,10 +32,6 @@ public enum TeamList {
 	public void addPlayer(Player player) {
 		list.add(player);
 	}
-
-	public java.util.List<Player> getPlayers(){
-		return list;
-	}
 	public TeamList getTeam(){
 		return this;
 	}
