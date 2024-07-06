@@ -2,23 +2,25 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -26,6 +28,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Yoriichi extends DemonsSlayersRoles {
+	private boolean killkoku = false;
+	private boolean activersoufle = false;
+	private final Map<UUID, PacketDisplay> inEye = new HashMap<>();
 
 	public Yoriichi(Player player) {
 		super(player);
@@ -34,6 +39,16 @@ public class Yoriichi extends DemonsSlayersRoles {
 		this.setCanuseblade(true);
 		this.setResi(20);
 		setLameIncassable(owner, true);
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+			for (Player p : player.getWorld().getPlayers()) {
+				if (p.getGameMode() != GameMode.SPECTATOR) {
+					PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
+					display.display(owner);
+					inEye.put(p.getUniqueId(), display);
+				}
+			}
+			new YoriichiHealthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+		}, 40);
 	}
 	@Override
 	public Roles getRoles() {
@@ -50,10 +65,7 @@ public class Yoriichi extends DemonsSlayersRoles {
 		return AllDesc.Yoriichi;
 	}
 
-	private boolean killkoku = false;
-	private boolean activersoufle = false;
-	private final Map<UUID, PacketDisplay> inEye = new HashMap<>();
-	@Override
+	/*@Override
 	public void onTick() {
 		for (Player p : Loc.getNearbyPlayers(owner, 30)){
 			if (!inEye.containsKey(p.getUniqueId())) {
@@ -66,19 +78,13 @@ public class Yoriichi extends DemonsSlayersRoles {
 				}
 			} else {
 				PacketDisplay packetDisplay = inEye.get(p.getUniqueId());
-				if (p.isSneaking()) {
-					packetDisplay.setCustomNameVisible(false, owner);
-				} else {
-					packetDisplay.setCustomNameVisible(true, owner);
-				}
+                packetDisplay.setCustomNameVisible(!p.isSneaking(), owner);
 				DecimalFormat df = new DecimalFormat("0");
                 packetDisplay.rename(df.format(p.getHealth())+ AllDesc.Coeur(" §c")+"§7 |§f "+df.format(((CraftPlayer) p).getHandle().getAbsorptionHearts())+AllDesc.Coeur(" §e"), owner);
-                if (packetDisplay != null) {
-                	packetDisplay.teleport(p.getLocation(), owner);
-                }
-			}
+                packetDisplay.teleport(p.getLocation(), owner);
+            }
 		}
-	}
+	}*/
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (player.getUniqueId() == owner.getUniqueId()) {
@@ -149,7 +155,7 @@ public class Yoriichi extends DemonsSlayersRoles {
 			if (!activersoufle) {				
 				owner.sendMessage("Activation du Soufle du Soleil");
 				activersoufle = true;
-			} else if (activersoufle) {
+			} else {
 				owner.sendMessage("Désactivation du Soufle du Soleil");
 				activersoufle = false;
 			}
@@ -200,6 +206,34 @@ public class Yoriichi extends DemonsSlayersRoles {
 
 	@Override
 	public String getName() {
-		return "§eYoriichi";
+		return "Yoriichi";
+	}
+	private static class YoriichiHealthRunnable extends BukkitRunnable {
+		private final Yoriichi yoriichi;
+		private YoriichiHealthRunnable(Yoriichi yoriichi){
+			this.yoriichi = yoriichi;
+		}
+		@Override
+		public void run() {
+			if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
+				cancel();
+				return;
+			}
+			Player owner = Bukkit.getPlayer(yoriichi.getPlayer());
+			if (owner != null){
+				for (Player p : owner.getWorld().getPlayers()) {
+					if (p.getGameMode() != GameMode.SPECTATOR) {
+						if (yoriichi.inEye.containsKey(p.getUniqueId())) {
+							PacketDisplay packetDisplay = yoriichi.inEye.get(p.getUniqueId());
+							packetDisplay.setInvisible(true);
+							packetDisplay.setCustomNameVisible(!p.isSneaking(), owner);
+							DecimalFormat df = new DecimalFormat("0");
+							packetDisplay.rename(df.format(p.getHealth())+ AllDesc.Coeur(" §c")+"§7 |§f "+df.format(((CraftPlayer) p).getHandle().getAbsorptionHearts())+AllDesc.Coeur(" §e"), owner);
+							packetDisplay.teleport(p.getLocation(), owner);
+						}
+					}
+				}
+			}
+		}
 	}
 }
