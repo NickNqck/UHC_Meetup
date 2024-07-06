@@ -80,10 +80,10 @@ public abstract class RoleBase implements Role{
 		owner.resetPlayerTime();
 		owner.resetMaxHealth();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				if (this.getOriginTeam() != null) {
-					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getOriginTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getOriginTeam().name()));
-					System.out.println(owner.getName() +" Team: "+ this.getOriginTeam());
-					oldteam = getOriginTeam();
+				if (this.getTeam() != null) {
+					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
+					System.out.println(owner.getName() +" Team: "+ this.getTeam());
+					oldteam = getTeam();
 				}
 				if (this.getRoles() != null) {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
@@ -170,8 +170,8 @@ public abstract class RoleBase implements Role{
 	}
 	public String getTeamColor(Player target) {
 		if (!gameState.hasRoleNull(target)) {
-			if (getPlayerRoles(target).getOriginTeam() != null) {
-				return getPlayerRoles(target).getOriginTeam().getColor();
+			if (getPlayerRoles(target).getTeam() != null) {
+				return getPlayerRoles(target).getTeam().getColor();
 			}else {
 				return "";
 			}
@@ -180,7 +180,7 @@ public abstract class RoleBase implements Role{
 		}
 	}
 	public String getTeamColor() {
-		return getOriginTeam().getColor();
+		return getTeam().getColor();
 	}
 	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
 		Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force));
@@ -200,13 +200,13 @@ public abstract class RoleBase implements Role{
 		if (gameState.hasRoleNull(player)) {
 			return false;
 		}else {
-            return getPlayerRoles(player).getOriginTeam() != null;
+            return getPlayerRoles(player).getTeam() != null;
 		}
 	}
 	public TeamList getTeam(Player player) {
 		TeamList team = null;
 		if (!gameState.hasRoleNull(player)) {
-			team = getPlayerRoles(player).getOriginTeam();
+			team = getPlayerRoles(player).getTeam();
 		}
 		return team;
 	}

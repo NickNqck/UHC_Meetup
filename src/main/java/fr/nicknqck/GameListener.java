@@ -506,7 +506,7 @@ public class GameListener implements Listener {
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
 			float x = Border.getActualBorderSize()*random.nextFloat();
 			float z = Border.getActualBorderSize()*random.nextFloat();
-			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
+			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize(), 0, z-Border.getActualBorderSize())).getLocation();
 		}
 		loc.setY(loc.getY()+1);
 		if (entity != null) entity.teleport(loc);
@@ -542,10 +542,11 @@ public class GameListener implements Listener {
 			SendToEveryone(victim.getDisplayName()+"§7 est mort,");
 			if (!gameState.hasRoleNull(victim)) {
 				World world = Bukkit.getWorld("nakime");
-				if (world != null){
-					SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? gameState.getPlayerRoles().get(victim).getName() : "§k"+victim.getDisplayName()));
+				RoleBase role = gameState.getPlayerRoles().get(victim);
+				if (world != null && victim.getWorld().equals(world)){
+					SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? role.getTeam().getColor()+role.getName() : "§k"+victim.getDisplayName()));
 				} else {
-					SendToEveryone("§7Son rôle était: "+gameState.getPlayerRoles().get(victim).getName());
+					SendToEveryone("§7Son rôle était: "+role.getTeam().getColor()+role.getName());
 				}
 			} else {
 				SendToEveryone(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");
@@ -616,11 +617,11 @@ public class GameListener implements Listener {
                     }
                     if (gameState.getPlayerRoles().containsKey(damager)) {
                         RoleBase role = gameState.getPlayerRoles().get(damager);
-                        if (role.getOriginTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
+                        if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
                             for (Player p : gameState.getInGamePlayers()) {
                                 if (!gameState.hasRoleNull(p)) {
                                     RoleBase role2 = gameState.getPlayerRoles().get(p);
-                                    if (role2.getOriginTeam() == TeamList.Demon || role2.getRoles() == Roles.Kaigaku) {
+                                    if (role2.getTeam() == TeamList.Demon || role2.getRoles() == Roles.Kaigaku) {
                                         p.sendMessage("§cLe joueur§4 "+damager.getName()+"§c à tué quelqu'un....");
                                     }
                                 }
@@ -655,7 +656,7 @@ public class GameListener implements Listener {
                             }
                             if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
                                 RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
-                                if (role.getOriginTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
+                                if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
                                     for (Player p : gameState.getInGamePlayers()) {
                                         if (!gameState.hasRoleNull(p)) {
                                             RoleBase role2 = gameState.getPlayerRoles().get(p);

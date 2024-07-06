@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import fr.nicknqck.utils.Loc;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,10 +31,9 @@ public class InfectItem implements Listener{
 		clicker = null;
 		p = null;
 	}
+	@Getter
 	static InfectItem instance;
-	public static InfectItem getInstance() {
-		return instance;
-	}
+
 	@EventHandler
 	public void CliqueDroit(PlayerInteractEvent e) {
 		if (e.getItem() == null)return;

@@ -79,7 +79,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 
 	@Override
 	public String getName() {
-		return "§eJigoroS7 (§6V2§7)";
+		return "§eJigoro§7 (§6V2§7)";
 	}
 
 	enum Pacte{

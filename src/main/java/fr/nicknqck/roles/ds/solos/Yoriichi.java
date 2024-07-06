@@ -39,16 +39,7 @@ public class Yoriichi extends DemonsSlayersRoles {
 		this.setCanuseblade(true);
 		this.setResi(20);
 		setLameIncassable(owner, true);
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			for (Player p : player.getWorld().getPlayers()) {
-				if (p.getGameMode() != GameMode.SPECTATOR) {
-					PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
-					display.display(owner);
-					inEye.put(p.getUniqueId(), display);
-				}
-			}
-			new YoriichiHealthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-		}, 40);
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> new YoriichiHealthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1), 40);
 	}
 	@Override
 	public Roles getRoles() {
@@ -225,11 +216,14 @@ public class Yoriichi extends DemonsSlayersRoles {
 					if (p.getGameMode() != GameMode.SPECTATOR) {
 						if (yoriichi.inEye.containsKey(p.getUniqueId())) {
 							PacketDisplay packetDisplay = yoriichi.inEye.get(p.getUniqueId());
-							packetDisplay.setInvisible(true);
 							packetDisplay.setCustomNameVisible(!p.isSneaking(), owner);
 							DecimalFormat df = new DecimalFormat("0");
 							packetDisplay.rename(df.format(p.getHealth())+ AllDesc.Coeur(" §c")+"§7 |§f "+df.format(((CraftPlayer) p).getHandle().getAbsorptionHearts())+AllDesc.Coeur(" §e"), owner);
 							packetDisplay.teleport(p.getLocation(), owner);
+						} else {
+							PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
+							display.display(owner);
+							yoriichi.inEye.put(p.getUniqueId(), display);
 						}
 					}
 				}

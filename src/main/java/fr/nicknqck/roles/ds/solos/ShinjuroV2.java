@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -51,6 +52,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
         player.sendMessage(Desc());
         setCanuseblade(true);
         giveItem(player, false, getItems());
+        giveItem(player, true, Items.getLamedenichirin());
         new ShinjuroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         new SakePower(this);
     }

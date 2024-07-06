@@ -22,7 +22,6 @@ public enum TeamList {
 	Kumogakure("§6"),
 	OverWorld("§a");
 
-
 	private final java.util.List<Player> list;
 	private final String Color;
 	TeamList(String color){
