@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.aot.builders;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import org.bukkit.entity.Player;
@@ -11,7 +12,7 @@ public abstract class AotRoles extends RoleBase {
     public boolean canShift = false;
     public boolean isTransformedinTitan = false;
     public double RodSpeedMultipliyer = 0;
-    public double gazAmount = 0;
+    public double gazAmount;
     public AotRoles(Player player) {
         super(player);
         gazAmount= 100.0;
@@ -25,6 +26,10 @@ public abstract class AotRoles extends RoleBase {
 
         @Override
         public void run() {
+            if (role.gameState.getServerState() != GameState.ServerStates.InGame) {
+                cancel();
+                return;
+            }
             if (role.actualTridiCooldown > 0) {
                 role.actualTridiCooldown--;
                 if (role.owner.getItemInHand().isSimilar(role.gameState.EquipementTridi())) {
@@ -39,7 +44,7 @@ public abstract class AotRoles extends RoleBase {
             if (role.actualTridiCooldown <= 0) {
                 if (role.owner.getItemInHand().isSimilar(role.gameState.EquipementTridi())) {
                     DecimalFormat df = new DecimalFormat("0.0");
-                    role.sendCustomActionBar(role.owner, aqua+"Gaz:§c "+df.format(role.gazAmount)+"% "+"§7§lArc Tridimentionnel§r:§6 Utilisable");
+                    role.sendCustomActionBar(role.owner, aqua+"Gaz:§c "+df.format(role.gazAmount)+"% "+"§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§r:§6 Utilisable");
                 }
             }
         }
