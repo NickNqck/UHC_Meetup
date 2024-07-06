@@ -59,7 +59,7 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 				"",
 				AllDesc.point+"si vous tappez un joueur qui regarde dans la même direction que vous vous aurez alors 5% de chance de lui infliger 1"+AllDesc.coeur+" de dégat supplémentaire",
 				"",
-				"si vous êtes frappez par un joueuer qui regarde dans la même direction que vous vous aurez 20% de chance d'obtenir 30s de "+AllDesc.Speed,
+				AllDesc.point+"Si vous êtes frappez par un joueur qui regarde dans la même direction que vous, vous aurez §c20%§f de§c chance§f d'obtenir§c 30 secondes§f de "+AllDesc.Speed,
 				"",
 				AllDesc.bar
 		};
@@ -87,7 +87,7 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 		cooldownShoulder = 0;
 		cooldownTP = 0;
 	}
-	ItemStack Tambour() {
+	private ItemStack Tambour() {
 		return BetterItem.of(new ItemBuilder(Material.STICK).addEnchant(Enchantment.ARROW_DAMAGE, 1).setUnbreakable(true).hideAllAttributes().setName("§cTambour").setLore("§7Permet de retourner la personne visée","§7"+StringID).toItemStack(), event -> {
 			if (event.isRightClick()) {
 				if (owner.isSneaking()) {
@@ -171,14 +171,14 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 	}
 	@Override
 	public ItemStack[] getItems() {
-	return new ItemStack[] {
-			Tambour()
-	};
+		return new ItemStack[] {
+				Tambour()
+		};
 	}
 	@Override
 	public void Update(GameState gameState) {
 		if (cooldownShoulder >=0)cooldownShoulder-=1;
-		if (cooldownShoulder == 0)owner.sendMessage("§cTambour§7 model§l Shoulder§7 est à nouveau utilisable !");
+		if (cooldownShoulder == 0)owner.sendMessage("§cTambour§7 model§l Back§7 est à nouveau utilisable !");
 		if (cooldownLeg >= 0)cooldownLeg-=1;
 		if (cooldownLeg == 0)owner.sendMessage("§cTambour§7 model§l Leg§7 est à nouveau utilisable !");
 		if (cooldownHead >= 0)cooldownHead-=1;
