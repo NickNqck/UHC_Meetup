@@ -40,7 +40,7 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 	public String[] Desc() {
 		return new String[] {
 				AllDesc.bar,
-				AllDesc.role+"Kyogai",
+				AllDesc.role+getName(),
 				AllDesc.objectifsolo+"§e Seul",
 				"",
 				AllDesc.effet,
