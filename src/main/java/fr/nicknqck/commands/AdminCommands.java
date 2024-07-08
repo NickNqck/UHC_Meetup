@@ -17,8 +17,12 @@ import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
 import fr.nicknqck.roles.ds.slayers.Pourfendeur;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.CC;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.rank.ChatRank;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -29,7 +33,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.UUID;
+import java.util.HashMap;
 
 public class AdminCommands implements CommandExecutor{
 
@@ -326,6 +330,7 @@ public class AdminCommands implements CommandExecutor{
 							}
 						} else {
 							sender.sendMessage(args[1]+"§c n'est pas connecté !");
+							return true;
 						}
 					}
 				}
@@ -558,37 +563,57 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("info")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() && ((Player)sender).getUniqueId().equals(UUID.fromString(""))) {
+						if (sender.isOp()) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (gameState.getPlayerRoles().containsKey(p)) {
-									gameState.RevivePlayer(p);
-									sender.sendMessage(p.getName()+" à bien été réssucité");
-									HubListener.getInstance().giveStartInventory(p);
-									gameState.getPlayerRoles().get(p).GiveItems();
-									gameState.getPlayerRoles().get(p).RoleGiven(gameState);
-									return true;
+                                } else {
+									sender.sendMessage("");
+									TextComponent texte = new TextComponent("Voici les informations disponible sur§b "+p.getName()+"\n");
+									texte.addExtra("\n");
+									texte.addExtra("UUID:§b "+p.getUniqueId().toString()+"\n");
+									texte.addExtra("\n");
+									if (!gameState.hasRoleNull(p)) {
+										RoleBase role = gameState.getPlayerRoles().get(p);
+										texte.addExtra("Role:§b "+role.getName());
+										texte.addExtra("\n");
+										texte.addExtra("Camp d'origine:§b "+ StringUtils.replaceUnderscoreWithSpace(role.getOriginTeam().getColor()+role.getOriginTeam().name()));
+										texte.addExtra("\n");
+										texte.addExtra("Camp actuel:§b "+StringUtils.replaceUnderscoreWithSpace(role.getTeamColor()+role.getTeam().name()));
+										texte.addExtra("\n");
+										texte.addExtra("Nombre de kill(s):§b "+gameState.getPlayerKills().get(p).size());
+										texte.addExtra("\n");
+										texte.addExtra("Joueurs tués: ");
+										TextComponent hver = new TextComponent("§b[?]");
+										hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(!gameState.getPlayerKills().get(p).isEmpty() ? getListPlayers(gameState.getPlayerKills().get(p)) : "§7Aucun")}));
+										texte.addExtra(hver);
+										texte.addExtra("\n");
+									} else {
+										texte.addExtra("Role:§b Aucun");
+
 									}
-								}
-							} else {
+									((Player) sender).spigot().sendMessage(texte);
+									if (p.isOp()) {
+										p.sendMessage(((Player) sender).getDisplayName()+" a obtenu des informations sur vous");
+										p.spigot().sendMessage(texte);
+									}
+                                }
+                            } else {
 								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						}
+                            }
+                            return true;
+                        }
 					}
 				}
-			}
+			}//args.length == 2
 			if (args.length == 3) {
 				if (args[0].equalsIgnoreCase("camp")) {
 					Player p = Bukkit.getPlayer(args[1]);
 					if (p != null) {
 						if (!gameState.hasRoleNull(p)) {
 							for (TeamList team : TeamList.values()) {
-								if (team.name().equals(args[2])) {
+								if (team.name().equalsIgnoreCase(args[2])) {
 									gameState.getPlayerRoles().get(p).setTeam(team);
 									break;
 								}
@@ -599,5 +624,12 @@ public class AdminCommands implements CommandExecutor{
 			}
 		}
 		return true;
+	}
+	private String getListPlayers(HashMap<Player, RoleBase> hashMap) {
+		StringBuilder sb = new StringBuilder();
+		for (Player p : hashMap.keySet()) {
+			sb.append("§f").append(p.getName()).append("§7 (").append(hashMap.get(p).getName()).append("§7) ");
+		}
+		return sb.toString();
 	}
 }

@@ -106,7 +106,8 @@ public class ItemsManager implements Listener {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
 				for (Bijus value : Bijus.values()) {
 					if (s.getItemMeta().hasDisplayName()) {
-						if (s.getItemMeta().getDisplayName().equalsIgnoreCase("§dGyûki") || s.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kyubi")) {
+						String name = s.getItemMeta().getDisplayName();
+						if (name.equalsIgnoreCase("§dGyûki") || name.equalsIgnoreCase("§6Kyubi") || name.equalsIgnoreCase("§6Kyûbi")) {
 							if (!gameState.hasRoleNull(e.getPlayer())) {
 								if (gameState.getPlayerRoles().get(e.getPlayer()).getOriginTeam().equals(TeamList.Jubi)) {
 									return;

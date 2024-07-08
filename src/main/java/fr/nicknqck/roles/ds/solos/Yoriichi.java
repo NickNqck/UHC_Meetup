@@ -56,16 +56,14 @@ public class Yoriichi extends DemonsSlayersRoles {
 		return AllDesc.Yoriichi;
 	}
 
-	/*@Override
+	@Override
 	public void onTick() {
 		for (Player p : Loc.getNearbyPlayers(owner, 30)){
 			if (!inEye.containsKey(p.getUniqueId())) {
 				if (!p.isSneaking()) {
 					PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
-
 		            display.display(owner);
-
-		            inEye.put(p.getUniqueId(), display);
+					inEye.put(p.getUniqueId(), display);
 				}
 			} else {
 				PacketDisplay packetDisplay = inEye.get(p.getUniqueId());
@@ -75,7 +73,7 @@ public class Yoriichi extends DemonsSlayersRoles {
                 packetDisplay.teleport(p.getLocation(), owner);
             }
 		}
-	}*/
+	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (player.getUniqueId() == owner.getUniqueId()) {
@@ -206,7 +204,7 @@ public class Yoriichi extends DemonsSlayersRoles {
 		}
 		@Override
 		public void run() {
-			if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
+			if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
 				cancel();
 				return;
 			}
