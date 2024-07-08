@@ -2,9 +2,9 @@ package fr.nicknqck;
 
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.blocks.BlockManager;
-import fr.nicknqck.blocks.BrickBlockListener;
-import fr.nicknqck.chat.Chat;
+import fr.nicknqck.events.blocks.BlockManager;
+import fr.nicknqck.events.blocks.BrickBlockListener;
+import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;

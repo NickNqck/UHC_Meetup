@@ -2,7 +2,7 @@ package fr.nicknqck.scenarios.impl;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.blocks.BlockManager;
+import fr.nicknqck.events.blocks.BlockManager;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

@@ -3,6 +3,7 @@ package fr.nicknqck.items;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import fr.nicknqck.utils.Loc;
 import lombok.Getter;
@@ -106,6 +107,16 @@ public class InfectItem implements Listener{
 				if (gameState.getServerState() == ServerStates.InGame) {
 					if (gameState.infecteur != null) {
 						if (gameState.infecteur == clicker) {
+							if (gameState.getInSpecPlayers().contains(p)) {
+								for (Player p : gameState.getInGamePlayers()) {
+									if (!gameState.hasRoleNull(p)) {
+										if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles) {
+											p.sendMessage("§cL'infection a échoué");
+										}
+									}
+								}
+								return;
+							}
 							gameState.infected = p;
 							p.sendTitle("§cVous avez été infecté", "Vous gagnez maintenant avec les Démons");
 							p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*10, 0, false, false));

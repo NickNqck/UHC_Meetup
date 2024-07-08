@@ -1,4 +1,4 @@
-package fr.nicknqck.blocks;
+package fr.nicknqck.events.blocks;
 
 import java.util.Arrays;
 

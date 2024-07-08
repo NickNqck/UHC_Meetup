@@ -3,7 +3,7 @@ package fr.nicknqck.utils.inventories;
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.chat.Chat;
+import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;

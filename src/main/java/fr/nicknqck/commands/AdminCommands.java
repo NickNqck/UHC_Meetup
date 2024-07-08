@@ -275,6 +275,39 @@ public class AdminCommands implements CommandExecutor{
                 }
 			}//args length == 1
 			if (args.length == 2) {
+				if (args[0].equalsIgnoreCase("setgroupe")) {
+					if (sender instanceof Player) {
+						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+							if (args[1] != null) {
+								if (gameState.getServerState() != null) {
+									if (gameState.getServerState() == ServerStates.InGame) {
+										int grp = Integer.parseInt(args[1]);
+										if (grp > 0) {
+											gameState.setGroupe(grp);
+											for (Player p : gameState.getInGamePlayers()) {
+												p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
+												NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
+											}
+											return true;
+										}
+									} else {
+										sender.sendMessage("§cIl faut être en jeux pour faire cette commande !");
+										return true;
+									}
+								}
+							} else {
+								sender.sendMessage("Cette commande prend comme valeur un chiffre");
+								return true;
+							}
+						} else {
+							sender.sendMessage("Il faut être op pour effectué cette commande ! ");
+							return true;
+						}
+					} else {
+						sender.sendMessage("Il faut être un joueur pour faire cette commande !");
+						return true;
+					}
+				}
 				if (args[0].equalsIgnoreCase("addRole")) {
 					if (args[1] != null) {
 						if (!sender.isOp())return true;
@@ -332,39 +365,6 @@ public class AdminCommands implements CommandExecutor{
 							sender.sendMessage(args[1]+"§c n'est pas connecté !");
 							return true;
 						}
-					}
-				}
-				if (args[0].equalsIgnoreCase("setgroupe")) {
-					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
-							if (args[1] != null) {
-								if (gameState.getServerState() != null) {
-									if (gameState.getServerState() == ServerStates.InGame) {
-										int grp = Integer.parseInt(args[1]);
-										if (grp > 0) {
-											gameState.setGroupe(grp);
-											for (Player p : gameState.getInGamePlayers()) {
-												p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
-												NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
-											}
-											return true;
-										}
-									} else {
-										sender.sendMessage("§cIl faut être en jeux pour faire cette commande !");
-										return true;
-									}
-								}
-							} else {
-								sender.sendMessage("Cette commande prend comme valeur un chiffre");
-								return true;
-							}
-						} else {
-							sender.sendMessage("Il faut être op pour effectué cette commande ! ");
-							return true;
-						}
-					} else {
-						sender.sendMessage("Il faut être un joueur pour faire cette commande !");
-						return true;
 					}
 				}
 				if (args[0].equalsIgnoreCase("addHost")) {

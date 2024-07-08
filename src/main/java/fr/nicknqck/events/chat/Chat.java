@@ -1,4 +1,4 @@
-package fr.nicknqck.chat;
+package fr.nicknqck.events.chat;
 
 import java.util.Collections;
 

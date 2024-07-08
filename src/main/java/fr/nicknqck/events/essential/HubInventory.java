@@ -5,7 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.chat.Chat;
+import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -554,7 +554,7 @@ public class HubInventory implements Listener {
                                         player.sendMessage("Timing maximal atteint !");
                                     }
                                 }else {
-                                    if (gameState.WaterEmptyTiming != 10) {
+                                    if (gameState.WaterEmptyTiming != 0) {
                                         gameState.WaterEmptyTiming-=1;
                                     }else {
                                         player.sendMessage("Timing minimal atteint !");
@@ -569,7 +569,7 @@ public class HubInventory implements Listener {
                                         player.sendMessage("Timing maximal atteint !");
                                     }
                                 }else {
-                                    if (gameState.LavaEmptyTiming != 10) {
+                                    if (gameState.LavaEmptyTiming != 0) {
                                         gameState.LavaEmptyTiming-=1;
                                     }else {
                                         player.sendMessage("Timing minimal atteint !");
