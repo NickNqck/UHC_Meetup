@@ -1,10 +1,12 @@
 package fr.nicknqck.items;
 
-import java.text.DecimalFormat;
-import java.util.Random;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.shinobi.KillerBee;
+import fr.nicknqck.utils.PotionUtils;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,11 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.PotionUtils;
+import java.text.DecimalFormat;
 
 public class RodTridimensionnelle implements Listener {
     public static ItemStack getItem() {
@@ -61,7 +59,7 @@ public class RodTridimensionnelle implements Listener {
                 if (!(roleBase instanceof AotRoles))return;
                 AotRoles role = (AotRoles) roleBase;
         		if (role.gazAmount > 0) {
-            		if (role.actualTridiCooldown <= 0) {
+            		if (role.getActualTridiCooldown() <= 0) {
             			if (!role.isTransformedinTitan) {
             				FishHook fishHook = (FishHook) event.getEntity();
                 	        Location eyeLocation = player.getEyeLocation().clone();
@@ -72,7 +70,7 @@ public class RodTridimensionnelle implements Listener {
             				event.setCancelled(true);
             			}
             		}else {
-            			role.sendCooldown(player, role.ArcTridiCooldown());
+            			role.sendCooldown(player, role.getActualTridiCooldown());
             			event.setCancelled(true);
             		}
             	} else {
@@ -106,27 +104,9 @@ public class RodTridimensionnelle implements Listener {
             cancel();
             Location loc = this.fishHook.getLocation();
             PotionUtils.effetGiveNofall(player);
-	        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-                PotionUtils.effetRemoveNofall(player);
-            }, 20*5);
+	        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> PotionUtils.effetRemoveNofall(player), 20*5);
             (new AttractFishHook(this.fishHook, this.player, loc, player.getLocation(), bool)).runTaskTimer(Main.getInstance(), 0L, 1L);
         }
-    }
-    public static int generateRandomNumber() {
-        Random random = new Random();
-        int min = 1;  // La valeur minimale (inclusive)
-        int max = 10;  // La valeur maximale (inclusive)
-
-        // Génère un nombre aléatoire entre min et max
-        int randomNumber = random.nextInt((max - min) + 1) + min;
-
-        return randomNumber;
-    }
-    public static double generateRandomDouble() {
-    	Random random = new Random();
-    	
-    	double randomNumber = random.nextDouble();
-    	return generateRandomNumber()+randomNumber;
     }
     public class AttractFishHook extends BukkitRunnable {
         private final Player player;
@@ -188,7 +168,7 @@ public class RodTridimensionnelle implements Listener {
                 }
                 DecimalFormat df = new DecimalFormat("0.0");
                 this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(role.gazAmount)+"%");
-                gameState.getPlayerRoles().get(this.player).actualTridiCooldown = gameState.TridiCooldown;
+                gameState.getPlayerRoles().get(this.player).setActualTridiCooldown(gameState.TridiCooldown);
             } else {
 				gameState.getPlayerRoles().get(player).onTentaculeEnd(r);
             }

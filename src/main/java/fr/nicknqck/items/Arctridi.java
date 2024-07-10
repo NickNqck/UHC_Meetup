@@ -58,16 +58,15 @@ public class Arctridi implements Listener{
     		if (event.getEntity().hasMetadata("teleportArrow "+gameState.getPlayerRoles().get(player).roleID) && gameState.getPlayerRoles().get(player) instanceof AotRoles) {
                 Arrow arrow = (Arrow) event.getEntity();
                 AotRoles role = (AotRoles) gameState.getPlayerRoles().get(player);
-                if (role.ArcTridiCooldown() <= 0 && !role.isTransformedinTitan) {
+                if (role.getActualTridiCooldown() <= 0 && !role.isTransformedinTitan) {
                 	if (role.gazAmount >0) {
                 		Vector arrowVelocity = arrow.getVelocity();
                         Vector playerVelocity = player.getLocation().getDirection().setY(0).normalize().multiply(1.5); // Adjust the teleport distance
                         Vector finalVelocity = arrowVelocity.add(playerVelocity);
                         noFall.add(player);
             			Location initLoc = player.getLocation();
-                        gameState.getPlayerRoles().get(player).onArcTridi(player, gameState);
                         player.teleport(arrow.getLocation().add(0, 1, 0).setDirection(finalVelocity));
-                        gameState.getPlayerRoles().get(player).actualTridiCooldown = gameState.TridiCooldown;
+                        gameState.getPlayerRoles().get(player).setActualTridiCooldown(gameState.TridiCooldown);
                         Location endLoc = player.getLocation();//Like initLoc but after TP
                         double distance = initLoc.distance(endLoc);
                         double gazToRemove = distance/8;
@@ -80,8 +79,8 @@ public class Arctridi implements Listener{
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> noFall.remove(player), 20*5);
                 	}
                 } else {
-                	if (gameState.getPlayerRoles().get(player).getActualCooldownArc() > 0) {
-                		gameState.getPlayerRoles().get(player).sendCooldown(player, gameState.getPlayerRoles().get(player).getActualCooldownArc());
+                	if (gameState.getPlayerRoles().get(player).getActualTridiCooldown() > 0) {
+                        gameState.getPlayerRoles().get(player).sendCooldown(player, gameState.getPlayerRoles().get(player).getActualTridiCooldown());
                 	}
                 	if (role.isTransformedinTitan) {
                 		player.sendMessage(gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 n'a pas supporté votre poid de Titan");

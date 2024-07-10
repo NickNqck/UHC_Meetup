@@ -10,7 +10,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.raytrace.BoundingBox;
 import fr.nicknqck.utils.raytrace.RayTrace;
@@ -33,7 +34,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
 public abstract class RoleBase implements Role{
@@ -41,6 +41,7 @@ public abstract class RoleBase implements Role{
 	public Player owner;
 	private Double maxHealth = 20.0;
 	private boolean canRespawn = false;
+	@Getter
 	private boolean hasNoFall = false;
 	private ArrayList<Player> linkWith = new ArrayList<>();
 	private Roles oldRole = null;
@@ -254,20 +255,14 @@ public abstract class RoleBase implements Role{
 		if (owner.getWorld().isThundering()) owner.getWorld().setThundering(false);
 		}
 	}
-	public int getActualCooldownArc() {return actualTridiCooldown;}
-	private boolean haslameforce = false;	
 	public boolean ItemUse(ItemStack item, GameState gameState) {return false;}
 	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {}
 	public void OpenFormInventory(GameState gameState) {}
 	public void FormChoosen(ItemStack item, GameState gameState) {}
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
 	// Fonction appelée a la fin d'une partie, utiliser pour supprimer des variables ou données spécifiques.
-	public void endRole() {}
-	public boolean hasLameForce() {return haslameforce;}
-	public void setLameForce(boolean haslameforce) {this.haslameforce = haslameforce;}
-	public boolean isHasNoFall() {return hasNoFall;}
+
 	public void setNoFall(boolean hasNoFall) {this.hasNoFall = hasNoFall;}
-	
 	public boolean isCanRespawn() {return canRespawn;}
 	public void setCanRespawn(boolean canRespawn) {this.canRespawn = canRespawn;}
 
@@ -278,9 +273,6 @@ public abstract class RoleBase implements Role{
 			linkWith.add(player);
 		}
 	}
-	
-	public boolean AttackedByPlayer(Player attacker, GameState gameState) {return false;}
-
 	public Roles getOldRole() {return oldRole;}
 
 	public void setOldRole(Roles oldRole) {this.oldRole = oldRole;}
@@ -337,14 +329,11 @@ public abstract class RoleBase implements Role{
 			gameState.DeadRole.add(getPlayerRoles(player).getRoles());
 		}
 	}
-	public boolean onBucketEmpty(Material bucket, Block block, GameState gameState, Player player) {return false;}
-	public boolean onBlockPlaced(Block block, Player player, GameState gameState) {return false;}
-	public boolean onBlockBreak(Player player, Block block, GameState gameState) {return false;}
 	public void OnAPlayerKillAnotherPlayer(Player player, Player damager, GameState gameState) {}
 	public void onAotCommands(String arg, String[] args, GameState gameState) {}
-	public void onArcTridi(Player player, GameState gameState) {}
-	public int actualTridiCooldown = -1;
-	public int ArcTridiCooldown() {return actualTridiCooldown;}
+	@Getter
+	@Setter
+	private int actualTridiCooldown = -1;
 	public void TransfoEclairxMessage(Player player) {
 		gameState.spawnLightningBolt(player.getWorld(), player.getLocation());
 		for (Player p : getIGPlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}

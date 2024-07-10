@@ -30,7 +30,8 @@ public class Kyojuro extends PillierRoles {
 	@Override
 	public String[] Desc() {
 	return AllDesc.Kyojuro;
-}	private int itemcooldown = 0;
+}
+	private int itemcooldown = 0;
 
 	@Override
 	public void GiveItems() {

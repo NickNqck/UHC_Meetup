@@ -393,32 +393,31 @@ public class GameListener implements Listener {
 	        SendToEveryone("Résumé de la partie");
 	        SendToEveryone(" ");
 	        if (!gameState.getInGamePlayers().isEmpty()) {
-				//	SendToEveryone(ChatColor.DARK_PURPLE+"Vainqueurs: ");
 					for (Player p : Bukkit.getOnlinePlayers()) {
 						((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
 						gameState.addInLobbyPlayers(p);
+						if (!gameState.hasRoleNull(p)) {
 							RoleBase prole = gameState.getPlayerRoles().get(p);
 							if (prole != null) {
-								prole.endRole();
-									String s = "";
-									if (gameState.getPlayerKills().containsKey(p)) {
-										if (!gameState.getPlayerKills().get(p).isEmpty()) {
-											int i = 0;
-											for (Player k : gameState.getPlayerKills().get(p).keySet()) {
-												i++;
-												if (i != gameState.getPlayerKills().get(p).size()) {
-													s+= "§7 - §f"+prole.getTeamColor(k)+k.getName()+"§7 ("+prole.getTeamColor(k)+prole.getPlayerRoles(k).getRoles().name()+"§7)\n";
-													
-												} else {
-													s+="§7 - §f"+prole.getTeamColor(k)+k.getName()+"§7 ("+prole.getTeamColor(k)+prole.getPlayerRoles(k).getRoles().name()+"§7)";
-												}
+								StringBuilder s = new StringBuilder();
+								if (gameState.getPlayerKills().containsKey(p)) {
+									if (!gameState.getPlayerKills().get(p).isEmpty()) {
+										int i = 0;
+										for (Player k : gameState.getPlayerKills().get(p).keySet()) {
+											i++;
+											if (i != gameState.getPlayerKills().get(p).size()) {
+												s.append("§7 - §f").append(prole.getTeamColor(k)).append(k.getName()).append("§7 (").append(prole.getTeamColor(k)).append(prole.getPlayerRoles(k).getRoles().name()).append("§7)\n");
+											} else {
+												s.append("§7 - §f").append(prole.getTeamColor(k)).append(k.getName()).append("§7 (").append(prole.getTeamColor(k)).append(prole.getPlayerRoles(k).getRoles().name()).append("§7)");
 											}
-											SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s, "§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill(s)");
-										} else {
-											SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill");
 										}
+										SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill(s)");
+									} else {
+										SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill");
 									}
+								}
 							}
+						}
                     }
 				}
 
@@ -489,8 +488,8 @@ public class GameListener implements Listener {
 		Random random = Main.RANDOM;
 		Location loc = null;
 		while (loc == null || gameState.world.getBlockAt(loc).getType() == Material.WATER || gameState.world.getBlockAt(loc).getType() == Material.LAVA) {
-			Float x = Border.getActualBorderSize()*random.nextFloat();
-			Float z = Border.getActualBorderSize()*random.nextFloat();
+			float x = Border.getActualBorderSize()*random.nextFloat();
+			float z = Border.getActualBorderSize()*random.nextFloat();
 			loc = gameState.world.getHighestBlockAt(new Location(gameState.world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);
@@ -519,8 +518,8 @@ public class GameListener implements Listener {
 		Random random = new Random();
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
-			Float x = Border.getActualBorderSize()*random.nextFloat();
-			Float z = Border.getActualBorderSize()*random.nextFloat();
+			float x = Border.getActualBorderSize()*random.nextFloat();
+			float z = Border.getActualBorderSize()*random.nextFloat();
 			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);
@@ -967,12 +966,6 @@ public class GameListener implements Listener {
 						}
 							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
 							if (gameState.getPlayerRoles().get(player).CancelAttack)event.setCancelled(true);
-						}
-					}
-					if (gameState.getPlayerRoles().containsKey(player)) {
-						if (gameState.getPlayerRoles().get(player).AttackedByPlayer(damager, gameState)) {
-							event.setCancelled(true);
-							return;
 						}
 					}
 				}

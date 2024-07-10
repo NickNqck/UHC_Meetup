@@ -1,7 +1,9 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
+import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -28,19 +30,18 @@ public class DemonKing extends EventBase{
 		if (!isActivated() && gameTime == getTime() && !gameState.demonKingTanjiro) {			
 			for (Player p : gameState.getInGamePlayers()) {
 				if (!gameState.hasRoleNull(p)) {
-					RoleBase role = gameState.getPlayerRoles().get(p);
+					RoleBase roleBase = gameState.getPlayerRoles().get(p);
 					if (gameState.attributedRole.contains(Roles.Tanjiro) && gameState.attributedRole.contains(Roles.Muzan)) {
-						if (gameState.DeadRole.contains(Roles.Muzan) && !gameState.DeadRole.contains(Roles.Tanjiro)) {
+						if (gameState.DeadRole.contains(Roles.Muzan) && !gameState.DeadRole.contains(Roles.Tanjiro) && roleBase instanceof DemonsSlayersRoles) {
+							DemonsSlayersRoles role = (DemonsSlayersRoles) roleBase;
 							if (role instanceof Tanjiro) {
 								setActivated(true);
 								role.setTeam(TeamList.Demon);
-								role.owner.sendMessage("§cLa liste des démons est : ");
-
-								role.owner.sendMessage("Vous venez de devenir le Démon le plus puissant de toute l'éxistance !");
-								role.owner.getInventory().remove(Items.getDSTanjiroDance());
-								role.setLameIncassable(role.owner, true);
-								role.owner.getInventory().addItem(role.getItems());
-								if (((Tanjiro) role).getLames().equals(Lames.Coeur)) {
+								Main.getInstance().getGetterList().getDemonList(p);
+								p.getInventory().remove(Items.getDSTanjiroDance());
+								role.setLameIncassable(p, true);
+								role.giveItem(p, true, role.getItems());
+								if (role.getLames().equals(Lames.Coeur)) {
 									role.setMaxHealth(24.0);
 								}else {
 									role.setMaxHealth(20.0);
@@ -49,28 +50,32 @@ public class DemonKing extends EventBase{
 								Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 									Bukkit.broadcastMessage(AllDesc.bar+"\n§rL'évènement aléatoire "+Events.DemonKingTanjiro.getName()+" viens de ce déclancher, le rôle§c Tanjiro§f est maintenant dans le camp des Démons !\n"+AllDesc.bar);
 									gameState.demonKingTanjiro = true;
-									for (Player k : gameState.getInGamePlayers()) {
-										if (gameState.attributedRole.contains(Roles.Kokushibo)) {
-											if (!gameState.hasRoleNull(k)) {
-												if (gameState.getPlayerRoles().get(k) instanceof Kokushibo) {
-													RoleBase koku = gameState.getPlayerRoles().get(k);
-													Kokushibo ko = (Kokushibo) koku;
-													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> ko.owner.sendMessage("§7Vous sentez des pulsions montez en vous..."), 20);
-													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> ko.owner.sendMessage("§7Vous devennez de plus en plus aigri..."), 20*5);
-													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-														ko.setTeam(TeamList.Solo);
-														ko.orginalMaxHealth = ko.getMaxHealth();
-														koku.owner.sendMessage(" \n§7La nouvelle de la mort de§c Muzan§7 et maintenant un simple pourfendeur devenue le chef des§c démons§7 qu'elle honte, vous explosez de rage et décidé de§l tué§7 tout le monde\n ");
-														if (((Kokushibo) koku).getLames().equals(Lames.Coeur)) {
-															koku.setMaxHealth(34.0);
-														}else {
-															koku.setMaxHealth(30.0);
-														}
-														koku.Heal(role.owner, role.getMaxHealth());
-														koku.owner.sendMessage("Vous posséderez maintenant l'effet "+AllDesc.Resi+" 1 pendant 3 minutes en tuant un joueur");
-														ko.solo = true;
-													}, 20*10);
+									if (RandomUtils.getOwnRandomProbability(50)) {
+										for (Player k : gameState.getInGamePlayers()) {
+											if (gameState.attributedRole.contains(Roles.Kokushibo)) {
+												if (!gameState.hasRoleNull(k)) {
+													if (gameState.getPlayerRoles().get(k) instanceof Kokushibo) {
+														RoleBase koku = gameState.getPlayerRoles().get(k);
+														Kokushibo ko = (Kokushibo) koku;
+														Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> ko.owner.sendMessage("§7Vous sentez des pulsions montez en vous..."), 20);
+														Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> ko.owner.sendMessage("§7Vous devennez de plus en plus aigri..."), 20*5);
+														Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+															ko.setTeam(TeamList.Solo);
+															ko.orginalMaxHealth = ko.getMaxHealth();
+															koku.owner.sendMessage(" \n§7La nouvelle de la mort de§c Muzan§7 et maintenant un simple pourfendeur devenue le chef des§c démons§7 qu'elle honte, vous explosez de rage et décidé de§l tué§7 tout le monde\n ");
+															if (((Kokushibo) koku).getLames().equals(Lames.Coeur)) {
+																koku.setMaxHealth(34.0);
+															}else {
+																koku.setMaxHealth(30.0);
+															}
+															koku.Heal(k, role.getMaxHealth());
+															k.sendMessage("Vous posséderez maintenant l'effet "+AllDesc.Resi+" 1 pendant 3 minutes en tuant un joueur");
+															ko.solo = true;
+														}, 20*10);
+													}
 												}
+											} else {
+												break;
 											}
 										}
 									}

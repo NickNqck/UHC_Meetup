@@ -30,18 +30,18 @@ public abstract class AotRoles extends RoleBase {
                 cancel();
                 return;
             }
-            if (role.actualTridiCooldown > 0) {
-                role.actualTridiCooldown--;
+            if (role.getActualTridiCooldown() > 0) {
+                role.setActualTridiCooldown(role.getActualTridiCooldown()-1);
                 if (role.owner.getItemInHand().isSimilar(role.gameState.EquipementTridi())) {
                     DecimalFormat df = new DecimalFormat("0.0");
                     //	sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"%"+aqua+" Cooldown:§6 "+actualTridiCooldown+"s");
-                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+role.gameState.sendGazBar(role.gazAmount, 2)+"§7("+aqua+df.format(role.gazAmount)+"%§7), Cooldown:§b "+role.cd(role.actualTridiCooldown));
+                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+role.gameState.sendGazBar(role.gazAmount, 2)+"§7("+aqua+df.format(role.gazAmount)+"%§7), Cooldown:§b "+role.cd(role.getActualTridiCooldown()));
                 }
-            }else if (role.actualTridiCooldown == 0){
+            }else if (role.getActualTridiCooldown() == 0){
                 role.owner.sendMessage("§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 utilisable !");
-                role.actualTridiCooldown--;
+                role.setActualTridiCooldown(role.getActualTridiCooldown()-1);
             }
-            if (role.actualTridiCooldown <= 0) {
+            if (role.getActualTridiCooldown() <= 0) {
                 if (role.owner.getItemInHand().isSimilar(role.gameState.EquipementTridi())) {
                     DecimalFormat df = new DecimalFormat("0.0");
                     role.sendCustomActionBar(role.owner, aqua+"Gaz:§c "+df.format(role.gazAmount)+"% "+"§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§r:§6 Utilisable");

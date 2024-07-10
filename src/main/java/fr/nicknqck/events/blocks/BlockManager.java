@@ -72,9 +72,6 @@ public class BlockManager implements Listener{
 	        		}
                 }.runTaskLater(Main.getInstance(), 20L *gameState.LavaEmptyTiming);
 	        }
-	        if (!gameState.hasRoleNull(event.getPlayer())) {
-	        	event.setCancelled(gameState.getPlayerRoles().get(event.getPlayer()).onBucketEmpty(event.getBucket(), block, gameState, event.getPlayer()));
-	        }
 	    }
 	 @EventHandler
 	 public void onBucketFill(PlayerBucketFillEvent e) {
@@ -102,7 +99,6 @@ public class BlockManager implements Listener{
 						event.getPlayer().updateInventory();
 					}
 				}
-				event.setCancelled(gameState.getPlayerRoles().get(event.getPlayer()).onBlockPlaced(event.getBlock(), event.getPlayer(), gameState));
 			}
 		}		
 	}
@@ -164,9 +160,6 @@ public class BlockManager implements Listener{
                 }
             }
         }
-		if (!gameState.hasRoleNull(player)) {
-			e.setCancelled(gameState.getPlayerRoles().get(player).onBlockBreak(player, block, gameState));
-		}
 	}
 	@EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
