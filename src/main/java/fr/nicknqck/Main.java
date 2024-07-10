@@ -293,13 +293,13 @@ public class Main extends JavaPlugin implements Listener{
 			getScoreboardManager().onDisable();
 		}
 		System.out.println("["+PLUGIN_NAME+"] Disabled");
-		//deleteWorld("world");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				World world = Bukkit.getWorlds().get(0);
 				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);				
 			}
 		}
+		System.out.println("["+PLUGIN_NAME+"] "+getBase());
 	}
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");

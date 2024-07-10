@@ -47,14 +47,6 @@ public class AdminCommands implements CommandExecutor{
 			this.gameState = GameState.getInstance();
 		}
 		if (args.length >= 1) {
-			if (args[0].equalsIgnoreCase("createloadworld")){
-                try {
-                    Main.createLoadWorld();
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-				return true;
-			}
 			if (args[0].equalsIgnoreCase("vie")){
 				if (args.length == 3){
 					Player target = Bukkit.getPlayer(args[1]);
