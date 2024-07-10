@@ -1,11 +1,10 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Gyokko;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -18,14 +17,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Muichiro extends SlayerRoles {
+public class Muichiro extends PillierRoles {
 
 	public Muichiro(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setCanuseblade(true);
-		gameState.addPillier(owner);
 	}
 	@Override
 	public Roles getRoles() {

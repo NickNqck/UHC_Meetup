@@ -1,11 +1,10 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.utils.Cuboid;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,14 +17,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 
-public class Tomioka extends SlayerRoles {
+public class Tomioka extends PillierRoles {
 
 	public Tomioka(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setCanuseblade(true);
-		gameState.addPillier(owner);
 	}
 	@Override
 	public Roles getRoles() {

@@ -1,13 +1,12 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.ChatColor;
@@ -25,14 +24,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
-public class Tengen extends SlayerRoles {
+public class Tengen extends PillierRoles {
 
 	public Tengen(Player player) {
 		super(player);
 		owner.sendMessage(AllDesc.Tengen);
 		this.setCanuseblade(true);
 		this.setForce(20);
-		gameState.addPillier(owner);
 	}
 
     @Override

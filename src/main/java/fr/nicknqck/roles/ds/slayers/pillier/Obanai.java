@@ -1,10 +1,9 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import org.bukkit.entity.Player;
@@ -12,13 +11,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Obanai extends SlayerRoles {
+public class Obanai extends PillierRoles {
 
 	public Obanai(Player player) {
 		super(player);
 		for (String desc : AllDesc.Obanai) owner.sendMessage(desc);
 		this.setCanuseblade(true);
-		gameState.addPillier(owner);
 	}
 	@Override
 	public Roles getRoles() {

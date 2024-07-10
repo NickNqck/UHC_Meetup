@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -6,14 +6,13 @@ import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-public class Kyojuro extends SlayerRoles {
+public class Kyojuro extends PillierRoles {
 
 	public Kyojuro(Player player) {
 		super(player);
@@ -22,7 +21,6 @@ public class Kyojuro extends SlayerRoles {
 		this.setCanuseblade(true);
 		this.setLameFr(true);
 		this.setResi(20);
-		gameState.addPillier(owner);
 	}
 	@Override
 	public Roles getRoles() {

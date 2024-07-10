@@ -1,17 +1,16 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Gyomei extends SlayerRoles {
+public class Gyomei extends PillierRoles {
 
 	public Gyomei(Player player) {
 		super(player);
@@ -20,7 +19,6 @@ public class Gyomei extends SlayerRoles {
 		setMaxHealth(24.0);
 		this.setCanuseblade(true);
 		this.setResi(20);
-		gameState.addPillier(owner);
 	}
 
 	@Override

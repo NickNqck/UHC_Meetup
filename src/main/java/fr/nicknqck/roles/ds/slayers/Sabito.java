@@ -7,6 +7,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.DemonMain;
+import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
@@ -86,7 +87,7 @@ public class Sabito extends SlayerRoles {
 				}
 				if (dietomioka && killdemon) {
 					souflecooldown = 60*4;
-				} else if (dietomioka && !killdemon) {
+				} else if (dietomioka) {
 					souflecooldown = 60*4+30;
 				} else if (killdemon) {
 					souflecooldown = 60*4+30;
@@ -112,7 +113,7 @@ public class Sabito extends SlayerRoles {
 						dietomioka = true;
 						owner.sendMessage(ChatColor.GOLD+""+ r.getRoles()+ChatColor.GRAY+" est mort vous gagnez donc en utilisant votre Soufle de L'eau Speed 2 pendant 2 minutes au lieu de Speed 1 pendant 2 minutes, également le cooldown est réduit de 30 secondes");
 						}
-					if (killer == owner) {
+					if (killer.getUniqueId() == getPlayer()) {
 						if (r instanceof DemonMain && !killdemon) {
 							killdemon = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+"Demon Main "+ChatColor.GRAY+"vous obtenez donc force 1 en utilisant votre Soufle de L'eau également son cooldown est réduit de 30 secondes");

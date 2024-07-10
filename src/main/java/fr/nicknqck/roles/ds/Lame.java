@@ -5,10 +5,6 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
-import fr.nicknqck.roles.ds.slayers.Kyojuro;
-import fr.nicknqck.roles.ds.slayers.Tanjiro;
-import fr.nicknqck.roles.ds.solos.Shinjuro;
-import fr.nicknqck.roles.ds.solos.ShinjuroV2;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,15 +31,10 @@ public class Lame implements Listener{
 							p.sendMessage("§cVous avez déjà une lame de nichirin");
 						} else {
 							Lames toGett = null;
-							while (toGett == null){
-								for (Lames lames : Lames.values()){
-									if (RandomUtils.getOwnRandomProbability(15)){
-										if (role instanceof Tanjiro || role instanceof Kyojuro || role instanceof ShinjuroV2 || role instanceof Shinjuro) {
-											if (lames != Lames.FireResistance) {
-												toGett = lames;
-												break;
-											}
-										} else {
+							while (toGett == null) {
+								for (Lames lames : Lames.values()) {
+									if (RandomUtils.getOwnRandomProbability(15)) {
+										if (!lames.getUsers().containsKey(role.getPlayer())){
 											toGett = lames;
 											break;
 										}

@@ -71,7 +71,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[i].contains("#MDJ")||args[i].contains("#MDj")||args[i].contains("#Mdj")||args[i].contains("#MdJ")||args[i].contains("#mdj")||args[i].contains("#mDj")){
 								String replaced;
 								if (gameState.getMdj() != null) {
-									replaced = args[i].replace("#MDJ", gameState.getMdj().name());
+									replaced = args[i].replace(args[i], gameState.getMdj().name());
 								} else {
 									replaced = args[i].replace("#MDJ", "Aucun");
 								}

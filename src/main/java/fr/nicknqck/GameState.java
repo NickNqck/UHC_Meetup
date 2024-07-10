@@ -19,6 +19,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
+import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.mc.overworld.Poulet;
 import fr.nicknqck.roles.mc.overworld.Squelette;
@@ -326,13 +327,11 @@ public class GameState{
 	public boolean roletab = false;
 	@Getter
 	public int critP = 20;
-	public boolean cibletanjiroAssassin = true;
+	@Getter
 	private static GameState instance;
-	public int TimeSpawnBiju = 60;
 	@Getter
 	@Setter
 	private int maxTimeSpawnBiju = 60*5;
-	public static GameState getInstance() {return instance;}
 	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
@@ -343,11 +342,8 @@ public class GameState{
 	public void addInObiPlayers(Player player) {Obi.add(player);}
 	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
-	public ArrayList<Player> Pillier = new ArrayList<Player>();
+	public ArrayList<Player> Pillier = new ArrayList<>();
 	public ArrayList<Player> getPillier(){return Pillier;}
-	public void setPillier(ArrayList<Player> Pill){Pillier = Pill;}
-	public void addPillier(Player player){Pillier.add(player);}
-	public void delPillier(Player player){Pillier.remove(player);}
 	
 	public ArrayList<Player> getCharmed(){return Charmed;} //GameListener 698
 	public void setCharmed(ArrayList<Player> CharmedPlayers){Charmed = CharmedPlayers;}
@@ -1140,9 +1136,9 @@ public class GameState{
 				for (Roles roles : hashMap.get(t)){
 					i++;
 					if (i != hashMap.get(t).size()){
-						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("§f, ");
+						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
 					} else {
-						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("\n");
+						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
 					}
 				}
 			}

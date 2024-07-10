@@ -8,7 +8,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.slayers.Kyojuro;
+import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
 import fr.nicknqck.utils.Loc;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

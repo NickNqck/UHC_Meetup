@@ -21,7 +21,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.Susamaru;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.Mitsuri;
+import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;

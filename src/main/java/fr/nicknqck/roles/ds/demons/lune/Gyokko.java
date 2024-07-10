@@ -5,7 +5,7 @@ import java.util.Random;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.slayers.Muichiro;
+import fr.nicknqck.roles.ds.slayers.pillier.Muichiro;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

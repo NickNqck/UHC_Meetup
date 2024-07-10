@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
@@ -7,7 +7,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import fr.nicknqck.utils.RandomUtils;
@@ -19,13 +18,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Sanemi extends SlayerRoles {
+public class Sanemi extends PillierRoles {
 
 	public Sanemi(Player player) {
 		super(player);
 		for (String desc : AllDesc.Sanemi) owner.sendMessage(desc);
 		setCanuseblade(true);
-		gameState.addPillier(owner);
 	}
 	@Override
 	public Roles getRoles() {

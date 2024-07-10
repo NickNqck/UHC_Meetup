@@ -1,7 +1,10 @@
-package fr.nicknqck.roles.ds.slayers;
+package fr.nicknqck.roles.ds.slayers.pillier;
 
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -9,19 +12,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Shinobu extends SlayerRoles {
+public class Shinobu extends PillierRoles {
 
 	public Shinobu(Player player) {
 		super(player);
 		owner.sendMessage(Desc());
         this.setCanuseblade(true);
-        gameState.addPillier(owner);
 	}
 	@Override
 	public Roles getRoles() {
