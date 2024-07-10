@@ -2,17 +2,16 @@ package fr.nicknqck;
 
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.events.blocks.BlockManager;
-import fr.nicknqck.events.blocks.BrickBlockListener;
-import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
 import fr.nicknqck.commands.vanilla.Whitelist;
 import fr.nicknqck.events.Events;
+import fr.nicknqck.events.blocks.BlockManager;
+import fr.nicknqck.events.blocks.BrickBlockListener;
+import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.essential.*;
 import fr.nicknqck.items.*;
-import fr.nicknqck.pregen.WorldGenCaves;
 import fr.nicknqck.roles.aot.builders.titans.Bestial;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
@@ -30,7 +29,6 @@ import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
 import fr.nicknqck.worlds.WorldGenerator;
 import lombok.Getter;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -43,7 +41,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -67,8 +64,8 @@ public class Main extends JavaPlugin implements Listener{
 	private ScheduledExecutorService executorMonoThread;
     @Getter
 	private ScheduledExecutorService scheduledExecutorService;
+	@Getter
     private static WorldFillTask worldfilltask;
-	public boolean gen = false;
 	public static String RH() {return "§c❤§r";}
 	public static List<Chunk> keepChunk = new ArrayList<>();
 	@Getter
@@ -304,30 +301,6 @@ public class Main extends JavaPlugin implements Listener{
 			}
 		}
 	}
-	public static void createLoadWorld() throws NoSuchFieldException, IllegalAccessException {
-		getInstance().gen = true;
-        deleteWorld("arena");
-        WorldCreator creator = new WorldCreator("arena");
-        creator.generatorSettings(getBase());
-        getInstance().gameWorld = creator.createWorld();
-        WorldGenCaves.load(getInstance().gameWorld, 600);
-        getInstance().gameWorld.getWorldBorder().setCenter(new Location(getInstance().gameWorld, 0.0, getInstance().gameWorld.getHighestBlockYAt(0, 0), 0.0));
-        getInstance().gameWorld.getWorldBorder().setSize(Border.getActualBorderSize() * 2);
-        worldfilltask = new WorldFillTask(getInstance().gameWorld, 20, Border.getMaxBorderSize());
-        worldfilltask.setTaskID(Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), worldfilltask, 1L, 1L));
-        getInstance().gameWorld.getEntities().forEach(Entity::remove);
-    }
-	private static void deleteWorld(String worldName) {
-        Bukkit.unloadWorld(worldName, false);
-        File worldContainer = new File(Bukkit.getWorldContainer() + "/" + worldName + "/");
-        if (worldContainer.exists()) {
-            try {
-                FileUtils.deleteDirectory(worldContainer);
-            } catch (Exception var4) {
-                worldContainer.delete();
-            }
-        }
-    }
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");
 		if (getInstance().getConfig().getString("debug").equalsIgnoreCase("ultra")){
