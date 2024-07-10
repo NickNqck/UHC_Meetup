@@ -74,8 +74,8 @@ public class Ino extends ShinobiRoles {
         if (cdTransposition >= 0){
             cdTransposition--;
             if (cdTransposition == 0) {
-                if (Bukkit.getPlayer(getUuidOwner()) != null){
-                    Bukkit.getPlayer(getUuidOwner()).sendMessage("§7Vous pouvez à nouveau utiliser votre§a Transposition§7 sur un joueur.");
+                if (Bukkit.getPlayer(getPlayer()) != null){
+                    Bukkit.getPlayer(getPlayer()).sendMessage("§7Vous pouvez à nouveau utiliser votre§a Transposition§7 sur un joueur.");
                 }
             }
         }
@@ -120,7 +120,7 @@ public class Ino extends ShinobiRoles {
                 return;
             }
             Player target = Bukkit.getPlayer(uuidTarget);
-            Player owner = Bukkit.getPlayer(ino.getUuidOwner());
+            Player owner = Bukkit.getPlayer(ino.getPlayer());
             if (target != null && owner != null){
                 if (target.getGameMode() == GameMode.SPECTATOR ||owner.getGameMode() != GameMode.SPECTATOR){
                     cancel();

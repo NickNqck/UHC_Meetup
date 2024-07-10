@@ -1,8 +1,10 @@
 package fr.nicknqck.roles.ds.builders;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -46,5 +48,23 @@ public abstract class DemonsSlayersRoles extends RoleBase {
             return null;
         }
         return null;
+    }
+    public void setLameIncassable(Player target, boolean a) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+            if (!gameState.hasRoleNull(target)) {
+                if (getPlayerRoles(target) instanceof DemonsSlayersRoles) {
+                    DemonsSlayersRoles role = (DemonsSlayersRoles) getPlayerRoles(target);
+                    role.setLameincassable(a);
+                    if (a) {
+                        sendMessageAfterXseconde(target, "Votre lame est devenue incassable", 1);
+                    } else {
+                        sendMessageAfterXseconde(target, "Votre lame n'est plus incassable", 1);
+                    }
+                }
+            } else {
+                target.sendMessage("On dirait qu'on à essayer de donner une lame incassable cependant au moment ou on vous l'a donné vous n'aviez pas de rôle");
+            }
+
+        }, 20);
     }
 }

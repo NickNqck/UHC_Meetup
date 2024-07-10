@@ -25,7 +25,7 @@ public class GetterList {
                 if (role instanceof DemonsRoles) {
                     DemonsRoles demon = (DemonsRoles) role;
                     if (demon.getRank().name().contains("Lune")){
-                        Player list = Bukkit.getPlayer(demon.getUuidOwner());
+                        Player list = Bukkit.getPlayer(demon.getPlayer());
                         if (list != null){
                             text.addExtra("\n§7 - §c"+list.getName());
                         }
@@ -42,7 +42,7 @@ public class GetterList {
             for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
                 if (role instanceof MahrRoles) {
                     MahrRoles mahr = (MahrRoles ) role;
-                    Player list = Bukkit.getPlayer(mahr.getUuidOwner());
+                    Player list = Bukkit.getPlayer(mahr.getPlayer());
                     if (list != null){
                         text.addExtra("\n§7 - §9"+list.getName());
                     }
@@ -59,7 +59,7 @@ public class GetterList {
                 if (role instanceof TitansRoles) {
                     TitansRoles Titans = (TitansRoles ) role;
                     if (!(role instanceof TitanBestial)){
-                        Player list = Bukkit.getPlayer(Titans.getUuidOwner());
+                        Player list = Bukkit.getPlayer(Titans.getPlayer());
                         if (list != null){
                             text.addExtra("\n§7 - §c"+list.getName());
                         }
@@ -75,7 +75,7 @@ public class GetterList {
             TextComponent text = new TextComponent("§cListe de l'Akatsuki:\n");
             for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
                 if (role instanceof AkatsukiRoles || role instanceof Obito) {
-                    Player list = Bukkit.getPlayer(role.getUuidOwner());
+                    Player list = Bukkit.getPlayer(role.getPlayer());
                     if (list != null){
                         text.addExtra("\n§7 - §c"+list.getName());
                     }

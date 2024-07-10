@@ -55,7 +55,7 @@ public class Lame implements Listener{
 		}
 	}
 	public static void giveLame(DemonsSlayersRoles role, Lames lames){
-		lames.getUsers().put(role.getUuidOwner(), 40);
+		lames.getUsers().put(role.getPlayer(), 40);
 		role.setLames(lames);
 		role.owner.sendMessage("§7Vous avez obtenue la lame de "+lames.name());
 	}

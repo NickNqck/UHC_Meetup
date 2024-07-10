@@ -142,7 +142,7 @@ public class Iso extends RoleBase {
             ultimateGap.put(owner.getUniqueId(), GlobalUtils.getItemAmount(owner, Material.GOLDEN_APPLE));
             ultimateGap.put(target.getUniqueId(), GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE));
             StunManager.stun(target.getUniqueId(), 5.0, false);
-            StunManager.stun(getUuidOwner(), 5.0, false);
+            StunManager.stun(getPlayer(), 5.0, false);
             createBuildingTask();
             cdUltime = 60*10;
         } else {
@@ -304,11 +304,11 @@ public class Iso extends RoleBase {
                     location.add(vector);
                     MathUtil.sendParticle(EnumParticle.REDSTONE, location);
                     for (Player target : location.getWorld().getPlayers()) {
-                        if (target.getUniqueId() != getUuidOwner() && target.getLocation().distance(location) < 1.0) {
+                        if (target.getUniqueId() != getPlayer() && target.getLocation().distance(location) < 1.0) {
                             if (!damaged.contains(target.getUniqueId())){
                                 if (right) {
                                     target.sendMessage("§7Vous ne pouvez plus attaqué§d Iso");
-                                    AttackUtils.setCantAttack(target, getUuidOwner());
+                                    AttackUtils.setCantAttack(target, getPlayer());
                                     Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                                         AttackUtils.getCantAttackNobody().remove(target.getUniqueId(), AttackUtils.getCantAttackNobody().get(target.getUniqueId()));
                                         if (target.isOnline()){
@@ -327,8 +327,8 @@ public class Iso extends RoleBase {
                                             }
                                             if (timeRemain == 0){
                                                 LeftBarrieredItem.clear();
-                                                if (Bukkit.getPlayer(getUuidOwner()) != null){
-                                                    Bukkit.getPlayer(getUuidOwner()).sendMessage("§7Votre§l Barrière de Renforcement§7 ne fait plus effet...");
+                                                if (Bukkit.getPlayer(getPlayer()) != null){
+                                                    Bukkit.getPlayer(getPlayer()).sendMessage("§7Votre§l Barrière de Renforcement§7 ne fait plus effet...");
                                                 }
                                             }
                                             timeRemain--;
@@ -350,14 +350,14 @@ public class Iso extends RoleBase {
     @Override
     public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {
         super.onALLPlayerDamageByEntityAfterPatch(event, victim, damager);
-        if (event.getDamager().getUniqueId().equals(getUuidOwner())){
+        if (event.getDamager().getUniqueId().equals(getPlayer())){
             if (LeftBarrieredItem.contains(event.getEntity().getUniqueId())) {
                 event.setDamage(event.getDamage()*1.25);
             }
             if (cdProtection >= 60*7){
                 stackedCoup++;
             }
-        } else if (event.getEntity().getUniqueId().equals(getUuidOwner())){
+        } else if (event.getEntity().getUniqueId().equals(getPlayer())){
             if (stackedCoup > 0 && cdProtection <= 60*7-1){
                 event.setCancelled(true);
                 stackedCoup--;

@@ -87,10 +87,10 @@ public class Kanae extends PillierRoles implements Listener {
         private void onBattle(EntityDamageByEntityEvent event){
             if (!(event.getDamager() instanceof Player))return;
             if (!(event.getEntity() instanceof Player))return;
-            if (ended || kanae.getUuidOwner() == null)return;
+            if (ended || kanae.getPlayer() == null)return;
             if (kanae.cooldown > 0)return;
             if (!((Player) event.getDamager()).getItemInHand().isSimilar(kanae.sword))return;
-            if (kanae.getUuidOwner().equals(event.getDamager().getUniqueId())) {
+            if (kanae.getPlayer().equals(event.getDamager().getUniqueId())) {
                 StringBuilder toKanae = new StringBuilder("§c"+((Player) event.getEntity()).getDisplayName()+"§7 à reçus§c ");
                 StringBuilder toVictim = new StringBuilder("§7Vous avez reçus§c ");
                 int rdm = Main.RANDOM.nextInt(100);

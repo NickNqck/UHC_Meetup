@@ -192,7 +192,7 @@ public class Hotaru extends SlayerRoles {
 							}
 						if (!gameState.hasRoleNull(cible)) {
 							if (gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles){
-								gameState.getPlayerRoles().get(cible).setLameIncassable(cible, true);
+								((DemonsSlayersRoles) gameState.getPlayerRoles().get(cible)).setLameIncassable(cible, true);
 							}
                         }
                             gameState.getPlayerRoles().get(cible).sendMessageAfterXseconde(cible, "§aHotaru§f à rendu votre Lame de Nichirin incassable", 1);

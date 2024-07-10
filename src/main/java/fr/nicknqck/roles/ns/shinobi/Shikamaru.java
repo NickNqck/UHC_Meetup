@@ -228,7 +228,7 @@ public class Shikamaru extends ShinobiRoles {
         @EventHandler
         private void onInventoryClick(InventoryClickEvent e){
             if (shikamaru == null)return;
-            if (e.getWhoClicked().getUniqueId().equals(shikamaru.getUuidOwner())){
+            if (e.getWhoClicked().getUniqueId().equals(shikamaru.getPlayer())){
                 if (e.getClickedInventory() == null)return;
                 if (e.getClickedInventory().getTitle() == null)return;
                 if (Main.isDebug()){
@@ -259,7 +259,7 @@ public class Shikamaru extends ShinobiRoles {
                                 e.getWhoClicked().sendMessage("§7Vous empêchez§c "+player.getDisplayName()+"§7 de bouger");
                                 player.sendMessage("§aShikamaru§7 vous empêche de bouger");
                                 stun(player.getUniqueId(), 10.0, false);
-                                stun(shikamaru.getUuidOwner(), 10.0, false);
+                                stun(shikamaru.getPlayer(), 10.0, false);
                                 if (e.getAction().equals(InventoryAction.PICKUP_HALF) && shikamaru.poisonUse < 2){
                                     new PoisonPowerRunnable(shikamaru, player.getUniqueId()).runTaskTimerAsynchronously(Main.getInstance(), 0, 40);
                                     shikamaru.poisonUse++;

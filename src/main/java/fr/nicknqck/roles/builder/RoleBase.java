@@ -8,7 +8,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
-import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -70,7 +69,6 @@ public abstract class RoleBase implements Role{
 	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
-	@Getter
 	private UUID uuidOwner;
 	public RoleBase(Player player) {
 		owner = player;
@@ -122,28 +120,10 @@ public abstract class RoleBase implements Role{
 
 	@Override
 	public UUID getPlayer() {
-		return getUuidOwner();
+		return uuidOwner;
 	}
 
 	public abstract void resetCooldown();
-	public void setLameIncassable(Player target, boolean a) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (!gameState.hasRoleNull(target)) {
-				if (getPlayerRoles(target) instanceof DemonsSlayersRoles) {
-					DemonsSlayersRoles role = (DemonsSlayersRoles) getPlayerRoles(target);
-					role.setLameincassable(a);
-					if (a) {
-						sendMessageAfterXseconde(target, "Votre lame est devenue incassable", 1);
-					} else {
-						sendMessageAfterXseconde(target, "Votre lame n'est plus incassable", 1);
-					}
-				}
-			} else {
-				target.sendMessage("On dirait qu'on à essayer de donner une lame incassable cependant au moment ou on vous l'a donné vous n'aviez pas de rôle");
-			}
-			
-    }, 20);	
-	}
 	public void sendActionBarCooldown(Player player, int cooldown) {
 		if (cooldown > 0) {
 		NMSPacket.sendActionBar(player, "Cooldown: "+cd(cooldown));
@@ -260,8 +240,6 @@ public abstract class RoleBase implements Role{
 	public void OpenFormInventory(GameState gameState) {}
 	public void FormChoosen(ItemStack item, GameState gameState) {}
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
-	// Fonction appelée a la fin d'une partie, utiliser pour supprimer des variables ou données spécifiques.
-
 	public void setNoFall(boolean hasNoFall) {this.hasNoFall = hasNoFall;}
 	public boolean isCanRespawn() {return canRespawn;}
 	public void setCanRespawn(boolean canRespawn) {this.canRespawn = canRespawn;}

@@ -93,7 +93,7 @@ public class Warden extends UHCMcRoles {
             if (args[0].equalsIgnoreCase("cible")){
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null){
-                    if (target.getUniqueId().equals(getUuidOwner())) {
+                    if (target.getUniqueId().equals(getPlayer())) {
                         owner.sendMessage("§cVous ne pouvez pas vous ciblez vous même.");
                         return;
                     }
