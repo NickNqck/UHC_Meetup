@@ -7,6 +7,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -49,6 +50,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
     private State state = State.Nothing;
     public ShinjuroV2(Player player) {
         super(player);
+        Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
         player.sendMessage(Desc());
         setCanuseblade(true);
         giveItem(player, false, getItems());

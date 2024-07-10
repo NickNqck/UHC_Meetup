@@ -279,7 +279,6 @@ public class Iso extends RoleBase {
         super.onLeftClick(event, gameState);
         if (!event.getAction().name().contains("LEFT"))return;
         if (event.getItem().isSimilar(BarriereItem)){
-
             event.setCancelled(true);
             if (cdBarriereGauche > 0){
                 sendCooldown(owner, cdBarriereGauche);

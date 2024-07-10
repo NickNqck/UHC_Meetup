@@ -140,7 +140,7 @@ public class TitanBestial extends TitansRoles {
 		}		
 		if (isTransformedinTitan) {
 		if (owner.getWorld().equals(Main.getInstance().gameWorld)) {
-			for (Player p : gameState.getNearbyPlayers(owner, 20)) {
+			for (Player p : Loc.getNearbyPlayers(owner, 20)) {
 				if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof AotRoles) {
 					AotRoles role = (AotRoles) gameState.getPlayerRoles().get(p);
 					if (role.isTransformedinTitan) {

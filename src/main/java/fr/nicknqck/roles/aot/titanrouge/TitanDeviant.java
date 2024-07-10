@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -39,10 +40,10 @@ public class TitanDeviant extends TitansRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		for (Player p:gameState.getNearbyPlayers(owner, 20)) {
+		for (Player p: Loc.getNearbyPlayers(owner, 20)) {
 			if (gameState.TitansRouge.contains(p)) {
-				List<Player> istitanaroundofTitanDéviant = new ArrayList<>();
-				istitanaroundofTitanDéviant.add(p);
+				List<Player> isTitanAroundDeviant = new ArrayList<>();
+				isTitanAroundDeviant.add(p);
                 isTransformedinTitan = true;
                 givePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
 

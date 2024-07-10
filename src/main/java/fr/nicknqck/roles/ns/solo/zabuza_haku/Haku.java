@@ -141,6 +141,10 @@ public class Haku extends NSRoles {
 		if (args[0].equalsIgnoreCase("hyoton")) {
 			if (bulleHakuCD > 60*8+1) {
 				bulleHakuCD = 60*8+1;
+				Player player = Bukkit.getPlayer(getPlayer());
+				if (player != null) {
+					player.sendMessage("§7Vous forcez la fermeture de votre§b bulle");
+				}
 			}
 		}
 	}

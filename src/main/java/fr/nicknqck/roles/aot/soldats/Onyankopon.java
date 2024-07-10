@@ -6,6 +6,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Material;
@@ -91,7 +92,7 @@ public class Onyankopon extends SoldatsRoles {
 		super.Update(gameState);
 	}
 	private void fuite() {
-		for (Player p:gameState.getNearbyPlayers(owner, 20)) {
+		for (Player p: Loc.getNearbyPlayers(owner, 20)) {
 			GameListener.RandomTp(p, Main.getInstance().gameWorld);
 			cd = 60;
 		}

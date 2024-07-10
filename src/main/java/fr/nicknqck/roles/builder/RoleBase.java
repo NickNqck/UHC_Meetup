@@ -145,7 +145,7 @@ public abstract class RoleBase implements Role{
 	public void setOldTeamList(TeamList list) {list = oldteam;}
 	public RoleBase getPlayerRoles(Player player) {return gameState.getPlayerRoles().get(player);}
 	public void sendMessageAfterXseconde(Player player, String message, int seconde) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			player.sendMessage(message);
 		}, 20L *seconde);
 	}

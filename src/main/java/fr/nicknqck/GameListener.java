@@ -485,11 +485,10 @@ public class GameListener implements Listener {
 	}
 	public void SendToEveryoneExcept(String message, Player player) {for (Player p : Bukkit.getOnlinePlayers()) {if (p.equals(player)) continue;p.sendMessage(message);}}
 	public static Location RandomTp(final Entity entity, final GameState gameState) {
-		Random random = Main.RANDOM;
 		Location loc = null;
 		while (loc == null || gameState.world.getBlockAt(loc).getType() == Material.WATER || gameState.world.getBlockAt(loc).getType() == Material.LAVA) {
-			float x = Border.getActualBorderSize()*random.nextFloat();
-			float z = Border.getActualBorderSize()*random.nextFloat();
+			float x = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
+			float z = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
 			loc = gameState.world.getHighestBlockAt(new Location(gameState.world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);

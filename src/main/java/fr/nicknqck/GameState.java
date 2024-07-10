@@ -966,15 +966,12 @@ public class GameState{
 			}
         }
     }
-	public List<Player> getNearbyPlayers(Entity entity, int distance) {return Loc.getNearbyPlayers(entity, distance);}
 	public void RevivePlayer(Player player) {
 		if (player == null)return;
 		if (getServerState() == ServerStates.InGame) {
-			if (getPlayerRoles().containsKey(player)) {
+			if (!hasRoleNull(player)) {
 				if (getInSpecPlayers().contains(player)) {
-					if (getInSpecPlayers().contains(player)){
-						delInSpecPlayers(player);
-					}
+					delInSpecPlayers(player);
 					if (!getInGamePlayers().contains(player)){
 						addInGamePlayers(player);
 					}
