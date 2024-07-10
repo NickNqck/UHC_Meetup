@@ -6,6 +6,7 @@ import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Lames;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -19,7 +20,7 @@ public class Kyojuro extends PillierRoles {
 		owner.sendMessage(AllDesc.Kyojuro);
 		this.setForce(20);
 		this.setCanuseblade(true);
-		this.setLameFr(true);
+		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		this.setResi(20);
 	}
 	@Override

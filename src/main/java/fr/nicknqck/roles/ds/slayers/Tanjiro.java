@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import java.text.DecimalFormat;
 
+import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +33,7 @@ boolean dance = false;
 		super(player);
 		for (String desc : AllDesc.Tanjiro) owner.sendMessage(desc);
 		this.setCanuseblade(true);
-		this.setLameFr(true);
+		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 	}
 
     @Override

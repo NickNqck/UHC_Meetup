@@ -1,5 +1,6 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -39,7 +40,7 @@ public class DemonKing extends EventBase{
 								role.owner.getInventory().remove(Items.getDSTanjiroDance());
 								role.setLameIncassable(role.owner, true);
 								role.owner.getInventory().addItem(role.getItems());
-								if (role.hasLamecoeur()) {
+								if (((Tanjiro) role).getLames().equals(Lames.Coeur)) {
 									role.setMaxHealth(24.0);
 								}else {
 									role.setMaxHealth(20.0);
@@ -54,17 +55,13 @@ public class DemonKing extends EventBase{
 												if (gameState.getPlayerRoles().get(k) instanceof Kokushibo) {
 													RoleBase koku = gameState.getPlayerRoles().get(k);
 													Kokushibo ko = (Kokushibo) koku;
-													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-														ko.owner.sendMessage("§7Vous sentez des pulsions montez en vous...");
-													}, 20);
-													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-														ko.owner.sendMessage("§7Vous devennez de plus en plus aigri...");
-													}, 20*5);
+													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> ko.owner.sendMessage("§7Vous sentez des pulsions montez en vous..."), 20);
+													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> ko.owner.sendMessage("§7Vous devennez de plus en plus aigri..."), 20*5);
 													Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 														ko.setTeam(TeamList.Solo);
 														ko.orginalMaxHealth = ko.getMaxHealth();
 														koku.owner.sendMessage(" \n§7La nouvelle de la mort de§c Muzan§7 et maintenant un simple pourfendeur devenue le chef des§c démons§7 qu'elle honte, vous explosez de rage et décidé de§l tué§7 tout le monde\n ");
-														if (koku.hasLamecoeur()) {
+														if (((Kokushibo) koku).getLames().equals(Lames.Coeur)) {
 															koku.setMaxHealth(34.0);
 														}else {
 															koku.setMaxHealth(30.0);

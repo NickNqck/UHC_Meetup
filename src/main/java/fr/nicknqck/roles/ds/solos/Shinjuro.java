@@ -8,13 +8,13 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
 import fr.nicknqck.utils.Loc;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -25,7 +25,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 		super(player);
 		owner.sendMessage(Desc());
 		setCanuseblade(true);
-		setLameFr(true);
+		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		setMaxHealth(24.0);
 		setLameIncassable(owner, true);
 	}
@@ -45,9 +45,8 @@ public class Shinjuro extends DemonsSlayersRoles {
 	}
 	@Override
 	public void GiveItems() {
-		Inventory inv = owner.getInventory();
 		giveItem(owner, false, getItems());
-		inv.addItem(Items.getLamedenichirin());
+		giveItem(owner, false, Items.getLamedenichirin());
 	}
 	@Override
 	public ItemStack[] getItems() {

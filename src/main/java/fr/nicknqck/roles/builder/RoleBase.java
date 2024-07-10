@@ -255,10 +255,6 @@ public abstract class RoleBase implements Role{
 		}
 	}
 	public int getActualCooldownArc() {return actualTridiCooldown;}
-	private boolean haslamecoeur = false;
-	private boolean haslamefr = false;
-	private boolean haslamespeed = false;
-	private boolean haslameresi = false;
 	private boolean haslameforce = false;	
 	public boolean ItemUse(ItemStack item, GameState gameState) {return false;}
 	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {}
@@ -271,16 +267,6 @@ public abstract class RoleBase implements Role{
 	public void setLameForce(boolean haslameforce) {this.haslameforce = haslameforce;}
 	public boolean isHasNoFall() {return hasNoFall;}
 	public void setNoFall(boolean hasNoFall) {this.hasNoFall = hasNoFall;}
-	
-	public boolean hasLameresi() {return haslameresi;}
-	public void setLameresi(boolean haslameresi) {this.haslameresi = haslameresi;}
-	
-	public boolean hasLameFr() {return haslamefr;}
-	public void setLameFr(boolean haslamefr) {this.haslamefr = haslamefr;}
-	public boolean hasLamecoeur() {return haslamecoeur;}
-	public void setLamecoeur(boolean haslamecoeur) {		this.haslamecoeur = haslamecoeur;	}
-	public boolean hasLameSpeed() {		return haslamespeed;	}
-	public void setLameSpeed(boolean haslamespeed) {		this.haslamespeed = haslamespeed;	}
 	
 	public boolean isCanRespawn() {return canRespawn;}
 	public void setCanRespawn(boolean canRespawn) {this.canRespawn = canRespawn;}
