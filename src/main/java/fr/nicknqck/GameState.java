@@ -6,15 +6,15 @@ import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.Eren;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -40,14 +40,14 @@ import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.roles.valo.agents.Iso;
 import fr.nicknqck.scenarios.impl.FFA;
-import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -287,16 +287,16 @@ public class GameState{
 	public boolean JigoroV2Pacte3 = false;
 	public World world = Main.getInstance().gameWorld;
 	private ServerStates serverState = ServerStates.InLobby;
-	private final HashMap<Roles, Integer> availableRoles = new HashMap<Roles, Integer>();
-	private final ArrayList<Events> availableEvents = new ArrayList<Events>();
+	private final HashMap<Roles, Integer> availableRoles = new HashMap<>();
+	private final ArrayList<Events> availableEvents = new ArrayList<>();
 	private final ArrayList<EventBase> inGameEvents = new ArrayList<>();
 	private ArrayList<Player> inLobbyPlayers = new ArrayList<>();
 	private ArrayList<Player> inGamePlayers = new ArrayList<>();
-	private ArrayList<Player> inSpecPlayers = new ArrayList<Player>();
+	private ArrayList<Player> inSpecPlayers = new ArrayList<>();
 	
-	public ArrayList<Player> Charmed = new ArrayList<Player>();
-	private HashMap<Player, RoleBase> playerRoles = new HashMap<Player, RoleBase>();
-	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<Player, HashMap<Player, RoleBase>>();
+	public ArrayList<Player> Charmed = new ArrayList<>();
+	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
+	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
 	public List<Player> igPlayers = new ArrayList<>();
 	int inGameTime = 0;
 
@@ -336,7 +336,7 @@ public class GameState{
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
 	public List<Player> infectedbyadmin = new ArrayList<>();
-	public ArrayList<Player> Obi = new ArrayList<Player>();
+	public ArrayList<Player> Obi = new ArrayList<>();
 	public ArrayList<Player> getInObiPlayers() {return Obi;}
 	public void setInObiPlayers(ArrayList<Player> SleepingPlayers) {Obi = SleepingPlayers;}
 	public void addInObiPlayers(Player player) {Obi.add(player);}
@@ -346,11 +346,10 @@ public class GameState{
 	public ArrayList<Player> getPillier(){return Pillier;}
 	
 	public ArrayList<Player> getCharmed(){return Charmed;} //GameListener 698
-	public void setCharmed(ArrayList<Player> CharmedPlayers){Charmed = CharmedPlayers;}
 	public void addCharmed(Player player){Charmed.add(player);}
 	public void delCharmed(Player player){Charmed.remove(player);}
 	
-	public ArrayList<Player> SleepingPlayer = new ArrayList<Player>();
+	public ArrayList<Player> SleepingPlayer = new ArrayList<>();
 	public ArrayList<Player> getInSleepingPlayers() {return SleepingPlayer;}
 	public void setInSleepingPlayers(ArrayList<Player> SleepingPlayers) {SleepingPlayer = SleepingPlayers;}
 	public void addInSleepingPlayers(Player player) {SleepingPlayer.add(player);}
