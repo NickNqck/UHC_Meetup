@@ -49,7 +49,7 @@ public class Jigoro extends DemonsSlayersRoles {
 		this.setCanuseblade(true);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}

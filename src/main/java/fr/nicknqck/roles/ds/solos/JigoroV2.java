@@ -34,7 +34,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		pacte = Pacte.Non_Choisis;
 		setCanuseblade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
@@ -56,7 +56,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}

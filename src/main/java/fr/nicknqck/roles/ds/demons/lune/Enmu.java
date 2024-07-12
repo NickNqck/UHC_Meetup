@@ -22,7 +22,7 @@ public class Enmu extends DemonsRoles {
 		super(player);
 		owner.sendMessage(AllDesc.Enmu);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}

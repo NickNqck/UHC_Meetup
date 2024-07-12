@@ -130,7 +130,7 @@ public class Zombie extends OverWorldRoles {
     @Override
     public void PlayerKilled(Player killer, Player victim, GameState gameState) {
         if (killer.getUniqueId() == owner.getUniqueId()){
-            if (getIGPlayers().contains(victim)){
+            if (gameState.getInGamePlayers().contains(victim)){
                 owner.sendMessage("Vous venez de tuer un joueur vous obtenez donc un §cCerveau §rsupplémentaire et vous donc à §c"+nmbCerveau);
                 nmbCerveau++;
             }

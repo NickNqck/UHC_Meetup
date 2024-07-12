@@ -117,7 +117,7 @@ public class Kakuzu extends AkatsukiRoles {
 						for (Player p : rap.keySet()) {
 							p.teleport(rap.get(p));
 						}
-						if (!getIGPlayers().contains(owner)) {
+						if (!gameState.getInGamePlayers().contains(owner)) {
 							cancel();
 							return;
 						}

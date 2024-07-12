@@ -100,7 +100,7 @@ public class Conny extends SoldatsRoles {
 		if (args[0].equalsIgnoreCase("proteger")) {
 			if (!cmd) {
 			if (args[1].equalsIgnoreCase("Jean")) {
-				for (Player p : getIGPlayers()) {
+				for (Player p : gameState.getInGamePlayers()) {
 					if (getPlayerRoles(p) instanceof Jean) {
 				Jean = true;
 				cmd = true;
@@ -109,7 +109,7 @@ public class Conny extends SoldatsRoles {
 				}
 				} else {
 				if (args[1].equalsIgnoreCase("Sasha")) {
-					for (Player p : getIGPlayers()) {
+					for (Player p : gameState.getInGamePlayers()) {
 						if (getPlayerRoles(p) instanceof Sasha) {
 					Sasha = true;
 					cmd = true;
@@ -132,7 +132,7 @@ public class Conny extends SoldatsRoles {
 		if (player != null) {
 			if (killer != null) {
 				if (Jean) {
-				for (Player p : getIGPlayers()) {
+				for (Player p : gameState.getInGamePlayers()) {
 					if (getPlayerRoles(p) instanceof Jean) {
 						owner.sendMessage("Votre proteger viens de mourir vous obtenez désormais Weakness 1 ansi que speed 1 lors de votre utilisation de votre sucre");
 						givePotionEffet(owner, PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 1, true);
@@ -140,7 +140,7 @@ public class Conny extends SoldatsRoles {
 				}
 			} else {
 				if (Sasha) {
-					for (Player p : getIGPlayers()) {
+					for (Player p : gameState.getInGamePlayers()) {
 						if (getPlayerRoles(p) instanceof Sasha) {
 							owner.sendMessage("Votre proteger viens de mourir vous obtenez désormais Weakness 1 ansi que speed 1 lors de votre utilisation de votre sucre");
 							givePotionEffet(owner, PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 1, true);

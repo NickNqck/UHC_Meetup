@@ -30,7 +30,7 @@ public class ZenItsu extends SlayerRoles {
 	@Override
 		public String[] Desc() {
 		if (gameState.JigoroV2Pacte3) {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (gameState.getPlayerRoles().containsKey(p)) {
 					if (getPlayerRoles(p) instanceof JigoroV2) {
 						sendMessageAfterXseconde(owner, "§6Jigoro§r: "+p.getName(), 1);

@@ -131,7 +131,7 @@ public class KillerBee extends ShinobiRoles {
 				@Override
 				public void run() {
 					i--;
-					if (i <= 0 || !getIGPlayers().contains(owner)) {
+					if (i <= 0 || !gameState.getInGamePlayers().contains(owner)) {
 						setMaxHealth(getMaxHealth()-4.0);
 						owner.sendMessage("§7Vous n'êtes plus sous l'effet de§d Gyûki§7.");
 						cancel();

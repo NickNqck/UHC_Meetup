@@ -37,7 +37,7 @@ public class Kokushibo extends DemonsRoles {
 		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
@@ -64,7 +64,7 @@ public class Kokushibo extends DemonsRoles {
 	public String[] Desc() {
 		if (!gameState.demonKingTanjiro) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				for (Player p : getIGPlayers()) {
+				for (Player p : gameState.getInGamePlayers()) {
 					if (getPlayerRoles(p) instanceof Muzan) {
 						owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 					}

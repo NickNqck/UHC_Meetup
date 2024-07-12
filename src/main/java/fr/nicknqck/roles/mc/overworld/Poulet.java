@@ -76,7 +76,7 @@ public class Poulet extends OverWorldRoles {
                 private int i = 0;
                     @Override
                     public void run() {
-                        if(getIGPlayers().contains(owner)) {
+                        if(gameState.getInGamePlayers().contains(owner)) {
                             i ++;
                             if (i == 4) {
                                 owner.sendMessage("Vous ne pouvez plus voler.");

@@ -32,7 +32,7 @@ public class Nezuko extends DemonsRoles {
 		this.setForce(20);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof Tanjiro) {
 					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
 				}
@@ -55,7 +55,7 @@ public class Nezuko extends DemonsRoles {
 	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : getIGPlayers()) {
+			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof Tanjiro) {
 					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
 				}

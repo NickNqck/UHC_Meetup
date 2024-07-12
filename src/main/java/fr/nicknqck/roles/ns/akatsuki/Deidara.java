@@ -401,7 +401,7 @@ public class Deidara extends AkatsukiRoles {
 							@Override
 							public void run() {
 								i--;
-								if (gameState.getServerState() != ServerStates.InGame || !getIGPlayers().contains(owner) || i ==0) {
+								if (gameState.getServerState() != ServerStates.InGame || !gameState.getInGamePlayers().contains(owner) || i ==0) {
 									owner.setFlying(false);
 									owner.setAllowFlight(false);
 									owner.setFallDistance(0.0f);

@@ -63,11 +63,6 @@ public abstract class RoleBase implements Role{
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
-
-	public ArrayList<Player> getIGPlayers() {
-		return gameState.getInGamePlayers();
-	}
-
 	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
@@ -315,9 +310,9 @@ public abstract class RoleBase implements Role{
 	private int actualTridiCooldown = -1;
 	public void TransfoEclairxMessage(Player player) {
 		gameState.spawnLightningBolt(player.getWorld(), player.getLocation());
-		for (Player p : getIGPlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}
+		for (Player p : gameState.getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}
 	}
-	public void TransfoMessage() {	for (Player p : getIGPlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");p.playSound(p.getLocation(), "aotmtp.transfo", 8, 1);}	}
+	public void TransfoMessage() {	for (Player p : gameState.getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");p.playSound(p.getLocation(), "aotmtp.transfo", 8, 1);}	}
 	public boolean hasRoleInfo() {return false;}
 	public void giveHeartatInt(Player target, double coeur) {
 		if (!gameState.hasRoleNull(target)) {
@@ -553,12 +548,11 @@ public abstract class RoleBase implements Role{
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {}
 	public Player getPlayerFromRole(Roles roles) {
 		List<Player> toReturn = new ArrayList<>();
-		getIGPlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).forEach(e -> toReturn.add(e));
+		gameState.getInGamePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).forEach(e -> toReturn.add(e));
 		if (toReturn.isEmpty()) {
 			return null;
 		}
-		Player PlayerRoles = toReturn.get(0);
-		return PlayerRoles;
+        return toReturn.get(0);
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();

@@ -99,7 +99,7 @@ public class YondaimeRaikage extends ShinobiRoles {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
-							if (timeLeft <=0 || !armureActived || !getIGPlayers().contains(owner)) {
+							if (timeLeft <=0 || !armureActived || !gameState.getInGamePlayers().contains(owner)) {
 								if (timeLeft <= 0) {
 									owner.sendMessage("§7Désactivation de votre§e Armure Raiton");
 									owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);

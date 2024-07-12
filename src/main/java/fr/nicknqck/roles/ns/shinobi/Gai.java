@@ -134,7 +134,7 @@ public class Gai extends ShinobiRoles {
 					int intVie = 60*6;
 					@Override
 					public void run() {
-						if (getIGPlayers().contains(owner)) {
+						if (gameState.getInGamePlayers().contains(owner)) {
 						intVie --;
 						} else {
 							cancel();

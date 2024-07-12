@@ -659,7 +659,7 @@ public class Obito extends NSRoles {
 		}
 		if (item.isSimilar(ninjutsuSpatioTemporelItem())) {
 			if (cdNinjutsu <= 0) {
-				for (Player p : getIGPlayers()) {
+				for (Player p : gameState.getInGamePlayers()) {
 					if (p.getUniqueId() != owner.getUniqueId()) {
 						p.hidePlayer(owner);
 					}

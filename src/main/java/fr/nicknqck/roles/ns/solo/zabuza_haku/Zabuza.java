@@ -127,7 +127,7 @@ public class Zabuza extends NSRoles {
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
 		if (entity.getUniqueId() == owner.getUniqueId()) {
-			if (getIGPlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim)) {
 				if (Invisible) {
 					removeInvisibility();
 				}

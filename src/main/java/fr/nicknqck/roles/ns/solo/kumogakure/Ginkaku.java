@@ -123,7 +123,7 @@ public class Ginkaku extends NSRoles {
 					//	private final PacketDisplay dp = display;
 						@Override
 						public void run() {
-							if (!gameState.getServerState().equals(ServerStates.InGame) || !getIGPlayers().contains(owner)){
+							if (!gameState.getServerState().equals(ServerStates.InGame) || !gameState.getInGamePlayers().contains(owner)){
 								cancel();
 							}
 							if (timeRemaining == 0){

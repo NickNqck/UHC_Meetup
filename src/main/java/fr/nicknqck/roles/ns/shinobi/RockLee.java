@@ -130,7 +130,7 @@ public class RockLee extends ShinobiRoles {
 	
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (getIGPlayers().contains(owner)) {
+		if (gameState.getInGamePlayers().contains(owner)) {
 			if (getListPlayerFromRole(Roles.Gai).contains(player)) {
 				owner.sendMessage("§aGaï Maito §rviens de mourir vous obtenez désormais la §cHuitième porte");
 				giveItem(owner, false, HuitPortesItem());
@@ -142,7 +142,7 @@ public class RockLee extends ShinobiRoles {
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
 		if (victim.getUniqueId() == owner.getUniqueId() && entity instanceof Player) {
 			if (DrunkenFist) {
-				if (getIGPlayers().contains(entity)) {
+				if (gameState.getInGamePlayers().contains(entity)) {
 					if (RandomUtils.getOwnRandomProbability(20)) {
 						owner.sendMessage("Vous venez d'esquiver un coup");
 						event.setDamage(0.0);
@@ -178,7 +178,7 @@ public class RockLee extends ShinobiRoles {
 					int intVie = 0;
 					@Override
 					public void run() {
-						if (getIGPlayers().contains(owner)) {
+						if (gameState.getInGamePlayers().contains(owner)) {
 						intVie ++;
 						} else {
 							cancel();

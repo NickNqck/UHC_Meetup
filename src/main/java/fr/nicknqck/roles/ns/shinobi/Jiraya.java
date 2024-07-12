@@ -159,7 +159,7 @@ public class Jiraya extends ShinobiRoles {
 							
 							@Override
 							public void run() {
-								if (cdGamabunta <= 60*8 || !getIGPlayers().contains(owner)) {
+								if (cdGamabunta <= 60*8 || !gameState.getInGamePlayers().contains(owner)) {
 									cancel();
 								}
 								int truc = cdGamabunta-(60*8);

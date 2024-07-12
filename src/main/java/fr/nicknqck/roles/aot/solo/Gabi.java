@@ -39,7 +39,7 @@ public class Gabi extends AotRoles {
 			if (!killshifter) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					List<Player> canBeinList = new ArrayList<>();
-					for (Player p : getIGPlayers()) {
+					for (Player p : gameState.getInGamePlayers()) {
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
@@ -59,7 +59,7 @@ public class Gabi extends AotRoles {
 			}, 11);
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					List<Player> canBeinList = new ArrayList<>();
-					for (Player p : getIGPlayers()) {
+					for (Player p : gameState.getInGamePlayers()) {
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
@@ -83,7 +83,7 @@ public class Gabi extends AotRoles {
 			}, 14);
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					List<Player> canBeinList = new ArrayList<>();
-					for (Player p : getIGPlayers()) {
+					for (Player p : gameState.getInGamePlayers()) {
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {

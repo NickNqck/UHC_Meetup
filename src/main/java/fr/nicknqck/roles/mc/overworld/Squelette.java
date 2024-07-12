@@ -68,7 +68,7 @@ public class Squelette extends OverWorldRoles {
 
     @Override
     public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-        if (getIGPlayers().contains(killer)){
+        if (gameState.getInGamePlayers().contains(killer)){
             if (victim.getUniqueId() == owner.getUniqueId()){
                 giveItem(killer, false, BontoutouItem);
                 killer.sendMessage("Vous venez de tuez §a"+owner.getName()+" §rqui était §aSquelette §r,vous obtenez donc un os §aBon TouTou §rqui vous permez d'apprivoiser un loup");

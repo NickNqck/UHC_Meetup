@@ -159,7 +159,7 @@ public class Hidan extends AkatsukiRoles {
 						int i = 200;
 						@Override
 						public void run() {
-							if (!getIGPlayers().contains(owner)) {
+							if (!gameState.getInGamePlayers().contains(owner)) {
 								cancel();
 							}
 							if (i == 0) {

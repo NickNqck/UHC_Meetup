@@ -28,7 +28,7 @@ public class Yahaba extends DemonsRoles {
 		setForce(20);
 		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-            List<Player> Ciblable = new ArrayList<>(getIGPlayers());
+            List<Player> Ciblable = new ArrayList<>(gameState.getInGamePlayers());
 			Collections.shuffle(Ciblable, Main.RANDOM);
 			for (Player p : Ciblable) {
 				if (!gameState.hasRoleNull(p)) {

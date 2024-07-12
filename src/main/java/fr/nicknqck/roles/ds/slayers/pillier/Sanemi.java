@@ -108,7 +108,7 @@ public class Sanemi extends PillierRoles {
 				} else {
 					if (args[1].equalsIgnoreCase("all")) {
 						if (!usetpAll) {
-							for (Player p : getIGPlayers()) {
+							for (Player p : gameState.getInGamePlayers()) {
 								if (p != null && p != owner) {
 									if (!gameState.hasRoleNull(p)) {
 										if (!(getPlayerRoles(p) instanceof Doma)) {
