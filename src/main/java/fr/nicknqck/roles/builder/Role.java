@@ -1,7 +1,9 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
+import org.bukkit.potion.PotionEffect;
 
+import java.util.Map;
 import java.util.UUID;
 
 public interface Role {
@@ -11,4 +13,6 @@ public interface Role {
     GameState.Roles getRoles();
     TeamList getOriginTeam();
     TeamList getTeam();
+    Map<PotionEffect, EffectWhen> getEffects();
+    void resetCooldown();
 }

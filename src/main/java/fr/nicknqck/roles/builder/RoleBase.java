@@ -58,6 +58,8 @@ public abstract class RoleBase implements Role{
 	private GamePlayer gamePlayer;
 	@Getter
 	private TeamList team;
+	@Getter
+	private final Map<PotionEffect, EffectWhen> effects = new HashMap<>();
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
@@ -122,8 +124,6 @@ public abstract class RoleBase implements Role{
 	public UUID getPlayer() {
 		return uuidOwner;
 	}
-
-	public abstract void resetCooldown();
 	public void sendActionBarCooldown(Player player, int cooldown) {
 		if (cooldown > 0) {
 		NMSPacket.sendActionBar(player, "Cooldown: "+cd(cooldown));

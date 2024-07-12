@@ -21,14 +21,17 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.Susamaru;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
+import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
-import fr.nicknqck.utils.*;
+import fr.nicknqck.utils.AntiLopsa;
+import fr.nicknqck.utils.PotionUtils;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -64,6 +67,7 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -373,16 +377,14 @@ public class GameListener implements Listener {
 				if (team != TeamList.Solo) {
 					String Vainqueurs = "Victoire du camp: "+team.getColor()+StringUtils.replaceUnderscoreWithSpace(team.name());
 					title = "Victoire des: "+team.getColor()+StringUtils.replaceUnderscoreWithSpace(team.name());
-					title = title.substring(0, title.length());
-					SendToEveryone(Vainqueurs);
+                    SendToEveryone(Vainqueurs);
 				} else {
 					if (gameState.getInGamePlayers().get(0) != null) {
 						Player winer = gameState.getInGamePlayers().get(0);
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+winer.getName();
 						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer).size()+"§f kill(s)";
 						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles().name();
-						title = title.substring(0, title.length());
-						SendToEveryone(Vainqueurs);
+                        SendToEveryone(Vainqueurs);
 					}
 				}
 			}
@@ -552,7 +554,7 @@ public class GameListener implements Listener {
 	}
 	@NotNull
 	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
-			Bukkit.getPluginManager().callEvent(new UHCPlayerKill(player, damager, gameState));
+		Bukkit.getPluginManager().callEvent(new UHCPlayerKill(player, damager, gameState));
 		for (EventBase event : gameState.getInGameEvents()) {
 			if (damager instanceof Player) {
 				event.OnPlayerKilled((Player) damager, player, gameState);
@@ -565,60 +567,60 @@ public class GameListener implements Listener {
 				event.OnPlayerKilled(null, player, gameState);
 			}
 		}
-			boolean cantDie = false;
-			if (!gameState.hasRoleNull(player)) {
-				if (gameState.getPlayerRoles().get(player).onPreDie(damager, gameState) || gameState.getPlayerRoles().get(player).getGamePlayer().isCanRevive()) {
-                    cantDie = true;
-                }
-				if (!cantDie){
-					gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
+		boolean cantDie = false;
+		if (!gameState.hasRoleNull(player)) {
+			if (gameState.getPlayerRoles().get(player).onPreDie(damager, gameState) || gameState.getPlayerRoles().get(player).getGamePlayer().isCanRevive()) {
+				cantDie = true;
+			}
+			if (!cantDie){
+				gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
+			}
+			if (gameState.getPlayerRoles().get(player).getItems() != null) {
+				for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
+					if (player.getInventory().contains(item)) {
+						player.getInventory().remove(item);
+					}
 				}
-				if (gameState.getPlayerRoles().get(player).getItems() != null) {
-					for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
-						if (player.getInventory().contains(item)) {
-							player.getInventory().remove(item);
+			}
+		}
+		if (cantDie) {
+			return;
+		}
+		for (ItemStack item : player.getInventory().getContents()){
+			if (item != null){
+				if (item.getType() != Material.AIR){
+					if (item.getAmount() <= 64){
+						if (item.getAmount() > 0) {
+							dropItem(player.getLocation().clone(), item.clone());
+						} else {
+							dropItem(player.getLocation().clone(), new ItemBuilder(item).setAmount(1).toItemStack());
 						}
 					}
 				}
 			}
-			if (cantDie) {
-				return;
-			}
-            for (ItemStack item : player.getInventory().getContents()){
-                if (item != null){
-                    if (item.getType() != Material.AIR){
-                        if (item.getAmount() <= 64){
-							if (item.getAmount() > 0) {
-								dropItem(player.getLocation().clone(), item.clone());
-							} else {
-								dropItem(player.getLocation().clone(), new ItemBuilder(item).setAmount(1).toItemStack());
-							}
-						}
-                    }
-                }
-            }
-			if (gameState.getHokage() != null) {
-				gameState.getHokage().onDeath(player, damager, gameState);
-			}
-			dropItem(player.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 2));
-			if (damager != null) {
-                //damager = le tueur
-                //player = la victim/le mort
-                if (damager instanceof Player) {
-                    Player killer = (Player) damager;
-                    DeathMessage(player);
-                    for (Player p : gameState.getInGamePlayers()) {
-                        if (gameState.getPlayerRoles().containsKey(p)) {
-                            gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
-                        }
-                    }
-                    if (gameState.getPlayerRoles().containsKey(damager)) {
-                        RoleBase role = gameState.getPlayerRoles().get(damager);
-                        if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
-                            for (Player p : gameState.getInGamePlayers()) {
-                                if (!gameState.hasRoleNull(p)) {
-                                    RoleBase role2 = gameState.getPlayerRoles().get(p);
-                                    if (role2.getTeam() == TeamList.Demon || role2.getRoles() == Roles.Kaigaku) {
+		}
+		if (gameState.getHokage() != null) {
+			gameState.getHokage().onDeath(player, damager, gameState);
+		}
+		dropItem(player.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 2));
+		if (damager != null) {
+			//damager = le tueur
+            //player = la victim/le mort
+			if (damager instanceof Player) {
+				Player killer = (Player) damager;
+                DeathMessage(player);
+                for (Player p : gameState.getInGamePlayers()) {
+					if (gameState.getPlayerRoles().containsKey(p)) {
+						gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
+					}
+				}
+				if (gameState.getPlayerRoles().containsKey(damager)) {
+					RoleBase role = gameState.getPlayerRoles().get(damager);
+					if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
+						for (Player p : gameState.getInGamePlayers()) {
+							if (!gameState.hasRoleNull(p)) {
+								RoleBase role2 = gameState.getPlayerRoles().get(p);
+								if (role2.getTeam().equals(TeamList.Demon) || role2.getOriginTeam().equals(TeamList.Demon)) {
                                         p.sendMessage("§cLe joueur§4 "+damager.getName()+"§c à tué quelqu'un....");
                                     }
                                 }
@@ -1107,10 +1109,12 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void OnPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
-		if (gameState.getInGamePlayers().contains(player))
-		if (gameState.getPlayerRoles().containsKey(player))
-		if (gameState.getPlayerRoles().get(player).getRoles() == null) {
-				event.setCancelled(true);
+		if (gameState.getInGamePlayers().contains(player)) {
+			if (!gameState.hasRoleNull(player)) {
+				if (gameState.getPlayerRoles().get(player).getRoles() == null) {
+					event.setCancelled(true);
+				}
+			}
 		}
 	}
 	public static void dropItem(final Location loc, final ItemStack item) {loc.getWorld().dropItem(loc.clone().add(0.5D, 0.3D, 0.5D), item);

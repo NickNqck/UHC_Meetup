@@ -1122,19 +1122,25 @@ public class GameState{
 			}
 		}
 		if (!hashMap.isEmpty()){
-			for (TeamList t : hashMap.keySet()){
+			List<Roles> appenned = new ArrayList<>();
+			for (TeamList t : TeamList.values()){
 				int size = 0;
 				if (hashMap.get(t) != null){
 					size = hashMap.get(t).size();
 				}
                 tr.append("\n§r(").append(t.getColor()).append(size).append("§f)").append(t.getColor()).append(StringUtils.replaceUnderscoreWithSpace(t.name())).append("(s): \n");
 				int i = 0;
-				for (Roles roles : hashMap.get(t)){
-					i++;
-					if (i != hashMap.get(t).size()){
-						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
-					} else {
-						tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+				if (hashMap.containsKey(t) && !hashMap.get(t).isEmpty()) {
+					for (Roles roles : hashMap.get(t)){
+						i++;
+						if (!appenned.contains(roles)) {
+							if (i != hashMap.get(t).size()){
+								tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
+							} else {
+								tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+							}
+							appenned.add(roles);
+						}
 					}
 				}
 			}
