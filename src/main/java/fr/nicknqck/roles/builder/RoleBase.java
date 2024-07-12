@@ -58,6 +58,8 @@ public abstract class RoleBase implements Role{
 	private GamePlayer gamePlayer;
 	@Getter
 	private TeamList team;
+	@Getter
+	private final Map<PotionEffect, EffectWhen> effects = new HashMap<>();
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
