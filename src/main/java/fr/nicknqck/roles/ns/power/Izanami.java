@@ -24,7 +24,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
-import fr.nicknqck.events.custom.UHCPlayerKill;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -276,7 +276,7 @@ public class Izanami implements Listener{
 		this.color = null;
 	}
 	@EventHandler
-	private void onKill(UHCPlayerKill e) {
+	private void onKill(UHCPlayerKillEvent e) {
 		if (isNotNull()) {
 			if (isGoodMission(MissionTarget.Tuer)) {
 				if (e.getKiller().getUniqueId().equals(target)) {

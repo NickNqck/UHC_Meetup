@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.nicknqck.events.custom.UHCPlayerKill;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -98,7 +98,7 @@ public class Arctridi implements Listener{
     	}
     }
     @EventHandler
-    private void onKill(UHCPlayerKill event) {
+    private void onKill(UHCPlayerKillEvent event) {
         if (event.getGamePlayerKiller().getRole() instanceof AotRoles){
             AotRoles role = (AotRoles) event.getGamePlayerKiller().getRole();
             if (role.gazAmount < 100.0) {

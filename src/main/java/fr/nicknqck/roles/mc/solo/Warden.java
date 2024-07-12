@@ -2,7 +2,7 @@ package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.UHCPlayerKill;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
@@ -233,7 +233,7 @@ public class Warden extends UHCMcRoles {
             timeRemaining--;
         }
         @EventHandler
-        private void onKill(UHCPlayerKill e){
+        private void onKill(UHCPlayerKillEvent e){
                 if (e.getPlayerKiller() != null && e.getGamePlayerKiller() != null){
                     if (e.getGameState().getGamePlayer().containsKey(e.getKiller().getUniqueId())){
                         if (e.getGameState().getPlayerRoles().get(e.getPlayerKiller()) instanceof Warden){

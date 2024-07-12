@@ -42,17 +42,17 @@ boolean dance = false;
 	}
 	public int actualuse = 0;
 	@Override
-		public void RoleGiven(GameState gameState) {
-			gameState.aroundTanjiro.clear();
-			super.RoleGiven(gameState);
-		}
+	public void RoleGiven(GameState gameState) {
+		gameState.aroundTanjiro.clear();
+		super.RoleGiven(gameState);
+	}
 	@Override
-		public String[] Desc() {return AllDesc.Tanjiro;}
+	public String[] Desc() {return AllDesc.Tanjiro;}
 	@Override
 	public void GiveItems() {
 			owner.getInventory().addItem(Items.getDSTanjiroDance());
 			owner.getInventory().addItem(Items.getLamedenichirin());
-		}
+	}
 	@Override
 	public void Update(GameState gameState) {
 		if (!gameState.demonKingTanjiro) {
@@ -117,7 +117,7 @@ boolean dance = false;
 		} 
 	}
 	@Override
-		public void onDSCommandSend(String[] args, GameState gameState) {
+	public void onDSCommandSend(String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("sEnTir")) {
 			if (actualuse < 3) {
 				if (args.length == 2) {

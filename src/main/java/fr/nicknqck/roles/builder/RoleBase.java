@@ -58,8 +58,6 @@ public abstract class RoleBase implements Role{
 	private GamePlayer gamePlayer;
 	@Getter
 	private TeamList team;
-	@Getter
-	private final Map<PotionEffect, EffectWhen> effects = new HashMap<>();
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
@@ -73,8 +71,8 @@ public abstract class RoleBase implements Role{
 	public String StringID = "";
 	private UUID uuidOwner;
 	public RoleBase(Player player) {
-		owner = player;
-		if (gameState == null){
+		this.owner = player;
+		if (this.gameState == null){
 			this.gameState = GameState.getInstance();
 		}
 		owner.setWalkSpeed(0.2f);
@@ -110,6 +108,8 @@ public abstract class RoleBase implements Role{
 					cancel();
 					return;
 				}
+				Player owner = Bukkit.getPlayer(getPlayer());
+				if (owner == null) return;
 				if (owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && getForce() < 20) {
 					setForce(20);
 				}
@@ -165,7 +165,6 @@ public abstract class RoleBase implements Role{
 	}
 	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
 		Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force));
-
 	}
 	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {givePotionEffet(owner, type, time, level, force);}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}

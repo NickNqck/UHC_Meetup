@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.UHCPlayerKill;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
@@ -220,7 +220,7 @@ public class Kurenai extends ShinobiRoles {
             kurenai.sendCustomActionBar(kurenai.owner, "§bTemp restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
         }
         @EventHandler
-        private void onUHCPlayerDie(UHCPlayerKill e){
+        private void onUHCPlayerDie(UHCPlayerKillEvent e){
             if (e.getVictim().getUniqueId().equals(owner) && timeRemaining > 0){
                 e.getVictim().getInventory().clear();
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

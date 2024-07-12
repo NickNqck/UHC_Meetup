@@ -9,14 +9,14 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class UHCPlayerKill extends Event {
+public class UHCPlayerKillEvent extends Event {
 	private static final HandlerList handlers = new HandlerList();
 	@Getter
 	private final Player victim;
 	private final Entity damager;
 	@Getter
 	private final GameState gameState;
-	public UHCPlayerKill(Player player, Entity damager, GameState gameState) {
+	public UHCPlayerKillEvent(Player player, Entity damager, GameState gameState) {
 		this.victim = player;
 		this.damager = damager;
 		this.gameState = gameState;

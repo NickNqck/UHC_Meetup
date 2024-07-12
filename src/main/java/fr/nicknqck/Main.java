@@ -12,6 +12,7 @@ import fr.nicknqck.events.blocks.BrickBlockListener;
 import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.essential.*;
 import fr.nicknqck.items.*;
+import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.aot.builders.titans.Bestial;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
@@ -171,6 +172,7 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemBuilderListener(), this);
+		new EffectsGiver();
 		System.out.println("Ending registering events");
 	}
 	private void registerCommands(GameState gameState) {
