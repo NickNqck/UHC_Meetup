@@ -7,6 +7,8 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.events.custom.DayEvent;
+import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
@@ -224,6 +226,7 @@ public class AdminCommands implements CommandExecutor{
 									Bukkit.broadcastMessage("");
 									Main.getInstance().gameWorld.setTime(13000);
 									gameState.t = gameState.timeday;
+									Bukkit.getServer().getPluginManager().callEvent(new NightEvent(gameState));
 									return true;
 									
 						} else if (args[0].equalsIgnoreCase("jour")) {
@@ -233,6 +236,7 @@ public class AdminCommands implements CommandExecutor{
                             Bukkit.broadcastMessage("");
                             gameState.t = gameState.timeday;
                             Main.getInstance().gameWorld.setTime(0);
+							Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
                             return true;
                         }
 					} else {
