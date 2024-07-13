@@ -107,12 +107,13 @@ public class HubListener implements Listener {
 			b.getBiju().setHote(null);
 			b.getBiju().resetCooldown();
 		}
+		Main.getInstance().gameWorld.setGameRuleValue("naturalRegeneration", "false");
 		BijuListener.getInstance().resetCooldown();
 		Bijus.initBiju(gameState);
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
-		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (gameState.getMdj() != null && gameState.getMdj().equals(MDJ.NS)){
 				if (gameState.getHokage() == null){
 					gameState.setHokage(new Hokage(gameState.getMinTimeSpawnBiju()-10, gameState));

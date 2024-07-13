@@ -559,6 +559,17 @@ public abstract class RoleBase implements Role{
 		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p)).forEach(e -> toReturn.add(e));
 		return toReturn;
 	}
+	public List<Player> getListPlayerFromRole(Class<? extends RoleBase> role) {
+		List<Player> toReturn = new ArrayList<>();
+		for (Player p : gameState.getInGamePlayers()) {
+			if (!gameState.hasRoleNull(p)) {
+				if (gameState.getPlayerRoles().get(p).getClass().equals(role)) {
+					toReturn.add(p);
+				}
+			}
+		}
+		return toReturn;
+	}
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {}
 	public void onBucketFill(PlayerBucketFillEvent e, Material bucket) {}
 	public void onALLPlayerDropItem(PlayerDropItemEvent e, Player dropper, ItemStack item) {}
