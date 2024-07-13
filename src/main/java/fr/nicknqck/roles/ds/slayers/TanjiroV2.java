@@ -41,6 +41,7 @@ public class TanjiroV2 extends SlayerRoles implements Listener {
     private int cdDanse;
     private boolean sentirUse;
     private int cdSentir;
+    private boolean useAssassin;
     public TanjiroV2(Player player) {
         super(player);
         player.spigot().sendMessage(desc());
@@ -88,13 +89,15 @@ public class TanjiroV2 extends SlayerRoles implements Listener {
         texte.addExtra("§7 (1x/12m).\n\n");
 
         TextComponent dsSentir = new TextComponent("§c/ds sentir");
-        dsSentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet de savoir combien il y a de§c démons§7 dans un rayon de§c 30 blocs§7 autours de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
+        dsSentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous permet de savoir combien il y a de§c démons§7 dans un rayon de§c 30 blocs§7 autours de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
         dsSentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir"));
         texte.addExtra(AllDesc.point+"§7Vous avez accès aux commandes ");
         texte.addExtra(dsSentir);
         texte.addExtra("§7 (1x/5m), ");
         TextComponent sentir = new TextComponent("§c/ds §csentir <joueur>");
-        sentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet de savoir si un joueur est un§c démons§7 ou non (§aNezuko§7 est compter comme§c démon§7). (1x/partie)")}));
+        sentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous permet de savoir si un joueur est un§c démons§7 ou non (§aNezuko§7 est compter comme§c démon§7). (1x/partie)")}));
         sentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir "));
         texte.addExtra(sentir);
         texte.addExtra("§7, ");
