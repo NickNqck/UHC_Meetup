@@ -466,7 +466,7 @@ public class GameState{
 			role = new Nezuko(player);
 			break;
 		case Tanjiro:
-			role = new Tanjiro(player);
+			role = new TanjiroV2(player);
 			break;
 		case Kokushibo:
 			role = new Kokushibo(player);
