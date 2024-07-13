@@ -210,7 +210,8 @@ public class GameListener implements Listener {
 			}
 			
 			if (gameState.shrinking) {
-				Border.setActualBorderSize((Border.getActualBorderSize()-Border.getBorderSpeed()*2)*2);
+				Border.setActualBorderSize((Border.getActualBorderSize()-(Border.getBorderSpeed()*2)));
+				System.out.println("BorderSize // "+Border.getActualBorderSize());
 				border.setSize(Math.max(Border.getMinBorderSize(), Border.getActualBorderSize()), 1);
 			}
 			if (gameState.inGameTime == 0) {
