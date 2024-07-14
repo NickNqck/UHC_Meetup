@@ -206,13 +206,9 @@ public class GameListener implements Listener {
 			
 			if (gameState.inGameTime == Border.getTempReduction()) {
 				gameState.shrinking = true;
+				long speed = (long) Border.getBorderSpeed();
+				border.setSize(Border.getMinBorderSize()*2, speed*120);
 				SendToEveryone("§7La bordure commence à bouger !");
-			}
-			
-			if (gameState.shrinking) {
-				Border.setActualBorderSize((Border.getActualBorderSize()-(Border.getBorderSpeed()*2)));
-				System.out.println("BorderSize // "+Border.getActualBorderSize());
-				border.setSize(Math.max(Border.getMinBorderSize(), Border.getActualBorderSize()), 1);
 			}
 			if (gameState.inGameTime == 0) {
 				gameState.nightTime = false;
@@ -259,7 +255,6 @@ public class GameListener implements Listener {
 							}
 						}
 						Bukkit.getPluginManager().callEvent(new NightEvent(gameState));
-				//		detectWin(gameState);
 					}
 				}
 			}
@@ -398,6 +393,7 @@ public class GameListener implements Listener {
 	        SendToEveryone("Résumé de la partie");
 	        SendToEveryone(" ");
 	        if (!gameState.getInGamePlayers().isEmpty()) {
+
 					for (Player p : Bukkit.getOnlinePlayers()) {
 						((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
 						gameState.addInLobbyPlayers(p);

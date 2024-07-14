@@ -7,7 +7,6 @@ import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.StartGameEvent;
-import fr.nicknqck.events.essential.HubInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
@@ -16,6 +15,7 @@ import fr.nicknqck.roles.ns.Hokage;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -41,10 +41,13 @@ public class HubListener implements Listener {
 			return;
 		}
 		gameState.world = Main.getInstance().gameWorld;
+		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
+		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		gameState.setInLobbyPlayers(new ArrayList<>());
 		gameState.igPlayers.addAll(gameState.getInGamePlayers());
-		spawnPlatform(Bukkit.getWorld("world"), Material.AIR);
+		spawnPlatform(Main.getInstance().gameWorld, Material.AIR);
 		gameState.infected = null;
 		gameState.infecteur = null;
 		gameState.Assassin = null;
@@ -223,9 +226,6 @@ public class HubListener implements Listener {
 	@Setter
 	@Getter
 	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
-
-	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
-	public void delInAvailableRoles(Roles role) {availableRoles.remove(role);}
 	public final void StartGame(final Player player) {
 		gameState.updateGameCanLaunch();
 		if (player.isOp() || gameState.getHost().contains(player.getUniqueId()) && gameState.gameCanLaunch) {
