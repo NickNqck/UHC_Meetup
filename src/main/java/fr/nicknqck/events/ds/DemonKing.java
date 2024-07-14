@@ -1,27 +1,25 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.events.EventBase;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.events.EventBase;
-import fr.nicknqck.events.Events;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
-import fr.nicknqck.utils.StringUtils;
 
 public class DemonKing extends EventBase{
 
@@ -36,17 +34,17 @@ public class DemonKing extends EventBase{
 							DemonsSlayersRoles role = (DemonsSlayersRoles) roleBase;
 							if (role instanceof Tanjiro) {
 								setActivated(true);
-								role.setTeam(TeamList.Demon);
+								DemonKingTanjiroRole newRole = new DemonKingTanjiroRole(p);
 								Main.getInstance().getGetterList().getDemonList(p);
-								p.getInventory().remove(Items.getDSTanjiroDance());
-								role.setLameIncassable(p, true);
-								role.giveItem(p, true, role.getItems());
 								if (role.getLames().equals(Lames.Coeur)) {
-									role.setMaxHealth(24.0);
+									newRole.setMaxHealth(24.0);
 								}else {
-									role.setMaxHealth(20.0);
+									newRole.setMaxHealth(20.0);
 								}
-								role.owner.sendMessage("Votre arrivé dans le camp des§c "+TeamList.Demon.name()+"s§f restera secrète jusqu'à "+StringUtils.secondsTowardsBeautiful(gameTime+60));
+								newRole.setLames(role.getLames());
+								gameState.getPlayerRoles().remove(p, role);
+								gameState.getPlayerRoles().put(p, newRole);
+								p.sendMessage("Votre arrivé dans le camp des§c "+TeamList.Demon.name()+"s§f restera secrète jusqu'à "+StringUtils.secondsTowardsBeautiful(gameTime+60));
 								Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 									Bukkit.broadcastMessage(AllDesc.bar+"\n§rL'évènement aléatoire "+Events.DemonKingTanjiro.getName()+" viens de ce déclancher, le rôle§c Tanjiro§f est maintenant dans le camp des Démons !\n"+AllDesc.bar);
 									gameState.demonKingTanjiro = true;
