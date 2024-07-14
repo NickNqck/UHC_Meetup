@@ -173,6 +173,25 @@ public class TanjiroV2 extends SlayerRoles implements Listener {
 
     @Override
     public void onDSCommandSend(String[] args, GameState gameState) {
+        if (args[0].equalsIgnoreCase("assassin")) {
+            if (args.length == 2) {
+                Player owner = Bukkit.getPlayer(getPlayer());
+                if (useAssassin){
+                    owner.sendMessage("§cVous avez atteint le nombre maximum d'utilisation de ce pouvoir.");
+                    return;
+                }
+                if (gameState.Assassin != null) {
+                    Player target = Bukkit.getPlayer(getPlayer());
+                    if (target != null) {
+                        boolean assa = target.getUniqueId().equals(gameState.Assassin.getUniqueId());
+                        owner.sendMessage("§c"+target.getName()+"§f "+(assa ? "§7est l'§4Assassin" : "§7n'est§c pas§7 l'§4Assassin"));
+                        useAssassin = true;
+                    }
+                } else {
+                    owner.sendMessage("§cL'§4Assassin§c n'a pas encore été désigner ou n'est pas présent dans la partie.");
+                }
+            }
+        }
         if (args[0].equalsIgnoreCase("sentir")) {
             Player owner = Bukkit.getPlayer(getPlayer());
             if (args.length == 2) {
