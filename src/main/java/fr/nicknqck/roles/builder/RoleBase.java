@@ -115,6 +115,7 @@ public abstract class RoleBase implements Role{
 				}
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+		setTeam(getOriginTeam());
 	}
 
 	@Override

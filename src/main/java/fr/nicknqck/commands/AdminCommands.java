@@ -604,6 +604,34 @@ public class AdminCommands implements CommandExecutor{
 				}
 			}//args.length == 2
 			if (args.length == 3) {
+				if (args[0].equalsIgnoreCase("time")) {
+					if (args[1].equalsIgnoreCase("set")) {
+						Integer anint = Integer.parseInt(args[2]);
+						System.out.println(anint);
+						gameState.setInGameTime(anint);
+					}
+				}
+				if (args[0].equalsIgnoreCase("deadrole")) {
+					if (args[1].equalsIgnoreCase("add")) {
+						for (Roles roles : GameState.Roles.values()) {
+							if (roles.name().equalsIgnoreCase(args[2])) {
+								if (!gameState.getAttributedRole().contains(roles)) {
+									gameState.getAttributedRole().add(roles);
+								}
+								gameState.getDeadRoles().add(roles);
+								break;
+							}
+						}
+					} else if (args[1].equalsIgnoreCase("del")) {
+						for (Roles roles : GameState.Roles.values()) {
+							if (roles.name().equalsIgnoreCase(args[2])) {
+								gameState.getDeadRoles().remove(roles);
+								break;
+							}
+						}
+					}
+					return true;
+				}
 				if (args[0].equalsIgnoreCase("camp")) {
 					Player p = Bukkit.getPlayer(args[1]);
 					if (p != null) {

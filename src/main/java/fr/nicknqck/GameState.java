@@ -3,7 +3,6 @@ package fr.nicknqck;
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.RoleGiveEvent;
-import fr.nicknqck.events.ds.DemonKingTanjiroRole;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
@@ -299,6 +298,7 @@ public class GameState{
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
 	public List<Player> igPlayers = new ArrayList<>();
+	@Setter
 	int inGameTime = 0;
 
 	@Getter
@@ -1129,18 +1129,20 @@ public class GameState{
 				if (hashMap.get(t) != null){
 					size = hashMap.get(t).size();
 				}
-                tr.append("\n§r(").append(t.getColor()).append(size).append("§f)").append(t.getColor()).append(StringUtils.replaceUnderscoreWithSpace(t.name())).append("(s): \n");
-				int i = 0;
-				if (hashMap.containsKey(t) && !hashMap.get(t).isEmpty()) {
-					for (Roles roles : hashMap.get(t)){
-						i++;
-						if (!appenned.contains(roles)) {
-							if (i != hashMap.get(t).size()){
-								tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
-							} else {
-								tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+				if (size != 0) {
+					tr.append("\n§r(").append(t.getColor()).append(size).append("§f)").append(t.getColor()).append(StringUtils.replaceUnderscoreWithSpace(t.name())).append("(s): \n");
+					int i = 0;
+					if (hashMap.containsKey(t) && !hashMap.get(t).isEmpty()) {
+						for (Roles roles : hashMap.get(t)){
+							i++;
+							if (!appenned.contains(roles)) {
+								if (i != hashMap.get(t).size()){
+									tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
+								} else {
+									tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+								}
+								appenned.add(roles);
 							}
-							appenned.add(roles);
 						}
 					}
 				}

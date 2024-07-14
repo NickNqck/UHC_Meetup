@@ -569,9 +569,6 @@ public class GameListener implements Listener {
 			if (gameState.getPlayerRoles().get(player).onPreDie(damager, gameState) || gameState.getPlayerRoles().get(player).getGamePlayer().isCanRevive()) {
 				cantDie = true;
 			}
-			if (!cantDie){
-				gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
-			}
 			if (gameState.getPlayerRoles().get(player).getItems() != null) {
 				for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
 					if (player.getInventory().contains(item)) {
@@ -583,7 +580,8 @@ public class GameListener implements Listener {
 		if (cantDie) {
 			return;
 		}
-		for (ItemStack item : player.getInventory().getContents()){
+        gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
+        for (ItemStack item : player.getInventory().getContents()){
 			if (item != null){
 				if (item.getType() != Material.AIR){
 					if (item.getAmount() <= 64){
