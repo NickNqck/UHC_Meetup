@@ -19,6 +19,26 @@ import java.util.UUID;
 public class EffectsGiver implements Listener {
     public EffectsGiver() {
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
+        new BukkitRunnable() {
+            private final GameState gameState = GameState.getInstance();
+            @Override
+            public void run() {
+                if (gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    for (Player player : gameState.getInGamePlayers()) {
+                        if (!gameState.hasRoleNull(player)) {
+                            RoleBase role = gameState.getPlayerRoles().get(player);
+                            if (!role.getEffects().isEmpty()) {
+                                for (PotionEffect effect : role.getEffects().keySet()) {
+                                    if (role.getEffects().get(effect).equals(EffectWhen.PERMANENT)) {
+                                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(effect, false));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 100);
     }
     @EventHandler
     private void onDay(DayEvent event) {
