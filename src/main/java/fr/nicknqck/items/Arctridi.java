@@ -99,6 +99,7 @@ public class Arctridi implements Listener{
     }
     @EventHandler
     private void onKill(UHCPlayerKillEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getRole() instanceof AotRoles){
             AotRoles role = (AotRoles) event.getGamePlayerKiller().getRole();
             if (role.gazAmount < 100.0) {
