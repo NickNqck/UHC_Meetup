@@ -1,29 +1,27 @@
 package fr.nicknqck.roles.ds.slayers;
 
-import java.text.DecimalFormat;
-
-import fr.nicknqck.roles.ds.builders.Lames;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.utils.WorldUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.text.DecimalFormat;
 
 public class Tanjiro extends SlayerRoles {
 int itemcooldown = 0;
@@ -239,7 +237,7 @@ boolean dance = false;
 		public boolean a = false;
 		public ItemStack[] getItems() {
 			return new ItemStack[] {
-					BetterItem.of(new ItemBuilder(Material.NETHER_STAR).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("§f§lBoule d'énergie").setLore("§7» Crée une explosion sur le prochaine adversaire que vous taperez","§7"+StringID).toItemStack(), event -> {
+					BetterItem.of(new ItemBuilder(Material.NETHER_STAR).hideAllAttributes().setName("§f§lBoule d'énergie").setLore("§7» Crée une explosion sur le prochaine adversaire que vous taperez","§7"+StringID).toItemStack(), event -> {
 						if (cd <= 0) {
 							a = true;
 							cd = 120;
@@ -259,6 +257,6 @@ boolean dance = false;
 
 	@Override
 	public String getName() {
-		return "§aTanjiro";
+		return "Tanjiro";
 	}
 }
