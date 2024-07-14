@@ -3,6 +3,7 @@ package fr.nicknqck;
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.RoleGiveEvent;
+import fr.nicknqck.events.ds.DemonKingTanjiroRole;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
@@ -466,7 +467,7 @@ public class GameState{
 			role = new Nezuko(player);
 			break;
 		case Tanjiro:
-			role = new TanjiroV2(player);
+			role = new Tanjiro(player);
 			break;
 		case Kokushibo:
 			role = new Kokushibo(player);
@@ -824,7 +825,7 @@ public class GameState{
        getInSpecPlayers().remove(player);
 		if (role.getRoles() != Roles.Slayer) {
 			if (!FFA.getFFA()) {
-				role.setTeam(roleType.getTeam());
+				role.setTeam(role.getOriginTeam());
 			} else {
 				role.setTeam(TeamList.Solo);
 			}
