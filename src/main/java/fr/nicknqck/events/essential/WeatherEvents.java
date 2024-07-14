@@ -9,17 +9,6 @@ public class WeatherEvents implements Listener {
 
     @EventHandler
     private void onWeatherChange(WeatherChangeEvent e){
-        if (e.getWorld().isThundering()){
-    //        e.getWorld().setThundering(false);
-            if (Main.isDebug()){
-                System.out.println("thunder storm");
-            }
-        }
-        if (e.getWorld().hasStorm()){
-        //    e.getWorld().setStorm(false);
-            if (Main.isDebug()){
-                System.out.println("Storming");
-            }
-        }
+        e.setCancelled(true);
     }
 }
