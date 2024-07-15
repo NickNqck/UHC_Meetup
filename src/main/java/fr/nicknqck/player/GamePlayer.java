@@ -23,6 +23,7 @@ public class GamePlayer {
 	public GamePlayer(UUID gamePlayer){
 		this.uuid = gamePlayer;
 		setAlive(true);
+		setCanRevive(false);
 	}
 	public static GamePlayer get(UUID uuid){
 		return GameState.getInstance().getPlayerRoles().get(Bukkit.getPlayer(uuid)).getGamePlayer();

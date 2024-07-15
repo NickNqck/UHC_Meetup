@@ -37,7 +37,6 @@ public class DemonKing extends EventBase{
 								gameState.delInPlayerRoles(p);
 								gameState.addInPlayerRoles(p, new DemonKingTanjiroRole(p));
 								RoleBase newRole = gameState.getPlayerRoles().get(p);
-								System.out.println(newRole);
 								Main.getInstance().getGetterList().getDemonList(p);
 								if (role.getLames().equals(Lames.Coeur)) {
 									newRole.setMaxHealth(24.0);
@@ -46,10 +45,9 @@ public class DemonKing extends EventBase{
 								}
 								if (newRole instanceof DemonsSlayersRoles){
 									((DemonsSlayersRoles) newRole).setLames(role.getLames());
-									System.out.println(newRole.getClass());
 								}
-								System.out.println(newRole.getEffects());
-								System.out.println(gameState.getPlayerRoles().get(p));
+								newRole.setGamePlayer(role.getGamePlayer());
+								newRole.getGamePlayer().setRole(newRole);
 								p.sendMessage("Votre arrivé dans le camp des§c "+TeamList.Demon.name()+"s§f restera secrète jusqu'à "+StringUtils.secondsTowardsBeautiful(gameTime+60));
 								Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 									Bukkit.broadcastMessage(AllDesc.bar+"\n§rL'évènement aléatoire "+Events.DemonKingTanjiro.getName()+" viens de ce déclancher, le rôle§c Tanjiro§f est maintenant dans le camp des Démons !\n"+AllDesc.bar);
