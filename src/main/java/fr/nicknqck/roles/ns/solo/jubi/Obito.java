@@ -41,6 +41,7 @@ import java.util.List;
 public class Obito extends NSRoles {
 	public List<Player> Tsukuyomi = new ArrayList<>();
 	private fr.nicknqck.roles.ns.power.Izanami izanami;
+	private int cdNinjutsu = 0;
 	public Obito(Player player) {
 		super(player);
 		setChakraType(Chakras.KATON);
@@ -57,40 +58,12 @@ public class Obito extends NSRoles {
 	}
 	@Override
 	public String getName() {
-		return "§dObito";
+		return "Obito";
 	}
 
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Jubi;
-	}
-
-	private static class ObitoRunnable extends BukkitRunnable{
-		private final Obito obito;
-		ObitoRunnable(Obito owner){
-			this.obito = owner;
-		}
-		@SuppressWarnings("deprecation")
-		@Override
-		public void run() {
-			if (GameState.getInstance().getServerState() != ServerStates.InGame) {
-				cancel();
-			}
-			if (obito.izanami.isAllTrue()) {
-				Player owner = Bukkit.getPlayer(obito.izanami.getUser());
-				Player toIzanami = Bukkit.getPlayer(obito.izanami.getTarget());
-				if (owner != null && toIzanami != null) {
-					owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
-					obito.getPlayerRoles(toIzanami).setOldTeamList(obito.getPlayerRoles(toIzanami).getOriginTeam());
-					obito.getPlayerRoles(toIzanami).setTeam(obito.getPlayerRoles(owner).getOriginTeam());
-					obito.toIzanami.resetTitle();
-					obito.toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+obito.getTeamColor(owner)+obito.getOriginTeam().name());
-					obito.toIzanami.sendMessage("§7Voici l'identité de votre coéquipier§e Sasuke: "+(obito.getPlayerFromRole(Roles.Obito) != null ? obito.getPlayerFromRole(Roles.Obito).getName() : "§cMort"));
-					obito.hasIzanami = true;
-					cancel();
-				}
-			}
-		}
 	}
      @Override
 	public String[] Desc() {
@@ -702,5 +675,25 @@ public class Obito extends NSRoles {
 		}
 		return false;
 	}
-	private int cdNinjutsu = 0;
+	private static class ObitoRunnable extends BukkitRunnable{
+		private final Obito obito;
+		ObitoRunnable(Obito owner){
+			this.obito = owner;
+		}
+		@Override
+		public void run() {
+			if (GameState.getInstance().getServerState() != ServerStates.InGame) {
+				cancel();
+			}
+			if (obito.izanami.isAllTrue()) {
+				Player toIzanami = Bukkit.getPlayer(obito.izanami.getTarget());
+				if (toIzanami != null) {
+					obito.hasIzanami = obito.izanami.onSuccessfullInfection(obito, obito.getPlayerRoles(toIzanami));
+					if (obito.hasIzanami){
+						cancel();
+					}
+				}
+			}
+		}
+	}
 }

@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -38,6 +41,7 @@ public class Izanami implements Listener{
 	@Getter
 	private final UUID user;
 	private int taperCoupRemaining = 15;
+	@Getter
 	private String color;
 	private int FraperCoupRemaining = 15;
 	private final HashMap<MissionUser, Boolean> Missions = new HashMap<>();
@@ -274,6 +278,7 @@ public class Izanami implements Listener{
 		FraperCoupRemaining = 15;
 		taperCoupRemaining = 15;
 		this.color = null;
+		HandlerList.unregisterAll(this);
 	}
 	@EventHandler
 	private void onKill(UHCPlayerKillEvent e) {
@@ -342,5 +347,21 @@ public class Izanami implements Listener{
 				}
 			}
 		}
+	}
+	@SuppressWarnings("deprecation")
+	public boolean onSuccessfullInfection(NSRoles infecteur, RoleBase infecter) {
+		Player owner = Bukkit.getPlayer(infecter.getPlayer());
+		Player toIzanami = Bukkit.getPlayer(infecter.getPlayer());
+		if (owner != null && toIzanami != null) {
+			owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
+			infecteur.getPlayerRoles(toIzanami).setOldTeamList(infecteur.getPlayerRoles(toIzanami).getOriginTeam());
+			infecteur.getPlayerRoles(toIzanami).setTeam(infecteur.getPlayerRoles(owner).getOriginTeam());
+			toIzanami.resetTitle();
+			toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+infecteur.getTeamColor(owner)+ infecteur.getOriginTeam().name());
+			toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+getColor()+infecteur.getName()+": "+(infecteur.getPlayerFromRole(infecteur.getRoles()) != null ? infecteur.getPlayerFromRole(infecteur.getRoles()).getName() : "§cMort"));
+			infecteur.getPlayerRoles(toIzanami).setDeathString(infecteur.getPlayerRoles(toIzanami).getDeathString()+"§7 ("+this.getColor()+"Izanami§7)");
+			return true;
+		}
+		return false;
 	}
 }

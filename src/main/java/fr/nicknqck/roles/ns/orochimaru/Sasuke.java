@@ -262,7 +262,7 @@ public class Sasuke extends OrochimaruRoles {
 							izanami.start(getTeamColor());
 							clicker.sendMessage(izanami.getStringsMission());
 							clicker.closeInventory();
-							new SasukeRunnable(izanami).runTaskTimer(Main.getInstance(), 0, 20);
+							new SasukeRunnable(this).runTaskTimer(Main.getInstance(), 0, 20);
                         }
 					}
 				}
@@ -574,35 +574,31 @@ public class Sasuke extends OrochimaruRoles {
 		return "§5Sasuke";
 	}
 
-	private class SasukeRunnable extends BukkitRunnable {
-		private Izanami izanami;
-		public SasukeRunnable(Izanami izanami) {
-			this.izanami = izanami;
+	private static class SasukeRunnable extends BukkitRunnable {
+		private final Sasuke sasuke;
+		public SasukeRunnable(Sasuke sasuke) {
+			this.sasuke = sasuke;
 		}
 		
-		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			if (gameState.getServerState() != ServerStates.InGame) {
+			if (sasuke.getGameState().getServerState() != ServerStates.InGame) {
 				cancel();
-				izanami = null;
+				sasuke.izanami = null;
 				return;
 			}
-			if (izanami == null){
+			if (sasuke.izanami == null){
 				return;
 			}
-			if (izanami.isAllTrue()) {
-				Player owner = Bukkit.getPlayer(izanami.getUser());
-				Player toIzanami = Bukkit.getPlayer(izanami.getTarget());
+			if (sasuke.izanami.isAllTrue()) {
+				Player owner = Bukkit.getPlayer(sasuke.izanami.getUser());
+				Player toIzanami = Bukkit.getPlayer(sasuke.izanami.getTarget());
 				if (owner != null && toIzanami != null) {
-					owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
-					getPlayerRoles(toIzanami).setOldTeamList(getPlayerRoles(toIzanami).getOriginTeam());
-					getPlayerRoles(toIzanami).setTeam(getPlayerRoles(owner).getOriginTeam());
-					toIzanami.resetTitle();
-					toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+getTeamColor(owner)+ getOriginTeam().name());
-					toIzanami.sendMessage("§7Voici l'identité de votre coéquipier§e Sasuke: "+(getPlayerFromRole(Roles.Sasuke) != null ? getPlayerFromRole(Roles.Sasuke).getName() : "§cMort"));
-					infectFinish = true;
-					cancel();
+					boolean reussite = sasuke.izanami.onSuccessfullInfection(sasuke, sasuke.getPlayerRoles(toIzanami));
+					if (reussite) {
+						sasuke.infectFinish = true;
+						cancel();
+					}
 				}
 			}
 		}

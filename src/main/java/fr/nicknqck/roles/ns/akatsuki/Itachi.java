@@ -218,7 +218,7 @@ public class Itachi extends AkatsukiRoles {
 							izanami.start("§c");
 							clicker.sendMessage(izanami.getStringsMission());
 							clicker.closeInventory();
-							new ItachiRunnable().runTaskTimer(Main.getInstance(), 0, 20);
+							new ItachiRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                         }
 					}
 				}
@@ -450,30 +450,28 @@ public class Itachi extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cItachi";
+		return "Itachi";
 	}
 
-	private class ItachiRunnable extends BukkitRunnable {
+	private static class ItachiRunnable extends BukkitRunnable {
+		private final Itachi itachi;
+		ItachiRunnable(Itachi itachi){
+			this.itachi = itachi;
+		}
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			if (gameState.getServerState() != ServerStates.InGame || izanami == null) {
+			if (itachi.gameState.getServerState() != ServerStates.InGame || itachi.izanami == null) {
 				cancel();
 				return;
 			}
-			if (izanami.isAllTrue()) {
-				Player owner = Bukkit.getPlayer(izanami.getUser());
-				Player toIzanami = Bukkit.getPlayer(izanami.getTarget());
-				if (owner != null && toIzanami != null) {
-					owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
-					getPlayerRoles(toIzanami).setOldTeamList(getPlayerRoles(toIzanami).getOriginTeam());
-					getPlayerRoles(toIzanami).setTeam(getPlayerRoles(owner).getOriginTeam());
-					toIzanami.resetTitle();
-					toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+getTeamColor(owner)+ getOriginTeam().name());
-					toIzanami.sendMessage("§7Voici l'identité de votre coéquipier§c Itachi: "+(getPlayerFromRole(Roles.Itachi) != null ? getPlayerFromRole(Roles.Itachi).getName() : "§cMort"));
-					infectFinish = true;
-					cancel();
+			if (itachi.izanami.isAllTrue()) {
+				Player toIzanami = Bukkit.getPlayer(itachi.izanami.getTarget());
+				if (toIzanami != null) {
+					itachi.infectFinish = itachi.izanami.onSuccessfullInfection(itachi, itachi.getPlayerRoles(toIzanami));
+					if (itachi.infectFinish){
+						cancel();
+					}
 				}
 			}
 		}
