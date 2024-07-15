@@ -526,8 +526,8 @@ public class GameListener implements Listener {
 	public static Location generateRandomLocation(final GameState gameState,final World world) {
 	    Location loc;
 	    do {
-	        Float x = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
-	        Float z = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
+	        float x = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
+	        float z = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
 	        loc = world.getHighestBlockAt(new Location(world, x - Border.getActualBorderSize() / 2, 0, z - Border.getActualBorderSize() / 2)).getLocation();
 	        loc.setY(loc.getY() + 1);
 	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
@@ -542,7 +542,7 @@ public class GameListener implements Listener {
 				if (world != null && victim.getWorld().equals(world)){
 					SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? role.getTeam().getColor()+role.getName() : "§k"+victim.getDisplayName()));
 				} else {
-					SendToEveryone("§7Son rôle était: "+role.getTeam().getColor()+role.getName());
+					SendToEveryone("§7Son rôle était: "+role.getTeam().getColor()+role.getName()+role.getDeathString());
 				}
 			} else {
 				SendToEveryone(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");
