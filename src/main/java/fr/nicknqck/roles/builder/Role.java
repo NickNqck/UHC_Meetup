@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Map;
@@ -15,4 +16,5 @@ public interface Role {
     TeamList getTeam();
     Map<PotionEffect, EffectWhen> getEffects();
     void resetCooldown();
+    TextComponent getComponent();
 }

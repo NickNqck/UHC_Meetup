@@ -77,7 +77,7 @@ public class GameState{
 	private Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
 	@Setter
 	@Getter
-	int groupe = 5;
+	private int groupe = 5;
 	@Getter
 	@Setter
 	private int minTimeSpawnBiju = 90;
@@ -321,7 +321,6 @@ public class GameState{
 	public int xpor = 0;
 	public int xpcharbon = 0;
 	public int xpdiams =0;
-	public List<Player> aroundTanjiro = new ArrayList<>();
 	public Player infected = null;
 	public int timewaitingbeinfected = 60;
 	public Player infecteur = null;

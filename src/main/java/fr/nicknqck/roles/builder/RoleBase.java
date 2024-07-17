@@ -16,6 +16,7 @@ import fr.nicknqck.utils.raytrace.BoundingBox;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;
 import lombok.Setter;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
@@ -713,5 +714,10 @@ public abstract class RoleBase implements Role{
 
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		return false;
+	}
+
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
 	}
 }

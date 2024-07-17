@@ -1,262 +1,309 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.utils.WorldUtils;
-import fr.nicknqck.utils.betteritem.BetterItem;
+import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.particles.MathUtil;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DecimalFormat;
+import java.util.List;
+import java.util.UUID;
 
-public class Tanjiro extends SlayerRoles {
-int itemcooldown = 0;
-boolean killassa = false;
-boolean dance = false;
-	public Tanjiro(Player player) {
-		super(player);
-		for (String desc : AllDesc.Tanjiro) owner.sendMessage(desc);
-		this.setCanuseblade(true);
-		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
-	}
+public class Tanjiro extends SlayerRoles implements Listener {
+    private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
+    private int cdDanse, cdSentir;
+    private boolean sentirUse, useAssassin;
+    public Tanjiro(Player player) {
+        super(player);
+        player.spigot().sendMessage(getComponent());
+        getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
+        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+        new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        giveItem(player, false, getItems());
+        giveItem(player, false, Items.getLamedenichirin());
+        setCanuseblade(true);
+        Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
+    }
 
     @Override
-	public Roles getRoles() {
-		return Roles.Tanjiro;
-	}
-	public int actualuse = 0;
-	@Override
-	public void RoleGiven(GameState gameState) {
-		gameState.aroundTanjiro.clear();
-		super.RoleGiven(gameState);
-	}
-	@Override
-	public String[] Desc() {return AllDesc.Tanjiro;}
-	@Override
-	public void GiveItems() {
-			owner.getInventory().addItem(Items.getDSTanjiroDance());
-			owner.getInventory().addItem(Items.getLamedenichirin());
-	}
-	@Override
-	public void Update(GameState gameState) {
-		if (!gameState.demonKingTanjiro) {
-			if (killassa) {
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-			}
-			if (!gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.SPEED, 80, 1, true);
-			}
-			if (itemcooldown >= 1) {
-				itemcooldown--;
-			}
-			if(itemcooldown == 60*7) {
-				dance = false;
-				owner.sendMessage("Vous ne mettez plus en feu les joueurs que vous tapez");
-			}
-			if (itemcooldown >= 60*5) {
-				MathUtil.sendCircleParticle(EnumParticle.FLAME, owner.getLocation(), 1, 30);
-				int newcd = itemcooldown-(60*5);
-				sendCustomActionBar(owner, aqua+"Temp restant de§6§l Dance du dieu du Feu§r: "+cd(newcd));
-			}
-			if (itemcooldown == 60*5) {
-				owner.sendMessage("Votre "+ChatColor.GOLD+"Dance du Dieu du Feu"+ChatColor.WHITE+" a été désactiver");
-				if (!killassa) {
-					setMaxHealth(owner.getMaxHealth() - 4.0);
-					owner.sendMessage("Vous subissez les contre coup de votre "+ChatColor.GOLD+"Dance du Dieu du Feu "+ChatColor.WHITE+"vous vennez de perdre "+ChatColor.RED+"2"+AllDesc.coeur+"permanent");
-				}else {
-					setMaxHealth(owner.getMaxHealth() - 2.0);
-					owner.sendMessage("Vous subissez les contre coup de votre "+ChatColor.GOLD+"Dance du Dieu du Feu "+ChatColor.WHITE+"vous vennez de perdre "+ChatColor.RED+"1"+AllDesc.coeur+" permanent");
-				}
-			}
-			for (Player p : gameState.getInGamePlayers()) {
-				if (gameState.getPlayerRoles().containsKey(p)) {
-					if (getPlayerRoles(p) instanceof Nezuko || getPlayerRoles(p).getOldTeam() == TeamList.Demon) {
-						if (p.getWorld().equals(owner.getWorld())) {
-							if (p.getLocation().distance(owner.getLocation()) <= 30) {
-								if (!gameState.aroundTanjiro.contains(p)) {
-									gameState.aroundTanjiro.add(p);
-								}
-							} else {
-                                gameState.aroundTanjiro.remove(p);
-							}	
-						} else {
-                            gameState.aroundTanjiro.remove(p);
-						}	
-					}
-				}				
-			}
-			if (owner.getItemInHand().isSimilar(Items.getDSTanjiroDance())) {
-				sendActionBarCooldown(owner, itemcooldown);}	
-		} else {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-			givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE,1, false);
-			setNoFall(true);
-			if (cd >= 1) {
-				cd-=1;
-			}else if (cd == 0) {
-				owner.sendMessage("§7§lBoule d'énergie§7 est à nouveau§l Utilisable");
-				cd--;
-			}
-		} 
-	}
-	@Override
-	public void onDSCommandSend(String[] args, GameState gameState) {
-		if (args[0].equalsIgnoreCase("sEnTir")) {
-			if (actualuse < 3) {
-				if (args.length == 2) {
-					Player target = Bukkit.getPlayer(args[1]);
-					if (target == null) {
-						owner.sendMessage("§cVeuiller ciblé un joueur éxistant !");
-					} else {
-						if (!gameState.hasRoleNull(target)) {
-							actualuse++;
-							if (getPlayerRoles(target).getOldTeam() == TeamList.Demon || getPlayerRoles(target) instanceof Nezuko) {
-								owner.sendMessage("§7§l"+target.getName()+"§7 sens le§c§l §nDémon");
-							} else {
-								owner.sendMessage("§7§l"+target.getName()+"§7 ne sens pas spécialement le§c Démon");
-							}
-						}
-					}
-				} else {
-					if (gameState.aroundTanjiro.isEmpty()) {
-						owner.sendMessage("§cIl n'y à aucun démon autours de vous");
-						actualuse++;
-						owner.sendMessage("Il ne vous reste que "+(3 - actualuse)+" utilisation du§6 /ds sentir");
-						} else {
-							actualuse++;
-							int size = gameState.aroundTanjiro.size();
-							gameState.aroundTanjiro.forEach(e -> owner.sendMessage("Il y à§c "+size+" §r de démon dans les 30blocs autours de vous (Nezuko est peut-être compter dedans)"));
-							owner.sendMessage("Il ne vous reste que "+(3 - actualuse)+" utilisation du§6 /ds sentir");
-						}
-				}
-			} else {
-			owner.sendMessage("Vous ne pouvez plus sniffer les joueurs autours de vous");
-			}
-		}
-		}
-	@Override
-	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (!gameState.demonKingTanjiro) {
-			if (killer == owner) {
-				if (victim != owner){
-					if (gameState.getInGamePlayers().contains(victim)) {
-						if (gameState.getPlayerRoles().containsKey(victim)) {
-							RoleBase role = gameState.getPlayerRoles().get(victim);
-							if (gameState.Assassin != null) {
-								if (gameState.Assassin.equals(role.owner)) {
-									setForce(20);
-									killassa = true;
-									owner.sendMessage("§7Vous venez de venger votre famille en tuant§c "+role.owner.getName()+"§7, ce qui vous offre l'effet§c Force 1§7 permanent, de plus");
-									givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 800, 1, true);
-								}
-							}
-						}
-					}
-				}
-			}	
-		}		
-			super.PlayerKilled(killer, victim, gameState);
-		}
-		boolean giveresi = false;
-	@Override
-		public boolean ItemUse(ItemStack item, GameState gameState) {
-			if (item.isSimilar(Items.getDSTanjiroDance())) {
-				if (itemcooldown <= 0) {
-					MathUtil.sendCircleParticle(EnumParticle.FLAME, owner.getLocation(), 1, 15);
-					owner.sendMessage(ChatColor.WHITE+"Vous venez d'activer votre: "+ChatColor.GOLD+"Dance du Dieu du Feu");
-					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
-					givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 20*60*3, 1, true);
-					dance = true;
-					if (!giveresi) {
-						giveresi = true;
-						addresi(20);
-					}
-					itemcooldown = 60*8;
-					for (Player p : gameState.getInGamePlayers()) {
-						if (gameState.getPlayerRoles().containsKey(p)) {
-							if (gameState.getPlayerRoles().get(p) instanceof Nezuko) {
-								gameState.getPlayerRoles().get(p).owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*3, 1, false, false));
-								gameState.getPlayerRoles().get(p).owner.sendMessage("Votre frère§a Tanjiro§r (§a"+owner.getName()+"§r) à activer sa§6 Danse du Dieu du Feu§r");
-								DecimalFormat df = new DecimalFormat("0");
-								gameState.getPlayerRoles().get(p).owner.sendMessage("Voici les coordonnées de votre frère: x:"+df.format(owner.getLocation().getX())+" y:"+df.format(owner.getLocation().getY())+" z:"+df.format(owner.getLocation().getZ()));
-							}
-						}
-					}
-				} else {
-					sendCooldown(owner, itemcooldown);
-				}
-			}
-			return super.ItemUse(item, gameState);
-		}
-	   	@Override
-		public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {
-		if (item.getType() != Material.DIAMOND_SWORD)return;
-		if (dance) {
-			if (victim != owner) {
-			   if (victim != null) {
-			      victim.setFireTicks(200);
-			   }
-			}
-			
-		}
-		if (gameState.demonKingTanjiro) {
-			if (a) {
-                if (victim != null) {
-                    WorldUtils.createBeautyExplosion(victim.getLocation(), 2);
+    public String getName() {
+        return "Tanjiro";
+    }
+
+    @Override
+    public GameState.Roles getRoles() {
+        return GameState.Roles.Tanjiro;
+    }
+
+    @Override
+    public void resetCooldown(){
+        cdDanse = 0;
+        cdSentir = 0;
+    }
+
+    @Override
+    public String[] Desc() {
+        return new String[] {
+
+        };
+    }
+    @Override
+    public TextComponent getComponent() {
+        TextComponent texte = new TextComponent(AllDesc.bar);
+        texte.addExtra("\n");
+        texte.addExtra("§7Role: §aTanjiro\n");
+        texte.addExtra("§7Votre objectif est de gagner avec le camp: §aSlayers\n");
+
+        texte.addExtra("\n"+AllDesc.point+"§7Vous possédez l'effet§c Speed I§7 le§c jour§7\n\n");
+        texte.addExtra(AllDesc.point+"§7Vous possédez l'item");
+        texte.addExtra(getDanseText());
+        texte.addExtra("§7 (1x/12m).\n\n");
+
+        TextComponent dsSentir = new TextComponent("§c/ds sentir");
+        dsSentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous permet de savoir combien il y a de§c démon§7 dans un rayon de§c 30 blocs§7 autours de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
+        dsSentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir"));
+        texte.addExtra(AllDesc.point+"§7Vous avez accès aux commandes ");
+        texte.addExtra(dsSentir);
+        texte.addExtra("§7 (1x/5m), ");
+        texte.addExtra(getSentir());
+        texte.addExtra("§7, (1x/5m)");
+        texte.addExtra(getAssassin());
+        texte.addExtra("§7, (1x/partie)\n\n");
+        texte.addExtra(getKillAssassin());
+        return texte;
+    }
+    private TextComponent getSentir() {
+        TextComponent sentir = new TextComponent("§c/ds §csentir <joueur>");
+        sentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous permet de savoir si un joueur est un§c démons§7 ou non (§aNezuko§7 est compter comme§c démon§7). (1x/partie)")}));
+        sentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir "));
+        return sentir;
+    }
+    private TextComponent getAssassin() {
+        TextComponent assassin = new TextComponent("§c/ds assassin <joueur>");
+        assassin.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous permet de savoir si un joueur est l'§4Assassin§7 ou non, " +
+                "\n§7S'il l'est vous obtiendrez un §ctraqueur§7 vers lui pendant§c 5 minutes§7, " +
+                "\n§7Sinon, vous perdrez§c 2"+AllDesc.coeur+"§7 permanent. (1x/partie)")}));
+        assassin.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds assassin "));
+        return assassin;
+    }
+    private TextComponent getDanseText() {
+        TextComponent danseItem = new TextComponent(" §7\"§6Danse §6du dieu §6du Feu§7\"");
+        danseItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Pendant§c 5 minutes§7 vous obtiendrez les effets§c résistance 1§7 et§c résistance au feu 1§7, également,\n" +
+                "§7pendant§c 1 minutes§7 vos coups mettront en §cfeu§7 les joueurs frappés, de plus,\n§7" +
+                "le joueur possédant le rôle de§a Nezuko§7 obtiendra l'effet§c speed 2§7 pendant§c 5 minutes§7,\n§7" +
+                " après ce temp là vous perdrez§c 2"+AllDesc.coeur+"§c permanent§7.§7 (1x/12m)")}));
+        return danseItem;
+    }
+    private TextComponent getKillAssassin() {
+        TextComponent texte = new TextComponent("§6§lParticularité 1");
+        texte.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Aléatoirement, un membre du camp des§c démons§7 est choisis pour devenir l'§4Assassin§7,\n§7Si vous parvenez à le tuer vous obtiendrez l'effet§c§l Force I§7 permanent")}));
+        return texte;
+    }
+
+    @Override
+    public ItemStack[] getItems() {
+        return new ItemStack[]{
+                danseItem
+        };
+    }
+    @EventHandler
+    private void onUse(PlayerInteractEvent event) {
+        if (event.getItem() == null)return;
+        if (event.getItem().isSimilar(danseItem)) {
+            if (event.getPlayer().getUniqueId().equals(getPlayer())) {
+                if (cdDanse <= 0) {
+                    event.getPlayer().sendMessage("§7Vous utilisez votre§6 Danse du dieu du Feu");
+                    cdDanse = 60*12;
+                    event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
+                    event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60*5, 0, false, false), true);
+                    List<Player> liste = getListPlayerFromRole(Nezuko.class);
+                    if (!liste.isEmpty()) {
+                        Location loc = event.getPlayer().getLocation();
+                        for (Player p : liste) {
+                            p.sendMessage("§aTanjiro§7 a utiliser sa§6 danse du dieu du feu§7 en§c x: "+loc.getBlockX()+", y: "+loc.getBlockY()+", z: "+loc.getBlockZ());
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*5, 1, false, false), true);
+                        }
+                    }
+                    event.setCancelled(true);
+                } else {
+                    sendCooldown(event.getPlayer(), cdDanse);
+                    event.setCancelled(true);
                 }
-                if (owner != null) {
-                    if (victim != null) {
-                        owner.sendMessage("Vous avez touchez: "+ victim.getName()+" avec votre§l Boule d'énergie");
+            }
+        }
+    }
+    @EventHandler
+    private void onBattle(EntityDamageByEntityEvent event) {
+        if (event.getDamager().getUniqueId().equals(getPlayer())) {
+            if (cdDanse >= 60*11) {
+                event.getEntity().setFireTicks(20*15);
+            }
+        }
+    }
+    @EventHandler
+    private void onEndGame(EndGameEvent event) {
+        HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public void onDSCommandSend(String[] args, GameState gameState) {
+        if (args[0].equalsIgnoreCase("assassin")) {
+            if (args.length == 2) {
+                Player owner = Bukkit.getPlayer(getPlayer());
+                if (useAssassin){
+                    owner.sendMessage("§cVous avez atteint le nombre maximum d'utilisation de ce pouvoir.");
+                    return;
+                }
+                if (gameState.Assassin != null) {
+                    Player target = Bukkit.getPlayer(getPlayer());
+                    if (target != null) {
+                        boolean assa = target.getUniqueId().equals(gameState.Assassin.getUniqueId());
+                        owner.sendMessage("§c"+target.getName()+"§f "+(assa ? "§7est l'§4Assassin" : "§7n'est§c pas§7 l'§4Assassin"));
+                        useAssassin = true;
+                        if (!assa) {
+                            setMaxHealth(getMaxHealth()-4);
+                        } else {
+                            givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*60*5,1, true);
+                            new BukkitRunnable() {
+                                private int timeRemaining = 60*5;
+                                private final UUID targetUUID = target.getUniqueId();
+                                private final UUID ownerUUID = owner.getUniqueId();
+                                @Override
+                                public void run() {
+                                    Player target = Bukkit.getPlayer(targetUUID);
+                                    Player owner = Bukkit.getPlayer(ownerUUID);
+                                    if (target !=null && owner != null) {
+                                        owner.setCompassTarget(target.getLocation());
+                                        timeRemaining--;
+                                    }
+                                    if (timeRemaining == 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                                        cancel();
+                                    }
+                                }
+                            }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                        }
+                    }
+                } else {
+                    owner.sendMessage("§cL'§4Assassin§c n'a pas encore été désigner ou n'est pas présent dans la partie.");
+                }
+            }
+        }
+        if (args[0].equalsIgnoreCase("sentir")) {
+            Player owner = Bukkit.getPlayer(getPlayer());
+            if (args.length == 2) {
+                if (sentirUse) {
+                    owner.sendMessage("§cVous avez atteint le nombre maximum d'utilisation de ce pouvoir.");
+                    return;
+                }
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    if (!gameState.hasRoleNull(target)) {
+                        RoleBase role = gameState.getPlayerRoles().get(target);
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof Nezuko || role.getOriginTeam().equals(TeamList.Demon);
+                        owner.sendMessage("§c"+target.getName()+(demon ? "§7 est un§c démon" : "§7 n'est pas un§c démon"));
+                        sentirUse = true;
+                    }
+                } else {
+                    owner.sendMessage("§c"+args[1]+" n'est pas connectée !");
+                }
+            } else {
+                if (cdSentir > 0) {
+                    sendCooldown(owner, cdSentir);
+                    return;
+                }
+                int amountDemon = 0;
+                for (Player player : Loc.getNearbyPlayersExcept(owner, 30)) {
+                    if (!gameState.hasRoleNull(player)) {
+                        RoleBase role = gameState.getPlayerRoles().get(player);
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof Nezuko || role.getOriginTeam().equals(TeamList.Demon);
+                        if (demon) {
+                            amountDemon++;
+                        }
                     }
                 }
-                if (victim != null) {
-                    victim.sendMessage("Vous avez été toucher par la§l Boulot d'énergie§r de§c Tanjiro");
-                }
-                Heal(victim, -2.0);
-				a = false;
-			}
-		}
-			super.ItemUseAgainst(item, victim, gameState);
-		}
-	   	int cd = 0;
-		public boolean a = false;
-		public ItemStack[] getItems() {
-			return new ItemStack[] {
-					BetterItem.of(new ItemBuilder(Material.NETHER_STAR).hideAllAttributes().setName("§f§lBoule d'énergie").setLore("§7» Crée une explosion sur le prochaine adversaire que vous taperez","§7"+StringID).toItemStack(), event -> {
-						if (cd <= 0) {
-							a = true;
-							cd = 120;
-							owner.sendMessage("§7Vous avez accumulé asser d'énergie, votre§l Boule d'énergie§7 est paré pour le combat...");
-						}else {
-							sendCooldown(owner, cd);
-						}
-						return true;
-					}).setDespawnable(true).setDroppable(false).setMovableOther(false).getItemStack()
-			};
-		}
-	@Override
-		public void resetCooldown() {
-		cd = 0;
-		actualuse = 0;
-		}
+                owner.sendMessage("§7Il y a§c "+amountDemon+" démon§7(§cs§7) autours de vous");
+                cdSentir = 60*5;
+            }
+        }
+        super.onDSCommandSend(args, gameState);
+    }
 
-	@Override
-	public String getName() {
-		return "Tanjiro";
-	}
+    private static class TanjiroRunnable extends BukkitRunnable {
+
+        private final Tanjiro tanjiro;
+        private TanjiroRunnable(Tanjiro tanjiro){
+            this.tanjiro = tanjiro;
+        }
+        @Override
+        public void run() {
+            if (tanjiro.getGameState().getServerState() != GameState.ServerStates.InGame) {
+                cancel();
+                return;
+            }
+            Player owner = Bukkit.getPlayer(tanjiro.getPlayer());
+            if (tanjiro.cdDanse >= 0) {
+                tanjiro.cdDanse--;
+            }
+            if (tanjiro.cdSentir >= 0){
+                tanjiro.cdSentir--;
+            }
+            if (owner != null) {
+                if (tanjiro.cdSentir == 0) {
+                    owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c /ds sentir");
+                }
+                if (tanjiro.cdDanse == 0) {
+                    owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§6 Danse du dieu du feu§7.");
+                }
+                if (owner.getItemInHand() != null) {
+                    if (owner.getItemInHand().isSimilar(tanjiro.danseItem)) {
+                        NMSPacket.sendActionBar(owner, (tanjiro.cdDanse <= 0 ? "§e<§f Pouvoir utilisable§e >" : "§bCooldown: "+ StringUtils.secondsTowardsBeautiful(tanjiro.cdDanse)));
+                    }
+                }
+                if (tanjiro.cdDanse >= 60*7) {
+                    NMSPacket.sendActionBar(owner, "§bTemp restant: "+StringUtils.secondsTowardsBeautiful(tanjiro.cdDanse-60*7));
+                    MathUtil.sendCircleParticle(EnumParticle.FLAME, owner.getLocation(), 1, 15);
+                    if (tanjiro.cdDanse == 60*7) {
+                        owner.sendMessage("§7Vous devez arrêter de danser suite à votre fatigue...");
+                        tanjiro.setMaxHealth(tanjiro.getMaxHealth()-4);
+                    }
+                    if (tanjiro.cdDanse == 60*11) {
+                        owner.sendMessage("§7Vous ne mettrez plus les joueurs en§c feu§7.");
+                    }
+                }
+            }
+        }
+    }
 }

@@ -43,6 +43,7 @@ public class AdminCommands implements CommandExecutor{
 	
 	public AdminCommands(GameState gameState) {this.gameState = gameState;}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		if (gameState == null) {
@@ -283,6 +284,7 @@ public class AdminCommands implements CommandExecutor{
 											for (Player p : gameState.getInGamePlayers()) {
 												p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
 												NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
+												p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");
 											}
 											return true;
 										}
