@@ -6,7 +6,9 @@ import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.packets.NMSPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -18,6 +20,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class ZenItsurugi extends SlayerRoles implements Listener {
     private final ItemStack vitesseItem = new ItemBuilder(Material.NETHER_STAR).setName("§eVitesse").setUnbreakable(true).setDroppable(false).toItemStack();
@@ -29,6 +36,7 @@ public class ZenItsurugi extends SlayerRoles implements Listener {
         giveItem(player, false, getItems());
         giveItem(player, false, Items.getLamedenichirin());
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
+        new ZenitsuRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
 
     @Override
@@ -55,12 +63,27 @@ public class ZenItsurugi extends SlayerRoles implements Listener {
     public TextComponent getComponent() {
         TextComponent text = new TextComponent(AllDesc.bar+"\n");
         text.addExtra("§7Role: §a"+getName()+"\n\n");
-        text.addExtra(AllDesc.point+"§7Lorsque votre vie est en dessous de§c 5"+AllDesc.coeur+"§7 vous aurez les effets§c Speed II§7 et§c Force I\n\n");
-        return super.getComponent();
+        text.addExtra(AllDesc.point+"§7Lorsque votre vie est en dessous de§c 5"+AllDesc.coeur+"§7 vous aurez les §7effets§c Speed II§7 et§c Force I\n\n");
+        text.addExtra(AllDesc.point+"§7Vous possédez l'item ");
+        text.addExtra(getVitesseText());
+        text.addExtra("§7 (1x/10m).\n\n");
+        text.addExtra(AllDesc.point+"§7Vous avez accès à la commande ");
+        text.addExtra(getPassifText());
+        text.addExtra("§7 (1x/15m).\n\n");
+        text.addExtra(AllDesc.bar);
+        return text;
     }
     private TextComponent getVitesseText(){
         TextComponent text = new TextComponent("§7\""+vitesseItem.getItemMeta().getDisplayName()+"§7\"");
-        text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous donne l'effet§c Speed I")}));
+        text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous donne l'effet§c Speed III§7 pendant§c 1 minutes§7, puis, vous donne les effets§c Weakness II§7 et§c Slowness II§7 pendant§c 3 minutes§7. (1x/10m)")}));
+        return text;
+    }
+    private TextComponent getPassifText(){
+        TextComponent text = new TextComponent("§c/ds passif");
+        text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                new TextComponent("§7Pendant§c 5 minutes§7 vous aurez§c 10%§7 de§c chance§7 d'infliger§c 2"+AllDesc.coeur+"§7 de dégat via un§e éclair§7. (1x/15m)")
+        }));
         return text;
     }
     @Override
@@ -78,7 +101,58 @@ public class ZenItsurugi extends SlayerRoles implements Listener {
         if (event.getItem() != null) {
             if (event.getItem().isSimilar(vitesseItem)) {
                 if (event.getPlayer().getUniqueId().equals(getPlayer())) {
+                    if (cdVitesse > 0) {
+                        sendCooldown(event.getPlayer(), cdVitesse);
+                        return;
+                    }
+                    cdVitesse = 60*13;
+                    new BukkitRunnable() {
+                        final UUID uuidUser = getPlayer();
+                        int timeRemaining = 60*3;
+                        @Override
+                        public void run() {
+                            Player player = Bukkit.getPlayer(uuidUser);
+                            if (player != null) {
+                                if (timeRemaining > 60*2) {
+                                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 2, false, false), true));
+                                } else {
+                                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 1, false, false), true);
+                                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 1, false, false), true);
+                                    });
+                                }
+                                timeRemaining--;
+                                NMSPacket.sendActionBar(owner, "§bTemp restant:§c "+ StringUtils.secondsTowardsBeautiful(cdVitesse-(60*10)));
+                            }
+                            if (timeRemaining == 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                                cancel();
+                            }
+                        }
 
+                    }.runTaskTimerAsynchronously(Main.getInstance(), 0,20);
+                }
+            }
+        }
+    }
+    private static class ZenitsuRunnable extends BukkitRunnable {
+        private final ZenItsurugi zenitsu;
+        private ZenitsuRunnable(ZenItsurugi zenItsurugi){
+            this.zenitsu = zenItsurugi;
+        }
+        @Override
+        public void run() {
+            if (zenitsu.getGameState().getServerState() != GameState.ServerStates.InGame) {
+                cancel();
+                return;
+            }
+            if (zenitsu.cdVitesse > 0) {
+                zenitsu.cdVitesse--;
+            }
+            Player owner = Bukkit.getPlayer(zenitsu.getPlayer());
+            if (owner != null) {
+                if (zenitsu.cdVitesse == 0) {
+                    zenitsu.cdVitesse--;
+                    owner.sendMessage("§7Vous pouvez à nouveau utiliser votre "+zenitsu.vitesseItem.getItemMeta().getDisplayName());
                 }
             }
         }

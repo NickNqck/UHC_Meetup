@@ -475,7 +475,7 @@ public class GameState{
 			role = new Jigoro(player);
 			break;
 		case ZenItsu:
-			role = new ZenItsu(player);
+			role = new ZenItsurugi(player);
 			break;
 		case Kaigaku:
 			role = new Kaigaku(player);
