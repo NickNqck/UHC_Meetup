@@ -45,7 +45,7 @@ public class Poulet extends OverWorldRoles {
         texte.addExtra(getPlumeText());
         texte.addExtra("§7 (1x/5m).");
 
-        texte.addExtra("\n");
+        texte.addExtra("\n\n");
         texte.addExtra(AllDesc.bar);
         return texte;
     }
