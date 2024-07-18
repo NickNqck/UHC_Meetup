@@ -122,10 +122,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getDanseText() {
         TextComponent danseItem = new TextComponent(" §7\"§6Danse §6du dieu §6du Feu§7\"");
         danseItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Pendant§c 5 minutes§7 vous obtiendrez les effets§c résistance 1§7 et§c résistance au feu 1§7, également,\n" +
-                "§7pendant§c 1 minutes§7 vos coups mettront en §cfeu§7 les joueurs frappés, de plus,\n§7" +
-                "le joueur possédant le rôle de§a Nezuko§7 obtiendra l'effet§c speed 2§7 pendant§c 5 minutes§7,\n§7" +
-                " après ce temp là vous perdrez§c 2"+AllDesc.coeur+"§c permanent§7.§7 (1x/12m)")}));
+                "")}));
         return danseItem;
     }
     private TextComponent getKillAssassin() {
