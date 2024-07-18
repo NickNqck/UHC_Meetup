@@ -41,9 +41,9 @@ public class Poulet extends OverWorldRoles {
         texte.addExtra("§7Votre objectif est de gagner avec le camp: §aOverWorld\n");
 
         texte.addExtra("\n"+AllDesc.point+"§7Vous possèdez §aNoFall §7permanent");
-        texte.addExtra("§7Vous possédez l'item");
+        texte.addExtra("\n§7Vous possédez l'item");
         texte.addExtra(getPlumeText());
-        texte.addExtra("§7 (1x/5 minutes).");
+        texte.addExtra("§7 (1x/5m).");
 
         texte.addExtra("\n");
         texte.addExtra(AllDesc.bar);
@@ -53,7 +53,7 @@ public class Poulet extends OverWorldRoles {
     private TextComponent getPlumeText() {
         TextComponent Plume = new TextComponent("§7\"§aPlume\"");
         Plume.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Vous permez de volez pendant 3 secondes. (1x/5 minutes)")}));
+                "§7Vous permez de volez pendant §c3 secondes. (1x/5 minutes)")}));
         return Plume;
     }
 
