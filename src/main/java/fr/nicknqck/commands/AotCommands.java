@@ -24,7 +24,7 @@ GameState gameState;
                 }
 				if (gameState.getPlayerRoles().containsKey(player)) {
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
-						player.sendMessage(gameState.getDescription(player));
+						gameState.sendDescription(player);
 						return true;
 					}else {
 						if (args[0].equalsIgnoreCase("steal")) {

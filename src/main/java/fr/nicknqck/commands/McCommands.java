@@ -24,13 +24,12 @@ public class McCommands implements CommandExecutor{
 				}
 				if (!gameState.hasRoleNull(sender)) {
 					if (args[0].equalsIgnoreCase("me")) {
-						sender.sendMessage(gameState.getDescription(sender));
-						return true;
-					} else {
+						gameState.sendDescription(sender);
+                    } else {
 						gameState.getPlayerRoles().get(sender).onMcCommand(args);
-						return true;
-					}
-				}
+                    }
+                    return true;
+                }
 			}
 		}
 		return true;

@@ -163,23 +163,19 @@ public class DSmtpCommands implements CommandExecutor {
 							return true;
 						}
 					}
-					if (args[0].equalsIgnoreCase("me")) {
-						if (sender instanceof Player) {
-							sender.sendMessage(gameState.getDescription((Player)sender));
-							return true;
-						}
-					}
+					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
+                        gameState.sendDescription((Player) sender);
+                        return true;
+                    }
 				}//vérification du serverstates.ingame
 			}else if (args.length == 2) { //else du args.length == 1
-				if (args[0].equalsIgnoreCase("dimtp")) {			
-					if (sender instanceof Player) {
-						Player player = (Player) sender;
-						int x = 0;
-						x = Integer.valueOf(args[1]);
-						player.teleport(new Location(Bukkit.getWorlds().get(x), 0, 152, 0));
-						return true;
-							}
-						}
+				if (args[0].equalsIgnoreCase("dimtp")) {
+                    Player player = (Player) sender;
+                    int x = 0;
+                    x = Integer.parseInt(args[1]);
+                    player.teleport(new Location(Bukkit.getWorlds().get(x), 0, 152, 0));
+                    return true;
+                }
 					}//} du args.length
 			
 			if (args[0].equalsIgnoreCase("chat")) {

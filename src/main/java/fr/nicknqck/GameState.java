@@ -1050,14 +1050,13 @@ public class GameState{
 			return 0;
 		}
 	}
-	public String[] getDescription(Player player) {
+	public void sendDescription(Player player) {
 		if (!hasRoleNull(player)) {
 			for (Titans t : Titans.values()) {
 				t.getTitan().onGetDescription(player);
 			}
-			return getPlayerRoles().get(player).Desc();
-		}else {
-			return new String[0];
+			player.sendMessage(getPlayerRoles().get(player).Desc());
+			player.spigot().sendMessage(getPlayerRoles().get(player).getComponent());
 		}
 	}
 	public Player getOwner(Roles role) {

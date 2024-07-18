@@ -39,7 +39,7 @@ public class NsCommands implements CommandExecutor {
 				}
 				if (!gameState.hasRoleNull(sender)) {
 					if (args[0].equalsIgnoreCase("me")) {
-						sender.sendMessage(gameState.getDescription(sender));
+						gameState.sendDescription(sender);
 						return true;
 					}
 					if (args[0].equalsIgnoreCase("see")) {
