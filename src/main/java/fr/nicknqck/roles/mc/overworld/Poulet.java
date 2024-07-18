@@ -5,6 +5,9 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -17,7 +20,7 @@ public class Poulet extends OverWorldRoles {
     private int cdplume = 0;
     public Poulet(Player player) {
         super(player);
-        owner.sendMessage(Desc());
+        player.spigot().sendMessage(getComponent());
         giveItem(owner,false,getItems());
     }
     @Override
@@ -27,25 +30,35 @@ public class Poulet extends OverWorldRoles {
     @Override
     public String[] Desc() {
         return new String[]{
-                AllDesc.bar,
-                AllDesc.role+"§aPoulet",
-                AllDesc.objectifteam+"§aOverWorld",
-                "",
-                AllDesc.items,
-                "",
-                AllDesc.point+"§aPlume :§r A son activation vous permez de voler pendant 3 secondes.§7 (1x/5m)",
-                "",
-                AllDesc.particularite,
-                "",
-                "Vous possédez §aNofall",
-                "",
-                AllDesc.bar
         };
+    }
+
+    public TextComponent getComponent(){
+        TextComponent texte = new TextComponent(AllDesc.bar);
+        texte.addExtra("\n");
+        texte.addExtra("§7Role: §aPoulet\n");
+        texte.addExtra("§7Votre objectif est de gagner avec le camp: §aOverWorld\n");
+
+        texte.addExtra("\n"+AllDesc.point+"§7Vous possèdez §aNoFall §7permanent");
+        texte.addExtra("§7Vous possédez l'item");
+        texte.addExtra(getPlumeText());
+        texte.addExtra("§7 (1x/5 minutes).");
+
+        texte.addExtra("\n");
+        texte.addExtra(AllDesc.bar);
+        return texte;
+    }
+
+    private TextComponent getPlumeText() {
+        TextComponent Plume = new TextComponent("§7\"§aPlume\"");
+        Plume.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous permez de volez pendant 3 secondes. (1x/5 minutes)")}));
+        return Plume;
     }
 
     @Override
     public String getName() {
-        return "§aPoulet";
+        return "Poulet";
     }
 
     @Override
