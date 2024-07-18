@@ -51,9 +51,9 @@ public class Poulet extends OverWorldRoles {
     }
 
     private TextComponent getPlumeText() {
-        TextComponent Plume = new TextComponent("§7\"§aPlume\"");
+        TextComponent Plume = new TextComponent("§7 \" §aPlume§7\"");
         Plume.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Vous permez de volez pendant §c3 secondes. §7(1x/5 minutes)")}));
+                "§7Vous permez de volez pendant §c3 secondes. §7(1x/5m)")}));
         return Plume;
     }
 
