@@ -542,7 +542,7 @@ public class GameListener implements Listener {
 				if (world != null && victim.getWorld().equals(world)){
 					SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? role.getTeam().getColor()+role.getName() : "§k"+victim.getDisplayName()));
 				} else {
-					SendToEveryone("§7Son rôle était: "+role.getTeam().getColor()+role.getName()+role.getDeathString());
+					SendToEveryone("§7Son rôle était: "+role.getTeam().getColor()+role.getName()+role.getSuffixString());
 				}
 			} else {
 				SendToEveryone(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");

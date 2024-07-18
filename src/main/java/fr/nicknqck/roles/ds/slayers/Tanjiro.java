@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -197,6 +198,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                             setMaxHealth(getMaxHealth()-4);
                         } else {
                             givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*60*5,1, true);
+                            giveItem(owner, true, new ItemBuilder(Material.COMPASS).setName("§4§lTraqueur").toItemStack());
                             new BukkitRunnable() {
                                 private int timeRemaining = 60*5;
                                 private final UUID targetUUID = target.getUniqueId();
@@ -260,6 +262,19 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
         super.onDSCommandSend(args, gameState);
     }
+    @EventHandler
+    private void onUHCPlayerKill(UHCPlayerKillEvent event){
+        if (event.getPlayerKiller() != null) {
+            if (event.getPlayerKiller().getUniqueId().equals(getPlayer())) {
+                if (gameState.Assassin != null) {
+                    if (gameState.Assassin.getUniqueId().equals(event.getVictim().getUniqueId())) {
+                        getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+                        event.getPlayerKiller().sendMessage("§7Vous avez venger votre famille, vous recevez l'effet§c Force I§7 de manière§c permanente");
+                    }
+                }
+            }
+        }
+    }
 
     private static class TanjiroRunnable extends BukkitRunnable {
 
@@ -289,7 +304,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 }
                 if (owner.getItemInHand() != null) {
                     if (owner.getItemInHand().isSimilar(tanjiro.danseItem)) {
-                        NMSPacket.sendActionBar(owner, (tanjiro.cdDanse <= 0 ? "§e<§f Pouvoir utilisable§e >" : "§bCooldown: "+ StringUtils.secondsTowardsBeautiful(tanjiro.cdDanse)));
+                        NMSPacket.sendActionBar(owner, (tanjiro.cdDanse <= 0 ? "§e«§f Pouvoir utilisable§e »" : "§bCooldown: "+ StringUtils.secondsTowardsBeautiful(tanjiro.cdDanse)));
                     }
                 }
                 if (tanjiro.cdDanse >= 60*7) {

@@ -63,7 +63,7 @@ public abstract class RoleBase implements Role{
 	private final Map<PotionEffect, EffectWhen> effects = new HashMap<>();
 	@Getter
 	@Setter
-	private String deathString = "";
+	private String suffixString = "";
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
@@ -279,7 +279,7 @@ public abstract class RoleBase implements Role{
 		ItemUseAgainst(itemInHand, player, gameState);
 	}
 	public void onEat(ItemStack item, GameState gameState) {}
-	public void onDSCommandSend(String[] args, GameState gameState) {}
+
 
 	public boolean onPickupItem(Item item) {
 		return false;}

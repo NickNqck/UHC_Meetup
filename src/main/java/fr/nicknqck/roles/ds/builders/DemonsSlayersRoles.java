@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.builders;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
@@ -67,4 +68,5 @@ public abstract class DemonsSlayersRoles extends RoleBase {
 
         }, 20);
     }
+    public void onDSCommandSend(String[] args, GameState gameState) {}
 }

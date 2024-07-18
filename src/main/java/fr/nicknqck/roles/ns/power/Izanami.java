@@ -359,7 +359,7 @@ public class Izanami implements Listener{
 			toIzanami.resetTitle();
 			toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+infecteur.getTeamColor(owner)+ infecteur.getOriginTeam().name());
 			toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+getColor()+infecteur.getName()+": "+(infecteur.getPlayerFromRole(infecteur.getRoles()) != null ? infecteur.getPlayerFromRole(infecteur.getRoles()).getName() : "§cMort"));
-			infecteur.getPlayerRoles(toIzanami).setDeathString(infecteur.getPlayerRoles(toIzanami).getDeathString()+"§7 ("+this.getColor()+"Izanami§7)");
+			infecteur.getPlayerRoles(toIzanami).setSuffixString(infecteur.getPlayerRoles(toIzanami).getSuffixString()+"§7 ("+this.getColor()+"Izanami§7)");
 			return true;
 		}
 		return false;

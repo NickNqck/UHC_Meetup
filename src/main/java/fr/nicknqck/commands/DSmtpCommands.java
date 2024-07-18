@@ -2,6 +2,7 @@ package fr.nicknqck.commands;
 
 import java.util.ArrayList;
 
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
@@ -245,8 +246,8 @@ public class DSmtpCommands implements CommandExecutor {
 				}
 			}
 			if (gameState.getServerState() == ServerStates.InGame) {
-				if (gameState.getPlayerRoles().containsKey(sender)) {
-					gameState.getPlayerRoles().get(sender).onDSCommandSend(args, gameState);
+				if (gameState.getPlayerRoles().containsKey(sender) && gameState.getPlayerRoles().get(sender) instanceof DemonsSlayersRoles) {
+					((DemonsSlayersRoles) gameState.getPlayerRoles().get(sender)).onDSCommandSend(args, gameState);
 					return true;
 				}
 			}
