@@ -98,8 +98,9 @@ public class Tanjiro extends SlayerRoles implements Listener {
         texte.addExtra(getSentir());
         texte.addExtra("§7, (1x/5m)");
         texte.addExtra(getAssassin());
-        texte.addExtra("§7, (1x/partie)\n\n");
+        texte.addExtra("§7, (1x/partie)\n\n"+AllDesc.point);
         texte.addExtra(getKillAssassin());
+        texte.addExtra("\n\n"+AllDesc.bar);
         return texte;
     }
     private TextComponent getSentir() {

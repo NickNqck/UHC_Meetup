@@ -6,6 +6,9 @@ import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -30,12 +33,12 @@ public class Kanae extends PillierRoles implements Listener {
         this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0 ,20);
         giveItem(player, false, getItems());
         giveItem(player, false, Items.getLamedenichirin());
-        owner.sendMessage(Desc());
+        player.spigot().sendMessage(getComponent());
     }
 
     @Override
     public String getName() {
-        return "§aKanae";
+        return "Kanae";
     }
 
     @Override
@@ -46,7 +49,7 @@ public class Kanae extends PillierRoles implements Listener {
     @Override
     public String[] Desc() {
         return new String[]{
-                AllDesc.bar,
+           /*     AllDesc.bar,
                 AllDesc.role+getName(),
                 AllDesc.objectifteam+(getTeam() != null ? getTeam().getColor()+getTeam().name() : "§aSlayers"),
                 "",
@@ -61,8 +64,33 @@ public class Kanae extends PillierRoles implements Listener {
                 AllDesc.point+"§c10%§f d'infliger de vous§c soignez§f de§c 2"+AllDesc.Coeur("§c"),"",
                 AllDesc.point+"§c5%§f d'infliger§c Weakness I§f,§c Slowness I§f et§c Poison I§f pendant§c 10s",
                 "",
-                AllDesc.bar
+                AllDesc.bar*/
         };
+    }
+
+    @Override
+    public TextComponent getComponent() {
+        TextComponent texte = new TextComponent(AllDesc.bar);
+        texte.addExtra("\n§7Role: §a"+getName()+"\n");
+        texte.addExtra("§7Votre objectif est de gagner avec le camp des§a Slayers\n\n");
+        texte.addExtra(AllDesc.point+"§7Vous possédez l'item ");
+        texte.addExtra(getSwordText());
+        texte.addExtra("§7, (1x/40s)\n\n");
+        texte.addExtra(AllDesc.bar);
+        return texte;
+    }
+    private TextComponent getSwordText() {
+        TextComponent textComponent = new TextComponent("§7\""+sword.getItemMeta().getDisplayName()+"§7\"");
+        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
+                new TextComponent("§7A chaque coup d'épée vous aurez un§c pourcentage de chance§7 d'infliger des§c effets négatifs§7.\n\n"+
+                        AllDesc.point+"§c25%§7 de ne rien faire du tout"+"\n"+
+                        AllDesc.point+"§c25%§7 d'infliger§c Weakness I§7 pendant§c 15s"+"\n"+
+                        AllDesc.point+"§c20%§7 d'infliger§c Slowness I§7 pendant§c 12s"+"\n"+
+                        AllDesc.point+"§c15%§7 d'infliger§c Poison I§7 pendant§c 10s"+"\n"+
+                        AllDesc.point+"§c10%§7 d'infliger de vous§c soignez§7 de§c 2"+AllDesc.Coeur("§c")+"\n"+
+                        AllDesc.point+"§c5%§7 d'infliger§c Weakness I§7,§c Slowness I§7 et§c Poison I§7 pendant§c 10s")
+        }));
+        return textComponent;
     }
 
     @Override
