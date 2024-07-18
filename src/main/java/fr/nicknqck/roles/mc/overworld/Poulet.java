@@ -126,7 +126,7 @@ public class Poulet extends OverWorldRoles {
         if (cdplume >= 0) {
             cdplume--;
             if (cdplume == 0) {
-                owner.sendMessage("Vous pouvez de nouveau réutilisez votre §aPlume");
+                owner.sendMessage("Vous pouvez de nouveau utilisez votre §aPlume");
             }
         }
         if (owner.getItemInHand() != null) {
