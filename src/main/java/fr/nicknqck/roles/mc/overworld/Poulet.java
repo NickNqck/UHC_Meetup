@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.packets.NMSPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -116,10 +117,17 @@ public class Poulet extends OverWorldRoles {
 
     @Override
     public void Update(GameState gameState) {
-        if (cdplume >= 0){
-            cdplume --;
-            if (cdplume == 0){
+        if (cdplume >= 0) {
+            cdplume--;
+            if (cdplume == 0) {
                 owner.sendMessage("Vous pouvez de nouveau réutilisez votre §aPlume");
+            }
+        }
+        if (owner.getItemInHand().isSimilar(plumeItem)){
+            if (cdplume >= 60*5){
+                NMSPacket.sendActionBar(owner, "§e« §rPouvoir Utilisable §e»");
+            } else {
+                NMSPacket.sendActionBar(owner, "§e« §r"+cdplume+" §e»");
             }
         }
         super.Update(gameState);
