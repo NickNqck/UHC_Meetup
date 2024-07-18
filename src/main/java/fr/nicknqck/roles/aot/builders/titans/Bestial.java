@@ -1,6 +1,8 @@
 package fr.nicknqck.roles.aot.builders.titans;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.*;
@@ -12,9 +14,13 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Bestial extends Titan{
+public class Bestial extends Titan implements Listener {
 
 	public enum Animal {
 		Taureau("§4", 0, getInstance().DashItem()),
@@ -137,6 +143,7 @@ public class Bestial extends Titan{
 
 	public Bestial() {
 		instance = this;
+		Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
 	public void onSecond() {
@@ -339,7 +346,7 @@ public class Bestial extends Titan{
 		}
 	}
 	public int getRandomInt(int min, int max) {
-		int toReturn = -1;
+		int toReturn;
 		do {
 			toReturn = RandomUtils.getRandomInt(min, max);
 		} while (toReturn == -1 || toReturn < min || toReturn > max);
@@ -497,33 +504,41 @@ public class Bestial extends Titan{
 	}
 	@Override
 	public void PlayerKilled(Player player, Entity damager) {}
-	public void onTick(GameState gameState) {
-		if (form != null) {
-			if (form.equals(Animal.Crocodile)) {
-				Player player = Bukkit.getPlayer(getOwner());
-				if (player == null)return;
-				if (getOwner() != null) {
-					if (isTransformedinTitan()) {
-						if (player.getLocation().getBlock().getType().name().contains("WATER")) {
-							if (player.getInventory().getBoots() != null) {
-								ItemStack boots = player.getInventory().getBoots();
-								if (boots.hasItemMeta()) {
-									ItemMeta meta = boots.getItemMeta();
-									if (!meta.hasEnchant(Enchantment.DEPTH_STRIDER)) {
-										meta.addEnchant(Enchantment.DEPTH_STRIDER, 3, true);
-										boots.setItemMeta(meta);
+	@Override
+	public void onPlayerAttackAnotherPlayer(Player damager, Player victim, EntityDamageByEntityEvent event) {}
+	@EventHandler
+	private void onPlayerMoove(PlayerMoveEvent event) {
+		if (getState().getServerState().equals(GameState.ServerStates.InGame)) {
+			assert getOwner() != null;
+			if (event.getPlayer().getUniqueId().equals(getOwner())) {
+				if (form != null) {
+					if (form.equals(Animal.Crocodile)) {
+						Player player = Bukkit.getPlayer(getOwner());
+						if (player == null)return;
+						if (getOwner() != null) {
+							if (isTransformedinTitan()) {
+								if (player.getLocation().getBlock().getType().name().contains("WATER")) {
+									if (player.getInventory().getBoots() != null) {
+										ItemStack boots = player.getInventory().getBoots();
+										if (boots.hasItemMeta()) {
+											ItemMeta meta = boots.getItemMeta();
+											if (!meta.hasEnchant(Enchantment.DEPTH_STRIDER)) {
+												meta.addEnchant(Enchantment.DEPTH_STRIDER, 3, true);
+												boots.setItemMeta(meta);
+											}
+										}
 									}
-								}
-							}
-						} else {
-							if (player.getInventory().getBoots() != null) {
-								ItemStack boots = player.getInventory().getBoots();
-								if (boots.hasItemMeta()) {
-									ItemMeta meta = boots.getItemMeta();
-									if (meta.hasEnchants()) {
-										if (meta.hasEnchant(Enchantment.DEPTH_STRIDER)) {
-											meta.removeEnchant(Enchantment.DEPTH_STRIDER);
-											boots.setItemMeta(meta);
+								} else {
+									if (player.getInventory().getBoots() != null) {
+										ItemStack boots = player.getInventory().getBoots();
+										if (boots.hasItemMeta()) {
+											ItemMeta meta = boots.getItemMeta();
+											if (meta.hasEnchants()) {
+												if (meta.hasEnchant(Enchantment.DEPTH_STRIDER)) {
+													meta.removeEnchant(Enchantment.DEPTH_STRIDER);
+													boots.setItemMeta(meta);
+												}
+											}
 										}
 									}
 								}
@@ -534,6 +549,8 @@ public class Bestial extends Titan{
 			}
 		}
 	}
-	@Override
-	public void onPlayerAttackAnotherPlayer(Player damager, Player victim, EntityDamageByEntityEvent event) {}
+	@EventHandler
+	private void onEndGame(EndGameEvent event) {
+		HandlerList.unregisterAll(this);
 	}
+}

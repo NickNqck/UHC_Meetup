@@ -19,6 +19,7 @@ public class Reflection {
     public static void playSound(Player player, Location location, String soundName, float volume, float pitch) {
         try {
             Class<?> soundClass = getClass("org.bukkit.Sound");
+            assert soundClass != null;
             Sound sound = (Sound) soundClass.getField(soundName).get(null);
 
             Method playSoundMethod = getMethod(player.getClass(), "playSound", Location.class, Sound.class, float.class, float.class);
@@ -51,6 +52,7 @@ public class Reflection {
             Class<?> packetClass = getNMSClass("Packet");
             Class<?> entityPlayerClass = getNMSClass("EntityPlayer");
             Field playerConnectionField = getField(entityPlayerClass, "playerConnection");
+            assert playerConnectionField != null;
             Method sendPacketMethod = getMethod(playerConnectionField.getType(), "sendPacket", packetClass);
 
             Object entityPlayer = getHandle(player);

@@ -241,7 +241,12 @@ public class Main extends JavaPlugin implements Listener{
 			if (gameState.getServerState() == ServerStates.InLobby) {
 				for (Player p : gameState.getInLobbyPlayers()) {
 				//	NMSPacket.sendTabTitle(p, null, null);
-					NMSPacket.sendTabTitle(p, gameState.msgBoard + "\n", "\n" + "§7Joueurs: §c" + gameState.getInLobbyPlayers().size() +"§r/§6"+gameState.getroleNMB()+ "\n" + "\n" + "§cdiscord.gg/RF3D4Du8VN");
+					NMSPacket.sendTabTitle(p,
+							gameState.msgBoard + "\n",
+							"\n" +
+									"§7Joueurs: §c" + gameState.getInLobbyPlayers().size() +"§r/§6"+gameState.getroleNMB()+ "\n"
+									+ "\n"
+									+ "§cdiscord.gg/RF3D4Du8VN");
 				}
 			}
 			if (gameState.getServerState() == ServerStates.InGame) {
@@ -261,9 +266,6 @@ public class Main extends JavaPlugin implements Listener{
 					if (!gameState.hasRoleNull(player)) {
 		        		gameState.getPlayerRoles().get(player).onTick();
 		        	}
-				}
-				if (Bestial.getInstance() != null) {
-					Bestial.getInstance().onTick(gameState);
 				}
 			}
 			if (gameState.getServerState() == ServerStates.GameEnded) {
