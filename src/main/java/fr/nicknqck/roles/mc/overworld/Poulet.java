@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -19,15 +20,18 @@ public class Poulet extends OverWorldRoles {
 
     private final ItemStack plumeItem = new ItemBuilder(Material.FEATHER).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§7Permet de voler pendant 3 secondes").setName("§aPlume").toItemStack();
     private int cdplume = 0;
+
     public Poulet(Player player) {
         super(player);
         player.spigot().sendMessage(getComponent());
-        giveItem(owner,false,getItems());
+        giveItem(owner, false, getItems());
     }
+
     @Override
     public GameState.Roles getRoles() {
         return GameState.Roles.Poulet;
     }
+
     @Override
     public String[] Desc() {
         return new String[]{
@@ -35,14 +39,14 @@ public class Poulet extends OverWorldRoles {
         };
     }
 
-    public TextComponent getComponent(){
+    public TextComponent getComponent() {
         TextComponent texte = new TextComponent(AllDesc.bar);
         texte.addExtra("\n");
         texte.addExtra("§7Role: §aPoulet\n");
         texte.addExtra("§7Votre objectif est de gagner avec le camp: §aOverWorld\n");
 
-        texte.addExtra("\n"+AllDesc.point+"§7Vous possèdez §aNoFall §7permanent");
-        texte.addExtra("\n\n"+AllDesc.point+"§7Vous possédez l'item");
+        texte.addExtra("\n" + AllDesc.point + "§7Vous possèdez §aNoFall §7permanent");
+        texte.addExtra("\n\n" + AllDesc.point + "§7Vous possédez l'item");
         texte.addExtra(getPlumeText());
         texte.addExtra("§7 (1x/5m).");
 
@@ -66,7 +70,7 @@ public class Poulet extends OverWorldRoles {
     @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
-        plumeItem,
+                plumeItem,
         };
     }
 
@@ -74,6 +78,7 @@ public class Poulet extends OverWorldRoles {
     public void resetCooldown() {
         cdplume = 0;
     }
+
     @Override
     public void RoleGiven(GameState gameState) {
         setNoFall(true);
@@ -82,22 +87,23 @@ public class Poulet extends OverWorldRoles {
 
     @Override
     public boolean ItemUse(ItemStack item, GameState gameState) {
-        if (item.isSimilar(plumeItem)){
-            if (cdplume <= 0){
+        if (item.isSimilar(plumeItem)) {
+            if (cdplume <= 0) {
                 owner.setAllowFlight(true);
                 owner.setFlying(true);
                 owner.sendMessage("Vous pouvez désormais voler");
-                new BukkitRunnable(){
-                private int i = 0;
+                new BukkitRunnable() {
+                    private int i = 0;
+
                     @Override
                     public void run() {
-                        if(gameState.getInGamePlayers().contains(owner)) {
-                            i ++;
+                        if (gameState.getInGamePlayers().contains(owner)) {
+                            i++;
                             if (i == 4) {
                                 owner.sendMessage("Vous ne pouvez plus voler.");
                                 owner.setFlying(false);
                                 owner.setAllowFlight(false);
-                                cdplume = 60*5;
+                                cdplume = 60 * 5;
                                 cancel();
 
                             }
@@ -123,13 +129,11 @@ public class Poulet extends OverWorldRoles {
                 owner.sendMessage("Vous pouvez de nouveau réutilisez votre §aPlume");
             }
         }
-        if (owner.getItemInHand().isSimilar(plumeItem)){
-            if (cdplume >= 60*5){
-                NMSPacket.sendActionBar(owner, "§e« §rPouvoir Utilisable §e»");
-            } else {
-                NMSPacket.sendActionBar(owner, "§e« §r"+cdplume+" §e»");
+        if (owner.getItemInHand() != null) {
+            if (owner.getItemInHand().isSimilar(plumeItem)) {
+                NMSPacket.sendActionBar(owner, (cdplume <= 0 ? "§e«§f Pouvoir utilisable§e »" : "§bCooldown: " + StringUtils.secondsTowardsBeautiful(cdplume)));
             }
         }
-        super.Update(gameState);
+
     }
 }
