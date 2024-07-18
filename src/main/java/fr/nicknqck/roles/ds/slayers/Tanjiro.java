@@ -96,9 +96,9 @@ public class Tanjiro extends SlayerRoles implements Listener {
         texte.addExtra(dsSentir);
         texte.addExtra("§7 (1x/5m), ");
         texte.addExtra(getSentir());
-        texte.addExtra("§7, (1x/5m)");
+        texte.addExtra("§7 (1x/5m), ");
         texte.addExtra(getAssassin());
-        texte.addExtra("§7, (1x/partie)\n\n"+AllDesc.point);
+        texte.addExtra("§7 (1x/partie)\n\n"+AllDesc.point);
         texte.addExtra(getKillAssassin());
         texte.addExtra("\n\n"+AllDesc.bar);
         return texte;
@@ -126,7 +126,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         return danseItem;
     }
     private TextComponent getKillAssassin() {
-        TextComponent texte = new TextComponent("§6§lParticularité 1");
+        TextComponent texte = new TextComponent("§6§lParticularité");
         texte.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
                 "§7Aléatoirement, un membre du camp des§c démons§7 est choisis pour devenir l'§4Assassin§7,\n§7Si vous parvenez à le tuer vous obtiendrez l'effet§c§l Force I§7 permanent")}));
         return texte;
