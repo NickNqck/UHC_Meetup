@@ -32,9 +32,9 @@ import java.util.UUID;
 public class ZenItsu extends SlayerRoles implements Listener {
     private final ItemStack vitesseItem = new ItemBuilder(Material.NETHER_STAR).setName("§eVitesse").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdVitesse, cdPassif, cdEclair;
+
     public ZenItsu(Player player) {
         super(player);
-        player.spigot().sendMessage(getComponent());
         setCanuseblade(true);
         giveItem(player, false, getItems());
         giveItem(player, false, Items.getLamedenichirin());
