@@ -1,19 +1,5 @@
 package fr.nicknqck.roles.ds.solos;
 
-import java.text.DecimalFormat;
-
-import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.slayers.ZenItsu;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
@@ -22,9 +8,21 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.utils.ArrowTargetUtils;
-import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.packets.NMSPacket;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.text.DecimalFormat;
 
 public class JigoroV2 extends DemonsSlayersRoles {
 
@@ -96,11 +94,11 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	private Player kaigaku;
 	private Player zen;
 	@Override
-		public ItemStack[] getItems() {
-			return new ItemStack[] {
-					Items.getVitesse()
-			};
-		}
+	public ItemStack[] getItems() {
+		return new ItemStack[] {
+				Items.getVitesse()
+		};
+	}
 	@Override
 	public void resetCooldown() {
 		speedCD = 0;
