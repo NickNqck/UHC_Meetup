@@ -72,6 +72,8 @@ public class KamuiUtils {
 				}
 			}
 		}
-        Cible.clear();
+		if (!Cible.isEmpty()){
+			Cible.clear();
+		}
     }
 }
