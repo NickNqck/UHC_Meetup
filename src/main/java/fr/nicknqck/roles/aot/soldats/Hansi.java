@@ -20,7 +20,6 @@ public class Hansi extends SoldatsRoles {
 
 	public Hansi(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

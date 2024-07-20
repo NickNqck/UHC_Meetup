@@ -24,7 +24,6 @@ public class Jean extends SoldatsRoles {
 
 	public Jean(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

@@ -17,7 +17,6 @@ public class Livai extends SoldatsRoles {
 
 	public Livai(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setAckerMan(true);
 	}

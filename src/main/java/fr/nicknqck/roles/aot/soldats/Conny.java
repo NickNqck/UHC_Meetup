@@ -17,7 +17,6 @@ public class Conny extends SoldatsRoles {
 
 	public Conny(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {

@@ -12,7 +12,6 @@ public class Eclaireur extends SoldatsRoles {
 
 	public Eclaireur(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

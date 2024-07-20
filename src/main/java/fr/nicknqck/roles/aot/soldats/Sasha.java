@@ -20,7 +20,6 @@ public class Sasha extends SoldatsRoles {
 
 	public Sasha(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

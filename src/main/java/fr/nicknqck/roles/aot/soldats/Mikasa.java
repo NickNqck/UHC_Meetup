@@ -17,7 +17,6 @@ public class Mikasa extends SoldatsRoles {
 
 	public Mikasa(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setAckerMan(true);
 	}

@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 public class Erwin extends SoldatsRoles {
 	public Erwin(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

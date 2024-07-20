@@ -18,7 +18,6 @@ public class Onyankopon extends SoldatsRoles {
 
 	public Onyankopon(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		owner.getInventory().addItem(getItems());
 	}

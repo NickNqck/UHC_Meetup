@@ -22,7 +22,6 @@ public class Soldat extends SoldatsRoles {
 	public kit form = null;
 	public Soldat(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override
