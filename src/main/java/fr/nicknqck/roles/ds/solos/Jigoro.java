@@ -44,7 +44,6 @@ public class Jigoro extends DemonsSlayersRoles {
 	private Status status = null;
 	public Jigoro(Player player) {
 		super(player);
-		for (String desc : AllDesc.Jigoro) owner.sendMessage(desc);
 		this.setCanuseblade(true);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

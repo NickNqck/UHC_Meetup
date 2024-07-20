@@ -29,7 +29,6 @@ public class Kyogai extends DemonsRoles {
 
 	public Kyogai(Player player) {
 		super(player);
-		owner.sendMessage(AllDesc.Kyogai);
 		owner.sendMessage("Pour choisir votre camp il faudra faire la commande: "+ChatColor.GOLD+"/ds role");
 	}
 

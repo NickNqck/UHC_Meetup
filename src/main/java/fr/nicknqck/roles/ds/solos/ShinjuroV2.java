@@ -51,7 +51,6 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
     public ShinjuroV2(Player player) {
         super(player);
         Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
-        player.sendMessage(Desc());
         setCanuseblade(true);
         giveItem(player, false, getItems());
         giveItem(player, true, Items.getLamedenichirin());

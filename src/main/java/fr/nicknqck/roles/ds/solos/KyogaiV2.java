@@ -20,7 +20,6 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 
 	public KyogaiV2(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		owner.getInventory().addItem(getItems());
 		addforce(20);
 	}

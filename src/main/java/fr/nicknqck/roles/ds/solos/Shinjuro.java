@@ -23,7 +23,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 
 	public Shinjuro(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		setMaxHealth(24.0);

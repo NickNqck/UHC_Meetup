@@ -28,7 +28,6 @@ public class JigoroV2 extends DemonsSlayersRoles {
 
 	public JigoroV2(Player player) {
 		super(player);
-		owner.sendMessage(AllDesc.JigoroV2);
 		pacte = Pacte.Non_Choisis;
 		setCanuseblade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
