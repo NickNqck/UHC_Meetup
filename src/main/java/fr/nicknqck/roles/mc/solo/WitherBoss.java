@@ -26,7 +26,6 @@ public class WitherBoss extends UHCMcRoles {
     private boolean passifActive = false;
     public WitherBoss(Player player) {
         super(player);
-        owner.sendMessage(Desc());
     }
     @Override
     public GameState.Roles getRoles() {

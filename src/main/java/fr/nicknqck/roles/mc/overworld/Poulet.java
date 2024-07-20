@@ -23,7 +23,6 @@ public class Poulet extends OverWorldRoles {
 
     public Poulet(Player player) {
         super(player);
-        player.spigot().sendMessage(getComponent());
         giveItem(owner, false, getItems());
     }
 

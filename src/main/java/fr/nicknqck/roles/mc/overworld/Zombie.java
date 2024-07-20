@@ -23,7 +23,6 @@ public class Zombie extends OverWorldRoles {
     private boolean SqueletteSound = false;
     public Zombie(Player player) {
         super(player);
-        owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
     }
     @Override

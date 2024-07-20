@@ -38,7 +38,6 @@ public class Warden extends UHCMcRoles {
     public Warden(Player player) {
         super(player);
         addBonusResi(10.0);
-        owner.sendMessage(Desc());
     }
     @Override
     public GameState.Roles getRoles() {
