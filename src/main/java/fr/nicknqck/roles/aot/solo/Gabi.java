@@ -19,7 +19,6 @@ public class Gabi extends AotRoles {
 	private boolean killshifter = false;
 	public Gabi(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		setCanVoleTitan(true);
 	}

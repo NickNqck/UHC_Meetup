@@ -22,7 +22,6 @@ public class TitanUltime extends TitansRoles {
 	public TitanUltime(Player player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		owner.sendMessage(Desc());
 		setForce(30);
 		gameState.GiveRodTridi(owner);
 	}
