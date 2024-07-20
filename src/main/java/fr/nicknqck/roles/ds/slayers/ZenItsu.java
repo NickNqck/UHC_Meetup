@@ -31,7 +31,7 @@ import java.util.UUID;
 
 public class ZenItsu extends SlayerRoles implements Listener {
     private final ItemStack vitesseItem = new ItemBuilder(Material.NETHER_STAR).setName("§eVitesse").setUnbreakable(true).setDroppable(false).toItemStack();
-    private int cdVitesse, cdPassif, cdEclair;
+    private int cdVitesse = -1, cdPassif = -1, cdEclair;
 
     public ZenItsu(Player player) {
         super(player);

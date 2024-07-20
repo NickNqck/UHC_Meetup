@@ -22,7 +22,6 @@ public class Sanemi extends PillierRoles {
 
 	public Sanemi(Player player) {
 		super(player);
-		for (String desc : AllDesc.Sanemi) owner.sendMessage(desc);
 		setCanuseblade(true);
 	}
 	@Override

@@ -14,7 +14,6 @@ public class Gyomei extends PillierRoles {
 
 	public Gyomei(Player player) {
 		super(player);
-		for (String s : AllDesc.Gyomei) owner.sendMessage(s);
 		this.setForce(20);
 		setMaxHealth(24.0);
 		this.setCanuseblade(true);

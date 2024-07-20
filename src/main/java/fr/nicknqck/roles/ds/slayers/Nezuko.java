@@ -27,7 +27,6 @@ public class Nezuko extends DemonsRoles {
 	boolean jour = false;
 	public Nezuko(Player player) {
 		super(player);
-		for (String desc : AllDesc.Nezuko) owner.sendMessage(desc);
 		regencooldown = 20;
 		this.setForce(20);
 		this.setResi(20);

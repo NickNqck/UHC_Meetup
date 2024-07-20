@@ -20,7 +20,6 @@ public class Kanao extends SlayerRoles {
 
 	public Kanao(Player player) {
 		super(player);
-		for (String desc : AllDesc.Kanao) owner.sendMessage(desc);
 		this.setForce(20);
 		setNoFall(true);
 		this.setCanuseblade(true);

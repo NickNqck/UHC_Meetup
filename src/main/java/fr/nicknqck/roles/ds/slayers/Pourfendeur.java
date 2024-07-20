@@ -32,7 +32,6 @@ public class Pourfendeur extends SlayerRoles {
 	ChatColor color = null;
 	public Pourfendeur(Player player) {
 		super(player);
-		for (String desc : AllDesc.Pourfendeur) owner.sendMessage(desc);
         this.setCanuseblade(true);
         int rint = Main.RANDOM.nextInt(5);
         if (rint == 0) {

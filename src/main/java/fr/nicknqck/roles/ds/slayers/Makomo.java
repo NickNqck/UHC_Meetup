@@ -21,7 +21,6 @@ public class Makomo extends SlayerRoles {
 
 	public Makomo(Player player) {
 		super(player);
-		for (String desc : AllDesc.Makomo) owner.sendMessage(desc);
 		setCanuseblade(true);
 	}
 	@Override

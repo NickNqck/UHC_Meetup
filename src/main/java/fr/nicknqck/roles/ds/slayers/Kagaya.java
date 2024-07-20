@@ -27,7 +27,6 @@ public class Kagaya extends SlayerRoles {
 
 	public Kagaya(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {

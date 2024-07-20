@@ -16,7 +16,6 @@ public class Shinobu extends PillierRoles {
 
 	public Shinobu(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
         this.setCanuseblade(true);
 	}
 	@Override

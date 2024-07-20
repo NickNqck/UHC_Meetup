@@ -15,7 +15,6 @@ public class Obanai extends PillierRoles {
 
 	public Obanai(Player player) {
 		super(player);
-		for (String desc : AllDesc.Obanai) owner.sendMessage(desc);
 		this.setCanuseblade(true);
 	}
 	@Override

@@ -18,7 +18,6 @@ public class Inosuke extends SlayerRoles {
 
 	public Inosuke(Player player) {
 		super(player);
-		for (String desc : AllDesc.Inosuke) owner.sendMessage(desc);
 		this.setForce(20);
 		this.setCanuseblade(true);
 		this.setResi(20);

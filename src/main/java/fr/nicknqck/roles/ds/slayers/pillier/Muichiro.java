@@ -21,7 +21,6 @@ public class Muichiro extends PillierRoles {
 
 	public Muichiro(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setCanuseblade(true);
 	}

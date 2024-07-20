@@ -33,7 +33,6 @@ public class Kanae extends PillierRoles implements Listener {
         this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0 ,20);
         giveItem(player, false, getItems());
         giveItem(player, false, Items.getLamedenichirin());
-        player.spigot().sendMessage(getComponent());
     }
 
     @Override

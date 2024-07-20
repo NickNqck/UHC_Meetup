@@ -18,7 +18,6 @@ public class Hotaru extends SlayerRoles {
 
 	public Hotaru(Player player) {
 		super(player);
-		owner.sendMessage(AllDesc.Hotaru);
 		setLameIncassable(owner, true);
 		setLames(null);
 	}

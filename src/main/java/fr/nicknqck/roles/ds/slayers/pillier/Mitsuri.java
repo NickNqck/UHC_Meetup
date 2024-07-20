@@ -14,7 +14,6 @@ import org.bukkit.potion.PotionEffectType;
 public class Mitsuri extends PillierRoles {
     public Mitsuri(Player player) {
         super(player);
-        owner.sendMessage(Desc());
         setCanuseblade(true);
     }
     @Override

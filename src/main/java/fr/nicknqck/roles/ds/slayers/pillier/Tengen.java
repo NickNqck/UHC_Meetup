@@ -28,7 +28,6 @@ public class Tengen extends PillierRoles {
 
 	public Tengen(Player player) {
 		super(player);
-		owner.sendMessage(AllDesc.Tengen);
 		this.setCanuseblade(true);
 		this.setForce(20);
 	}
