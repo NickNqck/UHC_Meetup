@@ -29,7 +29,6 @@ public class Kakuzu extends AkatsukiRoles {
 	public Kakuzu(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 		ChakrasOwned.put(getChakras(), true);
 		setForce(20);
 		giveItem(owner, false, getItems());

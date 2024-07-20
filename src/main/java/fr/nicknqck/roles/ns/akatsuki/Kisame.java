@@ -31,7 +31,6 @@ public class Kisame extends AkatsukiRoles {
 	public Kisame(Player player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {

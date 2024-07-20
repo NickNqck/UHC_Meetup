@@ -41,7 +41,6 @@ public class Nagato extends AkatsukiRoles {
     public Nagato(Player player) {
         super(player);
         setChakraType(Chakras.SUITON);
-        player.sendMessage(Desc());
         super.setForce(20.0);
     }
     @Override

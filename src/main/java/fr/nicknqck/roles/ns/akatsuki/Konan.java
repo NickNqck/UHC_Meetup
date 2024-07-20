@@ -32,7 +32,6 @@ public class Konan extends AkatsukiRoles {
 		super(player);
 		setChakraType(Chakras.SUITON);
 		setTeam(TeamList.Akatsuki);
-		owner.sendMessage(Desc());
 		setNoFall(true);
 	}
 	@Override

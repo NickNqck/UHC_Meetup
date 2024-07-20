@@ -26,7 +26,6 @@ public class Hidan extends AkatsukiRoles {
 	public Hidan(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {

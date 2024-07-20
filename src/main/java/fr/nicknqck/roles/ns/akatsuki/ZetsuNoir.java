@@ -21,7 +21,6 @@ public class ZetsuNoir extends AkatsukiRoles {
 	public ZetsuNoir(Player player) {
 		super(player);
 		setChakraType(Chakras.DOTON);
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {

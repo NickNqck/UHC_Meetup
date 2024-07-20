@@ -25,7 +25,6 @@ public class ZetsuBlanc extends AkatsukiRoles {
 	public ZetsuBlanc(Player player) {
 		super(player);
 		setChakraType(Chakras.DOTON);
-		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 	}
 	@Override

@@ -39,7 +39,6 @@ public class Deidara extends AkatsukiRoles {
 	public Deidara(Player player) {
 		super(player);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON));
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {

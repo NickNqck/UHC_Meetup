@@ -44,7 +44,6 @@ public class Itachi extends AkatsukiRoles {
 	public Itachi(Player player) {
 		super(player);
 		setChakraType(Chakras.KATON);
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {
