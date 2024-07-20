@@ -20,7 +20,6 @@ public class Doma extends DemonsRoles {
 
 	public Doma(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		this.setForce(20);
 		this.setResi(20);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

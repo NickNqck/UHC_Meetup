@@ -15,7 +15,6 @@ public class Susamaru extends DemonsRoles {
 
 	public Susamaru(Player player) {
 		super(player);
-		for (String desc : AllDesc.Susamaru)owner.sendMessage(desc);
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import fr.nicknqck.roles.desc.AllDesc;
 public class Enmu extends DemonsRoles {
 	public Enmu(Player player) {
 		super(player);
-		owner.sendMessage(AllDesc.Enmu);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {

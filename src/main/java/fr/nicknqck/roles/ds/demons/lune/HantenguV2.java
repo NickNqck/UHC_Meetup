@@ -26,7 +26,6 @@ public class HantenguV2 extends DemonsRoles {
 		super(player);
 		clone = Clone.Hantengu;
 		owner.getInventory().addItem(Items.getMaterialisationEmotion());
-		owner.sendMessage(AllDesc.HantenguV2);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {

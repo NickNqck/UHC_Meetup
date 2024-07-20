@@ -27,7 +27,6 @@ public class Kumo extends DemonsRoles {
 
 	public Kumo(Player player) {
 		super(player);
-		owner.sendMessage(AllDesc.Kumo);
 	}
 
 	@Override

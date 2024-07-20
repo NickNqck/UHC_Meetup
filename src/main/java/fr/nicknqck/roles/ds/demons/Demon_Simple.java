@@ -16,7 +16,6 @@ public class Demon_Simple extends DemonsRoles {
 	public Demon_Simple(Player player) {
 		super(player);
 		setForce(20);
-		owner.sendMessage(Desc());
 	}
 
 	@Override

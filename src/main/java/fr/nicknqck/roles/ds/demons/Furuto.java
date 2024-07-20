@@ -22,7 +22,6 @@ public class Furuto extends DemonsRoles {
 
 	public Furuto(Player player) {
 		super(player);
-		owner.sendMessage(AllDesc.Furuto);
 	}
 	@Override
 	public TeamList getOriginTeam() {

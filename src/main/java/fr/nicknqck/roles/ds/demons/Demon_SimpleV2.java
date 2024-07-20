@@ -23,7 +23,6 @@ public class Demon_SimpleV2 extends DemonsRoles {
 	public Demon_SimpleV2(Player player) {
 		super(player);
 		setForce(20);
-		owner.sendMessage(AllDesc.Demon_SimpleV2);
 	}
 	@Override
 	public TeamList getOriginTeam() {

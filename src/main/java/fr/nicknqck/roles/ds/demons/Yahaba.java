@@ -3,10 +3,10 @@ package fr.nicknqck.roles.ds.demons;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.ds.builders.DemonType;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,19 +26,9 @@ public class Yahaba extends DemonsRoles {
 	public Yahaba(Player player) {
 		super(player);
 		setForce(20);
-		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
             List<Player> Ciblable = new ArrayList<>(gameState.getInGamePlayers());
 			Collections.shuffle(Ciblable, Main.RANDOM);
-			for (Player p : Ciblable) {
-				if (!gameState.hasRoleNull(p)) {
-					if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles) {
-
-					} else {
-						
-					}
-				}
-			}
 			Ciblable.stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getPlayerRoles().get(p).getRoles().getTeam().equals(TeamList.Slayer));
 			owner.sendMessage("§7Votre §ccible§7 est "+(cible != null ? cible.getDisplayName() : "inexistante"));
 		}, 60L);

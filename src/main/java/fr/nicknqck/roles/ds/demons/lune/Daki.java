@@ -23,7 +23,6 @@ public class Daki extends DemonsRoles {
 
 	public Daki(Player player) {
 		super(player);
-		for (String desc : AllDesc.Daki) owner.sendMessage(desc);
 		this.setForce(20);
 		setCanRespawn(true);
 		this.setResi(20);

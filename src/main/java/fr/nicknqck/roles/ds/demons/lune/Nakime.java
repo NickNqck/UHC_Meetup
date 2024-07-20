@@ -34,7 +34,6 @@ public class Nakime extends DemonsRoles {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 	        Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
 		}
-        owner.sendMessage(Desc());
         Main.getInstance().nakime = Bukkit.getWorld("nakime");
 	}
 

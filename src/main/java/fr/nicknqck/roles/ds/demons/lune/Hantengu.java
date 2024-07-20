@@ -30,7 +30,6 @@ public class Hantengu extends DemonsRoles {
 private int killforce = 0;
 	public Hantengu(Player player) {
 		super(player);
-		for (String desc : AllDesc.Hantengu) owner.sendMessage(desc);
 		this.setForce(20 + killforce);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {

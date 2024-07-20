@@ -21,7 +21,6 @@ public class Muzan extends DemonsRoles {
 	int regencooldown = 0;
 	public Muzan(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		regencooldown = 10;
 		addforce(20);//pour contre balancer le onday qui retire 20% de force
 	}

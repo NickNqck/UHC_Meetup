@@ -14,7 +14,6 @@ public class Akaza extends DemonsRoles {
 	
 	public Akaza(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		this.setForce(20);
 	}
 

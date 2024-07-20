@@ -21,7 +21,6 @@ public class Gyutaro extends RoleBase{
 
 	public Gyutaro(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		this.setForce(20);
 		setCanRespawn(true);
 		this.setResi(20);
