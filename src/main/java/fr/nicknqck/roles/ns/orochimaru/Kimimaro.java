@@ -23,7 +23,6 @@ public class Kimimaro extends OrochimaruRoles {
 	public Kimimaro(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 	}
 

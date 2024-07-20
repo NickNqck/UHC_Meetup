@@ -31,7 +31,6 @@ public class Suigetsu extends OrochimaruRoles {
 	public Suigetsu(Player player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
-		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);

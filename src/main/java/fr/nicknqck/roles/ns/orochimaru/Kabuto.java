@@ -30,7 +30,6 @@ public class Kabuto extends OrochimaruRoles {
 
 	public Kabuto(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {

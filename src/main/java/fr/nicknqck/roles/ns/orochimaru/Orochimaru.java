@@ -36,7 +36,6 @@ public class Orochimaru extends OrochimaruRoles {
 		super(player);
 		setChakraType(getRandomChakras());
 		chakrasVoled.add(getChakras());
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public Roles getRoles() {

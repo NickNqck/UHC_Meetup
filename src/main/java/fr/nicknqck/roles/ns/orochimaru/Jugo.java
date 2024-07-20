@@ -21,7 +21,6 @@ public class Jugo extends Orochimaru {
 	public Jugo(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);

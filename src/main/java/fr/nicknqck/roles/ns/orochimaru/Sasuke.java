@@ -51,7 +51,6 @@ public class Sasuke extends OrochimaruRoles {
 	public Sasuke(Player player) {
 		super(player);
 		setChakraType(Chakras.KATON);
-		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);

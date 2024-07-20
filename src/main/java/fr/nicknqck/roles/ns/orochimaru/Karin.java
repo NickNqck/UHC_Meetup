@@ -25,7 +25,6 @@ public class Karin extends OrochimaruRoles {
 	public Karin(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 		timePassedNearby.clear();
 	}
 	@Override
