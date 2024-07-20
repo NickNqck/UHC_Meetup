@@ -27,7 +27,6 @@ public class TitanBestial extends TitansRoles {
 	private final HashMap<UUID, Integer> timePassed = new HashMap<>();
 	public TitanBestial(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		canShift = true;
 		gameState.GiveRodTridi(owner);
 		TitanListener.getInstance().setBestial(owner.getUniqueId());

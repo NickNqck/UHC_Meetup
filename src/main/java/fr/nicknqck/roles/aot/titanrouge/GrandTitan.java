@@ -19,7 +19,6 @@ public class GrandTitan extends TitansRoles {
 	public GrandTitan(Player player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

@@ -16,7 +16,6 @@ import java.util.List;
 public class TitanDeviant extends TitansRoles {
 	public TitanDeviant(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

@@ -20,7 +20,6 @@ public class PetitTitan extends TitansRoles {
 	public PetitTitan(Player player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 		}
 	@Override

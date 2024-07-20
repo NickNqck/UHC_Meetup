@@ -15,7 +15,6 @@ public class Jelena extends TitansRoles {
 
 	public Jelena(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override

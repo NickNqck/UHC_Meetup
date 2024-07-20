@@ -17,7 +17,6 @@ public class TitanSouriant extends TitansRoles {
 
 	public TitanSouriant(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.GiveRodTridi(owner);
 	}
 	@Override
