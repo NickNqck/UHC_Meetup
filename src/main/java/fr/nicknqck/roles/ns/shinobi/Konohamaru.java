@@ -29,7 +29,6 @@ public class Konohamaru extends ShinobiRoles {
 		super(player);
 		setChakraType(Chakras.KATON);
 		giveItem(owner, false, getItems());
-		owner.sendMessage(Desc());
 		
 	}
 	@Override

@@ -23,7 +23,6 @@ public class KillerBee extends ShinobiRoles {
 	public KillerBee(Player player) {
 		super(player);
 		setChakraType(Chakras.RAITON);
-		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 	}
 	@Override

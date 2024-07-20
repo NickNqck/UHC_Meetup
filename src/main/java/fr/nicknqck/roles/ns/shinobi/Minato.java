@@ -30,7 +30,6 @@ public class Minato extends ShinobiRoles {
 		super(player);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.KATON);
-		owner.sendMessage(Desc());
 		setCanBeHokage(true);
 	}
 	private Location Kunai = null;

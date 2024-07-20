@@ -30,7 +30,6 @@ public class Jiraya extends ShinobiRoles {
 	public Jiraya(Player player) {
 		super(player);
 		setChakraType(Chakras.KATON);
-		owner.sendMessage(Desc());
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "nakime Gamabunta8vzqzZvv189Zbxc:!");
 		setCanBeHokage(true);

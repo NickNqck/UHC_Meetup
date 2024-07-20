@@ -20,7 +20,6 @@ public class YondaimeRaikage extends ShinobiRoles {
 	public YondaimeRaikage(Player player) {
 		super(player);
 		setChakraType(Chakras.RAITON);
-		owner.sendMessage(Desc());
 	}
 
 	@Override

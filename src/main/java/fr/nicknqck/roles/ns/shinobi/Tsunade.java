@@ -29,7 +29,6 @@ public class Tsunade extends ShinobiRoles {
 	public Tsunade(Player player) {
 		super(player);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
-		owner.sendMessage(Desc());
 		setCanBeHokage(true);
 	}
 	@Override

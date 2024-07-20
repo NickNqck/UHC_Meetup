@@ -22,7 +22,6 @@ public class Gai extends ShinobiRoles {
 	public Gai(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 		setCanBeHokage(true);
 	}

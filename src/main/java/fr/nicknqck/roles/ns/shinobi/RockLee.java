@@ -26,7 +26,6 @@ public class RockLee extends ShinobiRoles {
 	public RockLee(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () ->{
 			if (!gameState.attributedRole.contains(Roles.Gai)) {

@@ -21,7 +21,6 @@ public class Asuma extends ShinobiRoles {
 	public Asuma(Player player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
-		owner.sendMessage(Desc());
 		setCanBeHokage(true);
 	}
 	@Override

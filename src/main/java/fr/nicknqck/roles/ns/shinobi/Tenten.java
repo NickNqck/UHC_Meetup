@@ -23,7 +23,6 @@ public class Tenten extends ShinobiRoles {
 	public Tenten(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 	}
 

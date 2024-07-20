@@ -37,7 +37,6 @@ public class Shikamaru extends ShinobiRoles {
     public Shikamaru(Player player) {
         super(player);
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
-        owner.sendMessage(Desc());
         new StunExecutable(this);
     }
     @Override

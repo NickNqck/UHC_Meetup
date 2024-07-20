@@ -23,7 +23,6 @@ public class Ino extends ShinobiRoles {
     public Ino(Player player) {
         super(player);
         setChakraType(getRandomChakras());
-        owner.sendMessage(Desc());
         giveItem(owner, false, getItems());
     }
     @Override

@@ -51,7 +51,6 @@ public class Kurenai extends ShinobiRoles {
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
         setChakraType(getRandomChakras());
-        owner.sendMessage(Desc());
         setCanBeHokage(true);
     }
 

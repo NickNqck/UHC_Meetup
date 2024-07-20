@@ -32,7 +32,6 @@ public class Naruto extends ShinobiRoles {
 	public Naruto(Player player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
-		owner.sendMessage(Desc());
 		setCanBeHokage(true);
 	}
 	@Override
