@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 public class Bertolt extends MahrRoles {
 	public Bertolt(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		TitanListener.getInstance().setColossal(owner.getUniqueId());

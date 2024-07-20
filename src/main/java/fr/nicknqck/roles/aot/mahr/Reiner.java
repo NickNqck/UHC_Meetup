@@ -13,7 +13,6 @@ public class Reiner extends MahrRoles {
 
 	public Reiner(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		Titans.Cuirasse.getTitan().getListener().setCuirasse(owner.getUniqueId());

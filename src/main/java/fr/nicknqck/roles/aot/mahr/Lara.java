@@ -13,7 +13,6 @@ public class Lara extends MahrRoles {
 
 	public Lara(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		Titans.WarHammer.getTitan().getListener().setWarHammer(owner.getUniqueId());

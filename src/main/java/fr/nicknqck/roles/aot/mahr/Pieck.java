@@ -15,7 +15,6 @@ public class Pieck extends MahrRoles {
 
 	public Pieck(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		if (owner.getName().equalsIgnoreCase("BoulotPieck")) {
 			sendMessageAfterXseconde(owner, "On dirait que tu Boulot ton propre role, y'a de quoi rire LOL (:jadorerire)", 5);

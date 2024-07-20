@@ -19,7 +19,6 @@ public class Magath extends MahrRoles {
 
 	public Magath(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		giveHealedHeartatInt(4.0);
 		toSearch = null;
 		gameState.GiveRodTridi(owner);

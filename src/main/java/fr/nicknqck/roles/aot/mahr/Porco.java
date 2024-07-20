@@ -13,7 +13,6 @@ public class Porco extends MahrRoles {
 
 	public Porco(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);
 		Titans.Machoire.getTitan().getListener().setMachoire(owner.getUniqueId());
