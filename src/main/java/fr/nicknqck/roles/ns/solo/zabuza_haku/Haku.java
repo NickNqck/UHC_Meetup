@@ -36,7 +36,6 @@ public class Haku extends NSRoles {
 	public Haku(Player player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
-		owner.sendMessage(Desc());
 		setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Zabuza)) {

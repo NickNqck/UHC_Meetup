@@ -38,7 +38,6 @@ public class Danzo extends NSRoles {
 	public Danzo(Player player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
-		owner.sendMessage(Desc());
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {

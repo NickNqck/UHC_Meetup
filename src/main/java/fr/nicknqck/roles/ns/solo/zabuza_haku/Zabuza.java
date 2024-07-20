@@ -33,7 +33,6 @@ public class Zabuza extends NSRoles {
 		super(player);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.SUITON);
-		owner.sendMessage(Desc());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Haku)) {
 				onHakuDeath(false);

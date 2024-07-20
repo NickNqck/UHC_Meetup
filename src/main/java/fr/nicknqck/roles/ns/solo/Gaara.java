@@ -40,7 +40,6 @@ public class Gaara extends NSRoles {
 
     public Gaara(Player player) {
 		super(player);
-		owner.sendMessage(Desc());
 		setNoFall(true);
 		resetCooldown();
 	}

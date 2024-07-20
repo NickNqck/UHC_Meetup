@@ -38,7 +38,6 @@ public class Kinkaku extends NSRoles {
     public Kinkaku(Player player) {
         super(player);
         super.setChakraType(super.getRandomChakras());
-        owner.sendMessage(Desc());
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(GameState.Roles.Ginkaku)){
                 givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);

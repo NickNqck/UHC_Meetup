@@ -45,7 +45,6 @@ public class Obito extends NSRoles {
 	public Obito(Player player) {
 		super(player);
 		setChakraType(Chakras.KATON);
-		owner.sendMessage(Desc());
 		giveItem(owner, false, getItems());
 		if (!gameState.attributedRole.contains(Roles.Kakashi)) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
