@@ -54,14 +54,15 @@ public class Tanjiro extends SlayerRoles implements Listener {
         giveItem(player, false, Items.getLamedenichirin());
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
-        AutomaticDesc desc = new AutomaticDesc(player.getUniqueId(), this);
+        AutomaticDesc desc = new AutomaticDesc(this);
         Map<TextComponent, Integer> test = new HashMap<>();
         test.put(getSentir(), 60*5);
         test.put(getSentirJoueur(), -500);
         test.put(getAssassin(), -500);
         desc.addEffects(getEffects()).addItem(this.getDanseText(), 60*12);
         desc.addCommands(test);
-        player.spigot().sendMessage(desc.getFinalDesc().get(player.getUniqueId()));
+        player.spigot().sendMessage(desc.getList().get(0));
+
     }
 
     @Override
