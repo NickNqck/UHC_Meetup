@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -35,7 +36,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Tanjiro extends SlayerRoles implements Listener {
@@ -44,7 +47,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private boolean sentirUse, useAssassin;
     public Tanjiro(Player player) {
         super(player);
-        player.spigot().sendMessage(getComponent());
         getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
@@ -52,6 +54,14 @@ public class Tanjiro extends SlayerRoles implements Listener {
         giveItem(player, false, Items.getLamedenichirin());
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
+        AutomaticDesc desc = new AutomaticDesc(player.getUniqueId(), this);
+        Map<TextComponent, Integer> test = new HashMap<>();
+        test.put(getSentir(), 60*5);
+        test.put(getSentirJoueur(), -500);
+        test.put(getAssassin(), -500);
+        desc.addEffects(getEffects()).addItem(this.getDanseText(), 60*12);
+        desc.addCommands(test);
+        player.spigot().sendMessage(desc.getFinalDesc().get(player.getUniqueId()));
     }
 
     @Override
@@ -72,9 +82,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
 
     @Override
     public String[] Desc() {
-        return new String[] {
-
-        };
+        return new String[0];
     }
     @Override
     public TextComponent getComponent() {
@@ -88,15 +96,12 @@ public class Tanjiro extends SlayerRoles implements Listener {
         texte.addExtra(getDanseText());
         texte.addExtra("§7 (1x/12m).\n\n");
 
-        TextComponent dsSentir = new TextComponent("§c/ds sentir");
-        dsSentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Vous permet de savoir combien il y a de§c démon§7 dans un rayon de§c 30 blocs§7 autours de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
-        dsSentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir"));
+
         texte.addExtra(AllDesc.point+"§7Vous avez accès aux commandes ");
-        texte.addExtra(dsSentir);
-        texte.addExtra("§7 (1x/5m), ");
         texte.addExtra(getSentir());
         texte.addExtra("§7 (1x/5m), ");
+        texte.addExtra(getSentirJoueur());
+        texte.addExtra("§7 (1x/partie), ");
         texte.addExtra(getAssassin());
         texte.addExtra("§7 (1x/partie)\n\n"+AllDesc.point);
         texte.addExtra(getKillAssassin());
@@ -104,6 +109,13 @@ public class Tanjiro extends SlayerRoles implements Listener {
         return texte;
     }
     private TextComponent getSentir() {
+        TextComponent dsSentir = new TextComponent("§c/ds sentir");
+        dsSentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
+                "§7Vous permet de savoir combien il y a de§c démon§7 dans un rayon de§c 30 blocs§7 autours de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
+        dsSentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir"));
+        return dsSentir;
+    }
+    private TextComponent getSentirJoueur() {
         TextComponent sentir = new TextComponent("§c/ds §csentir <joueur>");
         sentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
                 "§7Vous permet de savoir si un joueur est un§c démons§7 ou non (§aNezuko§7 est compter comme§c démon§7). (1x/partie)")}));
@@ -122,7 +134,9 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getDanseText() {
         TextComponent danseItem = new TextComponent(" §7\"§6Danse §6du dieu §6du Feu§7\"");
         danseItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "")}));
+                "§7Vous obtenez les effets§b Résistance I§7 et§b Fire Résistance I§7 pendant§c 5 minutes\n"
+                +"§7Vos coup mettront en§c feu§7 pendant§c 1 minute§7 (1x/12m)."
+        )}));
         return danseItem;
     }
     private TextComponent getKillAssassin() {
