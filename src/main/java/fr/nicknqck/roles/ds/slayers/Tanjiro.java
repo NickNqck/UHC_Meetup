@@ -36,10 +36,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Tanjiro extends SlayerRoles implements Listener {
     private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
@@ -55,13 +52,13 @@ public class Tanjiro extends SlayerRoles implements Listener {
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
-        Map<TextComponent, Integer> test = new HashMap<>();
+        Map<TextComponent, Integer> test = new LinkedHashMap<>();
         test.put(getSentir(), 60*5);
         test.put(getSentirJoueur(), -500);
         test.put(getAssassin(), -500);
         desc.addEffects(getEffects()).addItem(this.getDanseText(), 60*12);
         desc.addCommands(test);
-        player.spigot().sendMessage(desc.getList().get(0));
+        player.spigot().sendMessage(desc.getText());
 
     }
 
