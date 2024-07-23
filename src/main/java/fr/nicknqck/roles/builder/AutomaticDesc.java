@@ -2,7 +2,6 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -49,27 +48,35 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n\n" + AllDesc.point + "§7Vous avez accès aux commandes: "));
 
         Iterator<Map.Entry<TextComponent, Integer>> iterator = textAndCooldown.entrySet().iterator();
-        boolean first = false;
+        boolean first = true;
         while (iterator.hasNext()) {
             if (textAndCooldown.isEmpty()) return;
 
             Map.Entry<TextComponent, Integer> entry = iterator.next();
             TextComponent textComponent = entry.getKey();
             Integer cooldown = entry.getValue();
-            if (!first) text.addExtra("\n\n");
-            first = true;
-            text.addExtra(AllDesc.tab+" ");
+
+            if (!first) {
+                text.addExtra(new TextComponent("\n"));
+            } else {
+                first = false;
+                text.addExtra("\n");
+            }
+            text.addExtra("\n");
+            text.addExtra(AllDesc.tab + " ");
             text.addExtra(new TextComponent(textComponent));
 
             StringBuilder suffix = new StringBuilder("§7");
             if (cooldown != null) {
-                suffix.append(" §7(1x/").append(cooldown != -500 ? StringUtils.secondsTowardsBeautiful(cooldown) : ChatColor.GRAY + "partie").append("§7)");
+                suffix.append(" §7(1x/");
+                suffix.append(cooldown != -500 ? StringUtils.secondsTowardsBeautiful(cooldown) : "partie");
+                suffix.append("§7)");
             }
-            suffix.append(iterator.hasNext() ? "§7,\n\n " : "§7.");
-
+            suffix.append(iterator.hasNext() ? ", " : ".");
             text.addExtra(new TextComponent(suffix.toString()));
         }
     }
+
 
     public TextComponent getText(){
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
