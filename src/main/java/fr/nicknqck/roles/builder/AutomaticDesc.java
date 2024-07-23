@@ -26,6 +26,9 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n§7Votre objectif est de gagner avec le camp: "+role.getTeam().getColor()+role.getTeam().name()));
     }
     public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
+        for (EffectWhen effectWhen : map.values()) {
+
+        }
         for (PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
             text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(effect)+"§7 "+(when.equals(EffectWhen.PERMANENT) ? "de manière§c permanente" : when.equals(EffectWhen.DAY) ? "le§c jour" : "la§c nuit")));
