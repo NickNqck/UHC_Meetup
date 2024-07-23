@@ -26,14 +26,12 @@ dependencies {
     compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
-    implementation 'fr.mrmicky:FastParticles:2.0.0'
   ///  implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.11.3'
     //  implementation files('D:\\Directorty\\Nakime Fiesta\\libs\\bukkitapi-1.0.jar')
     compileOnly files('T:\\Bureau\\Dev\\Serv\\serveur de test\\spigot.jar')
 }
 
 shadowJar {
-    relocate 'fr.mrmicky.fastparticles', 'fr.nicknqck.utils.particles'
     // 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
 }
 
