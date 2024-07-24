@@ -42,6 +42,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdDanse, cdSentir;
     private boolean sentirUse, useAssassin;
+    private final TextComponent automaticDesc;
     public Tanjiro(Player player) {
         super(player);
         getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
@@ -56,10 +57,12 @@ public class Tanjiro extends SlayerRoles implements Listener {
         test.put(getSentir(), 60*5);
         test.put(getSentirJoueur(), -500);
         test.put(getAssassin(), -500);
-        desc.addEffects(getEffects()).addItem(this.getDanseText(), 60*12);
-        desc.addCommands(test);
+        desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
+        .addItem(this.getDanseText(), 60*12)
+        .addCommands(test)
+        .addParticularite(this.getKillAssassin().getHoverEvent());
         player.spigot().sendMessage(desc.getText());
-
+        this.automaticDesc = desc.getText();
     }
 
     @Override
@@ -84,7 +87,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
     @Override
     public TextComponent getComponent() {
-        TextComponent texte = new TextComponent(AllDesc.bar);
+ /*       TextComponent texte = new TextComponent(AllDesc.bar);
         texte.addExtra("\n");
         texte.addExtra("§7Role: §aTanjiro\n");
         texte.addExtra("§7Votre objectif est de gagner avec le camp: §aSlayers\n");
@@ -103,8 +106,8 @@ public class Tanjiro extends SlayerRoles implements Listener {
         texte.addExtra(getAssassin());
         texte.addExtra("§7 (1x/partie)\n\n"+AllDesc.point);
         texte.addExtra(getKillAssassin());
-        texte.addExtra("\n\n"+AllDesc.bar);
-        return texte;
+        texte.addExtra("\n\n"+AllDesc.bar);*/
+        return automaticDesc;
     }
     private TextComponent getSentir() {
         TextComponent dsSentir = new TextComponent("§c/ds sentir");

@@ -7,7 +7,8 @@ public enum EffectWhen {
     DAY("Jour"),
     NIGHT("Nuit"),
     PERMANENT("Permanent"),
-    AT_KILL("En tuant un joueur");
+    AT_KILL("En tuant un joueur"),
+    MID_LIFE("Moins de 5 coeurs");
     private final String name;
     EffectWhen(String name) {
         this.name = name;

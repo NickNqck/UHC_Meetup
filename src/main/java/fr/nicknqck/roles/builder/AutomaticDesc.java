@@ -2,10 +2,12 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -19,19 +21,31 @@ public class AutomaticDesc {
         addRoleName();
         addObjectif();
     }
-    public void addRoleName() {
+    private void addRoleName() {
         text.addExtra(new TextComponent("\n§7Role: "+role.getTeam().getColor()+role.getName()));
     }
-    public void addObjectif() {
+    private void addObjectif() {
         text.addExtra(new TextComponent("\n§7Votre objectif est de gagner avec le camp: "+role.getTeam().getColor()+role.getTeam().name()));
     }
-    public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
-        for (EffectWhen effectWhen : map.values()) {
-
+    public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {
+        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+getWhenString(when)));
+        return this;
+    }
+    public AutomaticDesc addEffects(EffectWhen when, PotionEffect... potionEffects) {
+        StringBuilder sb = new StringBuilder();
+        text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez les effets ");
+        Iterator<PotionEffect> iterator = Arrays.stream(potionEffects).iterator();
+        while (iterator.hasNext()) {
+            sb.append("§c"+getPotionEffectNameWithRomanLevel(iterator.next()));
+            sb.append(iterator.hasNext() ?"§7, " : getWhenString(when));
         }
+        text.addExtra(sb.toString());
+        return this;
+    }
+    public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
         for (PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
-            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(effect)+"§7 "+(when.equals(EffectWhen.PERMANENT) ? "de manière§c permanente" : when.equals(EffectWhen.DAY) ? "le§c jour" : "la§c nuit")));
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(effect)+"§7 ")+getWhenString(when));
         }
         return this;
     }
@@ -47,13 +61,13 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("§7"+(cooldown > 0 ? "(1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
-    public void addCommands(Map<TextComponent, Integer> textAndCooldown) {
+    public AutomaticDesc addCommands(Map<TextComponent, Integer> textAndCooldown) {
         text.addExtra(new TextComponent("\n\n" + AllDesc.point + "§7Vous avez accès aux commandes: "));
 
         Iterator<Map.Entry<TextComponent, Integer>> iterator = textAndCooldown.entrySet().iterator();
         boolean first = true;
         while (iterator.hasNext()) {
-            if (textAndCooldown.isEmpty()) return;
+            if (textAndCooldown.isEmpty()) return this;
 
             Map.Entry<TextComponent, Integer> entry = iterator.next();
             TextComponent textComponent = entry.getKey();
@@ -78,12 +92,33 @@ public class AutomaticDesc {
             suffix.append(iterator.hasNext() ? ", " : ".");
             text.addExtra(new TextComponent(suffix.toString()));
         }
+        return this;
     }
-
-
+    public AutomaticDesc addParticularite(HoverEvent particularite) {
+        text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez une particularité: ");
+        TextComponent part = new TextComponent("§b[?]");
+        part.setHoverEvent(particularite);
+        text.addExtra(part);
+        return this;
+    }
+    public AutomaticDesc addParticularites(HoverEvent... hoverEvents) {
+        text.addExtra("\n\n"+AllDesc.point+"§7Voud possédez §c"+hoverEvents.length+"§7 particularités: ");
+        int i = 1;
+        for (HoverEvent hover : hoverEvents) {
+            TextComponent toAdd = new TextComponent("§b["+i+"]");
+            toAdd.setHoverEvent(hover);
+            i++;
+            text.addExtra(toAdd);
+            text.addExtra("§7, ");
+        }
+        return this;
+    }
     public TextComponent getText(){
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
         return text;
+    }
+    private String getWhenString(EffectWhen when) {
+      return (when.equals(EffectWhen.PERMANENT) ? "de manière§c permanente" : when.equals(EffectWhen.DAY) ? "le§c jour" : when.equals(EffectWhen.NIGHT) ? "la§c nuit" : " en ayant moins de §c5"+AllDesc.coeur);
     }
     private String getPotionEffectNameWithRomanLevel(PotionEffect potionEffect) {
         if (potionEffect == null || potionEffect.getType() == null) {
