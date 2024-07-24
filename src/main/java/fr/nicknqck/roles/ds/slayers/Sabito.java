@@ -3,11 +3,16 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.DemonMain;
 import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
@@ -18,16 +23,30 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Sabito extends SlayerRoles {
-
+	private final TextComponent automaticDesc;
 	public Sabito(Player player) {
 		super(player);
 		this.setCanuseblade(true);
 		this.setResi(20);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0), EffectWhen.NIGHT)
+				.addItem(this.SoufleComponent(), 60*5)
+				.addParticularites(
+						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Si vous tuez le joueur possédant le rôle de§c Demon Main§7 le cooldown de votre \"§6Soufle de l'eau§7\" sera réduit de§c 30 secondes§7.")}),
+						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§a Tomioka§7 votre cooldown \"§6Soufle de l'eau§7\" sera réduit de§c 30 secondes§7, également, ce dernier vous donnerea§b Speed 2§7.")})
+				);
+		this.automaticDesc = automaticDesc.getText();
+		player.spigot().sendMessage(this.automaticDesc);
 	}
 	@Override
 	public Roles getRoles() {
 		return Roles.Sabito;
 	}
+
+	@Override
+	public TextComponent getComponent() {
+		return this.automaticDesc;
+	}
+
 	private int souflecooldown = 0;
 	private boolean killdemon = false;
 	private boolean dietomioka = false;
@@ -116,7 +135,7 @@ public class Sabito extends SlayerRoles {
 						if (r instanceof DemonMain && !killdemon) {
 							killdemon = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+"Demon Main "+ChatColor.GRAY+"vous obtenez donc force 1 en utilisant votre Soufle de L'eau également son cooldown est réduit de 30 secondes");
-							}
+						}
 					}
 			}
 		}
@@ -126,6 +145,11 @@ public class Sabito extends SlayerRoles {
 
 	@Override
 	public String getName() {
-		return "§aSabito";
+		return "Sabito";
 	}
-}
+	private TextComponent SoufleComponent() {
+		TextComponent text = new TextComponent("§7\"§cSoufle de l'eau§7\"");
+		text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous donne l'effet§b Speed "+(!dietomioka ? "I" : "II")+"§7.")}));
+		return text;
+	}
+ }

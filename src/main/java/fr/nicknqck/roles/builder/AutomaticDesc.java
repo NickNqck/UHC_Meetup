@@ -31,12 +31,16 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+getWhenString(when)));
         return this;
     }
+    public AutomaticDesc addCustomWhenEffect(PotionEffect potionEffect, String when) {
+        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+when));
+        return this;
+    }
     public AutomaticDesc addEffects(EffectWhen when, PotionEffect... potionEffects) {
         StringBuilder sb = new StringBuilder();
         text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez les effets ");
         Iterator<PotionEffect> iterator = Arrays.stream(potionEffects).iterator();
         while (iterator.hasNext()) {
-            sb.append("§c"+getPotionEffectNameWithRomanLevel(iterator.next()));
+            sb.append("§c").append(getPotionEffectNameWithRomanLevel(iterator.next()));
             sb.append(iterator.hasNext() ?"§7, " : getWhenString(when));
         }
         text.addExtra(sb.toString());
@@ -49,15 +53,15 @@ public class AutomaticDesc {
         }
         return this;
     }
-    public AutomaticDesc addItem(TextComponent text, int cooldown) {
+    public AutomaticDesc addItem(TextComponent textComponent, int cooldown) {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item "));
-        text.addExtra(text);
-        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? "(1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
+        text.addExtra(textComponent);
+        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
-    public AutomaticDesc addCommand(TextComponent text, int cooldown) {
+    public AutomaticDesc addCommand(TextComponent textComponent, int cooldown) {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous avez accès à la commande: "));
-        text.addExtra(new TextComponent(text));
+        text.addExtra(new TextComponent(textComponent));
         text.addExtra(new TextComponent("§7"+(cooldown > 0 ? "(1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
@@ -128,6 +132,13 @@ public class AutomaticDesc {
         int amplifier = potionEffect.getAmplifier();
         String effectName = capitalizeFirstLetter(type.getName().toLowerCase().replace('_', ' '));
         String romanLevel = getRomanNumeral(amplifier + 1);
+        if (type.equals(PotionEffectType.INCREASE_DAMAGE)) {
+            effectName = "Force";
+        } else if (type.equals(PotionEffectType.DAMAGE_RESISTANCE)) {
+            effectName = "Resistance";
+        } else if (type.equals(PotionEffectType.FAST_DIGGING)) {
+            effectName = "Haste";
+        }
         return effectName + " " + romanLevel;
     }
 

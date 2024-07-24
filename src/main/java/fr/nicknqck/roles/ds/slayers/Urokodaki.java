@@ -3,10 +3,14 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,11 +21,17 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Random;
 
 public class Urokodaki extends SlayerRoles {
-
+	private final TextComponent automaticDesc;
 	public Urokodaki(Player player) {
 		super(player);
 		this.setCanuseblade(true);
 		setForce(20);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this);
+		automaticDesc.addCustomWhenEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, false), "dans l'§beau").addItem(
+				this.SoufleComponent(), 60*5
+		);
+		this.automaticDesc = automaticDesc.getText();
+		player.spigot().sendMessage(this.automaticDesc);
 	}
 
     @Override
@@ -33,6 +43,12 @@ public class Urokodaki extends SlayerRoles {
 	public void resetCooldown() {
 		souflecooldown = 0;
 	}
+
+	@Override
+	public TextComponent getComponent() {
+		return this.automaticDesc;
+	}
+
 	@Override
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getLamedenichirin());
@@ -72,7 +88,7 @@ public class Urokodaki extends SlayerRoles {
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*2, 0, false, false));
 				owner.sendMessage("Activation de votre: "+ChatColor.GOLD+owner.getItemInHand().getItemMeta().getDisplayName());
 				souflecooldown = 60*5;
-			}else {
+			} else {
 				int s = souflecooldown%60;
 				int m = souflecooldown/60;
 				owner.sendMessage(ChatColor.RED+"Vous ne pourrez utiliser a nouveau votre abilité que dans "+ChatColor.GOLD+m+" minutes"+ChatColor.RED+" et "+ChatColor.GOLD+s+" secondes");
@@ -108,9 +124,13 @@ public class Urokodaki extends SlayerRoles {
 		}
 		super.PlayerKilled(killer, victim, gameState);
 	}
-
 	@Override
 	public String getName() {
-		return "§aUrokodaki";
+		return "Urokodaki";
+	}
+	private TextComponent SoufleComponent() {
+		TextComponent text = new TextComponent("§7\"§cSoufle de l'eau§7\"");
+		text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous donne l'effet§b Speed I§7. (Cooldown: 1x/5m)")}));
+		return text;
 	}
 }
