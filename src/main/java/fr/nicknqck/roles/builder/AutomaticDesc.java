@@ -118,7 +118,7 @@ public class AutomaticDesc {
         return text;
     }
     private String getWhenString(EffectWhen when) {
-      return (when.equals(EffectWhen.PERMANENT) ? "de manière§c permanente" : when.equals(EffectWhen.DAY) ? "le§c jour" : when.equals(EffectWhen.NIGHT) ? "la§c nuit" : " en ayant moins de §c5"+AllDesc.coeur);
+        return (when.equals(EffectWhen.PERMANENT) ? "de manière§c permanente" : when.equals(EffectWhen.DAY) ? "le§c jour" : when.equals(EffectWhen.NIGHT) ? "la§c nuit" : " en ayant moins de §c5"+AllDesc.coeur);
     }
     private String getPotionEffectNameWithRomanLevel(PotionEffect potionEffect) {
         if (potionEffect == null || potionEffect.getType() == null) {
