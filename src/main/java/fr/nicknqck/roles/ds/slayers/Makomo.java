@@ -4,10 +4,13 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.demons.DemonMain;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.ChatColor;
@@ -18,10 +21,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Makomo extends SlayerRoles {
-
+	private final TextComponent automaticDesc;
 	public Makomo(Player player) {
 		super(player);
 		setCanuseblade(true);
+		getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0), EffectWhen.PERMANENT);
+		this.automaticDesc = automaticDesc.getText();
 	}
 	@Override
 	public Roles getRoles() {
@@ -31,6 +37,12 @@ public class Makomo extends SlayerRoles {
 	public String[] Desc() {
 		return AllDesc.Makomo;
 	}
+
+	@Override
+	public TextComponent getComponent() {
+		return this.automaticDesc;
+	}
+
 	private int souflecooldown = 0;
 	private boolean fuse = false;
 	@Override
@@ -66,8 +78,6 @@ public class Makomo extends SlayerRoles {
 		}
 		if (souflecooldown > 60*5) {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*4, 0, false, false));
-		} else {
-			owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
 		}
 		super.Update(gameState);
 	}
