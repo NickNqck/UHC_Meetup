@@ -11,10 +11,8 @@ commands:
     description: All Admin Commands about DemonSlayer-UHC-Meetup Plugin
     usage: /a [nuit/jour]
     aliases: [a]
-  ManagerDesc:
-    description: All Description Commands about DemonSlayer-UHC-Meetup Plugin
-    usage: /desc [role]
-    aliases: [desc]
+  c:
+    description: Commands about customs roles
   discord:
     description: Donne le discord
   aot:

@@ -224,7 +224,9 @@ public class GameState{
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
 		Wither(TeamList.Solo, "mc", 1, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck"),
 		//Agent valorant (il n'y aura que Iso)
-		Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck")
+		Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck"),
+		//Custom roles
+		LeCompte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck")
 		;
 		private final TeamList team;
 		private final String mdj;

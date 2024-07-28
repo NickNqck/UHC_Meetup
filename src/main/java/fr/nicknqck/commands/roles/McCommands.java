@@ -1,4 +1,4 @@
-package fr.nicknqck.commands;
+package fr.nicknqck.commands.roles;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

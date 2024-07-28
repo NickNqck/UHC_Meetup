@@ -1,4 +1,4 @@
-package fr.nicknqck.commands;
+package fr.nicknqck.commands.roles;
 
 import java.util.ArrayList;
 

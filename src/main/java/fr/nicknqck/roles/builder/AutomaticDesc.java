@@ -59,10 +59,28 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
+    public AutomaticDesc addItem(HoverEvent hoverEvent, String itemName, int cooldown) {
+        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§b"));
+        TextComponent interrogativDot = new TextComponent("§b[?]");
+        interrogativDot.setHoverEvent(hoverEvent);
+        text.addExtra(interrogativDot);
+        text.addExtra(new TextComponent("§7 Vous possédez l'item \n"+itemName+"§7\""));
+        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
+        return this;
+    }
     public AutomaticDesc addCommand(TextComponent textComponent, int cooldown) {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous avez accès à la commande: "));
         text.addExtra(new TextComponent(textComponent));
         text.addExtra(new TextComponent("§7"+(cooldown > 0 ? "(1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
+        return this;
+    }
+    public AutomaticDesc addCommand(HoverEvent hoverEvent, String commandName, int cooldown) {
+        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§b"));
+        TextComponent interrogativDot = new TextComponent("§b[?]");
+        interrogativDot.setHoverEvent(hoverEvent);
+        text.addExtra(interrogativDot);
+        text.addExtra(new TextComponent("§7 Vous avez accès à la commande \n"+commandName+"§7\""));
+        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
     public AutomaticDesc addCommands(Map<TextComponent, Integer> textAndCooldown) {
