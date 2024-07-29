@@ -87,26 +87,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
     @Override
     public TextComponent getComponent() {
- /*       TextComponent texte = new TextComponent(AllDesc.bar);
-        texte.addExtra("\n");
-        texte.addExtra("§7Role: §aTanjiro\n");
-        texte.addExtra("§7Votre objectif est de gagner avec le camp: §aSlayers\n");
-
-        texte.addExtra("\n"+AllDesc.point+"§7Vous possédez l'effet§c Speed I§7 le§c jour§7\n\n");
-        texte.addExtra(AllDesc.point+"§7Vous possédez l'item");
-        texte.addExtra(getDanseText());
-        texte.addExtra("§7 (1x/12m).\n\n");
-
-
-        texte.addExtra(AllDesc.point+"§7Vous avez accès aux commandes ");
-        texte.addExtra(getSentir());
-        texte.addExtra("§7 (1x/5m), ");
-        texte.addExtra(getSentirJoueur());
-        texte.addExtra("§7 (1x/partie), ");
-        texte.addExtra(getAssassin());
-        texte.addExtra("§7 (1x/partie)\n\n"+AllDesc.point);
-        texte.addExtra(getKillAssassin());
-        texte.addExtra("\n\n"+AllDesc.bar);*/
         return automaticDesc;
     }
     private TextComponent getSentir() {

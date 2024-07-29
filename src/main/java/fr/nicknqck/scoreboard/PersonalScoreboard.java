@@ -63,16 +63,16 @@ public class PersonalScoreboard {
     	        objectiveSign.setLine(5, premsg+"§2");
     	        objectiveSign.setLine(6, premsg+ip);
     	        objectiveSign.removeScore("§c");
-    	}else if (this.gameState.getServerState() == ServerStates.InGame){
+    	} else if (this.gameState.getServerState() == ServerStates.InGame){
     		objectiveSign.setDisplayName(this.gameState.msgBoard);
     		
     		objectiveSign.setLine(0, "§c");
     		if (!this.gameState.hasRoleNull(player)) {
     			RoleBase role = this.gameState.getPlayerRoles().get(player);
     			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
-    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getTeam().getColor()+role.getRoles().name());
+    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getTeam().getColor()+role.getName());
     			}else {
-    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getRoles().name());
+    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getName());
     			}
     		}
     		objectiveSign.setLine(2, premsg+"§fJoueurs:§c "+this.gameState.getInGamePlayers().size());

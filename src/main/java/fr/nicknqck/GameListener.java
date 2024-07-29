@@ -7,10 +7,7 @@ import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
-import fr.nicknqck.events.custom.DayEvent;
-import fr.nicknqck.events.custom.EndGameEvent;
-import fr.nicknqck.events.custom.NightEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
@@ -552,6 +549,7 @@ public class GameListener implements Listener {
 	@NotNull
 	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
 		Bukkit.getPluginManager().callEvent(new UHCPlayerKillEvent(player, damager, gameState));
+		Bukkit.getPluginManager().callEvent(new UHCDeathEvent(player, gameState));
 		for (EventBase event : gameState.getInGameEvents()) {
 			if (damager instanceof Player) {
 				event.OnPlayerKilled((Player) damager, player, gameState);

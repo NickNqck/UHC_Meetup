@@ -5,27 +5,29 @@ import org.bukkit.entity.Player;
 @Getter
 public enum TeamList {
 	
-	Demon("§c"),
-	Slayer("§a"),
-	Solo("§e"),
-	Jigoro("§6"),
-	Mahr("§9"),
-	Titan("§c"),
-	Soldat("§a"),
-	Alliance("§6"),
-	Jubi("§d"),
-	Orochimaru("§5"),
-	Akatsuki("§c"),
-	Sasuke("§e§l"),
-	Zabuza_et_Haku("§b"),
-	Shinobi("§a"),
-	Kumogakure("§6"),
-	OverWorld("§a");
+	Demon("§c", "§cDémon"),
+	Slayer("§a", "§aSlayer"),
+	Solo("§e", "§eSolo"),
+	Jigoro("§6", "§6Jigoro"),
+	Mahr("§9", "§9Mahr"),
+	Titan("§c", "§cTitan"),
+	Soldat("§a", "§aSoldat"),
+	Alliance("§6", "§6Kyojuro - Shinjuro"),
+	Jubi("§d", "§dJubi"),
+	Orochimaru("§5", "§6Orochimaru"),
+	Akatsuki("§c", "§cAkatsuki"),
+	Sasuke("§e§l", "§e§lSasuke"),
+	Zabuza_et_Haku("§b", "§bZabuza et Haku"),
+	Shinobi("§a", "§aShinobi"),
+	Kumogakure("§6", "§6Kumogakure"),
+	OverWorld("§a", "§aOverworld");
 
 	private final java.util.List<Player> list;
 	private final String Color;
-	TeamList(String color){
+	private final String name;
+	TeamList(String color, String name){
 		this.Color = color;
+		this.name = name;
 		this.list = new java.util.ArrayList<>();
 	}
 	public void addPlayer(Player player) {

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.TripleMap;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
@@ -79,7 +80,7 @@ public class AutomaticDesc {
         TextComponent interrogativDot = new TextComponent("§b[?]");
         interrogativDot.setHoverEvent(hoverEvent);
         text.addExtra(interrogativDot);
-        text.addExtra(new TextComponent("§7 Vous avez accès à la commande \n"+commandName+"§7\""));
+        text.addExtra(new TextComponent("§7 \""+commandName+"§7\""));
         text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
@@ -113,6 +114,34 @@ public class AutomaticDesc {
             }
             suffix.append(iterator.hasNext() ? ", " : ".");
             text.addExtra(new TextComponent(suffix.toString()));
+        }
+        return this;
+    }
+    public AutomaticDesc setCommands(Map<HoverEvent, Map<String, Integer>> hoverAndCooldown) {
+        text.addExtra("\n\n"+"§7 - Commandes: \n\n");
+        for (HoverEvent hoverEvent : hoverAndCooldown.keySet()) {
+            for (String string : hoverAndCooldown.get(hoverEvent).keySet()) {
+                int cooldown = hoverAndCooldown.get(hoverEvent).get(string);
+                TextComponent interogativDot = new TextComponent("§b[?]");
+                interogativDot.setHoverEvent(hoverEvent);
+                text.addExtra("§7 "+AllDesc.point+" ");
+                text.addExtra(interogativDot);
+                text.addExtra("§7 "+string);
+                text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
+            }
+        }
+        return this;
+    }
+    @SafeVarargs
+    public final AutomaticDesc setCommands(TripleMap<HoverEvent, String, Integer>... hoverAndCooldown) {
+        text.addExtra("\n\n"+"§7 - Commandes: ");
+        for (TripleMap<HoverEvent, String, Integer> tripleMap : hoverAndCooldown) {
+            TextComponent interogativDot = new TextComponent("§b[?]");
+            interogativDot.setHoverEvent(tripleMap.getFirst());
+            text.addExtra("\n\n§7 "+AllDesc.point+" ");
+            text.addExtra(interogativDot);
+            text.addExtra("§7 "+tripleMap.getSecond());
+            text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
         }
         return this;
     }
