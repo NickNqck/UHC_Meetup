@@ -13,7 +13,6 @@ import fr.nicknqck.roles.aot.solo.Eren;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
-import fr.nicknqck.roles.builder.Role;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.custom.LeComte;
@@ -77,8 +76,6 @@ public class GameState{
 	public boolean gameCanLaunch = false;
 	@Getter
 	private Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
-	@Getter
-	private List<Class<? extends Role>> roleList = new LinkedList<>();
 	@Setter
 	@Getter
 	private int groupe = 5;
