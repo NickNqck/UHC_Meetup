@@ -23,10 +23,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.UUID;
+import java.util.*;
 
 public class LeComte extends CustomRolesBase implements Listener {
     private final TextComponent automaticDesc;
@@ -36,11 +37,15 @@ public class LeComte extends CustomRolesBase implements Listener {
     private boolean inspectionEnded = false;
     private int cdInspection;
     private int cdDuel;
+    private final List<UUID> inspecteds = new ArrayList<>();
     public LeComte(Player player) {
         super(player);
         final AutomaticDesc desc = new AutomaticDesc(this);
-        desc.addParticularite(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez§c 3"+AllDesc.coeur+"§7 supplémentaire")}));
         desc.setCommands(new TripleMap<>(getInspectionHover(), "§c/c inspection <joueur>", 60*10), new TripleMap<>(getDuelHover(), "§c/c duel <joueur>", 60*15));
+        Map<HoverEvent, String> particularites = new HashMap<>();
+        particularites.put(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez§c 3"+AllDesc.coeur+"§7 supplémentaire")}), "§cVie supplémentaire");
+        particularites.put(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Hors de votre dimension, vous infligez§c +35%§7 de dégat au joueurs que vous aviez complètement §cinspecter")}), "§cBoost de Force");
+        desc.setParticularites(particularites);
         this.automaticDesc = desc.getText();
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         new UpdateRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
@@ -133,11 +138,19 @@ public class LeComte extends CustomRolesBase implements Listener {
     private void onEndGame(EndGameEvent event) {
         HandlerList.unregisterAll(this);
     }
+    @EventHandler
+    private void onBattle(EntityDamageByEntityEvent event) {
+        if (event.getDamager().getUniqueId().equals(getPlayer()) && event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+            if (this.inspecteds.contains(event.getEntity().getUniqueId())) {
+                event.setDamage(event.getDamage()*1.35);
+            }
+        }
+    }
     private HoverEvent getInspectionHover() {
         return new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'obtenir petit-à-petit des informations sur le joueur cibler dans cette ordre là:\n\n"
-                +AllDesc.point+"§a1 minutes§7: Vous obtenez le camp du joueur\n"+
-                AllDesc.point+"§a2 minutes§7: Vous obtenez le rôle du joueur\n" +
-                AllDesc.point+"§a3 minutes§7: Vous obtenez l'information du nombre de§e pomme d'or§7 de la cible, de plus, vous en obtiendrez§c 5§7 en le tuant")});
+                +AllDesc.point+"§a1 minutes§7: Vous obtenez le nombre de §epomme d'or§7 du joueur\n"+
+                AllDesc.point+"§a2 minutes§7: Vous obtenez le§c camp§7 du joueur\n" +
+                AllDesc.point+"§a3 minutes§7: Vous obtenez le§c rôle§7 de la cible, de plus, vous obtiendrez§e 5 pommes d'or§7 supplémentaire en la§c tuant")});
     }
     private HoverEvent getDuelHover() {
         return new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
@@ -186,6 +199,10 @@ public class LeComte extends CustomRolesBase implements Listener {
         }
         @Override
         public void run() {
+            if (!leCompte.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
             if (time >= 60*3) {
                 leCompte.inspectionEnded = true;
                 cancel();
@@ -199,16 +216,6 @@ public class LeComte extends CustomRolesBase implements Listener {
                 }
                 NMSPacket.sendActionBar(owner, "§bTemp d'inspection actuel: "+ StringUtils.secondsTowardsBeautiful(time));
                 if (time == 60) {
-                    TeamList team = leCompte.getTeam(target);
-                    if (team != null) {
-                        owner.sendMessage("§c"+target.getName()+"§7 est dans le camp \""+team.getName()+"§7\"");
-                    }
-                } else if (time == 120) {
-                    if (!leCompte.getGameState().hasRoleNull(target)) {
-                        RoleBase role = leCompte.getGameState().getPlayerRoles().get(target);
-                        owner.sendMessage("§c"+target.getName()+"§7 est le rôle "+role.getOriginTeam().getColor()+role.getName());
-                    }
-                } else if (time == 60*3) {
                     int gapAmount = 0;
                     for (ItemStack itemStack : target.getInventory().getContents()) {
                         if (itemStack != null && itemStack.getType().equals(Material.GOLDEN_APPLE)) {
@@ -216,8 +223,20 @@ public class LeComte extends CustomRolesBase implements Listener {
                         }
                     }
                     owner.sendMessage("§c"+target.getName()+"§7 possède§e "+gapAmount+" pomme§7(§es§7)§e d'or");
+
+                } else if (time == 120) {
+                    TeamList team = leCompte.getTeam(target);
+                    if (team != null) {
+                        owner.sendMessage("§c"+target.getName()+"§7 est dans le camp \""+team.getName()+"§7\"");
+                    }
+                } else if (time == 60*3) {
+                    if (!leCompte.getGameState().hasRoleNull(target)) {
+                        RoleBase role = leCompte.getGameState().getPlayerRoles().get(target);
+                        owner.sendMessage("§c"+target.getName()+"§7 est le rôle "+role.getOriginTeam().getColor()+role.getName());
+                    }
                     owner.sendMessage("§7Votre inspection prend fin, vous obtiendrez§e 5 pommes d'or§7 en tuant §c"+target.getName());
                     leCompte.inspected = target.getUniqueId();
+                    leCompte.inspecteds.add(target.getUniqueId());
                 }
             }
         }

@@ -136,7 +136,7 @@ public class Kaigaku extends DemonsRoles {
 				if (gameState.getInGamePlayers().contains(victim) && gameState.getInGamePlayers().contains(killer)) {
 					if (gameState.getPlayerRoles().containsKey(victim) || gameState.getPlayerRoles().containsKey(killer)) {
 						if (killer == owner) {
-							String msg = "Vous avez reçus 1 demi"+Main.RH()+" permanent car§6 Jigoro§r ou§6 Kaigaku à fait un kill";
+							String msg = "Vous avez reçus 1 demi"+AllDesc.coeur+" permanent car§6 Jigoro§r ou§6 Kaigaku à fait un kill";
 							owner.sendMessage(msg);
 							setMaxHealth(getMaxHealth()+1.0);
 							owner.updateInventory();

@@ -263,7 +263,7 @@ public boolean killtanjiro = false;
 			if (victim != owner) {
 				if (!solo) {
 					if (getMaxHealth() < 30.0) {
-						owner.sendMessage("Vous venez de tuez: "+ChatColor.BOLD+victim.getName()+"§r vous gagnez donc§c 1 demi-"+Main.RH()+" permanent");
+						owner.sendMessage("Vous venez de tuez: "+ChatColor.BOLD+victim.getName()+"§r vous gagnez donc§c 1 demi-"+AllDesc.coeur+" permanent");
 						giveHalfHeartatInt(owner, 1);
 					}else {
 						owner.sendMessage("Vous venez de tuez: "+ChatColor.BOLD+victim.getName()+"§r vous venez donc de gagner 2"+AllDesc.coeur+" d'absorbtion");

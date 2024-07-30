@@ -164,6 +164,17 @@ public class AutomaticDesc {
         }
         return this;
     }
+    public AutomaticDesc setParticularites(Map<HoverEvent, String> hoverEvents) {
+        text.addExtra("\n\n"+"§7 - Particularitées: ");
+        for (HoverEvent hover : hoverEvents.keySet()) {
+            text.addExtra("\n\n "+AllDesc.point);
+            TextComponent toAdd = new TextComponent("§b[?]");
+            toAdd.setHoverEvent(hover);
+            text.addExtra(toAdd);
+            text.addExtra("§7, "+hoverEvents.get(hover));
+        }
+        return this;
+    }
     public TextComponent getText(){
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
         return text;

@@ -67,7 +67,6 @@ public class Main extends JavaPlugin implements Listener{
 	private ScheduledExecutorService scheduledExecutorService;
 	@Getter
     private static WorldFillTask worldfilltask;
-	public static String RH() {return "§c❤§r";}
 	public static List<Chunk> keepChunk = new ArrayList<>();
 	@Getter
 	private GetterList getterList;
@@ -77,11 +76,14 @@ public class Main extends JavaPlugin implements Listener{
 	public static Random RANDOM;
 	@Getter
 	private Inventories inventories;
+	@Getter
+	private RoleManager roleManager;
 
 	@Override
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
+		this.roleManager = new RoleManager();
 	//	this.databaseManager = new DatabaseManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);

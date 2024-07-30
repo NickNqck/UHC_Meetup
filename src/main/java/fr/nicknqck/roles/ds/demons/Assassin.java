@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -15,9 +16,9 @@ public class Assassin {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			 if (gameState.Assassin == null) {
 	             gameState.Assassin = gameState.canBeAssassin.get(0);
-	             gameState.Assassin.sendMessage("Vous êtes l'assassin vous possédez désormais§c 2"+Main.RH()+" supplémentaire de manière permanente, de plus faite attention au rôle de§a Tanjiro§f qui obtiendra un bonus s'il vous tue.");
+	             gameState.Assassin.sendMessage("Vous êtes l'assassin vous possédez désormais§c 2"+AllDesc.coeur+" supplémentaire de manière permanente, de plus faite attention au rôle de§a Tanjiro§f qui obtiendra un bonus s'il vous tue.");
 	             gameState.Assassin.resetTitle();
-	             gameState.Assassin.sendTitle("§c§lVous êtes l'§4§lAssassin", "§cVous obtenez donc 2"+Main.RH()+"§c supplémentaires !");
+	             gameState.Assassin.sendTitle("§c§lVous êtes l'§4§lAssassin", "§cVous obtenez donc 2"+ AllDesc.coeur+"§c supplémentaires !");
 	             gameState.getPlayerRoles().get(gameState.Assassin).setMaxHealth(gameState.getPlayerRoles().get(gameState.Assassin).getMaxHealth()+4.0);
 	             gameState.Assassin.setMaxHealth(gameState.getPlayerRoles().get(gameState.Assassin).getMaxHealth());
 	             gameState.Assassin.setHealth(gameState.Assassin.getMaxHealth());

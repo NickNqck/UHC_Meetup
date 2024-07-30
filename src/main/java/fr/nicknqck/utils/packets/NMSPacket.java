@@ -1,6 +1,7 @@
 package fr.nicknqck.utils.packets;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.desc.AllDesc;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
 import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
@@ -158,7 +159,7 @@ public class NMSPacket {
     			double z = (loc.getZ()+Math.sin(Math.toRadians(target.getEyeLocation().getYaw()-90)));
     			loc.setPitch(0);
     			DecimalFormat df = new DecimalFormat("0");
-        		stand.setCustomName(df.format(target.getHealth())+Main.RH());
+        		stand.setCustomName(df.format(target.getHealth())+ AllDesc.coeur);
         		stand.setCustomNameVisible(true);
         		stand.setLocation(x, useY, z, target.getEyeLocation().getPitch(), target.getEyeLocation().getYaw());
         		stand.setInvisible(true);
@@ -169,7 +170,7 @@ public class NMSPacket {
         		new BukkitRunnable() {
                     @Override
                     public void run() {
-                        if (viewer != null && viewer.isOnline()) {
+                        if (viewer.isOnline()) {
                             PacketPlayOutEntityDestroy destroyPacket = new PacketPlayOutEntityDestroy(stand.getId());
                             ((CraftPlayer) viewer).getHandle().playerConnection.sendPacket(destroyPacket);
                         }

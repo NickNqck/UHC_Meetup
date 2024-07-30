@@ -3,6 +3,7 @@ package fr.nicknqck.items;
 import java.util.Arrays;
 import java.util.Collections;
 
+import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -111,7 +112,7 @@ public abstract class Items {
 		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		  meta.setLore(Arrays.asList(ChatColor.WHITE+"Lame§a verte§r:§a NoFall",
-				  ChatColor.WHITE+"Lame§d Rose§r:§d 2"+Main.RH(),
+				  ChatColor.WHITE+"Lame§d Rose§r:§d 2"+ AllDesc.coeur,
 				  "§fLame§7 grise§r:§7 10% de Résistance",
 				  "§fLame§8 noir§r:§8 10% de Force",
 				  "§fLame§6 orange§r:§6 Fire Résistance",
