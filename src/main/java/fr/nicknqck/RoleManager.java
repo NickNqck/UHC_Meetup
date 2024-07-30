@@ -15,14 +15,19 @@ public class RoleManager {
 
     public RoleManager() {
         this.rolesRegistery = new HashMap<>();
+        try {
+            registerRoles();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void registerRoles() throws Exception {
+    private void registerRoles() throws Exception {
         registerRole(Inosuke.class);
         registerRole(Hotaru.class);
     }
 
-    private void registerRole(Class<? extends Role> roleClass) throws Exception {
+    public void registerRole(Class<? extends Role> roleClass) throws Exception {
         final Role role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
     }
