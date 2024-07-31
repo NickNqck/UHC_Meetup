@@ -3,6 +3,7 @@ package fr.nicknqck.events.custom;
 import fr.nicknqck.GameState;
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -16,6 +17,9 @@ public class UHCPlayerKillEvent extends Event {
 	private final Entity damager;
 	@Getter
 	private final GameState gameState;
+	@Setter
+	@Getter
+	private boolean cancel;
 	public UHCPlayerKillEvent(Player player, Entity damager, GameState gameState) {
 		this.victim = player;
 		this.damager = damager;

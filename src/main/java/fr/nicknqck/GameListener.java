@@ -304,6 +304,7 @@ public class GameListener implements Listener {
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
 			Border.setActualBorderSize(Border.getMaxBorderSize());
+			gameState.getGamePlayer().clear();
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(gameState.world, Material.GLASS);
@@ -510,16 +511,6 @@ public class GameListener implements Listener {
 		}
 		return loc;
 	}
-	public static Location RandomLocation(final World world) {
-		Location loc = null;
-		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
-			float x = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
-			float z = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
-			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
-		}
-		loc.setY(loc.getY()+1);
-		return loc;
-	}
 	public static Location generateRandomLocation(final GameState gameState,final World world) {
 	    Location loc;
 	    do {
@@ -548,7 +539,8 @@ public class GameListener implements Listener {
 	}
 	@NotNull
 	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
-		Bukkit.getPluginManager().callEvent(new UHCPlayerKillEvent(player, damager, gameState));
+		UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(player, damager, gameState);
+		Bukkit.getPluginManager().callEvent(playerKillEvent);
 		Bukkit.getPluginManager().callEvent(new UHCDeathEvent(player, gameState));
 		for (EventBase event : gameState.getInGameEvents()) {
 			if (damager instanceof Player) {
@@ -575,9 +567,10 @@ public class GameListener implements Listener {
 				}
 			}
 		}
-		if (cantDie) {
+		if (cantDie || playerKillEvent.isCancel()) {
 			return;
 		}
+		gameState.getGamePlayer().get(player.getUniqueId()).setAlive(false);
         gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
         for (ItemStack item : player.getInventory().getContents()){
 			if (item != null){
@@ -717,7 +710,6 @@ public class GameListener implements Listener {
     }
 	@EventHandler(priority = EventPriority.HIGHEST)
 	private void VanillaDeath(PlayerDeathEvent e) {
-		e.setDeathMessage("");
 		e.setDroppedExp(5);
 		e.getEntity().getInventory().clear();
 	}
@@ -1221,16 +1213,6 @@ public class GameListener implements Listener {
         TextComponent pref = new TextComponent(prefix);
         TextComponent hver = new TextComponent(toHover);
         hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(inHover)}));
-        pref.addExtra(hver);
-        pref.addExtra(suffix);
-
-        player.spigot().sendMessage(pref);
-    }
-    public void sendHoverMessage(Player player, String prefix, String toHover, String[] inHover, String suffix) {
-        TextComponent pref = new TextComponent(prefix);
-        TextComponent hver = new TextComponent(toHover);
-        
-        hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(prefix)}));
         pref.addExtra(hver);
         pref.addExtra(suffix);
 

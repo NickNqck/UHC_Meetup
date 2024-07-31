@@ -16,6 +16,7 @@ import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.custom.LeComte;
+import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -227,7 +228,8 @@ public class GameState{
 		//Agent valorant (il n'y aura que Iso)
 		Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck"),
 		//Custom roles
-		LeComte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck")
+		LeComte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck"),
+		LeJuge(TeamList.Solo, "custom", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eLe Juge").toItemStack(), "§bNickNqck")
 		;
 		private final TeamList team;
 		private final String mdj;
@@ -824,6 +826,9 @@ public class GameState{
 			break;
 			case LeComte:
 				role = new LeComte(player);
+				break;
+			case LeJuge:
+				role = new LeJuge(player);
 				break;
 		}
 		if (role == null) return null;

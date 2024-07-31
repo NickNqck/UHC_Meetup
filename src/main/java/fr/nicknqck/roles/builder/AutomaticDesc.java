@@ -50,7 +50,9 @@ public class AutomaticDesc {
     public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
         for (PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
-            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(effect)+"§7 ")+getWhenString(when));
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
+            text.addExtra(getPotionEffectNameWithRomanLevel(effect)+"§7 ");
+            text.addExtra(getWhenString(when));
         }
         return this;
     }
@@ -67,6 +69,19 @@ public class AutomaticDesc {
         text.addExtra(interrogativDot);
         text.addExtra(new TextComponent("§7 Vous possédez l'item \n"+itemName+"§7\""));
         text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
+        return this;
+    }
+    @SafeVarargs
+    public final AutomaticDesc setItems(TripleMap<HoverEvent, String, Integer>... tripleMaps) {
+        text.addExtra("\n\n"+"§7 - Items: ");
+        for (TripleMap<HoverEvent, String, Integer> tripleMap : tripleMaps) {
+            TextComponent interogativDot = new TextComponent("§b[?]");
+            interogativDot.setHoverEvent(tripleMap.getFirst());
+            text.addExtra("\n\n§7 "+AllDesc.point+" ");
+            text.addExtra(interogativDot);
+            text.addExtra("§7 "+tripleMap.getSecond());
+            text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
+        }
         return this;
     }
     public AutomaticDesc addCommand(TextComponent textComponent, int cooldown) {
@@ -127,7 +142,7 @@ public class AutomaticDesc {
                 text.addExtra("§7 "+AllDesc.point+" ");
                 text.addExtra(interogativDot);
                 text.addExtra("§7 "+string);
-                text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
+                text.addExtra(new TextComponent("§7 (1x/"+(cooldown != -500 ? StringUtils.secondsTowardsBeautiful(cooldown) : "partie" )+")."));
             }
         }
         return this;
@@ -141,7 +156,7 @@ public class AutomaticDesc {
             text.addExtra("\n\n§7 "+AllDesc.point+" ");
             text.addExtra(interogativDot);
             text.addExtra("§7 "+tripleMap.getSecond());
-            text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
+            text.addExtra(new TextComponent("§7 (1x/"+(tripleMap.getThird() != -500 ? StringUtils.secondsTowardsBeautiful(tripleMap.getThird()) : "partie" )+")."));
         }
         return this;
     }
