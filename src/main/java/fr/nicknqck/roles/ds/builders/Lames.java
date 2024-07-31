@@ -13,16 +13,18 @@ import java.util.function.Consumer;
 @Getter
 public enum Lames {
 
-    Force(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).addBonusforce(10.0)),
-    Resistance(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).addBonusResi(10.0)),
-    Coeur(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).setMaxHealth(event.getPlayer().getMaxHealth()+4.0)),
-    NoFall(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).setNoFall(true)),
-    Speed(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).addSpeedAtInt(event.getPlayer(), 10)),
-    FireResistance(event -> event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false)));
+    Force(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).addBonusforce(10.0), "§cForce"),
+    Resistance(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).addBonusResi(10.0), "§9Resistance"),
+    Coeur(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).setMaxHealth(event.getPlayer().getMaxHealth()+4.0), "§cCoeur"),
+    NoFall(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).setNoFall(true), "§aNo Fall"),
+    Speed(event -> GameState.getInstance().getPlayerRoles().get(event.getPlayer()).addSpeedAtInt(event.getPlayer(), 10), "§eSpeed"),
+    FireResistance(event -> event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false)), "§6Résistance au Feu");
 
     private final HashMap<UUID, Integer> users = new HashMap<>();
     private final Consumer<PlayerInteractEvent> consumer;
-    Lames(Consumer<PlayerInteractEvent> consumer){
+    private final String name;
+    Lames(Consumer<PlayerInteractEvent> consumer, String name){
         this.consumer = consumer;
+        this.name = name;
     }
 }
