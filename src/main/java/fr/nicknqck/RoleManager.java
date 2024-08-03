@@ -39,7 +39,7 @@ public class RoleManager {
     public RoleManager() {
         this.rolesRegistery = new HashMap<>();
         try {
-            registerRoles();
+       //     registerRoles();
         } catch (Exception e) {
             e.printStackTrace();
         }

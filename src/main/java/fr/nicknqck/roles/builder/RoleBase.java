@@ -39,13 +39,19 @@ import java.util.*;
 public abstract class RoleBase implements Role{
 
 	public Player owner;
+	@Getter
 	private Double maxHealth = 20.0;
 	private boolean canRespawn = false;
 	@Getter
 	private boolean hasNoFall = false;
 	private ArrayList<Player> linkWith = new ArrayList<>();
+	@Setter
+	@Getter
 	private Roles oldRole = null;
+	@Getter
 	private boolean powerEnabled = true;
+	@Getter
+	@Setter
 	private boolean invincible = false;
 	private double force = 0;
 	private double resi = 0;
@@ -253,20 +259,10 @@ public abstract class RoleBase implements Role{
 			linkWith.add(player);
 		}
 	}
-	public Roles getOldRole() {return oldRole;}
-
-	public void setOldRole(Roles oldRole) {this.oldRole = oldRole;}
-
-	public Double getMaxHealth() {return maxHealth;}
 
 	public void setMaxHealth(Double maxHealth) {this.maxHealth = maxHealth; owner.setMaxHealth(maxHealth);}
 
 	public void setPower(boolean powerEnabled) {this.powerEnabled = powerEnabled;}
-	
-	public boolean isPowerEnabled() {return this.powerEnabled;}
-
-	public void setInvincible(boolean b) {invincible = b;}
-	public boolean isInvincible() {return this.invincible;}
 
 	public void neoAttackedByPlayer(Player attacker, GameState gameState) {}
 	public boolean CancelAttack = false;

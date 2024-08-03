@@ -712,6 +712,7 @@ public class GameListener implements Listener {
 	private void VanillaDeath(PlayerDeathEvent e) {
 		e.setDroppedExp(5);
 		e.getEntity().getInventory().clear();
+		e.setDeathMessage(null);
 	}
 	@EventHandler
 	private void onEntityDeath(EntityDeathEvent e){

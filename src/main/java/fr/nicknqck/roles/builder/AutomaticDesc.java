@@ -51,8 +51,8 @@ public class AutomaticDesc {
         for (PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
             text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
-            text.addExtra(getPotionEffectNameWithRomanLevel(effect)+"§7 ");
-            text.addExtra(getWhenString(when));
+            text.addExtra("§c"+getPotionEffectNameWithRomanLevel(effect)+"§7 ");
+            text.addExtra("§7"+getWhenString(when));
         }
         return this;
     }
