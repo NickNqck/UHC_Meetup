@@ -21,7 +21,6 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 	public KyogaiV2(Player player) {
 		super(player);
 		owner.getInventory().addItem(getItems());
-		addforce(20);
 	}
 	@Override
 	public Roles getRoles() {
@@ -187,16 +186,6 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 		}
 		if (cooldownTP >= 0)cooldownTP--;
 		if (cooldownTP == 0)owner.sendMessage("§cTambour§7 model§l TP§7 est à nouveau utilisable !");
-	}
-	@Override
-	public void onNight(GameState gameState) {
-		addforce(20);
-		super.onNight(gameState);
-	}
-	@Override
-	public void onDay(GameState gameState) {
-		addforce(-20);
-		super.onDay(gameState);
 	}
 	@Override
 	public void onTick() {

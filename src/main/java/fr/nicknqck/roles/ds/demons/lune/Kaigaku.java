@@ -29,7 +29,6 @@ public class Kaigaku extends DemonsRoles {
 	private int cooldowntroisiememouvement = 0;
 	public Kaigaku(Player player) {
 		super(player);
-		this.setForce(20);
 		this.setCanuseblade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {

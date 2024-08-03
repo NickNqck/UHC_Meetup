@@ -41,7 +41,6 @@ public class LeJuge extends CustomRolesBase implements Listener {
         getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         AutomaticDesc desc = new AutomaticDesc(this);
         Map<HoverEvent, String> particularitees = new HashMap<>();
-
         particularitees.put(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toute les§c "+ StringUtils.secondsTowardsBeautiful(timeKill)+"§7 vous recevez une cible, si vous arrivez à la tuer vous obtiendrez un§c pourcentage§7 d'un effet aléatoire parmis:§b Speed§7,§c Force§7 et§9 Résistance§7,\n§7Sinon, si vous n'y arriver pas vous perdrez§c "+(getGameState().isMinage() ? "1/2" : "1")+ AllDesc.coeur+"§7 de manière§c permanente§7.")}), "§6Missions");
         desc.addEffects(getEffects());
         desc.setParticularites(particularitees);

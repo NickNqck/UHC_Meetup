@@ -22,7 +22,6 @@ public class Muzan extends DemonsRoles {
 	public Muzan(Player player) {
 		super(player);
 		regencooldown = 10;
-		addforce(20);//pour contre balancer le onday qui retire 20% de force
 	}
 
 	@Override
@@ -49,10 +48,6 @@ public class Muzan extends DemonsRoles {
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {setResi(20);}
-	@Override
-	public void onNight(GameState gameState) {addforce(20);if(killnez)setResi(40);}
-	@Override
-	public void onDay(GameState gameState) {if (!killnez)addforce(-20);}
 	@Override
 	public void Update(GameState gameState) {
 		if (killnez) {

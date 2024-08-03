@@ -127,7 +127,6 @@ public class Jiraya extends ShinobiRoles {
 		if (cdSenjutsu >= 0) {
 			cdSenjutsu--;
 			if (cdSenjutsu == 300) {
-				setForce(0);
 				setResi(0);
 				owner.sendMessage("§7L'invocation de§a Fukasaku et Shima§7 est terminé");
 				setMaxHealth(getMaxHealth()-4.0);
@@ -185,7 +184,6 @@ public class Jiraya extends ShinobiRoles {
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
 				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, false);
 				setResi(20);
-				setForce(20);
 				cdSenjutsu = 480;
             } else {
 				sendCooldown(owner, cdSenjutsu);

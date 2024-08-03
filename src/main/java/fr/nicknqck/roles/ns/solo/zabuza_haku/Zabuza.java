@@ -45,11 +45,6 @@ public class Zabuza extends NSRoles {
 		return Roles.Zabuza;
 	}
 	@Override
-	public void RoleGiven(GameState gameState) {
-		setForce(20);
-	}
-
-	@Override
     public String[] Desc() {
         KnowRole(owner, Roles.Haku, 5);
         return new String[] {

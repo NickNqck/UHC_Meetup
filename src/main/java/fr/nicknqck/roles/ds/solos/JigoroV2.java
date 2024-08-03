@@ -127,7 +127,6 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			if (item.isSimilar(GUIItems.getJigoroPacte1())) {
 				pacte = Pacte.Pacte1;
 				owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
-				addforce(20);
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
 				owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 			}
@@ -184,12 +183,10 @@ public class JigoroV2 extends DemonsSlayersRoles {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
 					zen.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
 					if (!zforce) {
-						addforce(20);
 						zforce = true;
 					}
 				} else {
 					if (zforce) {
-						addforce(-20);
 						zforce = false;
 					}
 				}

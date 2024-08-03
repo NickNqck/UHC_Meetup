@@ -61,7 +61,6 @@ public class Sanemi extends PillierRoles {
 			if (marquecooldown == 60*5) {
 				owner.sendMessage("Les effets de votre marque s'estompe...");
 				if (giveforce) {
-					addforce(-20);
 					giveforce = false;
 				}
 				if (giveresi) {
@@ -148,7 +147,6 @@ public class Sanemi extends PillierRoles {
 					if (rdm < 0.5) {
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*120, 0, false, false));
 						if (!giveforce) {
-							addforce(20);
 							giveforce = true;
 						}
 						owner.sendMessage("Votre marque des§a Pourfendeurs de démons§r vous à donnez l'effet§c force 1§r pendant 2 minutes");

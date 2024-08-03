@@ -138,7 +138,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 				if (cooldownsake <= 0) {
 						owner.sendMessage("§7Vous venez de boire de l'alcool");
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*((60 + 30)), 0, false, false));
-						setForce(20);
 						cooldownsake = 60*5;
 				}else {
 					sendCooldown(owner, cooldownsake);

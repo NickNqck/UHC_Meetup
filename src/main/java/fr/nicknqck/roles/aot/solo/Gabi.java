@@ -139,18 +139,14 @@ public class Gabi extends AotRoles {
 	@Override
 	public void Update(GameState gameState) {//Update s'actualise toute les secondes
 		if (!killshifter) {
-			if (inList.size() > 0) {
+			if (!inList.isEmpty()) {
 				for (Player p : inList) {
 					if (p != null) {
 						if (gameState.getInSpecPlayers().contains(p))inList.remove(p);
 						if (p.getWorld().equals(owner.getWorld())) {
 							if (owner.getLocation().distance(p.getLocation()) <= 20) {
 								givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-								setForce(20);
 							}
-						}
-						if (!owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
-							setForce(0);
 						}
 					}
 				}

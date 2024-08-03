@@ -59,7 +59,6 @@ public class Furuto extends DemonsRoles {
 		if (cooldown>=1)cooldown--;
 		if (gameState.nightTime) {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
-			if (getForce() != 20)setForce(getForce() + 20);
 		}
 		for (Player p : gameState.getInGamePlayers()) {
 			if (getPlayerRoles(p) != null && getPlayerRoles(p) != null && owner.getWorld().equals(p.getWorld())) {
@@ -128,7 +127,6 @@ public class Furuto extends DemonsRoles {
                 				if (getPlayerRoles(p).getOriginTeam() == TeamList.Demon) {
                 					if (!gameState.nightTime) {
                     					if (!p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
-                    						if (getPlayerRoles(p).getForce() != 20)getPlayerRoles(p).setForce(getPlayerRoles(p).getForce() + 20);
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), true);
                         					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Force 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Force 1 pendant§6 60§rs ");

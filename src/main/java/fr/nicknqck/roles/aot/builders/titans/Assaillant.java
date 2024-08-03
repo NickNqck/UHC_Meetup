@@ -94,8 +94,8 @@ public class Assaillant extends Titan {
 				player.sendMessage("§7Transformation en "+getName());
 				getListener().setAssaillantCooldown(60*8);
 				getPlayerRole(getOwner()).isTransformedinTitan = true;
-				getPlayerRole(getOwner()).setForce(30);
 				getPlayerRole(getOwner()).setResi(30);
+				getPlayerRole(getOwner()).addBonusforce(10.0);
 			} else {
 				sendCooldown(player, getListener().getAssaillantCooldown());
 			}
@@ -107,7 +107,8 @@ public class Assaillant extends Titan {
 				getListener().setAssaillantCooldown(60*4);
 				getPlayerRole(getOwner()).isTransformedinTitan = false;
 				getPlayerRole(getOwner()).setResi(0);
-				getPlayerRole(getOwner()).setForce(0);
+				getPlayerRole(getOwner()).addBonusforce(-10.0);
+
 			}else {
 				player.sendMessage("§7Veuiller attendre un peux avant de vous détransformez");
 			}

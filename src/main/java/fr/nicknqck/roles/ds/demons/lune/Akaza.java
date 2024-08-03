@@ -14,7 +14,6 @@ public class Akaza extends DemonsRoles {
 	
 	public Akaza(Player player) {
 		super(player);
-		this.setForce(20);
 	}
 
 	@Override

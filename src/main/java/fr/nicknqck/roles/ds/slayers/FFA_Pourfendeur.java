@@ -153,7 +153,6 @@ public class FFA_Pourfendeur extends SlayerRoles {
 					Lune = true;
 					owner.sendMessage(ChatColor.WHITE+"Vous avez choisis le soufle de la: "+ChatColor.GOLD+ form);
 					owner.sendMessage("Vous possédez maintenant: "+ChatColor.GOLD+"force 1 la nuit");
-					this.setForce(20);
 					nombredesoufle++;
 					kill--;
 				} else {
@@ -301,7 +300,6 @@ public class FFA_Pourfendeur extends SlayerRoles {
 				owner.getInventory().addItem(Items.getgoldenapple());
 				owner.getInventory().addItem(Items.getgoldenapple());
 				SoufleUnivers = true;
-				setForce(20);
 				if (kill == 7) {
 					kill = 0;
 				} else if (kill > 7) {

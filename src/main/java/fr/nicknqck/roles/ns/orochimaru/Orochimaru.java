@@ -10,6 +10,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -127,12 +128,12 @@ public class Orochimaru extends OrochimaruRoles {
 				Location rLoc = new Location(Main.getInstance().gameWorld, 0.0, 75, 0.0, player.getEyeLocation().getYaw(), player.getEyeLocation().getPitch());
 				killLoc.put(player, rLoc);
 			}
-			if (getPlayerRoles(player).getChakras() != null) {
+			if (getPlayerRoles(player) instanceof NSRoles && ((NSRoles) getPlayerRoles(player)).getChakras() != null) {
 				if (RandomUtils.getOwnRandomProbability(25)) {
-					if (!chakrasVoled.contains(getPlayerRoles(player).getChakras())) {
-						chakrasVoled.add(getPlayerRoles(player).getChakras());
-						getPlayerRoles(player).getChakras().getChakra().getList().add(owner.getUniqueId());
-						owner.sendMessage("§7Vous maitrisez maintenant la nature de Chakra: "+getPlayerRoles(player).getChakras().getShowedName());
+					if (!chakrasVoled.contains(((NSRoles) getPlayerRoles(player)).getChakras())) {
+						chakrasVoled.add(((NSRoles) getPlayerRoles(player)).getChakras());
+						((NSRoles) getPlayerRoles(player)).getChakras().getChakra().getList().add(owner.getUniqueId());
+						owner.sendMessage("§7Vous maitrisez maintenant la nature de Chakra: "+ ((NSRoles) getPlayerRoles(player)).getChakras().getShowedName());
 					}
 				}
 			}

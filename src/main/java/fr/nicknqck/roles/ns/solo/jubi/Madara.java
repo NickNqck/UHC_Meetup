@@ -154,11 +154,9 @@ public class Madara extends NSRoles {
 				owner.sendMessage("§7Vous obtenez votre puissance d'entant");
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 				givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true);
-				setForce(20);
 				MadaraUse = true;
             } else {
 				owner.sendMessage("§7Vous perdez votre puissance...");
-				setForce(0);
 				owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 				owner.removePotionEffect(PotionEffectType.SPEED);
 				MadaraUse = false;

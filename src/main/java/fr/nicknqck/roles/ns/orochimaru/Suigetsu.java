@@ -54,7 +54,6 @@ public class Suigetsu extends OrochimaruRoles {
 			owner.sendMessage("§5Orochimaru§7 est mort, vous obtenez l'effet§c Force 1§f permanent, §6/ns me§7 pour connaitre vos allier");
 		}
 		orochimaruDeath = true;
-		setForce(20);
 	}
 	@Override
 	public String[] Desc() {

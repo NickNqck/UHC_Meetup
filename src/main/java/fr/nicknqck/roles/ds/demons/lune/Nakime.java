@@ -120,7 +120,6 @@ public class Nakime extends DemonsRoles {
 				owner.teleport(loc.getRandomPositionStart());
 			}
 		}
-		setForce(20);
 		setResi(20);
 		setNoFall(true);
 	}
@@ -189,7 +188,6 @@ public class Nakime extends DemonsRoles {
 				owner.sendMessage(p.getName()+"§7 est sortie de votre cage");
 			}
 		}
-		setForce(0);
 		setResi(0);
 		setNoFall(false);
 		cooldown = 60*8;

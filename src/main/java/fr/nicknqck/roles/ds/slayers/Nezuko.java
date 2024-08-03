@@ -28,7 +28,6 @@ public class Nezuko extends DemonsRoles {
 	public Nezuko(Player player) {
 		super(player);
 		regencooldown = 20;
-		this.setForce(20);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {

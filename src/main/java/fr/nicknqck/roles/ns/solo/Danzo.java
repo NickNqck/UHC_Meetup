@@ -41,7 +41,6 @@ public class Danzo extends NSRoles {
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {
-		setForce(20);
 		giveHealedHeartatInt(2);
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			int nmbUchiwa = 0;

@@ -48,9 +48,6 @@ public class Mitsuri extends PillierRoles {
 		}
         if (gameState.nightTime){
             givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
-            if (!give) addforce(20); give = true;
-        } else {
-            if (give)addforce(-20); give = false;
         }
         if (cooldown >= 1) cooldown--;
         if (cooldown == (60*5)-10){

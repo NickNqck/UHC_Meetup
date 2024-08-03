@@ -26,7 +26,6 @@ public class Gyokko extends DemonsRoles {
 
 	public Gyokko(Player player) {
 		super(player);
-		this.setForce(20);
 		this.setResi(20);
 	}
 	@Override

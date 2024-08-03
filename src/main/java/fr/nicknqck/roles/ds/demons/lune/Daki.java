@@ -23,7 +23,6 @@ public class Daki extends DemonsRoles {
 
 	public Daki(Player player) {
 		super(player);
-		this.setForce(20);
 		setCanRespawn(true);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

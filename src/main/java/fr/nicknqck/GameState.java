@@ -47,6 +47,7 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -291,18 +292,35 @@ public class GameState{
 	public boolean JigoroV2Pacte2 = false;
 	public boolean JigoroV2Pacte3 = false;
 	public World world = Main.getInstance().gameWorld;
+	@Setter
+	@Getter
 	private ServerStates serverState = ServerStates.InLobby;
+	@Getter
 	private final HashMap<Roles, Integer> availableRoles = new HashMap<>();
+	@Getter
 	private final ArrayList<Events> availableEvents = new ArrayList<>();
+	@Getter
 	private final ArrayList<EventBase> inGameEvents = new ArrayList<>();
+	@Setter
+	@Getter
 	private ArrayList<Player> inLobbyPlayers = new ArrayList<>();
+	@Setter
+	@Getter
 	private ArrayList<Player> inGamePlayers = new ArrayList<>();
+	@Getter
+	@Setter
 	private ArrayList<Player> inSpecPlayers = new ArrayList<>();
-	
+
+	//GameListener 698
+	@Getter
 	public ArrayList<Player> Charmed = new ArrayList<>();
+	@Setter
+	@Getter
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
+	@Getter
 	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
 	public List<Player> igPlayers = new ArrayList<>();
+	@Getter
 	@Setter
 	int inGameTime = 0;
 
@@ -347,10 +365,9 @@ public class GameState{
 	public void addInObiPlayers(Player player) {Obi.add(player);}
 	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
+	@Getter
 	public ArrayList<Player> Pillier = new ArrayList<>();
-	public ArrayList<Player> getPillier(){return Pillier;}
-	
-	public ArrayList<Player> getCharmed(){return Charmed;} //GameListener 698
+
 	public void addCharmed(Player player){Charmed.add(player);}
 	public void delCharmed(Player player){Charmed.remove(player);}
 	
@@ -359,47 +376,26 @@ public class GameState{
 	public void setInSleepingPlayers(ArrayList<Player> SleepingPlayers) {SleepingPlayer = SleepingPlayers;}
 	public void addInSleepingPlayers(Player player) {SleepingPlayer.add(player);}
 	public void delInSleepingPlayers(Player player) {SleepingPlayer.remove(player);}
-	
-	public int getInGameTime() {return inGameTime;}
-	
+
 	public GameState() {
 		instance = this;
 	}
-	
-	public ServerStates getServerState() {return serverState;}
 
-	public void setServerState(ServerStates serverStates) {serverState = serverStates;}
-
-	public ArrayList<Player> getInLobbyPlayers() {return inLobbyPlayers;}
-
-	public void setInLobbyPlayers(ArrayList<Player> inLobbyPlayer) {inLobbyPlayers = inLobbyPlayer;}
-	
 	public void addInLobbyPlayers(Player player) {inLobbyPlayers.add(player);}
 
 	public void delInLobbyPlayers(Player player) {inLobbyPlayers.remove(player);}
-
-	public ArrayList<Player> getInGamePlayers() {return inGamePlayers;}
-
-	public void setInGamePlayers(ArrayList<Player> inGamePlayer) {inGamePlayers = inGamePlayer;}
 
 	public void addInGamePlayers(Player player) {inGamePlayers.add(player);}
 
 	public void delInGamePlayers(Player player) {inGamePlayers.remove(player);}
 
-	public ArrayList<Player> getInSpecPlayers() {return inSpecPlayers;}
-
-	public void setInSpecPlayers(ArrayList<Player> inSpecPlayer) {inSpecPlayers = inSpecPlayer;}
-
 	public void addInSpecPlayers(Player player) {inSpecPlayers.add(player);}
 
 	public void delInSpecPlayers(Player player) {inSpecPlayers.remove(player);}
 
-	public HashMap<Player, RoleBase> getPlayerRoles() {return playerRoles;}
-	public void setPlayerRoles(HashMap<Player, RoleBase> playerRole) {playerRoles = playerRole;}
 	public void addInPlayerRoles(Player player, RoleBase role) {playerRoles.put(player, role);}
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
-	public HashMap<Roles, Integer> getAvailableRoles() {return availableRoles;}
-	
+
 	public final boolean hasRoleNull(final Player player) {
 		if (getPlayerRoles().get(player) != null && getPlayerRoles().get(player).getRoles() != null && getPlayerRoles().containsKey(player)) {
 			return false;
@@ -411,18 +407,15 @@ public class GameState{
 	public void setAvailableRoles(HashMap<Roles, Integer> availableRole) {availableRole = availableRoles;}
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
 	public void delInAvailableRoles(Roles role) {availableRoles.remove(role);}
-	
-	public ArrayList<Events> getAvailableEvents() {return availableEvents;}
+
 	public void setAvailableEvents(ArrayList<Events> availableEvent) {availableEvent= availableEvents;}
 	public void addInAvailableEvents(Events event) {availableEvents.add(event);}
 	public void delInAvailableEvents(Events event) {availableEvents.remove(event);}
 
-	public HashMap<Player, HashMap<Player, RoleBase>> getPlayerKills() {return playerKills;}
 	public void setPlayerKills(HashMap<Player, HashMap<Player, RoleBase>> playerKill) {playerKill = playerKills;}
 	public void addPlayerKills(Player player) {playerKills.put(player, new HashMap<Player, RoleBase>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
-	
-	public ArrayList<EventBase> getInGameEvents() {return inGameEvents;}
+
 	public void setInGameEvents(ArrayList<EventBase> inGameEvent) {inGameEvent = inGameEvents;}
 	public void addInGameEvents(EventBase event) {inGameEvents.add(event);}
 	public void delInGameEvents(EventBase event) {inGameEvents.remove(event);}
@@ -460,7 +453,7 @@ public class GameState{
             roles.remove(r.getRoles());
 		}
 		
-		Roles roleType = null;
+		Roles roleType;
 		roleType = roles.get(new Random().nextInt(roles.size()));
 		RoleBase role = null;
 		switch(roleType) {
@@ -863,6 +856,7 @@ public class GameState{
 			}
 		}
 		attributedRole.add(roleType);
+		gamePlayer.setDeathLocation(player.getLocation());
 		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer));
 		return role;
 	}
@@ -976,9 +970,8 @@ public class GameState{
 			}
         }
     }
-	public void RevivePlayer(Player player) {
-		if (player == null)return;
-		if (getServerState() == ServerStates.InGame) {
+	public void RevivePlayer(@NonNull Player player) {
+        if (getServerState() == ServerStates.InGame) {
 			if (!hasRoleNull(player)) {
 				if (getInSpecPlayers().contains(player)) {
 					delInSpecPlayers(player);
@@ -986,7 +979,7 @@ public class GameState{
 						addInGamePlayers(player);
 					}
 					player.setGameMode(GameMode.SURVIVAL);
-					GameListener.RandomTp(player, this);
+					player.teleport(getGamePlayer().get(player.getUniqueId()).getDeathLocation());
 				}
 			}
 		}

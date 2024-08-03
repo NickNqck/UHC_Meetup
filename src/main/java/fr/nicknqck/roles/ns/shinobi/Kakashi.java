@@ -317,7 +317,6 @@ public class Kakashi extends ShinobiRoles {
 			if (item != null && item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
 				String target = item.getItemMeta().getDisplayName();
 				owner.getActivePotionEffects().stream().filter(e -> getPermanentPotionEffects(owner).contains(e.getType())).forEach(e -> owner.removePotionEffect(e.getType()));
-				setForce(0);
 				setResi(0);
 				if (Copied.containsKey(target)) {
 					for (PotionEffectType po : Copied.get(target)) {
@@ -327,9 +326,6 @@ public class Kakashi extends ShinobiRoles {
 						
 						@Override
 						public void run() {
-							if (owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
-								setForce(20);
-							}
 							if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)){
 								setResi(20);
 							}

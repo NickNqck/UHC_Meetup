@@ -7,6 +7,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
@@ -30,7 +31,6 @@ public class Kakuzu extends AkatsukiRoles {
 		super(player);
 		setChakraType(getRandomChakras());
 		ChakrasOwned.put(getChakras(), true);
-		setForce(20);
 		giveItem(owner, false, getItems());
 	}
 	@Override
@@ -85,10 +85,10 @@ public class Kakuzu extends AkatsukiRoles {
 	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (!gameState.hasRoleNull(victim)) {
-			if (getPlayerRoles(victim).getChakras() != null && victim != owner && killer == owner && !ChakrasOwned.containsKey(getPlayerRoles(victim).getChakras())) {
-				ChakrasOwned.put(getPlayerRoles(victim).getChakras(), true);
-				owner.sendMessage("§7Vous maitrisez maintenant le "+getPlayerRoles(victim).getChakras().getShowedName());
+		if (!gameState.hasRoleNull(victim) && getPlayerRoles(victim) instanceof NSRoles) {
+			if (((NSRoles) getPlayerRoles(victim)).getChakras() != null && victim != owner && killer == owner && !ChakrasOwned.containsKey(((NSRoles) getPlayerRoles(victim)).getChakras())) {
+				ChakrasOwned.put(((NSRoles) getPlayerRoles(victim)).getChakras(), true);
+				owner.sendMessage("§7Vous maitrisez maintenant le "+ ((NSRoles) getPlayerRoles(victim)).getChakras().getShowedName());
 			}
 		}
 	}

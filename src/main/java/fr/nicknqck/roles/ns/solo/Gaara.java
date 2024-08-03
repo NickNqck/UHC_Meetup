@@ -316,7 +316,6 @@ public class Gaara extends NSRoles {
         owner.sendMessage(("Vous avez utilisé votre §aShukaku§f."));
         usingShukaku = true;
         givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, true);
-        setForce(20);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> usingShukaku = false, 5*20*60);
         shukakuCooldown = 20*60;
 	}

@@ -18,7 +18,6 @@ public class Sakura extends ShinobiRoles {
 	public Sakura(Player player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		setForce(20);
 		setCanBeHokage(true);
 	}
 	@Override

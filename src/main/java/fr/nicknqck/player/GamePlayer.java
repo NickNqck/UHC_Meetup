@@ -1,11 +1,9 @@
 package fr.nicknqck.player;
 
-import fr.nicknqck.GameState;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.Location;
 
 import java.util.UUID;
 
@@ -17,18 +15,13 @@ public class GamePlayer {
 	private boolean isAlive;
 	@Setter
 	private boolean canRevive = false;
-	@Getter
 	@Setter
 	private RoleBase role;
+	@Setter
+	private Location deathLocation;
 	public GamePlayer(UUID gamePlayer){
 		this.uuid = gamePlayer;
 		setAlive(true);
 		setCanRevive(false);
-	}
-	public static GamePlayer get(UUID uuid){
-		return GameState.getInstance().getPlayerRoles().get(Bukkit.getPlayer(uuid)).getGamePlayer();
-	}
-	public static GamePlayer get(Player player){
-		return GameState.getInstance().getGamePlayer().get(player.getUniqueId());
 	}
 }

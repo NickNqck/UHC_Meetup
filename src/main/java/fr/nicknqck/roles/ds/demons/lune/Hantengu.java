@@ -30,7 +30,6 @@ public class Hantengu extends DemonsRoles {
 private int killforce = 0;
 	public Hantengu(Player player) {
 		super(player);
-		this.setForce(20 + killforce);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {
 				if (getPlayerRoles(p) instanceof Muzan) {
@@ -266,7 +265,7 @@ private int killforce = 0;
 		String name = item.getItemMeta().getDisplayName();
 		if (item.isSimilar(Items.getHantenguUrogiFly())) {
 			if (form == Form.Urogi) {
-				if (powerUrogi == true) {
+				if (powerUrogi) {
 					if (flytime == 6) {
 						flytime = 6;
 						powerUrogi = false;
@@ -450,16 +449,9 @@ private int killforce = 0;
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-							System.out.println("Force Hantengu [1] "+ this.getForce());
-							this.killforce++;
-							this.killforce++;
-							this.killforce++;
-							this.killforce++;
-							this.killforce++;
+							this.killforce+=5;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 5% de Force");
-							this.addforce(killforce);
-							System.out.println("Force Hantengu [2] "+this.getForce());
-						
+							addBonusforce(killforce);
 					}
 				}
 			}

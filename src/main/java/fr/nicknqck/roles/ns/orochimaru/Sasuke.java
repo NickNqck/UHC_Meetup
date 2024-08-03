@@ -337,7 +337,6 @@ public class Sasuke extends OrochimaruRoles {
 			owner.sendMessage("§7Enfin...§5 Orochimaru§7 est§c mort§7, vous pouvez enfin exprimez votre plein potentielle");
 		}
 		owner.setHealth(owner.getHealth()+6.0);
-		setForce(20);
 		setTeam(TeamList.Sasuke);
 		if (gameState.attributedRole.contains(Roles.Itachi) && !killItachi) {
 			new BukkitRunnable() {

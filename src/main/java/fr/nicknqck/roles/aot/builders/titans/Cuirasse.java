@@ -48,7 +48,6 @@ public class Cuirasse extends Titan{
 						form = Form.Partielle;
 						player.sendMessage("§7Votre cuirasse est maintenant§l§n "+form.name());
 						getPlayerRole(player).setResi(0);
-						getPlayerRole(player).setForce(20);
 						getPlayerRole(player).setMaxHealth(player.getMaxHealth()-4.0);
 						killCount--;
 						player.sendMessage("§7Il vous reste maintenant§l "+killCount+"§7 changement de cuirasse possible.");
@@ -58,7 +57,6 @@ public class Cuirasse extends Titan{
 						form = Form.Entiere;
 						player.sendMessage("§7Votre cuirasse est maintenant§l§n "+form.name());
 						getPlayerRole(player).setResi(20);
-						getPlayerRole(player).setForce(0);
 						getPlayerRole(player).giveHealedHeartatInt(2);
 						killCount--;
 						player.sendMessage("§7Il vous reste maintenant§l "+killCount+"§7 changement de cuirasse possible.");
@@ -113,8 +111,6 @@ public class Cuirasse extends Titan{
 				if (form == Form.Entiere) {
 					getPlayerRole(getListener().getCuirasse()).setResi(20);
 					getPlayerRole(getListener().getCuirasse()).giveHealedHeartatInt(p, 2);
-				} else if (form == Form.Partielle) {
-					getPlayerRole(getListener().getCuirasse()).setForce(20);
 				}
 			}else {
 				sendCooldown(p, getListener().getCuirasseCooldown());

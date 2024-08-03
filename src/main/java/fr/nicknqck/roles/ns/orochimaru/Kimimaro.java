@@ -104,7 +104,6 @@ public class Kimimaro extends OrochimaruRoles {
 						owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 						owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 						Marquecd = 60*10;
-						setForce(0);
 						setResi(0);
 					} else {
 						if (l == 60*5) {

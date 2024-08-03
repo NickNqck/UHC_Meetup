@@ -21,7 +21,6 @@ public class DemonMain extends DemonsRoles {
 
 	public DemonMain(Player player) {
 		super(player);
-		this.setForce(20);
 		this.setResi(20);
 	}
 	@Override

@@ -189,17 +189,11 @@ public class Jigoro extends DemonsSlayersRoles {
 							giveItem(owner, false, Items.getJoueurZenItsuSpeed());
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Zen'Itsu "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour"+ChatColor.GRAY+", ainsi que l'accès au: "+ChatColor.GOLD+"Premier Mouvement du Soufle de la Foudre"+ChatColor.GRAY+" qui vous donnera Speed 3 pendant 1 minutes");
 							killzen = true;
-							if (!giveforce) {
-								addforce(20);
-							}
 						}
 						if (role instanceof Kaigaku && !killkai) {
 							killkai = true;
 							giveItem(owner, false, Items.getSoufleFoudre4iememouvement());
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Kaigaku "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 la nuit"+ChatColor.GRAY+", ainsi que l'accès au: "+ChatColor.GOLD+"Quatrième Mouvement du Soufle de la Foudre"+ChatColor.GRAY+" qui vous téléportera à la personne la plus proche que vous pouvez voir dans un rayon maximum de 30 blocs");
-							if (!giveforce) {
-								addforce(20);
-							}
 						}
 					}
 				}

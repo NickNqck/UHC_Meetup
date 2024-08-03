@@ -118,7 +118,6 @@ public class Kyogai extends DemonsRoles {
 			System.out.println(owner.getName()+" = "+getRoles().name());
 			owner.getInventory().addItem(Items.getTambour());
 			camp = Camp.Démon;
-			setForce(20);
 		}
 		if (item.isSimilar(GUIItems.getKyogaiSolo())) {
 			setTeam(TeamList.Solo);
@@ -130,7 +129,6 @@ public class Kyogai extends DemonsRoles {
 			owner.getInventory().addItem(Items.getPercussionRapide());
 			camp = Camp.Solo;
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
-			setForce(20);
 		}
 		super.FormChoosen(item, gameState);
 	}

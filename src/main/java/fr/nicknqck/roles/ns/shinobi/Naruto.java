@@ -301,7 +301,6 @@ public class Naruto extends ShinobiRoles {
 								givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*idleTime, 1, false);
 								givePotionEffet(PotionEffectType.SPEED, 20*idleTime, 1, false);
 								cdSenjutsu = idleTime*2;
-								setForce(20);
 								na =false;
 								cancel();
 							} else {

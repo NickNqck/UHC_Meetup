@@ -17,7 +17,6 @@ public class Kyojuro extends PillierRoles {
 
 	public Kyojuro(Player player) {
 		super(player);
-		this.setForce(20);
 		this.setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		this.setResi(20);

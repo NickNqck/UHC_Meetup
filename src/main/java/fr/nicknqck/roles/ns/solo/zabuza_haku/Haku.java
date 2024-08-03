@@ -214,7 +214,6 @@ public class Haku extends NSRoles {
             
             this.fMap.putAll(map);
             bulleHakuCD = maxCDHaku+120;
-            setForce(20);
             setNoFall(true);
             new BukkitRunnable() {
 				@Override
@@ -227,7 +226,6 @@ public class Haku extends NSRoles {
 					
 					if (bulleHakuCD <= (maxCDHaku-120)) {
 						owner.sendMessage("§7Votre bulle disparait");
-						setForce(0);
 						owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 						resetBulleHaku();
 						cancel();

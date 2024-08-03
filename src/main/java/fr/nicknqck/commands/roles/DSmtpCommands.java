@@ -102,28 +102,24 @@ public class DSmtpCommands implements CommandExecutor {
 
                     }
 				} else if (args[0].equalsIgnoreCase("doc")){
-					if (sender instanceof Player) {
-						Player player = (Player) sender;
-						ArrayList<String> message = new ArrayList<String>();
-						message.add(ChatColor.BOLD+"Aucun document disponible, (pour l'instant)");
-						player.sendMessage(message.toArray(new String[message.size()]));
-						return true;
-					}
-				} else if (args[0].equalsIgnoreCase("lame")){
-					if (sender instanceof Player) {
-						Player player = (Player) sender;
-						ArrayList<String> message = getStrings();
-						player.sendMessage(message.toArray(new String[message.size()]));
-						return true;
-					}
-				} else if (args[0].equalsIgnoreCase("effect")) {
+                    Player player = (Player) sender;
+                    ArrayList<String> message = new ArrayList<String>();
+                    message.add(ChatColor.BOLD+"Aucun document disponible, (pour l'instant)");
+                    player.sendMessage(message.toArray(new String[message.size()]));
+                    return true;
+                } else if (args[0].equalsIgnoreCase("lame")){
+                    Player player = (Player) sender;
+                    ArrayList<String> message = getStrings();
+                    player.sendMessage(message.toArray(new String[message.size()]));
+                    return true;
+                } else if (args[0].equalsIgnoreCase("effect")) {
 						ArrayList<String> message = new ArrayList<String>();
 						if (gameState.getPlayerRoles().get(sender) == null) return false;
 						message.add(ChatColor.AQUA+"Effect: "+ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 						message.add("");
 						message.add(ChatColor.GREEN+"Résistance: "+ gameState.getPlayerRoles().get(sender).getResi()+"% + " +gameState.getPlayerRoles().get(sender).getBonusResi()+"%");
 						message.add("");
-						message.add(ChatColor.RED+"Force: "+ gameState.getPlayerRoles().get(sender).getForce()+"% + "+gameState.getPlayerRoles().get(sender).getBonusForce()+"%");
+						message.add(ChatColor.RED+"Force: 20% + "+gameState.getPlayerRoles().get(sender).getBonusForce()+"%");
 						message.add("");
 						message.add(ChatColor.AQUA+"Speed: "+gameState.getPlayerRoles().get(sender).owner.getWalkSpeed());
 						message.add("");
@@ -134,36 +130,31 @@ public class DSmtpCommands implements CommandExecutor {
 					}
 				if (gameState.getServerState() == ServerStates.InGame) {
 					if (args[0].equalsIgnoreCase("getpillier")) {
-						if (sender instanceof Player) {
-							for (Player e : gameState.getInGamePlayers()) {
-									Player s = (Player) sender;
-									if (!gameState.hasRoleNull(s)) {
-										if (gameState.getPlayerRoles().containsKey(s)) {
-											if (gameState.getPlayerRoles().containsKey(e)) {
-												if (gameState.getPlayerRoles().get(s) instanceof Kagaya) {
-													RoleBase r = gameState.getPlayerRoles().get(s);
-													Kagaya k = (Kagaya) r;
-													if (k.pacte3) {
-														if (k.access) {					
-															k.pillier = gameState.getPillier().get(0);
-															k.pillier.sendMessage("Vous êtes le pillier de Kagaya");
-															k.owner.sendMessage("Votre pillier est:§6 "+k.pillier.getName());
-															return true;
-														}
-													} else {
-														k.owner.sendMessage("Vous n'avez pas fait le bon pacte donc vous ne pouvez pas faire cette commande !");
-														return true;
-													}
-												}
-											}
-										}
-									}			
-							}
-						} else {
-							sender.sendMessage("Il faut etre un joueur pour cette commande");
-							return true;
-						}
-					}
+                        for (Player e : gameState.getInGamePlayers()) {
+                            Player s = (Player) sender;
+                            if (!gameState.hasRoleNull(s)) {
+                                if (gameState.getPlayerRoles().containsKey(s)) {
+                                    if (gameState.getPlayerRoles().containsKey(e)) {
+                                        if (gameState.getPlayerRoles().get(s) instanceof Kagaya) {
+                                            RoleBase r = gameState.getPlayerRoles().get(s);
+                                            Kagaya k = (Kagaya) r;
+                                            if (k.pacte3) {
+                                                if (k.access) {
+                                                    k.pillier = gameState.getPillier().get(0);
+                                                    k.pillier.sendMessage("Vous êtes le pillier de Kagaya");
+                                                    k.owner.sendMessage("Votre pillier est:§6 " + k.pillier.getName());
+                                                    return true;
+                                                }
+                                            } else {
+                                                k.owner.sendMessage("Vous n'avez pas fait le bon pacte donc vous ne pouvez pas faire cette commande !");
+                                                return true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
                         gameState.sendDescription((Player) sender);
                         return true;

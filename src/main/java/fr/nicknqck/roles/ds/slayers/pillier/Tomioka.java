@@ -21,7 +21,6 @@ public class Tomioka extends PillierRoles {
 
 	public Tomioka(Player player) {
 		super(player);
-		this.setForce(20);
 		this.setCanuseblade(true);
 	}
 	@Override

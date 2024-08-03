@@ -169,9 +169,6 @@ public class Bestial extends Titan implements Listener {
 					if (form == Animal.Singe) {
 						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-						if (getPlayerRole(getOwner()).getForce() < 20) {
-							getPlayerRole(getOwner()).setForce(20);
-						}
 						if (getPlayerRole(getOwner()).getResi() < 20) {
 							getPlayerRole(getOwner()).setResi(20);
 						}
@@ -179,15 +176,9 @@ public class Bestial extends Titan implements Listener {
 					if (form == Animal.Okapi) {
 						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-						if (getPlayerRole(getOwner()).getForce() < 20) {
-							getPlayerRole(getOwner()).setForce(20);
-						}
 					}
 					if (form == Animal.Taureau) {
 						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-						if (getPlayerRole(getOwner()).getForce() < 20) {
-							getPlayerRole(getOwner()).setForce(20);
-						}
 					}
 					int cd = getListener().getBestialCooldown()-(60*4);
 					getPlayerRole(player.getUniqueId()).sendCustomActionBar(player, "§bTemp restant de transformation: "+StringUtils.secondsTowardsBeautiful(cd));
@@ -313,23 +304,10 @@ public class Bestial extends Titan implements Listener {
 						if (getPlayerRole(getOwner()).getResi() > 0) {
 							getPlayerRole(getOwner()).setResi(0);
 						}
-						if (getPlayerRole(getOwner()).getForce() > 0) {
-							getPlayerRole(getOwner()).setForce(0);
-						}
 					}
 					if (form == Animal.Crocodile) {
 						if (getPlayerRole(getOwner()).getResi() > 0) {
 							getPlayerRole(getOwner()).setResi(0);
-						}
-					}
-					if (form == Animal.Taureau) {
-						if (getPlayerRole(getOwner()).getForce() > 0) {
-							getPlayerRole(getOwner()).setForce(0);
-						}
-					}
-					if (form == Animal.Okapi) {
-						if (getPlayerRole(getOwner()).getForce() > 0) {
-							getPlayerRole(getOwner()).setForce(0);
 						}
 					}
 				}

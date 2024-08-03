@@ -89,7 +89,7 @@ public class WarHammer extends Titan{
 				this.CoconLocation.getBlock().setType(Material.IRON_BLOCK);
 				System.out.println(getPlayerRole(getOwner()).isCanRespawn());
 				getPlayerRole(getOwner()).setCanRespawn(true);
-				getPlayerRole(getOwner()).setForce(30);
+				getPlayerRole(getOwner()).addBonusforce(10);
 				System.out.println(getPlayerRole(getOwner()).isCanRespawn());
 			}else {
 				if (getListener().getWarHammer() == null)return;
@@ -102,7 +102,7 @@ public class WarHammer extends Titan{
 			setTransformedinTitan(false);
 			getPlayerRole(getListener().getWarHammer()).isTransformedinTitan = false;
 			getPlayerRole(getListener().getWarHammer()).setMaxHealth(getPlayerRole(getListener().getWarHammer()).getMaxHealth()-6);
-			getPlayerRole(getOwner()).setForce(0);
+			getPlayerRole(getOwner()).addBonusforce(-10);
 			TransfoLocation = null;
 			if (CoconLocation != null) {
 				CoconLocation.getWorld().getBlockAt(CoconLocation).setType(Material.STONE);

@@ -46,10 +46,6 @@ public class Jugo extends Orochimaru {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public void RoleGiven(GameState gameState) {
-		setForce(20);
-	}
-	@Override
 	public String[] Desc() {
 		if (!kimimaroDeath) {
 			KnowRole(owner, Roles.Kimimaro, 20);

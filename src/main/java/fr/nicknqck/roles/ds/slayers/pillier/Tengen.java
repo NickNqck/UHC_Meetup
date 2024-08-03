@@ -29,7 +29,6 @@ public class Tengen extends PillierRoles {
 	public Tengen(Player player) {
 		super(player);
 		this.setCanuseblade(true);
-		this.setForce(20);
 	}
 
     @Override

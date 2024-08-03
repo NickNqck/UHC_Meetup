@@ -8,7 +8,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
-import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -53,7 +52,6 @@ public abstract class RoleBase implements Role{
 	@Getter
 	@Setter
 	private boolean invincible = false;
-	private double force = 0;
 	private double resi = 0;
 	private TeamList oldteam;
 	private double Bonusforce = 0;
@@ -118,9 +116,6 @@ public abstract class RoleBase implements Role{
 				}
 				Player owner = Bukkit.getPlayer(getPlayer());
 				if (owner == null) return;
-				if (owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) && getForce() < 20) {
-					setForce(20);
-				}
 				if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() < 20) {
 					setResi(20);
 				}
@@ -199,13 +194,8 @@ public abstract class RoleBase implements Role{
 		}
 		return team;
 	}
-	public double getForce() {return force;}
-	public void setForce(double force) {this.force = force;}
-	double allforce = getForce()+getBonusForce();
-	public void addforce(double force) {setForce(getForce() + force);}
 	public double getBonusForce() {return Bonusforce;}
 	public void setBonusForce(double Bonusforce) {this.Bonusforce = Bonusforce;}
-	public double getAllForce() {return allforce;}
 	public void addBonusforce(double Bonusforce) {
 		setBonusForce(getBonusForce() + Bonusforce);
 	}
@@ -224,15 +214,11 @@ public abstract class RoleBase implements Role{
         }, 20*10);//20ticks* le nombre de seconde voulue
 	}
 	public void Update(GameState gameState) {    //Update every 1s (20ticks)
-		allforce = getForce() + getBonusForce();
 		allresi = getResi() + getBonusResi();
 		if (owner != null) {
 			owner.setMaxHealth(getMaxHealth());
 			if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
 				setResi(0.0);
-			}
-			if (!owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
-				setForce(0.0);
 			}
 		if (!Objects.equals(owner.getWorld().getGameRuleValue("doMobSpawning"), "false"))
 			owner.getWorld().setGameRuleValue("doMobSpawning", "false");
@@ -520,37 +506,20 @@ public abstract class RoleBase implements Role{
         Location targetLocation = player.getLocation().add(targetDirection);
         return targetLocation;
     }
+	@Getter
+	@Setter
 	private boolean canVoleTitan = false;
-	public boolean isCanVoleTitan() {return canVoleTitan;}
-	public void setCanVoleTitan(boolean c) {canVoleTitan = c;}
+
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {}
 	private boolean ackerman = false;
 	public boolean isAckerMan() {return ackerman;}
 	public void setAckerMan(boolean b) {ackerman = b;}
-	public void setChakraType(Chakras chakras) {
-		if (chakras == null) {
-			this.chakras = null;
-			return;
-		}
-		chakras.getChakra().getList().add(owner.getUniqueId());
-		this.chakras = chakras;
-	}
-	private Chakras chakras = null;
-	public Chakras getChakras() {
-		return chakras;
-	}
-	public boolean hasChakras() {
-		if (chakras != null) {
-			return true;
-		}
-		return false;
-	}
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {}
 	@SuppressWarnings("deprecation")
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {}
 	public Player getPlayerFromRole(Roles roles) {
 		List<Player> toReturn = new ArrayList<>();
-		gameState.getInGamePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).forEach(e -> toReturn.add(e));
+		gameState.getInGamePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).forEach(toReturn::add);
 		if (toReturn.isEmpty()) {
 			return null;
 		}
@@ -577,31 +546,11 @@ public abstract class RoleBase implements Role{
 	public void onALLPlayerDropItem(PlayerDropItemEvent e, Player dropper, ItemStack item) {}
 	public void onALLPlayerRecupItem(PlayerPickupItemEvent e, ItemStack s) {}
 	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {}
-	public Chakras getRandomChakras() {
-        Chakras toReturn = null;
-        int rdm = RandomUtils.getRandomInt(1, 5);
-        if (rdm == 1) {
-            toReturn = Chakras.DOTON;
-        }
-        if (rdm == 2) {
-            toReturn = Chakras.FUTON;
-        }
-        if (rdm == 3) {
-            toReturn = Chakras.KATON;
-        }
-        if (rdm == 4) {
-            toReturn = Chakras.RAITON;
-        }
-        if (rdm == 5) {
-            toReturn = Chakras.SUITON;
-        }
 
-        return toReturn;
-    }
 	public void damage(Player target, double damage, int delay) {
 		if (target != null && target.isOnline()) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				if (target == null || !target.isOnline()) {
+				if (!target.isOnline()) {
 					return;
 				}
 				if (target.getHealth() < 0) {
@@ -667,24 +616,7 @@ public abstract class RoleBase implements Role{
 		return false;
 	}
 	public void neoFormChoosen(ItemStack item, Inventory inv, int slot, GameState gameState) {}
-	public Chakras getRandomChakrasBetween(Chakras... c) {
-        Chakras tr = null;
-        HashMap<Integer, Chakras> canReturn = new HashMap<>();
-        int i = 0;
-        for (Chakras ch : c) {
-            i++;
-            canReturn.put(i, ch);
-        }
-        int max = canReturn.size()+1;
-        int rdm = RandomUtils.getRandomInt(1, max);
-        for (Chakras r : canReturn.values()) {
-            if (canReturn.get(rdm).equals(r)) {
-                tr = r;
-                break;
-            }
-        }
-        return tr;
-    }
+
 	public void onJubiInvoque(Player invoquer) {}
 	public boolean onReceveExplosionDamage() {return false;}
 	public void onAllPlayerDamageByExplosion(EntityDamageEvent event, DamageCause cause, Player p) {}

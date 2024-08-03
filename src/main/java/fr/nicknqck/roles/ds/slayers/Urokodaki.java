@@ -25,7 +25,6 @@ public class Urokodaki extends SlayerRoles {
 	public Urokodaki(Player player) {
 		super(player);
 		this.setCanuseblade(true);
-		setForce(20);
 		AutomaticDesc automaticDesc = new AutomaticDesc(this);
 		automaticDesc.addCustomWhenEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, false), "dans l'§beau").addItem(
 				this.SoufleComponent(), 60*5
@@ -106,7 +105,6 @@ public class Urokodaki extends SlayerRoles {
 					if (role instanceof Tomioka || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
 						Random random = new Random();
 						int rint = random.nextInt(2);
-						System.out.println("Force Urokodaki 1 "+getForce());
 						System.out.println("Speed Urokodaki 1"+ owner.getWalkSpeed());
 						if (rint == 0) {
 							this.addBonusforce(5);
@@ -116,7 +114,6 @@ public class Urokodaki extends SlayerRoles {
 						addSpeedAtInt(owner, 5);
 						owner.sendMessage(ChatColor.GRAY+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 5% de Speed");
 						}
-						System.out.println("Force Urokodaki 2 "+getForce());
 						System.out.println("Speed Urokodaki 2"+ owner.getWalkSpeed());
 					}
 				}

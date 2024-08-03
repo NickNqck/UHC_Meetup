@@ -31,7 +31,6 @@ public class Kokushibo extends DemonsRoles {
 	public boolean solo = false;
 	public Kokushibo(Player player) {
 		super(player);
-		this.setForce(20);
 		regencooldown = 15;
 		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();

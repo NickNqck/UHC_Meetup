@@ -11,6 +11,7 @@ import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -138,18 +139,12 @@ public class GameListener implements Listener {
 				if (gameState.infected != null && gameState.infected.getUniqueId() == p.getUniqueId()) {
 					if (gameState.nightTime) {
 						gameState.getPlayerRoles().get(p).givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
-						if (!infectedgiveforce) {							
-							if (gameState.getPlayerRoles().get(p).getForce() != 20) {
-							gameState.getPlayerRoles().get(p).addforce(20);
+						if (!infectedgiveforce) {
 							infectedgiveforce = true;
-							}
 						}
 					} else {
-						if (gameState.getPlayerRoles().get(p).getForce() >= 20) {
-							if (infectedgiveforce) {
-								gameState.getPlayerRoles().get(p).addforce(-20);
-								infectedgiveforce = false;
-							}
+						if (infectedgiveforce) {
+							infectedgiveforce = false;
 						}
 					}
 				}
@@ -351,7 +346,6 @@ public class GameListener implements Listener {
 					RoleBase r = gameState.getPlayerRoles().get(p);
 					r.setBonusForce(0);
 					r.setBonusResi(0);
-					r.setForce(0);
 					r.setResi(0);
 					r.customName.clear();
 					r.setCanBeHokage(false);
@@ -570,7 +564,9 @@ public class GameListener implements Listener {
 		if (cantDie || playerKillEvent.isCancel()) {
 			return;
 		}
-		gameState.getGamePlayer().get(player.getUniqueId()).setAlive(false);
+		GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
+		gamePlayer.setAlive(false);
+		gamePlayer.setDeathLocation(player.getLocation());
         gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
         for (ItemStack item : player.getInventory().getContents()){
 			if (item != null){

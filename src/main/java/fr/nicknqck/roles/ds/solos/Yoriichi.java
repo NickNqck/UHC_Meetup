@@ -34,7 +34,6 @@ public class Yoriichi extends DemonsSlayersRoles {
 
 	public Yoriichi(Player player) {
 		super(player);
-		this.setForce(20);
 		this.setCanuseblade(true);
 		this.setResi(20);
 		setLameIncassable(owner, true);

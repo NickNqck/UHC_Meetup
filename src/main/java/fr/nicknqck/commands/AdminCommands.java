@@ -498,7 +498,7 @@ public class AdminCommands implements CommandExecutor{
 												"",
 												AllDesc.Resi+": "+ gameState.getPlayerRoles().get(p).getResi()+"% + " +gameState.getPlayerRoles().get(p).getBonusResi()+"%",
 												"",
-												ChatColor.RED+"Force: "+ gameState.getPlayerRoles().get(p).getForce()+"% + "+gameState.getPlayerRoles().get(p).getBonusForce()+"%",
+												ChatColor.RED+"Force: 20% + "+gameState.getPlayerRoles().get(p).getBonusForce()+"%",
 												"",
 												ChatColor.AQUA+"Speed: "+gameState.getPlayerRoles().get(p).owner.getWalkSpeed(),
 												"",

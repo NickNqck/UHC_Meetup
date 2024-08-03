@@ -86,17 +86,9 @@ public class Makomo extends SlayerRoles {
 		if (item.isSimilar(Items.getSoufleDeLeau())) {
 			if (souflecooldown <= 0) {
 				souflecooldown = 60*7;
-				System.out.println("Force Makomo [1] "+ this.getForce());
-				if (!fuse) {
-					this.addforce(20);
-				}
-				System.out.println("Force Makomo [2] "+ this.getForce());
 				fuse = true;
 				owner.sendMessage("Vous venez d'activer votre Soufle de L'eau ce qui vous donne"+ChatColor.GOLD+" Force 1 pendant 2 minutes");
 				org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					if (fuse) {
-						addforce(-20);
-					}
 		        }, 20*120);
 			} else {
 				sendCooldown(owner, souflecooldown);

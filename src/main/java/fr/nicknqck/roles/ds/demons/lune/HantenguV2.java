@@ -158,9 +158,6 @@ public class HantenguV2 extends DemonsRoles {
 			if (urogi) {
 				givePotionEffet(owner, PotionEffectType.JUMP, 20, 4, true);
 			}
-			if (getForce() != 20) {
-				setForce(20);
-			}
 			if (!isHasNoFall()) {
 				setNoFall(true);
 			}
@@ -170,7 +167,6 @@ public class HantenguV2 extends DemonsRoles {
 			} else {
 				if (timeinUrogi == 0) {
 					clone = Clone.Hantengu;
-					setForce(0);
 					setNoFall(false);
 					owner.sendMessage("Vous êtes redevenue le pitoyable§6 Hantengu");
 					owner.removePotionEffect(PotionEffectType.SPEED);
@@ -195,9 +191,6 @@ public class HantenguV2 extends DemonsRoles {
 			if (!owner.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
 			}
-			if (getForce() != 20) {
-				setForce(20);
-			}
 			if (invincibletime >= 1) {
 				invincibletime-=1;
 				owner.sendMessage("Vous êtes§6 invincible§r pendant encore§6 "+StringUtils.secondsTowardsBeautiful(invincibletime));
@@ -212,7 +205,6 @@ public class HantenguV2 extends DemonsRoles {
 				NMSPacket.sendActionBar(owner, "§b Temp restant en temp que§6 Aizetsu§r "+StringUtils.secondsTowardsBeautiful(timeinAizetsu));
 			} else {
 				clone = Clone.Hantengu;
-				setForce(0);
 				owner.sendMessage("Vous êtes redevenue le pitoyable§6 Hantengu");
 				owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 				owner.getInventory().remove(Items.getHantenguAizetsuEpee());
@@ -225,9 +217,6 @@ public class HantenguV2 extends DemonsRoles {
 			}
 			if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-			}
-			if (getForce() != 20) {
-				setForce(20);
 			}
 			if (getResi() != 20) {
 				setResi(20);
@@ -249,7 +238,6 @@ public class HantenguV2 extends DemonsRoles {
 				NMSPacket.sendActionBar(owner, "§b Temp restant en temp que§6 "+clone.name()+"§r "+StringUtils.secondsTowardsBeautiful(timeinZohakuten));
 			} else {
 				clone = Clone.Hantengu;
-				setForce(0);
 				owner.sendMessage("Vous êtes redevenue le pitoyable§6 Hantengu");
 				owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 				owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);

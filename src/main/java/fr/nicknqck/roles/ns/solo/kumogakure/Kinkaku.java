@@ -137,9 +137,9 @@ public class Kinkaku extends NSRoles {
         super.OnAPlayerDie(player, gameState, killer);
         if (owner != null && killer.getUniqueId().equals(owner.getUniqueId())){
             if (owner.getItemInHand().isSimilar(EventailItem)){
-                if (getPlayerRoles(player).hasChakras() && !getPlayerRoles(player).getChakras().getChakra().getList().contains(owner.getUniqueId())){
-                    getPlayerRoles(player).getChakras().getChakra().getList().add(owner.getUniqueId());
-                    owner.sendMessage("En tuant§c "+player.getDisplayName()+"§f vous avez obtenue sa nature de Chakra: "+getPlayerRoles(player).getChakras().getShowedName());
+                if (getPlayerRoles(player) instanceof NSRoles && ((NSRoles) getPlayerRoles(player)).hasChakras() && !((NSRoles) getPlayerRoles(player)).getChakras().getChakra().getList().contains(owner.getUniqueId())){
+                    ((NSRoles) getPlayerRoles(player)).getChakras().getChakra().getList().add(owner.getUniqueId());
+                    owner.sendMessage("En tuant§c "+player.getDisplayName()+"§f vous avez obtenue sa nature de Chakra: "+ ((NSRoles) getPlayerRoles(player)).getChakras().getShowedName());
                 }
             }
         }

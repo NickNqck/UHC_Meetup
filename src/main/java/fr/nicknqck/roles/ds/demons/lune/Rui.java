@@ -163,7 +163,6 @@ public class Rui extends DemonsRoles {
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false));
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60, 0, false, false));
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*30, 0, false, false));
-						setForce(20);
 						setResi(20);
 						int cd = 60*3;
 						cdfilforce =cd;
@@ -198,7 +197,6 @@ public class Rui extends DemonsRoles {
 				if (cdfilforce <=0) {
 					owner.sendMessage("Activation du fil de Force");
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60*20, 0, false, false));
-					setForce(20);
 					filuse++;
 					cdfilforce=60*3;
 					usefilforce=60;
