@@ -102,6 +102,6 @@ public class Tomioka extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aTomioka";
+		return "Tomioka";
 	}
 }

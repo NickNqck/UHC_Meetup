@@ -72,6 +72,6 @@ public class Susamaru extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cSusamaru";
+		return "Susamaru";
 	}
 }

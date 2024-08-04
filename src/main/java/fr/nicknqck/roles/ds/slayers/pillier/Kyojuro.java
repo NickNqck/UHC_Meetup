@@ -90,6 +90,6 @@ public class Kyojuro extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aKyojuro";
+		return "Kyojuro";
 	}
 }

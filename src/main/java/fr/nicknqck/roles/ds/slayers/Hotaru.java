@@ -33,7 +33,7 @@ public class Hotaru extends SlayerRoles {
 
 	@Override
 	public String getName() {
-		return "§aHotaru";
+		return "Hotaru";
 	}
 
 	@Override

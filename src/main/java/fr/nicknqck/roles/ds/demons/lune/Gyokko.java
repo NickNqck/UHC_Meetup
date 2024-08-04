@@ -58,7 +58,7 @@ public class Gyokko extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cGyokko";
+		return "Gyokko";
 	}
 
 	private int pouvoircooldown = 0;

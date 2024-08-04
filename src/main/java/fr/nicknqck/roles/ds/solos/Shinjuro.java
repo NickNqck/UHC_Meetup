@@ -162,7 +162,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 
 	@Override
 	public String getName() {
-		return "§eShinjuro";
+		return "Shinjuro";
 	}
 	private static class onTick extends BukkitRunnable {
 		private final Shinjuro shinjuro;

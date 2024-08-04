@@ -56,7 +56,7 @@ public class Enmu extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cEnmu";
+		return "Enmu";
 	}
 
 	@Override

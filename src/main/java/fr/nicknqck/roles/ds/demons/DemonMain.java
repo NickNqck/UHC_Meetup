@@ -33,7 +33,7 @@ public class DemonMain extends DemonsRoles {
 	}
 	@Override
 	public String getName() {
-		return "§cDemon Main";
+		return "Demon Main";
 	}
 
 	@Override

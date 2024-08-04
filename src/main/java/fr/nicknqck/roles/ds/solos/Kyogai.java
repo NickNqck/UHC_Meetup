@@ -57,7 +57,7 @@ public class Kyogai extends DemonsRoles {
 	}
 	@Override
 	public String getName() {
-		return "§cKyogai";
+		return "Kyogai";
 	}
 
 	private enum Camp{

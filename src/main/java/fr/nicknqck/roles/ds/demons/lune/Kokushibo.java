@@ -315,6 +315,6 @@ public boolean killtanjiro = false;
 
 	@Override
 	public String getName() {
-		return "§cKokushibo";
+		return "Kokushibo";
 	}
 }

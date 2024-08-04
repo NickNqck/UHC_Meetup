@@ -71,7 +71,7 @@ public class Gyutaro extends RoleBase{
 
 	@Override
 	public String getName() {
-		return "§cGyutaro";
+		return "Gyutaro";
 	}
 
 	@Override

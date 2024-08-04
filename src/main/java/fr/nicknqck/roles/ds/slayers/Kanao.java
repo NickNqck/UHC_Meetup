@@ -149,6 +149,6 @@ public class Kanao extends SlayerRoles {
 
 	@Override
 	public String getName() {
-		return "§aKanao";
+		return "Kanao";
 	}
 }

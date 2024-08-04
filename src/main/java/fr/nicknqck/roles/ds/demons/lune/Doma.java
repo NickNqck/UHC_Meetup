@@ -137,7 +137,7 @@ public class Doma extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cDoma";
+		return "Doma";
 	}
 
 	@Override

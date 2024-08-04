@@ -93,6 +93,6 @@ public class Obanai extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aObanai";
+		return "Obanai";
 	}
 }

@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Pourfendeur extends SlayerRoles {
 	@Override
 	public String getName() {
-		return "§aPourfendeur Simple";
+		return "Pourfendeur Simple";
 	}
 
 	public enum Soufle {
@@ -306,7 +306,7 @@ public class Pourfendeur extends SlayerRoles {
 				        	}
 				        }
 				        owner.sendMessage("Vous avez obtenue le Soufle: "+color+ form.name());
-			} while (modif == false);
+			} while (!modif);
 		}
 		super.PlayerKilled(killer, victim, gameState);
 	}

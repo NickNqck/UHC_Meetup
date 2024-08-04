@@ -41,7 +41,7 @@ public class Kagaya extends SlayerRoles {
 	}
 	@Override
 	public String getName() {
-		return "§aKagaya";
+		return "Kagaya";
 	}
 
 	enum Pacte{

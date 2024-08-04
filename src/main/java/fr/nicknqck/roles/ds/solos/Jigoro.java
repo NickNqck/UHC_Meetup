@@ -33,7 +33,7 @@ public class Jigoro extends DemonsSlayersRoles {
 
 	@Override
 	public String getName() {
-		return "§eJigoro";
+		return "Jigoro";
 	}
 
 	enum Status {

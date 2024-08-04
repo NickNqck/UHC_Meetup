@@ -201,6 +201,6 @@ public class Sanemi extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aSanemi";
+		return "Sanemi";
 	}
 }

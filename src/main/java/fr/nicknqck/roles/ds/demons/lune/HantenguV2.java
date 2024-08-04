@@ -50,7 +50,7 @@ public class HantenguV2 extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cHantengu§7 (§6V2§7)";
+		return "Hantengu§7 (§6V2§7)";
 	}
 
 	@Override

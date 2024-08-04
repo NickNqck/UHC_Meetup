@@ -175,6 +175,6 @@ public class Inosuke extends SlayerRoles {
 
 	@Override
 	public String getName() {
-		return "§aInosuke";
+		return "Inosuke";
 	}
 }

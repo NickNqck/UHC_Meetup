@@ -111,7 +111,7 @@ public class Kumo extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cKumo";
+		return "Kumo";
 	}
 
 	@Override

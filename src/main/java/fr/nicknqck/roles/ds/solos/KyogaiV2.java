@@ -69,7 +69,7 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 
 	@Override
 	public String getName() {
-		return "§cKyogai§7 (§6V2§7)";
+		return "Kyogai§7 (§6V2§7)";
 	}
 
 	public enum Model {

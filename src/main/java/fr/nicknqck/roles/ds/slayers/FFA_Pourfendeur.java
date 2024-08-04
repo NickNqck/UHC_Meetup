@@ -23,7 +23,7 @@ import java.util.Random;
 public class FFA_Pourfendeur extends SlayerRoles {
 	@Override
 	public String getName() {
-		return "§aPourfendeur de démon§7 (§eSolo§7)";
+		return "Pourfendeur de démon§7 (§eFFA§7)";
 	}
 
 	enum Soufle {

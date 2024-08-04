@@ -154,6 +154,6 @@ public class Shinobu extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aShinobu";
+		return "Shinobu";
 	}
 }

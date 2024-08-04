@@ -51,7 +51,7 @@ public class Daki extends DemonsRoles {
 	}
 	@Override
 	public String getName() {
-		return "§cDaki";
+		return "Daki";
 	}
 
 	@Override

@@ -187,6 +187,6 @@ public class Tengen extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aTengen";
+		return "Tengen";
 	}
 }

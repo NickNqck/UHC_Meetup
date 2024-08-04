@@ -100,7 +100,7 @@ private int killforce = 0;
 
 	@Override
 	public String getName() {
-		return "§cHantengu";
+		return "Hantengu";
 	}
 
 	@Override

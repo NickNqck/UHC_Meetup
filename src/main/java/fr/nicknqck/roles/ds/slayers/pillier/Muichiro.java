@@ -206,6 +206,6 @@ public class Muichiro extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aMuichiro";
+		return "Muichiro";
 	}
 }

@@ -95,7 +95,7 @@ public class Kaigaku extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cKaigaku";
+		return "Kaigaku";
 	}
 
 	@Override

@@ -206,6 +206,6 @@ public class Nakime extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cNakime";
+		return "Nakime";
 	}
 }

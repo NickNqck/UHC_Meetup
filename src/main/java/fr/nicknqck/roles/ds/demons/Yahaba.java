@@ -102,6 +102,6 @@ public class Yahaba extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cYahaba";
+		return "Yahaba";
 	}
 }

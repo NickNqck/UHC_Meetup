@@ -50,7 +50,7 @@ public class Furuto extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cFuruto";
+		return "Furuto";
 	}
 
 	private final List<Player> aP = new ArrayList<>();

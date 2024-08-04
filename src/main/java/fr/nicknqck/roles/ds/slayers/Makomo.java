@@ -119,6 +119,6 @@ public class Makomo extends SlayerRoles {
 
 	@Override
 	public String getName() {
-		return "§aMakomo";
+		return "Makomo";
 	}
 }

@@ -279,6 +279,6 @@ public class Rui extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cRui";
+		return "Rui";
 	}
 }

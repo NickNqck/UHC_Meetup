@@ -88,6 +88,6 @@ public class Gyomei extends PillierRoles {
 
 	@Override
 	public String getName() {
-		return "§aGyomei";
+		return "Gyomei";
 	}
 }

@@ -97,6 +97,6 @@ public class Mitsuri extends PillierRoles {
 
     @Override
     public String getName() {
-        return "§aMitsuri";
+        return "Mitsuri";
     }
 }

@@ -157,6 +157,6 @@ public class Muzan extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cMuzan";
+		return "Muzan";
 	}
 }

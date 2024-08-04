@@ -166,6 +166,6 @@ public class Nezuko extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§aNezuko";
+		return "Nezuko";
 	}
 }

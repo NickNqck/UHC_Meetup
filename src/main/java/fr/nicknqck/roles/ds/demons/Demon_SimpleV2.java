@@ -48,7 +48,7 @@ public class Demon_SimpleV2 extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cDemon Simple§7 (§6V2§7)";
+		return "Demon Simple§7 (§6V2§7)";
 	}
 
 	@Override

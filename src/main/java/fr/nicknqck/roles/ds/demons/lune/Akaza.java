@@ -68,7 +68,7 @@ public class Akaza extends DemonsRoles {
 
 	@Override
 	public String getName() {
-		return "§cAkaza";
+		return "Akaza";
 	}
 
 	@Override
