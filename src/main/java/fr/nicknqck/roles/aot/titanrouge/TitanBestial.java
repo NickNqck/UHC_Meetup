@@ -166,6 +166,6 @@ public class TitanBestial extends TitansRoles {
 
 	@Override
 	public String getName() {
-		return "§cTitan Bestial";
+		return "Titan Bestial";
 	}
 }

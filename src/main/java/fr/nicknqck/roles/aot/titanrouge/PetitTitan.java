@@ -48,7 +48,7 @@ public class PetitTitan extends TitansRoles {
 
 	@Override
 	public String getName() {
-		return "§cPetit Titan";
+		return "Petit Titan";
 	}
 
 	@Override

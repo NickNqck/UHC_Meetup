@@ -65,7 +65,7 @@ public class Livai extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aLivai";
+		return "Livai";
 	}
 
 	private int cdsugar = 0;

@@ -56,6 +56,6 @@ public class TitanSouriant extends TitansRoles {
 
 	@Override
 	public String getName() {
-		return "§cTitan Souriant";
+		return "Titan Souriant";
 	}
 }

@@ -125,7 +125,7 @@ public class Gabi extends AotRoles {
 
 	@Override
 	public String getName() {
-		return "§eGabi";
+		return "Gabi";
 	}
 
 	@Override

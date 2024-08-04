@@ -32,7 +32,7 @@ public class Eclaireur extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aEclaireur";
+		return "Eclaireur";
 	}
 
 	@Override

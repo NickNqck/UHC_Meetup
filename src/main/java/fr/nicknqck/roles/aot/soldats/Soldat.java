@@ -43,7 +43,7 @@ public class Soldat extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aSoldat";
+		return "Soldat";
 	}
 
 	private String[] Garnison = new String[] {

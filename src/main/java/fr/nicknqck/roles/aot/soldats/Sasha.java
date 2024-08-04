@@ -67,7 +67,7 @@ public class Sasha extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aSasha";
+		return "Sasha";
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class Mikasa extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aMikasa";
+		return "Mikasa";
 	}
 
 	@Override

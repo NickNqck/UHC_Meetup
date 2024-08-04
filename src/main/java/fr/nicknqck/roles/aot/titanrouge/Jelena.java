@@ -41,7 +41,7 @@ public class Jelena extends TitansRoles {
 
 	@Override
 	public String getName() {
-		return "§cJelena";
+		return "Jelena";
 	}
 
 	private int invuse = 2;

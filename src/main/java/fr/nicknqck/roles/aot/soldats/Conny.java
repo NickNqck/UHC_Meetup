@@ -53,7 +53,7 @@ public class Conny extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aConny";
+		return "Conny";
 	}
 
 	@Override

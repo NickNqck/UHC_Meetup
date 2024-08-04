@@ -42,7 +42,7 @@ public class GrandTitan extends TitansRoles {
 
 	@Override
 	public String getName() {
-		return "§cGrand Titan";
+		return "Grand Titan";
 	}
 
 	@Override

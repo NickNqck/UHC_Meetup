@@ -35,7 +35,7 @@ public class Armin extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aArmin";
+		return "Armin";
 	}
 
 	@Override

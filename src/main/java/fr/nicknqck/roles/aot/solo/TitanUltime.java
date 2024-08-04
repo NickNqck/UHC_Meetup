@@ -109,7 +109,7 @@ public class TitanUltime extends TitansRoles {
 
 	@Override
 	public String getName() {
-		return "§eTitan Ultime";
+		return "Titan Ultime";
 	}
 
 	@Override

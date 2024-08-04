@@ -29,7 +29,7 @@ public class Lara extends MahrRoles {
 
 	@Override
 	public String getName() {
-		return "§9Lara";
+		return "Lara";
 	}
 
 	@Override

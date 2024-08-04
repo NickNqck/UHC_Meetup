@@ -46,7 +46,7 @@ public class Jean extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aJean";
+		return "Jean";
 	}
 
 	private void createFirework(Player player, Color color) {

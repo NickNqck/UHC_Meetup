@@ -77,7 +77,7 @@ public class Eren extends AotRoles {
 
 	@Override
 	public String getName() {
-		return "§eEren";
+		return "Eren";
 	}
 
 	private int cdbertolt = -1;

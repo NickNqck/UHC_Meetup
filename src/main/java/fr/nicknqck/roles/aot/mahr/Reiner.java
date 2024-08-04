@@ -29,7 +29,7 @@ public class Reiner extends MahrRoles {
 
 	@Override
 	public String getName() {
-		return "§9Reiner";
+		return "Reiner";
 	}
 
 	@Override

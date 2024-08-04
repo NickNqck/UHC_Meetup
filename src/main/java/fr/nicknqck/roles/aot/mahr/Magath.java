@@ -27,7 +27,7 @@ public class Magath extends MahrRoles {
 	public Roles getRoles() {
 		return Roles.Magath;
 	}
-	private Player toSearch =null;
+	private Player toSearch;
 	@Override
 	public void Update(GameState gameState) {
 		if (toSearch != null) {

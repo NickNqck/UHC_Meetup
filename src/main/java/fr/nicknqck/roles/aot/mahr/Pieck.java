@@ -34,7 +34,7 @@ public class Pieck extends MahrRoles {
 
 	@Override
 	public String getName() {
-		return "§9Pieck";
+		return "Pieck";
 	}
 
 	@Override

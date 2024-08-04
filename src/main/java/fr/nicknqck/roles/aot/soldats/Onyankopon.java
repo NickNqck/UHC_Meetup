@@ -63,7 +63,7 @@ public class Onyankopon extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aOnyankopon";
+		return "Onyankopon";
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class Hansi extends SoldatsRoles {
 
 	@Override
 	public String getName() {
-		return "§aHansi";
+		return "Hansi";
 	}
 
 	@Override

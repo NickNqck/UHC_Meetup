@@ -49,7 +49,7 @@ public class Bertolt extends MahrRoles {
 
 	@Override
 	public String getName() {
-		return "§9Bertolt";
+		return "Bertolt";
 	}
 
 	@Override

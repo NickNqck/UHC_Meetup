@@ -34,7 +34,7 @@ public class Porco extends MahrRoles {
 
 	@Override
 	public String getName() {
-		return "§9Porco";
+		return "Porco";
 	}
 
 	@Override
