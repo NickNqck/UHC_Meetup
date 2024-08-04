@@ -26,6 +26,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Zabuza extends NSRoles {
 
@@ -39,6 +40,7 @@ public class Zabuza extends NSRoles {
 				owner.sendMessage("§bHaku§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
 			}
 		}, 20*10);
+		onTick();
 	}
 	@Override
 	public GameState.Roles getRoles() {
@@ -152,15 +154,25 @@ public class Zabuza extends NSRoles {
 			}
 		}
 	}
-	@Override
+
 	public void onTick() {
-		if (Invisible) {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (getListPlayerFromRole(Roles.Haku).contains(p) || getListPlayerFromRole(Roles.Zabuza).contains(p)) {
-					MathUtil.sendParticleTo(p, EnumParticle.CLOUD, owner.getLocation().clone());
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if (gameState.getServerState() != GameState.ServerStates.InGame) {
+					cancel();
+					return;
+				}
+				if (Invisible) {
+					for (Player p : Bukkit.getOnlinePlayers()) {
+						if (getListPlayerFromRole(Roles.Haku).contains(p) || getListPlayerFromRole(Roles.Zabuza).contains(p)) {
+							MathUtil.sendParticleTo(p, EnumParticle.CLOUD, owner.getLocation().clone());
+						}
+					}
 				}
 			}
-		}
+		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+
 	}
 	private boolean HakuDeath = false;
 	@Override

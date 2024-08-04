@@ -4,11 +4,17 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
 public abstract class NSRoles extends RoleBase {
+    @Setter
+    @Getter
+    private boolean canBeHokage = false;
+    private Chakras chakras = null;
     public NSRoles(Player player) {
         super(player);
     }
@@ -21,7 +27,6 @@ public abstract class NSRoles extends RoleBase {
         chakras.getChakra().getList().add(owner.getUniqueId());
         this.chakras = chakras;
     }
-    private Chakras chakras = null;
     public Chakras getChakras() {
         return chakras;
     }

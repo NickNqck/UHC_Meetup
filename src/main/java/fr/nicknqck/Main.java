@@ -265,9 +265,6 @@ public class Main extends JavaPlugin implements Listener{
 				    	String trs = time%60 < 10 ? "0"+time%60 : time%60+"";
 		        		TabTitleManager.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
 		        	}
-					if (!gameState.hasRoleNull(player)) {
-		        		gameState.getPlayerRoles().get(player).onTick();
-		        	}
 				}
 			}
 			if (gameState.getServerState() == ServerStates.GameEnded) {

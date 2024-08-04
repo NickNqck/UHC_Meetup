@@ -53,25 +53,6 @@ public class Yoriichi extends DemonsSlayersRoles {
 	public String[] Desc() {
 		return AllDesc.Yoriichi;
 	}
-
-	@Override
-	public void onTick() {
-		for (Player p : Loc.getNearbyPlayers(owner, 30)){
-			if (!inEye.containsKey(p.getUniqueId())) {
-				if (!p.isSneaking()) {
-					PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
-		            display.display(owner);
-					inEye.put(p.getUniqueId(), display);
-				}
-			} else {
-				PacketDisplay packetDisplay = inEye.get(p.getUniqueId());
-                packetDisplay.setCustomNameVisible(!p.isSneaking(), owner);
-				DecimalFormat df = new DecimalFormat("0");
-                packetDisplay.rename(df.format(p.getHealth())+ AllDesc.Coeur(" §c")+"§7 |§f "+df.format(((CraftPlayer) p).getHandle().getAbsorptionHearts())+AllDesc.Coeur(" §e"), owner);
-                packetDisplay.teleport(p.getLocation(), owner);
-            }
-		}
-	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (player.getUniqueId() == owner.getUniqueId()) {
@@ -190,7 +171,6 @@ public class Yoriichi extends DemonsSlayersRoles {
 			Items.getSoufleduSoleil()	
 		};
 	}
-
 	@Override
 	public String getName() {
 		return "Yoriichi";
@@ -208,6 +188,21 @@ public class Yoriichi extends DemonsSlayersRoles {
 			}
 			Player owner = Bukkit.getPlayer(yoriichi.getPlayer());
 			if (owner != null){
+				for (Player p : Loc.getNearbyPlayers(owner, 30)){
+					if (!yoriichi.inEye.containsKey(p.getUniqueId())) {
+						if (!p.isSneaking()) {
+							PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
+							display.display(owner);
+							yoriichi.inEye.put(p.getUniqueId(), display);
+						}
+					} else {
+						PacketDisplay packetDisplay = yoriichi.inEye.get(p.getUniqueId());
+						packetDisplay.setCustomNameVisible(!p.isSneaking(), owner);
+						DecimalFormat df = new DecimalFormat("0");
+						packetDisplay.rename(df.format(p.getHealth())+ AllDesc.Coeur(" §c")+"§7 |§f "+df.format(((CraftPlayer) p).getHandle().getAbsorptionHearts())+AllDesc.Coeur(" §e"), owner);
+						packetDisplay.teleport(p.getLocation(), owner);
+					}
+				}
 				for (Player p : owner.getWorld().getPlayers()) {
 					if (p.getGameMode() != GameMode.SPECTATOR) {
 						if (yoriichi.inEye.containsKey(p.getUniqueId())) {

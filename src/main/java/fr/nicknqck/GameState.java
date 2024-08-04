@@ -419,27 +419,6 @@ public class GameState{
 	public void setInGameEvents(ArrayList<EventBase> inGameEvent) {inGameEvent = inGameEvents;}
 	public void addInGameEvents(EventBase event) {inGameEvents.add(event);}
 	public void delInGameEvents(EventBase event) {inGameEvents.remove(event);}
-	
-	@SuppressWarnings("unchecked")
-	public ArrayList<Player> getPlayerLinks(Player player) { // Loop sur tout les joueurs trouvé dans le lien et verifier si la liste a changé (Lien a 3)
-		if (player == null) return null;
-		ArrayList<Player> linkwith = new ArrayList<Player>();
-		ArrayList<Player> oldlinkwith = new ArrayList<Player>();
-		linkwith.add(player);
-		while (!oldlinkwith.containsAll(linkwith)) {
-			oldlinkwith.clear();
-			oldlinkwith.addAll(linkwith);
-			for (Player p : (ArrayList<Player>)linkwith.clone()) {
-				if (getPlayerRoles().get(p) == null) continue;
-				for (Player p1 : getPlayerRoles().get(p).getLinkWith()) {
-					if (!linkwith.contains(p1)) {
-						linkwith.add(p1);
-					}
-				}
-			}
-		}
-		return linkwith;
-	}
 	public RoleBase GiveRole(Player player) {
 		if (getPlayerRoles().containsKey(player)) return null;
 		//Roles roleType = getAvailableRoles().get(new Random().nextInt(getAvailableRoles().size()));

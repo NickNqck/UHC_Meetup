@@ -30,6 +30,7 @@ public class Tsunade extends ShinobiRoles {
 		super(player);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
 		setCanBeHokage(true);
+		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
 	public Roles getRoles() {
@@ -87,12 +88,6 @@ public class Tsunade extends ShinobiRoles {
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-	}
-	@Override
-	public void onTick() {
-		if (owner.getItemInHand().isSimilar(ByakugoItem())) {
-			sendCustomActionBar(owner, "§cHP§f:§c "+SavedHP);
-		}
 	}
 	@Override
 	public void onNsCommand(String[] args) {
@@ -236,6 +231,25 @@ public class Tsunade extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aTsunade";
+		return "Tsunade";
+	}
+	private static class onTick extends BukkitRunnable {
+		private final Tsunade sakura;
+		private onTick(Tsunade sakura) {
+			this.sakura = sakura;
+		}
+		@Override
+		public void run() {
+			if (sakura.getGameState().getServerState() != GameState.ServerStates.InGame) {
+				cancel();
+				return;
+			}
+			Player owner = Bukkit.getPlayer(sakura.getPlayer());
+			if (owner != null) {
+				if (owner.getItemInHand().isSimilar(sakura.ByakugoItem())) {
+					sakura.sendCustomActionBar(owner, "§cHP§f:§c "+sakura.SavedHP);
+				}
+			}
+		}
 	}
 }

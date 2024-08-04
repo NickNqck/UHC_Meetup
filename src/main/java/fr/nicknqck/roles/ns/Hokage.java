@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -86,11 +87,11 @@ public class Hokage {
 		Player danzo = null;
 		for (Player p : canBeHokage) {
 			System.out.println(p.getDisplayName()+" can be Hokage ?");
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof NSRoles) {
 				if (gameState.getPlayerRoles().get(p) instanceof Danzo){
 					danzo = p;
 				}
-				if (gameState.getPlayerRoles().get(p).isCanBeHokage()) {
+				if (((NSRoles) gameState.getPlayerRoles().get(p)).isCanBeHokage()) {
 					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).getRoles().getItem().getItemMeta().getDisplayName());
 					return p;
 				}

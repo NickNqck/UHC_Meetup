@@ -22,6 +22,7 @@ import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
@@ -348,7 +349,9 @@ public class GameListener implements Listener {
 					r.setBonusResi(0);
 					r.setResi(0);
 					r.customName.clear();
-					r.setCanBeHokage(false);
+					if (r instanceof NSRoles) {
+						((NSRoles) r).setCanBeHokage(false);
+					}
 				}
 				if (!p.getWorld().getName().equalsIgnoreCase(Main.getInstance().gameWorld.getName())) {
 					p.teleport(new Location(Main.getInstance().gameWorld, 0, 151, 0));

@@ -40,10 +40,11 @@ public abstract class RoleBase implements Role{
 	public Player owner;
 	@Getter
 	private Double maxHealth = 20.0;
+	@Setter
+	@Getter
 	private boolean canRespawn = false;
 	@Getter
 	private boolean hasNoFall = false;
-	private ArrayList<Player> linkWith = new ArrayList<>();
 	@Setter
 	@Getter
 	private Roles oldRole = null;
@@ -52,6 +53,8 @@ public abstract class RoleBase implements Role{
 	@Getter
 	@Setter
 	private boolean invincible = false;
+	@Setter
+	@Getter
 	private double resi = 0;
 	private TeamList oldteam;
 	private double Bonusforce = 0;
@@ -130,7 +133,7 @@ public abstract class RoleBase implements Role{
 	}
 	public void sendActionBarCooldown(Player player, int cooldown) {
 		if (cooldown > 0) {
-		NMSPacket.sendActionBar(player, "Cooldown: "+cd(cooldown));
+			NMSPacket.sendActionBar(player, "Cooldown: "+cd(cooldown));
 		}else {
 			NMSPacket.sendActionBar(player, getItemNameInHand(player)+" Utilisable");
 		}
@@ -201,8 +204,7 @@ public abstract class RoleBase implements Role{
 	}
 	double allresi = getResi()+getBonusForce();
 	public double getAllResi() {return allresi;}
-	public double getResi() {return resi;}
-	public void setResi(double resi) {this.resi = resi;}
+
 	public void addresi(double resi) {setResi(getResi() + resi);}
 	public double getBonusResi() {return Bonusresi;}
 	public void setBonusResi(double Bonusresi) {this.Bonusresi = Bonusresi;}
@@ -235,16 +237,6 @@ public abstract class RoleBase implements Role{
 	public void FormChoosen(ItemStack item, GameState gameState) {}
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
 	public void setNoFall(boolean hasNoFall) {this.hasNoFall = hasNoFall;}
-	public boolean isCanRespawn() {return canRespawn;}
-	public void setCanRespawn(boolean canRespawn) {this.canRespawn = canRespawn;}
-
-	public ArrayList<Player> getLinkWith() {return linkWith;}
-	public void setLinkWith(ArrayList<Player> linkWith) {this.linkWith = linkWith;}
-	public void addLinkWith(Player player) {
-		if (!linkWith.contains(player)) {
-			linkWith.add(player);
-		}
-	}
 
 	public void setMaxHealth(Double maxHealth) {this.maxHealth = maxHealth; owner.setMaxHealth(maxHealth);}
 
@@ -255,15 +247,12 @@ public abstract class RoleBase implements Role{
 
 	public void onDay(GameState gameState) {}
 	public void onNight(GameState gameState) {}
-
 	public void addSpeedAtInt(Player player, float speedpercent) {player.setWalkSpeed(player.getWalkSpeed()+(speedpercent/500));}
 
 	public void neoItemUseAgainst(ItemStack itemInHand, Player player, GameState gameState, Player damager) {
 		ItemUseAgainst(itemInHand, player, gameState);
 	}
 	public void onEat(ItemStack item, GameState gameState) {}
-
-
 	public boolean onPickupItem(Item item) {
 		return false;}
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
@@ -300,8 +289,6 @@ public abstract class RoleBase implements Role{
 		gameState.spawnLightningBolt(player.getWorld(), player.getLocation());
 		for (Player p : gameState.getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}
 	}
-	public void TransfoMessage() {	for (Player p : gameState.getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");p.playSound(p.getLocation(), "aotmtp.transfo", 8, 1);}	}
-	public boolean hasRoleInfo() {return false;}
 	public void giveHeartatInt(Player target, double coeur) {
 		if (!gameState.hasRoleNull(target)) {
 			getPlayerRoles(target).setMaxHealth(getPlayerRoles(target).getMaxHealth()+coeur*2);
@@ -335,7 +322,6 @@ public abstract class RoleBase implements Role{
 			}, 20);
 		}
 	}
-//TODO Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {}, 20);
 	public void Heal(Player target, double demicoeur) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (target.getHealth() - demicoeur <= 0 && demicoeur <0) {
@@ -348,9 +334,6 @@ public abstract class RoleBase implements Role{
 			}
 		}, 5);
 	}
-	public static final String aqua = ChatColor.AQUA+"";
-	public void onAsyncChat(Player p, AsyncPlayerChatEvent e) {}
-	public void onPlayerInteract(Block clickedBlock, Player player) {}
 	public void onLeftClick(PlayerInteractEvent event, GameState gameState) {}
 	public void KnowRole(Player knower, Roles toknow, int delayinTick) {
 		if (Main.isDebug()){
@@ -395,9 +378,6 @@ public abstract class RoleBase implements Role{
 	        }
 	        return formattedName.toString().trim();
 	    }
-
-	public void onTick() {}
-
 	public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {}
 
 	public void onEndGame() {
@@ -630,9 +610,7 @@ public abstract class RoleBase implements Role{
 	public void onMcCommand(String[] args) {}
 
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
-	@Setter
-	@Getter
-	private boolean canBeHokage = false;
+
 	public boolean isCanTentacule() {
 		return false;//Simple methode for only Killer Bee
 	}

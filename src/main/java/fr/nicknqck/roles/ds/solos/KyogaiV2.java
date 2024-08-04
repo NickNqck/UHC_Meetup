@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -9,18 +10,21 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class KyogaiV2 extends DemonsSlayersRoles {
 
 	public KyogaiV2(Player player) {
 		super(player);
 		owner.getInventory().addItem(getItems());
+		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
 	public Roles getRoles() {
@@ -187,23 +191,9 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 		if (cooldownTP >= 0)cooldownTP--;
 		if (cooldownTP == 0)owner.sendMessage("§cTambour§7 model§l TP§7 est à nouveau utilisable !");
 	}
-	@Override
+
 	public void onTick() {
-		if (owner.getItemInHand().isSimilar(Tambour())) {
-			switch (model) {
-			case Head:
-				sendCustomActionBar(owner, "§7(§c"+model.name()+"§7)"+getItemNameInHand(owner)+" "+cd(cooldownHead));
-				break;
-			case Leg:
-				sendCustomActionBar(owner, "§7(§c"+model.name()+"§7)"+getItemNameInHand(owner)+" "+cd(cooldownLeg));
-				break;
-			case Back:
-				sendCustomActionBar(owner, "§7(§c"+model.name()+"§7)"+getItemNameInHand(owner)+" "+cd(cooldownShoulder));
-				break;
-			default:
-				break;
-			}
-		}
+
 	}
 	@Override
 	public void neoItemUseAgainst(ItemStack itemInHand, Player player, GameState gameState, Player damager) {
@@ -225,6 +215,37 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 				if (RandomUtils.getRandomProbability(20)) {
 					givePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
 					owner.sendMessage("§7Vous avez gagné l'effet "+AllDesc.Speed+"§b 1§7 suivre à là douleurs");
+				}
+			}
+		}
+	}
+	private static class onTick extends BukkitRunnable {
+		private final KyogaiV2 kyogaiV2;
+		private onTick(KyogaiV2 kyogai) {
+			this.kyogaiV2 = kyogai;
+		}
+		@Override
+		public void run() {
+			if (!kyogaiV2.getGameState().getServerState().equals(GameState.ServerStates.InGame) || !kyogaiV2.getGamePlayer().isAlive()) {
+				cancel();
+				return;
+			}
+			Player owner = Bukkit.getPlayer(kyogaiV2.getPlayer());
+			if (owner != null) {
+				if (owner.getItemInHand().isSimilar(kyogaiV2.Tambour())) {
+					switch (kyogaiV2.model) {
+						case Head:
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownHead));
+							break;
+						case Leg:
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownLeg));
+							break;
+						case Back:
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownShoulder));
+							break;
+						default:
+							break;
+					}
 				}
 			}
 		}

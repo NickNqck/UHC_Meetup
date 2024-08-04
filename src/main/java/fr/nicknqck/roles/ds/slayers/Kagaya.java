@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class Kagaya extends SlayerRoles {
 
 	public Kagaya(Player player) {
 		super(player);
+		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
 	public Roles getRoles() {
@@ -98,33 +101,6 @@ public class Kagaya extends SlayerRoles {
 		super.FormChoosen(item, gameState);
 	}
 	@Override
-	public void onTick() {
-		if (pacte1) {
-			for (Player p : Loc.getNearbyPlayersExcept(owner, 30)){
-				if (!seeHealth.containsKey(p.getUniqueId())) {
-					if (!p.isSneaking()) {
-						PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
-
-			            display.display(owner);
-
-			            seeHealth.put(p.getUniqueId(), display);
-					}
-				} else {
-					PacketDisplay packetDisplay = seeHealth.get(p.getUniqueId());
-					if (!packetDisplay.isCustomNameVisible()) {
-	                    packetDisplay.setCustomNameVisible(true, owner);
-	                }
-					DecimalFormat df = new DecimalFormat("0");
-	                packetDisplay.rename(df.format(p.getHealth())+ AllDesc.Coeur(" §c"), owner);
-	                if (p.isSneaking()) {
-	                	packetDisplay.setCustomNameVisible(false, owner);
-	                }
-	                packetDisplay.teleport(p.getLocation(), owner);
-				}
-			}
-		}
-	}
-	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (player.getUniqueId() == owner.getUniqueId()) {
 			seeHealth.clear();
@@ -178,5 +154,44 @@ public class Kagaya extends SlayerRoles {
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[0];
+	}
+	private static class onTick extends BukkitRunnable {
+		private final Kagaya kagaya;
+		private onTick(Kagaya kagaya) {
+			this.kagaya = kagaya;
+		}
+		@Override
+		public void run() {
+			if (!kagaya.getGamePlayer().isAlive() || !kagaya.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+				cancel();
+				return;
+			}
+			if (kagaya.pacte1) {
+				Player owner = Bukkit.getPlayer(kagaya.getPlayer());
+				if (owner == null)return;
+				for (Player p : Loc.getNearbyPlayersExcept(owner, 30)){
+					if (!kagaya.seeHealth.containsKey(p.getUniqueId())) {
+						if (!p.isSneaking()) {
+							PacketDisplay display = new PacketDisplay(p.getLocation(), WorldUtils.getBeautyHealth(p) + " ❤");
+
+							display.display(owner);
+
+							kagaya.seeHealth.put(p.getUniqueId(), display);
+						}
+					} else {
+						PacketDisplay packetDisplay = kagaya.seeHealth.get(p.getUniqueId());
+						if (!packetDisplay.isCustomNameVisible()) {
+							packetDisplay.setCustomNameVisible(true, owner);
+						}
+						DecimalFormat df = new DecimalFormat("0");
+						packetDisplay.rename(df.format(p.getHealth())+ AllDesc.Coeur(" §c"), owner);
+						if (p.isSneaking()) {
+							packetDisplay.setCustomNameVisible(false, owner);
+						}
+						packetDisplay.teleport(p.getLocation(), owner);
+					}
+				}
+			}
+		}
 	}
 }

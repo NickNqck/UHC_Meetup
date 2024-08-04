@@ -73,7 +73,7 @@ public class Gaara extends NSRoles {
         if(shukakuCooldown > 0) {
         	if (usingShukaku) {
         		int newcd = shukakuCooldown-(60*15);
-        		sendCustomActionBar(owner, "§eSable: "+sablenmb+aqua+" Temp restant sous§e Shukaku§r: "+cd(newcd));
+        		sendCustomActionBar(owner, "§eSable: "+sablenmb+"§b Temp restant sous§e Shukaku§r: "+cd(newcd));
         	}
         	shukakuCooldown--;
         }

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -18,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Shinjuro extends DemonsSlayersRoles {
 
@@ -27,6 +29,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		setMaxHealth(24.0);
 		setLameIncassable(owner, true);
+		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
 	public Roles getRoles() {
@@ -98,37 +101,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 		}
 		super.Update(gameState);
 	}
-	@Override
-	public void onTick() {
-		if (Events.Alliance.getEvent().isActivated()) {
-			if (gameState.getOwner(Roles.Kyojuro) != null) {
-				sendCustomActionBar(owner, Loc.getDirectionMate(owner, gameState.getOwner(Roles.Kyojuro), true));
-			}
-		}
-		Material m = owner.getPlayer().getLocation().getBlock().getType();
-		 Location y1 = new Location(owner.getWorld(), owner.getLocation().getX(), owner.getLocation().getY()+1, owner.getLocation().getZ());
-		 Material a = y1.getBlock().getType();
-		    if (m == Material.LAVA || m == Material.STATIONARY_LAVA || a == Material.LAVA || a == Material.STATIONARY_LAVA) {
-		    	if (owner.getHealth() != getMaxHealth()) {
-		    		if (regencooldown == 0) {
-		    			double max = this.getMaxHealth();
-		    			double ahealth = owner.getHealth();
-		    			double dif = max-ahealth;
-		    			if (!(dif <= 1.0)) {
-		    				Heal(owner, 1);
-		    				owner.sendMessage("§7Vous venez de gagné§c 1/2"+AllDesc.coeur+"§7 suite à votre temp passé au chaud");
-		    			} else {
-		    				owner.setHealth(max);
-		    			}
-		    			regencooldown = 10;
-		    		}else {
-		    			sendCustomActionBar(owner, "§7Temp avant§d régénération§7:§l "+regencooldown+"s");
-		    		}
-		    	}
-		    } else {
-		    	if (regencooldown != 10) regencooldown = 10;
-		    }
-	}
 	
 	
 	@Override
@@ -191,5 +163,46 @@ public class Shinjuro extends DemonsSlayersRoles {
 	@Override
 	public String getName() {
 		return "§eShinjuro";
+	}
+	private static class onTick extends BukkitRunnable {
+		private final Shinjuro shinjuro;
+		private onTick(Shinjuro shinjuro) {
+			this.shinjuro = shinjuro;
+		}
+		@Override
+		public void run() {
+			if (!shinjuro.getGameState().getServerState().equals(GameState.ServerStates.InGame) || !shinjuro.getGamePlayer().isAlive()) {
+				cancel();
+				return;
+			}
+			if (Events.Alliance.getEvent().isActivated()) {
+				if (shinjuro.gameState.getOwner(Roles.Kyojuro) != null) {
+					shinjuro.sendCustomActionBar(shinjuro.owner, Loc.getDirectionMate(shinjuro.owner, shinjuro.gameState.getOwner(Roles.Kyojuro), true));
+				}
+			}
+			Material m = shinjuro.owner.getPlayer().getLocation().getBlock().getType();
+			Location y1 = new Location(shinjuro.owner.getWorld(), shinjuro.owner.getLocation().getX(), shinjuro.owner.getLocation().getY()+1, shinjuro.owner.getLocation().getZ());
+			Material a = y1.getBlock().getType();
+			if (m == Material.LAVA || m == Material.STATIONARY_LAVA || a == Material.LAVA || a == Material.STATIONARY_LAVA) {
+				if (shinjuro.owner.getHealth() != shinjuro.getMaxHealth()) {
+					if (shinjuro.regencooldown == 0) {
+						double max = shinjuro.getMaxHealth();
+						double ahealth = shinjuro.owner.getHealth();
+						double dif = max-ahealth;
+						if (!(dif <= 1.0)) {
+							shinjuro.Heal(shinjuro.owner, 1);
+							shinjuro.owner.sendMessage("§7Vous venez de gagné§c 1/2"+AllDesc.coeur+"§7 suite à votre temp passé au chaud");
+						} else {
+							shinjuro.owner.setHealth(max);
+						}
+						shinjuro.regencooldown = 10;
+					}else {
+						shinjuro.sendCustomActionBar(shinjuro.owner, "§7Temp avant§d régénération§7:§l "+shinjuro.regencooldown+"s");
+					}
+				}
+			} else {
+				if (shinjuro.regencooldown != 10) shinjuro.regencooldown = 10;
+			}
+		}
 	}
 }

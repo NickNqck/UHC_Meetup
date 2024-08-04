@@ -144,13 +144,6 @@ public class JoinEvents implements Listener{
 				r.owner = player;
 				System.out.println("owner Player: "+r.owner);
 			}
-			for (Player p : (ArrayList<Player>) r.getLinkWith().clone()) {
-				if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-					r.getLinkWith().remove(p);
-					r.addLinkWith(player);
-					System.out.println("link Player: "+p);
-				}
-			}
 		}
 		for (Player p : ((HashMap<Player, RoleBase>)gameState.getPlayerRoles().clone()).keySet()) {
 			if (Bukkit.getPlayer(p.getDisplayName()) == player) {

@@ -23,7 +23,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class InfectItem implements Listener{
-	GameState gameState;
+	private final GameState gameState;
+	private int ActualTime;
+	private boolean infect;
 	public InfectItem(GameState state) {
 		this.gameState = state;
 		ActualTime = 0;
@@ -33,8 +35,7 @@ public class InfectItem implements Listener{
 		p = null;
 	}
 	@Getter
-	static InfectItem instance;
-
+	private static InfectItem instance;
 	@EventHandler
 	public void CliqueDroit(PlayerInteractEvent e) {
 		if (e.getItem() == null)return;
@@ -45,28 +46,26 @@ public class InfectItem implements Listener{
 					Inventory inv = Bukkit.createInventory(e.getPlayer(), 27, "Infection");
 					Player a = e.getPlayer();					
 						for (Player p : Loc.getNearbyPlayers(a, 30)) {
-									if (!gameState.hasRoleNull(p)) {
-										if (gameState.getInGamePlayers().contains(p)) {
-											if (gameState.getPlayerRoles().get(p).getOldTeam() != TeamList.Demon && !(gameState.getPlayerRoles().get(p).getPlayerRoles(p) instanceof Nezuko)) {
-												ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
-												SkullMeta meta = (SkullMeta) skull.getItemMeta();
-												meta.setOwner(p.getDisplayName());
-												meta.setDisplayName(p.getDisplayName());
-												skull.setItemMeta(meta);
-												inv.addItem(skull);
-												a.openInventory(inv);
-											}											
-										}
+							if (!gameState.hasRoleNull(p)) {
+								if (gameState.getInGamePlayers().contains(p)) {
+									if (gameState.getPlayerRoles().get(p).getOldTeam() != TeamList.Demon && !(gameState.getPlayerRoles().get(p).getPlayerRoles(p) instanceof Nezuko)) {
+										ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
+										SkullMeta meta = (SkullMeta) skull.getItemMeta();
+										meta.setOwner(p.getDisplayName());
+										meta.setDisplayName(p.getDisplayName());
+										skull.setItemMeta(meta);
+										inv.addItem(skull);
+										a.openInventory(inv);
 									}
+								}
+							}
 						}
-					a.openInventory(inv);
+						a.openInventory(inv);
 				}
 			}
 		}
 	}
 	public static ItemStack getItem() {return Items.getInfection();}
-	private int ActualTime = 0;
-	private boolean infect = false;
 	@EventHandler
 	public void InventoryClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() != null) {
@@ -129,10 +128,10 @@ public class InfectItem implements Listener{
 							}
 							gameState.infected = p;
 							clicker.sendMessage(p.getName()+" à été infecté");
-							if (gameState.getPlayerRoles().get(p).getOriginTeam() != TeamList.Slayer) {
-								p.sendMessage("Vous avez été infecté mais comme vous n'étiez pas du camp§a Slayer§r vous n'avez pas pus être infecté, vous restez donc dnas votre camp d'origine");
+							if (gameState.getPlayerRoles().get(p).getTeam() != TeamList.Slayer) {
+								p.sendMessage("Vous avez été infecté mais comme vous n'étiez pas du camp§a Slayer§r vous n'avez pas pus être infecté, vous restez donc dans votre camp d'origine");
 							}
-							if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Slayer) {
+							if (gameState.getPlayerRoles().get(p).getTeam() == TeamList.Slayer) {
 								gameState.getPlayerRoles().get(p).setTeam(TeamList.Demon);
 								p.sendMessage("Voici l'identité de votre§c infecteur§f:§c§l "+gameState.infecteur.getName());
 							}
