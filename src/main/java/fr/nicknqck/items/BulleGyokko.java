@@ -1,16 +1,10 @@
 package fr.nicknqck.items;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.Main;
+import fr.nicknqck.roles.ds.demons.lune.Gyokko;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -23,16 +17,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.ds.demons.lune.Gyokko;
+import java.util.*;
 
 public class BulleGyokko implements Listener{
-
-	
-	GameState gameState;
+	private final GameState gameState;
 	public BulleGyokko(GameState gameState) {
 		this.gameState = gameState;
 	}
