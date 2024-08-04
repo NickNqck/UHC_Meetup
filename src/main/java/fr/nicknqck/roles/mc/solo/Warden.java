@@ -51,7 +51,7 @@ public class Warden extends UHCMcRoles {
 
     @Override
     public String getName() {
-        return "§eWarden";
+        return "Warden";
     }
 
     @Override

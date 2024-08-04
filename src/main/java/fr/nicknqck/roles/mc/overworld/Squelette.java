@@ -50,7 +50,7 @@ public class Squelette extends OverWorldRoles {
 
     @Override
     public String getName() {
-        return "§aSquelette";
+        return "Squelette";
     }
 
     @Override

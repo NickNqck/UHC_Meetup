@@ -46,7 +46,7 @@ public class WitherBoss extends UHCMcRoles {
 
     @Override
     public String getName() {
-        return "§eWither Boss";
+        return "Wither Boss";
     }
 
     @Override

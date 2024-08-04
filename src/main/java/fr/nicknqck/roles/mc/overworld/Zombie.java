@@ -66,7 +66,7 @@ public class Zombie extends OverWorldRoles {
 
     @Override
     public String getName() {
-        return "§aZombie";
+        return "Zombie";
     }
 
     @Override
