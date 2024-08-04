@@ -165,7 +165,7 @@ public class Kurenai extends ShinobiRoles {
 
     @Override
     public String getName() {
-        return "§aKurenai";
+        return "Kurenai";
     }
 
     private static class KurenaiRunnable extends BukkitRunnable implements Listener {

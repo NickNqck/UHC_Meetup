@@ -198,6 +198,6 @@ public class Karin extends OrochimaruRoles {
 
 	@Override
 	public String getName() {
-		return "§5Karin";
+		return "Karin";
 	}
 }

@@ -184,7 +184,7 @@ public class Danzo extends NSRoles {
 
 	@Override
 	public String getName() {
-		return "§eDanzo";
+		return "Danzo";
 	}
 
 	private enum SceauAction {

@@ -216,7 +216,7 @@ public class Suigetsu extends OrochimaruRoles {
 
 	@Override
 	public String getName() {
-		return "§5Suigetsu";
+		return "Suigetsu";
 	}
 
 	@Override

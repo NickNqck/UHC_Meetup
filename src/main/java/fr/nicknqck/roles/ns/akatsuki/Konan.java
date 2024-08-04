@@ -200,6 +200,6 @@ public class Konan extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cKonan";
+		return "Konan";
 	}
 }

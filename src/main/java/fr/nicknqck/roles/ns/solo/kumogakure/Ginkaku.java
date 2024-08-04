@@ -339,7 +339,7 @@ public class Ginkaku extends NSRoles {
 
 	@Override
 	public String getName() {
-		return "§6Ginkaku";
+		return "Ginkaku";
 	}
 
 	private class TargetFallChecker implements Listener {

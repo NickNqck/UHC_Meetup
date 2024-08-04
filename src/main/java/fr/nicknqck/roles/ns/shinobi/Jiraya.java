@@ -243,6 +243,6 @@ public class Jiraya extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aJiraya";
+		return "Jiraya";
 	}
 }

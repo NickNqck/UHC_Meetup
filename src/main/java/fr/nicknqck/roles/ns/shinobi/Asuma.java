@@ -124,6 +124,6 @@ public class Asuma extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aAsuma";
+		return "Asuma";
 	}
 }

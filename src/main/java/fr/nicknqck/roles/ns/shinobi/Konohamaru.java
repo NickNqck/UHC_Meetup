@@ -168,6 +168,6 @@ public class Konohamaru extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aKonohamaru";
+		return "Konohamaru";
 	}
 }

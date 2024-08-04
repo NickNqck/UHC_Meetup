@@ -251,6 +251,6 @@ public class Minato extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aMinato";
+		return "Minato";
 	}
 }

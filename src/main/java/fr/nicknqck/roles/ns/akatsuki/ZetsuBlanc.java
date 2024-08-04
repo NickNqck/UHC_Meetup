@@ -150,6 +150,6 @@ public class ZetsuBlanc extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cZetsu Blanc";
+		return "Zetsu Blanc";
 	}
 }

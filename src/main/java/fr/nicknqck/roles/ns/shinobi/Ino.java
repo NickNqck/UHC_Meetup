@@ -101,7 +101,7 @@ public class Ino extends ShinobiRoles {
 
     @Override
     public String getName() {
-        return "§aIno";
+        return "Ino";
     }
 
     private static class TranspositionRunnable extends BukkitRunnable {

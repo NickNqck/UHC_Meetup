@@ -176,6 +176,6 @@ public class Jugo extends Orochimaru {
 
 	@Override
 	public String getName() {
-		return "§5Jugo";
+		return "Jugo";
 	}
 }

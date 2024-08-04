@@ -219,6 +219,6 @@ public class Kakuzu extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cKakuzu";
+		return "Kakuzu";
 	}
 }

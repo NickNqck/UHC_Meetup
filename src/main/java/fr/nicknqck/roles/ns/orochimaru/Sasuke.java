@@ -569,7 +569,7 @@ public class Sasuke extends OrochimaruRoles {
 
 	@Override
 	public String getName() {
-		return "§5Sasuke";
+		return "Sasuke";
 	}
 
 	private static class SasukeRunnable extends BukkitRunnable {

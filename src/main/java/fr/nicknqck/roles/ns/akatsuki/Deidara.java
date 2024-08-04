@@ -136,7 +136,7 @@ public class Deidara extends AkatsukiRoles {
 								@Override
 								public void run() {
 									if (gameState.getServerState() != ServerStates.InGame) {
-										if (map.size() > 0) {
+										if (!map.isEmpty()) {
 											setOldBlockwMap();
 										}
 										cancel();
@@ -225,7 +225,7 @@ public class Deidara extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cDeidara";
+		return "Deidara";
 	}
 
 	private enum Mode {

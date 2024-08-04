@@ -381,7 +381,7 @@ public class Gaara extends NSRoles {
 
     @Override
     public String getName() {
-        return "§eGaara";
+        return "Gaara";
     }
 
     private static class Wave extends BukkitRunnable {

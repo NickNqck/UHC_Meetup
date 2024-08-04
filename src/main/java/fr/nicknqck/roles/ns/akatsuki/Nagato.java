@@ -273,6 +273,6 @@ public class Nagato extends AkatsukiRoles {
 
     @Override
     public String getName() {
-        return "§cNagato";
+        return "Nagato";
     }
 }

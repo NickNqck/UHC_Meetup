@@ -370,6 +370,6 @@ public class Kakashi extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aKakashi";
+		return "Kakashi";
 	}
 }

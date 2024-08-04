@@ -165,6 +165,6 @@ public class Kimimaro extends OrochimaruRoles {
 
 	@Override
 	public String getName() {
-		return "§5Kimimaro";
+		return "Kimimaro";
 	}
 }

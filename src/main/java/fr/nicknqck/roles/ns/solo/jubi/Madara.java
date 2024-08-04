@@ -506,6 +506,6 @@ public class Madara extends NSRoles {
 
 	@Override
 	public String getName() {
-		return "§dMadara";
+		return "Madara";
 	}
 }

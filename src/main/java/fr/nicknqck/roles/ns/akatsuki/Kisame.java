@@ -214,6 +214,6 @@ public class Kisame extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cKisame";
+		return "Kisame";
 	}
 }

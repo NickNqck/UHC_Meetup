@@ -297,7 +297,7 @@ public class Haku extends NSRoles {
 	}
 	@Override
 	public String getName() {
-		return "§bHaku";
+		return "Haku";
 	}
 
 	@Override

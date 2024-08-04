@@ -252,6 +252,6 @@ public class Zabuza extends NSRoles {
 
 	@Override
 	public String getName() {
-		return "§bZabuza";
+		return "Zabuza";
 	}
 }

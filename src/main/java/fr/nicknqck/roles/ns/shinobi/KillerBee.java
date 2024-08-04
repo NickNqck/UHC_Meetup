@@ -163,6 +163,6 @@ public class KillerBee extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aKiller Bee";
+		return "Killer Bee";
 	}
 }

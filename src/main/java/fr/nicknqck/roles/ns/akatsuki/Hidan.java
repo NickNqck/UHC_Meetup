@@ -189,6 +189,6 @@ public class Hidan extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cHidan";
+		return "Hidan";
 	}
 }

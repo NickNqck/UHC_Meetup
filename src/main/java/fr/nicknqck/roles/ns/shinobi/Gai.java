@@ -220,6 +220,6 @@ public class Gai extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aGaï";
+		return "Gaï";
 	}
 }

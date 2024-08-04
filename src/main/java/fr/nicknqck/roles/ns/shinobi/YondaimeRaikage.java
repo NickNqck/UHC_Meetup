@@ -130,6 +130,6 @@ public class YondaimeRaikage extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aYondaime Raikage";
+		return "Yondaime Raikage";
 	}
 }

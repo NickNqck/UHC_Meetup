@@ -251,6 +251,6 @@ public class Kabuto extends OrochimaruRoles {
 
 	@Override
 	public String getName() {
-		return "§5Kabuto";
+		return "Kabuto";
 	}
 }

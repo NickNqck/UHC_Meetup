@@ -216,7 +216,7 @@ public class Shikamaru extends ShinobiRoles {
     }
     @Override
     public String getName() {
-        return "§aShikamaru";
+        return "Shikamaru";
     }
     private static class StunExecutable implements Listener{
         private Shikamaru shikamaru;

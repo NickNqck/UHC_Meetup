@@ -264,6 +264,6 @@ public class RockLee extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aRock Lee";
+		return "Rock Lee";
 	}
 }

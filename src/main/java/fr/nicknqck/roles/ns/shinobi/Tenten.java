@@ -170,6 +170,6 @@ public class Tenten extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aTenten";
+		return "Tenten";
 	}
 }

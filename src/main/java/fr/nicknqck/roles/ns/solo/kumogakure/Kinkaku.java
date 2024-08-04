@@ -213,7 +213,7 @@ public class Kinkaku extends NSRoles {
 
     @Override
     public String getName() {
-        return "§6Kinkaku";
+        return "Kinkaku";
     }
 
     private static class KinkakuMissions implements Listener {

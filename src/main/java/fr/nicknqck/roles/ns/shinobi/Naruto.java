@@ -402,6 +402,6 @@ public class Naruto extends ShinobiRoles {
 
 	@Override
 	public String getName() {
-		return "§aNaruto";
+		return "Naruto";
 	}
 }

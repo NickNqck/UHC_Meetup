@@ -138,6 +138,6 @@ public class ZetsuNoir extends AkatsukiRoles {
 
 	@Override
 	public String getName() {
-		return "§cZetsu Noir";
+		return "Zetsu Noir";
 	}
 }
