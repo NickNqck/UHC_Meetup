@@ -421,6 +421,6 @@ public class Iso extends RoleBase {
 
     @Override
     public String getName() {
-        return "§dIso";
+        return "Iso";
     }
 }
