@@ -201,7 +201,7 @@ public class Main extends JavaPlugin implements Listener{
 		System.out.println("Starting cleaning blocks");
 		for (int x = -150; x <= 150; x++) {
 			for (int z = -150; z <= 150; z++) {
-				for (int y = 60; y <= 120; y++) {
+				for (int y = 50; y <= 120; y++) {
 					//System.out.println("Calculating Block at "+"x:"+x+", y:"+y+", z:"+z);
 					Block block = gameWorld.getBlockAt(x, y, z);
 					if (block.getType().name().contains("SPONGE") ||block.getType() == Material.BRICK || block.getType() == Material.COBBLESTONE || block.getType() == Material.OBSIDIAN || block.getType() == Material.PACKED_ICE || block.getType() == Material.ICE) {
