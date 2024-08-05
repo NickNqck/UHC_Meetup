@@ -10,10 +10,6 @@ import fr.nicknqck.scoreboard.Reflection;
 public class TPS {
 	private TPS() {}
 
-    public static double getTPS() {
-        return getAverageTPS(1);
-    }
-
     public static double getAverageTPS(int time) {
         double[] recentTps;
         if (canGetWithPaper()) {
