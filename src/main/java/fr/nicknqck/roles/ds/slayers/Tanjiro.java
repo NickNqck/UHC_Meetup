@@ -186,7 +186,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     return;
                 }
                 if (gameState.Assassin != null) {
-                    Player target = Bukkit.getPlayer(getPlayer());
+                    Player target = Bukkit.getPlayer(args[1]);
                     if (target != null) {
                         boolean assa = target.getUniqueId().equals(gameState.Assassin.getUniqueId());
                         owner.sendMessage("§c"+target.getName()+"§f "+(assa ? "§7est l'§4Assassin" : "§7n'est§c pas§7 l'§4Assassin"));
@@ -281,7 +281,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
         @Override
         public void run() {
-            if (tanjiro.getGameState().getServerState() != GameState.ServerStates.InGame) {
+            if (tanjiro.getGameState().getServerState() != GameState.ServerStates.InGame || !tanjiro.getGamePlayer().isAlive()) {
                 cancel();
                 return;
             }
