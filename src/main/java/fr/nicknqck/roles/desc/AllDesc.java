@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 public class AllDesc{
 	// §c❤§r ❤ rouge
 	public final static String coeur = "§c❤§r";
-	public final static String Coeur(String color) {
+	public static String Coeur(String color) {
 		return color+"❤§r";
 	}
 	public final static String Speed = "§eSpeed§r";
@@ -19,7 +19,6 @@ public class AllDesc{
 	public final static String blind = "§1Blindness§r";
 	public final static String slow = "§9Slowness§r";
 	public final static String weak = "§7Weakness§r";
-	public final static String poison = "§2Poison§r";
 	public final static String items = ChatColor.BOLD+"Items: ";
 	public final static String commande = ChatColor.BOLD + "Commande: ";
 	public final static String effet = ChatColor.BOLD+"Effet: ";
@@ -86,32 +85,6 @@ public class AllDesc{
  */           "",
             bar
 	};
-	public static String[] Kanae = new String[]{
-			bar,
-			"§lRôle: §r§aKanae",
-			"",
-            "§lItems: ",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD + ChatColor.BOLD + "Épée fleuriale: " + ChatColor.WHITE + "Quand vous mettrez un coup d'épée un certain % de chance d'infliger un effet au joueur tapée, il y à§6 40s§r entre chaque effet appliqué à votre adversaire",
-            "",
-            ChatColor.BOLD + " Pourcentage: ",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+" 1% "+ ChatColor.WHITE + "de chance d'infliger "+poison+" 1, "+slow+" 1, "+weak+" 1 pendant 10s",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+" 7% "+ ChatColor.WHITE + "de chance de ce soigner 2"+coeur,
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+" 7% "+ ChatColor.WHITE + "de chance d'activer le fait que vos coup mette en feu l'adversaire pendant 10s",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+" 15% "+ ChatColor.WHITE + "de chance d'infliger "+poison+" 1 pendant 10s",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+" 20% "+ ChatColor.WHITE + "de chance d'infliger "+slow+" 1 pendant 12s",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+" 25% "+ ChatColor.WHITE + "de chance d'infliger "+weak+" 1 pendant 15s",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+" 25% "+ ChatColor.WHITE + "de chance de ne rien faire",
-            "",
-            bar
-    };
 	public static String[] Kyogai = new String[]{
 			bar,
 			"§lRôle: §r§6Kyogai",
@@ -537,7 +510,7 @@ public class AllDesc{
 			"",
 			ChatColor.BOLD+"Commande: ",
 			"",
-			ChatColor.DARK_GRAY+" •§r §6" +"/ds brume§r <joueur> donne au joueur visée l'effet "+blind+" 5 pendant 30s, vous possédez§6 3 utilisations§r de cette commande",
+			ChatColor.DARK_GRAY+" •§r §6" +"/ds brume§r <joueur> donne au joueur visée l'effet "+blind+" 5 pendant 30s, vous possédez§6 3 utilisations§r de cette commande§7 (1x/3m)",
 			"",
 			bar
 	};
@@ -724,27 +697,6 @@ public class AllDesc{
 			"",
 			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"A la mort des rôles: "+ChatColor.GOLD+"Tomioka, Tanjiro, Makomo, Sabito"+ChatColor.WHITE+" vous gagnez aléatoirement sois: §c5%§r de "+Force+" sois§b 5%§r de "+Speed),
 			"",
-			bar
-	};
-	public static String[] ZenItsu = new String[] {
-			bar,
-			role+"§aZenItsu",
-			"",
-			ChatColor.BOLD+"Passif: ",
-			"",
-			point +"§fQuand vous tapez un joueur avec votre épée vous avez 10% de chance d'infliger 1"+coeur+" de dégat via un éclair au joueur taper",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			point +Speed+" 2 et "+Force+" 1 en dessous de la moitié de vos§c HP",
-			"",
-			items,
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Premier Mouvement: "+ChatColor.WHITE+" Vous donne "+Speed+" 3 pendant 1 minutes puis "+slow+" 1 et "+weak+" 1 pendant 1 minutes"),
-			"",
-			commande,
-			"",
-			point+"§6/ds eclair§7: vous permet d'activer votre passif",
 			bar
 	};
 	public static String[] Jigoro = new String[] {

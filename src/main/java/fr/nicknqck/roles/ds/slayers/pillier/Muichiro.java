@@ -73,7 +73,7 @@ public class Muichiro extends PillierRoles {
 										if (dsbrumeuse < 3) {
 											if (dsbrumecd <= 0) {
 												dsbrumeuse+=1;
-												dsbrumecd = 60;
+												dsbrumecd = 180;
 												givePotionEffet(target, PotionEffectType.BLINDNESS, 20*30, 5, true);
 												target.sendMessage("Vous avez été touché par la brume de§6 Muichiro");
 												owner.sendMessage("Votre brume à bien toucher "+target.getName());
