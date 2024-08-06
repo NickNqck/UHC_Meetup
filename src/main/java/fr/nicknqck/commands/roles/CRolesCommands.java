@@ -20,7 +20,9 @@ public class CRolesCommands implements CommandExecutor {
                 Player sender = (Player) commandSender;
                 if (gameState.getPlayerRoles().get(sender) instanceof CustomRolesBase) {
                     CustomRolesBase role = (CustomRolesBase) gameState.getPlayerRoles().get(sender);
-                    return role.onCustomCommand(strings, sender);
+                    if (role.getGamePlayer().isAlive()) {
+                        return role.onCustomCommand(strings, sender);
+                    }
                 }
             }
         }

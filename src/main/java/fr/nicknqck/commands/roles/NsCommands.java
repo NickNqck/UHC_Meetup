@@ -3,6 +3,7 @@ package fr.nicknqck.commands.roles;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -123,8 +124,8 @@ public class NsCommands implements CommandExecutor {
                         }
                         return true;
                     }
-					if (gameState.getInGamePlayers().contains(sender) && !gameState.hasRoleNull(sender)){
-						gameState.getPlayerRoles().get(sender).onNsCommand(args);
+					if (!gameState.hasRoleNull(sender) && gameState.getPlayerRoles().get(sender).getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
+						((NSRoles) gameState.getPlayerRoles().get(sender)).onNsCommand(args);
 					}
 					return true;
 				}

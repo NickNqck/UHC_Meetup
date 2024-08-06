@@ -18,6 +18,7 @@ public abstract class AotRoles extends RoleBase {
         gazAmount= 100.0;
         new RodCooldownRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
+    public void onAotCommands(String arg, String[] args, GameState gameState) {}
     private static class RodCooldownRunnable extends BukkitRunnable {
         private final AotRoles role;
         public RodCooldownRunnable(AotRoles role) {

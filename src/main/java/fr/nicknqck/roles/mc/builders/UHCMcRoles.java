@@ -7,4 +7,5 @@ public abstract class UHCMcRoles extends RoleBase {
     public UHCMcRoles(Player player) {
         super(player);
     }
+    public void onMcCommand(String[] args) {}
 }

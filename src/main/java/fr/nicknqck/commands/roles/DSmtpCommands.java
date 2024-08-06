@@ -57,51 +57,45 @@ public class DSmtpCommands implements CommandExecutor {
 					return true;
 				}
 				if (args[0].equalsIgnoreCase("role")) {
-					if (sender instanceof Player) {
-						Player player = (Player) sender;
-						if (gameState.getInGamePlayers().contains(player)
-								&& gameState.getPlayerRoles().containsKey(player)) {
-							gameState.getPlayerRoles().get(player).OpenFormInventory(gameState);
-							return true;
-						}
-					}
-				} else if (args[0].equalsIgnoreCase("list")) {
-					if (sender instanceof Player) {
-						Player player = (Player) sender;
-						ArrayList<String> message = new ArrayList<String>();
-						message.add(ChatColor.GOLD+"Liste des rôles potentiellement en jeu (composition de la partie non actuallisé):");
-						if (gameState.getServerState() == ServerStates.InLobby) {
-							int roleNmb = 0;
-							for (Roles r : gameState.getAvailableRoles().keySet()) {
-								System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
-								roleNmb += gameState.getAvailableRoles().get(r);
-								player.sendMessage("§crole§r:§6 "+r+"§r,§c nmb§r:§6 "+gameState.getAvailableRoles().get(r));
-								System.out.println(roleNmb);
-							}
-							return true;
-						}
-                        for (Roles r : gameState.getAvailableRoles().keySet()) {
-							int nmb = 0;
-							for (RoleBase role : gameState.getPlayerRoles().values()) {
-								if (role.getOldRole() == r || role.getRoles() == r) {
-									nmb += 1;
-								}
-							}
-							if (nmb > 0) {
-								message.add(ChatColor.DARK_PURPLE+"("+ChatColor.RED+nmb+ChatColor.DARK_PURPLE+") : "+ChatColor.GOLD+r.name()+ChatColor.DARK_PURPLE+",");
-							}
-						}
-						player.sendMessage(message.toArray(new String[message.size()]));
-						return true;
-					}
-				} else if (args[0].equalsIgnoreCase("roles")) {
-					if (sender instanceof Player) {
-						//ArrayList<String> message = new ArrayList<String>();
-                        sender.sendMessage(gameState.getRolesList());
+                    Player player = (Player) sender;
+                    if (gameState.getInGamePlayers().contains(player)
+                            && gameState.getPlayerRoles().containsKey(player)) {
+                        gameState.getPlayerRoles().get(player).OpenFormInventory(gameState);
                         return true;
-
                     }
-				} else if (args[0].equalsIgnoreCase("doc")){
+                } else if (args[0].equalsIgnoreCase("list")) {
+                    Player player = (Player) sender;
+                    ArrayList<String> message = new ArrayList<>();
+                    message.add(ChatColor.GOLD+"Liste des rôles potentiellement en jeu (composition de la partie non actuallisé):");
+                    if (gameState.getServerState() == ServerStates.InLobby) {
+                        int roleNmb = 0;
+                        for (Roles r : gameState.getAvailableRoles().keySet()) {
+                            System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
+                            roleNmb += gameState.getAvailableRoles().get(r);
+                            player.sendMessage("§crole§r:§6 "+r+"§r,§c nmb§r:§6 "+gameState.getAvailableRoles().get(r));
+                            System.out.println(roleNmb);
+                        }
+                        return true;
+                    }
+                    for (Roles r : gameState.getAvailableRoles().keySet()) {
+                        int nmb = 0;
+                        for (RoleBase role : gameState.getPlayerRoles().values()) {
+                            if (role.getOldRole() == r || role.getRoles() == r) {
+                                nmb += 1;
+                            }
+                        }
+                        if (nmb > 0) {
+                            message.add(ChatColor.DARK_PURPLE+"("+ChatColor.RED+nmb+ChatColor.DARK_PURPLE+") : "+ChatColor.GOLD+r.name()+ChatColor.DARK_PURPLE+",");
+                        }
+                    }
+                    player.sendMessage(message.toArray(new String[message.size()]));
+                    return true;
+                } else if (args[0].equalsIgnoreCase("roles")) {
+                    //ArrayList<String> message = new ArrayList<String>();
+                    sender.sendMessage(gameState.getRolesList());
+                    return true;
+
+                } else if (args[0].equalsIgnoreCase("doc")){
                     Player player = (Player) sender;
                     ArrayList<String> message = new ArrayList<String>();
                     message.add(ChatColor.BOLD+"Aucun document disponible, (pour l'instant)");
@@ -171,74 +165,75 @@ public class DSmtpCommands implements CommandExecutor {
 					}//} du args.length
 			
 			if (args[0].equalsIgnoreCase("chat")) {
-				if (sender instanceof Player) {
-					if (gameState.getPlayerRoles().containsKey(sender)) {
-						if (!gameState.getInGamePlayers().contains(sender))return false;
-						//Debut chat muzan kokushibo
-						if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo || gameState.getPlayerRoles().get(sender) instanceof Muzan) {
-							StringBuilder sb = new StringBuilder();
-							for (int i = 1;i<args.length;i++) {
-								sb.append(" ");
-								sb.append(args[i]);
-							}
-							String name2 = sb.toString();
-							String uwu = "(§c"+gameState.getPlayerRoles().get(sender).getRoles().name()+"§r)§c§l "+sender.getName()+"§r : "+name2;
-							for (Player p : gameState.getInGamePlayers()) {
-								if (gameState.getPlayerRoles().containsKey(p)) {
-									if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo) {
-										if (gameState.getPlayerRoles().get(p) instanceof Muzan) {
-											p.sendMessage(uwu);
-											sender.sendMessage(uwu);
-											return true;
-										}									
-									}
-									if (gameState.getPlayerRoles().get(sender) instanceof Muzan) {
-										if (gameState.getPlayerRoles().get(p) instanceof Kokushibo) {
-											p.sendMessage(uwu);
-											sender.sendMessage(uwu);
-											return true;
-										}
-									}	
-								}							
-							}
-						}//Fin chat muzan kokushibo
-						//Debut chat JigoroV2 Kaigaku
-						if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2 || gameState.getPlayerRoles().get(sender) instanceof Kaigaku) {//vérifie si le rôle du sender
-							StringBuilder sb = new StringBuilder();
-							for (int i =1;i<args.length;i++) {
-								sb.append(" ");
-								sb.append(args[i]);
-							}
-							String name2 = sb.toString();
-							String owo = "(§6"+gameState.getPlayerRoles().get(sender).getRoles().name()+"§r)§6§l "+sender.getName()+"§r : "+name2;
-							if (gameState.JigoroV2Pacte2) {
-								for (Player p : gameState.getInGamePlayers()) {
-									if (gameState.getPlayerRoles().containsKey(p)) {
-										if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2) {
-											if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {
-												p.sendMessage(owo);
-												sender.sendMessage(owo);
-												return true;
-											}									
-										}
-										if (gameState.getPlayerRoles().get(sender) instanceof Kaigaku) {
-											if (gameState.getPlayerRoles().get(p) instanceof JigoroV2) {
-												p.sendMessage(owo);
-												sender.sendMessage(owo);
-												return true;
-											}
-											
-										}
-									}							
-								}	
-							}
-						}
-					}
-				}
-			}
+                if (gameState.getPlayerRoles().containsKey(sender)) {
+                    if (!gameState.getInGamePlayers().contains(sender)) return false;
+//Debut chat muzan kokushibo
+                    if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo || gameState.getPlayerRoles().get(sender) instanceof Muzan) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 1; i < args.length; i++) {
+                            sb.append(" ");
+                            sb.append(args[i]);
+                        }
+                        String name2 = sb.toString();
+                        String uwu = "(§c" + gameState.getPlayerRoles().get(sender).getRoles().name() + "§r)§c§l " + sender.getName() + "§r : " + name2;
+                        for (Player p : gameState.getInGamePlayers()) {
+                            if (gameState.getPlayerRoles().containsKey(p)) {
+                                if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo) {
+                                    if (gameState.getPlayerRoles().get(p) instanceof Muzan) {
+                                        p.sendMessage(uwu);
+                                        sender.sendMessage(uwu);
+                                        return true;
+                                    }
+                                }
+                                if (gameState.getPlayerRoles().get(sender) instanceof Muzan) {
+                                    if (gameState.getPlayerRoles().get(p) instanceof Kokushibo) {
+                                        p.sendMessage(uwu);
+                                        sender.sendMessage(uwu);
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }//Fin chat muzan kokushibo
+//Debut chat JigoroV2 Kaigaku
+                    if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2 || gameState.getPlayerRoles().get(sender) instanceof Kaigaku) {//vérifie si le rôle du sender
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 1; i < args.length; i++) {
+                            sb.append(" ");
+                            sb.append(args[i]);
+                        }
+                        String name2 = sb.toString();
+                        String owo = "(§6" + gameState.getPlayerRoles().get(sender).getRoles().name() + "§r)§6§l " + sender.getName() + "§r : " + name2;
+                        if (gameState.JigoroV2Pacte2) {
+                            for (Player p : gameState.getInGamePlayers()) {
+                                if (gameState.getPlayerRoles().containsKey(p)) {
+                                    if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2) {
+                                        if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {
+                                            p.sendMessage(owo);
+                                            sender.sendMessage(owo);
+                                            return true;
+                                        }
+                                    }
+                                    if (gameState.getPlayerRoles().get(sender) instanceof Kaigaku) {
+                                        if (gameState.getPlayerRoles().get(p) instanceof JigoroV2) {
+                                            p.sendMessage(owo);
+                                            sender.sendMessage(owo);
+                                            return true;
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 			if (gameState.getServerState() == ServerStates.InGame) {
 				if (gameState.getPlayerRoles().containsKey(sender) && gameState.getPlayerRoles().get(sender) instanceof DemonsSlayersRoles) {
-					((DemonsSlayersRoles) gameState.getPlayerRoles().get(sender)).onDSCommandSend(args, gameState);
+					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getPlayerRoles().get(sender);
+					if (role.getGamePlayer().isAlive()) {
+						((DemonsSlayersRoles) gameState.getPlayerRoles().get(sender)).onDSCommandSend(args, gameState);
+					}
 					return true;
 				}
 			}

@@ -1,5 +1,6 @@
 package fr.nicknqck.commands.roles;
 
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,7 +10,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 
 public class AotCommands implements CommandExecutor {
-GameState gameState;
+	private final GameState gameState;
 	public AotCommands(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -22,36 +23,36 @@ GameState gameState;
 				if (args[0].equalsIgnoreCase("roles")) {
                     sender.sendMessage(gameState.getRolesList());
                 }
-				if (gameState.getPlayerRoles().containsKey(player)) {
+				if (!gameState.hasRoleNull(player)) {
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
 						gameState.sendDescription(player);
-						return true;
-					}else {
+                    } else {
 						if (args[0].equalsIgnoreCase("steal")) {
 							for (Titans value : Titans.values()) {
 								value.getTitan().onSteal(player, args);
 							}
-							return true;
-						} else {
+                        } else {
 							if (args[0].equalsIgnoreCase("titan")) {
 								for (Titans value : Titans.values()) {
 								value.getTitan().onAotTitan(player, args);
 							}
-							return true;
-							} else {
+                            } else {
 								for (Titans t : Titans.values()) {
-								t.getTitan().onSubCommand(player, args);
+									t.getTitan().onSubCommand(player, args);
 								}
-							gameState.getPlayerRoles().get(player).onAotCommands(arg, args, gameState);
-							return true;
-							}
-						}
-					}					
-				}else {
-				player.sendMessage("§cCommande Introuvable !");
-				return true;
-				}
-			}
+								if (gameState.getPlayerRoles().get(player) instanceof AotRoles) {
+									if (gameState.getPlayerRoles().get(player).getGamePlayer().isAlive()) {
+										((AotRoles) gameState.getPlayerRoles().get(player)).onAotCommands(arg, args, gameState);
+									}
+								}
+                            }
+                        }
+                    }
+                } else {
+					player.sendMessage("§cCommande Introuvable !");
+                }
+                return true;
+            }
 		}
 		return false;
 	}

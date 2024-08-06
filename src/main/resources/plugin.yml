@@ -29,7 +29,7 @@ commands:
     description: Permet d'obtenir le mumble
   say:
     description: Custom of /say commands
-    permission: say.use
+    permission: host.say
   gamemode:
     description: Custom of /gamemode commands
   gm:
@@ -38,6 +38,6 @@ commands:
     description: Addon of /whitelist
   whitelist:
     description: Custom of /whitelist commands
-    permission: wl.use
+    permission: host.wl
   mc:
     description: Fait parti des roles de UHC Minecraft

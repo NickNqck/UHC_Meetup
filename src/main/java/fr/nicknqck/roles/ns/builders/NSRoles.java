@@ -72,4 +72,5 @@ public abstract class NSRoles extends RoleBase {
         }
         return tr;
     }
+    public void onNsCommand(String[] args) {}
 }

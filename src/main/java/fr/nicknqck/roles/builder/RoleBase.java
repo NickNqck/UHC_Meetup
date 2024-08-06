@@ -281,7 +281,7 @@ public abstract class RoleBase implements Role{
 		}
 	}
 	public void OnAPlayerKillAnotherPlayer(Player player, Player damager, GameState gameState) {}
-	public void onAotCommands(String arg, String[] args, GameState gameState) {}
+
 	@Getter
 	@Setter
 	private int actualTridiCooldown = -1;
@@ -356,7 +356,7 @@ public abstract class RoleBase implements Role{
 
 	public void onProjectileHit(Projectile entity, Player shooter) {}
 
-	public void onNsCommand(String[] args) {}
+
 
 	 public void listPotionEffects(Player target, Player receiver) {
 	        receiver.sendMessage("\nEffets de potion actifs pour§7 " + target.getName() + "§r:");
@@ -607,8 +607,6 @@ public abstract class RoleBase implements Role{
 		p.getWorld().setGameRuleValue("sendCommandFeedback", "true");
 	}
 	public HashMap<UUID, String> customName = new HashMap<>();
-	public void onMcCommand(String[] args) {}
-
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
 
 	public boolean isCanTentacule() {
