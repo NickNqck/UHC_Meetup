@@ -52,7 +52,7 @@ public class KillerBee extends ShinobiRoles {
 				"",
 				AllDesc.point+"§aTentacule§f: Sous forme de§l cane à pêche§r§f, cette objet vous permet de vous déplacez comme via un §cgrappin§f,§c cette item n'est utilisable que lorsque que§d Gyûki§c est activé§f.§7 (1x/30s)",
 				"",
-				AllDesc.point+"§eLame Raiton§f: Épée en fer §lTtranchant IV§r§f",
+				AllDesc.point+"§eLame Raiton§f: Épée en fer §lTranchant IV§r§f",
 				"",
 				AllDesc.particularite,
 				"",
