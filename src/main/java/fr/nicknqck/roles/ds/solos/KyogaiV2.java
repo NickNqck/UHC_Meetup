@@ -3,6 +3,9 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -15,16 +18,22 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class KyogaiV2 extends DemonsSlayersRoles {
+public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 
 	public KyogaiV2(Player player) {
 		super(player);
 		owner.getInventory().addItem(getItems());
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+		this.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
+		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
 	public Roles getRoles() {
@@ -59,7 +68,7 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 				"",
 				AllDesc.particularite,
 				"",
-				AllDesc.point+"si vous tappez un joueur qui regarde dans la même direction que vous vous aurez alors 5% de chance de lui infliger 1"+AllDesc.coeur+" de dégat supplémentaire",
+				AllDesc.point+"si vous tappez un joueur qui regarde dans la même direction que vous vous aurez alors 15% de chance de lui infliger 1"+AllDesc.coeur+" de dégat supplémentaire",
 				"",
 				AllDesc.point+"Si vous êtes frappez par un joueur qui regarde dans la même direction que vous, vous aurez §c20%§f de§c chance§f d'obtenir§c 30 secondes§f de "+AllDesc.Speed,
 				"",
@@ -185,39 +194,40 @@ public class KyogaiV2 extends DemonsSlayersRoles {
 		if (cooldownLeg == 0)owner.sendMessage("§cTambour§7 model§l Leg§7 est à nouveau utilisable !");
 		if (cooldownHead >= 0)cooldownHead-=1;
 		if (cooldownHead == 0)owner.sendMessage("§cTambour§7 model§l Head§7 est à nouveau utilisable !");
-		if (gameState.nightTime) {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-		}
 		if (cooldownTP >= 0)cooldownTP--;
 		if (cooldownTP == 0)owner.sendMessage("§cTambour§7 model§l TP§7 est à nouveau utilisable !");
 	}
-
-	public void onTick() {
-
-	}
-	@Override
-	public void neoItemUseAgainst(ItemStack itemInHand, Player player, GameState gameState, Player damager) {
-		if (damager.equals(owner)) {
-			if (player.equals(owner))return;
-			if (Loc.getCardinalDirection(damager).equals(Loc.getCardinalDirection(player))) {
-				if (RandomUtils.getRandomProbability(5)){
-					Heal(player, -2);
-					damager.sendMessage("§7§l"+player.getName()+"§7 à subit 1"+AllDesc.coeur+"§7 de dégat supplémentaire");
-					player.sendMessage("§eKyogai§7 vous à fait subir 1"+AllDesc.coeur+"§7 de dégat supplémentaire");
+	@EventHandler
+	private void onUHCBattle(UHCPlayerBattleEvent event) {
+		if (!event.isPatch())return;
+		if (event.getDamager().getUuid().equals(getPlayer())) {//donc le owner de KyogaiV2 est le mec qui tape
+			Player owner = Bukkit.getPlayer(event.getDamager().getUuid());
+			Player victim = Bukkit.getPlayer(event.getVictim().getUuid());
+			if (owner != null && victim != null) {//Les deux joueurs sont encore connecter
+				if (Main.getInstance().getLocUtils().getPlayerFacing(owner).equals(Main.getInstance().getLocUtils().getPlayerFacing(victim))) {//si ils regardent la même direction
+					if (RandomUtils.getRandomProbability(15)){
+						Heal(victim, -2);
+						owner.sendMessage("§7§l"+victim.getName()+"§7 à subit 1"+AllDesc.coeur+"§7 de dégat supplémentaire");
+						owner.sendMessage("§eKyogai§7 vous à fait subir 1"+AllDesc.coeur+"§7 de dégat supplémentaire");
+					}
+				}
+			}
+		} else if (event.getVictim().getUuid().equals(getPlayer())) {
+			Player owner = Bukkit.getPlayer(event.getVictim().getUuid());
+			Player damager = Bukkit.getPlayer(event.getDamager().getUuid());
+			if (owner != null && damager != null) {//Les deux joueurs sont encore connecter
+				if (Main.getInstance().getLocUtils().getPlayerFacing(owner).equals(Main.getInstance().getLocUtils().getPlayerFacing(damager))) {//si ils regardent la même direction
+					if (RandomUtils.getRandomProbability(20)) {//donc 20% de chance de donner speed 1 a kyogai
+						givePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
+						owner.sendMessage("§7Vous avez gagné l'effet "+AllDesc.Speed+"§b 1§7 suite à là douleurs");
+					}
 				}
 			}
 		}
 	}
-	@Override
-	public void neoAttackedByPlayer(Player attacker, GameState gameState) {
-		if (attacker != owner) {
-			if (Loc.getCardinalDirection(attacker).equals(Loc.getCardinalDirection(owner))) {
-				if (RandomUtils.getRandomProbability(20)) {
-					givePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
-					owner.sendMessage("§7Vous avez gagné l'effet "+AllDesc.Speed+"§b 1§7 suivre à là douleurs");
-				}
-			}
-		}
+	@EventHandler
+	private void onEndGame(EndGameEvent event) {
+		HandlerList.unregisterAll(this);
 	}
 	private static class onTick extends BukkitRunnable {
 		private final KyogaiV2 kyogaiV2;
