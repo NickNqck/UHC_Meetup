@@ -625,4 +625,7 @@ public abstract class RoleBase implements Role{
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}
+	public void givePotionEffect(PotionEffect effect, EffectWhen when) {
+		getEffects().put(effect, when);
+	}
 }
