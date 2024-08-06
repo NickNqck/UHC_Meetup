@@ -185,36 +185,15 @@ public class Loc {
         // Mettre à jour la nouvelle position du joueur
         joueurCible.teleport(location);
     }
-    public static void cancelKnockback(Player player) {
-        Vector e = new Vector(0,0,0);
-        
-        player.setVelocity(e);
-    }
-    public static char getCharCardinalDirection(Player player) {
-        double rotation = (player.getLocation().getYaw() - 90) % 360;
-        if (rotation < 0) {
-            rotation += 360.0;
-        }
-        if (0 <= rotation && rotation < 22.5) {
-            return 'N';
-        } else if (22.5 <= rotation && rotation < 67.5) {
-            return 'N';
-        } else if (67.5 <= rotation && rotation < 112.5) {
-            return 'E';
-        } else if (112.5 <= rotation && rotation < 157.5) {
-            return 'S';
-        } else if (157.5 <= rotation && rotation < 202.5) {
-            return 'S';
-        } else if (202.5 <= rotation && rotation < 247.5) {
-            return 'S';
-        } else if (247.5 <= rotation && rotation < 292.5) {
-            return 'W';
-        } else if (292.5 <= rotation && rotation < 337.5) {
-            return 'N';
-        } else if (337.5 <= rotation && rotation < 360.0) {
-            return 'N';
+    public String getPlayerFacing(Player player) {
+        Vector direction = player.getLocation().getDirection();
+        double x = direction.getX();
+        double z = direction.getZ();
+
+        if (Math.abs(x) > Math.abs(z)) {
+            return x > 0 ? "EAST" : "WEST";
         } else {
-            return 'N';
+            return z > 0 ? "SOUTH" : "NORTH";
         }
     }
 
@@ -264,39 +243,39 @@ public class Loc {
         if (player.getWorld().equals(mate.getWorld())) {
             if (player.getLocation().distance(mate.getLocation()) > distance) {
                 if (getDirectionTo(player, mate.getLocation().clone()) <= 45.0) {
-                    return "§6" + mate.getName() + "§f \u2b06 ? ";
+                    return "§6" + mate.getName() + "§f ⬆ ? ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 90.0) {
-                    return "§6" + mate.getName() + "§f \u2b08 ? ";
+                    return "§6" + mate.getName() + "§f ⬈ ? ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 135.0) {
                     return "§6" + mate.getName() + "§f➨ ? ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 180.0) {
-                    return "§6" + mate.getName() + "§f \u2b0a ? ";
+                    return "§6" + mate.getName() + "§f ⬊ ? ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 225.0) {
-                    return "§6" + mate.getName() + "§f \u2b07 ? ";
+                    return "§6" + mate.getName() + "§f ⬇ ? ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 270.0) {
-                    return "§6" + mate.getName() + "§f \u2b0b ? ";
+                    return "§6" + mate.getName() + "§f ⬋ ? ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 315.0) {
-                    return "§6" + mate.getName() + "§f \u2b05 ? ";
+                    return "§6" + mate.getName() + "§f ⬅ ? ";
                 } else {
-                    return "§6" + mate.getName() + "§f \u2b09 ? ";
+                    return "§6" + mate.getName() + "§f ⬉ ? ";
                 }
             } else {
                 if (getDirectionTo(player, mate.getLocation().clone()) <= 45.0) {
-                    return "§6" + mate.getName() + "§f \u2b06 " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
+                    return "§6" + mate.getName() + "§f ⬆ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 90.0) {
-                    return "§6" + mate.getName() + "§f \u2b08 " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
+                    return "§6" + mate.getName() + "§f ⬈ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 135.0) {
                     return "§6" + mate.getName() + "§f➨ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 180.0) {
-                    return "§6" + mate.getName() + "§f \u2b0a " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
+                    return "§6" + mate.getName() + "§f ⬊ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 225.0) {
-                    return "§6" + mate.getName() + "§f \u2b07 " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
+                    return "§6" + mate.getName() + "§f ⬇ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 270.0) {
-                    return "§6" + mate.getName() + "§f \u2b0b " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
+                    return "§6" + mate.getName() + "§f ⬋ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 } else if (getDirectionTo(player, mate.getLocation().clone()) <= 315.0) {
-                    return "§6" + mate.getName() + "§f \u2b05 " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
+                    return "§6" + mate.getName() + "§f ⬅ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 } else {
-                    return "§6" + mate.getName() + "§f \u2b09 " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
+                    return "§6" + mate.getName() + "§f ⬉ " + ((int) player.getLocation().distance(mate.getLocation())) + " ";
                 }
             }
         } else {

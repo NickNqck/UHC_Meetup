@@ -19,10 +19,7 @@ import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
-import fr.nicknqck.utils.AttackUtils;
-import fr.nicknqck.utils.PotionUtils;
-import fr.nicknqck.utils.SchedulerRunnable;
-import fr.nicknqck.utils.TPS;
+import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
@@ -79,12 +76,14 @@ public class Main extends JavaPlugin implements Listener{
 	private Inventories inventories;
 	@Getter
 	private RoleManager roleManager;
-
+	@Getter
+	private Loc locUtils;
 	@Override
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
 		this.roleManager = new RoleManager();
+		this.locUtils = new Loc();
 	//	this.databaseManager = new DatabaseManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
