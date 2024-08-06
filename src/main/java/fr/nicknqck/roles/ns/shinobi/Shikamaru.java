@@ -231,7 +231,7 @@ public class Shikamaru extends ShinobiRoles {
                 if (e.getClickedInventory() == null)return;
                 if (e.getClickedInventory().getTitle() == null)return;
                 if (Main.isDebug()){
-                    System.out.println("PULL UIP");
+                    System.out.println("PULL UP");
                 }
                 if (e.getClickedInventory().getTitle().equals("§aShikamaru§7 ->§a Stun")){
                     e.setCancelled(true);
@@ -298,8 +298,8 @@ public class Shikamaru extends ShinobiRoles {
             Player target = Bukkit.getPlayer(uuidTarget);
             if (target != null){
                 shikamaru.damage(target, 1.0, 1, shikamaru.owner, true);
+                timeRemaining--;
             }
-            timeRemaining--;
         }
     }
 }
