@@ -269,7 +269,7 @@ public class GameListener implements Listener {
 				}
 			}
 			for (Events value : Events.values()) {
-				if (gameState.getInGameTime() == value.getEvent().getTime()) {
+				if (gameState.getInGameTime() == value.getEvent().getMinTime()) {
 					if (RandomUtils.getOwnRandomProbability(value.getProba())) {
 						value.getEvent().PlayEvent(gameState.getInGameTime());
 					}

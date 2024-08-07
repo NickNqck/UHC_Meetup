@@ -65,12 +65,15 @@ public class InfectItem implements Listener{
 			}
 		}
 	}
-	public static ItemStack getItem() {return Items.getInfection();}
 	@EventHandler
 	public void InventoryClick(InventoryClickEvent e) {
 		if (e.getWhoClicked() != null) {
 			if (e.getWhoClicked().getOpenInventory() != null) {
 				if (e.getAction() == null)return;
+				if (e.getCurrentItem() == null)return;
+				if (e.getClickedInventory() == null)return;
+				if (e.getWhoClicked().getOpenInventory() == null)return;
+				if (e.getWhoClicked().getOpenInventory().getTitle() == null) return;
 				if (e.getWhoClicked().getOpenInventory().getTitle().equalsIgnoreCase("Infection")) {
 					for (Player p : gameState.getInGamePlayers()) {
 						if (e.getCurrentItem().getType() == Material.SKULL_ITEM) {

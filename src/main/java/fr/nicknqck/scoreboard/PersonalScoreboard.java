@@ -70,13 +70,14 @@ public class PersonalScoreboard {
     		if (!this.gameState.hasRoleNull(player)) {
     			RoleBase role = this.gameState.getPlayerRoles().get(player);
 				String roleName = role.getName();
-				if (premsg.length()+ roleName.length() + 8 > 40) {
-					roleName = role.getClass().getName();
+				String iRole = "§fRôle: ";
+				if (premsg.length()+iRole.length()+ roleName.length() >= 40) {
+					roleName = role.getRoles().name();
 				}
     			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
-    				objectiveSign.setLine(1, premsg+"§fRôle: "+role.getTeam().getColor()+roleName);
+    				objectiveSign.setLine(1, premsg+iRole+role.getTeam().getColor()+roleName);
     			}else {
-    				objectiveSign.setLine(1, premsg+"§fRôle: "+roleName);
+    				objectiveSign.setLine(1, premsg+iRole+roleName);
     			}
     		}
     		objectiveSign.setLine(2, premsg+"§fJoueurs:§c "+this.gameState.getInGamePlayers().size());

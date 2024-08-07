@@ -24,11 +24,11 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
 public class Alliance extends EventBase{
-	private Player kyojuro;
-	private Player shinjuro;
+	private Kyojuro kyojuro;
+	private Shinjuro shinjuro;
 	@Override
 	public boolean PlayEvent(int gameTime) {
-		if (!isActivated() && gameTime == getTime()) {
+		if (!isActivated() && gameTime == getMinTime()) {
 			if (gameState.attributedRole.contains(Roles.Kyojuro) && !gameState.DeadRole.contains(Roles.Kyojuro)) {
 				if (gameState.attributedRole.contains(Roles.Shinjuro) && !gameState.DeadRole.contains(Roles.Shinjuro)) {
 					Bukkit.broadcastMessage("L'évènement aléatoire "+Events.Alliance.getName()+"§r s'est activé, à partir de maintenant§e Shinjuro§r et§a Kyojuro§r gagne ensemble.§6 /ds alliance§r pour plus d'information...");
@@ -43,7 +43,7 @@ public class Alliance extends EventBase{
 									k.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
 									k.owner.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
 									k.giveHealedHeartatInt(2);
-									this.kyojuro = k.owner;
+									this.kyojuro = k;
 								}
 								if (role instanceof Shinjuro) {
 									Shinjuro s = (Shinjuro) role;
@@ -51,7 +51,7 @@ public class Alliance extends EventBase{
 									s.owner.sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
 									s.owner.getInventory().removeItem(Items.getSake());
 									s.setSakeCooldown(-1);
-									this.shinjuro = s.owner;
+									this.shinjuro = s;
 								}
 							}
 						}
@@ -66,8 +66,8 @@ public class Alliance extends EventBase{
 	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {}
 	@Override
 	public void setupEvent() {
-		setTime(GameState.getInstance().AllianceTime);
-		System.out.println("Alliance will be start at "+StringUtils.secondsTowardsBeautiful(getTime()));
+		setMinTime(GameState.getInstance().AllianceTime);
+		System.out.println("Alliance will be start at "+StringUtils.secondsTowardsBeautiful(getMinTime()));
 	}
 	@Override
 	public Events getEvents() {
@@ -84,11 +84,15 @@ public class Alliance extends EventBase{
 	@Override
 	public void onSecond() {
 		if (shinjuro != null && kyojuro != null) {
-			if (Loc.getNearbyPlayers(kyojuro, 20).contains(shinjuro)) {
-				shinjuro.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true);
-				kyojuro.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true);
+			Player kOwner = Bukkit.getPlayer(kyojuro.getPlayer());
+			Player sOwner = Bukkit.getPlayer(shinjuro.getPlayer());
+			if (kOwner == null|| sOwner == null)return;
+			if (Loc.getNearbyPlayers(kOwner, 20).contains(sOwner)) {
+				sOwner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true);
+				kOwner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true);
 			}
-			NMSPacket.sendActionBar(shinjuro, Loc.getDirectionMate(shinjuro, kyojuro, true));
+			NMSPacket.sendActionBar(sOwner, Loc.getDirectionMate(sOwner, kOwner, true));
+			NMSPacket.sendActionBar(kOwner, Loc.getDirectionMate(kOwner, sOwner, true));
 		}
 	}
 	@Override

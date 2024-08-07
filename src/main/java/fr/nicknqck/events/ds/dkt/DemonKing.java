@@ -1,4 +1,4 @@
-package fr.nicknqck.events.ds;
+package fr.nicknqck.events.ds.dkt;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -25,7 +25,7 @@ public class DemonKing extends EventBase{
 
 	@Override
 	public boolean PlayEvent(int gameTime) {
-		if (!isActivated() && gameTime == getTime() && !gameState.demonKingTanjiro) {			
+		if (!isActivated() && gameTime == getMinTime() && !gameState.demonKingTanjiro) {
 			for (Player p : gameState.getInGamePlayers()) {
 				if (!gameState.hasRoleNull(p)) {
 					RoleBase roleBase = gameState.getPlayerRoles().get(p);
@@ -86,7 +86,7 @@ public class DemonKing extends EventBase{
 							}
 							
 						}else {
-							this.setTime(getTime()+60*5);
+							this.setMinTime(getMinTime()+60*5);
 							setActivated(false);
 							return false;
 						}
@@ -100,7 +100,7 @@ public class DemonKing extends EventBase{
 	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {}
 	@Override
 	public void setupEvent() {
-		setTime(GameState.getInstance().DKminTime);
+		setMinTime(GameState.getInstance().DKminTime);
 	}
 	@Override
 	public Events getEvents() {

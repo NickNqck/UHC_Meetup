@@ -216,7 +216,7 @@ public class AkazaVSKyojuro extends EventBase{
 	private boolean endEvent = false;
 	@Override
 	public void setupEvent() {
-		setTime(GameState.getInstance().AkazaVsKyojuroTime);
+		setMinTime(GameState.getInstance().AkazaVsKyojuroTime);
 	}
 	@Override
 	public Events getEvents() {

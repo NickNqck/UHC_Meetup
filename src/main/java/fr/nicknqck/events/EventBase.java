@@ -1,5 +1,6 @@
 package fr.nicknqck.events;
 
+import fr.nicknqck.GameState;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Entity;
@@ -7,22 +8,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.Objective;
-
-import fr.nicknqck.GameState;
 
 public abstract class EventBase {
 	
 	public GameState gameState = GameState.getInstance();
 	@Setter
 	@Getter
-	private int time;
+	private int minTime;
 	@Setter
 	@Getter
 	private boolean activated = false;
 	
 	public boolean PlayEvent(int gameTime) {
-		if (!isActivated() && gameTime == time) {
+		if (!isActivated() && gameTime == minTime) {
 			setActivated(true);
 			return true;
 		}

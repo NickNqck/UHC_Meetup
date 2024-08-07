@@ -1,4 +1,4 @@
-package fr.nicknqck.events.ds;
+package fr.nicknqck.events.ds.dkt;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
@@ -26,9 +26,9 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     public DemonKingTanjiroRole(Player player) {
         super(player);
         player.getInventory().remove(Material.BLAZE_ROD);
-        getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-        getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-        getEffects().put(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+        givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+        givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         setNoFall(true);
         giveItem(player, false, getItems());
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());

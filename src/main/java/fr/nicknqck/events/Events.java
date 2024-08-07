@@ -3,7 +3,7 @@ package fr.nicknqck.events;
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.ds.AkazaVSKyojuro;
 import fr.nicknqck.events.ds.Alliance;
-import fr.nicknqck.events.ds.DemonKing;
+import fr.nicknqck.events.ds.dkt.DemonKing;
 
 public enum Events {
 	DemonKingTanjiro(new DemonKing(),"§cDemon King Tanjiro", GameState.getInstance().DKTProba),
