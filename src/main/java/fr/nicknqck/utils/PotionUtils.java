@@ -13,9 +13,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class PotionUtils implements Listener {
-    private static ArrayList<Player> noFall = new ArrayList<Player>();
-    private static ArrayList<Player> invincible = new ArrayList<>();
-    private static ArrayList<Player> freeze = new ArrayList<>();
+    private static final ArrayList<Player> noFall = new ArrayList<>();
+    private static final ArrayList<Player> invincible = new ArrayList<>();
+    private static final ArrayList<Player> freeze = new ArrayList<>();
     public static void effectGive(Player p, PotionEffectType e, int t, int l){
         p.addPotionEffect(new PotionEffect(e, t * 20, l, true, false));
     }

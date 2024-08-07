@@ -12,7 +12,6 @@ import static fr.nicknqck.utils.packets.NMSPacket.sendPacket;
 
 public class TabTitleManager {
 
-
     public static void sendTabTitle(Player player, String header, String footer) {
         if (header == null)
             header = "";
