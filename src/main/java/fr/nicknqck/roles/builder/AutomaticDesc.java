@@ -15,8 +15,8 @@ import java.util.Map;
 public class AutomaticDesc {
     private static final String[] ROMAN_NUMERALS = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
     private final TextComponent text;
-    private final Role role;
-    public AutomaticDesc(Role role) {
+    private final IRole role;
+    public AutomaticDesc(IRole role) {
         this.role = role;
         text = new TextComponent(AllDesc.bar);
         addRoleName();

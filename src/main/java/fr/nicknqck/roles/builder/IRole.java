@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffect;
 import java.util.Map;
 import java.util.UUID;
 
-public interface Role {
+public interface IRole {
 
     UUID getPlayer();
     String getName();

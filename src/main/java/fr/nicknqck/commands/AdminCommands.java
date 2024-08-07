@@ -574,7 +574,7 @@ public class AdminCommands implements CommandExecutor{
 									texte.addExtra("\n");
 									if (!gameState.hasRoleNull(p)) {
 										RoleBase role = gameState.getPlayerRoles().get(p);
-										texte.addExtra("Role:§b "+role.getName());
+										texte.addExtra("Role:§b "+role.getOriginTeam().getColor()+role.getName());
 										texte.addExtra("\n");
 										texte.addExtra("Camp d'origine:§b "+ StringUtils.replaceUnderscoreWithSpace(role.getOriginTeam().getColor()+role.getOriginTeam().name()));
 										texte.addExtra("\n");
@@ -654,7 +654,7 @@ public class AdminCommands implements CommandExecutor{
 	private String getListPlayers(HashMap<Player, RoleBase> hashMap) {
 		StringBuilder sb = new StringBuilder();
 		for (Player p : hashMap.keySet()) {
-			sb.append("§f").append(p.getName()).append("§7 (").append(hashMap.get(p).getName()).append("§7) ");
+			sb.append("§f").append(p.getName()).append("§7 (").append(hashMap.get(p).getTeam().getColor()).append(hashMap.get(p).getName()).append("§7) ");
 		}
 		return sb.toString();
 	}

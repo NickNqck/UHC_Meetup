@@ -6,7 +6,7 @@ import fr.nicknqck.roles.aot.solo.Eren;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
-import fr.nicknqck.roles.builder.Role;
+import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.custom.LeComte;
 import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.ds.demons.*;
@@ -34,7 +34,7 @@ import java.util.UUID;
 @Getter
 public class RoleManager {
 
-    private final Map<Class<? extends Role>, Role> rolesRegistery;
+    private final Map<Class<? extends IRole>, IRole> rolesRegistery;
 
     public RoleManager() {
         this.rolesRegistery = new HashMap<>();
@@ -51,8 +51,8 @@ public class RoleManager {
         registerNs();
         registerCustomRoles();
     }
-    public void registerRole(Class<? extends Role> roleClass) throws Exception {
-        final Role role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
+    public void registerRole(Class<? extends IRole> roleClass) throws Exception {
+        final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
     }
     private void registerDemonSlayer() throws Exception {

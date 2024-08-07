@@ -35,7 +35,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public abstract class RoleBase implements Role{
+public abstract class RoleBase implements IRole {
 
 	public Player owner;
 	@Getter
