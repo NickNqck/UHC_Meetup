@@ -35,7 +35,6 @@ import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
@@ -331,13 +330,13 @@ public class Madara extends NSRoles {
 					if (traqued != null) {
 						if (traqued.getBiju().getMaster() == null) {
 							Location loc = traqued.getBiju().getSpawn();
-		                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
+		                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
 		                    owner.setCompassTarget(loc);
 		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 						} else {
 							owner.sendMessage(("&fVous traquez désormais " + Bukkit.getPlayer(traqued.getBiju().getMaster()).getName() + " §fqui se situe en :"));
 		                    Location loc = Bukkit.getPlayer(traqued.getBiju().getMaster()).getLocation();
-		                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
+		                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
 		                    owner.setCompassTarget(loc);
 		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 						}
@@ -373,13 +372,13 @@ public class Madara extends NSRoles {
 					owner.sendMessage("§7Vous traquez maintenant "+bijus.getBiju().getName());
 					if (bijus.getBiju().getMaster() == null) {
 						Location loc = bijus.getBiju().getSpawn();
-	                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
+	                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
 	                    owner.setCompassTarget(loc);
 	                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 					} else {
-						owner.sendMessage(CC.prefix("&fVous traquez désormais " + Bukkit.getPlayer(bijus.getBiju().getMaster()).getName() + " &fqui se situe en :"));
+						owner.sendMessage(("§fVous traquez désormais " + Bukkit.getPlayer(bijus.getBiju().getMaster()).getName() + " §fqui se situe en :"));
 	                    Location loc = Bukkit.getPlayer(bijus.getBiju().getMaster()).getLocation();
-	                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
+	                    owner.sendMessage(("&a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f,§a" + loc.getBlockZ()));
 	                    owner.setCompassTarget(loc);
 	                    owner.sendMessage("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn()));
 					}

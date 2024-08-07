@@ -35,7 +35,6 @@ import fr.nicknqck.bijus.Biju;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -127,7 +126,7 @@ public class Matatabi extends Biju{
 							if (!(entity instanceof Player)) continue;
 							Player player = (Player) entity;
 							player.setFireTicks(20 * 16);
-							player.sendMessage(CC.prefix(getName() + " &fvient de vous mettre en &cfeu&f."));
+							player.sendMessage((getName() + " &fvient de vous mettre en &cfeu&f."));
 						}
 						timeAttack = 10;
 					}
@@ -225,7 +224,7 @@ public class Matatabi extends Biju{
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-							Bukkit.broadcastMessage(CC.prefix(getName() + " &fvient de réapparaître."));
+							Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
 						} else {
 							cancel();
 						}

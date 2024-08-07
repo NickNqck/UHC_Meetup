@@ -29,7 +29,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -284,8 +283,8 @@ public class BijuListener implements Listener{
 	        if (getMatatabiFire() != null) {
 	        	if (event.getDamager().getUniqueId().equals(getMatatabiFire())) {
 		                event.getEntity().setFireTicks(60);
-		                event.getEntity().sendMessage(CC.prefix("&cVous avez été touché par Matatabi"));
-		                event.getDamager().sendMessage(CC.prefix("&fVous avez enflammé &c" + event.getEntity().getName()));
+		                event.getEntity().sendMessage(("&cVous avez été touché par Matatabi"));
+		                event.getDamager().sendMessage(("&fVous avez enflammé &c" + event.getEntity().getName()));
 		        }
 	        }
 	        
@@ -315,7 +314,7 @@ public class BijuListener implements Listener{
 		                ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 5*20, 0, false, false), true);
 		                event.getEntity().setVelocity(event.getEntity().getLocation().getDirection().multiply(1.6));
 		                MathUtil.sendParticle(EnumParticle.EXPLOSION_HUGE, event.getEntity().getLocation());
-		                event.getEntity().sendMessage(CC.prefix("&cVous avez été touché par Saiken"));
+		                event.getEntity().sendMessage(("&cVous avez été touché par Saiken"));
 		            }
 		        }
 	        }

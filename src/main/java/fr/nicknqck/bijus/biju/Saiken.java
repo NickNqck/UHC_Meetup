@@ -7,7 +7,6 @@ import fr.nicknqck.bijus.Biju;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import net.minecraft.server.v1_8_R3.EntityLiving;
@@ -146,12 +145,12 @@ public class Saiken extends Biju {
             	return;
             }
             if (this.timer == spawn - 30) {
-                Bukkit.broadcastMessage(CC.prefix(getName() + " &fva apparaître dans &a30 &fsecondes."));
+                Bukkit.broadcastMessage((getName() + " &fva apparaître dans &a30 &fsecondes."));
             }
 
             if (this.timer == spawn) {
                 spawnBiju();
-                Bukkit.broadcastMessage(CC.prefix(getName() + " &fvient d'apparaître."));
+                Bukkit.broadcastMessage((getName() + " &fvient d'apparaître."));
                 cancel();
             }
         }
@@ -207,7 +206,7 @@ public class Saiken extends Biju {
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage(CC.prefix(getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }

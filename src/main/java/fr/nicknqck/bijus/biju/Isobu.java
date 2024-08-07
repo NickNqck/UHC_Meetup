@@ -36,7 +36,6 @@ import fr.nicknqck.bijus.Biju;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -173,7 +172,7 @@ public class Isobu extends Biju{
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus()) && guardian == null) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage(CC.prefix(getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }

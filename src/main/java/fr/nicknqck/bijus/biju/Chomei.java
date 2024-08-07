@@ -220,7 +220,7 @@ public class Chomei extends Biju {
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage(CC.prefix(getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }
