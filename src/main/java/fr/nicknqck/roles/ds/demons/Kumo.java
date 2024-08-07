@@ -78,9 +78,7 @@ public class Kumo extends DemonInferieurRole {
         					cdprison = 60*5;
         					owner.sendMessage("Vous venez d'enfermer "+player.getName());
         					player.sendMessage("Vous avez été enfermé par§c Kumo");
-        					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-        		                map.keySet().forEach(location -> location.setType(map.get(location)));
-        		            }, 20*60);
+        					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> map.keySet().forEach(location -> location.setType(map.get(location))), 20*60);
         				} else {
         					owner.sendMessage("Veuiller viser un joueur !");
         				}				
@@ -130,7 +128,7 @@ public class Kumo extends DemonInferieurRole {
 		super.Update(gameState);
 	}
 	public Set<Location> sphere(Location location, int radius, boolean hollow){
-	        Set<Location> blocks = new HashSet<Location>();
+	        Set<Location> blocks = new HashSet<>();
 	        World world = location.getWorld();
 	        int X = location.getBlockX();
 	        int Y = location.getBlockY();
@@ -148,7 +146,7 @@ public class Kumo extends DemonInferieurRole {
 	                    }
 	                }
 	            }
-	            return makeHollow(blocks, true);
+	            return makeHollow(blocks);
 	        } else {
 	            for (int x = X - radius; x <= X + radius; x++) {
 	                for (int y = Y - radius; y <= Y + radius; y++) {
@@ -163,40 +161,24 @@ public class Kumo extends DemonInferieurRole {
 	            return blocks;
 	        }
 	    }
-	private Set<Location> makeHollow(Set<Location> blocks, boolean sphere){
-	        Set<Location> edge = new HashSet<Location>();
-	        if(!sphere){
-	            for(Location l : blocks){
-	                World w = l.getWorld();
-	                int X = l.getBlockX();
-	                int Y = l.getBlockY();
-	                int Z = l.getBlockZ();
-	                Location front = new Location(w, X + 1, Y, Z);
-	                Location back = new Location(w, X - 1, Y, Z);
-	                Location left = new Location(w, X, Y, Z + 1);
-	                Location right = new Location(w, X, Y, Z - 1);
-	                if(!(blocks.contains(front) && blocks.contains(back) && blocks.contains(left) && blocks.contains(right))){
-	                    edge.add(l);
-	                }
-	            }
-	        } else {
-	            for(Location l : blocks){
-	                World w = l.getWorld();
-	                int X = l.getBlockX();
-	                int Y = l.getBlockY();
-	                int Z = l.getBlockZ();
-	                Location front = new Location(w, X + 1, Y, Z);
-	                Location back = new Location(w, X - 1, Y, Z);
-	                Location left = new Location(w, X, Y, Z + 1);
-	                Location right = new Location(w, X, Y, Z - 1);
-	                Location top = new Location(w, X, Y + 1, Z);
-	                Location bottom = new Location(w, X, Y - 1, Z);
-	                if(!(blocks.contains(front) && blocks.contains(back) && blocks.contains(left) && blocks.contains(right) && blocks.contains(top) && blocks.contains(bottom))){
-	                    edge.add(l);
-	                }
-	            }
-	        }
-	        return edge;
+	private Set<Location> makeHollow(Set<Location> blocks){
+	        Set<Location> edge = new HashSet<>();
+        for (Location l : blocks) {
+            World w = l.getWorld();
+            int X = l.getBlockX();
+            int Y = l.getBlockY();
+            int Z = l.getBlockZ();
+            Location front = new Location(w, X + 1, Y, Z);
+            Location back = new Location(w, X - 1, Y, Z);
+            Location left = new Location(w, X, Y, Z + 1);
+            Location right = new Location(w, X, Y, Z - 1);
+            Location top = new Location(w, X, Y + 1, Z);
+            Location bottom = new Location(w, X, Y - 1, Z);
+            if (!(blocks.contains(front) && blocks.contains(back) && blocks.contains(left) && blocks.contains(right) && blocks.contains(top) && blocks.contains(bottom))) {
+                edge.add(l);
+            }
+        }
+        return edge;
 	    }
 	@Override
 	public String[] Desc() {

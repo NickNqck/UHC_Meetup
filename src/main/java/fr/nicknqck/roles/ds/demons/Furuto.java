@@ -35,15 +35,8 @@ public class Furuto extends DemonInferieurRole {
 	public Roles getRoles() {
 		return Roles.Furuto;
 	}
-	private Player lunesup;
 	@Override
 	public String[] Desc() {
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(fr.nicknqck.Main.getPlugin(fr.nicknqck.Main.class), () -> {
-			if (lunesup != null) {
-					owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
-				
-			}
-		}, 20);	
 		return AllDesc.Furuto;
 	}
 

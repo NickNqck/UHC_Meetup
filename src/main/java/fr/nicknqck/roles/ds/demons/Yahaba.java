@@ -17,8 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Yahaba extends DemonInferieurRole {
-	
-	private Player lunesup;
+
 	private Player cible;
 	private boolean killcible = false;
 
@@ -49,9 +48,6 @@ public class Yahaba extends DemonInferieurRole {
 	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-            if (lunesup != null) {
-                owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
-            }
             if (cible != null && !killcible) {
             	owner.sendMessage("§cVotre cible est:§r "+cible.getName());
             }

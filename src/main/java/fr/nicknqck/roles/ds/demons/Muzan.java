@@ -17,8 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 public class Muzan extends DemonsRoles {
-	boolean killnez = false;
-	int regencooldown = 0;
+	private boolean killnez = false;
+	private int regencooldown;
 	public Muzan(Player player) {
 		super(player);
 		regencooldown = 10;
