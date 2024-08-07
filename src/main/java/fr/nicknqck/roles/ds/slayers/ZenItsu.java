@@ -172,6 +172,7 @@ public class ZenItsu extends SlayerRoles implements Listener {
         @Override
         public void run() {
             if (zenitsu.getGameState().getServerState() != GameState.ServerStates.InGame) {
+                System.out.println("Cancelled zenitsu runnable");
                 cancel();
                 return;
             }
@@ -196,6 +197,13 @@ public class ZenItsu extends SlayerRoles implements Listener {
                 }
                 if (zenitsu.cdPassif >= 60*15) {
                     NMSPacket.sendActionBar(owner, "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful(zenitsu.cdPassif-(60*15)));
+                }
+                double maxHealth = owner.getMaxHealth();
+                if (owner.getHealth() <= maxHealth/2) {
+                    if (zenitsu.cdVitesse <= 60*12) {
+                        owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1, false, false), true);
+                    }
+                    owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true);
                 }
             }
         }

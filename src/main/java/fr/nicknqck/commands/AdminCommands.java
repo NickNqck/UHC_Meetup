@@ -49,12 +49,18 @@ public class AdminCommands implements CommandExecutor{
 			this.gameState = GameState.getInstance();
 		}
 		if (args.length >= 1) {
-			if (args[0].equalsIgnoreCase("vie")){
-				if (args.length == 3){
+			if (args[0].equalsIgnoreCase("vie")) {
+				if (args.length == 3) {
 					Player target = Bukkit.getPlayer(args[1]);
-					double damage = Double.parseDouble(args[2]);
-					if (target != null){
-						target.setHealth(target.getHealth()-damage);
+					try {
+						double damage = Double.parseDouble(args[2]);
+						if (target != null) {
+							target.setHealth(target.getHealth() - damage);
+						} else {
+							System.out.println("Player not found: " + args[1]);
+						}
+					} catch (NumberFormatException e) {
+						System.out.println("Invalid number format: " + args[2]);
 					}
 				}
 			}
