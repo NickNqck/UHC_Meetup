@@ -44,7 +44,7 @@ public class Demon_Simple extends DemonsRoles implements Listener {
 
 	@Override
 	public String getName() {
-		return "§cDemon Simple";
+		return "Demon";
 	}
 
 	@Override
