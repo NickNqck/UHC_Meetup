@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -292,9 +293,9 @@ public class Madara extends NSRoles {
 			if (e.getMessage().startsWith("!")) {
 				String msg = e.getMessage();
 				Player obito = getPlayerFromRole(Roles.Obito);
-				owner.sendMessage(CC.translate("&dMadara: "+msg.substring(1)));
+				owner.sendMessage(ChatColor.translateAlternateColorCodes('&', "&dMadara: "+msg.substring(1)));
 				if (obito != null) {
-					obito.sendMessage(CC.translate("&dMadara: "+msg.substring(1)));
+					obito.sendMessage(ChatColor.translateAlternateColorCodes('&', "&dMadara: "+msg.substring(1)));
 				}
 			}
 		}
@@ -332,13 +333,13 @@ public class Madara extends NSRoles {
 							Location loc = traqued.getBiju().getSpawn();
 		                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 						} else {
-							owner.sendMessage(CC.prefix("&fVous traquez désormais " + Bukkit.getPlayer(traqued.getBiju().getMaster()).getName() + " &fqui se situe en :"));
+							owner.sendMessage(("&fVous traquez désormais " + Bukkit.getPlayer(traqued.getBiju().getMaster()).getName() + " §fqui se situe en :"));
 		                    Location loc = Bukkit.getPlayer(traqued.getBiju().getMaster()).getLocation();
 		                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 						}
 					}
 				}
@@ -374,13 +375,13 @@ public class Madara extends NSRoles {
 						Location loc = bijus.getBiju().getSpawn();
 	                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 	                    owner.setCompassTarget(loc);
-	                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+	                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 					} else {
 						owner.sendMessage(CC.prefix("&fVous traquez désormais " + Bukkit.getPlayer(bijus.getBiju().getMaster()).getName() + " &fqui se situe en :"));
 	                    Location loc = Bukkit.getPlayer(bijus.getBiju().getMaster()).getLocation();
 	                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 	                    owner.setCompassTarget(loc);
-	                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+	                    owner.sendMessage("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn()));
 					}
 					break;
 				}

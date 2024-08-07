@@ -279,13 +279,13 @@ public class Obito extends NSRoles {
 							Location loc = traqued.getBiju().getSpawn();
 		                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 						} else {
 							owner.sendMessage(CC.prefix("&fVous traquez désormais " + Bukkit.getPlayer(traqued.getBiju().getMaster()).getName() + " &fqui se situe en :"));
 		                    Location loc = Bukkit.getPlayer(traqued.getBiju().getMaster()).getLocation();
 		                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 						}
 					}
 				}
@@ -367,13 +367,13 @@ public class Obito extends NSRoles {
 								Location loc = bijus.getBiju().getSpawn();
 			                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 			                    owner.setCompassTarget(loc);
-			                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+			                    owner.sendMessage("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn()));
 							} else {
 								owner.sendMessage(CC.prefix("&fVous traquez désormais " + Bukkit.getPlayer(bijus.getBiju().getMaster()).getName() + " &fqui se situe en :"));
 			                    Location loc = Bukkit.getPlayer(bijus.getBiju().getMaster()).getLocation();
 			                    owner.sendMessage(CC.prefix("&a" + loc.getBlockX() + "&f, &a" + loc.getBlockY() + "&f, &a" + loc.getBlockZ()));
 			                    owner.setCompassTarget(loc);
-			                    owner.sendMessage(CC.translate("&a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
+			                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
 							}
 							break;
 						}
@@ -553,9 +553,9 @@ public class Obito extends NSRoles {
 			if (e.getMessage().startsWith("!")) {
 				String msg = e.getMessage();
 				Player Madara = getPlayerFromRole(Roles.Madara);
-				owner.sendMessage(CC.translate("&dObito: "+msg.substring(1)));
+				owner.sendMessage(("§dObito: "+msg.substring(1)));
 				if (Madara != null) {
-					Madara.sendMessage(CC.translate("&dObito: "+msg.substring(1)));
+					Madara.sendMessage(("§dObito: "+msg.substring(1)));
 				}
 			}
 		}

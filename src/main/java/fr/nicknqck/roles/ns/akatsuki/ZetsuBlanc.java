@@ -1,24 +1,23 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
-import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
-import fr.nicknqck.roles.ns.Intelligence;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class ZetsuBlanc extends AkatsukiRoles {
 
@@ -78,9 +77,9 @@ public class ZetsuBlanc extends AkatsukiRoles {
 			if (e.getMessage().startsWith("!")) {
 				String msg = e.getMessage();
 				Player obito = getPlayerFromRole(Roles.ZetsuNoir);
-				owner.sendMessage(CC.translate("&cZetsu §rBlanc : "+msg.substring(1)));
+				owner.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cZetsu §rBlanc : "+msg.substring(1)));
 				if (obito != null) {
-					obito.sendMessage(CC.translate("&cZetsu §rBlanc : "+msg.substring(1)));
+					obito.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cZetsu §rBlanc : "+msg.substring(1)));
 				}
 			}
 		}

@@ -197,7 +197,7 @@ public class Kisame extends AkatsukiRoles {
 						return;
 					}
 					if (s <= 60) {
-						sendCustomActionBar(owner, CC.translate("&bTemp restant: "+gameState.sendIntBar(s, 60, 2)+"§b (§c"+(60-s)+"§b)"));
+						sendCustomActionBar(owner, "§bTemp restant: "+gameState.sendIntBar(s, 60, 2)+"§b (§c"+(60-s)+"§b)");
 						if (s == 60) {
 							clearSuibun();
 							if (owner.getInventory().getBoots() != null) {

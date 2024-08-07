@@ -8,6 +8,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.Loc;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -123,9 +124,9 @@ public class ZetsuNoir extends AkatsukiRoles {
 			if (e.getMessage().startsWith("!")) {
 				String msg = e.getMessage();
 				Player blanc = getPlayerFromRole(Roles.ZetsuBlanc);
-				owner.sendMessage(CC.translate("&cZetsu§8Noir§r: "+msg.substring(1)));
+				owner.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cZetsu§8Noir§r: "+msg.substring(1)));
 				if (blanc != null) {
-					blanc.sendMessage(CC.translate("&cZetsu§8Noir§r: "+msg.substring(1)));
+					blanc.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cZetsu§8Noir§r: "+msg.substring(1)));
 				}
 			}
 		}

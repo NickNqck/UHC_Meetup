@@ -1,18 +1,17 @@
 package fr.nicknqck.roles.ns.solo.zabuza_haku;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.raytrace.RayTrace;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -21,15 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.Main;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.raytrace.RayTrace;
+import java.util.*;
 
 public class Haku extends NSRoles {
 	private int maxCDHaku = 60*8;
@@ -128,9 +119,9 @@ public class Haku extends NSRoles {
 			if (e.getMessage().startsWith("!")) {
 				String msg = e.getMessage();
 				Player Zabuza = getPlayerFromRole(Roles.Zabuza);
-				owner.sendMessage(CC.translate("&bHaku: "+msg.substring(1)));
+				owner.sendMessage(("§bHaku: "+ ChatColor.translateAlternateColorCodes('&', msg.substring(1))));
 				if (Zabuza != null) {
-					Zabuza.sendMessage(CC.translate("&bHaku: "+msg.substring(1)));
+					Zabuza.sendMessage(("§bHaku: "+ChatColor.translateAlternateColorCodes('&', msg.substring(1))));
 				}
 			}
 		}

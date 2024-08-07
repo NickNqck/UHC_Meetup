@@ -1,8 +1,8 @@
 package fr.nicknqck.commands.vanilla;
 
-import fr.nicknqck.utils.CC;
 import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,9 +20,9 @@ public class Say implements CommandExecutor {
 		if (s instanceof Player) {
 			Player sender = (Player)s;
 			Bukkit.broadcastMessage(" ");
-			Bukkit.broadcastMessage(ChatRank.getPlayerGrade(sender).getFullPrefix()+sender.getName()+"§f:"+CC.translate(sb.toString()));
+			Bukkit.broadcastMessage(ChatRank.getPlayerGrade(sender).getFullPrefix()+sender.getName()+"§f:"+ ChatColor.translateAlternateColorCodes('&', sb.toString()));
 		} else {
-			Bukkit.broadcastMessage("[CONSOLE] :"+CC.translate(sb.toString()));
+			Bukkit.broadcastMessage("[CONSOLE] :"+ChatColor.translateAlternateColorCodes('&', sb.toString()));
 			return true;
 		}
 		return false;

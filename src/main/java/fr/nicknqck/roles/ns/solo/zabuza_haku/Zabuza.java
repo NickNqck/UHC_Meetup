@@ -1,12 +1,21 @@
 package fr.nicknqck.roles.ns.solo.zabuza_haku;
 
-import java.util.HashMap;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.utils.AttackUtils;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -14,19 +23,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
-
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.utils.AttackUtils;
-import fr.nicknqck.utils.CC;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
-import fr.nicknqck.utils.particles.MathUtil;
-import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
 
 public class Zabuza extends NSRoles {
 
@@ -88,9 +87,9 @@ public class Zabuza extends NSRoles {
 			if (e.getMessage().startsWith("!")) {
 				String msg = e.getMessage();
 				Player Haku = getPlayerFromRole(Roles.Haku);
-				owner.sendMessage(CC.translate("&bZabuza: "+msg.substring(1)));
+				owner.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bZabuza: "+msg.substring(1)));
 				if (Haku != null) {
-					Haku.sendMessage(CC.translate("&bZabuza: "+msg.substring(1)));
+					Haku.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bZabuza: "+msg.substring(1)));
 				}
 			}
 		}

@@ -78,9 +78,9 @@ public class AdminCommands implements CommandExecutor{
 								} else {
 									replaced = args[i].replace("#MDJ", "Aucun");
 								}
-								sb.append(CC.translate(replaced));
+								sb.append(ChatColor.translateAlternateColorCodes('&', replaced));
 							} else {
-								sb.append(CC.translate(args[i]));
+								sb.append(ChatColor.translateAlternateColorCodes('&', args[i]));
 							}
 						}
 						String name2 = sb.toString();
