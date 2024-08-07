@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,10 +24,12 @@ public class Yahaba extends DemonInferieurRole {
 
 	public Yahaba(Player player) {
 		super(player);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             List<Player> Ciblable = new ArrayList<>(gameState.getInGamePlayers());
 			Collections.shuffle(Ciblable, Main.RANDOM);
-			Ciblable.stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getPlayerRoles().get(p).getRoles().getTeam().equals(TeamList.Slayer));
+			Ciblable.stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> !(gameState.getPlayerRoles().get(p) instanceof SlayerRoles)).forEach(Ciblable::remove);
+			Collections.shuffle(Ciblable, Main.RANDOM);
+			this.cible = Ciblable.get(0);
 			owner.sendMessage("§7Votre §ccible§7 est "+(cible != null ? cible.getDisplayName() : "inexistante"));
 		}, 60L);
 	}
