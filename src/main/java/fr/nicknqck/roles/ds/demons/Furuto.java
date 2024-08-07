@@ -2,13 +2,12 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.ds.builders.DemonType;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Furuto extends DemonsRoles {
+public class Furuto extends DemonInferieurRole {
 
 	public Furuto(Player player) {
 		super(player);

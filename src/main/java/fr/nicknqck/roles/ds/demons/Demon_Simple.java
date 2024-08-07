@@ -1,10 +1,12 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,11 +16,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class Demon_Simple extends DemonsRoles implements Listener {
+public class Demon_Simple extends DemonInferieurRole implements Listener {
 	private double force;
 	public Demon_Simple(Player player) {
 		super(player);

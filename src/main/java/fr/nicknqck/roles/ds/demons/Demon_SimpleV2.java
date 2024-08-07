@@ -1,22 +1,20 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
+import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.utils.StringUtils;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.StringUtils;
-import net.md_5.bungee.api.ChatColor;
-
-public class Demon_SimpleV2 extends DemonsRoles {
+public class Demon_SimpleV2 extends DemonInferieurRole {
 	
 	private Player lunesup;
 	

@@ -6,7 +6,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Yahaba extends DemonsRoles {
+public class Yahaba extends DemonInferieurRole {
 	
 	private Player lunesup;
 	private Player cible;

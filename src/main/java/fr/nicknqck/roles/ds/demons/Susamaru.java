@@ -1,17 +1,15 @@
 package fr.nicknqck.roles.ds.demons;
 
-import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.ds.builders.DemonType;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
-public class Susamaru extends DemonsRoles {
+public class Susamaru extends DemonInferieurRole {
 
 	public Susamaru(Player player) {
 		super(player);

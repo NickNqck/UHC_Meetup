@@ -1040,6 +1040,23 @@ public class GameState{
 			}
 			player.sendMessage(getPlayerRoles().get(player).Desc());
 			player.spigot().sendMessage(getPlayerRoles().get(player).getComponent());
+			RoleBase role = getPlayerRoles().get(player);
+			if (!role.getKnowedRoles().isEmpty()) {
+				for (RoleBase know : role.getKnowedRoles()) {
+					for (Player p : getInGamePlayers()) {
+						if (!hasRoleNull(p)) {
+							if (getPlayerRoles().get(p).equals(know)) {
+								player.sendMessage(know.getOriginTeam().getColor()+p.getDisplayName()+"§7 possède le rôle: "+know.getOriginTeam().getColor()+know.getName());
+							}
+						}
+					}
+				}
+			}
+			if (!role.getMessageOnDescription().isEmpty()) {
+				for (String string : role.getMessageOnDescription()) {
+					player.sendMessage(string);
+				}
+			}
 		}
 	}
 	public Player getOwner(Roles role) {

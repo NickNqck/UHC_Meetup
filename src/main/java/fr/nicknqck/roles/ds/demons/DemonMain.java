@@ -1,9 +1,16 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.slayers.*;
+import fr.nicknqck.roles.ds.slayers.Makomo;
+import fr.nicknqck.roles.ds.slayers.Sabito;
+import fr.nicknqck.roles.ds.slayers.Tanjiro;
+import fr.nicknqck.roles.ds.slayers.Urokodaki;
 import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -11,13 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-
-public class DemonMain extends DemonsRoles {
+public class DemonMain extends DemonInferieurRole {
 
 	public DemonMain(Player player) {
 		super(player);
