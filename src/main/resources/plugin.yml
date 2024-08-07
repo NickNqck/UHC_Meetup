@@ -41,3 +41,6 @@ commands:
     permission: host.wl
   mc:
     description: Fait parti des roles de UHC Minecraft
+  me:
+    description: Custom from vanilla /me command
+    permission: me.say
