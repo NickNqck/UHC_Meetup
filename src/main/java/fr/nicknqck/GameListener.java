@@ -538,7 +538,8 @@ public class GameListener implements Listener {
 	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
 		UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(player, damager, gameState);
 		Bukkit.getPluginManager().callEvent(playerKillEvent);
-		Bukkit.getPluginManager().callEvent(new UHCDeathEvent(player, gameState));
+		UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(player, gameState);
+		Bukkit.getPluginManager().callEvent(uhcDeathEvent);
 		for (EventBase event : gameState.getInGameEvents()) {
 			if (damager instanceof Player) {
 				event.OnPlayerKilled((Player) damager, player, gameState);
@@ -564,7 +565,7 @@ public class GameListener implements Listener {
 				}
 			}
 		}
-		if (cantDie || playerKillEvent.isCancel()) {
+		if (cantDie || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
 			return;
 		}
 		GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());

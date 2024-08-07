@@ -2,7 +2,6 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -15,8 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Demon_SimpleV2 extends DemonInferieurRole {
-	
-	private Player lunesup;
+
 	
 	public Demon_SimpleV2(Player player) {
 		super(player);
@@ -36,11 +34,6 @@ public class Demon_SimpleV2 extends DemonInferieurRole {
 	}
 	@Override
 	public String[] Desc() {
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-            if (lunesup != null) {
-                    owner.sendMessage("§cVotre lune supérieure est:§r "+lunesup.getName());
-            }
-        }, 20);		
 		return AllDesc.Demon_SimpleV2;
 	}
 

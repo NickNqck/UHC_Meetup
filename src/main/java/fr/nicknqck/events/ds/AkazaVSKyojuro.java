@@ -109,7 +109,7 @@ public class AkazaVSKyojuro extends EventBase{
 		if (isActivated()) {
 			if (akaza != null && kyojuro != null) {
 				if (item.isSimilar(Vague())) {
-					if (user == kyojuro && KyojuroWin) {
+					if (user.getUniqueId() == kyojuro.getPlayer()&& KyojuroWin) {
 						if (cdvague <= 0) {
 							user.sendMessage("§7Maintenant vous§c enflammez§7 les joueurs qui vous frappe pendant§b 10s");
 							cdvague = 60*8;
@@ -296,7 +296,7 @@ public class AkazaVSKyojuro extends EventBase{
 		if (isActivated()) {
 			if (kyojuro != null) {
 				if (cdvague >= (60*7)+50) {
-						if (player == kyojuro) {
+						if (player.getUniqueId() == kyojuro.getPlayer()) {
 							if (damageur instanceof Player) {
 								Player attacker = (Player) damageur;
 								if (RandomUtils.getOwnRandomProbability(10)) {

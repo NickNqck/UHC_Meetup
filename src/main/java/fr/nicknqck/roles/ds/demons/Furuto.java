@@ -244,4 +244,9 @@ public class Furuto extends DemonInferieurRole {
 	public void resetCooldown() {
 		cooldown = 0;
 	}
+
+	@Override
+	public void onDSCommandSend(String[] args, GameState gameState) {
+		super.onDSCommandSend(args, gameState);
+	}
 }

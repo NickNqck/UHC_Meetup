@@ -1,11 +1,15 @@
 package fr.nicknqck.commands.roles;
 
-import java.util.ArrayList;
-
+import fr.nicknqck.GameState;
+import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
+import fr.nicknqck.roles.ds.slayers.Kagaya;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,14 +19,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.events.Events;
-import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.slayers.Kagaya;
+import java.util.ArrayList;
 
 public class DSmtpCommands implements CommandExecutor {
 	GameState gameState;
@@ -35,27 +32,12 @@ public class DSmtpCommands implements CommandExecutor {
 			return true;
 		}
 		if (args.length >= 1) {
-			for (Events e : Events.values()) {
-				return e.getEvent().onSubDSCommand((Player)sender, args);
-			}
+            for (Events e : Events.values()) {
+                if (e.getEvent().onSubDSCommand((Player) sender, args)) {
+                    return true;
+                }
+            }
 			if (args.length == 1) {
-			/*	if (args[0].equalsIgnoreCase("alliance")) {
-					sender.sendMessage(new String[] {
-							AllDesc.bar,
-							Events.Alliance.getName(),
-							"",
-							"§7Lorsque l'évènement s'active: ",
-							"",
-							"§7Le§a Kyojuro§7 et le§e Shinjuro§7 passe dans le camp§6 Alliance §epère§6-§afils",
-							"",
-							"§eShinjuro§7 perd l'accès à son "+Items.getSake().getItemMeta().getDisplayName()+"§7, cependant, il obtient un traqueur vers§a Kyojuro§7 en plus de l'effet "+AllDesc.Force+"§c 1§7 en étant proche lui",
-							"",
-							"§aKyojuro§7 gagne l'effet "+AllDesc.Speed+"§b 1§7, également ses pomme en or lui donneront "+AllDesc.Force+"§c 1§7 pendant§6 15secondes§7 au lieu de§6 5secondes",
-							"",
-							AllDesc.bar
-					});
-					return true;
-				}*/
 				if (args[0].equalsIgnoreCase("role")) {
                     Player player = (Player) sender;
                     if (gameState.getInGamePlayers().contains(player)
@@ -228,6 +210,7 @@ public class DSmtpCommands implements CommandExecutor {
                     }
                 }
             }
+
 			if (gameState.getServerState() == ServerStates.InGame) {
 				if (gameState.getPlayerRoles().containsKey(sender) && gameState.getPlayerRoles().get(sender) instanceof DemonsSlayersRoles) {
 					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getPlayerRoles().get(sender);

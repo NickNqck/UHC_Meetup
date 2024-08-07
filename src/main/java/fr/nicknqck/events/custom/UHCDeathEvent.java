@@ -2,6 +2,7 @@ package fr.nicknqck.events.custom;
 
 import fr.nicknqck.GameState;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -12,6 +13,8 @@ public class UHCDeathEvent extends Event {
 
     private final Player player;
     private final GameState gameState;
+    @Setter
+    private boolean cancelled = false;
     public UHCDeathEvent(Player player, GameState gameState) {
         this.player = player;
         this.gameState = gameState;
