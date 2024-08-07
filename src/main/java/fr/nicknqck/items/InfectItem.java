@@ -94,8 +94,8 @@ public class InfectItem implements Listener{
 			}
 		}
 	}
-	Player clicker;
-	Player p;
+	private Player clicker;
+	private Player p;
 	@SuppressWarnings("deprecation")
 	public void onSecond() {
 		if (p == null)return;
@@ -133,8 +133,9 @@ public class InfectItem implements Listener{
 							}
 							if (gameState.getPlayerRoles().get(p).getTeam() == TeamList.Slayer) {
 								gameState.getPlayerRoles().get(p).setTeam(TeamList.Demon);
-								p.sendMessage("Voici l'identité de votre§c infecteur§f:§c§l "+gameState.infecteur.getName());
 							}
+							p.sendMessage("Voici l'identité de votre§c infecteur§f:§c§l "+gameState.infecteur.getName());
+							p.resetTitle();
 							p.sendTitle("§cVous avez été infecté", "Vous gagnez maintenant avec les Démons");
 						}
 					}
