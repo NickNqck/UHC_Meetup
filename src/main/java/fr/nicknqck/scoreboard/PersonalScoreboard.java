@@ -50,7 +50,7 @@ public class PersonalScoreboard {
     public void reloadData(){}
 
     public void setLines(String ip){
-    	String premsg = this.gameState.premsg;
+    	String premsg = "§7§l ┃ §r";
 		ChatRank.updateRank(this.player);
     	if (this.gameState.getServerState() == ServerStates.InLobby) {
     		 	objectiveSign.setDisplayName(this.gameState.msgBoard);

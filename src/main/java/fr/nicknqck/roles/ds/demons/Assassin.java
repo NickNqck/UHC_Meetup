@@ -11,11 +11,14 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 
+import java.util.Collections;
+
 public class Assassin {
 	@SuppressWarnings("deprecation")
 	public void start(GameState gameState) {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			 if (gameState.Assassin == null) {
+				 Collections.shuffle(gameState.canBeAssassin, Main.RANDOM);
 	             gameState.Assassin = gameState.canBeAssassin.get(0);
 				 if (gameState.Assassin == null) return;
 	             gameState.Assassin.sendMessage("Vous êtes l'assassin vous possédez désormais§c 2"+AllDesc.coeur+" supplémentaire de manière permanente, de plus faite attention au rôle de§a Tanjiro§f qui obtiendra un bonus s'il vous tue.");

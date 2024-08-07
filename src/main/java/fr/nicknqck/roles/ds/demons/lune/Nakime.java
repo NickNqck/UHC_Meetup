@@ -139,7 +139,7 @@ public class Nakime extends DemonsRoles {
 		if (actualworld.getName().equalsIgnoreCase("nakime")) {
 			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-			for (Player p : gameState.getOnlinePlayers()) {
+			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (p.getLocation().getY() <= 122) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
 						LocPlayer locPlayer = new LocPlayer();
@@ -181,7 +181,7 @@ public class Nakime extends DemonsRoles {
 		super.Update(gameState);
 	}
 	public void ejectPlayerinCage() {
-		for (Player p : gameState.getOnlinePlayers()) {
+		for (Player p : Bukkit.getOnlinePlayers()) {
 			if (p.getWorld().equals(Main.getInstance().nakime)) {
 				GameListener.RandomTp(p, Main.getInstance().gameWorld);
 				p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime");

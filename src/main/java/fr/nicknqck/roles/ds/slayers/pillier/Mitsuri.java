@@ -6,6 +6,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +36,6 @@ public class Mitsuri extends PillierRoles {
         owner.getInventory().addItem(Items.getLamedenichirin());        
         super.GiveItems();
     }
-    private boolean give = false;
     private int cooldown = 0;
     @Override
     public void resetCooldown() {
@@ -51,7 +51,7 @@ public class Mitsuri extends PillierRoles {
         }
         if (cooldown >= 1) cooldown--;
         if (cooldown == (60*5)-10){
-            for (Player p : gameState.getOnlinePlayers()){
+            for (Player p : Bukkit.getOnlinePlayers()){
                 if (gameState.getCharmed().contains(p)){
                 	gameState.delCharmed(p);
                     owner.sendMessage(ChatColor.GOLD+p.getName()+"§r n'est plus sous votre charme");

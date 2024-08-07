@@ -245,9 +245,6 @@ public class GameState{
 			this.gDesign = GDesign;
 		}
 		}
-	public void setAllMDJDesac() {
-		setMdj(MDJ.Aucun);
-	}
 	@Getter
 	public enum MDJ{
 		Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack()),
@@ -855,11 +852,6 @@ public class GameState{
 	public int TimingAssassin = 10;
 	public boolean morteclair = true;
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
-	public List<Player> canSeeHealth = new ArrayList<>();
-	public String premsg = "§7§l ┃ §r";
-	public String getFormattedHealth(double hp, String format) {
-		return new DecimalFormat(format).toString();
-	}
 	public DecimalFormat getDecimalFormat(String format) {
 		return new DecimalFormat(format);
 	}
@@ -869,7 +861,7 @@ public class GameState{
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (inLobbyPlayers.size() == this.getroleNMB());}
-	public void initEvents(GameState gameState) {
+	public void initEvents() {
 		for (Events eventType : getAvailableEvents()) {
 			if (RandomUtils.getOwnRandomProbability(50)) {
 				switch (eventType) {
@@ -888,12 +880,13 @@ public class GameState{
 	}
 	public int DKminTime = 60*30;
 	public GameListener gamelist() {return GameListener.getInstance();}
-	public int getroleNMB() {int nmbrole = 0;
-	for (Roles r : getAvailableRoles().keySet()) {
-		nmbrole += getAvailableRoles().get(r);
+	public int getroleNMB() {
+		int nmbrole = 0;
+		for (Roles r : getAvailableRoles().keySet()) {
+			nmbrole += getAvailableRoles().get(r);
+		}
+		return nmbrole;
 	}
-	return nmbrole;}
-	public boolean cycleChanged() {return prevNightTime != nightTime;}
 	@Getter
 	@Setter
 	private int nmbGap = 12;
@@ -926,16 +919,11 @@ public class GameState{
             e.printStackTrace();
         }
     }
-	public Collection<? extends Player> getOnlinePlayers() {return Bukkit.getOnlinePlayers();}
 	public void spawnLightningBolt(World world, Location loc) {world.strikeLightningEffect(loc);}
 	public boolean isApoil(Player player) {
 		boolean apoil;
 		org.bukkit.inventory.PlayerInventory inv = player.getInventory();
-		if (inv.getHelmet() == null && inv.getChestplate() == null && inv.getLeggings() == null && inv.getBoots() == null) {
-			apoil = true;
-		} else {
-			apoil = false;
-		}
+        apoil = inv.getHelmet() == null && inv.getChestplate() == null && inv.getLeggings() == null && inv.getBoots() == null;
 		return apoil;
 	}
 	@SuppressWarnings("deprecation")

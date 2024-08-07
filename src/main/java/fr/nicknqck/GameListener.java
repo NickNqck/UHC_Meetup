@@ -196,11 +196,10 @@ public class GameListener implements Listener {
 				}
 			}
 			gameState.prevNightTime = gameState.nightTime;
-			
 			if (gameState.inGameTime == Border.getTempReduction()) {
 				gameState.shrinking = true;
-				long speed = (long) Border.getBorderSpeed();
-				border.setSize(Border.getMinBorderSize()*2, speed*120);
+				long speed = Border.getBorderSpeed()*20;
+				border.setSize(Border.getMinBorderSize()*2, speed*360);
 				SendToEveryone("§7La bordure commence à bouger !");
 			}
 			if (gameState.inGameTime == 0) {
@@ -211,7 +210,7 @@ public class GameListener implements Listener {
 				Main.getInstance().gameWorld.setTime(0);
 				Main.getInstance().gameWorld.setGameRuleValue("doDaylightCycle", "false");
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					for (Player p : gameState.getOnlinePlayers()) {
+					for (Player p : Bukkit.getOnlinePlayers()) {
 						if (gameState.getPlayerRoles().containsKey(p)) {
 							gameState.getPlayerRoles().get(p).onDay(gameState);
 						}
@@ -453,7 +452,7 @@ public class GameListener implements Listener {
 						e.remove();
 					}
 				}
-				for (Player p : gameState.getOnlinePlayers()) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
 					p.setGameMode(GameMode.ADVENTURE);
 					p.closeInventory();
 					p.getInventory().clear();

@@ -10,6 +10,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -97,7 +98,7 @@ public class TitanUltime extends TitansRoles {
 					GameListener.SendToEveryone("§6§lLE TITAN ULTIME VIENS DE CE TRANSFORMER");
 					GameListener.SendToEveryone("");
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-					for (Player p : gameState.getOnlinePlayers()) {
+					for (Player p : Bukkit.getOnlinePlayers()) {
 						p.playSound(p.getLocation(), Sound.GHAST_DEATH, 10, 20);
 					}
 					return true;

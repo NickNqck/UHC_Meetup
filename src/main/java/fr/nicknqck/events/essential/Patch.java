@@ -71,6 +71,7 @@ public class Patch implements Listener{
 			if (Main.isDebug()){
 				System.out.println(victim.getName()+" has been resi cancelled by Titan Machoire");
 			}
+			event.setDamage(event.getDamage()*1.2);
             return;
          }
         if (gameState.getPlayerRoles().get(victim).getAllResi() >= 100) {

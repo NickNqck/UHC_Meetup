@@ -273,7 +273,7 @@ public abstract class RoleBase implements IRole {
 		}
 		if (!gameState.hasRoleNull(player)){
 			if (getPlayerRoles(player).getRoles() == Roles.Nakime) {
-				for (Player p : gameState.getOnlinePlayers()) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
 						GameListener.RandomTp(p, Main.getInstance().gameWorld);
 						p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime§7 du à la mort de cette dernière");

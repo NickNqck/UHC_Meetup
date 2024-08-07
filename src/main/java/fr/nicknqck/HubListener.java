@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class HubListener implements Listener {
@@ -45,6 +46,7 @@ public class HubListener implements Listener {
 		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
 		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
+		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.setInLobbyPlayers(new ArrayList<>());
 		gameState.igPlayers.addAll(gameState.getInGamePlayers());
 		spawnPlatform(Main.getInstance().gameWorld, Material.AIR);
@@ -105,7 +107,7 @@ public class HubListener implements Listener {
 		}
 		gameState.nightTime = false;
 		// Supression de la plateforme
-		gameState.initEvents(gameState);
+		gameState.initEvents();
 		for (Bijus b : Bijus.values()) {
 			b.getBiju().setHote(null);
 			b.getBiju().resetCooldown();

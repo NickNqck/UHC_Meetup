@@ -89,7 +89,7 @@ public class TitanBestial extends TitansRoles {
 					GameListener.SendToEveryone("");
 					GameListener.SendToEveryone("§c§lLe Titan Bestial vient de crier !!!");
 					GameListener.SendToEveryone("");
-					for (Player p : gameState.getOnlinePlayers()) {
+					for (Player p : Bukkit.getOnlinePlayers()) {
 						p.playSound(p.getLocation(), "aotmtp.bestialcri", 8, 1);
 					}
 				}, 20*15);

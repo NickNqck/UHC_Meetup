@@ -37,8 +37,6 @@ public class HubInventory implements Listener {
         instance = this;
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryConfig(gameState), Main.getInstance());
     }
-
-
     @EventHandler
     private void OnInventoryClicked(InventoryClickEvent event) {
         if (gameState.getServerState() != GameState.ServerStates.InLobby) return;
@@ -192,10 +190,10 @@ public class HubInventory implements Listener {
                             for (GameState.MDJ mdj : GameState.MDJ.values()) {
                                 if (item.isSimilar(mdj.getItem())) {
                                     if (gameState.getMdj().equals(mdj)) {
-                                        gameState.setAllMDJDesac();
+                                        gameState.setMdj(GameState.MDJ.Aucun);
                                         gameState.updateGameCanLaunch();
                                     }else {
-                                        gameState.setAllMDJDesac();
+                                        gameState.setMdj(GameState.MDJ.Aucun);
                                         gameState.setMdj(mdj);
                                     }
                                 }
@@ -592,9 +590,9 @@ public class HubInventory implements Listener {
                             }
                             if (name.contains("Vitesse de la bordure")) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    Border.setBorderSpeed(Math.min(Border.getBorderSpeed()+1f, 10f));
+                                    Border.setBorderSpeed(Math.min(Border.getBorderSpeed()+1, 10));
                                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                    Border.setBorderSpeed(Math.max(Border.getBorderSpeed()-1f, 1f));
+                                    Border.setBorderSpeed(Math.max(Border.getBorderSpeed()-1, 1));
                                 }
                             }
                             if (name.contains("Temp avant activation du PVP")) {
