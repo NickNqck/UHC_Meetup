@@ -1,5 +1,8 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.roles.ds.demons.lune.Akaza;
+import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,7 +25,16 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 
 public class AkazaVSKyojuro extends EventBase{
-
+	private int i = 0;
+	private Akaza akaza;
+	private Kyojuro kyojuro;
+	private Location originalAkazaLocation;
+	private Location originalKyojuroLocation;
+	private boolean AkazaWin = false;
+	private boolean KyojuroWin = false;
+	private boolean PouvoirSang = false;
+	private int PouvoirSangCooldown = -1;
+	private int BattleTime = 0;
 	@Override
 	public boolean PlayEvent(int gameTime) {
 		if (gameState.attributedRole.contains(Roles.Akaza)) {
@@ -32,23 +44,24 @@ public class AkazaVSKyojuro extends EventBase{
 						ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 					    Bukkit.dispatchCommand(console, "nakime E4jL5cOzv0sI2XqY7wNpD3Ab");
 							if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
-								Player kyojuro = gameState.getOwner(Roles.Kyojuro);
-								Player akaza = gameState.getOwner(Roles.Akaza);
-								if (akaza != null) {
+								Player pkyojuro = gameState.getOwner(Roles.Kyojuro);
+								Player pAkaza = gameState.getOwner(Roles.Akaza);
+								if (pAkaza != null && kyojuro != null) {
+									Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
+									Kyojuro kyojuro = (Kyojuro) gameState.getPlayerRoles().get(pkyojuro);
 									this.akaza = akaza;
-									this.originalAkazaLocation = akaza.getLocation();
-									akaza.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -40, 6, -24.5, -90, 0));
-									akaza.playSound(akaza.getEyeLocation(), "dsmtp.avsk", 10, 1);
-								}
-								if (kyojuro != null) {
 									this.kyojuro = kyojuro;
-									this.originalKyojuroLocation = kyojuro.getLocation();
-									kyojuro.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -3.5, 7, -23.5, 90, 0));
-									kyojuro.playSound(kyojuro.getLocation(), "dsmtp.avsk", 10, 1);
+									this.originalAkazaLocation = pAkaza.getLocation();
+									pAkaza.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -40, 6, -24.5, -90, 0));
+									pAkaza.playSound(pAkaza.getEyeLocation(), "dsmtp.avsk", 10, 1);
+									this.originalKyojuroLocation = pkyojuro.getLocation();
+									pkyojuro.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -3.5, 7, -23.5, 90, 0));
+									pkyojuro.playSound(pkyojuro.getLocation(), "dsmtp.avsk", 10, 1);
+									Bukkit.getWorld("AkazaVSKyojuro").setGameRuleValue("randomTickSpeed", "3");
+									Bukkit.broadcastMessage(getEvents().getName()+"§r vient de ce déclancher !");
+									BattleTime = 0;
+									return true;
 								}
-								Bukkit.getWorld("AkazaVSKyojuro").setGameRuleValue("randomTickSpeed", "3");
-								Bukkit.broadcastMessage(getEvents().getName()+"§r vient de ce déclancher !");
-								BattleTime = 0;
 							}
 					}
 				}
@@ -56,16 +69,6 @@ public class AkazaVSKyojuro extends EventBase{
 		}
 		return super.PlayEvent(gameTime);
 	}
-	private Player akaza;
-	private Player kyojuro;
-	private Location originalAkazaLocation;
-	private Location originalKyojuroLocation;
-	
-	private boolean AkazaWin = false;
-	private boolean KyojuroWin = false;
-	private boolean PouvoirSang = false;
-	private int PouvoirSangCooldown = -1;
-	private int BattleTime = 0;
 	@Override
 	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {}
 	private ItemStack Vague() {
@@ -76,10 +79,10 @@ public class AkazaVSKyojuro extends EventBase{
 	}
 	private int cdvague = -1;
 	@Override
-	public void onSubDSCommand(Player sender, String[] args) {
+	public boolean onSubDSCommand(Player sender, String[] args) {
 		if (args[0].equalsIgnoreCase("compa")) {
 			if (akaza != null) {
-				if (sender == akaza) {
+				if (sender.getUniqueId().equals(akaza.getPlayer())) {
 					if (AkazaWin) {
 						if (PouvoirSang) {
 							PouvoirSang = false;
@@ -97,7 +100,9 @@ public class AkazaVSKyojuro extends EventBase{
 					}
 				}
 			}
+			return true;
 		}
+		return false;
 	}
 	@Override
 	public void onItemInteract(PlayerInteractEvent event, ItemStack item, Player user) {
@@ -116,7 +121,6 @@ public class AkazaVSKyojuro extends EventBase{
 			}
 		}
 	}
-	int i = 0;
 	@Override
 	public void onSecond() {
 		if (isActivated()) {
@@ -126,33 +130,51 @@ public class AkazaVSKyojuro extends EventBase{
 				if (i == 60 && akaza != null && kyojuro != null) {
 					i = 0;
 					String msg = "§bTemps avant fin du combat:§c "+StringUtils.secondsTowardsBeautiful(300-BattleTime);
-					akaza.sendMessage(msg);
-					kyojuro.sendMessage(msg);
+					Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
+					if (akaza != null) {
+						akaza.sendMessage(msg);
+					}
+					Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
+					if (kyojuro != null) {
+						kyojuro.sendMessage(msg);
+					}
 				}
 			}
 			if (PouvoirSangCooldown > 0) {
 				PouvoirSangCooldown--;
-				if (PouvoirSangCooldown == 60*8) {
+				if (PouvoirSangCooldown == 60*8 && this.akaza != null) {
 					PouvoirSang = false;
-					akaza.sendMessage("§7Désactivation du§b compa");
+                    Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
+					if (akaza != null) {
+						akaza.sendMessage("§7Désactivation du§b compa");
+					}
 				}
 			}
 			if (PouvoirSangCooldown == 0 && akaza != null) {
-				akaza.sendMessage("§6§l/ds compa§7 est à nouveau utilisable !");
+				Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
+				if (akaza != null) {
+					akaza.sendMessage("§6§l/ds compa§7 est à nouveau utilisable !");
+				}
 				PouvoirSangCooldown = -5;
 			}
 			if (cdvague > 0) {
 				cdvague--;
 				if (cdvague == (60*7)+50) {
 					if (kyojuro != null) {
-						gameState.getPlayerRoles().get(kyojuro).setInvincible(false);
-						kyojuro.sendMessage("§7Vous n'êtes plus invincible !");
+						kyojuro.setInvincible(false);
+						Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
+						if (kyojuro != null) {
+							kyojuro.sendMessage("§7Vous n'êtes plus invincible !");
+						}
 					}
 				}
 			}
 			if (cdvague == 0) {
 				if (kyojuro != null) {
-					kyojuro.sendMessage(Vague().getItemMeta().getDisplayName()+"§7 est maintenant utilisable !");
+					Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
+					if (kyojuro != null) {
+						kyojuro.sendMessage(Vague().getItemMeta().getDisplayName()+"§7 est maintenant utilisable !");
+					}
 					cdvague--;
 				}
 			}
@@ -162,11 +184,8 @@ public class AkazaVSKyojuro extends EventBase{
 	@SuppressWarnings("deprecation")
 	private void detectWhoWin() {
 		if (realEnd)return;
-		boolean end = false;
-		if (AkazaWin) {
-			end = true;
-		}
-		if (KyojuroWin) {
+		boolean end = AkazaWin;
+        if (KyojuroWin) {
 			end = true;
 		}
 		if (BattleTime == 60*5) {
@@ -180,8 +199,12 @@ public class AkazaVSKyojuro extends EventBase{
 		if (KyojuroWin) {
 			subTitle = "§7Victoire de§a Kyojuro";
 		}
-		if (!KyojuroWin && !AkazaWin && end && BattleTime >= 60*5 && !LocationNul()) {
+		if (!KyojuroWin && !AkazaWin && end && !LocationNul()) {
 			subTitle = "§7§l§nMatch nul§r§7§l...";
+			Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
+			Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
+			if (akaza == null)return;
+			if (kyojuro == null) return;
 			kyojuro.sendTitle(title, subTitle);
 			akaza.sendTitle(title, subTitle);
 			kyojuro.teleport(originalKyojuroLocation);
@@ -190,11 +213,15 @@ public class AkazaVSKyojuro extends EventBase{
 			originalKyojuroLocation = null;
 		}
 		if (originalAkazaLocation != null && akaza != null && end && AkazaWin) {
+			Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
+			if (akaza == null)return;
 			akaza.teleport(originalAkazaLocation);
 			originalAkazaLocation = null;
 			akaza.sendTitle(title, subTitle);
 		}
 		if (originalKyojuroLocation != null && kyojuro != null && end && KyojuroWin) {
+			Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
+			if (kyojuro == null) return;
 			kyojuro.teleport(originalKyojuroLocation);
 			kyojuro.sendTitle(title, subTitle);
 			originalKyojuroLocation = null;
@@ -208,11 +235,8 @@ public class AkazaVSKyojuro extends EventBase{
 	}
 	boolean realEnd = false;
 	private boolean LocationNul() {
-		if (originalAkazaLocation == null ||originalKyojuroLocation == null) {
-			return true;
-		}
-		return false;
-	}
+        return originalAkazaLocation == null || originalKyojuroLocation == null;
+    }
 	private boolean endEvent = false;
 	@Override
 	public void setupEvent() {
@@ -230,18 +254,23 @@ public class AkazaVSKyojuro extends EventBase{
 	public void onPlayerKilled(Entity damager, Player player, GameState gameState) {
 		if (isActivated() && !endEvent) {
 			if (akaza != null && kyojuro != null) {
-				if (player.getUniqueId() == kyojuro.getUniqueId()) {//donc if victim == kyojuro donc winner == Akaza
-					akaza.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), true);
+				if (player.getUniqueId() == kyojuro.getPlayer()) {//donc if victim == kyojuro donc winner == Akaza
+					akaza.givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 					AkazaWin = true;
-					akaza.sendMessage("§7Vous avez gagné votre 1v1 contre§a§l Kyojuro§r§7 !");
 					PouvoirSangCooldown = 0;
 					PouvoirSang = false;
+					Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
+					if (akaza == null)return;
+					akaza.sendMessage("§7Vous avez gagné votre 1v1 contre§a§l Kyojuro§r§7 !");
 				}
-				if (player.getUniqueId() == akaza.getUniqueId()) {//donc if victim == akaza, donc winner == Kyojuro
-					kyojuro.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), true);
+				if (player.getUniqueId() == akaza.getPlayer()) {//donc if victim == akaza, donc winner == Kyojuro
 					KyojuroWin = true;
-					kyojuro.sendMessage("§7Vous avez gagné votre 1v1 contre§c§l Akaza§r§7 !");
 					cdvague = 0;
+					Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
+					if (kyojuro == null)return;
+					this.kyojuro.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+					kyojuro.sendMessage("§7Vous avez gagné votre 1v1 contre§c§l Akaza§r§7 !");
+
 				}
 			}
 		}
@@ -286,7 +315,7 @@ public class AkazaVSKyojuro extends EventBase{
 				}
 			}
 			if (akaza != null) {
-				if (PouvoirSang && player == akaza) {
+				if (PouvoirSang && player.getUniqueId().equals(akaza.getPlayer())) {
 					if (PouvoirSangCooldown >= 60*8) {
 						if (RandomUtils.getOwnRandomProbability(10)) {
 							event.setDamage(0.0);

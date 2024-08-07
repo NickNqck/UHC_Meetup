@@ -36,10 +36,10 @@ public class DSmtpCommands implements CommandExecutor {
 		}
 		if (args.length >= 1) {
 			for (Events e : Events.values()) {
-				e.getEvent().onSubDSCommand((Player)sender, args);
+				return e.getEvent().onSubDSCommand((Player)sender, args);
 			}
 			if (args.length == 1) {
-				if (args[0].equalsIgnoreCase("alliance")) {
+			/*	if (args[0].equalsIgnoreCase("alliance")) {
 					sender.sendMessage(new String[] {
 							AllDesc.bar,
 							Events.Alliance.getName(),
@@ -55,7 +55,7 @@ public class DSmtpCommands implements CommandExecutor {
 							AllDesc.bar
 					});
 					return true;
-				}
+				}*/
 				if (args[0].equalsIgnoreCase("role")) {
                     Player player = (Player) sender;
                     if (gameState.getInGamePlayers().contains(player)

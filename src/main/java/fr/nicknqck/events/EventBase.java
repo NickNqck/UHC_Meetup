@@ -36,5 +36,5 @@ public abstract class EventBase {
 	public abstract void onSecond();
 	public abstract void resetCooldown();
 	public abstract void onPlayerDamagedByPlayer(EntityDamageByEntityEvent event, Player player, Entity damageur);
-	public abstract void onSubDSCommand(Player sender, String[] args);
+	public abstract boolean onSubDSCommand(Player sender, String[] args);
 }

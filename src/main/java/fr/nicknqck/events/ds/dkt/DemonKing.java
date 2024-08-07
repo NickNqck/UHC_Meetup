@@ -121,5 +121,5 @@ public class DemonKing extends EventBase{
 	@Override
 	public void onPlayerDamagedByPlayer(EntityDamageByEntityEvent event, Player player, Entity damageur) {}
 	@Override
-	public void onSubDSCommand(Player sender, String[] args) {}
+	public boolean onSubDSCommand(Player sender, String[] args) {return false;}
 }

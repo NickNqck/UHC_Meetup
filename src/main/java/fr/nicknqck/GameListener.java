@@ -954,12 +954,14 @@ public class GameListener implements Listener {
 						}
 					}
 				}
-				if (player.getHealth()-damage <= 0) {
+                assert player != null;
+                if (player.getHealth()-damage <= 0) {
 					if (event.getCause() != DamageCause.FALL) {
 						if (gameState.getInGamePlayers().contains(player)) {
 							if (!gameState.hasRoleNull(player)) {
 								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
-									gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
+                                    assert damageur instanceof Player;
+                                    gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
 									event.setCancelled(true);
 									return;
 								}

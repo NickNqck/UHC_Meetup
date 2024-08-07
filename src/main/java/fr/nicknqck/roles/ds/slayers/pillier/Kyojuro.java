@@ -7,6 +7,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Lames;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,7 +15,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 public class Kyojuro extends PillierRoles {
-
+	private int itemcooldown = 0;
+	private boolean hasdsfire = false;
+	@Setter
+	private boolean alliance = false;
 	public Kyojuro(Player player) {
 		super(player);
 		this.setCanuseblade(true);
@@ -29,8 +33,6 @@ public class Kyojuro extends PillierRoles {
 	public String[] Desc() {
 	return AllDesc.Kyojuro;
 }
-	private int itemcooldown = 0;
-
 	@Override
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getLamedenichirin());
@@ -39,17 +41,16 @@ public class Kyojuro extends PillierRoles {
 	@Override
 	public void onEat(ItemStack item, GameState gameState) {
 		if (item.getType() == Material.GOLDEN_APPLE) {
-			if (!Events.Alliance.getEvent().isActivated()) {
+			if (!alliance) {
 				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*5, 1, true);
 				owner.sendMessage("Vous venez de gagner l'effet "+AllDesc.Force+" 1 pendant 5 secondes");
-			}else {
+			} else {
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*15, 1, true);
 				owner.sendMessage("Vous venez de gagner l'effet "+AllDesc.Force+" 1 pendant 15 secondes");
 			}
 		}
 		super.onEat(item, gameState);
 	}
-	private boolean hasdsfire = false;
 	@Override
 	public void onDSCommandSend(String[] args, GameState gameState) {
 		if(args[0].equalsIgnoreCase("fire")) {

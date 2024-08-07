@@ -1,5 +1,6 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.roles.builder.EffectWhen;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -44,6 +45,7 @@ public class Alliance extends EventBase{
 									k.owner.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
 									k.giveHealedHeartatInt(2);
 									this.kyojuro = k;
+									k.setAlliance(true);
 								}
 								if (role instanceof Shinjuro) {
 									Shinjuro s = (Shinjuro) role;
@@ -63,7 +65,15 @@ public class Alliance extends EventBase{
 		return false;
 	}
 	@Override
-	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {}
+	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {
+		if (this.kyojuro != null && this.shinjuro != null) {
+			if (victim.getUniqueId().equals(kyojuro.getPlayer())) {
+				this.shinjuro.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+			} else if (victim.getUniqueId().equals(shinjuro.getPlayer())) {
+				this.kyojuro.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+			}
+		}
+	}
 	@Override
 	public void setupEvent() {
 		setMinTime(GameState.getInstance().AllianceTime);
@@ -103,7 +113,7 @@ public class Alliance extends EventBase{
 	@Override
 	public void onPlayerDamagedByPlayer(EntityDamageByEntityEvent event, Player player, Entity damageur) {}
 	@Override
-	public void onSubDSCommand(Player sender, String[] args) {
+	public boolean onSubDSCommand(Player sender, String[] args) {
 		if (args[0].equalsIgnoreCase("alliance")) {
 			sender.sendMessage(new String[] {
 					AllDesc.bar,
@@ -114,8 +124,13 @@ public class Alliance extends EventBase{
 					"§aKyojuro§7 gagne l'effet§c Force 1§7 proche de§e Shinjuro§7 (20blocs), également il gagne§c 2"+AllDesc.coeur+"§7 permanent",
 					"",
 					"§eShinjuro§7 gagne l'effet§c Force 1§7 proche de§a Kyojuro§7 (20blocs), également il gagne un traqueur jusqu'à la fin de la partie pointant vers§a Kyojuro",
+					"",
+					"§7A la mort de l'un l'autre obtient l'effet§c Force I§7 permanent",
+					"",
 					AllDesc.bar
 			});
+			return true;
 		}
+		return false;
 	}
 }
