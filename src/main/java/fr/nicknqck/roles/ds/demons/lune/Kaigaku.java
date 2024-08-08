@@ -8,7 +8,6 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -21,7 +20,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -67,13 +65,6 @@ public class Kaigaku extends DemonsRoles implements Listener {
 	}
 	@Override
 	public String[] Desc() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof JigoroV2 && gameState.JigoroV2Pacte2) {
-					owner.sendMessage("La personne possédant le rôle de§6 Jigoro§r est:§6 "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.Kaigaku;
 	}
 	@Override
