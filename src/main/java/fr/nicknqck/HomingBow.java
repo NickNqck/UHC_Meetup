@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -27,14 +26,12 @@ public class HomingBow implements Listener {
 		this.gameState = gameState;
 	}
 	   
-	boolean truc = false;
+	private boolean truc = false;
 	public boolean isBowWithSpecificItem(Player player) {
 	    if (player.getItemInHand().getType() == Material.BOW) {
 	        ItemStack bowItem = player.getItemInHand();
 	        // Vérifier si l'arc correspond à l'ItemStack spécifique
-	        if (bowItem.isSimilar(Items.getSusamaruBow())) {
-	            return true;
-	        }
+            return bowItem.isSimilar(Items.getSusamaruBow());
 	    }
 	    return false;
 	}
@@ -157,20 +154,13 @@ public class HomingBow implements Listener {
 	    }
 	}
 	private boolean isSpecialPlayer(Player player) {
-    // Vérifie si le joueur est spécial selon vos critères
-	if (gameState.getServerState().equals(ServerStates.InGame)) {
-		if (gameState.getInGamePlayers().contains(player)) {
-			if (!gameState.hasRoleNull(player)) {
-                return gameState.getPlayerRoles().get(player) instanceof Susamaru;
-				} else {
-					return false;
+		if (gameState.getServerState().equals(ServerStates.InGame)) {
+			if (gameState.getInGamePlayers().contains(player)) {
+				if (!gameState.hasRoleNull(player)) {
+					return gameState.getPlayerRoles().get(player) instanceof Susamaru;
 				}
-			} else {
-				return false;
 			}
-		} else {
-			return false;
 		}
-}
-
+		return false;
+	}
 }
