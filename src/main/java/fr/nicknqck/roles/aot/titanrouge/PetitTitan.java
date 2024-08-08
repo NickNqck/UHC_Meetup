@@ -15,9 +15,11 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
+import java.util.UUID;
+
 public class PetitTitan extends TitansRoles {
 
-	public PetitTitan(Player player) {
+	public PetitTitan(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
 		gameState.GiveRodTridi(owner);

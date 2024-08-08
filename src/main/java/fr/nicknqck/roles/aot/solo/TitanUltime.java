@@ -18,9 +18,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class TitanUltime extends TitansRoles {
 
-	public TitanUltime(Player player) {
+	public TitanUltime(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
 		gameState.GiveRodTridi(owner);

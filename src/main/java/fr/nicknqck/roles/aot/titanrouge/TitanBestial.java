@@ -25,7 +25,7 @@ import java.util.UUID;
 
 public class TitanBestial extends TitansRoles {
 	private final HashMap<UUID, Integer> timePassed = new HashMap<>();
-	public TitanBestial(Player player) {
+	public TitanBestial(UUID player) {
 		super(player);
 		canShift = true;
 		gameState.GiveRodTridi(owner);

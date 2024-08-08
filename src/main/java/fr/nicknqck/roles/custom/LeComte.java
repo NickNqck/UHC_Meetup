@@ -38,7 +38,7 @@ public class LeComte extends CustomRolesBase implements Listener {
     private int cdInspection;
     private int cdDuel;
     private final List<UUID> inspecteds = new ArrayList<>();
-    public LeComte(Player player) {
+    public LeComte(UUID player) {
         super(player);
         final AutomaticDesc desc = new AutomaticDesc(this);
         desc.setCommands(new TripleMap<>(getInspectionHover(), "§c/c inspection <joueur>", 60*10), new TripleMap<>(getDuelHover(), "§c/c duel <joueur>", 60*15));
@@ -50,8 +50,8 @@ public class LeComte extends CustomRolesBase implements Listener {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         new UpdateRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         setMaxHealth(26.0);
-        player.setMaxHealth(getMaxHealth());
-        player.setHealth(player.getMaxHealth());
+        owner.setMaxHealth(getMaxHealth());
+        owner.setHealth(owner.getMaxHealth());
     }
     @Override
     public String getName() {

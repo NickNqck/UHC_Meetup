@@ -18,9 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Sanemi extends PillierRoles {
 
-	public Sanemi(Player player) {
+	public Sanemi(UUID player) {
 		super(player);
 		setCanuseblade(true);
 	}

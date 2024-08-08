@@ -17,8 +17,10 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
+import java.util.UUID;
+
 public class Enmu extends DemonsRoles {
-	public Enmu(Player player) {
+	public Enmu(UUID player) {
 		super(player);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {

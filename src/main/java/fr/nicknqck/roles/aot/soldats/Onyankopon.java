@@ -14,9 +14,11 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class Onyankopon extends SoldatsRoles {
 
-	public Onyankopon(Player player) {
+	public Onyankopon(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 		owner.getInventory().addItem(getItems());

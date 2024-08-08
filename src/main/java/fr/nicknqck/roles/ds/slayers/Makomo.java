@@ -20,9 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Makomo extends SlayerRoles {
 	private final TextComponent automaticDesc;
-	public Makomo(Player player) {
+	public Makomo(UUID player) {
 		super(player);
 		setCanuseblade(true);
 		getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);

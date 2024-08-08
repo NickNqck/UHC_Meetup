@@ -1,9 +1,9 @@
 package fr.nicknqck.roles.ds.builders;
 
-import org.bukkit.entity.Player;
+import java.util.UUID;
 
 public abstract class DemonsRoles extends DemonsSlayersRoles {
-    public DemonsRoles(Player player) {
+    public DemonsRoles(UUID player) {
         super(player);
     }
     public abstract DemonType getRank();

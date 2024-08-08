@@ -25,10 +25,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Kabuto extends OrochimaruRoles {
 
-	public Kabuto(Player player) {
+	public Kabuto(UUID player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.solo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.AotRoles;
@@ -29,7 +30,7 @@ public class Eren extends AotRoles {
 	private boolean killPorco = false;
 	private boolean killBertolt = false;
 
-	public Eren(Player player) {
+	public Eren(UUID player) {
 		super(player);
 		canShift = true;
 		gameState.GiveRodTridi(owner);

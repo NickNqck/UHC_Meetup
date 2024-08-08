@@ -25,7 +25,7 @@ import java.util.UUID;
 
 public class Konohamaru extends ShinobiRoles {
 
-	public Konohamaru(Player player) {
+	public Konohamaru(UUID player) {
 		super(player);
 		setChakraType(Chakras.KATON);
 		giveItem(owner, false, getItems());

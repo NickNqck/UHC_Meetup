@@ -26,9 +26,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 
-	public KyogaiV2(Player player) {
+	public KyogaiV2(UUID player) {
 		super(player);
 		owner.getInventory().addItem(getItems());
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);

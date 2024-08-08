@@ -16,10 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Tomioka extends PillierRoles {
 
-	public Tomioka(Player player) {
+	public Tomioka(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 	}

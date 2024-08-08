@@ -17,9 +17,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Muichiro extends PillierRoles {
 
-	public Muichiro(Player player) {
+	public Muichiro(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 	}

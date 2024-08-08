@@ -16,10 +16,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Muzan extends DemonsRoles {
 	private boolean killnez = false;
 	private int regencooldown;
-	public Muzan(Player player) {
+	public Muzan(UUID player) {
 		super(player);
 		regencooldown = 10;
 	}

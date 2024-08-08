@@ -22,12 +22,14 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 
+import java.util.UUID;
+
 public class Kaigaku extends DemonsRoles {
 
 	private boolean killzen = false;
 	private int cooldownquatriememouvement = 0;
 	private int cooldowntroisiememouvement = 0;
-	public Kaigaku(Player player) {
+	public Kaigaku(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

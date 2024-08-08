@@ -16,9 +16,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Demon_Simple extends DemonInferieurRole implements Listener {
 	private double force;
-	public Demon_Simple(Player player) {
+	public Demon_Simple(UUID player) {
 		super(player);
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}

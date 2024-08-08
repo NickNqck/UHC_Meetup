@@ -26,10 +26,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Zabuza extends NSRoles {
 
-	public Zabuza(Player player) {
+	public Zabuza(UUID player) {
 		super(player);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.SUITON);

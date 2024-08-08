@@ -18,9 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class DemonMain extends DemonInferieurRole {
 
-	public DemonMain(Player player) {
+	public DemonMain(UUID player) {
 		super(player);
 		this.setResi(20);
 	}

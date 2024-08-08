@@ -28,10 +28,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Kakashi extends ShinobiRoles {
 
-	public Kakashi(Player player) {
+	public Kakashi(UUID player) {
 		super(player);
 		setChakraType(Chakras.RAITON);
 		if (!gameState.attributedRole.contains(Roles.Obito)) {

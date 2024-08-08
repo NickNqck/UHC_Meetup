@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.solo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
@@ -38,7 +39,7 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 
 public class Gaara extends NSRoles {
 
-    public Gaara(Player player) {
+    public Gaara(UUID player) {
 		super(player);
 		setNoFall(true);
 		resetCooldown();

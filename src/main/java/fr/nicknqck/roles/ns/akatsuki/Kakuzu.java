@@ -24,10 +24,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class Kakuzu extends AkatsukiRoles {
 
-	public Kakuzu(Player player) {
+	public Kakuzu(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		ChakrasOwned.put(getChakras(), true);

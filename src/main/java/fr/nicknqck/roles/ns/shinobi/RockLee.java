@@ -21,9 +21,11 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 
+import java.util.UUID;
+
 public class RockLee extends ShinobiRoles {
 
-	public RockLee(Player player) {
+	public RockLee(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		giveItem(owner, false, getItems());

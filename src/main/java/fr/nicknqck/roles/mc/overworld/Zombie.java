@@ -14,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class Zombie extends OverWorldRoles {
 
     private final ItemStack CerveauItem = new ItemBuilder(Material.ROTTEN_FLESH).setName("§cCerveau").setLore("§7Vous permez de dévorrez un cerveau pour vous rendre plus fort").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
@@ -21,7 +23,7 @@ public class Zombie extends OverWorldRoles {
     private int nmbCerveau = 1;
     private boolean CerveauActive = false;
     private boolean SqueletteSound = false;
-    public Zombie(Player player) {
+    public Zombie(UUID player) {
         super(player);
         giveItem(owner, false, getItems());
     }

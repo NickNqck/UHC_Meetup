@@ -33,11 +33,11 @@ public class ZenItsu extends SlayerRoles implements Listener {
     private final ItemStack vitesseItem = new ItemBuilder(Material.NETHER_STAR).setName("§eVitesse").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdVitesse = -1, cdPassif = -1, cdEclair;
 
-    public ZenItsu(Player player) {
+    public ZenItsu(UUID player) {
         super(player);
         setCanuseblade(true);
-        giveItem(player, false, getItems());
-        giveItem(player, false, Items.getLamedenichirin());
+        giveItem(owner, false, getItems());
+        giveItem(owner, false, Items.getLamedenichirin());
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
         new ZenitsuRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }

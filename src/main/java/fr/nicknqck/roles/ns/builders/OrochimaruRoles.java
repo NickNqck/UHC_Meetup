@@ -3,8 +3,10 @@ package fr.nicknqck.roles.ns.builders;
 import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public abstract class OrochimaruRoles extends NSRoles{
-    public OrochimaruRoles(Player player) {
+    public OrochimaruRoles(UUID player) {
         super(player);
     }
 

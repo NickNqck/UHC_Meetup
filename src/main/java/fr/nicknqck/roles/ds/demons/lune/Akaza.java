@@ -13,9 +13,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Akaza extends DemonsRoles {
 	private int regencooldown = 0;
-	public Akaza(Player player) {
+	public Akaza(UUID player) {
 		super(player);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		getKnowedRoles().add(Muzan.class);

@@ -16,9 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Kanao extends SlayerRoles {
 
-	public Kanao(Player player) {
+	public Kanao(UUID player) {
 		super(player);
 		setNoFall(true);
 		this.setCanuseblade(true);

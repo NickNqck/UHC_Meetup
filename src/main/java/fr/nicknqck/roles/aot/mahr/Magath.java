@@ -14,10 +14,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
+import java.util.UUID;
 
 public class Magath extends MahrRoles {
 
-	public Magath(Player player) {
+	public Magath(UUID player) {
 		super(player);
 		giveHealedHeartatInt(4.0);
 		toSearch = null;

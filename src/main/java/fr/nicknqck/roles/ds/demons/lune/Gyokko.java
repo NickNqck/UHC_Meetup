@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
 import java.util.Random;
+import java.util.UUID;
 
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -24,7 +25,7 @@ import fr.nicknqck.utils.StringUtils;
 
 public class Gyokko extends DemonsRoles {
 
-	public Gyokko(Player player) {
+	public Gyokko(UUID player) {
 		super(player);
 		this.setResi(20);
 	}

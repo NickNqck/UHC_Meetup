@@ -30,10 +30,11 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class Orochimaru extends OrochimaruRoles {
 
-	public Orochimaru(Player player) {
+	public Orochimaru(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		chakrasVoled.add(getChakras());

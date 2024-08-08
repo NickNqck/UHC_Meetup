@@ -9,9 +9,11 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class Susamaru extends DemonInferieurRole {
 
-	public Susamaru(Player player) {
+	public Susamaru(UUID player) {
 		super(player);
 	}
 

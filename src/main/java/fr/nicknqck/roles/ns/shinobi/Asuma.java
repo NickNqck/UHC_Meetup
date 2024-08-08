@@ -16,9 +16,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Asuma extends ShinobiRoles {
 
-	public Asuma(Player player) {
+	public Asuma(UUID player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
 		setCanBeHokage(true);

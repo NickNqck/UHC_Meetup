@@ -16,10 +16,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Furuto extends DemonInferieurRole {
 
-	public Furuto(Player player) {
+	public Furuto(UUID player) {
 		super(player);
 	}
 	@Override

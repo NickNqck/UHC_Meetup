@@ -16,9 +16,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class Sakura extends ShinobiRoles {
 
-	public Sakura(Player player) {
+	public Sakura(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		setCanBeHokage(true);

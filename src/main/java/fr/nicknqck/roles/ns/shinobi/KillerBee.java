@@ -18,9 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class KillerBee extends ShinobiRoles {
 
-	public KillerBee(Player player) {
+	public KillerBee(UUID player) {
 		super(player);
 		setChakraType(Chakras.RAITON);
 		giveItem(owner, false, getItems());

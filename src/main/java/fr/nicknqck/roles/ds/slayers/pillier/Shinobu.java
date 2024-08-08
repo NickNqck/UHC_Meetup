@@ -12,9 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Shinobu extends PillierRoles {
 
-	public Shinobu(Player player) {
+	public Shinobu(UUID player) {
 		super(player);
         this.setCanuseblade(true);
 	}

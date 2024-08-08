@@ -24,7 +24,7 @@ public class WitherBoss extends UHCMcRoles {
     private final ItemStack FlyItem = new ItemBuilder(Material.FEATHER).setName("§aFly").setLore("§7Vous permet de voler pendant un temp maximum de§c 15s").toItemStack();
     private int cdFly = 0;
     private boolean passifActive = false;
-    public WitherBoss(Player player) {
+    public WitherBoss(UUID player) {
         super(player);
     }
     @Override

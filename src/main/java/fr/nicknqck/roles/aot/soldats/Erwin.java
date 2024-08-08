@@ -11,8 +11,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class Erwin extends SoldatsRoles {
-	public Erwin(Player player) {
+	public Erwin(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

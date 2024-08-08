@@ -20,10 +20,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Hidan extends AkatsukiRoles {
 
-	public Hidan(Player player) {
+	public Hidan(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 	}

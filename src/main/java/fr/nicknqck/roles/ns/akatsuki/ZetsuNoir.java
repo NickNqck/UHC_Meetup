@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class ZetsuNoir extends AkatsukiRoles {
 
-	public ZetsuNoir(Player player) {
+	public ZetsuNoir(UUID player) {
 		super(player);
 		setChakraType(Chakras.DOTON);
 	}

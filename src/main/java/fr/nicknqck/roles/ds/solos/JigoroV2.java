@@ -25,10 +25,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
+import java.util.UUID;
 
 public class JigoroV2 extends DemonsSlayersRoles {
 
-	public JigoroV2(Player player) {
+	public JigoroV2(UUID player) {
 		super(player);
 		pacte = Pacte.Non_Choisis;
 		setCanuseblade(true);

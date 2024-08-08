@@ -24,9 +24,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.UUID;
+
 public class Minato extends ShinobiRoles {
 
-	public Minato(Player player) {
+	public Minato(UUID player) {
 		super(player);
 		giveItem(owner, false, getItems());
 		setChakraType(Chakras.KATON);

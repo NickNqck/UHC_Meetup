@@ -21,18 +21,20 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class Kanae extends PillierRoles implements Listener {
     private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aLame végétal").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cooldown = 0;
     private final KanaeRunnable runnable;
-    public Kanae(Player player) {
+    public Kanae(UUID player) {
         super(player);
         new SwordListener(this);
         setCanuseblade(true);
         this.runnable = new KanaeRunnable(this);
         this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0 ,20);
-        giveItem(player, false, getItems());
-        giveItem(player, false, Items.getLamedenichirin());
+        giveItem(owner, false, getItems());
+        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override

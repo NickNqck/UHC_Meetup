@@ -12,8 +12,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Mitsuri extends PillierRoles {
-    public Mitsuri(Player player) {
+    public Mitsuri(UUID player) {
         super(player);
         setCanuseblade(true);
     }

@@ -44,7 +44,7 @@ public class Ginkaku extends NSRoles {
 	private final ItemStack GourdeItem = new ItemBuilder(Material.HOPPER).setName("§bGourde écarlate").setLore("§7Vous permet de sceller un joueur.").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().toItemStack();
 	private UUID GourdeTarget;
 	private int cdGourde = 0;
-	public Ginkaku(Player player) {
+	public Ginkaku(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

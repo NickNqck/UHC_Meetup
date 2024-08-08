@@ -49,7 +49,7 @@ public class Madara extends NSRoles {
 	private int SusanoCD = 0;
 	private boolean hasIzanagi = false;
 
-	public Madara(Player player) {
+	public Madara(UUID player) {
 		super(player);
 		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 		setChakraType(Chakras.KATON);

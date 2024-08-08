@@ -19,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class FFA_Pourfendeur extends SlayerRoles {
 	@Override
@@ -41,7 +42,7 @@ public class FFA_Pourfendeur extends SlayerRoles {
 		Fleur
 	}
 	Soufle form = null;
-	public FFA_Pourfendeur(Player player) {
+	public FFA_Pourfendeur(UUID player) {
 		super(player);
 		owner.sendMessage("Vue que nous somme en FFA vous devez vous-même choisir votre Soufle via la commmande§6 /ds role");
 		setCanuseblade(true);

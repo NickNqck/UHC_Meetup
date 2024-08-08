@@ -14,10 +14,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Gabi extends AotRoles {
 	private boolean killshifter = false;
-	public Gabi(Player player) {
+	public Gabi(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 		setCanVoleTitan(true);

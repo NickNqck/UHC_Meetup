@@ -3,8 +3,10 @@ package fr.nicknqck.roles.aot.builders;
 import fr.nicknqck.roles.builder.TeamList;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public abstract class TitansRoles extends AotRoles{
-    public TitansRoles(Player player) {
+    public TitansRoles(UUID player) {
         super(player);
     }
 

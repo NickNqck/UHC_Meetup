@@ -16,12 +16,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class Poulet extends OverWorldRoles {
 
     private final ItemStack plumeItem = new ItemBuilder(Material.FEATHER).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§7Permet de voler pendant 3 secondes").setName("§aPlume").toItemStack();
     private int cdplume = 0;
 
-    public Poulet(Player player) {
+    public Poulet(UUID player) {
         super(player);
         giveItem(owner, false, getItems());
     }

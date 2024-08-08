@@ -32,7 +32,7 @@ public class Yoriichi extends DemonsSlayersRoles {
 	private boolean activersoufle = false;
 	private final Map<UUID, PacketDisplay> inEye = new HashMap<>();
 
-	public Yoriichi(Player player) {
+	public Yoriichi(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 		this.setResi(20);

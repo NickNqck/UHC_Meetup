@@ -23,10 +23,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class Tengen extends PillierRoles {
 
-	public Tengen(Player player) {
+	public Tengen(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 	}

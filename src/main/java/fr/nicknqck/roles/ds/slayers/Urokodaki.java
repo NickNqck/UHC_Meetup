@@ -19,10 +19,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class Urokodaki extends SlayerRoles {
 	private final TextComponent automaticDesc;
-	public Urokodaki(Player player) {
+	public Urokodaki(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 		AutomaticDesc automaticDesc = new AutomaticDesc(this);
@@ -30,7 +31,7 @@ public class Urokodaki extends SlayerRoles {
 				this.SoufleComponent(), 60*5
 		);
 		this.automaticDesc = automaticDesc.getText();
-		player.spigot().sendMessage(this.automaticDesc);
+		owner.spigot().sendMessage(this.automaticDesc);
 	}
 
     @Override

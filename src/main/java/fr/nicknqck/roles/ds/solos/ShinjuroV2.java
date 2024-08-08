@@ -28,6 +28,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class ShinjuroV2 extends DemonsSlayersRoles {
     private final ItemStack SakeVide = new ItemBuilder(Material.GLASS_BOTTLE).setName("§6Sake§7 (§fVide§7)").setDroppable(false).toItemStack();
     private final ItemStack SakeRemplie = new ItemBuilder(Material.POTION).setDurability(0).setName("§6Sake§7 (§fRemplie§7)").setDroppable(false).toItemStack();
@@ -48,12 +50,12 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
         }
     }
     private State state = State.Nothing;
-    public ShinjuroV2(Player player) {
+    public ShinjuroV2(UUID player) {
         super(player);
-        Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
+        Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
         setCanuseblade(true);
-        giveItem(player, false, getItems());
-        giveItem(player, true, Items.getLamedenichirin());
+        giveItem(owner, false, getItems());
+        giveItem(owner, true, Items.getLamedenichirin());
         new ShinjuroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         new SakePower(this);
     }

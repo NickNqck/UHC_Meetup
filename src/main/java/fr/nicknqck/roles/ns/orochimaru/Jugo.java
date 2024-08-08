@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
@@ -16,9 +17,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class Jugo extends Orochimaru {
+import java.util.UUID;
 
-	public Jugo(Player player) {
+public class Jugo extends OrochimaruRoles {
+
+	public Jugo(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

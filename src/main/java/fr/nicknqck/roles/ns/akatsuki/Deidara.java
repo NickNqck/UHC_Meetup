@@ -33,10 +33,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class Deidara extends AkatsukiRoles {
 
-	public Deidara(Player player) {
+	public Deidara(UUID player) {
 		super(player);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON));
 	}

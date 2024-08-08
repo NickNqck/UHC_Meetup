@@ -13,6 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Pourfendeur extends SlayerRoles {
 	@Override
 	public String getName() {
@@ -30,7 +32,7 @@ public class Pourfendeur extends SlayerRoles {
     }
 	Soufle form = null;
 	ChatColor color = null;
-	public Pourfendeur(Player player) {
+	public Pourfendeur(UUID player) {
 		super(player);
         this.setCanuseblade(true);
         int rint = Main.RANDOM.nextInt(5);

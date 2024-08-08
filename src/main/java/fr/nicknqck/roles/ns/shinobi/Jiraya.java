@@ -25,9 +25,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.UUID;
+
 public class Jiraya extends ShinobiRoles {
 
-	public Jiraya(Player player) {
+	public Jiraya(UUID player) {
 		super(player);
 		setChakraType(Chakras.KATON);
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();

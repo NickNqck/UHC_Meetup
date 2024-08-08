@@ -27,6 +27,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Itachi extends AkatsukiRoles {
 
@@ -41,7 +42,7 @@ public class Itachi extends AkatsukiRoles {
 	private int cdAttaque = 0;
 	private boolean Izanami = false;
 	
-	public Itachi(Player player) {
+	public Itachi(UUID player) {
 		super(player);
 		setChakraType(Chakras.KATON);
 	}

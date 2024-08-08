@@ -10,8 +10,10 @@ import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class Bertolt extends MahrRoles {
-	public Bertolt(Player player) {
+	public Bertolt(UUID player) {
 		super(player);
 		gameState.Shifter.add(owner);
 		gameState.GiveRodTridi(owner);

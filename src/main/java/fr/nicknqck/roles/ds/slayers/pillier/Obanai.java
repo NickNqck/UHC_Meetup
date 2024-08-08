@@ -11,9 +11,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Obanai extends PillierRoles {
 
-	public Obanai(Player player) {
+	public Obanai(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 	}

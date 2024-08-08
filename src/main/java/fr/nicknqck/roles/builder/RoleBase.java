@@ -82,8 +82,9 @@ public abstract class RoleBase implements IRole {
 	public int roleID = 0;
 	public String StringID = "";
 	private UUID uuidOwner;
-	public RoleBase(Player player) {
-		this.owner = player;
+	public RoleBase(UUID player) {
+		Player owner = Bukkit.getPlayer(player);
+		this.owner = owner;
 		if (this.gameState == null){
 			this.gameState = GameState.getInstance();
 		}
@@ -164,12 +165,9 @@ public abstract class RoleBase implements IRole {
 		if (!gameState.hasRoleNull(target)) {
 			if (getPlayerRoles(target).getTeam() != null) {
 				return getPlayerRoles(target).getTeam().getColor();
-			}else {
-				return "";
 			}
-		}else {
-			return "";
 		}
+		return "";
 	}
 	public String getTeamColor() {
 		return getTeam().getColor();

@@ -35,7 +35,7 @@ public class DemonKing extends EventBase{
 							if (role instanceof Tanjiro) {
 								setActivated(true);
 								gameState.delInPlayerRoles(p);
-								gameState.addInPlayerRoles(p, new DemonKingTanjiroRole(p));
+								gameState.addInPlayerRoles(p, new DemonKingTanjiroRole(p.getUniqueId()));
 								RoleBase newRole = gameState.getPlayerRoles().get(p);
 								Main.getInstance().getGetterList().getDemonList(p);
 								if (role.getLames().equals(Lames.Coeur)) {

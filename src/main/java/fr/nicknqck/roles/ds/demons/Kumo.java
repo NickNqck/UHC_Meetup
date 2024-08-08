@@ -20,10 +20,11 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class Kumo extends DemonInferieurRole {
 
-	public Kumo(Player player) {
+	public Kumo(UUID player) {
 		super(player);
 	}
 

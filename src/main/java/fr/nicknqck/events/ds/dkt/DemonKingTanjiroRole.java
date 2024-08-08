@@ -20,17 +20,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     private final ItemStack energieItem = new ItemBuilder(Material.NETHER_STAR).setName("§r§f§lBoule d'énergie").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdEnergie;
-    public DemonKingTanjiroRole(Player player) {
+    public DemonKingTanjiroRole(UUID player) {
         super(player);
-        player.getInventory().remove(Material.BLAZE_ROD);
+        owner.getInventory().remove(Material.BLAZE_ROD);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         setNoFall(true);
-        giveItem(player, false, getItems());
+        giveItem(owner, false, getItems());
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
     }
 

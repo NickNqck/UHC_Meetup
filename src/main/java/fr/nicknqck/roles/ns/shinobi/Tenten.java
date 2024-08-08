@@ -18,9 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class Tenten extends ShinobiRoles {
 
-	public Tenten(Player player) {
+	public Tenten(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		giveItem(owner, false, getItems());

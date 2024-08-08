@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class Pieck extends MahrRoles {
 
-	public Pieck(Player player) {
+	public Pieck(UUID player) {
 		super(player);
 		gameState.Shifter.add(owner);
 		if (owner.getName().equalsIgnoreCase("BoulotPieck")) {

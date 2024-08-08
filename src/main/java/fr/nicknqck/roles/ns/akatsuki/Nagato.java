@@ -38,7 +38,7 @@ public class Nagato extends AkatsukiRoles {
     private int cdTpMe = 0;
     private int cdRepousser = 0;
     private final List<UUID> NF = new ArrayList<>();
-    public Nagato(Player player) {
+    public Nagato(UUID player) {
         super(player);
         setChakraType(Chakras.SUITON);
     }

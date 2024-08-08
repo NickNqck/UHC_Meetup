@@ -21,9 +21,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class Shinjuro extends DemonsSlayersRoles {
 
-	public Shinjuro(Player player) {
+	public Shinjuro(UUID player) {
 		super(player);
 		setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);

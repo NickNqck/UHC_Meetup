@@ -24,7 +24,7 @@ import java.util.*;
 
 public class Haku extends NSRoles {
 	private int maxCDHaku = 60*8;
-	public Haku(Player player) {
+	public Haku(UUID player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
 		setResi(20);

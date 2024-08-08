@@ -27,7 +27,7 @@ import java.util.UUID;
 
 public class Kisame extends AkatsukiRoles {
 
-	public Kisame(Player player) {
+	public Kisame(UUID player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
 	}

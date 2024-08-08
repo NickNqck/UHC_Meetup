@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Soldat extends SoldatsRoles {
 	public enum kit {
 		Garnison,
@@ -20,7 +22,7 @@ public class Soldat extends SoldatsRoles {
 		Bataillon,
 	}
 	public kit form = null;
-	public Soldat(Player player) {
+	public Soldat(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

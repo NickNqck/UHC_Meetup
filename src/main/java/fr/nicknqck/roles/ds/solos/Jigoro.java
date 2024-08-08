@@ -21,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Jigoro extends DemonsSlayersRoles {
 	private boolean Zoneactiver2 = false;
 	private boolean killzen = false;
@@ -42,7 +44,7 @@ public class Jigoro extends DemonsSlayersRoles {
 		Min3
 	}
 	private Status status = null;
-	public Jigoro(Player player) {
+	public Jigoro(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 		this.setResi(20);

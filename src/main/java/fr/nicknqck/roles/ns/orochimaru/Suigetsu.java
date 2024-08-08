@@ -25,10 +25,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Suigetsu extends OrochimaruRoles {
 
-	public Suigetsu(Player player) {
+	public Suigetsu(UUID player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {

@@ -1,10 +1,11 @@
 package fr.nicknqck.roles.ds.builders;
 
 import fr.nicknqck.roles.builder.TeamList;
-import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public abstract class SlayerRoles extends DemonsSlayersRoles{
-    public SlayerRoles(Player player) {
+    public SlayerRoles(UUID player) {
         super(player);
     }
 

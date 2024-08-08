@@ -13,9 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Conny extends SoldatsRoles {
 
-	public Conny(Player player) {
+	public Conny(UUID player) {
 		super(player);
 	}
 	@Override

@@ -13,13 +13,15 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class Squelette extends OverWorldRoles {
 
     private final ItemStack KorosuItem = new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§71 flèche sur deux que vous tirez ira directement sur votre cible").setName("§aKorosu shi no yumi").toItemStack();
     private final ItemStack BontoutouItem = new ItemBuilder(Material.BONE).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("§aBon TouTou").setLore("§7Vous permez d'apprivoiser un loup").toItemStack();
     private int KorosuCount = 0;
     private boolean ZombieSound = false;
-    public Squelette(Player player) {
+    public Squelette(UUID player) {
         super(player);
     }
 

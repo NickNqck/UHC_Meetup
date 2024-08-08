@@ -13,9 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Mikasa extends SoldatsRoles {
 
-	public Mikasa(Player player) {
+	public Mikasa(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 		setAckerMan(true);

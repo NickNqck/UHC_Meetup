@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class Karin extends OrochimaruRoles {
 
-	public Karin(Player player) {
+	public Karin(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		timePassedNearby.clear();

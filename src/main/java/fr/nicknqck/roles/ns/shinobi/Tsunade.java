@@ -26,7 +26,7 @@ import java.util.UUID;
 
 public class Tsunade extends ShinobiRoles {
 
-	public Tsunade(Player player) {
+	public Tsunade(UUID player) {
 		super(player);
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
 		setCanBeHokage(true);

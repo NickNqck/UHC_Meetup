@@ -19,10 +19,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Jean extends SoldatsRoles {
 
-	public Jean(Player player) {
+	public Jean(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

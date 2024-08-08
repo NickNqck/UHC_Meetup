@@ -31,7 +31,7 @@ public class LeJuge extends CustomRolesBase implements Listener {
     private final int timeKill;
     private final KillRunnable killRunnable;
 
-    public LeJuge(Player player) {
+    public LeJuge(UUID player) {
         super(player);
         if (getGameState().isMinage()) {
             timeKill = 60*10;

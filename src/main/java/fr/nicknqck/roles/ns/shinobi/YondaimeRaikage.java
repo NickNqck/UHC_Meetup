@@ -15,9 +15,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class YondaimeRaikage extends ShinobiRoles {
 
-	public YondaimeRaikage(Player player) {
+	public YondaimeRaikage(UUID player) {
 		super(player);
 		setChakraType(Chakras.RAITON);
 	}

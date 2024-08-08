@@ -18,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Nezuko extends DemonsRoles {
 	private int itemcooldown = 0;
 	private int regencooldown;
@@ -25,7 +27,7 @@ public class Nezuko extends DemonsRoles {
 	boolean firezone = false;
 	boolean nuit = false;
 	boolean jour = false;
-	public Nezuko(Player player) {
+	public Nezuko(UUID player) {
 		super(player);
 		regencooldown = 20;
 		this.setResi(20);

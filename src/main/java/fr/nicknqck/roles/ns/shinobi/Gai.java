@@ -17,9 +17,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class Gai extends ShinobiRoles {
 
-	public Gai(Player player) {
+	public Gai(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		giveItem(owner, false, getItems());

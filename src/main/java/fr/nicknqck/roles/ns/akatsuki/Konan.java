@@ -25,10 +25,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Konan extends AkatsukiRoles {
 
-	public Konan(Player player) {
+	public Konan(UUID player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
 		setTeam(TeamList.Akatsuki);

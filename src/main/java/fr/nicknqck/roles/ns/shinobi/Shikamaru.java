@@ -34,7 +34,7 @@ public class Shikamaru extends ShinobiRoles {
     private final ItemStack zoneItem = new ItemBuilder(Material.NETHER_STAR).setName("§aZone d'ombre").setLore("§7Vous permet d'empêcher tout les joueurs autours de vous de bouger").toItemStack();
     private int cdZone = 0;
     private int cdShogi = 0;
-    public Shikamaru(Player player) {
+    public Shikamaru(UUID player) {
         super(player);
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
         new StunExecutable(this);

@@ -19,9 +19,11 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 
+import java.util.UUID;
+
 public class Daki extends DemonsRoles {
 
-	public Daki(Player player) {
+	public Daki(UUID player) {
 		super(player);
 		setCanRespawn(true);
 		this.setResi(20);

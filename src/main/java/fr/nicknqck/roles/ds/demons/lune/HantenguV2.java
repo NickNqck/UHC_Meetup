@@ -20,9 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class HantenguV2 extends DemonsRoles {
 
-	public HantenguV2(Player player) {
+	public HantenguV2(UUID player) {
 		super(player);
 		clone = Clone.Hantengu;
 		owner.getInventory().addItem(Items.getMaterialisationEmotion());

@@ -38,7 +38,7 @@ public class EffectsGiver implements Listener {
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 100);
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20*25);
     }
     @EventHandler
     private void onDay(DayEvent event) {

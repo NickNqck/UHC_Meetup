@@ -36,13 +36,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class Obito extends NSRoles {
 	public List<Player> Tsukuyomi = new ArrayList<>();
 	private fr.nicknqck.roles.ns.power.Izanami izanami;
 	private int cdNinjutsu = 0;
-	public Obito(Player player) {
+	public Obito(UUID player) {
 		super(player);
 		setChakraType(Chakras.KATON);
 		giveItem(owner, false, getItems());

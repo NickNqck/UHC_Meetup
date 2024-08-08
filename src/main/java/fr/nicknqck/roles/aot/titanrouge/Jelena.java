@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class Jelena extends TitansRoles {
 
-	public Jelena(Player player) {
+	public Jelena(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

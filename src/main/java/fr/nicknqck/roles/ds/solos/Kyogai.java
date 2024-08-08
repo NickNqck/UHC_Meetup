@@ -25,9 +25,11 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import net.md_5.bungee.api.ChatColor;
 
+import java.util.UUID;
+
 public class Kyogai extends DemonsRoles {
 
-	public Kyogai(Player player) {
+	public Kyogai(UUID player) {
 		super(player);
 		owner.sendMessage("Pour choisir votre camp il faudra faire la commande: "+ChatColor.GOLD+"/ds role");
 	}

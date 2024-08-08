@@ -32,6 +32,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Sasuke extends OrochimaruRoles {
 
@@ -48,7 +49,7 @@ public class Sasuke extends OrochimaruRoles {
 	private boolean infectFinish = false;
 	private final List<Player> Tsukuyomi = new ArrayList<>();
 	
-	public Sasuke(Player player) {
+	public Sasuke(UUID player) {
 		super(player);
 		setChakraType(Chakras.KATON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

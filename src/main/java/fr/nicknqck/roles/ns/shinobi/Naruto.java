@@ -27,9 +27,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.UUID;
+
 public class Naruto extends ShinobiRoles {
 
-	public Naruto(Player player) {
+	public Naruto(UUID player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
 		setCanBeHokage(true);

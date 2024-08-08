@@ -26,9 +26,11 @@ import net.minecraft.server.v1_8_R3.ChatComponentText;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
+import java.util.UUID;
+
 public class Hantengu extends DemonsRoles {
-private int killforce = 0;
-	public Hantengu(Player player) {
+	private int killforce = 0;
+	public Hantengu(UUID player) {
 		super(player);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {

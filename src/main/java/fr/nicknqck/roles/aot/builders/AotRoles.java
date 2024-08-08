@@ -7,13 +7,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
+import java.util.UUID;
 
 public abstract class AotRoles extends RoleBase {
     public boolean canShift = false;
     public boolean isTransformedinTitan = false;
     public double RodSpeedMultipliyer = 0;
     public double gazAmount;
-    public AotRoles(Player player) {
+    public AotRoles(UUID player) {
         super(player);
         gazAmount= 100.0;
         new RodCooldownRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);

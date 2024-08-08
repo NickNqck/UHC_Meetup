@@ -20,7 +20,7 @@ import java.util.UUID;
 public class Ino extends ShinobiRoles {
     private final ItemStack transpositionItem = new ItemBuilder(Material.NETHER_STAR).setName("§aTransposition").setLore("§7Vous permet de suivre très discrètement un joueur").toItemStack();
     private int cdTransposition = 0;
-    public Ino(Player player) {
+    public Ino(UUID player) {
         super(player);
         setChakraType(getRandomChakras());
         giveItem(owner, false, getItems());

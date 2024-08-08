@@ -34,7 +34,7 @@ public class Kurenai extends ShinobiRoles {
     private int cdBois = 0;
     private final ItemStack GenjutsuItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu temporel").setLore("§7Vous permet en ciblant un joueur de créer un pure combat 1v1").toItemStack();
     private int cdGenjutsu = 0;
-    public Kurenai(Player player) {
+    public Kurenai(UUID player) {
         super(player);
     }
 

@@ -16,13 +16,14 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class Yahaba extends DemonInferieurRole {
 
 	private Player cible;
 	private boolean killcible = false;
 
-	public Yahaba(Player player) {
+	public Yahaba(UUID player) {
 		super(player);
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             List<Player> Ciblable = new ArrayList<>(gameState.getInGamePlayers());

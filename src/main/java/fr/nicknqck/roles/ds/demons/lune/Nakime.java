@@ -25,10 +25,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Nakime extends DemonsRoles {
 
-	public Nakime(Player player) {
+	public Nakime(UUID player) {
 		super(player);
 		if (!gameState.pregenNakime) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();

@@ -15,10 +15,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Hansi extends SoldatsRoles {
 
-	public Hansi(Player player) {
+	public Hansi(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

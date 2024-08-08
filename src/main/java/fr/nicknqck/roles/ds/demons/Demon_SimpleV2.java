@@ -13,10 +13,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Demon_SimpleV2 extends DemonInferieurRole {
 
 	
-	public Demon_SimpleV2(Player player) {
+	public Demon_SimpleV2(UUID player) {
 		super(player);
 	}
 	@Override

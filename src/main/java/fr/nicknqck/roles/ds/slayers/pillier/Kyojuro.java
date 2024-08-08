@@ -15,11 +15,13 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Kyojuro extends PillierRoles {
 	private int itemcooldown = 0;
 	@Setter
 	private boolean alliance = false;
-	public Kyojuro(Player player) {
+	public Kyojuro(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);

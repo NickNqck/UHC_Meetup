@@ -44,15 +44,15 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private int cdDanse, cdSentir;
     private boolean sentirUse, useAssassin;
     private final TextComponent automaticDesc;
-    public Tanjiro(Player player) {
+    public Tanjiro(UUID player) {
         super(player);
         getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        giveItem(player, false, getItems());
-        giveItem(player, false, Items.getLamedenichirin());
+        giveItem(owner, false, getItems());
+        giveItem(owner, false, Items.getLamedenichirin());
         setCanuseblade(true);
-        Lames.FireResistance.getUsers().put(player.getUniqueId(), Integer.MAX_VALUE);
+        Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
      /*  Map<TextComponent, Integer> test = new LinkedHashMap<>();
         test.put(getSentir(), 60*5);

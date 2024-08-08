@@ -35,7 +35,7 @@ public class Danzo extends NSRoles {
 	private int coupToScelled = 0;
 	private boolean SceauActived = false;
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
-	public Danzo(Player player) {
+	public Danzo(UUID player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
 	}

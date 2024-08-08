@@ -12,9 +12,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TitanDeviant extends TitansRoles {
-	public TitanDeviant(Player player) {
+	public TitanDeviant(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

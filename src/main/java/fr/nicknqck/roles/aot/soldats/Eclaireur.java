@@ -8,9 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Eclaireur extends SoldatsRoles {
 
-	public Eclaireur(Player player) {
+	public Eclaireur(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

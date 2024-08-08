@@ -1,8 +1,11 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
 import java.util.Random;
+import java.util.UUID;
 
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,13 +20,19 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 
-public class Gyutaro extends RoleBase{
+public class Gyutaro extends DemonsRoles {
 
-	public Gyutaro(Player player) {
+	public Gyutaro(UUID player) {
 		super(player);
 		setCanRespawn(true);
 		this.setResi(20);
 		}
+
+	@Override
+	public DemonType getRank() {
+		return DemonType.LuneSuperieur;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Gyutaro;

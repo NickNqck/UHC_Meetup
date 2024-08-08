@@ -16,9 +16,11 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.util.UUID;
+
 public class Sasha extends SoldatsRoles {
 
-	public Sasha(Player player) {
+	public Sasha(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 	}

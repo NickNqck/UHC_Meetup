@@ -10,9 +10,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Gyomei extends PillierRoles {
 
-	public Gyomei(Player player) {
+	public Gyomei(UUID player) {
 		super(player);
 		setMaxHealth(24.0);
 		this.setCanuseblade(true);

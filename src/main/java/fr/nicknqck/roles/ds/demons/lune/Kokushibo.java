@@ -25,11 +25,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Kokushibo extends DemonsRoles {
 	private int itemcooldown = 0;
 	private int regencooldown = 0;
 	public boolean solo = false;
-	public Kokushibo(Player player) {
+	public Kokushibo(UUID player) {
 		super(player);
 		regencooldown = 15;
 		this.setCanuseblade(true);

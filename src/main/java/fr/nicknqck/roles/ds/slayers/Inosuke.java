@@ -14,9 +14,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Inosuke extends SlayerRoles {
 
-	public Inosuke(Player player) {
+	public Inosuke(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
 		this.setResi(20);

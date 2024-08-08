@@ -19,9 +19,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class ZetsuBlanc extends AkatsukiRoles {
 
-	public ZetsuBlanc(Player player) {
+	public ZetsuBlanc(UUID player) {
 		super(player);
 		setChakraType(Chakras.DOTON);
 		giveItem(owner, false, getItems());

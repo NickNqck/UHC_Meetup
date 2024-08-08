@@ -11,11 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
 import java.util.function.Predicate;
 
 public class Livai extends SoldatsRoles {
 
-	public Livai(Player player) {
+	public Livai(UUID player) {
 		super(player);
 		gameState.GiveRodTridi(owner);
 		setAckerMan(true);

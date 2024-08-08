@@ -14,10 +14,11 @@ import org.bukkit.event.Listener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class DemonInferieurRole extends DemonsRoles implements Listener {
     private DemonsRoles lune;
-    public DemonInferieurRole(Player player) {
+    public DemonInferieurRole(UUID player) {
         super(player);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             List<DemonsRoles> roles = new ArrayList<>();

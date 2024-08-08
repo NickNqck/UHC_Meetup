@@ -27,7 +27,7 @@ import java.util.UUID;
 
 public class Kagaya extends SlayerRoles {
 
-	public Kagaya(Player player) {
+	public Kagaya(UUID player) {
 		super(player);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}

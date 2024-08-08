@@ -35,7 +35,7 @@ public class Warden extends UHCMcRoles {
     private final ItemStack darkness = new ItemBuilder(Material.NETHER_STAR).setLore("§7").setUnbreakable(true).setName("§9Darkness").toItemStack();
     private int cdDarkness = 0;
     private int cdCible = 0;
-    public Warden(Player player) {
+    public Warden(UUID player) {
         super(player);
         addBonusResi(10.0);
     }

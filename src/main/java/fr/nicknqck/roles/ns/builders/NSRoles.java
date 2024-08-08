@@ -9,13 +9,14 @@ import lombok.Setter;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
+@Getter
 public abstract class NSRoles extends RoleBase {
     @Setter
-    @Getter
     private boolean canBeHokage = false;
     private Chakras chakras = null;
-    public NSRoles(Player player) {
+    public NSRoles(UUID player) {
         super(player);
     }
     public abstract Intelligence getIntelligence();
@@ -27,9 +28,7 @@ public abstract class NSRoles extends RoleBase {
         chakras.getChakra().getList().add(owner.getUniqueId());
         this.chakras = chakras;
     }
-    public Chakras getChakras() {
-        return chakras;
-    }
+
     public boolean hasChakras() {
         return chakras != null;
     }

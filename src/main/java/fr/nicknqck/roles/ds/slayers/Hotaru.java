@@ -14,9 +14,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Hotaru extends SlayerRoles {
 
-	public Hotaru(Player player) {
+	public Hotaru(UUID player) {
 		super(player);
 		setLameIncassable(owner, true);
 		setLames(null);

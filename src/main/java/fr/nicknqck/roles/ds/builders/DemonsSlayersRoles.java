@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     private Lames lames;
     private boolean lameincassable = false;
     private boolean canuseblade = false;
-    public DemonsSlayersRoles(Player player) {
+    public DemonsSlayersRoles(UUID player) {
         super(player);
     }
     public Player getRightClicked(double maxDistance, int radius) {
