@@ -26,12 +26,21 @@ public class Yahaba extends DemonInferieurRole {
 	public Yahaba(UUID player) {
 		super(player);
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            List<Player> Ciblable = new ArrayList<>(gameState.getInGamePlayers());
-			Collections.shuffle(Ciblable, Main.RANDOM);
-			Ciblable.stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> !(gameState.getPlayerRoles().get(p) instanceof SlayerRoles)).forEach(Ciblable::remove);
-			Collections.shuffle(Ciblable, Main.RANDOM);
-			this.cible = Ciblable.get(0);
-			owner.sendMessage("§7Votre §ccible§7 est "+(cible != null ? cible.getDisplayName() : "inexistante"));
+            List<SlayerRoles> roles = new ArrayList<>();
+			for (Player p : gameState.getInGamePlayers()) {
+				if (!gameState.hasRoleNull(p)) {
+					if (gameState.getPlayerRoles().get(p) instanceof SlayerRoles) {
+						roles.add((SlayerRoles) gameState.getPlayerRoles().get(p));
+					}
+				}
+			}
+			if (!roles.isEmpty()) {
+				Collections.shuffle(roles, Main.RANDOM);
+				this.cible = roles.get(0).owner;
+				getMessageOnDescription().add("§7Votre§c cible§7 est§c "+cible.getName()+"§7.");
+			} else {
+				owner.sendMessage("§7Aucune cible n'a été trouver");
+			}
 		}, 60L);
 	}
 
