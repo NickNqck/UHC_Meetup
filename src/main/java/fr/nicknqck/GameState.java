@@ -824,7 +824,7 @@ public class GameState{
 		role.setGamePlayer(gamePlayer);
 		role.getGameState().getGamePlayer().put(player, gamePlayer);
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
-			if (getPlayerRoles().get(aziz).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(player).getRoles().equals(Roles.Kyogai)) {
+			if (getPlayerRoles().get(aziz).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(aziz).getRoles().equals(Roles.Kyogai)) {
 				canBeAssassin.add(aziz);
 				System.out.println(aziz.getName()+" added to canBeAssassinList, size: "+canBeAssassin.size());
 			}
