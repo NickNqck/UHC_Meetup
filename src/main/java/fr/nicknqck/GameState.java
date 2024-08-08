@@ -176,8 +176,8 @@ public class GameState{
 		Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("Conny").toItemStack(), "§bMega02600"),
 		//Solo Aot
 		Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("Eren").toItemStack(), "§bNickNqck"),
-		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("Titan Ultime").toItemStack(), "§bNickNqck"),
 		Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("Gabi").toItemStack(), "§bNickNqck"),
+		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("Titan Ultime").toItemStack(), "§bNickNqck"),
 		//Jubi ns
 		Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("Madara").toItemStack(), "§aYukan"),
 		Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("Obito").toItemStack(), "§aYukan"),
