@@ -40,9 +40,7 @@ public class Patch implements Listener{
         Player victim = (Player) event.getEntity();
      	if (damager.getItemInHand() == null) return;
       	if (damager.getItemInHand().getType() == Material.AIR)return;
-	  	if (Main.isDebug()){
-		  System.out.println("Original Damage: "+event.getDamage());
-	  }
+	  	if (Main.isDebug())System.out.println("Original Damage: "+event.getDamage());
       	for (Titans titans : Titans.values()) {
     	  titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event);
       }

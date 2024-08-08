@@ -2,9 +2,8 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Lames;
 import lombok.Setter;
@@ -12,17 +11,19 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Kyojuro extends PillierRoles {
 	private int itemcooldown = 0;
-	private boolean hasdsfire = false;
 	@Setter
 	private boolean alliance = false;
 	public Kyojuro(Player player) {
 		super(player);
 		this.setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
+		givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		this.setResi(20);
 	}
 	@Override
@@ -36,6 +37,16 @@ public class Kyojuro extends PillierRoles {
 	@Override
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getLamedenichirin());
+		ItemStack FireAspect = new ItemStack(Material.ENCHANTED_BOOK);
+		EnchantmentStorageMeta BookMeta = (EnchantmentStorageMeta) FireAspect.getItemMeta();
+		BookMeta.addStoredEnchant(Enchantment.FIRE_ASPECT, 1, false);
+		FireAspect.setItemMeta(BookMeta);
+		giveItem(owner, false, FireAspect);
+		ItemStack Flame = new ItemStack(Material.ENCHANTED_BOOK);
+		EnchantmentStorageMeta FlameMeta = (EnchantmentStorageMeta) Flame.getItemMeta();
+		FlameMeta.addStoredEnchant(Enchantment.ARROW_FIRE, 1, false);
+		Flame.setItemMeta(FlameMeta);
+		giveItem(owner, false, Flame);
 		super.GiveItems();
 	}
 	@Override
@@ -52,33 +63,10 @@ public class Kyojuro extends PillierRoles {
 		super.onEat(item, gameState);
 	}
 	@Override
-	public void onDSCommandSend(String[] args, GameState gameState) {
-		if(args[0].equalsIgnoreCase("fire")) {
-			if (!hasdsfire) {
-				for (int slot = 0; slot < 9; slot++) {
-		            ItemStack item = owner.getInventory().getItem(slot);
-		            if (item != null && item.getType() == Material.BOW) {
-		            	item.addEnchantment(Enchantment.ARROW_FIRE, 1);
-	            		owner.sendMessage("Enchantement de votre Arc");
-	            		ItemsManager.instance.jsp.add(item);
-		            }
-		            if (item != null && item.getType() == Material.DIAMOND_SWORD) {
-		            	item.addEnchantment(Enchantment.FIRE_ASPECT, 1);
-	            		owner.sendMessage("Enchantement de votre Épée");
-	            		ItemsManager.instance.jsp.add(item);
-		            }
-		            hasdsfire = true;
-		        }
-			}			
-		}
-	}
-
-	@Override
 	public void Update(GameState gameState) {
-		if (Events.Alliance.getEvent().isActivated()) {
+		if (alliance) {
 			givePotionEffet(PotionEffectType.SPEED, 100, 1, true);
 		}
-		givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 20*3, 1, true);
 		if (itemcooldown >= 1) {itemcooldown--;}
 	}
 	@Override

@@ -469,9 +469,6 @@ public class AllDesc{
 			"",
 			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur possédant le rôle de: "+ChatColor.GOLD+"Akaza"+ChatColor.WHITE+" vous obtiendrez l'effet "+Resi+" 1 la "+nuit),
 			"",
-			"Commande:",
-			"",
-			"§6§l/ds fire§r: Enchant l'épée dans votre hotbar§6§l Fire Aspect 1§r et l'arc§6§l Flame 1§r",
 			bar
 	};
 	public static String[] Makomo = new String[] {
