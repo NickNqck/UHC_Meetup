@@ -37,6 +37,7 @@ public class Akaza extends DemonsRoles implements Listener {
 	private int regencooldown = 0;
 	private final TextComponent desc;
 	private final AkazaPilierRunnable runnable;
+
 	public Akaza(UUID player) {
 		super(player);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
@@ -44,7 +45,8 @@ public class Akaza extends DemonsRoles implements Listener {
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez une§c régénération§7 naturel à hauteur de§c 1/2"+ AllDesc.coeur+"§7 toute les§c 20 secondes§7.")}),
-				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toute les§c 5 minutes§7 vous êtes informer du nombre de§c pilier§7 que vous avez croiser ces§c 5 dernières minutes§7.")}));
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toute les§c 5 minutes§7 vous êtes informer du nombre de§c pilier§7 que vous avez croiser ces§c 5 dernières minutes§7.")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("")}));
 		this.desc = desc.getText();
 		this.runnable = new AkazaPilierRunnable(this);
 		this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
