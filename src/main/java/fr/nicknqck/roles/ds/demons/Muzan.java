@@ -28,7 +28,7 @@ public class Muzan extends DemonsRoles {
 
 	@Override
 	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+		return DemonType.Demon;
 	}
 	@Override
 	public TeamList getOriginTeam() {
