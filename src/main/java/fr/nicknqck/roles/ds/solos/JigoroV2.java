@@ -129,7 +129,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	@Override
 	public void FormChoosen(ItemStack item, GameState gameState) {
 		if (pacte == Pacte.Non_Choisis) {
-			JigoroV2ChoosePacteEvent choosePacteEvent = new JigoroV2ChoosePacteEvent(pacte);
+			JigoroV2ChoosePacteEvent choosePacteEvent = new JigoroV2ChoosePacteEvent(pacte, owner);
 			if (item.isSimilar(GUIItems.getJigoroPacte1())) {
 				pacte = Pacte.Pacte1;
 				choosePacteEvent.setPacte(pacte);
