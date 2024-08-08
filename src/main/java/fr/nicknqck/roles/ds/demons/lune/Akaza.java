@@ -22,7 +22,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -32,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Akaza extends DemonsRoles implements Listener {
+public class Akaza extends DemonsRoles {
 
 	private int regencooldown = 0;
 	private final TextComponent desc;
@@ -50,7 +49,6 @@ public class Akaza extends DemonsRoles implements Listener {
 		this.desc = desc.getText();
 		this.runnable = new AkazaPilierRunnable(this);
 		this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
 	public DemonType getRank() {
