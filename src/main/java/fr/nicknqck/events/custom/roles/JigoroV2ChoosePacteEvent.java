@@ -14,7 +14,7 @@ public class JigoroV2ChoosePacteEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private JigoroV2.Pacte pacte;
-    private boolean cancelled;
+    private boolean cancelled = false;
     private final Player jigoro;
     public JigoroV2ChoosePacteEvent(JigoroV2.@NonNull Pacte pacte, Player jigoro) {
         this.pacte = pacte;

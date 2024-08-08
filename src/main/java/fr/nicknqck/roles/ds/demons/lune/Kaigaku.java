@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.roles.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -10,6 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -24,7 +29,7 @@ import fr.nicknqck.utils.RandomUtils;
 
 import java.util.UUID;
 
-public class Kaigaku extends DemonsRoles {
+public class Kaigaku extends DemonsRoles implements Listener {
 
 	private boolean killzen = false;
 	private int cooldownquatriememouvement = 0;
@@ -36,12 +41,10 @@ public class Kaigaku extends DemonsRoles {
 		getKnowedRoles().add(Muzan.class);
 		setLameIncassable(owner, true);
 	}
-
 	@Override
 	public DemonType getRank() {
 		return DemonType.LuneSuperieur;
 	}
-
 	@Override
 	public Roles getRoles() {
 		return Roles.Kaigaku;
@@ -66,12 +69,6 @@ public class Kaigaku extends DemonsRoles {
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-				if (getPlayerRoles(p) instanceof ZenItsu) {
-					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
-				}
 				if (getPlayerRoles(p) instanceof JigoroV2 && gameState.JigoroV2Pacte2) {
 					owner.sendMessage("La personne possédant le rôle de§6 Jigoro§r est:§6 "+p.getName());
 				}
@@ -86,12 +83,10 @@ public class Kaigaku extends DemonsRoles {
 		owner.getInventory().addItem(Items.getLamedenichirin());
 		super.GiveItems();
 	}
-
 	@Override
 	public String getName() {
 		return "Kaigaku";
 	}
-
 	@Override
 	public void Update(GameState gameState) {
 		if (owner.getItemInHand().isSimilar(Items.getSoufleFoudre4iememouvement())) {
@@ -239,5 +234,17 @@ public class Kaigaku extends DemonsRoles {
 			}
 		}
 		super.ItemUseAgainst(item, victim, gameState);
+	}
+	@EventHandler
+	private void onEndGame(EndGameEvent event) {
+		HandlerList.unregisterAll(this);
+	}
+	@EventHandler
+	private void onJigoroPacte(JigoroV2ChoosePacteEvent event) {
+		if (!event.isCancelled()) {
+			if (event.getPacte().equals(JigoroV2.Pacte.PacteKaigaku)) {
+				getKnowedRoles().add(JigoroV2.class);
+			}
+		}
 	}
 }
