@@ -72,7 +72,7 @@ public abstract class RoleBase implements IRole {
 	@Setter
 	private String suffixString = "";
 	@Getter
-	private List<RoleBase> knowedRoles = new ArrayList<>();
+	private List<Class<? extends RoleBase>> knowedRoles = new ArrayList<>();
 	@Getter
 	private List<String> messageOnDescription = new ArrayList<>();
 	public abstract String[] Desc();

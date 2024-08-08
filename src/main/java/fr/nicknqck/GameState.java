@@ -1030,11 +1030,12 @@ public class GameState{
 			player.spigot().sendMessage(getPlayerRoles().get(player).getComponent());
 			RoleBase role = getPlayerRoles().get(player);
 			if (!role.getKnowedRoles().isEmpty()) {
-				for (RoleBase know : role.getKnowedRoles()) {
+				for (Class<? extends RoleBase> know : role.getKnowedRoles()) {
 					for (Player p : getInGamePlayers()) {
 						if (!hasRoleNull(p)) {
-							if (getPlayerRoles().get(p).equals(know)) {
-								player.sendMessage(know.getOriginTeam().getColor()+p.getDisplayName()+"§7 possède le rôle: "+know.getOriginTeam().getColor()+know.getName());
+							if (getPlayerRoles().get(p).getClass().equals(know)) {
+								String teamColor = getPlayerRoles().get(p).getOriginTeam().getColor();
+								player.sendMessage(teamColor+p.getDisplayName()+"§7 possède le rôle: "+teamColor+getPlayerRoles().get(p).getName());
 							}
 						}
 					}
