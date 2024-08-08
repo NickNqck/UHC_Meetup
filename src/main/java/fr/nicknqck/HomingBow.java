@@ -1,7 +1,6 @@
 package fr.nicknqck;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -10,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -27,14 +25,7 @@ public class HomingBow implements Listener {
 	}
 	   
 	private boolean truc = false;
-	public boolean isBowWithSpecificItem(Player player) {
-	    if (player.getItemInHand().getType() == Material.BOW) {
-	        ItemStack bowItem = player.getItemInHand();
-	        // Vérifier si l'arc correspond à l'ItemStack spécifique
-            return bowItem.isSimilar(Items.getSusamaruBow());
-	    }
-	    return false;
-	}
+
 	@EventHandler
     public void onProjectileLaunch(ProjectileLaunchEvent event) {
 		Projectile projectile = event.getEntity();
@@ -139,10 +130,9 @@ public class HomingBow implements Listener {
 		                        }                				
 		                    }
 		                    if (sam.Niveau2) {
-		                        Player player = shooter;
-		                        if (player.getGameMode() != org.bukkit.GameMode.CREATIVE) {
-		                            player.setAllowFlight(false); // Disable flight if the arrow hits a block
-		                            player.setFlying(false);
+                                if (shooter.getGameMode() != org.bukkit.GameMode.CREATIVE) {
+		                            shooter.setAllowFlight(false); // Disable flight if the arrow hits a block
+		                            shooter.setFlying(false);
 		                        } else {
 		                            shooter.sendMessage("Pourquoi tu triches ?");
 		                        }
