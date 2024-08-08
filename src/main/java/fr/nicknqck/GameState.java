@@ -84,6 +84,13 @@ public class GameState{
 	@Getter
 	@Setter
 	private int minTimeSpawnBiju = 90;
+	public int DKTProba = 0;
+	public int AllianceProba = 0;
+	public int AllianceTime = 60;
+	public int AkazaVSKyojuroProba = 0;
+	public int AkazaVsKyojuroTime = 60;
+	public int nmbArrow = 24;
+	public boolean LaveTitans = true;
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -157,20 +164,20 @@ public class GameState{
 		TitanDeviant(TeamList.Titan, "aot", 4, new ItemBuilder(Material.SNOW_BALL).setName("Titan Deviant").toItemStack(), "§bNickNqck"),
 		Jelena(TeamList.Titan, "aot", 3, new ItemBuilder(Material.CHEST).setName("Jelena").toItemStack(), "§bNickNqck"),
 		//Soldat aot
-		Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("Livai").toItemStack(), "§bNickNqck"),
-		Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("Soldat").toItemStack(), "§bNickNqck"),
+		Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("Livai").toItemStack(), "§bMega02600"),
+		Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("Soldat").toItemStack(), "§bMega02600"),
 		Erwin(TeamList.Soldat, "aot", 2, new ItemBuilder(Material.SIGN).setName("Erwin").toItemStack(), "§bNickNqck"),
-		Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("Gabi").toItemStack(), "§bNickNqck"),
 		Armin(TeamList.Soldat, "aot", 3, new ItemBuilder(Material.CHEST).setName("Armin").toItemStack(), "§bNickNqck"),
-		Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("Eren").toItemStack(), "§bNickNqck"),
-		Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("Eclaireur").toItemStack(), "§bNickNqck"),
-		Jean(TeamList.Soldat, "aot", 5, new ItemBuilder(Material.FIREWORK).setName("Jean").toItemStack(), "§bNickNqck"),
-		Onyankopon(TeamList.Soldat, "aot", 6, new ItemBuilder(Material.ENDER_PEARL).setName("Onyankopon").toItemStack(), "§bNickNqck"),
-		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("Titan Ultime").toItemStack(), "§bNickNqck"),
+		Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("Eclaireur").toItemStack(), "§bMega02600"),
+		Jean(TeamList.Soldat, "aot", 5, new ItemBuilder(Material.FIREWORK).setName("Jean").toItemStack(), "§bMega02600"),
+		Onyankopon(TeamList.Soldat, "aot", 6, new ItemBuilder(Material.ENDER_PEARL).setName("Onyankopon").toItemStack(), "§bMega02600"),
 		Hansi(TeamList.Soldat, "aot", 7, new ItemBuilder(Material.THIN_GLASS).setName("Hansi").toItemStack(), "§bNickNqck"),
 		Sasha(TeamList.Soldat, "aot", 8, new ItemBuilder(Material.BOW).setName("Sasha").toItemStack(), "§bNickNqck"),
 		Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("Conny").toItemStack(), "§bMega02600"),
-		
+		//Solo Aot
+		Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("Eren").toItemStack(), "§bNickNqck"),
+		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("Titan Ultime").toItemStack(), "§bNickNqck"),
+		Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("Gabi").toItemStack(), "§bNickNqck"),
 		//Jubi ns
 		Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("Madara").toItemStack(), "§aYukan"),
 		Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("Obito").toItemStack(), "§aYukan"),
@@ -879,7 +886,7 @@ public class GameState{
 		}
 	}
 	public int DKminTime = 60*30;
-	public GameListener gamelist() {return GameListener.getInstance();}
+
 	public int getroleNMB() {
 		int nmbrole = 0;
 		for (Roles r : getAvailableRoles().keySet()) {
@@ -1058,13 +1065,6 @@ public class GameState{
 		}
 		return null;
 	}
-	public int DKTProba = 0;
-	public int AllianceProba = 0;
-	public int AllianceTime = 60;
-	public int AkazaVSKyojuroProba = 0;
-	public int AkazaVsKyojuroTime = 60;
-	public int nmbArrow = 24;
-	public boolean LaveTitans = true;
 	public String getRolesList() {
 		Map<TeamList, List<Roles>> hashMap = new LinkedHashMap<>();
 		StringBuilder tr = new StringBuilder();
