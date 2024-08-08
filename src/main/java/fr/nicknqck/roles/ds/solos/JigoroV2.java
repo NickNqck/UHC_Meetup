@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.roles.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -82,7 +83,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		return "Jigoro§7 (§6V2§7)";
 	}
 
-	private enum Pacte{
+	public enum Pacte{
 		Non_Choisis,
 		Pacte1,
 		Pacte2,
@@ -128,52 +129,69 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	@Override
 	public void FormChoosen(ItemStack item, GameState gameState) {
 		if (pacte == Pacte.Non_Choisis) {
+			JigoroV2ChoosePacteEvent choosePacteEvent = new JigoroV2ChoosePacteEvent(pacte);
 			if (item.isSimilar(GUIItems.getJigoroPacte1())) {
 				pacte = Pacte.Pacte1;
-				owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
-				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
-				owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+				choosePacteEvent.setPacte(pacte);
 			}
 			if (item.isSimilar(GUIItems.getJigoroPacte2())) {
 				pacte = Pacte.Pacte2;
-				owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
-				for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
-					if (!gameState.hasRoleNull(p)) {//vérifie que p a un role
-						if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {//si p est kaigaku
-							owner.sendMessage(p.getName()+" est§c Kaigaku");
-							kaigaku = (Kaigaku) gameState.getPlayerRoles().get(p);
-							gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
-							setTeam(TeamList.Jigoro);
-							p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
-							kaigaku.getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-							p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getOriginTeam().name());
-							kaigaku.owner.sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
-							gameState.JigoroV2Pacte2 = true;
-							owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
-							break;
-						}
-					}
-				}
+				choosePacteEvent.setPacte(pacte);
 			}
 			if (item.isSimilar(GUIItems.getJigoroPacte3())) {
 				pacte = Pacte.Pacte3;
-				owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
-				gameState.JigoroV2Pacte3 = true;
-				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-				for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
-					if (gameState.getPlayerRoles().containsKey(p)) {//vérifie que p a un role
-						if (gameState.getPlayerRoles().get(p) instanceof ZenItsu) {//si p est ZenItsu
-							owner.sendMessage(p.getName()+" est§a ZenItsu");
-							zen = p;
-							gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
-							setTeam(TeamList.Jigoro);
-							p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
-							p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getOriginTeam().name());
-							
-							p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-							owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+				choosePacteEvent.setPacte(pacte);
+			}
+			Bukkit.getPluginManager().callEvent(choosePacteEvent);
+			if (!choosePacteEvent.isCancelled()) {
+				switch (choosePacteEvent.getPacte()) {
+					case Pacte1:
+						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
+						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
+						owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+						break;
+					case Pacte2:
+						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
+						for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
+							if (!gameState.hasRoleNull(p)) {//vérifie que p a un role
+								if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {//si p est kaigaku
+									owner.sendMessage(p.getName()+" est§c Kaigaku");
+									kaigaku = (Kaigaku) gameState.getPlayerRoles().get(p);
+									gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
+									setTeam(TeamList.Jigoro);
+									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
+									kaigaku.getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+									p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getOriginTeam().name());
+									kaigaku.owner.sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
+									gameState.JigoroV2Pacte2 = true;
+									owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+									break;
+								}
+							}
 						}
-					}
+						break;
+					case Pacte3:
+						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
+						gameState.JigoroV2Pacte3 = true;
+						owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
+						for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
+							if (gameState.getPlayerRoles().containsKey(p)) {//vérifie que p a un role
+								if (gameState.getPlayerRoles().get(p) instanceof ZenItsu) {//si p est ZenItsu
+									owner.sendMessage(p.getName()+" est§a ZenItsu");
+									zen = p;
+									gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
+									setTeam(TeamList.Jigoro);
+									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
+									p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getOriginTeam().name());
+
+									p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
+									owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+								}
+							}
+						}
+						break;
+					default:
+						break;
 				}
 			}
 		}

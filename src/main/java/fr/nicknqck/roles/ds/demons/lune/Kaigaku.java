@@ -32,16 +32,8 @@ public class Kaigaku extends DemonsRoles {
 	public Kaigaku(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof ZenItsu) {
-					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
-				}
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
+		getKnowedRoles().add(ZenItsu.class);
+		getKnowedRoles().add(Muzan.class);
 		setLameIncassable(owner, true);
 	}
 

@@ -81,7 +81,7 @@ public abstract class RoleBase implements IRole {
 	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
-	private UUID uuidOwner;
+	private final UUID uuidOwner;
 	public RoleBase(UUID player) {
 		Player owner = Bukkit.getPlayer(player);
 		this.owner = owner;
@@ -101,20 +101,18 @@ public abstract class RoleBase implements IRole {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
 				}
         }, 20);
-		if (owner != null) {
-			this.uuidOwner = owner.getUniqueId();
-			owner.sendMessage("");
-			owner.setAllowFlight(false);
-			owner.setFlying(false);
-			owner.setGameMode(GameMode.SURVIVAL);
-			actualTridiCooldown = -1;
-			roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
-			System.out.println(owner.getName()+", RoleID: "+roleID);
-			StringID = RandomUtils.generateRandomString(24);
-			System.out.println(owner.getName()+", StringID: "+StringID);
-		    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 1);
-		}
-		new BukkitRunnable() {
+        this.uuidOwner = owner.getUniqueId();
+        owner.sendMessage("");
+        owner.setAllowFlight(false);
+        owner.setFlying(false);
+        owner.setGameMode(GameMode.SURVIVAL);
+        actualTridiCooldown = -1;
+        roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
+        System.out.println(owner.getName()+", RoleID: "+roleID);
+        StringID = RandomUtils.generateRandomString(24);
+        System.out.println(owner.getName()+", StringID: "+StringID);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
+        new BukkitRunnable() {
 			
 			@Override
 			public void run() {
