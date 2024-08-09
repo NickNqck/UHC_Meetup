@@ -45,7 +45,7 @@ public class RodTridimensionnelle implements Listener {
         if (!gameState.hasRoleNull(player)) {
         	RoleBase roleBase = gameState.getPlayerRoles().get(player);
         	if (roleBase instanceof KillerBee) {
-        		if (roleBase.isCanTentacule()) {
+        		if (((KillerBee) roleBase).isCanTentacule()) {
         			FishHook fishHook = (FishHook) event.getEntity();
         	        Location eyeLocation = player.getEyeLocation().clone();
         	        fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
@@ -170,7 +170,9 @@ public class RodTridimensionnelle implements Listener {
                 this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(role.gazAmount)+"%");
                 gameState.getPlayerRoles().get(this.player).setActualTridiCooldown(gameState.TridiCooldown);
             } else {
-				gameState.getPlayerRoles().get(player).onTentaculeEnd(r);
+                if (gameState.getPlayerRoles().get(player) instanceof KillerBee) {
+                    ((KillerBee) gameState.getPlayerRoles().get(player)).onTentaculeEnd(r);
+                }
             }
         }
     }

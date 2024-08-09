@@ -145,7 +145,7 @@ public class KillerBee extends ShinobiRoles {
 		}
 		return super.ItemUse(item, gameState);
 	}
-	@Override
+
 	public boolean isCanTentacule() {
 		if (cdTentacule > 0) {
 			sendCooldown(owner, cdTentacule);
@@ -157,7 +157,7 @@ public class KillerBee extends ShinobiRoles {
 		}
 		return true;
 	}
-	@Override
+
 	public void onTentaculeEnd(double distanceSquared) {
 		cdTentacule = 30;
 		owner.sendMessage("§7Pouvoir de la §aTentacule§7.");

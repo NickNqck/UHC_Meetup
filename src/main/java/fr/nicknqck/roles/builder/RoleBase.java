@@ -502,7 +502,6 @@ public abstract class RoleBase implements IRole {
 	public void onALLPlayerDropItem(PlayerDropItemEvent e, Player dropper, ItemStack item) {}
 	public void onALLPlayerRecupItem(PlayerPickupItemEvent e, ItemStack s) {}
 	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {}
-
 	public void damage(Player target, double damage, int delay) {
 		if (target != null && target.isOnline()) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -572,7 +571,6 @@ public abstract class RoleBase implements IRole {
 		return false;
 	}
 	public void neoFormChoosen(ItemStack item, Inventory inv, int slot, GameState gameState) {}
-
 	public void onJubiInvoque(Player invoquer) {}
 	public boolean onReceveExplosionDamage() {return false;}
 	public void onAllPlayerDamageByExplosion(EntityDamageEvent event, DamageCause cause, Player p) {}
@@ -584,14 +582,6 @@ public abstract class RoleBase implements IRole {
 	}
 	public HashMap<UUID, String> customName = new HashMap<>();
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
-
-	public boolean isCanTentacule() {
-		return false;//Simple methode for only Killer Bee
-	}
-
-	public void onTentaculeEnd(double distanceSquared) {
-		//Simple method for only Killer Bee
-	}
 
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		return false;
