@@ -230,7 +230,6 @@ public class Itachi extends AkatsukiRoles {
 	public Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
-
 	private void openIzanamiInventory() {
 		owner.closeInventory();
 		if (izanami == null) {

@@ -462,6 +462,7 @@ public class GameListener implements Listener {
 				}
 	        }, 20);
 		}, 1);
+		gameState.hasPregen = false;
 		System.out.println("game ended");
 	}
 	public static void SendToEveryone(String message) {for (Player p : Bukkit.getOnlinePlayers()) {p.sendMessage(message);}}
