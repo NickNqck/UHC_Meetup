@@ -100,7 +100,7 @@ public class Squelette extends OverWorldRoles {
                             target = onlinePlayer;
                     }
                     if(target == null) return;
-                    entity.setVelocity(target.getLocation().toVector().subtract(entity.getLocation().toVector()));
+                    entity.setVelocity(target.getLocation().toVector().subtract(shooter.getLocation().toVector()));
                     KorosuCount = 0;
                 }
             }
