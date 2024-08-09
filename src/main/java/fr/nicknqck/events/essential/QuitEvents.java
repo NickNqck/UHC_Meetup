@@ -7,6 +7,7 @@ import fr.nicknqck.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -15,7 +16,7 @@ public class QuitEvents implements Listener{
 	public QuitEvents() {
 		this.gameState = GameState.getInstance();
 	}
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void OnDisconnect(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		Main.getInstance().getScoreboardManager().onLogout(player);
@@ -42,10 +43,7 @@ public class QuitEvents implements Listener{
 	        }
 	        event.setQuitMessage(quitMessage);
 	        System.out.println("Le joueur: " + player.getName() + " c'est deconnecter il est donc mort suite a ceci");
-	        if (gameState.getInGamePlayers().size() <= 1) {
-				if (gameState.getInGamePlayers().size() == 1) GameListener.detectWin(gameState);
-				if (gameState.getInGamePlayers().isEmpty()) GameListener.detectWin(gameState);
-			}
+			GameListener.detectWin(gameState);
 	    }
 	}
 }

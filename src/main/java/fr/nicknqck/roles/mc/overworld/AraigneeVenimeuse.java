@@ -58,11 +58,11 @@ public class AraigneeVenimeuse extends RoleBase {
     @Override
     public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
         if (entity.getUniqueId() == owner.getUniqueId()){
-            if(owner.getItemInHand()){
+        /*    if(owner.getItemInHand()){
                 if (poison){
                     givePotionEffet(victim, PotionEffectType.POISON, 2,1,true);
                 }
-            }
+            }*/
         }
         super.onALLPlayerDamageByEntity(event, victim, entity);
     }
