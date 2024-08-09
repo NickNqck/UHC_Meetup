@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class Poulet extends OverWorldRoles {
 
-    private final ItemStack plumeItem = new ItemBuilder(Material.FEATHER).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§7Permet de voler pendant 3 secondes").setName("§aPlume").toItemStack();
+    private final ItemStack plumeItem = new ItemBuilder(Material.FEATHER).addEnchant(Enchantment.ARROW_DAMAGE, 4).setLore("§7Permet de voler pendant 3 secondes").setName("§aPlume").hideAllAttributes().toItemStack();
     private int cdplume = 0;
 
     public Poulet(UUID player) {
