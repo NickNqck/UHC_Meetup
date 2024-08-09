@@ -22,6 +22,7 @@ public class RoleGiveEvent extends Event {
         this.type = roleType;
         this.gamePlayer = gamePlayer;
     }
+    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
     }

@@ -42,7 +42,6 @@ import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.roles.valo.agents.Iso;
 import fr.nicknqck.scenarios.impl.FFA;
-import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -56,7 +55,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class GameState{
@@ -72,7 +70,6 @@ public class GameState{
 	public int WaterEmptyTiming = 30;
 	public int LavaEmptyTiming = 30;
 	public boolean pregenNakime = false;
-	//public static Roles setPlayerRoles;
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
 	@Getter
@@ -90,6 +87,11 @@ public class GameState{
 	public int AkazaVsKyojuroTime = 60;
 	public int nmbArrow = 24;
 	public boolean LaveTitans = true;
+	@Getter
+	public int TimingAssassin = 10;
+	public boolean morteclair = true;
+	@Getter
+	public final List<UUID> Host = new ArrayList<>();
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -280,18 +282,15 @@ public class GameState{
 	@Getter
 	@Setter
 	private MDJ mdj = MDJ.Aucun;
-
 	public boolean isAllMdjNull() {
 		return mdj == MDJ.Aucun;
 	}
-
 	@Getter
 	public int roleTimer = 1;
 	public int pvpTimer = 1;
 	public int getPvPTimer() {
 		return pvpTimer;
 	}
-
 	public boolean JigoroV2Pacte2 = false;
 	public boolean JigoroV2Pacte3 = false;
 	@Setter
@@ -312,8 +311,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private ArrayList<Player> inSpecPlayers = new ArrayList<>();
-
-	//GameListener 698
 	@Getter
 	public ArrayList<Player> Charmed = new ArrayList<>();
 	@Setter
@@ -325,7 +322,6 @@ public class GameState{
 	@Getter
 	@Setter
 	int inGameTime = 0;
-
 	@Getter
 	public boolean nightTime = false;
 	boolean prevNightTime = true;
@@ -850,34 +846,24 @@ public class GameState{
 		System.out.println("Starting Assassin System");
 		assa.start(this);
 	}
-	@Getter
-	public int TimingAssassin = 10;
-	public boolean morteclair = true;
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
-	public DecimalFormat getDecimalFormat(String format) {
-		return new DecimalFormat(format);
-	}
-	@Setter
-	@Getter
-	public List<UUID> Host = new ArrayList<>();
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (inLobbyPlayers.size() == this.getroleNMB());}
 	public void initEvents() {
 		for (Events eventType : getAvailableEvents()) {
-			if (RandomUtils.getOwnRandomProbability(50)) {
-				switch (eventType) {
+			switch (eventType) {
 				case DemonKingTanjiro:
 					addInGameEvents(Events.DemonKingTanjiro.getEvent());
-					break;
+				break;
 				case Alliance:
 					addInGameEvents(Events.Alliance.getEvent());
-					break;
+				break;
 				case AkazaVSKyojuro:
 					addInGameEvents(Events.AkazaVSKyojuro.getEvent());
-					break;
+				break;
 				}
-			}
+
 		}
 	}
 	public int DKminTime = 60*30;
