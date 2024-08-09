@@ -34,7 +34,7 @@ public class RayTrace
     }
     
     public List<Vector> traverse(final double blocksAway, final double accuracy) {
-        final List<Vector> positions = new ArrayList<Vector>();
+        final List<Vector> positions = new ArrayList<>();
         for (double d = 0.0; d <= blocksAway; d += accuracy) {
             positions.add(this.getPostion(d));
         }

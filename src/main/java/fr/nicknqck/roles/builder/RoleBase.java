@@ -353,31 +353,26 @@ public abstract class RoleBase implements IRole {
 		}, delayinTick);
 	}
 	public void onProjectileLaunch(Projectile projectile, Player shooter) {}
-
 	public void onProjectileHit(Projectile entity, Player shooter) {}
-
-
-
-	 public void listPotionEffects(Player target, Player receiver) {
-	        receiver.sendMessage("\nEffets de potion actifs pour§7 " + target.getName() + "§r:");
-	        for (PotionEffect effect : target.getActivePotionEffects()) {
-	            PotionEffectType type = effect.getType();
-	            if (type != PotionEffectType.ABSORPTION) {
-	            	String effectName = formatEffectName(type.getName());
-		            String message = ChatColor.GRAY + "- " + effectName;
-		            receiver.sendMessage(message);	
-	            }
-	        }
-	    }
-	 public String formatEffectName(String effectName) {
-	        // Formater le nom de l'effet de potion en ajoutant des espaces entre les mots
-	        String[] words = effectName.split("_");
-	        StringBuilder formattedName = new StringBuilder();
-	        for (String word : words) {
-	            formattedName.append(ChatColor.WHITE).append(word.substring(0, 1).toUpperCase()).append(word.substring(1)).append(" ");
-	        }
-	        return formattedName.toString().trim();
-	    }
+	public void listPotionEffects(Player target, Player receiver) {
+		receiver.sendMessage("\nEffets de potion actifs pour§7 " + target.getName() + "§r:");
+	    for (PotionEffect effect : target.getActivePotionEffects()) {
+			PotionEffectType type = effect.getType();
+			if (type != PotionEffectType.ABSORPTION) {
+				String effectName = formatEffectName(type.getName());
+				String message = ChatColor.GRAY + "- " + effectName;
+				receiver.sendMessage(message);
+			}
+		}
+	}
+	private String formatEffectName(String effectName) {
+		String[] words = effectName.split("_");
+		StringBuilder formattedName = new StringBuilder();
+		for (String word : words) {
+			formattedName.append(ChatColor.WHITE).append(word.substring(0, 1).toUpperCase()).append(word.substring(1)).append(" ");
+		}
+		return formattedName.toString().trim();
+	}
 	public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {}
 
 	public void onEndGame() {
@@ -459,17 +454,6 @@ public abstract class RoleBase implements IRole {
         }
         return null;
     }
-	public Location getTargetLocation(Player player, double distanceMax) {
-        RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
-        List<Vector> positions = rayTrace.traverse(distanceMax, 0.05D);
-        for (Vector vector : positions) {
-            Location position = vector.toLocation(player.getWorld());
-            if (position != null) {
-            	return position;
-            }
-        }
-        return null;
-    }
 	public static Location getTargetLocation(Player player, int maxDistance) {
         BlockIterator blockIterator = new BlockIterator(player, maxDistance);
         
@@ -483,17 +467,9 @@ public abstract class RoleBase implements IRole {
 
         // Si aucune cible n'est trouvée, retournez la position du joueur à la distance maximale
         Vector targetDirection = player.getLocation().getDirection().normalize().multiply(maxDistance);
-        Location targetLocation = player.getLocation().add(targetDirection);
-        return targetLocation;
+        return player.getLocation().add(targetDirection);
     }
-	@Getter
-	@Setter
-	private boolean canVoleTitan = false;
-
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {}
-	private boolean ackerman = false;
-	public boolean isAckerMan() {return ackerman;}
-	public void setAckerMan(boolean b) {ackerman = b;}
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {}
 	@SuppressWarnings("deprecation")
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {}
