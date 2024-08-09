@@ -68,7 +68,6 @@ public class Main extends JavaPlugin implements Listener{
 	public static List<Chunk> keepChunk = new ArrayList<>();
 	@Getter
 	private GetterList getterList;
-
 	@Getter
 	private static Main Instance;
 	public static Random RANDOM;
@@ -88,12 +87,14 @@ public class Main extends JavaPlugin implements Listener{
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
-		this.gameWorld = Bukkit.getWorld(getConfig().getString("gameworld"));
 		gameState.world = gameWorld;
-
-		gameWorld.setGameRuleValue("randomTickSpeed", "3");
-		gameWorld.setGameRuleValue("doMobSpawning", "false");
-		gameWorld.setGameRuleValue("doFireTick", "false");
+		WorldCreator creator = new WorldCreator("arena");
+		creator.generatorSettings(getBase());
+		World gameWorld = creator.createWorld();
+		this.gameWorld = gameWorld;
+		this.gameWorld.setGameRuleValue("randomTickSpeed", "3");
+		this.gameWorld.setGameRuleValue("doMobSpawning", "false");
+		this.gameWorld.setGameRuleValue("doFireTick", "false");
 		initPlugin(gameState);
 		EnableScoreboard(gameState);
 		registerEvents(gameState);
@@ -114,7 +115,6 @@ public class Main extends JavaPlugin implements Listener{
 			p.teleport(new Location(p.getWorld(), 0, 151, 0));
 			p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
-		
 		System.out.println("["+PLUGIN_NAME+"] Enabled");
 		giveTab(gameState);
 
@@ -312,17 +312,18 @@ public class Main extends JavaPlugin implements Listener{
 		return debug;
 	}
 	public static String getBase() {
-        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 600+
-        		",\"depthNoiseScaleZ\":" + 600 +
-        		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0,\"seaLevel\":" + 63 + 
+        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 1000+
+        		",\"depthNoiseScaleZ\":" + 1000 +
+        		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +
+				"\"seaLevel\":" + 60 +
         		",\"useCaves\":" + true + //S'il y aura des caves ou non
         		",\"useDungeons\":" + true + //S'il y aura des dongeons ou non
         		",\"dungeonChance\":" + 8 + //Probo dongeon 8 = vanilla
         		",\"useStrongholds\":" + true + //S'il y aura des strongholds
         		",\"useVillages\":" + true + //S'il y aura des villages ou non
-        		",\"useMineShafts\":" + true + //S'il y aura des mineshafts ou non
-        		",\"useTemples\":" + true + //S'il y aura des temples de la jungle
-        		",\"useMonuments\":" + true+ //
+        		",\"useMineShafts\":" + false + //S'il y aura des mineshafts ou non
+        		",\"useTemples\":" + false + //S'il y aura des temples de la jungle
+        		",\"useMonuments\":" + false+ //
         		",\"useRavines\":" + true + //Si il y aura des failles ou non
         		",\"useWaterLakes\":" + true + //S'il y aura des lacs d'eau
         		",\"waterLakeChance\":" + 4 + //La proba d'avoir des lacs d'eau 4 = vanilla
@@ -339,8 +340,8 @@ public class Main extends JavaPlugin implements Listener{
         		",\"ironCount\":" + 20 + 
         		",\"ironMinHeight\":" + 0 + 
         		",\"ironMaxHeight\":" + 64 + 
-        		",\"goldSize\":" + 9 +
-        		",\"goldCount\":" + 2 + 
+        		",\"goldSize\":" + 11 +
+        		",\"goldCount\":" + 4 +
         		",\"goldMinHeight\":" + 0 + 
         		",\"goldMaxHeight\":" + 32 + 
         		",\"redstoneSize\":" + 8 + 
