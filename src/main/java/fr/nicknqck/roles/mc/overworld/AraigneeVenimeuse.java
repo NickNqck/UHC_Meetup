@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.mc.builders.UHCMcRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -14,10 +14,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.UUID;
 
-public class AraigneeVenimeuse extends RoleBase {
+public class AraigneeVenimeuse extends UHCMcRoles {
 
     private final ItemStack ToileItem = new ItemBuilder(Material.WEB).setName("§aToile d'araignée").setLore("§7Vous permez de poser une toile d'araigée sous un joueur").addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).hideAllAttributes().toItemStack();
     private boolean poison = false;
+    private int cdToile = 0;
 
     public AraigneeVenimeuse(UUID player) {
         super(player);
@@ -37,7 +38,7 @@ public class AraigneeVenimeuse extends RoleBase {
 
     @Override
     public String getName() {
-        return "";
+        return "Araignée venimeuse";
     }
 
     @Override
@@ -58,12 +59,43 @@ public class AraigneeVenimeuse extends RoleBase {
     @Override
     public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
         if (entity.getUniqueId() == owner.getUniqueId()){
-        /*    if(owner.getItemInHand()){
+            if(owner.getItemInHand().getType().equals(Material.DIAMOND_SWORD)){
                 if (poison){
                     givePotionEffet(victim, PotionEffectType.POISON, 2,1,true);
                 }
-            }*/
+            }
         }
         super.onALLPlayerDamageByEntity(event, victim, entity);
+    }
+
+    @Override
+    public void onMcCommand(String[] args) {
+        if (args[0].equalsIgnoreCase("poison")) {
+            if (poison){
+                owner.sendMessage("Vous venez de désactiver votre passif §aPoison§r.");
+                poison = false;
+            } else {
+                owner.sendMessage("Vous venez d'activer votre passif §aPoison§r.");
+                poison = true;
+            }
+        }
+        super.onMcCommand(args);
+    }
+
+    @Override
+    public boolean ItemUse(ItemStack item, GameState gameState) {
+        if (item.isSimilar(ToileItem)){
+            if (cdToile <= 0){
+                Player target = getTargetPlayer(owner, 30);
+                if (target == null) {
+                    owner.sendMessage("§cIl faut viser un joueur !");
+                    return true;
+                }
+                owner.sendMessage("Vous venez de placez une §atoile d'araignée §rsous les pieds de "+target.getName()+".");
+                target.sendMessage("§cVous venez de marcher dans une toile d'araignée!");
+                target.getLocation().getBlock().setType(Material.WEB);
+            }
+        }
+        return super.ItemUse(item, gameState);
     }
 }

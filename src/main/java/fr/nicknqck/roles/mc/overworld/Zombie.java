@@ -40,7 +40,7 @@ public class Zombie extends OverWorldRoles {
                 "",
                 AllDesc.effet,
                 "",
-                AllDesc.point+"Vous possédez "+AllDesc.Force+" 1 la §8nuit ainsi que "+AllDesc.weak+" 1 le §ejour",
+                AllDesc.point+"Vous possédez "+AllDesc.Force+" 1 la §8nuit ainsi que "+AllDesc.weak+" 1 le §ejour §csi vous ne possédez pas §rde §bcasque en diamant",
                 "",
                 AllDesc.items,
                 "",
@@ -150,8 +150,10 @@ public class Zombie extends OverWorldRoles {
         if (gameState.nightTime){
             givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 3*20 , 1 ,false);
         } else {
-            if (!CerveauActive){
-                givePotionEffet(PotionEffectType.WEAKNESS, 3*20,1,false);
+            if (owner.getEquipment().getHelmet().getType().equals(Material.DIAMOND_HELMET)) {
+                if (!CerveauActive) {
+                    givePotionEffet(PotionEffectType.WEAKNESS, 3 * 20, 1, false);
+                }
             }
         }
         super.Update(gameState);
