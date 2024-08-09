@@ -26,7 +26,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
-import fr.nicknqck.worlds.WorldGenerator;
 import lombok.Getter;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
@@ -135,7 +134,6 @@ public class Main extends JavaPlugin implements Listener{
 		scheduledExecutorService = Executors.newScheduledThreadPool(16);
         executorMonoThread = Executors.newScheduledThreadPool(1);
         scoreboardManager = new ScoreboardManager(gameState);
-        SchedulerRunnable.register(this);
         getScoreboardManager().onEnable();
 		System.out.println("End enable scoreboard");
 	}
@@ -153,7 +151,6 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
 		getServer().getPluginManager().registerEvents(new HomingBow(gameState), this);
 		getServer().getPluginManager().registerEvents(new BlockManager(gameState), this);
-		getServer().getPluginManager().registerEvents(new WorldGenerator(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemsManager(gameState), this);
 		getServer().getPluginManager().registerEvents(new Chat(gameState), this);
 		getServer().getPluginManager().registerEvents(new BrickBlockListener(), this);
@@ -295,6 +292,14 @@ public class Main extends JavaPlugin implements Listener{
 		WorldCreator creator = new WorldCreator("arena");
 		creator.generatorSettings(getBase());
 		World gameWorld = creator.createWorld();
+		gameWorld.setTime(6000);
+		gameWorld.setGameRuleValue("doMobSpawning", "false");
+		gameWorld.setGameRuleValue("doDaylightCycle", "false");
+		gameWorld.setGameRuleValue("spectatorsGenerateChunks", "false");
+		gameWorld.setGameRuleValue("naturalRegeneration", "false");
+		gameWorld.setGameRuleValue("announceAdvancements", "false");
+		gameWorld.setDifficulty(Difficulty.HARD);
+		gameWorld.setSpawnLocation(0, gameWorld.getHighestBlockYAt(0, 0), 0);
 		gameWorld.setGameRuleValue("randomTickSpeed", "3");
 		gameWorld.setGameRuleValue("doMobSpawning", "false");
 		gameWorld.setGameRuleValue("doFireTick", "false");
@@ -327,7 +332,7 @@ public class Main extends JavaPlugin implements Listener{
 		}
 		return debug;
 	}
-	public static String getBase() {
+	private String getBase() {
         return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 1000+
         		",\"depthNoiseScaleZ\":" + 1000 +
         		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +

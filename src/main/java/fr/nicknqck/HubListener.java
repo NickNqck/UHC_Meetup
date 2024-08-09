@@ -99,7 +99,7 @@ public class HubListener implements Listener {
 			p.setExp(0);
 			p.setLevel(0);
 			p.setFallDistance(0);
-			GameListener.RandomTp(p, gameState);
+			GameListener.RandomTp(p);
 			gameState.addPlayerKills(p);
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);

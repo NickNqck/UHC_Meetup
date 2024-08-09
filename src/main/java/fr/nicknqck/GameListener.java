@@ -36,6 +36,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import lombok.Getter;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -469,16 +470,17 @@ public class GameListener implements Listener {
 			GameListener.getInstance().sendHoverMessage(p, prefix, HoverWord, HoverContent, suffix);
 		}
 	}
-	public static Location RandomTp(final Entity entity, final GameState gameState) {
+	public static Location RandomTp(@NonNull final Entity entity) {
 		Location loc = null;
 		final World world = Main.getInstance().getWorldManager().getGameWorld();
-		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA) {
+		while (loc == null || world.getBlockAt(loc).getType().name().contains("WATER") || world.getBlockAt(loc).getType().name().contains("LAVA")) {
 			float x = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
 			float z = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
-			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
+			double y = world.getHighestBlockYAt((int) x, (int) z);
+			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, y, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);
-		if (entity != null) entity.teleport(loc);
+        entity.teleport(loc);
 		if (entity instanceof Player) {
 			((Player)entity).playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}

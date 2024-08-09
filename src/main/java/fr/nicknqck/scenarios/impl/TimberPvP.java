@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.zephyr.SchedulerRunnable;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -83,15 +82,14 @@ public class TimberPvP extends BasicScenarios implements Listener {
 
 
             }.runTaskTimer(Main.getInstance(), 0, 5);
-            SchedulerRunnable.CreateTimerScheduler(Main.getInstance(), 0, new fr.nicknqck.utils.SchedulerRunnable.IScheduler() {
-
+            new BukkitRunnable() {
                 @Override
                 public void run() {
                     player.sendMessage("COUCOU2");
                     for (int i = 0; i < bList.size(); ++i) {
                         Block block = bList.get(i);
-                        player.sendMessage("i "+i+" coubeh2");
-                        if (block.getType().equals(Material.LOG_2)  || block.getType().equals(Material.LOG)) {
+                        player.sendMessage("i " + i + " coubeh2");
+                        if (block.getType().equals(Material.LOG_2) || block.getType().equals(Material.LOG)) {
                             List<ItemStack> items = new ArrayList<>(block.getDrops());
                             block.setType(Material.AIR);
                             finalItems.addAll(items);
@@ -99,7 +97,7 @@ public class TimberPvP extends BasicScenarios implements Listener {
                         BlockFace[] values;
                         for (int length = (values = BlockFace.values()).length, j = 0; j < length; ++j) {
                             BlockFace face = values[j];
-                            if (block.getRelative(face).getType().equals(Material.LOG_2)  || block.getRelative(face).getType().equals(Material.LOG))
+                            if (block.getRelative(face).getType().equals(Material.LOG_2) || block.getRelative(face).getType().equals(Material.LOG))
                                 bList.add(block.getRelative(face));
 
                         }
@@ -108,11 +106,10 @@ public class TimberPvP extends BasicScenarios implements Listener {
                     if (bList.isEmpty()) {
                         for (ItemStack item2 : finalItems)
                             player.getWorld().dropItemNaturally(event.getBlock().getLocation(), item2);
-
-                        SchedulerRunnable.cancel(this);
+                        cancel();
                     }
                 }
-            });
+            }.runTaskTimer(Main.getInstance() ,0, 1);
         }
     }
 }

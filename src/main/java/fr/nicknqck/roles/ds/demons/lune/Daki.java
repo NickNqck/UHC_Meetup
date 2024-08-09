@@ -188,7 +188,7 @@ public class Daki extends DemonsRoles {
 			if (isCanRespawn()) {
 				owner.sendMessage("Vous venez de vous faire tuez pour la première fois vous venez donc de réssucité");
 				
-				GameListener.RandomTp(owner, gameState);
+				GameListener.RandomTp(owner);
 				owner.sendMessage("Vous venez d'être TP aléatoirement");
 				owner.setHealth(getMaxHealth());
 				setCanRespawn(false);
