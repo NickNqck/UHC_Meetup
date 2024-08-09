@@ -46,7 +46,7 @@ public class AkazaVSKyojuro extends EventBase{
 							if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
 								Player pkyojuro = gameState.getOwner(Roles.Kyojuro);
 								Player pAkaza = gameState.getOwner(Roles.Akaza);
-								if (pAkaza != null && kyojuro != null) {
+								if (pAkaza != null && pkyojuro != null) {
 									Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
 									Kyojuro kyojuro = (Kyojuro) gameState.getPlayerRoles().get(pkyojuro);
 									this.akaza = akaza;
