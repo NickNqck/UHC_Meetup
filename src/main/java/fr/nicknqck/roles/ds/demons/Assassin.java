@@ -2,14 +2,14 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.TeamList;
 
 import java.util.Collections;
 
@@ -18,6 +18,7 @@ public class Assassin {
 	public void start(GameState gameState) {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			 if (gameState.Assassin == null) {
+				 if (gameState.getServerState() != ServerStates.InGame)return;
 				 Collections.shuffle(gameState.canBeAssassin, Main.RANDOM);
 	             gameState.Assassin = gameState.canBeAssassin.get(0);
 				 if (gameState.Assassin == null) return;
@@ -28,13 +29,13 @@ public class Assassin {
 	             role.setMaxHealth(role.getMaxHealth()+4.0);
 	             gameState.Assassin.setMaxHealth(role.getMaxHealth());
 	             gameState.Assassin.setHealth(role.getMaxHealth());
+				 role.setSuffixString(role.getSuffixString()+"§7 (§cAssassin§7)§r");
 	             System.out.println(gameState.Assassin.getName()+" is now the Assassin of the game");
 	             System.out.println("Ending Assassin System");
-	             if (gameState.getServerState() != ServerStates.InGame)return;
 	             for (Player p : gameState.getInGamePlayers()) {
 	            	 if (!gameState.hasRoleNull(p)) {
 	            		 if (gameState.getPlayerRoles().get(p).hasTeam(p)) {	            			 
-	            			 if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Demon || gameState.getPlayerRoles().get(p).getRoles() == Roles.Tanjiro) {
+	            			 if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles || gameState.getPlayerRoles().get(p) instanceof Tanjiro) {
 		            			 p.sendMessage("§cL'Assassin à été désigné");
 		            		 }
 	            		 }
