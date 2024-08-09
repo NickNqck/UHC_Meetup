@@ -14,7 +14,7 @@ public class AllDesc{
 	public final static String nuit = "§1nuit§r";
 	public final static String jour = "§ejour§r";
 	public final static String fireResi = "§6Fire Résistance§r";
-	public final static String bar = ChatColor.DARK_GRAY+"§o§m-----------------------------------";
+	public final static String bar = ChatColor.DARK_GRAY+"§o§m-----------------------------------§r";
 	public final static String regen = "§dRégénération§r";
 	public final static String blind = "§1Blindness§r";
 	public final static String slow = "§9Slowness§r";

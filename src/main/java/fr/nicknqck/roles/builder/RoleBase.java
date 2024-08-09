@@ -6,7 +6,6 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.utils.RandomUtils;
@@ -21,9 +20,6 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -39,7 +35,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public abstract class RoleBase implements IRole, Listener {
+public abstract class RoleBase implements IRole {
 
 	public Player owner;
 	@Getter
@@ -132,7 +128,6 @@ public abstract class RoleBase implements IRole, Listener {
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 		setTeam(getOriginTeam());
-		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 
 	@Override
@@ -632,9 +627,5 @@ public abstract class RoleBase implements IRole, Listener {
 	}
 	public void givePotionEffect(PotionEffect effect, EffectWhen when) {
 		getEffects().put(effect, when);
-	}
-	@EventHandler
-	private void onEndGame(EndGameEvent event) {
-		HandlerList.unregisterAll(this);
 	}
 }
