@@ -35,6 +35,9 @@ public class AkazaVSKyojuro extends EventBase{
 	private boolean PouvoirSang = false;
 	private int PouvoirSangCooldown = -1;
 	private int BattleTime = 0;
+	private int cdvague = -1;
+	private boolean endEvent = false;
+	private boolean realEnd = false;
 	@Override
 	public boolean PlayEvent(int gameTime) {
 		if (gameState.attributedRole.contains(Roles.Akaza)) {
@@ -77,7 +80,6 @@ public class AkazaVSKyojuro extends EventBase{
 				.setLore("§r§7Pendant§b 10s§7 quand un joueur vous frappe il y aura 10% de chance qu'il§6 brûle§7 et subisse§c 1/2"+AllDesc.coeur)
 				.toItemStack();
 	}
-	private int cdvague = -1;
 	@Override
 	public boolean onSubDSCommand(Player sender, String[] args) {
 		if (args[0].equalsIgnoreCase("compa")) {
@@ -124,7 +126,7 @@ public class AkazaVSKyojuro extends EventBase{
 	@Override
 	public void onSecond() {
 		if (isActivated()) {
-			if (BattleTime <= 60*5 && !LocationNul()) {
+			if (BattleTime <= 60*5 && !LocationNull()) {
 				i++;
 				BattleTime++;
 				if (i == 60 && akaza != null && kyojuro != null) {
@@ -199,7 +201,7 @@ public class AkazaVSKyojuro extends EventBase{
 		if (KyojuroWin) {
 			subTitle = "§7Victoire de§a Kyojuro";
 		}
-		if (!KyojuroWin && !AkazaWin && end && !LocationNul()) {
+		if (!KyojuroWin && !AkazaWin && end && !LocationNull()) {
 			subTitle = "§7§l§nMatch nul§r§7§l...";
 			Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
 			Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
@@ -227,17 +229,15 @@ public class AkazaVSKyojuro extends EventBase{
 			originalKyojuroLocation = null;
 			gameState.getPlayerRoles().get(kyojuro).giveItem(kyojuro, true, this.Vague());
 		}
-		if (end && LocationNul() && !realEnd) {
+		if (end && !LocationNull() && !realEnd) {
 			this.endEvent = true;
 			Bukkit.broadcastMessage("Fin de l'évènement "+getEvents().getName());
 			realEnd = true;
 		}
 	}
-	boolean realEnd = false;
-	private boolean LocationNul() {
-        return originalAkazaLocation == null || originalKyojuroLocation == null;
+	private boolean LocationNull() {
+        return originalAkazaLocation == null && originalKyojuroLocation == null;
     }
-	private boolean endEvent = false;
 	@Override
 	public void setupEvent() {
 		setMinTime(GameState.getInstance().AkazaVsKyojuroTime);
