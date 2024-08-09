@@ -401,11 +401,7 @@ public class GameState{
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final Player player) {
-		if (getPlayerRoles().get(player) != null && getPlayerRoles().get(player).getRoles() != null && getPlayerRoles().containsKey(player)) {
-			return false;
-		} else {
-			return true;
-		}
+        return getPlayerRoles().get(player) == null || getPlayerRoles().get(player).getRoles() == null || !getPlayerRoles().containsKey(player);
 	}
 
 	public void setAvailableRoles(HashMap<Roles, Integer> availableRole) {availableRole = availableRoles;}
@@ -1124,12 +1120,21 @@ public class GameState{
 						for (Roles roles : hashMap.get(t)){
 							i++;
 							if (!appenned.contains(roles)) {
-								if (i != hashMap.get(t).size()){
-									tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
+								if (getServerState().equals(ServerStates.InLobby)) {
+									if (i != hashMap.get(t).size()){
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
+									} else {
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+									}
+									appenned.add(roles);
 								} else {
-									tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+									if (i != hashMap.get(t).size()){
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("§f, ");
+									} else {
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("\n");
+									}
 								}
-								appenned.add(roles);
+
 							}
 						}
 					}
