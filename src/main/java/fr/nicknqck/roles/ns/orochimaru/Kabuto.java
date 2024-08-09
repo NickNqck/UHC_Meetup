@@ -119,10 +119,10 @@ public class Kabuto extends OrochimaruRoles {
 			}
 		}
 		if (killer.getUniqueId() == owner.getUniqueId() && mortOrochimaru) {
-			if (player.getLocation().getWorld().equals(Main.getInstance().gameWorld)) {
+			if (player.getLocation().getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 				killLoc.put(player, player.getLocation());
 			} else {
-				Location rLoc = new Location(Main.getInstance().gameWorld, 0.0, 75, 0.0, player.getEyeLocation().getYaw(), player.getEyeLocation().getPitch());
+				Location rLoc = new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 75, 0.0, player.getEyeLocation().getYaw(), player.getEyeLocation().getPitch());
 				killLoc.put(player, rLoc);
 			}
 			((CraftPlayer) owner).getHandle().setAbsorptionHearts(((CraftPlayer) owner).getHandle().getAbsorptionHearts()+2.0f);

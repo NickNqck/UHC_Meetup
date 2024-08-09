@@ -65,7 +65,6 @@ public class GameState{
 	private int timeProcHokage = 90;
 	@Getter
 	private final List<Roles> deadRoles = new ArrayList<>();
-
 	public boolean BijusEnable = false;
 	public boolean stuffUnbreak = true;
 	public int TridiCooldown = 16;
@@ -295,7 +294,6 @@ public class GameState{
 
 	public boolean JigoroV2Pacte2 = false;
 	public boolean JigoroV2Pacte3 = false;
-	public World world = Main.getInstance().gameWorld;
 	@Setter
 	@Getter
 	private ServerStates serverState = ServerStates.InLobby;

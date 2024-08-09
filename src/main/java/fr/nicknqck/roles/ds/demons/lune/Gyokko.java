@@ -136,7 +136,7 @@ public class Gyokko extends DemonsRoles {
 			if (pouvoircooldown <= 0) {
 				setInvincible(true);
 				Location ploc = owner.getLocation();
-				Location pot = new Location(Main.getInstance().gameWorld, ploc.getX() + random.nextInt(15), ploc.getY(), ploc.getZ() + random.nextInt(15));
+				Location pot = new Location(Main.getInstance().getWorldManager().getGameWorld(), ploc.getX() + random.nextInt(15), ploc.getY(), ploc.getZ() + random.nextInt(15));
 				System.out.println(pot);
 				owner.teleport(pot);
 				setInvincible(false);

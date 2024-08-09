@@ -64,7 +64,7 @@ public abstract class Biju {
 			}
 	}
 	public Location getRandomSpawn(){
-		Location spawn = new Location(Main.getInstance().gameWorld, 0.0, Main.getInstance().gameWorld.getHighestBlockYAt(0, 0), 0.0);
+		Location spawn = new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, Main.getInstance().getWorldManager().getGameWorld().getHighestBlockYAt(0, 0), 0.0);
 		if (Main.isDebug()){
 			System.err.println("Final Spawn:     "+spawn);
 		}

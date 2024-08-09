@@ -79,7 +79,7 @@ public class Matatabi extends Biju{
 
 	@Override
 	public void setupBiju(GameState gameState) {
-		World world = Main.getInstance().gameWorld;
+		World world = Main.getInstance().getWorldManager().getGameWorld();
 		this.gameState = gameState;
 		new MatatabiRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
 		this.spawn = getRandomSpawn();
@@ -94,7 +94,7 @@ public class Matatabi extends Biju{
 
 	@Override
 	public void spawnBiju() {
-		this.blaze = (Blaze) Main.getInstance().gameWorld.spawnEntity(this.spawn, EntityType.BLAZE);
+		this.blaze = (Blaze) Main.getInstance().getWorldManager().getGameWorld().spawnEntity(this.spawn, EntityType.BLAZE);
 		blaze.setCustomName(this.getName());
 		blaze.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
 		blaze.setMaxHealth(2D * 100D);

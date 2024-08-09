@@ -82,7 +82,7 @@ public class GameListener implements Listener {
 	public GameListener(GameState gameState) {
 		this.gameState = gameState;
 		Instance = this;
-		border = Main.getInstance().gameWorld.getWorldBorder();
+		border = Main.getInstance().getWorldManager().getGameWorld().getWorldBorder();
 		border.setSize(Border.getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
 			UpdateGame();
@@ -98,13 +98,12 @@ public class GameListener implements Listener {
 
 		}, 20, 20);
 	}
-	//public static GameListener getInstance() {return Instance;}
 	private boolean infectedgiveforce = false;
 	private void UpdateGame() {
 		switch(gameState.getServerState()) {
 		case InLobby:
+			World world = Bukkit.getWorld("world");
 			for (Player p : gameState.getInLobbyPlayers()) {
-				World world = Bukkit.getWorld("world");
 				if (p.getLocation().getY() < 100 && !p.isFlying() && p.getGameMode() != GameMode.CREATIVE) {
 					p.setMaxHealth(20.0);
 					p.setHealth(p.getMaxHealth());
@@ -132,7 +131,7 @@ public class GameListener implements Listener {
 			}
 			break;
 		case InGame:
-			Main.getInstance().gameWorld.setPVP(gameState.pvp);
+			Main.getInstance().getWorldManager().getGameWorld().setPVP(gameState.pvp);
 			for (Player p : gameState.getInGamePlayers()) {
 				if (gameState.inGameTime < 10) {
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
@@ -207,8 +206,8 @@ public class GameListener implements Listener {
 				SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 				SendToEveryone("\n §bIl fait maintenant jour");
 				SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-				Main.getInstance().gameWorld.setTime(0);
-				Main.getInstance().gameWorld.setGameRuleValue("doDaylightCycle", "false");
+				Main.getInstance().getWorldManager().getGameWorld().setTime(0);
+				Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("doDaylightCycle", "false");
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					for (Player p : Bukkit.getOnlinePlayers()) {
 						if (gameState.getPlayerRoles().containsKey(p)) {
@@ -221,7 +220,7 @@ public class GameListener implements Listener {
 				gameState.t--;
 				if (gameState.t <= 0) {
 					if (gameState.nightTime) {
-						Main.getInstance().gameWorld.setTime(0);
+						Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 						gameState.nightTime = false;
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant jour");
@@ -235,7 +234,7 @@ public class GameListener implements Listener {
 						Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
 						//detectWin(gameState);
 					} else {
-						Main.getInstance().gameWorld.setTime(16500);
+						Main.getInstance().getWorldManager().getGameWorld().setTime(16500);
 						gameState.nightTime = true;
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant nuit\n");
@@ -250,7 +249,6 @@ public class GameListener implements Listener {
 					}
 				}
 			}
-
 			if (gameState.inGameTime == gameState.roleTimer) {
 				for (Player p : gameState.getInGamePlayers()) {
 					RoleBase role = gameState.GiveRole(p);
@@ -302,7 +300,7 @@ public class GameListener implements Listener {
 			gameState.getGamePlayer().clear();
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
-			HubListener.spawnPlatform(gameState.world, Material.GLASS);
+			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
 			gameState.getInGameEvents().clear();
 			gameState.setInObiPlayers(new ArrayList<>());
 			gameState.setInSleepingPlayers(new ArrayList<>());
@@ -352,8 +350,8 @@ public class GameListener implements Listener {
 						((NSRoles) r).setCanBeHokage(false);
 					}
 				}
-				if (!p.getWorld().getName().equalsIgnoreCase(Main.getInstance().gameWorld.getName())) {
-					p.teleport(new Location(Main.getInstance().gameWorld, 0, 151, 0));
+				if (!p.getWorld().getName().equalsIgnoreCase(Main.getInstance().getWorldManager().getLobbyWorld().getName())) {
+					p.teleport(new Location(Main.getInstance().getWorldManager().getLobbyWorld(), 0, 151, 0));
 				}
 				if (((CraftPlayer) p ).getHandle().isBurning()){
 					((CraftPlayer) p).getHandle().fireTicks = 0;
@@ -447,7 +445,7 @@ public class GameListener implements Listener {
 				}
 			}
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				for (Entity e : gameState.world.getEntities()) {
+				for (Entity e : Main.getInstance().getWorldManager().getLobbyWorld().getEntities()) {
 					if (!(e instanceof Player)) {
 						e.remove();
 					}
@@ -471,20 +469,13 @@ public class GameListener implements Listener {
 			GameListener.getInstance().sendHoverMessage(p, prefix, HoverWord, HoverContent, suffix);
 		}
 	}
-	public static void SendToEveryoneWithHoverMessageExcept(String prefix, String HoverWord, String HoverContent, String suffix, Player cantSee) {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			if (p.getUniqueId() != cantSee.getUniqueId()) {
-				GameListener.getInstance().sendHoverMessage(p, prefix, HoverWord, HoverContent, suffix);
-			}
-		}
-	}
-	public void SendToEveryoneExcept(String message, Player player) {for (Player p : Bukkit.getOnlinePlayers()) {if (p.equals(player)) continue;p.sendMessage(message);}}
 	public static Location RandomTp(final Entity entity, final GameState gameState) {
 		Location loc = null;
-		while (loc == null || gameState.world.getBlockAt(loc).getType() == Material.WATER || gameState.world.getBlockAt(loc).getType() == Material.LAVA) {
+		final World world = Main.getInstance().getWorldManager().getGameWorld();
+		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA) {
 			float x = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
 			float z = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
-			loc = gameState.world.getHighestBlockAt(new Location(gameState.world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
+			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize()/2, 0, z-Border.getActualBorderSize()/2)).getLocation();
 		}
 		loc.setY(loc.getY()+1);
 		if (entity != null) entity.teleport(loc);

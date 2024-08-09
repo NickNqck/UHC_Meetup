@@ -115,7 +115,7 @@ public class TitanBestial extends TitansRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		if (owner.getWorld().equals(Main.getInstance().gameWorld)){
+		if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())){
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
 				if (!gameState.hasRoleNull(p)) {
 					if (getPlayerRoles(p) instanceof Soldat) {
@@ -138,7 +138,7 @@ public class TitanBestial extends TitansRoles {
 			}
 		}		
 		if (isTransformedinTitan) {
-		if (owner.getWorld().equals(Main.getInstance().gameWorld)) {
+		if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			for (Player p : Loc.getNearbyPlayers(owner, 20)) {
 				if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof AotRoles) {
 					AotRoles role = (AotRoles) gameState.getPlayerRoles().get(p);

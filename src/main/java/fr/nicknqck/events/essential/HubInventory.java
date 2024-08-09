@@ -139,7 +139,7 @@ public class HubInventory implements Listener {
                             }
                         } else if (item.isSimilar(GUIItems.getPregen(gameState))) {
                             if (!gameState.hasPregen){
-                                new PregenerationTask(Main.getInstance().gameWorld, Border.getMaxBorderSize());
+                                new PregenerationTask(Main.getInstance().getWorldManager().getGameWorld(), Border.getMaxBorderSize());
                                 gameState.hasPregen = true;
                             }
                         }else if (item.isSimilar(GUIItems.getSelectEventButton())) {

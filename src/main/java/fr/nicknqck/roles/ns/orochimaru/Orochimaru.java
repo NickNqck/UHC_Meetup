@@ -123,10 +123,10 @@ public class Orochimaru extends OrochimaruRoles {
 		}
 		if (killer.getUniqueId() == owner.getUniqueId()) {
 			((CraftPlayer) owner).getHandle().setAbsorptionHearts(((CraftPlayer) owner).getHandle().getAbsorptionHearts()+4.0f);
-			if (player.getLocation().getWorld().equals(Main.getInstance().gameWorld)) {
+			if (player.getLocation().getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 				killLoc.put(player, player.getLocation());
 			} else {
-				Location rLoc = new Location(Main.getInstance().gameWorld, 0.0, 75, 0.0, player.getEyeLocation().getYaw(), player.getEyeLocation().getPitch());
+				Location rLoc = new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 75, 0.0, player.getEyeLocation().getYaw(), player.getEyeLocation().getPitch());
 				killLoc.put(player, rLoc);
 			}
 			if (getPlayerRoles(player) instanceof NSRoles && ((NSRoles) getPlayerRoles(player)).getChakras() != null) {

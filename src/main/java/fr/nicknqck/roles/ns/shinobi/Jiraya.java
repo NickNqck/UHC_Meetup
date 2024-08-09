@@ -104,7 +104,7 @@ public class Jiraya extends ShinobiRoles {
 		if(Bukkit.getWorld("Gamabunta") != null) {
 			if (owner.getWorld().equals(Bukkit.getWorld("Gamabunta"))) {
 				for (Player p : owner.getWorld().getPlayers()) {
-					GameListener.RandomTp(p, Main.getInstance().gameWorld);
+					GameListener.RandomTp(p, Main.getInstance().getWorldManager().getGameWorld());
 				}
 			}
 		}
@@ -230,11 +230,11 @@ public class Jiraya extends ShinobiRoles {
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (Bukkit.getWorld("Gamabunta")!=null) {
 			if (player.getWorld().equals(Bukkit.getWorld("Gamabunta"))) {
-				GameListener.RandomTp(player, Main.getInstance().gameWorld);
+				GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld());
 				if (player.getUniqueId() == owner.getUniqueId()) {
 					for (Player p : Bukkit.getOnlinePlayers()) {
 						if (p.getWorld().equals(Bukkit.getWorld("Gamabunta"))) {
-							GameListener.RandomTp(p, Main.getInstance().gameWorld);
+							GameListener.RandomTp(p, Main.getInstance().getWorldManager().getGameWorld());
 						}
 					}
 					cdGamabunta = 60*8;

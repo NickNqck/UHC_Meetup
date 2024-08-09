@@ -662,7 +662,7 @@ public class HantenguV2 extends DemonsRoles {
 						setMaxHealth(2.0);
 					}
 					owner.sendMessage("Vous avez réussis à mourir en temp qu'§6Urami§r vous réssuciter donc en temp qu'§cHantengu§r mais vous avez perdu§c 3❤§r permanent");
-					GameListener.RandomTp(victim, Main.getInstance().gameWorld);
+					GameListener.RandomTp(victim, Main.getInstance().getWorldManager().getGameWorld());
 				}
 			}
 		}

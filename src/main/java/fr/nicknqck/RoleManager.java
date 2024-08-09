@@ -35,23 +35,45 @@ import java.util.UUID;
 public class RoleManager {
 
     private final Map<Class<? extends IRole>, IRole> rolesRegistery;
-
+    private final Map<Class<? extends IRole>, Integer> rolesEnable;
     public RoleManager() {
         this.rolesRegistery = new HashMap<>();
+        this.rolesEnable = new HashMap<>();
         try {
-       //     registerRoles();
+            registerRoles();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    public void addRole(Class<? extends IRole> role) {
+        if (rolesEnable.containsKey(role)) {
+            int roleCount = rolesEnable.get(role);
+            rolesEnable.remove(role, roleCount);
+            rolesEnable.put(role, roleCount+1);
+        } else {
+            rolesEnable.put(role, 1);
+        }
+    }
+    public void removeRole(Class<? extends IRole> role) {
+        if (rolesEnable.containsKey(role)) {
+            int roleCount = rolesEnable.get(role);
+            if (rolesEnable.get(role) > 1) {
+                rolesEnable.remove(role, roleCount);
+                rolesEnable.put(role, roleCount-1);
+            } else {
+                rolesEnable.remove(role, roleCount);
+            }
+        } else {
+            System.err.println("Error: "+role.getName()+" is not set has enable role");
+        }
+    }
     private void registerRoles() throws Exception {
         registerDemonSlayer();
         registerAot();
         registerNs();
         registerCustomRoles();
     }
-    public void registerRole(Class<? extends IRole> roleClass) throws Exception {
+    private void registerRole(Class<? extends IRole> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
     }

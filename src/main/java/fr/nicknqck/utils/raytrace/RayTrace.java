@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 
-import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -94,7 +93,7 @@ public class RayTrace
     public Vector positionOfIntersection(double maxDistance, double accuracy) {
         for (double d = 0.0; d <= maxDistance; d += accuracy) {
             Vector position = getPostion(d);
-            if (position.toLocation(Main.getInstance().gameWorld).getBlock().getType().isSolid()) {
+            if (position.toLocation(Main.getInstance().getWorldManager().getGameWorld()).getBlock().getType().isSolid()) {
                 return position;
             }
         }

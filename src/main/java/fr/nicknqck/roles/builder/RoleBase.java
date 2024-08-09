@@ -262,16 +262,16 @@ public abstract class RoleBase implements IRole {
 		for (Titans value : Titans.values()) {
 			value.getTitan().onAPlayerDie(player, killer);
 		}
-		if (!player.getWorld().equals(Main.getInstance().gameWorld)) {
+		if (!player.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				GameListener.RandomTp(player, Main.getInstance().gameWorld);
+				GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld());
 			}, 20);
 		}
 		if (!gameState.hasRoleNull(player)){
 			if (getPlayerRoles(player).getRoles() == Roles.Nakime) {
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
-						GameListener.RandomTp(p, Main.getInstance().gameWorld);
+						GameListener.RandomTp(p, Main.getInstance().getWorldManager().getGameWorld());
 						p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime§7 du à la mort de cette dernière");
 						player.sendMessage(p.getName()+"§7 est sortie de votre cage");
 					}

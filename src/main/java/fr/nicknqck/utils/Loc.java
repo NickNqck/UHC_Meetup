@@ -219,7 +219,7 @@ public class Loc {
         for (Player onlinePlayer : referencePlayer.getWorld().getPlayers()) {
             // Assurez-vous de ne pas comparer le joueur avec lui-même
             if (!onlinePlayer.equals(referencePlayer)) {
-            	if (referencePlayer.getWorld().equals(Main.getInstance().nakime)) {
+            	if (referencePlayer.getWorld().getName().equals("nakime")) {
             		if (onlinePlayer.getWorld().equals(referencePlayer.getWorld())) {
                 		if (!gameState.hasRoleNull(onlinePlayer)) {
                 			if (gameState.getPlayerRoles().get(onlinePlayer).getOriginTeam() != TeamList.Demon) {

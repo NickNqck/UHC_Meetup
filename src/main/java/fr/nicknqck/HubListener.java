@@ -41,7 +41,6 @@ public class HubListener implements Listener {
 			System.out.println("Impossible de start la partie");
 			return;
 		}
-		gameState.world = Main.getInstance().gameWorld;
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
 		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
@@ -49,7 +48,7 @@ public class HubListener implements Listener {
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.setInLobbyPlayers(new ArrayList<>());
 		gameState.igPlayers.addAll(gameState.getInGamePlayers());
-		spawnPlatform(Main.getInstance().gameWorld, Material.AIR);
+		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
 		gameState.infected = null;
 		gameState.infecteur = null;
 		gameState.Assassin = null;
@@ -66,11 +65,11 @@ public class HubListener implements Listener {
 		gameState.setPlayerKills(new HashMap<>());
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
-		gameState.world.getWorldBorder().setSize(Border.getMaxBorderSize()*2);
+		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
 		if (gameState.JigoroV2Pacte2)gameState.JigoroV2Pacte2 = false;
 		if (gameState.JigoroV2Pacte3)gameState.JigoroV2Pacte3 = false;
 		TitanListener.getInstance().onStartGame();
-		for (Entity e : gameState.world.getEntities()) {
+		for (Entity e : Main.getInstance().getWorldManager().getGameWorld().getEntities()) {
 			if (e instanceof Player) continue;
 			e.remove();
 		}
@@ -112,7 +111,7 @@ public class HubListener implements Listener {
 			b.getBiju().setHote(null);
 			b.getBiju().resetCooldown();
 		}
-		Main.getInstance().gameWorld.setGameRuleValue("naturalRegeneration", "false");
+		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
 		BijuListener.getInstance().resetCooldown();
 		Bijus.initBiju(gameState);
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
@@ -121,7 +120,7 @@ public class HubListener implements Listener {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (gameState.getMdj() != null && gameState.getMdj().equals(MDJ.NS)){
 				if (gameState.getHokage() == null){
-					gameState.setHokage(new Hokage(gameState.getMinTimeSpawnBiju()-10, gameState));
+					gameState.setHokage(new Hokage(gameState.getTimeProcHokage()-10, gameState));
 				}
 				gameState.getHokage().run();
 			}

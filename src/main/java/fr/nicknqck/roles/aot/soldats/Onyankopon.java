@@ -94,7 +94,7 @@ public class Onyankopon extends SoldatsRoles {
 	}
 	private void fuite() {
 		for (Player p: Loc.getNearbyPlayers(owner, 20)) {
-			GameListener.RandomTp(p, Main.getInstance().gameWorld);
+			GameListener.RandomTp(p, Main.getInstance().getWorldManager().getGameWorld());
 			cd = 60;
 		}
 		use += 1;

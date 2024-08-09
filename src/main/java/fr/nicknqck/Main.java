@@ -28,6 +28,7 @@ import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
 import fr.nicknqck.worlds.WorldGenerator;
 import lombok.Getter;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -40,6 +41,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -55,8 +58,6 @@ Roles: NickNack, Mega02600
 
 public class Main extends JavaPlugin implements Listener{
 	public final String PLUGIN_NAME = "UHC-Meetup";
-	public World gameWorld;
-	public World nakime;
 	@Getter
 	private ScoreboardManager scoreboardManager;
     @Getter
@@ -77,31 +78,26 @@ public class Main extends JavaPlugin implements Listener{
 	private RoleManager roleManager;
 	@Getter
 	private Loc locUtils;
+	@Getter
+	private WorldsManager worldManager;
 	@Override
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
 		this.roleManager = new RoleManager();
 		this.locUtils = new Loc();
-	//	this.databaseManager = new DatabaseManager();
+		this.worldManager = new WorldsManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
-		gameState.world = gameWorld;
-		WorldCreator creator = new WorldCreator("arena");
-		creator.generatorSettings(getBase());
-		World gameWorld = creator.createWorld();
-		this.gameWorld = gameWorld;
-		this.gameWorld.setGameRuleValue("randomTickSpeed", "3");
-		this.gameWorld.setGameRuleValue("doMobSpawning", "false");
-		this.gameWorld.setGameRuleValue("doFireTick", "false");
+		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
+		spawnPlatform(getWorldManager().getLobbyWorld());
+		initGameWorld();
 		initPlugin(gameState);
 		EnableScoreboard(gameState);
 		registerEvents(gameState);
 		registerCommands(gameState);
-		spawnPlatform();
-		nakime = Bukkit.getWorld("nakime");
-		clearMap();
+		clearMap(getWorldManager().getLobbyWorld());
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
 			p.setPlayerListName(p.getName());
@@ -117,7 +113,6 @@ public class Main extends JavaPlugin implements Listener{
 		}
 		System.out.println("["+PLUGIN_NAME+"] Enabled");
 		giveTab(gameState);
-
 		saveDefaultConfig();
         registerRecipes();
 		System.out.println("ENDING ONENABLE");
@@ -196,26 +191,26 @@ public class Main extends JavaPlugin implements Listener{
 		getCommand("discord").setExecutor(new Discord());
 		System.out.println("Ending registering commands");
 	}
-	private void clearMap() {
+	private void clearMap(World world) {
 		System.out.println("Starting cleaning map");
 		System.out.println("Starting cleaning blocks");
 		for (int x = -150; x <= 150; x++) {
 			for (int z = -150; z <= 150; z++) {
 				for (int y = 50; y <= 120; y++) {
 					//System.out.println("Calculating Block at "+"x:"+x+", y:"+y+", z:"+z);
-					Block block = gameWorld.getBlockAt(x, y, z);
+					Block block = world.getBlockAt(x, y, z);
 					if (block.getType().name().contains("SPONGE") ||block.getType() == Material.BRICK || block.getType() == Material.COBBLESTONE || block.getType() == Material.OBSIDIAN || block.getType() == Material.PACKED_ICE || block.getType() == Material.ICE) {
 						if (isDebug()){
-							System.out.println(gameWorld.getBlockAt(x, y, z).getType().name()+" -> Air at x:"+x+", y:"+y+", z:"+z);
+							System.out.println(world.getBlockAt(x, y, z).getType().name()+" -> Air at x:"+x+", y:"+y+", z:"+z);
 						}
-						gameWorld.getBlockAt(x, y, z).setType(Material.AIR);
+						world.getBlockAt(x, y, z).setType(Material.AIR);
 					}
 				}
 			}
 		}
 		System.out.println("End cleaning blocks");
 		System.out.println("Starting cleaning entities");
-		for (Entity e : gameWorld.getEntities()) {
+		for (Entity e : world.getEntities()) {
 			if (e instanceof Player) continue;
 			System.out.println("removing Entity "+e.getName()+" at "+e.getLocation());
 			e.remove();
@@ -275,16 +270,37 @@ public class Main extends JavaPlugin implements Listener{
 		}, 1, 1);
 		System.out.println("Ending give tab");
 	}
-	private void spawnPlatform() {
+	private void spawnPlatform(World world) {
 		System.out.println("Spawning GLASS platform");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
-				gameWorld.getBlockAt(new Location(gameWorld, x, 150, z)).setType(Material.GLASS);
+				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.GLASS);
 			}
 		}
 		System.out.println("Ended GLASS platform");
 	}
-
+	private void initGameWorld() {
+		for (World world : Bukkit.getWorlds()) {
+			if (world.getName().equals("arena")) {
+				File worldFolder = world.getWorldFolder();
+				Bukkit.unloadWorld(world, false);
+				try {
+					FileUtils.deleteDirectory(worldFolder);
+					System.out.println("Deleted world "+worldFolder.getName());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		WorldCreator creator = new WorldCreator("arena");
+		creator.generatorSettings(getBase());
+		World gameWorld = creator.createWorld();
+		gameWorld.setGameRuleValue("randomTickSpeed", "3");
+		gameWorld.setGameRuleValue("doMobSpawning", "false");
+		gameWorld.setGameRuleValue("doFireTick", "false");
+		getWorldManager().setGameWorld(gameWorld);
+		System.out.println("Created world gameWorld");
+	}
 	@EventHandler
 	public void onChunkUnload(ChunkUnloadEvent e) {
 		if (keepChunk.contains(e.getChunk()))
@@ -299,7 +315,7 @@ public class Main extends JavaPlugin implements Listener{
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				World world = Bukkit.getWorlds().get(0);
-				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);				
+				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);
 			}
 		}
 		System.out.println("["+PLUGIN_NAME+"] "+getBase());

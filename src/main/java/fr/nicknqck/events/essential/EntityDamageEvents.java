@@ -68,7 +68,7 @@ public class EntityDamageEvents implements Listener{
 						if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
 							event.setCancelled(true);
 						} else {
-							if (player.getWorld().equals(Main.getInstance().nakime)) {
+							if (player.getWorld().getName().equals("nakime")) {
 								event.setDamage(event.getDamage()/4);
 							}
 						}

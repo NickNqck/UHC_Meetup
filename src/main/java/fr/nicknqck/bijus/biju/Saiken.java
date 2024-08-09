@@ -52,7 +52,7 @@ public class Saiken extends Biju {
     private GameState gameState;
     @Override
     public void setupBiju(GameState gameState) {
-        World world = Main.getInstance().gameWorld;
+        World world = Main.getInstance().getWorldManager().getGameWorld();
 		this.spawn = getRandomSpawn();
         this.gameState = gameState;
         new SaikenRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
@@ -65,7 +65,7 @@ public class Saiken extends Biju {
 
     @Override
     public void spawnBiju() {
-        this.slime = (Slime) Main.getInstance().gameWorld.spawnEntity(this.spawn, EntityType.SLIME);
+        this.slime = (Slime) Main.getInstance().getWorldManager().getGameWorld().spawnEntity(this.spawn, EntityType.SLIME);
         slime.setCustomName(this.getName());
         slime.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
         slime.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
