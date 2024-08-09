@@ -93,6 +93,7 @@ public class Squelette extends OverWorldRoles {
                     Player target = null;
                     for (Player onlinePlayer : shooter.getWorld().getPlayers()) {
                         if (!onlinePlayer.getGameMode().equals(GameMode.SURVIVAL)) continue;
+                        if (onlinePlayer.getUniqueId() == shooter.getUniqueId()) continue;
                         if (target == null) target = onlinePlayer;
                         double distance = shooter.getLocation().distance(target.getLocation());
                         if (distance > shooter.getLocation().distance(onlinePlayer.getLocation()))
