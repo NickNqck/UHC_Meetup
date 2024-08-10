@@ -34,7 +34,7 @@ public class Jugo extends OrochimaruRoles {
 	public Jugo(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);
 				owner.sendMessage("§5Kimimaro§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort (/§6ns me§7)");
