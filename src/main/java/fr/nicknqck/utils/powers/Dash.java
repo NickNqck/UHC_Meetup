@@ -65,12 +65,15 @@ public class Dash {
 				S++;
 				if (degat) {
 					for (Player p : Loc.getNearbyPlayersExcept(target, distance)) {
-						if (p.getHealth() > degats) {
-							p.setHealth(p.getHealth()-degats);
-						}else {
-							p.setHealth(0.5);
+						if (!dashedPlayers.contains(p.getUniqueId())) {
+							if (p.getHealth() > degats) {
+								p.setHealth(p.getHealth()-degats);
+							}else {
+								p.setHealth(0.5);
+							}
+							p.damage(0.0);
+							dashedPlayers.add(p.getUniqueId());
 						}
-						p.damage(0.0);
 					}
 				}
 				if (S == Saut) {
