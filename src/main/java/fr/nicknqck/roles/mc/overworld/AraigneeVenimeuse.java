@@ -23,6 +23,10 @@ public class AraigneeVenimeuse extends UHCMcRoles {
 
     public AraigneeVenimeuse(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void GiveItems() {
         giveItem(owner, false , getItems());
     }
 
