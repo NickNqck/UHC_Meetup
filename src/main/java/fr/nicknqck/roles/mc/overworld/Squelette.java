@@ -25,6 +25,10 @@ public class Squelette extends OverWorldRoles {
 
     public Squelette(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void GiveItems() {
         giveItem(owner, false, KorosuItem);
     }
 

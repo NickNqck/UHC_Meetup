@@ -25,8 +25,13 @@ public class KillerBee extends ShinobiRoles {
 	public KillerBee(UUID player) {
 		super(player);
 		setChakraType(Chakras.RAITON);
+	}
+
+	@Override
+	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.KillerBee;

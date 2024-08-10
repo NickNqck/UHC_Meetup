@@ -25,6 +25,10 @@ public class Poulet extends OverWorldRoles {
 
     public Poulet(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void GiveItems() {
         giveItem(owner, false, getItems());
     }
 

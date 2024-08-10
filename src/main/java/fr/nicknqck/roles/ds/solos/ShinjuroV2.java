@@ -52,13 +52,24 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
     private State state = State.Nothing;
     public ShinjuroV2(UUID player) {
         super(player);
-        Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
-        setCanuseblade(true);
+
+    }
+
+    @Override
+    public void GiveItems() {
         giveItem(owner, false, getItems());
         giveItem(owner, true, Items.getLamedenichirin());
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        Lames.FireResistance.getUsers().put(owner.getUniqueId(), Integer.MAX_VALUE);
+        setCanuseblade(true);
+
         new ShinjuroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         new SakePower(this);
     }
+
     @Override
     public String getName() {
         return "Shinjuro§7 (§6V2§7)";

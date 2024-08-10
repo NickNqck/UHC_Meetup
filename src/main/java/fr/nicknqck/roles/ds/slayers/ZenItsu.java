@@ -36,10 +36,14 @@ public class ZenItsu extends SlayerRoles implements Listener {
     public ZenItsu(UUID player) {
         super(player);
         setCanuseblade(true);
-        giveItem(owner, false, getItems());
-        giveItem(owner, false, Items.getLamedenichirin());
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
         new ZenitsuRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+    }
+
+    @Override
+    public void GiveItems() {
+        giveItem(owner, false, getItems());
+        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override

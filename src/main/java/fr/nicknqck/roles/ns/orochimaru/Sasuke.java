@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -37,6 +38,7 @@ import java.util.UUID;
 public class Sasuke extends OrochimaruRoles {
 
 	private Izanami izanami;
+	@Getter
 	private boolean mortOrochimaru = false;
 	private int SusanoCD = 0;
 	private boolean hasIzanagi = false;

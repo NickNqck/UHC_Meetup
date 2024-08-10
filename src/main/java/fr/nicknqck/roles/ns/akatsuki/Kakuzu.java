@@ -32,8 +32,14 @@ public class Kakuzu extends AkatsukiRoles {
 		super(player);
 		setChakraType(getRandomChakras());
 		ChakrasOwned.put(getChakras(), true);
+
+	}
+
+	@Override
+	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Kakuzu;

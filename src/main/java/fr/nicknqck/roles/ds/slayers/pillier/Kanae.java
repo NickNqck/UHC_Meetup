@@ -33,6 +33,11 @@ public class Kanae extends PillierRoles implements Listener {
         setCanuseblade(true);
         this.runnable = new KanaeRunnable(this);
         this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0 ,20);
+
+    }
+
+    @Override
+    public void GiveItems() {
         giveItem(owner, false, getItems());
         giveItem(owner, false, Items.getLamedenichirin());
     }

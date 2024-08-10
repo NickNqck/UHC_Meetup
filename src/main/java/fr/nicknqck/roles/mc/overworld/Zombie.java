@@ -25,8 +25,14 @@ public class Zombie extends OverWorldRoles {
     private boolean SqueletteSound = false;
     public Zombie(UUID player) {
         super(player);
+
+    }
+
+    @Override
+    public void GiveItems() {
         giveItem(owner, false, getItems());
     }
+
     @Override
     public GameState.Roles getRoles() {
         return GameState.Roles.Zombie;

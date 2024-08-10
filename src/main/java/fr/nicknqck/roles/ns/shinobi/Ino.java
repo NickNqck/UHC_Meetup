@@ -23,8 +23,15 @@ public class Ino extends ShinobiRoles {
     public Ino(UUID player) {
         super(player);
         setChakraType(getRandomChakras());
+
+    }
+
+    @Override
+    public void GiveItems() {
+        super.GiveItems();
         giveItem(owner, false, getItems());
     }
+
     @Override
     public GameState.Roles getRoles() {
         return GameState.Roles.Ino;

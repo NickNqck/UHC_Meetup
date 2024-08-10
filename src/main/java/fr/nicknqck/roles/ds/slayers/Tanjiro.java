@@ -49,8 +49,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
         getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        giveItem(owner, false, getItems());
-        giveItem(owner, false, Items.getLamedenichirin());
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
@@ -66,6 +64,12 @@ public class Tanjiro extends SlayerRoles implements Listener {
         .setParticularites(particlarite);
         this.automaticDesc = desc.getText();
 
+    }
+
+    @Override
+    public void GiveItems() {
+        giveItem(owner, false, getItems());
+        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override
