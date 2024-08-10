@@ -76,7 +76,7 @@ public class AutomaticDesc {
         for (TripleMap<HoverEvent, String, Integer> tripleMap : tripleMaps) {
             TextComponent interogativDot = new TextComponent(tripleMap.getSecond());
             interogativDot.setHoverEvent(tripleMap.getFirst());
-            text.addExtra("\n\n§7Vous possédez l'item \"");
+            text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
             text.addExtra(interogativDot);
             text.addExtra("§7\" ");
             text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
