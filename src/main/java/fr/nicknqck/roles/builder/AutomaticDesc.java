@@ -73,13 +73,12 @@ public class AutomaticDesc {
     }
     @SafeVarargs
     public final AutomaticDesc setItems(TripleMap<HoverEvent, String, Integer>... tripleMaps) {
-        text.addExtra("\n\n"+"§7 - Items: ");
         for (TripleMap<HoverEvent, String, Integer> tripleMap : tripleMaps) {
-            TextComponent interogativDot = new TextComponent("§b[?]");
+            TextComponent interogativDot = new TextComponent(tripleMap.getSecond());
             interogativDot.setHoverEvent(tripleMap.getFirst());
-            text.addExtra("\n\n§7 "+AllDesc.point+" ");
+            text.addExtra("\n\n§7Vous possédez l'item \"");
             text.addExtra(interogativDot);
-            text.addExtra("§7 "+tripleMap.getSecond());
+            text.addExtra("§7\" ");
             text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
         }
         return this;

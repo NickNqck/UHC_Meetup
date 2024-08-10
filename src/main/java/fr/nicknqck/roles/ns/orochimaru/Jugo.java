@@ -6,7 +6,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.TripleMap;
@@ -69,30 +68,7 @@ public class Jugo extends OrochimaruRoles {
 	}
 	@Override
 	public String[] Desc() {
-		return new String[] {/*
-				AllDesc.bar,
-				AllDesc.role+"§5Jugo",
-				AllDesc.objectifteam+"§5Orochimaru",
-				"",
-				AllDesc.effet,
-				"",
-				AllDesc.point+"§cForce 1§f permanent",
-				"",
-				AllDesc.items,
-				"",
-				AllDesc.point+"§5Marque maudite§f: Vous offres pendant 3minutes des effets en fonction d'un pourcentage: ",
-				"§7     →§a70%§f: Vous obtenez l'effet§e Speed 1",
-				"§7     →§c30%§f: Vous obtenez les effets§e Speed 1§f et§9 Résistance 1§f mais vous devennez un rôle§e Solo§f pendant 2m30s",
-				"",
-				AllDesc.particularite,
-				"",
-				"Vous possédez l'identité de§5 Kimimaro",
-				"A la mort de§5 Kimimaro§f vous obtiendrez l'identité d'§5Orochimaru",
-				"A la mort d'§5Orochimaru§f vous obtiendrez l'identité des rôles:§5 Karin§f et§5 Suigetsu",
-				"",
-				AllDesc.chakra+getChakras().getShowedName(),
-				AllDesc.bar*/
-		};
+		return new String[0];
 	}
 
 	@Override
