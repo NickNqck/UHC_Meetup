@@ -10,14 +10,19 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.roles.ns.solo.jubi.Madara;
+import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -62,12 +67,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.SUITON);
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> {
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
-				onOrochimaruDeath(false);
-				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la partie vous avez tout de même reçus les bonus dû à sa mort ! (§6/ns me§7)");
-			}
-		}, 20*5);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		getKnowedRoles().add(Orochimaru.class);
 		AutomaticDesc automaticDesc = new AutomaticDesc(this);
@@ -97,6 +96,10 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			if (!gameState.getAttributedRole().contains(Roles.Jugo)) {
 				owner.sendMessage("§5Jugo§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
 				onJugoDeath(false);
+			}
+			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+				onOrochimaruDeath(false);
+				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la partie vous avez tout de même reçus les bonus dû à sa mort !");
 			}
 		}, 20*10);
 	}
@@ -295,6 +298,19 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			if (event.getRole() instanceof Jugo) {
 				onJugoDeath(true);
 			}
+			int amountDeath = 0;
+			int amountIG = 0;
+			for (RoleBase role : event.getGameState().getPlayerRoles().values()) {
+				if (role.getOriginTeam().equals(TeamList.Orochimaru)) {
+					amountIG++;
+					if (!role.getGamePlayer().isAlive()) {
+						amountDeath++;
+					}
+				}
+			}
+			if (amountDeath == amountIG-1) {//donc si tout les orochimarus sont mort (sauf kabuto)
+				onLastAlive();
+			}
 		}
 	}
 	@EventHandler
@@ -341,9 +357,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 							tick--;
 							for (Block block : getSurroundingBlocks(player)) {
 								if (block.getType() != Material.BEDROCK && block.getType() != Material.BARRIER) {
-									Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-										block.setType(Material.AIR);
-									});
+									Bukkit.getScheduler().runTask(Main.getInstance(), () -> block.setType(Material.AIR));
 								}
 							}
 							if (tick == 0) {
@@ -373,6 +387,27 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 
 		return blocks;
 	}
+
+	@Override
+	public void onNsCommand(String[] args) {
+		if (args.length == 2) {
+			if (args[0].equalsIgnoreCase("kabuto")) {
+				if (args[1].equalsIgnoreCase("send")) {
+					Player obito = getPlayerFromRole(Roles.Obito);
+					if (obito != null) {
+						proposeObito(obito);
+					}
+				}
+				if (args[1].equalsIgnoreCase("dont")) {
+					Player owner = Bukkit.getPlayer(getPlayer());
+					if (owner != null) {
+						onKabutoDeny(owner);
+					}
+				}
+			}
+		}
+	}
+
 	private void onKarinDeath(boolean msg) {
 		this.karinDeath = true;
 		if (msg) {
@@ -411,5 +446,47 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 				owner.sendMessage("§5Jugo§7 est malencontreusement mort, heureusement que vous aviez eu le temp de faire des expériences sur lui, vous avez§c récupérer§7 sa faculté de§a Dash");
 			}
 		}
+	}
+	private void onLastAlive() {
+		Player owner = Bukkit.getPlayer(getPlayer());
+		if (owner != null) {
+			boolean obitoAlive = !getListPlayerFromRole(Obito.class).isEmpty();
+			boolean madaraAlive = !getListPlayerFromRole(Madara.class).isEmpty();
+			if (!madaraAlive) {
+				if (obitoAlive){
+					proposeKabuto(owner);
+				} else {
+					onKabutoDeny(owner);
+				}
+			} else {
+				onKabutoDeny(owner);
+			}
+		}
+	}
+	private void proposeKabuto(@NonNull Player owner) {
+		TextComponent proposition = new TextComponent("§7Vous n'avez plus aucun allier en ce bas monde, voulez vous proposer à§d Obito§7 une alliance ?\n\n");
+		TextComponent accept = new TextComponent("§a§lACCEPTER");
+		accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ns kabuto send"));
+		proposition.addExtra(accept);
+		proposition.addExtra("\n\n");
+		TextComponent deny = new TextComponent("§c§lREFUSER");
+		deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ns kabuto dont"));
+		proposition.addExtra(deny);
+		owner.spigot().sendMessage(proposition);
+	}
+	private void proposeObito(@NonNull Player obito) {
+		TextComponent proposition = new TextComponent("§5Kabuto§7 vous propose une alliance, celà lui fera rejoindre votre camp, souhaitez vous §aaccepter§7 son invitation ?\n\n");
+		TextComponent accept = new TextComponent("§a§lACCEPTER");
+		accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ns obito accept"));
+		proposition.addExtra(accept);
+		proposition.addExtra("\n\n");
+		TextComponent deny = new TextComponent("§c§lREFUSER");
+		deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ns obito deny"));
+		proposition.addExtra(deny);
+		obito.spigot().sendMessage(proposition);
+	}
+	private void onKabutoDeny(@NonNull Player owner) {
+		owner.sendMessage("§7Vous êtes maintenant un rôle§e Solitaire§7.");
+		setTeam(TeamList.Kabuto);
 	}
 }

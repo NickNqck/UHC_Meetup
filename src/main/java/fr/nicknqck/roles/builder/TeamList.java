@@ -19,6 +19,7 @@ public enum TeamList {
 	Sasuke("§e§l", "§e§lSasuke"),
 	Zabuza_et_Haku("§b", "§bZabuza et Haku"),
 	Shinobi("§a", "§aShinobi"),
+	Kabuto("§6§l", "§6§lKabuto"),
 	Kumogakure("§6", "§6Kumogakure"),
 	OverWorld("§a", "§aOverworld");
 

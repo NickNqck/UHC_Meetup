@@ -753,7 +753,7 @@ public class GameListener implements Listener {
 		boolean Shinobi = false;
 		
 		boolean Kumogakure = false;
-		
+		boolean Kabuto = false;
 		for (Player player2 : gameState.getInGamePlayers()) {
 			if (gameState.getPlayerRoles().get(player2) != null) {
 				RoleBase role = gameState.getPlayerRoles().get(player2);
@@ -803,10 +803,13 @@ public class GameListener implements Listener {
 				case Zabuza_et_Haku:
 					Brume = true;
 					break;
+				case Kabuto:
+					Kabuto = true;
+					break;
 				}
 			}
 		}
-		int i = trueCount(Slayer, Demon, Solo, Jigoro, Mahr, Titans, Soldat, Jubi, Alliance, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure);
+		int i = trueCount(Slayer, Demon, Solo, Jigoro, Mahr, Titans, Soldat, Jubi, Alliance, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto);
 		if (gameDone) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.hasRoleNull(p)) {
@@ -886,6 +889,10 @@ public class GameListener implements Listener {
 			}
 			if (Shinobi) {
 				winer = TeamList.Shinobi;
+				gameDone = true;
+			}
+			if (Kabuto) {
+				winer = TeamList.Kabuto;
 				gameDone = true;
 			}
 		}
