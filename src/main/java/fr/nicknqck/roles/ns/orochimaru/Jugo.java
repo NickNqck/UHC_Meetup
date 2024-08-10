@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.orochimaru;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -14,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -34,6 +36,7 @@ public class Jugo extends OrochimaruRoles {
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort");
 			}
 		}, 20*5);
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 	}
 	@Override
 	public Roles getRoles() {
@@ -125,7 +128,6 @@ public class Jugo extends OrochimaruRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		if (marqueCD >= 0) {
 			marqueCD--;
 			if (marqueCD == 0) {
