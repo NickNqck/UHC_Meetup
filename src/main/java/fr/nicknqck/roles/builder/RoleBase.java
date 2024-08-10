@@ -108,28 +108,28 @@ public abstract class RoleBase implements IRole {
 			System.out.println(owner.getName()+", RoleID: "+roleID);
 			StringID = RandomUtils.generateRandomString(24);
 			System.out.println(owner.getName()+", StringID: "+StringID);
+			Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
+			new BukkitRunnable() {
+
+				@Override
+				public void run() {
+					if (gameState.getServerState() != ServerStates.InGame) {
+						cancel();
+						return;
+					}
+					Player owner = Bukkit.getPlayer(getPlayer());
+					if (owner == null) return;
+					if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() < 20) {
+						setResi(20);
+					}
+				}
+			}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+			setTeam(getOriginTeam());
 		}
 		if (this.gameState == null){
 			this.gameState = GameState.getInstance();
 		}
         actualTridiCooldown = -1;
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
-        new BukkitRunnable() {
-			
-			@Override
-			public void run() {
-				if (gameState.getServerState() != ServerStates.InGame) {
-					cancel();
-					return;
-				}
-				Player owner = Bukkit.getPlayer(getPlayer());
-				if (owner == null) return;
-				if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() < 20) {
-					setResi(20);
-				}
-			}
-		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
-		setTeam(getOriginTeam());
 	}
 
 	@Override
