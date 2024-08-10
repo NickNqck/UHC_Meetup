@@ -9,7 +9,6 @@ import fr.nicknqck.roles.ds.builders.Lames;
 import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.potion.PotionEffect;
@@ -23,11 +22,18 @@ public class Kyojuro extends PillierRoles {
 	private boolean alliance = false;
 	public Kyojuro(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		owner.setExp(owner.getExp()+4f);
 		this.setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		this.setResi(20);
+		super.RoleGiven(gameState);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Kyojuro;
