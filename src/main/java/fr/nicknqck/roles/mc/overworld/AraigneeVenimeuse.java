@@ -79,7 +79,7 @@ public class AraigneeVenimeuse extends UHCMcRoles {
         if (entity.getUniqueId() == owner.getUniqueId()){
             if(owner.getItemInHand().getType().equals(Material.DIAMOND_SWORD)){
                 if (poison){
-                    givePotionEffet(victim, PotionEffectType.POISON, 2,1,true);
+                    givePotionEffet(victim, PotionEffectType.POISON, 20*2,1,true);
                 }
             }
         }
@@ -118,5 +118,16 @@ public class AraigneeVenimeuse extends UHCMcRoles {
             }
         }
         return super.ItemUse(item, gameState);
+    }
+
+    @Override
+    public void Update(GameState gameState) {
+        if (cdToile >= 0){
+            cdToile --;
+            if (cdToile == 0){
+                owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§a Toile d'araignée");
+            }
+        }
+        super.Update(gameState);
     }
 }
