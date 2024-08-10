@@ -26,6 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Jugo extends OrochimaruRoles {
+
 	private boolean kimimaroDeath = false;
 	private int marqueCD = 0;
 	private boolean orochimaruDeath = false;
