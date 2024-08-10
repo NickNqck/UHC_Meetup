@@ -493,7 +493,9 @@ public abstract class RoleBase implements IRole {
 		for (Player p : gameState.getInGamePlayers()) {
 			if (!gameState.hasRoleNull(p)) {
 				if (gameState.getPlayerRoles().get(p).getClass().equals(role)) {
-					toReturn.add(p);
+					if (gameState.getPlayerRoles().get(p).getGamePlayer().isAlive()){
+						toReturn.add(p);
+					}
 				}
 			}
 		}
