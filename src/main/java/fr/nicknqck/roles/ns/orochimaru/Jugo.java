@@ -22,7 +22,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Jugo extends OrochimaruRoles {
-
+	private boolean kimimaroDeath = false;
+	private int marqueCD = 0;
+	private boolean orochimaruDeath = false;
 	public Jugo(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
@@ -46,23 +48,12 @@ public class Jugo extends OrochimaruRoles {
 	public Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
-
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
 	@Override
 	public String[] Desc() {
-		if (!kimimaroDeath) {
-			KnowRole(owner, Roles.Kimimaro, 20);
-		} else {
-			if (!orochimaruDeath) {
-				KnowRole(owner, Roles.Orochimaru, 20);
-			}else {
-				KnowRole(owner, Roles.Karin, 15);
-				KnowRole(owner, Roles.Suigetsu, 18);
-			}
-		}
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"§5Jugo",
@@ -97,23 +88,20 @@ public class Jugo extends OrochimaruRoles {
 	private ItemStack MarqueMauditeItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§5Marque maudite").setLore("§7Vous permet de devenir plus puissant pendant un court instant").toItemStack();
 	}
-	private boolean kimimaroDeath = false;
-	private int marqueCD = 0;
-	private boolean orochimaruDeath = false;
 	private void onKimimaroDeath(boolean msg) {
 		kimimaroDeath = true;
 		if (msg) {
 			owner.sendMessage("§5Kimimaro§7 est mort, vous obtenez donc l'identité de son maitre§5 Orochimaru");
 		}
-		KnowRole(owner, Roles.Orochimaru, 20);
+		getKnowedRoles().add(Orochimaru.class);
 	}
 	private void onOrochimaruDeath(boolean msg) {
 		orochimaruDeath = true;
 		if (msg) {
 			owner.sendMessage("§7Maitre§5 Orochimaru§7 est mort, vous obtenez donc l'identité de vos nouveau amis,§5 Karin§f et§5 Suigetsu");
 		}
-		KnowRole(owner, Roles.Karin, 20);
-		KnowRole(owner, Roles.Suigetsu, 18);
+		getKnowedRoles().add(Karin.class);
+		getKnowedRoles().add(Suigetsu.class);
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
