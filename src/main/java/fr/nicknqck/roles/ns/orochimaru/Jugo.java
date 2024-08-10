@@ -47,8 +47,8 @@ public class Jugo extends OrochimaruRoles {
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		AutomaticDesc automaticDesc = new AutomaticDesc(this);
 		automaticDesc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous offre§c 3 minutes§7 d'effet en fonction de votre§c chance§7:\n\n" +
-				"§7     →§a70%§f: Vous obtenez l'effet§e Speed 1\n" +
-				"§7     →§c30%§f: Vous obtenez les effets§e Speed 1§f et§9 Résistance 1§f mais vous devennez un rôle§e Solo§f pendant§c 2m30s")}), "§5Marque maudite", 60*5));
+				"§7     →§a70%§7: Vous obtenez l'effet§e Speed 1\n" +
+				"§7     →§c30%§7: Vous obtenez les effets§e Speed 1§7 et§9 Résistance 1§7 mais vous devennez un rôle§e Solo§f pendant§c 2m30s")}), "§5Marque maudite", 60*5));
 		automaticDesc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez l'identité de§5 Kimimaro")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Kimimaro§7 vous obtenez l'identité d'§5Orochimaru")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort d'§5Orochimaru§7 vous obtenez l'identité de§5 Karin§7 et de§5 Suigetsu")}),
