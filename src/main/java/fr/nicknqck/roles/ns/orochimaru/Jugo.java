@@ -54,6 +54,7 @@ public class Jugo extends OrochimaruRoles {
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort d'§5Orochimaru§7 vous obtenez l'identité de§5 Karin§7 et de§5 Suigetsu")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Votre nature de chakra§c aléatoire§7, cette partie vous avez la nature de chakra: "+getChakras().getShowedName())}));
 		this.desc = automaticDesc.getText();
+		getKnowedRoles().add(Kimimaro.class);
 	}
 	@Override
 	public Roles getRoles() {
