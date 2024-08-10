@@ -23,7 +23,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,8 +37,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class Kabuto extends OrochimaruRoles implements Listener {
@@ -46,6 +51,9 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	private final HashMap<Player, Location> killLoc = new HashMap<>();
 	private boolean mortOrochimaru = false;
 	private boolean karinDeath = false;
+	private boolean kimimaroDeath = false;
+	private boolean jugoDeath = false;
+	private final ItemStack dashItem = new ItemBuilder(Material.NETHER_STAR).setName("§aDash").toItemStack();
 
 	public Kabuto(UUID player) {
 		super(player);
@@ -76,9 +84,21 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Karin)) {
 				onKarinDeath(false);
+				owner.sendMessage("§5Karin§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
+			}
+			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
+				onKimimaroDeath(false);
+				owner.sendMessage("§5Kimimaro§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
+			}
+			if (!gameState.getAttributedRole().contains(Roles.Sasuke)) {
+				onSasukeDeath(false);
+				owner.sendMessage("§5Sasuke§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
+			}
+			if (!gameState.getAttributedRole().contains(Roles.Jugo)) {
+				owner.sendMessage("§5Jugo§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
+				onJugoDeath(false);
 			}
 		}, 20*10);
-		super.RoleGiven(gameState);
 	}
 	@Override
 	public Roles getRoles() {
@@ -90,15 +110,15 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	}
 	@Override
 	public ItemStack[] getItems() {
+		List<ItemStack> toReturn = new ArrayList<>();
+		toReturn.add(this.NinjutsuMedicalItem());
 		if (mortOrochimaru) {
-			return new ItemStack[] {
-					NinjutsuMedicalItem(),
-					EdoTenseiItem()
-			};
+			toReturn.add(this.EdoTenseiItem());
 		}
-		return new ItemStack[] {
-				NinjutsuMedicalItem()
-		};
+		if (jugoDeath) {
+			toReturn.add(this.dashItem);
+		}
+		return toReturn.toArray(new ItemStack[0]);
 	}
 	@Override
 	public String[] Desc() {
@@ -175,43 +195,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		giveItem(owner, true, getItems());
 		if (msg) {
 			owner.sendMessage("§7C'est terrible !§5 Orochimaru§7 est§c mort§7, en son homage vous récupérez sa plus puissante technique, l'§5Edo Tensei§7.");
-		}
-	}
-	@Override
-	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
-		if (event.getItem() != null) {
-			if (player.getUniqueId() == owner.getUniqueId()) {
-				if (event.getItem().isSimilar(NinjutsuMedicalItem())) {
-					event.setCancelled(true);
-					if (ninjutsuCD > 0) {
-						sendCooldown(owner, ninjutsuCD);
-						return;
-					}
-					if (event.getAction().name().contains("LEFT")) {
-						if (!mortOrochimaru) {
-							ninjutsuCD = 60*2;
-						}else {
-							ninjutsuCD = 60;
-						}
-						player.sendMessage("§dSoins !");
-						Heal(owner, this.karinDeath ? 10 : 4);
-					} else {
-						Player target = getTargetPlayer(owner, 30);
-						if (target == null) {
-							owner.sendMessage("§cIl faut viser un joueur !");
-							return;
-						}
-						Heal(target, this.karinDeath ? 10 : 4);
-						player.sendMessage("§dSoins !");
-						target.sendMessage("§5Kabuto§f vous à§d soigner§f !");
-						if (!mortOrochimaru) {
-							ninjutsuCD = 60*2;
-						}else {
-							ninjutsuCD = 60;
-						}
-					}
-				}
-			}
 		}
 	}
 	@Override
@@ -300,7 +283,95 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			if (event.getRole() instanceof Karin && !this.karinDeath) {
 				onKarinDeath(true);
 			}
+			if (event.getRole() instanceof Kimimaro && !this.kimimaroDeath) {
+				onKimimaroDeath(true);
+			}
+			if (event.getRole() instanceof Sasuke) {
+				Sasuke role = (Sasuke) event.getRole();
+				if (!role.isMortOrochimaru()) {
+					onSasukeDeath(true);
+				}
+			}
+			if (event.getRole() instanceof Jugo) {
+				onJugoDeath(true);
+			}
 		}
+	}
+	@EventHandler
+	private void onInteract(PlayerInteractEvent event) {
+		if (event.getItem() != null) {
+			Player player = event.getPlayer();
+			if (player.getUniqueId() == getPlayer()) {
+				if (event.getItem().isSimilar(NinjutsuMedicalItem())) {
+					event.setCancelled(true);
+					if (ninjutsuCD > 0) {
+						sendCooldown(owner, ninjutsuCD);
+						return;
+					}
+					if (event.getAction().name().contains("LEFT")) {
+						if (!mortOrochimaru) {
+							ninjutsuCD = 60*2;
+						}else {
+							ninjutsuCD = 60;
+						}
+						player.sendMessage("§dSoins !");
+						Heal(owner, this.karinDeath ? 10 : 4);
+					} else {
+						Player target = getTargetPlayer(owner, 30);
+						if (target == null) {
+							owner.sendMessage("§cIl faut viser un joueur !");
+							return;
+						}
+						Heal(target, this.karinDeath ? 10 : 4);
+						player.sendMessage("§dSoins !");
+						target.sendMessage("§5Kabuto§f vous à§d soigner§f !");
+						if (!mortOrochimaru) {
+							ninjutsuCD = 60*2;
+						}else {
+							ninjutsuCD = 60;
+						}
+					}
+				}
+				if (event.getItem().isSimilar(this.dashItem)) {
+					player.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(5));
+					new BukkitRunnable() {
+						private int tick = 19;
+						@Override
+						public void run() {
+							tick--;
+							for (Block block : getSurroundingBlocks(player)) {
+								if (block.getType() != Material.BEDROCK && block.getType() != Material.BARRIER) {
+									Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+										block.setType(Material.AIR);
+									});
+								}
+							}
+							if (tick == 0) {
+								cancel();
+							}
+						}
+					}.runTaskTimerAsynchronously(Main.getInstance(), 1, 0);
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
+	private List<Block> getSurroundingBlocks(Player player) {
+		List<Block> blocks = new ArrayList<>();
+		Location playerLocation = player.getLocation();
+
+		for (int x = -2; x <= 2; x++) {
+			for (int z = -2; z <= 2; z++) {
+				Block block = playerLocation.clone().add(x, 0, z).getBlock();
+				Block block2 = playerLocation.clone().add(x, 1, z).getBlock();
+				Block block3 = playerLocation.clone().add(x, 2, z).getBlock();
+				blocks.add(block);
+				blocks.add(block2);
+				blocks.add(block3);
+			}
+		}
+
+		return blocks;
 	}
 	private void onKarinDeath(boolean msg) {
 		this.karinDeath = true;
@@ -308,6 +379,36 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			Player owner = Bukkit.getPlayer(getPlayer());
 			if (owner != null) {
 				owner.sendMessage("§5Karin§7 est malheuresement morte, celà vous a donnez des idées pour votre§a Ninjutsu Médical§7 il§d soignera§7 à partir de maintenant§c 5"+AllDesc.coeur+"§7 au lieu de§c 2§7.");
+			}
+		}
+	}
+	private void onKimimaroDeath(boolean msg) {
+		Player owner = Bukkit.getPlayer(getPlayer());
+		if (owner == null)return;
+		this.kimimaroDeath = true;
+		giveItem(owner, false, new ItemBuilder(Material.DIAMOND_SWORD).setName("§fManipulation des os").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setDroppable(false).toItemStack());
+		if (msg) {
+			owner.sendMessage("§5Kimimaro§7 est mort, sa vie n'aura pas été inutile, vous récupérez sa capaciter de la §n§fManipulation des os");
+		}
+	}
+	private void onSasukeDeath(boolean msg) {
+		Player owner = Bukkit.getPlayer(getPlayer());
+		setMaxHealth(getMaxHealth()+4.0);
+		if (owner != null) {
+			owner.setMaxHealth(getMaxHealth());
+			owner.setHealth(owner.getHealth()+4.0);
+			if (msg) {
+				owner.sendMessage("§7Cette saleté de§5 Sasuke§7 est mort, malgré ceci sa vie n'a pas été inutile, sa grande vitalité vous à inspirez et vous a donnez§a +§c2"+AllDesc.coeur+"§7 permanent");
+			}
+		}
+	}
+	private void onJugoDeath(boolean msg) {
+		this.jugoDeath = true;
+		Player owner = Bukkit.getPlayer(getPlayer());
+		if (owner != null) {
+			giveItem(owner, false, this.dashItem);
+			if (msg) {
+				owner.sendMessage("§5Jugo§7 est malencontreusement mort, heureusement que vous aviez eu le temp de faire des expériences sur lui, vous avez§c récupérer§7 sa faculté de§a Dash");
 			}
 		}
 	}
