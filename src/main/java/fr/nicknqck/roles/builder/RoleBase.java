@@ -81,17 +81,15 @@ public abstract class RoleBase implements IRole {
 	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
-	private final UUID uuidOwner;
+	private UUID uuidOwner;
 	public RoleBase(UUID player) {
 		Player owner = Bukkit.getPlayer(player);
-		this.owner = owner;
-		if (this.gameState == null){
-			this.gameState = GameState.getInstance();
-		}
-		owner.setWalkSpeed(0.2f);
-		owner.resetPlayerTime();
-		owner.resetMaxHealth();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+		if (owner != null) {
+			this.owner = owner;
+			owner.setWalkSpeed(0.2f);
+			owner.resetPlayerTime();
+			owner.resetMaxHealth();
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				if (this.getTeam() != null) {
 					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
 					System.out.println(owner.getName() +" Team: "+ this.getTeam());
@@ -100,17 +98,21 @@ public abstract class RoleBase implements IRole {
 				if (this.getRoles() != null) {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
 				}
-        }, 20);
-        this.uuidOwner = owner.getUniqueId();
-        owner.sendMessage("");
-        owner.setAllowFlight(false);
-        owner.setFlying(false);
-        owner.setGameMode(GameMode.SURVIVAL);
+			}, 20);
+			this.uuidOwner = owner.getUniqueId();
+			owner.sendMessage("");
+			owner.setAllowFlight(false);
+			owner.setFlying(false);
+			owner.setGameMode(GameMode.SURVIVAL);
+			roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
+			System.out.println(owner.getName()+", RoleID: "+roleID);
+			StringID = RandomUtils.generateRandomString(24);
+			System.out.println(owner.getName()+", StringID: "+StringID);
+		}
+		if (this.gameState == null){
+			this.gameState = GameState.getInstance();
+		}
         actualTridiCooldown = -1;
-        roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
-        System.out.println(owner.getName()+", RoleID: "+roleID);
-        StringID = RandomUtils.generateRandomString(24);
-        System.out.println(owner.getName()+", StringID: "+StringID);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
         new BukkitRunnable() {
 			

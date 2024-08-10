@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class Lame implements Listener{
+
 	@EventHandler
 	public void ItemUse(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
@@ -54,7 +55,7 @@ public class Lame implements Listener{
 			}
 		}
 	}
-	public static void giveLame(DemonsSlayersRoles role, Lames lames){
+	private void giveLame(DemonsSlayersRoles role, Lames lames){
 		lames.getUsers().put(role.getPlayer(), 40);
 		role.setLames(lames);
 		role.owner.sendMessage("§7Vous avez obtenue la lame de "+lames.getName());
