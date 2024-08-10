@@ -2,6 +2,7 @@ package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.Material;
@@ -22,12 +23,28 @@ public class AraigneeVenimeuse extends UHCMcRoles {
 
     public AraigneeVenimeuse(UUID player) {
         super(player);
+        giveItem(owner, false , getItems());
     }
 
     @Override
     public String[] Desc() {
-        return new String[0];
+        return new String[]{
+                AllDesc.bar,
+                AllDesc.role+"§aAraignée Venimeuse",
+                AllDesc.objectifteam+"§aOverworld",
+                "",
+                AllDesc.items,
+                AllDesc.point+"§aToile d'araignée §r: Vous permez de poser une toile d'araignée sur le joueur visé. (1x/15mins)",
+                "",
+                AllDesc.commande,
+                AllDesc.point+"/mc poison : Vous permez d'activé votre passif",
+                "",
+                AllDesc.particularite,
+                "Si votre passif est actif tout vos coups d'épée donnerons l'effet §2poison 1 pendant 2 secondes.",
+        };
     }
+
+
 
     @Override
     public ItemStack[] getItems() {
@@ -43,17 +60,18 @@ public class AraigneeVenimeuse extends UHCMcRoles {
 
     @Override
     public GameState.Roles getRoles() {
-        return null;
+        return GameState.Roles.AraigneeVenimeuse;
     }
 
     @Override
     public TeamList getOriginTeam() {
-        return null;
+        return TeamList.OverWorld;
     }
 
     @Override
     public void resetCooldown() {
-
+        cdToile = 0;
+        poison = false;
     }
 
     @Override
@@ -94,6 +112,9 @@ public class AraigneeVenimeuse extends UHCMcRoles {
                 owner.sendMessage("Vous venez de placez une §atoile d'araignée §rsous les pieds de "+target.getName()+".");
                 target.sendMessage("§cVous venez de marcher dans une toile d'araignée!");
                 target.getLocation().getBlock().setType(Material.WEB);
+                cdToile = 60*15;
+            } else {
+                sendCooldown(owner, cdToile);
             }
         }
         return super.ItemUse(item, gameState);

@@ -5,7 +5,6 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -26,7 +25,7 @@ public class Squelette extends OverWorldRoles {
 
     public Squelette(UUID player) {
         super(player);
-        giveItem(owner, false, getItems());
+        giveItem(owner, false, KorosuItem);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class Squelette extends OverWorldRoles {
 
     @Override
     public void resetCooldown() {
-
+        KorosuCount = 0;
     }
 
     @Override

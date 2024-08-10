@@ -23,6 +23,7 @@ import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
+import fr.nicknqck.roles.mc.overworld.AraigneeVenimeuse;
 import fr.nicknqck.roles.mc.overworld.Poulet;
 import fr.nicknqck.roles.mc.overworld.Squelette;
 import fr.nicknqck.roles.mc.overworld.Zombie;
@@ -229,7 +230,8 @@ public class GameState{
 		//OverWorld
         Poulet(TeamList.OverWorld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack(), "§bMega02600"),
 		Zombie(TeamList.OverWorld, "mc", 1, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack(), "§bMega02600"),
-		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aSquelette").toItemStack(), "§bMega02600"),
+		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack(), "§bMega02600"),
+		AraigneeVenimeuse(TeamList.OverWorld, "mc", 3, new ItemBuilder(Material.SPIDER_EYE).setName("§aAraignée Venimeuse").toItemStack(), "§bMega02600"),
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
@@ -796,6 +798,9 @@ public class GameState{
 			break;
 		case LeJuge:
 			role = new LeJuge(player);
+			break;
+		case AraigneeVenimeuse:
+			role = new AraigneeVenimeuse(player);
 			break;
 		}
 		if (role == null) return null;
