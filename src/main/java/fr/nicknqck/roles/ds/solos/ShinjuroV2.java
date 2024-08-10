@@ -247,6 +247,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
                             }
                             shinjuro.cdSake += 10;
                             event.getPlayer().sendMessage("§7Vous avez gagner§b "+rdm+"%§7 d'alcool.");
+                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false));
                             event.setCancelled(true);
                         } else {
                             shinjuro.sendCooldown(event.getPlayer(), shinjuro.cdSake);

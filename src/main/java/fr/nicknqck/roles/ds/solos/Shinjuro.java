@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -30,6 +31,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 		setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		setMaxHealth(24.0);
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		setLameIncassable(owner, true);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
@@ -103,15 +105,16 @@ public class Shinjuro extends DemonsSlayersRoles {
 		}
 		super.Update(gameState);
 	}
-	
-	
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item != null) {
 			if (item.isSimilar(Items.getSake())) {
 				if (cooldownsake <= 0) {
 						owner.sendMessage("§7Vous venez de boire de l'alcool");
-						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*((60 + 30)), 0, false, false));
+						owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*((60 + 30)), 0, false, false));
+						if (killkyojuro) {
+							owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*((60 + 30)), 1, false, false), true);
+						}
 						cooldownsake = 60*5;
 				}else {
 					sendCooldown(owner, cooldownsake);
