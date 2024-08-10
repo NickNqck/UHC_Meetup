@@ -3,13 +3,18 @@ package fr.nicknqck.roles.ns.orochimaru;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -25,20 +30,30 @@ public class Jugo extends OrochimaruRoles {
 	private boolean kimimaroDeath = false;
 	private int marqueCD = 0;
 	private boolean orochimaruDeath = false;
+	private final TextComponent desc;
 	public Jugo(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);
-				owner.sendMessage("§5Kimimaro§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort");
+				owner.sendMessage("§5Kimimaro§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort (/§6ns me§7)");
 			}
 			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
-				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort");
+				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort (/§6ns me§7)");
 			}
 		}, 20*5);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this);
+		automaticDesc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous offre§c 3 minutes§7 d'effet en fonction de votre§c chance§7:\n\n" +
+				"§7     →§a70%§f: Vous obtenez l'effet§e Speed 1\n" +
+				"§7     →§c30%§f: Vous obtenez les effets§e Speed 1§f et§9 Résistance 1§f mais vous devennez un rôle§e Solo§f pendant§c 2m30s")}), "§5Marque maudite", 60*5));
+		automaticDesc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez l'identité de§5 Kimimaro")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Kimimaro§7 vous obtenez l'identité d'§5Orochimaru")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort d'§5Orochimaru§7 vous obtenez l'identité de§5 Karin§7 et de§5 Suigetsu")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Votre nature de chakra§c aléatoire§7, cette partie vous avez la nature de chakra: "+getChakras().getShowedName())}));
+		this.desc = automaticDesc.getText();
 	}
 	@Override
 	public Roles getRoles() {
@@ -54,7 +69,7 @@ public class Jugo extends OrochimaruRoles {
 	}
 	@Override
 	public String[] Desc() {
-		return new String[] {
+		return new String[] {/*
 				AllDesc.bar,
 				AllDesc.role+"§5Jugo",
 				AllDesc.objectifteam+"§5Orochimaru",
@@ -76,9 +91,15 @@ public class Jugo extends OrochimaruRoles {
 				"A la mort d'§5Orochimaru§f vous obtiendrez l'identité des rôles:§5 Karin§f et§5 Suigetsu",
 				"",
 				AllDesc.chakra+getChakras().getShowedName(),
-				AllDesc.bar
+				AllDesc.bar*/
 		};
 	}
+
+	@Override
+	public TextComponent getComponent() {
+		return this.desc;
+	}
+
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
@@ -91,14 +112,14 @@ public class Jugo extends OrochimaruRoles {
 	private void onKimimaroDeath(boolean msg) {
 		kimimaroDeath = true;
 		if (msg) {
-			owner.sendMessage("§5Kimimaro§7 est mort, vous obtenez donc l'identité de son maitre§5 Orochimaru");
+			owner.sendMessage("§5Kimimaro§7 est mort, vous obtenez donc l'identité de son maitre§5 Orochimaru§7, (§6/ns me§7)");
 		}
 		getKnowedRoles().add(Orochimaru.class);
 	}
 	private void onOrochimaruDeath(boolean msg) {
 		orochimaruDeath = true;
 		if (msg) {
-			owner.sendMessage("§7Maitre§5 Orochimaru§7 est mort, vous obtenez donc l'identité de vos nouveau amis,§5 Karin§f et§5 Suigetsu");
+			owner.sendMessage("§7Maitre§5 Orochimaru§7 est mort, vous obtenez donc l'identité de vos nouveau amis,§5 Karin§f et§5 Suigetsu§7, (§6/ns me§7)");
 		}
 		getKnowedRoles().add(Karin.class);
 		getKnowedRoles().add(Suigetsu.class);
