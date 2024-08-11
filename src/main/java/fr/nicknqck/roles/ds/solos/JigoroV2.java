@@ -32,6 +32,12 @@ public class JigoroV2 extends DemonsSlayersRoles {
 
 	public JigoroV2(UUID player) {
 		super(player);
+        pacte = Pacte.Non_Choisis;
+    }
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		pacte = Pacte.Non_Choisis;
 		setCanuseblade(true);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
@@ -45,7 +51,9 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			}
 		}, 20);
 		setLameIncassable(owner, true);
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 	}
+
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Solo;
@@ -320,8 +328,8 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (pacte == Pacte.PacteSolo) {
-			if (killer == owner) {
-				if (victim != owner){
+			if (killer.getUniqueId() == getPlayer()) {
+				if (victim.getUniqueId() != getPlayer()){
 					if (gameState.getInGamePlayers().contains(victim)) {
 						if (gameState.getPlayerRoles().containsKey(victim)) {
 							RoleBase role = gameState.getPlayerRoles().get(victim);
