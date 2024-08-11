@@ -8,8 +8,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Map;
 
 public class AutomaticDesc {
@@ -36,17 +34,6 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+when));
         return this;
     }
-    public AutomaticDesc addEffects(EffectWhen when, PotionEffect... potionEffects) {
-        StringBuilder sb = new StringBuilder();
-        text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez les effets ");
-        Iterator<PotionEffect> iterator = Arrays.stream(potionEffects).iterator();
-        while (iterator.hasNext()) {
-            sb.append("§c").append(getPotionEffectNameWithRomanLevel(iterator.next()));
-            sb.append(iterator.hasNext() ?"§7, " : getWhenString(when));
-        }
-        text.addExtra(sb.toString());
-        return this;
-    }
     public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
         for (PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
@@ -62,15 +49,6 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
-    public AutomaticDesc addItem(HoverEvent hoverEvent, String itemName, int cooldown) {
-        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§b"));
-        TextComponent interrogativDot = new TextComponent("§b[?]");
-        interrogativDot.setHoverEvent(hoverEvent);
-        text.addExtra(interrogativDot);
-        text.addExtra(new TextComponent("§7 Vous possédez l'item \n"+itemName+"§7\""));
-        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
-        return this;
-    }
     @SafeVarargs
     public final AutomaticDesc setItems(TripleMap<HoverEvent, String, Integer>... tripleMaps) {
         for (TripleMap<HoverEvent, String, Integer> tripleMap : tripleMaps) {
@@ -80,54 +58,6 @@ public class AutomaticDesc {
             text.addExtra(interogativDot);
             text.addExtra("§7\" ");
             text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
-        }
-        return this;
-    }
-    public AutomaticDesc addCommand(TextComponent textComponent, int cooldown) {
-        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous avez accès à la commande: "));
-        text.addExtra(new TextComponent(textComponent));
-        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? "(1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
-        return this;
-    }
-    public AutomaticDesc addCommand(HoverEvent hoverEvent, String commandName, int cooldown) {
-        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§b"));
-        TextComponent interrogativDot = new TextComponent("§b[?]");
-        interrogativDot.setHoverEvent(hoverEvent);
-        text.addExtra(interrogativDot);
-        text.addExtra(new TextComponent("§7 \""+commandName+"§7\""));
-        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
-        return this;
-    }
-    public AutomaticDesc addCommands(Map<TextComponent, Integer> textAndCooldown) {
-        text.addExtra(new TextComponent("\n\n" + AllDesc.point + "§7Vous avez accès aux commandes: "));
-
-        Iterator<Map.Entry<TextComponent, Integer>> iterator = textAndCooldown.entrySet().iterator();
-        boolean first = true;
-        while (iterator.hasNext()) {
-            if (textAndCooldown.isEmpty()) return this;
-
-            Map.Entry<TextComponent, Integer> entry = iterator.next();
-            TextComponent textComponent = entry.getKey();
-            Integer cooldown = entry.getValue();
-
-            if (!first) {
-                text.addExtra(new TextComponent("\n"));
-            } else {
-                first = false;
-                text.addExtra("\n");
-            }
-            text.addExtra("\n");
-            text.addExtra(AllDesc.tab + " ");
-            text.addExtra(new TextComponent(textComponent));
-
-            StringBuilder suffix = new StringBuilder("§7");
-            if (cooldown != null) {
-                suffix.append(" §7(1x/");
-                suffix.append(cooldown != -500 ? StringUtils.secondsTowardsBeautiful(cooldown) : "partie");
-                suffix.append("§7)");
-            }
-            suffix.append(iterator.hasNext() ? ", " : ".");
-            text.addExtra(new TextComponent(suffix.toString()));
         }
         return this;
     }
@@ -148,22 +78,15 @@ public class AutomaticDesc {
     }
     @SafeVarargs
     public final AutomaticDesc setCommands(TripleMap<HoverEvent, String, Integer>... hoverAndCooldown) {
-        text.addExtra("\n\n"+"§7 - Commandes: ");
+        text.addExtra("\n\n" + "§7 - Commandes: ");
         for (TripleMap<HoverEvent, String, Integer> tripleMap : hoverAndCooldown) {
             TextComponent interogativDot = new TextComponent("§b[?]");
             interogativDot.setHoverEvent(tripleMap.getFirst());
-            text.addExtra("\n\n§7 "+AllDesc.point+" ");
+            text.addExtra("\n\n§7 " + AllDesc.point + " ");
             text.addExtra(interogativDot);
-            text.addExtra("§7 "+tripleMap.getSecond());
-            text.addExtra(new TextComponent("§7 (1x/"+(tripleMap.getThird() != -500 ? StringUtils.secondsTowardsBeautiful(tripleMap.getThird()) : "partie" )+")."));
+            text.addExtra("§7 " + tripleMap.getSecond());
+            text.addExtra(new TextComponent("§7 (1x/" + (tripleMap.getThird() != -500 ? StringUtils.secondsTowardsBeautiful(tripleMap.getThird()) : "partie") + ")."));
         }
-        return this;
-    }
-    public AutomaticDesc addParticularite(HoverEvent particularite) {
-        text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez une particularité: ");
-        TextComponent part = new TextComponent("§b[?]");
-        part.setHoverEvent(particularite);
-        text.addExtra(part);
         return this;
     }
     public AutomaticDesc addParticularites(HoverEvent... hoverEvents) {
@@ -213,14 +136,12 @@ public class AutomaticDesc {
         }
         return effectName + " " + romanLevel;
     }
-
     private String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
             return input;
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
-
     private String getRomanNumeral(int number) {
         if (number <= 0 || number > ROMAN_NUMERALS.length) {
             return String.valueOf(number);
