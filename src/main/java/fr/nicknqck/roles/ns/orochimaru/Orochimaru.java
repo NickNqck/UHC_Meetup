@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -25,6 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class Orochimaru extends OrochimaruRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		setResi(20);
+		givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0), EffectWhen.PERMANENT);
 	}
 	private final List<Chakras> chakrasVoled = new ArrayList<>();
 	@Override
@@ -104,10 +107,6 @@ public class Orochimaru extends OrochimaruRoles {
 				"Vos natures de Chakras: "+ sb,
 				AllDesc.bar
 		};
-	}
-	@Override
-	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 	}
 	private ItemStack EdoTenseiItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei").setLore("§7Permet de réssusciter jusqu'à deux personnes que vous avez tuer").toItemStack();
@@ -211,7 +210,7 @@ public class Orochimaru extends OrochimaruRoles {
 						clicker.closeInventory();
 						clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
 						clicker.sendMessage("§5Edo Tensei !");
-						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getOriginTeam());
+						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getTeam());
 						HubListener.getInstance().giveStartInventory(clicked);
 						gameState.RevivePlayer(clicked);
 						setMaxHealth(getMaxHealth()-4.0);

@@ -297,7 +297,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 						giveItem(clicked, false, getPlayerRoles(clicked).getItems());
 						killLoc.remove(clicked);
 						clicked.resetTitle();
-						clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+getTeam(clicked).name());
+						clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+getTeam(clicked).getName());
 						
 					}
 				}
