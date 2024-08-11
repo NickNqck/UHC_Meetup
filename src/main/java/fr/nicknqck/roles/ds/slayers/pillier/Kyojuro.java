@@ -26,7 +26,7 @@ public class Kyojuro extends PillierRoles {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
-		owner.setExp(owner.getExp()+4f);
+		owner.setLevel(4);
 		this.setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
