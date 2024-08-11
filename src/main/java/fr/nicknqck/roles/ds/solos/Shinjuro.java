@@ -18,6 +18,7 @@ import fr.nicknqck.utils.TripleMap;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -206,29 +207,31 @@ public class Shinjuro extends DemonsSlayersRoles {
 					shinjuro.sendCustomActionBar(shinjuro.owner, Loc.getDirectionMate(shinjuro.owner, shinjuro.gameState.getOwner(Roles.Kyojuro), true));
 				}
 			}
-			Material m = shinjuro.owner.getPlayer().getLocation().getBlock().getType();
-			Location y1 = new Location(shinjuro.owner.getWorld(), shinjuro.owner.getLocation().getX(), shinjuro.owner.getLocation().getY()+1, shinjuro.owner.getLocation().getZ());
-			Material a = y1.getBlock().getType();
-			if (m == Material.LAVA || m == Material.STATIONARY_LAVA || a == Material.LAVA || a == Material.STATIONARY_LAVA) {
-				if (shinjuro.owner.getHealth() != shinjuro.getMaxHealth()) {
-					if (shinjuro.regencooldown == 0) {
-						double max = shinjuro.getMaxHealth();
-						double ahealth = shinjuro.owner.getHealth();
-						double dif = max-ahealth;
-						if (!(dif <= 1.0)) {
-							shinjuro.Heal(shinjuro.owner, 1);
-							shinjuro.owner.sendMessage("§7Vous venez de gagné§c 1/2"+AllDesc.coeur+"§7 suite à votre temp passé au chaud");
-						} else {
-							shinjuro.owner.setHealth(max);
+			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+				Material m = shinjuro.owner.getPlayer().getLocation().getBlock().getType();
+				Location y1 = new Location(shinjuro.owner.getWorld(), shinjuro.owner.getLocation().getX(), shinjuro.owner.getLocation().getY()+1, shinjuro.owner.getLocation().getZ());
+				Material a = y1.getBlock().getType();
+				if (m == Material.LAVA || m == Material.STATIONARY_LAVA || a == Material.LAVA || a == Material.STATIONARY_LAVA) {
+					if (shinjuro.owner.getHealth() != shinjuro.getMaxHealth()) {
+						if (shinjuro.regencooldown == 0) {
+							double max = shinjuro.getMaxHealth();
+							double ahealth = shinjuro.owner.getHealth();
+							double dif = max-ahealth;
+							if (!(dif <= 1.0)) {
+								shinjuro.Heal(shinjuro.owner, 1);
+								shinjuro.owner.sendMessage("§7Vous venez de gagné§c 1/2"+AllDesc.coeur+"§7 suite à votre temp passé au chaud");
+							} else {
+								shinjuro.owner.setHealth(max);
+							}
+							shinjuro.regencooldown = 10;
+						}else {
+							shinjuro.sendCustomActionBar(shinjuro.owner, "§7Temp avant§d régénération§7:§l "+shinjuro.regencooldown+"s");
 						}
-						shinjuro.regencooldown = 10;
-					}else {
-						shinjuro.sendCustomActionBar(shinjuro.owner, "§7Temp avant§d régénération§7:§l "+shinjuro.regencooldown+"s");
 					}
+				} else {
+					if (shinjuro.regencooldown != 10) shinjuro.regencooldown = 10;
 				}
-			} else {
-				if (shinjuro.regencooldown != 10) shinjuro.regencooldown = 10;
-			}
+			});
 		}
 	}
 }
