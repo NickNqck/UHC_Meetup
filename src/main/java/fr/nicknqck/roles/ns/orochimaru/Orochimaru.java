@@ -52,7 +52,7 @@ public class Orochimaru extends OrochimaruRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		setResi(20);
-		givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0), EffectWhen.PERMANENT);
+		givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 	}
 	private final List<Chakras> chakrasVoled = new ArrayList<>();
 	@Override
@@ -218,7 +218,7 @@ public class Orochimaru extends OrochimaruRoles {
 						giveItem(clicked, false, getPlayerRoles(clicked).getItems());
 						killLoc.remove(clicked);
 						clicked.resetTitle();
-						clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+TeamList.Orochimaru);
+						clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+getTeam().getName());
 						
 					}
 				}
