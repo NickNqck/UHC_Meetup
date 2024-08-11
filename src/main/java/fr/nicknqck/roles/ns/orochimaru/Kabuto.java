@@ -66,10 +66,10 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	private int dashCd;
 	private int cdErmite;
 	private boolean obitoTeam = false;
+	private boolean lastAlive = false;
     public Kabuto(UUID player) {
 		super(player);
 	}
-
 	@Override
 	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.SUITON);
@@ -81,8 +81,14 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 				"§7     → Clique droit: En visant un joueur, celà permet de le§d soigner§7 de§c 2"+AllDesc.coeur+"\n\n" +
 				"§7     → Clique gauche: Vous§d soigne§7 de§c 2"+AllDesc.coeur)}), "§aNinjutsu Médical", 60*3));
 		automaticDesc.addParticularites(
-				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de §5Karin§7 votre§a Ninjutsu Médical§d soignera§7 de§c 6"+AllDesc.coeur)}),
-				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Jugo§7 vous obtiendrez un§a dash§7 qui vous propulsera§c 10blocs§7 en avant et infligera§c 2"+AllDesc.coeur+"§7 aux joueurs proche.")})
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort d'§5Orochimaru§7 vous obtenez son item d'§5Edo Tensei§7.")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de §5Karin§7 votre§a Ninjutsu Médical§d soignera§7 de§c 5"+AllDesc.coeur)}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Jugo§7 vous obtiendrez un§a dash§7 qui vous propulsera§c 10blocs§7 en avant et infligera§c 2"+AllDesc.coeur+"§7 aux joueurs proche.")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Kimimaro§7 vous obtiendrez une épée en diamant nommé \"§fManipulation des os§7\" enchanter tranchant IV.")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Sasuke§7 s'il était encore dans le camp§5 Orochimaru§7 vous gagnez§a +§c2"+AllDesc.coeur+"§c permanent")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Si vous êtes le dernier membre du camp§5 Orochimaru§7 en§a vie§7 vous obtiendrez l'effet§c Force I§7 de manière§c permanente§7.\n\n" +
+						"§7De plus, vous aurez le choix de gagner ou non avec§d Obito§7 en duo (uniquement si§d Madara§7 est§c mort§7)\n" +
+						"§7Si§d Obito§7 accepte vous rejoindrez son camp mais perdrez votre§5 Edo Tensei§7.")})
 		);
 		this.desc = automaticDesc.getText();
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
@@ -355,6 +361,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 						return;
 					}
 					player.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(5));
+					player.setNoDamageTicks(16);
 					new BukkitRunnable() {
 						private int tick = 16;
 						@Override
@@ -418,6 +425,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	}
 	@Override
 	public void onNsCommand(String[] args) {
+		if (!lastAlive)return;
 		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("kabuto")) {
 				if (args[1].equalsIgnoreCase("send")) {
@@ -494,6 +502,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		if (owner != null) {
 			boolean obitoAlive = !getListPlayerFromRole(Obito.class).isEmpty();
 			boolean madaraAlive = !getListPlayerFromRole(Madara.class).isEmpty();
+			lastAlive = true;
 			if (!madaraAlive) {
 				if (obitoAlive){
 					proposeKabuto(owner);
@@ -547,6 +556,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		player.sendMessage("§5Kabuto§7 rejoint maintenant votre camp");
 	}
 	public void onObitoCommand(String[] args, Obito role) {
+		if (!lastAlive)return;
 		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("obito")) {
 				if (args[1].equalsIgnoreCase("deny")) {
@@ -564,7 +574,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			}
 		}
 	}
-
 	private static class HealingRunnable extends BukkitRunnable {
 
 		private final Kabuto kabuto;
