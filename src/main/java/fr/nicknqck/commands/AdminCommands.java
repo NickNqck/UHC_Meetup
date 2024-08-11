@@ -283,16 +283,21 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								if (gameState.getServerState() != null) {
 									if (gameState.getServerState() == ServerStates.InGame) {
-										int grp = Integer.parseInt(args[1]);
-										if (grp > 0) {
-											gameState.setGroupe(grp);
-											for (Player p : gameState.getInGamePlayers()) {
-												p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
-												NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
-												p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");
+										try {
+											int grp = Integer.parseInt(args[1]);
+											if (grp > 0) {
+												gameState.setGroupe(grp);
+												for (Player p : gameState.getInGamePlayers()) {
+													p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
+													NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
+													p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");
+												}
+												return true;
 											}
-											return true;
+										} catch (NumberFormatException e) {
+											e.printStackTrace();
 										}
+
 									} else {
 										sender.sendMessage("§cIl faut être en jeux pour faire cette commande !");
 										return true;
