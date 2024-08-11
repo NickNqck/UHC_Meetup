@@ -6,6 +6,7 @@ import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -50,6 +51,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Kabuto extends OrochimaruRoles implements Listener {
+
 	private TextComponent desc;
 	private int ninjutsuCD = 0;
 	private final HashMap<Player, RoleBase> edoTensei = new HashMap<>();
@@ -59,8 +61,12 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	private boolean kimimaroDeath = false;
 	private boolean jugoDeath = false;
 	private final ItemStack dashItem = new ItemBuilder(Material.NETHER_STAR).setName("§aDash").toItemStack();
-
-	public Kabuto(UUID player) {
+	private boolean solo = false;
+	private final ItemStack ermiteItem = new ItemBuilder(Material.NETHER_STAR).setName("§5Mode Ermite").toItemStack();
+	private int dashCd;
+	private int cdErmite;
+	private boolean obitoTeam = false;
+    public Kabuto(UUID player) {
 		super(player);
 	}
 
@@ -101,6 +107,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la partie vous avez tout de même reçus les bonus dû à sa mort !");
 			}
+			verifyAliveOrochimaru(getGameState());
 		}, 20*10);
 	}
 	@Override
@@ -115,11 +122,14 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	public ItemStack[] getItems() {
 		List<ItemStack> toReturn = new ArrayList<>();
 		toReturn.add(this.NinjutsuMedicalItem());
-		if (mortOrochimaru) {
+		if (mortOrochimaru && !obitoTeam) {
 			toReturn.add(this.EdoTenseiItem());
 		}
 		if (jugoDeath) {
 			toReturn.add(this.dashItem);
+		}
+		if (solo) {
+			toReturn.add(this.ermiteItem);
 		}
 		return toReturn.toArray(new ItemStack[0]);
 	}
@@ -165,6 +175,8 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	public void resetCooldown() {
 		ninjutsuCD = 0;
 		edoTensei.clear();
+		dashCd = 0;
+		cdErmite = 0;
 	}
 	private ItemStack EdoTenseiItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei").setLore("§7Hérité de§5 Orochimaru§7 cette technique permet de réssusciter 1 personne que vous avez tuer").toItemStack();
@@ -298,19 +310,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			if (event.getRole() instanceof Jugo) {
 				onJugoDeath(true);
 			}
-			int amountDeath = 0;
-			int amountIG = 0;
-			for (RoleBase role : event.getGameState().getPlayerRoles().values()) {
-				if (role.getOriginTeam().equals(TeamList.Orochimaru)) {
-					amountIG++;
-					if (!role.getGamePlayer().isAlive()) {
-						amountDeath++;
-					}
-				}
-			}
-			if (amountDeath == amountIG-1) {//donc si tout les orochimarus sont mort (sauf kabuto)
-				onLastAlive();
-			}
+			verifyAliveOrochimaru(event.getGameState());
 		}
 	}
 	@EventHandler
@@ -349,9 +349,14 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 					}
 				}
 				if (event.getItem().isSimilar(this.dashItem)) {
+					if (dashCd >= 1) {
+						sendCooldown(event.getPlayer(), dashCd);
+						event.setCancelled(true);
+						return;
+					}
 					player.setVelocity(player.getEyeLocation().getDirection().normalize().multiply(5));
 					new BukkitRunnable() {
-						private int tick = 19;
+						private int tick = 16;
 						@Override
 						public void run() {
 							tick--;
@@ -365,7 +370,31 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 							}
 						}
 					}.runTaskTimerAsynchronously(Main.getInstance(), 1, 0);
+					dashCd = 60*6;
 					event.setCancelled(true);
+				}
+				if (event.getItem().isSimilar(this.ermiteItem)) {
+					if (cdErmite >= 1) {
+						sendCooldown(player, cdErmite);
+						event.setCancelled(true);
+						return;
+					}
+					if (this.solo) {
+						player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
+						HealingRunnable runnable = new HealingRunnable(this);
+						runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+					}
+				}
+			}
+		}
+	}
+	@EventHandler
+	private void onUHCKill(UHCPlayerKillEvent event) {
+		if (event.getGamePlayerKiller() != null) {
+			if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
+				if (this.cdErmite > 60) {
+					this.cdErmite-=60;
+					event.getPlayerKiller().sendMessage("§7Le cooldown actuel de votre§5 Mode Ermite§7 a été réduit de§c 60 secondes§7.");
 				}
 			}
 		}
@@ -387,7 +416,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 
 		return blocks;
 	}
-
 	@Override
 	public void onNsCommand(String[] args) {
 		if (args.length == 2) {
@@ -407,7 +435,21 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			}
 		}
 	}
-
+	private void verifyAliveOrochimaru(GameState gameState) {
+		int amountDeath = 0;
+		int amountIG = 0;
+		for (RoleBase role : gameState.getPlayerRoles().values()) {
+			if (role.getOriginTeam().equals(TeamList.Orochimaru)) {
+				amountIG++;
+				if (!role.getGamePlayer().isAlive()) {
+					amountDeath++;
+				}
+			}
+		}
+		if (amountDeath == amountIG-1) {//donc si tout les orochimarus sont mort (sauf kabuto)
+			onLastAlive();
+		}
+	}
 	private void onKarinDeath(boolean msg) {
 		this.karinDeath = true;
 		if (msg) {
@@ -486,7 +528,70 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		obito.spigot().sendMessage(proposition);
 	}
 	private void onKabutoDeny(@NonNull Player owner) {
+		this.solo = true;
 		owner.sendMessage("§7Vous êtes maintenant un rôle§e Solitaire§7.");
 		setTeam(TeamList.Kabuto);
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+
+	}
+	private void onObitoDeny(@NonNull Player owner) {
+		owner.sendMessage("§7Cette saleté d'§dObito§7 a refuser de s'allier à vous, vous avez intérêt à lui faire regretter");
+		onKabutoDeny(owner);
+	}
+	private void onObitoAccept(@NonNull Player owner, @NonNull Obito obito) {
+		owner.sendMessage("§dObito§7 a accepter de vous rejoindre, ses éxigences vous force à ne plus utiliser votre§5 Edo Tensei§7, vous avez gagner un allier de taille");
+		setTeam(obito.getTeam());
+		this.obitoTeam = true;
+		Player player = Bukkit.getPlayer(obito.getPlayer());
+		if (player == null)return;
+		player.sendMessage("§5Kabuto§7 rejoint maintenant votre camp");
+	}
+	public void onObitoCommand(String[] args, Obito role) {
+		if (args.length == 2) {
+			if (args[0].equalsIgnoreCase("obito")) {
+				if (args[1].equalsIgnoreCase("deny")) {
+					Player owner = Bukkit.getPlayer(getPlayer());
+					if (owner != null) {
+						onObitoDeny(owner);
+					}
+				}
+				if (args[1].equalsIgnoreCase("accept")) {
+					Player owner = Bukkit.getPlayer(getPlayer());
+					if (owner != null) {
+						onObitoAccept(owner, role);
+					}
+				}
+			}
+		}
+	}
+
+	private static class HealingRunnable extends BukkitRunnable {
+
+		private final Kabuto kabuto;
+		private int timeRemaining = 60*5;
+		private int timeHealthRemaining = 10;
+		private HealingRunnable(Kabuto owner) {
+			this.kabuto = owner;
+		}
+		@Override
+		public void run() {
+			if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame) || !kabuto.getGamePlayer().isAlive()){
+				cancel();
+				return;
+			}
+			timeRemaining--;
+			timeHealthRemaining--;
+			if (timeRemaining == 0) {
+				cancel();
+				return;
+			}
+			Player owner = Bukkit.getPlayer(kabuto.getPlayer());
+			if (owner != null) {
+				if (timeHealthRemaining <= 0) {
+					timeHealthRemaining = 10;
+					Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.setHealth(Math.min(owner.getHealth() + 1.0, owner.getMaxHealth())));
+				}
+			}
+		}
 	}
 }

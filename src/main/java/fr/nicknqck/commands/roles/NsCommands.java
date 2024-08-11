@@ -3,7 +3,10 @@ package fr.nicknqck.commands.roles;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.orochimaru.Kabuto;
+import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -125,7 +128,18 @@ public class NsCommands implements CommandExecutor {
                         return true;
                     }
 					if (!gameState.hasRoleNull(sender) && gameState.getPlayerRoles().get(sender).getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
-						((NSRoles) gameState.getPlayerRoles().get(sender)).onNsCommand(args);
+						NSRoles role = (NSRoles) gameState.getPlayerRoles().get(sender);
+						role.onNsCommand(args);
+						if (role instanceof Obito) {
+							for (RoleBase r : gameState.getPlayerRoles().values()) {
+								if (r.getGamePlayer().isAlive()) {
+									if (r instanceof Kabuto) {
+										Kabuto kabuto = (Kabuto) r;
+										kabuto.onObitoCommand(args, (Obito)role);
+									}
+								}
+							}
+						}
 					}
 					return true;
 				}
