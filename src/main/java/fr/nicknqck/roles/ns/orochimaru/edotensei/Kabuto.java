@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ns.orochimaru;
+package fr.nicknqck.roles.ns.orochimaru.edotensei;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -15,7 +15,10 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.roles.ns.orochimaru.Jugo;
+import fr.nicknqck.roles.ns.orochimaru.Karin;
+import fr.nicknqck.roles.ns.orochimaru.Kimimaro;
+import fr.nicknqck.roles.ns.orochimaru.Sasuke;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.utils.GlobalUtils;
@@ -51,7 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class Kabuto extends OrochimaruRoles implements Listener {
+public class Kabuto extends EdoTenseiOrochimaru implements Listener {
 
 	private TextComponent desc;
 	private int ninjutsuCD = 0;

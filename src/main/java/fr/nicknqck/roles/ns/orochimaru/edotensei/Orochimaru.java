@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ns.orochimaru;
+package fr.nicknqck.roles.ns.orochimaru.edotensei;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -12,7 +12,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.roles.ns.orochimaru.Sasuke;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class Orochimaru extends OrochimaruRoles {
+public class Orochimaru extends EdoTenseiOrochimaru {
 
 	public Orochimaru(UUID player) {
 		super(player);

@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.ns.orochimaru.Kabuto;
+import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
