@@ -330,7 +330,9 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			if (event.getRole() instanceof Jugo) {
 				onJugoDeath(true);
 			}
-			verifyAliveOrochimaru(event.getGameState());
+			if (!solo) {
+				verifyAliveOrochimaru(event.getGameState());
+			}
 		}
 	}
 	@EventHandler
