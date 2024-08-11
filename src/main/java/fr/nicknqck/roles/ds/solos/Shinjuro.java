@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -13,6 +14,10 @@ import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.TripleMap;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,16 +30,33 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Shinjuro extends DemonsSlayersRoles {
-
+	private boolean usesoufle = false;
+	private int cooldownsake = 0;
+	private int souflecooldown = 0;
+	private boolean killkyojuro = false;
+	private int regencooldown = 10;
+	private TextComponent desc;
 	public Shinjuro(UUID player) {
 		super(player);
+
+	}
+	@Override
+	public void RoleGiven(GameState gameState) {
 		setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		setMaxHealth(24.0);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		setLameIncassable(owner, true);
+		AutomaticDesc desc = new AutomaticDesc(this);
+		desc.addEffects(getEffects());
+		desc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous offre l'effet§b Speed I§7 pendant§c 1m30s§7\n\n§7Si vous avez tuer§a Kyojuro§7 vous aurez l'effet§b Speed II§7 à la place")}), "§6Sake", 60*5),
+				new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'§aactiver§7/§cdésactiver§7 votre effet de§6 Fire Résistance I")}), "§6Soufle du feu", 5))
+				.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Quand vous êtes sous l'effet de votre§6 Soufle du feu§7 vos coups mette en§c feu§7.")}),
+						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous vous§d régénérez§7 de§c 1/2"+AllDesc.coeur+"§7 toute les§c 10 secondes")}));
+		this.desc = desc.getText();
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Shinjuro;
@@ -46,8 +68,13 @@ public class Shinjuro extends DemonsSlayersRoles {
 	}
 
 	@Override
+	public TextComponent getComponent() {
+		return desc;
+	}
+
+	@Override
 	public String[] Desc() {
-		return AllDesc.Shinjuro;
+		return new String[0];
 	}
 	@Override
 	public void GiveItems() {
@@ -61,11 +88,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 				Items.getSoufleDuFeu()
 		};
 	}
-	private boolean usesoufle = false;
-	private int cooldownsake = 0;
-	private int souflecooldown = 0;
-	private boolean killkyojuro = false;
-	private int regencooldown = 10;
 	public void setSakeCooldown(int i) {
 		cooldownsake = i;
 	}
@@ -144,7 +166,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Kyojuro) {
+						if (role instanceof Kyojuro && !killkyojuro) {
 							killkyojuro = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles().name()+ChatColor.GRAY+" maintenant en utilisant le Soufle du Feu vous obtiendrez l'effet: "+ChatColor.RED+"Speed 1"+ChatColor.GRAY+" permanent");
 						}
@@ -164,7 +186,6 @@ public class Shinjuro extends DemonsSlayersRoles {
         victim.setFireTicks(x);
         super.ItemUseAgainst(item, victim, gameState);
 	}
-
 	@Override
 	public String getName() {
 		return "Shinjuro";
