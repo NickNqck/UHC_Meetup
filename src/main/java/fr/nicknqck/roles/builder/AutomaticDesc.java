@@ -62,21 +62,6 @@ public class AutomaticDesc {
         }
         return this;
     }
-    public AutomaticDesc setCommands(Map<HoverEvent, Map<String, Integer>> hoverAndCooldown) {
-        text.addExtra("\n\n"+"§7 - Commandes: \n\n");
-        for (HoverEvent hoverEvent : hoverAndCooldown.keySet()) {
-            for (String string : hoverAndCooldown.get(hoverEvent).keySet()) {
-                int cooldown = hoverAndCooldown.get(hoverEvent).get(string);
-                TextComponent interogativDot = new TextComponent("§b[?]");
-                interogativDot.setHoverEvent(hoverEvent);
-                text.addExtra("§7 "+AllDesc.point+" ");
-                text.addExtra(interogativDot);
-                text.addExtra("§7 "+string);
-                text.addExtra(new TextComponent("§7 (1x/"+(cooldown != -500 ? StringUtils.secondsTowardsBeautiful(cooldown) : "partie" )+")."));
-            }
-        }
-        return this;
-    }
     @SafeVarargs
     public final AutomaticDesc setCommands(TripleMap<HoverEvent, String, Integer>... hoverAndCooldown) {
         text.addExtra("\n\n" + "§7 - Commandes: ");
