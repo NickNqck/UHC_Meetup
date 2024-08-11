@@ -24,6 +24,7 @@ import java.util.*;
 
 public class Haku extends NSRoles {
 	private int maxCDHaku = 60*8;
+	private int bulleHakuCD = 0;
 	public Haku(UUID player) {
 		super(player);
 		setChakraType(Chakras.SUITON);
@@ -87,7 +88,7 @@ public class Haku extends NSRoles {
 	private ItemStack BulleItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§bHyôton").setLore("§7Vous permet de crée une sphère de glace").toItemStack();
 	}
-	private int bulleHakuCD = 0;
+
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
@@ -129,8 +130,8 @@ public class Haku extends NSRoles {
 	@Override
 	public void onNsCommand(String[] args) {
 		if (args[0].equalsIgnoreCase("hyoton")) {
-			if (bulleHakuCD > 60*8+1) {
-				bulleHakuCD = 60*8+1;
+			if (bulleHakuCD > maxCDHaku) {
+				bulleHakuCD = maxCDHaku+1;
 				Player player = Bukkit.getPlayer(getPlayer());
 				if (player != null) {
 					player.sendMessage("§7Vous forcez la fermeture de votre§b bulle");
@@ -213,9 +214,9 @@ public class Haku extends NSRoles {
 						cancel();
 						return;
 					}
-					givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+					givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					
-					if (bulleHakuCD <= (maxCDHaku-120)) {
+					if (bulleHakuCD <= maxCDHaku) {
 						owner.sendMessage("§7Votre bulle disparait");
 						owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 						resetBulleHaku();
