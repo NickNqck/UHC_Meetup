@@ -289,7 +289,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 						clicker.closeInventory();
 						clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
 						clicker.sendMessage("§5Edo Tensei !");
-						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getOriginTeam());
+						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getTeam());
 						HubListener.getInstance().giveStartInventory(clicked);
 						gameState.RevivePlayer(clicked);
 						setMaxHealth(getMaxHealth()-4.0);
@@ -461,12 +461,17 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 					Player obito = getPlayerFromRole(Roles.Obito);
 					if (obito != null) {
 						proposeObito(obito);
+						Player owner = Bukkit.getPlayer(getPlayer());
+						if (owner != null) {
+							owner.sendMessage("§7Vous venez de proposer une alliance à§d Obito");
+						}
 					}
 				}
 				if (args[1].equalsIgnoreCase("dont")) {
 					Player owner = Bukkit.getPlayer(getPlayer());
 					if (owner != null) {
 						onKabutoDeny(owner);
+						owner.sendMessage("§7Vous avez refuser de proposer une alliance à§d Obito");
 					}
 				}
 			}
@@ -527,6 +532,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		}
 	}
 	private void onLastAlive() {
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		Player owner = Bukkit.getPlayer(getPlayer());
 		if (owner != null) {
 			boolean obitoAlive = !getListPlayerFromRole(Obito.class).isEmpty();
@@ -569,8 +575,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		this.solo = true;
 		owner.sendMessage("§7Vous êtes maintenant un rôle§e Solitaire§7.");
 		setTeam(TeamList.Kabuto);
-		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-
 	}
 	private void onObitoDeny(@NonNull Player owner) {
 		owner.sendMessage("§7Cette saleté d'§dObito§7 a refuser de s'allier à vous, vous avez intérêt à lui faire regretter");
