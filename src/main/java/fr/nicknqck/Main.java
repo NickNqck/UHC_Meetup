@@ -32,9 +32,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,8 +40,6 @@ import org.bukkit.potion.PotionEffect;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -65,7 +61,6 @@ public class Main extends JavaPlugin implements Listener{
 	private ScheduledExecutorService scheduledExecutorService;
 	@Getter
     private static WorldFillTask worldfilltask;
-	public static List<Chunk> keepChunk = new ArrayList<>();
 	@Getter
 	private GetterList getterList;
 	@Getter
@@ -276,7 +271,7 @@ public class Main extends JavaPlugin implements Listener{
 		}
 		System.out.println("Ended GLASS platform");
 	}
-	private void initGameWorld() {
+	public void initGameWorld() {
 		for (World world : Bukkit.getWorlds()) {
 			if (world.getName().equals("arena")) {
 				File worldFolder = world.getWorldFolder();
@@ -306,11 +301,6 @@ public class Main extends JavaPlugin implements Listener{
 		getWorldManager().setGameWorld(gameWorld);
 		System.out.println("Created world gameWorld");
 	}
-	@EventHandler
-	public void onChunkUnload(ChunkUnloadEvent e) {
-		if (keepChunk.contains(e.getChunk()))
-			e.setCancelled(true); 
-   }
 	@Override
 	public void onDisable() {
 		if (getScoreboardManager() != null) {

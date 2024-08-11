@@ -45,7 +45,7 @@ public class LeComte extends CustomRolesBase implements Listener {
         Map<HoverEvent, String> particularites = new HashMap<>();
         particularites.put(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez§c 3"+AllDesc.coeur+"§7 supplémentaire")}), "§cVie supplémentaire");
         particularites.put(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Hors de votre dimension, vous infligez§c +35%§7 de dégat au joueurs que vous aviez complètement §cinspecter")}), "§cBoost de Force");
-        desc.setParticularites(particularites);
+        desc.addParticularites(particularites.keySet().toArray(new HoverEvent[0]));
         this.automaticDesc = desc.getText();
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         new UpdateRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);

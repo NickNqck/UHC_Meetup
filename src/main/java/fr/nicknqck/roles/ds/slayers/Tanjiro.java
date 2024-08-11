@@ -52,16 +52,10 @@ public class Tanjiro extends SlayerRoles implements Listener {
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
-     /*  Map<TextComponent, Integer> test = new LinkedHashMap<>();
-        test.put(getSentir(), 60*5);
-        test.put(getSentirJoueur(), -500);
-        test.put(getAssassin(), -500);*/
-        Map<HoverEvent, String> particlarite = new LinkedHashMap<>();
-        particlarite.put(getKillAssassin().getHoverEvent(), "§c§lTuer l'Assassin");
         desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
         .setItems(new TripleMap<>(getDanseText().getHoverEvent(), getDanseText().getText(), 60*12))
         .setCommands(new TripleMap<>(getSentir().getHoverEvent(), getSentir().getText(), 60*5), new TripleMap<>(getSentirJoueur().getHoverEvent(), getSentirJoueur().getText(), -500), new TripleMap<>(getAssassin().getHoverEvent(), getAssassin().getText(), -500))
-        .setParticularites(particlarite);
+        .addParticularites(getKillAssassin().getHoverEvent());
         this.automaticDesc = desc.getText();
 
     }

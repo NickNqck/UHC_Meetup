@@ -11,6 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Map;
 
 public class AutomaticDesc {
+
     private static final String[] ROMAN_NUMERALS = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
     private final TextComponent text;
     private final IRole role;
@@ -98,17 +99,6 @@ public class AutomaticDesc {
             i++;
             text.addExtra(toAdd);
             text.addExtra("§7, ");
-        }
-        return this;
-    }
-    public AutomaticDesc setParticularites(Map<HoverEvent, String> hoverEvents) {
-        text.addExtra("\n\n"+"§7 - Particularitées: ");
-        for (HoverEvent hover : hoverEvents.keySet()) {
-            text.addExtra("\n\n "+AllDesc.point);
-            TextComponent toAdd = new TextComponent("§b[?]");
-            toAdd.setHoverEvent(hover);
-            text.addExtra(toAdd);
-            text.addExtra("§7, "+hoverEvents.get(hover));
         }
         return this;
     }

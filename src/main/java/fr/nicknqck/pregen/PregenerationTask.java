@@ -45,7 +45,6 @@ public class PregenerationTask extends BukkitRunnable {
 			Location loc = new Location(this.world, this.cx, 0.0D, this.cz);
 			if (!loc.getChunk().isLoaded()) {
 				loc.getWorld().loadChunk(loc.getChunk().getX(), loc.getChunk().getZ(), true);
-				Main.keepChunk.add(loc.getChunk());
 				System.out.println("Pregen "+loc.getChunk());
 			}
 			this.cx+=16;
