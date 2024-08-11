@@ -19,6 +19,7 @@ import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.utils.GlobalUtils;
+import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
@@ -81,6 +82,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 				"§7     → Clique droit: En visant un joueur, celà permet de le§d soigner§7 de§c 2"+AllDesc.coeur+"\n\n" +
 				"§7     → Clique gauche: Vous§d soigne§7 de§c 2"+AllDesc.coeur)}), "§aNinjutsu Médical", 60*3));
 		automaticDesc.addParticularites(
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra: "+getChakras().getShowedName())}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort d'§5Orochimaru§7 vous obtenez son item d'§5Edo Tensei§7.")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de §5Karin§7 votre§a Ninjutsu Médical§d soignera§7 de§c 5"+AllDesc.coeur)}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Jugo§7 vous obtiendrez un§a dash§7 qui vous propulsera§c 10blocs§7 en avant et infligera§c 2"+AllDesc.coeur+"§7 aux joueurs proche.")}),
@@ -174,6 +176,18 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			ninjutsuCD--;
 			if (ninjutsuCD == 0) {
 				owner.sendMessage("§7Vous pouvez à nouveau§d soigner§7 quelqu'un.");
+			}
+		}
+		if (cdErmite >= 0) {
+			cdErmite--;
+			if (cdErmite == 0) {
+				owner.sendMessage("§7Vous pouvez à nouveau utiliser le§5 Mode Ermite");
+			}
+		}
+		if (dashCd >= 0) {
+			dashCd--;
+			if (dashCd == 0) {
+				owner.sendMessage("§7Vous pouvez à nouveau§a Dash");
 			}
 		}
 	}
@@ -364,12 +378,25 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 					player.setNoDamageTicks(16);
 					new BukkitRunnable() {
 						private int tick = 16;
+						private final List<UUID> damaged = new ArrayList<>();
 						@Override
 						public void run() {
 							tick--;
 							for (Block block : getSurroundingBlocks(player)) {
 								if (block.getType() != Material.BEDROCK && block.getType() != Material.BARRIER) {
 									Bukkit.getScheduler().runTask(Main.getInstance(), () -> block.setType(Material.AIR));
+								}
+							}
+							for (Player p : Loc.getNearbyPlayersExcept(player, 5)) {
+								if (!damaged.contains(p.getUniqueId())) {
+									Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+										if (p.getHealth() - 4.0 <= 0)  {
+											p.setHealth(1.0);
+										} else {
+											p.setHealth(p.getHealth()-4.0);
+										}
+										damaged.add(p.getUniqueId());
+									});
 								}
 							}
 							if (tick == 0) {
