@@ -1,7 +1,5 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import fr.nicknqck.events.custom.EndGameEvent;
-import fr.nicknqck.events.custom.roles.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -11,9 +9,6 @@ import fr.nicknqck.roles.ds.solos.JigoroV2;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -27,7 +22,7 @@ import fr.nicknqck.utils.RandomUtils;
 
 import java.util.UUID;
 
-public class Kaigaku extends DemonsRoles implements Listener {
+public class Kaigaku extends DemonsRoles {
 
 	private boolean killzen = false;
 	private int cooldownquatriememouvement = 0;
@@ -225,17 +220,5 @@ public class Kaigaku extends DemonsRoles implements Listener {
 			}
 		}
 		super.ItemUseAgainst(item, victim, gameState);
-	}
-	@EventHandler
-	private void onEndGame(EndGameEvent event) {
-		HandlerList.unregisterAll(this);
-	}
-	@EventHandler
-	private void onJigoroPacte(JigoroV2ChoosePacteEvent event) {
-		if (!event.isCancelled()) {
-			if (event.getPacte().equals(JigoroV2.Pacte.PacteKaigaku)) {
-				getKnowedRoles().add(JigoroV2.class);
-			}
-		}
 	}
 }

@@ -171,6 +171,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 									gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
 									setTeam(TeamList.Jigoro);
 									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
+									kaigaku.getKnowedRoles().add(this.getClass());
 									kaigaku.getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 									p.sendMessage("Vous avez rejoint la team "+getPlayerRoles(p).getOriginTeam().name());
 									kaigaku.owner.sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
