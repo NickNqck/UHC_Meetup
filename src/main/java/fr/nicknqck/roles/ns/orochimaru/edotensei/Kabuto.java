@@ -190,7 +190,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	private void onOrochimaruDeath(boolean msg) {
 		owner.getInventory().removeItem(getItems());
 		mortOrochimaru = true;
-		new EdoTenseiUser(this);
+		this.edo = new EdoTenseiUser(this);
 		giveItem(owner, true, getItems());
 		if (msg) {
 			owner.sendMessage("§7C'est terrible !§5 Orochimaru§7 est§c mort§7, en son homage vous récupérez sa plus puissante technique, l'§5Edo Tensei§7.");
