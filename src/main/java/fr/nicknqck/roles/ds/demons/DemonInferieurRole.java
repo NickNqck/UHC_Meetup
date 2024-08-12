@@ -44,7 +44,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
                 getMessageOnDescription().add("§7Aucune§c Lunes§7 n'a pus vous êtres assigner.");
             }
         }, 20*5);
-        EventUtils.registerEvents(this, Main.getInstance());
+        EventUtils.registerEvents(this);
     }
     @EventHandler
     private void onEndGame(EndGameEvent event) {

@@ -254,11 +254,9 @@ public class GameListener implements Listener {
 				for (Player p : gameState.getInGamePlayers()) {
 					RoleBase role = gameState.GiveRole(p);
 					if (role != null){
+						role.RoleGiven(gameState);
 						role.GiveItems();
 					}
-				}
-				for (RoleBase r : gameState.getPlayerRoles().values()) {
-					r.RoleGiven(gameState);
 				}
 			}
 			for (Player p : gameState.getInGamePlayers()) {

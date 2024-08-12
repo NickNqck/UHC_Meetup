@@ -15,6 +15,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.Jugo;
 import fr.nicknqck.roles.ns.orochimaru.Karin;
 import fr.nicknqck.roles.ns.orochimaru.Kimimaro;
@@ -54,7 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class Kabuto extends EdoTenseiOrochimaru implements Listener {
+public class Kabuto extends OrochimaruRoles implements Listener {
 
 	private TextComponent desc;
 	private int ninjutsuCD = 0;

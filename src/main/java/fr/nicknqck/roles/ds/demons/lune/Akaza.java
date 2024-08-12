@@ -56,7 +56,7 @@ public class Akaza extends DemonsRoles implements Listener {
 		this.desc = desc.getText();
 		this.runnable = new AkazaPilierRunnable(this);
 		this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-		EventUtils.registerEvents(this, Main.getInstance());
+		EventUtils.registerEvents(this);
 	}
 	@Override
 	public DemonType getRank() {
