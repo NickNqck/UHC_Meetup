@@ -183,9 +183,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 				onOrochimaruDeath(true);
 			}
 		}
-		if (killer.getUniqueId() == owner.getUniqueId() && mortOrochimaru) {
-			((CraftPlayer) owner).getHandle().setAbsorptionHearts(((CraftPlayer) owner).getHandle().getAbsorptionHearts()+2.0f);
-		}
 	}
 	private void onOrochimaruDeath(boolean msg) {
 		owner.getInventory().removeItem(getItems());
