@@ -16,6 +16,7 @@ import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
+import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -90,7 +91,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	public String getName() {
 		return "Jigoro§7 (§6V2§7)";
 	}
-
+	@Getter
 	public enum Pacte{
 		Non_Choisis(""),
 		PacteSolo("Pacte§e Solo"),
@@ -156,12 +157,12 @@ public class JigoroV2 extends DemonsSlayersRoles {
 				this.pacte = choosePacteEvent.getPacte();
 				switch (choosePacteEvent.getPacte()) {
 					case PacteSolo:
-						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
+						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.getName());
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
 						owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 						break;
 					case PacteKaigaku:
-						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
+						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.getName());
 						for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
 							if (!gameState.hasRoleNull(p)) {//vérifie que p a un role
 								if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {//si p est kaigaku
@@ -181,7 +182,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 						}
 						break;
 					case PacteZenItsu:
-						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.name());
+						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.getName());
 						gameState.JigoroV2Pacte3 = true;
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
 						for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
