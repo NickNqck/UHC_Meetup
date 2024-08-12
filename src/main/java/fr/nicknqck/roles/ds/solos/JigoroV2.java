@@ -51,7 +51,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			}
 		}, 20);
 		setLameIncassable(owner, true);
-		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+		givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 	}
 
 	@Override
@@ -92,10 +92,14 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	}
 
 	public enum Pacte{
-		Non_Choisis,
-		PacteSolo,
-		PacteKaigaku,
-		PacteZenItsu
+		Non_Choisis(""),
+		PacteSolo("Pacte§e Solo"),
+		PacteKaigaku("Pacte§c Kaigaku"),
+		PacteZenItsu("Pacte§6 Zen'Itsu");
+		final String name;
+		Pacte(String name) {
+			this.name = name;
+		}
 	}
 	@NonNull
 	private Pacte pacte;
@@ -104,7 +108,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	private boolean killkai = false;
 	private boolean killtwo = false;
 	private Kaigaku kaigaku;
-	private Player zen;
+	private ZenItsu zen;
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
@@ -184,7 +188,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 							if (gameState.getPlayerRoles().containsKey(p)) {//vérifie que p a un role
 								if (gameState.getPlayerRoles().get(p) instanceof ZenItsu) {//si p est ZenItsu
 									owner.sendMessage(p.getName()+" est§a ZenItsu");
-									zen = p;
+									zen = (ZenItsu) gameState.getPlayerRoles().get(p);
 									gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
 									setTeam(TeamList.Jigoro);
 									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
@@ -199,34 +203,24 @@ public class JigoroV2 extends DemonsSlayersRoles {
 					default:
 						break;
 				}
+			} else {
+				owner.sendMessage(choosePacteEvent.getMessage());
 			}
 		}
 		super.FormChoosen(item, gameState);
 	}
-	boolean zforce = false;
 	@Override
 	public void Update(GameState gameState) {
 		if (pacte == Pacte.PacteZenItsu) {
 			if (zen != null) {
-				if (owner.getLocation().distance(zen.getLocation()) <= 20.0 && gameState.getInGamePlayers().contains(owner) && gameState.getInGamePlayers().contains(zen)) {
+				if (owner.getLocation().distance(zen.owner.getLocation()) <= 20.0 && gameState.getInGamePlayers().contains(owner) && zen.getGamePlayer().isAlive()) {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
-					zen.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
-					if (!zforce) {
-						zforce = true;
-					}
-				} else {
-					if (zforce) {
-						zforce = false;
-					}
+					zen.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
 				}
-				if (!zresi) {
-					addresi(20);
-					zresi = true;
-				}
-                if (gameState.getInGamePlayers().contains(zen)) {
+                if (zen.getGamePlayer().isAlive()) {
 					DecimalFormat df = new DecimalFormat("0");
-					NMSPacket.sendActionBar(owner, "§aZenItsu§r: "+df.format(owner.getLocation().distance(zen.getLocation()))+ArrowTargetUtils.calculateArrow(owner, zen.getLocation()));
-					NMSPacket.sendActionBar(zen, "§6Jigoro§r: "+df.format(zen.getLocation().distance(owner.getLocation()))+ArrowTargetUtils.calculateArrow(zen, owner.getLocation()));	
+					NMSPacket.sendActionBar(owner, "§aZenItsu§r: "+df.format(owner.getLocation().distance(zen.owner.getLocation()))+ArrowTargetUtils.calculateArrow(owner, zen.owner.getLocation()));
+					NMSPacket.sendActionBar(zen.owner, "§6Jigoro§r: "+df.format(zen.owner.getLocation().distance(owner.getLocation()))+ArrowTargetUtils.calculateArrow(zen.owner, owner.getLocation()));
 				}
 			}
 			if (speedCD <90*9) {
@@ -249,27 +243,14 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			if (speedCD >= 1)speedCD--;
 			if (kaigaku != null) {
 				if (kaigaku.getTeam() == TeamList.Jigoro) {
-					if (kaigaku.getGamePlayer().isAlive() && gameState.getInGamePlayers().contains(owner)) {
-						if (owner.getLocation().distance(owner.getLocation()) <= 50) {
-							owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*3, 0, false, false));
+					if (kaigaku.getGamePlayer().isAlive() && getGamePlayer().isAlive()){
+						Player owner = Bukkit.getPlayer(getPlayer());
+						if (owner == null)return;
+						Player kOwner = Bukkit.getPlayer(kaigaku.getPlayer());
+						if (kOwner == null)return;
+						if (owner.getLocation().distance(kOwner.getLocation()) <= 50) {
+							owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), true);
 							kaigaku.givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-							if (!resi) {
-								addresi(20);
-								resi = true;
-							}
-							if (!kresi) {
-								kaigaku.addresi(20);
-								kresi = true;
-							}
-						} else {
-							if (kresi) {
-								kaigaku.addresi(-20);
-								kresi = false;
-							}
-							if (resi) {
-								addresi(-20);
-								resi = false;
-							}
 						}
 					}
 				}
@@ -322,9 +303,6 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		}
 		return super.ItemUse(item, gameState);
 	}
-	private boolean resi = false;
-	private boolean kresi = false;
-	private boolean zresi = false;
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (pacte == Pacte.PacteSolo) {
@@ -338,10 +316,6 @@ public class JigoroV2 extends DemonsSlayersRoles {
 									addSpeedAtInt(owner, 10);
 									owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Zen'Itsu "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"résistance 1 le jour"+ChatColor.GRAY+", ainsi que "+ChatColor.GOLD+"10% de Speed");
 									killzen = true;
-									if (!resi) {
-										addresi(20);
-										resi = true;
-									}
 								}					
 							}
 							if (role instanceof Kaigaku) {
@@ -349,10 +323,6 @@ public class JigoroV2 extends DemonsSlayersRoles {
 									killkai = true;
 									owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Kaigaku "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"résistance 1 la nuit"+ChatColor.GRAY+", ainsi que "+ChatColor.GOLD+"10% de Speed");
 									addSpeedAtInt(owner, 10);
-									if (!resi) {
-										addresi(20);
-										resi = true;
-									}
 								}
 							}
 						}
@@ -376,7 +346,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			}
 		}
 		if (pacte == Pacte.PacteZenItsu) {
-			if (killer == owner || killer == zen) {
+			if (killer.getUniqueId() == getPlayer() || killer.getUniqueId() == zen.getPlayer()) {
 				if (!killkai) {
 					if (getPlayerRoles(victim) instanceof Kaigaku) {
 						owner.sendMessage(ChatColor.GOLD+killer.getName()+"§r à tué§c Kaigaku§r ce qui vous permet d'avoir§6 Speed 2 en dessous de 5§c❤§r");
