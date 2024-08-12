@@ -51,7 +51,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,8 +58,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 
 	private TextComponent desc;
 	private int ninjutsuCD = 0;
-	private final HashMap<Player, RoleBase> edoTensei = new HashMap<>();
-	private final HashMap<Player, Location> killLoc = new HashMap<>();
 	private boolean mortOrochimaru = false;
 	private boolean karinDeath = false;
 	private boolean kimimaroDeath = false;
@@ -72,6 +69,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	private int cdErmite;
 	private boolean obitoTeam = false;
 	private boolean lastAlive = false;
+	private EdoTenseiUser edo;
     public Kabuto(UUID player) {
 		super(player);
 	}
@@ -135,7 +133,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		List<ItemStack> toReturn = new ArrayList<>();
 		toReturn.add(this.NinjutsuMedicalItem());
 		if (mortOrochimaru && !obitoTeam) {
-			toReturn.add(this.EdoTenseiItem());
+			toReturn.add(this.edo.getEdoTenseiItem());
 		}
 		if (jugoDeath) {
 			toReturn.add(this.dashItem);
@@ -147,28 +145,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	}
 	@Override
 	public String[] Desc() {
-		return new String[] {/*
-				AllDesc.bar,
-				AllDesc.role+"§5Kabuto",
-				AllDesc.objectifteam+"§5Orochimaru",
-				"",
-				AllDesc.effet,
-				"",
-				AllDesc.point+"§eSpeed 1§f permanent",
-				"",
-				AllDesc.items,
-				"",
-				AllDesc.point+"§aNinjutsu Médical§f: Effectue une action en fonction du clique:",
-				"§7     →§f Clique droit: En visant un joueur, celà permet de le soigner de§c 2"+AllDesc.coeur,
-				"§7     →§f Clique gauche: Vous soigne de§c 2"+AllDesc.coeur,
-				"§4!§cLe cooldown des deux clique est partagé§4!",
-				"",
-				AllDesc.particularite,
-				"",
-				"A la mort de§5 Orochimaru§f vous obtenez l'item§5 Edo Tensei§f qui permet de tué une personne que vous avez précédemment tué",
-				"",
-				AllDesc.bar*/
-		};
+		return new String[0];
 	}
 	@Override
 	public TextComponent getComponent() {
@@ -198,39 +175,27 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	@Override
 	public void resetCooldown() {
 		ninjutsuCD = 0;
-		edoTensei.clear();
 		dashCd = 0;
 		cdErmite = 0;
-	}
-	private ItemStack EdoTenseiItem() {
-		return new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei").setLore("§7Hérité de§5 Orochimaru§7 cette technique permet de réssusciter 1 personne que vous avez tuer").toItemStack();
 	}
 	private ItemStack NinjutsuMedicalItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§aNinjutsu Médical").setLore("§7Permet de vous soignez vous ou un autre joueur").toItemStack();
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (edoTensei.containsKey(player)) {
-			edoTensei.remove(player, getPlayerRoles(player));
-		}
 		if (getPlayerRoles(player) instanceof Orochimaru) {
 			if (!mortOrochimaru) {
 				onOrochimaruDeath(true);
 			}
 		}
 		if (killer.getUniqueId() == owner.getUniqueId() && mortOrochimaru) {
-			if (player.getLocation().getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
-				killLoc.put(player, player.getLocation());
-			} else {
-				Location rLoc = new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 75, 0.0, player.getEyeLocation().getYaw(), player.getEyeLocation().getPitch());
-				killLoc.put(player, rLoc);
-			}
 			((CraftPlayer) owner).getHandle().setAbsorptionHearts(((CraftPlayer) owner).getHandle().getAbsorptionHearts()+2.0f);
 		}
 	}
 	private void onOrochimaruDeath(boolean msg) {
 		owner.getInventory().removeItem(getItems());
 		mortOrochimaru = true;
+		new EdoTenseiUser(this);
 		giveItem(owner, true, getItems());
 		if (msg) {
 			owner.sendMessage("§7C'est terrible !§5 Orochimaru§7 est§c mort§7, en son homage vous récupérez sa plus puissante technique, l'§5Edo Tensei§7.");
@@ -239,74 +204,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
-	}
-	@Override
-	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (mortOrochimaru) {
-			if (item.isSimilar(EdoTenseiItem())) {
-				if (killLoc.isEmpty()) {
-					owner.sendMessage("§7Il faut avoir tué au moins§n 1 joueurs§7 pour utiliser cette technique");
-					return true;
-				}
-				if (!edoTensei.isEmpty()) {
-					owner.sendMessage("§7Vous avez déjà§5 Edo Tensei");
-					return true;
-				}
-				Inventory inv = Bukkit.createInventory(owner, 54, "§5Edo Tensei");
-				for (int i = 0; i <= 8; i++) {
-					if (i == 4) {
-						inv.setItem(i, GUIItems.getSelectBackMenu());
-					} else {
-						inv.setItem(i, GUIItems.getOrangeStainedGlassPane());
-					}
-				}
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					if (killLoc.containsKey(p)) {
-						if (owner.getLocation().distance(killLoc.get(p)) <= 50) {
-							inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName(p.getName()).setLore("§7Cliquez ici pour réssusciter ce joueur !").toItemStack());
-						}
-					}
-				}
-				owner.openInventory(inv);
-				owner.updateInventory();
-			}
-		}
-		return super.ItemUse(item, gameState);
-	}
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
-		if (clicker.getUniqueId() != owner.getUniqueId())return;
-		if (inv.getTitle().equals("§5Edo Tensei")) {
-			if (item == null) {
-				return;
-			}
-			if (item.getType() == Material.AIR) {
-				return;
-			}
-			if (item.hasItemMeta()) {
-				if (item.getItemMeta().hasDisplayName()) {
-					Player clicked = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
-					event.setCancelled(true);
-					if (clicked != null) {
-						edoTensei.put(clicked, getPlayerRoles(clicked));
-						clicker.closeInventory();
-						clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
-						clicker.sendMessage("§5Edo Tensei !");
-						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getTeam());
-						HubListener.getInstance().giveStartInventory(clicked);
-						gameState.RevivePlayer(clicked);
-						setMaxHealth(getMaxHealth()-4.0);
-						clicked.teleport(clicker);
-						giveItem(clicked, false, getPlayerRoles(clicked).getItems());
-						killLoc.remove(clicked);
-						clicked.resetTitle();
-						clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+getTeam(clicked).getName());
-						
-					}
-				}
-			}
-		}
 	}
 	@Override
 	public String getName() {
