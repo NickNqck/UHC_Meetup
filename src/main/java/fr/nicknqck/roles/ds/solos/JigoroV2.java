@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -15,12 +17,15 @@ import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -29,7 +34,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
-public class JigoroV2 extends DemonsSlayersRoles {
+public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 
 	public JigoroV2(UUID player) {
 		super(player);
@@ -53,6 +58,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		}, 20);
 		setLameIncassable(owner, true);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+		EventUtils.registerEvents(this);
 	}
 
 	@Override
@@ -358,5 +364,28 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			}
 		}
 		super.PlayerKilled(killer, victim, gameState);
+	}
+	@EventHandler
+	private void onEndGame(EndGameEvent event) {
+		EventUtils.unregisterEvents(this);
+	}
+	@EventHandler
+	private void onUHCKill(UHCPlayerKillEvent event) {
+		if (event.getGamePlayerKiller() != null) {
+			if (!event.isCancel()) {
+				if (this.pacte == Pacte.PacteKaigaku){
+					if (gameState.hasRoleNull(event.getVictim()))return;
+					if (!(gameState.getPlayerRoles().get(event.getVictim()) instanceof ZenItsu))return;
+					RoleBase role = event.getGamePlayerKiller().getRole();
+					if (role.getPlayer().equals(getPlayer())) {
+						event.getPlayerKiller().sendMessage("§7En tuant§a Zen'Itsu§7 vous avez obtenue l'effet§c Force I§7 permanent.");
+						givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
+					} else if (role.getPlayer().equals(this.kaigaku.getPlayer())) {
+						event.getPlayerKiller().sendMessage("§7En tuant§a Zen'Itsu§7 vous avez offert l'effet§c Force I§7 permanent§7 à§6 Jigoro§7.");
+						givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
+					}
+				}
+			}
+		}
 	}
 }

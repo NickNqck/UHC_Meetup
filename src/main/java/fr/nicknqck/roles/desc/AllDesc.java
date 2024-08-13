@@ -335,7 +335,7 @@ public class AllDesc{
 			"",
 			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
 			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur ayant le rôle de: "+ChatColor.GOLD+"ZenItsu"+ChatColor.WHITE+" vous obtiendrez son pouvoir c'est à dire que quand vous taperez un joueur il y aura 10% de chance qu'il reçoive 1"+coeur+" de dégat via un§e éclair"),
+			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur ayant le rôle de: "+ChatColor.GOLD+"ZenItsu"+ChatColor.WHITE+" vos cooldown réduiront de§c 60 secondes§f a chaque utilisation"),
 			"",
 			bar
 	};
@@ -848,7 +848,7 @@ public class AllDesc{
             "",
             ChatColor.GOLD+"Pacte 1§r: Vous devrez gagner seul en tant que rôle entièrement§6 solitaire§r pour ce faire vous obtiendrez "+Force+" 1 permanent§r, de plus vous obtiendrez "+Resi+" 1 le jour si vous tuez§a ZenItsu§r ainsi que "+Resi+" 1 la "+nuit+" si vous tuez§c Kaigaku§r, pour chaque kill de vos disciples vous récupérerez 10% de "+Speed,
             "",
-            ChatColor.GOLD+"Pacte 2§r: Vous devrez gagner avec§c Kaigaku§r pour ce faire vous et lui disposez de l'effet "+Resi+" 1 à moins de 50blocs de lui ainsi que lorsque l'un de vous fait un kill vous gagnez tout les deux 1/2"+coeur+" permanent, de plus vous disposez d'un chat avec ce dernier via la commande§6 /ds chat",
+            ChatColor.GOLD+"Pacte 2§r: Vous devrez gagner avec§c Kaigaku§r pour ce faire vous et lui disposez de l'effet "+Resi+" 1 à moins de 50blocs de lui ainsi que lorsque l'un de vous fait un kill vous gagnez tout les deux§c 1/2"+coeur+" permanent, de plus vous disposez d'un chat avec ce dernier via la commande§6 /ds chat, si vous ou§c Kaigaku§f parvenez à tuer§a Zen'Itsu§f vous obtiendrez l'effet§c Force I§f permanent",
             "",
             ChatColor.GOLD+"Pacte 3§r: Vous devrez gagner avec§a ZenItsu§r pour ce faire vous et lui  disposez de l'effet "+Resi+" 1 permanent, également vous possédez tous les deux l'effet§c "+Force+"§c 1§r à moins de 20blocs, pour vous aider à vous retrouver vous deux possédez une flèche pointant vers l'autre, si l'un de vous deux tue§c Kaigaku§r vous obtiendrez§6 "+Speed+"§b 2§r en-dessous de 5"+coeur,
             "",

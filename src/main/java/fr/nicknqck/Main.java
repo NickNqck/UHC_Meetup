@@ -52,6 +52,7 @@ Roles: NickNack, Mega02600
 */
 
 public class Main extends JavaPlugin implements Listener{
+
 	public final String PLUGIN_NAME = "UHC-Meetup";
 	@Getter
 	private ScoreboardManager scoreboardManager;

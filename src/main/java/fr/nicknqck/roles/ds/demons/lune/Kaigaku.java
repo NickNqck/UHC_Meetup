@@ -156,6 +156,9 @@ public class Kaigaku extends DemonsRoles {
 						gameState.spawnLightningBolt(p.getWorld(), p.getLocation());
 					}
 				}
+				if (killzen) {
+					cooldownquatriememouvement-=60;
+				}
 			}  else {
 				sendCooldown(owner, cooldowntroisiememouvement);
 			}
@@ -190,6 +193,9 @@ public class Kaigaku extends DemonsRoles {
 							cooldownquatriememouvement = 60*3;
 							target.sendMessage(ChatColor.WHITE+"Vous avez été touché par un soufle de la foudre");
 							owner.teleport(loc);
+							if (killzen) {
+								cooldownquatriememouvement-=60;
+							}
 							return true;
 						}	
 					} else {
@@ -202,24 +208,5 @@ public class Kaigaku extends DemonsRoles {
 				}
 		}
 		return super.ItemUse(item, gameState);
-	}
-	@Override
-	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {
-		if (killzen) {
-			if (item.getType().name().contains("SWORD")) {
-				if (RandomUtils.getOwnRandomProbability(10)) {
-					for(Player p : gameState.getInGamePlayers()) {
-						if (p != owner && p == victim) {
-							Heal(victim, -4);
-						    owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + victim.getName());
-						    victim.sendMessage(ChatColor.GREEN+"Vous avez été foudroyez par "+ChatColor.GOLD+"Kaigaku");
-						    victim.getWorld().strikeLightningEffect(victim.getLocation());
-						}
-					}
-					
-				}
-			}
-		}
-		super.ItemUseAgainst(item, victim, gameState);
 	}
 }
