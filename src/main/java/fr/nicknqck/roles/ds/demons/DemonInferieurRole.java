@@ -4,6 +4,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.event.EventUtils;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
                 if (!gameState.hasRoleNull(p)) {
                     RoleBase role = gameState.getPlayerRoles().get(p);
                     if (role instanceof DemonsRoles) {
-                        if (((DemonsRoles) role).getRank().name().contains("Lune")) {
+                        if (((DemonsRoles) role).getRank().equals(DemonType.LuneSuperieur)) {
                             roles.add((DemonsRoles) role);
                         }
                     }
@@ -43,7 +44,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
                 getMessageOnDescription().add("§7Aucune§c Lunes§7 n'a pus vous êtres assigner.");
             }
         }, 20*5);
-        EventUtils.registerEvents(this, Main.getInstance());
+        EventUtils.registerEvents(this);
     }
     @EventHandler
     private void onEndGame(EndGameEvent event) {

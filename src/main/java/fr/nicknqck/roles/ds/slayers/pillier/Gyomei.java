@@ -16,6 +16,10 @@ public class Gyomei extends PillierRoles {
 
 	public Gyomei(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		setMaxHealth(24.0);
 		this.setCanuseblade(true);
 		this.setResi(20);

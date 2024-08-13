@@ -14,7 +14,7 @@ public class AllDesc{
 	public final static String nuit = "§1nuit§r";
 	public final static String jour = "§ejour§r";
 	public final static String fireResi = "§6Fire Résistance§r";
-	public final static String bar = ChatColor.DARK_GRAY+"§o§m-----------------------------------";
+	public final static String bar = ChatColor.DARK_GRAY+"§o§m-----------------------------------§r";
 	public final static String regen = "§dRégénération§r";
 	public final static String blind = "§1Blindness§r";
 	public final static String slow = "§9Slowness§r";
@@ -63,7 +63,7 @@ public class AllDesc{
             "",
             ChatColor.DARK_GRAY + " • " +Force+" 1 permanent",
             "",
-            /*commande,
+            commande,
             "",
             point+"/ds aura <joueur>: Permet de savoir quel est l'aura guerrière d'un joueur (en fonction de son rôle)",
             "",
@@ -82,7 +82,7 @@ public class AllDesc{
             "§7 -§r Si un§c Démon§f est l'§4§lAssassin§r alors sont Aura augmente d'un rang (maximum§c Forte§f)",
             "",
             "§7 -§r Si le joueur visé est l'§cinfecté§f de la partie alors il sera compter comme étant une§c lune supérieur§f, pour finir, si un rôle ayant une Aura plus puissante que§c Forte§f est§c infecté§f alors il garde sont aura actuel.",
- */           "",
+            "",
             bar
 	};
 	public static String[] Kyogai = new String[]{
@@ -335,7 +335,7 @@ public class AllDesc{
 			"",
 			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
 			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur ayant le rôle de: "+ChatColor.GOLD+"ZenItsu"+ChatColor.WHITE+" vous obtiendrez son pouvoir c'est à dire que quand vous taperez un joueur il y aura 10% de chance qu'il reçoive 1"+coeur+" de dégat via un§e éclair"),
+			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur ayant le rôle de: "+ChatColor.GOLD+"ZenItsu"+ChatColor.WHITE+" vos cooldown réduiront de§c 60 secondes§f a chaque utilisation"),
 			"",
 			bar
 	};
@@ -848,7 +848,7 @@ public class AllDesc{
             "",
             ChatColor.GOLD+"Pacte 1§r: Vous devrez gagner seul en tant que rôle entièrement§6 solitaire§r pour ce faire vous obtiendrez "+Force+" 1 permanent§r, de plus vous obtiendrez "+Resi+" 1 le jour si vous tuez§a ZenItsu§r ainsi que "+Resi+" 1 la "+nuit+" si vous tuez§c Kaigaku§r, pour chaque kill de vos disciples vous récupérerez 10% de "+Speed,
             "",
-            ChatColor.GOLD+"Pacte 2§r: Vous devrez gagner avec§c Kaigaku§r pour ce faire vous et lui disposez de l'effet "+Resi+" 1 à moins de 50blocs de lui ainsi que lorsque l'un de vous fait un kill vous gagnez tout les deux 1/2"+coeur+" permanent, de plus vous disposez d'un chat avec ce dernier via la commande§6 /ds chat",
+            ChatColor.GOLD+"Pacte 2§r: Vous devrez gagner avec§c Kaigaku§r pour ce faire vous et lui disposez de l'effet "+Resi+" 1 à moins de 50blocs de lui ainsi que lorsque l'un de vous fait un kill vous gagnez tout les deux§c 1/2"+coeur+" permanent, de plus vous disposez d'un chat avec ce dernier via la commande§6 /ds chat, si vous ou§c Kaigaku§f parvenez à tuer§a Zen'Itsu§f vous obtiendrez l'effet§c Force I§f permanent",
             "",
             ChatColor.GOLD+"Pacte 3§r: Vous devrez gagner avec§a ZenItsu§r pour ce faire vous et lui  disposez de l'effet "+Resi+" 1 permanent, également vous possédez tous les deux l'effet§c "+Force+"§c 1§r à moins de 20blocs, pour vous aider à vous retrouver vous deux possédez une flèche pointant vers l'autre, si l'un de vous deux tue§c Kaigaku§r vous obtiendrez§6 "+Speed+"§b 2§r en-dessous de 5"+coeur,
             "",
@@ -946,13 +946,13 @@ public class AllDesc{
             "",
             ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + "A votre premier kill vous perdez votre Weakness le "+jour+" de plus, plus vous obtiendrez de kill plus vous obtiendrez d'effet",
             "", 
-            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "2 kill:" + ChatColor.WHITE + " Vous obetenez 10% de "+Speed,
+            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "2 kill:" + ChatColor.WHITE + " Vous obtenez 10% de "+Speed,
             "", 
-            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "3 kill:" + ChatColor.WHITE + " Vous obetenez 10% de "+Force+" supplémentaire",
+            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "3 kill:" + ChatColor.WHITE + " Vous obtenez 10% de "+Force+" supplémentaire",
             "", 
-            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "4 kill:" + ChatColor.WHITE + " Vous obetenez 10% de "+Resi,
+            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "4 kill:" + ChatColor.WHITE + " Vous obtenez 10% de "+Resi,
             "", 
-            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "6 kill:" + ChatColor.WHITE + " Vous obetenez un item nommé transformation qui à son activation vous octroie l'effet "+Resi+" pendant 3min",
+            ChatColor.DARK_GRAY + " • " + ChatColor.RED + "6 kill:" + ChatColor.WHITE + " Vous obtenez un item nommé transformation qui à son activation vous octroie l'effet "+Resi+" pendant 3min",
             "",
             ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + "Vous possèdez l'identité aléatoire d'une lune suppérieur",
             "",

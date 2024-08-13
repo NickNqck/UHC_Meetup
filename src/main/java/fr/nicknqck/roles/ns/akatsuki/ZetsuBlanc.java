@@ -26,8 +26,14 @@ public class ZetsuBlanc extends AkatsukiRoles {
 	public ZetsuBlanc(UUID player) {
 		super(player);
 		setChakraType(Chakras.DOTON);
+
+	}
+
+	@Override
+	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.ZetsuBlanc;

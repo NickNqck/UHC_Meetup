@@ -30,10 +30,16 @@ public class Minato extends ShinobiRoles {
 
 	public Minato(UUID player) {
 		super(player);
-		giveItem(owner, false, getItems());
 		setChakraType(Chakras.KATON);
 		setCanBeHokage(true);
 	}
+
+	@Override
+	public void GiveItems() {
+		giveItem(owner, false, getItems());
+		super.GiveItems();
+	}
+
 	private Location Kunai = null;
 	@Override
 	public GameState.Roles getRoles() {

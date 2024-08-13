@@ -46,12 +46,17 @@ public class Obito extends NSRoles {
 	public Obito(UUID player) {
 		super(player);
 		setChakraType(Chakras.KATON);
-		giveItem(owner, false, getItems());
 		if (!gameState.attributedRole.contains(Roles.Kakashi)) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}
 	}
+
+	@Override
+	public void GiveItems() {
+		giveItem(owner, false, getItems());
+	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.Obito;
@@ -262,8 +267,8 @@ public class Obito extends NSRoles {
 			owner.openInventory(toOpen);
 		} else {
 			Inventory inv = Bukkit.createInventory(owner, 9, "§cIzanami");
-			inv.setItem(3, new ItemBuilder(GlobalUtils.getPlayerHead(owner.getUniqueId())).setName("§eVos objectifs").setLore("").toItemStack());
-			inv.setItem(5, new ItemBuilder(Material.NETHER_STAR).setName("§eSon objectif").setLore("").toItemStack());
+			inv.setItem(3, izanami.getResultUserMission());
+			inv.setItem(5, izanami.getResultVictimMission());
 			inv.setItem(8, GUIItems.getSelectBackMenu());
 			owner.openInventory(inv);
 		}
@@ -293,12 +298,10 @@ public class Obito extends NSRoles {
 			}
 		}
 	}
-
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
-
 	@Override
 	public void Update(GameState gameState) {
 		givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
@@ -539,7 +542,7 @@ public class Obito extends NSRoles {
 								izanami1.start("§d");
 								this.izanami = izanami1;
 								clicker.sendMessage(izanami1.getStringsMission());
-								new ObitoRunnable(this).runTaskTimer(Main.getInstance(), 0, 20);
+								new ObitoRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
 							}
 						}
 					}
@@ -682,8 +685,9 @@ public class Obito extends NSRoles {
 		}
 		@Override
 		public void run() {
-			if (GameState.getInstance().getServerState() != ServerStates.InGame) {
+			if (obito.gameState.getServerState() != ServerStates.InGame || obito.izanami == null) {
 				cancel();
+				return;
 			}
 			if (obito.izanami.isAllTrue()) {
 				Player toIzanami = Bukkit.getPlayer(obito.izanami.getTarget());

@@ -25,6 +25,10 @@ public class Kimimaro extends OrochimaruRoles {
 	public Kimimaro(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
+	}
+
+	@Override
+	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
 

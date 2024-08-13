@@ -777,6 +777,7 @@ public class Inventories {
                     inv.setItem(53, GUIItems.getx());
                     inv.setItem(10, GUIItems.getSelectRoleButton());
                     inv.setItem(13, GUIItems.getPregen(gameState));
+                    inv.setItem(16, new ItemBuilder(Material.GRASS).setName("§aChanger le monde de jeu").toItemStack());
                     inv.setItem(19, GUIItems.getSelectConfigButton());
                     inv.setItem(31, GUIItems.getSelectScenarioButton());
                     inv.setItem(28, GUIItems.getSelectInvsButton());

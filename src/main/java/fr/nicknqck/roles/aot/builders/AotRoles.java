@@ -3,6 +3,8 @@ package fr.nicknqck.roles.aot.builders;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -14,6 +16,9 @@ public abstract class AotRoles extends RoleBase {
     public boolean isTransformedinTitan = false;
     public double RodSpeedMultipliyer = 0;
     public double gazAmount;
+    @Getter
+    @Setter
+    private boolean canVoleTitan = false;
     public AotRoles(UUID player) {
         super(player);
         gazAmount= 100.0;

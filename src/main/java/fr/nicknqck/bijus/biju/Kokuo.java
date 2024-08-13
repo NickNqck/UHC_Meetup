@@ -71,7 +71,7 @@ public class Kokuo extends Biju {
     public void setupBiju(GameState gameState) {
     	this.spawn=getRandomSpawn();
     	this.gameState = gameState;
-        World world = Main.getInstance().gameWorld;
+        World world = Main.getInstance().getWorldManager().getGameWorld();
         new KokuoRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
         System.out.println("Kokuo will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
     }

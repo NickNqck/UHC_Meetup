@@ -3,6 +3,8 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -17,6 +19,9 @@ import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -27,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Yoriichi extends DemonsSlayersRoles {
+public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	private boolean killkoku = false;
 	private boolean activersoufle = false;
 	private final Map<UUID, PacketDisplay> inEye = new HashMap<>();
@@ -38,6 +43,7 @@ public class Yoriichi extends DemonsSlayersRoles {
 		this.setResi(20);
 		setLameIncassable(owner, true);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> new YoriichiHealthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1), 40);
+		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
 	public Roles getRoles() {
@@ -86,13 +92,8 @@ public class Yoriichi extends DemonsSlayersRoles {
 		owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
 		owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
 		if (killkoku) {
-			if (!gameState.nightTime) {			
-				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-				
-			} else {
-				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-			}
-		} else {
+            owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
+        } else {
 			if (!gameState.nightTime) {
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999, 0, false, false));
 			} else {
@@ -131,24 +132,6 @@ public class Yoriichi extends DemonsSlayersRoles {
 		return super.ItemUse(item, gameState);
 	}
 	@Override
-	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {
-		if (item.isSimilar(Items.getdiamondsword())) {
-			if (activersoufle) {
-				if (victim.hasPotionEffect(PotionEffectType.ABSORPTION)) {
-					victim.removePotionEffect(PotionEffectType.ABSORPTION);
-					float abso = ((CraftPlayer) victim).getHandle().getAbsorptionHearts();
-					if (victim.getHealth() > abso) {
-						victim.setHealth(victim.getHealth() - abso);
-					} else {
-						victim.setHealth(1.0);
-					}
-					victim.sendMessage("§6Yoriichi"+"§f vous à retirer votre absorbtion");
-					owner.sendMessage("Vous venez de retirer l'absorbtion de:§6§l "+ victim.getName());
-				}
-			}
-		}
-	}
-	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner) {
@@ -174,6 +157,29 @@ public class Yoriichi extends DemonsSlayersRoles {
 	@Override
 	public String getName() {
 		return "Yoriichi";
+	}
+	@EventHandler
+	private void onUHCDamage(UHCPlayerBattleEvent event) {
+		if (event.getDamager().getUuid().equals(getPlayer())) {
+			if (activersoufle) {
+				Player victim = Bukkit.getPlayer(event.getVictim().getUuid());
+				if (victim != null) {
+					float abso = ((CraftPlayer) victim).getHandle().getAbsorptionHearts();
+					victim.removePotionEffect(PotionEffectType.ABSORPTION);
+					if (victim.getHealth() > abso) {
+						victim.setHealth(victim.getHealth() - abso);
+					} else {
+						victim.setHealth(1.0);
+					}
+					victim.sendMessage("§6Yoriichi"+"§f vous à retirer votre absorbtion");
+					owner.sendMessage("Vous venez de retirer l'absorbtion de:§6§l "+ victim.getName());
+				}
+			}
+		}
+	}
+	@EventHandler
+	private void onEndGame(EndGameEvent event) {
+		HandlerList.unregisterAll(this);
 	}
 	private static class YoriichiHealthRunnable extends BukkitRunnable {
 		private final Yoriichi yoriichi;

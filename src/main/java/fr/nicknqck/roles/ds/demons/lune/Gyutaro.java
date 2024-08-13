@@ -87,7 +87,7 @@ public class Gyutaro extends DemonsRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim == owner) {			
 			if (isCanRespawn()) {
-				GameListener.RandomTp(owner, gameState);
+				GameListener.RandomTp(owner);
 				owner.sendMessage("Vous venez d'être TP aléatoirement");
 				setMaxHealth(getMaxHealth() - 2.0); 
 				owner.setHealth(getMaxHealth());

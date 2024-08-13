@@ -43,7 +43,10 @@ public class Iso extends RoleBase {
     private final Map<UUID, Location> ultimeLocation = new HashMap<>();
     public Iso(UUID player) {
         super(player);
-        owner.sendMessage(Desc());
+    }
+
+    @Override
+    public void GiveItems() {
         giveItem(owner, false, getItems());
     }
 

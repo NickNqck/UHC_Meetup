@@ -45,7 +45,7 @@ public class Chomei extends Biju {
     private GameState gameState;
     @Override
     public void setupBiju(GameState gameState) {
-        World world = Main.getInstance().gameWorld;
+        World world = Main.getInstance().getWorldManager().getGameWorld();
         this.gameState = gameState;
         spawn = getRandomSpawn();
         new ChomeiRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
@@ -58,7 +58,7 @@ public class Chomei extends Biju {
 
     @Override
     public void spawnBiju() {
-        this.ghast = (Ghast) Main.getInstance().gameWorld.spawnEntity(this.spawn, EntityType.GHAST);
+        this.ghast = (Ghast) Main.getInstance().getWorldManager().getGameWorld().spawnEntity(this.spawn, EntityType.GHAST);
         ghast.setCustomName(this.getName());
         ghast.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
         ghast.setMaxHealth(2D * 100D);

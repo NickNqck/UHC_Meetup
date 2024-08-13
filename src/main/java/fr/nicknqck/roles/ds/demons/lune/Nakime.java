@@ -35,7 +35,6 @@ public class Nakime extends DemonsRoles {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 	        Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
 		}
-        Main.getInstance().nakime = Bukkit.getWorld("nakime");
 	}
 
 	@Override
@@ -63,10 +62,10 @@ public class Nakime extends DemonsRoles {
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
 				BetterItem.of(new ItemBuilder(Material.MAGMA_CREAM).setName("§cCage").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore("§7"+StringID).toItemStack(), event -> {
-					if (owner.getWorld().equals(Main.getInstance().nakime)) {
+					if (owner.getWorld().getName().equalsIgnoreCase("nakime")) {
 						if (cd <= 0) {
 							for (Player p : Bukkit.getOnlinePlayers()) {
-								if (p.getWorld().equals(Main.getInstance().nakime)) {
+								if (p.getWorld().getName().equalsIgnoreCase("nakime")) {
 									if (!gameState.hasRoleNull(p)) {
 										if (getPlayerRoles(p).getRoles() != Roles.Nakime) {
 											LocPlayer loc = new LocPlayer();
@@ -81,7 +80,7 @@ public class Nakime extends DemonsRoles {
 							sendCooldown(owner, cd);
 							return true;
 						}
-					}else if (owner.getWorld().equals(Main.getInstance().gameWorld)) {
+					}else if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 						if (cooldown <= 0) {
 							EnterinNakime();
                         }else {
@@ -96,7 +95,7 @@ public class Nakime extends DemonsRoles {
 	@Override
 	public void onDSCommandSend(String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("return")) {
-			if (owner.getWorld().equals(Main.getInstance().nakime)) {
+			if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 				ejectPlayerinCage();
 				owner.sendMessage("Tout les joueurs étant dans votre cage on été éparpiller sur la map");
 			}else {
@@ -183,8 +182,8 @@ public class Nakime extends DemonsRoles {
 	}
 	public void ejectPlayerinCage() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			if (p.getWorld().equals(Main.getInstance().nakime)) {
-				GameListener.RandomTp(p, Main.getInstance().gameWorld);
+			if (p.getWorld().getName().equalsIgnoreCase("nakime")) {
+				GameListener.RandomTp(p, Main.getInstance().getWorldManager().getGameWorld());
 				p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime");
 				owner.sendMessage(p.getName()+"§7 est sortie de votre cage");
 			}

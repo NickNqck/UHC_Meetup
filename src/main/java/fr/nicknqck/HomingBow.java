@@ -18,7 +18,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.demons.Susamaru;
 
 public class HomingBow implements Listener {
-	GameState gameState;
+	private final GameState gameState;
 	
 	public HomingBow(GameState gameState) {
 		this.gameState = gameState;
@@ -35,11 +35,8 @@ public class HomingBow implements Listener {
 				gameState.getPlayerRoles().get(shooter).onProjectileLaunch(event, shooter);
 			}
 		}
-        // Vérifier si le projectile est une flèche
         if (projectile instanceof Arrow) {
             Arrow arrow = (Arrow) projectile;
-            
-            // Vérifier si le tireur est un joueur
             if (arrow.getShooter() instanceof Player) {
                 Player shooter = (Player) arrow.getShooter();
                 if (!gameState.hasRoleNull(shooter)) {

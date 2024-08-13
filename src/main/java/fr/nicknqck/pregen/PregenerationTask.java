@@ -13,59 +13,57 @@ public class PregenerationTask extends BukkitRunnable {
 	
 	private Double percent;
 	private Double currentChunkLoad;
-	private Double totalChunkToLoad;
+	private final Double totalChunkToLoad;
 	
 	private Integer cx;
 	private Integer cz;
-	private Integer mx;
-	private Integer mz;
-	private Integer radius;
-	private World world;
+	private final Integer mx;
+	private final Integer mz;
+	private final Integer radius;
+	private final World world;
 	private Boolean finished;
 	
 	public PregenerationTask(World world, Integer r) {
 		r+=150;
-		this.percent = Double.valueOf(0.0D);
-		this.totalChunkToLoad = Double.valueOf(Math.pow(r.intValue(), 2.0D) / 64.0D);
-		this.currentChunkLoad = Double.valueOf(0.0D);
-		this.cx = Integer.valueOf(world.getSpawnLocation().getBlockX()-r.intValue());
-		this.cz = Integer.valueOf(world.getSpawnLocation().getBlockZ()-r.intValue());
+		this.percent = 0.0D;
+		this.totalChunkToLoad = Math.pow(r, 2.0D) / 64.0D;
+		this.currentChunkLoad = 0.0D;
+		this.cx = world.getSpawnLocation().getBlockX() - r;
+		this.cz = world.getSpawnLocation().getBlockZ() - r;
 		this.world = world;
 		this.radius = r;
-		this.mx = Integer.valueOf(r.intValue()+world.getSpawnLocation().getBlockX());
-		this.mz = Integer.valueOf(r.intValue()+world.getSpawnLocation().getBlockZ());
-		this.finished = Boolean.valueOf(false);
-		Bukkit.broadcastMessage("§8[§cPregen§8] §fLancement de la pré-génération");
+		this.mx = r + world.getSpawnLocation().getBlockX();
+		this.mz = r + world.getSpawnLocation().getBlockZ();
+		this.finished = Boolean.FALSE;
+		Bukkit.broadcastMessage("§8[§cPregen§8] §fLancement de la pré-génération de §c"+world.getName());
 		runTaskTimer(Main.getInstance(), 0L, 5L);
 	}
 	
 	@Override
 	public void run() {
-		for(int i = 0; i < 30 && !this.finished.booleanValue(); i++) {
-			Location loc = new Location(this.world, this.cx.intValue(), 0.0D, this.cz.intValue());
+		for(int i = 0; i < 30 && !this.finished; i++) {
+			Location loc = new Location(this.world, this.cx, 0.0D, this.cz);
 			if (!loc.getChunk().isLoaded()) {
 				loc.getWorld().loadChunk(loc.getChunk().getX(), loc.getChunk().getZ(), true);
-				Main.keepChunk.add(loc.getChunk());
 				System.out.println("Pregen "+loc.getChunk());
 			}
 			this.cx+=16;
-			this.currentChunkLoad = Double.valueOf(this.currentChunkLoad.doubleValue() + 1.0D);
-			if(this.cx.intValue() > this.mx.intValue()) {
-				this.cx = Integer.valueOf(world.getSpawnLocation().getBlockX()-this.radius.intValue());
+			this.currentChunkLoad = this.currentChunkLoad + 1.0D;
+			if(this.cx > this.mx) {
+				this.cx = world.getSpawnLocation().getBlockX() - this.radius;
 				this.cz+=16;
-				if(this.cz.intValue() > this.mz.intValue()) {
+				if(this.cz > this.mz) {
 					this.currentChunkLoad = this.totalChunkToLoad;
-					this.finished = Boolean.valueOf(true);
+					this.finished = Boolean.TRUE;
 				}
 			}
 		}
-		this.percent = Double.valueOf(this.currentChunkLoad.doubleValue() / this.totalChunkToLoad.doubleValue() * 100.0D);
-//		Bukkit.getOnlinePlayers().forEach(players -> NMSPacket.sendActionbar(players, "§fPré-génération §8» [§r"+"§8] §c"+this.percent.intValue()+"%"));
+		this.percent = this.currentChunkLoad / this.totalChunkToLoad * 100.0D;
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			NMSPacket.sendActionBar(p, "§fPré-génération §8» §c"+this.percent.intValue()+"%");
+			NMSPacket.sendActionBar(p, "§fPré-génération de §c"+world.getName()+" §8» §c"+this.percent.intValue()+"%");
 		}
-		if(this.finished.booleanValue()) {
-			Bukkit.broadcastMessage("§8[§cPregen§8] §fLa pré-génération est terminée !");
+		if(this.finished) {
+			Bukkit.broadcastMessage("§8[§cPregen§8] §fLa pré-génération de§c "+world.getName()+"§f est terminée !");
 			cancel();
 			
 			//Bukkit.getOnlinePlayers().forEach(players -> NMSMethod.sendActionbar(players, "§fPré-génération §8» [§r"+UHCAPI.get().getGameManager().getProgressBar(this.percent.intValue(), 100, 20, "|", "§c", "§f")+"§8] §c"+this.percent.intValue()+"%"));

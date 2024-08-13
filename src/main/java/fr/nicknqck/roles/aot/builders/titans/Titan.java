@@ -42,9 +42,9 @@ public abstract class Titan {
 		}
 		return null;
 	}
-	public RoleBase getPlayerRole(Player player) {
-		if (!GameState.getInstance().hasRoleNull(player)) {
-			return GameState.getInstance().getPlayerRoles().get(player);
+	public AotRoles getPlayerRole(Player player) {
+		if (!GameState.getInstance().hasRoleNull(player) && GameState.getInstance().getPlayerRoles().get(player) instanceof AotRoles) {
+			return (AotRoles) GameState.getInstance().getPlayerRoles().get(player);
 		}
 		return null;
 	}

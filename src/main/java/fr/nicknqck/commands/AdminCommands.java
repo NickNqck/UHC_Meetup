@@ -230,7 +230,7 @@ public class AdminCommands implements CommandExecutor{
 									Bukkit.broadcastMessage("");
 									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant nuit");
 									Bukkit.broadcastMessage("");
-									Main.getInstance().gameWorld.setTime(13000);
+									Main.getInstance().getWorldManager().getGameWorld().setTime(13000);
 									gameState.t = gameState.timeday;
 									Bukkit.getServer().getPluginManager().callEvent(new NightEvent(gameState));
 									return true;
@@ -241,7 +241,7 @@ public class AdminCommands implements CommandExecutor{
                             Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant jour");
                             Bukkit.broadcastMessage("");
                             gameState.t = gameState.timeday;
-                            Main.getInstance().gameWorld.setTime(0);
+                            Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 							Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
                             return true;
                         }
@@ -283,16 +283,21 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								if (gameState.getServerState() != null) {
 									if (gameState.getServerState() == ServerStates.InGame) {
-										int grp = Integer.parseInt(args[1]);
-										if (grp > 0) {
-											gameState.setGroupe(grp);
-											for (Player p : gameState.getInGamePlayers()) {
-												p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
-												NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
-												p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");
+										try {
+											int grp = Integer.parseInt(args[1]);
+											if (grp > 0) {
+												gameState.setGroupe(grp);
+												for (Player p : gameState.getInGamePlayers()) {
+													p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
+													NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
+													p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");
+												}
+												return true;
 											}
-											return true;
+										} catch (NumberFormatException e) {
+											e.printStackTrace();
 										}
+
 									} else {
 										sender.sendMessage("§cIl faut être en jeux pour faire cette commande !");
 										return true;

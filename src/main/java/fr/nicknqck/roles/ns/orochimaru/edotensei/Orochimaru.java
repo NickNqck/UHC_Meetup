@@ -1,39 +1,35 @@
-package fr.nicknqck.roles.ns.orochimaru;
+package fr.nicknqck.roles.ns.orochimaru.edotensei;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.utils.GlobalUtils;
+import fr.nicknqck.roles.ns.orochimaru.Sasuke;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class Orochimaru extends OrochimaruRoles {
-
+	private EdoTenseiUser edo;
+	private final List<Chakras> chakrasVoled = new ArrayList<>();
 	public Orochimaru(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
@@ -50,8 +46,9 @@ public class Orochimaru extends OrochimaruRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		setResi(20);
+		givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+		this.edo = new EdoTenseiUser(this);
 	}
-	private final List<Chakras> chakrasVoled = new ArrayList<>();
 	@Override
 	public String[] Desc() {
 		StringBuilder sb = new StringBuilder();
@@ -92,7 +89,7 @@ public class Orochimaru extends OrochimaruRoles {
 				"",
 				AllDesc.point+KusanagiItem().getItemMeta().getDisplayName()+"§f: Épée en diamant tranchant 4",
 				"",
-				AllDesc.point+EdoTenseiItem().getItemMeta().getDisplayName()+"§f: Permet de réssusciter un joueur que vous avez précedemment tuer et de le faire rejoindre votre camp en échange de§c 3"+AllDesc.coeur+" permanent",
+				AllDesc.point+"§5Edo Tensei§f: Permet de réssusciter un joueur que vous avez précedemment tuer et de le faire rejoindre votre camp en échange de§c 3"+AllDesc.coeur+" permanent",
 				"",
 				AllDesc.particularite,
 				"",
@@ -105,30 +102,13 @@ public class Orochimaru extends OrochimaruRoles {
 				AllDesc.bar
 		};
 	}
-	@Override
-	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-	}
-	private ItemStack EdoTenseiItem() {
-		return new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei").setLore("§7Permet de réssusciter jusqu'à deux personnes que vous avez tuer").toItemStack();
-	}
 	private ItemStack KusanagiItem() {
 		return new ItemBuilder(Material.DIAMOND_SWORD).setName("§5Kusanagi").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("§7L'épée légendaire en possession du§5 Orochimaru").toItemStack();
 	}
-	private final HashMap<Player, RoleBase> edoTensei = new HashMap<>();
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (edoTensei.containsKey(player)) {
-			edoTensei.remove(player, getPlayerRoles(player));
-		}
 		if (killer.getUniqueId() == owner.getUniqueId()) {
 			((CraftPlayer) owner).getHandle().setAbsorptionHearts(((CraftPlayer) owner).getHandle().getAbsorptionHearts()+4.0f);
-			if (player.getLocation().getWorld().equals(Main.getInstance().gameWorld)) {
-				killLoc.put(player, player.getLocation());
-			} else {
-				Location rLoc = new Location(Main.getInstance().gameWorld, 0.0, 75, 0.0, player.getEyeLocation().getYaw(), player.getEyeLocation().getPitch());
-				killLoc.put(player, rLoc);
-			}
 			if (getPlayerRoles(player) instanceof NSRoles && ((NSRoles) getPlayerRoles(player)).getChakras() != null) {
 				if (RandomUtils.getOwnRandomProbability(25)) {
 					if (!chakrasVoled.contains(((NSRoles) getPlayerRoles(player)).getChakras())) {
@@ -144,7 +124,7 @@ public class Orochimaru extends OrochimaruRoles {
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
 				KusanagiItem(),
-				EdoTenseiItem()
+				this.edo.getEdoTenseiItem()
 		};
 	}
 	@Override
@@ -157,76 +137,6 @@ public class Orochimaru extends OrochimaruRoles {
 			}, 1);
 		}
 	}
-	private final HashMap<Player, Location> killLoc = new HashMap<>();
-	@Override
-	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (item.isSimilar(EdoTenseiItem())) {
-			if (killLoc.isEmpty()) {
-				owner.sendMessage("§7Il faut avoir tué au moins§n 1 joueurs§7 pour utiliser cette technique");
-				return true;
-			}
-			if (!edoTensei.isEmpty()) {
-				owner.sendMessage("§7Vous avez déjà§5 Edo Tensei");
-				return true;
-			}
-			Inventory inv = Bukkit.createInventory(owner, 54, "§5Edo Tensei");
-			for (int i = 0; i <= 8; i++) {
-				if (i == 4) {
-					inv.setItem(i, GUIItems.getSelectBackMenu());
-				} else {
-					inv.setItem(i, GUIItems.getOrangeStainedGlassPane());
-				}
-			}
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (killLoc.containsKey(p)) {
-					if (killLoc.get(p).getWorld().equals(owner.getWorld())) {
-						if (owner.getLocation().distance(killLoc.get(p)) <= 50) {
-							inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName(p.getName()).setLore("§7Cliquez ici pour réssusciter ce joueur !").toItemStack());
-						}
-					}
-				}
-			}
-			owner.openInventory(inv);
-			owner.updateInventory();
-		}
-		return super.ItemUse(item, gameState);
-	}
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
-		if (clicker.getUniqueId() != owner.getUniqueId())return;
-		if (inv.getTitle().equals("§5Edo Tensei")) {
-			if (item == null) {
-				return;
-			}
-			if (item.getType() == Material.AIR) {
-				return;
-			}
-			if (item.hasItemMeta()) {
-				if (item.getItemMeta().hasDisplayName()) {
-					Player clicked = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
-					event.setCancelled(true);
-					if (clicked != null) {
-						edoTensei.put(clicked, getPlayerRoles(clicked));
-						clicker.closeInventory();
-						clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
-						clicker.sendMessage("§5Edo Tensei !");
-						getPlayerRoles(clicked).setTeam(getPlayerRoles(clicker).getOriginTeam());
-						HubListener.getInstance().giveStartInventory(clicked);
-						gameState.RevivePlayer(clicked);
-						setMaxHealth(getMaxHealth()-4.0);
-						clicked.teleport(clicker);
-						giveItem(clicked, false, getPlayerRoles(clicked).getItems());
-						killLoc.remove(clicked);
-						clicked.resetTitle();
-						clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+TeamList.Orochimaru);
-						
-					}
-				}
-			}
-		}
-	}
-
 	@Override
 	public Intelligence getIntelligence() {
 		return Intelligence.GENIE;

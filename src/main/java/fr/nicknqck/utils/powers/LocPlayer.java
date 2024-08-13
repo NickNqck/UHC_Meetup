@@ -40,31 +40,31 @@ public class LocPlayer {
         Collections.shuffle(locs);
     }
 
-    public static Location loc1 = new Location(Main.getInstance().nakime, 14,158,770);
-    public static Location loc2 = new Location(Main.getInstance().nakime, 56,130,850);
-    public static Location loc3 = new Location(Main.getInstance().nakime, 60,157,809);
-    public static Location loc4 = new Location(Main.getInstance().nakime, 38,187,820);
-    public static Location loc5 = new Location(Main.getInstance().nakime, 38,182,813);
-    public static Location loc6 = new Location(Main.getInstance().nakime, 17,187,809);
-    public static Location loc7 = new Location(Main.getInstance().nakime, 12,175,787);
-    public static Location loc8 = new Location(Main.getInstance().nakime, 13,155,809);
-    public static Location loc9 = new Location(Main.getInstance().nakime, 25,157,830);
-    public static Location loc10 = new Location(Main.getInstance().nakime, 25,178,857);
-    public static Location loc11 = new Location(Main.getInstance().nakime, 46,190,856);
-    public static Location loc12 = new Location(Main.getInstance().nakime, 80,167,811);
-    public static Location loc13 = new Location(Main.getInstance().nakime, 54,168,806);
-    public static Location loc14 = new Location(Main.getInstance().nakime, 52,148,783);
-    public static Location loc15 = new Location(Main.getInstance().nakime, 67,148,793);
-    public static Location loc16 = new Location(Main.getInstance().nakime, 40,157,770);
-    public static Location loc17 = new Location(Main.getInstance().nakime, 30,141,777);
-    public static Location loc18 = new Location(Main.getInstance().nakime, 20,136,788);
-    public static Location loc19 = new Location(Main.getInstance().nakime, 5,177,842);
-    public static Location loc20 = new Location(Main.getInstance().nakime, 8,157,830);
-    public static Location loc21 = new Location(Main.getInstance().nakime, 62,165,848);
-    public static Location loc22 = new Location(Main.getInstance().nakime, 81,145,820);
-    public static Location loc23 = new Location(Main.getInstance().nakime, 14,129,810);
-    public static Location loc24 = new Location(Main.getInstance().nakime, 75,155,782);
-    public static Location loc25 = new Location(Main.getInstance().nakime, 47,190,858);
+    public static Location loc1 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 14,158,770);
+    public static Location loc2 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 56,130,850);
+    public static Location loc3 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 60,157,809);
+    public static Location loc4 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 38,187,820);
+    public static Location loc5 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 38,182,813);
+    public static Location loc6 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 17,187,809);
+    public static Location loc7 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 12,175,787);
+    public static Location loc8 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 13,155,809);
+    public static Location loc9 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 25,157,830);
+    public static Location loc10 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 25,178,857);
+    public static Location loc11 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 46,190,856);
+    public static Location loc12 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 80,167,811);
+    public static Location loc13 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 54,168,806);
+    public static Location loc14 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 52,148,783);
+    public static Location loc15 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 67,148,793);
+    public static Location loc16 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 40,157,770);
+    public static Location loc17 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 30,141,777);
+    public static Location loc18 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 20,136,788);
+    public static Location loc19 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 5,177,842);
+    public static Location loc20 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 8,157,830);
+    public static Location loc21 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 62,165,848);
+    public static Location loc22 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 81,145,820);
+    public static Location loc23 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 14,129,810);
+    public static Location loc24 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 75,155,782);
+    public static Location loc25 = new Location(Main.getInstance().getWorldManager().getGameWorld(), 47,190,858);
 
     public Location getRandomPositionStart() {
         Random ran = new Random();

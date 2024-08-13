@@ -28,9 +28,13 @@ public class Konohamaru extends ShinobiRoles {
 	public Konohamaru(UUID player) {
 		super(player);
 		setChakraType(Chakras.KATON);
-		giveItem(owner, false, getItems());
-		
 	}
+
+	@Override
+	public void GiveItems() {
+		giveItem(owner, false, getItems());
+	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.Konohamaru;

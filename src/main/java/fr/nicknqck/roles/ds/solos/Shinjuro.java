@@ -5,6 +5,8 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -12,6 +14,11 @@ import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.TripleMap;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,15 +31,33 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Shinjuro extends DemonsSlayersRoles {
-
+	private boolean usesoufle = false;
+	private int cooldownsake = 0;
+	private int souflecooldown = 0;
+	private boolean killkyojuro = false;
+	private int regencooldown = 10;
+	private TextComponent desc;
 	public Shinjuro(UUID player) {
 		super(player);
+
+	}
+	@Override
+	public void RoleGiven(GameState gameState) {
 		setCanuseblade(true);
 		Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
 		setMaxHealth(24.0);
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		setLameIncassable(owner, true);
+		AutomaticDesc desc = new AutomaticDesc(this);
+		desc.addEffects(getEffects());
+		desc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous offre l'effet§b Speed I§7 pendant§c 1m30s§7\n\n§7Si vous avez tuer§a Kyojuro§7 vous aurez l'effet§b Speed II§7 à la place")}), "§6Sake", 60*5),
+				new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'§aactiver§7/§cdésactiver§7 votre effet de§6 Fire Résistance I")}), "§6Soufle du feu", 5))
+				.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Quand vous êtes sous l'effet de votre§6 Soufle du feu§7 vos coups mette en§c feu§7.")}),
+						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous vous§d régénérez§7 de§c 1/2"+AllDesc.coeur+"§7 toute les§c 10 secondes")}));
+		this.desc = desc.getText();
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Shinjuro;
@@ -44,8 +69,13 @@ public class Shinjuro extends DemonsSlayersRoles {
 	}
 
 	@Override
+	public TextComponent getComponent() {
+		return desc;
+	}
+
+	@Override
 	public String[] Desc() {
-		return AllDesc.Shinjuro;
+		return new String[0];
 	}
 	@Override
 	public void GiveItems() {
@@ -59,11 +89,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 				Items.getSoufleDuFeu()
 		};
 	}
-	private boolean usesoufle = false;
-	private int cooldownsake = 0;
-	private int souflecooldown = 0;
-	private boolean killkyojuro = false;
-	private int regencooldown = 10;
 	public void setSakeCooldown(int i) {
 		cooldownsake = i;
 	}
@@ -103,15 +128,16 @@ public class Shinjuro extends DemonsSlayersRoles {
 		}
 		super.Update(gameState);
 	}
-	
-	
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item != null) {
 			if (item.isSimilar(Items.getSake())) {
 				if (cooldownsake <= 0) {
 						owner.sendMessage("§7Vous venez de boire de l'alcool");
-						owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*((60 + 30)), 0, false, false));
+						owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*((60 + 30)), 0, false, false));
+						if (killkyojuro) {
+							owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*((60 + 30)), 1, false, false), true);
+						}
 						cooldownsake = 60*5;
 				}else {
 					sendCooldown(owner, cooldownsake);
@@ -141,7 +167,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 				if (gameState.getInGamePlayers().contains(victim)) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Kyojuro) {
+						if (role instanceof Kyojuro && !killkyojuro) {
 							killkyojuro = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles().name()+ChatColor.GRAY+" maintenant en utilisant le Soufle du Feu vous obtiendrez l'effet: "+ChatColor.RED+"Speed 1"+ChatColor.GRAY+" permanent");
 						}
@@ -161,7 +187,6 @@ public class Shinjuro extends DemonsSlayersRoles {
         victim.setFireTicks(x);
         super.ItemUseAgainst(item, victim, gameState);
 	}
-
 	@Override
 	public String getName() {
 		return "Shinjuro";
@@ -182,29 +207,31 @@ public class Shinjuro extends DemonsSlayersRoles {
 					shinjuro.sendCustomActionBar(shinjuro.owner, Loc.getDirectionMate(shinjuro.owner, shinjuro.gameState.getOwner(Roles.Kyojuro), true));
 				}
 			}
-			Material m = shinjuro.owner.getPlayer().getLocation().getBlock().getType();
-			Location y1 = new Location(shinjuro.owner.getWorld(), shinjuro.owner.getLocation().getX(), shinjuro.owner.getLocation().getY()+1, shinjuro.owner.getLocation().getZ());
-			Material a = y1.getBlock().getType();
-			if (m == Material.LAVA || m == Material.STATIONARY_LAVA || a == Material.LAVA || a == Material.STATIONARY_LAVA) {
-				if (shinjuro.owner.getHealth() != shinjuro.getMaxHealth()) {
-					if (shinjuro.regencooldown == 0) {
-						double max = shinjuro.getMaxHealth();
-						double ahealth = shinjuro.owner.getHealth();
-						double dif = max-ahealth;
-						if (!(dif <= 1.0)) {
-							shinjuro.Heal(shinjuro.owner, 1);
-							shinjuro.owner.sendMessage("§7Vous venez de gagné§c 1/2"+AllDesc.coeur+"§7 suite à votre temp passé au chaud");
-						} else {
-							shinjuro.owner.setHealth(max);
+			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+				Material m = shinjuro.owner.getPlayer().getLocation().getBlock().getType();
+				Location y1 = new Location(shinjuro.owner.getWorld(), shinjuro.owner.getLocation().getX(), shinjuro.owner.getLocation().getY()+1, shinjuro.owner.getLocation().getZ());
+				Material a = y1.getBlock().getType();
+				if (m == Material.LAVA || m == Material.STATIONARY_LAVA || a == Material.LAVA || a == Material.STATIONARY_LAVA) {
+					if (shinjuro.owner.getHealth() != shinjuro.getMaxHealth()) {
+						if (shinjuro.regencooldown == 0) {
+							double max = shinjuro.getMaxHealth();
+							double ahealth = shinjuro.owner.getHealth();
+							double dif = max-ahealth;
+							if (!(dif <= 1.0)) {
+								shinjuro.Heal(shinjuro.owner, 1);
+								shinjuro.owner.sendMessage("§7Vous venez de gagné§c 1/2"+AllDesc.coeur+"§7 suite à votre temp passé au chaud");
+							} else {
+								shinjuro.owner.setHealth(max);
+							}
+							shinjuro.regencooldown = 10;
+						}else {
+							shinjuro.sendCustomActionBar(shinjuro.owner, "§7Temp avant§d régénération§7:§l "+shinjuro.regencooldown+"s");
 						}
-						shinjuro.regencooldown = 10;
-					}else {
-						shinjuro.sendCustomActionBar(shinjuro.owner, "§7Temp avant§d régénération§7:§l "+shinjuro.regencooldown+"s");
 					}
+				} else {
+					if (shinjuro.regencooldown != 10) shinjuro.regencooldown = 10;
 				}
-			} else {
-				if (shinjuro.regencooldown != 10) shinjuro.regencooldown = 10;
-			}
+			});
 		}
 	}
 }

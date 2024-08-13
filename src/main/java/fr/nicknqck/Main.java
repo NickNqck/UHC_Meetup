@@ -26,22 +26,20 @@ import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.worlds.WorldFillTask;
-import fr.nicknqck.worlds.WorldGenerator;
 import lombok.Getter;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -54,9 +52,8 @@ Roles: NickNack, Mega02600
 */
 
 public class Main extends JavaPlugin implements Listener{
+
 	public final String PLUGIN_NAME = "UHC-Meetup";
-	public World gameWorld;
-	public World nakime;
 	@Getter
 	private ScoreboardManager scoreboardManager;
     @Getter
@@ -65,10 +62,8 @@ public class Main extends JavaPlugin implements Listener{
 	private ScheduledExecutorService scheduledExecutorService;
 	@Getter
     private static WorldFillTask worldfilltask;
-	public static List<Chunk> keepChunk = new ArrayList<>();
 	@Getter
 	private GetterList getterList;
-
 	@Getter
 	private static Main Instance;
 	public static Random RANDOM;
@@ -78,29 +73,26 @@ public class Main extends JavaPlugin implements Listener{
 	private RoleManager roleManager;
 	@Getter
 	private Loc locUtils;
+	@Getter
+	private WorldsManager worldManager;
 	@Override
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
 		this.roleManager = new RoleManager();
 		this.locUtils = new Loc();
-	//	this.databaseManager = new DatabaseManager();
+		this.worldManager = new WorldsManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
-		this.gameWorld = Bukkit.getWorld(getConfig().getString("gameworld"));
-		gameState.world = gameWorld;
-
-		gameWorld.setGameRuleValue("randomTickSpeed", "3");
-		gameWorld.setGameRuleValue("doMobSpawning", "false");
-		gameWorld.setGameRuleValue("doFireTick", "false");
+		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
+		spawnPlatform(getWorldManager().getLobbyWorld());
+		initGameWorld();
 		initPlugin(gameState);
 		EnableScoreboard(gameState);
 		registerEvents(gameState);
 		registerCommands(gameState);
-		spawnPlatform();
-		nakime = Bukkit.getWorld("nakime");
-		clearMap();
+		clearMap(getWorldManager().getLobbyWorld());
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
 			p.setPlayerListName(p.getName());
@@ -114,10 +106,8 @@ public class Main extends JavaPlugin implements Listener{
 			p.teleport(new Location(p.getWorld(), 0, 151, 0));
 			p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
-		
 		System.out.println("["+PLUGIN_NAME+"] Enabled");
 		giveTab(gameState);
-
 		saveDefaultConfig();
         registerRecipes();
 		System.out.println("ENDING ONENABLE");
@@ -140,7 +130,6 @@ public class Main extends JavaPlugin implements Listener{
 		scheduledExecutorService = Executors.newScheduledThreadPool(16);
         executorMonoThread = Executors.newScheduledThreadPool(1);
         scoreboardManager = new ScoreboardManager(gameState);
-        SchedulerRunnable.register(this);
         getScoreboardManager().onEnable();
 		System.out.println("End enable scoreboard");
 	}
@@ -158,7 +147,6 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
 		getServer().getPluginManager().registerEvents(new HomingBow(gameState), this);
 		getServer().getPluginManager().registerEvents(new BlockManager(gameState), this);
-		getServer().getPluginManager().registerEvents(new WorldGenerator(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemsManager(gameState), this);
 		getServer().getPluginManager().registerEvents(new Chat(gameState), this);
 		getServer().getPluginManager().registerEvents(new BrickBlockListener(), this);
@@ -196,26 +184,26 @@ public class Main extends JavaPlugin implements Listener{
 		getCommand("discord").setExecutor(new Discord());
 		System.out.println("Ending registering commands");
 	}
-	private void clearMap() {
+	private void clearMap(World world) {
 		System.out.println("Starting cleaning map");
 		System.out.println("Starting cleaning blocks");
 		for (int x = -150; x <= 150; x++) {
 			for (int z = -150; z <= 150; z++) {
 				for (int y = 50; y <= 120; y++) {
 					//System.out.println("Calculating Block at "+"x:"+x+", y:"+y+", z:"+z);
-					Block block = gameWorld.getBlockAt(x, y, z);
+					Block block = world.getBlockAt(x, y, z);
 					if (block.getType().name().contains("SPONGE") ||block.getType() == Material.BRICK || block.getType() == Material.COBBLESTONE || block.getType() == Material.OBSIDIAN || block.getType() == Material.PACKED_ICE || block.getType() == Material.ICE) {
 						if (isDebug()){
-							System.out.println(gameWorld.getBlockAt(x, y, z).getType().name()+" -> Air at x:"+x+", y:"+y+", z:"+z);
+							System.out.println(world.getBlockAt(x, y, z).getType().name()+" -> Air at x:"+x+", y:"+y+", z:"+z);
 						}
-						gameWorld.getBlockAt(x, y, z).setType(Material.AIR);
+						world.getBlockAt(x, y, z).setType(Material.AIR);
 					}
 				}
 			}
 		}
 		System.out.println("End cleaning blocks");
 		System.out.println("Starting cleaning entities");
-		for (Entity e : gameWorld.getEntities()) {
+		for (Entity e : world.getEntities()) {
 			if (e instanceof Player) continue;
 			System.out.println("removing Entity "+e.getName()+" at "+e.getLocation());
 			e.remove();
@@ -275,21 +263,45 @@ public class Main extends JavaPlugin implements Listener{
 		}, 1, 1);
 		System.out.println("Ending give tab");
 	}
-	private void spawnPlatform() {
+	private void spawnPlatform(World world) {
 		System.out.println("Spawning GLASS platform");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
-				gameWorld.getBlockAt(new Location(gameWorld, x, 150, z)).setType(Material.GLASS);
+				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.GLASS);
 			}
 		}
 		System.out.println("Ended GLASS platform");
 	}
-
-	@EventHandler
-	public void onChunkUnload(ChunkUnloadEvent e) {
-		if (keepChunk.contains(e.getChunk()))
-			e.setCancelled(true); 
-   }
+	public void initGameWorld() {
+		for (World world : Bukkit.getWorlds()) {
+			if (world.getName().equals("arena")) {
+				File worldFolder = world.getWorldFolder();
+				Bukkit.unloadWorld(world, false);
+				try {
+					FileUtils.deleteDirectory(worldFolder);
+					System.out.println("Deleted world "+worldFolder.getName());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		WorldCreator creator = new WorldCreator("arena");
+		creator.generatorSettings(getBase());
+		World gameWorld = creator.createWorld();
+		gameWorld.setTime(6000);
+		gameWorld.setGameRuleValue("doMobSpawning", "false");
+		gameWorld.setGameRuleValue("doDaylightCycle", "false");
+		gameWorld.setGameRuleValue("spectatorsGenerateChunks", "false");
+		gameWorld.setGameRuleValue("naturalRegeneration", "false");
+		gameWorld.setGameRuleValue("announceAdvancements", "false");
+		gameWorld.setDifficulty(Difficulty.HARD);
+		gameWorld.setSpawnLocation(0, gameWorld.getHighestBlockYAt(0, 0), 0);
+		gameWorld.setGameRuleValue("randomTickSpeed", "3");
+		gameWorld.setGameRuleValue("doMobSpawning", "false");
+		gameWorld.setGameRuleValue("doFireTick", "false");
+		getWorldManager().setGameWorld(gameWorld);
+		System.out.println("Created world gameWorld");
+	}
 	@Override
 	public void onDisable() {
 		if (getScoreboardManager() != null) {
@@ -299,7 +311,7 @@ public class Main extends JavaPlugin implements Listener{
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
 				World world = Bukkit.getWorlds().get(0);
-				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);				
+				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);
 			}
 		}
 		System.out.println("["+PLUGIN_NAME+"] "+getBase());
@@ -311,18 +323,19 @@ public class Main extends JavaPlugin implements Listener{
 		}
 		return debug;
 	}
-	public static String getBase() {
-        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 600+
-        		",\"depthNoiseScaleZ\":" + 600 +
-        		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0,\"seaLevel\":" + 63 + 
+	private String getBase() {
+        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 1000+
+        		",\"depthNoiseScaleZ\":" + 1000 +
+        		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +
+				"\"seaLevel\":" + 60 +
         		",\"useCaves\":" + true + //S'il y aura des caves ou non
         		",\"useDungeons\":" + true + //S'il y aura des dongeons ou non
         		",\"dungeonChance\":" + 8 + //Probo dongeon 8 = vanilla
         		",\"useStrongholds\":" + true + //S'il y aura des strongholds
         		",\"useVillages\":" + true + //S'il y aura des villages ou non
-        		",\"useMineShafts\":" + true + //S'il y aura des mineshafts ou non
-        		",\"useTemples\":" + true + //S'il y aura des temples de la jungle
-        		",\"useMonuments\":" + true+ //
+        		",\"useMineShafts\":" + false + //S'il y aura des mineshafts ou non
+        		",\"useTemples\":" + false + //S'il y aura des temples de la jungle
+        		",\"useMonuments\":" + false+ //
         		",\"useRavines\":" + true + //Si il y aura des failles ou non
         		",\"useWaterLakes\":" + true + //S'il y aura des lacs d'eau
         		",\"waterLakeChance\":" + 4 + //La proba d'avoir des lacs d'eau 4 = vanilla
@@ -339,8 +352,8 @@ public class Main extends JavaPlugin implements Listener{
         		",\"ironCount\":" + 20 + 
         		",\"ironMinHeight\":" + 0 + 
         		",\"ironMaxHeight\":" + 64 + 
-        		",\"goldSize\":" + 9 +
-        		",\"goldCount\":" + 2 + 
+        		",\"goldSize\":" + 11 +
+        		",\"goldCount\":" + 4 +
         		",\"goldMinHeight\":" + 0 + 
         		",\"goldMaxHeight\":" + 32 + 
         		",\"redstoneSize\":" + 8 + 

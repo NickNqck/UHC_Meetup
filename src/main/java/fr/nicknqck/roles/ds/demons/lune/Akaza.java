@@ -4,6 +4,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -15,6 +17,8 @@ import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
+import fr.nicknqck.utils.packets.NMSPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -37,6 +41,8 @@ public class Akaza extends DemonsRoles implements Listener {
 	private int regencooldown = 0;
 	private final TextComponent desc;
 	private final AkazaPilierRunnable runnable;
+	private int coupInfliged = 0;
+	private int coupToInflig = 50;
 	public Akaza(UUID player) {
 		super(player);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
@@ -44,11 +50,13 @@ public class Akaza extends DemonsRoles implements Listener {
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez une§c régénération§7 naturel à hauteur de§c 1/2"+ AllDesc.coeur+"§7 toute les§c 20 secondes§7.")}),
-				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toute les§c 5 minutes§7 vous êtes informer du nombre de§c pilier§7 que vous avez croiser ces§c 5 dernières minutes§7.")}));
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toute les§c 5 minutes§7 vous êtes informer du nombre de§c pilier§7 que vous avez croiser ces§c 5 dernières minutes§7.")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Tout les§c 50 coups§7 infliger vous gagnerez§c 30 secondes§7 de l'effet§c Résistance I§7.")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque mort d'une§c lune supérieur§7 les coups requis pour obtenir l'effet§c Résistance I§7 réduise de§c 5§7.")}));
 		this.desc = desc.getText();
 		this.runnable = new AkazaPilierRunnable(this);
 		this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+		EventUtils.registerEvents(this);
 	}
 	@Override
 	public DemonType getRank() {
@@ -83,7 +91,7 @@ public class Akaza extends DemonsRoles implements Listener {
 					owner.setHealth(owner.getHealth() + 1.0);
 				} else {
 					owner.setHealth(this.getMaxHealth());
-				}			
+				}
 			}
 		}
 		if (regencooldown >= 1) {regencooldown--;}
@@ -97,9 +105,33 @@ public class Akaza extends DemonsRoles implements Listener {
 		regencooldown = 0;
 	}
 	@EventHandler
+	private void onUHCBattle(UHCPlayerBattleEvent event) {
+		if (event.isPatch()) {
+			if (!event.getOriginEvent().isCancelled() && event.getOriginEvent().getDamager() instanceof Player) {
+				if (event.getDamager().getUuid().equals(getPlayer())) {
+					this.coupInfliged++;
+					NMSPacket.sendActionBar((Player) event.getOriginEvent().getDamager(), "§7Coup infliger:§c "+coupInfliged+"§7/§6"+coupToInflig);
+				}
+			}
+		}
+	}
+	@EventHandler
 	private void onEndGame(EndGameEvent event) {
 		this.runnable.cancel();
 		HandlerList.unregisterAll(this);
+	}
+	@EventHandler
+	private void onUHCDeath(UHCDeathEvent event) {
+		if (!event.isCancelled()) {
+			if (!event.getGameState().hasRoleNull(event.getPlayer())) {
+				if (event.getGameState().getPlayerRoles().get(event.getPlayer()) instanceof DemonsRoles) {
+					DemonsRoles role = (DemonsRoles) event.getGameState().getPlayerRoles().get(event.getPlayer());
+					if (role.getRank().equals(DemonType.LuneSuperieur)) {
+						this.coupToInflig-=5;
+					}
+				}
+			}
+		}
 	}
 	private static class AkazaPilierRunnable extends BukkitRunnable {
 
@@ -111,7 +143,7 @@ public class Akaza extends DemonsRoles implements Listener {
 		}
 		@Override
 		public void run() {
-			if (!akaza.getGamePlayer().isAlive()) {
+			if (!akaza.getGamePlayer().isAlive() || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
 				cancel();
 				return;
 			}
@@ -132,17 +164,25 @@ public class Akaza extends DemonsRoles implements Listener {
 					RoleBase role = akaza.getGameState().getPlayerRoles().get(around);
 					if (role instanceof PillierRoles) {
 						PillierRoles pillierRoles = (PillierRoles) role;
-						if (timeCroised.containsKey(pillierRoles.getName())) {
-							int i = timeCroised.get(pillierRoles.getName());
-							timeCroised.remove(pillierRoles.getName(), i);
-							timeCroised.put(pillierRoles.getName(), i+1);
-						} else {
-							timeCroised.put(pillierRoles.getName(), 1);
+						if (pillierRoles.getGamePlayer().isAlive()) {
+							if (timeCroised.containsKey(pillierRoles.getName())) {
+								int i = timeCroised.get(pillierRoles.getName());
+								timeCroised.remove(pillierRoles.getName(), i);
+								timeCroised.put(pillierRoles.getName(), i+1);
+							} else {
+								timeCroised.put(pillierRoles.getName(), 1);
+							}
 						}
 					}
 				}
 			}
 			timeRemaining--;
+			NMSPacket.sendActionBar(owner, "§7Coup infliger:§c "+akaza.coupInfliged+"§7/§6"+akaza.coupToInflig);
+			if (akaza.coupInfliged >= akaza.coupToInflig) {
+				Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*30, 0, false, false), true));
+				owner.sendMessage("§7Vous avez obtenue l'effet§c Résistance I§7 pendant§c 30 secondes§7.");
+				akaza.coupInfliged = 0;
+			}
 		}
 	}
 }

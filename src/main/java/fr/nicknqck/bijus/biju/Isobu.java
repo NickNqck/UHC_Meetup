@@ -48,7 +48,7 @@ public class Isobu extends Biju{
 	private GameState gameState;
 	@Override
 	public void setupBiju(GameState gameState) {
-		World world = Main.getInstance().gameWorld;
+		World world = Main.getInstance().getWorldManager().getGameWorld();
 		this.gameState = gameState;
 		new IsobuRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
 		this.spawn = getRandomSpawn();

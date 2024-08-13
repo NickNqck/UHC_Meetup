@@ -25,6 +25,10 @@ public class Tenten extends ShinobiRoles {
 	public Tenten(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
+	}
+
+	@Override
+	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
 

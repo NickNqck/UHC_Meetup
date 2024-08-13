@@ -48,22 +48,6 @@ public class JoinEvents implements Listener{
 			joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint le Lobby §c"+gameState.getInLobbyPlayers().size()+"§r/§6"+ gameState.getroleNMB() +"§r";
 			break;
 		case InGame:
-			if (gameState.getInSpecPlayers().contains(player)) {
-				player.setGameMode(GameMode.SPECTATOR);
-				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint la liste des Spectateurs";
-			} else if (gameState.getInLobbyPlayers().contains(player)) {
-				player.setGameMode(GameMode.SPECTATOR);
-				gameState.delInLobbyPlayers(player);
-				gameState.addInSpecPlayers(player);
-				player.sendMessage(ChatColor.WHITE+"Tu est passé de la liste des personnes au Lobby au personne en Spectateur");
-				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A quitté le Lobby et à rejoint la liste des Spectateurs";
-				
-			} else if (gameState.getInGamePlayers().contains(player)){
-				player.setGameMode(GameMode.SPECTATOR);
-				gameState.delInGamePlayers(player);
-				gameState.addInSpecPlayers(player);
-				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A quittée la liste des joueurs en jeux pour devenir un Spectateur";
-			}
 			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player) || !gameState.getInGamePlayers().contains(player)) {
 				gameState.addInSpecPlayers(player);
 				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint la liste des Spectateurs";

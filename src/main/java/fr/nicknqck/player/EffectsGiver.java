@@ -30,7 +30,7 @@ public class EffectsGiver implements Listener {
                             if (!role.getEffects().isEmpty()) {
                                 for (PotionEffect effect : role.getEffects().keySet()) {
                                     if (role.getEffects().get(effect).equals(EffectWhen.PERMANENT)) {
-                                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(effect, false));
+                                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(effect.getType(), Integer.MAX_VALUE, effect.getAmplifier(), false, false), false));
                                     }
                                 }
                             }

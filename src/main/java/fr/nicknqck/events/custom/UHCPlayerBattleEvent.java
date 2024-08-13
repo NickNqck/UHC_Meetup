@@ -11,17 +11,17 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 @Getter
 public class UHCPlayerBattleEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
-    @Setter
-    private boolean patch;
+    private final boolean patch;
     private final GamePlayer victim;
     private final GamePlayer damager;
     @Setter
     private double damage;
     private final EntityDamageByEntityEvent originEvent;
-    public UHCPlayerBattleEvent(GamePlayer damaged, GamePlayer damager, EntityDamageByEntityEvent event) {
+    public UHCPlayerBattleEvent(GamePlayer damaged, GamePlayer damager, EntityDamageByEntityEvent event, boolean patch) {
         this.victim = damaged;
         this.damager = damager;
         this.originEvent = event;
+        this.patch = patch;
     }
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {

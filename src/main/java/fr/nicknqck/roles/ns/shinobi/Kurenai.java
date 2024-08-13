@@ -179,7 +179,7 @@ public class Kurenai extends ShinobiRoles {
         private KurenaiRunnable(Player player, Kurenai kurenai) {
             this.initLocation = player.getLocation().clone();
             this.owner = player.getUniqueId();
-            EventUtils.registerEvents(this, Main.getInstance());
+            EventUtils.registerEvents(this);
             this.armors = player.getInventory().getArmorContents();
             this.kurenai = kurenai;
             this.kurenai.getGamePlayer().setCanRevive(true);

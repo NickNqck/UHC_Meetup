@@ -41,7 +41,7 @@ public class Rui extends DemonsRoles {
 	}
 	@Override
 	public DemonType getRank() {
-		return DemonType.LuneInferieur;
+		return DemonType.LuneSuperieur;
 	}
 
 	@Override

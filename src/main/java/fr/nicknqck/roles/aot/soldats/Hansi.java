@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titan;
 import fr.nicknqck.roles.aot.solo.Eren;
@@ -45,7 +46,7 @@ public class Hansi extends SoldatsRoles {
 	}
 	private int actualtorture = 0;
 	private int actualseringue = 0;
-	private List<Player> tortured = new ArrayList<>();
+	private final List<Player> tortured = new ArrayList<>();
 
 	@Override
 	public String getName() {
@@ -114,8 +115,9 @@ public class Hansi extends SoldatsRoles {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (!gameState.hasRoleNull(target)) {
 					if (actualseringue < 3) {
-						if (!Titan.hasTitan(target) && !getPlayerRoles(target).isAckerMan() ){
-							getPlayerRoles(target).setCanVoleTitan(true);
+						if (getPlayerRoles(target) instanceof AotRoles && !Titan.hasTitan(target)){
+							if (getPlayerRoles(target) instanceof SoldatsRoles && ((SoldatsRoles) getPlayerRoles(target)).isAckerMan())return;
+							((AotRoles) getPlayerRoles(target)).setCanVoleTitan(true);
 							target.sendMessage("§7Vous avez reçus une seringue");
 						}
 						actualseringue++;

@@ -49,23 +49,21 @@ public class Tanjiro extends SlayerRoles implements Listener {
         getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
         new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        giveItem(owner, false, getItems());
-        giveItem(owner, false, Items.getLamedenichirin());
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
-     /*  Map<TextComponent, Integer> test = new LinkedHashMap<>();
-        test.put(getSentir(), 60*5);
-        test.put(getSentirJoueur(), -500);
-        test.put(getAssassin(), -500);*/
-        Map<HoverEvent, String> particlarite = new LinkedHashMap<>();
-        particlarite.put(getKillAssassin().getHoverEvent(), "§c§lTuer l'Assassin");
         desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
         .setItems(new TripleMap<>(getDanseText().getHoverEvent(), getDanseText().getText(), 60*12))
         .setCommands(new TripleMap<>(getSentir().getHoverEvent(), getSentir().getText(), 60*5), new TripleMap<>(getSentirJoueur().getHoverEvent(), getSentirJoueur().getText(), -500), new TripleMap<>(getAssassin().getHoverEvent(), getAssassin().getText(), -500))
-        .setParticularites(particlarite);
+        .addParticularites(getKillAssassin().getHoverEvent());
         this.automaticDesc = desc.getText();
 
+    }
+
+    @Override
+    public void GiveItems() {
+        giveItem(owner, false, getItems());
+        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override
@@ -118,9 +116,9 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getDanseText() {
         TextComponent danseItem = new TextComponent(" §7\"§6Danse §6du dieu §6du Feu§7\"");
         danseItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§r§7Vous obtenez pendant§l§c 5 minutes§r§7 l'effet §9resistance 1 §r§7et vous devenez §6invulnerable au degat de feu \n" +
-                        "§r§7, également,pendant§l§c 1 minute§r§7 vos coup §6embrasent§r§7 les joueurs touchés, de plus le joueur possedant le role de §aNezuko§r§7 obtiendra \n" +
-                        "§r§7l'effet §espeed 2§r§7 pendant§l§c 5 minutes§r§7, à la dissipation des effets vous perdez  §c2"+AllDesc.coeur+" permanent§7.§7 (1x/12m)."
+                "§r§7Vous obtenez pendant§l§c 5 minutes§r§7 l'Effet §9Resistance 1 §r§7et vous devenez §6invulnerable aux degâts de feu, §r§7également,\n"+
+                "§r§7pendant§l§c 1 minute§r§7 vos coups §6embrasent§r§7 les joueurs touchés, de plus le joueur possédant le role de §aNezuko§r§7\n"+
+                "§r§7obtiendra l'effet §espeed 2§r§7 pendant§l§c 5 minutes§r§7, à la dissipation des effets vous perdez  §c2"+AllDesc.coeur+"§r§7 permanent§7. (1x/12m)."
         )}));
         return danseItem;
     }

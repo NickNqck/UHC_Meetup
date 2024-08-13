@@ -7,6 +7,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Bukkit;

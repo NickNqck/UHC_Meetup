@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public enum DemonType {
 
-    LuneSuperieur(""),
-    LuneInferieur(""),
-    Demon("");
-
+    LuneSuperieur("§cLune Supérieur"),
+    LuneInferieur("§cLune Inferieur"),
+    Demon("§cDémon Inferieur");
+    private final String name;
     DemonType(String name){
-
+        this.name = name;
     }
 }

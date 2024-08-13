@@ -23,6 +23,7 @@ import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
+import fr.nicknqck.roles.mc.overworld.AraigneeVenimeuse;
 import fr.nicknqck.roles.mc.overworld.Poulet;
 import fr.nicknqck.roles.mc.overworld.Squelette;
 import fr.nicknqck.roles.mc.overworld.Zombie;
@@ -31,6 +32,8 @@ import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.orochimaru.*;
+import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
+import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
@@ -42,7 +45,6 @@ import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.roles.valo.agents.Iso;
 import fr.nicknqck.scenarios.impl.FFA;
-import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -56,7 +58,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class GameState{
@@ -65,7 +66,6 @@ public class GameState{
 	private int timeProcHokage = 90;
 	@Getter
 	private final List<Roles> deadRoles = new ArrayList<>();
-
 	public boolean BijusEnable = false;
 	public boolean stuffUnbreak = true;
 	public int TridiCooldown = 16;
@@ -73,7 +73,6 @@ public class GameState{
 	public int WaterEmptyTiming = 30;
 	public int LavaEmptyTiming = 30;
 	public boolean pregenNakime = false;
-	//public static Roles setPlayerRoles;
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
 	@Getter
@@ -91,6 +90,11 @@ public class GameState{
 	public int AkazaVsKyojuroTime = 60;
 	public int nmbArrow = 24;
 	public boolean LaveTitans = true;
+	@Getter
+	public int TimingAssassin = 10;
+	public boolean morteclair = true;
+	@Getter
+	public final List<UUID> Host = new ArrayList<>();
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -228,7 +232,8 @@ public class GameState{
 		//OverWorld
         Poulet(TeamList.OverWorld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack(), "§bMega02600"),
 		Zombie(TeamList.OverWorld, "mc", 1, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack(), "§bMega02600"),
-		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aSquelette").toItemStack(), "§bMega02600"),
+		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack(), "§bMega02600"),
+		AraigneeVenimeuse(TeamList.OverWorld, "mc", 3, new ItemBuilder(Material.SPIDER_EYE).setName("§aAraignée Venimeuse").toItemStack(), "§bMega02600"),
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
@@ -281,21 +286,17 @@ public class GameState{
 	@Getter
 	@Setter
 	private MDJ mdj = MDJ.Aucun;
-
 	public boolean isAllMdjNull() {
 		return mdj == MDJ.Aucun;
 	}
-
 	@Getter
 	public int roleTimer = 1;
 	public int pvpTimer = 1;
 	public int getPvPTimer() {
 		return pvpTimer;
 	}
-
 	public boolean JigoroV2Pacte2 = false;
 	public boolean JigoroV2Pacte3 = false;
-	public World world = Main.getInstance().gameWorld;
 	@Setter
 	@Getter
 	private ServerStates serverState = ServerStates.InLobby;
@@ -314,8 +315,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private ArrayList<Player> inSpecPlayers = new ArrayList<>();
-
-	//GameListener 698
 	@Getter
 	public ArrayList<Player> Charmed = new ArrayList<>();
 	@Setter
@@ -327,7 +326,6 @@ public class GameState{
 	@Getter
 	@Setter
 	int inGameTime = 0;
-
 	@Getter
 	public boolean nightTime = false;
 	boolean prevNightTime = true;
@@ -401,11 +399,7 @@ public class GameState{
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final Player player) {
-		if (getPlayerRoles().get(player) != null && getPlayerRoles().get(player).getRoles() != null && getPlayerRoles().containsKey(player)) {
-			return false;
-		} else {
-			return true;
-		}
+        return getPlayerRoles().get(player) == null || getPlayerRoles().get(player).getRoles() == null || !getPlayerRoles().containsKey(player);
 	}
 
 	public void setAvailableRoles(HashMap<Roles, Integer> availableRole) {availableRole = availableRoles;}
@@ -807,6 +801,9 @@ public class GameState{
 		case LeJuge:
 			role = new LeJuge(player);
 			break;
+		case AraigneeVenimeuse:
+			role = new AraigneeVenimeuse(player);
+			break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(aziz);
@@ -856,34 +853,24 @@ public class GameState{
 		System.out.println("Starting Assassin System");
 		assa.start(this);
 	}
-	@Getter
-	public int TimingAssassin = 10;
-	public boolean morteclair = true;
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
-	public DecimalFormat getDecimalFormat(String format) {
-		return new DecimalFormat(format);
-	}
-	@Setter
-	@Getter
-	public List<UUID> Host = new ArrayList<>();
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (inLobbyPlayers.size() == this.getroleNMB());}
 	public void initEvents() {
 		for (Events eventType : getAvailableEvents()) {
-			if (RandomUtils.getOwnRandomProbability(50)) {
-				switch (eventType) {
+			switch (eventType) {
 				case DemonKingTanjiro:
 					addInGameEvents(Events.DemonKingTanjiro.getEvent());
-					break;
+				break;
 				case Alliance:
 					addInGameEvents(Events.Alliance.getEvent());
-					break;
+				break;
 				case AkazaVSKyojuro:
 					addInGameEvents(Events.AkazaVSKyojuro.getEvent());
-					break;
+				break;
 				}
-			}
+
 		}
 	}
 	public int DKminTime = 60*30;
@@ -1124,12 +1111,21 @@ public class GameState{
 						for (Roles roles : hashMap.get(t)){
 							i++;
 							if (!appenned.contains(roles)) {
-								if (i != hashMap.get(t).size()){
-									tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
+								if (getServerState().equals(ServerStates.InLobby)) {
+									if (i != hashMap.get(t).size()){
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? " §7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("§f, ");
+									} else {
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+									}
+									appenned.add(roles);
 								} else {
-									tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append(getAvailableRoles().get(roles) > 1 ? "§7(x§c"+getAvailableRoles().get(roles)+"§7)" : "").append("\n");
+									if (i != hashMap.get(t).size()){
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("§f, ");
+									} else {
+										tr.append(t.getColor()).append(roles.getItem().getItemMeta().getDisplayName()).append("\n");
+									}
 								}
-								appenned.add(roles);
+
 							}
 						}
 					}

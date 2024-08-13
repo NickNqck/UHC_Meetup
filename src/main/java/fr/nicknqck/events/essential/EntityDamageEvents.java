@@ -3,8 +3,6 @@ package fr.nicknqck.events.essential;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.Main;
-import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.utils.AttackUtils;
@@ -68,7 +66,7 @@ public class EntityDamageEvents implements Listener{
 						if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
 							event.setCancelled(true);
 						} else {
-							if (player.getWorld().equals(Main.getInstance().nakime)) {
+							if (player.getWorld().getName().equals("nakime")) {
 								event.setDamage(event.getDamage()/4);
 							}
 						}
@@ -118,7 +116,7 @@ public class EntityDamageEvents implements Listener{
 								gameState.getPlayerRoles().get(player).PlayerKilled(killer, player, gameState);
 							}							
 						} else {
-							GameListener.RandomTp(player, gameState);
+							GameListener.RandomTp(player);
 						}
 					}
 				}

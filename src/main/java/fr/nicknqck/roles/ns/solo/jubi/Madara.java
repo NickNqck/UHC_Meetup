@@ -53,9 +53,14 @@ public class Madara extends NSRoles {
 		super(player);
 		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 		setChakraType(Chakras.KATON);
-		giveItem(owner, false, getItems());
 		map.clear();
 	}
+
+	@Override
+	public void GiveItems() {
+		giveItem(owner, false, getItems());
+	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.Madara;

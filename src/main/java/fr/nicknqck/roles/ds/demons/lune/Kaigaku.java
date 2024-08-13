@@ -1,12 +1,13 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
-import org.bukkit.Bukkit;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,7 +17,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -32,24 +32,14 @@ public class Kaigaku extends DemonsRoles {
 	public Kaigaku(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof ZenItsu) {
-					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
-				}
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
+		getKnowedRoles().add(ZenItsu.class);
+		getKnowedRoles().add(Muzan.class);
 		setLameIncassable(owner, true);
 	}
-
 	@Override
 	public DemonType getRank() {
 		return DemonType.LuneSuperieur;
 	}
-
 	@Override
 	public Roles getRoles() {
 		return Roles.Kaigaku;
@@ -72,19 +62,6 @@ public class Kaigaku extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-				if (getPlayerRoles(p) instanceof ZenItsu) {
-					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
-				}
-				if (getPlayerRoles(p) instanceof JigoroV2 && gameState.JigoroV2Pacte2) {
-					owner.sendMessage("La personne possédant le rôle de§6 Jigoro§r est:§6 "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.Kaigaku;
 	}
 	@Override
@@ -94,12 +71,10 @@ public class Kaigaku extends DemonsRoles {
 		owner.getInventory().addItem(Items.getLamedenichirin());
 		super.GiveItems();
 	}
-
 	@Override
 	public String getName() {
 		return "Kaigaku";
 	}
-
 	@Override
 	public void Update(GameState gameState) {
 		if (owner.getItemInHand().isSimilar(Items.getSoufleFoudre4iememouvement())) {
@@ -168,25 +143,22 @@ public class Kaigaku extends DemonsRoles {
 			if (cooldowntroisiememouvement <= 0) {
 				cooldowntroisiememouvement = 5*60;
 				owner.sendMessage(ChatColor.GREEN+"Exécution du"+ChatColor.GOLD+" Troisème mouvement du soufle de la foudre.");
-				for(Player p : gameState.getInGamePlayers()) {
-					if (p != owner) {
-						if (getPlayerRoles(p).getOriginTeam() != getPlayerRoles(owner).getOriginTeam()) {
-							  if(p.getLocation().distance(owner.getLocation()) <= 30) {
-								  if (p.getHealth() > 4.0) {
-										p.setHealth(p.getHealth() - 4.0);
-									} else {
-										p.setHealth(0.5);
-									}
-								  if (!gameState.JigoroV2Pacte2) {
-									  owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*(60*3), 0, false, false));
-								  }
-							    	owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + p.getName());
-							    	p.sendMessage(ChatColor.GREEN+"Vous avez été touchez le Troisième mouvement du soufle de la foudre de:"+ChatColor.GOLD+" Kaigaku");
-							        gameState.spawnLightningBolt(p.getWorld(), p.getLocation());
-							    }	
+				for(Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
+					if (!gameState.hasRoleNull(p)) {
+						if (p.getHealth() > 4.0) {
+							p.setHealth(p.getHealth() - 4.0);
+						} else {
+							p.setHealth(0.5);
 						}
+						owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*(60*3), 0, false, false));
+						owner.sendMessage("§aVos éclair ont toucher: " + p.getName());
+						p.sendMessage("§aVous avez été touchez le Troisième mouvement du soufle de la foudre de:§c Kaigaku");
+						gameState.spawnLightningBolt(p.getWorld(), p.getLocation());
 					}
-				}					
+				}
+				if (killzen) {
+					cooldownquatriememouvement-=60;
+				}
 			}  else {
 				sendCooldown(owner, cooldowntroisiememouvement);
 			}
@@ -197,16 +169,19 @@ public class Kaigaku extends DemonsRoles {
 				return false;
 			}
 			if (cooldownquatriememouvement <= 0) {
-				double min = 25;
-				Player target = getTargetPlayer(owner, min);
+				Player target = getTargetPlayer(owner, 25);
 					if (target != null) {
 						if (owner.canSee(target)) {
 							Location loc = target.getLocation();
-							System.out.println(target.getEyeLocation());
+							if (Main.isDebug()){
+								System.out.println(target.getEyeLocation());
+							}
 							loc.setX(loc.getX()+Math.cos(Math.toRadians(-target.getEyeLocation().getYaw()+90)));
 							loc.setZ(loc.getZ()+Math.sin(Math.toRadians(target.getEyeLocation().getYaw()-90)));
 							loc.setPitch(0);
-							System.out.println(loc);
+							if (Main.isDebug()) {
+								System.out.println(loc);
+							}
 							owner.teleport(loc);
 							target.getWorld().strikeLightning(target.getLocation());
 							if (target.getHealth() > 4.0) {
@@ -218,34 +193,20 @@ public class Kaigaku extends DemonsRoles {
 							cooldownquatriememouvement = 60*3;
 							target.sendMessage(ChatColor.WHITE+"Vous avez été touché par un soufle de la foudre");
 							owner.teleport(loc);
-
+							if (killzen) {
+								cooldownquatriememouvement-=60;
+							}
+							return true;
 						}	
 					} else {
 						owner.sendMessage("§cIl faut viser un joueur !");
+						return true;
 					}
 				} else {
 					sendCooldown(owner, cooldownquatriememouvement);
+					return true;
 				}
 		}
 		return super.ItemUse(item, gameState);
-	}
-	@Override
-	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {
-		if (killzen) {
-			if (item.getType().name().contains("SWORD")) {
-				if (RandomUtils.getOwnRandomProbability(10)) {
-					for(Player p : gameState.getInGamePlayers()) {
-						if (p != owner && p == victim) {
-							Heal(victim, -4);
-						    owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + victim.getName());
-						    victim.sendMessage(ChatColor.GREEN+"Vous avez été foudroyez par "+ChatColor.GOLD+"Kaigaku");
-						    victim.getWorld().strikeLightningEffect(victim.getLocation());
-						}
-					}
-					
-				}
-			}
-		}
-		super.ItemUseAgainst(item, victim, gameState);
 	}
 }

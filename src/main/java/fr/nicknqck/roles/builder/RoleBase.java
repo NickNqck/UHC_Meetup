@@ -84,14 +84,12 @@ public abstract class RoleBase implements IRole {
 	private UUID uuidOwner;
 	public RoleBase(UUID player) {
 		Player owner = Bukkit.getPlayer(player);
-		this.owner = owner;
-		if (this.gameState == null){
-			this.gameState = GameState.getInstance();
-		}
-		owner.setWalkSpeed(0.2f);
-		owner.resetPlayerTime();
-		owner.resetMaxHealth();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+		if (owner != null) {
+			this.owner = owner;
+			owner.setWalkSpeed(0.2f);
+			owner.resetPlayerTime();
+			owner.resetMaxHealth();
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				if (this.getTeam() != null) {
 					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
 					System.out.println(owner.getName() +" Team: "+ this.getTeam());
@@ -100,36 +98,38 @@ public abstract class RoleBase implements IRole {
 				if (this.getRoles() != null) {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
 				}
-        }, 20);
-		if (owner != null) {
+			}, 20);
 			this.uuidOwner = owner.getUniqueId();
 			owner.sendMessage("");
 			owner.setAllowFlight(false);
 			owner.setFlying(false);
 			owner.setGameMode(GameMode.SURVIVAL);
-			actualTridiCooldown = -1;
 			roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
 			System.out.println(owner.getName()+", RoleID: "+roleID);
 			StringID = RandomUtils.generateRandomString(24);
 			System.out.println(owner.getName()+", StringID: "+StringID);
-		    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 1);
+			Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
+			new BukkitRunnable() {
+
+				@Override
+				public void run() {
+					if (gameState.getServerState() != ServerStates.InGame) {
+						cancel();
+						return;
+					}
+					Player owner = Bukkit.getPlayer(getPlayer());
+					if (owner == null) return;
+					if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() < 20) {
+						setResi(20);
+					}
+				}
+			}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+			setTeam(getOriginTeam());
 		}
-		new BukkitRunnable() {
-			
-			@Override
-			public void run() {
-				if (gameState.getServerState() != ServerStates.InGame) {
-					cancel();
-					return;
-				}
-				Player owner = Bukkit.getPlayer(getPlayer());
-				if (owner == null) return;
-				if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() < 20) {
-					setResi(20);
-				}
-			}
-		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
-		setTeam(getOriginTeam());
+		if (this.gameState == null){
+			this.gameState = GameState.getInstance();
+		}
+        actualTridiCooldown = -1;
 	}
 
 	@Override
@@ -264,16 +264,16 @@ public abstract class RoleBase implements IRole {
 		for (Titans value : Titans.values()) {
 			value.getTitan().onAPlayerDie(player, killer);
 		}
-		if (!player.getWorld().equals(Main.getInstance().gameWorld)) {
+		if (!player.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				GameListener.RandomTp(player, Main.getInstance().gameWorld);
+				GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld());
 			}, 20);
 		}
 		if (!gameState.hasRoleNull(player)){
 			if (getPlayerRoles(player).getRoles() == Roles.Nakime) {
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
-						GameListener.RandomTp(p, Main.getInstance().gameWorld);
+						GameListener.RandomTp(p, Main.getInstance().getWorldManager().getGameWorld());
 						p.sendMessage("§7Vous avez été éjecté de la§c cage de Nakime§7 du à la mort de cette dernière");
 						player.sendMessage(p.getName()+"§7 est sortie de votre cage");
 					}
@@ -355,31 +355,26 @@ public abstract class RoleBase implements IRole {
 		}, delayinTick);
 	}
 	public void onProjectileLaunch(Projectile projectile, Player shooter) {}
-
 	public void onProjectileHit(Projectile entity, Player shooter) {}
-
-
-
-	 public void listPotionEffects(Player target, Player receiver) {
-	        receiver.sendMessage("\nEffets de potion actifs pour§7 " + target.getName() + "§r:");
-	        for (PotionEffect effect : target.getActivePotionEffects()) {
-	            PotionEffectType type = effect.getType();
-	            if (type != PotionEffectType.ABSORPTION) {
-	            	String effectName = formatEffectName(type.getName());
-		            String message = ChatColor.GRAY + "- " + effectName;
-		            receiver.sendMessage(message);	
-	            }
-	        }
-	    }
-	 public String formatEffectName(String effectName) {
-	        // Formater le nom de l'effet de potion en ajoutant des espaces entre les mots
-	        String[] words = effectName.split("_");
-	        StringBuilder formattedName = new StringBuilder();
-	        for (String word : words) {
-	            formattedName.append(ChatColor.WHITE).append(word.substring(0, 1).toUpperCase()).append(word.substring(1)).append(" ");
-	        }
-	        return formattedName.toString().trim();
-	    }
+	public void listPotionEffects(Player target, Player receiver) {
+		receiver.sendMessage("\nEffets de potion actifs pour§7 " + target.getName() + "§r:");
+	    for (PotionEffect effect : target.getActivePotionEffects()) {
+			PotionEffectType type = effect.getType();
+			if (type != PotionEffectType.ABSORPTION) {
+				String effectName = formatEffectName(type.getName());
+				String message = ChatColor.GRAY + "- " + effectName;
+				receiver.sendMessage(message);
+			}
+		}
+	}
+	private String formatEffectName(String effectName) {
+		String[] words = effectName.split("_");
+		StringBuilder formattedName = new StringBuilder();
+		for (String word : words) {
+			formattedName.append(ChatColor.WHITE).append(word.substring(0, 1).toUpperCase()).append(word.substring(1)).append(" ");
+		}
+		return formattedName.toString().trim();
+	}
 	public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {}
 
 	public void onEndGame() {
@@ -461,17 +456,6 @@ public abstract class RoleBase implements IRole {
         }
         return null;
     }
-	public Location getTargetLocation(Player player, double distanceMax) {
-        RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
-        List<Vector> positions = rayTrace.traverse(distanceMax, 0.05D);
-        for (Vector vector : positions) {
-            Location position = vector.toLocation(player.getWorld());
-            if (position != null) {
-            	return position;
-            }
-        }
-        return null;
-    }
 	public static Location getTargetLocation(Player player, int maxDistance) {
         BlockIterator blockIterator = new BlockIterator(player, maxDistance);
         
@@ -485,17 +469,9 @@ public abstract class RoleBase implements IRole {
 
         // Si aucune cible n'est trouvée, retournez la position du joueur à la distance maximale
         Vector targetDirection = player.getLocation().getDirection().normalize().multiply(maxDistance);
-        Location targetLocation = player.getLocation().add(targetDirection);
-        return targetLocation;
+        return player.getLocation().add(targetDirection);
     }
-	@Getter
-	@Setter
-	private boolean canVoleTitan = false;
-
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {}
-	private boolean ackerman = false;
-	public boolean isAckerMan() {return ackerman;}
-	public void setAckerMan(boolean b) {ackerman = b;}
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {}
 	@SuppressWarnings("deprecation")
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {}
@@ -517,7 +493,9 @@ public abstract class RoleBase implements IRole {
 		for (Player p : gameState.getInGamePlayers()) {
 			if (!gameState.hasRoleNull(p)) {
 				if (gameState.getPlayerRoles().get(p).getClass().equals(role)) {
-					toReturn.add(p);
+					if (gameState.getPlayerRoles().get(p).getGamePlayer().isAlive()){
+						toReturn.add(p);
+					}
 				}
 			}
 		}
@@ -528,7 +506,6 @@ public abstract class RoleBase implements IRole {
 	public void onALLPlayerDropItem(PlayerDropItemEvent e, Player dropper, ItemStack item) {}
 	public void onALLPlayerRecupItem(PlayerPickupItemEvent e, ItemStack s) {}
 	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {}
-
 	public void damage(Player target, double damage, int delay) {
 		if (target != null && target.isOnline()) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -598,7 +575,6 @@ public abstract class RoleBase implements IRole {
 		return false;
 	}
 	public void neoFormChoosen(ItemStack item, Inventory inv, int slot, GameState gameState) {}
-
 	public void onJubiInvoque(Player invoquer) {}
 	public boolean onReceveExplosionDamage() {return false;}
 	public void onAllPlayerDamageByExplosion(EntityDamageEvent event, DamageCause cause, Player p) {}
@@ -610,14 +586,6 @@ public abstract class RoleBase implements IRole {
 	}
 	public HashMap<UUID, String> customName = new HashMap<>();
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
-
-	public boolean isCanTentacule() {
-		return false;//Simple methode for only Killer Bee
-	}
-
-	public void onTentaculeEnd(double distanceSquared) {
-		//Simple method for only Killer Bee
-	}
 
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		return false;

@@ -8,7 +8,6 @@ import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -39,7 +38,6 @@ public class Patch implements Listener{
         Player damager = (Player) event.getDamager();
         Player victim = (Player) event.getEntity();
      	if (damager.getItemInHand() == null) return;
-      	if (damager.getItemInHand().getType() == Material.AIR)return;
 	  	if (Main.isDebug())System.out.println("Original Damage: "+event.getDamage());
       	for (Titans titans : Titans.values()) {
     	  titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event);
@@ -54,8 +52,7 @@ public class Patch implements Listener{
 			event.setCancelled(true);
 			return;
 		}
-		 UHCPlayerBattleEvent battleEvent = new UHCPlayerBattleEvent(gameState.getPlayerRoles().get(victim).getGamePlayer(), gameState.getPlayerRoles().get(damager).getGamePlayer(), event);
-		 battleEvent.setPatch(false);
+		 UHCPlayerBattleEvent battleEvent = new UHCPlayerBattleEvent(gameState.getPlayerRoles().get(victim).getGamePlayer(), gameState.getPlayerRoles().get(damager).getGamePlayer(), event, false);
 		 battleEvent.setDamage(event.getDamage());
 		 Bukkit.getPluginManager().callEvent(battleEvent);
 		 event.setDamage(battleEvent.getDamage());
@@ -82,8 +79,7 @@ public class Patch implements Listener{
 				ApplyResi(event, gameState.getPlayerRoles().get(victim).getBonusResi(), false);
 			}
 		}
-		UHCPlayerBattleEvent battleEvent2 = new UHCPlayerBattleEvent(gameState.getPlayerRoles().get(victim).getGamePlayer(), gameState.getPlayerRoles().get(damager).getGamePlayer(), event);
-		battleEvent2.setPatch(true);
+		UHCPlayerBattleEvent battleEvent2 = new UHCPlayerBattleEvent(gameState.getPlayerRoles().get(victim).getGamePlayer(), gameState.getPlayerRoles().get(damager).getGamePlayer(), event, true);
 		battleEvent2.setDamage(event.getDamage());
 		Bukkit.getPluginManager().callEvent(battleEvent2);
 		event.setDamage(battleEvent2.getDamage());

@@ -350,12 +350,11 @@ public class Izanami implements Listener{
 	}
 	@SuppressWarnings("deprecation")
 	public boolean onSuccessfullInfection(NSRoles infecteur, RoleBase infecter) {
-		Player owner = Bukkit.getPlayer(infecter.getPlayer());
+		Player owner = Bukkit.getPlayer(infecteur.getPlayer());
 		Player toIzanami = Bukkit.getPlayer(infecter.getPlayer());
 		if (owner != null && toIzanami != null) {
 			owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
-			infecteur.getPlayerRoles(toIzanami).setOldTeamList(infecteur.getPlayerRoles(toIzanami).getOriginTeam());
-			infecteur.getPlayerRoles(toIzanami).setTeam(infecteur.getPlayerRoles(owner).getOriginTeam());
+			infecter.setTeam(infecteur.getTeam());
 			toIzanami.resetTitle();
 			toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+infecteur.getTeamColor(owner)+ infecteur.getOriginTeam().name());
 			toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+getColor()+infecteur.getName()+": "+(infecteur.getPlayerFromRole(infecteur.getRoles()) != null ? infecteur.getPlayerFromRole(infecteur.getRoles()).getName() : "§cMort"));

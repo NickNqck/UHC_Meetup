@@ -24,8 +24,13 @@ public class Gai extends ShinobiRoles {
 	public Gai(UUID player) {
 		super(player);
 		setChakraType(getRandomChakras());
-		giveItem(owner, false, getItems());
 		setCanBeHokage(true);
+	}
+
+	@Override
+	public void GiveItems() {
+		giveItem(owner, false, getItems());
+		super.GiveItems();
 	}
 
 	@Override
