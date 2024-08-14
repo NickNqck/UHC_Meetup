@@ -1,6 +1,5 @@
 package fr.nicknqck.events.essential;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -48,7 +47,7 @@ public class JoinEvents implements Listener{
 			joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint le Lobby §c"+gameState.getInLobbyPlayers().size()+"§r/§6"+ gameState.getroleNMB() +"§r";
 			break;
 		case InGame:
-			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player) || !gameState.getInGamePlayers().contains(player)) {
+			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player.getUniqueId()) || !gameState.getInGamePlayers().contains(player)) {
 				gameState.addInSpecPlayers(player);
 				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint la liste des Spectateurs";
 				player.setGameMode(GameMode.SPECTATOR);
@@ -94,21 +93,23 @@ public class JoinEvents implements Listener{
  	@SuppressWarnings("unchecked")
 	private void printConsoleAndRegister(Player player) {
 		// Update Players
-		for (Player p : (ArrayList<Player>) gameState.getInGamePlayers().clone()) {
+		for (Player p : gameState.getInGamePlayers()) {
 			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
 				gameState.getInGamePlayers().remove(p);
 				gameState.getInGamePlayers().add(player);
 				System.out.println("game Player: "+p);
 			}
 		}
-		for (Player p : (ArrayList<Player>) gameState.getInLobbyPlayers().clone()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				gameState.getInLobbyPlayers().remove(p);
-				gameState.getInLobbyPlayers().add(player);
+		for (UUID u : gameState.getInLobbyPlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
+			if (u.equals(player.getUniqueId())) {
+				gameState.getInLobbyPlayers().remove(p.getUniqueId());
+				gameState.getInLobbyPlayers().add(player.getUniqueId());
 				System.out.println("lobby Player: "+p);
 			}
 		}
-		for (Player p : (ArrayList<Player>) gameState.getInSpecPlayers().clone()) {
+		for (Player p : gameState.getInSpecPlayers()) {
 			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
 				gameState.getInSpecPlayers().remove(p);
 				gameState.getInSpecPlayers().add(player);

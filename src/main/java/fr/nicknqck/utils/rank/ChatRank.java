@@ -1,6 +1,5 @@
 package fr.nicknqck.utils.rank;
 
-import fr.nicknqck.GameState;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -66,10 +65,6 @@ public enum ChatRank {
                 ChatRank.Op.setPlayer(player);
                 return;
             }
-            if (GameState.getInstance().getHost().contains(player.getUniqueId())){
-                ChatRank.Host.setPlayer(player);
-                return;
-            }
             ChatRank.Joueur.setPlayer(player);
         }
     }
@@ -80,5 +75,16 @@ public enum ChatRank {
             }
         }
         return Joueur;
+    }
+    public void add(UUID uuid) {
+        players.add(uuid);
+    }
+
+    public boolean contains(UUID uniqueId) {
+        return players.contains(uniqueId);
+    }
+
+    public void remove(UUID uniqueId) {
+        players.remove(uniqueId);
     }
 }

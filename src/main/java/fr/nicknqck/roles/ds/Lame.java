@@ -2,16 +2,20 @@ package fr.nicknqck.roles.ds;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
-import fr.nicknqck.utils.RandomUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Lame implements Listener{
 
@@ -31,17 +35,15 @@ public class Lame implements Listener{
 						if (role.getLames() != null) {
 							p.sendMessage("§cVous avez déjà une lame de nichirin");
 						} else {
-							Lames toGett = null;
-							while (toGett == null) {
-								for (Lames lames : Lames.values()) {
-									if (RandomUtils.getOwnRandomProbability(15)) {
-										if (!lames.getUsers().containsKey(role.getPlayer())){
-											toGett = lames;
-											break;
-										}
-									}
-								}
-							}
+							Lames toGett;
+							List<Lames> lames = new ArrayList<>();
+                            Collections.addAll(lames, Lames.values());
+							Collections.shuffle(lames, Main.RANDOM);
+							Collections.shuffle(lames, Main.RANDOM);
+							Collections.shuffle(lames, Main.RANDOM);
+							Collections.shuffle(lames, Main.RANDOM);//Je mélange 4 fois pour bien assurer que ce sois au pif
+							toGett = lames.get(0);
+
 							toGett.getConsumer().accept(e);
 							giveLame(role, toGett);
 							e.getPlayer().setItemInHand(new ItemStack(Material.AIR));

@@ -7,6 +7,7 @@ import fr.nicknqck.commands.roles.*;
 import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
 import fr.nicknqck.commands.vanilla.Whitelist;
+import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.blocks.BlockManager;
 import fr.nicknqck.events.blocks.BrickBlockListener;
@@ -41,6 +42,7 @@ import org.bukkit.potion.PotionEffect;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -75,6 +77,8 @@ public class Main extends JavaPlugin implements Listener{
 	private Loc locUtils;
 	@Getter
 	private WorldsManager worldManager;
+	@Getter
+	private GameConfig gameConfig;
 	@Override
 	public void onEnable() {
 		Instance = this;
@@ -85,6 +89,7 @@ public class Main extends JavaPlugin implements Listener{
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
+		this.gameConfig = new GameConfig();
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
 		initGameWorld();
@@ -229,7 +234,7 @@ public class Main extends JavaPlugin implements Listener{
 		System.out.println("Starting give tab");
 		Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
 			if (gameState.getServerState() == ServerStates.InLobby) {
-				for (Player p : gameState.getInLobbyPlayers()) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
 				//	NMSPacket.sendTabTitle(p, null, null);
 					NMSPacket.sendTabTitle(p,
 							gameState.msgBoard + "\n",

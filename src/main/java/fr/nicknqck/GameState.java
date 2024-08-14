@@ -70,8 +70,6 @@ public class GameState{
 	public boolean stuffUnbreak = true;
 	public int TridiCooldown = 16;
 	public boolean hasPregen = false;
-	public int WaterEmptyTiming = 30;
-	public int LavaEmptyTiming = 30;
 	public boolean pregenNakime = false;
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
@@ -93,8 +91,6 @@ public class GameState{
 	@Getter
 	public int TimingAssassin = 10;
 	public boolean morteclair = true;
-	@Getter
-	public final List<UUID> Host = new ArrayList<>();
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -308,13 +304,13 @@ public class GameState{
 	private final ArrayList<EventBase> inGameEvents = new ArrayList<>();
 	@Setter
 	@Getter
-	private ArrayList<Player> inLobbyPlayers = new ArrayList<>();
+	private List<UUID> inLobbyPlayers = new ArrayList<>();
 	@Setter
 	@Getter
-	private ArrayList<Player> inGamePlayers = new ArrayList<>();
+	private List<Player> inGamePlayers = new ArrayList<>();
 	@Getter
 	@Setter
-	private ArrayList<Player> inSpecPlayers = new ArrayList<>();
+	private List<Player> inSpecPlayers = new ArrayList<>();
 	@Getter
 	public ArrayList<Player> Charmed = new ArrayList<>();
 	@Setter
@@ -383,9 +379,9 @@ public class GameState{
 		instance = this;
 	}
 
-	public void addInLobbyPlayers(Player player) {inLobbyPlayers.add(player);}
+	public void addInLobbyPlayers(Player player) {inLobbyPlayers.add(player.getUniqueId());}
 
-	public void delInLobbyPlayers(Player player) {inLobbyPlayers.remove(player);}
+	public void delInLobbyPlayers(Player player) {inLobbyPlayers.remove(player.getUniqueId());}
 
 	public void addInGamePlayers(Player player) {inGamePlayers.add(player);}
 

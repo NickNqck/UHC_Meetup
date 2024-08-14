@@ -41,7 +41,7 @@ public class BlockManager implements Listener{
 	    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
 	        Block block = event.getBlockClicked().getRelative(event.getBlockFace());
 	        if (event.getBucket() == Material.WATER_BUCKET) {
-				if (gameState.WaterEmptyTiming <= 0)return;
+				if (Main.getInstance().getGameConfig().getWaterEmptyTiming() <= 0)return;
 	            new BukkitRunnable() {
 	                @Override
 	                public void run() {
@@ -50,7 +50,7 @@ public class BlockManager implements Listener{
 	                        cancel();
 	                    }
 	                }
-	            }.runTaskLater(Main.getInstance(), 20L *gameState.WaterEmptyTiming);
+	            }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getWaterEmptyTiming());
 	        }
 	        if (!gameState.LaveTitans) {
 	        	if (!gameState.hasRoleNull(event.getPlayer())) {
@@ -64,13 +64,13 @@ public class BlockManager implements Listener{
 	        	}
 	        }
 	        if (event.getBucket() == Material.LAVA_BUCKET) {
-				if (gameState.LavaEmptyTiming <= 0)return;
+				if (Main.getInstance().getGameConfig().getLavaEmptyTiming() <= 0)return;
 	        	new BukkitRunnable() {
 	        		public void run() {
 	        				block.setType(Material.AIR);
 	        				cancel();
 	        		}
-                }.runTaskLater(Main.getInstance(), 20L *gameState.LavaEmptyTiming);
+                }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getLavaEmptyTiming());
 	        }
 	    }
 	 @EventHandler

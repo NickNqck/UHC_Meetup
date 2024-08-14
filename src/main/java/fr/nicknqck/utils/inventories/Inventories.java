@@ -2,6 +2,7 @@ package fr.nicknqck.utils.inventories;
 
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.Events;
@@ -13,6 +14,7 @@ import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -393,13 +395,13 @@ public class Inventories {
                             "§r§fClique droit: §c-10 secondes"
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
-                            "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(gameState.WaterEmptyTiming)+" > 1 minutes",
+                            "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
                             "§r§fClique gauche: §a+1 secondes",
                             "§r§fClique droit: §c-1 secondes",
                             "§r§f(0 secondes =§c désactiver"
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemp avant despawn de la§6 Lave").setLore(
-                            "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(gameState.LavaEmptyTiming)+" > 1 minutes",
+                            "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getLavaEmptyTiming())+" > 1 minutes",
                             "§r§fClique gauche: §a+1 seconde",
                             "§r§fClique droit: §c-1 seconde",
                             "§r§f(0 secondes =§c désactiver"
@@ -881,7 +883,7 @@ public class Inventories {
                             inv.setItem(13, GUIItems.getSelectNSButton());
                         }
                     }
-                    if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+                    if (ChatRank.isHost(player)) {
                         inv.setItem(25, new ItemBuilder(Material.BOOKSHELF).setName("Configuration du mode de jeu").toItemStack());
                     }
                     inv.setItem(26, GUIItems.getSelectBackMenu());

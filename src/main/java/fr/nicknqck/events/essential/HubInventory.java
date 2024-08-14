@@ -14,6 +14,7 @@ import fr.nicknqck.scenarios.Scenarios;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.scenarios.impl.DiamondLimit;
+import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,6 +26,8 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 public class HubInventory implements Listener {
 
@@ -65,21 +68,21 @@ public class HubInventory implements Listener {
                 if (!item.hasItemMeta())return;
                 switch(inv.getTitle()) {
                     case "§fConfiguration":
-                        if (item.isSimilar(GUIItems.getStartGameButton()) && (player.isOp() || gameState.getHost().contains(player.getUniqueId()) )) {
+                        if (item.isSimilar(GUIItems.getStartGameButton()) && ChatRank.isHost(player)) {
                             HubListener.getInstance().StartGame(player);
-                        } else if (item.isSimilar(GUIItems.getSelectRoleButton())  && (player.isOp() || gameState.getHost().contains(player.getUniqueId()))) {
+                        } else if (item.isSimilar(GUIItems.getSelectRoleButton())  &&ChatRank.isHost(player)) {
                             player.openInventory(GUIItems.getRoleSelectGUI());
                             Main.getInstance().getInventories().updateRoleInventory(player); //Ouvre le menu role
-                        }  else if (item.isSimilar(GUIItems.getSelectScenarioButton())  && (player.isOp() || gameState.getHost().contains(player.getUniqueId()) ) ) {
+                        }  else if (item.isSimilar(GUIItems.getSelectScenarioButton())  && ChatRank.isHost(player) ) {
                             player.openInventory(GUIItems.getScenarioGUI());
                             Main.getInstance().getInventories().updateScenarioInventory(player); //Ouvre le menu des scenarios
-                        } else if (item.isSimilar(GUIItems.getSelectConfigButton())  && (player.isOp() || gameState.getHost().contains(player.getUniqueId()) )) {
+                        } else if (item.isSimilar(GUIItems.getSelectConfigButton())  && ChatRank.isHost(player)) {
                             player.openInventory(GUIItems.getConfigSelectGUI());
                             Main.getInstance().getInventories().updateConfigInventory(player); //Ouvre le menu permettant de configurer l'essentiel de la partie
-                        } else if (item.isSimilar(GUIItems.getSelectInvsButton())  && (player.isOp() || gameState.getHost().contains(player.getUniqueId()) )) {
+                        } else if (item.isSimilar(GUIItems.getSelectInvsButton())  && ChatRank.isHost(player)) {
                             player.openInventory(GUIItems.getSelectInventoryGUI());
                             Main.getInstance().getInventories().updateSelectInventory(player); //Ouvre le menu pour config l'inventaire
-                        } else if (item.isSimilar(AntiPvP.getlobbypvp())||item.isSimilar(AntiPvP.getnotlobbypvp())  && (player.isOp() || gameState.getHost().contains(player.getUniqueId()) )) {
+                        } else if (item.isSimilar(AntiPvP.getlobbypvp())||item.isSimilar(AntiPvP.getnotlobbypvp())  && ChatRank.isHost(player)) {
                             if (AntiPvP.isAntipvplobby()) {
                                 AntiPvP.setAntipvplobby(false);
                                 player.sendMessage("Vous venez d'activer le PvP dans le Lobby");
@@ -89,7 +92,7 @@ public class HubInventory implements Listener {
                                 player.sendMessage("Vous venez de désactiver le PvP dans le lobby");
                                 Bukkit.broadcastMessage("Un administrateur à desactiver le PvP dans le Lobby");
                             }
-                        }  else if (item.isSimilar(GUIItems.getCrit(gameState))  && (player.isOp() || gameState.getHost().contains(player.getUniqueId()) )) {
+                        }  else if (item.isSimilar(GUIItems.getCrit(gameState))  && ChatRank.isHost(player)) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
                                 if (gameState.critP < 50) {
                                     gameState.critP+=1;
@@ -178,12 +181,14 @@ public class HubInventory implements Listener {
                                 }
                             } else {
                                 if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                                    if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()) ))player.openInventory(GUIItems.getAdminWatchGUI());
+                                    if (ChatRank.isHost(player))player.openInventory(GUIItems.getAdminWatchGUI());
                                     if (!player.isOp() && player.getOpenInventory() != null && player.getInventory() != null) player.closeInventory();
                                 }
                             }
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateRoleInventory(p);
                         }
                         event.setCancelled(true);
@@ -206,7 +211,9 @@ public class HubInventory implements Listener {
                                 }
                             }
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateSelectMDJ(p);
                         }
                         event.setCancelled(true);
@@ -301,7 +308,9 @@ public class HubInventory implements Listener {
                                 }
                             }
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateEventInventory(p);
                         }
                         event.setCancelled(true);
@@ -315,9 +324,11 @@ public class HubInventory implements Listener {
                         }
                         player.updateInventory();
                         if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            for (Player p : gameState.getInLobbyPlayers()) {
+                            for (UUID u : gameState.getInLobbyPlayers()) {
+                                Player p = Bukkit.getPlayer(u);
+                                if (p == null)continue;
                                 if (p == event.getWhoClicked()) {
-                                    if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()) ))p.openInventory(GUIItems.getAdminWatchGUI());
+                                    if (ChatRank.isHost(player))p.openInventory(GUIItems.getAdminWatchGUI());
                                     if (!p.isOp() && p.getOpenInventory() != null && p.getInventory() != null) p.closeInventory();
                                 }
                             }
@@ -379,9 +390,11 @@ public class HubInventory implements Listener {
                                 if (gameState.xpdiams<1)gameState.xpdiams++;
                             } else {
                                 if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                                    for (Player p : gameState.getInLobbyPlayers()) {
+                                    for (UUID u : gameState.getInLobbyPlayers()) {
+                                        Player p = Bukkit.getPlayer(u);
+                                        if (p == null)continue;
                                         if (p == event.getWhoClicked()) {
-                                            if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()) ))p.openInventory(GUIItems.getScenarioGUI()); Main.getInstance().getInventories().updateScenarioInventory(player);
+                                            if (ChatRank.isHost(player))p.openInventory(GUIItems.getScenarioGUI()); Main.getInstance().getInventories().updateScenarioInventory(player);
                                             if (!p.isOp() && p.getOpenInventory() != null && p.getInventory() != null) p.closeInventory();
                                         }
                                     }
@@ -400,7 +413,7 @@ public class HubInventory implements Listener {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!event.getWhoClicked().isOp() && !gameState.getHost().contains(player.getUniqueId())) {
+                        if (!ChatRank.isHost(player)) {
                             event.setCancelled(true);
                             return;
                         }
@@ -432,7 +445,9 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getDemonSlayerInventory());
                             Main.getInstance().getInventories().updateDSInventory(player);
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateSlayerInventory(p);
                         }
                         event.setCancelled(true);
@@ -445,11 +460,10 @@ public class HubInventory implements Listener {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!event.getWhoClicked().isOp() && !gameState.getHost().contains(player.getUniqueId())) {
+                        if (!ChatRank.isHost(player)) {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!player.isOp() && !gameState.getHost().contains(player.getUniqueId()))return;
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (!item.isSimilar(GUIItems.getRedStainedGlassPane()) && !item.isSimilar(GUIItems.getSelectSoloButton()) && !item.isSimilar(GUIItems.getSelectDemonButton()) && !item.isSimilar(GUIItems.getSelectSlayersButton())&& !item.isSimilar(GUIItems.getCantStartGameButton()) && !item.isSimilar(GUIItems.getStartGameButton())) {
                                 String name = item.getItemMeta().getDisplayName();
@@ -465,7 +479,9 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getDemonSlayerInventory());
                             Main.getInstance().getInventories().updateDSInventory(player);
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateDemonInventory(p);
                         }
                         if (sl) {
@@ -491,11 +507,10 @@ public class HubInventory implements Listener {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!event.getWhoClicked().isOp() && !gameState.getHost().contains(player.getUniqueId())) {
+                        if (!ChatRank.isHost(player)) {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!player.isOp() && !gameState.getHost().contains(player.getUniqueId()))return;
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (!item.isSimilar(GUIItems.getOrangeStainedGlassPane()) && !solo && !d && !sl && !mahr && !titans && !soldat && !item.isSimilar(GUIItems.getCantStartGameButton()) && !item.isSimilar(GUIItems.getStartGameButton())) {
                                 String name = item.getItemMeta().getDisplayName();
@@ -509,9 +524,11 @@ public class HubInventory implements Listener {
                             if (item.isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
 
                         } else {
-                            for (Player p : gameState.getInLobbyPlayers()) {
+                            for (UUID u : gameState.getInLobbyPlayers()) {
+                                Player p = Bukkit.getPlayer(u);
+                                if (p == null)continue;
                                 if (p == event.getWhoClicked()) {
-                                    if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()))) {
+                                    if (ChatRank.isHost(player)) {
                                         p.openInventory(GUIItems.getDemonSlayerInventory());
                                         Main.getInstance().getInventories().updateDSInventory(player);
                                     }
@@ -519,7 +536,9 @@ public class HubInventory implements Listener {
                                 }
                             }
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateDSSoloInventory(p);
                         }
                         if (sl) {
@@ -553,14 +572,14 @@ public class HubInventory implements Listener {
                             String name = item.getItemMeta().getDisplayName();
                             if (item.getType().equals(Material.WATER_BUCKET)) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    if (gameState.WaterEmptyTiming != 60) {
-                                        gameState.WaterEmptyTiming+=1;
+                                    if (Main.getInstance().getGameConfig().getWaterEmptyTiming() != 60) {
+                                        Main.getInstance().getGameConfig().setWaterEmptyTiming(Main.getInstance().getGameConfig().getWaterEmptyTiming()+1);
                                     }else {
                                         player.sendMessage("Timing maximal atteint !");
                                     }
                                 }else {
-                                    if (gameState.WaterEmptyTiming != 0) {
-                                        gameState.WaterEmptyTiming-=1;
+                                    if (Main.getInstance().getGameConfig().getWaterEmptyTiming() != 0) {
+                                        Main.getInstance().getGameConfig().setWaterEmptyTiming(Main.getInstance().getGameConfig().getWaterEmptyTiming()-1);
                                     }else {
                                         player.sendMessage("Timing minimal atteint !");
                                     }
@@ -568,14 +587,14 @@ public class HubInventory implements Listener {
                             }
                             if (item.getType().equals(Material.LAVA_BUCKET)) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    if (gameState.LavaEmptyTiming != 60) {
-                                        gameState.LavaEmptyTiming+=1;
+                                    if (Main.getInstance().getGameConfig().getLavaEmptyTiming() != 60) {
+                                        Main.getInstance().getGameConfig().setLavaEmptyTiming(Main.getInstance().getGameConfig().getLavaEmptyTiming()+1);
                                     }else {
                                         player.sendMessage("Timing maximal atteint !");
                                     }
                                 }else {
-                                    if (gameState.LavaEmptyTiming != 0) {
-                                        gameState.LavaEmptyTiming-=1;
+                                    if (Main.getInstance().getGameConfig().getLavaEmptyTiming() != 0) {
+                                        Main.getInstance().getGameConfig().setLavaEmptyTiming(Main.getInstance().getGameConfig().getLavaEmptyTiming()-1);
                                     }else {
                                         player.sendMessage("Timing minimal atteint !");
                                     }
@@ -642,7 +661,7 @@ public class HubInventory implements Listener {
                             gameState.pvpTimer = Math.max(0, Math.min(gameState.pvpTimer, 40*60));
                             gameState.roleTimer = Math.max(0, Math.min(gameState.roleTimer, 40*60));
                             if (name.contains("Durée du jour (et de la nuit)")) {
-                                if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+                                if (ChatRank.isHost(player)) {
                                     if (action.equals(InventoryAction.PICKUP_ALL)) {
                                         gameState.timeday+=10;
                                         player.updateInventory();
@@ -658,7 +677,7 @@ public class HubInventory implements Listener {
                             }
 
                             if (item.isSimilar(GUIItems.getTabRoleInfo(gameState))) {
-                                if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+                                if (ChatRank.isHost(player)) {
                                     if (!gameState.roletab) {
                                         player.sendMessage("Les roles seront maintenant afficher dans le tab");
                                         gameState.roletab = true;
@@ -671,7 +690,7 @@ public class HubInventory implements Listener {
                                 }
                             }
                             if (item.isSimilar(Items.geteclairmort())) {
-                                if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+                                if (ChatRank.isHost(player)) {
                                     if (!gameState.morteclair) {
                                         player.sendMessage("Éclair à la mort est désormais§6 activé");
                                         gameState.morteclair = true;
@@ -702,11 +721,13 @@ public class HubInventory implements Listener {
                                 }
                             }
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateConfigInventory(p);
                         }
                         if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            if ((player.isOp() || gameState.getHost().contains(player.getUniqueId())))player.openInventory(GUIItems.getAdminWatchGUI());
+                            if (ChatRank.isHost(player)) player.openInventory(GUIItems.getAdminWatchGUI());
                         }
                         event.setCancelled(true);
                         break;
@@ -718,11 +739,10 @@ public class HubInventory implements Listener {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!event.getWhoClicked().isOp() && !gameState.getHost().contains(player.getUniqueId())) {
+                        if (!ChatRank.isHost(player)) {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!player.isOp() && !gameState.getHost().contains(player.getUniqueId()))return;
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (!item.isSimilar(GUIItems.getSBluetainedGlassPane()) && !solo && !d && !sl && !mahr && !titans && !soldat && !aotconfig &&!item.isSimilar(GUIItems.getCantStartGameButton()) && !item.isSimilar(GUIItems.getStartGameButton())) {
                                 String name = item.getItemMeta().getDisplayName();
@@ -738,9 +758,11 @@ public class HubInventory implements Listener {
                             if (item.isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
 
                         } else {
-                            if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()) ))player.openInventory(GUIItems.getSelectAOTInventory());Main.getInstance().getInventories().updateAOTInventory(player);
+                            if (ChatRank.isHost(player))player.openInventory(GUIItems.getSelectAOTInventory());Main.getInstance().getInventories().updateAOTInventory(player);
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateAOTSoloInventory(p);
                         }
                         if (mahr) {
@@ -773,11 +795,10 @@ public class HubInventory implements Listener {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!event.getWhoClicked().isOp() && !gameState.getHost().contains(player.getUniqueId())) {
+                        if (!ChatRank.isHost(player)) {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!player.isOp() && !gameState.getHost().contains(player.getUniqueId()))return;
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (!item.isSimilar(GUIItems.getRedStainedGlassPane()) && !solo && !d && !sl && !mahr && !titans && !soldat && !aotconfig &&!item.isSimilar(GUIItems.getCantStartGameButton()) && !item.isSimilar(GUIItems.getStartGameButton())) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
@@ -795,9 +816,11 @@ public class HubInventory implements Listener {
                             if (item.isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
 
                         } else {
-                            if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()) ))player.openInventory(GUIItems.getSelectAOTInventory());Main.getInstance().getInventories().updateAOTInventory(player);
+                            if (ChatRank.isHost(player))player.openInventory(GUIItems.getSelectAOTInventory());Main.getInstance().getInventories().updateAOTInventory(player);
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateDSSoloInventory(p);
                         }
                         if (mahr) {
@@ -830,11 +853,10 @@ public class HubInventory implements Listener {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!event.getWhoClicked().isOp() && !gameState.getHost().contains(player.getUniqueId())) {
+                        if (!ChatRank.isHost(player)) {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!player.isOp() && !gameState.getHost().contains(player.getUniqueId()))return;
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (!item.isSimilar(GUIItems.getGreenStainedGlassPane()) && !solo && !d && !sl && !mahr && !titans && !soldat && !aotconfig &&!item.isSimilar(GUIItems.getCantStartGameButton()) && !item.isSimilar(GUIItems.getStartGameButton())) {
                                 String name = item.getItemMeta().getDisplayName();
@@ -850,7 +872,7 @@ public class HubInventory implements Listener {
                             if (item.isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
 
                         } else {
-                            if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()) ))player.openInventory(GUIItems.getSelectAOTInventory());Main.getInstance().getInventories().updateAOTInventory(player);
+                            if (ChatRank.isHost(player))player.openInventory(GUIItems.getSelectAOTInventory());Main.getInstance().getInventories().updateAOTInventory(player);
                         }
                         if (mahr) {
                             player.openInventory(GUIItems.getMahrGui());
@@ -931,11 +953,10 @@ public class HubInventory implements Listener {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!event.getWhoClicked().isOp() && !gameState.getHost().contains(player.getUniqueId())) {
+                        if (!ChatRank.isHost(player)) {
                             event.setCancelled(true);
                             return;
                         }
-                        if (!player.isOp() && !gameState.getHost().contains(player.getUniqueId()))return;
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (!item.isSimilar(GUIItems.getOrangeStainedGlassPane()) && !solo && !d && !sl && !mahr && !titans && !soldat && !item.isSimilar(GUIItems.getCantStartGameButton()) && !item.isSimilar(GUIItems.getStartGameButton())) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
@@ -951,9 +972,11 @@ public class HubInventory implements Listener {
                             if (item.isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
 
                         } else {
-                            for (Player p : gameState.getInLobbyPlayers()) {
+                            for (UUID u : gameState.getInLobbyPlayers()) {
+                                Player p = Bukkit.getPlayer(u);
+                                if (p == null)continue;
                                 if (p == event.getWhoClicked()) {
-                                    if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()))){
+                                    if (ChatRank.isHost(player)){
                                         p.openInventory(GUIItems.getSelectAOTInventory());
                                         Main.getInstance().getInventories().updateAOTInventory(player);
                                     }
@@ -961,7 +984,9 @@ public class HubInventory implements Listener {
                                 }
                             }
                         }
-                        for (Player p : gameState.getInLobbyPlayers()) {
+                        for (UUID u : gameState.getInLobbyPlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             Main.getInstance().getInventories().updateDSSoloInventory(p);
                         }
                         if (solo) {
@@ -1048,7 +1073,7 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getSelectNSInventory());
                             Main.getInstance().getInventories().updateNSInventory(player);
                         } else {
-                            if (gameState.getHost().contains(player.getUniqueId()) || player.isOp()) {
+                            if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -1098,7 +1123,7 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getRoleSelectGUI());
                             Main.getInstance().getInventories().updateRoleInventory(player);
                         } else {
-                            if (gameState.getHost().contains(player.getUniqueId()) || player.isOp()) {
+                            if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -1137,7 +1162,7 @@ public class HubInventory implements Listener {
                                 event.setCancelled(true);
                                 return;
                             }
-                            if (gameState.getHost().contains(player.getUniqueId()) || player.isOp()) {
+                            if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -1158,7 +1183,7 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getSelectNSSoloInventory());
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
-                            if (gameState.getHost().contains(player.getUniqueId()) || player.isOp()) {
+                            if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -1178,7 +1203,7 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getSelectNSSoloInventory());
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
-                            if (gameState.getHost().contains(player.getUniqueId()) || player.isOp()) {
+                            if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -1197,7 +1222,7 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getRoleSelectGUI());
                             Main.getInstance().getInventories().updateRoleInventory(player);
                         } else {
-                            if (gameState.getHost().contains(player.getUniqueId()) || player.isOp()) {
+                            if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -1216,7 +1241,7 @@ public class HubInventory implements Listener {
                             player.openInventory(GUIItems.getSelectNSSoloInventory());
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
-                            if (gameState.getHost().contains(player.getUniqueId()) || player.isOp()) {
+                            if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -1233,7 +1258,9 @@ public class HubInventory implements Listener {
                     default:
                         break;
                 }
-                for (Player p : gameState.getInLobbyPlayers()) {
+                for (UUID u : gameState.getInLobbyPlayers()) {
+                    Player p = Bukkit.getPlayer(u);
+                    if (p == null)continue;
                     Main.getInstance().getInventories().menuUpdater(p);
                 }
             }

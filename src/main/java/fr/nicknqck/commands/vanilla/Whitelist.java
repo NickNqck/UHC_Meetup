@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,7 +28,7 @@ public class Whitelist implements CommandExecutor, Listener {
 		if (args.length >= 1) {
 			if (zzzz instanceof Player) {
 				Player sender = (Player)zzzz;
-				if (isGoodPlayer(sender)) {
+				if (ChatRank.isHost(sender)) {
 					sender.sendMessage("§cIl faut être§l HOST§c pour whitelister un joueur");
 					return true;
 				}
@@ -103,9 +104,6 @@ public class Whitelist implements CommandExecutor, Listener {
 		});
 		return true;
 	}
-	private boolean isGoodPlayer(Player p) {
-        return !p.isOp() && !gameState.getHost().contains(p.getUniqueId());
-    }
 	private final List<UUID> Whitelisted = new ArrayList<>();
 	public boolean wlActivated = false;
 	@EventHandler
@@ -115,7 +113,7 @@ public class Whitelist implements CommandExecutor, Listener {
 			e.setLoginResult(Result.KICK_BANNED);
 			e.setKickMessage("§cPseudo incorect désolé !");
 		}
-		if (!Whitelisted.contains(e.getUniqueId()) && wlActivated && isGoodPlayer(Bukkit.getPlayer(e.getUniqueId()))) {
+		if (!Whitelisted.contains(e.getUniqueId()) && wlActivated && !ChatRank.isHost(e.getUniqueId())) {
 			e.setLoginResult(Result.KICK_WHITELIST);
 			e.setKickMessage("§cVous n'êtes pas dans la whitelist !");
 		}

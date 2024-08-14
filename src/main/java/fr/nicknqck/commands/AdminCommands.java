@@ -15,9 +15,6 @@ import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.Pourfendeur;
-import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.rank.ChatRank;
@@ -72,7 +69,7 @@ public class AdminCommands implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("name")) {
 				if (sender instanceof Player) {
-					if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+					if (ChatRank.isHost(sender)) {
 						StringBuilder sb = new StringBuilder();
 						for (int i = 1;i<args.length;i++) {
 							sb.append(" ");
@@ -182,7 +179,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
-					if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+					if (ChatRank.isHost(sender)) {
 						if (gameState.getServerState() == ServerStates.InLobby) {
 							if (args[0].equalsIgnoreCase("start")) {
 								if (gameState.gameCanLaunch) {
@@ -263,7 +260,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("giveblade")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							Player p = (Player) sender;
 							p.getInventory().addItem(Items.getLamedenichirin());
 							Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+sender.getName());
@@ -279,7 +276,7 @@ public class AdminCommands implements CommandExecutor{
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("setgroupe")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								if (gameState.getServerState() != null) {
 									if (gameState.getServerState() == ServerStates.InGame) {
@@ -382,11 +379,11 @@ public class AdminCommands implements CommandExecutor{
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
                                 } else {
-									if (gameState.getHost().contains(p.getUniqueId())) {
+									if (ChatRank.isHost(sender)) {
 										sender.sendMessage("Cette personne est déjà host...");
                                     } else {
 										p.addAttachment(Main.getInstance(), "Host", true);
-										gameState.getHost().add(p.getUniqueId());
+										ChatRank.Host.add(p.getUniqueId());
 										sender.sendMessage("Vous avez ajouter "+p.getName()+" à la list(e) des hosts");
 										Bukkit.broadcastMessage(p.getName()+" est maintenant host");
                                     }
@@ -402,14 +399,14 @@ public class AdminCommands implements CommandExecutor{
                 }
 				if (args[0].equalsIgnoreCase("delHost") || args[0].equalsIgnoreCase("removeHost")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
                                 } else {
-									if (gameState.getHost().contains(p.getUniqueId())) {
-										gameState.getHost().remove(p.getUniqueId());
+									if (ChatRank.Host.contains(p.getUniqueId())) {
+										ChatRank.Host.remove(p.getUniqueId());
 										p.addAttachment(Main.getInstance(), "Host", false);
 										sender.sendMessage(p.getName()+" n'est plus host");
                                     } else {
@@ -457,45 +454,9 @@ public class AdminCommands implements CommandExecutor{
                         }
                     return true;
                 }
-				if (args[0].equalsIgnoreCase("cheat")) {
-					if (sender instanceof Player) {
-						Player s = (Player) sender;
-						if (s.isOp() || gameState.getHost().contains(s.getUniqueId())) {
-							if (args[1] != null) {
-								Player p = Bukkit.getPlayer(args[1]);
-								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (!gameState.hasRoleNull(p)) {
-										if (gameState.getPlayerRoles().containsKey(p)) {
-											if (gameState.getPlayerRoles().get(p).getRoles() == Roles.Slayer) {
-                                                RoleBase r;
-                                                if (FFA.getFFA()) {
-                                                    r = gameState.getPlayerRoles().get(p);
-													FFA_Pourfendeur fp = (FFA_Pourfendeur) r;
-													fp.cheat = true;
-													fp.owner.sendMessage("Vous avez bien cheater pour obtenir le souffle de l'univers");
-                                                } else {
-                                                    r = gameState.getPlayerRoles().get(s);
-													Pourfendeur fp = (Pourfendeur) r;
-													fp.owner.sendMessage("");
-                                                }
-                                                return true;
-                                            }
-										}
-									}						
-								}					
-							} else {
-								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						}
-					}
-				}
 				if (args[0].equalsIgnoreCase("effect")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -523,7 +484,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("role")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -545,7 +506,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("revive")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {

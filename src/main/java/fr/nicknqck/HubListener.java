@@ -12,6 +12,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.ns.Hokage;
+import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
@@ -29,6 +30,7 @@ import org.bukkit.potion.PotionEffect;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class HubListener implements Listener {
 	private final GameState gameState;
@@ -44,7 +46,7 @@ public class HubListener implements Listener {
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
 		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
-		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
+		gameState.setInGamePlayers(gameState.getInLobbyPlayers().stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).map(Bukkit::getPlayer).collect(Collectors.toList()));
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.setInLobbyPlayers(new ArrayList<>());
 		gameState.igPlayers.addAll(gameState.getInGamePlayers());
@@ -212,7 +214,7 @@ public class HubListener implements Listener {
 			// Si click droit alors afficher un menu (AdminWatch)
 			if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				if (itemstack.isSimilar(ItemsManager.adminWatch)) {
-					if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+					if (ChatRank.isHost(player)) {
 						player.openInventory(GUIItems.getAdminWatchGUI());
 		    			Main.getInstance().getInventories().updateAdminInventory(player);
 					} else {
@@ -229,7 +231,7 @@ public class HubListener implements Listener {
 	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
 	public final void StartGame(final Player player) {
 		gameState.updateGameCanLaunch();
-		if (player.isOp() || gameState.getHost().contains(player.getUniqueId()) && gameState.gameCanLaunch) {
+		if (ChatRank.isHost(player) && gameState.gameCanLaunch) {
 			StartGame();
 			player.closeInventory();
 		} else {

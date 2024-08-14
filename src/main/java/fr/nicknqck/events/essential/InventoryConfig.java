@@ -2,6 +2,8 @@ package fr.nicknqck.events.essential;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.utils.rank.ChatRank;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,6 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 public class InventoryConfig implements Listener {
     private final GameState gameState;
@@ -181,9 +185,11 @@ public class InventoryConfig implements Listener {
                 }
             }
             if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                for (Player p : gameState.getInLobbyPlayers()) {
+                for (UUID u : gameState.getInLobbyPlayers()) {
+                    Player p = Bukkit.getPlayer(u);
+                    if (p == null)continue;
                     if (p == event.getWhoClicked()) {
-                        if ((player.isOp() || gameState.getHost().contains(player.getUniqueId()) ))p.openInventory(GUIItems.getAdminWatchGUI());
+                        if (ChatRank.isHost(player))p.openInventory(GUIItems.getAdminWatchGUI());
                         if (!p.isOp() && p.getOpenInventory() != null && p.getInventory() != null) p.closeInventory();
                     }
                 }

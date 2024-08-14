@@ -173,7 +173,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private void onEndGame(EndGameEvent event) {
         HandlerList.unregisterAll(this);
     }
-
     @Override
     public void onDSCommandSend(String[] args, GameState gameState) {
         if (args[0].equalsIgnoreCase("assassin")) {

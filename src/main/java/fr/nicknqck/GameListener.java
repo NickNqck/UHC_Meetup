@@ -35,6 +35,7 @@ import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.KamuiUtils;
+import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -68,10 +69,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GameListener implements Listener {
 
@@ -104,7 +102,9 @@ public class GameListener implements Listener {
 		switch(gameState.getServerState()) {
 		case InLobby:
 			World world = Bukkit.getWorld("world");
-			for (Player p : gameState.getInLobbyPlayers()) {
+			for (UUID u : gameState.getInLobbyPlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (p.getLocation().getY() < 100 && !p.isFlying() && p.getGameMode() != GameMode.CREATIVE) {
 					p.setMaxHealth(20.0);
 					p.setHealth(p.getMaxHealth());
@@ -113,7 +113,7 @@ public class GameListener implements Listener {
 					p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 				}
 				if (p.getGameMode() != GameMode.ADVENTURE) {
-					if (!p.isOp() && !gameState.getHost().contains(p.getUniqueId())) {
+					if (!ChatRank.isHost(p)) {
 						p.setGameMode(GameMode.ADVENTURE);
 					}
 				}
@@ -128,7 +128,7 @@ public class GameListener implements Listener {
 				if (!gameState.getInSleepingPlayers().isEmpty()) gameState.getInSleepingPlayers().clear();
 				if (!gameState.getPillier().isEmpty())gameState.getPillier().clear();
 				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
-				if (!gameState.getInLobbyPlayers().contains(p))gameState.addInLobbyPlayers(p);
+				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId()))gameState.addInLobbyPlayers(p);
 			}
 			break;
 		case InGame:
@@ -418,7 +418,7 @@ public class GameListener implements Listener {
 			gameState.setInGamePlayers(new ArrayList<>());
 			BijuListener.getInstance().resetCooldown();
 			for (Player p : gameState.getInSpecPlayers()) {
-				if (!gameState.getInLobbyPlayers().contains(p)) {
+				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId())) {
 					gameState.addInLobbyPlayers(p);
 					p.setGameMode(GameMode.ADVENTURE);
 				}
@@ -428,8 +428,10 @@ public class GameListener implements Listener {
 			gameState.setPlayerRoles(new HashMap<>());
 			gameState.DeadRole = new ArrayList<>();
 			if (!gameState.getInLobbyPlayers().isEmpty()) {
-				for (Player p : gameState.getInLobbyPlayers()) {
-					if (p != null && p.isOnline()) {
+				for (UUID u : gameState.getInLobbyPlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					if (p.isOnline()) {
 						p.setGameMode(GameMode.ADVENTURE);
 						p.setMaxHealth(20.0);
 						p.getInventory().clear();
@@ -439,8 +441,7 @@ public class GameListener implements Listener {
 						ItemsManager.GiveHubItems(p);
 						p.teleport(new Location(Bukkit.getWorld("world"), 0.0, 151.0, 0.0));
 					}
-                    assert p != null;
-                    if (!p.isOnline())gameState.getInLobbyPlayers().remove(p);
+                    if (!p.isOnline())gameState.getInLobbyPlayers().remove(p.getUniqueId());
 				}
 			}
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -962,8 +963,7 @@ public class GameListener implements Listener {
                                     assert damageur instanceof Player;
                                     gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
 									event.setCancelled(true);
-									return;
-								}
+                                }
 							}
 						}
 					} else {
@@ -1171,7 +1171,7 @@ public class GameListener implements Listener {
         Recipe recipe = event.getRecipe();
 
         // Vérifier si le craft correspond au craft personnalisé
-        if (recipe instanceof ShapedRecipe && ((ShapedRecipe) recipe).getResult() == Items.getLamedenichirin()) {
+        if (recipe instanceof ShapedRecipe && recipe.getResult() == Items.getLamedenichirin()) {
             // Vérifier si tous les ingrédients sont présents
             ItemStack[] matrix = inventory.getMatrix();
             if (matrix[0] != null && matrix[1] != null && matrix[2] != null &&
