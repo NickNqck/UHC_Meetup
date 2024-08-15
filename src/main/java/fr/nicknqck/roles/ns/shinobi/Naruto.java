@@ -30,7 +30,13 @@ import org.bukkit.util.Vector;
 import java.util.UUID;
 
 public class Naruto extends ShinobiRoles {
-
+	private int cdRasengan = 0;
+	private int AmitieKyubi = 0;
+	private int cdKyubi = 0;
+	private int timeVillager = 0;
+	private int cdClone = 0;
+	private boolean useSmell = false;
+	private Villager villager = null;
 	public Naruto(UUID player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
@@ -53,8 +59,6 @@ public class Naruto extends ShinobiRoles {
 				AllDesc.objectifteam+"§aShinobi",
 				"",
 				AllDesc.items,
-				"",
-				AllDesc.point+"§aSenjutsu§f: Vous permet en restant immobile pendant un certain temp de gagner les effets§e Speed 1§f et§c Force 1§f pendant ce même temp (5 minutes maximum)",
 				"",
 				AllDesc.point+"§aRasengan§f: Lorsque vous frappez un joueur avec, crée une explosion infligeant§c 2"+AllDesc.coeur+".§7 (1x/2m)",
 				"",
@@ -81,16 +85,12 @@ public class Naruto extends ShinobiRoles {
 	private ItemStack KyubiItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§6Kyubi").setLore("§7Vous donne plus ou moins d'effet en fonction de votre tôt d'amitié avec§6 Kurama").toItemStack();
 	}
-	private ItemStack SenjutsuItem() {
-		return new ItemBuilder(Material.NETHER_STAR).setName("§aSenjutsu").setLore("§7Vous permet de canaliser l'énergie naturel").toItemStack();
-	}
 	private ItemStack RasenganItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan").setLore("§7Vous permet de rassembler votre Chakra en un point").toItemStack();
 	}
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				SenjutsuItem(),
 				RasenganItem(),
 				KyubiItem()
 		};
@@ -99,8 +99,6 @@ public class Naruto extends ShinobiRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
-	private boolean useSmell = false;
-	private Villager villager = null;
 	@Override
 	public void onNsCommand(String[] args) {
 		if (args[0].equalsIgnoreCase("smell")){
@@ -168,13 +166,6 @@ public class Naruto extends ShinobiRoles {
             }
 		}
 	}
-	private int cdRasengan = 0;
-	private int idleTime = 0;
-	private int cdSenjutsu = 0;
-	private int AmitieKyubi = 0;
-	private int cdKyubi = 0;
-	private int timeVillager = 0;
-	private int cdClone = 0;
 	@Override
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		if (villager != null) {
@@ -288,35 +279,6 @@ public class Naruto extends ShinobiRoles {
 				return true;
 			}
 		}
-		if (item.isSimilar(SenjutsuItem())) {
-			if (cdSenjutsu <= 0) {
-				if (!na) {
-					owner.sendMessage("§aVous commencez a amassé de l'§fénergie naturelle");
-					na = true;
-					new BukkitRunnable() {
-						final Location oLoc = owner.getLocation().clone();
-						@Override
-						public void run() {
-							idleTime++;
-							if (oLoc.distance(owner.getLocation()) > 0.9 || idleTime == 60*5) {
-								owner.sendMessage("§cVous n'amassez plus d'§fénergie naturelle");
-								givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*idleTime, 1, false);
-								givePotionEffet(PotionEffectType.SPEED, 20*idleTime, 1, false);
-								cdSenjutsu = idleTime*2;
-								na =false;
-								cancel();
-							} else {
-								sendCustomActionBar(owner, "Énergie amassé: "+cd(idleTime));
-							}
-						}
-					}.runTaskTimer(Main.getInstance(), 0, 20);
-					return true;
-				}
-			} else {
-				sendCooldown(owner, cdSenjutsu);
-				return true;
-			}
-		}
 		if (item.isSimilar(RasenganItem())) {
 			if (cdRasengan <= 0) {
 				owner.sendMessage("§7Il faut frapper un joueur pour crée une explosion.");
@@ -327,7 +289,6 @@ public class Naruto extends ShinobiRoles {
         }
 		return super.ItemUse(item, gameState);
 	}
-	private boolean na = false;
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
 		if (entity.getUniqueId() == owner.getUniqueId()) {
@@ -370,13 +331,6 @@ public class Naruto extends ShinobiRoles {
 				owner.sendMessage("§7Vous pouvez à nouveau utiliser un§a clone");
 			}
 		}
-		if (cdSenjutsu >= 0) {
-			cdSenjutsu--;
-			if (cdSenjutsu == 0) {
-				owner.sendMessage("§7Vous pouvez a nouveau utiliser le§a Senjutsu");
-				idleTime = 0;
-			}
-		}
 		if (cdKyubi >= 0) {
 			cdKyubi--;
 			if (cdKyubi == 0) {
@@ -392,8 +346,6 @@ public class Naruto extends ShinobiRoles {
 	}
 	@Override
 	public void resetCooldown() {
-		cdSenjutsu = 0;
-		idleTime = 0;
 		cdRasengan = 0;
 		cdKyubi = 0;
 		useSmell = false;

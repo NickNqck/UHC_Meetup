@@ -16,7 +16,6 @@ public enum ChatRank {
     private final String prefix;
     private final String color;
     private final List<UUID> players;
-    private static final List<UUID> ranked = new ArrayList<>();
     ChatRank(String prefix, String color){
         this.color = color;
         this.prefix = prefix;
@@ -28,7 +27,6 @@ public enum ChatRank {
             chatRank.players.remove(player.getUniqueId());
         }
         players.add(player.getUniqueId());
-        ranked.add(player.getUniqueId());
 
     }
     public static boolean isHost(Object uuid) {
