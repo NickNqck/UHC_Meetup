@@ -13,7 +13,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
-import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
@@ -308,7 +307,7 @@ public class Naruto extends ShinobiRoles {
 		if (entity.getUniqueId() == owner.getUniqueId()) {
 			if (owner.getItemInHand().isSimilar(rasenganItem)) {
 				if (cdRasengan <= 0) {
-					MathUtil.sendParticle(EnumParticle.EXPLOSION_LARGE, victim.getLocation());
+					fr.nicknqck.utils.particles.MathUtil.sendParticle(EnumParticle.EXPLOSION_LARGE, victim.getLocation());
 					Heal(victim, -4);
 					victim.damage(0.0);
 					Location loc = victim.getLocation();
