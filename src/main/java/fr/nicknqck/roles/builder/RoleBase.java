@@ -20,7 +20,6 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -157,9 +156,7 @@ public abstract class RoleBase implements IRole {
 	public void setOldTeamList(TeamList list) {list = oldteam;}
 	public RoleBase getPlayerRoles(Player player) {return gameState.getPlayerRoles().get(player);}
 	public void sendMessageAfterXseconde(Player player, String message, int seconde) {
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			player.sendMessage(message);
-		}, 20L *seconde);
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.sendMessage(message), 20L *seconde);
 	}
 	public String getTeamColor(Player target) {
 		if (!gameState.hasRoleNull(target)) {
@@ -213,9 +210,7 @@ public abstract class RoleBase implements IRole {
 	public void addBonusResi(double Bonusresi) {setBonusResi(getBonusResi() + Bonusresi);}
 	public void GiveItems() {}
 	public void RoleGiven(GameState gameState) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			owner.sendMessage(ChatColor.RED+"Discord du mode de jeu: "+ChatColor.GOLD+"https://discord.gg/RF3D4Du8VN");
-        }, 20*10);//20ticks* le nombre de seconde voulue
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> owner.sendMessage(ChatColor.RED+"Discord du mode de jeu: "+ChatColor.GOLD+"https://discord.gg/RF3D4Du8VN"), 20*10);//20ticks* le nombre de seconde voulue
 	}
 	public void Update(GameState gameState) {    //Update every 1s (20ticks)
 		allresi = getResi() + getBonusResi();
@@ -265,9 +260,7 @@ public abstract class RoleBase implements IRole {
 			value.getTitan().onAPlayerDie(player, killer);
 		}
 		if (!player.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld());
-			}, 20);
+			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld()), 20);
 		}
 		if (!gameState.hasRoleNull(player)){
 			if (getPlayerRoles(player).getRoles() == Roles.Nakime) {
@@ -485,7 +478,7 @@ public abstract class RoleBase implements IRole {
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p)).forEach(e -> toReturn.add(e));
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p)).forEach(toReturn::add);
 		return toReturn;
 	}
 	public List<Player> getListPlayerFromRole(Class<? extends RoleBase> role) {
@@ -502,9 +495,6 @@ public abstract class RoleBase implements IRole {
 		return toReturn;
 	}
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {}
-	public void onBucketFill(PlayerBucketFillEvent e, Material bucket) {}
-	public void onALLPlayerDropItem(PlayerDropItemEvent e, Player dropper, ItemStack item) {}
-	public void onALLPlayerRecupItem(PlayerPickupItemEvent e, ItemStack s) {}
 	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {}
 	public void damage(Player target, double damage, int delay) {
 		if (target != null && target.isOnline()) {
@@ -571,13 +561,7 @@ public abstract class RoleBase implements IRole {
 	}
 	public void onInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 	}
-	public boolean onAllPlayerBlockBreak(BlockBreakEvent e, Player player, Block block) {
-		return false;
-	}
 	public void neoFormChoosen(ItemStack item, Inventory inv, int slot, GameState gameState) {}
-	public void onJubiInvoque(Player invoquer) {}
-	public boolean onReceveExplosionDamage() {return false;}
-	public void onAllPlayerDamageByExplosion(EntityDamageEvent event, DamageCause cause, Player p) {}
 	public void playSound(Player p, String sound) {
 		p.getWorld().setGameRuleValue("sendCommandFeedback", "false");
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
@@ -586,11 +570,9 @@ public abstract class RoleBase implements IRole {
 	}
 	public HashMap<UUID, String> customName = new HashMap<>();
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
-
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		return false;
 	}
-
 	@Override
 	public TextComponent getComponent() {
 		return new TextComponent("");

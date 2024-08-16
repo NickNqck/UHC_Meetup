@@ -105,11 +105,6 @@ public class NsCommands implements CommandExecutor {
 									b.getBiju().setHote(sender.getUniqueId());
 								}
 								gameState.setJubiCrafter(sender);
-								for (Player p : gameState.getInGamePlayers()) {
-									if (!gameState.hasRoleNull(p)) {
-										gameState.getPlayerRoles().get(p).onJubiInvoque(sender);
-									}
-								}
 								GameListener.SendToEveryone("");
 								GameListener.SendToEveryone("§c§lLe Jûbi à été invoquée !");
 								GameListener.SendToEveryone("");

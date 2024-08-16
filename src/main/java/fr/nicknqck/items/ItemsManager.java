@@ -97,11 +97,6 @@ public class ItemsManager implements Listener {
 		if (gameState.getPlayerRoles().containsKey(e.getPlayer())) {
 			e.setCancelled(gameState.getPlayerRoles().get(e.getPlayer()).onPickupItem(e.getItem()));
 		}
-		for (Player p : gameState.getInGamePlayers()) {
-			if (!gameState.hasRoleNull(p)) {
-				gameState.getPlayerRoles().get(p).onALLPlayerRecupItem(e, s);
-			}
-		}
 		if (s.hasItemMeta()) {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
 				for (Bijus value : Bijus.values()) {
@@ -137,11 +132,6 @@ public class ItemsManager implements Listener {
 			if (event.getItemDrop().getItemStack().hasItemMeta()) {
 				if (meta.hasLore() || jsp.contains(event.getItemDrop().getItemStack())|| event.getItemDrop().getItemStack().isSimilar(gameState.EquipementTridi())) {
 					event.setCancelled(true);
-				}
-			}
-			for (Player p : gameState.getInGamePlayers()) {
-				if (!gameState.hasRoleNull(p)) {
-					gameState.getPlayerRoles().get(p).onALLPlayerDropItem(event, player, event.getItemDrop().getItemStack());
 				}
 			}
 		}

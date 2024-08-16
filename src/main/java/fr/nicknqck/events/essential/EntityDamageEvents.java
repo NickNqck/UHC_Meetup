@@ -80,23 +80,6 @@ public class EntityDamageEvents implements Listener{
 				if (gameState.shutdown.contains(player)) {
 					event.setCancelled(true);
 				}
-				if (event.getCause() == DamageCause.BLOCK_EXPLOSION || event.getCause() == DamageCause.ENTITY_EXPLOSION) {
-					if (gameState.getPlayerRoles().containsKey(player)) {
-						if (gameState.getPlayerRoles().get(player).onReceveExplosionDamage()) {
-							event.setDamage(0);
-							event.setCancelled(true);
-						}
-						for (Player p : gameState.getInGamePlayers()) {
-							if (!gameState.hasRoleNull(p)) {
-								if (!event.isCancelled()) {
-									gameState.getPlayerRoles().get(p).onAllPlayerDamageByExplosion(event, event.getCause(), p);
-								} else {
-									break;
-								}
-							}
-						}
-					}
-				}
 				if (gameState.getPlayerRoles().containsKey(player)) {
 					if (gameState.getPlayerRoles().get(player).isInvincible()) {
 						event.setCancelled(true);

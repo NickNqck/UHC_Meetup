@@ -73,12 +73,6 @@ public class BlockManager implements Listener{
                 }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getLavaEmptyTiming());
 	        }
 	    }
-	 @EventHandler
-	 public void onBucketFill(PlayerBucketFillEvent e) {
-		 if (!gameState.hasRoleNull(e.getPlayer())) {
-			 gameState.getPlayerRoles().get(e.getPlayer()).onBucketFill(e, e.getBucket());
-		 }
-	 }
 	@EventHandler
 	public void OnBlockPlaced(org.bukkit.event.block.BlockPlaceEvent event) {
 		for (ItemStack is : Arrays.asList(
@@ -127,13 +121,6 @@ public class BlockManager implements Listener{
                     if (block.getType().equals(Material.STAINED_CLAY) || block.getType().equals(Material.COAL_BLOCK)) {
                         e.setCancelled(true);
                         block.setType(Material.AIR);
-                        return;
-                    }
-                }
-            }
-            for (Player p : gameState.getInGamePlayers()) {
-                if (!gameState.hasRoleNull(p)) {
-                    if (gameState.getPlayerRoles().get(player).onAllPlayerBlockBreak(e, player, block)) {
                         return;
                     }
                 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GameConfig {
+    @Getter
     private static GameConfig instance;
     public GameConfig() {
         instance = this;
