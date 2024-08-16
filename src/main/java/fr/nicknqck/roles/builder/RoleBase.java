@@ -21,7 +21,6 @@ import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
