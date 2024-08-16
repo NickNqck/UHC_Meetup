@@ -7,8 +7,6 @@ import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -69,18 +67,6 @@ public class Pieck extends MahrRoles {
 	boolean pickup = false;
 	@Override
 	public boolean onPickupItem(Item item) {return pickup;}
-	@Override
-	public void onAotCommands(String arg, String[] args, GameState gameState) {
-		if (args[0].equalsIgnoreCase("pickup")) {
-			
-		}
-		super.onAotCommands(arg, args, gameState);
-	}
-	boolean a =false;
-	boolean b = false;
-	boolean c = false;
-	boolean d = false;
-	Inventory inv = owner.getInventory();
 	@Override
 	public void Update(GameState gameState) {//Update s'actualise toute les secondes
 		if (regencd > 0) {
