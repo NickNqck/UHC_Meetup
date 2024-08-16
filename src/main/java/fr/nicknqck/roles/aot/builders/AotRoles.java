@@ -12,6 +12,9 @@ import java.text.DecimalFormat;
 import java.util.UUID;
 
 public abstract class AotRoles extends RoleBase {
+    @Getter
+    @Setter
+    private int actualTridiCooldown;
     public boolean canShift = false;
     public boolean isTransformedinTitan = false;
     public double RodSpeedMultipliyer = 0;
@@ -23,8 +26,13 @@ public abstract class AotRoles extends RoleBase {
         super(player);
         gazAmount= 100.0;
         new RodCooldownRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        actualTridiCooldown = -1;
     }
     public void onAotCommands(String arg, String[] args, GameState gameState) {}
+    public void TransfoEclairxMessage(Player player) {
+        gameState.spawnLightningBolt(player.getWorld(), player.getLocation());
+        for (Player p : gameState.getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}
+    }
     private static class RodCooldownRunnable extends BukkitRunnable {
         private final AotRoles role;
         public RodCooldownRunnable(AotRoles role) {

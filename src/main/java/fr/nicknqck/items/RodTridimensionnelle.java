@@ -168,7 +168,7 @@ public class RodTridimensionnelle implements Listener {
                 }
                 DecimalFormat df = new DecimalFormat("0.0");
                 this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(role.gazAmount)+"%");
-                gameState.getPlayerRoles().get(this.player).setActualTridiCooldown(gameState.TridiCooldown);
+                role.setActualTridiCooldown(gameState.TridiCooldown);
             } else {
                 if (gameState.getPlayerRoles().get(player) instanceof KillerBee) {
                     ((KillerBee) gameState.getPlayerRoles().get(player)).onTentaculeEnd(r);

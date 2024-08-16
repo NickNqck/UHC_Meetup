@@ -127,7 +127,6 @@ public abstract class RoleBase implements IRole {
 		if (this.gameState == null){
 			this.gameState = GameState.getInstance();
 		}
-        actualTridiCooldown = -1;
 	}
 
 	@Override
@@ -275,14 +274,6 @@ public abstract class RoleBase implements IRole {
 		}
 	}
 	public void OnAPlayerKillAnotherPlayer(Player player, Player damager, GameState gameState) {}
-
-	@Getter
-	@Setter
-	private int actualTridiCooldown = -1;
-	public void TransfoEclairxMessage(Player player) {
-		gameState.spawnLightningBolt(player.getWorld(), player.getLocation());
-		for (Player p : gameState.getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}
-	}
 	public void giveHeartatInt(Player target, double coeur) {
 		if (!gameState.hasRoleNull(target)) {
 			getPlayerRoles(target).setMaxHealth(getPlayerRoles(target).getMaxHealth()+coeur*2);
