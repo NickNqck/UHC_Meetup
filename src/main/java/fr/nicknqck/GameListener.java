@@ -950,7 +950,6 @@ public class GameListener implements Listener {
 							}
 						}
 							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
-							if (gameState.getPlayerRoles().get(player).CancelAttack)event.setCancelled(true);
 						}
 					}
 				}

@@ -238,7 +238,6 @@ public abstract class RoleBase implements IRole {
 	public void setPower(boolean powerEnabled) {this.powerEnabled = powerEnabled;}
 
 	public void neoAttackedByPlayer(Player attacker, GameState gameState) {}
-	public boolean CancelAttack = false;
 
 	public void onDay(GameState gameState) {}
 	public void onNight(GameState gameState) {}
