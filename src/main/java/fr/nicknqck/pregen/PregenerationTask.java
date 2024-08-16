@@ -22,7 +22,9 @@ public class PregenerationTask extends BukkitRunnable {
 	private final Integer radius;
 	private final World world;
 	private Boolean finished;
-	
+	private int loadedChunks;
+	private int chunkAlreadyLoad;
+	private int chunkFinded;
 	public PregenerationTask(World world, Integer r) {
 		r+=150;
 		this.percent = 0.0D;
@@ -46,7 +48,12 @@ public class PregenerationTask extends BukkitRunnable {
 			if (!loc.getChunk().isLoaded()) {
 				loc.getWorld().loadChunk(loc.getChunk().getX(), loc.getChunk().getZ(), true);
 				System.out.println("Pregen "+loc.getChunk());
+				loadedChunks++;
+			} else {
+				System.out.println(loc.getChunk().toString()+" is already loaded");
+				chunkAlreadyLoad++;
 			}
+			chunkFinded++;
 			this.cx+=16;
 			this.currentChunkLoad = this.currentChunkLoad + 1.0D;
 			if(this.cx > this.mx) {
@@ -65,7 +72,7 @@ public class PregenerationTask extends BukkitRunnable {
 		if(this.finished) {
 			Bukkit.broadcastMessage("§8[§cPregen§8] §fLa pré-génération de§c "+world.getName()+"§f est terminée !");
 			cancel();
-			
+			Bukkit.broadcastMessage("§c"+chunkFinded+"§7 on essayer d'être généré, §c"+chunkAlreadyLoad+"§7 l'était déjà et §c"+loadedChunks+"§7 on été pregen");
 			//Bukkit.getOnlinePlayers().forEach(players -> NMSMethod.sendActionbar(players, "§fPré-génération §8» [§r"+UHCAPI.get().getGameManager().getProgressBar(this.percent.intValue(), 100, 20, "|", "§c", "§f")+"§8] §c"+this.percent.intValue()+"%"));
 		}
 	}
