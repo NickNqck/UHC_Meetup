@@ -37,7 +37,7 @@ public class ScoreboardManager {
 	private final ScheduledFuture reloadingTask;
     private int ipCharIndex;
     private int cooldown;
-    GameState gameState;
+    private final GameState gameState;
     public ScoreboardManager(GameState gameState) {
     	this.gameState = gameState;
         scoreboards = new HashMap<>();
@@ -60,7 +60,7 @@ public class ScoreboardManager {
 
     public void onDisable() {
     	if (scoreboards != null) {
-    		if (scoreboards.size() > 0) {
+    		if (!scoreboards.isEmpty()) {
     			scoreboards.values().forEach(PersonalScoreboard::onLogout);
     		}
     	}
