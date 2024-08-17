@@ -309,7 +309,7 @@ public abstract class RoleBase implements IRole {
 	public void Heal(Player target, double demicoeur) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (target.getHealth() - demicoeur <= 0 && demicoeur <0) {
-				GameListener.getInstance().DeathHandler(target, target, demicoeur, gameState);
+				GameListener.getInstance().DeathHandler(target, target, gameState);
 			}
 			if (target.getHealth() <= (target.getMaxHealth()-demicoeur)) {
 				target.setHealth(target.getHealth()+demicoeur);
@@ -459,20 +459,27 @@ public abstract class RoleBase implements IRole {
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {}
 	public Player getPlayerFromRole(Roles roles) {
 		List<Player> toReturn = new ArrayList<>();
-		gameState.getInGamePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).forEach(toReturn::add);
-		if (toReturn.isEmpty()) {
-			return null;
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
+			if (!gameState.hasRoleNull(p)) {
+				if (getPlayerRoles(p).getRoles().equals(roles)) {
+					toReturn.add(p);
+				}
+			}
 		}
         return toReturn.get(0);
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p)).forEach(toReturn::add);
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p.getUniqueId())).forEach(toReturn::add);
 		return toReturn;
 	}
 	public List<Player> getListPlayerFromRole(Class<? extends RoleBase> role) {
 		List<Player> toReturn = new ArrayList<>();
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
 				if (gameState.getPlayerRoles().get(p).getClass().equals(role)) {
 					if (gameState.getPlayerRoles().get(p).getGamePlayer().isAlive()){

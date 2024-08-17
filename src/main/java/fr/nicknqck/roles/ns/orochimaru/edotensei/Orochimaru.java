@@ -62,9 +62,11 @@ public class Orochimaru extends OrochimaruRoles {
 			}
 		}
 		List<Player> mates = new ArrayList<>();
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
-				if (getTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
+				if (getTeam(p) != null && p.getUniqueId() != getPlayer()) {
 					if (getTeam(p) == TeamList.Orochimaru || getPlayerRoles(p) instanceof Sasuke) {
 						mates.add(p);
 					}

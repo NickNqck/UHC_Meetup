@@ -99,7 +99,9 @@ public class Tsunade extends ShinobiRoles {
 	private final List<UUID> inKatsuyu = new ArrayList<>();
 	private Inventory KatsuyuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 54, "§aKatsuyu");
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
 				if (inKatsuyu.contains(p.getUniqueId())) {
 					inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName("§a"+p.getName()).toItemStack());
@@ -115,7 +117,9 @@ public class Tsunade extends ShinobiRoles {
 		if (inv.getTitle().equals("§aKatsuyu") || inv.getName().equals("§aKatsuyu")) {
 			if (item != null && item.getType() == Material.SKULL_ITEM) {
 				if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (item.getItemMeta().getDisplayName().contains(p.getName())) {
 							if (inKatsuyu.contains(p.getUniqueId())) {
 								inKatsuyu.remove(p.getUniqueId());

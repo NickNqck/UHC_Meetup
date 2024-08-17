@@ -9,6 +9,7 @@ import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
 import fr.nicknqck.roles.builder.TeamList;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -83,7 +84,7 @@ public class Eren extends AotRoles {
 
 	private int cdbertolt = -1;
 	private int cdPorco = -1;
-	private List<ItemStack> itemToRecup = new ArrayList<>();
+	private final List<ItemStack> itemToRecup = new ArrayList<>();
 	
 	ItemStack Cercle() {
 		return BetterItem.of((new ItemBuilder(Material.MAGMA_CREAM)).setName("§c§lCercle de Feu").setLore("§7"+StringID).toItemStack(), (event) -> {
@@ -258,7 +259,9 @@ public class Eren extends AotRoles {
 			if (isTransformedinTitan) {
 				if (cdbertolt >= 60) {
 					MathUtil.sendCircleParticle(EnumParticle.FLAME, owner.getLocation(), 8, 24);
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (p.getLocation().distance(owner.getLocation()) <= 8) {
 							p.setFireTicks(60);
 						}

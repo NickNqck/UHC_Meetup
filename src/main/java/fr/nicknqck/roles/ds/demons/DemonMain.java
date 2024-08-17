@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ds.slayers.Sabito;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.roles.ds.slayers.Urokodaki;
 import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -81,7 +82,9 @@ public class DemonMain extends DemonInferieurRole {
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(Items.getPouvoirSanginaire())) {
 			if (itemcooldown <= 0) {
-				for(Player p : gameState.getInGamePlayers()) {
+				for(UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (p!= owner) {
 						  if(p.getLocation().distance(owner.getLocation()) <= 30) {
 							  if (p.getHealth() > 3.0) {
@@ -105,7 +108,7 @@ public class DemonMain extends DemonInferieurRole {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof Urokodaki) {

@@ -3,6 +3,7 @@ package fr.nicknqck.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -67,7 +68,9 @@ public class ItemsManager implements Listener {
 		Player player = event.getPlayer();
 		if (!gameState.getPlayerRoles().containsKey(player))return;
 		gameState.getPlayerRoles().get(player).onEat(item, gameState);
-		for (Player ig : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player ig = Bukkit.getPlayer(u);
+			if (ig == null)continue;
 			if (!gameState.hasRoleNull(ig)) {
 				gameState.getPlayerRoles().get(ig).onALLPlayerEat(event, item, player);
 			}

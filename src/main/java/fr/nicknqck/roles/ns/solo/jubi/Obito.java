@@ -635,8 +635,10 @@ public class Obito extends NSRoles {
 		}
 		if (item.isSimilar(ninjutsuSpatioTemporelItem())) {
 			if (cdNinjutsu <= 0) {
-				for (Player p : gameState.getInGamePlayers()) {
-					if (p.getUniqueId() != owner.getUniqueId()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					if (u != getPlayer()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						p.hidePlayer(owner);
 					}
 				}

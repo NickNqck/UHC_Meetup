@@ -6,6 +6,7 @@ import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -101,7 +102,9 @@ public class Conny extends SoldatsRoles {
 		if (args[0].equalsIgnoreCase("proteger")) {
 			if (!cmd) {
 			if (args[1].equalsIgnoreCase("Jean")) {
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (getPlayerRoles(p) instanceof Jean) {
 				Jean = true;
 				cmd = true;
@@ -110,7 +113,9 @@ public class Conny extends SoldatsRoles {
 				}
 				} else {
 				if (args[1].equalsIgnoreCase("Sasha")) {
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (getPlayerRoles(p) instanceof Sasha) {
 					Sasha = true;
 					cmd = true;
@@ -133,7 +138,9 @@ public class Conny extends SoldatsRoles {
 		if (player != null) {
 			if (killer != null) {
 				if (Jean) {
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (getPlayerRoles(p) instanceof Jean) {
 						owner.sendMessage("Votre proteger viens de mourir vous obtenez désormais Weakness 1 ansi que speed 1 lors de votre utilisation de votre sucre");
 						givePotionEffet(owner, PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 1, true);
@@ -141,7 +148,9 @@ public class Conny extends SoldatsRoles {
 				}
 			} else {
 				if (Sasha) {
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (getPlayerRoles(p) instanceof Sasha) {
 							owner.sendMessage("Votre proteger viens de mourir vous obtenez désormais Weakness 1 ansi que speed 1 lors de votre utilisation de votre sucre");
 							givePotionEffet(owner, PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 1, true);

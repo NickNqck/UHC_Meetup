@@ -108,8 +108,10 @@ public class Sanemi extends PillierRoles {
 				} else {
 					if (args[1].equalsIgnoreCase("all")) {
 						if (!usetpAll) {
-							for (Player p : gameState.getInGamePlayers()) {
-								if (p != null && p != owner) {
+							for (UUID u : gameState.getInGamePlayers()) {
+								Player p = Bukkit.getPlayer(u);
+								if (p == null)continue;
+								if (u != getPlayer()) {
 									if (!gameState.hasRoleNull(p)) {
 										if (!(getPlayerRoles(p) instanceof Doma)) {
 											if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
@@ -170,7 +172,7 @@ public class Sanemi extends PillierRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof Kokushibo && !killkoku) {

@@ -70,7 +70,7 @@ public class Muichiro extends PillierRoles {
 				if (args[1] != null) {
 					Player target = Bukkit.getPlayer(args[1]);
 					if (target != null) {
-						if (gameState.getInGamePlayers().contains(target) && gameState.getInGamePlayers().contains(owner)){
+						if (gameState.getInGamePlayers().contains(target.getUniqueId()) && gameState.getInGamePlayers().contains(getPlayer())){
 							if (!gameState.hasRoleNull(target)) {
 										if (dsbrumeuse < 3) {
 											if (dsbrumecd <= 0) {
@@ -127,8 +127,10 @@ public class Muichiro extends PillierRoles {
 		}
 		if (zone) {
 			MathUtil.sendCircleParticle(EnumParticle.CLOUD, zoneloc, 15, 50);
-			for(Player p : gameState.getInGamePlayers()) {
-				if (p != owner && p.getWorld().equals(owner.getWorld())) {
+			for(UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
+				if (u != getPlayer() && p.getWorld().equals(owner.getWorld())) {
 					  if(p.getLocation().distance(zoneloc) <= 15) {
 						  givePotionEffet(p, PotionEffectType.BLINDNESS, 20*3, Integer.MAX_VALUE, true);
 					    }
@@ -191,7 +193,7 @@ public class Muichiro extends PillierRoles {
 		}
 		if (killer == owner) {
 			if (victim != owner) {
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof Gyokko) {

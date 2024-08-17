@@ -23,7 +23,9 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
         super(player);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             List<DemonsRoles> roles = new ArrayList<>();
-            for (Player p : gameState.getInGamePlayers()) {
+            for (UUID u : gameState.getInGamePlayers()) {
+                Player p = Bukkit.getPlayer(u);
+                if (p == null)continue;
                 if (!gameState.hasRoleNull(p)) {
                     RoleBase role = gameState.getPlayerRoles().get(p);
                     if (role instanceof DemonsRoles) {

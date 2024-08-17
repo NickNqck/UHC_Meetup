@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +24,9 @@ public class Enmu extends DemonsRoles {
 	public Enmu(UUID player) {
 		super(player);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
@@ -93,15 +96,19 @@ public class Enmu extends DemonsRoles {
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(Items.getPouvoirSanginaire())) {
 			if (itemcooldown <= 0) {
-				for (Player p : gameState.getInGamePlayers()) {
-					if (gameState.getInGamePlayers().contains(p)) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 						for (RoleBase r : gameState.getPlayerRoles().values()) {
 							if (r.getOriginTeam() != TeamList.Demon) {
 								if (r.getRoles() != Roles.Nezuko) {
 									if (p != owner) {
 										double min = 10;
 										Player target = null;
-										for (Player plou : gameState.getInGamePlayers()) {
+										for (UUID uplou : gameState.getInGamePlayers()) {
+											Player plou = Bukkit.getPlayer(uplou);
+											if (plou == null)continue;
 											if (owner.canSee(plou) && plou != owner && plou.getWorld().equals(owner.getWorld())) {
 												double dist = Math.abs(plou.getLocation().distance(owner.getLocation()));
 												if (dist < min) {

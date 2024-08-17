@@ -29,11 +29,7 @@ public class HantenguV2 extends DemonsRoles {
 		clone = Clone.Hantengu;
 		owner.getInventory().addItem(Items.getMaterialisationEmotion());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
+			getKnowedRoles().add(Muzan.class);
 		}, 20);
 	}
 
@@ -57,16 +53,9 @@ public class HantenguV2 extends DemonsRoles {
 
 	@Override
 	public String[] Desc() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.HantenguV2;
 	}
-	Clone clone;
+	private Clone clone;
 	private boolean firstchoice = false;
 	private boolean secondchoice = false;
 	@Override
@@ -372,7 +361,9 @@ public class HantenguV2 extends DemonsRoles {
 			if (firstchoice) {
 				if (clone == Clone.Karaku || clone == Clone.Zohakuten) {
 					if (cdkaraku <= 0) {
-						for (Player player : gameState.getInGamePlayers()) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player player = Bukkit.getPlayer(u);
+							if (player == null)continue;
 							if (player != owner && player.getWorld().equals(owner.getWorld())) {
 								if (player.getLocation().distance(owner.getLocation()) <= 30) {
 									Location ploc1 = player.getLocation();
@@ -403,8 +394,10 @@ public class HantenguV2 extends DemonsRoles {
 			if (firstchoice) {
 				if (clone == Clone.Sekido || clone == Clone.Zohakuten) {
 					if (cdsekido <= 0) {
-						for (Player p : gameState.getInGamePlayers()) {
-							if (p != owner) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
+							if (u != getPlayer()) {
 								if (getPlayerRoles(p).getOriginTeam() != TeamList.Demon) {
 									if (p.getLocation().distance(owner.getLocation()) <= 25) {
 										if (p.getHealth() > 4.0) {
@@ -470,12 +463,11 @@ public class HantenguV2 extends DemonsRoles {
 						if (t == null || getPlayerRoles(t).getOriginTeam() == TeamList.Demon) {
 							owner.sendMessage("§cVeuiller viser un joueur");
 						} else {
-							Player player = (Player) t;
-							player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*30, 0, false, false), true);
-							player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*30, 0, false, false), true);
-							player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*30, 0, false, false), true);
+                            t.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*30, 0, false, false), true);
+							t.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*30, 0, false, false), true);
+							t.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*30, 0, false, false), true);
 							cdcri = 120;
-							owner.sendMessage("Vous avez crier sur§6 "+player.getName());
+							owner.sendMessage("Vous avez crier sur§6 "+ t.getName());
 						}	
 					} else {
 						owner.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cdcri));

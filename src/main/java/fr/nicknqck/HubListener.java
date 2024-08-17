@@ -30,6 +30,7 @@ import org.bukkit.potion.PotionEffect;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class HubListener implements Listener {
@@ -46,10 +47,10 @@ public class HubListener implements Listener {
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
 		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
-		gameState.setInGamePlayers(gameState.getInLobbyPlayers().stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).map(Bukkit::getPlayer).collect(Collectors.toList()));
+		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.setInLobbyPlayers(new ArrayList<>());
-		gameState.igPlayers.addAll(gameState.getInGamePlayers());
+		gameState.igPlayers.addAll(gameState.getInGamePlayers().stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).map(Bukkit::getPlayer).collect(Collectors.toList()));
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
 		gameState.infected = null;
 		gameState.infecteur = null;
@@ -89,7 +90,9 @@ public class HubListener implements Listener {
 		}
 		System.out.println("lobby: "+gameState.getInLobbyPlayers().size()+", roles: "+roleNmb+", equal: "+(gameState.getInLobbyPlayers().size() == roleNmb));
 		
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			p.setMaxHealth(20.0);
 			p.setHealth(20.0);
 			p.setFoodLevel(20);

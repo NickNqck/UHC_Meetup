@@ -2,7 +2,6 @@ package fr.nicknqck.events.custom;
 
 import fr.nicknqck.GameState;
 import lombok.Getter;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -19,9 +18,7 @@ public class StartGameEvent extends Event {
     private final List<UUID> inGamePlayers = new ArrayList<>();
     public StartGameEvent(GameState gameState) {
         this.gameState = gameState;
-        for (Player p : gameState.getInGamePlayers()){
-            inGamePlayers.add(p.getUniqueId());
-        }
+        inGamePlayers.addAll(gameState.getInGamePlayers());
         System.out.println("StartGameEvent has been called !");
     }
     @Override

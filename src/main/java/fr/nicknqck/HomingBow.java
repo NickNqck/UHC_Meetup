@@ -142,7 +142,7 @@ public class HomingBow implements Listener {
 	}
 	private boolean isSpecialPlayer(Player player) {
 		if (gameState.getServerState().equals(ServerStates.InGame)) {
-			if (gameState.getInGamePlayers().contains(player)) {
+			if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 				if (!gameState.hasRoleNull(player)) {
 					return gameState.getPlayerRoles().get(player) instanceof Susamaru;
 				}

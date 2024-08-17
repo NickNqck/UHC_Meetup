@@ -33,7 +33,9 @@ public class Hantengu extends DemonsRoles {
 	public Hantengu(UUID player) {
 		super(player);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
@@ -64,7 +66,9 @@ public class Hantengu extends DemonsRoles {
 	@Override
 		public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
@@ -206,7 +210,7 @@ public class Hantengu extends DemonsRoles {
 					owner.setFlying(true);
 					flytime--;
 					owner.sendMessage("Il vous reste "+ChatColor.GOLD+flytime+"§rs pour voler");
-				} else if (flytime == 0 && powerUrogi == false){
+				} else if (flytime == 0 && !powerUrogi){
 					owner.setAllowFlight(false);
 					owner.setFlying(false);
 				}
@@ -269,8 +273,7 @@ public class Hantengu extends DemonsRoles {
 			if (form == Form.Urogi) {
 				if (powerUrogi) {
 					if (flytime == 6) {
-						flytime = 6;
-						powerUrogi = false;
+                        powerUrogi = false;
 						new WingsEffect(20*flytime+1, EnumParticle.CRIT).start(owner);
 						owner.sendMessage("Vous avez maintenant: "+flytime+"s pour voler");
 					}
@@ -400,20 +403,22 @@ public class Hantengu extends DemonsRoles {
 			if (item.isSimilar(Items.getHantenguKarakuVent())) {
 				if (powerKaraku <= 0) {
 					if (form == Form.Karaku) {
-						for (Player player : gameState.getInGamePlayers()) {
-							if (player != owner) {
-										if (player.getLocation().distance(owner.getLocation()) <= 30) {
-										Location ploc1 = player.getLocation();
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
+							if (p != owner) {
+										if (p.getLocation().distance(owner.getLocation()) <= 30) {
+										Location ploc1 = p.getLocation();
 										Location spawn1 = new Location(Bukkit.getWorld("World"), ploc1.getX(), ploc1.getY() + 30, ploc1.getZ());
-										Location loc = player.getLocation();
-										System.out.println(player.getEyeLocation());
-										loc.setX(loc.getX()+Math.cos(Math.toRadians(-player.getEyeLocation().getYaw()+90)));
-										loc.setZ(loc.getZ()+Math.sin(Math.toRadians(player.getEyeLocation().getYaw()-90)));
+										Location loc = p.getLocation();
+										System.out.println(p.getEyeLocation());
+										loc.setX(loc.getX()+Math.cos(Math.toRadians(-p.getEyeLocation().getYaw()+90)));
+										loc.setZ(loc.getZ()+Math.sin(Math.toRadians(p.getEyeLocation().getYaw()-90)));
 										loc.setPitch(0);
 										System.out.println(loc);
 										System.out.println(spawn1);
-										player.teleport(spawn1);
-										player.sendMessage("Vous venez d'être téléporter par Karaku");
+										p.teleport(spawn1);
+										p.sendMessage("Vous venez d'être téléporter par Karaku");
 										powerKaraku = 60;
 										}								
 							}
@@ -448,7 +453,7 @@ public class Hantengu extends DemonsRoles {
 	@Override
 		public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 			if (killer == owner && victim != owner && form == Form.Sekido) {
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 							this.killforce+=5;

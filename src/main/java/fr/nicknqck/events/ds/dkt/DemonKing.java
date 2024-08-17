@@ -21,12 +21,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class DemonKing extends EventBase{
 
 	@Override
 	public boolean PlayEvent(int gameTime) {
 		if (!isActivated() && gameTime == getMinTime() && !gameState.demonKingTanjiro) {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (!gameState.hasRoleNull(p)) {
 					RoleBase roleBase = gameState.getPlayerRoles().get(p);
 					if (gameState.attributedRole.contains(Roles.Tanjiro) && gameState.attributedRole.contains(Roles.Muzan)) {
@@ -53,7 +57,9 @@ public class DemonKing extends EventBase{
 									Bukkit.broadcastMessage(AllDesc.bar+"\n§rL'évènement aléatoire "+Events.DemonKingTanjiro.getName()+" viens de ce déclancher, le rôle§c Tanjiro§f est maintenant dans le camp des Démons !\n"+AllDesc.bar);
 									gameState.demonKingTanjiro = true;
 									if (RandomUtils.getOwnRandomProbability(50)) {
-										for (Player k : gameState.getInGamePlayers()) {
+										for (UUID uk : gameState.getInGamePlayers()) {
+											Player k = Bukkit.getPlayer(uk);
+											if (k == null)continue;
 											if (gameState.attributedRole.contains(Roles.Kokushibo)) {
 												if (!gameState.hasRoleNull(k)) {
 													if (gameState.getPlayerRoles().get(k) instanceof Kokushibo) {

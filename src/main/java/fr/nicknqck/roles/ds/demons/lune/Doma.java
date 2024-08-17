@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.utils.RandomUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +25,9 @@ public class Doma extends DemonsRoles {
 		super(player);
 		this.setResi(20);
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
@@ -47,7 +50,9 @@ public class Doma extends DemonsRoles {
 	@Override
 	public String[] Desc() {
 		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
@@ -95,7 +100,9 @@ public class Doma extends DemonsRoles {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*3, 0, false, false), true);
 		}
 		if (zonedeglace) {
-		for(Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (p != owner && p.getWorld().equals(owner.getWorld())) {
 				if(p.getLocation().distance(owner.getLocation()) <= 5) {
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*3, 2, false, false), true);

@@ -32,6 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AdminCommands implements CommandExecutor{
 
@@ -284,7 +285,9 @@ public class AdminCommands implements CommandExecutor{
 											int grp = Integer.parseInt(args[1]);
 											if (grp > 0) {
 												gameState.setGroupe(grp);
-												for (Player p : gameState.getInGamePlayers()) {
+												for (UUID u : gameState.getInGamePlayers()) {
+													Player p = Bukkit.getPlayer(u);
+													if (p == null)continue;
 													p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
 													NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
 													p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");

@@ -307,7 +307,7 @@ public class GameState{
 	private List<UUID> inLobbyPlayers = new ArrayList<>();
 	@Setter
 	@Getter
-	private List<Player> inGamePlayers = new ArrayList<>();
+	private List<UUID> inGamePlayers = new ArrayList<>();
 	@Getter
 	@Setter
 	private List<Player> inSpecPlayers = new ArrayList<>();
@@ -383,9 +383,9 @@ public class GameState{
 
 	public void delInLobbyPlayers(Player player) {inLobbyPlayers.remove(player.getUniqueId());}
 
-	public void addInGamePlayers(Player player) {inGamePlayers.add(player);}
+	public void addInGamePlayers(Player player) {inGamePlayers.add(player.getUniqueId());}
 
-	public void delInGamePlayers(Player player) {inGamePlayers.remove(player);}
+	public void delInGamePlayers(Player player) {inGamePlayers.remove(player.getUniqueId());}
 
 	public void addInSpecPlayers(Player player) {inSpecPlayers.add(player);}
 
@@ -407,7 +407,7 @@ public class GameState{
 	public void delInAvailableEvents(Events event) {availableEvents.remove(event);}
 
 	public void setPlayerKills(HashMap<Player, HashMap<Player, RoleBase>> playerKill) {playerKill = playerKills;}
-	public void addPlayerKills(Player player) {playerKills.put(player, new HashMap<Player, RoleBase>());}
+	public void addPlayerKills(Player player) {playerKills.put(player, new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
 	public void setInGameEvents(ArrayList<EventBase> inGameEvent) {inGameEvent = inGameEvents;}
@@ -813,7 +813,8 @@ public class GameState{
 		}
 		role.gameState = this;
 		addInPlayerRoles(aziz, role);
-		fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(player);
+		fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(aziz);
+		gamePlayer.setRole(role);
 		role.setGamePlayer(gamePlayer);
 		role.getGameState().getGamePlayer().put(player, gamePlayer);
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
@@ -896,7 +897,7 @@ public class GameState{
 		try {
             player.setPlayerListName(name);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
 	}
 	public void changePseudo(String name, Player player) {
@@ -907,7 +908,7 @@ public class GameState{
             f.setAccessible(true);
             f.set(profile, name);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
     }
 	public void spawnLightningBolt(World world, Location loc) {world.strikeLightningEffect(loc);}
@@ -933,7 +934,7 @@ public class GameState{
 			if (!hasRoleNull(player)) {
 				if (getInSpecPlayers().contains(player)) {
 					delInSpecPlayers(player);
-					if (!getInGamePlayers().contains(player)){
+					if (!getInGamePlayers().contains(player.getUniqueId())){
 						addInGamePlayers(player);
 					}
 					player.setGameMode(GameMode.SURVIVAL);
@@ -971,46 +972,28 @@ public class GameState{
 	public String sendGazBar(double number, double sizeChanger) {
 		double maxGaz = 100/sizeChanger;
 		double gaz = number/sizeChanger;
-		String bar = " ";
+		StringBuilder bar = new StringBuilder(" ");
 		for (double i = 0; i < gaz; i++) {
-			bar += "§a|";
+			bar.append("§a|");
 		}
 		for (double i = gaz; i < maxGaz; i++) {
-			bar += "§c|";
+			bar.append("§c|");
 		}
-		bar += " ";
-		return bar;
+		bar.append(" ");
+		return bar.toString();
 	}
 	public String sendIntBar(int fnmb, int nMax, int sizeChanger) {
 		int max = nMax/sizeChanger;
 		int nmb = fnmb/sizeChanger;
-		String bar = " "; 
+		StringBuilder bar = new StringBuilder(" ");
 		for (int i = 0; i < nmb; i++) {
-			bar += "§a|";
+			bar.append("§a|");
 		}
 		for (int i = nmb; i < max; i++) {
-			bar += "§c|";
+			bar.append("§c|");
 		}
-		bar += " ";
-		return bar;
-	}
-	public int getAttributedRolesNMB(Roles role) {
-		if (role == null) {
-			return 0;
-		}
-		int i = 0;
-		int a = 0;
-		for (Roles r : attributedRole) {
-			a++;
-			if (r == role) {
-				i++;
-			}
-		}
-		if (a == attributedRole.size()) {
-			return i;
-		}else {
-			return 0;
-		}
+		bar.append(" ");
+		return bar.toString();
 	}
 	public void sendDescription(Player player) {
 		if (!hasRoleNull(player)) {
@@ -1022,7 +1005,9 @@ public class GameState{
 			RoleBase role = getPlayerRoles().get(player);
 			if (!role.getKnowedRoles().isEmpty()) {
 				for (Class<? extends RoleBase> know : role.getKnowedRoles()) {
-					for (Player p : getInGamePlayers()) {
+					for (UUID u : getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (!hasRoleNull(p)) {
 							if (getPlayerRoles().get(p).getClass().equals(know)) {
 								String teamColor = getPlayerRoles().get(p).getOriginTeam().getColor();
@@ -1040,7 +1025,9 @@ public class GameState{
 		}
 	}
 	public Player getOwner(Roles role) {
-		for (Player p : getInGamePlayers()) {
+		for (UUID u : getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!hasRoleNull(p)) {
 				if (getPlayerRoles().get(p).getRoles() == role) {
 					return p;

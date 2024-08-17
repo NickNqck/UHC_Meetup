@@ -12,6 +12,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 
 import java.util.Collections;
+import java.util.UUID;
 
 public class Assassin {
 	@SuppressWarnings("deprecation")
@@ -32,7 +33,9 @@ public class Assassin {
 				 role.setSuffixString(role.getSuffixString()+"§7 (§cAssassin§7)§r");
 	             System.out.println(gameState.Assassin.getName()+" is now the Assassin of the game");
 	             System.out.println("Ending Assassin System");
-	             for (Player p : gameState.getInGamePlayers()) {
+	             for (UUID u : gameState.getInGamePlayers()) {
+					 Player p = Bukkit.getPlayer(u);
+					 if (p == null)continue;
 	            	 if (!gameState.hasRoleNull(p)) {
 	            		 if (gameState.getPlayerRoles().get(p).hasTeam(p)) {	            			 
 	            			 if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles || gameState.getPlayerRoles().get(p) instanceof Tanjiro) {

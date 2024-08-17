@@ -46,7 +46,9 @@ public class Konan extends AkatsukiRoles {
 	@Override
 	public String[] Desc() {
 		List<Player> mates = new ArrayList<>();
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
 				if (getOldTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
 					if (getOldTeam(p) == TeamList.Akatsuki || getPlayerRoles(p) instanceof Obito) {

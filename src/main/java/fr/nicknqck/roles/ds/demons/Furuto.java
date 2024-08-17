@@ -8,6 +8,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -53,7 +54,9 @@ public class Furuto extends DemonInferieurRole {
 		if (gameState.nightTime) {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
 		}
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (getPlayerRoles(p) != null && getPlayerRoles(p) != null && owner.getWorld().equals(p.getWorld())) {
 				if (p.getLocation().distance(owner.getLocation()) <= 20 && !aP.contains(p)) {
 					aP.add(p);
@@ -81,11 +84,13 @@ public class Furuto extends DemonInferieurRole {
         return new ItemStack[]{BetterItem.of((new ItemBuilder(Material.NETHER_STAR)).setName("Flûte").toItemStack(), (event) -> {
             if (event.isLeftClick()) return false;
             else {
-            	for (Player p : gameState.getInGamePlayers()) {
+            	for (UUID u : gameState.getInGamePlayers()) {
             		if (cooldown >= 1) {
             			sendCooldown(event.getPlayer(), cooldown);
 						return true;
             		}
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
             		if (aP.contains(p)) {
             			int r = RandomUtils.getRandomInt(0, 4);
                 			if (r == 0) {

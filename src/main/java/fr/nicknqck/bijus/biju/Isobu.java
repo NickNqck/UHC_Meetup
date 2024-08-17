@@ -245,7 +245,9 @@ public class Isobu extends Biju{
 	@Override
 	public void onSecond(GameState gameState) {
 		if (BijuListener.getInstance().getIsobuCooldown() == 60*15) {
-			for (Player p : GameState.getInstance().getInGamePlayers()) {
+			for (UUID u : GameState.getInstance().getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				for (Bijus value : Bijus.values()) {
 					if (value.getBiju().getName().equals(getName())) {//je vérifie si le nom du bijus trouvé dans le for est celui de Isobu
 						if (value.getBiju().getMaster().equals(p.getUniqueId())) {

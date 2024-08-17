@@ -87,9 +87,11 @@ public class Inosuke extends SlayerRoles {
 		}
 		if (item.isSimilar(Items.getSoufledelaBêteMutilationFurieuse())) {
 			if (mutilationcooldown <= 0) {
-				for(Player p : gameState.getInGamePlayers()) {
-					if (p!= owner) {
-						  if(p.getLocation().distance(owner.getLocation()) <= 30) {
+				for(UUID u : gameState.getInGamePlayers()) {
+					if (u!= getPlayer()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
+						if(p.getLocation().distance(owner.getLocation()) <= 30) {
 							  p.setHealth(p.getHealth() - 3.0);
 							  p.sendMessage(ChatColor.WHITE+"Vous avez touchez par le: "+ChatColor.GOLD+"Cinquième Croc: Mutilation Furieuse");
 							  owner.sendMessage(ChatColor.WHITE+"Activation de votre: "+ChatColor.GOLD+"Cinquième Croc: Mutillation Furieuse");
@@ -130,7 +132,7 @@ public class Inosuke extends SlayerRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof Doma) {

@@ -3,6 +3,7 @@ package fr.nicknqck.events.essential;
 import java.util.HashMap;
 import java.util.UUID;
 
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,12 +43,20 @@ public class JoinEvents implements Listener{
 			player.setMaxHealth(20.0);
 			player.setGameMode(GameMode.ADVENTURE);
 			ItemsManager.GiveHubItems(player);
-			player.teleport(new Location(Bukkit.getWorld("world"), 0, 151, 0));
+			player.teleport(new Location(Main.getInstance().getWorldManager().getLobbyWorld(), 0, 151, 0));
 			player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 			joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint le Lobby §c"+gameState.getInLobbyPlayers().size()+"§r/§6"+ gameState.getroleNMB() +"§r";
 			break;
 		case InGame:
-			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player.getUniqueId()) || !gameState.getInGamePlayers().contains(player)) {
+			if (gameState.getInGamePlayers().contains(event.getPlayer().getUniqueId())) {
+				GamePlayer gamePlayer = gameState.getGamePlayer().get(event.getPlayer().getUniqueId());
+				if (gamePlayer != null) {
+					gamePlayer.onJoin();
+				}
+				event.setJoinMessage(null);
+				return;
+			}
+			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player.getUniqueId()) || !gameState.getInGamePlayers().contains(player.getUniqueId())) {
 				gameState.addInSpecPlayers(player);
 				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint la liste des Spectateurs";
 				player.setGameMode(GameMode.SPECTATOR);
@@ -64,6 +73,7 @@ public class JoinEvents implements Listener{
 	}
  	@EventHandler(priority = EventPriority.HIGHEST)
 	private void onCustomJoin(PlayerJoinEvent e) {
+		if (gameState.getServerState().equals(GameState.ServerStates.InGame))return;
 		gameState.updateGameCanLaunch();
 		UUID uuid = e.getPlayer().getUniqueId();
 		Player player = e.getPlayer();
@@ -93,10 +103,10 @@ public class JoinEvents implements Listener{
  	@SuppressWarnings("unchecked")
 	private void printConsoleAndRegister(Player player) {
 		// Update Players
-		for (Player p : gameState.getInGamePlayers()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				gameState.getInGamePlayers().remove(p);
-				gameState.getInGamePlayers().add(player);
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
+			if (Bukkit.getPlayer(u) == player) {
 				System.out.println("game Player: "+p);
 			}
 		}

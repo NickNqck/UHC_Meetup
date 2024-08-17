@@ -49,14 +49,8 @@ public class Jigoro extends DemonsSlayersRoles {
 		this.setCanuseblade(true);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof ZenItsu) {
-					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
-				}
-				if (getPlayerRoles(p) instanceof Kaigaku) {
-					owner.sendMessage("La personne possédant le rôle de§c Kaigaku§r est:§c "+p.getName());
-				}
-			}
+			getKnowedRoles().add(ZenItsu.class);
+			getKnowedRoles().add(Kaigaku.class);
 		}, 20);
 		setLameIncassable(owner, true);
 	}
@@ -148,7 +142,7 @@ public class Jigoro extends DemonsSlayersRoles {
 			MathUtil.sendCircleParticle(EnumParticle.VILLAGER_ANGRY, owner.getLocation(), 10, 15);
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
 				if (!gameState.hasRoleNull(p)) {
-					if (gameState.getInGamePlayers().contains(p)) {
+					if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 						if (cooldowndegat <= 0 && p != owner) {
 							if (p.getHealth() > 4.0) {
 							p.setHealth(p.getHealth() - 4.0);
@@ -184,7 +178,7 @@ public class Jigoro extends DemonsSlayersRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof ZenItsu && !killzen) {

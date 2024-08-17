@@ -24,6 +24,8 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
+import java.util.UUID;
+
 public class Alliance extends EventBase{
 	private Kyojuro kyojuro;
 	private Shinjuro shinjuro;
@@ -33,7 +35,9 @@ public class Alliance extends EventBase{
 			if (gameState.attributedRole.contains(Roles.Kyojuro) && !gameState.DeadRole.contains(Roles.Kyojuro)) {
 				if (gameState.attributedRole.contains(Roles.Shinjuro) && !gameState.DeadRole.contains(Roles.Shinjuro)) {
 					Bukkit.broadcastMessage("L'évènement aléatoire "+Events.Alliance.getName()+"§r s'est activé, à partir de maintenant§e Shinjuro§r et§a Kyojuro§r gagne ensemble.§6 /ds alliance§r pour plus d'information...");
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							RoleBase role = gameState.getPlayerRoles().get(p);
 							if (role instanceof Kyojuro || role instanceof Shinjuro) {

@@ -79,6 +79,8 @@ public class Main extends JavaPlugin implements Listener{
 	private WorldsManager worldManager;
 	@Getter
 	private GameConfig gameConfig;
+	@Getter
+	private DeathManager deathManager;
 	@Override
 	public void onEnable() {
 		Instance = this;
@@ -168,6 +170,9 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemBuilderListener(), this);
 		new EffectsGiver();
+		DeathManager manager = new DeathManager();
+		getServer().getPluginManager().registerEvents(manager, this);
+		this.deathManager = manager;
 		System.out.println("Ending registering events");
 	}
 	private void registerCommands(GameState gameState) {
@@ -245,7 +250,9 @@ public class Main extends JavaPlugin implements Listener{
 				}
 			}
 			if (gameState.getServerState() == ServerStates.InGame) {
-				for (Player player : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player player = Bukkit.getPlayer(u);
+					if (player == null)continue;
 					if (gameState.roleTimer < gameState.getInGameTime()) {
 		        		if (!gameState.hasRoleNull(player)) {
 		        			if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
@@ -286,7 +293,7 @@ public class Main extends JavaPlugin implements Listener{
 					FileUtils.deleteDirectory(worldFolder);
 					System.out.println("Deleted world "+worldFolder.getName());
 				} catch (IOException e) {
-					e.printStackTrace();
+					e.fillInStackTrace();
 				}
 			}
 		}

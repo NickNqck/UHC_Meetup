@@ -28,7 +28,9 @@ public class Daki extends DemonsRoles {
 		setCanRespawn(true);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
@@ -113,7 +115,7 @@ public class Daki extends DemonsRoles {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
 		}
 		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (!gameState.getInGamePlayers().contains(r.owner))continue;
+			if (!gameState.getInGamePlayers().contains(r.getPlayer()))continue;
 			if (r.getRoles() == Roles.Gyutaro && r.owner.getWorld().equals(owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*3, 0, false, false), true);
@@ -149,7 +151,9 @@ public class Daki extends DemonsRoles {
 		}
 		if (item.isSimilar(Items.getObi())) {
 			if (obicooldown <= 0) {
-				for (Player pl : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player pl = Bukkit.getPlayer(u);
+					if (pl == null)continue;
 					RoleBase p = gameState.getPlayerRoles().get(pl);
 					if (pl != owner) {
 						if (p.getRoles() != Roles.Tanjiro && p.getOriginTeam() != TeamList.Demon && p.getRoles() != Roles.Inosuke && p.getRoles() != Roles.Tengen && p.getRoles() != Roles.ZenItsu && p.getRoles() != Roles.Daki && p.getRoles() != Roles.Gyutaro) {
@@ -199,7 +203,7 @@ public class Daki extends DemonsRoles {
 				}
 			}
 		if (victim != owner && killer == owner){
-			if (gameState.getInGamePlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
 					if (r instanceof Gyutaro) {

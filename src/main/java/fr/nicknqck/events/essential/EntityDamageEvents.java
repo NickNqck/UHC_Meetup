@@ -17,6 +17,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
+import java.util.UUID;
+
 public class EntityDamageEvents implements Listener{
 
 	
@@ -53,7 +55,9 @@ public class EntityDamageEvents implements Listener{
 				Player player = (Player) event.getEntity();
 				Player killer = player.getKiller();
 				double damage = event.getFinalDamage();
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (!gameState.hasRoleNull(p)) {
 						gameState.getPlayerRoles().get(p).onALLPlayerDamage(event, player);
 					}
@@ -90,7 +94,7 @@ public class EntityDamageEvents implements Listener{
 					event.setCancelled(true);
 				}
 				if ((player.getHealth()-damage) <= 0) {
-					if (gameState.getInGamePlayers().contains(player)) {
+					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 						if (gameState.getPlayerRoles().containsKey(player)) {
 							if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
 								for (Player p : Bukkit.getOnlinePlayers()) {

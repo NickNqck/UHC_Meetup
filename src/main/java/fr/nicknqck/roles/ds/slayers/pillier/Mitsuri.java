@@ -67,8 +67,10 @@ public class Mitsuri extends PillierRoles {
     public boolean ItemUse(ItemStack item, GameState gameState) {
         if (item.isSimilar(Items.getCharm())){
             if (cooldown <= 0){
-                for (Player p : gameState.getInGamePlayers()){
-                    if (gameState.getInGamePlayers().contains(p)){
+                for (UUID u : gameState.getInGamePlayers()){
+                    Player p = Bukkit.getPlayer(u);
+                    if (p == null)continue;
+                    if (gameState.getInGamePlayers().contains(p.getUniqueId())){
                         for (RoleBase r : gameState.getPlayerRoles().values()){
                             if (r.getRoles() != Roles.Mitsuri && r.getRoles() != null && p != owner){
                                 if (!gameState.getCharmed().contains(p)){

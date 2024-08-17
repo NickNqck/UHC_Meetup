@@ -22,6 +22,8 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class InfectItem implements Listener{
 	private final GameState gameState;
 	private int ActualTime;
@@ -47,7 +49,7 @@ public class InfectItem implements Listener{
 					Player a = e.getPlayer();					
 						for (Player p : Loc.getNearbyPlayers(a, 30)) {
 							if (!gameState.hasRoleNull(p)) {
-								if (gameState.getInGamePlayers().contains(p)) {
+								if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 									if (gameState.getPlayerRoles().get(p).getOldTeam() != TeamList.Demon && !(gameState.getPlayerRoles().get(p).getPlayerRoles(p) instanceof Nezuko)) {
 										ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
 										SkullMeta meta = (SkullMeta) skull.getItemMeta();
@@ -75,7 +77,9 @@ public class InfectItem implements Listener{
 				if (e.getWhoClicked().getOpenInventory() == null)return;
 				if (e.getWhoClicked().getOpenInventory().getTitle() == null) return;
 				if (e.getWhoClicked().getOpenInventory().getTitle().equalsIgnoreCase("Infection")) {
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (e.getCurrentItem().getType() == Material.SKULL_ITEM) {
 							if (e.getCurrentItem().getItemMeta().getDisplayName().equals(p.getName())) {
 								ActualTime = 0;
@@ -110,7 +114,9 @@ public class InfectItem implements Listener{
 					if (gameState.infecteur != null) {
 						if (gameState.infecteur == clicker) {
 							if (gameState.getInSpecPlayers().contains(p)) {
-								for (Player p : gameState.getInGamePlayers()) {
+								for (UUID u : gameState.getInGamePlayers()) {
+									Player p = Bukkit.getPlayer(u);
+									if (p == null)continue;
 									if (!gameState.hasRoleNull(p)) {
 										if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles) {
 											p.sendMessage("§cL'infection a échoué");
@@ -124,7 +130,9 @@ public class InfectItem implements Listener{
 							p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*10, 0, false, false));
 							
 							gameState.infecteur.sendMessage(p.getName()+" à été infecté");
-							for (Player z : gameState.getInGamePlayers()) {
+							for (UUID u : gameState.getInGamePlayers()) {
+								Player z = Bukkit.getPlayer(u);
+								if (z == null)continue;
 								if (gameState.getPlayerRoles().get(z).getOriginTeam() == TeamList.Demon) {
 									z.sendMessage("§4Un joueur à été infecté et à rejoins le camp des§c Démons");
 								}

@@ -419,7 +419,7 @@ public class Madara extends NSRoles {
 					MeteoriteUse++;
 					owner.closeInventory();
 					owner.sendMessage("§7Votre météorite attérira dans 10s");
-					Loc.getNearbyPlayers(owner, 50).stream().filter(p -> gameState.getInGamePlayers().contains(p)).filter(p -> !gameState.hasRoleNull(p)).forEach(e -> playSound(e, "mob.wither.death"));
+					Loc.getNearbyPlayers(owner, 50).stream().filter(p -> gameState.getInGamePlayers().contains(p.getUniqueId())).filter(p -> !gameState.hasRoleNull(p)).forEach(e -> playSound(e, "mob.wither.death"));
 					new BukkitRunnable() {
 						private final Location loc = owner.getLocation();
 						private int s = 0;
@@ -429,7 +429,9 @@ public class Madara extends NSRoles {
 							s++;
 							if (s == 5) {
 								owner.sendMessage("§7Votre météorite attérira dans 5s");
-								for (Player p : gameState.getInGamePlayers()) {
+								for (UUID u : gameState.getInGamePlayers()) {
+									Player p = Bukkit.getPlayer(u);
+									if (p == null)continue;
 									if (p.getWorld() == loc.getWorld()) {
 										if (p.getLocation().distance(loc) <= 50) {
 											playSound(p, "mob.wither.death");

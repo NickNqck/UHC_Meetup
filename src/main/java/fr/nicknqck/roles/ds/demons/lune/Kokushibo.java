@@ -29,20 +29,14 @@ import java.util.UUID;
 
 public class Kokushibo extends DemonsRoles {
 	private int itemcooldown = 0;
-	private int regencooldown = 0;
-	public boolean solo = false;
+	private int regencooldown;
+	public boolean solo;
 	public Kokushibo(UUID player) {
 		super(player);
 		regencooldown = 15;
 		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Muzan.class), 20);
 		setLameIncassable(owner, true);
 		solo = false;
 		killtanjiro = false;
@@ -63,13 +57,6 @@ public class Kokushibo extends DemonsRoles {
 	@Override
 	public String[] Desc() {
 		if (!gameState.demonKingTanjiro) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				for (Player p : gameState.getInGamePlayers()) {
-					if (getPlayerRoles(p) instanceof Muzan) {
-						owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-					}
-				}
-			}, 20);
 			return AllDesc.Kokushibo;
 		}else {
 			if (getOriginTeam().equals(TeamList.Solo)) {
@@ -203,7 +190,7 @@ public class Kokushibo extends DemonsRoles {
 		if (regencooldown>=1) regencooldown-=1;
 		super.Update(gameState);
 	}
-public boolean killtanjiro = false;
+public boolean killtanjiro;
 	@Override
 	public void OpenFormInventory(GameState gameState) {
 		if (!killtanjiro) {
@@ -256,7 +243,7 @@ public boolean killtanjiro = false;
 		}
 		super.FormChoosen(item, gameState);
 	}
-	public double orginalMaxHealth = 20.0;
+	public double orginalMaxHealth;
 
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
@@ -303,7 +290,9 @@ public boolean killtanjiro = false;
 				GameListener.SendToEveryone("§6Kokushibo §rà mis la §9nuit");
 				owner.getInventory().addItem(Items.getkokushibosword());
 				itemcooldown = gameState.timeday*2;
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (gameState.getPlayerRoles().containsKey(p)) {
 						gameState.getPlayerRoles().get(p).onNight(gameState);
 					}

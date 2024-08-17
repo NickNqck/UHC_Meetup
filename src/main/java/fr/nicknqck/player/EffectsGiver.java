@@ -24,7 +24,9 @@ public class EffectsGiver implements Listener {
             @Override
             public void run() {
                 if (gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                    for (Player player : gameState.getInGamePlayers()) {
+                    for (UUID u : gameState.getInGamePlayers()) {
+                        Player player = Bukkit.getPlayer(u);
+                        if (player == null)continue;
                         if (!gameState.hasRoleNull(player)) {
                             RoleBase role = gameState.getPlayerRoles().get(player);
                             if (!role.getEffects().isEmpty()) {
@@ -42,7 +44,9 @@ public class EffectsGiver implements Listener {
     }
     @EventHandler
     private void onDay(DayEvent event) {
-        for (Player player : event.getInGamePlayersWithRole()) {
+        for (UUID u : event.getInGamePlayersWithRole()) {
+            Player player = Bukkit.getPlayer(u);
+            if (player == null)continue;
             RoleBase roleBase = event.getGameState().getPlayerRoles().get(player);
             if (!roleBase.getEffects().isEmpty()) {
                 for (PotionEffect potionEffect : roleBase.getEffects().keySet()) {
@@ -70,7 +74,9 @@ public class EffectsGiver implements Listener {
     }
     @EventHandler
     private void onNight(NightEvent event) {
-        for (Player player : event.getInGamePlayersWithRole()) {
+        for (UUID u : event.getInGamePlayersWithRole()) {
+            Player player = Bukkit.getPlayer(u);
+            if (player == null)continue;
             RoleBase roleBase = event.getGameState().getPlayerRoles().get(player);
             if (!roleBase.getEffects().isEmpty()) {
                 for (PotionEffect potionEffect : roleBase.getEffects().keySet()) {

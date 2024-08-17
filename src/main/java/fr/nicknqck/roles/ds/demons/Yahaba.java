@@ -27,7 +27,9 @@ public class Yahaba extends DemonInferieurRole {
 		super(player);
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             List<SlayerRoles> roles = new ArrayList<>();
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (!gameState.hasRoleNull(p)) {
 					if (gameState.getPlayerRoles().get(p) instanceof SlayerRoles) {
 						roles.add((SlayerRoles) gameState.getPlayerRoles().get(p));
@@ -70,18 +72,20 @@ public class Yahaba extends DemonInferieurRole {
 	@Override
 	public void Update(GameState gameState) {
 		if (!killcible) {
-         for (Player p:gameState.getInGamePlayers()) {
+         for (UUID u : gameState.getInGamePlayers()) {
         	 if (cible != null) {
-        		if (p == cible && p.getWorld().equals(owner.getWorld())) {
-        			 if (p.getLocation().distance(owner.getLocation())<= 15) {
-        				 owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
-        			 }
-        	    }
-        	 }
-         }
-        }else {
-        	givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
-        }
+				 Player p = Bukkit.getPlayer(u);
+				 if (p == null)continue;
+				 if (p == cible && p.getWorld().equals(owner.getWorld())) {
+					 if (p.getLocation().distance(owner.getLocation())<= 15) {
+						 owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
+					 }
+				 }
+			 }
+		 }
+		}else {
+			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
+		}
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {

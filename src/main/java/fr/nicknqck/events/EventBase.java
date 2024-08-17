@@ -9,6 +9,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nullable;
+
 public abstract class EventBase {
 	
 	public GameState gameState = GameState.getInstance();
@@ -27,7 +29,7 @@ public abstract class EventBase {
 		return false;
 	}
 	
-	public abstract void OnPlayerKilled(Player player, Player victim, GameState gameState);
+	public abstract void OnPlayerKilled(@Nullable Player player, Player victim, GameState gameState);
 	public abstract void setupEvent();
 	public abstract Events getEvents();
 	public abstract int getProba();

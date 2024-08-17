@@ -92,10 +92,14 @@ public class Kyogai extends DemonsRoles {
 		setOldTeamList(TeamList.Demon);
 		if (item.isSimilar(GUIItems.getKyogaiDémon())) {
 			if (!FFA.getFFA()) {
-				for (Player e : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player e = Bukkit.getPlayer(u);
+					if (e == null)continue;
 					if (gameState.getPlayerRoles().get(e) != null) {
 						if (!gameState.hasRoleNull(e)) {
-							for (Player s : gameState.getInGamePlayers()) {
+							for (UUID as : gameState.getInGamePlayers()) {
+								Player s = Bukkit.getPlayer(as);
+								if (s == null)continue;
 								if (!gameState.hasRoleNull(s)) {
 										if (gameState.getAvailableRoles().containsKey(Roles.Muzan)) {
 											if (gameState.getPlayerRoles().get(e) instanceof Muzan) {
@@ -205,11 +209,12 @@ public class Kyogai extends DemonsRoles {
 							 cooldowntambour = 30;
 						}
 					} else {
-						for (Player target : gameState.getInGamePlayers()) {
-						if (target != owner && target != null) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player target = Bukkit.getPlayer(u);
+							if (target == null)continue;
+						if (u != getPlayer()) {
 							  if(target.getLocation().distance(owner.getLocation()) <= 30) {
-								  	 Player player = (Player) target;
-									 Location location = player.getLocation().clone();
+                                  Location location = target.getLocation().clone();
 								     location.setYaw(-location.getYaw());
 								     location.setPitch(-location.getPitch());
 								     target.teleport(location);
@@ -246,8 +251,10 @@ public class Kyogai extends DemonsRoles {
 			if (izi == 0) {
 				double min = 30;
 				Player target = null;
-				for (Player p : gameState.getInGamePlayers()) {
-					if (p != owner) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					if (u != getPlayer()) {
 						double dist = Math.abs(p.getLocation().distance(owner.getLocation()));
 						if (dist < min) {
 							target = p;
@@ -270,8 +277,10 @@ public class Kyogai extends DemonsRoles {
 			if (izi == 0) {
 				double min = 30;
 				Player target = null;
-				for (Player p : gameState.getInGamePlayers()) {
-					if (p != owner) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					if (u != getPlayer()) {
 						double dist = Math.abs(p.getLocation().distance(owner.getLocation()));
 						if (dist < min) {
 							target = p;
@@ -293,7 +302,7 @@ public class Kyogai extends DemonsRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer != owner)return;
 		if (victim == owner)return;
-		if (gameState.getInGamePlayers().contains(victim)) {
+		if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 			if (gameState.getPlayerRoles().containsKey(victim)) {
 				RoleBase role = gameState.getPlayerRoles().get(victim);
 		if (camp == Camp.Solo) {		

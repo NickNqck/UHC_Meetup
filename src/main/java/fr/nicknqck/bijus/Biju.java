@@ -104,9 +104,11 @@ public abstract class Biju {
 	}
 	public UUID getMaster() {
         UUID toReturn = null;
-        for (Player aliveOnlinePlayer : GameState.getInstance().getInGamePlayers()) {
-            if (hasBiju(aliveOnlinePlayer) && getBiju(aliveOnlinePlayer) == this) {
-                toReturn = aliveOnlinePlayer.getUniqueId();
+        for (UUID u : GameState.getInstance().getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
+            if (hasBiju(p) && getBiju(p) == this) {
+                toReturn = u;
                 break;
             }
         }

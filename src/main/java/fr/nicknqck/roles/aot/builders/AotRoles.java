@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -31,7 +32,11 @@ public abstract class AotRoles extends RoleBase {
     public void onAotCommands(String arg, String[] args, GameState gameState) {}
     public void TransfoEclairxMessage(Player player) {
         gameState.spawnLightningBolt(player.getWorld(), player.getLocation());
-        for (Player p : gameState.getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}
+        for (UUID u : gameState.getInGamePlayers()) {
+            Player p = Bukkit.getPlayer(u);
+            if (p == null)continue;
+            p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");
+        }
     }
     private static class RodCooldownRunnable extends BukkitRunnable {
         private final AotRoles role;

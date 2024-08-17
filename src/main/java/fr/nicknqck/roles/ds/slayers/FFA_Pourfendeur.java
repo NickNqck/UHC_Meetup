@@ -445,21 +445,23 @@ public class FFA_Pourfendeur extends SlayerRoles {
 		}
 		if (Foudre&& victim != owner) {
 			if (usefoudre) {
-				for(Player p : gameState.getInGamePlayers())
-					if (p != owner && p == victim) {
-                        assert victim != null;
-                        if (victim.getHealth() > 4.0) {
+				for(UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					if (u.equals(getPlayer()) && p == victim) {
+						if (victim.getHealth() > 4.0) {
 							victim.setHealth(victim.getHealth() - 4.0);
 						} else {
 							victim.setHealth(1.0);
-						}			
-						victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false));
-							victim.damage(0.0);
-					    	owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + victim.getName());
-					    	victim.sendMessage(ChatColor.GREEN+"Vous avez été foudroyez par un simple "+ChatColor.GOLD+"Pourfendeur de Démon...");
-					        victim.getWorld().strikeLightningEffect(victim.getLocation());
 						}
-				usefoudre = false;
+						victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false));
+						victim.damage(0.0);
+						owner.sendMessage(ChatColor.GREEN+"Vous avez touchez : "+ ChatColor.GOLD + victim.getName());
+						victim.sendMessage(ChatColor.GREEN+"Vous avez été foudroyez par un simple "+ChatColor.GOLD+"Pourfendeur de Démon...");
+						victim.getWorld().strikeLightningEffect(victim.getLocation());
+					}
+					usefoudre = false;
+				}
 			}
 		}
 		if (Soleil && usesoleil) {

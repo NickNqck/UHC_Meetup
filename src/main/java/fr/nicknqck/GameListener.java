@@ -54,9 +54,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -133,12 +131,16 @@ public class GameListener implements Listener {
 			break;
 		case InGame:
 			Main.getInstance().getWorldManager().getGameWorld().setPVP(gameState.pvp);
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
 				if (gameState.inGameTime < 10) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
 				}
-				if (gameState.infected != null && gameState.infected.getUniqueId() == p.getUniqueId()) {
+				if (gameState.infected != null && gameState.infected.getUniqueId() == u) {
 					if (gameState.nightTime) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						gameState.getPlayerRoles().get(p).givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
 						if (!infectedgiveforce) {
 							infectedgiveforce = true;
@@ -152,7 +154,9 @@ public class GameListener implements Listener {
 			}
 			AntiLopsa.startWorldBorderChecker();
 			if (Hastey_Boys.isHasteyBoys()) {
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					ItemStack is = p.getItemInHand();
 					ItemMeta meta = is.getItemMeta();
 					Material m = is.getType();
@@ -174,7 +178,9 @@ public class GameListener implements Listener {
 						}
 					}
 			if (Hastey_Babys.isHasteyBabys()) {
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					ItemStack is = p.getItemInHand();
 					ItemMeta meta = is.getItemMeta();
 					Material m = is.getType();
@@ -227,7 +233,9 @@ public class GameListener implements Listener {
 						SendToEveryone("\n §bIl fait maintenant jour");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 						gameState.t = gameState.timeday;
-						for (Player p : gameState.getInGamePlayers()) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
 							if (gameState.getPlayerRoles().containsKey(p)) {
 								gameState.getPlayerRoles().get(p).onDay(gameState);
 							}
@@ -241,7 +249,9 @@ public class GameListener implements Listener {
 						SendToEveryone("\n §bIl fait maintenant nuit\n");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 						gameState.t = gameState.timeday;
-						for (Player p : gameState.getInGamePlayers()) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
 							if (gameState.getPlayerRoles().containsKey(p)) {
 								gameState.getPlayerRoles().get(p).onNight(gameState);
 							}
@@ -251,7 +261,9 @@ public class GameListener implements Listener {
 				}
 			}
 			if (gameState.inGameTime == gameState.roleTimer) {
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					RoleBase role = gameState.GiveRole(p);
 					if (role != null){
 						role.RoleGiven(gameState);
@@ -259,7 +271,9 @@ public class GameListener implements Listener {
 					}
 				}
 			}
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (gameState.getPlayerRoles().containsKey(p)) {
 					gameState.getPlayerRoles().get(p).Update(gameState);
 				}
@@ -337,7 +351,9 @@ public class GameListener implements Listener {
 			gameState.attributedRole.clear();
 			KamuiUtils.resetUtils();
 			gameState.setHokage(null);
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				ItemsManager.ClearInventory(p);
 				if (!gameState.hasRoleNull(p)) {
 					RoleBase r = gameState.getPlayerRoles().get(p);
@@ -367,8 +383,10 @@ public class GameListener implements Listener {
                     SendToEveryone(Vainqueurs);
 				} else {
 					if (gameState.getInGamePlayers().get(0) != null) {
-						Player winer = gameState.getInGamePlayers().get(0);
-						String Vainqueurs = "Vainqueur:§l "+team.getColor()+winer.getName();
+						Player winer = Bukkit.getPlayer(gameState.getInGamePlayers().get(0));
+						String win = winer == null ? "§cDéconnecter" : winer.getName();
+						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
+						assert winer != null;
 						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer).size()+"§f kill(s)";
 						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles().name();
                         SendToEveryone(Vainqueurs);
@@ -527,7 +545,7 @@ public class GameListener implements Listener {
 			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 	}
 	@NotNull
-	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
+	public void DeathHandler(final Player player, final Entity damager, final GameState gameState) {
 		UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(player, damager, gameState);
 		Bukkit.getPluginManager().callEvent(playerKillEvent);
 		UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(player, gameState, gameState.getPlayerRoles().get(player));
@@ -587,7 +605,9 @@ public class GameListener implements Listener {
 			if (damager instanceof Player) {
 				Player killer = (Player) damager;
                 DeathMessage(player);
-                for (Player p : gameState.getInGamePlayers()) {
+                for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (gameState.getPlayerRoles().containsKey(p)) {
 						gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
 					}
@@ -595,7 +615,9 @@ public class GameListener implements Listener {
 				if (gameState.getPlayerRoles().containsKey(damager)) {
 					RoleBase role = gameState.getPlayerRoles().get(damager);
 					if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
-						for (Player p : gameState.getInGamePlayers()) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
 							if (!gameState.hasRoleNull(p)) {
 								RoleBase role2 = gameState.getPlayerRoles().get(p);
 								if (role2.getTeam().equals(TeamList.Demon) || role2.getOriginTeam().equals(TeamList.Demon)) {
@@ -605,7 +627,9 @@ public class GameListener implements Listener {
                             }
                         }
                     }
-                    for (Player p : gameState.getInGamePlayers()) {
+                    for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
                         if (gameState.getPlayerRoles().containsKey(p)) {
                             gameState.getPlayerRoles().get(p).PlayerKilled((Player)damager, player, gameState);
                             if (!gameState.getPlayerKills().get(damager).containsKey(player)) {
@@ -615,7 +639,9 @@ public class GameListener implements Listener {
                             }
                         }
                     }
-                    for (Player p : gameState.getInGamePlayers()) {
+                    for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
                         if (!gameState.hasRoleNull(player)) {
                             gameState.getPlayerRoles().get(p).OnAPlayerDie(player, gameState, damager);
                         }
@@ -626,7 +652,9 @@ public class GameListener implements Listener {
                         if (arr.getShooter() instanceof Player) {
                             Player killer = (Player) arr.getShooter();
                             DeathMessage(player);
-                            for (Player p : gameState.getInGamePlayers()) {
+                            for (UUID u : gameState.getInGamePlayers()) {
+								Player p = Bukkit.getPlayer(u);
+								if (p == null)continue;
                                 if (gameState.getPlayerRoles().containsKey(p)) {
                                     gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
                                 }
@@ -634,7 +662,9 @@ public class GameListener implements Listener {
                             if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
                                 RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
                                 if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
-                                    for (Player p : gameState.getInGamePlayers()) {
+                                    for (UUID u : gameState.getInGamePlayers()) {
+										Player p = Bukkit.getPlayer(u);
+										if (p == null)continue;
                                         if (!gameState.hasRoleNull(p)) {
                                             RoleBase role2 = gameState.getPlayerRoles().get(p);
                                             if (role2.getOldTeam() == TeamList.Demon || role2 instanceof Kaigaku) {
@@ -644,7 +674,9 @@ public class GameListener implements Listener {
                                     }
                                 }
                             }
-                            for (Player p : gameState.getInGamePlayers()) {
+                            for (UUID u : gameState.getInGamePlayers()) {
+								Player p = Bukkit.getPlayer(u);
+								if (p == null)continue;
                                 if (gameState.getPlayerRoles().containsKey(p))
                                     gameState.getPlayerRoles().get(p).PlayerKilled((Player)arr.getShooter(), player, gameState);
                                 if (!gameState.getPlayerKills().get((Player)arr.getShooter()).containsKey(player)) {
@@ -653,7 +685,9 @@ public class GameListener implements Listener {
                                     gameState.getPlayerKills().get((Player)arr.getShooter()).put(player, fakeRole);
                                 }
                             }
-                            for (Player p : gameState.getInGamePlayers()) {
+                            for (UUID u : gameState.getInGamePlayers()) {
+								Player p = Bukkit.getPlayer(u);
+								if (p == null)continue;
                                 if (!gameState.hasRoleNull(player)) {
                                     gameState.getPlayerRoles().get(p).OnAPlayerDie(player, gameState, damager);
                                 }
@@ -685,13 +719,13 @@ public class GameListener implements Listener {
 				dropItem(player.getLocation(), new ItemStack(Material.ARROW, 8));
 				dropItem(player.getLocation(), new ItemStack(Material.BRICK, 16));
 			}
-			player.setMaxHealth(20.0);
-			player.setHealth(player.getMaxHealth());
-			player.setFoodLevel(20);
-			player.setGameMode(GameMode.SPECTATOR);
-			ItemsManager.ClearInventory(player);
-			player.updateInventory();
-			detectWin(gameState);
+		player.setMaxHealth(20.0);
+		player.setHealth(player.getMaxHealth());
+		player.setFoodLevel(20);
+		player.setGameMode(GameMode.SPECTATOR);
+		ItemsManager.ClearInventory(player);
+		player.updateInventory();
+		detectWin(gameState);
 	}
 	private static int trueCount(boolean... b) {
         int sum = 0;
@@ -700,20 +734,6 @@ public class GameListener implements Listener {
         }
         return sum;
     }
-	@EventHandler(priority = EventPriority.HIGHEST)
-	private void VanillaDeath(PlayerDeathEvent e) {
-		e.setDroppedExp(5);
-		e.getEntity().getInventory().clear();
-		e.setDeathMessage(null);
-	}
-	@EventHandler
-	private void onEntityDeath(EntityDeathEvent e){
-		if (e.getEntity() instanceof Player){
-			DeathHandler((Player) e.getEntity(), e.getEntity().getKiller(), e.getEntity().getLastDamage(), gameState);
-			e.setDroppedExp(15);
-			e.getDrops().clear();
-		}
-	}
 	public static void detectWin(GameState gameState) {
         List<Player> players = new ArrayList<>(gameState.igPlayers);
 		players.removeAll(gameState.getInSpecPlayers());
@@ -753,7 +773,9 @@ public class GameListener implements Listener {
 		
 		boolean Kumogakure = false;
 		boolean Kabuto = false;
-		for (Player player2 : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player player2 = Bukkit.getPlayer(u);
+			if (player2 == null)continue;
 			if (gameState.getPlayerRoles().get(player2) != null) {
 				RoleBase role = gameState.getPlayerRoles().get(player2);
 				switch (role.getTeam()) {
@@ -956,7 +978,7 @@ public class GameListener implements Listener {
                 assert player != null;
                 if (player.getHealth()-damage <= 0) {
 					if (event.getCause() != DamageCause.FALL) {
-						if (gameState.getInGamePlayers().contains(player)) {
+						if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 							if (!gameState.hasRoleNull(player)) {
 								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
                                     assert damageur instanceof Player;
@@ -1007,7 +1029,7 @@ public class GameListener implements Listener {
 				gameState.getPlayerRoles().get(clicker).onInventoryClick(event, item, inv, clicker);
 			}
 			for (Player p : Bukkit.getOnlinePlayers()){
-				if (gameState.getInGamePlayers().contains(p)) {
+				if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 					if (!gameState.hasRoleNull(p)) {
 						gameState.getPlayerRoles().get(p).onAllPlayerInventoryClick(event, item, inv, clicker);
 					}
@@ -1051,7 +1073,9 @@ public class GameListener implements Listener {
 			for (Events e : Events.values()) {
 				e.getEvent().onItemInteract(event, itemstack, player);
 			}
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (!gameState.hasRoleNull(p)) {
 					gameState.getPlayerRoles().get(p).onALLPlayerInteract(event, player);
 				}
@@ -1064,7 +1088,7 @@ public class GameListener implements Listener {
 				}
 			}
 				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-					if (gameState.getInGamePlayers().contains(player)) {
+					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 						if (gameState.getPlayerRoles().containsKey(player)) {
 							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
@@ -1094,7 +1118,7 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void OnPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
-		if (gameState.getInGamePlayers().contains(player)) {
+		if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 			if (!gameState.hasRoleNull(player)) {
 				if (gameState.getPlayerRoles().get(player).getRoles() == null) {
 					event.setCancelled(true);
@@ -1109,7 +1133,9 @@ public class GameListener implements Listener {
 	}
 	@EventHandler
 	public void OnMoove(PlayerMoveEvent e) {
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
 				gameState.getPlayerRoles().get(p).onAllPlayerMoove(e, e.getPlayer());
 			}
@@ -1118,6 +1144,13 @@ public class GameListener implements Listener {
 		Location from = e.getFrom();
 		Location to = e.getTo();
 		if(to == null) return;
+		if (gameState.getServerState().equals(ServerStates.InGame)) {
+			if (!gameState.getGamePlayer().isEmpty()) {
+				if (gameState.getGamePlayer().containsKey(e.getPlayer().getUniqueId())) {
+					gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).setLastLocation(e.getFrom());
+				}
+			}
+		}
 		if (to.getY() < 0) {
 			p.teleport(new Location(to.getWorld(), to.getX(), to.getWorld().getHighestBlockYAt(to), to.getZ()));
 		}

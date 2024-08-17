@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
+import java.util.UUID;
 
 public class Chat implements Listener{
 	private static ChatColor opcolor = ChatColor.RED;
@@ -51,9 +52,11 @@ public class Chat implements Listener{
 				}
 				e.setCancelled(true);
             }else {
-				for (Player ig : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player ig = Bukkit.getPlayer(u);
+					if (ig == null)continue;
 					if (!gameState.hasRoleNull(ig)) {
-						if (gameState.getInGamePlayers().contains(p)) {
+						if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 							if (!gameState.hasRoleNull(p)) {
 								gameState.getPlayerRoles().get(ig).onAllPlayerChat(e, p);
 							}

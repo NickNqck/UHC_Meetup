@@ -47,7 +47,9 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		pacte = Pacte.Non_Choisis;
 		setCanuseblade(true);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
@@ -72,7 +74,9 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 	@Override
 	public String[] Desc() {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (getPlayerRoles(p) instanceof ZenItsu) {
 					owner.sendMessage("La personne possédant le rôle de§a ZenItsu§r est:§a "+p.getName());
 				}
@@ -169,7 +173,9 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 						break;
 					case PacteKaigaku:
 						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.getName());
-						for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
+						for (UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
 							if (!gameState.hasRoleNull(p)) {//vérifie que p a un role
 								if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {//si p est kaigaku
 									owner.sendMessage(p.getName()+" est§c Kaigaku");
@@ -192,7 +198,9 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 						owner.sendMessage("Vous avez choisis le Pacte§6 "+pacte.getName());
 						gameState.JigoroV2Pacte3 = true;
 						owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-						for (Player p : gameState.getInGamePlayers()) {//p = les gens en jeux
+						for (UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
 							if (gameState.getPlayerRoles().containsKey(p)) {//vérifie que p a un role
 								if (gameState.getPlayerRoles().get(p) instanceof ZenItsu) {//si p est ZenItsu
 									owner.sendMessage(p.getName()+" est§a ZenItsu");
@@ -221,7 +229,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 	public void Update(GameState gameState) {
 		if (pacte == Pacte.PacteZenItsu) {
 			if (zen != null) {
-				if (owner.getLocation().distance(zen.owner.getLocation()) <= 20.0 && gameState.getInGamePlayers().contains(owner) && zen.getGamePlayer().isAlive()) {
+				if (owner.getLocation().distance(zen.owner.getLocation()) <= 20.0 && gameState.getInGamePlayers().contains(getPlayer()) && zen.getGamePlayer().isAlive()) {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
 					zen.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
 				}
@@ -316,7 +324,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		if (pacte == Pacte.PacteSolo) {
 			if (killer.getUniqueId() == getPlayer()) {
 				if (victim.getUniqueId() != getPlayer()){
-					if (gameState.getInGamePlayers().contains(victim)) {
+					if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 						if (gameState.getPlayerRoles().containsKey(victim)) {
 							RoleBase role = gameState.getPlayerRoles().get(victim);
 							if (role instanceof ZenItsu) {
@@ -339,7 +347,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 			}	
 		}
 		if (pacte == Pacte.PacteKaigaku) {
-			if (gameState.getInGamePlayers().contains(victim) && gameState.getInGamePlayers().contains(killer)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId()) && gameState.getInGamePlayers().contains(killer.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim) || gameState.getPlayerRoles().containsKey(killer)) {
 					if (killer == owner) {
 						String msg = "Vous avez reçus 1 demi§c❤§r permanent car§6 Jigoro§r ou§6 Kaigaku à fait un kill";

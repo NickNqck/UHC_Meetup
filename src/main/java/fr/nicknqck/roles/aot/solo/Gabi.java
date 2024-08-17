@@ -33,13 +33,15 @@ public class Gabi extends AotRoles {
 		return TeamList.Solo;
 	}
 
-	private	List<Player> inList = new ArrayList<>();
+	private final List<Player> inList = new ArrayList<>();
 	@Override
 	public String[] Desc() {
 			if (!killshifter) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					List<Player> canBeinList = new ArrayList<>();
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
@@ -59,7 +61,9 @@ public class Gabi extends AotRoles {
 			}, 11);
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					List<Player> canBeinList = new ArrayList<>();
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
@@ -83,7 +87,9 @@ public class Gabi extends AotRoles {
 			}, 14);
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					List<Player> canBeinList = new ArrayList<>();
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
 								if (!inList.contains(p)) {
@@ -157,9 +163,7 @@ public class Gabi extends AotRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (inList.contains(player)) {
-			inList.remove(player);
-		}
+        inList.remove(player);
 	}
 	@Override
 	public void resetCooldown() {

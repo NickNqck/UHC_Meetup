@@ -32,11 +32,7 @@ public class Nezuko extends DemonsRoles {
 		regencooldown = 20;
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Tanjiro) {
-					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
-				}
-			}
+			getKnowedRoles().add(Tanjiro.class);
 		}, 20);
 	}
 	@Override
@@ -54,13 +50,6 @@ public class Nezuko extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Tanjiro) {
-					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.Nezuko;
 	}
 	@Override
@@ -111,7 +100,7 @@ public class Nezuko extends DemonsRoles {
 			firezone = false;
 		}
 		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (!gameState.getInGamePlayers().contains(r.owner)) continue;
+			if (!gameState.getInGamePlayers().contains(r.getPlayer())) continue;
 			if (r instanceof Tanjiro && r.owner.getWorld().equals(owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*2, 0, false, false));

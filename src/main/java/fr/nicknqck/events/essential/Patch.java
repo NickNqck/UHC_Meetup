@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Patch implements Listener{
 	private final GameState gameState;
 	public Patch(GameState gameState) {
@@ -29,7 +31,9 @@ public class Patch implements Listener{
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
 		}
 		if (!(event.getEntity() instanceof Player)) return;
-        for (Player a : gameState.getInGamePlayers()) {
+        for (UUID u : gameState.getInGamePlayers()) {
+			Player a = Bukkit.getPlayer(u);
+			if (a == null)continue;
         	if (!gameState.hasRoleNull(a)) {
         		gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntity(event, (Player) event.getEntity(), event.getDamager());
         	}
@@ -83,7 +87,9 @@ public class Patch implements Listener{
 		battleEvent2.setDamage(event.getDamage());
 		Bukkit.getPluginManager().callEvent(battleEvent2);
 		event.setDamage(battleEvent2.getDamage());
-        for (Player a : gameState.getInGamePlayers()) {
+        for (UUID u : gameState.getInGamePlayers()) {
+			Player a = Bukkit.getPlayer(u);
+			if (a == null)continue;
         	if (!gameState.hasRoleNull(a)) {
         		if (!event.isCancelled()) {
         			gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntityAfterPatch(event, victim, damager);

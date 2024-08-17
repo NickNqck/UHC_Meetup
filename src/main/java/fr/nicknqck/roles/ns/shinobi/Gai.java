@@ -12,7 +12,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -140,7 +139,7 @@ public class Gai extends ShinobiRoles {
 					int intVie = 60*6;
 					@Override
 					public void run() {
-						if (gameState.getInGamePlayers().contains(owner)) {
+						if (gameState.getInGamePlayers().contains(getPlayer())) {
 						intVie --;
 						} else {
 							cancel();
@@ -213,7 +212,7 @@ public class Gai extends ShinobiRoles {
 							cancel();
 						}
 						if (in == 10) {
-							GameListener.getInstance().DeathHandler(owner, owner, 50000.0, gameState);
+							GameListener.getInstance().DeathHandler(owner, owner, gameState);
 							cancel();
 						}
 					

@@ -15,7 +15,6 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -28,11 +27,7 @@ public class Rui extends DemonsRoles {
 	public Rui(UUID player) {
 		super(player);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
+			getKnowedRoles().add(Muzan.class);
 		}, 20);
 	}
 	@Override
@@ -50,13 +45,6 @@ public class Rui extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.Rui;
 	}
 	
