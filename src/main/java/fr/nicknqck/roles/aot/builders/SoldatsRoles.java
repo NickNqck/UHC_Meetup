@@ -1,7 +1,6 @@
 package fr.nicknqck.roles.aot.builders;
 
 import fr.nicknqck.roles.builder.TeamList;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
