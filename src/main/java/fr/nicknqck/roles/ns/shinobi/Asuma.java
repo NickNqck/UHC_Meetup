@@ -99,7 +99,7 @@ public class Asuma extends ShinobiRoles {
 
 	@Override
 	public Intelligence getIntelligence() {
-		return null;
+		return Intelligence.CONNUE;
 	}
 
 	@Override

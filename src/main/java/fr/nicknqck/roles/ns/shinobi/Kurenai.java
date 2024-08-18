@@ -106,8 +106,9 @@ public class Kurenai extends ShinobiRoles {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c Genjutsu temporel§7.");
             }
         }
-        if (getPlayerFromRole(GameState.Roles.Asuma) != null){
-            if (Loc.getNearbyPlayers(getPlayerFromRole(GameState.Roles.Asuma), 15).contains(owner)){
+        Player asuma = getPlayerFromRole(GameState.Roles.Asuma);
+        if (asuma != null){
+            if (Loc.getNearbyPlayers(asuma, 15).contains(owner)){
                 givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
             }
         }
