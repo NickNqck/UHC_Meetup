@@ -161,7 +161,7 @@ public class Deidara extends AkatsukiRoles {
 											}
 											loc.getBlock().setType(Material.AIR);
 											for (Player p : Loc.getNearbyPlayers(loc, 0.85)) {
-												GameListener.getInstance().DeathHandler(p, owner, gameState);
+												Main.getInstance().getDeathManager().KillHandler(p, owner);
 											}
 										}
 										GameListener.SendToEveryone("§4§lL'art est explosion !");

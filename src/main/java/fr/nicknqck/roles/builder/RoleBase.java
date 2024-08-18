@@ -309,7 +309,7 @@ public abstract class RoleBase implements IRole {
 	public void Heal(Player target, double demicoeur) {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (target.getHealth() - demicoeur <= 0 && demicoeur <0) {
-				GameListener.getInstance().DeathHandler(target, target, gameState);
+				Main.getInstance().getDeathManager().KillHandler(target, target);
 			}
 			if (target.getHealth() <= (target.getMaxHealth()-demicoeur)) {
 				target.setHealth(target.getHealth()+demicoeur);

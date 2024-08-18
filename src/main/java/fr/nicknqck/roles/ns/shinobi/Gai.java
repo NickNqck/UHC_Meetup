@@ -212,7 +212,7 @@ public class Gai extends ShinobiRoles {
 							cancel();
 						}
 						if (in == 10) {
-							GameListener.getInstance().DeathHandler(owner, owner, gameState);
+							Main.getInstance().getDeathManager().KillHandler(owner, owner);
 							cancel();
 						}
 					
