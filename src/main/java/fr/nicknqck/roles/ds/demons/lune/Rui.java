@@ -26,9 +26,7 @@ public class Rui extends DemonsRoles {
 
 	public Rui(UUID player) {
 		super(player);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			getKnowedRoles().add(Muzan.class);
-		}, 20);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Muzan.class), 20);
 	}
 	@Override
 	public TeamList getOriginTeam() {

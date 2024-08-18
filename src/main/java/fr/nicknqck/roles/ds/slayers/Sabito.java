@@ -126,7 +126,7 @@ public class Sabito extends SlayerRoles {
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim != owner) {
-			if (gameState.getInGamePlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
 					if (r instanceof Tomioka && !dietomioka) {

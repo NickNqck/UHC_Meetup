@@ -87,7 +87,7 @@ public class Muzan extends DemonsRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof Nezuko) {
@@ -133,7 +133,7 @@ public class Muzan extends DemonsRoles {
 			if (args.length == 2) {
 				if (args[1] != null) {
 					Player player = Bukkit.getPlayer(args[1]);
-						if (gameState.getInGamePlayers().contains(player) && !gameState.hasRoleNull(player)) {
+						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player)) {
 							if (gameState.infected == null && gameState.infecteur == null) {
 								if (getPlayerRoles(player).getOldTeam() == TeamList.Demon || getPlayerRoles(player) instanceof Nezuko) {
 									giveItem(player, false, Items.getInfection());

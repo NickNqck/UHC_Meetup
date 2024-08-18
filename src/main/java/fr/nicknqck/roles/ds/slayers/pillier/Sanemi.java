@@ -86,7 +86,7 @@ public class Sanemi extends PillierRoles {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target != null) {
 					if (dstpcooldown <= 0 && dstpuse < 2) {
-						if (target.getWorld().equals(Bukkit.getWorld("world"))) {
+						if (target.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 							Location loc = GameListener.generateRandomLocation(target.getWorld());
 							target.teleport(loc);
 							target.sendMessage("§7Vous avez été téléporté par§a Sanemi");
@@ -177,11 +177,11 @@ public class Sanemi extends PillierRoles {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof Kokushibo && !killkoku) {
 							killkoku = true;
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Kokushibo "+ChatColor.GRAY+"vous obtenez donc la marque des pourfendeurs ce qui vous donnera force 1 pendant 2 minutes");
+							owner.sendMessage(ChatColor.GRAY + "Vous venez de tuez " + ChatColor.GOLD + "Kokushibo " + ChatColor.GRAY + "vous obtenez donc la marque des pourfendeurs ce qui vous donnera force 1 pendant 2 minutes");
 							owner.getInventory().addItem(Items.getSlayerMark());
-		super.PlayerKilled(killer, victim, gameState);
-	}
-}
+							super.PlayerKilled(killer, victim, gameState);
+						}
+					}
 				}
 			}
 		}

@@ -31,9 +31,7 @@ public class Nezuko extends DemonsRoles {
 		super(player);
 		regencooldown = 20;
 		this.setResi(20);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			getKnowedRoles().add(Tanjiro.class);
-		}, 20);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Tanjiro.class), 20);
 	}
 	@Override
 	public TeamList getOriginTeam() {

@@ -121,7 +121,7 @@ public class Shinobu extends PillierRoles {
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim != owner) {
-			if (gameState.getInGamePlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
 					if (killer == owner) {
@@ -135,19 +135,17 @@ public class Shinobu extends PillierRoles {
 		}
 	}
 		if (victim == owner) {
-				if (gameState.getInGamePlayers().contains(killer)) {
+				if (gameState.getInGamePlayers().contains(killer.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(killer)) {
 						RoleBase r = gameState.getPlayerRoles().get(killer);
-						if (killer != null) {
-							if (r instanceof Doma) {
-								killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*30, 0, false, false));
-								killer.sendMessage("En tuant le joueur: "+ChatColor.GOLD+ owner.getName() +ChatColor.WHITE+" vous recevez poison 1 pendant 30 secondes");
-							} else {
-								killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*15, 0, false, false));
-								killer.sendMessage("En tuant le joueur: "+ChatColor.GOLD+ owner.getName() +ChatColor.WHITE+" vous recevez poison 1 pendant 15 secondes");
-							}
-						}
-				}
+                        if (r instanceof Doma) {
+                            killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 30, 0, false, false));
+                            killer.sendMessage("En tuant le joueur: " + ChatColor.GOLD + owner.getName() + ChatColor.WHITE + " vous recevez poison 1 pendant 30 secondes");
+                        } else {
+                            killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 15, 0, false, false));
+                            killer.sendMessage("En tuant le joueur: " + ChatColor.GOLD + owner.getName() + ChatColor.WHITE + " vous recevez poison 1 pendant 15 secondes");
+                        }
+                    }
 			}
 		
 		}

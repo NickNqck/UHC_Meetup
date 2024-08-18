@@ -147,7 +147,7 @@ public class Hotaru extends SlayerRoles {
 				Player cible = Bukkit.getPlayer(args[1]);
 					if (actualdslameuse <5) {
 						if (cible != null) {
-							if (!gameState.getInGamePlayers().contains(cible)) {
+							if (!gameState.getInGamePlayers().contains(cible.getUniqueId())) {
 							owner.sendMessage("Vous ne pouvez pas obtenir d'information sur un joueur qui n'est pas en jeu");
 							}
 							if (cible.getInventory().contains(Items.getLamedenichirincoeur())) {
@@ -188,7 +188,7 @@ public class Hotaru extends SlayerRoles {
 				Player cible = Bukkit.getPlayer(args[1]);
 					if (!hasdsunbreak) {
 						if (cible != null) {
-							if (!gameState.getInGamePlayers().contains(cible)) {
+							if (!gameState.getInGamePlayers().contains(cible.getUniqueId())) {
 							owner.sendMessage("Impossible de rendre la lame d'un mort incassable !");
 							}
 						if (!gameState.hasRoleNull(cible)) {
@@ -218,7 +218,7 @@ public class Hotaru extends SlayerRoles {
 					Player cible = Bukkit.getPlayer(args[1]);
 					if (actualdsrepair < 5) {
 						if (cible != null) {
-							if (!gameState.getInGamePlayers().contains(cible)) {
+							if (!gameState.getInGamePlayers().contains(cible.getUniqueId())) {
 								owner.sendMessage("Impossible de rendre la lame d'un mort incassable !");
 							}
 							for (Lames lames : Lames.values()) {

@@ -134,7 +134,7 @@ public class Kanao extends SlayerRoles {
 		if (victim == owner) {
 			victim.getInventory().remove(Material.NETHER_STAR);
 		} else {
-			if (gameState.getInGamePlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
 					if (killer == owner) {

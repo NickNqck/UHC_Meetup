@@ -1,5 +1,7 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.GameListener;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ds.demons.lune.Akaza;
 import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
@@ -140,6 +142,20 @@ public class AkazaVSKyojuro extends EventBase{
 					if (kyojuro != null) {
 						kyojuro.sendMessage(msg);
 					}
+				}
+			}
+			if (realEnd && !LocationNull() && this.akaza != null && this.kyojuro != null) {
+				Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
+				Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
+				if (kyojuro != null) {
+					Location loc = GameListener.generateRandomLocation(Main.getInstance().getWorldManager().getGameWorld());
+					kyojuro.teleport(loc);
+					this.originalKyojuroLocation = null;
+				}
+				if (akaza != null) {
+					Location loc = GameListener.generateRandomLocation(Main.getInstance().getWorldManager().getGameWorld());
+					akaza.teleport(loc);
+					this.originalAkazaLocation = null;
 				}
 			}
 			if (PouvoirSangCooldown > 0) {

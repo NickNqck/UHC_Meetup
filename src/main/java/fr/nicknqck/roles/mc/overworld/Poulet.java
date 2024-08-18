@@ -12,7 +12,6 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -102,7 +101,7 @@ public class Poulet extends OverWorldRoles {
 
                     @Override
                     public void run() {
-                        if (gameState.getInGamePlayers().contains(owner)) {
+                        if (gameState.getInGamePlayers().contains(getPlayer())) {
                             i++;
                             if (i == 4) {
                                 owner.sendMessage("Vous ne pouvez plus voler.");

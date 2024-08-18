@@ -130,7 +130,7 @@ public class WitherBoss extends UHCMcRoles {
                     private int timeRemaining = 15;
                     @Override
                     public void run() {
-                        if (gameState.getServerState() != GameState.ServerStates.InGame || !gameState.getInGamePlayers().contains(owner) || !isFlying){
+                        if (gameState.getServerState() != GameState.ServerStates.InGame || !gameState.getInGamePlayers().contains(getPlayer()) || !isFlying){
                             cancel();
                             return;
                         }

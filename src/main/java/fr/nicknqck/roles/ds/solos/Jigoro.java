@@ -154,9 +154,7 @@ public class Jigoro extends DemonsSlayersRoles {
 							 p.getWorld().strikeLightningEffect(p.getLocation());
 							 Location loc = p.getLocation();
 							 gameState.spawnLightningBolt(loc.getWorld(), loc);
-							 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-								 cooldowndegat = 4;
-							 }, 1);
+							 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> cooldowndegat = 4, 1);
 					    }
 					}
 				}

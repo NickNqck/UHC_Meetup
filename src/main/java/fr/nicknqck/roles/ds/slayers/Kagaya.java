@@ -133,7 +133,7 @@ public class Kagaya extends SlayerRoles {
 					if (r.owner != owner) {
 						if (pillier != null) {
 							if (r.owner == pillier) {
-								if (gameState.getInGamePlayers().contains(pillier)) {
+								if (gameState.getInGamePlayers().contains(pillier.getUniqueId())) {
 									if (pillier.getGameMode() != GameMode.SPECTATOR) {
 										if (pillier.getWorld().equals(owner.getWorld())) {
 											if (pillier.getLocation().distance(owner.getLocation()) <= 30) {

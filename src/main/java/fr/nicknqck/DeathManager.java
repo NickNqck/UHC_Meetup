@@ -45,7 +45,7 @@ public class DeathManager implements Listener {
     private void onEntityDeath(EntityDeathEvent e){
         if (e.getEntity() instanceof Player){
             Player player = (Player) e.getEntity();
-            KillHandler(player, player.getLastDamageCause().getEntity());
+            KillHandler(player, player.getKiller());
             e.setDroppedExp(15);
             e.getDrops().clear();
         }
