@@ -1,25 +1,19 @@
 package fr.nicknqck;
 
-import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.Susamaru;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.Nezuko;
 import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -32,7 +26,6 @@ import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import fr.nicknqck.utils.rank.ChatRank;
@@ -45,7 +38,6 @@ import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -518,7 +510,7 @@ public class GameListener implements Listener {
 		}
 		return loc;
 	}
-	public static Location generateRandomLocation(final GameState gameState,final World world) {
+	public static Location generateRandomLocation(final World world) {
 	    Location loc;
 	    do {
 	        float x = Border.getActualBorderSize() * Main.RANDOM.nextFloat();

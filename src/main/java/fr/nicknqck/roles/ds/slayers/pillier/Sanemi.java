@@ -87,7 +87,7 @@ public class Sanemi extends PillierRoles {
 				if (target != null) {
 					if (dstpcooldown <= 0 && dstpuse < 2) {
 						if (target.getWorld().equals(Bukkit.getWorld("world"))) {
-							Location loc = GameListener.generateRandomLocation(gameState, target.getWorld());
+							Location loc = GameListener.generateRandomLocation(target.getWorld());
 							target.teleport(loc);
 							target.sendMessage("§7Vous avez été téléporté par§a Sanemi");
 							dstpuse++;
@@ -116,7 +116,7 @@ public class Sanemi extends PillierRoles {
 										if (!(getPlayerRoles(p) instanceof Doma)) {
 											if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 												if (owner.getWorld().equals(p.getWorld())) {
-													Location loc = GameListener.generateRandomLocation(gameState, owner.getWorld());
+													Location loc = GameListener.generateRandomLocation(owner.getWorld());
 													p.teleport(loc);
 													p.sendMessage("§7Vous avez été téléporté par§a Sanemi");
 													usetpAll = true;
