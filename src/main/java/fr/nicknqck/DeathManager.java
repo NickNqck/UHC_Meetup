@@ -2,6 +2,7 @@ package fr.nicknqck;
 
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
+import fr.nicknqck.events.custom.DemonKillEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.ItemsManager;
@@ -12,6 +13,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -24,6 +26,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -100,7 +104,7 @@ public class DeathManager implements Listener {
         if (gameState.getHokage() != null) {
             gameState.getHokage().onDeath(killedPlayer, entityKiller, gameState);
         }
-        dropItem(killedPlayer.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 2));
+        dropDeathItems(killedPlayer.getLocation());
         //damager = le tueur
         //player = la victim/le mort
         if (entityKiller instanceof Player) {
@@ -116,16 +120,7 @@ public class DeathManager implements Listener {
             if (gameState.getPlayerRoles().containsKey(killer)) {
                 RoleBase role = gameState.getPlayerRoles().get(killer);
                 if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
-                    for (UUID u : gameState.getInGamePlayers()) {
-                        Player p = Bukkit.getPlayer(u);
-                        if (p == null)continue;
-                        if (!gameState.hasRoleNull(p)) {
-                            RoleBase role2 = gameState.getPlayerRoles().get(p);
-                            if (role2.getTeam().equals(TeamList.Demon) || role2.getOriginTeam().equals(TeamList.Demon)) {
-                                p.sendMessage("§cLe joueur§4 "+killer.getName()+"§c à tué quelqu'un....");
-                            }
-                        }
-                    }
+                    onDemonKill(killer.getName());
                 }
             }
             for (UUID u : gameState.getInGamePlayers()) {
@@ -163,16 +158,7 @@ public class DeathManager implements Listener {
                     if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
                         RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
                         if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
-                            for (UUID u : gameState.getInGamePlayers()) {
-                                Player p = Bukkit.getPlayer(u);
-                                if (p == null)continue;
-                                if (!gameState.hasRoleNull(p)) {
-                                    RoleBase role2 = gameState.getPlayerRoles().get(p);
-                                    if (role2.getOldTeam() == TeamList.Demon || role2 instanceof Kaigaku) {
-                                        p.sendMessage("§cLe joueur§4 "+killer.getName()+"§c à tué quelqu'un....");
-                                    }
-                                }
-                            }
+                            onDemonKill(killer.getName());
                         }
                     }
                     for (UUID u : gameState.getInGamePlayers()) {
@@ -242,7 +228,10 @@ public class DeathManager implements Listener {
                 }
             }
         }
-        dropItem(gamePlayer.getDeathLocation(), new ItemStack(Material.GOLDEN_APPLE, 2));
+        if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) || gamePlayer.getRole() instanceof Nezuko) {
+            onDemonKill(gamePlayer.getPlayerName());
+        }
+        dropDeathItems(gamePlayer.getDeathLocation());
         GameState.getInstance().getInGamePlayers().remove(gamePlayer.getUuid());
         if (GameState.getInstance().getInGamePlayers().size()-1 > 0) {
             dropItem(gamePlayer.getDeathLocation(), new ItemStack(Material.ARROW, 8));
@@ -250,6 +239,27 @@ public class DeathManager implements Listener {
         }
         sendDiscDeathMessage(gamePlayer);
         detectWin(GameState.getInstance());
+    }
+    private void onDemonKill(String killerName) {
+        GameState gameState = GameState.getInstance();
+        final List<UUID> demons = new ArrayList<>();
+        for (UUID u : gameState.getInGamePlayers()) {
+            Player p = Bukkit.getPlayer(u);
+            if (p == null)continue;
+            if (!gameState.hasRoleNull(p)) {
+                RoleBase role2 = gameState.getPlayerRoles().get(p);
+                if (role2.getOriginTeam() == TeamList.Demon || role2 instanceof Kaigaku) {
+                    demons.add(u);
+                    p.sendMessage("§cLe joueur§4 "+killerName+"§c à tué quelqu'un....");
+                }
+            }
+        }
+        Bukkit.getPluginManager().callEvent(new DemonKillEvent(demons, killerName));
+    }
+    private void dropDeathItems(@NonNull Location loc) {
+        for (ItemStack item : Main.getInstance().getGameConfig().getItemOnKill()) {
+            dropItem(loc, item);
+        }
     }
     private void DeathMessage(@Nonnull Player victim) {
         SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
