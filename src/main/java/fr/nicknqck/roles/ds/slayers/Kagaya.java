@@ -119,7 +119,7 @@ public class Kagaya extends SlayerRoles {
 					owner.sendMessage("§7Votre pilier est§a "+pilier.getName()+"§7 (§a"+pilier.owner.getName()+"§7)");
 					this.pillier = pilier;
 				} else {
-					owner.sendMessage("Désolé mais il n'y à aucun pillier dans la partie donc vous avez la possibilité de choisir un autre pacte");
+					owner.sendMessage("Malheuresement, il n'y à aucun pillier dans la partie donc vous avez la possibilité de choisir un autre pacte");
 					pacte3 = false;
 					pacte = null;
 				}
