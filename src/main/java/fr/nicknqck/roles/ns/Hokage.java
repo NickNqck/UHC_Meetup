@@ -99,6 +99,7 @@ public class Hokage {
 			if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof NSRoles) {
 				if (gameState.getPlayerRoles().get(p) instanceof Danzo){
 					danzo = (Danzo) gameState.getPlayerRoles().get(p);
+					System.out.println("p = "+p.getName()+" est Danzo");
 				}
 				if (((NSRoles) gameState.getPlayerRoles().get(p)).isCanBeHokage()) {
 					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).getName());
