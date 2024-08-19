@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.ns.Chakra;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -13,10 +14,9 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakra;
 import fr.nicknqck.roles.ns.Chakras;
 
-public class Futon extends Chakra{
+public class Futon implements Chakra {
 
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {
