@@ -116,7 +116,6 @@ public class GameListener implements Listener {
 				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
 				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
 				if (!gameState.getInSleepingPlayers().isEmpty()) gameState.getInSleepingPlayers().clear();
-				if (!gameState.getPillier().isEmpty())gameState.getPillier().clear();
 				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId()))gameState.addInLobbyPlayers(p);
 			}

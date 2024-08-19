@@ -7,11 +7,11 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -21,9 +21,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Kagaya extends SlayerRoles {
 
@@ -53,8 +51,7 @@ public class Kagaya extends SlayerRoles {
 	boolean pacte1 = false;
 	boolean pacte2 = false;
 	public boolean pacte3 = false;
-	public Player pillier= null;
-	public boolean access = false;
+	public PillierRoles pillier= null;
 	private final Map<UUID, PacketDisplay> seeHealth = new HashMap<>();
 	@Override
 	public void resetCooldown() {
@@ -88,14 +85,29 @@ public class Kagaya extends SlayerRoles {
 				pacte = Pacte.Pacte3;
 				pacte3 = true;				
 				owner.sendMessage("Vous venez de choisir le pacte: "+pacte.name());
-				if (!gameState.getPillier().isEmpty()) {
-						owner.sendMessage("Pour obtenir votre pillier faite la commande:§6 /ds getPillier");
-						access = true;
+				List<PillierRoles> pilierRoles = new ArrayList<>();
+				for (UUID uuid : gameState.getInGamePlayers()) {
+					Player player = Bukkit.getPlayer(uuid);
+					if (player == null)continue;
+					if (gameState.hasRoleNull(player))continue;
+					if (gameState.getPlayerRoles().get(player) instanceof PillierRoles) {
+						pilierRoles.add((PillierRoles) gameState.getPlayerRoles().get(player));
+					}
+				}
+				if (!pilierRoles.isEmpty()) {
+					Collections.shuffle(pilierRoles, Main.RANDOM);
+					PillierRoles pilier = pilierRoles.get(0);
+					if (pilier == null) {
+						System.err.println("Kagaya pilier is null, HOW ?!");
+						return;
+					}
+					owner.sendMessage("§7Votre pilier est§a "+pilier.getName()+"§7 (§a"+pilier.owner.getName()+"§7)");
+					this.pillier = pilier;
 				} else {
 					owner.sendMessage("Désolé mais il n'y à aucun pillier dans la partie donc vous avez la possibilité de choisir un autre pacte");
 					pacte3 = false;
 					pacte = null;
-					}
+				}
 			}
 		}
 		super.FormChoosen(item, gameState);
@@ -133,10 +145,10 @@ public class Kagaya extends SlayerRoles {
 					if (r.owner != owner) {
 						if (pillier != null) {
 							if (r.owner == pillier) {
-								if (gameState.getInGamePlayers().contains(pillier.getUniqueId())) {
-									if (pillier.getGameMode() != GameMode.SPECTATOR) {
-										if (pillier.getWorld().equals(owner.getWorld())) {
-											if (pillier.getLocation().distance(owner.getLocation()) <= 30) {
+								if (gameState.getInGamePlayers().contains(pillier.getPlayer())) {
+									if (pillier.getGamePlayer().isAlive()) {
+										if (pillier.getGamePlayer().getLastLocation().getWorld().equals(owner.getWorld())) {
+											if (pillier.getGamePlayer().getLastLocation().distance(owner.getLocation()) <= 30) {
 												owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*5, 0, false, false));
 												givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 											}

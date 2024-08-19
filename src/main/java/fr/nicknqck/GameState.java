@@ -365,8 +365,6 @@ public class GameState{
 	public void addInObiPlayers(Player player) {Obi.add(player);}
 	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
-	@Getter
-	public ArrayList<Player> Pillier = new ArrayList<>();
 
 	public void addCharmed(Player player){Charmed.add(player);}
 	public void delCharmed(Player player){Charmed.remove(player);}

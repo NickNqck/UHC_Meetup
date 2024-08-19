@@ -9,7 +9,6 @@ import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
-import fr.nicknqck.roles.ds.slayers.Kagaya;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -106,34 +105,6 @@ public class DSmtpCommands implements CommandExecutor {
 						return true;
 					}
 				if (gameState.getServerState() == ServerStates.InGame) {
-					if (args[0].equalsIgnoreCase("getpillier")) {
-                        for (UUID u : gameState.getInGamePlayers()) {
-                            Player s = (Player) sender;
-                            if (!gameState.hasRoleNull(s)) {
-                                if (gameState.getPlayerRoles().containsKey(s)) {
-                                    Player p = Bukkit.getPlayer(u);
-                                    if (p == null)continue;
-                                    if (gameState.getPlayerRoles().containsKey(p)) {
-                                        if (gameState.getPlayerRoles().get(s) instanceof Kagaya) {
-                                            RoleBase r = gameState.getPlayerRoles().get(s);
-                                            Kagaya k = (Kagaya) r;
-                                            if (k.pacte3) {
-                                                if (k.access) {
-                                                    k.pillier = gameState.getPillier().get(0);
-                                                    k.pillier.sendMessage("Vous êtes le pillier de Kagaya");
-                                                    k.owner.sendMessage("Votre pillier est:§6 " + k.pillier.getName());
-                                                    return true;
-                                                }
-                                            } else {
-                                                k.owner.sendMessage("Vous n'avez pas fait le bon pacte donc vous ne pouvez pas faire cette commande !");
-                                                return true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
                         gameState.sendDescription((Player) sender);
                         return true;
