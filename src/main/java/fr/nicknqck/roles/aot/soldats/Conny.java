@@ -80,7 +80,7 @@ public class Conny extends SoldatsRoles {
 		desc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'obtenir des effets en fonction de qui vous protégez: \n\n"+
 				AllDesc.tab+"§aJean§7: Vous donne les effets§b Speed I§7 et§9 Résistance I§7 pendant§c 3 minutes§7.\n\n"+
 				AllDesc.tab+"§aSasha§7: Vous donne l'effet§b Speed II§7 pendant§c 3 minutes§7.\n\n"+
-				"§7A la mort de votre protéger vous aurez les effets de celui que vous n'aviez pas choisis précédemment.")}), "Sucre", 60));
+				"§7A la mort de votre protéger vous aurez les effets de celui que vous n'aviez pas choisis précédemment.")}), "Sucre", 60*5));
 		return desc;
 	}
 
@@ -113,7 +113,7 @@ public class Conny extends SoldatsRoles {
 					} else {
 						giveSashaEffect(owner);
 					}
-					cd = 60*7;
+					cd = 60*8;
 					return true;
 				} else if (this.protegerRole instanceof Sasha) {
 					if (!protegerdead) {
@@ -121,7 +121,7 @@ public class Conny extends SoldatsRoles {
 					} else {
 						giveJeanEffect(owner);
 					}
-					cd = 60*7;
+					cd = 60*8;
 					return true;
 				}
 			} else {
