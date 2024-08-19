@@ -42,7 +42,7 @@ public class Kagaya extends SlayerRoles {
 		return "Kagaya";
 	}
 
-	enum Pacte{
+	private enum Pacte{
 		Pacte1,
 		Pacte2,
 		Pacte3
