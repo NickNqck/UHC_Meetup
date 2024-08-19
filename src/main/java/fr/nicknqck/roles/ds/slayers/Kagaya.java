@@ -47,9 +47,9 @@ public class Kagaya extends SlayerRoles {
 		Pacte2,
 		Pacte3
 	}
-	Pacte pacte;
-	boolean pacte1 = false;
-	boolean pacte2 = false;
+	private Pacte pacte;
+	private boolean pacte1 = false;
+	private boolean pacte2 = false;
 	public boolean pacte3 = false;
 	public PillierRoles pillier= null;
 	private final Map<UUID, PacketDisplay> seeHealth = new HashMap<>();
