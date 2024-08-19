@@ -399,21 +399,15 @@ public class GameState{
         return getPlayerRoles().get(player) == null || getPlayerRoles().get(player).getRoles() == null || !getPlayerRoles().containsKey(player);
 	}
 
-	public void setAvailableRoles(HashMap<Roles, Integer> availableRole) {availableRole = availableRoles;}
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
-	public void delInAvailableRoles(Roles role) {availableRoles.remove(role);}
 
-	public void setAvailableEvents(ArrayList<Events> availableEvent) {availableEvent= availableEvents;}
 	public void addInAvailableEvents(Events event) {availableEvents.add(event);}
-	public void delInAvailableEvents(Events event) {availableEvents.remove(event);}
 
 	public void setPlayerKills(HashMap<Player, HashMap<Player, RoleBase>> playerKill) {playerKill = playerKills;}
 	public void addPlayerKills(Player player) {playerKills.put(player, new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
-	public void setInGameEvents(ArrayList<EventBase> inGameEvent) {inGameEvent = inGameEvents;}
 	public void addInGameEvents(EventBase event) {inGameEvents.add(event);}
-	public void delInGameEvents(EventBase event) {inGameEvents.remove(event);}
 	public RoleBase GiveRole(Player aziz) {
 		if (getPlayerRoles().containsKey(aziz)) return null;
 		//Roles roleType = getAvailableRoles().get(new Random().nextInt(getAvailableRoles().size()));
