@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.Loc;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,9 +19,9 @@ import java.util.UUID;
 
 public class Gabi extends AotRoles {
 	private boolean killshifter = false;
+	private final List<UUID> inList = new ArrayList<>();
 	public Gabi(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 		setCanVoleTitan(true);
 	}
 	@Override
@@ -33,7 +34,10 @@ public class Gabi extends AotRoles {
 		return TeamList.Solo;
 	}
 
-	private final List<Player> inList = new ArrayList<>();
+	@Override
+	public void GiveItems() {
+		gameState.GiveRodTridi(owner);
+	}
 	@Override
 	public String[] Desc() {
 			if (!killshifter) {
@@ -44,11 +48,11 @@ public class Gabi extends AotRoles {
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
-								if (!inList.contains(p)) {
+								if (!inList.contains(p.getUniqueId())) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);
-									if (inList.size() < 3 && !inList.contains(t)) {
-										inList.add(t);
+									if (inList.size() < 3 && !inList.contains(t.getUniqueId())) {
+										inList.add(t.getUniqueId());
 									}
 								}
 							}else {
@@ -66,11 +70,11 @@ public class Gabi extends AotRoles {
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
-								if (!inList.contains(p)) {
+								if (!inList.contains(p.getUniqueId())) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);
-									if (inList.size() < 3 && !inList.contains(t)) {
-										inList.add(t);
+									if (inList.size() < 3 && !inList.contains(t.getUniqueId())) {
+										inList.add(t.getUniqueId());
 										System.out.println("added "+t.getName());
 										
 									}
@@ -92,11 +96,11 @@ public class Gabi extends AotRoles {
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
-								if (!inList.contains(p)) {
+								if (!inList.contains(p.getUniqueId())) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);
-									if (inList.size() < 3 && !inList.contains(t)) {
-										inList.add(t);
+									if (inList.size() < 3 && !inList.contains(t.getUniqueId())) {
+										inList.add(t.getUniqueId());
 										System.out.println("added "+t.getName());
 										
 									}
@@ -111,7 +115,7 @@ public class Gabi extends AotRoles {
 			}, 15);
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 					owner.sendMessage("§7Liste des cibles: ");
-					inList.forEach(p -> owner.sendMessage("§7 - §c"+p.getName()));
+					inList.stream().filter(u -> Bukkit.getPlayer(u) != null).forEach(p -> owner.sendMessage("§7 - §c"+Bukkit.getPlayer(p).getName()));
 				}, 20);
 			}
 			return new String[] {
@@ -147,13 +151,12 @@ public class Gabi extends AotRoles {
 	public void Update(GameState gameState) {//Update s'actualise toute les secondes
 		if (!killshifter) {
 			if (!inList.isEmpty()) {
-				for (Player p : inList) {
+				for (UUID u : inList) {
+					Player p = Bukkit.getPlayer(u);
 					if (p != null) {
-						if (gameState.getInSpecPlayers().contains(p))inList.remove(p);
-						if (p.getWorld().equals(owner.getWorld())) {
-							if (owner.getLocation().distance(p.getLocation()) <= 20) {
-								givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-							}
+						if (gameState.getInSpecPlayers().contains(p))inList.remove(u);
+						if (Loc.getNearbyPlayersExcept(p, 20).contains(owner)) {
+							givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 						}
 					}
 				}
@@ -163,7 +166,12 @@ public class Gabi extends AotRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-        inList.remove(player);
+		if (killer.getUniqueId().equals(getPlayer())) {
+			if (inList.contains(player.getUniqueId())) {
+				this.killshifter = true;
+			}
+		}
+        inList.remove(player.getUniqueId());
 	}
 	@Override
 	public void resetCooldown() {
