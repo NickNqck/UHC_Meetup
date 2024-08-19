@@ -54,7 +54,6 @@ public abstract class RoleBase implements IRole {
 	@Setter
 	@Getter
 	private double resi = 0;
-	private TeamList oldteam;
 	private double Bonusforce = 0;
 	private double Bonusresi = 0;
 	@Getter
@@ -91,7 +90,6 @@ public abstract class RoleBase implements IRole {
 				if (this.getTeam() != null) {
 					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
 					System.out.println(owner.getName() +" Team: "+ this.getTeam());
-					oldteam = getTeam();
 				}
 				if (this.getRoles() != null) {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
@@ -147,11 +145,6 @@ public abstract class RoleBase implements IRole {
 		}else{
 			return StringUtils.secondsTowardsBeautiful(cooldown);}
 		}
-	public TeamList getOldTeam() {return oldteam;}
-	public TeamList getOldTeam(Player p) {
-		return getPlayerRoles(p).getOldTeam();
-	}
-	public void setOldTeamList(TeamList list) {list = oldteam;}
 	public RoleBase getPlayerRoles(Player player) {return gameState.getPlayerRoles().get(player);}
 	public void sendMessageAfterXseconde(Player player, String message, int seconde) {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.sendMessage(message), 20L *seconde);
@@ -328,7 +321,7 @@ public abstract class RoleBase implements IRole {
 				if (gameState.getInSpecPlayers().contains(p))return;
 				if (!gameState.hasRoleNull(p)) {
 					if (getListPlayerFromRole(toknow).contains(p)) {
-						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p) && getOldTeam(p) != null) {
+						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p).getOriginTeam() != null) {
 							knower.sendMessage("Le joueur possédant le rôle de "+toknow.getTeam().getColor()+toknow.name()+"§f est "+p.getName());
 						}
 					}

@@ -89,7 +89,6 @@ public class Kyogai extends DemonsRoles {
 	}
 	@Override
 	public void FormChoosen(ItemStack item, GameState gameState) {
-		setOldTeamList(TeamList.Demon);
 		if (item.isSimilar(GUIItems.getKyogaiDémon())) {
 			if (!FFA.getFFA()) {
 				for (UUID u : gameState.getInGamePlayers()) {
@@ -114,20 +113,18 @@ public class Kyogai extends DemonsRoles {
 					}
 				}
 				setTeam(TeamList.Demon);
-				setOldTeamList(TeamList.Demon);
 				owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 			} else {
 				setTeam(TeamList.Solo);
 				owner.sendMessage("Malgré votre choix vue que le mode FFA est activé vous devez tout de même gagner en temp que rôle solitaire");
 			}
-			System.out.println(owner.getName()+" = "+ getOriginTeam()+", OldTeam = "+getOldTeam());
+			System.out.println(owner.getName()+" = "+ getOriginTeam()+", OldTeam = "+getOriginTeam());
 			System.out.println(owner.getName()+" = "+getRoles().name());
 			owner.getInventory().addItem(Items.getTambour());
 			camp = Camp.Démon;
 		}
 		if (item.isSimilar(GUIItems.getKyogaiSolo())) {
 			setTeam(TeamList.Solo);
-			setOldTeamList(getOriginTeam());
 			owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 			System.out.println(owner.getName()+" = "+ getOriginTeam());
 			System.out.println(owner.getName()+" = "+getRoles().name());

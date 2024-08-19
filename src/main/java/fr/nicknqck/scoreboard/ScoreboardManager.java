@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -30,6 +31,7 @@ import fr.nicknqck.Main;
  * along with SamaGamesAPI.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class ScoreboardManager {
+    @Getter
     private final Map<UUID, PersonalScoreboard> scoreboards;
     @SuppressWarnings({ "unused", "rawtypes" })
 	private final ScheduledFuture glowingTask;

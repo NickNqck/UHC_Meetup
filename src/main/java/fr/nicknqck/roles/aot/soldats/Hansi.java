@@ -80,12 +80,12 @@ public class Hansi extends SoldatsRoles {
 											owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 											giveHeartatInt(target, -2);
 										}else {
-											if (getPlayerRoles(target).getOldTeam() == TeamList.Soldat) {
+											if (getPlayerRoles(target).getOriginTeam() == TeamList.Soldat) {
 												target.sendMessage("§7Vous avez perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous étiez dans le camp§a Soldat");
 												owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 												giveHeartatInt(target, -2);
 											}else {
-												if (getPlayerRoles(target).getOldTeam() != TeamList.Soldat) {
+												if (getPlayerRoles(target).getOriginTeam() != TeamList.Soldat) {
 													tortured.add(target);
 													target.sendMessage("§7Vous avez perdu 1"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous n'étiez pas dans le camp§a Soldat");
 													owner.sendMessage("§7Vous avez gagner 1"+AllDesc.coeur+"§7 permanent suite à la torture sur§f "+target.getName()+"§7, vous avez donc compris qu'il§l n'est pas dans votre camp");

@@ -9,7 +9,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Sasuke extends OrochimaruRoles {
+public class Sasuke extends UchiwaRoles {
 
 	private Izanami izanami;
 	@Getter
@@ -73,6 +73,12 @@ public class Sasuke extends OrochimaruRoles {
 	public Roles getRoles() {
 		return Roles.Sasuke;
 	}
+
+	@Override
+	public TeamList getOriginTeam() {
+		return TeamList.Orochimaru;
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Orochimaru, 1);

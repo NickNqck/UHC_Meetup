@@ -28,7 +28,7 @@ public class Doton implements Chakra {
 	public Chakras getChakres() {
 		return Chakras.DOTON;
 	}
-	private List<UUID> Doton = new ArrayList<>();
+	private final List<UUID> Doton = new ArrayList<>();
 	@Override
 	public List<UUID> getList() {
 		return Doton;
@@ -47,7 +47,7 @@ public class Doton implements Chakra {
 
 	@Override
 	public void onEntityDamage(EntityDamageEvent event, Player player) {
-		if (RandomUtils.getOwnRandomProbability(3) && Doton.contains(player.getUniqueId())) {
+		if (RandomUtils.getOwnRandomProbability(3) && Doton.contains(player.getUniqueId()) && !event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
 			player.sendMessage("§7Vous avez esquivé un coup grâce à votre Chakra.");
 			event.setCancelled(true);
 		}

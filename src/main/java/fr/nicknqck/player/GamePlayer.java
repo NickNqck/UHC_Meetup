@@ -4,6 +4,7 @@ import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.scoreboard.PersonalScoreboard;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -43,11 +44,14 @@ public class GamePlayer {
 	@NonNull
 	@Setter
 	private ItemStack[] lastInventoryContent;
+	@Getter
+	private PersonalScoreboard scoreboard;
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
 		this.playerName = gamePlayer.getName();
 		this.lastLocation = gamePlayer.getLocation();
 		this.lastInventoryContent = gamePlayer.getInventory().getContents();
+		this.scoreboard = Main.getInstance().getScoreboardManager().getScoreboards().get(gamePlayer.getUniqueId());
 		setAlive(true);
 		setCanRevive(false);
 	}

@@ -24,7 +24,6 @@ public class Ino extends ShinobiRoles {
     public Ino(UUID player) {
         super(player);
         setChakraType(getRandomChakras());
-
     }
 
     @Override

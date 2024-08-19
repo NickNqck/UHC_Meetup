@@ -42,7 +42,6 @@ public class Alliance extends EventBase{
 							RoleBase role = gameState.getPlayerRoles().get(p);
 							if (role instanceof Kyojuro || role instanceof Shinjuro) {
 								role.setTeam(TeamList.Alliance);
-								role.setOldTeamList(TeamList.Alliance);
 								if (role instanceof Kyojuro) {
 									Kyojuro k = (Kyojuro) role;
 									k.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());

@@ -6,7 +6,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class Obito extends NSRoles {
+public class Obito extends JubiRoles {
 	public List<Player> Tsukuyomi = new ArrayList<>();
 	private fr.nicknqck.roles.ns.power.Izanami izanami;
 	private int cdNinjutsu = 0;
@@ -65,11 +65,6 @@ public class Obito extends NSRoles {
 	@Override
 	public String getName() {
 		return "Obito";
-	}
-
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Jubi;
 	}
      @Override
 	public String[] Desc() {

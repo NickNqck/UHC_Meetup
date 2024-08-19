@@ -9,6 +9,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -189,7 +190,11 @@ public class Danzo extends NSRoles {
 		}
 	}
 	private boolean isUchiwa(Player p){
-		return getListPlayerFromRole(Roles.Madara).contains(p) || getListPlayerFromRole(Roles.Obito).contains(p) || getListPlayerFromRole(Roles.Sasuke).contains(p) || getListPlayerFromRole(Roles.Itachi).contains(p);
+		if (!gameState.hasRoleNull(p)) {
+            return gameState.getPlayerRoles().get(p) instanceof UchiwaRoles;
+		}
+		return false;
+//		return getListPlayerFromRole(Roles.Madara).contains(p) || getListPlayerFromRole(Roles.Obito).contains(p) || getListPlayerFromRole(Roles.Sasuke).contains(p) || getListPlayerFromRole(Roles.Itachi).contains(p);
 	}
 
 	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();

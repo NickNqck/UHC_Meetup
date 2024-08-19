@@ -4,13 +4,18 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
+import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.WorldUtils;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,7 +29,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class Kagaya extends SlayerRoles {
-
+	private TextComponent desc;
 	public Kagaya(UUID player) {
 		super(player);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
@@ -40,6 +45,16 @@ public class Kagaya extends SlayerRoles {
 	@Override
 	public String getName() {
 		return "Kagaya";
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		AutomaticDesc desc = new AutomaticDesc(this);
+		desc.setCommands(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("Vous permet de choisir entre les 3 pactes disponible\n\n"+
+		"§cPacte n°1:§r Vous offre la particularité de voir la§c vie§r des joueurs au dessus de leurs têtes, également vous obtenez §8Weakness I§r le §eJour§r et §9Resistance I§r la§1 Nuit§r\n\n"+
+		"§cPacte n°2:§r Vous octroie §c2♥§r permanent supplémentaire ainsi que §9Resistance I§r le§e Jour§r\n\n"+
+		"§cPacte n°3:§r Vous obtenez l'identité d'un §aPilier§r aléatoire parmis ceux encore en §cvie§r ainsi que §9Resistance I§r à moins de §c30 blocs§r de ce dernier")}), "§c/ds role", -500));
+		this.desc = desc.getText();
 	}
 
 	private enum Pacte{
@@ -205,5 +220,10 @@ public class Kagaya extends SlayerRoles {
 				}
 			}
 		}
+	}
+
+	@Override
+	public TextComponent getComponent() {
+		return this.desc;
 	}
 }

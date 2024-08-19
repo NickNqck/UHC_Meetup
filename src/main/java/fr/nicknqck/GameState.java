@@ -220,6 +220,7 @@ public class GameState{
 		Kurenai(TeamList.Shinobi, "ns", 13, new ItemBuilder(Material.INK_SACK).setDurability(1).setName("§aKurenai").toItemStack(), "§bNickNqck"),
 		Shikamaru(TeamList.Shinobi, "ns", 14, new ItemBuilder(Material.SPIDER_EYE).setName("§aShikamaru").toItemStack(), "§bNickNqck"),
 		Ino(TeamList.Shinobi, "ns", 15, new ItemBuilder(Material.ARMOR_STAND).setName("§aIno").toItemStack(), "§bNickNqck"),
+		Fugaku(TeamList.Shinobi, "ns", 16, new ItemBuilder(Material.MAGMA_CREAM).setName("§aFugaku").toItemStack(), "§bNickNqck"),
 		//Haku et Zabuza
 		Zabuza(TeamList.Zabuza_et_Haku, "ns", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bZabuza").toItemStack(), "§aYukan"),
 		Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan"),
@@ -794,6 +795,9 @@ public class GameState{
 		case AraigneeVenimeuse:
 			role = new AraigneeVenimeuse(player);
 			break;
+		case Fugaku:
+			role = new Fugaku(player);
+			break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(aziz);
@@ -1039,22 +1043,22 @@ public class GameState{
 		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
 			for (RoleBase e : getPlayerRoles().values()) {
-				if (e.getOldTeam() == null){
-					e.setOldTeamList(e.getRoles().getTeam());
+				if (e.getOriginTeam() == null){
+					e.setTeam(e.getRoles().getTeam());
 				}
-				if (e.getOldTeam() != null) {
+				if (e.getOriginTeam() != null) {
 					if (e.owner != null && !e.owner.getGameMode().equals(GameMode.SPECTATOR)) {
-						if (hashMap.get(e.getOldTeam()) == null){
+						if (hashMap.get(e.getOriginTeam()) == null){
 							List<Roles> r = new ArrayList<>();
-							hashMap.put(e.getOldTeam(), r);
+							hashMap.put(e.getOriginTeam(), r);
 						}
 						if (Main.isDebug()){
 							System.out.println(e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
 						}
-						List<Roles> aList = hashMap.get(e.getOldTeam());
+						List<Roles> aList = hashMap.get(e.getOriginTeam());
 						aList.add(e.getRoles());
-						hashMap.remove(e.getOldTeam(), hashMap.get(e.getOldTeam()));
-						hashMap.put(e.getOldTeam(), aList);
+						hashMap.remove(e.getOriginTeam(), hashMap.get(e.getOriginTeam()));
+						hashMap.put(e.getOriginTeam(), aList);
 					}
 				}
 			}

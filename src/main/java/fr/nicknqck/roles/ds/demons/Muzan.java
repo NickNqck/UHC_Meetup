@@ -108,7 +108,7 @@ public class Muzan extends DemonsRoles {
 				if (target != null) {
 					if (!hasBoost) {
 						if (gameState.hasRoleNull(target))return;
-						if (getPlayerRoles(target).getOldTeam().equals(TeamList.Demon)) {
+						if (getPlayerRoles(target).getOriginTeam().equals(TeamList.Demon)) {
 							target.sendMessage("§cMuzan§7 vous à offert son boost de§c 10% de force");
 							hasBoost = true;
 							owner.sendMessage("§7Vous avez donné§c 10% de force§7 à§l "+target.getName());
@@ -135,7 +135,7 @@ public class Muzan extends DemonsRoles {
 					Player player = Bukkit.getPlayer(args[1]);
 						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player)) {
 							if (gameState.infected == null && gameState.infecteur == null) {
-								if (getPlayerRoles(player).getOldTeam() == TeamList.Demon || getPlayerRoles(player) instanceof Nezuko) {
+								if (getPlayerRoles(player).getOriginTeam() == TeamList.Demon || getPlayerRoles(player) instanceof Nezuko) {
 									giveItem(player, false, Items.getInfection());
 									owner.sendMessage("Vous avez donné le Pouvoir de l'infection à§c "+player.getName());
 									player.sendMessage("Le grand§c Muzan§r vous à donné le pouvoir de l'infection, faite s'en bonne usage...");

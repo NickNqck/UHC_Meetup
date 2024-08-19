@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import lombok.NonNull;
@@ -42,7 +42,7 @@ import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.particles.MathUtil;
 
-public class Madara extends NSRoles {
+public class Madara extends JubiRoles {
 
 	private int BenshoCD = 0;
 	private int ShinraCD = 0;
@@ -71,11 +71,6 @@ public class Madara extends NSRoles {
 		if (entity.getUniqueId() == owner.getUniqueId()) {
 			System.out.println(event.getDamage());
 		}
-	}
-
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Jubi;
 	}
 
 	@Override
