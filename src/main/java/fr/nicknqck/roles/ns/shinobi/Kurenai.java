@@ -11,6 +11,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -160,7 +161,7 @@ public class Kurenai extends ShinobiRoles {
     }
 
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.INTELLIGENT;
     }
 

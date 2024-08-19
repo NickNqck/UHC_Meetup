@@ -15,6 +15,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import fr.nicknqck.utils.powers.KamuiUtils.Users;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
@@ -43,7 +44,7 @@ public class Kakashi extends ShinobiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 

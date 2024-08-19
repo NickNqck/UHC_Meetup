@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.Sasuke;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -140,7 +141,7 @@ public class Orochimaru extends OrochimaruRoles {
 		}
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 

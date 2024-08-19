@@ -6,8 +6,8 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -19,8 +19,9 @@ public abstract class NSRoles extends RoleBase {
     public NSRoles(UUID player) {
         super(player);
     }
+
     public abstract Intelligence getIntelligence();
-    public void setChakraType(Chakras chakras) {
+    public void setChakraType(@Nullable Chakras chakras) {
         if (chakras == null) {
             this.chakras = null;
             return;

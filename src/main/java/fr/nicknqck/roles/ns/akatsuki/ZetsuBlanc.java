@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,7 +41,7 @@ public class ZetsuBlanc extends AkatsukiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
 

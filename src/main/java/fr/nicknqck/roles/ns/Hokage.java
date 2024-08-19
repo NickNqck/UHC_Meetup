@@ -10,7 +10,6 @@ import fr.nicknqck.roles.ns.solo.Danzo;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.nicknqck.GameListener;
@@ -63,15 +62,13 @@ public class Hokage {
 						Hokage = fH.getUniqueId();
 						gameState.getPlayerRoles().get(fH).addBonusforce(10);
 						gameState.getPlayerRoles().get(fH).addBonusResi(10);
-						Player finalFH = fH;
-						Player finalFH1 = fH;
-						for (UUID u : gameState.getInGamePlayers()) {
+                        for (UUID u : gameState.getInGamePlayers()) {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
 							if (gameState.hasRoleNull(p))continue;
 							if (gameState.getPlayerRoles().get(p).getClass().equals(Danzo.class)) {
-								if (!u.equals(finalFH.getUniqueId())) {
-									p.sendMessage("§7Voici le rôle de l'Hokage: "+gameState.getPlayerRoles().get(finalFH1).getRoles().getItem().getItemMeta().getDisplayName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)");
+								if (!u.equals(fH.getUniqueId())) {
+									p.sendMessage("§7Voici le rôle de l'Hokage: §a"+gameState.getPlayerRoles().get(fH).getName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)");
 								}
 							}
 						}
@@ -94,52 +91,37 @@ public class Hokage {
 		System.out.println("Research Hokage");
         List<UUID> canBeHokage = new ArrayList<>(gameState.getInGamePlayers());
 		Collections.shuffle(canBeHokage);
-		Player danzo = null;
+		Danzo danzo = null;
 		for (UUID u : canBeHokage) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			System.out.println(p.getDisplayName()+" can be Hokage ?");
 			if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof NSRoles) {
 				if (gameState.getPlayerRoles().get(p) instanceof Danzo){
-					danzo = p;
+					danzo = (Danzo) gameState.getPlayerRoles().get(p);
 				}
 				if (((NSRoles) gameState.getPlayerRoles().get(p)).isCanBeHokage()) {
-					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).getRoles().getItem().getItemMeta().getDisplayName());
+					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).getName());
 					return p;
 				}
 			}
 		}
 		if (danzo != null){
-			return danzo;
+			if (danzo.isKillHokage()) {
+				Player d = Bukkit.getPlayer(danzo.getPlayer());
+				if (d != null) {
+					return d;
+				}
+			}
 		}
 		System.out.println("Searched Hokage returned NULL");
 		return null;
 	}
-	public void onDeath(Player player, Entity damager, GameState gameState) {
+	public void onDeath(Player player, GameState gameState) {
 		if (Hokage == null) {
 			return;
 		}
 		if (player.getUniqueId().equals(Hokage)) {
-			Player killer = null;
-			if (damager instanceof Player) {
-				killer = (Player)damager;
-			}
-			if (damager instanceof Projectile) {
-				Projectile prok = (Projectile)damager;
-                if (prok.getShooter() instanceof Player) {
-					killer = (Player) prok.getShooter();
-				}
-			}
-			if (killer != null) {
-				if (!gameState.hasRoleNull(killer)) {
-					if (gameState.getPlayerRoles().get(killer) instanceof Danzo) {
-						if (this.Hokage != null && player.getUniqueId().equals(this.Hokage)){
-							killer.sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
-							forceHokage = killer;
-						}
-					}
-				}
-			}
 			if (!gameState.hasRoleNull(player)){
 				this.Hokage = null;
 				gameState.getPlayerRoles().get(player).addBonusforce(-10);

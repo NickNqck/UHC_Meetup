@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -62,7 +63,7 @@ public class Jugo extends OrochimaruRoles {
 		return Roles.Jugo;
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
 	@Override

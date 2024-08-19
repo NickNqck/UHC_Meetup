@@ -11,6 +11,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.raytrace.RayTrace;
+import lombok.NonNull;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -241,7 +242,7 @@ public class Haku extends NSRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;
 	}
 

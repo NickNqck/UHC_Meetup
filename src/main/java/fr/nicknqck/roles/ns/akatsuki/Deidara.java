@@ -13,6 +13,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 import lombok.Getter;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -47,7 +48,7 @@ public class Deidara extends AkatsukiRoles {
 		return Roles.Deidara;
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;
 	}
 

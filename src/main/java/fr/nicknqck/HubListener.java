@@ -123,13 +123,13 @@ public class HubListener implements Listener {
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (gameState.getMdj() != null && gameState.getMdj().equals(MDJ.NS)){
+			if (gameState.getMdj().equals(MDJ.NS)){
 				if (gameState.getHokage() == null){
 					gameState.setHokage(new Hokage(gameState.getTimeProcHokage()-10, gameState));
 				}
 				gameState.getHokage().run();
 			}
-		}, 100);
+		}, 220);
 		System.out.println("Ended StartGame");
 	}
 	public void giveStartInventory(Player p) {

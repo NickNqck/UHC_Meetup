@@ -13,6 +13,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.StringUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,7 +59,7 @@ public class Ginkaku extends NSRoles {
 		return Roles.Ginkaku;
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
 

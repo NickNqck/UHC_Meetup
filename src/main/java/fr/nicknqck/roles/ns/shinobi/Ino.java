@@ -8,6 +8,7 @@ import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.raytrace.RayTrace;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -37,7 +38,7 @@ public class Ino extends ShinobiRoles {
         return GameState.Roles.Ino;
     }
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.CONNUE;
     }
 

@@ -40,7 +40,7 @@ public class EffectsGiver implements Listener {
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20*25);
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20*10);//une fois toute les 10 secondes
     }
     @EventHandler
     private void onDay(DayEvent event) {
@@ -105,7 +105,7 @@ public class EffectsGiver implements Listener {
     @EventHandler
     private void onKill(UHCPlayerKillEvent event) {
         if (event.getGamePlayerKiller() != null) {
-            if (event.getGamePlayerKiller().getRole() == null)return;
+            event.getGamePlayerKiller();
             for (PotionEffect potionEffect : event.getGamePlayerKiller().getRole().getEffects().keySet()) {
                 if (event.getGamePlayerKiller().getRole().getEffects().get(potionEffect).equals(EffectWhen.AT_KILL)) {
                     event.getPlayerKiller().addPotionEffect(potionEffect, true);

@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -225,7 +226,7 @@ public class Itachi extends AkatsukiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 	private void openIzanamiInventory() {

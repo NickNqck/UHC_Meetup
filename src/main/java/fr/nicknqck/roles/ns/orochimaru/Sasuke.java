@@ -14,6 +14,7 @@ import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -273,7 +274,7 @@ public class Sasuke extends OrochimaruRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 

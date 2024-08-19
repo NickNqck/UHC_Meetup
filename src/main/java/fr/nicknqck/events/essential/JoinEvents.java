@@ -20,6 +20,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.roles.builder.RoleBase;
+import org.bukkit.potion.PotionEffect;
 
 public class JoinEvents implements Listener{
 	private final GameState gameState;
@@ -42,6 +43,9 @@ public class JoinEvents implements Listener{
 			gameState.addInLobbyPlayers(player);
 			player.setMaxHealth(20.0);
 			player.setGameMode(GameMode.ADVENTURE);
+			for (PotionEffect effect : player.getActivePotionEffects()) {
+				player.removePotionEffect(effect.getType());
+			}
 			ItemsManager.GiveHubItems(player);
 			player.teleport(new Location(Main.getInstance().getWorldManager().getLobbyWorld(), 0, 151, 0));
 			player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);

@@ -279,6 +279,7 @@ public class GameState{
 			return itemC;
 		}
 	}
+	@NonNull
 	@Getter
 	@Setter
 	private MDJ mdj = MDJ.Aucun;

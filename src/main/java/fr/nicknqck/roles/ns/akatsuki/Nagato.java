@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -251,7 +252,7 @@ public class Nagato extends AkatsukiRoles {
     }
 
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.INTELLIGENT;
     }
 

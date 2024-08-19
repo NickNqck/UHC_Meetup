@@ -17,6 +17,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import fr.nicknqck.utils.powers.KamuiUtils.Users;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -299,7 +300,7 @@ public class Obito extends NSRoles {
 		}
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 	@Override

@@ -194,7 +194,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		}
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 	@Override

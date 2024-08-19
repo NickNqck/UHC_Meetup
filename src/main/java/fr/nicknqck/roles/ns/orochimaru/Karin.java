@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -116,7 +117,7 @@ public class Karin extends OrochimaruRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 

@@ -8,6 +8,7 @@ import java.util.UUID;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -352,7 +353,7 @@ public class Madara extends NSRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 

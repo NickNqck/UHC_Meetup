@@ -11,6 +11,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -55,7 +56,7 @@ public class Kinkaku extends NSRoles {
         return GameState.Roles.Kinkaku;
     }
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
 

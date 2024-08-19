@@ -11,6 +11,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ public class Shikamaru extends ShinobiRoles {
         return GameState.Roles.Shikamaru;
     }
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.GENIE;
     }
 
@@ -73,6 +74,12 @@ public class Shikamaru extends ShinobiRoles {
             cdZone--;
             if (cdZone == 0){
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§a Zone d'ombre");
+            }
+        }
+        if (cdShogi >= 0){
+            cdShogi--;
+            if (cdShogi == 0){
+                owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§6 /ns shogi <joueur>");
             }
         }
     }

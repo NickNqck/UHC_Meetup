@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -11,6 +12,8 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -35,6 +39,8 @@ public class Danzo extends NSRoles {
 	private int coupToScelled = 0;
 	private boolean SceauActived = false;
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
+	@Getter
+	private boolean killHokage = false;
 	public Danzo(UUID player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
@@ -54,13 +60,13 @@ public class Danzo extends NSRoles {
 				killUchiwa = true;
 			}
 		}, 20*10);
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 0), EffectWhen.PERMANENT);
+		givePotionEffect(new PotionEffect(PotionEffectType.SPEED,1 , 0), EffectWhen.PERMANENT);
 	}
-
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
-
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
@@ -104,8 +110,6 @@ public class Danzo extends NSRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (killUchiwa) {
 			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 		}
@@ -140,6 +144,14 @@ public class Danzo extends NSRoles {
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer.getUniqueId() == owner.getUniqueId()) {
+			if (gameState.getHokage() != null) {
+				if (gameState.getHokage().Hokage != null) {
+					if (gameState.getHokage().Hokage.equals(victim.getUniqueId())) {
+						killer.sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
+						this.killHokage = true;
+					}
+				}
+			}
 			if (owner.getMaxHealth() < 24.0) {
 				setMaxHealth(owner.getMaxHealth()+1.0);
 				owner.setMaxHealth(getMaxHealth());
@@ -254,7 +266,7 @@ public class Danzo extends NSRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 
