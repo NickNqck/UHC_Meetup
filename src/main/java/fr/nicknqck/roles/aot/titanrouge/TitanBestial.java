@@ -27,11 +27,17 @@ public class TitanBestial extends TitansRoles {
 	private final HashMap<UUID, Integer> timePassed = new HashMap<>();
 	public TitanBestial(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		canShift = true;
 		gameState.GiveRodTridi(owner);
-		TitanListener.getInstance().setBestial(owner.getUniqueId());
+		TitanListener.getInstance().setBestial(getPlayer());
 		giveItem(owner, true, Titans.Bestial.getTitan().Items());
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.TitanBestial;
