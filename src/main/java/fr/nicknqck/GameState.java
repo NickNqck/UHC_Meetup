@@ -58,6 +58,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class GameState{
@@ -279,7 +280,7 @@ public class GameState{
 			return itemC;
 		}
 	}
-	@NonNull
+	@Nonnull
 	@Getter
 	@Setter
 	private MDJ mdj = MDJ.Aucun;
