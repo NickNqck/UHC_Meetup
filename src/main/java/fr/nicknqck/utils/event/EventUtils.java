@@ -6,6 +6,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 public class EventUtils {
+
     public static void registerEvents(Listener listener) {
         Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
         System.out.println("Registered event " + listener.getClass().getName().toLowerCase() +" with plugin "+Main.getInstance().getName().toLowerCase());
