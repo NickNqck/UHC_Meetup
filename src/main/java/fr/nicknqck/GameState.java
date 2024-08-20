@@ -403,7 +403,6 @@ public class GameState{
 
 	public void addInAvailableEvents(Events event) {availableEvents.add(event);}
 
-	public void setPlayerKills(HashMap<Player, HashMap<Player, RoleBase>> playerKill) {playerKill = playerKills;}
 	public void addPlayerKills(Player player) {playerKills.put(player, new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
@@ -411,7 +410,7 @@ public class GameState{
 	public RoleBase GiveRole(Player aziz) {
 		if (getPlayerRoles().containsKey(aziz)) return null;
 		//Roles roleType = getAvailableRoles().get(new Random().nextInt(getAvailableRoles().size()));
-		ArrayList<Roles> roles = new ArrayList<Roles>();
+		ArrayList<Roles> roles = new ArrayList<>();
 		for (Roles role : getAvailableRoles().keySet()) {
 			for (int i = 0; i < getAvailableRoles().get(role); i++) {
 				roles.add(role);
@@ -898,17 +897,6 @@ public class GameState{
             e.fillInStackTrace();
         }
 	}
-	public void changePseudo(String name, Player player) {
-		net.minecraft.server.v1_8_R3.EntityPlayer ePlayer = ((org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) player).getHandle();
-        com.mojang.authlib.GameProfile profile = ePlayer.getProfile();
-        try {
-            java.lang.reflect.Field f = profile.getClass().getDeclaredField("name");
-            f.setAccessible(true);
-            f.set(profile, name);
-        } catch (Exception e) {
-            e.fillInStackTrace();
-        }
-    }
 	public void spawnLightningBolt(World world, Location loc) {world.strikeLightningEffect(loc);}
 	public boolean isApoil(Player player) {
 		boolean apoil;

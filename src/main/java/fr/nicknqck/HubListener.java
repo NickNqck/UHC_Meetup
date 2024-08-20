@@ -65,7 +65,7 @@ public class HubListener implements Listener {
 		gameState.t = gameState.timeday;
 		Events.initEvents();
 		gameState.setPlayerRoles(new HashMap<>());
-		gameState.setPlayerKills(new HashMap<>());
+		gameState.getPlayerKills().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
 		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
