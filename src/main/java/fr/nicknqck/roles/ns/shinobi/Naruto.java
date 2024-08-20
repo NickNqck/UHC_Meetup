@@ -162,7 +162,7 @@ public class Naruto extends ShinobiRoles {
 			} else {
 				villager.damage(999.0, owner);
 				villager = null;
-				this.cdClone = Math.max(timeVillager*2 , 60*5);
+				this.cdClone = 60*5;
 				givePotionEffet(PotionEffectType.SPEED, 20*timeVillager, 1, true);
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*timeVillager, 1, true);
 				timeVillager = 0;
@@ -177,7 +177,7 @@ public class Naruto extends ShinobiRoles {
 				StringBuilder sb = new StringBuilder();
 				for (Player p : Loc.getNearbyPlayersExcept(villager, 15)) {
 					if (gameState.hasRoleNull(p))continue;
-					if (!gameState.getInGamePlayers().contains(p))continue;
+					if (!gameState.getInGamePlayers().contains(p.getUniqueId()))continue;
 					if (p.hasPotionEffect(PotionEffectType.INVISIBILITY))continue;
 					RoleBase role = gameState.getPlayerRoles().get(p);
 					sb.append("§7 - ").append(role.getOriginTeam().getColor()).append(role.getName()).append("\n");

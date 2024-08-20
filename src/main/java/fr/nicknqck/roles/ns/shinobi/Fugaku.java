@@ -9,12 +9,14 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -46,7 +48,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
     private final ItemStack oeilItem = new ItemBuilder(Material.EYE_OF_ENDER).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setUnbreakable(true).setName("§cOeil Maléfique").setDroppable(false).toItemStack();
     private int cdAffaiblissement;
     private int cdAttaque;
-
+    private int cdCombat;
     public Fugaku(UUID player) {
         super(player);
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 2, 0), EffectWhen.PERMANENT);
@@ -57,6 +59,13 @@ public class Fugaku extends UchiwaRoles implements Listener {
         setChakraType(Chakras.KATON);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffects(getEffects())
+                .setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Ouvre un menu donnant accès à§c 3 pouvoirs§7:\n\n"
+                +AllDesc.point+"§fAffaiblissement§7: Donne à la cible l'effet§8 Weakness I§7 pendant§c 18 secondes§7. (1x/2min)\n\n"
+                +AllDesc.point+"§cAttaque§7: Vous téléporte dans un rayon de§c 10 blocs§7 autours de la cible. (1x/5min)\n\n"
+                +AllDesc.point+"§6§lPlace au combat !§7: Pendant§c 1 minutes§7 vous obtenez des §cbonus§7: (1x/10min)\n\n"
+                +AllDesc.tab+"§7Vous serez insensible à tout les projectiles\n"
+                +AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégat au joueur viser\n"
+                +AllDesc.tab+"§7Vous subirez §c-25%§7 de dégat de sa part")}), "§cOeil Maléfique", 0))
                 .addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra "+Chakras.KATON.getShowedName())})
                 , new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toutes les§c 5 minutes§7, vous saurez si vous avez croisé un porteur de §cSharingan§7 à moins de §c10 blocs§7.")})
                 );
@@ -101,6 +110,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
     public void resetCooldown() {
         cdAffaiblissement = 0;
         cdAttaque = 0;
+        cdCombat = 0;
     }
 
     @Override
@@ -124,6 +134,12 @@ public class Fugaku extends UchiwaRoles implements Listener {
             cdAttaque--;
             if (this.cdAttaque == 0) {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser la technique d'§cAttaque§7 de votre§c Oeil Maléfique");
+            }
+        }
+        if (this.cdCombat >= 0) {
+            cdCombat--;
+            if (this.cdCombat == 0) {
+                owner.sendMessage("§7Vous pouvez à nouveau utiliser la technique \"§6§lPlace au combat§7\" de votre§c Oeil Maléfique");
             }
         }
     }
@@ -162,7 +178,9 @@ public class Fugaku extends UchiwaRoles implements Listener {
                                 }
                             }
                             if (event.getSlot() == 6) {
-                                openChoosePlayerInventory((Player) event.getWhoClicked(), "§6§lPlace au combat !");
+                                if (cdCombat <= 0) {
+                                    openChoosePlayerInventory((Player) event.getWhoClicked(), "§6§lPlace au combat !");
+                                }
                             }
                             event.setCancelled(true);
                             break;
@@ -236,7 +254,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
         Inventory inv = Bukkit.createInventory(player, 9, "§cOeil Maléfique");
         inv.setItem(2, new ItemBuilder(Material.FERMENTED_SPIDER_EYE).setName("§r§fAffaiblissement").setLore("§7Inflige l'effet§8 Weakness I§7 pendant §c18 secondes§7 a un joueur visée","",(cdAffaiblissement <= 0 ? "§cPouvoir Utilisable" : "§7Cooldown: §c"+ StringUtils.secondsTowardsBeautiful(cdAffaiblissement))).toItemStack());
         inv.setItem(4, new ItemBuilder(Material.IRON_SWORD).hideAllAttributes().setName("§cAttaque").setLore("§7Vous permet de vous téléporter dans un rayon de§c 10 blocs§7 autours d'un joueur visée","",(cdAttaque <= 0 ? "§cPouvoir Utilisable":"§7Cooldown:§c "+StringUtils.secondsTowardsBeautiful(cdAttaque))).toItemStack());
-        inv.setItem(6, new ItemBuilder(Material.BOW).setName("§6§lPlace au combat !").setLore("§7Pendant§c une minute§7, vous permet de vous rendre insensible à tout les projectiles, également, vous infligerez§c 25%§7 de dégat supplémentaire au joueur viser§7 et subirez§c 25%§7 de dégat en moins de sa part").toItemStack());
+        inv.setItem(6, new ItemBuilder(Material.BOW).setName("§6§lPlace au combat !").setLore("§7En visant un joueur vous obtiendrez des§c bonus§7 pendant§c 1 minutes§7: ","", AllDesc.tab+"§7Vous serez insensible à tout les projectiles",AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégat au joueur viser",AllDesc.tab+"§7Vous subirez §c-25%§7 de dégat de sa part","",(cdCombat <= 0 ? "§cPouvoir Utilisable" : "§7Cooldown:§c "+StringUtils.secondsTowardsBeautiful(cdCombat))).toItemStack());
         player.openInventory(inv);
     }
     private void openChoosePlayerInventory(Player player, String invName) {
@@ -256,7 +274,6 @@ public class Fugaku extends UchiwaRoles implements Listener {
         player.openInventory(inv);
     }
 
-
     private static class CombatManager implements Listener {
 
         private final Fugaku fugaku;
@@ -267,6 +284,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
             this.uTarget = target.getUniqueId();
             EventUtils.registerEvents(this);
             new CombatRunnable(this).runTaskTimer(Main.getInstance(), 0, 20);
+            this.fugaku.cdCombat = 60*10;
         }
         @EventHandler
         private void onDamage(UHCPlayerBattleEvent event) {
@@ -334,6 +352,10 @@ public class Fugaku extends UchiwaRoles implements Listener {
                 cancel();
                 return;
             }
+            if (!fugaku.getGamePlayer().isAlive()) {
+                cancel();
+                return;
+            }
             Player owner = Bukkit.getPlayer(fugaku.getPlayer());
             if (owner != null) {
                 timeRemaining--;
@@ -342,7 +364,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
                         if (fugaku.getGameState().hasRoleNull(p))continue;
                         RoleBase role = fugaku.getGameState().getPlayerRoles().get(p);
                         if (!role.getGamePlayer().isAlive())continue;
-                        if (role instanceof UchiwaRoles || role instanceof Danzo) {
+                        if (role instanceof UchiwaRoles || role instanceof Danzo ||role instanceof Kakashi) {
                             this.croised = true;
                         }
                     }

@@ -115,7 +115,8 @@ public class EdoTenseiUser implements Listener {
                                         this.role.setMaxHealth(this.role.getMaxHealth()-4.0);
                                         owner.setMaxHealth(this.role.getMaxHealth());
                                         clicked.teleport(owner);
-                                        role.giveItem(clicked, false, role.getItems());
+                                        role.GiveItems();
+                                        role.RoleGiven(gameState);
                                         killLocation.remove(clicked.getUniqueId());
                                         clicked.resetTitle();
                                         clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+this.role.getTeam().getName());
