@@ -1,4 +1,4 @@
-package fr.nicknqck;
+package fr.nicknqck.managers;
 
 import lombok.Getter;
 import lombok.Setter;

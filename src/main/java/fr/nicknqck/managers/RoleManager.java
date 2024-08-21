@@ -1,4 +1,4 @@
-package fr.nicknqck;
+package fr.nicknqck.managers;
 
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;

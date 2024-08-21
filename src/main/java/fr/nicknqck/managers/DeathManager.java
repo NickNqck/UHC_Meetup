@@ -1,5 +1,7 @@
-package fr.nicknqck;
+package fr.nicknqck.managers;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.events.EventBase;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.DemonKillEvent;
