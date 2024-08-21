@@ -205,11 +205,8 @@ public class DeathManager implements Listener {
             dropItem(killedPlayer.getLocation(), new ItemStack(Material.ARROW, 8));
             dropItem(killedPlayer.getLocation(), new ItemStack(Material.BRICK, 16));
         }
-        killedPlayer.setMaxHealth(20.0);
-        killedPlayer.setHealth(killedPlayer.getMaxHealth());
         killedPlayer.setFoodLevel(20);
         killedPlayer.setGameMode(GameMode.SPECTATOR);
-        ItemsManager.ClearInventory(killedPlayer);
         killedPlayer.updateInventory();
         detectWin(gameState);
     }
