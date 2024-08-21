@@ -21,12 +21,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static fr.nicknqck.player.StunManager.stun;
 
@@ -53,6 +52,11 @@ public class Kurenai extends ShinobiRoles {
         super.RoleGiven(gameState);
         setChakraType(getRandomChakras());
         setCanBeHokage(true);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+            if (gameState.getAttributedRole().contains(GameState.Roles.Asuma)) {
+                new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+        }, 20);
     }
 
     @Override
@@ -105,12 +109,6 @@ public class Kurenai extends ShinobiRoles {
             cdGenjutsu--;
             if (cdGenjutsu == 0){
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c Genjutsu temporel§7.");
-            }
-        }
-        Player asuma = getPlayerFromRole(GameState.Roles.Asuma);
-        if (asuma != null){
-            if (Loc.getNearbyPlayers(asuma, 15).contains(owner)){
-                givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
             }
         }
     }
@@ -169,7 +167,30 @@ public class Kurenai extends ShinobiRoles {
     public String getName() {
         return "Kurenai";
     }
+    private static class ForceRunneable extends BukkitRunnable {
+        private final Kurenai kurenai;
+        public ForceRunneable(Kurenai kurenai) {
+            this.kurenai = kurenai;
+        }
 
+        @Override
+        public void run() {
+            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            if (!kurenai.getGamePlayer().isAlive()) return;
+            List<Player> aList = new ArrayList<>(kurenai.getListPlayerFromRole(Asuma.class));
+            if (aList.isEmpty()) {
+                return;
+            }
+            for (Player p : aList) {
+                if (Loc.getNearbyPlayersExcept(p, 15).contains(kurenai.owner)) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> kurenai.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true));
+                }
+            }
+        }
+    }
     private static class KurenaiRunnable extends BukkitRunnable implements Listener {
         private final Location initLocation;
         private int timeRemaining = 60;
