@@ -236,7 +236,6 @@ public class Main extends JavaPlugin implements Listener{
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
 		}
-		System.out.println("init FastInv");
 	}
 	private void giveTab(GameState gameState) {
 		System.out.println("Starting give tab");
