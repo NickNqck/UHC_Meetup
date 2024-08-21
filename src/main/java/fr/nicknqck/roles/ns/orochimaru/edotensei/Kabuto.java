@@ -32,7 +32,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -223,7 +222,8 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			if (event.getRole() instanceof Jugo) {
 				onJugoDeath(true);
 			}
-			if (!solo && !obitoTeam) {
+			if (!solo && !obitoTeam && getGamePlayer().isAlive()) {
+				Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> verifyAliveOrochimaru(event.getGameState()), 5);
 				verifyAliveOrochimaru(event.getGameState());
 			}
 		}
