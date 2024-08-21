@@ -45,15 +45,20 @@ public class DeathManager implements Listener {
     }
     @EventHandler
     private void onEntityDeath(EntityDeathEvent e){
+        if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))return;
         if (e.getEntity() instanceof Player){
             Player player = (Player) e.getEntity();
-            KillHandler(player, player.getKiller());
+            if (player.getKiller() != null) {
+                KillHandler(player, player.getKiller());
+            } else {
+                KillHandler(player, player.getLastDamageCause().getEntity());
+            }
             e.setDroppedExp(15);
             e.getDrops().clear();
         }
     }
     public void KillHandler(@Nonnull Player killedPlayer, @Nonnull Entity entityKiller) {
-        GameState gameState = GameState.getInstance();
+        final GameState gameState = GameState.getInstance();
         UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(killedPlayer, entityKiller, gameState);
         Bukkit.getPluginManager().callEvent(playerKillEvent);
         UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getPlayerRoles().get(killedPlayer));
@@ -86,10 +91,12 @@ public class DeathManager implements Listener {
         if (cantDie || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
             return;
         }
-        GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
-        gamePlayer.setAlive(false);
-        gamePlayer.setDeathLocation(killedPlayer.getLocation());
-        gameState.getDeadRoles().add(gameState.getPlayerRoles().get(killedPlayer).getRoles());
+        if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
+            GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
+            gamePlayer.setAlive(false);
+            gamePlayer.setDeathLocation(killedPlayer.getLocation());
+            gameState.getDeadRoles().add(gameState.getPlayerRoles().get(killedPlayer).getRoles());
+        }
         for (ItemStack item : killedPlayer.getInventory().getContents()){
             if (item != null){
                 if (item.getType() != Material.AIR){
@@ -208,6 +215,8 @@ public class DeathManager implements Listener {
         killedPlayer.setFoodLevel(20);
         killedPlayer.setGameMode(GameMode.SPECTATOR);
         killedPlayer.updateInventory();
+        killedPlayer.spigot().respawn();
+        killedPlayer.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 100, 0.0));
         detectWin(gameState);
     }
     public void DisconnectKillHandler(@Nonnull GamePlayer gamePlayer) {
