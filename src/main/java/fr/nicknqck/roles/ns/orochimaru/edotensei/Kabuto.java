@@ -205,7 +205,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		HandlerList.unregisterAll(this);
 	}
 	@EventHandler
-	private void onUHCDeath(UHCDeathEvent event) {
+	private void onUHCDeath(@NonNull UHCDeathEvent event) {
 		if (event.getRole() != null) {
 			if (event.getRole() instanceof Karin && !this.karinDeath) {
 				onKarinDeath(true);
@@ -224,7 +224,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			}
 			if (!solo && !obitoTeam && getGamePlayer().isAlive()) {
 				Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> verifyAliveOrochimaru(event.getGameState()), 5);
-				verifyAliveOrochimaru(event.getGameState());
 			}
 		}
 	}
