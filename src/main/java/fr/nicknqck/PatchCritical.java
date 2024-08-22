@@ -51,8 +51,9 @@ public class PatchCritical {
 
     public boolean isCritical() {
     	if (e == null)return false;
-        if (!(e.getDamager() instanceof Player))
-        return false;//Le damager ne peut pas être un joueur donc pas de critical
+        if (!(e.getDamager() instanceof Player)) {
+            return false;//Le damager ne peut pas être un joueur donc pas de critical
+        }
         Player p = (Player) e.getDamager();
         double a = getAttackValue(p);
         DecimalFormat df = new DecimalFormat("0.00");//Les dégats de la force diffère a 0.0000001 environ.
@@ -77,10 +78,14 @@ public class PatchCritical {
         net.minecraft.server.v1_8_R3.ItemStack craftItemStack = CraftItemStack.asNMSCopy(itemStack);
         if(craftItemStack.getItem() == null) return attackDamage;
         Item item = craftItemStack.getItem();
-        if (!(item instanceof ItemSword) && !(item instanceof ItemTool) && !(item instanceof ItemHoe)) return attackDamage;
+        if (!(item instanceof ItemSword) && !(item instanceof ItemTool) && !(item instanceof ItemHoe)) {
+            return attackDamage;
+        }
             Multimap<String, AttributeModifier> map = item.i();
             Collection<AttributeModifier> attributes = map.get(GenericAttributes.ATTACK_DAMAGE.getName());
-            if (attributes.isEmpty()) return attackDamage;
+            if (attributes.isEmpty()) {
+                return attackDamage;
+            }
                 for (AttributeModifier am : attributes)
                     if (am.a().toString().equalsIgnoreCase(uuid.toString()) && am.c() == 0) attackDamage += am.d();
 

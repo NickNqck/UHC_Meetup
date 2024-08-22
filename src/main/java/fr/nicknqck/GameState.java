@@ -75,7 +75,7 @@ public class GameState{
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
 	@Getter
-	private Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
+	private final Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
 	@Setter
 	@Getter
 	private int groupe = 5;
