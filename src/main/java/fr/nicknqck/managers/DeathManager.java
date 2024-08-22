@@ -215,7 +215,6 @@ public class DeathManager implements Listener {
         killedPlayer.setFoodLevel(20);
         killedPlayer.setGameMode(GameMode.SPECTATOR);
         killedPlayer.updateInventory();
-        killedPlayer.spigot().respawn();
         killedPlayer.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 100, 0.0));
         detectWin(gameState);
     }
