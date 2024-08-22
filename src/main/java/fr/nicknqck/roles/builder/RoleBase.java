@@ -200,9 +200,7 @@ public abstract class RoleBase implements IRole {
 	public void setBonusResi(double Bonusresi) {this.Bonusresi = Bonusresi;}
 	public void addBonusResi(double Bonusresi) {setBonusResi(getBonusResi() + Bonusresi);}
 	public void GiveItems() {}
-	public void RoleGiven(GameState gameState) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> owner.sendMessage(ChatColor.RED+"Discord du mode de jeu: "+ChatColor.GOLD+"https://discord.gg/RF3D4Du8VN"), 20*10);//20ticks* le nombre de seconde voulue
-	}
+	public void RoleGiven(GameState gameState) {}
 	public void Update(GameState gameState) {    //Update every 1s (20ticks)
 		allresi = getResi() + getBonusResi();
 		if (owner != null) {

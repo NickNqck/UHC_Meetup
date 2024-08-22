@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 public class GetterList {
     private final GameState gameState;
+    
     public GetterList(GameState gameState) {
         this.gameState = gameState;
     }

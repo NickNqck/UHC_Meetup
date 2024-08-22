@@ -260,6 +260,7 @@ public class GameListener implements Listener {
 						role.RoleGiven(gameState);
 						role.GiveItems();
 					}
+					Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage(ChatColor.RED+"Discord du mode de jeu: "+ChatColor.GOLD+"https://discord.gg/RF3D4Du8VN"), 20*10);//20ticks* le nombre de seconde voulue
 				}
 			}
 			for (UUID u : gameState.getInGamePlayers()) {

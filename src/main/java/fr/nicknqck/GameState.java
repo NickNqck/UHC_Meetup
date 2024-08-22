@@ -493,7 +493,7 @@ public class GameState{
 			break;
 		case Slayer:
 			if (!FFA.getFFA()) {
-				role = new Pourfendeur(player);
+				role = new PourfendeurV2(player);
 				role.setTeam(TeamList.Slayer);
 			} else {
 				role = new FFA_Pourfendeur(player);
