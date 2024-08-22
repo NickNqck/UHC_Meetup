@@ -45,8 +45,10 @@ public class HubListener implements Listener {
 			return;
 		}
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+		Bukkit.dispatchCommand(console, "gamerule sendCommandFeedback false");
 		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
 		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
+		Bukkit.dispatchCommand(console, "gamerule sendCommandFeedback true");
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.setInLobbyPlayers(new ArrayList<>());
@@ -71,7 +73,6 @@ public class HubListener implements Listener {
 		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
 		if (gameState.JigoroV2Pacte2)gameState.JigoroV2Pacte2 = false;
 		if (gameState.JigoroV2Pacte3)gameState.JigoroV2Pacte3 = false;
-		TitanListener.getInstance().onStartGame();
 		for (Entity e : Main.getInstance().getWorldManager().getGameWorld().getEntities()) {
 			if (e instanceof Player) continue;
 			e.remove();
@@ -92,7 +93,15 @@ public class HubListener implements Listener {
 		
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
-			if (p == null)continue;
+			if (p == null) {
+				System.out.println("canceled start game, because "+u.toString()+" is Player null");
+				gameState.getInGamePlayers().clear();
+				for (Player player : Bukkit.getOnlinePlayers()) {
+					gameState.getInLobbyPlayers().add(player.getUniqueId());
+				}
+				gameState.igPlayers.clear();
+				return;
+			}
 			p.setMaxHealth(20.0);
 			p.setHealth(20.0);
 			p.setFoodLevel(20);
@@ -109,6 +118,7 @@ public class HubListener implements Listener {
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);
 		}
+		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
 		// Supression de la plateforme
 		gameState.initEvents();
