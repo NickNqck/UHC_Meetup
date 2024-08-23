@@ -103,9 +103,9 @@ public class Kakashi extends ShinobiRoles {
     private int cdArimasu = 0;
     private Inventory KamuiInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cKamui");
-		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+cd(cdArimasu),
+		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdArimasu),
 				"§7Permet de vous téléportez dans le Kamui").toItemStack());
-		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+cd(cdSonohoka),
+		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdSonohoka),
 				"§7Permet de téléporter un joueur dans le Kamui").toItemStack());
 		return inv;
 	}

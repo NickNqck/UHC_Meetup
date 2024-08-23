@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.betteritem.BetterItem;
@@ -34,6 +35,9 @@ public class Nakime extends DemonsRoles {
 		if (!gameState.pregenNakime) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 	        Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
+			if (Bukkit.getWorld("nakime") != null) {
+				Main.getInstance().getWorldManager().setNakimeWorld(Bukkit.getWorld("nakime"));
+			}
 		}
 	}
 
@@ -68,7 +72,7 @@ public class Nakime extends DemonsRoles {
 								if (p.getWorld().getName().equalsIgnoreCase("nakime")) {
 									if (!gameState.hasRoleNull(p)) {
 										if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getRoles() != Roles.Nakime) {
-											LocPlayer loc = new LocPlayer();
+											LocPlayer loc = new LocPlayer(Main.getInstance().getWorldManager().getNakimeWorld());
 											p.teleport(loc.getRandomPositionRespawn());
 											p.sendMessage("§7Vous avez été téléporté de manière aléatoire par§c Nakime");
 										}
@@ -106,7 +110,7 @@ public class Nakime extends DemonsRoles {
 	public void EnterinNakime() {
 		cooldown =60*10;
 		owner.sendMessage("§7Entrée dans la cage !");
-		LocPlayer loc = new LocPlayer();
+		LocPlayer loc = new LocPlayer(Main.getInstance().getWorldManager().getNakimeWorld());
 		for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 			owner.sendMessage("§7§l"+p.getName()+"§7 est entrée dans votre§c cage§7 !");
 			inCage.add(p);
@@ -142,7 +146,7 @@ public class Nakime extends DemonsRoles {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (p.getLocation().getY() <= 122) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
-						LocPlayer locPlayer = new LocPlayer();
+						LocPlayer locPlayer = new LocPlayer(Main.getInstance().getWorldManager().getNakimeWorld());
 						p.teleport(locPlayer.getRandomPositionRespawn());
 						p.sendMessage("§7Vous avez été téléporter aléatoirement");
 						gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(true);
@@ -162,9 +166,9 @@ public class Nakime extends DemonsRoles {
 			if (cooldown >= 60*8) {
 				int newcooldown = cooldown-60*8;
 				if (Loc.getNearestPlayerforNakime(owner, 150, gameState) != null) {
-					sendCustomActionBar(owner, "§bTemp restant dans la cage: "+cd(newcooldown)+"§a Slayer§b le plus proche: "+ArrowTargetUtils.calculateArrow(owner, Loc.getNearestPlayerforNakime(owner, 150, gameState).getLocation()));
+					sendCustomActionBar(owner, "§bTemp restant dans la cage: "+ StringUtils.secondsTowardsBeautiful(newcooldown)+"§a Slayer§b le plus proche: "+ArrowTargetUtils.calculateArrow(owner, Loc.getNearestPlayerforNakime(owner, 150, gameState).getLocation()));
 				}else{
-					sendCustomActionBar(owner, "§bTemp restant dans la cage: "+cd(newcooldown));
+					sendCustomActionBar(owner, "§bTemp restant dans la cage: "+StringUtils.secondsTowardsBeautiful(newcooldown));
 				}
 			}
 			if (cooldown == 60*8) {

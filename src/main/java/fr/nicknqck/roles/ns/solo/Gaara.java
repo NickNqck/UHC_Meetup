@@ -8,6 +8,7 @@ import java.util.UUID;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -67,7 +68,7 @@ public class Gaara extends NSRoles {
     public GameState.Roles getRoles() {
         return Roles.Gaara;
     }
-    int timingsable = 15;
+
     @Override
     public void Update(GameState gameState) {
     	if(fixCooldown > 0) fixCooldown--;
@@ -75,7 +76,7 @@ public class Gaara extends NSRoles {
         if(shukakuCooldown > 0) {
         	if (usingShukaku) {
         		int newcd = shukakuCooldown-(60*15);
-        		sendCustomActionBar(owner, "§eSable: "+sablenmb+"§b Temp restant sous§e Shukaku§r: "+cd(newcd));
+        		sendCustomActionBar(owner, "§eSable: "+sablenmb+"§b Temp restant sous§e Shukaku§r: "+ StringUtils.secondsTowardsBeautiful(newcd));
         	}
         	shukakuCooldown--;
         }
@@ -427,58 +428,14 @@ public class Gaara extends NSRoles {
             index++;
         }
     }
-   /* public void useSarcophage(Player player) {
-        Player target = getTargetPlayer(player, 10);
-        if(target != null){
-            Location min = target.getLocation().clone().subtract(2, 1, 2), max = target.getLocation().clone().add(2, 5, 2);
-
-            Cuboid sarcophage = new Cuboid(min, max);
-            sarcophage.getBlocks().forEach(block -> block.setType(Material.SAND));
-        }
-        player.updateInventory();
-    }*/
-    public  void useLance(Player player) {
+   public  void useLance(Player player) {
         ItemBuilder itemBuilder = new ItemBuilder(Material.DIAMOND_SWORD);
         itemBuilder.addEnchant(Enchantment.DAMAGE_ALL, 4);
         itemBuilder.setDurability((short) (Material.DIAMOND_SWORD.getMaxDurability() - 25));
         player.getInventory().addItem(itemBuilder.toItemStack());
         player.updateInventory();
-    }/*
-    public List<Block> getBlocks(Location center, int radius, boolean hollow, boolean sphere) {
-        List<Location> locs = circle(center, radius, radius, hollow, sphere, 0);
-        List<Block> blocks = new ArrayList<>();
-
-        for (Location loc : locs) {
-            blocks.add(loc.getBlock());
-        }
-
-        return blocks;
     }
-    public  List<Location> circle(final Location loc,final int radius,final int height,final boolean hollow,final boolean sphere,final int plusY) {
-        List<Location> circleblocks = new ArrayList<>();
-        int cx = loc.getBlockX();
-        int cy = loc.getBlockY();
-        int cz = loc.getBlockZ();
 
-        for (int x = cx - radius; x <= cx + radius; x++) {
-            for (int z = cz - radius; z <= cz + radius; z++) {
-                for (int y = (sphere ? cy - radius : cy); y < (sphere ? cy
-                        + radius : cy + height); y++) {
-                    double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z)
-                            + (sphere ? (cy - y) * (cy - y) : 0);
-
-                    if (dist < radius * radius
-                            && !(hollow && dist < (radius - 1) * (radius - 1))) {
-                        Location l = new Location(loc.getWorld(), x, y + plusY,
-                                z);
-                        circleblocks.add(l);
-                    }
-                }
-            }
-        }
-
-        return circleblocks;
-    }*/
     public void useArmure(Player player) {
         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
         setResi(40);

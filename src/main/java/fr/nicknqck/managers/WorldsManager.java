@@ -10,5 +10,6 @@ public class WorldsManager {
 
     private World gameWorld;
     private World lobbyWorld;
+    private World nakimeWorld;
 
 }

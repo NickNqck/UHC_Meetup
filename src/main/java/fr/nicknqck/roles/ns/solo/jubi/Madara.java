@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.roles.ns.builders.JubiRoles;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -195,7 +194,7 @@ public class Madara extends JubiRoles {
 							cancel();
 							return;
 						}
-						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+cd(SusanoCD-(60*10)));
+						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
 						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
@@ -236,8 +235,8 @@ public class Madara extends JubiRoles {
 	private Bijus traqued = null;
 	private void openChibakuTenseiInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cChibaku Tensei");
-		inv.setItem(0, new ItemBuilder(Material.IRON_SWORD).setName("§cBenshô Ten'in").setLore("§7Cooldown "+cd(BenshoCD),"§7Permet d'attirer un joueur proche à votre position").toItemStack());
-		inv.setItem(4, new ItemBuilder(Material.IRON_CHESTPLATE).setName("§cShinra Tensei").setLore("§7Cooldown "+cd(ShinraCD),"§7Permet de repousser toute entité étant à moins de 20blocs de vous").toItemStack());
+		inv.setItem(0, new ItemBuilder(Material.IRON_SWORD).setName("§cBenshô Ten'in").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(BenshoCD),"§7Permet d'attirer un joueur proche à votre position").toItemStack());
+		inv.setItem(4, new ItemBuilder(Material.IRON_CHESTPLATE).setName("§cShinra Tensei").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(ShinraCD),"§7Permet de repousser toute entité étant à moins de 20blocs de vous").toItemStack());
 		if (MeteoriteUse == 0) {
 			inv.setItem(8, new ItemBuilder(Material.STONE).setName("§7Météorite").setLore("§7Utilisation:§c "+MeteoriteUse+"§7/§61","§7Permet de créer un énorme trou tuant tout joueur à l'intérieur").toItemStack());
 		}

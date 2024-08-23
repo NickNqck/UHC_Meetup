@@ -78,7 +78,6 @@ public abstract class RoleBase implements IRole {
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
-	public boolean hasblade = false;
 	public int roleID = 0;
 	public String StringID = "";
 	private UUID uuidOwner;
@@ -90,11 +89,9 @@ public abstract class RoleBase implements IRole {
 			owner.resetPlayerTime();
 			owner.resetMaxHealth();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				if (this.getTeam() != null) {
-					owner.sendMessage(ChatColor.BOLD+"Camp: "+ this.getTeam().getColor() +StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
-					System.out.println(owner.getName() +" Team: "+ this.getTeam());
-				}
-				if (this.getRoles() != null) {
+                owner.sendMessage(ChatColor.BOLD + "Camp: " + this.getTeam().getColor() + StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
+                System.out.println(owner.getName() +" Team: "+ this.getTeam());
+                if (this.getRoles() != null) {
 					System.out.println(owner.getName() +" Role: "+ getRoles().name());
 				}
 			}, 20);
@@ -129,25 +126,18 @@ public abstract class RoleBase implements IRole {
 			this.gameState = GameState.getInstance();
 		}
 	}
-
 	@Override
 	public UUID getPlayer() {
 		return uuidOwner;
 	}
 	public void sendActionBarCooldown(Player player, int cooldown) {
 		if (cooldown > 0) {
-			NMSPacket.sendActionBar(player, "Cooldown: "+cd(cooldown));
+			NMSPacket.sendActionBar(player, "Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));
 		}else {
 			NMSPacket.sendActionBar(player, getItemNameInHand(player)+" Utilisable");
 		}
 	}
 	public void sendCustomActionBar(Player player, String msg) {NMSPacket.sendActionBar(player, msg);}
-	public String cd(int cooldown) {
-		if (cooldown <= 0) {
-			return "Utilisable";
-		}else{
-			return StringUtils.secondsTowardsBeautiful(cooldown);}
-		}
 	public void sendMessageAfterXseconde(Player player, String message, int seconde) {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.sendMessage(message), 20L *seconde);
 	}

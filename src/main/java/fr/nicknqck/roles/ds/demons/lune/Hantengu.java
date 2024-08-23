@@ -123,7 +123,7 @@ public class Hantengu extends DemonsRoles {
 		}
 		if (owner.getItemInHand().isSimilar(Items.getHantenguSekido())) {
 			if (Sekido > 0) {
-					String message = "Temp de transformation restant:§6 "+StringUtils.secondsTowardsBeautiful(sekitime)+"§r Cooldown: §6"+cd(Sekido);
+					String message = "Temp de transformation restant:§6 "+StringUtils.secondsTowardsBeautiful(sekitime)+"§r Cooldown: §6"+StringUtils.secondsTowardsBeautiful(Sekido);
 					PacketPlayOutChat packet = new PacketPlayOutChat(new ChatComponentText(message), (byte)2);
 					((CraftPlayer) owner).getHandle().playerConnection.sendPacket(packet);
 			} else {

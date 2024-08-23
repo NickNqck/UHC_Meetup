@@ -9,6 +9,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -268,16 +269,16 @@ public class Deidara extends AkatsukiRoles {
 	public void Update(GameState gameState) {
 		if (owner.getItemInHand().isSimilar(ArcExplosifItem()) || owner.getItemInHand().isSimilar(BakutonItem())) {
 			if (mode == Mode.C1) {
-				sendCustomActionBar(owner, "§7(§cC1§7) Cooldown: "+cd(cdC1));
+				sendCustomActionBar(owner, "§7(§cC1§7) Cooldown: "+ StringUtils.secondsTowardsBeautiful(cdC1));
 			}
 			if (mode == Mode.C2) {
-				sendCustomActionBar(owner, "§7(§cC2§7) Cooldown: "+cd(cdC2));
+				sendCustomActionBar(owner, "§7(§cC2§7) Cooldown: "+StringUtils.secondsTowardsBeautiful(cdC2));
 			}
 			if (mode == Mode.C3) {
-				sendCustomActionBar(owner, "§7(§cC3§7) Cooldown: "+cd(cdC3));
+				sendCustomActionBar(owner, "§7(§cC3§7) Cooldown: "+StringUtils.secondsTowardsBeautiful(cdC3));
 			}
 			if (mode == Mode.C4) {
-				sendCustomActionBar(owner, "§7(§cC4§7) Cooldown: "+cd(cdC4));
+				sendCustomActionBar(owner, "§7(§cC4§7) Cooldown: "+StringUtils.secondsTowardsBeautiful(cdC4));
 			}
 			if (mode == Mode.ArtUltime) {
 				sendCustomActionBar(owner, "§7Le jour de l'§cArt Ultime§7 est arrivé !");

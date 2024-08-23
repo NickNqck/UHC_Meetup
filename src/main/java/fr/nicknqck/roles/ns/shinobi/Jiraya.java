@@ -8,6 +8,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -165,7 +166,7 @@ public class Jiraya extends ShinobiRoles {
 								}
 								int truc = cdGamabunta-(60*8);
 								for (Player p : Loc.getNearbyPlayers(owner, 150)) {
-									sendCustomActionBar(p, "§bTemp restant dans§c Gamabunta§b:§c "+cd(truc));
+									sendCustomActionBar(p, "§bTemp restant dans§c Gamabunta§b:§c "+ StringUtils.secondsTowardsBeautiful(truc));
 								}
 							}
 						}.runTaskTimer(Main.getInstance(), 0, 20);

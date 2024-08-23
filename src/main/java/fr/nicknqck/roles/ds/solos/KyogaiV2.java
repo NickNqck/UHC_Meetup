@@ -9,6 +9,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -247,13 +248,13 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 				if (owner.getItemInHand().isSimilar(kyogaiV2.Tambour())) {
 					switch (kyogaiV2.model) {
 						case Head:
-							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownHead));
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+ StringUtils.secondsTowardsBeautiful(kyogaiV2.cooldownHead));
 							break;
 						case Leg:
-							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownLeg));
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+StringUtils.secondsTowardsBeautiful(kyogaiV2.cooldownLeg));
 							break;
 						case Back:
-							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownShoulder));
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+StringUtils.secondsTowardsBeautiful(kyogaiV2.cooldownShoulder));
 							break;
 						default:
 							break;

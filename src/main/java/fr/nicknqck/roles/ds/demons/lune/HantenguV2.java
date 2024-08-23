@@ -287,7 +287,7 @@ public class HantenguV2 extends DemonsRoles {
 		if (cdAizetsu == 0) owner.sendMessage(Items.getHantenguAizetsu().getItemMeta().getDisplayName()+"§f est à nouveau utilisable !");
 		if (invincibletime > 0) {
 			invincibletime--;
-			owner.sendMessage("Temp avant fin d'invincibilité:§6 "+cd(invincibletime));
+			owner.sendMessage("Temp avant fin d'invincibilité:§6 "+StringUtils.secondsTowardsBeautiful(invincibletime));
 		}else if (invincibletime == 0) {
 			owner.sendMessage("Vous n'êtes plus invincible");
 			setInvincible(false);

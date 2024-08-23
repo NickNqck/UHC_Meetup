@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.builders;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -55,7 +56,7 @@ public abstract class AotRoles extends RoleBase {
                 if (role.owner.getItemInHand().isSimilar(role.gameState.EquipementTridi())) {
                     DecimalFormat df = new DecimalFormat("0.0");
                     //	sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"%"+aqua+" Cooldown:§6 "+actualTridiCooldown+"s");
-                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+role.gameState.sendGazBar(role.gazAmount, 2)+"§7(§b"+df.format(role.gazAmount)+"%§7), Cooldown:§b "+role.cd(role.getActualTridiCooldown()));
+                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+role.gameState.sendGazBar(role.gazAmount, 2)+"§7(§b"+df.format(role.gazAmount)+"%§7), "+(role.getActualTridiCooldown() <= 0 ? role.gameState.EquipementTridi().getItemMeta().getDisplayName()+" utilisable" : StringUtils.secondsTowardsBeautiful(role.getActualTridiCooldown())));
                 }
             }else if (role.getActualTridiCooldown() == 0){
                 role.owner.sendMessage("§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 utilisable !");

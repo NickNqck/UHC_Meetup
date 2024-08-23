@@ -168,8 +168,8 @@ public class Hotaru extends SlayerRoles {
 							if (cible.getInventory().contains(Items.getLamedenichirinspeed())) {
 							owner.sendMessage("Ce joueur possède une lame de§e speed");
 							}
-							if (!gameState.hasRoleNull(cible)) {
-								if (!gameState.getPlayerRoles().get(cible).hasblade) {
+							if (!gameState.hasRoleNull(cible) && gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles) {
+								if (!((DemonsSlayersRoles) gameState.getPlayerRoles().get(cible)).hasblade) {
 								owner.sendMessage("Ce joueurs ne possède pas de lame");
 								}
 							}

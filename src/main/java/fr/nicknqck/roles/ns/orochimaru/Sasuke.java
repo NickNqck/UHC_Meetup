@@ -11,6 +11,7 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import lombok.Getter;
@@ -147,8 +148,8 @@ public class Sasuke extends UchiwaRoles {
 	}
 	private Inventory GenjutsuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cGenjutsu");
-		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+cd(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
-		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+cd(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
+		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+ StringUtils.secondsTowardsBeautiful(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
+		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+StringUtils.secondsTowardsBeautiful(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
 		if (!hasIzanami) {
 			inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous permez d'infecter quelqu'un").toItemStack());
 		} else {
@@ -503,7 +504,7 @@ public class Sasuke extends UchiwaRoles {
 							cancel();
 							return;
 						}
-						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+cd(SusanoCD-(60*10)));
+						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
 						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);

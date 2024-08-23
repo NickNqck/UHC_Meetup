@@ -178,8 +178,8 @@ public class Obito extends JubiRoles {
 	}
 	private Inventory GenjutsuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cGenjutsu");
-		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+cd(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
-		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+cd(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
+		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+StringUtils.secondsTowardsBeautiful(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
+		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+StringUtils.secondsTowardsBeautiful(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
 		if (!Izanami) {
 			inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous permez d'infecter quelqu'un").toItemStack());
 		} else {
@@ -196,9 +196,9 @@ public class Obito extends JubiRoles {
     private int cdSusano = -1;
 	private Inventory KamuiInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cKamui");
-		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+cd(cdArimasu),
+		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdArimasu),
 				"§7Permet de vous téléportez dans le Kamui").toItemStack());
-		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+cd(cdSonohoka),
+		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdSonohoka),
 				"§7Permet de téléporter un joueur dans le Kamui").toItemStack());
 		return inv;
 	}
