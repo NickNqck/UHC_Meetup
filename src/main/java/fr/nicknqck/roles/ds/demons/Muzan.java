@@ -76,7 +76,6 @@ public class Muzan extends DemonsRoles {
 			if (owner.getHealth() != this.getMaxHealth()) {
 				if (regencooldown >= 1){regencooldown--;}
 				if (regencooldown == 0) {
-					//owner.sendMessage(ChatColor.GREEN+"Vous venez de régénérer 1 demi-coeur suite à votre pouvoir de régénération");
 					regencooldown = 10;
 					Heal(owner, 1.0);
 				}
@@ -114,7 +113,7 @@ public class Muzan extends DemonsRoles {
 						if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) ||gamePlayer.getRole().getTeam().equals(TeamList.Demon)) {
 							target.sendMessage("§cMuzan§7 vous à offert son boost de§c 10% de force");
 							hasBoost = true;
-							owner.sendMessage("§7Vous avez donné§c 10% de force§7 à§l "+target.getName());
+							owner.sendMessage("§7Vous avez donné§c 10% de§c force§7 à§l "+target.getName());
 							gamePlayer.getRole().addBonusforce(10);
 						}else {
 							owner.sendMessage("Vous ne pouvez pas boost un humain !");
