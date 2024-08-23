@@ -112,7 +112,7 @@ public class Suigetsu extends OrochimaruRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (getPlayerRoles(player) instanceof Orochimaru) {
+		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Orochimaru) {
 			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 			boolean KarinAlive = !getListPlayerFromRole(Roles.Karin).isEmpty();
             onOrochimaruDeath(true);

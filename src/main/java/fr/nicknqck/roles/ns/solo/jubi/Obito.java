@@ -7,7 +7,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -690,7 +689,7 @@ public class Obito extends JubiRoles {
 			if (obito.izanami.isAllTrue()) {
 				Player toIzanami = Bukkit.getPlayer(obito.izanami.getTarget());
 				if (toIzanami != null) {
-					obito.hasIzanami = obito.izanami.onSuccessfullInfection(obito, obito.getPlayerRoles(toIzanami));
+					obito.hasIzanami = obito.izanami.onSuccessfullInfection(obito, GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId()).getRole());
 					if (obito.hasIzanami){
 						cancel();
 					}

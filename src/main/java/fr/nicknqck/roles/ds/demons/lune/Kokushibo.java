@@ -261,7 +261,7 @@ public boolean killtanjiro;
 					owner.sendMessage("Vous venez de tuez:§l "+victim.getName()+"§r vous gagnez donc "+AllDesc.Resi+" 1 pendant 3minutes");
 					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
-					if (getPlayerRoles(victim) instanceof Tanjiro) {
+					if (gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof Tanjiro) {
 						owner.sendMessage("§7Vous avez réussis à vaincre cette imposteur de§a Tanjiro§7, vous avez maintenant un choix qui s'offre à vous... (§l/ds role§7)");
 						killtanjiro = true;
 					}

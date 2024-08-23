@@ -12,7 +12,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -23,15 +22,7 @@ import java.util.UUID;
 public class Enmu extends DemonsRoles {
 	public Enmu(UUID player) {
 		super(player);
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (UUID u : gameState.getInGamePlayers()) {
-				Player p = Bukkit.getPlayer(u);
-				if (p == null)continue;
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
+		getKnowedRoles().add(Muzan.class);
 	}
 
 	@Override
@@ -45,7 +36,6 @@ public class Enmu extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		KnowRole(owner, Roles.Muzan, 1);
 		return AllDesc.Enmu;
 	}
 	@Override

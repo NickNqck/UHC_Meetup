@@ -424,6 +424,7 @@ public class GameState{
 		roleType = roles.get(new Random().nextInt(roles.size()));
 		RoleBase role = null;
 		UUID player = aziz.getUniqueId();
+		if (!getGamePlayer().containsKey(player))return null;
 		switch(roleType) {
 		case Muzan:
 			role = new Muzan(player);
@@ -810,10 +811,9 @@ public class GameState{
 		}
 		role.gameState = this;
 		addInPlayerRoles(aziz, role);
-		fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(aziz);
+		fr.nicknqck.player.GamePlayer gamePlayer = getGamePlayer().get(player);
 		gamePlayer.setRole(role);
 		role.setGamePlayer(gamePlayer);
-		role.getGameState().getGamePlayer().put(player, gamePlayer);
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
 			if (getPlayerRoles().get(aziz).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(aziz).getRoles().equals(Roles.Kyogai)) {
 				canBeAssassin.add(aziz);

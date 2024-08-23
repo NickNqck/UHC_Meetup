@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
@@ -68,8 +69,9 @@ public class TitanBestial extends TitansRoles {
 			if (!cri) {
 				owner.sendMessage("§7Votre cri s'apprête à retentir...");
 				for (Player p : canBeTransformed) {
-					if (getPlayerRoles(p) instanceof Soldat) {
-						Soldat soldat = (Soldat) getPlayerRoles(p);
+					GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+					if (gamePlayer.getRole() instanceof Soldat) {
+						Soldat soldat = (Soldat) gamePlayer.getRole();
 						if (soldat.form == Soldat.kit.Brigade || soldat.form.equals(Soldat.kit.Garnison)) {
 							p.sendMessage("§7Vous sentez l'alcool vous montez à la tête...");
 							givePotionEffet(p, PotionEffectType.CONFUSION, 20*15, 2, true);
@@ -104,7 +106,8 @@ public class TitanBestial extends TitansRoles {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
 					if (!gameState.hasRoleNull(p)) {
-						if (getPlayerRoles(p).getOriginTeam().equals(TeamList.Titan)) {
+						GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+						if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Titan)) {
 							Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 								DecimalFormat df = new DecimalFormat("0");
 								String x = df.format(owner.getLocation().getX());
@@ -126,7 +129,8 @@ public class TitanBestial extends TitansRoles {
 		if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())){
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
 				if (!gameState.hasRoleNull(p)) {
-					if (getPlayerRoles(p) instanceof Soldat) {
+					GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+					if (gamePlayer.getRole() instanceof Soldat) {
 						if (!canBeTransformed.contains(p)) {
 							if (timePassed.containsKey(p.getUniqueId())) {
 								int time = timePassed.get(p.getUniqueId());

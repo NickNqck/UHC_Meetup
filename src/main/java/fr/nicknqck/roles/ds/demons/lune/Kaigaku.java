@@ -123,7 +123,7 @@ public class Kaigaku extends DemonsRoles {
 									if (gameState.getPlayerRoles().get(p) instanceof JigoroV2) {
 										Player jigoro = gameState.getPlayerRoles().get(p).owner;
 										jigoro.sendMessage(msg);
-										getPlayerRoles(jigoro).setMaxHealth(getPlayerRoles(jigoro).getMaxHealth()+1.0);
+										gameState.getGamePlayer().get(jigoro.getUniqueId()).getRole().setMaxHealth(gameState.getGamePlayer().get(jigoro.getUniqueId()).getRole().getMaxHealth()+1.0);
 										jigoro.updateInventory();
 									}
 								}

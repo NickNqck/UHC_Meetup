@@ -473,7 +473,7 @@ public class Itachi extends UchiwaRoles {
 			if (itachi.izanami.isAllTrue()) {
 				Player toIzanami = Bukkit.getPlayer(itachi.izanami.getTarget());
 				if (toIzanami != null) {
-					itachi.infectFinish = itachi.izanami.onSuccessfullInfection(itachi, itachi.getPlayerRoles(toIzanami));
+					itachi.infectFinish = itachi.izanami.onSuccessfullInfection(itachi, itachi.getGameState().getGamePlayer().get(toIzanami.getUniqueId()).getRole());
 					if (itachi.infectFinish){
 						cancel();
 					}

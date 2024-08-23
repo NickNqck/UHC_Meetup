@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -57,7 +58,8 @@ public class Furuto extends DemonInferieurRole {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (getPlayerRoles(p) != null && getPlayerRoles(p) != null && owner.getWorld().equals(p.getWorld())) {
+			GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+			if (gamePlayer != null && owner.getWorld().equals(p.getWorld())) {
 				if (p.getLocation().distance(owner.getLocation()) <= 20 && !aP.contains(p)) {
 					aP.add(p);
 				}else {
@@ -91,18 +93,19 @@ public class Furuto extends DemonInferieurRole {
             		}
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
+					GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
             		if (aP.contains(p)) {
             			int r = RandomUtils.getRandomInt(0, 4);
                 			if (r == 0) {
-                				if (getPlayerRoles(p).getOriginTeam() == TeamList.Demon) {
+                				if (gamePlayer.getRole().getOriginTeam() == TeamList.Demon) {
                 					if (!gameState.nightTime&& !p.hasPotionEffect(PotionEffectType.SPEED)) {
                     					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true);
-                    					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Speed 1");
+                    					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Speed 1");
                     					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Speed 1 pendant§6 60§rs ");
                     				} else {
                     					if (!p.hasPotionEffect(PotionEffectType.SPEED)) {
                                     		p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Speed 2");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Speed 2");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Speed 2 pendant§6 60§rs ");
                     					}   			
                     				}
@@ -110,11 +113,11 @@ public class Furuto extends DemonInferieurRole {
                 					if (p.hasPotionEffect(PotionEffectType.SLOW))return false;
                 					if (!gameState.nightTime) {
                 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*60, 0, false, false), true);
-                						p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Slowness 1");
+                						p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Slowness 1");
                 						owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Slowness 1 pendant§6 60§rs ");
                 					} else {
                 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*60, 1, false, false), true);
-                						p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Slowness 2");
+                						p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Slowness 2");
                 						owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Slowness 2 pendant§6 60§rs ");
                 					}
                 				}
@@ -122,11 +125,11 @@ public class Furuto extends DemonInferieurRole {
                                // owner.sendMessage("Vous venez d'activer votre§6 Flûte");
                 			}
                 			if (r == 1) {
-                				if (getPlayerRoles(p).getOriginTeam() == TeamList.Demon) {
+                				if (gamePlayer.getRole().getOriginTeam() == TeamList.Demon) {
                 					if (!gameState.nightTime) {
                     					if (!p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Force 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Force 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Force 1 pendant§6 60§rs ");
                         					cooldown = 60*3;
                                            // owner.sendMessage("Vous venez d'activer votre§6 Flûte");
@@ -134,7 +137,7 @@ public class Furuto extends DemonInferieurRole {
                     				} else {
                     					if (!p.hasPotionEffect(PotionEffectType.SPEED)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Speed 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Speed 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Speed 1 pendant§6 60§rs ");
                         					cooldown = 60*3;
                                            // owner.sendMessage("Vous venez d'activer votre§6 Flûte");
@@ -144,7 +147,7 @@ public class Furuto extends DemonInferieurRole {
                 					if (!gameState.nightTime) {
                     					if (!p.hasPotionEffect(PotionEffectType.WEAKNESS)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*60, 0, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Weakness 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Weakness 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Weakness 1 pendant§6 60§rs ");
                         					cooldown = 60*3;
                                            // owner.sendMessage("Vous venez d'activer votre§6 Flûte");
@@ -152,7 +155,7 @@ public class Furuto extends DemonInferieurRole {
                     				} else {
                     					if (!p.hasPotionEffect(PotionEffectType.SLOW)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*60, 0, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Slowness 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Slowness 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Slowness 1 pendant§6 60§rs ");
                         					cooldown = 60*3;
                                            // owner.sendMessage("Vous venez d'activer votre§6 Flûte");
@@ -161,18 +164,18 @@ public class Furuto extends DemonInferieurRole {
                 				}                				
                 			}
                 			if (r == 2) {
-                				if (getPlayerRoles(p).getOriginTeam() == TeamList.Demon) {
+                				if (gamePlayer.getRole().getOriginTeam() == TeamList.Demon) {
                 					if (!gameState.nightTime) {
                     					if (!p.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                    						if (getPlayerRoles(p).getResi() != 20)getPlayerRoles(p).setResi(getPlayerRoles(p).getResi() + 20);
+                    						if (gamePlayer.getRole().getResi() != 20)gamePlayer.getRole().setResi(gamePlayer.getRole().getResi() + 20);
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60, 0, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Résistance 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Résistance 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Résistance 1 pendant§6 60§rs ");
                     					}
                     				} else {
                     					if (!p.hasPotionEffect(PotionEffectType.JUMP)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20*60, 1, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Speed 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Speed 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Jump Boost 2 pendant§6 60§rs ");
                     					}
                     				}	
@@ -199,16 +202,16 @@ public class Furuto extends DemonInferieurRole {
                 					if (!gameState.nightTime) {
                     					if (!p.hasPotionEffect(PotionEffectType.JUMP)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20*60, 0, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Jump Boost 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Jump Boost 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Jump Boost 1 pendant§6 60§rs ");
                         					cooldown = 60*3;
                                            // owner.sendMessage("Vous venez d'activer votre§6 Flûte");
                     					}
                     				} else {
                     					if (!p.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                    						if (getPlayerRoles(p).getResi() != 20)getPlayerRoles(p).setResi(getPlayerRoles(p).getResi() + 20);
+                    						if (gamePlayer.getRole().getResi() != 20)gamePlayer.getRole().setResi(gamePlayer.getRole().getResi() + 20);
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60, 0, false, false), true);
-                        					p.sendMessage(getPlayerRoles(owner).getOriginTeam().getColor()+"Furuto§r vous à offert Résistance 1");
+                        					p.sendMessage(getOriginTeam().getColor()+"Furuto§r vous à offert Résistance 1");
                         					owner.sendMessage("Vous avez offert à§6 "+p.getName()+"§r"+" Résistance 1 pendant§6 60§rs ");
                         					cooldown = 60*3;
                                            // owner.sendMessage("Vous venez d'activer votre§6 Flûte");

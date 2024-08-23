@@ -93,10 +93,11 @@ public class Kakuzu extends AkatsukiRoles {
 	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (!gameState.hasRoleNull(victim) && getPlayerRoles(victim) instanceof NSRoles) {
-			if (((NSRoles) getPlayerRoles(victim)).getChakras() != null && victim != owner && killer == owner && !ChakrasOwned.containsKey(((NSRoles) getPlayerRoles(victim)).getChakras())) {
-				ChakrasOwned.put(((NSRoles) getPlayerRoles(victim)).getChakras(), true);
-				owner.sendMessage("§7Vous maitrisez maintenant le "+ ((NSRoles) getPlayerRoles(victim)).getChakras().getShowedName());
+		if (!gameState.hasRoleNull(victim) && gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof NSRoles) {
+			NSRoles vRole = (NSRoles) gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
+			if ((vRole.getChakras() != null && victim != owner && killer == owner && !ChakrasOwned.containsKey(vRole.getChakras()))) {
+				ChakrasOwned.put(vRole.getChakras(), true);
+				owner.sendMessage("§7Vous maitrisez maintenant le "+ (vRole).getChakras().getShowedName());
 			}
 		}
 	}
@@ -111,7 +112,7 @@ public class Kakuzu extends AkatsukiRoles {
 				HashMap<Player, Location> rap = new HashMap<>();
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 					if (!gameState.hasRoleNull(p)) {
-						if (getTeam(p) != getOriginTeam()) {
+						if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() != getOriginTeam()) {
 							rap.put(p, p.getLocation());
 							owner.sendMessage("§7Vos§c Corps Rapiécé§7 on touché§c "+p.getDisplayName());
 						}
@@ -124,7 +125,7 @@ public class Kakuzu extends AkatsukiRoles {
 						for (Player p : rap.keySet()) {
 							p.teleport(rap.get(p));
 						}
-						if (!gameState.getInGamePlayers().contains(owner)) {
+						if (!gameState.getInGamePlayers().contains(owner.getUniqueId())) {
 							cancel();
 							return;
 						}

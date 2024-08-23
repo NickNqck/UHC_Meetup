@@ -60,19 +60,15 @@ public class Armin extends SoldatsRoles {
 				        Inventory doubleChest = Bukkit.createInventory(owner, 54, "Inventaire de " + target.getName());
 				        for (int i = 0; i < target.getInventory().getSize(); i++) {
 				        	   ItemStack item = target.getInventory().getItem(i);
-					            if (getPlayerRoles(target).getRoles() != Roles.Eren) {
+					            if (gameState.getGamePlayer().get(target.getUniqueId()).getRole().getRoles() != Roles.Eren) {
 					            	if (item != null && item.getType() != Material.AIR) {
 						            	doubleChest.setItem(i, item.clone());
 						            }
 					            }else {
 					            	if (item != null && item.getType() != Material.AIR) {
 					            		if (item.hasItemMeta()) {
-					            			if (!item.getItemMeta().hasLore()) {
-					            				doubleChest.setItem(i, item.clone());
-					            		}else {
-					            			doubleChest.setItem(i, item.clone());
-					            		}
-					            	}
+                                            doubleChest.setItem(i, item.clone());
+                                        }
 					            }
 					        }
 				        }

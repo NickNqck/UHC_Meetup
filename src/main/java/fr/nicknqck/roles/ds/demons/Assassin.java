@@ -37,7 +37,7 @@ public class Assassin {
 					 Player p = Bukkit.getPlayer(u);
 					 if (p == null)continue;
 	            	 if (!gameState.hasRoleNull(p)) {
-	            		 if (gameState.getPlayerRoles().get(p).hasTeam(p)) {	            			 
+	            		 if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() != null) {
 	            			 if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles || gameState.getPlayerRoles().get(p) instanceof Tanjiro) {
 		            			 p.sendMessage("§cL'Assassin à été désigné");
 		            		 }

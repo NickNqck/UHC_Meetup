@@ -31,10 +31,10 @@ public class Daki extends DemonsRoles {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (getPlayerRoles(p) instanceof Muzan) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
-				if (getPlayerRoles(p) instanceof Gyutaro) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Gyutaro) {
 					owner.sendMessage("La personne possédant le rôle de§c Gyutaro§r est:§c "+p.getName());
 				}
 			}

@@ -407,10 +407,11 @@ public class GameListener implements Listener {
 										int i = 0;
 										for (Player k : gameState.getPlayerKills().get(p).keySet()) {
 											i++;
+											RoleBase role = gameState.getPlayerKills().get(p).get(k);
 											if (i != gameState.getPlayerKills().get(p).size()) {
-												s.append("§7 - §f").append(prole.getTeamColor(k)).append(k.getName()).append("§7 (").append(prole.getTeamColor(k)).append(prole.getPlayerRoles(k).getRoles().name()).append("§7)\n");
+												s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name()).append("§7)\n");
 											} else {
-												s.append("§7 - §f").append(prole.getTeamColor(k)).append(k.getName()).append("§7 (").append(prole.getTeamColor(k)).append(prole.getPlayerRoles(k).getRoles().name()).append("§7)");
+												s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(prole.getTeamColor()).append(role.getRoles().name()).append("§7)");
 											}
 										}
 										SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill(s)");
@@ -751,7 +752,7 @@ public class GameListener implements Listener {
 							}
 						if (gameState.getPlayerRoles().get(player).getRoles().equals(Roles.Slayer) && FFA.getFFA()) {
 							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(player);
-							if (f.getPlayerRoles(f.owner).getRoles() == Roles.Slayer) {
+							if (f.getRoles() == Roles.Slayer) {
 								if (f.owner == player) {
 									if (f.Serpent) {
 										if (f.serpentactualtime >= 0) {
@@ -886,8 +887,8 @@ public class GameListener implements Listener {
 							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
 			        				RoleBase role = gameState.getPlayerRoles().get(player);
+									if (!(role instanceof Susamaru))return;
 		                			Susamaru sam = (Susamaru) role;
-		                			if (role.getPlayerRoles(player).getRoles() != Roles.Susamaru)return;
 		                			if (player != sam.owner)return;
 		                			if (sam.Niveau1 && !sam.Niveau2 && sam.changecd <= 0) {
 		                				sam.Niveau1 = false;

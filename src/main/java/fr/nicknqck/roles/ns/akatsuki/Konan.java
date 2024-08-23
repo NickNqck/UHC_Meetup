@@ -52,7 +52,7 @@ public class Konan extends AkatsukiRoles {
 			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
 				if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
-					if (getOriginTeam() == TeamList.Akatsuki || getPlayerRoles(p) instanceof Obito) {
+					if (getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
 						mates.add(p);
 					}
 				}

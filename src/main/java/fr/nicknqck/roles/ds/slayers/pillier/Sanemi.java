@@ -113,7 +113,7 @@ public class Sanemi extends PillierRoles {
 								if (p == null)continue;
 								if (u != getPlayer()) {
 									if (!gameState.hasRoleNull(p)) {
-										if (!(getPlayerRoles(p) instanceof Doma)) {
+										if (!(gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Doma)) {
 											if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 												if (owner.getWorld().equals(p.getWorld())) {
 													Location loc = GameListener.generateRandomLocation(owner.getWorld());

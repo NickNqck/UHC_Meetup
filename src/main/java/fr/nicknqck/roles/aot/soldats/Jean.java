@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.soldats;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -77,8 +78,9 @@ public class Jean extends SoldatsRoles {
 				List<Player> inZone = new ArrayList<>();
 				for (Player p : Loc.getNearbyPlayers(owner, 25)) {//Pour chaque joueur étant à moins de 25 blocs du l'owner du rôle
 					if (!gameState.hasRoleNull(p)) {//si ce même joueur possède un rôle
-						if (getPlayerRoles(p).getRoles() != Roles.Gabi && getPlayerRoles(p).getRoles() != Roles.Eren && getPlayerRoles(p).getRoles() != Roles.Jelena) {//S'il n'est pas Gabi ou Eren ou Jelena
-							if (getPlayerRoles(p).getOriginTeam() != TeamList.Soldat) {//S'il n'est pas dans la team Soldat
+						GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+						if (gamePlayer.getRole().getRoles() != Roles.Gabi && gamePlayer.getRole().getRoles() != Roles.Eren && gamePlayer.getRole().getRoles() != Roles.Jelena) {//S'il n'est pas Gabi ou Eren ou Jelena
+							if (gamePlayer.getRole().getOriginTeam() != TeamList.Soldat) {//S'il n'est pas dans la team Soldat
 								mechant.add(p);//alors il est ajouté en temp que méchant
 							}
 						}

@@ -396,7 +396,7 @@ public class HantenguV2 extends DemonsRoles {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
 							if (u != getPlayer()) {
-								if (getPlayerRoles(p).getOriginTeam() != TeamList.Demon) {
+								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() != TeamList.Demon) {
 									if (p.getLocation().distance(owner.getLocation()) <= 25) {
 										if (p.getHealth() > 4.0) {
 											p.setHealth(p.getHealth() - 4.0);
@@ -458,7 +458,7 @@ public class HantenguV2 extends DemonsRoles {
 				if (clone == Clone.Urogi || clone == Clone.Zohakuten) {
 					if (cdcri <= 0) {
 						Player t = getRightClicked(30, 1);
-						if (t == null || getPlayerRoles(t).getOriginTeam() == TeamList.Demon) {
+						if (t == null || gameState.getGamePlayer().get(t.getUniqueId()).getRole().getOriginTeam() == TeamList.Demon) {
 							owner.sendMessage("§cVeuiller viser un joueur");
 						} else {
                             t.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*30, 0, false, false), true);

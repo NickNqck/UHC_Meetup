@@ -50,7 +50,7 @@ public class InfectItem implements Listener{
 						for (Player p : Loc.getNearbyPlayers(a, 30)) {
 							if (!gameState.hasRoleNull(p)) {
 								if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
-									if (gameState.getPlayerRoles().get(p).getOriginTeam() != TeamList.Demon && !(gameState.getPlayerRoles().get(p).getPlayerRoles(p) instanceof Nezuko)) {
+									if (gameState.getPlayerRoles().get(p).getOriginTeam() != TeamList.Demon && !(gameState.getPlayerRoles().get(p) instanceof Nezuko)) {
 										ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
 										SkullMeta meta = (SkullMeta) skull.getItemMeta();
 										meta.setOwner(p.getDisplayName());

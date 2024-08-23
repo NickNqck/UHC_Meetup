@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.builders;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,8 +55,9 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     public void setLameIncassable(Player target, boolean a) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
             if (!gameState.hasRoleNull(target)) {
-                if (getPlayerRoles(target) instanceof DemonsSlayersRoles) {
-                    DemonsSlayersRoles role = (DemonsSlayersRoles) getPlayerRoles(target);
+                GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());
+                if (GP.getRole() instanceof DemonsSlayersRoles) {
+                    DemonsSlayersRoles role = (DemonsSlayersRoles) GP.getRole();
                     role.setLameincassable(a);
                     if (a) {
                         sendMessageAfterXseconde(target, "Votre lame est devenue incassable", 1);

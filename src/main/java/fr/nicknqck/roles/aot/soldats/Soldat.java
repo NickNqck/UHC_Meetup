@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.soldats;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
@@ -184,7 +185,8 @@ public void resetCooldown() {
 public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 	if (killer == owner) {
 		if (victim != null) {
-			if (getPlayerRoles(victim) instanceof TitansRoles || getPlayerRoles(victim) instanceof MahrRoles) {
+			GamePlayer gamePlayer = gameState.getGamePlayer().get(victim.getUniqueId());
+			if (gamePlayer.getRole() instanceof TitansRoles || gamePlayer.getRole() instanceof MahrRoles) {
 				int rint = RandomUtils.getRandomInt(0, 2);
 				if (rint == 0) {
 					addBonusResi(7);

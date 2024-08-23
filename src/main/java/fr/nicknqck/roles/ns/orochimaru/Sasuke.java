@@ -602,7 +602,7 @@ public class Sasuke extends UchiwaRoles {
 				Player owner = Bukkit.getPlayer(sasuke.izanami.getUser());
 				Player toIzanami = Bukkit.getPlayer(sasuke.izanami.getTarget());
 				if (owner != null && toIzanami != null) {
-					boolean reussite = sasuke.izanami.onSuccessfullInfection(sasuke, sasuke.getPlayerRoles(toIzanami));
+					boolean reussite = sasuke.izanami.onSuccessfullInfection(sasuke, GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId()).getRole());
 					if (reussite) {
 						sasuke.infectFinish = true;
 						cancel();

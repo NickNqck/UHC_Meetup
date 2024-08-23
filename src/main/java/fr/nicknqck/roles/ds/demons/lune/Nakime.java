@@ -67,7 +67,7 @@ public class Nakime extends DemonsRoles {
 							for (Player p : Bukkit.getOnlinePlayers()) {
 								if (p.getWorld().getName().equalsIgnoreCase("nakime")) {
 									if (!gameState.hasRoleNull(p)) {
-										if (getPlayerRoles(p).getRoles() != Roles.Nakime) {
+										if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getRoles() != Roles.Nakime) {
 											LocPlayer loc = new LocPlayer();
 											p.teleport(loc.getRandomPositionRespawn());
 											p.sendMessage("§7Vous avez été téléporté de manière aléatoire par§c Nakime");
@@ -145,8 +145,8 @@ public class Nakime extends DemonsRoles {
 						LocPlayer locPlayer = new LocPlayer();
 						p.teleport(locPlayer.getRandomPositionRespawn());
 						p.sendMessage("§7Vous avez été téléporter aléatoirement");
-						getPlayerRoles(p).setInvincible(true);
-						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getPlayerRoles(p).setInvincible(false), 40);
+						gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(true);
+						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(false), 40);
 					}
 				}
 			}

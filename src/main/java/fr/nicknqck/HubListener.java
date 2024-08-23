@@ -10,6 +10,7 @@ import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.utils.rank.ChatRank;
@@ -117,6 +118,8 @@ public class HubListener implements Listener {
 			gameState.addPlayerKills(p);
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);
+			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);
+			gameState.getGamePlayer().put(p.getUniqueId(), gamePlayer);
 		}
 		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;

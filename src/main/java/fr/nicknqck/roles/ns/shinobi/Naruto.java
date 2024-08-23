@@ -12,7 +12,6 @@ import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -107,13 +106,10 @@ public class Naruto extends ShinobiRoles {
 						Player target = Bukkit.getPlayer(args[1]);
 						if (target != null) {
 							if (!gameState.hasRoleNull(target)) {
-								if (getTeam(target) != null) {
-									owner.sendMessage(target.getName()+"§a est dans le camp: "+getTeamColor(target)+StringUtils.replaceUnderscoreWithSpace(getTeam(target).name()));
-									useSmell = true;
-								} else {
-									owner.sendMessage("§cCe joueur n'appartient pas a une équipe !");
-								}
-							} else {
+                                gameState.getGamePlayer().get(target.getUniqueId());
+                                owner.sendMessage(target.getName() + "§a est dans le camp: " +gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam().getName());
+                                useSmell = true;
+                            } else {
 								owner.sendMessage("§cCe joueur ne possède aucun rôle !");
 							}
 						} else {

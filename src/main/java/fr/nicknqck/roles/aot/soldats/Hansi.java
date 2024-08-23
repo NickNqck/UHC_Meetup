@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titan;
@@ -65,33 +66,34 @@ public class Hansi extends SoldatsRoles {
 									owner.sendMessage("§7Ce joueur à déjà été torturé par vos soins");
 									return;
 								}
-								if (getPlayerRoles(target) instanceof Eren) {
+								GamePlayer gamePlayer = gameState.getGamePlayer().get(target.getUniqueId());
+								if (gamePlayer.getRole() instanceof Eren) {
 									target.sendMessage("§7Vous avez censé avoir perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 mais à la place vous avez gagner 1"+AllDesc.coeur+" permanent, elle à appris que vous êtes dans le camp des §a Soldats");
 									owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 									giveHeartatInt(target, 1);
 								}else {
-									if (getPlayerRoles(target) instanceof Gabi) {
+									if (gamePlayer.getRole() instanceof Gabi) {
 										target.sendMessage("§7Vous avez censé avoir perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 mais à la place vous avez gagner 1"+AllDesc.coeur+" permanent, elle à appris que vous êtes dans le camp des §a Soldats");
 										owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 										giveHeartatInt(target, 1);
 									}else {
-										if (getPlayerRoles(target) instanceof Jelena) {
+										if (gamePlayer.getRole() instanceof Jelena) {
 											target.sendMessage("§7Vous avez perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous étiez dans le camp§a Soldat");
 											owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 											giveHeartatInt(target, -2);
 										}else {
-											if (getPlayerRoles(target).getOriginTeam() == TeamList.Soldat) {
+											if (gamePlayer.getRole().getOriginTeam() == TeamList.Soldat) {
 												target.sendMessage("§7Vous avez perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous étiez dans le camp§a Soldat");
 												owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 												giveHeartatInt(target, -2);
 											}else {
-												if (getPlayerRoles(target).getOriginTeam() != TeamList.Soldat) {
+												if (gamePlayer.getRole().getOriginTeam() != TeamList.Soldat) {
 													tortured.add(target);
 													target.sendMessage("§7Vous avez perdu 1"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 elle à donc compris que vous n'étiez pas dans le camp§a Soldat");
 													owner.sendMessage("§7Vous avez gagner 1"+AllDesc.coeur+"§7 permanent suite à la torture sur§f "+target.getName()+"§7, vous avez donc compris qu'il§l n'est pas dans votre camp");
 													giveHealedHeartatInt(owner, 1);
-													getPlayerRoles(target).setMaxHealth(target.getMaxHealth()-2);
-													target.setMaxHealth(getPlayerRoles(target).getMaxHealth());
+													gamePlayer.getRole().setMaxHealth(target.getMaxHealth()-2);
+													target.setMaxHealth(gamePlayer.getRole().getMaxHealth());
 												}
 											}
 										}
@@ -115,9 +117,10 @@ public class Hansi extends SoldatsRoles {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (!gameState.hasRoleNull(target)) {
 					if (actualseringue < 3) {
-						if (getPlayerRoles(target) instanceof AotRoles && !Titan.hasTitan(target)){
-							if (getPlayerRoles(target) instanceof SoldatsRoles && ((SoldatsRoles) getPlayerRoles(target)).isAckerMan())return;
-							((AotRoles) getPlayerRoles(target)).setCanVoleTitan(true);
+						GamePlayer gamePlayer = gameState.getGamePlayer().get(target.getUniqueId());
+						if (gamePlayer.getRole() instanceof AotRoles && !Titan.hasTitan(target)){
+							if (gamePlayer.getRole() instanceof SoldatsRoles && ((SoldatsRoles) gamePlayer.getRole()).isAckerMan())return;
+							((AotRoles) gamePlayer.getRole()).setCanVoleTitan(true);
 							target.sendMessage("§7Vous avez reçus une seringue");
 						}
 						actualseringue++;

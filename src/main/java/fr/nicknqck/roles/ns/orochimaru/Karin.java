@@ -146,13 +146,13 @@ public class Karin extends OrochimaruRoles {
 				int i = timePassedNearby.get(p.getUniqueId());
 				timePassedNearby.remove(p.getUniqueId(), i);
 				timePassedNearby.put(p.getUniqueId(), i+1);
-				if (getPlayerRoles(p).getOriginTeam() == TeamList.Orochimaru) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() == TeamList.Orochimaru) {
 					if (timePassedNearby.get(p.getUniqueId()) == 60*2) {
 						owner.sendMessage("§5"+p.getDisplayName()+"§f est dans le camp§5 Orochimaru");
 					}
 				}else {
 					if (timePassedNearby.get(p.getUniqueId()) == 60*5) {
-						owner.sendMessage(getTeamColor(p)+p.getDisplayName()+"§f est dans le camp "+getTeamColor(p)+getTeam(p).name());
+						owner.sendMessage(gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeamColor()+p.getDisplayName()+"§f est dans le camp "+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam().getName());
 					}
 				}
 			}else {

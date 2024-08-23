@@ -177,7 +177,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (getPlayerRoles(player) instanceof Orochimaru) {
+		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Orochimaru) {
 			if (!mortOrochimaru) {
 				onOrochimaruDeath(true);
 			}

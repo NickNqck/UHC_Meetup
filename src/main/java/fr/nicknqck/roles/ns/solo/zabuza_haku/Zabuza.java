@@ -129,7 +129,7 @@ public class Zabuza extends NSRoles {
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
 		if (entity.getUniqueId() == owner.getUniqueId()) {
-			if (gameState.getInGamePlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (Invisible) {
 					removeInvisibility();
 				}
@@ -183,7 +183,7 @@ public class Zabuza extends NSRoles {
 	private boolean HakuDeath = false;
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (getPlayerRoles(player) instanceof Haku && !HakuDeath) {
+		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Haku && !HakuDeath) {
 			onHakuDeath(true);
 		}
 	}

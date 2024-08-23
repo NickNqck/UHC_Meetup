@@ -225,7 +225,7 @@ public class LeComte extends CustomRolesBase implements Listener {
                     owner.sendMessage("§c"+target.getName()+"§7 possède§e "+gapAmount+" pomme§7(§es§7)§e d'or");
 
                 } else if (time == 120) {
-                    TeamList team = leCompte.getTeam(target);
+                    TeamList team = GameState.getInstance().getGamePlayer().get(target.getUniqueId()).getRole().getTeam();
                     if (team != null) {
                         owner.sendMessage("§c"+target.getName()+"§7 est dans le camp \""+team.getName()+"§7\"");
                     }

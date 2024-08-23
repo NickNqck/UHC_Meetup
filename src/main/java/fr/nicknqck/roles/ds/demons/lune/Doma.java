@@ -2,7 +2,6 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -24,15 +23,7 @@ public class Doma extends DemonsRoles {
 	public Doma(UUID player) {
 		super(player);
 		this.setResi(20);
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (UUID u : gameState.getInGamePlayers()) {
-				Player p = Bukkit.getPlayer(u);
-				if (p == null)continue;
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
+		getKnowedRoles().add(Muzan.class);
 	}
 	@Override
 	public TeamList getOriginTeam() {
@@ -49,15 +40,6 @@ public class Doma extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (UUID u : gameState.getInGamePlayers()) {
-				Player p = Bukkit.getPlayer(u);
-				if (p == null)continue;
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.Doma;
 	}
 	

@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -108,11 +109,12 @@ public class Muzan extends DemonsRoles {
 				if (target != null) {
 					if (!hasBoost) {
 						if (gameState.hasRoleNull(target))return;
-						if (getPlayerRoles(target).getOriginTeam().equals(TeamList.Demon)) {
+						GamePlayer gamePlayer = gameState.getGamePlayer().get(target.getUniqueId());
+						if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) ||gamePlayer.getRole().getTeam().equals(TeamList.Demon)) {
 							target.sendMessage("§cMuzan§7 vous à offert son boost de§c 10% de force");
 							hasBoost = true;
 							owner.sendMessage("§7Vous avez donné§c 10% de force§7 à§l "+target.getName());
-							getPlayerRoles(target).addBonusforce(10);
+							gamePlayer.getRole().addBonusforce(10);
 						}else {
 							owner.sendMessage("Vous ne pouvez pas boost un humain !");
 						}
@@ -135,7 +137,8 @@ public class Muzan extends DemonsRoles {
 					Player player = Bukkit.getPlayer(args[1]);
 						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player)) {
 							if (gameState.infected == null && gameState.infecteur == null) {
-								if (getPlayerRoles(player).getOriginTeam() == TeamList.Demon || getPlayerRoles(player) instanceof Nezuko) {
+								GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
+								if (gamePlayer.getRole().getOriginTeam() == TeamList.Demon || gamePlayer.getRole() instanceof Nezuko) {
 									giveItem(player, false, Items.getInfection());
 									owner.sendMessage("Vous avez donné le Pouvoir de l'infection à§c "+player.getName());
 									player.sendMessage("Le grand§c Muzan§r vous à donné le pouvoir de l'infection, faite s'en bonne usage...");

@@ -62,7 +62,7 @@ public class Nagato extends AkatsukiRoles {
             if (p == null)continue;
             if (!gameState.hasRoleNull(p)) {
                 if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
-                    if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Akatsuki || getPlayerRoles(p) instanceof Obito) {
+                    if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
                         mates.add(p);
                     }
                 }
@@ -116,7 +116,7 @@ public class Nagato extends AkatsukiRoles {
                 if (target != null){
                     if (Loc.getNearbyPlayersExcept(owner, 15).contains(target)){
                         if (!gameState.hasRoleNull(target)){
-                            owner.sendMessage(getPlayerRoles(target).getRoles().getTeam().getColor()+target.getDisplayName()+"§f possède le rôle: "+getPlayerRoles(target).getRoles().getItem().getItemMeta().getDisplayName());
+                            owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getRoles().getTeam().getColor()+target.getDisplayName()+"§f possède le rôle: "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName());
                             useJikogudo++;
                         }
                     } else {
@@ -137,7 +137,7 @@ public class Nagato extends AkatsukiRoles {
                 if (target != null){
                     if (Loc.getNearbyPlayersExcept(owner, 15).contains(target)){
                         if (!gameState.hasRoleNull(target)){
-                            owner.sendMessage(getTeamColor(target)+target.getDisplayName()+"§7 est dans le camp: "+getTeamColor(target)+getTeam(target).name()+"§7, et possède exactement "+ GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE)+"§e pommes d'or");
+                            owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole()+target.getDisplayName()+"§7 est dans le camp: "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam().getName()+"§7, et possède exactement "+ GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE)+"§e pommes d'or");
                             useNingendo++;
                         } else {
                             owner.sendMessage(target.getDisplayName()+" ne possède pas de rôle, et donc de team.");

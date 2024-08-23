@@ -8,12 +8,14 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
+import fr.nicknqck.roles.ds.demons.lune.Nakime;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.raytrace.BoundingBox;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -62,6 +64,7 @@ public abstract class RoleBase implements IRole {
 	@Setter
 	private GamePlayer gamePlayer;
 	@Getter
+	@NonNull
 	private TeamList team;
 	@Getter
 	private final Map<PotionEffect, EffectWhen> effects = new HashMap<>();
@@ -145,17 +148,8 @@ public abstract class RoleBase implements IRole {
 		}else{
 			return StringUtils.secondsTowardsBeautiful(cooldown);}
 		}
-	public RoleBase getPlayerRoles(Player player) {return gameState.getPlayerRoles().get(player);}
 	public void sendMessageAfterXseconde(Player player, String message, int seconde) {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.sendMessage(message), 20L *seconde);
-	}
-	public String getTeamColor(Player target) {
-		if (!gameState.hasRoleNull(target)) {
-			if (getPlayerRoles(target).getTeam() != null) {
-				return getPlayerRoles(target).getTeam().getColor();
-			}
-		}
-		return "";
 	}
 	public String getTeamColor() {
 		return getTeam().getColor();
@@ -167,25 +161,9 @@ public abstract class RoleBase implements IRole {
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 	public void setTeam(TeamList team) {
-		if (this.team != null){
-			this.team.getList().remove(this.owner);
-		}
-		this.team = team;
+        this.team.getList().remove(this.owner);
+        this.team = team;
 		this.team.addPlayer(this.owner);	
-	}
-	public boolean hasTeam(Player player) {
-		if (gameState.hasRoleNull(player)) {
-			return false;
-		}else {
-            return getPlayerRoles(player).getTeam() != null;
-		}
-	}
-	public TeamList getTeam(Player player) {
-		TeamList team = null;
-		if (!gameState.hasRoleNull(player)) {
-			team = getPlayerRoles(player).getTeam();
-		}
-		return team;
 	}
 	public double getBonusForce() {return Bonusforce;}
 	public void setBonusForce(double Bonusforce) {this.Bonusforce = Bonusforce;}
@@ -251,7 +229,7 @@ public abstract class RoleBase implements IRole {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld()), 20);
 		}
 		if (!gameState.hasRoleNull(player)){
-			if (getPlayerRoles(player).getRoles() == Roles.Nakime) {
+			if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Nakime) {
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
 						GameListener.RandomTp(p, Main.getInstance().getWorldManager().getGameWorld());
@@ -260,26 +238,27 @@ public abstract class RoleBase implements IRole {
 					}
 				}
 			}
-			gameState.DeadRole.add(getPlayerRoles(player).getRoles());
+			gameState.DeadRole.add(gameState.getGamePlayer().get(player.getUniqueId()).getRole().getRoles());
 		}
 	}
 	public void OnAPlayerKillAnotherPlayer(Player player, Player damager, GameState gameState) {}
 	public void giveHeartatInt(Player target, double coeur) {
 		if (!gameState.hasRoleNull(target)) {
-			getPlayerRoles(target).setMaxHealth(getPlayerRoles(target).getMaxHealth()+coeur*2);
+			gameState.getGamePlayer().get(target.getUniqueId()).getRole().setMaxHealth(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getMaxHealth()+coeur*2);
 		}
 	}
 	public final void giveHealedHeartatInt(final Player target,final double coeur) {
 		if (!gameState.hasRoleNull(target)) {
-			getPlayerRoles(target).setMaxHealth(getPlayerRoles(target).getMaxHealth()+coeur*2);
-			target.setMaxHealth(getPlayerRoles(target).getMaxHealth());
+			GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());
+			GP.getRole().setMaxHealth(GP.getRole().getMaxHealth()+coeur*2);
+			target.setMaxHealth(GP.getRole().getMaxHealth());
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 				if (gameState.hasRoleNull(target))return;
-				if (target.getHealth() <= (getPlayerRoles(target).getMaxHealth())-(coeur*2)) {
+				if (target.getHealth() <= (GP.getRole().getMaxHealth())-(coeur*2)) {
 					target.setHealth(target.getHealth()+(coeur*2));
 				}else {
 					if (gameState.hasRoleNull(target))return;
-					target.setHealth(getPlayerRoles(target).getMaxHealth());
+					target.setHealth(GP.getRole().getMaxHealth());
 				}
 			}, 20);
 		}
@@ -287,12 +266,13 @@ public abstract class RoleBase implements IRole {
 	public final void giveHealedHeartatInt(final double coeur) {giveHealedHeartatInt(owner, coeur);}
 	public void giveHalfHeartatInt(Player target, double demicoeur){
 		if (!gameState.hasRoleNull(target)) {
-			getPlayerRoles(target).setMaxHealth(getPlayerRoles(target).getMaxHealth()+demicoeur);
+			GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());
+			GP.getRole().setMaxHealth(GP.getRole().getMaxHealth()+demicoeur);
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				if (target.getHealth() <= (getPlayerRoles(target).getMaxHealth())-(demicoeur)) {
+				if (target.getHealth() <= (GP.getRole().getMaxHealth())-(demicoeur)) {
 					target.setHealth(target.getHealth()+(demicoeur));
 				}else {
-					target.setHealth(getPlayerRoles(target).getMaxHealth());
+					target.setHealth(GP.getRole().getMaxHealth());
 				}
 			}, 20);
 		}
@@ -454,7 +434,8 @@ public abstract class RoleBase implements IRole {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
-				if (getPlayerRoles(p).getRoles().equals(roles)) {
+				GamePlayer GP = gameState.getGamePlayer().get(p.getUniqueId());
+				if (GP.getRole().getRoles().equals(roles)) {
 					toReturn.add(p);
 				}
 			}
@@ -463,7 +444,8 @@ public abstract class RoleBase implements IRole {
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> getPlayerRoles(e).getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p.getUniqueId())).forEach(toReturn::add);
+
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> gameState.getGamePlayer().get(e.getUniqueId()).getRole().getRoles() == roles).filter(p -> gameState.getInGamePlayers().contains(p.getUniqueId())).forEach(toReturn::add);
 		return toReturn;
 	}
 	public List<Player> getListPlayerFromRole(Class<? extends RoleBase> role) {

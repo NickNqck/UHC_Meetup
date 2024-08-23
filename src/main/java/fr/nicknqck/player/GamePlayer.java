@@ -32,7 +32,7 @@ public class GamePlayer {
 	@Setter
 	private Location deathLocation;
 	@Setter
-	private int timeDisconnectLeft = 60;
+	private int timeDisconnectLeft = 60*5;
 	private final String playerName;
 	@Nullable
 	private DiscRunnable discRunnable;

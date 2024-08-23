@@ -141,9 +141,9 @@ public class Conny extends SoldatsRoles {
 					for (UUID u : gameState.getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
-						if (getPlayerRoles(p) instanceof Jean) {
+						if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Jean) {
 							amountJean++;
-							this.protegerRole = getPlayerRoles(p);
+							this.protegerRole = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 							cmd = true;
 							owner.sendMessage("Vous protegez désormais Jean vous obtenez donc le pseudo du Jean "+p.getName());
 							break;
@@ -158,9 +158,9 @@ public class Conny extends SoldatsRoles {
 						for (UUID u : gameState.getInGamePlayers()) {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
-							if (getPlayerRoles(p) instanceof Sasha) {
+							if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Sasha) {
 								amountSasha++;
-								this.protegerRole = getPlayerRoles(p);
+								this.protegerRole = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 								cmd = true;
 								owner.sendMessage("Vous protegez désormais Sasha vous obtenez donc le pseudo du Sasha "+p.getName());
 								break;

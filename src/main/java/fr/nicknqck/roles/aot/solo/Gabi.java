@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -47,7 +48,8 @@ public class Gabi extends AotRoles {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
-							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
+							GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+							if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).canShift) {
 								if (!inList.contains(p.getUniqueId())) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);
@@ -69,7 +71,8 @@ public class Gabi extends AotRoles {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
-							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
+							GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+							if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).canShift) {
 								if (!inList.contains(p.getUniqueId())) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);
@@ -95,7 +98,8 @@ public class Gabi extends AotRoles {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
-							if (getPlayerRoles(p) instanceof AotRoles && ((AotRoles) getPlayerRoles(p)).canShift) {
+							GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
+							if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).canShift) {
 								if (!inList.contains(p.getUniqueId())) {
 									canBeinList.add(p);
 									Player t = canBeinList.get(0);

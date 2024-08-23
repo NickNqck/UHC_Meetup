@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import lombok.Getter;
@@ -356,9 +357,11 @@ public class Izanami implements Listener{
 			owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
 			infecter.setTeam(infecteur.getTeam());
 			toIzanami.resetTitle();
-			toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+infecteur.getTeamColor(owner)+ infecteur.getOriginTeam().name());
+			GamePlayer gOwner = GameState.getInstance().getGamePlayer().get(owner.getUniqueId());
+			GamePlayer gTo = GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId());
+			toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+gOwner.getRole().getTeamColor()+ infecteur.getOriginTeam().name());
 			toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+getColor()+infecteur.getName()+": "+(infecteur.getPlayerFromRole(infecteur.getRoles()) != null ? infecteur.getPlayerFromRole(infecteur.getRoles()).getName() : "§cMort"));
-			infecteur.getPlayerRoles(toIzanami).setSuffixString(infecteur.getPlayerRoles(toIzanami).getSuffixString()+"§7 ("+this.getColor()+"Izanami§7)");
+			gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.getColor()+"Izanami§7)");
 			return true;
 		}
 		return false;
