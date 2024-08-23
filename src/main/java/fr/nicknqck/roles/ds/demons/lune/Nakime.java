@@ -14,6 +14,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.powers.LocPlayer;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -42,8 +43,8 @@ public class Nakime extends DemonsRoles {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 
 	@Override

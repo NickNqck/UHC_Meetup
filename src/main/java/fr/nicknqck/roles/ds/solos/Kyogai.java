@@ -4,6 +4,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,8 +36,8 @@ public class Kyogai extends DemonsRoles {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 
 	@Override

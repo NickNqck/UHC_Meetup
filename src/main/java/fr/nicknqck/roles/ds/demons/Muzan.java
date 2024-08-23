@@ -11,6 +11,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,8 +29,8 @@ public class Muzan extends DemonsRoles {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 	@Override
 	public TeamList getOriginTeam() {

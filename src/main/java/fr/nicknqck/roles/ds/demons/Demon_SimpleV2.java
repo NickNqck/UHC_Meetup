@@ -7,6 +7,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.utils.StringUtils;
+import lombok.NonNull;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,8 +27,8 @@ public class Demon_SimpleV2 extends DemonInferieurRole {
 		return TeamList.Demon;
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 
 	@Override

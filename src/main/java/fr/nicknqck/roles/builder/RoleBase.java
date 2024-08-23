@@ -59,12 +59,12 @@ public abstract class RoleBase implements IRole {
 	private double Bonusforce = 0;
 	private double Bonusresi = 0;
 	@Getter
+	@NonNull
 	public GameState gameState;
 	@Getter
 	@Setter
 	private GamePlayer gamePlayer;
 	@Getter
-	@NonNull
 	private TeamList team;
 	@Getter
 	private final Map<PotionEffect, EffectWhen> effects = new HashMap<>();
@@ -82,6 +82,9 @@ public abstract class RoleBase implements IRole {
 	public String StringID = "";
 	private UUID uuidOwner;
 	public RoleBase(UUID player) {
+		if (this.gameState == null){
+			this.gameState = GameState.getInstance();
+		}
 		Player owner = Bukkit.getPlayer(player);
 		if (owner != null) {
 			this.owner = owner;
@@ -122,9 +125,6 @@ public abstract class RoleBase implements IRole {
 			}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 			setTeam(getOriginTeam());
 		}
-		if (this.gameState == null){
-			this.gameState = GameState.getInstance();
-		}
 	}
 	@Override
 	public UUID getPlayer() {
@@ -151,7 +151,9 @@ public abstract class RoleBase implements IRole {
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 	public void setTeam(TeamList team) {
-        this.team.getList().remove(this.owner);
+		if (this.team != null) {
+			this.team.getList().remove(this.owner);
+		}
         this.team = team;
 		this.team.addPlayer(this.owner);	
 	}

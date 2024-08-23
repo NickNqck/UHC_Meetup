@@ -8,6 +8,7 @@ import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -37,8 +38,8 @@ public class Kaigaku extends DemonsRoles {
 		setLameIncassable(owner, true);
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 	@Override
 	public Roles getRoles() {

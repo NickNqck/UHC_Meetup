@@ -12,6 +12,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -32,8 +33,8 @@ public class HantenguV2 extends DemonsRoles {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 
 	@Override

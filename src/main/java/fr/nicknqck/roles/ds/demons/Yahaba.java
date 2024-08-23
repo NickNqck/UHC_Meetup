@@ -7,6 +7,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -55,8 +56,8 @@ public class Yahaba extends DemonInferieurRole {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 
 	@Override

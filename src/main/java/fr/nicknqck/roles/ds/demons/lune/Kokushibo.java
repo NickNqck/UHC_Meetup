@@ -14,6 +14,7 @@ import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -46,8 +47,8 @@ public class Kokushibo extends DemonsRoles {
 		return TeamList.Demon;
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 
 	@Override

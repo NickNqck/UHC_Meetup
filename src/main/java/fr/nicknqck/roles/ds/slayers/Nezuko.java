@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,8 +39,8 @@ public class Nezuko extends DemonsRoles {
 		return TeamList.Slayer;
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneInferieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.NEZUKO;
 	}
 
 	@Override

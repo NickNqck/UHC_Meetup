@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -26,8 +27,8 @@ public class Enmu extends DemonsRoles {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.INFERIEUR;
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ds.slayers.Sabito;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.roles.ds.slayers.Urokodaki;
 import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -41,8 +42,8 @@ public class DemonMain extends DemonInferieurRole {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 
 	@Override

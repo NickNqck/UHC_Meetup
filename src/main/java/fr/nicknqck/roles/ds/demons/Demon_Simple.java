@@ -7,6 +7,7 @@ import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,8 +27,8 @@ public class Demon_Simple extends DemonInferieurRole implements Listener {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 	@Override
 	public TeamList getOriginTeam() {

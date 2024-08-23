@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -19,6 +20,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -53,7 +55,6 @@ public class Akaza extends DemonsRoles implements Listener {
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Tout les§c 50 coups§7 infliger vous gagnerez§c 30 secondes§7 de l'effet§c Résistance I§7.")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque mort d'une§c lune supérieur§7 les coups requis pour obtenir l'effet§c Résistance I§7 réduise de§c 5§7.")}));
 		this.desc = desc.getText();
-
 	}
 
 	@Override
@@ -62,11 +63,24 @@ public class Akaza extends DemonsRoles implements Listener {
 		this.runnable = new AkazaPilierRunnable(this);
 		this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
 		EventUtils.registerEvents(this);
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+			int amount = 5;
+			for (GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+                if (gamePlayer.getRole() instanceof DemonsRoles) {
+					DemonsRoles role = (DemonsRoles) gamePlayer.getRole();
+					if (role.getPlayer().equals(getPlayer()))continue;
+					if (role.getRank().equals(DemonType.SUPERIEUR)) {
+						amount--;
+					}
+                }
+            }
+			coupToInflig -= (amount*5);
+		}, 20);
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 	@Override
 	public TeamList getOriginTeam() {
@@ -132,7 +146,7 @@ public class Akaza extends DemonsRoles implements Listener {
 			if (!event.getGameState().hasRoleNull(event.getPlayer())) {
 				if (event.getGameState().getPlayerRoles().get(event.getPlayer()) instanceof DemonsRoles) {
 					DemonsRoles role = (DemonsRoles) event.getGameState().getPlayerRoles().get(event.getPlayer());
-					if (role.getRank().equals(DemonType.LuneSuperieur)) {
+					if (role.getRank().equals(DemonType.SUPERIEUR)) {
 						this.coupToInflig-=5;
 					}
 				}

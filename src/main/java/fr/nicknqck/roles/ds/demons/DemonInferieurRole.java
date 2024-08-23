@@ -29,7 +29,8 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
                 if (!gameState.hasRoleNull(p)) {
                     RoleBase role = gameState.getPlayerRoles().get(p);
                     if (role instanceof DemonsRoles) {
-                        if (((DemonsRoles) role).getRank().equals(DemonType.LuneSuperieur)) {
+                        DemonsRoles d = (DemonsRoles) role;
+                        if (d.getRank().equals(DemonType.SUPERIEUR) || d.getRank().equals(DemonType.INFERIEUR)) {
                             roles.add((DemonsRoles) role);
                         }
                     }

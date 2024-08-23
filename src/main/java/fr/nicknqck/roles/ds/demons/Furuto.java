@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,8 +31,8 @@ public class Furuto extends DemonInferieurRole {
 		return TeamList.Demon;
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 
 	@Override
