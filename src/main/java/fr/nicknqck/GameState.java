@@ -75,6 +75,9 @@ public class GameState{
 	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
 	@Getter
+	@Setter
+	private boolean roleAttributed = false;
+	@Getter
 	private final Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
 	@Setter
 	@Getter
@@ -396,7 +399,7 @@ public class GameState{
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final Player player) {
-        return !getGamePlayer().containsKey(player.getUniqueId()) && getRoleTimer() > 0;
+        return !getGamePlayer().containsKey(player.getUniqueId()) || getRoleTimer() <= 0;
 	}
 
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}

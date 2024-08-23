@@ -91,6 +91,7 @@ public class GameListener implements Listener {
 	private void UpdateGame() {
 		switch(gameState.getServerState()) {
 		case InLobby:
+			gameState.setRoleAttributed(false);
 			World world = Bukkit.getWorld("world");
 			for (UUID u : gameState.getInLobbyPlayers()) {
 				Player p = Bukkit.getPlayer(u);
@@ -252,6 +253,7 @@ public class GameListener implements Listener {
 				}
 			}
 			if (gameState.inGameTime == gameState.roleTimer) {
+				gameState.setRoleAttributed(true);
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
