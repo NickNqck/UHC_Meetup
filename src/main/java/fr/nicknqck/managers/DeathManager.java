@@ -135,6 +135,9 @@ public class DeathManager implements Listener {
             for (UUID u : gameState.getInGamePlayers()) {
                 Player p = Bukkit.getPlayer(u);
                 if (p == null)continue;
+                if (!gameState.hasRoleNull(killedPlayer)) {
+                    gameState.getPlayerRoles().get(p).OnAPlayerDie(killedPlayer, gameState, killer);
+                }
                 if (gameState.getPlayerRoles().containsKey(p)) {
                     gameState.getPlayerRoles().get(p).PlayerKilled(killer, killedPlayer, gameState);
                     if (!gameState.getPlayerKills().get(killer).containsKey(killedPlayer)) {
@@ -142,13 +145,6 @@ public class DeathManager implements Listener {
                         fakeRole.setOldRole(gameState.getPlayerRoles().get(killedPlayer).getOldRole());
                         gameState.getPlayerKills().get(killer).put(killedPlayer, fakeRole);
                     }
-                }
-            }
-            for (UUID u : gameState.getInGamePlayers()) {
-                Player p = Bukkit.getPlayer(u);
-                if (p == null)continue;
-                if (!gameState.hasRoleNull(killedPlayer)) {
-                    gameState.getPlayerRoles().get(p).OnAPlayerDie(killedPlayer, gameState, killer);
                 }
             }
         }else {
@@ -212,6 +208,7 @@ public class DeathManager implements Listener {
             dropItem(killedPlayer.getLocation(), new ItemStack(Material.ARROW, 8));
             dropItem(killedPlayer.getLocation(), new ItemStack(Material.BRICK, 16));
         }
+        killedPlayer.spigot().respawn();
         killedPlayer.setFoodLevel(20);
         killedPlayer.setGameMode(GameMode.SPECTATOR);
         killedPlayer.updateInventory();
