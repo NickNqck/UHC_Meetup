@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -10,6 +11,7 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.slayers.Nezuko;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -138,14 +140,17 @@ public class Muzan extends DemonsRoles {
 						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player)) {
 							if (gameState.infected == null && gameState.infecteur == null) {
 								GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
-								if (gamePlayer.getRole().getOriginTeam() == TeamList.Demon || gamePlayer.getRole() instanceof Nezuko) {
+								if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() == TeamList.Demon || gamePlayer.getRole() instanceof Nezuko) {
 									giveItem(player, false, Items.getInfection());
 									owner.sendMessage("Vous avez donné le Pouvoir de l'infection à§c "+player.getName());
 									player.sendMessage("Le grand§c Muzan§r vous à donné le pouvoir de l'infection, faite s'en bonne usage...");
 									gameState.infecteur = player;
-								}		
+									InfectItem.getInstance().setInfecteur((DemonsSlayersRoles) gamePlayer.getRole());
+								} else {
+									owner.sendMessage("§c"+args[1]+"§7 ne peut pas recevoir l'§cinfection");
+								}
 							} else {
-								owner.sendMessage("Il y à déjà quelqu'un qui possède le pouvoir de l'§cinfection§r (§c"+gameState.infecteur.getName()+"§r)");
+								owner.sendMessage("Il y à déjà quelqu'un qui possède le pouvoir de l'§cinfection§r (§c"+InfectItem.getInstance().getInfecteur().owner.getName()+"§r)");
 							}
 						} else {
 							owner.sendMessage("La personne visée n'a pas de rôle ou n'est pas en jeu");

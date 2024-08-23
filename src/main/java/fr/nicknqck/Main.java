@@ -257,7 +257,7 @@ public class Main extends JavaPlugin implements Listener{
 					if (player == null)continue;
 					if (gameState.roleTimer < gameState.getInGameTime()) {
 		        		if (!gameState.hasRoleNull(player)) {
-		        			if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
+		        			if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getOriginTeam() != null) {
 				            	TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
 				         }
 		        		}		        		 
