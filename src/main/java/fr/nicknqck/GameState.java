@@ -399,7 +399,7 @@ public class GameState{
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final Player player) {
-        return !getGamePlayer().containsKey(player.getUniqueId()) || getRoleTimer() <= 0;
+        return !getGamePlayer().containsKey(player.getUniqueId()) || !isRoleAttributed();
 	}
 
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
