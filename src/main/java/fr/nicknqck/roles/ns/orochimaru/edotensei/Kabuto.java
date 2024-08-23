@@ -64,6 +64,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	private boolean obitoTeam = false;
 	private boolean lastAlive = false;
 	private EdoTenseiUser edo;
+	private boolean kabutoSend = false, obitoSend = false;
     public Kabuto(UUID player) {
 		super(player);
 	}
@@ -349,6 +350,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		if (!lastAlive)return;
 		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("kabuto")) {
+				if (this.kabutoSend)return;
 				if (args[1].equalsIgnoreCase("send")) {
 					Player obito = getPlayerFromRole(Roles.Obito);
 					if (obito != null) {
@@ -356,6 +358,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 						Player owner = Bukkit.getPlayer(getPlayer());
 						if (owner != null) {
 							owner.sendMessage("§7Vous venez de proposer une alliance à§d Obito");
+							kabutoSend = true;
 						}
 					}
 				}
@@ -364,6 +367,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 					if (owner != null) {
 						onKabutoDeny(owner);
 						owner.sendMessage("§7Vous avez refuser de proposer une alliance à§d Obito");
+						kabutoSend = true;
 					}
 				}
 			}
@@ -467,6 +471,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		this.solo = true;
 		owner.sendMessage("§7Vous êtes maintenant un rôle§e Solitaire§7.");
 		setTeam(TeamList.Kabuto);
+		this.edo.setCanEdoTensei(false);
 	}
 	private void onObitoDeny(@NonNull Player owner) {
 		owner.sendMessage("§7Cette saleté d'§dObito§7 a refuser de s'allier à vous, vous avez intérêt à lui faire regretter");
@@ -479,21 +484,27 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		Player player = Bukkit.getPlayer(obito.getPlayer());
 		if (player == null)return;
 		player.sendMessage("§5Kabuto§7 rejoint maintenant votre camp");
+		this.edo.setCanEdoTensei(false);
+
 	}
+
 	public void onObitoCommand(String[] args, Obito role) {
 		if (!lastAlive)return;
 		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("obito")) {
+				if (this.obitoSend)return;
 				if (args[1].equalsIgnoreCase("deny")) {
 					Player owner = Bukkit.getPlayer(getPlayer());
 					if (owner != null) {
 						onObitoDeny(owner);
+						obitoSend = true;
 					}
 				}
 				if (args[1].equalsIgnoreCase("accept")) {
 					Player owner = Bukkit.getPlayer(getPlayer());
 					if (owner != null) {
 						onObitoAccept(owner, role);
+						obitoSend = true;
 					}
 				}
 			}
