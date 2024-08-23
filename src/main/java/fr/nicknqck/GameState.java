@@ -399,6 +399,9 @@ public class GameState{
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final Player player) {
+		if (getGamePlayer().containsKey(player.getUniqueId())) {
+            return getGamePlayer().get(player.getUniqueId()).getRole() == null;
+        }
         return !getGamePlayer().containsKey(player.getUniqueId()) || !isRoleAttributed();
 	}
 

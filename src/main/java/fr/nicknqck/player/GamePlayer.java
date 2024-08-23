@@ -10,11 +10,11 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import javax.annotation.Nullable;
 import java.util.UUID;
 
 @Getter
@@ -25,8 +25,7 @@ public class GamePlayer {
 	private boolean isAlive;
 	@Setter
 	private boolean canRevive = false;
-	@NotNull
-	@NonNull
+	@org.bukkit.craftbukkit.libs.jline.internal.Nullable
 	@Setter
 	private RoleBase role;
 	@Setter
