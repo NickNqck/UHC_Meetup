@@ -152,22 +152,22 @@ public class GameListener implements Listener {
 					ItemMeta meta = is.getItemMeta();
 					Material m = is.getType();
 					if (meta != null) {
-								if (!meta.hasEnchant(Enchantment.DIG_SPEED)) {
-									if (!meta.hasEnchants()) {
-										if (!meta.spigot().isUnbreakable()) {
-                                            if (m == Material.IRON_PICKAXE || m == Material.IRON_SPADE || m == Material.IRON_AXE || m == Material.DIAMOND_PICKAXE || m == Material.DIAMOND_SPADE || m == Material.DIAMOND_AXE || m == Material.GOLD_PICKAXE || m == Material.GOLD_SPADE || m == Material.GOLD_AXE || m == Material.WOOD_PICKAXE || m == Material.WOOD_SPADE || m == Material.WOOD_AXE || m == Material.STONE_AXE || m == Material.STONE_PICKAXE || m == Material.STONE_SPADE) {
-                                                meta.addEnchant(Enchantment.DIG_SPEED, 3, true);
-                                                meta.addEnchant(Enchantment.DURABILITY, 3, true);
-                                                is.setItemMeta(meta);
-                                                p.sendMessage(Hastey_Boys.hasteyboy() + ChatColor.WHITE + "Enchantement de votre item");
-                                                p.updateInventory();
-                                            }
-                                        }
+						if (!meta.hasEnchant(Enchantment.DIG_SPEED)) {
+							if (!meta.hasEnchants()) {
+								if (!meta.spigot().isUnbreakable()) {
+									if (m == Material.IRON_PICKAXE || m == Material.IRON_SPADE || m == Material.IRON_AXE || m == Material.DIAMOND_PICKAXE || m == Material.DIAMOND_SPADE || m == Material.DIAMOND_AXE || m == Material.GOLD_PICKAXE || m == Material.GOLD_SPADE || m == Material.GOLD_AXE || m == Material.WOOD_PICKAXE || m == Material.WOOD_SPADE || m == Material.WOOD_AXE || m == Material.STONE_AXE || m == Material.STONE_PICKAXE || m == Material.STONE_SPADE) {
+										meta.addEnchant(Enchantment.DIG_SPEED, 3, true);
+                                        meta.addEnchant(Enchantment.DURABILITY, 3, true);
+                                        is.setItemMeta(meta);
+                                        p.sendMessage(Hastey_Boys.hasteyboy() + ChatColor.WHITE + "Enchantement de votre item");
+                                        p.updateInventory();
 									}
-								}				
+								}
 							}
 						}
 					}
+				}
+			}
 			if (Hastey_Babys.isHasteyBabys()) {
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
