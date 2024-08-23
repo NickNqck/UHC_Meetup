@@ -382,7 +382,7 @@ public class AdminCommands implements CommandExecutor{
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
                                 } else {
-									if (ChatRank.isHost(sender)) {
+									if (ChatRank.isHost(p)) {
 										sender.sendMessage("Cette personne est déjà host...");
                                     } else {
 										p.addAttachment(Main.getInstance(), "Host", true);
