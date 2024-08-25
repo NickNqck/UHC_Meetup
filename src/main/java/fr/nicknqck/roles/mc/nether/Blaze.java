@@ -45,7 +45,7 @@ public class Blaze extends NetherRoles {
     public TextComponent getComponent(){return automaticDesc;}
     private TextComponent getflyText(){
         TextComponent fly = new TextComponent("§cFly");
-        fly.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permez de §avoler §rpendant 5 secondes. (1x/5mins)")}));
+        fly.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permez de §avoler §7pendant 5 secondes. (1x/5mins)")}));
         return fly;
     }
     private TextComponent getBowText(){
