@@ -11,6 +11,7 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -112,8 +113,10 @@ public class Blaze extends NetherRoles {
                             NMSPacket.sendActionBar(owner, "§bVous pouvez encore voler pendant §c" + i + "s");
                             if (i == 0) {
                                 owner.sendMessage("Vous ne pouvez plus voler ");
-                                owner.setFlying(false);
-                                owner.setAllowFlight(false);
+                                Bukkit.getScheduler().runTask(Main.getInstance(), ()->{
+                                    owner.setFlying(false);
+                                    owner.setAllowFlight(false);
+                                });
                                 cdFly = 60 * 5;
                                 cancel();
                             }
