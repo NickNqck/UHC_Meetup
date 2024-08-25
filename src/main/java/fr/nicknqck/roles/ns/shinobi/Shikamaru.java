@@ -25,8 +25,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-import static fr.nicknqck.player.StunManager.stun;
-
 public class Shikamaru extends ShinobiRoles {
     private final ItemStack stunItem = new ItemBuilder(Material.NETHER_STAR).setName("§aStun").setLore("§7Vous permet d'empêcher de bouger un joueur").toItemStack();
     private int cdStun = 0;
@@ -175,7 +173,9 @@ public class Shikamaru extends ShinobiRoles {
             }
             cdZone = 60*5;
             for (Player p : Loc.getNearbyPlayersExcept(owner, powerDistance-10)){
-               stun(p.getUniqueId(), 5.0, true);
+                if (gameState.getGamePlayer().containsKey(p.getUniqueId())) {
+                    gameState.getGamePlayer().get(p.getUniqueId()).stun(5*20);
+                }
             }
         }
         return super.ItemUse(item, gameState);
@@ -237,9 +237,6 @@ public class Shikamaru extends ShinobiRoles {
             if (e.getWhoClicked().getUniqueId().equals(shikamaru.getPlayer())){
                 if (e.getClickedInventory() == null)return;
                 if (e.getClickedInventory().getTitle() == null)return;
-                if (Main.isDebug()){
-                    System.out.println("PULL UP");
-                }
                 if (e.getClickedInventory().getTitle().equals("§aShikamaru§7 ->§a Stun")){
                     e.setCancelled(true);
                     ItemStack item = e.getCurrentItem();
@@ -262,10 +259,11 @@ public class Shikamaru extends ShinobiRoles {
                             }
                             final Player player = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                             if (player != null){
+                                if (!GameState.getInstance().getGamePlayer().containsKey(player.getUniqueId()))return;
                                 e.getWhoClicked().sendMessage("§7Vous empêchez§c "+player.getDisplayName()+"§7 de bouger");
                                 player.sendMessage("§aShikamaru§7 vous empêche de bouger");
-                                stun(player.getUniqueId(), 10.0, false);
-                                stun(shikamaru.getPlayer(), 10.0, false);
+                                shikamaru.getGamePlayer().stun(10*20);
+                                GameState.getInstance().getGamePlayer().get(player.getUniqueId()).stun(10*20);
                                 if (e.getAction().equals(InventoryAction.PICKUP_HALF) && shikamaru.poisonUse < 2){
                                     new PoisonPowerRunnable(shikamaru, player.getUniqueId()).runTaskTimerAsynchronously(Main.getInstance(), 0, 40);
                                     shikamaru.poisonUse++;

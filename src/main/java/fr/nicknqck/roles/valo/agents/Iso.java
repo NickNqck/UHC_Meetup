@@ -2,7 +2,6 @@ package fr.nicknqck.roles.valo.agents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.player.StunManager;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -136,6 +135,7 @@ public class Iso extends RoleBase {
                 owner.sendMessage("§7Ce pouvoir est inutilisable, il manque le plugin avec les utilitaires ou ce plugin n'a pas été mis a jour par l'administrateur de votre serveur. (§6/discord§7)");
                 return;
             }
+            if (gameState.hasRoleNull(target))return;
             ultimeLocation.put(owner.getUniqueId(), owner.getLocation());
             ultimeLocation.put(target.getUniqueId(), target.getLocation());
             final Location oLoc = new Location(Bukkit.getWorld("IsoUlt"), 0.5, 33.1, -20, -0.1f, -0.1f);
@@ -144,8 +144,8 @@ public class Iso extends RoleBase {
             target.teleport(tLoc);
             ultimateGap.put(owner.getUniqueId(), GlobalUtils.getItemAmount(owner, Material.GOLDEN_APPLE));
             ultimateGap.put(target.getUniqueId(), GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE));
-            StunManager.stun(target.getUniqueId(), 5.0, false);
-            StunManager.stun(getPlayer(), 5.0, false);
+            getGamePlayer().stun(5*20);
+            gameState.getGamePlayer().get(target.getUniqueId()).stun(20*5);
             createBuildingTask();
             cdUltime = 60*10;
         } else {

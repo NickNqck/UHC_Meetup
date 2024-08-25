@@ -27,7 +27,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-import static fr.nicknqck.player.StunManager.stun;
 
 public class Kurenai extends ShinobiRoles {
     private final ItemStack BoisItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu des bois").setLore("§7Vous permet d'empêcher le joueur viser de bouger").toItemStack();
@@ -127,7 +126,7 @@ public class Kurenai extends ShinobiRoles {
             }
             owner.sendMessage("§7Vous utiliser votre§c Genjutsu§7 sur§a "+target.getDisplayName());
             owner.setGameMode(GameMode.SPECTATOR);
-            stun(target.getUniqueId(), 5.0, false);
+            gameState.getGamePlayer().get(target.getUniqueId()).stun(5*20);
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 Location loc = target.getLocation();
                 loc.setX(loc.getX()+Math.cos(Math.toRadians(-target.getEyeLocation().getYaw()+90)));

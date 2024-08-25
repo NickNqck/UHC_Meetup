@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.player.StunManager;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -354,7 +353,7 @@ public class Ginkaku extends NSRoles {
 				if (gTarget != null){
 					if (Bukkit.getPlayer(gTarget) != null){
 						if (!gameState.hasRoleNull(Bukkit.getPlayer(gTarget))){
-							StunManager.stun(gTarget, 5.0, false);
+							gameState.getGamePlayer().get(gTarget).stun(5*20);
 						}
 					}
 					gTarget = null;

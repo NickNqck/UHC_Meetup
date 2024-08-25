@@ -64,6 +64,30 @@ public class GamePlayer {
 			this.discRunnable = null;
 		}
 	}
+	public void stun(int tick) {
+		Player player = Bukkit.getPlayer(getUuid());
+		if (player == null)return;
+		new BukkitRunnable() {
+			private int ticks = tick;
+			private final Location stunLocation = player.getLocation();
+			@Override
+			public void run() {
+				if (ticks == 0 || !isAlive || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				Player player = Bukkit.getPlayer(getUuid());
+				if (player == null)return;
+				if (!player.getWorld().equals(stunLocation.getWorld())) {
+					cancel();
+					return;
+				}
+				player.teleport(stunLocation);
+				ticks--;
+
+			}
+		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+	}
 	private static class DiscRunnable extends BukkitRunnable {
 		private final GamePlayer gamePlayer;
 		private DiscRunnable(GamePlayer gamePlayer) {
