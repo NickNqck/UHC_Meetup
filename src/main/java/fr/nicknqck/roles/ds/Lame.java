@@ -43,7 +43,6 @@ public class Lame implements Listener{
 							Collections.shuffle(lames, Main.RANDOM);
 							Collections.shuffle(lames, Main.RANDOM);//Je mélange 4 fois pour bien assurer que ce sois au pif
 							toGett = lames.get(0);
-
 							toGett.getConsumer().accept(e);
 							giveLame(role, toGett);
 							e.getPlayer().setItemInHand(new ItemStack(Material.AIR));
@@ -61,5 +60,6 @@ public class Lame implements Listener{
 		lames.getUsers().put(role.getPlayer(), 40);
 		role.setLames(lames);
 		role.owner.sendMessage("§7Vous avez obtenue la lame de "+lames.getName());
+		role.owner.setHealth(role.owner.getMaxHealth());
 	}
 }
