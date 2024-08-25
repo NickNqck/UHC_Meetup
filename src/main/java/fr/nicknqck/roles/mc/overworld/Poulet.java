@@ -115,7 +115,7 @@ public class Poulet extends OverWorldRoles {
                             cancel();
                         }
                     }
-                }.runTaskTimer(Main.getInstance(), 0, 20);
+                }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             } else {
                 sendCooldown(owner, cdplume);
                 return true;

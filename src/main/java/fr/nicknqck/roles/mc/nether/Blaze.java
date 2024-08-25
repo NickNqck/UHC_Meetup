@@ -26,13 +26,14 @@ public class Blaze extends NetherRoles {
     private int cdFly = 0;
     private final ItemStack arcItem = new ItemBuilder(Material.BOW).setName("§cArc").setDroppable(false).addEnchant(Enchantment.ARROW_DAMAGE, 3).addEnchant(Enchantment.ARROW_FIRE, 1).toItemStack();
     private final TextComponent automaticDesc;
+
     public Blaze(UUID player) {
         super(player);
-        giveItem(owner, false,getItems());
+        giveItem(owner, false, getItems());
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20, 0, false, false), EffectWhen.PERMANENT)
-        .setItems(new TripleMap<>(getflyText().getHoverEvent(), getflyText().getText(), 60*5), new TripleMap<>(getBowText().getHoverEvent(), getBowText().getText(), 0))
-        .addParticularites(getNofall().getHoverEvent());
+                .setItems(new TripleMap<>(getflyText().getHoverEvent(), getflyText().getText(), 60 * 5), new TripleMap<>(getBowText().getHoverEvent(), getBowText().getText(), 0))
+                .addParticularites(getNofall().getHoverEvent());
         this.automaticDesc = desc.getText();
     }
 
@@ -42,18 +43,24 @@ public class Blaze extends NetherRoles {
         setNoFall(true);
         super.RoleGiven(gameState);
     }
-    public TextComponent getComponent(){return automaticDesc;}
-    private TextComponent getflyText(){
+
+    public TextComponent getComponent() {
+        return automaticDesc;
+    }
+
+    private TextComponent getflyText() {
         TextComponent fly = new TextComponent("§cFly");
         fly.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permez de §avoler §7pendant 5 secondes. (1x/5mins)")}));
         return fly;
     }
-    private TextComponent getBowText(){
+
+    private TextComponent getBowText() {
         TextComponent bow = new TextComponent("§cArc");
         bow.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Arc power 3 et flame 1.")}));
         return bow;
     }
-    private  TextComponent getNofall(){
+
+    private TextComponent getNofall() {
         TextComponent Nofall = new TextComponent("§6§lParticularité");
         Nofall.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez §aNoFall permanent.")}));
         return Nofall;
@@ -67,10 +74,10 @@ public class Blaze extends NetherRoles {
 
     @Override
     public ItemStack[] getItems() {
-       return new ItemStack[]{
-               flyItem,
-               arcItem
-       };
+        return new ItemStack[]{
+                flyItem,
+                arcItem
+        };
     }
 
     @Override
@@ -90,26 +97,25 @@ public class Blaze extends NetherRoles {
 
     @Override
     public boolean ItemUse(ItemStack item, GameState gameState) {
-        if(item.isSimilar(flyItem)){
+        if (item.isSimilar(flyItem)) {
             if (cdFly <= 0) {
                 owner.setAllowFlight(true);
                 owner.setFlying(true);
                 owner.sendMessage("Vous pouvez désormais §avoler");
-                new BukkitRunnable(){
+                new BukkitRunnable() {
                     private int i = 5;
+
                     @Override
                     public void run() {
                         if (gameState.getInGamePlayers().contains(getPlayer())) {
-                            if (i >= 5) {
-                                i--;
-                                NMSPacket.sendActionBar(owner, "§bVous pouvez encore voler pendant §c"+i+"s");
-                                if (i == 0){
-                                    owner.sendMessage("Vous ne pouvez plus voler ");
-                                    owner.setFlying(false);
-                                    owner.setAllowFlight(false);
-                                    cdFly = 60*5;
-                                    cancel();
-                                }
+                            i--;
+                            NMSPacket.sendActionBar(owner, "§bVous pouvez encore voler pendant §c" + i + "s");
+                            if (i == 0) {
+                                owner.sendMessage("Vous ne pouvez plus voler ");
+                                owner.setFlying(false);
+                                owner.setAllowFlight(false);
+                                cdFly = 60 * 5;
+                                cancel();
                             }
                         } else {
                             cancel();
@@ -119,15 +125,16 @@ public class Blaze extends NetherRoles {
             } else {
                 sendCooldown(owner, cdFly);
             }
+            return true;
         }
         return super.ItemUse(item, gameState);
     }
 
     @Override
     public void Update(GameState gameState) {
-        if (cdFly >= 0){
-            cdFly --;
-            if (cdFly == 0){
+        if (cdFly >= 0) {
+            cdFly--;
+            if (cdFly == 0) {
                 owner.sendMessage("Vous pouvez de nouveau réutiliser votre §cFly");
             }
         }
