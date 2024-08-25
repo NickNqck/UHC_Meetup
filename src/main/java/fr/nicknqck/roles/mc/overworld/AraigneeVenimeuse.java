@@ -1,10 +1,14 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
+import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -20,31 +24,41 @@ public class AraigneeVenimeuse extends UHCMcRoles {
     private final ItemStack ToileItem = new ItemBuilder(Material.WEB).setName("§aToile d'araignée").setLore("§7Vous permez de poser une toile d'araigée sous un joueur").addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1).hideAllAttributes().toItemStack();
     private boolean poison = false;
     private int cdToile = 0;
+    private final TextComponent automaticDesc;
 
     public AraigneeVenimeuse(UUID player) {
         super(player);
+        AutomaticDesc desc = new AutomaticDesc(this);
+        desc.setCommands(new TripleMap<>(getPoison().getHoverEvent(), getPoison().getText(), 0))
+                .setItems(new TripleMap<>(getToileText().getHoverEvent(), getToileText().getText(), 60*15))
+                .addParticularites(getPassif().getHoverEvent());
+        this.automaticDesc = desc.getText();
     }
 
     @Override
     public void GiveItems() {
         giveItem(owner, false , getItems());
     }
+    public TextComponent getComponent(){return automaticDesc;}
+    private TextComponent getPoison(){
+        TextComponent Poison =  new TextComponent("§a/mc poison");
+        Poison.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permez d'activer votre passif")}));
+        return Poison;
+    }
+    private TextComponent getToileText(){
+        TextComponent ToileText = new TextComponent("§7\"§aToile\"");
+        ToileText.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Pose une toile d'araignée sur le joueur visé. (1x/15mins)")}));
+        return ToileText;
+    }
+    private TextComponent getPassif(){
+        TextComponent Passif = new TextComponent("§6§lParticularité");
+        Passif.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("Si votre passif est actif tout vos coups d'épée donnerons l'effet §2poison 1 pendant 2 secondes.")}));
+        return Passif;
+    }
 
     @Override
     public String[] Desc() {
         return new String[]{
-                AllDesc.bar,
-                AllDesc.role+"§aAraignée Venimeuse",
-                AllDesc.objectifteam+"§aOverworld",
-                "",
-                AllDesc.items,
-                AllDesc.point+"§aToile d'araignée §r: Vous permez de poser une toile d'araignée sur le joueur visé. (1x/15mins)",
-                "",
-                AllDesc.commande,
-                AllDesc.point+"/mc poison : Vous permez d'activé votre passif",
-                "",
-                AllDesc.particularite,
-                "Si votre passif est actif tout vos coups d'épée donnerons l'effet §2poison 1 pendant 2 secondes.",
         };
     }
 
@@ -53,7 +67,7 @@ public class AraigneeVenimeuse extends UHCMcRoles {
     @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
-            ToileItem,
+                ToileItem,
         };
     }
 
