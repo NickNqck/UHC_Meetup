@@ -1,4 +1,4 @@
-package fr.nicknqck.events.custom.roles;
+package fr.nicknqck.events.custom.roles.ds;
 
 import fr.nicknqck.roles.ds.solos.JigoroV2;
 import lombok.Getter;
