@@ -1,7 +1,6 @@
 package fr.nicknqck.roles.ns.solo.jubi;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -53,7 +51,6 @@ public class Madara extends JubiRoles {
 		super(player);
 		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 		setChakraType(Chakras.KATON);
-		map.clear();
 	}
 
 	@Override
@@ -221,10 +218,8 @@ public class Madara extends JubiRoles {
 	@Override
 	public void resetCooldown() {
 		traqued = null;
-		setOldBlockwMap();
 		MadaraUse = false;
 		BenshoCD = 0;
-		map.clear();
 		ShinraCD = 0;
 		MeteoriteUse = 0;
 		hasIzanagi = false;
@@ -313,15 +308,12 @@ public class Madara extends JubiRoles {
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (player == owner) {
 			NF.clear();
-			setOldBlockwMap();
 		}
 	}
 	@Override
 	public void onEndGame() {
 		NF.clear();
-		setOldBlockwMap();
 	}
-	private final HashMap<Block, Integer> map = new HashMap<>();
 	@Override
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
 		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -351,17 +343,6 @@ public class Madara extends JubiRoles {
 		return Intelligence.GENIE;
 	}
 
-	@SuppressWarnings("deprecation")
-	private void setOldBlockwMap() {
-		map.keySet().stream().filter(n -> n.getTypeId() != 162).filter(e -> e.getTypeId() != 161).forEach(loc -> loc.setType(Material.getMaterial(map.get(loc))));
-		map.keySet().stream().filter(b -> b.getTypeId() == 162).filter(b -> b.getType() == Material.LOG_2).forEach(dob -> dob.setTypeIdAndData(map.get(dob), (byte) 1, true));
-		map.keySet().stream().filter(b -> b.getTypeId() == 161).filter(b -> b.getType() == Material.LEAVES_2).forEach(r -> r.setTypeIdAndData(map.get(r), (byte) 1, true));
-		map.keySet().stream().filter(b -> b.getTypeId() == 100).forEach(b -> b.setType(Material.AIR));
-		map.keySet().stream().filter(b -> b.getTypeId() == 99).forEach(b -> b.setType(Material.AIR));
-		map.keySet().stream().filter(b -> b.getTypeId() == 18).forEach(b -> b.setTypeIdAndData(18, (byte) 0, true));
-		map.keySet().stream().filter(b -> b.getTypeId() == 17).forEach(b -> b.setTypeIdAndData(17, (byte)0, true));
-		map.clear();
-	}
 	@Override
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 		if (inv.getTitle().equalsIgnoreCase("§7Traqueur de bijus")) {
@@ -418,7 +399,6 @@ public class Madara extends JubiRoles {
 					new BukkitRunnable() {
 						private final Location loc = owner.getLocation();
 						private int s = 0;
-						@SuppressWarnings("deprecation")
 						@Override
 						public void run() {
 							s++;
@@ -437,9 +417,6 @@ public class Madara extends JubiRoles {
 							if (s == 10) {
 								Location Center = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
 								for(Location loc : new MathUtil().sphere(Center, 30, false)) {
-									if (loc.getBlock().getTypeId() != 32 && loc.getBlock().getType() != Material.AIR && loc.getBlock().getType() != Material.LONG_GRASS && loc.getBlock().getType() != Material.RED_ROSE && loc.getBlock().getType() != Material.YELLOW_FLOWER && loc.getBlock().getType() != Material.DOUBLE_PLANT) {
-										map.put(loc.getBlock(), loc.getBlock().getTypeId());
-									}
 									loc.getBlock().setType(Material.AIR);
 									for (Player p : Loc.getNearbyPlayers(loc, 0.9)) {
 										if (p.getUniqueId() != owner.getUniqueId()) {
@@ -452,9 +429,8 @@ public class Madara extends JubiRoles {
 										}
 									}
 								}
-								new MathUtil().spawnFallingBlocks(new Location(loc.getWorld(), loc.getX(), loc.getY()+10, loc.getZ()), Material.STONE, 8, false, true, 60);
+								new MathUtil().spawnFallingBlocks(new Location(loc.getWorld(), loc.getX(), loc.getY()+10, loc.getZ()), Material.STONE, 8, false, false, 60);
 								cancel();
-								Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> setOldBlockwMap(), 20*60*3);
 							}
 							if (gameState.getInSpecPlayers().contains(owner)) {
 								cancel();
