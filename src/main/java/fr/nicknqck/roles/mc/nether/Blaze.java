@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.mc.nether;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.mc.builders.NetherRoles;
@@ -101,7 +102,7 @@ public class Blaze extends NetherRoles {
                         if (gameState.getInGamePlayers().contains(getPlayer())) {
                             if (i >= 5) {
                                 i--;
-                                NMSPacket.sendActionBar(owner, "Vous pouvez encore voler pendant §b"+i);
+                                NMSPacket.sendActionBar(owner, "Vous pouvez encore voler pendant §b"+i+"§rs");
                                 if (i == 0){
                                     owner.sendMessage("Vous ne pouvez plus voler ");
                                     owner.setFlying(false);
@@ -114,7 +115,7 @@ public class Blaze extends NetherRoles {
                             cancel();
                         }
                     }
-                };
+                }.runTaskTimer(Main.getInstance(), 0, 20);
             } else {
                 sendCooldown(owner, cdFly);
             }
