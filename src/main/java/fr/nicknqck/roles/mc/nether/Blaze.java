@@ -45,7 +45,7 @@ public class Blaze extends NetherRoles {
     public TextComponent getComponent(){return automaticDesc;}
     private TextComponent getflyText(){
         TextComponent fly = new TextComponent("§cFly");
-        fly.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permez de voler pendant 5 secondes. (1x/5mins)")}));
+        fly.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permez de §avoler §rpendant 5 secondes. (1x/5mins)")}));
         return fly;
     }
     private TextComponent getBowText(){
@@ -94,7 +94,7 @@ public class Blaze extends NetherRoles {
             if (cdFly <= 0) {
                 owner.setAllowFlight(true);
                 owner.setFlying(true);
-                owner.sendMessage("Vous pouvez désormais voler");
+                owner.sendMessage("Vous pouvez désormais §avoler");
                 new BukkitRunnable(){
                     private int i = 5;
                     @Override
@@ -102,7 +102,7 @@ public class Blaze extends NetherRoles {
                         if (gameState.getInGamePlayers().contains(getPlayer())) {
                             if (i >= 5) {
                                 i--;
-                                NMSPacket.sendActionBar(owner, "Vous pouvez encore voler pendant §b"+i+"§rs");
+                                NMSPacket.sendActionBar(owner, "§bVous pouvez encore voler pendant §c"+i+"s");
                                 if (i == 0){
                                     owner.sendMessage("Vous ne pouvez plus voler ");
                                     owner.setFlying(false);
@@ -115,7 +115,7 @@ public class Blaze extends NetherRoles {
                             cancel();
                         }
                     }
-                }.runTaskTimer(Main.getInstance(), 0, 20);
+                }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             } else {
                 sendCooldown(owner, cdFly);
             }
