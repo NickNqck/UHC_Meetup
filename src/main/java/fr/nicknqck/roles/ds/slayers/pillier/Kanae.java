@@ -162,6 +162,10 @@ public class Kanae extends PillierRoles implements Listener {
         }
         @Override
         public void run() {
+            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
             if (kanae.cooldown >= 0){
                 kanae.cooldown--;
                 if (kanae.cooldown == 0){
