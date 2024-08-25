@@ -23,6 +23,7 @@ import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
+import fr.nicknqck.roles.mc.nether.Blaze;
 import fr.nicknqck.roles.mc.overworld.AraigneeVenimeuse;
 import fr.nicknqck.roles.mc.overworld.Poulet;
 import fr.nicknqck.roles.mc.overworld.Squelette;
@@ -235,6 +236,8 @@ public class GameState{
 		Zombie(TeamList.OverWorld, "mc", 1, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack(), "§bMega02600"),
 		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack(), "§bMega02600"),
 		AraigneeVenimeuse(TeamList.OverWorld, "mc", 3, new ItemBuilder(Material.SPIDER_EYE).setName("§aAraignée Venimeuse").toItemStack(), "§bMega02600"),
+		//Nether
+		Blaze(TeamList.Nether, "mc", 0, new ItemBuilder(Material.BLAZE_ROD).setName("§cBlaze").toItemStack(), "§bMega02600"),
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
@@ -803,6 +806,9 @@ public class GameState{
 			break;
 		case Fugaku:
 			role = new Fugaku(player);
+			break;
+		case Blaze:
+			role = new Blaze(player);
 			break;
 		}
 		if (role == null) return null;
