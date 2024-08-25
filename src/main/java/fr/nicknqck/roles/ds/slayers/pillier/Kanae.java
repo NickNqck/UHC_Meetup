@@ -76,7 +76,7 @@ public class Kanae extends PillierRoles implements Listener {
                         AllDesc.point+"§c25%§7 d'infliger§c Weakness I§7 pendant§c 15s"+"\n"+
                         AllDesc.point+"§c20%§7 d'infliger§c Slowness I§7 pendant§c 12s"+"\n"+
                         AllDesc.point+"§c15%§7 d'infliger§c Poison I§7 pendant§c 10s"+"\n"+
-                        AllDesc.point+"§c10%§7 d'infliger de vous§c soignez§7 de§c 2"+AllDesc.Coeur("§c")+"\n"+
+                        AllDesc.point+"§c10%§7 de vous§c soignez§7 de§c 2"+AllDesc.Coeur("§c")+"\n"+
                         AllDesc.point+"§c5%§7 d'infliger§c Weakness I§7,§c Slowness I§7 et§c Poison I§7 pendant§c 10s")
         }));
         return textComponent;
