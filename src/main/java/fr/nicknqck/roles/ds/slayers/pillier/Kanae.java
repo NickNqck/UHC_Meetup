@@ -54,24 +54,7 @@ public class Kanae extends PillierRoles implements Listener {
 
     @Override
     public String[] Desc() {
-        return new String[]{
-           /*     AllDesc.bar,
-                AllDesc.role+getName(),
-                AllDesc.objectifteam+(getTeam() != null ? getTeam().getColor()+getTeam().name() : "§aSlayers"),
-                "",
-                AllDesc.items,
-                "",
-                AllDesc.point+sword.getItemMeta().getDisplayName()+"§f: A chaque coup d'épée vous aurez un§c pourcentage de chance§f d'infliger des§c effets négatifs§f.",
-                AllDesc.tab+"§fPourcentage: ","",
-                AllDesc.point+"§c25%§f de ne rien faire du tout","",
-                AllDesc.point+"§c25%§f d'infliger§c Weakness I§f pendant§c 15s","",
-                AllDesc.point+"§c20%§f d'infliger§c Slowness I§f pendant§c 12s","",
-                AllDesc.point+"§c15%§f d'infliger§c Poison I§f pendant§c 10s","",
-                AllDesc.point+"§c10%§f d'infliger de vous§c soignez§f de§c 2"+AllDesc.Coeur("§c"),"",
-                AllDesc.point+"§c5%§f d'infliger§c Weakness I§f,§c Slowness I§f et§c Poison I§f pendant§c 10s",
-                "",
-                AllDesc.bar*/
-        };
+        return new String[0];
     }
 
     @Override
