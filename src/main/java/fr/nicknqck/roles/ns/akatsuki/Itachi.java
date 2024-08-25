@@ -281,7 +281,7 @@ public class Itachi extends UchiwaRoles {
 	}
 	private ItemStack AmateratsuItem() {
 		return new ItemBuilder(Material.NETHER_STAR)
-				.setName("§cAmateratsu")
+				.setName("§cAmaterasu")
 				.setLore("§7Permet en visant un joueur de le mettre en feu")
 				.toItemStack();
 	}
