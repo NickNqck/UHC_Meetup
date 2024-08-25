@@ -3,12 +3,9 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -35,7 +32,6 @@ public class Kanao extends SlayerRoles {
 	
 	private int hanacooldown = 0;
 	private int tourbicooldown = 0;
-	private boolean killdoma = false;
 	@Override
 	public void resetCooldown() {
 		hanacooldown = 0;
@@ -128,25 +124,6 @@ public class Kanao extends SlayerRoles {
 			owner.sendMessage("Veuiller indiquer le pseudo d'un joueur");
 		}
 		super.onDSCommandSend(args, gameState);
-	}
-	@Override
-	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (victim == owner) {
-			victim.getInventory().remove(Material.NETHER_STAR);
-		} else {
-			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-				if (gameState.getPlayerRoles().containsKey(victim)) {
-					RoleBase r = gameState.getPlayerRoles().get(victim);
-					if (killer == owner) {
-						if (r instanceof Doma && !killdoma) {
-							killdoma = true;
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+r.getRoles()+" "+ChatColor.GRAY+"vous obtenez donc l'item de poison de shinobu");
-						}
-					}
-				}
-			}
-		}
-		super.PlayerKilled(killer, victim, gameState);
 	}
 
 	@Override

@@ -33,7 +33,6 @@ public class Inosuke extends SlayerRoles {
 	private int perforationcooldown = 0;
 	private int mutilationcooldown = 0;
 	private int tailladecooldown = 0;
-	private boolean killdoma = false;
 	private boolean perfoactiver = false;
 	private boolean useblade = false;
 	@Override
@@ -107,9 +106,7 @@ public class Inosuke extends SlayerRoles {
 			if (tailladecooldown <= 0) {
 				owner.sendMessage(ChatColor.WHITE+"Activation de votre: "+ChatColor.GOLD+"Neuvième Croc: Taillade Ondulante Divine");
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*120, 0, false, false));
-				if (!killdoma) {
-					owner.setHealth(owner.getHealth() - 4.0);
-				}
+				owner.setHealth(owner.getHealth() - 4.0);
 				tailladecooldown = 60*5;
 			} else {
 				sendCooldown(owner, tailladecooldown);
@@ -128,24 +125,7 @@ public class Inosuke extends SlayerRoles {
 		}
 		super.ItemUseAgainst(item, victim, gameState);
 	}
-	@Override
-	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (killer == owner) {
-			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Doma) {
-							killdoma = true;						
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous ne prendrez plus de mallus avec votre: "+ChatColor.GOLD+"Taillade Ondulante Divine");
-						
-						}
-					}
-				}
-			}
-		}
-		super.PlayerKilled(killer, victim, gameState);
-	}
+
 	@Override
 	public void onDSCommandSend(String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("aura")) {

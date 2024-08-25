@@ -32,7 +32,6 @@ public class Shinobu extends PillierRoles {
     private int MedicamentCooldown = 0;
 	private int InjectionCooldown = 0;
 	private boolean Injection = false;
-	private boolean killdoma = false;
 	@Override
 	public void resetCooldown() {
 		InjectionCooldown = 0;
@@ -59,9 +58,6 @@ public class Shinobu extends PillierRoles {
 		}
 		if (gameState.nightTime) {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*3, 0, false, false));
-		if (killdoma) {
-			owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 0, false, false));
-		}
 		}
 		if (MedicamentCooldown >= 1) {
 			MedicamentCooldown--;
@@ -120,34 +116,19 @@ public class Shinobu extends PillierRoles {
 	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (victim != owner) {
-			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-				if (gameState.getPlayerRoles().containsKey(victim)) {
-					RoleBase r = gameState.getPlayerRoles().get(victim);
-					if (killer == owner) {
-						if (r instanceof Doma && !killdoma) {
-							killdoma = true;
-							owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 0, false, false));
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez le joueur possédant le rôle de: "+ChatColor.GOLD+"Doma "+ChatColor.GRAY+"vous obtenez donc Speed 1 le jour");
-							}
-					}
-			}
-		}
-	}
 		if (victim == owner) {
-				if (gameState.getInGamePlayers().contains(killer.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(killer)) {
-						RoleBase r = gameState.getPlayerRoles().get(killer);
-                        if (r instanceof Doma) {
-                            killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 30, 0, false, false));
-                            killer.sendMessage("En tuant le joueur: " + ChatColor.GOLD + owner.getName() + ChatColor.WHITE + " vous recevez poison 1 pendant 30 secondes");
-                        } else {
-                            killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 15, 0, false, false));
-                            killer.sendMessage("En tuant le joueur: " + ChatColor.GOLD + owner.getName() + ChatColor.WHITE + " vous recevez poison 1 pendant 15 secondes");
-                        }
-                    }
+			if (gameState.getInGamePlayers().contains(killer.getUniqueId())) {
+				if (gameState.getPlayerRoles().containsKey(killer)) {
+					RoleBase r = gameState.getPlayerRoles().get(killer);
+					if (r instanceof Doma) {
+						killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 30, 0, false, false));
+                        killer.sendMessage("En tuant le joueur: " + ChatColor.GOLD + owner.getName() + ChatColor.WHITE + " vous recevez poison 1 pendant 30 secondes");
+					} else {
+						killer.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20 * 15, 0, false, false));
+                        killer.sendMessage("En tuant le joueur: " + ChatColor.GOLD + owner.getName() + ChatColor.WHITE + " vous recevez poison 1 pendant 15 secondes");
+					}
+				}
 			}
-		
 		}
 	super.PlayerKilled(killer, victim, gameState);
 	}
