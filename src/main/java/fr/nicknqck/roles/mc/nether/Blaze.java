@@ -25,7 +25,7 @@ public class Blaze extends NetherRoles {
 
     private final ItemStack flyItem = new ItemBuilder(Material.BLAZE_ROD).setName("§cFly").setLore("§7Vous permez de voler pendant 5 secondes. (1x/5mins)").setDroppable(false).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
     private int cdFly = 0;
-    private final ItemStack arcItem = new ItemBuilder(Material.BOW).setName("§cArc").setDroppable(false).addEnchant(Enchantment.ARROW_DAMAGE, 3).addEnchant(Enchantment.ARROW_FIRE, 1).toItemStack();
+    private final ItemStack arcItem = new ItemBuilder(Material.BOW).setName("§cArc").setDroppable(false).addEnchant(Enchantment.ARROW_DAMAGE, 3).addEnchant(Enchantment.ARROW_FIRE, 1).setUnbreakable(true).toItemStack();
     private final TextComponent automaticDesc;
 
     public Blaze(UUID player) {

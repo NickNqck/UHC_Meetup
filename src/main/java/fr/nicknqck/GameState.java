@@ -24,6 +24,7 @@ import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.mc.nether.Blaze;
+import fr.nicknqck.roles.mc.nether.Brute;
 import fr.nicknqck.roles.mc.overworld.*;
 import fr.nicknqck.roles.mc.solo.Warden;
 import fr.nicknqck.roles.mc.solo.WitherBoss;
@@ -237,6 +238,7 @@ public class GameState{
 		GolemDeFer(TeamList.OverWorld, "mc", 4, new ItemBuilder(Material.IRON_BLOCK).setName("§aGolem De Fer").toItemStack(), "§bMega02600"),
 		//Nether
 		Blaze(TeamList.Nether, "mc", 0, new ItemBuilder(Material.BLAZE_ROD).setName("§cBlaze").toItemStack(), "§bMega02600"),
+		Brute(TeamList.Nether, "mc", 1, new ItemBuilder(Material.GOLD_AXE).setName("§cBrute").toItemStack(), "§bMega02600"),
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
@@ -811,6 +813,9 @@ public class GameState{
 			break;
 		case GolemDeFer:
 			role = new GolemDeFer(player);
+			break;
+		case Brute:
+			role = new Brute(player);
 			break;
 		}
 		if (role == null) return null;
