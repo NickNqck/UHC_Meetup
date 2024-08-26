@@ -58,7 +58,17 @@ public class AutomaticDesc {
             text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
             text.addExtra(interogativDot);
             text.addExtra("§7\" ");
-            text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
+            switch (tripleMap.getThird()) {
+                case -500:
+                    text.addExtra("§7 (1x/partie).");
+                    break;
+                case 0:
+                    text.addExtra("§7.");
+                    break;
+                default:
+                    text.addExtra("§7 (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+").");
+                    break;
+            }
         }
         return this;
     }
