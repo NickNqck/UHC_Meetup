@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -22,11 +23,8 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class WorldUtils {
 
+    @Getter
     private static final DecimalFormat decimalFormater = new DecimalFormat("#.##");
-
-    public static DecimalFormat getDecimalFormater() {
-        return decimalFormater;
-    }
 
     public static void spawnParticle(final Location loc, final EnumParticle particle) {
         for (final Player online : Bukkit.getOnlinePlayers()) {
