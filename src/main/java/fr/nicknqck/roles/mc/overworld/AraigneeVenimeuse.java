@@ -39,6 +39,7 @@ public class AraigneeVenimeuse extends UHCMcRoles {
     public void GiveItems() {
         giveItem(owner, false , getItems());
     }
+    @Override
     public TextComponent getComponent(){return automaticDesc;}
     private TextComponent getPoison(){
         TextComponent Poison =  new TextComponent("§a/mc poison");

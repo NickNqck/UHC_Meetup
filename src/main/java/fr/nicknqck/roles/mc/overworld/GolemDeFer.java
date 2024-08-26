@@ -30,10 +30,13 @@ public class GolemDeFer extends OverWorldRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20,0,false,false), EffectWhen.PERMANENT);
-        owner.setMaxHealth(getMaxHealth()+4.0);
+        setMaxHealth(24.0);
+        owner.setMaxHealth(getMaxHealth());
+        owner.setHealth(owner.getMaxHealth());
         setNoFall(true);
         super.RoleGiven(gameState);
     }
+    @Override
     public TextComponent getComponent(){
         return automaticDesc;
     }

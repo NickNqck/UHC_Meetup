@@ -30,11 +30,8 @@ public class Blaze extends NetherRoles {
 
     public Blaze(UUID player) {
         super(player);
-        giveItem(owner, false, getItems());
         AutomaticDesc desc = new AutomaticDesc(this);
-        desc.addEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20, 0, false, false), EffectWhen.PERMANENT)
-                .setItems(new TripleMap<>(getflyText().getHoverEvent(), getflyText().getText(), 60 * 5), new TripleMap<>(getBowText().getHoverEvent(), getBowText().getText(), 0))
-                .addParticularites(getNofall().getHoverEvent());
+        desc.addEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20, 0, false, false), EffectWhen.PERMANENT).setItems(new TripleMap<>(getflyText().getHoverEvent(), getflyText().getText(), 60 * 5), new TripleMap<>(getBowText().getHoverEvent(), getBowText().getText(), 0)).addParticularites(getNofall().getHoverEvent());
         this.automaticDesc = desc.getText();
     }
 
@@ -44,7 +41,7 @@ public class Blaze extends NetherRoles {
         setNoFall(true);
         super.RoleGiven(gameState);
     }
-
+    @Override
     public TextComponent getComponent() {
         return automaticDesc;
     }
@@ -75,10 +72,7 @@ public class Blaze extends NetherRoles {
 
     @Override
     public ItemStack[] getItems() {
-        return new ItemStack[]{
-                flyItem,
-                arcItem
-        };
+        return new ItemStack[]{flyItem, arcItem};
     }
 
     @Override
@@ -113,7 +107,7 @@ public class Blaze extends NetherRoles {
                             NMSPacket.sendActionBar(owner, "§bVous pouvez encore voler pendant §c" + i + "s");
                             if (i == 0) {
                                 owner.sendMessage("Vous ne pouvez plus voler ");
-                                Bukkit.getScheduler().runTask(Main.getInstance(), ()->{
+                                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                                     owner.setFlying(false);
                                     owner.setAllowFlight(false);
                                 });
@@ -143,4 +137,5 @@ public class Blaze extends NetherRoles {
         }
         super.Update(gameState);
     }
+
 }
