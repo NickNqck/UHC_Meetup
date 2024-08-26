@@ -111,7 +111,7 @@ public class MathUtil {
             sendParticle(particle, x, y+1, z, startLocation.getWorld());
         }
     }
-    private List<FallingBlock> fallingBlocks = new ArrayList<>();
+    private final List<FallingBlock> fallingBlocks = new ArrayList<>();
     public Set<Location> sphere(Location location, int radius, boolean hollow){
         Set<Location> blocks = new HashSet<>();
         World world = location.getWorld();
