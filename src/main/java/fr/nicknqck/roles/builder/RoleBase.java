@@ -12,6 +12,8 @@ import fr.nicknqck.roles.ds.demons.lune.Nakime;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.raytrace.BoundingBox;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;
@@ -60,7 +62,7 @@ public abstract class RoleBase implements IRole {
 	private double Bonusresi = 0;
 	@Getter
 	@NonNull
-	public GameState gameState;
+	public GameState gameState = GameState.getInstance();
 	@Getter
 	@Setter
 	private GamePlayer gamePlayer;
@@ -72,9 +74,12 @@ public abstract class RoleBase implements IRole {
 	@Setter
 	private String suffixString = "";
 	@Getter
-	private List<Class<? extends RoleBase>> knowedRoles = new ArrayList<>();
+	private final List<Class<? extends RoleBase>> knowedRoles = new ArrayList<>();
 	@Getter
-	private List<String> messageOnDescription = new ArrayList<>();
+	private final List<String> messageOnDescription = new ArrayList<>();
+	@Getter
+	private final List<Power> powers = new ArrayList<>();
+
 	public abstract String[] Desc();
 	
 	public abstract ItemStack[] getItems();
@@ -129,6 +134,18 @@ public abstract class RoleBase implements IRole {
 	@Override
 	public UUID getPlayer() {
 		return uuidOwner;
+	}
+	public void addPower(Power power) {
+	/*	TKGPowerAddToPlayerEvent event = new TKGPowerAddToPlayerEvent(this.plugin.getUhcapi(), power, this.getTKGPlayer());
+		this.plugin.getServer().getPluginManager().callEvent(event);*/
+		this.powers.add(power);
+	}
+	public void addPower(ItemPower itemPower, boolean give) {
+		this.addPower(itemPower);
+		Player player = Bukkit.getPlayer(getPlayer());
+		if (give && player != null) {
+			giveItem(player, false, itemPower.getItem());
+		}
 	}
 	public void sendActionBarCooldown(Player player, int cooldown) {
 		if (cooldown > 0) {

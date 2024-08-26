@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -135,6 +137,16 @@ public class ItemsManager implements Listener {
 			if (event.getItemDrop().getItemStack().hasItemMeta()) {
 				if (meta.hasLore() || jsp.contains(event.getItemDrop().getItemStack())|| event.getItemDrop().getItemStack().isSimilar(gameState.EquipementTridi())) {
 					event.setCancelled(true);
+					return;
+				}
+			}
+		}
+		if (!gameState.hasRoleNull(player)) {
+			for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+				if (power instanceof ItemPower) {
+					if (event.getItemDrop().getItemStack().isSimilar(((ItemPower) power).getItem())) {
+						((ItemPower) power).call(event);
+					}
 				}
 			}
 		}

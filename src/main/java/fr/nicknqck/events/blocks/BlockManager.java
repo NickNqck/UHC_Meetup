@@ -3,6 +3,8 @@ package fr.nicknqck.events.blocks;
 import java.util.Arrays;
 
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,7 +18,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -38,8 +39,8 @@ public class BlockManager implements Listener{
 	}
 	
 	 @EventHandler
-	    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
-	        Block block = event.getBlockClicked().getRelative(event.getBlockFace());
+	 public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
+		Block block = event.getBlockClicked().getRelative(event.getBlockFace());
 	        if (event.getBucket() == Material.WATER_BUCKET) {
 				if (Main.getInstance().getGameConfig().getWaterEmptyTiming() <= 0)return;
 	            new BukkitRunnable() {
@@ -94,7 +95,16 @@ public class BlockManager implements Listener{
 					}
 				}
 			}
-		}		
+			if (!gameState.hasRoleNull(event.getPlayer())) {
+				for (Power power : gameState.getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().getPowers()) {
+					if (power instanceof ItemPower) {
+						if (event.getItemInHand().isSimilar(((ItemPower) power).getItem()))  {
+							((ItemPower) power).call(event);
+						}
+					}
+				}
+			}
+		}
 	}
 	@EventHandler
 	public void BlockBreak(org.bukkit.event.block.BlockBreakEvent e) {
@@ -146,6 +156,17 @@ public class BlockManager implements Listener{
                     }
                 }
             }
+			if (!gameState.hasRoleNull(player)) {
+				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+					if (power instanceof ItemPower) {
+						for (ItemStack itemStack : e.getBlock().getDrops()) {
+							if (itemStack.isSimilar(((ItemPower) power).getItem())) {
+								((ItemPower) power).call(e);
+							}
+						}
+					}
+				}
+			}
         }
 	}
 	@EventHandler

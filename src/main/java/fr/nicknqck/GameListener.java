@@ -27,7 +27,9 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.particles.MathUtil;
+import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.KamuiUtils;
+import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.NonNull;
@@ -866,6 +868,15 @@ public class GameListener implements Listener {
 		Player player = event.getPlayer();
 		if (event.hasItem()) {
 			ItemStack itemstack = event.getItem();
+			if (!gameState.hasRoleNull(player)) {
+				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+					if (power instanceof ItemPower) {
+						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
+							((ItemPower) power).call(event);
+						}
+					}
+				}
+			}
 			for (Events e : Events.values()) {
 				e.getEvent().onItemInteract(event, itemstack, player);
 			}
