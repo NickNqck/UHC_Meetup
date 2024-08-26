@@ -47,7 +47,11 @@ public class Doton implements Chakra {
 
 	@Override
 	public void onEntityDamage(EntityDamageEvent event, Player player) {
-		if (RandomUtils.getOwnRandomProbability(3) && Doton.contains(player.getUniqueId()) && !event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+		if (event.isCancelled())return;
+		if (!Doton.contains(player.getUniqueId()))return;
+		if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL))return;
+		if (RandomUtils.getOwnRandomProbability(3)) {
+			player.setNoDamageTicks(15);
 			player.sendMessage("§7Vous avez esquivé un coup grâce à votre Chakra.");
 			event.setCancelled(true);
 		}
