@@ -6,14 +6,11 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.powers.Cooldown;
-import fr.nicknqck.utils.powers.ItemPower;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -21,7 +18,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class RockLeeV2 extends PortesRoles implements Listener {
@@ -53,7 +49,6 @@ public class RockLeeV2 extends PortesRoles implements Listener {
                 60*3
         ));
         this.desc = desc.getText();
-        addPower(new Test(this), true);
     }
 
     @Override
@@ -121,21 +116,6 @@ public class RockLeeV2 extends PortesRoles implements Listener {
             owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true);
             cdSake = 60*3;
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*15, 0, false, false), true), 20*60);
-        }
-    }
-    private static class Test extends ItemPower {
-
-        protected Test(RockLeeV2 role) {
-            super("§aTest", new Cooldown(80), new ItemBuilder(Material.FEATHER), role);
-        }
-
-        @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§dGAY");
-                return true;
-            }
-            return false;
         }
     }
 }
