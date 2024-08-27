@@ -3,28 +3,30 @@ package fr.nicknqck.roles.ns.shinobi.porte;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class RockLeeV2 extends PortesRoles implements Listener {
 
     private final TextComponent desc;
-    private final ItemStack sakeItem = new ItemBuilder(Material.GLASS_BOTTLE).setName("§aAlcoolique no Jutsu").setUnbreakable(true).setDroppable(false).toItemStack();
-    private int cdSake;
+
     public RockLeeV2(UUID player) {
         super(player);
         AutomaticDesc desc = new AutomaticDesc(this);
@@ -48,17 +50,18 @@ public class RockLeeV2 extends PortesRoles implements Listener {
                 "§aAlcoolique no Jutsu",
                 60*3
         ));
+        desc.addParticularites(
+          new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra: "+getChakras().getShowedName())})
+        );
         this.desc = desc.getText();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
-        giveItem(owner, false, getItems());
-    }
-
-    @Override
-    public String[] Desc() {
-        return new String[0];
+        addPower(new TroisPortePower(this), true);
+        addPower(new SixPortesPower(this), true);
+        addPower(new HuitPortesPower(this), true);
+        addPower(new SakePower(this), true);
     }
 
     @Override
@@ -68,12 +71,7 @@ public class RockLeeV2 extends PortesRoles implements Listener {
 
     @Override
     public ItemStack[] getItems() {
-        return new ItemStack[]{
-                this.troisPorteItem,
-                this.sixPorteItem,
-                this.huitPorteItem,
-                this.sakeItem
-        };
+        return new ItemStack[0];
     }
 
     @Override
@@ -86,36 +84,20 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         return GameState.Roles.RockLee;
     }
 
-    @Override
-    public void resetCooldown() {
-        cdSake = 0;
-    }
+    private static class SakePower extends ItemPower {
 
-    @Override
-    public void Update(GameState gameState) {
-        if (cdSake >= 0) {
-            cdSake--;
-            if (cdSake == 0) {
-                owner.sendMessage("§7Vous pouvez à nouveau boire de l'alcool.");
-            }
+        protected SakePower(RoleBase role) {
+            super("§aAlcoolique No Jutsu", new Cooldown(60*3), new ItemBuilder(Material.GLASS_BOTTLE).setName("§aAlcoolique no Jutsu"), role);
         }
-    }
 
-    @EventHandler
-    private void onInteract(PlayerInteractEvent event) {
-        if (!event.hasItem()) return;
-        if (event.isCancelled()) return;
-        if (!event.getPlayer().getUniqueId().equals(getPlayer())) return;
-        ItemStack item = event.getItem();
-        if (item.isSimilar(this.sakeItem)) {
-            event.setCancelled(true);
-            if (cdSake > 0) {
-                sendCooldown(owner, cdSake);
-                return;
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true);
+                Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*15, 0, false, false), true), 20*60);
+                return true;
             }
-            owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true);
-            cdSake = 60*3;
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*15, 0, false, false), true), 20*60);
+            return false;
         }
     }
 }
