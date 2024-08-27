@@ -57,8 +57,11 @@ public class DoubleCircleEffect extends ParticleEffect {
                     WorldUtils.spawnParticle(firstCircle, particle);
                     WorldUtils.spawnParticle(secondCircle, particle);
                 } else {
-                    MathUtil.spawnColoredParticle(firstCircle, particle, red, green, blue);
-                    MathUtil.spawnColoredParticle(secondCircle, particle, red, green, blue);
+                    MathUtil.spawnParticle(firstCircle, red, green, blue);
+                    MathUtil.spawnParticle(secondCircle, red, green, blue);
+
+                   // MathUtil.spawnColoredParticle(firstCircle, particle, red, green, blue);
+                   // MathUtil.spawnColoredParticle(secondCircle, particle, red, green, blue);
                 }
                 ticks++;
             }

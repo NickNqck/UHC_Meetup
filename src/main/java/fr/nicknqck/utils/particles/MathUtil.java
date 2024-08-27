@@ -4,10 +4,7 @@ import fr.nicknqck.Main;
 import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -29,6 +26,16 @@ public class MathUtil {
     public static void spawnColoredParticle(@NonNull Player player, @NonNull Location loc, @NonNull EnumParticle particle, float red, float green, float blue) {
         PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(particle, true, (float) loc.getX(), (float) loc.getY(), (float) loc.getZ(), red, green, blue, 1.0F, 0);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    }
+
+    public static void spawnParticle(Location location, float r, float g, float b) {
+        location.getWorld().spigot().playEffect(location, Effect.COLOURED_DUST, 0, 1, r / 255, g / 255, b / 255, 1, 0, 64);
+    }
+
+
+    public static void spawnParticle(Location location, float r, float g, float b, Player... players) {
+        for (Player player : players)
+            player.spigot().playEffect(location, Effect.COLOURED_DUST, 0, 1, r / 255, g / 255, b / 255, 1, 0, 64);
     }
     public static void sendParticle(final EnumParticle particle, final Location location) {
         sendParticle(particle, location.getX(), location.getY(), location.getZ(), location.getWorld());
