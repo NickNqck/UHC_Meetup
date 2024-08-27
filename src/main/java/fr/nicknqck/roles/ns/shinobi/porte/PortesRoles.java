@@ -2,141 +2,142 @@ package fr.nicknqck.roles.ns.shinobi.porte;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
-import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class PortesRoles extends ShinobiRoles implements Listener {
 
-    public final ItemStack troisPorteItem = new ItemBuilder(Material.NETHER_STAR).setName("§aTroisième Porte").setUnbreakable(true).setDroppable(false).toItemStack();
-    public final ItemStack sixPorteItem = new ItemBuilder(Material.NETHER_STAR).setName("§aSixième Porte").setUnbreakable(true).setDroppable(false).toItemStack();
-    public final ItemStack huitPorteItem = new ItemBuilder(Material.NETHER_STAR).setName("§aHuitième Porte").setUnbreakable(true).setDroppable(false).toItemStack();
-    private int cdTrois, cdSix;
     private boolean huitUsed = false;
 
     public PortesRoles(UUID player) {
         super(player);
-        EventUtils.registerEvents(this);
-        new PortePowersListener(this);
+        setChakraType(getRandomChakras());
 
-    }
-    @EventHandler
-    private void onEndGame(EndGameEvent event) {
-        EventUtils.unregisterEvents(this);
     }
     @Override
     public void resetCooldown() {
-        cdTrois = 0;
-        cdSix = 0;
         huitUsed = false;
     }
+
+    @Override
+    public String[] Desc() {
+        return new String[0];
+    }
+
     @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
-    private static class PortePowersListener implements Listener {
-
+    static class TroisPortePower extends ItemPower {
         private final PortesRoles role;
-
-        private PortePowersListener(PortesRoles role) {
+        protected TroisPortePower(PortesRoles role) {
+            super("§aTroisième Porte", new Cooldown(90), new ItemBuilder(Material.NETHER_STAR).setName("§aTroisième Porte"), role);
             this.role = role;
-            EventUtils.registerEvents(this);
-            new PorteCooldownRunnable(role).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
-        @EventHandler
-        private void onEndGame(EndGameEvent event) {
-            EventUtils.unregisterEvents(this);
-        }
-        @EventHandler
-        private void onInteract(PlayerInteractEvent event) {
-            if (!event.hasItem()) return;
-            if (event.isCancelled()) return;
-            if (!event.getPlayer().getUniqueId().equals(role.getPlayer())) return;
-            ItemStack item = event.getItem();
-            if (item.isSimilar(role.troisPorteItem)) {
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
-                if (role.cdTrois > 0) {
-                    role.sendCooldown(event.getPlayer(), role.cdTrois);
-                    return;
-                }
                 if (role.huitUsed) {
-                    event.getPlayer().sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
-                    return;
+                    player.sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
+                    return false;
                 }
-                event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60 + 30, 0, false, false), true);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60 + 30, 0, false, false), true);
                 if (event.getPlayer().getHealth() - 2.0 <= 0.0) {
                     event.getPlayer().setHealth(1.0);
                 } else {
                     event.getPlayer().setHealth(event.getPlayer().getHealth() - 2.0);
                 }
-                role.cdTrois = 90;
+                return true;
             }
-            if (item.isSimilar(role.sixPorteItem)) {
+            return false;
+        }
+    }
+    static class SixPortesPower extends ItemPower {
+        private final PortesRoles role;
+        protected SixPortesPower(PortesRoles role) {
+            super("§aSix Porte", new Cooldown(180), new ItemBuilder(Material.NETHER_STAR).setName("§aSix Porte"), role);
+            this.role = role;
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
-                if (role.cdSix > 0) {
-                    role.sendCooldown(role.owner, role.cdSix);
-                    return;
-                }
                 if (role.huitUsed) {
                     event.getPlayer().sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
-                    return;
+                    return false;
                 }
                 if (role.getMaxHealth() - 2.0 <= 0) {
                     event.getPlayer().sendMessage("§cVous ne pouvez plus utiliser cette technique !");
-                    return;
+                    return false;
                 }
-                role.cdSix = 180;
                 role.setMaxHealth(role.getMaxHealth()-2.0);
                 role.owner.setMaxHealth(role.getMaxHealth());
                 role.owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60 *3, 0, false, false), true);
                 role.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 60 * 3, 0, false, false), true);
                 new DoubleCircleEffect(20*60*3, EnumParticle.VILLAGER_HAPPY).start(role.owner);
+                return true;
             }
-            if (item.isSimilar(role.huitPorteItem)) {
+            return false;
+        }
+    }
+    static class HuitPortesPower extends ItemPower {
+        private final PortesRoles role;
+        protected HuitPortesPower(PortesRoles role) {
+            super("§aHuit Portes", new Cooldown(9999), new ItemBuilder(Material.NETHER_STAR).setName("§aHuit Portes"), role);
+            this.role = role;
+            setMaxUse(1);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
                 if (role.huitUsed) {
                     event.getPlayer().sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
-                    return;
+                    return false;
                 }
-                new DoubleCircleEffect(20*60*5, EnumParticle.REDSTONE).start(role.owner);
+                new DoubleCircleEffect(20*60*5, EnumParticle.REDSTONE, 171, 34, 19).start(role.owner);
                 role.owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*5, 1, false, false), true);
-                role. owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 1, false, false), true);
-                role.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, false, false), true);
-                role.owner.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60*5, 1, false, false), true);
+                role. owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
+                role.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 0, false, false), true);
+                role.owner.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60*5, 0, false, false), true);
                 role.setMaxHealth(30.0);
                 role.owner.setMaxHealth(role.getMaxHealth());
                 role.owner.setHealth(role.owner.getMaxHealth());
-                role.cdSix = -1;
-                role.cdTrois = -1;
                 role.huitUsed = true;
                 Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                     if (Bukkit.getPlayer(role.getPlayer()) != null) {
                         Player owner = Bukkit.getPlayer(role.getPlayer());
-                        if (role.gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                        if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                             if (!role.gameState.hasRoleNull(owner)) {
-                                if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole() instanceof RockLeeV2) {
+                                if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole().roleID == this.role.roleID) {
                                     if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole().StringID.equals(role.StringID)) {//donc c'est définitivement la même partie que quand il a activer
                                         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                                             role.setMaxHealth(10.0);
-                                            owner.setMaxHealth(role.getMaxHealth());
-                                            owner.setHealth(owner.getHealth());
+                                            role.owner.setMaxHealth(role.getMaxHealth());
+                                            role.owner.setHealth(role.owner.getHealth());
                                         });
                                     }
                                 }
@@ -144,35 +145,9 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
                         }
                     }
                 }, 20*60*5);
+                return true;
             }
-        }
-        private static class PorteCooldownRunnable extends BukkitRunnable {
-
-            private final PortesRoles role;
-
-            private PorteCooldownRunnable(PortesRoles role) {
-                this.role = role;
-            }
-
-            @Override
-            public void run() {
-                if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
-                    cancel();
-                    return;
-                }
-                if (role.cdTrois >= 0) {
-                    role.cdTrois--;
-                    if (role.cdTrois == 0) {
-                        role.owner.sendMessage("§7Vous pouvez à nouveau utiliser la§a Troisième Porte");
-                    }
-                }
-                if (role.cdSix >= 0) {
-                    role.cdSix--;
-                    if (role.cdSix == 0) {
-                        role.owner.sendMessage("§7Vous pouvez à nouveau utiliser la§a Sixième Porte");
-                    }
-                }
-            }
+            return false;
         }
     }
 }
