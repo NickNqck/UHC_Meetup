@@ -872,6 +872,7 @@ public class GameListener implements Listener {
 				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
 					if (power instanceof ItemPower) {
 						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
+							event.setCancelled(true);
 							((ItemPower) power).call(event);
 						}
 					}
