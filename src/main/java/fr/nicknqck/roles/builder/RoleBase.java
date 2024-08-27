@@ -81,8 +81,7 @@ public abstract class RoleBase implements IRole {
 	private final List<Power> powers = new ArrayList<>();
 
 	public abstract String[] Desc();
-	
-	public abstract ItemStack[] getItems();
+
 	public int roleID = 0;
 	public String StringID = "";
 	private UUID uuidOwner;

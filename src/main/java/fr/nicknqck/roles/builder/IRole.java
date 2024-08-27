@@ -2,6 +2,7 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.Map;
@@ -17,4 +18,5 @@ public interface IRole {
     Map<PotionEffect, EffectWhen> getEffects();
     void resetCooldown();
     TextComponent getComponent();
+    ItemStack[] getItems();
 }
