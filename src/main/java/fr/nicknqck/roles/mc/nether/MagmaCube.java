@@ -78,7 +78,6 @@ public class MagmaCube extends NetherRoles implements Listener {
                 if(reviveRestant == 0){
                     getGamePlayer().setCanRevive(false);
                 }
-                e.getVictim().getInventory().addItem(contents);
                 if (e.getVictim().isDead()) {
                     e.getVictim().spigot().respawn();
                 }
