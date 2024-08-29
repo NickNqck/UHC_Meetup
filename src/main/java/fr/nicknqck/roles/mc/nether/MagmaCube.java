@@ -69,29 +69,23 @@ public class MagmaCube extends NetherRoles implements Listener {
         if (reviveRestant > 0) {
             if (e.getVictim().getUniqueId().equals(owner.getUniqueId())) {
                 Location loc = Loc.getRandomLocationAroundPlayer(e.getPlayerKiller(), 5);
+                ItemStack[] contents = e.getVictim().getInventory().getContents();
+                e.getGameState().addInSpecPlayers(e.getVictim());
+                e.getGameState().RevivePlayer(e.getVictim());
+                e.getVictim().setMaxHealth(getMaxHealth() -4.0);
+                e.getVictim().sendMessage("§7Vous venez de réssusciter en perdant §c2" + AllDesc.coeur + " §7permanent");
+                reviveRestant--;
+                if(reviveRestant == 0){
+                    getGamePlayer().setCanRevive(false);
+                }
+                e.getVictim().getInventory().addItem(contents);
+                if (e.getVictim().isDead()) {
+                    e.getVictim().spigot().respawn();
+                }
                 if (loc.getWorld() != Main.getInstance().getWorldManager().getGameWorld()) {
-                    ItemStack[] contents = e.getVictim().getInventory().getContents();
-                    e.getGameState().addInSpecPlayers(e.getVictim());
-                    e.getGameState().RevivePlayer(e.getVictim());
-                    e.getVictim().setMaxHealth(getMaxHealth() - 4.0);
-                    e.getVictim().sendMessage("§7Vous venez de réssusciter en perdant §c2" + AllDesc.coeur + " §7permanent");
-                    reviveRestant--;
-                    e.getVictim().getInventory().addItem(contents);
-                    if (e.getVictim().isDead()) {
-                        e.getVictim().spigot().respawn();
-                    }
+
                 } else {
-                    ItemStack[] contents = e.getVictim().getInventory().getContents();
-                    e.getGameState().addInSpecPlayers(e.getVictim());
-                    e.getGameState().RevivePlayer(e.getVictim());
                     e.getVictim().teleport(loc);
-                    e.getVictim().setMaxHealth(getMaxHealth() - 4.0);
-                    e.getVictim().sendMessage("§7Vous venez de réssusciter en perdant §c2" + AllDesc.coeur + " §7permanent");
-                    reviveRestant--;
-                    e.getVictim().getInventory().addItem(contents);
-                    if (e.getVictim().isDead()) {
-                        e.getVictim().spigot().respawn();
-                    }
                 }
             }
         }
