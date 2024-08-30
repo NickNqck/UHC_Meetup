@@ -162,7 +162,6 @@ public class EntityDamageEvents implements Listener{
 						/*
 						 * (damager).getItemInHand() = ItemStack item
 						 * player = Player victim
-						 * gameState = GameState gameState
 						 */
 						if (player != null) {
 							Player attacker = (Player) damageur;
