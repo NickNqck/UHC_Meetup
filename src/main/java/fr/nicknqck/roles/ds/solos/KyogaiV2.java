@@ -207,7 +207,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 			Player owner = Bukkit.getPlayer(event.getDamager().getUuid());
 			Player victim = Bukkit.getPlayer(event.getVictim().getUuid());
 			if (owner != null && victim != null) {//Les deux joueurs sont encore connecter
-				if (Main.getInstance().getLocUtils().getPlayerFacing(owner).equals(Main.getInstance().getLocUtils().getPlayerFacing(victim))) {//si ils regardent la même direction
+				if (Loc.getPlayerFacing(owner).equals(Loc.getPlayerFacing(victim))) {//si ils regardent la même direction
 					if (RandomUtils.getRandomProbability(15)){
 						Heal(victim, -2);
 						owner.sendMessage("§7§l"+victim.getName()+"§7 à subit 1"+AllDesc.coeur+"§7 de dégat supplémentaire");
@@ -219,7 +219,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 			Player owner = Bukkit.getPlayer(event.getVictim().getUuid());
 			Player damager = Bukkit.getPlayer(event.getDamager().getUuid());
 			if (owner != null && damager != null) {//Les deux joueurs sont encore connecter
-				if (Main.getInstance().getLocUtils().getPlayerFacing(owner).equals(Main.getInstance().getLocUtils().getPlayerFacing(damager))) {//si ils regardent la même direction
+				if (Loc.getPlayerFacing(owner).equals(Loc.getPlayerFacing(damager))) {//si ils regardent la même direction
 					if (RandomUtils.getRandomProbability(20)) {//donc 20% de chance de donner speed 1 a kyogai
 						givePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
 						owner.sendMessage("§7Vous avez gagné l'effet "+AllDesc.Speed+"§b 1§7 suite à là douleurs");
