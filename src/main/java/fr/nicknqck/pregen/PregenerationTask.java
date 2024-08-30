@@ -21,7 +21,7 @@ public class PregenerationTask extends BukkitRunnable {
 	private final Integer mz;
 	private final Integer radius;
 	private final World world;
-	private Boolean finished;
+	private boolean finished;
 	private int loadedChunks;
 	private int chunkAlreadyLoad;
 	private int chunkFinded;
@@ -36,7 +36,7 @@ public class PregenerationTask extends BukkitRunnable {
 		this.radius = r;
 		this.mx = r + world.getSpawnLocation().getBlockX();
 		this.mz = r + world.getSpawnLocation().getBlockZ();
-		this.finished = Boolean.FALSE;
+		this.finished = false;
 		Bukkit.broadcastMessage("§8[§cPregen§8] §fLancement de la pré-génération de §c"+world.getName());
 		runTaskTimer(Main.getInstance(), 0L, 5L);
 	}
@@ -47,10 +47,8 @@ public class PregenerationTask extends BukkitRunnable {
 			Location loc = new Location(this.world, this.cx, 0.0D, this.cz);
 			if (!loc.getChunk().isLoaded()) {
 				loc.getWorld().loadChunk(loc.getChunk().getX(), loc.getChunk().getZ(), true);
-				System.out.println("Pregen "+loc.getChunk());
 				loadedChunks++;
 			} else {
-				System.out.println(loc.getChunk().toString()+" is already loaded");
 				chunkAlreadyLoad++;
 			}
 			chunkFinded++;
@@ -61,7 +59,7 @@ public class PregenerationTask extends BukkitRunnable {
 				this.cz+=16;
 				if(this.cz > this.mz) {
 					this.currentChunkLoad = this.totalChunkToLoad;
-					this.finished = Boolean.TRUE;
+					this.finished = true;
 				}
 			}
 		}

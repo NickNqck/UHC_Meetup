@@ -26,6 +26,7 @@ public class JoinEvents implements Listener{
 	private final GameState gameState;
 	public JoinEvents() {
 		this.gameState = GameState.getInstance();
+		new ToggleFlyEvent();
 	}
 	
  	@EventHandler(priority = EventPriority.LOWEST)
