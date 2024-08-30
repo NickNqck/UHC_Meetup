@@ -69,7 +69,6 @@ public class GameListener implements Listener {
 	public WorldBorder border;
 	@Getter
 	private static GameListener Instance;
-//	private BukkitScheduler gameTimer = Bukkit.getServer().getScheduler(); // Seconds
 	public GameListener(GameState gameState) {
 		this.gameState = gameState;
 		Instance = this;
