@@ -1,6 +1,5 @@
 package fr.nicknqck;
 
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
@@ -13,12 +12,8 @@ import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.Susamaru;
-import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.scenarios.impl.AntiPvP;
-import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
 import fr.nicknqck.utils.AntiLopsa;
@@ -26,7 +21,6 @@ import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
-import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import fr.nicknqck.utils.powers.Power;
@@ -36,18 +30,14 @@ import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -711,88 +701,6 @@ public class GameListener implements Listener {
 		}
 		if (gameDone){
 			EndGame(gameState, winer);
-		}
-	}
-	@EventHandler(priority = EventPriority.HIGHEST)
-	private void OnDamagedEntityByEntity(EntityDamageByEntityEvent event) {
-		if (gameState.getServerState() == ServerStates.InGame) {
-			if (event.getEntity() instanceof Player) {
-				Player player = (Player) event.getEntity();
-				Entity damageur = event.getDamager();
-				double damage = event.getFinalDamage();
-				for (Events e : Events.values()) {
-					e.getEvent().onPlayerDamagedByPlayer(event, player, damageur);
-				}
-				if (damageur instanceof Player) {
-					Player damager = (Player) event.getDamager();					
-					if (gameState.getPlayerRoles().containsKey(damager)) {
-						gameState.getPlayerRoles().get(damager).ItemUseAgainst(damager.getItemInHand(), player, gameState);
-						gameState.getPlayerRoles().get(damager).neoItemUseAgainst(damager.getItemInHand(), player, gameState, damager);
-						/*
-						 * (damager).getItemInHand() = ItemStack item
-						 * player = Player victim
-						 * gameState = GameState gameState
-						 */
-						if (player != null) {
-							Player attacker = (Player) damageur;
-                            if (gameState.shutdown.contains(attacker)) {
-								event.setCancelled(true);
-							}
-							if (gameState.getCharmed().contains(attacker)) {
-								if (gameState.getPlayerRoles().get(player) instanceof Mitsuri) {
-									attacker.sendMessage("Vous n'avez pas le pouvoir de tapée l'amour de votre vie");
-									double x = player.getLocation().getX();
-									double y = player.getLocation().getY();
-									double z = player.getLocation().getZ();
-									MathUtil.sendParticleTo(attacker, EnumParticle.HEART, x, y+2, z);
-									event.setCancelled(true);
-								}
-							}
-						if (gameState.getPlayerRoles().get(player).getRoles().equals(Roles.Slayer) && FFA.getFFA()) {
-							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(player);
-							if (f.getRoles() == Roles.Slayer) {
-								if (f.owner == player) {
-									if (f.Serpent) {
-										if (f.serpentactualtime >= 0) {
-											if (RandomUtils.getOwnRandomProbability(20)) {
-												f.owner.sendMessage("Vous venez d'esquiver un coup grâce à votre Soufle");
-												event.setCancelled(true);	
-											}							
-										}
-									}
-								}
-							}
-						}
-							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
-						}
-					}
-				}
-                assert player != null;
-                if (player.getHealth()-damage <= 0) {
-					if (event.getCause() != DamageCause.FALL) {
-						if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-							if (!gameState.hasRoleNull(player)) {
-								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
-                                    assert damageur instanceof Player;
-                                    gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
-									event.setCancelled(true);
-                                }
-							}
-						}
-					} else {
-						if (gameState.getPlayerRoles().containsKey(player)) {
-							if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
-								event.setDamage(0);
-								event.setCancelled(true);
-							}
-						}
-					}
-				}				
-			}
-		} else {//else du serverstates.ingame
-			if (AntiPvP.isAntipvplobby()) {
-				event.setCancelled(true);
-			}
 		}
 	}
 	@EventHandler

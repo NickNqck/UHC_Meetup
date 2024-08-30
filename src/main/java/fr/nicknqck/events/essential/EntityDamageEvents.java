@@ -3,12 +3,20 @@ package fr.nicknqck.events.essential;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.events.Events;
+import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
+import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
+import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.AttackUtils;
+import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.particles.MathUtil;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -133,6 +141,88 @@ public class EntityDamageEvents implements Listener{
 					e.setDamage(0.0);
 					e.setCancelled(true);
 				}
+			}
+		}
+	}
+	@EventHandler(priority = EventPriority.HIGHEST)
+	private void OnDamagedEntityByEntity(EntityDamageByEntityEvent event) {
+		if (gameState.getServerState() == ServerStates.InGame) {
+			if (event.getEntity() instanceof Player) {
+				Player player = (Player) event.getEntity();
+				Entity damageur = event.getDamager();
+				double damage = event.getFinalDamage();
+				for (Events e : Events.values()) {
+					e.getEvent().onPlayerDamagedByPlayer(event, player, damageur);
+				}
+				if (damageur instanceof Player) {
+					Player damager = (Player) event.getDamager();
+					if (gameState.getPlayerRoles().containsKey(damager)) {
+						gameState.getPlayerRoles().get(damager).ItemUseAgainst(damager.getItemInHand(), player, gameState);
+						gameState.getPlayerRoles().get(damager).neoItemUseAgainst(damager.getItemInHand(), player, gameState, damager);
+						/*
+						 * (damager).getItemInHand() = ItemStack item
+						 * player = Player victim
+						 * gameState = GameState gameState
+						 */
+						if (player != null) {
+							Player attacker = (Player) damageur;
+							if (gameState.shutdown.contains(attacker)) {
+								event.setCancelled(true);
+							}
+							if (gameState.getCharmed().contains(attacker)) {
+								if (gameState.getPlayerRoles().get(player) instanceof Mitsuri) {
+									attacker.sendMessage("Vous n'avez pas le pouvoir de tapée l'amour de votre vie");
+									double x = player.getLocation().getX();
+									double y = player.getLocation().getY();
+									double z = player.getLocation().getZ();
+									MathUtil.sendParticleTo(attacker, EnumParticle.HEART, x, y+2, z);
+									event.setCancelled(true);
+								}
+							}
+							if (gameState.getPlayerRoles().get(player).getRoles().equals(GameState.Roles.Slayer) && FFA.getFFA()) {
+								FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(player);
+								if (f.getRoles() == GameState.Roles.Slayer) {
+									if (f.owner == player) {
+										if (f.Serpent) {
+											if (f.serpentactualtime >= 0) {
+												if (RandomUtils.getOwnRandomProbability(20)) {
+													f.owner.sendMessage("Vous venez d'esquiver un coup grâce à votre Soufle");
+													event.setCancelled(true);
+												}
+											}
+										}
+									}
+								}
+							}
+							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
+						}
+					}
+				}
+				assert player != null;
+				if (player.getHealth()-damage <= 0) {
+					if (event.getCause() != DamageCause.FALL) {
+						if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
+							if (!gameState.hasRoleNull(player)) {
+								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
+									assert damageur instanceof Player;
+									gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
+									event.setCancelled(true);
+								}
+							}
+						}
+					} else {
+						if (gameState.getPlayerRoles().containsKey(player)) {
+							if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
+								event.setDamage(0);
+								event.setCancelled(true);
+							}
+						}
+					}
+				}
+			}
+		} else {//else du serverstates.ingame
+			if (AntiPvP.isAntipvplobby()) {
+				event.setCancelled(true);
 			}
 		}
 	}
