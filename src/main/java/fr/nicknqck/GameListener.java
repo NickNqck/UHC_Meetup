@@ -295,7 +295,6 @@ public class GameListener implements Listener {
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
 			Border.setActualBorderSize(Border.getMaxBorderSize());
-			gameState.getGamePlayer().clear();
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
@@ -387,8 +386,9 @@ public class GameListener implements Listener {
 	        SendToEveryone("Résumé de la partie");
 	        SendToEveryone(" ");
 	        if (!gameState.getInGamePlayers().isEmpty()) {
-
-					for (Player p : Bukkit.getOnlinePlayers()) {
+					for (UUID uuid : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(uuid);
+						if (p == null) continue;
 						((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
 						gameState.addInLobbyPlayers(p);
 						if (!gameState.hasRoleNull(p)) {
@@ -416,7 +416,7 @@ public class GameListener implements Listener {
 						}
                     }
 				}
-
+			gameState.getGamePlayer().clear();
 			System.out.println("end");
 			gameState.pregenNakime = false;
 			gameState.setInGamePlayers(new ArrayList<>());
