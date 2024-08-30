@@ -16,11 +16,13 @@ public class StartGameEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final GameState gameState;
     private final List<UUID> inGamePlayers = new ArrayList<>();
-    public StartGameEvent(GameState gameState) {
+    private final List<GameState.Roles> igRoles;
+
+    public StartGameEvent(GameState gameState, List<GameState.Roles> rolesList) {
         this.gameState = gameState;
-        inGamePlayers.addAll(gameState.getInGamePlayers());
-        System.out.println("StartGameEvent has been called !");
+        this.igRoles = rolesList;
     }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;

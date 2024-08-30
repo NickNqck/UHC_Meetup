@@ -1,0 +1,23 @@
+#Si hook est sur true alors le webhook sur la partie url sera utilisable
+hook: true
+#Il faut mettre votre webhook dans les '' pour que celà fonctionne
+url: 'https://discord.com/api/webhooks/1278037751190519821/-ZxnkbxRej68ldWkPski712-8WazdEYQcGTO4_usb330EaropVd2qz9FiVtcIFlflVpI'
+#Dans la catégorie name vous pouvez définir le nom qui sera afficher sur le webhook,
+#Si vous écrivez <joueur> dans cette catégorie alors le nom du joueur concerné par le webhook sera également celui du message envoyer sur discord
+name: '<joueur>'
+#Dans le cas ou aucun joueur ne peut être donnée comme nom de webhook alors ce nom sera afficher.
+#S'il est définie sur Nom par défaut, alors le nom du webhook sera la raison pour laquelle il a été appeler
+defaultname: 'Nom par défaut'
+#Si lobby est définie sur true alors le webhook sera utiliser également utiliser dans le lobby
+lobby: false
+#De même si game est définie sur true alors le webhook pourra se déclancher en game
+game: false
+#Si join est définie sur true, alors un webhook sera envoyer quand un joueur se connecte
+join: false
+#Si disc est définie sur true, alors un webhook sera envoyer quand un joueur déconnecte
+disc: false
+#Si battleInfo est définie sur true, alors le webhook enverra des informations sur les combats qu'il y a (en game uniquement)
+#Celà peut crée des erreurs dans la console car sa va spam les serveurs de discord
+battleInfo: false
+#Si définie sur true permet de savoir quand une game start, les joueurs jouant cette game et la composition de la partie
+start: true

@@ -28,10 +28,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class HubListener implements Listener {
@@ -80,7 +77,7 @@ public class HubListener implements Listener {
 		}
 		// Debug Affichages des roles InGame
 		int roleNmb = 0;
-		
+		List<Roles> rolesList = new ArrayList<>();
 		for (Roles r : gameState.getAvailableRoles().keySet()) {
 			if (Main.isDebug()){
 				System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
@@ -88,6 +85,8 @@ public class HubListener implements Listener {
 			roleNmb += gameState.getAvailableRoles().get(r);
 			if (gameState.getAvailableRoles().get(r) == 0){
 				gameState.getDeadRoles().add(r);
+			} else {
+				rolesList.add(r);
 			}
 		}
 		System.out.println("lobby: "+gameState.getInLobbyPlayers().size()+", roles: "+roleNmb+", equal: "+(gameState.getInLobbyPlayers().size() == roleNmb));
@@ -123,7 +122,6 @@ public class HubListener implements Listener {
 		}
 		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
-		// Supression de la plateforme
 		gameState.initEvents();
 		for (Bijus b : Bijus.values()) {
 			b.getBiju().setHote(null);
@@ -132,7 +130,7 @@ public class HubListener implements Listener {
 		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
 		BijuListener.getInstance().resetCooldown();
 		Bijus.initBiju(gameState);
-		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
+		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState, rolesList));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {

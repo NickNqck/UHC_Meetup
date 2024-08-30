@@ -34,6 +34,8 @@ import lombok.Getter;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -77,19 +79,18 @@ public class Main extends JavaPlugin implements Listener{
 	@Getter
 	private RoleManager roleManager;
 	@Getter
-	private Loc locUtils;
-	@Getter
 	private WorldsManager worldManager;
 	@Getter
 	private GameConfig gameConfig;
 	@Getter
 	private DeathManager deathManager;
+	@Getter
+	private FileConfiguration webhookConfig;
 	@Override
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
 		this.roleManager = new RoleManager();
-		this.locUtils = new Loc();
 		this.worldManager = new WorldsManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
@@ -120,8 +121,25 @@ public class Main extends JavaPlugin implements Listener{
 		giveTab(gameState);
 		saveDefaultConfig();
         registerRecipes();
+		saveDefaultWebhookConfig();
 		System.out.println("ENDING ONENABLE");
     }
+	private void saveDefaultWebhookConfig() {
+		File webhookFile = new File(getDataFolder(), "webhook.yml");
+
+		if (!webhookFile.exists()) {
+			getLogger().info("Creation du fichier webhook.yml par defaut...");
+			saveResource("webhook.yml", false);
+		} else {
+			getLogger().info("Fichier webhook.yml deja present.");
+		}
+		updateWebHookConfig();
+	}
+	public void updateWebHookConfig() {
+		File webhookFile = new File(getDataFolder(), "webhook.yml");
+        webhookConfig = YamlConfiguration.loadConfiguration(webhookFile);
+		System.out.println("WebHook updated");
+	}
 	private void registerRecipes() {
 		System.out.println("Starting registering recipes");
 		ItemStack result = Items.getLamedenichirin();
@@ -173,6 +191,7 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemBuilderListener(), this);
 		new EffectsGiver();
+		getServer().getPluginManager().registerEvents(new WebHookListeners(gameState), this);
 		DeathManager manager = new DeathManager();
 		getServer().getPluginManager().registerEvents(manager, this);
 		this.deathManager = manager;
