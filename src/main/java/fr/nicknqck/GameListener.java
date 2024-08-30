@@ -540,94 +540,81 @@ public class GameListener implements Listener {
 			gameState.sendTitleToAll("§fVictoire de", "§7Personne", false);
             gameDone = true;
         }
-		boolean Slayer = false;
+		boolean Slayer = false, Demon = false, Solo = false, Jigoro = false, Alliance = false;
 		
-		boolean Demon = false;
+		boolean Mahr = false, Titans = false, Soldat = false;
 		
-		boolean Solo = false;
-		
-		boolean Jigoro = false;
-		
-		boolean Mahr = false;
-		
-		boolean Titans = false;
-		
-		boolean Soldat = false;
-		
-		boolean Jubi = false;
-		
-		boolean Alliance = false;
-		
-		boolean Orochimaru = false;
-		
-		boolean Akatsuki = false;
-		
-		boolean Sasuke = false;
-		
-		boolean Brume = false;
-		
-		boolean Shinobi = false;
-		
-		boolean Kumogakure = false;
-		boolean Kabuto = false;
+		boolean Jubi = false, Orochimaru = false, Akatsuki = false, Sasuke = false, Brume = false, Shinobi = false, Kumogakure = false, Kabuto = false;
+
+		boolean OverWorld = false, Nether = false;
+
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player player2 = Bukkit.getPlayer(u);
 			if (player2 == null)continue;
 			if (gameState.getPlayerRoles().get(player2) != null) {
 				RoleBase role = gameState.getPlayerRoles().get(player2);
 				switch (role.getTeam()) {
-				case Akatsuki:
-					Akatsuki = true;
-					break;
-				case Alliance:
-					Alliance = true;
-					break;
-				case Demon:
-					Demon = true;
-					break;
-				case Jigoro:
-					Jigoro = true;
-					break;
-				case Jubi:
-					Jubi = true;
-					break;
-				case Kumogakure:
-					Kumogakure = true;
-					break;
-				case Mahr:
-					Mahr = true;
-					break;
-				case Orochimaru:
-					Orochimaru = true;
-					break;
-				case Sasuke:
-					Sasuke = true;
-					break;
-				case Shinobi:
-					Shinobi = true;
-					break;
-				case Slayer:
-					Slayer = true;
-					break;
-				case Soldat:
-					Soldat = true;
-					break;
-				case Solo:
-					Solo = true;
-					break;
-				case Titan:
-					Titans = true;
-					break;
-				case Zabuza_et_Haku:
-					Brume = true;
-					break;
-				case Kabuto:
-					Kabuto = true;
-					break;
+					case Akatsuki:
+						Akatsuki = true;
+						break;
+					case Alliance:
+						Alliance = true;
+						break;
+					case Demon:
+						Demon = true;
+						break;
+					case Jigoro:
+						Jigoro = true;
+						break;
+					case Jubi:
+						Jubi = true;
+						break;
+					case Kumogakure:
+						Kumogakure = true;
+						break;
+					case Mahr:
+						Mahr = true;
+						break;
+					case Orochimaru:
+						Orochimaru = true;
+						break;
+					case Sasuke:
+						Sasuke = true;
+						break;
+					case Shinobi:
+						Shinobi = true;
+						break;
+					case Slayer:
+						Slayer = true;
+						break;
+					case Soldat:
+						Soldat = true;
+						break;
+					case Solo:
+						Solo = true;
+						break;
+					case Titan:
+						Titans = true;
+						break;
+					case Zabuza_et_Haku:
+						Brume = true;
+						break;
+					case Kabuto:
+						Kabuto = true;
+						break;
+					case OverWorld:
+						OverWorld = true;
+						break;
+					case Nether:
+						Nether = true;
+						break;
 				}
 			}
 		}
-		int i = trueCount(Slayer, Demon, Solo, Jigoro, Mahr, Titans, Soldat, Jubi, Alliance, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto);
+		int i = trueCount(Slayer, Demon, Solo, Jigoro, Alliance,
+				Mahr, Titans, Soldat,
+				Jubi, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto,
+				OverWorld, Nether);
 		if (gameDone) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.hasRoleNull(p)) {
@@ -711,6 +698,14 @@ public class GameListener implements Listener {
 			}
 			if (Kabuto) {
 				winer = TeamList.Kabuto;
+				gameDone = true;
+			}
+			if (OverWorld) {
+				winer = TeamList.OverWorld;
+				gameDone = true;
+			}
+			if (Nether) {
+				winer = TeamList.Nether;
 				gameDone = true;
 			}
 		}
