@@ -6,6 +6,7 @@ import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.chat.Chat;
+import fr.nicknqck.events.essential.inventorys.rconfig.AotRolesConfig;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.pregen.PregenerationTask;
@@ -35,6 +36,7 @@ public class HubConfig implements Listener {
     public HubConfig(GameState gameState) {
         this.gameState = gameState;
         EventUtils.registerEvents(this);
+        new AotRolesConfig(gameState);
     }
     @EventHandler
     private void onInventoryClick(InventoryClickEvent event) {
