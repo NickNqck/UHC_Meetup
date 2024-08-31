@@ -13,6 +13,7 @@ import fr.nicknqck.events.blocks.BlockManager;
 import fr.nicknqck.events.blocks.BrickBlockListener;
 import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.essential.*;
+import fr.nicknqck.events.essential.inventorys.HubInventory;
 import fr.nicknqck.items.*;
 import fr.nicknqck.managers.DeathManager;
 import fr.nicknqck.managers.RoleManager;

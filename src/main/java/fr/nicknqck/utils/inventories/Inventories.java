@@ -51,6 +51,7 @@ public class Inventories {
         updateNSBrumeInventory(p);
         updateNSShinobiInventory(p);
         updateNSKumogakure(p);
+        updateMCInventory(p);
     }
     public void updateSecretTitansInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
@@ -873,14 +874,19 @@ public class Inventories {
                     if (gameState.isAllMdjNull()) {
                         inv.setItem(13, new ItemBuilder(Material.SIGN).setName("§7Aucun mode de jeux activé !").toItemStack());
                     } else {
-                        if (gameState.getMdj() == GameState.MDJ.DS) {
-                            inv.setItem(13, GUIItems.getSelectDSButton());
-                        }
-                        if (gameState.getMdj() == GameState.MDJ.AOT) {
-                            inv.setItem(13, GUIItems.getSelectAOTButton());
-                        }
-                        if (gameState.getMdj() == GameState.MDJ.NS) {
-                            inv.setItem(13, GUIItems.getSelectNSButton());
+                        switch (gameState.getMdj()) {
+                            case DS:
+                                inv.setItem(13, GUIItems.getSelectDSButton());
+                                break;
+                            case MC:
+                                inv.setItem(13, GUIItems.getSelectBackMenu());
+                                break;
+                            case AOT:
+                                inv.setItem(13, GUIItems.getSelectAOTButton());
+                                break;
+                            case NS:
+                                inv.setItem(13, GUIItems.getSelectNSButton());
+                                break;
                         }
                     }
                     if (ChatRank.isHost(player)) {
@@ -1252,5 +1258,19 @@ public class Inventories {
             }
         }
     }
-
+    public void updateMCInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§fRoles§7 ->§6 NS")) {
+                    inv.clear();
+                    inv.setItem(10, GUIItems.getSelectOverworldButton());
+                    inv.setItem(26, GUIItems.getSelectBackMenu());
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
 }

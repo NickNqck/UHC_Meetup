@@ -135,7 +135,7 @@ public abstract class GUIItems{
 		stack.setItemMeta(meta);
 		return stack;
 	}
-	public final static ItemStack getSouffleSerpent() {
+	public static ItemStack getSouffleSerpent() {
 		ItemStack stack = new ItemStack(Material.BARRIER, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Souffle du Serpent");
@@ -219,7 +219,7 @@ public abstract class GUIItems{
 		stack.setItemMeta(meta);
 		return stack;
 	}
-	public final static ItemStack getSouffleFleur() {
+	public static ItemStack getSouffleFleur() {
 		ItemStack stack = new ItemStack(Material.RED_ROSE, 1, (byte) 2);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Souffle de la Fleur");
@@ -570,8 +570,7 @@ public static ItemStack getSelectConfigButton() {
 	}
 	
 	public static Inventory getSlayersSelectGUI() {
-		Inventory inv = Bukkit.createInventory(null, 54, "DemonSlayer ->§a Slayers");
-		return inv;
+        return Bukkit.createInventory(null, 54, "DemonSlayer ->§a Slayers");
 	}
 	public static ItemStack getSelectDemonButton() {
 		ItemStack stack = new ItemStack(Material.REDSTONE_BLOCK, 1);
@@ -607,6 +606,9 @@ public static ItemStack getSelectConfigButton() {
 	public static Inventory getSelectNSBrumeInventory() {
 		return Bukkit.createInventory(null, 54, "§eSolo§7 ->§b Zabuza et Haku");
 	}
+	public static ItemStack getSelectOverworldButton() {
+		  return new ItemBuilder(Material.GRASS).setName("§aOverworld").toItemStack();
+	}
 	public static Inventory getSelectNSJubiInventory() {
 		return Bukkit.createInventory(null, 54, "§eSolo§7 ->§d Jubi");
 	}
@@ -640,8 +642,7 @@ public static ItemStack getSelectConfigButton() {
 		return stack;
 	}
 	public static Inventory getDemonSelectGUI() {
-		Inventory inv = Bukkit.createInventory(null, 54, "DemonSlayer -> §cDémons");
-		return inv;
+        return Bukkit.createInventory(null, 54, "DemonSlayer -> §cDémons");
 	}
 	public static ItemStack getSelectSoloButton() {
 		ItemStack stack = new ItemStack(Material.INK_SACK, 1, (byte) 14);
@@ -654,12 +655,10 @@ public static ItemStack getSelectConfigButton() {
 		return stack;
 	}
 	public static Inventory getCutCleanConfigGUI() {
-		Inventory inv = Bukkit.createInventory(null, 9, "§bCutClean");
-		return inv;
+        return Bukkit.createInventory(null, 9, "§bCutClean");
 	}
 	public static Inventory getDSSoloSelectGUI() {
-		Inventory inv = Bukkit.createInventory(null, 54, "DemonSlayer -> §eSolo");
-		return inv;
+        return Bukkit.createInventory(null, 54, "DemonSlayer -> §eSolo");
 	}
 	public static Inventory getAOTSoloSelectGUI() {
 		return Bukkit.createInventory(null, 54, "§fAOT§7 -> §eSolo");
@@ -683,8 +682,7 @@ public static ItemStack getSelectConfigButton() {
 	}
 	
 	public static Inventory getEventSelectGUI() {
-		Inventory inv = Bukkit.createInventory(null, 9, "§fConfiguration§7 -> §6Événements");
-		return inv;
+        return Bukkit.createInventory(null, 9, "§fConfiguration§7 -> §6Événements");
 	}
 	public static Inventory getMahrGui() {
         return Bukkit.createInventory(null, 54, "§fAOT§7 ->§9 Mahr");
@@ -710,6 +708,9 @@ public static ItemStack getSelectConfigButton() {
 	public static ItemStack getSelectDSButton() {
 		return new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
+	public static ItemStack getSelectMCButton() {
+		  return new ItemBuilder(Material.GRASS).setName("§aMinecraft").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
+	}
 	public static Inventory getDemonSlayerInventory() {
 		return Bukkit.createInventory(null, 27, "§fRoles§7 ->§6 DemonSlayer");
 	}
@@ -724,5 +725,8 @@ public static ItemStack getSelectConfigButton() {
 	}
 	public static Inventory getSelectNSInventory() {
 		return Bukkit.createInventory(null, 27, "§fRoles§7 ->§6 NS");
+	}
+	public static Inventory getSelectMCInventory() {
+		  return Bukkit.createInventory(null, 27, "§fRoles§7 ->§a Minecraft");
 	}
 }

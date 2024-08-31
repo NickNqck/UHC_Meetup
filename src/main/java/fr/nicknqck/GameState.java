@@ -59,7 +59,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 public class GameState{
@@ -269,7 +268,8 @@ public class GameState{
 		Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack()),
 		DS(new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
 		AOT(new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
-		NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack());
+		NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack()),
+		MC(new ItemBuilder(Material.GRASS).setName("§aMinecraft").toItemStack());
 
 		private final ItemStack item;
 		MDJ(ItemStack item) {
@@ -290,7 +290,7 @@ public class GameState{
 			return itemC;
 		}
 	}
-	@Nonnull
+	@NonNull
 	@Getter
 	@Setter
 	private MDJ mdj = MDJ.Aucun;

@@ -1,4 +1,4 @@
-package fr.nicknqck.events.essential;
+package fr.nicknqck.events.essential.inventorys;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.items.GUIItems;
@@ -19,6 +19,7 @@ public class InventoryConfig implements Listener {
     private final GameState gameState;
     public InventoryConfig(GameState gameState) {
         this.gameState = gameState;
+        new HubConfig(gameState);
     }
     @EventHandler
     private void onInventoryClick(InventoryClickEvent event){
