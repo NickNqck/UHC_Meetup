@@ -516,14 +516,14 @@ public class AdminCommands implements CommandExecutor{
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
 									return true;
 								} else {
-									if (gameState.getPlayerRoles().containsKey(p)) {
-									gameState.RevivePlayer(p);
-									sender.sendMessage(p.getName()+" à bien été réssucité");
-									HubListener.getInstance().giveStartInventory(p);
-									gameState.getPlayerRoles().get(p).GiveItems();
-									gameState.getPlayerRoles().get(p).setMaxHealth(20.0);
-									gameState.getPlayerRoles().get(p).RoleGiven(gameState);
-									return true;
+									if (!gameState.hasRoleNull(p)) {
+										gameState.RevivePlayer(p);
+										sender.sendMessage(p.getName()+" à bien été réssucité");
+										HubListener.getInstance().giveStartInventory(p);
+										gameState.getPlayerRoles().get(p).GiveItems();
+										gameState.getPlayerRoles().get(p).setMaxHealth(20.0);
+										gameState.getPlayerRoles().get(p).RoleGiven(gameState);
+										return true;
 									}
 								}
 							} else {

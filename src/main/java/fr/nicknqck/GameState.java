@@ -874,7 +874,8 @@ public class GameState{
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 
 	public void updateGameCanLaunch() {
-		gameCanLaunch = (inLobbyPlayers.size() == this.getroleNMB());}
+		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
+	}
 	public void initEvents() {
 		for (Events eventType : getAvailableEvents()) {
 			switch (eventType) {

@@ -259,8 +259,15 @@ public class GameListener implements Listener {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (gameState.getPlayerRoles().containsKey(p)) {
-					gameState.getPlayerRoles().get(p).Update(gameState);
+				if (!gameState.hasRoleNull(p)) {
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().Update(gameState);
+					List<ItemStack> items = new ArrayList<>();
+					for (ItemStack item : p.getInventory().getContents()) {
+						if (item == null)continue;
+						if (item.getType().equals(Material.AIR))continue;
+						items.add(item);
+					}
+					gameState.getGamePlayer().get(p.getUniqueId()).setLastInventoryContent(items.toArray(new ItemStack[0]));
 				}
 			}
 			for (Events value : Events.values()) {

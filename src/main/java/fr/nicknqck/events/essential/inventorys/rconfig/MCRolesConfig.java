@@ -49,6 +49,8 @@ public class MCRolesConfig implements Listener {
                                 }
                             }
                         }
+                        Main.getInstance().getInventories().updateNetherInventory(player);
+                        Main.getInstance().getInventories().updateOverworldInventory(player);
                         event.setCancelled(true);
                         break;
                 }
