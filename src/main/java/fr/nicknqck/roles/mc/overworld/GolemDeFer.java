@@ -23,7 +23,7 @@ public class GolemDeFer extends OverWorldRoles {
         super(player);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, false), EffectWhen.PERMANENT)
-                .addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez §aNoFall§7."+ Chakras.KATON.getShowedName())}), new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez §c2"+AllDesc.coeur+" §7permanent.")}));
+                .addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez §aNoFall§7.")}), new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez §c2"+AllDesc.coeur+" §7permanent.")}));
         this.automaticDesc = desc.getText();
     }
 

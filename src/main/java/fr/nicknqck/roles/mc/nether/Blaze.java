@@ -30,6 +30,7 @@ public class Blaze extends NetherRoles {
 
     public Blaze(UUID player) {
         super(player);
+        giveItem(owner,false, getItems());
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20, 0, false, false), EffectWhen.PERMANENT).setItems(new TripleMap<>(getflyText().getHoverEvent(), getflyText().getText(), 60 * 5), new TripleMap<>(getBowText().getHoverEvent(), getBowText().getText(), 0)).addParticularites(getNofall().getHoverEvent());
         this.automaticDesc = desc.getText();
