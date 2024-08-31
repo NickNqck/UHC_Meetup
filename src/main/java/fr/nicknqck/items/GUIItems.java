@@ -729,4 +729,8 @@ public static ItemStack getSelectConfigButton() {
 	public static Inventory getSelectMCInventory() {
 		  return Bukkit.createInventory(null, 27, "§fRoles§7 ->§a Minecraft");
 	}
+
+	public static ItemStack getSelectNetherButton() {
+		  return new ItemBuilder(Material.NETHERRACK).setName("§cNether").toItemStack();
+	}
 }

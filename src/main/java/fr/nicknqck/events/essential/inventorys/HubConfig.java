@@ -4,6 +4,7 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
+import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.essential.inventorys.rconfig.AotRolesConfig;
@@ -515,6 +516,39 @@ public class HubConfig implements Listener {
                     if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                         if (ChatRank.isHost(player)) player.openInventory(GUIItems.getAdminWatchGUI());
                     }
+                    event.setCancelled(true);
+                    break;
+                case "Configuration ->§6 Bijus":
+                    if (!item.hasItemMeta())return;
+                    if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+                        player.openInventory(GUIItems.getConfigSelectGUI());
+                        Main.getInstance().getInventories().updateConfigInventory(player);
+                        event.setCancelled(true);
+                        return;
+                    }
+                    for (Bijus bijus : Bijus.values()) {
+                        if (item.isSimilar(bijus.getBiju().getItemInMenu())) {
+                            bijus.setEnable(!bijus.isEnable());
+                        }
+                    }
+
+                    if (item.getItemMeta().hasDisplayName()){
+                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée minimal de spawn des bijus")){
+                            if (action == InventoryAction.PICKUP_ALL){
+                                Border.setMinBijuSpawn(Math.min(Border.getMinBijuSpawn()+50, Border.getMaxBijuSpawn()-50));
+                            } else {
+                                Border.setMinBijuSpawn(Math.max(Border.getMinBijuSpawn()-50, Border.getMinBorderSize()+50));
+                            }
+                        }
+                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée maximal de spawn des bijus")){
+                            if (action == InventoryAction.PICKUP_ALL){
+                                Border.setMaxBijuSpawn(Math.min(Border.getMaxBijuSpawn()+50, Border.getMaxBorderSize()-50));
+                            } else {
+                                Border.setMaxBijuSpawn(Math.max(Border.getMaxBijuSpawn()-50, Border.getMinBijuSpawn()+50));
+                            }
+                        }
+                    }
+                    Main.getInstance().getInventories().openConfigBijusInventory(player);
                     event.setCancelled(true);
                     break;
             }

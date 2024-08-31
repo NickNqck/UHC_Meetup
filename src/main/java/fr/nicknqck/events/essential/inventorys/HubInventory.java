@@ -1,10 +1,8 @@
 package fr.nicknqck.events.essential.inventorys;
 
-import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.essential.inventorys.rconfig.DSRolesConfig;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.rank.ChatRank;
@@ -14,7 +12,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +36,6 @@ public class HubInventory implements Listener {
         if (event.getWhoClicked() instanceof Player) {
             Player player = (Player) event.getWhoClicked();
             Inventory inv = event.getClickedInventory();
-            InventoryAction action = event.getAction();
             if (inv != null && event.getCurrentItem() != null) {
                 if (event.getCurrentItem().isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
                 final ItemStack item = event.getCurrentItem();
@@ -143,39 +139,6 @@ public class HubInventory implements Listener {
                         }
                         event.setCancelled(true);
                         break;
-                    case "Configuration ->§6 Bijus":
-                        if (!item.hasItemMeta())return;
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getConfigSelectGUI());
-                            Main.getInstance().getInventories().updateConfigInventory(player);
-                            event.setCancelled(true);
-                            return;
-                        }
-                        for (Bijus bijus : Bijus.values()) {
-                            if (item.isSimilar(bijus.getBiju().getItemInMenu())) {
-                                bijus.setEnable(!bijus.isEnable());
-                            }
-                        }
-
-                        if (item.getItemMeta().hasDisplayName()){
-                            if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée minimal de spawn des bijus")){
-                                if (action == InventoryAction.PICKUP_ALL){
-                                    Border.setMinBijuSpawn(Math.min(Border.getMinBijuSpawn()+50, Border.getMaxBijuSpawn()-50));
-                                } else {
-                                    Border.setMinBijuSpawn(Math.max(Border.getMinBijuSpawn()-50, Border.getMinBorderSize()+50));
-                                }
-                            }
-                            if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée maximal de spawn des bijus")){
-                                if (action == InventoryAction.PICKUP_ALL){
-                                    Border.setMaxBijuSpawn(Math.min(Border.getMaxBijuSpawn()+50, Border.getMaxBorderSize()-50));
-                                } else {
-                                    Border.setMaxBijuSpawn(Math.max(Border.getMaxBijuSpawn()-50, Border.getMinBijuSpawn()+50));
-                                }
-                            }
-                        }
-                        Main.getInstance().getInventories().openConfigBijusInventory(player);
-                        event.setCancelled(true);
-                        break;
                     case "§fRoles§7 ->§6 NS":
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (item.isSimilar(GUIItems.getStartGameButton())) {
@@ -201,6 +164,28 @@ public class HubInventory implements Listener {
                                 }
                             }
                         }else {
+                            player.openInventory(GUIItems.getRoleSelectGUI());
+                            Main.getInstance().getInventories().updateRoleInventory(player);
+                        }
+                        event.setCancelled(true);
+                        break;
+                    case "§fRoles§7 ->§a Minecraft":
+                        if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
+                            if (item.isSimilar(GUIItems.getStartGameButton())) {
+                                if (gameState.gameCanLaunch) {
+                                    HubListener.getInstance().StartGame(player);
+                                }
+                            } else {
+                                if (item.isSimilar(GUIItems.getSelectOverworldButton())) {
+                                    player.openInventory(Bukkit.createInventory(player, 54, "§aMinecraft§7 ->§a Overworld"));
+                                    Main.getInstance().getInventories().updateOverworldInventory(player);
+                                }
+                                if (item.isSimilar(GUIItems.getSelectNetherButton())) {
+                                    player.openInventory(Bukkit.createInventory(player, 54, "§aMinecraft§7 ->§c Nether"));
+                                    Main.getInstance().getInventories().updateNetherInventory(player);
+                                }
+                            }
+                        } else {
                             player.openInventory(GUIItems.getRoleSelectGUI());
                             Main.getInstance().getInventories().updateRoleInventory(player);
                         }

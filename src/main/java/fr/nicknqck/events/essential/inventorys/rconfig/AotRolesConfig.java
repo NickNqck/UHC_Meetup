@@ -26,6 +26,7 @@ public class AotRolesConfig implements Listener {
         EventUtils.registerEvents(this);
         this.gameState = gameState;
         EventUtils.registerEvents(new NSRolesConfig(gameState));
+        EventUtils.registerEvents(new MCRolesConfig(gameState));
     }
 
     @EventHandler

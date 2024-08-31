@@ -52,6 +52,7 @@ public class Inventories {
         updateNSShinobiInventory(p);
         updateNSKumogakure(p);
         updateMCInventory(p);
+        updateOverworldInventory(p);
     }
     public void updateSecretTitansInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
@@ -879,7 +880,7 @@ public class Inventories {
                                 inv.setItem(13, GUIItems.getSelectDSButton());
                                 break;
                             case MC:
-                                inv.setItem(13, GUIItems.getSelectBackMenu());
+                                inv.setItem(13, GUIItems.getSelectMCButton());
                                 break;
                             case AOT:
                                 inv.setItem(13, GUIItems.getSelectAOTButton());
@@ -1263,10 +1264,115 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§fRoles§7 ->§6 NS")) {
+                if (inv.getTitle().equals("§fRoles§7 ->§a Minecraft")) {
                     inv.clear();
                     inv.setItem(10, GUIItems.getSelectOverworldButton());
+                    inv.setItem(12, GUIItems.getSelectNetherButton());
                     inv.setItem(26, GUIItems.getSelectBackMenu());
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+
+    public void updateOverworldInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§aMinecraft§7 ->§a Overworld")) {
+                    inv.clear();
+                    ItemStack glass = GUIItems.getGreenStainedGlassPane();
+                    inv.setItem(0, glass);
+                    inv.setItem(1, glass);
+                    inv.setItem(9, glass);//haut gauche
+
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    inv.setItem(7, glass);//haut droite
+                    inv.setItem(8, glass);
+                    inv.setItem(17, glass);
+
+                    inv.setItem(45, glass);
+                    inv.setItem(46, glass);
+                    inv.setItem(36, glass);//bas gauche
+
+                    inv.setItem(44, glass);
+                    inv.setItem(52, glass);
+                    inv.setItem(53, glass);//bas droite
+
+                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.OverWorld) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+
+    public void updateNetherInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§aMinecraft§7 ->§c Nether")) {
+                    inv.clear();
+                    ItemStack glass = GUIItems.getRedStainedGlassPane();
+                    inv.setItem(0, glass);
+                    inv.setItem(1, glass);
+                    inv.setItem(9, glass);//haut gauche
+
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    inv.setItem(7, glass);//haut droite
+                    inv.setItem(8, glass);
+                    inv.setItem(17, glass);
+
+                    inv.setItem(45, glass);
+                    inv.setItem(46, glass);
+                    inv.setItem(36, glass);//bas gauche
+
+                    inv.setItem(44, glass);
+                    inv.setItem(52, glass);
+                    inv.setItem(53, glass);//bas droite
+
+                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Nether) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
                 }
             }
         }
