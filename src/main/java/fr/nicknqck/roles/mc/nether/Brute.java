@@ -24,6 +24,7 @@ public class Brute extends NetherRoles {
 
     public Brute(UUID player) {
         super(player);
+        giveItem(owner,false,getItems());
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,20,0,false,false), EffectWhen.PERMANENT)
                 .setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Une §eHache en or §7Tranchant 7")}),"§eHache en or", 0));
