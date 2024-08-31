@@ -10,7 +10,7 @@ import org.bukkit.event.HandlerList;
 public class JumpStartEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
-    private boolean cancelled;
+    private boolean cancelled = true;
     @Getter
     private final Player player;
     @Getter
@@ -21,7 +21,7 @@ public class JumpStartEvent extends Event implements Cancellable {
     private double velocity = 2.0;
     @Getter
     @Setter
-    private double velocityHight = 1.5;
+    private double velocityHight = 1.0;
     public JumpStartEvent(Player player) {
         this.player = player;
     }

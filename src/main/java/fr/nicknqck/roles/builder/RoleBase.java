@@ -178,14 +178,12 @@ public abstract class RoleBase implements IRole {
 	public void addBonusforce(double Bonusforce) {
 		setBonusForce(getBonusForce() + Bonusforce);
 	}
-	double allresi = getResi()+getBonusForce();
-	public double getAllResi() {return allresi;}
-
 	public void addresi(double resi) {setResi(getResi() + resi);}
 	public double getBonusResi() {return Bonusresi;}
 	public void setBonusResi(double Bonusresi) {this.Bonusresi = Bonusresi;}
 	public void addBonusResi(double Bonusresi) {setBonusResi(getBonusResi() + Bonusresi);}
 	public void GiveItems() {
+		if (this.getPowers().isEmpty())return;
 		for (Power powers : this.getPowers()) {
 			if (powers instanceof ItemPower) {
 				addPower((ItemPower) powers, true);
@@ -194,7 +192,6 @@ public abstract class RoleBase implements IRole {
 	}
 	public void RoleGiven(GameState gameState) {}
 	public void Update(GameState gameState) {
-		allresi = getResi() + getBonusResi();
 		if (owner != null) {
 			owner.setMaxHealth(getMaxHealth());
 			if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {

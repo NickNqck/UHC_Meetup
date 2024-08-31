@@ -75,11 +75,12 @@ public class Patch implements Listener{
 			event.setDamage(event.getDamage()*1.2);
             return;
          }
-        if (gameState.getPlayerRoles().get(victim).getAllResi() >= 100) {
+		double allResi = gameState.getPlayerRoles().get(victim).getBonusResi() + gameState.getGamePlayer().get(victim.getUniqueId()).getRole().getResi();
+        if (allResi >= 100) {
             event.setCancelled(true);
         }
         if (victim.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-			ApplyResi(event, gameState.getPlayerRoles().get(victim).getAllResi(), true);
+			ApplyResi(event, allResi, true);
 		} else {
 			if (gameState.getPlayerRoles().containsKey(victim)) {
 				ApplyResi(event, gameState.getPlayerRoles().get(victim).getBonusResi(), false);

@@ -2,10 +2,13 @@ package fr.nicknqck.roles.ns.shinobi.porte;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.doublejump.JumpStartEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
@@ -15,6 +18,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -54,6 +58,7 @@ public class RockLeeV2 extends PortesRoles implements Listener {
           new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra: "+getChakras().getShowedName())})
         );
         this.desc = desc.getText();
+        EventUtils.registerEvents(this);
     }
 
     @Override
@@ -79,6 +84,15 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         return "Rock Lee";
     }
 
+    @EventHandler
+    private void onEnd(EndGameEvent event) {
+        EventUtils.unregisterEvents(this);
+    }
+    @EventHandler
+    private void onDoubleJump(JumpStartEvent event) {
+        event.setCancelled(false);
+    }
+
     @Override
     public GameState.Roles getRoles() {
         return GameState.Roles.RockLee;
@@ -93,8 +107,10 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         @Override
         public boolean onUse(Player player, Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
+                player.setAllowFlight(true);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true);
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*15, 0, false, false), true), 20*60);
+                Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.setAllowFlight(false), 20*60);
                 return true;
             }
             return false;
