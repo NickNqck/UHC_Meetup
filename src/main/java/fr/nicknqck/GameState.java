@@ -109,6 +109,7 @@ public class GameState{
 		JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("JigoroV2").toItemStack(), "§bNickNqck"),
 		KyogaiV2(TeamList.Solo, "ds", 5, new ItemBuilder(Material.STICK).setName("KyogaiV2").toItemStack(), "§bNickNqck"),
 		ShinjuroV2(TeamList.Solo, "ds", 6, new ItemBuilder(Material.FLINT_AND_STEEL).setName("ShinjuroV2").toItemStack(), "§bNickNqck"),
+		SlayerSolo(TeamList.Solo, "ds", 7, new ItemBuilder(Material.IRON_SWORD).setName("Pourfendeur Simple (§eSolo§f)").toItemStack(), "§bNickNqck"),
 		//Démons ds
 		Muzan(TeamList.Demon, "ds", 0, new ItemBuilder(Material.REDSTONE_ORE).setName("Muzan").toItemStack(), "§bNickNqck"),
 		Kokushibo(TeamList.Demon, "ds", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("Kokushibo").toItemStack(), "§bNickNqck"),
@@ -822,6 +823,9 @@ public class GameState{
 		case MagmaCube:
 			role = new MagmaCube(player);
 			break;
+			case SlayerSolo:
+				role = new FFA_Pourfendeur(player);
+				break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(aziz);
