@@ -78,6 +78,7 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	private final List<String> messageOnDescription = new ArrayList<>();
 	@Getter
+	@NonNull
 	private final List<Power> powers = new ArrayList<>();
 
 	public abstract String[] Desc();
@@ -182,14 +183,7 @@ public abstract class RoleBase implements IRole {
 	public double getBonusResi() {return Bonusresi;}
 	public void setBonusResi(double Bonusresi) {this.Bonusresi = Bonusresi;}
 	public void addBonusResi(double Bonusresi) {setBonusResi(getBonusResi() + Bonusresi);}
-	public void GiveItems() {
-		if (this.getPowers().isEmpty())return;
-		for (Power powers : this.getPowers()) {
-			if (powers instanceof ItemPower) {
-				addPower((ItemPower) powers, true);
-			}
-		}
-	}
+	public void GiveItems() {}
 	public void RoleGiven(GameState gameState) {}
 	public void Update(GameState gameState) {
 		if (owner != null) {
