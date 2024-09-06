@@ -2,13 +2,18 @@ package fr.nicknqck.roles.ns.shinobi.porte;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -43,6 +48,27 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
     @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
+    }
+    public TripleMap<HoverEvent, String, Integer> troisPorteMap() {
+        return new TripleMap<>(
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous donne l'effet§b Speed I§7 pendant§c 1m30s§7.\n\n§7Coût:§c 1" + AllDesc.coeur + "§7 (non permanent)")}),
+                "§aTroisième Porte",
+                90
+        );
+    }
+    public TripleMap<HoverEvent, String, Integer> sixPorteMap() {
+        return new TripleMap<>(
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous donne les effets§b Speed I§7 et§c Force I§7 pendant§c 3 minutes§7.\n\n§7Coût:§c 1❤ permanent")}),
+                "§aSixième Porte",
+                180
+        );
+    }
+    public TripleMap<HoverEvent, String, Integer> huitPorteMap() {
+        return new TripleMap<>(
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous donne les effets§b Speed II§7,§c Force I§7,§9 Résistance I§7 et§6 Fire Résistance I§7 pendant§c 5 minutes§7, également, vous obtiendrez§c 15❤§7 permanent.\n\n§7Coût: (Après§c 5 minutes§7) Vous fait tomber à§c 5❤ permanent§7, après ceci vous ne pourrez plus utiliser vos§a portes§7.")}),
+                "§aHuitième Porte",
+                -500
+        );
     }
     static class TroisPortePower extends ItemPower {
         private final PortesRoles role;
