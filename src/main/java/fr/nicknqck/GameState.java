@@ -103,58 +103,58 @@ public class GameState{
 	@Getter
 	public enum Roles {
 		//Solo ds
-		Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("Yoriichi").toItemStack(), "§bNickNqck"),
-		Jigoro(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("Jigoro").toItemStack(), "§bNickNqck"),
-		Shinjuro(TeamList.Solo, "ds", 2, new ItemBuilder(Material.LAVA_BUCKET).setName("Shinjuro").toItemStack(), "§bNickNqck"),
-		JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("JigoroV2").toItemStack(), "§bNickNqck"),
-		KyogaiV2(TeamList.Solo, "ds", 5, new ItemBuilder(Material.STICK).setName("KyogaiV2").toItemStack(), "§bNickNqck"),
-		ShinjuroV2(TeamList.Solo, "ds", 6, new ItemBuilder(Material.FLINT_AND_STEEL).setName("ShinjuroV2").toItemStack(), "§bNickNqck"),
-		SlayerSolo(TeamList.Solo, "ds", 7, new ItemBuilder(Material.IRON_SWORD).setName("Pourfendeur Simple (§eSolo§f)").toItemStack(), "§bNickNqck"),
+		Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
+		Jigoro(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
+		Shinjuro(TeamList.Solo, "ds", 2, new ItemBuilder(Material.LAVA_BUCKET).setName("§eShinjuro").toItemStack(), "§bNickNqck"),
+		JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("§eJigoro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
+		KyogaiV2(TeamList.Solo, "ds", 5, new ItemBuilder(Material.STICK).setName("§eKyogai §7(§6V2§7)").toItemStack(), "§bNickNqck"),
+		ShinjuroV2(TeamList.Solo, "ds", 6, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§eShinjuro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
+		SlayerSolo(TeamList.Solo, "ds", 7, new ItemBuilder(Material.IRON_SWORD).setName("§aPourfendeur Simple§7 (§eSolo§7)").toItemStack(), "§bNickNqck"),
 		//Démons ds
-		Muzan(TeamList.Demon, "ds", 0, new ItemBuilder(Material.REDSTONE_ORE).setName("Muzan").toItemStack(), "§bNickNqck"),
-		Kokushibo(TeamList.Demon, "ds", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("Kokushibo").toItemStack(), "§bNickNqck"),
-		Doma(TeamList.Demon, "ds", 2, new ItemBuilder(Material.PACKED_ICE).setName("Doma").toItemStack(), "§bNickNqck"),
-		Akaza(TeamList.Demon, "ds", 3, new ItemBuilder(Material.APPLE).setName("Akaza").toItemStack(), "§bNickNqck"),
-		Nakime(TeamList.Demon, "ds", 18, new ItemBuilder(Material.MAGMA_CREAM).setName("Nakime").toItemStack(), "§bNickNqck"),
-		Hantengu(TeamList.Demon, "ds", 4, new ItemBuilder(Material.RABBIT_FOOT).setName("Hantengu").toItemStack(), "§bNickNqck"),
-		HantenguV2(TeamList.Demon, "ds", 11, new ItemBuilder(Material.NETHER_STAR).setName("HantenguV2").toItemStack(), "§bNickNqck"),
-		Gyokko(TeamList.Demon, "ds", 5, new ItemBuilder(Material.FLOWER_POT_ITEM).setName("Gyokko").toItemStack(), "§bNickNqck"),
-		Daki(TeamList.Demon, "ds", 6, new ItemBuilder(Material.IRON_FENCE).setName("Daki").toItemStack(), "§bNickNqck"),
-		Gyutaro(TeamList.Demon, "ds", 7, new ItemBuilder(Material.DIAMOND_HOE).setName("Gyutaro").toItemStack(), "§bNickNqck"),
-		Kaigaku(TeamList.Demon, "ds", 8, new ItemBuilder(Material.YELLOW_FLOWER).setName("Kaigaku").toItemStack(), "§bNickNqck"),
-		Enmu(TeamList.Demon, "ds", 19, new ItemBuilder(Material.EYE_OF_ENDER).setName("Enmu").toItemStack(), "§bNickNqck"),
-		Rui(TeamList.Demon, "ds", 16, new ItemBuilder(Material.STRING).setName("Rui").toItemStack(), "§bNickNqck"),
-		Kyogai(TeamList.Demon, "ds", 3, new ItemBuilder(Material.DISPENSER).setName("Kyogai").toItemStack(), "§bNickNqck"),
-		Susamaru(TeamList.Demon, "ds", 9, new ItemBuilder(Material.BOW).setName("Susamaru").toItemStack(), "§bNickNqck"),
-		Furuto(TeamList.Demon, "ds", 10, new ItemBuilder(Material.NETHER_BRICK).setName("Furuto").toItemStack(), "§bNickNqck"),
-		DemonSimpleV2(TeamList.Demon, "ds", 12, new ItemBuilder(Material.NETHER_STALK).setName("DemonSimpleV2").toItemStack(), "§bMega02600"),
-		Yahaba(TeamList.Demon, "ds", 13, new ItemBuilder(Material.COMPASS).setName("Yahaba").toItemStack(), "§bNickNqck"),
-		DemonMain(TeamList.Demon, "ds", 14, new ItemBuilder(Material.SKULL_ITEM).setName("DemonMain").setDurability(3).toItemStack(), "§bNickNqck"),
-		Demon(TeamList.Demon, "ds", 15, new ItemBuilder(Material.NETHER_FENCE).setName("Demon").toItemStack(), "§bNickNqck"),
-		Kumo(TeamList.Demon, "ds", 17, new ItemBuilder(Material.WEB).setName("Kumo").toItemStack(), "§bNickNqck"),
+		Muzan(TeamList.Demon, "ds", 0, new ItemBuilder(Material.REDSTONE_ORE).setName("§cMuzan").toItemStack(), "§bNickNqck"),
+		Kokushibo(TeamList.Demon, "ds", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cKokushibo").toItemStack(), "§bNickNqck"),
+		Doma(TeamList.Demon, "ds", 2, new ItemBuilder(Material.PACKED_ICE).setName("§cDoma").toItemStack(), "§bNickNqck"),
+		Akaza(TeamList.Demon, "ds", 3, new ItemBuilder(Material.APPLE).setName("§cAkaza").toItemStack(), "§bNickNqck"),
+		Nakime(TeamList.Demon, "ds", 18, new ItemBuilder(Material.MAGMA_CREAM).setName("§cNakime").toItemStack(), "§bNickNqck"),
+		Hantengu(TeamList.Demon, "ds", 4, new ItemBuilder(Material.RABBIT_FOOT).setName("§cHantengu").toItemStack(), "§bNickNqck"),
+		HantenguV2(TeamList.Demon, "ds", 11, new ItemBuilder(Material.NETHER_STAR).setName("§cHantengu§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
+		Gyokko(TeamList.Demon, "ds", 5, new ItemBuilder(Material.FLOWER_POT_ITEM).setName("§cGyokko").toItemStack(), "§bNickNqck"),
+		Daki(TeamList.Demon, "ds", 6, new ItemBuilder(Material.IRON_FENCE).setName("§cDaki").toItemStack(), "§bNickNqck"),
+		Gyutaro(TeamList.Demon, "ds", 7, new ItemBuilder(Material.DIAMOND_HOE).setName("§cGyutaro").toItemStack(), "§bNickNqck"),
+		Kaigaku(TeamList.Demon, "ds", 8, new ItemBuilder(Material.YELLOW_FLOWER).setName("§cKaigaku").toItemStack(), "§bNickNqck"),
+		Enmu(TeamList.Demon, "ds", 19, new ItemBuilder(Material.EYE_OF_ENDER).setName("§cEnmu").toItemStack(), "§bNickNqck"),
+		Rui(TeamList.Demon, "ds", 16, new ItemBuilder(Material.STRING).setName("§cRui").toItemStack(), "§bNickNqck"),
+		Kyogai(TeamList.Demon, "ds", 3, new ItemBuilder(Material.DISPENSER).setName("§cKyogai").toItemStack(), "§bNickNqck"),
+		Susamaru(TeamList.Demon, "ds", 9, new ItemBuilder(Material.BOW).setName("§cSusamaru").toItemStack(), "§bNickNqck"),
+		Furuto(TeamList.Demon, "ds", 10, new ItemBuilder(Material.NETHER_BRICK).setName("§cFuruto").toItemStack(), "§bNickNqck"),
+		DemonSimpleV2(TeamList.Demon, "ds", 12, new ItemBuilder(Material.NETHER_STALK).setName("§cDemonSimple§7 (§6V2§7)").toItemStack(), "§bMega02600"),
+		Yahaba(TeamList.Demon, "ds", 13, new ItemBuilder(Material.COMPASS).setName("§cYahaba").toItemStack(), "§bNickNqck"),
+		DemonMain(TeamList.Demon, "ds", 14, new ItemBuilder(Material.SKULL_ITEM).setName("§cDemon Main").setDurability(3).toItemStack(), "§bNickNqck"),
+		Demon(TeamList.Demon, "ds", 15, new ItemBuilder(Material.NETHER_FENCE).setName("§cDemon Simple").toItemStack(), "§bNickNqck"),
+		Kumo(TeamList.Demon, "ds", 17, new ItemBuilder(Material.WEB).setName("§cKumo").toItemStack(), "§bNickNqck"),
 		//Slayer ds
-		Nezuko(TeamList.Slayer, "ds", 0, new ItemBuilder(Material.REDSTONE).setName("Nezuko").toItemStack(), "§bNickNqck"),
-		Tanjiro(TeamList.Slayer, "ds", 1, new ItemBuilder(Material.BLAZE_ROD).setName("Tanjiro").toItemStack(), "§bNickNqck"),
-		Tomioka(TeamList.Slayer, "ds", 2, new ItemBuilder(Material.WATER_BUCKET).setName("Tomioka").toItemStack(), "§bNickNqck"),
-		Kyojuro(TeamList.Slayer, "ds", 3, new ItemBuilder(Material.FLINT_AND_STEEL).setName("Kyojuro").toItemStack(), "§bNickNqck"),
-		Muichiro(TeamList.Slayer, "ds", 4, new ItemBuilder(Material.FEATHER).setName("Muichiro").toItemStack(), "§bNickNqck"),
-		Gyomei(TeamList.Slayer, "ds", 5, new ItemBuilder(Material.IRON_AXE).setName("Gyomei").toItemStack(), "§bNickNqck"),
-		Sanemi(TeamList.Slayer, "ds", 6, new ItemBuilder(Material.QUARTZ).setName("Sanemi").toItemStack(), "§bNickNqck"),
-		Tengen(TeamList.Slayer, "ds", 7, new ItemBuilder(Material.JUKEBOX).setName("Tengen").toItemStack(), "§bNickNqck"),
-		Shinobu(TeamList.Slayer, "ds", 8, new ItemBuilder(Material.SPIDER_EYE).setName("Shinobu").toItemStack(), "§bNickNqck"),
-		Obanai(TeamList.Slayer, "ds", 9, new ItemBuilder(Material.GOLDEN_CARROT).setName("Obanai").toItemStack(), "§bNickNqck"),
-		ZenItsu(TeamList.Slayer, "ds", 10, new ItemBuilder(Material.GLOWSTONE_DUST).setName("ZenItsu").toItemStack(), "§bNickNqck"),
-		Inosuke(TeamList.Slayer, "ds", 11, new ItemBuilder(Material.PORK).setName("Inosuke").toItemStack(), "§bNickNqck"),
-		Kanao(TeamList.Slayer, "ds", 12, new ItemBuilder(Material.LEATHER_BOOTS).setName("Kanao").toItemStack(), "§bNickNqck"),
-		Slayer(TeamList.Slayer, "ds", 13, new ItemBuilder(Material.IRON_SWORD).setName("Slayer").toItemStack(), "§bNickNqck"),
-		Sabito(TeamList.Slayer, "ds", 14, new ItemBuilder(Material.POTION).setDurability((short)0).setName("Sabito").toItemStack(), "§bNickNqck"),
-		Urokodaki(TeamList.Slayer, "ds", 15, new ItemBuilder(Material.WATER_LILY).setName("Urokodaki").toItemStack(), "§bNickNqck"),
-		Makomo(TeamList.Slayer, "ds", 16, new ItemBuilder(Material.BOWL).setName("Makomo").toItemStack(), "§bNickNqck"),
-		Kanae(TeamList.Slayer, "ds", 17, new ItemBuilder(Material.DIAMOND_SWORD).setName("Kanae").toItemStack(), "§bNickNqck"),
-		Mitsuri(TeamList.Slayer, "ds", 18, new ItemBuilder(Material.RED_ROSE).setName("Mitsuri").toItemStack(), "§bNickNqck"),
-		Kagaya(TeamList.Slayer, "ds", 19, new ItemBuilder(Material.CHEST).setName("Kagaya").toItemStack(), "§bNickNqck"),
-		Hotaru(TeamList.Slayer, "ds", 20, new ItemBuilder(Material.ANVIL).setName("Hotaru").toItemStack(), "§bNickNqck"),
-		
+		Kagaya(TeamList.Slayer, "ds", 0, new ItemBuilder(Material.CHEST).setName("§aKagaya").toItemStack(), "§bNickNqck"),
+		Gyomei(TeamList.Slayer, "ds", 1, new ItemBuilder(Material.IRON_AXE).setName("§aGyomei").toItemStack(), "§bNickNqck"),
+		Sanemi(TeamList.Slayer, "ds", 2, new ItemBuilder(Material.QUARTZ).setName("§aSanemi").toItemStack(), "§bNickNqck"),
+		Tomioka(TeamList.Slayer, "ds", 3, new ItemBuilder(Material.WATER_BUCKET).setName("§aTomioka").toItemStack(), "§bNickNqck"),
+		Kyojuro(TeamList.Slayer, "ds", 4, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§aKyojuro").toItemStack(), "§bNickNqck"),
+		Muichiro(TeamList.Slayer, "ds", 5, new ItemBuilder(Material.FEATHER).setName("§aMuichiro").toItemStack(), "§bNickNqck"),
+		Tengen(TeamList.Slayer, "ds", 6, new ItemBuilder(Material.JUKEBOX).setName("§aTengen").toItemStack(), "§bNickNqck"),
+		Shinobu(TeamList.Slayer, "ds", 7, new ItemBuilder(Material.SPIDER_EYE).setName("§aShinobu").toItemStack(), "§bNickNqck"),
+		Mitsuri(TeamList.Slayer, "ds", 8, new ItemBuilder(Material.RED_ROSE).setName("§aMitsuri").toItemStack(), "§bNickNqck"),
+		Obanai(TeamList.Slayer, "ds", 9, new ItemBuilder(Material.GOLDEN_CARROT).setName("§aObanai").toItemStack(), "§bNickNqck"),
+		Kanae(TeamList.Slayer, "ds", 10, new ItemBuilder(Material.DIAMOND_SWORD).setName("§aKanae").toItemStack(), "§bNickNqck"),
+
+		Tanjiro(TeamList.Slayer, "ds", 11, new ItemBuilder(Material.BLAZE_ROD).setName("§aTanjiro").toItemStack(), "§bNickNqck"),
+		Nezuko(TeamList.Slayer, "ds", 12, new ItemBuilder(Material.REDSTONE).setName("§aNezuko").toItemStack(), "§bNickNqck"),
+		ZenItsu(TeamList.Slayer, "ds", 13, new ItemBuilder(Material.GLOWSTONE_DUST).setName("§aZenItsu").toItemStack(), "§bNickNqck"),
+		Inosuke(TeamList.Slayer, "ds", 14, new ItemBuilder(Material.PORK).setName("§aInosuke").toItemStack(), "§bNickNqck"),
+		Kanao(TeamList.Slayer, "ds", 15, new ItemBuilder(Material.LEATHER_BOOTS).setName("§aKanao").toItemStack(), "§bNickNqck"),
+		Sabito(TeamList.Slayer, "ds", 16, new ItemBuilder(Material.POTION).setDurability(0).setName("§aSabito").toItemStack(), "§bNickNqck"),
+		Urokodaki(TeamList.Slayer, "ds", 17, new ItemBuilder(Material.WATER_LILY).setName("§aUrokodaki").toItemStack(), "§bNickNqck"),
+		Makomo(TeamList.Slayer, "ds", 18, new ItemBuilder(Material.BOWL).setName("§aMakomo").toItemStack(), "§bNickNqck"),
+		Hotaru(TeamList.Slayer, "ds", 19, new ItemBuilder(Material.ANVIL).setName("§aHotaru").toItemStack(), "§bNickNqck"),
+		Slayer(TeamList.Slayer, "ds", 20, new ItemBuilder(Material.IRON_SWORD).setName("§aPourfendeur Simple").toItemStack(), "§bNickNqck"),
 		//Mahr aot
 		Reiner(TeamList.Mahr, "aot", 0, new ItemBuilder(Material.QUARTZ).setName("Reiner").toItemStack(), "§bNickNqck"),
 		Pieck(TeamList.Mahr, "aot", 1, new ItemBuilder(Material.CHEST).setName("Pieck").toItemStack(), "§bNickNqck"),
@@ -182,13 +182,13 @@ public class GameState{
 		//Solo Aot
 		Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("Eren").toItemStack(), "§bNickNqck"),
 		Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("Gabi").toItemStack(), "§bNickNqck"),
-		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("Titan Ultime").toItemStack(), "§bNickNqck"),
+		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("§eTitan Ultime").toItemStack(), "§bNickNqck"),
 		//Jubi ns
-		Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("Madara").toItemStack(), "§aYukan"),
-		Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("Obito").toItemStack(), "§aYukan"),
+		Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dMadara").toItemStack(), "§aYukan"),
+		Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("§dObito").toItemStack(), "§aYukan"),
 		//Solo ns
-		Gaara(TeamList.Solo, "ns", 0, new ItemBuilder(Material.SAND).setName("Gaara").toItemStack(), "§bNickNqck"),
-		Danzo(TeamList.Solo, "ns", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("Danzo").toItemStack(), "§bNickNqck"),
+		Gaara(TeamList.Solo, "ns", 0, new ItemBuilder(Material.SAND).setName("§eGaara").toItemStack(), "§bNickNqck"),
+		Danzo(TeamList.Solo, "ns", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eDanzo").toItemStack(), "§bNickNqck"),
 		//Orochimaru ns
 		Orochimaru(TeamList.Orochimaru, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§5Orochimaru").toItemStack(), "§bNickNqck"),
 		Kabuto(TeamList.Orochimaru, "ns", 1, new ItemBuilder(Material.WATER_LILY).setName("§5Kabuto").toItemStack(), "§bNickNqck"),
@@ -263,7 +263,7 @@ public class GameState{
 			this.item = item;
 			this.gDesign = GDesign;
 		}
-		}
+	}
 	@Getter
 	public enum MDJ{
 		Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack()),
@@ -406,6 +406,7 @@ public class GameState{
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final Player player) {
+		if (player == null)return true;
 		if (getGamePlayer().containsKey(player.getUniqueId())) {
             return getGamePlayer().get(player.getUniqueId()).getRole() == null;
         }

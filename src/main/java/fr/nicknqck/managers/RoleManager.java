@@ -42,7 +42,7 @@ public class RoleManager {
         this.rolesRegistery = new HashMap<>();
         this.rolesEnable = new HashMap<>();
         try {
-          //  registerRoles();
+            registerRoles();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,6 +131,7 @@ public class RoleManager {
         registerRole(Shinjuro.class);
         registerRole(ShinjuroV2.class);
         registerRole(Yoriichi.class);
+        registerRole(FFA_Pourfendeur.class);
     }
     private void registerAot() throws Exception{
         //Register Soldats

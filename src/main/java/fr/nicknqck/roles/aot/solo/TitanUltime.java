@@ -26,7 +26,6 @@ public class TitanUltime extends TitansRoles {
 	public TitanUltime(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		gameState.GiveRodTridi(owner);
 		addBonusforce(10.0);
 	}
 	@Override

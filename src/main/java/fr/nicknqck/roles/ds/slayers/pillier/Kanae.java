@@ -24,16 +24,21 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Kanae extends PillierRoles implements Listener {
+
     private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aLame végétal").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cooldown = 0;
-    private final KanaeRunnable runnable;
+    private KanaeRunnable runnable;
     public Kanae(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        super.RoleGiven(gameState);
         new SwordListener(this);
         setCanuseblade(true);
         this.runnable = new KanaeRunnable(this);
         this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0 ,20);
-
     }
 
     @Override

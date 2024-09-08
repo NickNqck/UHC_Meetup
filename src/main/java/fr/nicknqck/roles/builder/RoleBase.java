@@ -162,9 +162,13 @@ public abstract class RoleBase implements IRole {
 		return getTeam().getColor();
 	}
 	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
+		if (player == null)return;
 		Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force));
 	}
-	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {givePotionEffet(owner, type, time, level, force);}
+	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {
+		if (owner == null)return;
+		givePotionEffet(owner, type, time, level, force);
+	}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 	public void setTeam(TeamList team) {

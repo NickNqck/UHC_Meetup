@@ -55,6 +55,11 @@ public class Sasuke extends UchiwaRoles {
 	
 	public Sasuke(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		setChakraType(Chakras.KATON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
@@ -70,6 +75,7 @@ public class Sasuke extends UchiwaRoles {
 		}, 20*5);
 		setCanBeHokage(true);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Sasuke;

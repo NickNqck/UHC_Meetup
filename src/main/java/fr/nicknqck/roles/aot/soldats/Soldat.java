@@ -26,7 +26,6 @@ public class Soldat extends SoldatsRoles {
 	public kit form = null;
 	public Soldat(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {
@@ -83,7 +82,7 @@ public class Soldat extends SoldatsRoles {
     };
 @Override
 public void RoleGiven(GameState gameState) {
-	int rint = -5;
+	int rint;
 	do {
 		rint = RandomUtils.getRandomInt(0, 2);
 		System.out.println(rint);

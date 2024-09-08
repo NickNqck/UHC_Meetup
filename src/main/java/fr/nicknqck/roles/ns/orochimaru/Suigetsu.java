@@ -33,6 +33,10 @@ public class Suigetsu extends OrochimaruRoles {
 
 	public Suigetsu(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
@@ -41,6 +45,7 @@ public class Suigetsu extends OrochimaruRoles {
 			}
 		}, 20*10);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Suigetsu;

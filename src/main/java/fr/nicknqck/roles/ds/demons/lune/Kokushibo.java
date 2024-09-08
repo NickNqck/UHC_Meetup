@@ -35,6 +35,11 @@ public class Kokushibo extends DemonsRoles {
 	public Kokushibo(UUID player) {
 		super(player);
 		regencooldown = 15;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Muzan.class), 20);
@@ -42,6 +47,7 @@ public class Kokushibo extends DemonsRoles {
 		solo = false;
 		killtanjiro = false;
 	}
+
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Demon;

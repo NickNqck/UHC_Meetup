@@ -15,8 +15,7 @@ public class Porco extends MahrRoles {
 	public Porco(UUID player) {
 		super(player);
 		gameState.Shifter.add(owner);
-		gameState.GiveRodTridi(owner);
-		Titans.Machoire.getTitan().getListener().setMachoire(owner.getUniqueId());
+		Titans.Machoire.getTitan().getListener().setMachoire(player);
 	}
 	@Override
 	public Roles getRoles() {

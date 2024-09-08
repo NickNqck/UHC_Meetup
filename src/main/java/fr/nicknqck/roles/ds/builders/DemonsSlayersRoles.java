@@ -54,6 +54,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
         return null;
     }
     public void setLameIncassable(Player target, boolean a) {
+        if (target == null)return;
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
             if (!gameState.hasRoleNull(target)) {
                 GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());

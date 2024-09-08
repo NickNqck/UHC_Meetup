@@ -21,8 +21,7 @@ public class PetitTitan extends TitansRoles {
 	public PetitTitan(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		gameState.GiveRodTridi(owner);
-		}
+	}
 	@Override
 	public Roles getRoles() {
 		return Roles.PetitTitan;

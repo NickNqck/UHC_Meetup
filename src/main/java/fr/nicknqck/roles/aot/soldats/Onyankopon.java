@@ -20,8 +20,6 @@ public class Onyankopon extends SoldatsRoles {
 
 	public Onyankopon(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
-		owner.getInventory().addItem(getItems());
 	}
 	@Override
 	public Roles getRoles() {

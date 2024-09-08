@@ -32,9 +32,14 @@ public class Jugo extends OrochimaruRoles {
 	private boolean kimimaroDeath = false;
 	private int marqueCD = 0;
 	private boolean orochimaruDeath = false;
-	private final TextComponent desc;
+	private TextComponent desc;
 	public Jugo(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
@@ -58,6 +63,7 @@ public class Jugo extends OrochimaruRoles {
 		this.desc = automaticDesc.getText();
 		getKnowedRoles().add(Kimimaro.class);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Jugo;

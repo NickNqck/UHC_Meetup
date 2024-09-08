@@ -16,11 +16,7 @@ public class Pieck extends MahrRoles {
 	public Pieck(UUID player) {
 		super(player);
 		gameState.Shifter.add(owner);
-		if (owner.getName().equalsIgnoreCase("BoulotPieck")) {
-			sendMessageAfterXseconde(owner, "On dirait que tu Boulot ton propre role, y'a de quoi rire LOL (:jadorerire)", 5);
-		}
-		gameState.GiveRodTridi(owner);
-		Titans.Charette.getTitan().getListener().setCharette(owner.getUniqueId());
+		Titans.Charette.getTitan().getListener().setCharette(player);
 	}
 	@Override
 	public Roles getRoles() {

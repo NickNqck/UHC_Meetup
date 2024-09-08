@@ -15,8 +15,7 @@ public class Reiner extends MahrRoles {
 	public Reiner(UUID player) {
 		super(player);
 		gameState.Shifter.add(owner);
-		gameState.GiveRodTridi(owner);
-		Titans.Cuirasse.getTitan().getListener().setCuirasse(owner.getUniqueId());
+		Titans.Cuirasse.getTitan().getListener().setCuirasse(player);
 	}
 	@Override
 	public Roles getRoles() {

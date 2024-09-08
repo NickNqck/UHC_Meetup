@@ -35,8 +35,7 @@ public class Eren extends AotRoles {
 	public Eren(UUID player) {
 		super(player);
 		canShift = true;
-		gameState.GiveRodTridi(owner);
-		Titans.Assaillant.getTitan().getListener().setAssaillant(owner.getUniqueId());
+		Titans.Assaillant.getTitan().getListener().setAssaillant(player);
 	}
 	@Override
 	public Roles getRoles() {

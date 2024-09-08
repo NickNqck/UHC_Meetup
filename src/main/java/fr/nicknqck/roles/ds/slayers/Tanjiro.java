@@ -43,20 +43,9 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdDanse, cdSentir;
     private boolean sentirUse, useAssassin;
-    private final TextComponent automaticDesc;
+    private TextComponent automaticDesc;
     public Tanjiro(UUID player) {
         super(player);
-        getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
-        new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        setCanuseblade(true);
-        Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
-        AutomaticDesc desc = new AutomaticDesc(this);
-        desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
-        .setItems(new TripleMap<>(getDanseText().getHoverEvent(), getDanseText().getText(), 60*12))
-        .setCommands(new TripleMap<>(getSentir().getHoverEvent(), getSentir().getText(), 60*5), new TripleMap<>(getSentirJoueur().getHoverEvent(), getSentirJoueur().getText(), -500), new TripleMap<>(getAssassin().getHoverEvent(), getAssassin().getText(), -500))
-        .addParticularites(getKillAssassin().getHoverEvent());
-        this.automaticDesc = desc.getText();
 
     }
 
@@ -64,6 +53,21 @@ public class Tanjiro extends SlayerRoles implements Listener {
     public void GiveItems() {
         giveItem(owner, false, getItems());
         giveItem(owner, false, Items.getLamedenichirin());
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
+        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+        new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        setCanuseblade(true);
+        Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
+        AutomaticDesc desc = new AutomaticDesc(this);
+        desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
+                .setItems(new TripleMap<>(getDanseText().getHoverEvent(), getDanseText().getText(), 60*12))
+                .setCommands(new TripleMap<>(getSentir().getHoverEvent(), getSentir().getText(), 60*5), new TripleMap<>(getSentirJoueur().getHoverEvent(), getSentirJoueur().getText(), -500), new TripleMap<>(getAssassin().getHoverEvent(), getAssassin().getText(), -500))
+                .addParticularites(getKillAssassin().getHoverEvent());
+        this.automaticDesc = desc.getText();
     }
 
     @Override

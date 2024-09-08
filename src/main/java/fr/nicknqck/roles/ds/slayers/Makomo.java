@@ -23,13 +23,9 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.UUID;
 
 public class Makomo extends SlayerRoles {
-	private final TextComponent automaticDesc;
+	private TextComponent automaticDesc;
 	public Makomo(UUID player) {
 		super(player);
-		setCanuseblade(true);
-		getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-		AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0), EffectWhen.PERMANENT);
-		this.automaticDesc = automaticDesc.getText();
 	}
 	@Override
 	public Roles getRoles() {
@@ -38,6 +34,15 @@ public class Makomo extends SlayerRoles {
 	@Override
 	public String[] Desc() {
 		return AllDesc.Makomo;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
+		setCanuseblade(true);
+		getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0), EffectWhen.PERMANENT);
+		this.automaticDesc = automaticDesc.getText();
 	}
 
 	@Override

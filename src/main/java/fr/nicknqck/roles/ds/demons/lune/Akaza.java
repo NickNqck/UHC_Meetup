@@ -41,12 +41,16 @@ import java.util.UUID;
 public class Akaza extends DemonsRoles implements Listener {
 
 	private int regencooldown = 0;
-	private final TextComponent desc;
+	private TextComponent desc;
 	private AkazaPilierRunnable runnable;
 	private int coupInfliged = 0;
 	private int coupToInflig = 50;
 	public Akaza(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		getKnowedRoles().add(Muzan.class);
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
@@ -55,10 +59,6 @@ public class Akaza extends DemonsRoles implements Listener {
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Tout les§c 50 coups§7 infliger vous gagnerez§c 30 secondes§7 de l'effet§c Résistance I§7.")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque mort d'une§c lune supérieur§7 les coups requis pour obtenir l'effet§c Résistance I§7 réduise de§c 5§7.")}));
 		this.desc = desc.getText();
-	}
-
-	@Override
-	public void RoleGiven(GameState gameState) {
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		this.runnable = new AkazaPilierRunnable(this);
 		this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);

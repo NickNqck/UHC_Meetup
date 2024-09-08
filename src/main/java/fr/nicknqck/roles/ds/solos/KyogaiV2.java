@@ -33,10 +33,6 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 
 	public KyogaiV2(UUID player) {
 		super(player);
-		owner.getInventory().addItem(getItems());
-		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
-		this.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
 	public Roles getRoles() {
@@ -45,6 +41,10 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(owner, 3);
+		owner.getInventory().addItem(getItems());
+		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+		this.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
+		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
 	public TeamList getOriginTeam() {

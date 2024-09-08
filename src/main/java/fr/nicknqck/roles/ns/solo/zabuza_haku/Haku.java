@@ -28,6 +28,11 @@ public class Haku extends NSRoles {
 	private int bulleHakuCD = 0;
 	public Haku(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		setChakraType(Chakras.SUITON);
 		setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
@@ -37,6 +42,7 @@ public class Haku extends NSRoles {
 			}
 		}, 20*10);
 	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.Haku;

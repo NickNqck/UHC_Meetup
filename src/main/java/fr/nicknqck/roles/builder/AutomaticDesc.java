@@ -18,6 +18,7 @@ public class AutomaticDesc {
     public AutomaticDesc(IRole role) {
         this.role = role;
         text = new TextComponent(AllDesc.bar);
+        if (role == null)return;
         addRoleName();
         addObjectif();
     }

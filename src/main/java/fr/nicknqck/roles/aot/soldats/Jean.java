@@ -26,7 +26,6 @@ public class Jean extends SoldatsRoles {
 
 	public Jean(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

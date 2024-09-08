@@ -91,7 +91,6 @@ public class Main extends JavaPlugin implements Listener{
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
-		this.roleManager = new RoleManager();
 		this.worldManager = new WorldsManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
@@ -123,6 +122,7 @@ public class Main extends JavaPlugin implements Listener{
 		saveDefaultConfig();
         registerRecipes();
 		saveDefaultWebhookConfig();
+		this.roleManager = new RoleManager();
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -307,18 +307,7 @@ public class Main extends JavaPlugin implements Listener{
 		System.out.println("Ended GLASS platform");
 	}
 	public void initGameWorld() {
-		for (World world : Bukkit.getWorlds()) {
-			if (world.getName().equals("arena")) {
-				File worldFolder = world.getWorldFolder();
-				Bukkit.unloadWorld(world, false);
-				try {
-					FileUtils.deleteDirectory(worldFolder);
-					System.out.println("Deleted world "+worldFolder.getName());
-				} catch (IOException e) {
-					e.fillInStackTrace();
-				}
-			}
-		}
+		deleteWorld("arena");
 		WorldCreator creator = new WorldCreator("arena");
 		creator.generatorSettings(getBase());
 		World gameWorld = creator.createWorld();
@@ -336,11 +325,26 @@ public class Main extends JavaPlugin implements Listener{
 		getWorldManager().setGameWorld(gameWorld);
 		System.out.println("Created world gameWorld");
 	}
+	private void deleteWorld(String worldName) {
+		for (World world : Bukkit.getWorlds()) {
+			if (world.getName().equals(worldName)) {
+				File worldFolder = world.getWorldFolder();
+				Bukkit.unloadWorld(world, false);
+				try {
+					FileUtils.deleteDirectory(worldFolder);
+					System.out.println("Deleted world "+worldFolder.getName());
+				} catch (IOException e) {
+					e.fillInStackTrace();
+				}
+			}
+		}
+	}
 	@Override
 	public void onDisable() {
 		if (getScoreboardManager() != null) {
 			getScoreboardManager().onDisable();
 		}
+		deleteWorld("arena");
 		System.out.println("["+PLUGIN_NAME+"] Disabled");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
@@ -348,6 +352,7 @@ public class Main extends JavaPlugin implements Listener{
 				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);
 			}
 		}
+
 		System.out.println("["+PLUGIN_NAME+"] "+getBase());
 	}
 	public static boolean isDebug(){

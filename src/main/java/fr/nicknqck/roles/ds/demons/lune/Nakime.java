@@ -33,9 +33,13 @@ public class Nakime extends DemonsRoles {
 
 	public Nakime(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		if (!gameState.pregenNakime) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-	        Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
+			Bukkit.dispatchCommand(console, "nakime qF9JbNzW5R3s2ePk8mZr0HaS");
 			if (Bukkit.getWorld("nakime") != null) {
 				Main.getInstance().getWorldManager().setNakimeWorld(Bukkit.getWorld("nakime"));
 			}

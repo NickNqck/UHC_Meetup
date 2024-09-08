@@ -29,27 +29,7 @@ public class Yahaba extends DemonInferieurRole {
 	private TextComponent desc;
 	public Yahaba(UUID player) {
 		super(player);
-		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            List<SlayerRoles> roles = new ArrayList<>();
-			for (UUID u : gameState.getInGamePlayers()) {
-				Player p = Bukkit.getPlayer(u);
-				if (p == null)continue;
-				if (!gameState.hasRoleNull(p)) {
-					if (gameState.getPlayerRoles().get(p) instanceof SlayerRoles) {
-						roles.add((SlayerRoles) gameState.getPlayerRoles().get(p));
-					}
-				}
-			}
-			if (!roles.isEmpty()) {
-				Collections.shuffle(roles, Main.RANDOM);
-				this.cible = roles.get(0).owner;
-				getMessageOnDescription().add("§7Votre§c cible§7 est§c "+cible.getName()+"§7.");
-			} else {
-				owner.sendMessage("§7Aucune cible n'a été trouver");
-			}
-		}, 60L);
 	}
-
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Demon;
@@ -125,6 +105,25 @@ public class Yahaba extends DemonInferieurRole {
 		new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Au début de la partie une§c cible§7 vous est attribué, si vous parvenez à la tuer vous obtiendrez l'effet§c Force I§7 permanent")})
 		,new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Au début de la partie une§c Lune Supérieur§7 est désigné, vous obtiendrez donc son §cpseudo")}));
 		this.desc = desc.getText();
+		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+			List<SlayerRoles> roles = new ArrayList<>();
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
+				if (!gameState.hasRoleNull(p)) {
+					if (gameState.getPlayerRoles().get(p) instanceof SlayerRoles) {
+						roles.add((SlayerRoles) gameState.getPlayerRoles().get(p));
+					}
+				}
+			}
+			if (!roles.isEmpty()) {
+				Collections.shuffle(roles, Main.RANDOM);
+				this.cible = roles.get(0).owner;
+				getMessageOnDescription().add("§7Votre§c cible§7 est§c "+cible.getName()+"§7.");
+			} else {
+				owner.sendMessage("§7Aucune cible n'a été trouver");
+			}
+		}, 60L);
 	}
 
 	@Override

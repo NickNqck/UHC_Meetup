@@ -17,7 +17,6 @@ public class Livai extends SoldatsRoles {
 
 	public Livai(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 		setAckerMan(true);
 	}
 	@Override

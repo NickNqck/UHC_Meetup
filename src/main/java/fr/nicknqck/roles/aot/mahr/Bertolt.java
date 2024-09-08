@@ -15,8 +15,7 @@ public class Bertolt extends MahrRoles {
 	public Bertolt(UUID player) {
 		super(player);
 		gameState.Shifter.add(owner);
-		gameState.GiveRodTridi(owner);
-		TitanListener.getInstance().setColossal(owner.getUniqueId());
+		TitanListener.getInstance().setColossal(player);
 	}
 
 	@Override

@@ -33,6 +33,10 @@ public class Zabuza extends NSRoles {
 
 	public Zabuza(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Haku)) {

@@ -27,12 +27,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class LeJuge extends CustomRolesBase implements Listener {
-    private final TextComponent automaticDesc;
-    private final int timeKill;
-    private final KillRunnable killRunnable;
+    private TextComponent automaticDesc;
+    private int timeKill;
+    private KillRunnable killRunnable;
 
     public LeJuge(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
         if (getGameState().isMinage()) {
             timeKill = 60*10;
         } else {

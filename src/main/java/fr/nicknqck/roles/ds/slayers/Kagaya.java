@@ -32,8 +32,8 @@ public class Kagaya extends SlayerRoles {
 	private TextComponent desc;
 	public Kagaya(UUID player) {
 		super(player);
-		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Kagaya;
@@ -55,6 +55,7 @@ public class Kagaya extends SlayerRoles {
 		"§c§nPacte n°2:§r§7 Vous octroie §c2♥§r§7 permanent supplémentaire ainsi que §9Resistance I§r§7 le§e Jour§r\n\n"+
 		"§c§nPacte n°3:§r§7 Vous obtenez l'identité d'un §aPilier§r§7 aléatoire parmis ceux encore en §cvie§r§7 ainsi que §9Resistance I§r§7 à moins de §c30 blocs§r§7 de ce dernier")}), "§c/ds role", -500));
 		this.desc = desc.getText();
+		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 
 	private enum Pacte{

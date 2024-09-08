@@ -32,6 +32,11 @@ public class Kyogai extends DemonsRoles {
 
 	public Kyogai(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		owner.sendMessage("Pour choisir votre camp il faudra faire la commande: "+ChatColor.GOLD+"/ds role");
 	}
 

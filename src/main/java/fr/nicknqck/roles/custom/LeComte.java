@@ -30,7 +30,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class LeComte extends CustomRolesBase implements Listener {
-    private final TextComponent automaticDesc;
+
+    private TextComponent automaticDesc;
     private boolean useInspection = false;
     private UUID inspected;
     private BukkitRunnable inspectionRunnable;
@@ -40,6 +41,10 @@ public class LeComte extends CustomRolesBase implements Listener {
     private final List<UUID> inspecteds = new ArrayList<>();
     public LeComte(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
         final AutomaticDesc desc = new AutomaticDesc(this);
         desc.setCommands(new TripleMap<>(getInspectionHover(), "§c/c inspection <joueur>", 60*10), new TripleMap<>(getDuelHover(), "§c/c duel <joueur>", 60*15));
         Map<HoverEvent, String> particularites = new HashMap<>();
@@ -53,6 +58,7 @@ public class LeComte extends CustomRolesBase implements Listener {
         owner.setMaxHealth(getMaxHealth());
         owner.setHealth(owner.getMaxHealth());
     }
+
     @Override
     public String getName() {
         return "Le Comte";

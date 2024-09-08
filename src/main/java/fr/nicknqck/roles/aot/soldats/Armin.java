@@ -16,8 +16,13 @@ public class Armin extends SoldatsRoles {
 
 	public Armin(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		gameState.GiveRodTridi(owner);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Armin;

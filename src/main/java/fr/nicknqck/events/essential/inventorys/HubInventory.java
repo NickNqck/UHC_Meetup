@@ -3,8 +3,8 @@ package fr.nicknqck.events.essential.inventorys;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.essential.inventorys.rconfig.DSRolesConfig;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -27,8 +27,7 @@ public class HubInventory implements Listener {
     public HubInventory(GameState gameState) {
         this.gameState = gameState;
         instance = this;
-        Bukkit.getServer().getPluginManager().registerEvents(new InventoryConfig(gameState), Main.getInstance());
-        new DSRolesConfig(gameState);
+        EventUtils.registerEvents(new InventoryConfig(gameState));
     }
     @EventHandler
     private void OnInventoryClicked(InventoryClickEvent event) {

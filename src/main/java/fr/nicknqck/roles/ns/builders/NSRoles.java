@@ -26,7 +26,7 @@ public abstract class NSRoles extends RoleBase {
             this.chakras = null;
             return;
         }
-        chakras.getChakra().getList().add(owner.getUniqueId());
+        chakras.getChakra().getList().add(getPlayer());
         this.chakras = chakras;
     }
 

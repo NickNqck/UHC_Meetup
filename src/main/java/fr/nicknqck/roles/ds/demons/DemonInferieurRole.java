@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
@@ -21,6 +22,11 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
     private DemonsRoles lune;
     public DemonInferieurRole(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        super.RoleGiven(gameState);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             List<DemonsRoles> roles = new ArrayList<>();
             for (UUID u : gameState.getInGamePlayers()) {
@@ -49,6 +55,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
         }, 20*5);
         EventUtils.registerEvents(this);
     }
+
     @EventHandler
     private void onEndGame(EndGameEvent event) {
         EventUtils.unregisterEvents(this);

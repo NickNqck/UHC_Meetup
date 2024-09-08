@@ -25,9 +25,17 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.UUID;
 
 public class Sabito extends SlayerRoles {
-	private final TextComponent automaticDesc;
+	private TextComponent automaticDesc;
 	public Sabito(UUID player) {
 		super(player);
+	}
+	@Override
+	public Roles getRoles() {
+		return Roles.Sabito;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		this.setCanuseblade(true);
 		this.setResi(20);
 		AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0), EffectWhen.NIGHT)
@@ -37,11 +45,6 @@ public class Sabito extends SlayerRoles {
 						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§a Tomioka§7 votre cooldown \"§6Soufle de l'eau§7\" sera réduit de§c 30 secondes§7, également, ce dernier vous donnerea§b Speed 2§7.")})
 				);
 		this.automaticDesc = automaticDesc.getText();
-		owner.spigot().sendMessage(this.automaticDesc);
-	}
-	@Override
-	public Roles getRoles() {
-		return Roles.Sabito;
 	}
 
 	@Override

@@ -44,9 +44,6 @@ public class FFA_Pourfendeur extends SlayerRoles {
 	Soufle form = null;
 	public FFA_Pourfendeur(UUID player) {
 		super(player);
-		owner.sendMessage("Vue que nous somme en FFA vous devez vous-même choisir votre Soufle via la commmande§6 /ds role");
-		setCanuseblade(true);
-        setLameIncassable(owner, true);
 	}
 	@Override
 	public Roles getRoles() {
@@ -60,6 +57,13 @@ public class FFA_Pourfendeur extends SlayerRoles {
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Solo;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		owner.sendMessage("Vue que nous somme en FFA vous devez vous-même choisir votre Soufle via la commmande§6 /ds role");
+		setCanuseblade(true);
+		setLameIncassable(owner, true);
 	}
 
 	public boolean cheat = false;

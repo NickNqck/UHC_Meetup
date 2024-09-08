@@ -22,16 +22,9 @@ import java.util.Random;
 import java.util.UUID;
 
 public class Urokodaki extends SlayerRoles {
-	private final TextComponent automaticDesc;
+	private TextComponent automaticDesc;
 	public Urokodaki(UUID player) {
 		super(player);
-		this.setCanuseblade(true);
-		AutomaticDesc automaticDesc = new AutomaticDesc(this);
-		automaticDesc.addCustomWhenEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, false), "dans l'§beau").addItem(
-				this.SoufleComponent(), 60*5
-		);
-		this.automaticDesc = automaticDesc.getText();
-		owner.spigot().sendMessage(this.automaticDesc);
 	}
 
     @Override
@@ -42,6 +35,16 @@ public class Urokodaki extends SlayerRoles {
 	@Override
 	public void resetCooldown() {
 		souflecooldown = 0;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		this.setCanuseblade(true);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this);
+		automaticDesc.addCustomWhenEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, false), "dans l'§beau").addItem(
+				this.SoufleComponent(), 60*5
+		);
+		this.automaticDesc = automaticDesc.getText();
 	}
 
 	@Override

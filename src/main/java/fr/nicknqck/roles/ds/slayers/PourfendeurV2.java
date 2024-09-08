@@ -35,7 +35,7 @@ import java.util.*;
 
 public class PourfendeurV2 extends SlayerRoles implements Listener {
 
-    private final TextComponent desc;
+    private TextComponent desc;
     @Getter
     private enum Soufles {
         ROCHE("de la§8 Roche"),
@@ -56,19 +56,6 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
     private final ItemStack soufleEauItem = new ItemBuilder(Material.NETHER_STAR).setName("§bSoufle de l'Eau").setUnbreakable(true).setDroppable(false).toItemStack();
     public PourfendeurV2(UUID player) {
         super(player);
-        AutomaticDesc desc = new AutomaticDesc(this);
-        desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Au début de la partie un soufle aléatoire vous est définie parmis:\n\n"
-        + AllDesc.tab+"§6Soufle du feu§7: A chaque coup §cinfliger§7 vous aurez§c 10%§7 de§c chance§7 que le coup§6 enflamme§7 la§c cible§7.\n\n"
-        + AllDesc.tab+"§bSoufle de l'eau§7: Vous obtenez un livre enchanter§b Depth Strider I§7 ainsi qu'un item vous donnant§b Speed I§7 pendant§c 3 minutes§7. (1x/5m)\n\n"
-        + AllDesc.tab+"§aSoufle du vent§7: Vous obtenez un item vous donnant§b Speed II§7 pendant§c 2 minutes§7. (1x/4min)\n\n"
-        + AllDesc.tab+"§8Soufle de la roche§7: Vous aurez l'effet§8 Résistance I§7 le jour.\n\n"
-        + AllDesc.tab+"§eSoufle de la foudre§7: Vous aurez un item vous permettant d'infliger (§caprès activation§7)§c 1❤§7 de§c dégat§7 ainsi que l'effet§l Slowness I§r§7. (1x/3min)")})
-        , new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque§c kill§7 que vous faite vous obtenez un soufle aléatoire parmis ceux cité.")}),
-        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous obtenez le§c cinquième§7 et §cdernier§7 soufle disponnible vous aurez un certain§c pourcentage de chance§7 de: \n\n"
-        +AllDesc.tab+"§7(§c5%§7) Devenir§e Solo§7: Si celà arrive vous obtiendrez les effets§b Speed I§7 et§c Force I§7 permanent\n§7Votre item \"§eSoufle de la Foudre§7\" infligera en plus de l'effet§l Slowness I§7 l'effet§l Weakness I§7 pendant§c 15 secondes\n§7Pour finir vous obtiendrez l'§cenchantement§b Depth Strider 2§7 sur vos bottes.\n\n"
-        +AllDesc.tab+"§7(§c15%§7) Devenir§c Démon§7: Si celà arrive vous obtiendrez l'effet§c Force I§7 la§c nuit§7, également, vous apparaitrez dans la liste de§c Muzan§7.\n\n"
-        +AllDesc.tab+"§7(§c80%§7) Rester§a Slayer§7: Vous ne gagnez rien de plus")}));
-        this.desc = desc.getText();
     }
 
     @Override
@@ -83,6 +70,19 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         EventUtils.registerEvents(this);
         new UpdateRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         setCanuseblade(true);
+        AutomaticDesc desc = new AutomaticDesc(this);
+        desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Au début de la partie un soufle aléatoire vous est définie parmis:\n\n"
+                        + AllDesc.tab+"§6Soufle du feu§7: A chaque coup §cinfliger§7 vous aurez§c 10%§7 de§c chance§7 que le coup§6 enflamme§7 la§c cible§7.\n\n"
+                        + AllDesc.tab+"§bSoufle de l'eau§7: Vous obtenez un livre enchanter§b Depth Strider I§7 ainsi qu'un item vous donnant§b Speed I§7 pendant§c 3 minutes§7. (1x/5m)\n\n"
+                        + AllDesc.tab+"§aSoufle du vent§7: Vous obtenez un item vous donnant§b Speed II§7 pendant§c 2 minutes§7. (1x/4min)\n\n"
+                        + AllDesc.tab+"§8Soufle de la roche§7: Vous aurez l'effet§8 Résistance I§7 le jour.\n\n"
+                        + AllDesc.tab+"§eSoufle de la foudre§7: Vous aurez un item vous permettant d'infliger (§caprès activation§7)§c 1❤§7 de§c dégat§7 ainsi que l'effet§l Slowness I§r§7. (1x/3min)")})
+                , new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque§c kill§7 que vous faite vous obtenez un soufle aléatoire parmis ceux cité.")}),
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous obtenez le§c cinquième§7 et §cdernier§7 soufle disponnible vous aurez un certain§c pourcentage de chance§7 de: \n\n"
+                        +AllDesc.tab+"§7(§c5%§7) Devenir§e Solo§7: Si celà arrive vous obtiendrez les effets§b Speed I§7 et§c Force I§7 permanent\n§7Votre item \"§eSoufle de la Foudre§7\" infligera en plus de l'effet§l Slowness I§7 l'effet§l Weakness I§7 pendant§c 15 secondes\n§7Pour finir vous obtiendrez l'§cenchantement§b Depth Strider 2§7 sur vos bottes.\n\n"
+                        +AllDesc.tab+"§7(§c15%§7) Devenir§c Démon§7: Si celà arrive vous obtiendrez l'effet§c Force I§7 la§c nuit§7, également, vous apparaitrez dans la liste de§c Muzan§7.\n\n"
+                        +AllDesc.tab+"§7(§c80%§7) Rester§a Slayer§7: Vous ne gagnez rien de plus")}));
+        this.desc = desc.getText();
     }
 
     @Override

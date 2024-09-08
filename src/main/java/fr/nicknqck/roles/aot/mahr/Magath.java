@@ -23,7 +23,6 @@ public class Magath extends MahrRoles {
 		super(player);
 		giveHealedHeartatInt(4.0);
 		toSearch = null;
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

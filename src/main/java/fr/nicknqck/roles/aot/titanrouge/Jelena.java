@@ -18,7 +18,6 @@ public class Jelena extends TitansRoles {
 
 	public Jelena(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

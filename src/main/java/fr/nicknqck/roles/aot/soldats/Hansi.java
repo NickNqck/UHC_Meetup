@@ -23,7 +23,6 @@ public class Hansi extends SoldatsRoles {
 
 	public Hansi(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

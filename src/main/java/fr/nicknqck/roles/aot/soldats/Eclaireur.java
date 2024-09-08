@@ -14,7 +14,6 @@ public class Eclaireur extends SoldatsRoles {
 
 	public Eclaireur(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

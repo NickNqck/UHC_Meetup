@@ -20,7 +20,6 @@ public class GrandTitan extends TitansRoles {
 	public GrandTitan(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

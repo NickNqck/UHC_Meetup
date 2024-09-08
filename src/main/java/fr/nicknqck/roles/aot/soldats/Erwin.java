@@ -16,7 +16,6 @@ import java.util.UUID;
 public class Erwin extends SoldatsRoles {
 	public Erwin(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {
