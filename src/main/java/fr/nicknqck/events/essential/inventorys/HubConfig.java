@@ -7,9 +7,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.Events;
 import fr.nicknqck.events.chat.Chat;
-import fr.nicknqck.events.essential.inventorys.rconfig.aot.*;
-import fr.nicknqck.events.essential.inventorys.rconfig.ds.*;
-import fr.nicknqck.events.essential.inventorys.rconfig.ns.*;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.pregen.PregenerationTask;
@@ -30,37 +27,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class HubConfig implements Listener {
 
     private final GameState gameState;
-    private final List<IConfiguratorRole> rolesConfigurations = new ArrayList<>();
-
 
     public HubConfig(GameState gameState) {
         this.gameState = gameState;
         EventUtils.registerEvents(this);
-
-        rolesConfigurations.add(new SlayerConfig());
-        rolesConfigurations.add(new DemonsConfig());
-        rolesConfigurations.add(new DSSoloConfig());
-
-        rolesConfigurations.add(new SoldatsConfig());
-        rolesConfigurations.add(new TitansConfig());
-        rolesConfigurations.add(new MahrsConfig());
-        rolesConfigurations.add(new AotConfig());
-        rolesConfigurations.add(new AOTSolo());
-
-        rolesConfigurations.add(new ShinobiConfig());
-        rolesConfigurations.add(new AkatsukiConfig());
-        rolesConfigurations.add(new OrochimaruConfig());
-        rolesConfigurations.add(new NSSoloConfig());
-        rolesConfigurations.add(new JubiConfig());
-        rolesConfigurations.add(new ZabHakuConfig());
-        rolesConfigurations.add(new KumogakureConfig());
     }
     @EventHandler
     private void onInventoryClick(InventoryClickEvent event) {
@@ -575,15 +550,9 @@ public class HubConfig implements Listener {
                     event.setCancelled(true);
                     break;
             }
-            gameState.updateGameCanLaunch();
-            if (item.isSimilar(GUIItems.getStartGameButton()) && ChatRank.isHost(player)) {
+            if (item.isSimilar(GUIItems.getStartGameButton()) && ChatRank.isHost(player) && gameState.gameCanLaunch) {
                 HubListener.getInstance().StartGame(player);
-                return;
-            }
-            for (IConfiguratorRole iConfig : rolesConfigurations) {
-                if (iConfig.getInvName().equals(inv.getTitle())) {
-                    iConfig.onInventoryClick(event);
-                }
+                event.setCancelled(true);
             }
         }
     }

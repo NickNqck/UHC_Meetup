@@ -17,7 +17,6 @@ import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -42,11 +41,6 @@ public class HubListener implements Listener {
 			System.out.println("Impossible de start la partie");
 			return;
 		}
-		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		Bukkit.dispatchCommand(console, "gamerule sendCommandFeedback false");
-		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
-		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
-		Bukkit.dispatchCommand(console, "gamerule sendCommandFeedback true");
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.setInLobbyPlayers(new ArrayList<>());
@@ -102,6 +96,7 @@ public class HubListener implements Listener {
 				gameState.igPlayers.clear();
 				return;
 			}
+			p.updateInventory();
 			p.setMaxHealth(20.0);
 			p.setHealth(20.0);
 			p.setFoodLevel(20);
@@ -118,7 +113,7 @@ public class HubListener implements Listener {
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);
 			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);
-			gameState.getGamePlayer().put(p.getUniqueId(), gamePlayer);
+			gameState.getGamePlayer().put(u, gamePlayer);
 		}
 		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
@@ -143,6 +138,7 @@ public class HubListener implements Listener {
 		}, 220);
 		System.out.println("Ended StartGame");
 	}
+
 	public void giveStartInventory(Player p) {
 		Main.getInstance().getScoreboardManager().update(p);
 		ItemsManager.ClearInventory(p);
@@ -243,6 +239,7 @@ public class HubListener implements Listener {
 	@Setter
 	@Getter
 	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
+
 	public final void StartGame(final Player player) {
 		gameState.updateGameCanLaunch();
 		if (ChatRank.isHost(player) && gameState.gameCanLaunch) {
