@@ -22,10 +22,12 @@ import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
+import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -193,6 +195,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new WebHookListeners(gameState), this);
 		DeathManager manager = new DeathManager();
 		getServer().getPluginManager().registerEvents(manager, this);
+		EventUtils.registerEvents(new BanquePower());
 		this.deathManager = manager;
 		System.out.println("Ending registering events");
 	}

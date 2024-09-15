@@ -72,7 +72,7 @@ public class PersonalScoreboard {
     			RoleBase role = this.gameState.getPlayerRoles().get(player);
 				String roleName = role.getName();
 				String iRole = "§fRôle: ";
-				if (premsg.length()+iRole.length()+ roleName.length() >= 40) {
+				if (premsg.length()+iRole.length()+ roleName.length() + role.getTeam().getColor().length() >= 40) {
 					roleName = role.getRoles().name();
 				}
     			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {

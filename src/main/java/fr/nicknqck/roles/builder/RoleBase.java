@@ -523,7 +523,7 @@ public abstract class RoleBase implements IRole {
         }
         return false;
     }
-	public static List<PotionEffectType> getPermanentPotionEffects(Player player) {
+	public List<PotionEffectType> getPermanentPotionEffects(Player player) {
         List<PotionEffectType> permanentEffects = new ArrayList<>();
 
         for (PotionEffect effect : player.getActivePotionEffects()) {

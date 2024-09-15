@@ -19,7 +19,6 @@ public final class EasyRoleAdder {
                 if (GameState.getInstance().getAvailableRoles().get(roles) > 0) {
                     GameState.getInstance().addInAvailableRoles(roles, Math.max(GameState.getInstance().getInLobbyPlayers().size()-1, GameState.getInstance().getAvailableRoles().get(roles)-1));
                     GameState.getInstance().updateGameCanLaunch();
-                    System.out.println("removed role: "+name);
                     break;
                 }
             }
