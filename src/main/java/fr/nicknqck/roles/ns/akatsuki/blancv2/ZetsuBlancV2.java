@@ -40,7 +40,7 @@ public class ZetsuBlancV2 extends AkatsukiRoles {
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addParticularites(
           new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra: "+getChakras().getShowedName())}),
-          new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7")})
+          new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous envoyez un message avec comme préfixe§c !§7 vous pourrez parler avec tout les autres§c "+getName()+"§7.")})
         );
         this.desc = desc.getText();
     }

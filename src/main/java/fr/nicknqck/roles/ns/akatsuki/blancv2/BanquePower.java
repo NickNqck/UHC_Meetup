@@ -109,7 +109,7 @@ public class BanquePower implements Listener {
     @EventHandler
     private void onInventoryClick(InventoryClickEvent event) {
         if (event.getClickedInventory() == null)return;
-        if (event.getClickedInventory().getTitle() != null)return;
+        if (event.getClickedInventory().getTitle() == null)return;
         if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))return;
         if (event.getClickedInventory().getTitle().equals("Banque")) {
             if (!event.getCurrentItem().getType().equals(Material.STAINED_GLASS_PANE)) {
