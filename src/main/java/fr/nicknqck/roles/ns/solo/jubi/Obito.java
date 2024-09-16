@@ -598,7 +598,7 @@ public class Obito extends JubiRoles {
 			}
 			Inventory inv = Bukkit.createInventory(owner, 9, "§7Traqueur de bijus");
 			for (Bijus b : Bijus.values()) {
-				if (b.isEnable()) {
+				if (b.getBiju().isEnable()) {
 					inv.addItem(b.getBiju().getItem());
 				}
 			}

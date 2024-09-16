@@ -172,7 +172,7 @@ public class Isobu extends Biju{
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus()) && guardian == null) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " §fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }
@@ -194,7 +194,7 @@ public class Isobu extends Biju{
         @Override
         public void run() {
         	timer++;
-        	if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+        	if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !isEnable()) {
             	cancel();
             	return;
             }
@@ -299,7 +299,7 @@ public class Isobu extends Biju{
 	public void onProjectileHit(ProjectileHitEvent e, Bijus bijus, Projectile projectile) {}
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setName(getName()).setLore(getBijus().isEnable() ? "§aActivé" : "§cDésactivé").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setName(getName()).setLore(isEnable() ? "§aActivé" : "§cDésactivé").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
 	@Override
 	public Bijus getBijus() {

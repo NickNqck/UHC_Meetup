@@ -24,7 +24,7 @@ public abstract class Power {
     private boolean cooldownResetSended = true;
     private final RoleBase role;
 
-    public Power(@NonNull String name,@NonNull Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
+    public Power(@NonNull String name, Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
         this.name = name;
         this.cooldown = cooldown;
         this.use = 0;

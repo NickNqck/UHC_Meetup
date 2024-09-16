@@ -126,7 +126,7 @@ public class Matatabi extends Biju{
 							if (!(entity instanceof Player)) continue;
 							Player player = (Player) entity;
 							player.setFireTicks(20 * 16);
-							player.sendMessage((getName() + " &fvient de vous mettre en &cfeu&f."));
+							player.sendMessage((getName() + " §fvient de vous mettre en §cfeu§f."));
 						}
 						timeAttack = 10;
 					}
@@ -162,7 +162,7 @@ public class Matatabi extends Biju{
 		@Override
 		public void run() {
 			timer++;
-			if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+			if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !isEnable()) {
 				cancel();
 				return;
 			}
@@ -224,7 +224,7 @@ public class Matatabi extends Biju{
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-							Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
+							Bukkit.broadcastMessage((getName() + " §fvient de réapparaître."));
 						} else {
 							cancel();
 						}
@@ -236,7 +236,7 @@ public class Matatabi extends Biju{
 
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setDurability((short) 4).setName(getName()).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore(getBijus().isEnable() ? "§aActivé" : "§cDésactivé").toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setDurability((short) 4).setName(getName()).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore(isEnable() ? "§aActivé" : "§cDésactivé").toItemStack();
 	}
 
 	@Override

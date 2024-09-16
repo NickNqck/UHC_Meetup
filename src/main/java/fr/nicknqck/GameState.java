@@ -367,7 +367,7 @@ public class GameState{
 	private static GameState instance;
 	@Getter
 	@Setter
-	private int maxTimeSpawnBiju = 60*5;
+	private int maxTimeSpawnBiju = 100;
 	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();

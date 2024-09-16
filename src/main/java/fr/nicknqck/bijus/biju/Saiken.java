@@ -140,17 +140,17 @@ public class Saiken extends Biju {
         @Override
         public void run() {
             timer++;
-            if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+            if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !isEnable()) {
             	cancel();
             	return;
             }
             if (this.timer == spawn - 30) {
-                Bukkit.broadcastMessage((getName() + " &fva apparaître dans &a30 &fsecondes."));
+                Bukkit.broadcastMessage((getName() + " §fva apparaître dans §a30 §fsecondes."));
             }
 
             if (this.timer == spawn) {
                 spawnBiju();
-                Bukkit.broadcastMessage((getName() + " &fvient d'apparaître."));
+                Bukkit.broadcastMessage((getName() + " §fvient d'apparaître."));
                 cancel();
             }
         }
@@ -206,7 +206,7 @@ public class Saiken extends Biju {
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " §fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }
@@ -218,7 +218,7 @@ public class Saiken extends Biju {
 
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setDurability(15).setLore(getBijus().isEnable() ? "§aActivé" : "§cDésactivé").setName(getName()).toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setDurability(15).setLore(isEnable() ? "§aActivé" : "§cDésactivé").setName(getName()).toItemStack();
 	}
 
 	@Override

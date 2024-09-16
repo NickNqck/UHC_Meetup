@@ -1187,7 +1187,7 @@ public class Inventories {
                     int i = 19;
                     for (Bijus bijus : Bijus.values()) {
                         ItemStack item = bijus.getBiju().getItemInMenu();
-                        item.setAmount(bijus.isEnable() ? 1 : 0);
+                        item.setAmount(bijus.getBiju().isEnable() ? 1 : 0);
                         inv.setItem(i, item);
                         i++;
                     }

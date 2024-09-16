@@ -526,7 +526,7 @@ public class HubConfig implements Listener {
                     }
                     for (Bijus bijus : Bijus.values()) {
                         if (item.isSimilar(bijus.getBiju().getItemInMenu())) {
-                            bijus.setEnable(!bijus.isEnable());
+                            bijus.getBiju().setEnable(!bijus.getBiju().isEnable());
                         }
                     }
 
