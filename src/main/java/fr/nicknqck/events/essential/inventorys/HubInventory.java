@@ -602,8 +602,8 @@ public class HubInventory implements Listener {
                     case "§aNaruto§7 ->§5 Orochimaru":
                         if (!item.getItemMeta().hasDisplayName())return;
                         if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getRoleSelectGUI());
-                            Main.getInstance().getInventories().updateRoleInventory(player);
+                            player.openInventory(GUIItems.getSelectNSInventory());
+                            Main.getInstance().getInventories().updateNSInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
                                 name = item.getItemMeta().getDisplayName();
@@ -622,8 +622,8 @@ public class HubInventory implements Listener {
                         if (!item.hasItemMeta())return;
                         if (!item.getItemMeta().hasDisplayName())return;
                         if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getRoleSelectGUI());
-                            Main.getInstance().getInventories().updateRoleInventory(player);
+                            player.openInventory(GUIItems.getSelectNSInventory());
+                            Main.getInstance().getInventories().updateNSInventory(player);
                         } else {
                             if (item.isSimilar(GUIItems.getSelectJubiButton())) {
                                 player.openInventory(GUIItems.getSelectNSJubiInventory());
@@ -706,8 +706,8 @@ public class HubInventory implements Listener {
                         break;
                     case "§aNaruto§7 ->§a Shinobi":
                         if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getRoleSelectGUI());
-                            Main.getInstance().getInventories().updateRoleInventory(player);
+                            player.openInventory(GUIItems.getSelectNSInventory());
+                            Main.getInstance().getInventories().updateNSInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
                                 for (GameState.Roles roles : GameState.Roles.values()) {
