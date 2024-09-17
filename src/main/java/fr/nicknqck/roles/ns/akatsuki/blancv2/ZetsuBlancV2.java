@@ -5,6 +5,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.utils.TripleMap;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -38,6 +39,9 @@ public class ZetsuBlancV2 extends AkatsukiRoles {
     public void RoleGiven(GameState gameState) {
         setChakraType(getRandomChakras());
         AutomaticDesc desc = new AutomaticDesc(this);
+        desc.setItems(
+          new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous §ctuez§7 un joueur vous gagnez l'un de ses effet permanent, les autres effets qu'il possédait son stocké dans cette item et sont récupérable constemment.")}), "§fBanque", 5)
+        );
         desc.addParticularites(
           new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra: "+getChakras().getShowedName())}),
           new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous envoyez un message avec comme préfixe§c !§7 vous pourrez parler avec tout les autres§c "+getName()+"§7.")})
