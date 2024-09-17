@@ -236,7 +236,12 @@ public class Matatabi extends Biju{
 
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setDurability((short) 4).setName(getName()).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore(isEnable() ? "§aActivé" : "§cDésactivé").toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setDurability(4)
+				.setName(getName())
+				.addEnchant(Enchantment.ARROW_DAMAGE, 1)
+				.hideAllAttributes()
+				.setLore(isEnable() ? "§aActivé" : "§cDésactivé")
+				.toItemStack();
 	}
 
 	@Override

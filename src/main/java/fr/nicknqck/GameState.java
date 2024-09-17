@@ -86,6 +86,9 @@ public class GameState{
 	@Getter
 	@Setter
 	private int minTimeSpawnBiju = 90;
+	@Getter
+	@Setter
+	private int maxTimeSpawnBiju = 160;
 	public int DKTProba = 0;
 	public int AllianceProba = 0;
 	public int AllianceTime = 60;
@@ -365,9 +368,6 @@ public class GameState{
 	public int critP = 20;
 	@Getter
 	private static GameState instance;
-	@Getter
-	@Setter
-	private int maxTimeSpawnBiju = 100;
 	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();

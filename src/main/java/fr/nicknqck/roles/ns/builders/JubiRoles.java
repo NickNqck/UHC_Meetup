@@ -12,6 +12,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -92,7 +93,7 @@ public abstract class JubiRoles extends UchiwaRoles {
             if (!event.getCurrentItem().hasItemMeta())return;
             if (!event.getCurrentItem().getItemMeta().hasDisplayName())return;
             for (Bijus bijus : Bijus.values()) {
-                if (bijus.getBiju().getItemInMenu().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName())) {
+                if (bijus.getBiju().getItemInMenu().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName()) || event.getCurrentItem().getItemMeta().getDisplayName().contains(bijus.name())) {
                     if (bijus.getBiju().isEnable()) {
                         this.traqued = bijus.getBiju();
                         event.getWhoClicked().sendMessage("§7Vous§c traquez§7 maintenant "+bijus.getBiju().getName());
@@ -103,30 +104,38 @@ public abstract class JubiRoles extends UchiwaRoles {
                     break;
                 }
             }
-            event.getWhoClicked().sendMessage(""+event.getCurrentItem());
             event.setCancelled(true);
             event.getWhoClicked().closeInventory();
         }
         private void printTraqueMessage(Player player) {
             if (this.traqued == null) {
-                player.sendMessage("§7Vous ne traquez §caucun§d biju§c actuellement§7.");
+                player.sendMessage("§cVous ne traquezcaucun§d biju§c actuellement§c !");
                 return;
             }
             player.sendMessage("§7Voici tout les informations disponnible sur "+this.traqued.getName());
             player.sendMessage("");
             if (this.traqued.getHote() == null) {
                 if (this.traqued.getLivingEntity() == null) {
-                    player.sendMessage("§7Il apparaitra en §cx: "+this.traqued.getSpawn().getBlockX()+"§7, §cy:§7 "+this.traqued.getSpawn().getBlockY()+"§7, §cz: "+this.traqued.getSpawn().getBlockZ());
+                    player.sendMessage("§7Il apparaitra en "+getGoodCoord(this.traqued.getSpawn()));
                     player.setCompassTarget(this.traqued.getSpawn());
-                    player.sendMessage("§7Il apparaitra dans§c "+ StringUtils.secondsTowardsBeautiful(this.roles.getGameState().getInGameTime()-this.traqued.getTimeSpawn()));
+                    player.sendMessage("§7Il apparaitra dans§c "+
+                            StringUtils.secondsTowardsBeautiful(this.traqued.getTimeSpawn()-this.roles.getGameState().getInGameTime())+
+                            "§7 c'est à dire à §c"+
+                            StringUtils.secondsTowardsBeautiful(this.traqued.getTimeSpawn())+"§7.");
                 } else {
-                    player.sendMessage("§7Il est actuellement en §cx: "+this.traqued.getLivingEntity().getLocation().getBlockX()+"§7, §cy: "+this.traqued.getLivingEntity().getLocation().getBlockY()+"§7, §cz: "+this.traqued.getLivingEntity().getLocation().getBlockZ());
+                    player.sendMessage("§7Il est actuellement en "+getGoodCoord(this.traqued.getLivingEntity().getLocation()));
                     player.setCompassTarget(this.traqued.getLivingEntity().getLocation());
                 }
             } else {
                 GamePlayer gamePlayer = this.roles.getGameState().getGamePlayer().get(this.traqued.getHote());
-                player.sendMessage("§c"+gamePlayer.getPlayerName()+"§7 est en§c x: "+gamePlayer.getLastLocation().getBlockX()+"§7, §cy: "+gamePlayer.getLastLocation().getBlockY()+"§7,§c z: "+gamePlayer.getLastLocation().getBlockZ());
+                player.sendMessage("§c"+gamePlayer.getPlayerName()+"§7 est en "+getGoodCoord(gamePlayer.getLastLocation()));
             }
+        }
+        private String getGoodCoord(Location location) {
+            int x = location.getBlockX();
+            int y = location.getBlockY();
+            int z = location.getBlockZ();
+            return "§cx§7: §c"+x+"§7,§c y§7:§c "+y+"§7,§c z§7:§c "+z;
         }
     }
 }
