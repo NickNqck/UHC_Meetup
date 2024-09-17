@@ -182,15 +182,14 @@ public class Saiken extends Biju {
 					spawnBiju();
 					return;
 				}
-        	} else {
-        		slime.setSize(0);
-        		drops.clear();
-        		spawnBiju();
-        		return;
         	}
         	slime.setSize(0);
             this.slime = null;
             drops.clear();
+			if (k == null) {
+				spawnBiju();
+				return;
+			}
             new BukkitRunnable() {
 				int i = 0;
 				@Override

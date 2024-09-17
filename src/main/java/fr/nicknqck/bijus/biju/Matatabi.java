@@ -45,6 +45,8 @@ public class Matatabi extends Biju{
 	private Blaze blaze;
 	private Location spawn;
 	private GameState gameState;
+	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
+
 	@Override
 	public LivingEntity getLivingEntity() {
 		return blaze;
@@ -89,7 +91,7 @@ public class Matatabi extends Biju{
 
 	@Override
 	public String getName() {
-		return "§aMatatabi";
+		return "§6Matatabi";
 	}
 
 	@Override
@@ -148,7 +150,6 @@ public class Matatabi extends Biju{
 	public ItemStack getItem() {
 		return Items.Matatabi();
 	}
-	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
 	@Override
 	public int getTimeSpawn() {
 		return TimeSpawn;
@@ -178,7 +179,7 @@ public class Matatabi extends Biju{
 	}
 	@Override
 	public void onDeath(LivingEntity entity, List<ItemStack> drops) {
-		if (blaze != null && entity.getUniqueId() == blaze.getUniqueId()) {
+		if (blaze != null && entity.getUniqueId().equals(blaze.getUniqueId())) {
 			Player k = null;
 			if (entity.getKiller() instanceof Arrow) {
 				Arrow arrow = (Arrow) entity.getKiller();
@@ -203,9 +204,6 @@ public class Matatabi extends Biju{
 					spawnBiju();
 					return;
 				}
-			} else {
-				spawnBiju();
-				return;
 			}
 			this.blaze = null;
 			drops.clear();
@@ -334,6 +332,5 @@ public class Matatabi extends Biju{
 		return false;
 	}
 	@Override
-	public void onJubiInvoc(Player invoquer) {
-	}
+	public void onJubiInvoc(Player invoquer) {}
 }
