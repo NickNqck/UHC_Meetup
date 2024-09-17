@@ -92,13 +92,27 @@ public class BanquePower implements Listener {
                     List<PotionEffect> effectList = getPermanentPotionEffects(event.getVictim());
                     if (!effectList.isEmpty()){
                         Collections.shuffle(effectList, Main.RANDOM);
-                        PotionEffect potionEffect = effectList.getFirst();
+                        PotionEffect potionEffect = effectList.get(0);
+                        final List<PotionEffect> reste = new ArrayList<>();
+                        for (PotionEffect po : effectList) {
+                            if (!effectList.get(0).equals(po)) {
+                                reste.add(po);
+                            }
+                        }
+                        if (!reste.isEmpty()) {
+                            sendMessagetoZetsus("§c"+reste.size()+"§7 ont été ajouter à la§f §nBanque");
+                            for (PotionEffect potion : reste) {
+                                addToBanque(potion);
+                            }
+                        }
                         if (getPermanentPotionEffects(event.getPlayerKiller()).isEmpty()) {
                             role.givePotionEffect(potionEffect, EffectWhen.PERMANENT);
                         } else {
                             if (!this.effects.containsKey(potionEffect)) {
                                 sendMessagetoZetsus("§7Un nouvelle effet à été ajouter à la§f §nBanque");
                                 addToBanque(potionEffect);
+                            } else {
+                                event.getPlayerKiller().sendMessage("L'effet est déjà dans la banque (§c"+potionEffect.getType().getName()+"§f)");
                             }
                         }
                     }
@@ -157,10 +171,10 @@ public class BanquePower implements Listener {
                 permanentEffects.add(effect);
             }
         }
-        permanentEffects.removeIf(effect -> !effect.getType().equals(PotionEffectType.INCREASE_DAMAGE) ||
-                !effect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE) ||
-                !effect.getType().equals(PotionEffectType.SPEED) ||
-                !effect.getType().equals(PotionEffectType.FIRE_RESISTANCE) ||
+        permanentEffects.removeIf(effect -> !effect.getType().equals(PotionEffectType.INCREASE_DAMAGE) &&
+                !effect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE) &&
+                !effect.getType().equals(PotionEffectType.SPEED) &&
+                !effect.getType().equals(PotionEffectType.FIRE_RESISTANCE) &&
                 !effect.getType().equals(PotionEffectType.REGENERATION));
         return permanentEffects;
     }
