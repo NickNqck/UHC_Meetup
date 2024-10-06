@@ -3,7 +3,9 @@ package fr.nicknqck.commands.roles;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
@@ -39,6 +41,62 @@ public class NsCommands implements CommandExecutor {
 			if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("roles")) {
 					sender.sendMessage(gameState.getRolesList());
+					return true;
+				}
+				if (args[0].equalsIgnoreCase("intelligences")) {
+					final List<NSRoles> genie = new ArrayList<>();
+					final List<NSRoles> intelligent = new ArrayList<>();
+					final List<NSRoles> moyenne = new ArrayList<>();
+					final List<NSRoles> peu = new ArrayList<>();
+					for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+						if (!gamePlayer.isAlive())continue;
+						if (gamePlayer.getRole() == null)continue;
+						if (gamePlayer.getRole() instanceof NSRoles) {
+							NSRoles role = (NSRoles) gamePlayer.getRole();
+							if (role.getIntelligence().equals(Intelligence.GENIE)) {
+								genie.add(role);
+							} else if (role.getIntelligence().equals(Intelligence.INTELLIGENT)) {
+								intelligent.add(role);
+							} else if (role.getIntelligence().equals(Intelligence.MOYENNE) || role.getIntelligence().equals(Intelligence.CONNUE)) {
+								moyenne.add(role);
+							} else if (role.getIntelligence().equals(Intelligence.PEUINTELLIGENT)) {
+								peu.add(role);
+							}
+						}
+					}
+					if (genie.isEmpty() && intelligent.isEmpty() && moyenne.isEmpty() && peu.isEmpty()) {
+						sender.sendMessage("§7Aucune personne n'a de rôle venant de l'univers de§a Naruto§7 n'est présent en jeu/vie");
+						return true;
+					}
+					StringBuilder sb = new StringBuilder();
+					if (!genie.isEmpty()) {
+						sb.append("§2§lGénie: \n").append("\n");
+						for (NSRoles roles : genie) {
+							sb.append(roles.getName()).append("§7, ");
+						}
+					}
+					if (!intelligent.isEmpty()) {
+						sb.append("§a§lIntelligent: ").append("\n").append("\n");
+						for (NSRoles roles : intelligent) {
+							sb.append(roles.getName()).append("§7, ");
+						}
+					}
+					if (!moyenne.isEmpty()) {
+						sb.append("§e§lMoyenne: ").append("\n").append("\n");
+						for (NSRoles roles : moyenne) {
+							sb.append(roles.getName()).append("§7, ");
+						}
+					}
+					if (!peu.isEmpty()) {
+						sb.append("§c§lPeu Intelligent: ").append("\n").append("\n");
+						for (NSRoles roles : peu) {
+							sb.append(roles.getName()).append("§7, ");
+						}
+					}
+					sender.sendMessage("§7Voici la liste des§c roles§7 avec leurs§a intelligence§7:");
+					sender.sendMessage("");
+					sb.trimToSize();
+					sender.sendMessage(sb.toString());
 					return true;
 				}
 				if (!gameState.hasRoleNull(sender)) {
