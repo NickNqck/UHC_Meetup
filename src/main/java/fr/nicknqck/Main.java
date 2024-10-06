@@ -1,6 +1,5 @@
 package fr.nicknqck;
 
-import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.roles.*;
@@ -119,7 +118,6 @@ public class Main extends JavaPlugin {
 			p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
 		System.out.println("["+PLUGIN_NAME+"] Enabled");
-		giveTab(gameState);
 		saveDefaultConfig();
         registerRecipes();
 		saveDefaultWebhookConfig();
@@ -162,6 +160,47 @@ public class Main extends JavaPlugin {
         scoreboardManager = new ScoreboardManager(gameState);
         getScoreboardManager().onEnable();
 		System.out.println("End enable scoreboard");
+	}
+	private void giveTab(GameState gameState) {
+		System.out.println("Starting give tab");
+		Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+			if (gameState.getServerState() == GameState.ServerStates.InLobby) {
+				for (UUID u : gameState.getInLobbyPlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					TabTitleManager.sendTabTitle(p,
+							gameState.msgBoard + "\n",
+							"\n" +
+									"§7Joueurs: §c" + gameState.getInLobbyPlayers().size() +"§r/§6"+gameState.getroleNMB()+ "\n"
+									+ "\n§6§l TPS: "+ TPS.getAverageTPS(1)+" "
+									+ "§cdiscord.gg/RF3D4Du8VN");
+				}
+			}
+			if (gameState.getServerState() == GameState.ServerStates.InGame) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player player = Bukkit.getPlayer(u);
+					if (player == null)continue;
+					if (gameState.roleTimer < gameState.getInGameTime()) {
+						if (!gameState.hasRoleNull(player)) {
+							if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
+								TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
+							}
+						}
+					} else {
+						int time = gameState.roleTimer-gameState.getInGameTime();
+						String trm = time/60 < 10 ? "0"+time/60 : time/60+"";
+						String trs = time%60 < 10 ? "0"+time%60 : time%60+"";
+						TabTitleManager.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
+					}
+				}
+			}
+			if (gameState.getServerState() == GameState.ServerStates.GameEnded) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					NMSPacket.clearTitle(p);
+				}
+			}
+		}, 1, 1);
+		System.out.println("Ending give tab");
 	}
 	private void registerEvents(GameState gameState) {
 		System.out.println("Starting registering events");
@@ -257,46 +296,6 @@ public class Main extends JavaPlugin {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
 		}
-	}
-	private void giveTab(GameState gameState) {
-		System.out.println("Starting give tab");
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-			if (gameState.getServerState() == ServerStates.InLobby) {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-				//	NMSPacket.sendTabTitle(p, null, null);
-					NMSPacket.sendTabTitle(p,
-							gameState.msgBoard + "\n",
-							"\n" +
-									"§7Joueurs: §c" + gameState.getInLobbyPlayers().size() +"§r/§6"+gameState.getroleNMB()+ "\n"
-									+ "\n§6§l TPS: "+ TPS.getAverageTPS(1)+" "
-									+ "§cdiscord.gg/RF3D4Du8VN");
-				}
-			}
-			if (gameState.getServerState() == ServerStates.InGame) {
-				for (UUID u : gameState.getInGamePlayers()) {
-					Player player = Bukkit.getPlayer(u);
-					if (player == null)continue;
-					if (gameState.roleTimer < gameState.getInGameTime()) {
-		        		if (!gameState.hasRoleNull(player)) {
-		        			if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getOriginTeam() != null) {
-				            	TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
-				         }
-		        		}		        		 
-		        	} else {
-		        		int time = gameState.roleTimer-gameState.getInGameTime();
-				    	String trm = time/60 < 10 ? "0"+time/60 : time/60+"";
-				    	String trs = time%60 < 10 ? "0"+time%60 : time%60+"";
-		        		TabTitleManager.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
-		        	}
-				}
-			}
-			if (gameState.getServerState() == ServerStates.GameEnded) {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					NMSPacket.clearTitle(p);
-				}
-			}
-		}, 1, 1);
-		System.out.println("Ending give tab");
 	}
 	private void spawnPlatform(World world) {
 		System.out.println("Spawning GLASS platform");
