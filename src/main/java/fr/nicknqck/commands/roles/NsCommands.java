@@ -68,35 +68,44 @@ public class NsCommands implements CommandExecutor {
 						sender.sendMessage("§7Aucune personne n'a de rôle venant de l'univers de§a Naruto§7 n'est présent en jeu/vie");
 						return true;
 					}
-					StringBuilder sb = new StringBuilder();
-					if (!genie.isEmpty()) {
-						sb.append("§2§lGénie: \n").append("\n");
-						for (NSRoles roles : genie) {
-							sb.append(roles.getName()).append("§7, ");
-						}
-					}
-					if (!intelligent.isEmpty()) {
-						sb.append("§a§lIntelligent: ").append("\n").append("\n");
-						for (NSRoles roles : intelligent) {
-							sb.append(roles.getName()).append("§7, ");
-						}
-					}
-					if (!moyenne.isEmpty()) {
-						sb.append("§e§lMoyenne: ").append("\n").append("\n");
-						for (NSRoles roles : moyenne) {
-							sb.append(roles.getName()).append("§7, ");
-						}
-					}
-					if (!peu.isEmpty()) {
-						sb.append("§c§lPeu Intelligent: ").append("\n").append("\n");
-						for (NSRoles roles : peu) {
-							sb.append(roles.getName()).append("§7, ");
-						}
-					}
 					sender.sendMessage("§7Voici la liste des§c roles§7 avec leurs§a intelligence§7:");
 					sender.sendMessage("");
-					sb.trimToSize();
-					sender.sendMessage(sb.toString());
+					if (!genie.isEmpty()) {
+						sender.sendMessage("§2§lGénie: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : genie) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
+					if (!intelligent.isEmpty()) {
+						sender.sendMessage("§a§lIntelligent: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : intelligent) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
+					if (!moyenne.isEmpty()) {
+						sender.sendMessage("§e§lMoyenne: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : moyenne) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
+					if (!peu.isEmpty()) {
+						sender.sendMessage("§c§lPeu Intelligent: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : peu) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
 					return true;
 				}
 				if (!gameState.hasRoleNull(sender)) {
