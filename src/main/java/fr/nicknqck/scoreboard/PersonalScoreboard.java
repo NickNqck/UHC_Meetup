@@ -9,8 +9,14 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.TPS;
+import fr.nicknqck.utils.packets.NMSPacket;
+import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.utils.rank.ChatRank;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -38,6 +44,9 @@ public class PersonalScoreboard {
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
     private final GameState gameState;
+	@Setter
+	@Getter
+	private boolean tab = false;
     PersonalScoreboard(Player player, GameState gameState){
         this.player = player;
         this.gameState = gameState;
@@ -127,6 +136,46 @@ public class PersonalScoreboard {
     	}
         objectiveSign.updateLines();
     }
+	public void setTab() {
+		setTab(true);
+		Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
+			if (gameState.getServerState() == GameState.ServerStates.InLobby) {
+				for (UUID u : gameState.getInLobbyPlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					TabTitleManager.sendTabTitle(p,
+							gameState.msgBoard + "\n",
+							"\n" +
+									"§7Joueurs: §c" + gameState.getInLobbyPlayers().size() +"§r/§6"+gameState.getroleNMB()+ "\n"
+									+ "\n§6§l TPS: "+ TPS.getAverageTPS(1)+" "
+									+ "§cdiscord.gg/RF3D4Du8VN");
+				}
+			}
+			if (gameState.getServerState() == GameState.ServerStates.InGame) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player player = Bukkit.getPlayer(u);
+					if (player == null)continue;
+					if (gameState.roleTimer < gameState.getInGameTime()) {
+						if (!gameState.hasRoleNull(player)) {
+							if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
+								TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
+							}
+						}
+					} else {
+						int time = gameState.roleTimer-gameState.getInGameTime();
+						String trm = time/60 < 10 ? "0"+time/60 : time/60+"";
+						String trs = time%60 < 10 ? "0"+time%60 : time%60+"";
+						TabTitleManager.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
+					}
+				}
+			}
+			if (gameState.getServerState() == GameState.ServerStates.GameEnded) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					NMSPacket.clearTitle(p);
+				}
+			}
+		}, 1, 1);
+	}
     public void onLogout(){
         objectiveSign.removeReceiver(Bukkit.getServer().getOfflinePlayer(uuid));
         System.out.println("removing "+Bukkit.getPlayer(uuid).getName()+" from PersonalScoreboard");
