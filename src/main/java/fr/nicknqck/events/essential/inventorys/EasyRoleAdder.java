@@ -17,7 +17,8 @@ public final class EasyRoleAdder {
         for (GameState.Roles roles : GameState.Roles.values()) {
             if (roles.getItem().getItemMeta().getDisplayName().equals(name)) {
                 if (GameState.getInstance().getAvailableRoles().get(roles) > 0) {
-                    GameState.getInstance().addInAvailableRoles(roles, Math.max(GameState.getInstance().getInLobbyPlayers().size()-1, GameState.getInstance().getAvailableRoles().get(roles)-1));
+                    GameState.getInstance().addInAvailableRoles(roles,
+                            Math.max(0, GameState.getInstance().getAvailableRoles().get(roles)-1));
                     GameState.getInstance().updateGameCanLaunch();
                     break;
                 }
