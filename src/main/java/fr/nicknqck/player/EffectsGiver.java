@@ -2,6 +2,7 @@ package fr.nicknqck.player;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.CustomKillEffectGiveEvent;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -14,9 +15,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class EffectsGiver implements Listener {
+
+    private static final Map<GamePlayer, Map<Class<? extends RoleBase>, PotionEffect>> killGiver = new HashMap<>();
+
     public EffectsGiver() {
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
         new BukkitRunnable() {
@@ -105,12 +111,32 @@ public class EffectsGiver implements Listener {
     @EventHandler
     private void onKill(UHCPlayerKillEvent event) {
         if (event.getGamePlayerKiller() != null) {
-            event.getGamePlayerKiller();
             for (PotionEffect potionEffect : event.getGamePlayerKiller().getRole().getEffects().keySet()) {
                 if (event.getGamePlayerKiller().getRole().getEffects().get(potionEffect).equals(EffectWhen.AT_KILL)) {
                     event.getPlayerKiller().addPotionEffect(potionEffect, true);
                 }
             }
+            if (killGiver.isEmpty())return;
+            if (killGiver.containsKey(event.getGamePlayerKiller())) {
+                if (event.getGameState().getGamePlayer().containsKey(event.getVictim().getUniqueId())) {
+                    GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId());
+                    if (gamePlayer.getRole() == null)return;
+                    PotionEffect potionEffect = killGiver.get(gamePlayer).get(gamePlayer.getRole().getClass());
+                    CustomKillEffectGiveEvent e = new CustomKillEffectGiveEvent(event.getGamePlayerKiller(), gamePlayer, gamePlayer.getRole(), potionEffect, event.getGameState());
+                    Bukkit.getPluginManager().callEvent(e);
+                    if (e.isCancelled())return;
+                    event.getPlayerKiller().addPotionEffect(potionEffect);
+                }
+            }
         }
     }
+
+    public static void addCustomOnKill(final GamePlayer gamePlayer, final Class<? extends RoleBase> roleToKill, PotionEffect potionEffect) {
+        if (!killGiver.containsKey(gamePlayer)) {
+            Map<Class<? extends RoleBase>, PotionEffect> one = new HashMap<>();
+            one.put(roleToKill, potionEffect);
+            killGiver.put(gamePlayer, one);
+        }
+    }
+
 }

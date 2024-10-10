@@ -42,6 +42,7 @@ public class Danzo extends NSRoles {
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
 	@Getter
 	private boolean killHokage = false;
+
 	public Danzo(UUID player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
