@@ -19,6 +19,8 @@ import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
 import fr.nicknqck.roles.ns.shinobi.*;
+import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
+import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
@@ -168,6 +170,7 @@ public class RoleManager {
     private void registerNs() throws Exception {
         //Register Shinobi
         registerRole(Asuma.class);
+        registerRole(Fugaku.class);
         registerRole(Gai.class);
         registerRole(Ino.class);
         registerRole(Jiraya.class);
@@ -183,6 +186,8 @@ public class RoleManager {
         registerRole(Tenten.class);
         registerRole(Tsunade.class);
         registerRole(YondaimeRaikage.class);
+        registerRole(RockLeeV2.class);
+        registerRole(GaiV2.class);
         //Register Orochimaru
         registerRole(Jugo.class);
         registerRole(Kabuto.class);

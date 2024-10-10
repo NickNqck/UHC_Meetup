@@ -27,21 +27,10 @@ import java.util.UUID;
 
 public class RockLeeV2 extends PortesRoles implements Listener {
 
-    private final TextComponent desc;
+    private TextComponent desc;
 
     public RockLeeV2(UUID player) {
         super(player);
-        AutomaticDesc desc = new AutomaticDesc(this);
-        desc.setItems(troisPorteMap(), sixPorteMap(), huitPorteMap(),
-        new TripleMap<>(
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'obtenir l'effet§b Speed I§7 pendant§c 1 minute§7, puis, vous obtiendrez§c 15 secondes§7 de§2 nausé§7. (1x/3m)")}),
-                "§aAlcoolique no Jutsu",
-                60*3
-        )).addParticularites(
-          new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Votre nature de chakra est §caléatoire§7, cette partie vous possédez la nature de chakra: "+getChakras().getShowedName())})
-        );
-        this.desc = desc.getText();
-        EventUtils.registerEvents(this);
     }
 
     @Override
@@ -50,6 +39,17 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         addPower(new SixPortesPower(this), true);
         addPower(new HuitPortesPower(this), true);
         addPower(new SakePower(this), true);
+        AutomaticDesc desc = new AutomaticDesc(this);
+        desc.setItems(troisPorteMap(), sixPorteMap(), huitPorteMap(),
+                new TripleMap<>(
+                        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'obtenir l'effet§b Speed I§7 pendant§c 1 minute§7, puis, vous obtiendrez§c 15 secondes§7 de§2 nausé§7. (1x/3m)")}),
+                        "§aAlcoolique no Jutsu",
+                        60*3
+                )).addParticularites(
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Votre nature de chakra est §caléatoire§7, cette partie vous possédez la nature de chakra: "+getChakras().getShowedName())})
+        );
+        this.desc = desc.getText();
+        EventUtils.registerEvents(this);
     }
 
     @Override

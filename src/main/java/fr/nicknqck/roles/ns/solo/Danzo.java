@@ -107,6 +107,7 @@ public class Danzo extends NSRoles {
 				"",
 				"Si vous parvenez à tuer un membre du clan§4§l Uchiwa§f vous obtiendrez l'effet "+AllDesc.Resi+"§9 1 permanent",
 				"Vous infligez§c +10%§f de dégat au§4§l Uchiwa",
+				"Toute les§c 2 minutes§7 vous obtenez l'information si un§4§l Uchiwa§7 est présent autours de vous ou non (§c15 blocs§7), s'il y en a un vous obtiendrez son rang (§6/ns uchirang§7)",
 				"",
 				AllDesc.chakra+getChakras().getShowedName(),
 				AllDesc.bar
