@@ -48,6 +48,12 @@ public class Itachi extends UchiwaRoles {
 		super(player);
 		setChakraType(Chakras.KATON);
 	}
+
+	@Override
+	public UchiwaType getUchiwaType() {
+		return UchiwaType.IMPORTANT;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Itachi;

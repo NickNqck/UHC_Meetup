@@ -44,7 +44,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Fugaku extends UchiwaRoles implements Listener {
+
     private TextComponent desc;
+
+    @Override
+    public UchiwaType getUchiwaType() {
+        return UchiwaType.INUTILE;
+    }
+
     private final ItemStack oeilItem = new ItemBuilder(Material.EYE_OF_ENDER).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setUnbreakable(true).setName("§cOeil Maléfique").setDroppable(false).toItemStack();
     private int cdAffaiblissement;
     private int cdAttaque;

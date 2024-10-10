@@ -41,6 +41,11 @@ public abstract class JubiRoles extends UchiwaRoles {
         addPower(new TraqueurPower(this), true);
     }
 
+    @Override
+    public UchiwaType getUchiwaType() {
+        return UchiwaType.LEGENDAIRE;
+    }
+
     static class TraqueurPower extends ItemPower implements Listener {
 
         private final JubiRoles roles;

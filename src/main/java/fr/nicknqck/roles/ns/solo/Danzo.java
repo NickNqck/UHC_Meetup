@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
@@ -13,6 +14,7 @@ import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.powers.Power;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -25,12 +27,10 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Danzo extends NSRoles {
 
@@ -42,6 +42,7 @@ public class Danzo extends NSRoles {
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
 	@Getter
 	private boolean killHokage = false;
+	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
 
 	public Danzo(UUID player) {
 		super(player);
@@ -64,6 +65,7 @@ public class Danzo extends NSRoles {
 		}, 20*10);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 0), EffectWhen.PERMANENT);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED,1 , 0), EffectWhen.PERMANENT);
+		addPower(new UchiwaFinders(this));
 	}
 	@Override
 	public TeamList getOriginTeam() {
@@ -195,10 +197,7 @@ public class Danzo extends NSRoles {
             return gameState.getPlayerRoles().get(p) instanceof UchiwaRoles;
 		}
 		return false;
-//		return getListPlayerFromRole(Roles.Madara).contains(p) || getListPlayerFromRole(Roles.Obito).contains(p) || getListPlayerFromRole(Roles.Sasuke).contains(p) || getListPlayerFromRole(Roles.Itachi).contains(p);
 	}
-
-	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
 
 	@Override
 	public String getName() {
@@ -331,5 +330,66 @@ public class Danzo extends NSRoles {
             return true;
         }
 		return super.ItemUse(item, gameState);
+	}
+
+	@Getter
+    private static class UchiwaFinders extends Power {
+
+		private final FindersRunnable findersRunnable;
+
+		public UchiwaFinders(Danzo role) {
+			super("Chercheur d'Uchiwa", null, role);
+			this.findersRunnable = new FindersRunnable(role, role.getGamePlayer());
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> args) {
+			return false;
+		}
+		@Getter
+		private static class FindersRunnable extends BukkitRunnable {
+
+			private final Danzo danzo;
+			private final GamePlayer gamePlayer;
+
+			public FindersRunnable(Danzo role, GamePlayer gamePlayer) {
+				this.danzo = role;
+				this.gamePlayer = gamePlayer;
+				runTaskTimerAsynchronously(Main.getInstance(), 0, 20*120);
+			}
+
+			@Override
+			public void run() {
+				if (!danzo.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
+				if (!gamePlayer.isAlive() || owner == null) {
+					return;
+				}
+
+				List<Player> players = Loc.getNearbyPlayers(gamePlayer.getLastLocation(), 15);
+				if (players.isEmpty()) {
+					owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autours de vous (§c15 blocs§7)");
+					return;
+				}
+				int nmbUchiwa = 0;
+				for (Player player : players) {
+					if (!danzo.getGameState().getGamePlayer().containsKey(player.getUniqueId())) continue;
+					GamePlayer gm = danzo.getGameState().getGamePlayer().get(player.getUniqueId());
+					if (!gm.isAlive())continue;
+					if (gm.getRole() == null)continue;
+					if (gm.getRole() instanceof UchiwaRoles) {
+						nmbUchiwa++;
+						owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autours de vous, son aura vous fait donné l'impression qu'il est§c "+((UchiwaRoles) gm.getRole()).getUchiwaType().getName());
+						break;
+					}
+				}
+				if (nmbUchiwa == 0) {
+					owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autours de vous (§c15 blocs§7)");
+				}
+			}
+		}
 	}
 }

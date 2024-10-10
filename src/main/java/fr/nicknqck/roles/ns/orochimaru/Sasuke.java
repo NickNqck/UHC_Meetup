@@ -58,6 +58,11 @@ public class Sasuke extends UchiwaRoles {
 	}
 
 	@Override
+	public UchiwaType getUchiwaType() {
+		return UchiwaType.IMPORTANT;
+	}
+
+	@Override
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);
 		setChakraType(Chakras.KATON);
