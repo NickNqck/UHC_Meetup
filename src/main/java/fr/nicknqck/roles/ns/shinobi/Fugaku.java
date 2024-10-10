@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.events.custom.roles.ns.FugakuPowerEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -196,14 +195,10 @@ public class Fugaku extends UchiwaRoles implements Listener {
                                 if (item.getItemMeta().hasDisplayName()) {
                                     Player clicked = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                                     if (clicked != null) {
-                                        FugakuPowerEvent fugakuPowerEvent = new FugakuPowerEvent(FugakuPowerEvent.Power.AFFAIBLISSEMENT, clicked, this);
-                                        Bukkit.getPluginManager().callEvent(fugakuPowerEvent);
-                                        if (!fugakuPowerEvent.isCancelled()) {
-                                            clicked.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*18, 0, false, false), true);
-                                            clicked.sendMessage("§aFugaku§7 vous fait sentir impuissant");
-                                            event.getWhoClicked().sendMessage("§7Vous avez donner à §c"+clicked.getName()+"§7 l'effet§8 Weakness I§7 pendant§c 18 secondes");
-                                            this.cdAffaiblissement = 120;
-                                        }
+                                        clicked.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*18, 0, false, false), true);
+                                        clicked.sendMessage("§aFugaku§7 vous fait sentir impuissant");
+                                        event.getWhoClicked().sendMessage("§7Vous avez donner à §c"+clicked.getName()+"§7 l'effet§8 Weakness I§7 pendant§c 18 secondes");
+                                        this.cdAffaiblissement = 120;
                                     }
                                 }
                             }
@@ -220,15 +215,12 @@ public class Fugaku extends UchiwaRoles implements Listener {
                                 if (item.getItemMeta().hasDisplayName()) {
                                     Player clicked = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                                     if (clicked != null) {
-                                        FugakuPowerEvent fugakuPowerEvent = new FugakuPowerEvent(FugakuPowerEvent.Power.ATTAQUE, clicked, this);
-                                        Bukkit.getPluginManager().callEvent(fugakuPowerEvent);
-                                        if (!fugakuPowerEvent.isCancelled()) {
-                                            Location loc = Loc.getRandomLocationAroundPlayer(clicked, 10);
-                                            event.getWhoClicked().teleport(loc);
-                                            clicked.sendMessage("§7Vous sentez quelque chose de nouveau autours de vous.");
-                                            event.getWhoClicked().sendMessage("§7Vous vous êtes téléportez autours de§c "+clicked.getName());
-                                            cdAttaque = 60*5;
-                                        }
+                                        Location loc = Loc.getRandomLocationAroundPlayer(clicked, 10);
+                                        event.getWhoClicked().teleport(loc);
+                                        clicked.sendMessage("§7Vous sentez quelque chose de nouveau autours de vous.");
+                                        event.getWhoClicked().sendMessage("§7Vous vous êtes téléportez autours de§c "+clicked.getName());
+                                        cdAttaque = 60*5;
+
                                     }
                                 }
                             }
@@ -245,12 +237,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
                                 if (item.getItemMeta().hasDisplayName()) {
                                     Player clicked = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                                     if (clicked != null) {
-                                        FugakuPowerEvent fugakuPowerEvent = new FugakuPowerEvent(FugakuPowerEvent.Power.AFFAIBLISSEMENT, clicked, this);
-                                        Bukkit.getPluginManager().callEvent(fugakuPowerEvent);
-                                        if (!fugakuPowerEvent.isCancelled()) {
-                                            new CombatManager(this, clicked);
-                                        }
-
+                                        new CombatManager(this, clicked);
                                     }
                                 }
                             }
