@@ -2,10 +2,7 @@ package fr.nicknqck.player;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.CustomKillEffectGiveEvent;
-import fr.nicknqck.events.custom.DayEvent;
-import fr.nicknqck.events.custom.NightEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.*;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import org.bukkit.Bukkit;
@@ -130,7 +127,10 @@ public class EffectsGiver implements Listener {
             }
         }
     }
-
+    @EventHandler
+    private void onEndGame(EndGameEvent event) {
+        killGiver.clear();
+    }
     public static void addCustomOnKill(final GamePlayer gamePlayer, final Class<? extends RoleBase> roleToKill, PotionEffect potionEffect) {
         if (!killGiver.containsKey(gamePlayer)) {
             Map<Class<? extends RoleBase>, PotionEffect> one = new HashMap<>();
