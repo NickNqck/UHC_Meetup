@@ -36,6 +36,7 @@ import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
 import fr.nicknqck.roles.ns.shinobi.*;
+import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
@@ -746,7 +747,7 @@ public class GameState{
 			role = new Deidara(player);
 			break;
 		case Gai:
-			role = new Gai(player);
+			role = new GaiV2(player);
 			break;
 		case RockLee:
 			role = new RockLeeV2(player);

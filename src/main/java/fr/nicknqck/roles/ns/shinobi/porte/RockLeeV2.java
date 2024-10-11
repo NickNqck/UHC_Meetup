@@ -3,8 +3,10 @@ package fr.nicknqck.roles.ns.shinobi.porte;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.shinobi.Gai;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -37,7 +39,6 @@ public class RockLeeV2 extends PortesRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         addPower(new TroisPortePower(this), true);
         addPower(new SixPortesPower(this), true);
-        addPower(new HuitPortesPower(this), true);
         addPower(new SakePower(this), true);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.setItems(troisPorteMap(), sixPorteMap(), huitPorteMap(),
@@ -46,7 +47,8 @@ public class RockLeeV2 extends PortesRoles implements Listener {
                         "§aAlcoolique no Jutsu",
                         60*3
                 )).addParticularites(
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Votre nature de chakra est §caléatoire§7, cette partie vous possédez la nature de chakra: "+getChakras().getShowedName())})
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Votre nature de chakra est §caléatoire§7, cette partie vous possédez la nature de chakra: "+getChakras().getShowedName())}),
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de §aGai Maito§7 vous obtiendrez l'item "+huitPorteMap().getSecond())})
         );
         this.desc = desc.getText();
         EventUtils.registerEvents(this);
@@ -71,7 +73,19 @@ public class RockLeeV2 extends PortesRoles implements Listener {
     private void onEnd(EndGameEvent event) {
         EventUtils.unregisterEvents(this);
     }
-
+    @EventHandler
+    private void onDie(UHCDeathEvent event) {
+        if (event.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+            if (event.getRole() == null)return;
+            if (event.getRole() instanceof Gai || event.getRole() instanceof GaiV2) {
+                if (!getGamePlayer().isAlive()){
+                    addPower(new HuitPortesPower(this));
+                    return;
+                }
+                addPower(new HuitPortesPower(this), true);
+            }
+        }
+    }
     @Override
     public GameState.Roles getRoles() {
         return GameState.Roles.RockLee;
