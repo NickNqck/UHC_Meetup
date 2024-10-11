@@ -56,7 +56,7 @@ public abstract class Power {
 
         PowerActivateEvent powerActivateEvent = new PowerActivateEvent(this.plugin, player, this);
         this.plugin.getServer().getPluginManager().callEvent(powerActivateEvent);
-        if (powerActivateEvent.isCancelled()) {
+        if (powerActivateEvent.isCancel()) {
             if (powerActivateEvent.getCancelMessage() != null) {
                 player.sendMessage(powerActivateEvent.getCancelMessage());
             } else {
@@ -83,7 +83,8 @@ public abstract class Power {
     }
     public abstract boolean onUse(Player player, Map<String, Object> args);
 
-    public void onEndCooldown(Cooldown cooldown) {
+    public void onEndCooldown(final Cooldown cooldown) {
+        if (this.cooldown == null)return;
         if (cooldown.equals(this.getCooldown())) {//donc si c'est EXACTEMENT le même "Cooldown"
             getRole().owner.sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
         }

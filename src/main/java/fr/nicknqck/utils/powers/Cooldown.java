@@ -3,10 +3,12 @@ package fr.nicknqck.utils.powers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
+import lombok.Setter;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public final class Cooldown {
     private final int cooldown;
+    @Setter
     private int lastUse;
 
     public Cooldown(int cooldown) {

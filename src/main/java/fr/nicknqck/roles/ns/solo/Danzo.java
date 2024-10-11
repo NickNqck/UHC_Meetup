@@ -361,7 +361,7 @@ public class Danzo extends NSRoles {
 
 			@Override
 			public void run() {
-				if (!danzo.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+				if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
 					cancel();
 					return;
 				}

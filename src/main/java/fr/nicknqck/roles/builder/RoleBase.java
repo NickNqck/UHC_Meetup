@@ -287,7 +287,7 @@ public abstract class RoleBase implements IRole {
 		}
 	}
 	public void Heal(Player target, double demicoeur) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+		Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
 			if (target.getHealth() - demicoeur <= 0 && demicoeur <0) {
 				Main.getInstance().getDeathManager().KillHandler(target, target);
 			}
@@ -296,7 +296,7 @@ public abstract class RoleBase implements IRole {
 			}else {
 				target.setHealth(target.getMaxHealth());
 			}
-		}, 5);
+		});
 	}
 	public void onLeftClick(PlayerInteractEvent event, GameState gameState) {}
 	public void KnowRole(Player knower, Roles toknow, int delayinTick) {

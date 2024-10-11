@@ -12,8 +12,9 @@ import org.bukkit.event.HandlerList;
 import javax.annotation.Nullable;
 
 @Getter
-public class PowerActivateEvent extends Event implements Cancellable {
+public class PowerActivateEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
+    @Setter
     private boolean cancel = false;
     private final Main plugin;
     private final Player player;
@@ -33,15 +34,5 @@ public class PowerActivateEvent extends Event implements Cancellable {
     @Override
     public HandlerList getHandlers() {
         return handlers;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancel;
-    }
-
-    @Override
-    public void setCancelled(boolean b) {
-        this.cancel = b;
     }
 }
