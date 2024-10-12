@@ -243,6 +243,7 @@ public class GameState{
 		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack(), "§bMega02600"),
 		AraigneeVenimeuse(TeamList.OverWorld, "mc", 3, new ItemBuilder(Material.SPIDER_EYE).setName("§aAraignée Venimeuse").toItemStack(), "§bMega02600"),
 		GolemDeFer(TeamList.OverWorld, "mc", 4, new ItemBuilder(Material.IRON_BLOCK).setName("§aGolem De Fer").toItemStack(), "§bMega02600"),
+		Vache(TeamList.OverWorld, "mc", 5, new ItemBuilder(Material.MILK_BUCKET).setName("§aVache").toItemStack(), "§bRémi"),
 		//Nether
 		Blaze(TeamList.Nether, "mc", 0, new ItemBuilder(Material.BLAZE_ROD).setName("§cBlaze").toItemStack(), "§bMega02600"),
 		Brute(TeamList.Nether, "mc", 1, new ItemBuilder(Material.GOLD_AXE).setName("§cBrute").toItemStack(), "§bMega02600"),
@@ -832,6 +833,9 @@ public class GameState{
 				break;
 			case ZetsuBlancV2:
 				role = new ZetsuBlancV2(player);
+				break;
+			case Vache:
+				role = new Vache(player);
 				break;
 		}
 		if (role == null) return null;
