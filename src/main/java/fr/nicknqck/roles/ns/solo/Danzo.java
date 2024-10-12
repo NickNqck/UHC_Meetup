@@ -17,6 +17,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.powers.Power;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,6 +42,7 @@ public class Danzo extends NSRoles {
 	private boolean SceauActived = false;
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
 	@Getter
+	@Setter
 	private boolean killHokage = false;
 	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
 

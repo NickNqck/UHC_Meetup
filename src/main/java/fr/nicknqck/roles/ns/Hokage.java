@@ -118,12 +118,20 @@ public class Hokage {
 		System.out.println("Searched Hokage returned NULL");
 		return null;
 	}
-	public void onDeath(Player player, GameState gameState) {
+	public void onDeath(Player player, Entity entityKiller, GameState gameState) {
 		if (Hokage == null) {
 			return;
 		}
 		if (player.getUniqueId().equals(Hokage)) {
 			if (!gameState.hasRoleNull(player)){
+				if (gameState.getGamePlayer().containsKey(entityKiller.getUniqueId())) {
+					if (gameState.getGamePlayer().get(entityKiller.getUniqueId()).getRole() != null) {
+						if (gameState.getGamePlayer().get(entityKiller.getUniqueId()).getRole() instanceof Danzo) {
+							((Danzo) gameState.getGamePlayer().get(entityKiller.getUniqueId()).getRole()).setKillHokage(true);
+							entityKiller.sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
+						}
+					}
+				}
 				this.Hokage = null;
 				gameState.getPlayerRoles().get(player).addBonusforce(-10);
 				gameState.getPlayerRoles().get(player).addBonusResi(-10);

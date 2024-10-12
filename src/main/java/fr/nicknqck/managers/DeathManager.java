@@ -111,7 +111,7 @@ public class DeathManager implements Listener {
             }
         }
         if (gameState.getHokage() != null) {
-            gameState.getHokage().onDeath(killedPlayer, gameState);
+            gameState.getHokage().onDeath(killedPlayer, entityKiller, gameState);
         }
         dropDeathItems(killedPlayer.getLocation());
         //damager = le tueur
