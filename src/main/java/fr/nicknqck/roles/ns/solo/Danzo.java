@@ -151,14 +151,6 @@ public class Danzo extends NSRoles {
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer.getUniqueId() == owner.getUniqueId()) {
-			if (gameState.getHokage() != null) {
-				if (gameState.getHokage().Hokage != null) {
-					if (gameState.getHokage().Hokage.equals(victim.getUniqueId())) {
-						killer.sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
-						this.killHokage = true;
-					}
-				}
-			}
 			if (owner.getMaxHealth() < 24.0) {
 				setMaxHealth(owner.getMaxHealth()+1.0);
 				owner.setMaxHealth(getMaxHealth());
