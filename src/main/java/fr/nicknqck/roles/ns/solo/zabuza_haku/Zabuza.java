@@ -176,6 +176,9 @@ public class Zabuza extends NSRoles implements Listener {
 	@EventHandler
 	private void onPowerUse(PowerActivateEvent event) {
 		if (event.isCancel())return;
+		if (event.getPower().getCooldown() != null) {
+			if (event.getPower().isCooldownResetSended())return;
+		}
 		String name = event.getPower().getName();
 		Player owner = Bukkit.getPlayer(getPlayer());
 		if (owner == null)return;
