@@ -100,6 +100,7 @@ public class GameListener implements Listener {
 					}
 				}
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 0, false, false));
 				world.setWeatherDuration(0);
 				p.getWorld().setWeatherDuration(0);
 				p.getWorld().setStorm(false);
