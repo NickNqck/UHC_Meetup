@@ -511,13 +511,8 @@ public class GameState{
 			role = new Yoriichi(player);
 			break;
 		case Slayer:
-			if (!FFA.getFFA()) {
-				role = new PourfendeurV2(player);
-				role.setTeam(TeamList.Slayer);
-			} else {
-				role = new FFA_Pourfendeur(player);
-				role.setTeam(TeamList.Solo);
-			}
+			role = new PourfendeurV2(player);
+			role.setTeam(TeamList.Slayer);
 			break;
 		case DemonMain:
 			role = new DemonMain(player);
@@ -829,7 +824,7 @@ public class GameState{
 			role = new MagmaCube(player);
 			break;
 			case SlayerSolo:
-				role = new FFA_Pourfendeur(player);
+				role = new SlayerSolo(player);
 				break;
 			case ZetsuBlancV2:
 				role = new ZetsuBlancV2(player);
