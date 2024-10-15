@@ -137,6 +137,10 @@ public class Muzan extends DemonsRoles {
 			if (args.length == 2) {
 				if (args[1] != null) {
 					Player player = Bukkit.getPlayer(args[1]);
+					if (player == null) {
+						owner.sendMessage("§c"+args[1]+" n'est pas connecter");
+						return;
+					}
 						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player)) {
 							if (gameState.infected == null && gameState.infecteur == null) {
 								GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
