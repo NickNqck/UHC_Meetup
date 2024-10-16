@@ -10,6 +10,8 @@ import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
+import fr.nicknqck.utils.powers.CommandPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -22,7 +24,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class DSmtpCommands implements CommandExecutor {
-	GameState gameState;
+
+    private final GameState gameState;
 	
 	public DSmtpCommands(GameState gameState) {this.gameState = gameState;}
 
@@ -194,6 +197,13 @@ public class DSmtpCommands implements CommandExecutor {
 					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getPlayerRoles().get(sender);
 					if (role.getGamePlayer().isAlive()) {
 						((DemonsSlayersRoles) gameState.getPlayerRoles().get(sender)).onDSCommandSend(args, gameState);
+                        if (!role.getPowers().isEmpty()) {
+                            for (Power power : role.getPowers()) {
+                                if (power instanceof CommandPower) {
+                                    ((CommandPower) power).call(args, CommandPower.CommandType.DS, (Player) sender);
+                                }
+                            }
+                        }
 					}
 					return true;
 				}

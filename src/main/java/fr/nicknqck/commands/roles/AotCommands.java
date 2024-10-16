@@ -1,6 +1,8 @@
 package fr.nicknqck.commands.roles;
 
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.utils.powers.CommandPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -34,15 +36,24 @@ public class AotCommands implements CommandExecutor {
                         } else {
 							if (args[0].equalsIgnoreCase("titan")) {
 								for (Titans value : Titans.values()) {
-								value.getTitan().onAotTitan(player, args);
-							}
+									value.getTitan().onAotTitan(player, args);
+									return true;
+								}
                             } else {
 								for (Titans t : Titans.values()) {
 									t.getTitan().onSubCommand(player, args);
 								}
 								if (gameState.getPlayerRoles().get(player) instanceof AotRoles) {
-									if (gameState.getPlayerRoles().get(player).getGamePlayer().isAlive()) {
-										((AotRoles) gameState.getPlayerRoles().get(player)).onAotCommands(arg, args, gameState);
+									AotRoles aotRoles = (AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole();
+									if (aotRoles.getGamePlayer().isAlive()) {
+										aotRoles.onAotCommands(arg, args, gameState);
+										if (!aotRoles.getPowers().isEmpty()) {
+											for (Power power : aotRoles.getPowers()) {
+												if (power instanceof CommandPower) {
+													((CommandPower) power).call(args, CommandPower.CommandType.AOT, player);
+												}
+											}
+										}
 									}
 								}
                             }
