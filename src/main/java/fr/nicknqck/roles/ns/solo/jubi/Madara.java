@@ -14,12 +14,10 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -29,7 +27,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
@@ -116,7 +113,6 @@ public class Madara extends JubiRoles {
 				MadaraItem(),
 				ChibakuTenseiItem(),
 				SusanoItem(),
-				TraqueurItem()
 		};
 	}
 	private ItemStack MadaraItem() {
@@ -135,12 +131,6 @@ public class Madara extends JubiRoles {
 		return new ItemBuilder(Material.NETHER_STAR)
 				.setName("§c§lSusano")
 				.setLore("§7Vous donne "+AllDesc.Resi+"§7 1 pendant 5m")
-				.toItemStack();
-	}
-	private ItemStack TraqueurItem() {
-		return new ItemBuilder(Material.COMPASS)
-				.setName("§dTraqueur")
-				.setLore("§7Permet de traquer les bijus")
 				.toItemStack();
 	}
 	private boolean MadaraUse = false;
@@ -200,24 +190,10 @@ public class Madara extends JubiRoles {
 			}
 			return true;
 		}
-		if (item.isSimilar(TraqueurItem())) {
-			if (!gameState.BijusEnable) {
-				owner.sendMessage("§7Les Bijus sont désactivé...");
-				return true;
-			}
-			Inventory inv = Bukkit.createInventory(owner, 9, "§7Traqueur de bijus");
-			for (Bijus b : Bijus.values()) {
-				if (b.getBiju().isEnable()) {
-					inv.addItem(b.getBiju().getItem());
-				}
-			}
-			owner.openInventory(inv);
-		}
 		return false;
 	}
 	@Override
 	public void resetCooldown() {
-		traqued = null;
 		MadaraUse = false;
 		BenshoCD = 0;
 		ShinraCD = 0;
@@ -227,7 +203,6 @@ public class Madara extends JubiRoles {
 		owner.getInventory().removeItem(getItems());
 		giveItem(owner, true, getItems());
 	}
-	private Bijus traqued = null;
 	private void openChibakuTenseiInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cChibaku Tensei");
 		inv.setItem(0, new ItemBuilder(Material.IRON_SWORD).setName("§cBenshô Ten'in").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(BenshoCD),"§7Permet d'attirer un joueur proche à votre position").toItemStack());
@@ -314,29 +289,6 @@ public class Madara extends JubiRoles {
 	public void onEndGame() {
 		NF.clear();
 	}
-	@Override
-	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
-		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-			if (player.getUniqueId() == owner.getUniqueId()) {
-				if (event.getItem().isSimilar(TraqueurItem())) {
-					if (traqued != null) {
-						if (traqued.getBiju().getMaster() == null) {
-							Location loc = traqued.getBiju().getSpawn();
-		                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
-		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
-						} else {
-							owner.sendMessage(("&fVous traquez désormais " + Bukkit.getPlayer(traqued.getBiju().getMaster()).getName() + " §fqui se situe en :"));
-		                    Location loc = Bukkit.getPlayer(traqued.getBiju().getMaster()).getLocation();
-		                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
-		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
-						}
-					}
-				}
-			}
-		}
-	}
 
 	@Override
 	public @NonNull Intelligence getIntelligence() {
@@ -345,28 +297,6 @@ public class Madara extends JubiRoles {
 
 	@Override
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
-		if (inv.getTitle().equalsIgnoreCase("§7Traqueur de bijus")) {
-			event.setCancelled(true);
-			for (Bijus bijus : Bijus.values()) {
-				if (item.isSimilar(bijus.getBiju().getItem())) {
-					this.traqued = bijus;
-					owner.sendMessage("§7Vous traquez maintenant "+bijus.getBiju().getName());
-					if (bijus.getBiju().getMaster() == null) {
-						Location loc = bijus.getBiju().getSpawn();
-	                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
-	                    owner.setCompassTarget(loc);
-	                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
-					} else {
-						owner.sendMessage(("§fVous traquez désormais " + Bukkit.getPlayer(bijus.getBiju().getMaster()).getName() + " §fqui se situe en :"));
-	                    Location loc = Bukkit.getPlayer(bijus.getBiju().getMaster()).getLocation();
-	                    owner.sendMessage(("&a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f,§a" + loc.getBlockZ()));
-	                    owner.setCompassTarget(loc);
-	                    owner.sendMessage("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn()));
-					}
-					break;
-				}
-			}
-		}
 		if (inv.getTitle().equalsIgnoreCase("§cChibaku Tensei")) {
 			if (event.getSlot() == 0) {
 				if (BenshoCD <= 0) {
