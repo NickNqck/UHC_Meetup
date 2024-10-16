@@ -4,14 +4,17 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -37,6 +40,8 @@ public class SlayerSolo extends DemonsSlayersRoles {
         addPower(new EauPower(this), true);
         addPower(new VentPower(this), true);
         addPower(new FoudrePower(this), true);
+        addPower(new FeuPower(this), true);
+        addPower(new RochePower(this), true);
     }
 
     @Override
@@ -74,7 +79,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         private boolean used = false;
 
         protected FoudrePower(RoleBase role) {
-            super("§eSoufle de la Foudre", new Cooldown(60*5), new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eSoufle de la Foudre"), role);
+            super("§eSoufle de la Foudre", new Cooldown(60*6), new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eSoufle de la Foudre"), role);
         }
 
         @Override
@@ -145,7 +150,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
     private static class EauPower extends ItemPower implements Listener {
 
         protected EauPower(RoleBase role) {
-            super("§bSoufle de l'Eau", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§bSoufle de l'Eau"), role);
+            super("§bSoufle de l'Eau", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§bSoufle de l'Eau"), role);
         }
 
         @Override
@@ -195,5 +200,65 @@ public class SlayerSolo extends DemonsSlayersRoles {
             }
         }
     }
+    private static class FeuPower extends ItemPower implements Listener{
 
+        protected FeuPower(RoleBase role) {
+            super("§cSoufle du Feu", new Cooldown(60*6), new ItemBuilder(Material.BLAZE_ROD).setName("§cSoufle du Feu"), role);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                player.sendMessage("§7Activation du§c Soufle du Feu");
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*180, 0, false, false));
+                EventUtils.registerEvents(this);
+                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                    player.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
+                    EventUtils.unregisterEvents(this);
+                }, 20*180);
+                return true;
+            }
+            return false;
+        }
+        @EventHandler
+        private void onBaston(UHCPlayerBattleEvent event) {
+            if (event.getDamager().getUuid().equals(getRole().getPlayer())) {
+                if (Main.RANDOM.nextInt(100) <= 20) {
+                    event.getOriginEvent().getEntity().setFireTicks(20*20);
+                }
+            }
+        }
+    }
+    private static class RochePower extends ItemPower {
+
+        protected RochePower(RoleBase role) {
+            super("§8Soufle de la Roche", new Cooldown(60*8), new ItemBuilder(Material.STONE_AXE).setName("§8Soufle de la Roche").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideEnchantAttributes(), role);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                Player target = getRole().getTargetPlayer(player, 25);
+                if (target != null) {
+                    GamePlayer gamePlayer = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
+                    if (gamePlayer == null) {
+                        player.sendMessage("§c"+target.getDisplayName()+"§7 n'est pas en jeu");
+                        return false;
+                    }
+                    gamePlayer.stun(10);
+                    for (Location loc : new MathUtil().sphere(target.getLocation(), 5, true)) {
+                        loc.getBlock().setType(Material.STONE);
+                    }
+                    player.teleport(new Location(target.getWorld(), target.getLocation().getX(), target.getLocation().getY()+6.0, target.getLocation().getZ()));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*15, 1, false, false));
+                    player.sendMessage("§7Vous avez utiliser votre§8 Soufle de la Roche");
+                    return true;
+                } else {
+                    player.sendMessage("§cIl faut viser un joueur");
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
 }
