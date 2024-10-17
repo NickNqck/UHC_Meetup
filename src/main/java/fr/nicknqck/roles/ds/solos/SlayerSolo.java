@@ -74,11 +74,28 @@ public class SlayerSolo extends DemonsSlayersRoles {
           ),
           new TripleMap<>(
                   new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                      new TextComponent("§7Déclanche un§c timer§7 de§c 60 secondes§7, durant lesquelles le §cpremier§7 coup porter à chaque§c joueur\n§7 infligera§c 2❤§7 supplémentaire ainsi que l'effet§8 Slowness I§7 pendant§c 15 secondes§7.")
+                      new TextComponent("§7Déclanche un§c timer§7 de§c 60 secondes§7, durant lesquelles le §cpremier§7 coup porter à chaque§c joueur\n" +
+                              "§7infligera§c 2❤§7 supplémentaire ainsi que l'effet§8 Slowness I§7 pendant§c 15 secondes§7.")
                   }),
                   "§eSoufle de la Foudre",
-                  2
-        ));
+                  60*5
+        ),
+        new TripleMap<>(
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
+                        new TextComponent("§7Vous donne l'effet§6 Résistance au feu§7 et§c 20%§7 de§c chance§7 de§6 bruler§7 les joueurs que vous frappez pendant§c 3 minutes§7.")
+                }),
+                "§cSoufle du Feu",
+                60*3
+        ),
+        new TripleMap<>(
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                    new TextComponent("§7En visant un joueur, permet de l'enfermer dans une boule de pierre\n" +
+                            "§7et de vous §ctéléportez§7 au dessus de cette dernière, également, vous donne§c 10 secondes§7 de§6 Haste II§7.")
+                }),
+                "§8Soufle de la Roche",
+                6
+        )
+                );
         this.desc = automaticDesc.getText();
     }
 
