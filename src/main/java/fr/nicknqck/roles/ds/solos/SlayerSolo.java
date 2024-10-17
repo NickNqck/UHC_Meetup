@@ -5,15 +5,20 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,10 +32,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class SlayerSolo extends DemonsSlayersRoles {
+
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).setName("§aLame de Pourfendeur").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setDroppable(false).toItemStack();
+    private TextComponent desc;
 
     public SlayerSolo(UUID player) {
         super(player);
@@ -44,6 +54,42 @@ public class SlayerSolo extends DemonsSlayersRoles {
         addPower(new FeuPower(this), true);
         addPower(new RochePower(this), true);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999, 0), EffectWhen.PERMANENT);
+        setMaxHealth(24.0);
+        owner.setMaxHealth(getMaxHealth());
+        owner.setHealth(owner.getMaxHealth());
+        AutomaticDesc automaticDesc = new AutomaticDesc(this).setItems(
+          new TripleMap<>(
+                  new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                       new TextComponent("§7Vous donne l'effet§e Speed I§7 et enchante vos bottes§b Depht Strider III§7 pendant§c 3 minutes")
+                  }),
+                  "§bSoufle de l'Eau",
+                  60*3
+          ),
+          new TripleMap<>(
+                  new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                          new TextComponent("§7Vous donne l'effet§e Speed II§7 et§a No Fall§7 pendant§c 2 minutes")
+                  }),
+                  "§aSoufle du Vent",
+                  60*3
+          ),
+          new TripleMap<>(
+                  new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                      new TextComponent("§7Déclanche un§c timer§7 de§c 60 secondes§7, durant lesquelles le §cpremier§7 coup porter à chaque§c joueur\n§7 infligera§c 2❤§7 supplémentaire ainsi que l'effet§8 Slowness I§7 pendant§c 15 secondes§7.")
+                  }),
+                  "§eSoufle de la Foudre",
+                  2
+        ));
+        this.desc = automaticDesc.getText();
+    }
+
+    @Override
+    public TextComponent getComponent() {
+        return this.desc;
+    }
+
+    @Override
+    public void GiveItems() {
+        giveItem(owner, false, getItems());
     }
 
     @Override
@@ -73,12 +119,14 @@ public class SlayerSolo extends DemonsSlayersRoles {
 
     @Override
     public ItemStack[] getItems() {
-        return new ItemStack[0];
+        return new ItemStack[] {
+                sword
+        };
     }
     private static class FoudrePower extends ItemPower implements Listener {
 
         private boolean using = false;
-        private boolean used = false;
+        private final List<UUID> taped = new ArrayList<>();
 
         protected FoudrePower(RoleBase role) {
             super("§eSoufle de la Foudre", new Cooldown(60*6), new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eSoufle de la Foudre"), role);
@@ -90,11 +138,9 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 this.using = true;
                 player.sendMessage("§7Votre§e Foudre§7 est prête, vous avez maintenant§c 60 secondes§7 pour l'utiliser sur un§c joueur§7.");
                 Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-                    if (!used) {
-                        this.using = false;
-                        player.sendMessage("§7Il est trop tard, vous ne ressentez plus la§e Foudre§7 dans votre corp.");
-                        EventUtils.unregisterEvents(this);
-                    }
+                    this.using = false;
+                    player.sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
+                    EventUtils.unregisterEvents(this);
                 }, 20*60);
                 EventUtils.registerEvents(this);
                 return true;
@@ -105,6 +151,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         private void onDamage(UHCPlayerBattleEvent event) {
             if (!event.getDamager().getUuid().equals(getRole().getPlayer()))return;
             if (this.using) {
+                if (this.taped.contains(event.getVictim().getUuid()))return;
                 Player victim = event.getVictim().getRole().owner;
                 victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false));
                 if (victim.getHealth() - 4.0 <= 0.0) {
@@ -114,8 +161,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                     victim.damage(0.0);
                 }
                 victim.sendMessage("§7Vous subissez une§e foudre§c très puissante§7.");
-                this.used = true;
-                EventUtils.unregisterEvents(this);
+                this.taped.add(event.getVictim().getUuid());
             }
         }
     }
