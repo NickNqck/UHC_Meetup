@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -42,6 +43,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         addPower(new FoudrePower(this), true);
         addPower(new FeuPower(this), true);
         addPower(new RochePower(this), true);
+        givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999, 0), EffectWhen.PERMANENT);
     }
 
     @Override
