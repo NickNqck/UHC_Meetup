@@ -45,6 +45,14 @@ public class AutomaticDesc {
         }
         return this;
     }
+    public AutomaticDesc addCustomLine(String line) {
+        text.addExtra(new TextComponent("\n\n"+AllDesc.point+line));
+        return this;
+    }
+    public AutomaticDesc addCustomText(TextComponent text) {
+        text.addExtra(text);
+        return this;
+    }
     public AutomaticDesc addItem(TextComponent textComponent, int cooldown) {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item "));
         text.addExtra(textComponent);

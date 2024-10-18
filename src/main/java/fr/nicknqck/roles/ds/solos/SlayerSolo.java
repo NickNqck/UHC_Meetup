@@ -54,7 +54,17 @@ public class SlayerSolo extends DemonsSlayersRoles {
         setMaxHealth(24.0);
         owner.setMaxHealth(getMaxHealth());
         owner.setHealth(owner.getMaxHealth());
-        AutomaticDesc automaticDesc = new AutomaticDesc(this).setItems(
+        AutomaticDesc automaticDesc = new AutomaticDesc(this)
+                .addEffects(getEffects())
+                .addCustomLine("§7Vous possédez§c 2❤ permanent§7 supplémentaire.")
+                .setItems(
+          new TripleMap<>(
+                  new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                          new TextComponent("§7Épée en§b diamant§7 enchanté§c tranchant IV")
+                  }),
+                  "§aLame de Pourfendeur",
+                  0
+          ),
           new TripleMap<>(
                   new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                        new TextComponent("§7Vous donne l'effet§e Speed I§7 et enchante vos bottes§b Depht Strider III§7 pendant§c 3 minutes")
