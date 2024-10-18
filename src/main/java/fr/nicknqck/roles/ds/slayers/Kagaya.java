@@ -5,7 +5,6 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
@@ -21,7 +20,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -156,24 +154,9 @@ public class Kagaya extends SlayerRoles {
 			} else {if (getResi()>0) setResi(0);}
 		}
 		if (pacte3) {
-			for (RoleBase r : gameState.getPlayerRoles().values()) {
-				if (r != null && r.owner != null) {
-					if (r.owner != owner) {
-						if (pillier != null) {
-							if (r.owner == pillier) {
-								if (gameState.getInGamePlayers().contains(pillier.getPlayer())) {
-									if (pillier.getGamePlayer().isAlive()) {
-										if (pillier.getGamePlayer().getLastLocation().getWorld().equals(owner.getWorld())) {
-											if (pillier.getGamePlayer().getLastLocation().distance(owner.getLocation()) <= 30) {
-												owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*5, 0, false, false));
-												givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-											}
-										}										
-									}
-								}
-							}
-						}
-					}
+			for (Player p : Loc.getNearbyPlayers(owner, 30)) {
+				if (p == pillier){
+					givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 3, 1,true);
 				}
 			}
 		}
