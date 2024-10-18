@@ -9,31 +9,31 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class Cooldown {
     private final int cooldown;
     @Setter
-    private int lastUse;
+    private int actualCooldown;
 
     public Cooldown(int cooldown) {
         this.cooldown = cooldown;
     }
 
     public int getCooldownRemaining() {
-        return this.lastUse;
+        return this.actualCooldown;
     }
 
     public boolean isInCooldown() {
-        return this.lastUse > 0;
+        return this.actualCooldown > 0;
     }
 
     public void use() {
-        this.lastUse = cooldown;
+        this.actualCooldown = cooldown;
         new cdRemover(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
 
     public void addSeconds(int seconds) {
-        this.lastUse += seconds;
+        this.actualCooldown += seconds;
     }
 
     public void resetCooldown() {
-        this.lastUse = 0;
+        this.actualCooldown = 0;
     }
     private static class cdRemover extends BukkitRunnable {
 
@@ -49,8 +49,8 @@ public final class Cooldown {
                 cancel();
                 return;
             }
-            if (this.cooldown.lastUse > 0) {
-                this.cooldown.lastUse--;
+            if (this.cooldown.actualCooldown > 0) {
+                this.cooldown.actualCooldown--;
             } else {
                 for (GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
                     if (gamePlayer.getRole() == null)continue;
