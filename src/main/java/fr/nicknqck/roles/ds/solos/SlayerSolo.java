@@ -32,10 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SlayerSolo extends DemonsSlayersRoles {
 
@@ -93,7 +90,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                             "§7et de vous §ctéléportez§7 au dessus de cette dernière, également, vous donne§c 10 secondes§7 de§6 Haste II§7.")
                 }),
                 "§8Soufle de la Roche",
-                6
+                60*8-15
         )
                 );
         this.desc = automaticDesc.getText();
@@ -311,9 +308,17 @@ public class SlayerSolo extends DemonsSlayersRoles {
                         return false;
                     }
                     gamePlayer.stun(10);
-                    for (Location loc : new MathUtil().sphere(target.getLocation(), 5, true)) {
+                    final Set<Location> sphere = new MathUtil().sphere(target.getLocation(), 5, true);
+                    for (final Location loc : sphere) {
                         loc.getBlock().setType(Material.STONE);
                     }
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                        for (final Location loc : sphere) {
+                            loc.getBlock().setType(Material.AIR);
+                        }
+                        assert player.isOnline();
+                        player.sendMessage("§7Votre§8 Soufle de la Roche§7 s'arrête maintenant");
+                    }, 20*15);
                     player.teleport(new Location(target.getWorld(), target.getLocation().getX(), target.getLocation().getY()+6.0, target.getLocation().getZ()));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*15, 1, false, false));
                     player.sendMessage("§7Vous avez utiliser votre§8 Soufle de la Roche");
