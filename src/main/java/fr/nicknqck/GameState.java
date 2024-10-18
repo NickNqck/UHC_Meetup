@@ -960,6 +960,7 @@ public class GameState{
 					}
 					player.setGameMode(GameMode.SURVIVAL);
 					player.teleport(getGamePlayer().get(player.getUniqueId()).getDeathLocation());
+					getGamePlayer().get(player.getUniqueId()).setAlive(true);
 				}
 			}
 		}
