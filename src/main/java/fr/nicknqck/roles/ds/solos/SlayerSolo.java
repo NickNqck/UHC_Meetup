@@ -166,7 +166,9 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 player.sendMessage("§7Votre§e Foudre§7 est prête, vous avez maintenant§c 60 secondes§7 pour l'utiliser sur un§c joueur§7.");
                 Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                     this.using = false;
-                    player.sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
+                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
+                        player.sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
+                    }
                     EventUtils.unregisterEvents(this);
                 }, 20*60);
                 EventUtils.registerEvents(this);
@@ -189,6 +191,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 }
                 victim.sendMessage("§7Vous subissez une§e foudre§c très puissante§7.");
                 this.taped.add(event.getVictim().getUuid());
+                getRole().getGameState().spawnLightningBolt(victim.getWorld(), victim.getLocation());
             }
         }
     }
@@ -206,7 +209,9 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 EventUtils.registerEvents(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     assert player.isOnline();
-                    player.sendMessage("§7Votre§a Soufle du Vent§7 est maintenant désactiver");
+                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
+                        player.sendMessage("§7Votre§a Soufle du Vent§7 est maintenant désactiver");
+                    }
                     EventUtils.unregisterEvents(this);
                 },20*120);
                 return true;
@@ -249,7 +254,9 @@ public class SlayerSolo extends DemonsSlayersRoles {
                                     mBoot.removeEnchant(Enchantment.DEPTH_STRIDER);
                                     boot.setItemMeta(mBoot);
                                     player.getInventory().setBoots(boot);
-                                    player.sendMessage("§7Votre§b Soufle de l'Eau§7 ne fais plus effet");
+                                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
+                                        player.sendMessage("§7Votre§b Soufle de l'Eau§7 ne fais plus effet");
+                                    }
                                 }
                             }
                         }, 20*180);
@@ -288,7 +295,9 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*180, 0, false, false));
                 EventUtils.registerEvents(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                    player.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
+                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
+                        player.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
+                    }
                     EventUtils.unregisterEvents(this);
                 }, 20*180);
                 return true;
@@ -321,16 +330,22 @@ public class SlayerSolo extends DemonsSlayersRoles {
                         return false;
                     }
                     gamePlayer.stun(10);
-                    final Set<Location> sphere = new MathUtil().sphere(target.getLocation(), 5, true);
-                    for (final Location loc : sphere) {
-                        loc.getBlock().setType(Material.STONE);
-                    }
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                    final Set<Location> sphere = new MathUtil().sphere(target.getLocation(), 4, true);
+                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
                         for (final Location loc : sphere) {
-                            loc.getBlock().setType(Material.AIR);
+                            loc.getBlock().setType(Material.STONE);
                         }
+                    });
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                        Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                            for (final Location loc : sphere) {
+                                loc.getBlock().setType(Material.AIR);
+                            }
+                        });
                         assert player.isOnline();
-                        player.sendMessage("§7Votre§8 Soufle de la Roche§7 s'arrête maintenant");
+                        if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
+                            player.sendMessage("§7Votre§8 Soufle de la Roche§7 s'arrête maintenant");
+                        }
                     }, 20*15);
                     player.teleport(new Location(target.getWorld(), target.getLocation().getX(), target.getLocation().getY()+6.0, target.getLocation().getZ()));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*15, 1, false, false));
