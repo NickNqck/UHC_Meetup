@@ -53,6 +53,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         addPower(new RochePower(this), true);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 9999, 0), EffectWhen.PERMANENT);
         setMaxHealth(24.0);
+        setCanuseblade(true);
         owner.setMaxHealth(getMaxHealth());
         owner.setHealth(owner.getMaxHealth());
         AutomaticDesc automaticDesc = new AutomaticDesc(this)
