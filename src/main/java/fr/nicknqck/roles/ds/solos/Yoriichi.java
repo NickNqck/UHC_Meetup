@@ -160,7 +160,7 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	}
 	@EventHandler
 	private void onUHCDamage(UHCPlayerBattleEvent event) {
-		if (event.getDamager().getUuid().equals(getPlayer())) {
+		if (event.getDamager().getUuid().equals(getPlayer()) && event.isPatch()) {
 			if (activersoufle) {
 				Player victim = Bukkit.getPlayer(event.getVictim().getUuid());
 				if (victim != null) {
