@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -114,6 +115,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
     @Override
     public void GiveItems() {
         giveItem(owner, false, getItems());
+        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override
