@@ -319,7 +319,11 @@ public class Main extends JavaPlugin {
 	public void initGameWorld() {
 		deleteWorld("arena");
 		WorldCreator creator = new WorldCreator("arena");
+		System.out.println("Seed: "+creator.seed());
+		System.out.println("Original Base Settings: "+creator.generatorSettings());
+		System.out.println("Original Base : "+creator.generator());
 		creator.generatorSettings(getBase());
+		System.out.println("After Config Base Settings: "+creator.generatorSettings());
 		World gameWorld = creator.createWorld();
 		gameWorld.setTime(6000);
 		gameWorld.setGameRuleValue("doMobSpawning", "false");

@@ -131,11 +131,6 @@ public class HubConfig implements Listener {
                         Main.getInstance().getInventories().updateEventInventory(player);
                     } else if (item.getType().equals(Material.GRASS)) {
                         Main.getInstance().getWorldConfig().openInitConfig(player);
-                     /*   Main.getInstance().initGameWorld();
-                        event.getWhoClicked().sendMessage("§7Vous avez réinitialiser le monde de jeu.");
-                        if (gameState.hasPregen) {
-                            gameState.hasPregen = false;
-                        }*/
                     }
                     if (item.isSimilar(GUIItems.getx())) player.closeInventory();
                     event.setCancelled(true);
