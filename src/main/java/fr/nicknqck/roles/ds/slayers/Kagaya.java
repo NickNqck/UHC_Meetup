@@ -139,12 +139,20 @@ public class Kagaya extends SlayerRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (pacte1) {
-			if (gameState.nightTime) {
-				if (getResi() < 20)setResi(20);
-				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			if (gameState.nightTime){
+				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 3,1,true);
 			} else {
-				if (getResi()>0)setResi(0);
-				givePotionEffet(PotionEffectType.WEAKNESS, 60, 1, true);
+				givePotionEffet(PotionEffectType.WEAKNESS, 3,1,true);
+			}
+			for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
+				if (p.getWorld() != owner.getWorld())return;
+				if (p.getLocation().distance(owner.getLocation()) <= 15) {
+					if (p != owner) {
+						DecimalFormat df = new DecimalFormat("0.0");
+						String message = "§cVie de "+p.getName()+" §6" + (df.format(p.getHealth()/2))+"♥";
+						sendCustomActionBar(owner, message);
+					}
+				}
 			}
 		}
 		if (pacte2) {

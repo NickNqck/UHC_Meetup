@@ -111,7 +111,6 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 						sendCustomActionBar(owner, message);
 					}				
 			}
-				
 		}
 		super.Update(gameState);
 	}
