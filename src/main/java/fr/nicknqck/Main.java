@@ -13,6 +13,7 @@ import fr.nicknqck.events.blocks.BrickBlockListener;
 import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.essential.*;
 import fr.nicknqck.events.essential.inventorys.HubInventory;
+import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
 import fr.nicknqck.managers.DeathManager;
 import fr.nicknqck.managers.RoleManager;
@@ -87,6 +88,9 @@ public class Main extends JavaPlugin {
 	private DeathManager deathManager;
 	@Getter
 	private FileConfiguration webhookConfig;
+	@Getter
+	private WorldConfig worldConfig;
+
 	@Override
 	public void onEnable() {
 		Instance = this;
@@ -98,10 +102,11 @@ public class Main extends JavaPlugin {
 		this.gameConfig = new GameConfig();
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
+		registerEvents(gameState);
 		initGameWorld();
+		registerEvents2(gameState);
 		initPlugin(gameState);
 		EnableScoreboard(gameState);
-		registerEvents(gameState);
 		registerCommands(gameState);
 		clearMap(getWorldManager().getLobbyWorld());
 		for (Player p : Bukkit.getOnlinePlayers()) {
@@ -212,7 +217,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new RodTridimensionnelle(gameState), this);
 		getServer().getPluginManager().registerEvents(new PotionUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubListener(gameState), this);
-		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
 		getServer().getPluginManager().registerEvents(new HomingBow(gameState), this);
 		getServer().getPluginManager().registerEvents(new BlockManager(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemsManager(gameState), this);
@@ -235,8 +239,14 @@ public class Main extends JavaPlugin {
 		DeathManager manager = new DeathManager();
 		getServer().getPluginManager().registerEvents(manager, this);
 		EventUtils.registerEvents(new BanquePower());
+		WorldConfig worldConfig = new WorldConfig(gameState);
+		getServer().getPluginManager().registerEvents(worldConfig, this);
+		this.worldConfig = worldConfig;
 		this.deathManager = manager;
 		System.out.println("Ending registering events");
+	}
+	private void registerEvents2(GameState gameState) {
+		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
 	}
 	private void registerCommands(GameState gameState) {
 		System.out.println("Starting registering commands");
@@ -352,8 +362,6 @@ public class Main extends JavaPlugin {
 				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);
 			}
 		}
-
-		System.out.println("["+PLUGIN_NAME+"] "+getBase());
 	}
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");
@@ -392,14 +400,14 @@ public class Main extends JavaPlugin {
         		",\"ironMinHeight\":" + 0 + 
         		",\"ironMaxHeight\":" + 64 + 
         		",\"goldSize\":" + 11 +
-        		",\"goldCount\":" + 4 +
+        		",\"goldCount\":" + 4*getWorldConfig().getGoldBooster() +
         		",\"goldMinHeight\":" + 0 + 
         		",\"goldMaxHeight\":" + 32 + 
         		",\"redstoneSize\":" + 8 + 
         		",\"redstoneCount\":" + 20 + 
         		",\"redstoneMinHeight\":" + 0 + 
         		",\"redstoneMaxHeight\":" + 16+ 
-        		",\"diamondSize\":" + 8 + ",\"diamondCount\":" + 1 +
+        		",\"diamondSize\":" + 8 + ",\"diamondCount\":" + 1*getWorldConfig().getDiamondBooster() +
         		",\"diamondMinHeight\":" + 0 + ",\"diamondMaxHeight\":" + 22 +
         		",\"lapisSize\":" + 7 + ",\"lapisCount\":" + 1 + ",\"lapisCenterHeight\":" + 16 +",\"lapisSpread\":" + 16+ "}";
     }
