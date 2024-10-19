@@ -1,22 +1,26 @@
 package fr.nicknqck.roles.ns.akatsuki.blancv2;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.event.EventUtils;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class ZetsuBlancV2 extends AkatsukiRoles {
+public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
 
     private TextComponent desc;
 
@@ -47,6 +51,7 @@ public class ZetsuBlancV2 extends AkatsukiRoles {
           new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous envoyez un message avec comme préfixe§c !§7 vous pourrez parler avec tout les autres§c "+getName()+"§7.")})
         );
         this.desc = desc.getText();
+        EventUtils.registerEvents(this);
     }
 
     @Override
@@ -74,28 +79,31 @@ public class ZetsuBlancV2 extends AkatsukiRoles {
         return this.desc;
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onAllPlayerChat(PlayerChatEvent e, Player p) {
-        if (p.getUniqueId().equals(getPlayer())) {
-            if (e.getMessage().startsWith("!")) {
-                if (e.getMessage().length() == 1) {
+    @EventHandler
+    private void onEndGame(EndGameEvent event) {
+        EventUtils.unregisterEvents(this);
+    }
+    @EventHandler
+    private void onAllPlayerChat(AsyncPlayerChatEvent event) {
+        Player p = event.getPlayer();
+        if (p.getUniqueId().equals(getPlayer()) && event.getMessage().startsWith("!")) {
+                if (event.getMessage().length() == 1) {
                     return;
                 }
-                for (GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+                String message = event.getMessage().substring(1);
+                for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
                     if (gamePlayer.isAlive()) {
                         if (gamePlayer.getRole() != null) {
                             if (gamePlayer.getRole() instanceof ZetsuBlancV2) {
                                 Player zetsu = Bukkit.getPlayer(gamePlayer.getUuid());
                                 if (zetsu != null) {
-                                    String message = e.getMessage().substring(1);
                                     zetsu.sendMessage("§cZetsu Blanc V2 "+message);
                                 }
                             }
                         }
                     }
                 }
-            }
         }
     }
+
 }
