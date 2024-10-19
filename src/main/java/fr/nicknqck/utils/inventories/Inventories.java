@@ -1275,7 +1275,6 @@ public class Inventories {
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-
     public void updateOverworldInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
@@ -1327,7 +1326,6 @@ public class Inventories {
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-
     public void updateNetherInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {

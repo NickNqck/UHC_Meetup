@@ -22,9 +22,9 @@ public class WorldConfig implements Listener {
 
     private final GameState gameState;
     @Setter
-    private int goldBooster = 1;
+    private int goldBooster = 0;
     @Setter
-    private int diamondBooster = 2;
+    private int diamondBooster = 0;
 
     public WorldConfig(final GameState gameState) {
         this.gameState = gameState;
@@ -58,19 +58,23 @@ public class WorldConfig implements Listener {
                     player.sendMessage("§7Le monde de jeu n'a pas été crée");
                 }
                 event.setCancelled(true);
+            } else if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+                player.openInventory(GUIItems.getAdminWatchGUI());
+                Main.getInstance().getInventories().updateAdminInventory(player);
+                event.setCancelled(true);
             }
         } else if (event.getClickedInventory().getTitle().equalsIgnoreCase("§fConfiguration§7 ->§6 Mineraix")) {
             if (item.getType().equals(Material.GOLD_ORE)) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
                     setGoldBooster(Math.min(3, getGoldBooster()+1));
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    setGoldBooster(Math.max(1, getGoldBooster()-1));
+                    setGoldBooster(Math.max(0, getGoldBooster()-1));
                 }
             } else if (item.getType().equals(Material.DIAMOND_ORE)) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
                     setDiamondBooster(Math.min(3, getDiamondBooster()+1));
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    setDiamondBooster(Math.max(1, getDiamondBooster()-1));
+                    setDiamondBooster(Math.max(0, getDiamondBooster()-1));
                 }
             } else if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                 openInitConfig(player);
@@ -88,6 +92,7 @@ public class WorldConfig implements Listener {
         wConfig.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§6Configuration des mineraix").toItemStack());
         wConfig.setItem(13, new ItemBuilder(Material.EYE_OF_ENDER).setName("§fObserver le monde générer").toItemStack());
         wConfig.setItem(15, new ItemBuilder(Material.GRASS).setName("§aChanger de Monde").toItemStack());
+        wConfig.setItem(wConfig.getSize()-1, GUIItems.getSelectBackMenu());
         player.openInventory(wConfig);
     }
     private void openMineralConfig(Player player) {

@@ -403,15 +403,15 @@ public class Main extends JavaPlugin {
         		",\"ironCount\":" + 20 + 
         		",\"ironMinHeight\":" + 0 + 
         		",\"ironMaxHeight\":" + 64 + 
-        		",\"goldSize\":" + 11 +
-        		",\"goldCount\":" + 4*getWorldConfig().getGoldBooster() +
+        		",\"goldSize\":" + 10 +
+        		",\"goldCount\":" + (3+getWorldConfig().getGoldBooster()) +
         		",\"goldMinHeight\":" + 0 + 
         		",\"goldMaxHeight\":" + 32 + 
         		",\"redstoneSize\":" + 8 + 
         		",\"redstoneCount\":" + 20 + 
         		",\"redstoneMinHeight\":" + 0 + 
         		",\"redstoneMaxHeight\":" + 16+ 
-        		",\"diamondSize\":" + 8 + ",\"diamondCount\":" + 1*getWorldConfig().getDiamondBooster() +
+        		",\"diamondSize\":" + 8 + ",\"diamondCount\":" + (1+getWorldConfig().getDiamondBooster()) +
         		",\"diamondMinHeight\":" + 0 + ",\"diamondMaxHeight\":" + 22 +
         		",\"lapisSize\":" + 7 + ",\"lapisCount\":" + 1 + ",\"lapisCenterHeight\":" + 16 +",\"lapisSpread\":" + 16+ "}";
     }
