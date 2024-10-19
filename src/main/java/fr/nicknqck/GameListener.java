@@ -88,11 +88,13 @@ public class GameListener implements Listener {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
 				if (p.getLocation().getY() < 100 && !p.isFlying() && p.getGameMode() != GameMode.CREATIVE) {
-					p.setMaxHealth(20.0);
-					p.setHealth(p.getMaxHealth());
-					p.setFoodLevel(20);
-					p.teleport(new Location(world, 0, 151, 0));
-					p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+					if (!p.getGameMode().equals(GameMode.CREATIVE) && !p.getGameMode().equals(GameMode.SPECTATOR)) {
+						p.setMaxHealth(20.0);
+						p.setHealth(p.getMaxHealth());
+						p.setFoodLevel(20);
+						p.teleport(new Location(world, 0, 151, 0));
+						p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+					}
 				}
 				if (p.getGameMode() != GameMode.ADVENTURE) {
 					if (!ChatRank.isHost(p)) {
