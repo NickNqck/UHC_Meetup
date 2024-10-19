@@ -136,6 +136,18 @@ public class Kagaya extends SlayerRoles {
 	public void onEndGame() {
 		seeHealth.clear();
 	}
+
+
+	public void updateHealthAboveHead(Player player) {
+		double health = player.getHealth();
+		double maxHealth = player.getMaxHealth();
+		String healthDisplay = "§c❤ " + String.format("%.1f", health) + "/" + String.format("%.0f", maxHealth);
+		player.setPlayerListName("§a"+player.getName() + " " + healthDisplay);
+		player.setCustomName(healthDisplay);
+		player.setCustomNameVisible(true);  // Affiche le nom personnalisé au-dessus du joueur
+	}
+
+
 	@Override
 	public void Update(GameState gameState) {
 		if (pacte1) {
@@ -144,14 +156,9 @@ public class Kagaya extends SlayerRoles {
 			} else {
 				givePotionEffet(PotionEffectType.WEAKNESS, 3,1,true);
 			}
-			for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
-				if (p.getWorld() != owner.getWorld())return;
-				if (p.getLocation().distance(owner.getLocation()) <= 15) {
-					if (p != owner) {
-						DecimalFormat df = new DecimalFormat("0.0");
-						String message = "§cVie de "+p.getName()+" §6" + (df.format(p.getHealth()/2))+"♥";
-						sendCustomActionBar(owner, message);
-					}
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				if (player != owner) {
+					updateHealthAboveHead(player);
 				}
 			}
 		}
