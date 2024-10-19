@@ -126,16 +126,16 @@ public class HubConfig implements Listener {
                             new PregenerationTask(Main.getInstance().getWorldManager().getGameWorld(), Border.getMaxBorderSize());
                             gameState.hasPregen = true;
                         }
-                    }else if (item.isSimilar(GUIItems.getSelectEventButton())) {
+                    } else if (item.isSimilar(GUIItems.getSelectEventButton())) {
                         player.openInventory(GUIItems.getEventSelectGUI());
                         Main.getInstance().getInventories().updateEventInventory(player);
                     } else if (item.getType().equals(Material.GRASS)) {
-                        event.getWhoClicked().closeInventory();
-                        Main.getInstance().initGameWorld();
+                        Main.getInstance().getWorldConfig().openInitConfig(player);
+                     /*   Main.getInstance().initGameWorld();
                         event.getWhoClicked().sendMessage("§7Vous avez réinitialiser le monde de jeu.");
                         if (gameState.hasPregen) {
                             gameState.hasPregen = false;
-                        }
+                        }*/
                     }
                     if (item.isSimilar(GUIItems.getx())) player.closeInventory();
                     event.setCancelled(true);
