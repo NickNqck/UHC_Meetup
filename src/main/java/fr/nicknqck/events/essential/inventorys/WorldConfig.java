@@ -7,6 +7,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -44,7 +45,11 @@ public class WorldConfig implements Listener {
                 event.setCancelled(true);
             } else if (item.getType().equals(Material.GRASS)) {
                 player.closeInventory();
-                Main.getInstance().initGameWorld();
+                if (!Main.getInstance().initGameWorld()) {
+                    player.sendMessage("§cImpossible de supprimer le monde de jeu actuel, un joueur est peut être encore dedans ?");
+                    event.setCancelled(true);
+                    return;
+                }
                 event.getWhoClicked().sendMessage("§7Vous avez crée un nouveau monde.");
                 if (gameState.hasPregen) {
                     gameState.hasPregen = false;
@@ -52,11 +57,7 @@ public class WorldConfig implements Listener {
                 event.setCancelled(true);
             } else if (item.getType().equals(Material.EYE_OF_ENDER)) {
                 player.closeInventory();
-                if (Main.getInstance().getWorldManager().getGameWorld() != null) {
-                    player.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0, Main.getInstance().getWorldManager().getGameWorld().getHighestBlockYAt(0, 0)+1, 0));
-                } else {
-                    player.sendMessage("§7Le monde de jeu n'a pas été crée");
-                }
+                player.performCommand("a preview");
                 event.setCancelled(true);
             } else if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                 player.openInventory(GUIItems.getAdminWatchGUI());

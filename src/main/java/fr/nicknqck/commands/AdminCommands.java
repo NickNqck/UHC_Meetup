@@ -21,9 +21,7 @@ import fr.nicknqck.utils.rank.ChatRank;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -76,12 +74,8 @@ public class AdminCommands implements CommandExecutor{
 							sb.append(" ");
 							if (args[i].contains("#MDJ")||args[i].contains("#MDj")||args[i].contains("#Mdj")||args[i].contains("#MdJ")||args[i].contains("#mdj")||args[i].contains("#mDj")){
 								String replaced;
-								if (gameState.getMdj() != null) {
-									replaced = args[i].replace(args[i], gameState.getMdj().name());
-								} else {
-									replaced = args[i].replace("#MDJ", "Aucun");
-								}
-								sb.append(ChatColor.translateAlternateColorCodes('&', replaced));
+                                replaced = args[i].replace(args[i], gameState.getMdj().name());
+                                sb.append(ChatColor.translateAlternateColorCodes('&', replaced));
 							} else {
 								sb.append(ChatColor.translateAlternateColorCodes('&', args[i]));
 							}
@@ -215,6 +209,24 @@ public class AdminCommands implements CommandExecutor{
 								}
 								return true;
 							}
+							if (args[0].equalsIgnoreCase("preview")) {
+								World world = Main.getInstance().getWorldManager().getGameWorld();
+								if (world == null) {
+									player.sendMessage("§7Le monde de jeu n'a pas été crée");
+                                } else {
+									if (player.getWorld().equals(world)) {
+										player.sendMessage("§7Vous quittez la§c preview§7 de§c arena");
+										player.teleport(new Location(Main.getInstance().getWorldManager().getLobbyWorld(), 0, 152, 0));
+										player.setGameMode(GameMode.ADVENTURE);
+										return true;
+									}
+									player.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0, Main.getInstance().getWorldManager().getGameWorld().getHighestBlockYAt(0, 0)+1, 0));
+									player.setGameMode(GameMode.SPECTATOR);
+									player.sendMessage("§7Pour quitter la§c preview§7 du monde il faudra faire la commande§6 /a preview");
+									return true;
+                                }
+                                return true;
+                            }
 						}
 						
 						if (gameState.getServerState() != ServerStates.InGame)return false;

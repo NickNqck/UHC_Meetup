@@ -316,8 +316,8 @@ public class Main extends JavaPlugin {
 		}
 		System.out.println("Ended GLASS platform");
 	}
-	public void initGameWorld() {
-		deleteWorld("arena");
+	public boolean initGameWorld() {
+		if (!deleteWorld("arena"))return false;
 		WorldCreator creator = new WorldCreator("arena");
 		System.out.println("Seed: "+creator.seed());
 		System.out.println("Original Base Settings: "+creator.generatorSettings());
@@ -338,11 +338,16 @@ public class Main extends JavaPlugin {
 		gameWorld.setGameRuleValue("doFireTick", "false");
 		getWorldManager().setGameWorld(gameWorld);
 		System.out.println("Created world gameWorld");
+		return true;
 	}
-	private void deleteWorld(String worldName) {
+	private boolean deleteWorld(String worldName) {
 		for (World world : Bukkit.getWorlds()) {
 			if (world.getName().equals(worldName)) {
 				File worldFolder = world.getWorldFolder();
+				if (!world.getPlayers().isEmpty()) {
+					System.out.println("Can't delete world \""+worldName+"\" because "+world.getPlayers().size()+" is inside");
+					return true;
+				}
 				Bukkit.unloadWorld(world, false);
 				try {
 					FileUtils.deleteDirectory(worldFolder);
@@ -352,6 +357,7 @@ public class Main extends JavaPlugin {
 				}
 			}
 		}
+		return false;
 	}
 	@Override
 	public void onDisable() {
