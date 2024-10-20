@@ -1,4 +1,4 @@
-package fr.nicknqck.worlds;
+package fr.nicknqck.worlds.worldloader;
 
 public class CoordXZ {
     public int x;

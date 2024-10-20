@@ -7,8 +7,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +24,8 @@ public class WorldConfig implements Listener {
     private int goldBooster = 0;
     @Setter
     private int diamondBooster = 0;
+    @Setter
+    private int caveBooster = 0;
 
     public WorldConfig(final GameState gameState) {
         this.gameState = gameState;
@@ -64,7 +64,7 @@ public class WorldConfig implements Listener {
                 Main.getInstance().getInventories().updateAdminInventory(player);
                 event.setCancelled(true);
             }
-        } else if (event.getClickedInventory().getTitle().equalsIgnoreCase("§fConfiguration§7 ->§6 Mineraix")) {
+        } else if (event.getClickedInventory().getTitle().equalsIgnoreCase("§fConfiguration§7 ->§6 Grottes")) {
             if (item.getType().equals(Material.GOLD_ORE)) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
                     setGoldBooster(Math.min(3, getGoldBooster()+1));
@@ -81,6 +81,12 @@ public class WorldConfig implements Listener {
                 openInitConfig(player);
                 event.setCancelled(true);
                 return;
+            } else if (item.getType().equals(Material.STONE)) {
+                if (action.equals(InventoryAction.PICKUP_ALL)) {
+                    setCaveBooster(Math.min(600, getCaveBooster()+200));
+                } else if (action.equals(InventoryAction.PICKUP_HALF)) {
+                    setCaveBooster(Math.max(0, getCaveBooster()-200));
+                }
             }
             openMineralConfig(player);
             event.setCancelled(true);
@@ -90,16 +96,17 @@ public class WorldConfig implements Listener {
 
     public void openInitConfig(Player player) {
         Inventory wConfig = Bukkit.createInventory(player, 54, "§fConfiguration§7 ->§a Monde");
-        wConfig.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§6Configuration des mineraix").toItemStack());
+        wConfig.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§6Configuration des grottes").toItemStack());
         wConfig.setItem(13, new ItemBuilder(Material.EYE_OF_ENDER).setName("§fObserver le monde générer").toItemStack());
         wConfig.setItem(15, new ItemBuilder(Material.GRASS).setName("§aChanger de Monde").toItemStack());
         wConfig.setItem(wConfig.getSize()-1, GUIItems.getSelectBackMenu());
         player.openInventory(wConfig);
     }
     private void openMineralConfig(Player player) {
-        Inventory inv = Bukkit.createInventory(player, 27, "§fConfiguration§7 ->§6 Mineraix");
-        inv.setItem(12, new ItemBuilder(Material.GOLD_ORE).setName("§fBoost des mineraix d'§6 or").setLore("","§7Boost actuel:§c x"+getGoldBooster()).toItemStack());
-        inv.setItem(14, new ItemBuilder(Material.DIAMOND_ORE).setName("§fBoost des mineraix de§b diamant").setLore("","§7Boost actual:§c x"+getDiamondBooster()).toItemStack());
+        Inventory inv = Bukkit.createInventory(player, 27, "§fConfiguration§7 ->§6 Grottes");
+        inv.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§fBoost des mineraix d'§6 or").setLore("","§7Boost actuel:§c x"+getGoldBooster()).toItemStack());
+        inv.setItem(13, new ItemBuilder(Material.STONE).setName("§fBoost des§8 grottes").setLore("","§7Boost actuel: §c x"+getCaveBooster()).toItemStack());
+        inv.setItem(15, new ItemBuilder(Material.DIAMOND_ORE).setName("§fBoost des mineraix de§b diamant").setLore("","§7Boost actual:§c x"+getDiamondBooster()).toItemStack());
         inv.setItem(inv.getSize()-1, GUIItems.getSelectBackMenu());
         player.openInventory(inv);
     }

@@ -1,4 +1,4 @@
-package fr.nicknqck.worlds;
+package fr.nicknqck.worlds.worldloader;
 
 import java.text.DecimalFormat;
 

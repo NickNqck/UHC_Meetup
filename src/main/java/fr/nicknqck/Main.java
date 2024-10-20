@@ -30,9 +30,8 @@ import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
-import fr.nicknqck.utils.packets.NMSPacket;
-import fr.nicknqck.utils.packets.TabTitleManager;
-import fr.nicknqck.worlds.WorldFillTask;
+import fr.nicknqck.worlds.WorldListener;
+import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import lombok.Getter;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
@@ -49,7 +48,6 @@ import org.bukkit.potion.PotionEffect;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -166,47 +164,7 @@ public class Main extends JavaPlugin {
         getScoreboardManager().onEnable();
 		System.out.println("End enable scoreboard");
 	}
-	private void giveTab(GameState gameState) {
-		System.out.println("Starting give tab");
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-			if (gameState.getServerState() == GameState.ServerStates.InLobby) {
-				for (UUID u : gameState.getInLobbyPlayers()) {
-					Player p = Bukkit.getPlayer(u);
-					if (p == null)continue;
-					TabTitleManager.sendTabTitle(p,
-							gameState.msgBoard + "\n",
-							"\n" +
-									"§7Joueurs: §c" + gameState.getInLobbyPlayers().size() +"§r/§6"+gameState.getroleNMB()+ "\n"
-									+ "\n§6§l TPS: "+ TPS.getAverageTPS(1)+" "
-									+ "§cdiscord.gg/RF3D4Du8VN");
-				}
-			}
-			if (gameState.getServerState() == GameState.ServerStates.InGame) {
-				for (UUID u : gameState.getInGamePlayers()) {
-					Player player = Bukkit.getPlayer(u);
-					if (player == null)continue;
-					if (gameState.roleTimer < gameState.getInGameTime()) {
-						if (!gameState.hasRoleNull(player)) {
-							if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
-								TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
-							}
-						}
-					} else {
-						int time = gameState.roleTimer-gameState.getInGameTime();
-						String trm = time/60 < 10 ? "0"+time/60 : time/60+"";
-						String trs = time%60 < 10 ? "0"+time%60 : time%60+"";
-						TabTitleManager.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
-					}
-				}
-			}
-			if (gameState.getServerState() == GameState.ServerStates.GameEnded) {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					NMSPacket.clearTitle(p);
-				}
-			}
-		}, 1, 1);
-		System.out.println("Ending give tab");
-	}
+
 	private void registerEvents(GameState gameState) {
 		System.out.println("Starting registering events");
 		getServer().getPluginManager().registerEvents(new WeatherEvents(), this);
@@ -247,6 +205,7 @@ public class Main extends JavaPlugin {
 	}
 	private void registerEvents2(GameState gameState) {
 		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
+		getServer().getPluginManager().registerEvents(new WorldListener(), this);
 	}
 	private void registerCommands(GameState gameState) {
 		System.out.println("Starting registering commands");
@@ -317,7 +276,7 @@ public class Main extends JavaPlugin {
 		System.out.println("Ended GLASS platform");
 	}
 	public boolean initGameWorld() {
-		if (!deleteWorld("arena"))return false;
+		if (!deleteWorld())return false;
 		WorldCreator creator = new WorldCreator("arena");
 		System.out.println("Seed: "+creator.seed());
 		System.out.println("Original Base Settings: "+creator.generatorSettings());
@@ -340,13 +299,13 @@ public class Main extends JavaPlugin {
 		System.out.println("Created world gameWorld");
 		return true;
 	}
-	private boolean deleteWorld(String worldName) {
+	private boolean deleteWorld() {
 		for (World world : Bukkit.getWorlds()) {
-			if (world.getName().equals(worldName)) {
+			if (world.getName().equals("arena")) {
 				File worldFolder = world.getWorldFolder();
 				if (!world.getPlayers().isEmpty()) {
-					System.out.println("Can't delete world \""+worldName+"\" because "+world.getPlayers().size()+" is inside");
-					return true;
+					System.out.println("Can't delete world \""+ "arena" +"\" because "+world.getPlayers().size()+" is inside");
+					return false;
 				}
 				Bukkit.unloadWorld(world, false);
 				try {
@@ -357,14 +316,14 @@ public class Main extends JavaPlugin {
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 	@Override
 	public void onDisable() {
 		if (getScoreboardManager() != null) {
 			getScoreboardManager().onDisable();
 		}
-		deleteWorld("arena");
+		deleteWorld();
 		System.out.println("["+PLUGIN_NAME+"] Disabled");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
@@ -381,10 +340,10 @@ public class Main extends JavaPlugin {
 		return debug;
 	}
 	private String getBase() {
-        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 1000+
-        		",\"depthNoiseScaleZ\":" + 1000 +
+        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + (600+getWorldConfig().getCaveBooster())+
+        		",\"depthNoiseScaleZ\":" + (600+getWorldConfig().getCaveBooster()) +
         		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +
-				"\"seaLevel\":" + 60 +
+				"\"seaLevel\":" + 62 +
         		",\"useCaves\":" + true + //S'il y aura des caves ou non
         		",\"useDungeons\":" + true + //S'il y aura des dongeons ou non
         		",\"dungeonChance\":" + 8 + //Probo dongeon 8 = vanilla
