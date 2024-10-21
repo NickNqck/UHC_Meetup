@@ -4,13 +4,10 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.events.Events;
-import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
 import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
-import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.AttackUtils;
-import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.particles.MathUtil;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
@@ -176,21 +173,6 @@ public class EntityDamageEvents implements Listener{
 									double z = player.getLocation().getZ();
 									MathUtil.sendParticleTo(attacker, EnumParticle.HEART, x, y+2, z);
 									event.setCancelled(true);
-								}
-							}
-							if (gameState.getPlayerRoles().get(player).getRoles().equals(GameState.Roles.Slayer) && FFA.getFFA()) {
-								FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(player);
-								if (f.getRoles() == GameState.Roles.Slayer) {
-									if (f.owner == player) {
-										if (f.Serpent) {
-											if (f.serpentactualtime >= 0) {
-												if (RandomUtils.getOwnRandomProbability(20)) {
-													f.owner.sendMessage("Vous venez d'esquiver un coup grâce à votre Soufle");
-													event.setCancelled(true);
-												}
-											}
-										}
-									}
 								}
 							}
 							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
