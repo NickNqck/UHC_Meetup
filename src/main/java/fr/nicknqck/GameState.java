@@ -111,10 +111,10 @@ public class GameState{
 		Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
 		Jigoro(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
 		Shinjuro(TeamList.Solo, "ds", 2, new ItemBuilder(Material.LAVA_BUCKET).setName("§eShinjuro").toItemStack(), "§bNickNqck"),
+		ShinjuroV2(TeamList.Solo, "ds", 3, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§eShinjuro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
 		JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("§eJigoro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
 		KyogaiV2(TeamList.Solo, "ds", 5, new ItemBuilder(Material.STICK).setName("§eKyogai §7(§6V2§7)").toItemStack(), "§bNickNqck"),
-		ShinjuroV2(TeamList.Solo, "ds", 6, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§eShinjuro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
-		SlayerSolo(TeamList.Solo, "ds", 7, new ItemBuilder(Material.IRON_SWORD).setName("§aPourfendeur Simple§7 (§eSolo§7)").toItemStack(), "§bNickNqck"),
+		SlayerSolo(TeamList.Solo, "ds", 6, new ItemBuilder(Material.IRON_SWORD).setName("§ePourfendeur Solitaire").toItemStack(), "§bNickNqck"),
 		//Démons ds
 		Muzan(TeamList.Demon, "ds", 0, new ItemBuilder(Material.REDSTONE_ORE).setName("§cMuzan").toItemStack(), "§bNickNqck"),
 		Kokushibo(TeamList.Demon, "ds", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cKokushibo").toItemStack(), "§bNickNqck"),
