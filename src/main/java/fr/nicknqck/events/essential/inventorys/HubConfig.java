@@ -130,7 +130,22 @@ public class HubConfig implements Listener {
                         player.openInventory(GUIItems.getEventSelectGUI());
                         Main.getInstance().getInventories().updateEventInventory(player);
                     } else if (item.getType().equals(Material.GRASS)) {
-                        Main.getInstance().getWorldConfig().openInitConfig(player);
+                        if (goodIP()) {
+                            Main.getInstance().getWorldConfig().openInitConfig(player);
+                        } else {
+                            player.closeInventory();
+                            Main.getInstance().getWorldListener().setEnable(true);
+                            if (!Main.getInstance().initGameWorld()) {
+                                player.sendMessage("§cImpossible de supprimer le monde de jeu actuel, un joueur est peut être encore dedans ?");
+                                event.setCancelled(true);
+                                return;
+                            }
+                            event.getWhoClicked().sendMessage("§7Vous avez crée un nouveau monde.");
+                            if (gameState.hasPregen) {
+                                gameState.hasPregen = false;
+                            }
+                            Main.getInstance().getWorldListener().setEnable(false);
+                        }
                     }
                     if (item.isSimilar(GUIItems.getx())) player.closeInventory();
                     event.setCancelled(true);
@@ -550,5 +565,15 @@ public class HubConfig implements Listener {
                 event.setCancelled(true);
             }
         }
+    }
+    private boolean goodIP() {
+        return true;
+      /*  String serverIP = Bukkit.getServer().getIp();
+        int serverPort = Bukkit.getServer().getPort();
+
+
+        if ("127.0.0.1".equals(serverIP) || "localhost".equals(serverIP)) {
+            return true;
+        } else return "62.210.100.59".equals(serverIP) && serverPort == 25565;*/
     }
 }
