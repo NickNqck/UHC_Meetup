@@ -9,12 +9,12 @@ public class BiomeChanger {
         try {
             Field biomeF = BiomeBase.class.getDeclaredField("biomes");
             biomeF.setAccessible(true);
-            if (biomeF.get((Object) null) instanceof BiomeBase[]) {
-                BiomeBase[] biomes = (BiomeBase[]) biomeF.get((Object) null);
+            if (biomeF.get(null) instanceof BiomeBase[]) {
+                BiomeBase[] biomes = (BiomeBase[]) biomeF.get(null);
                 for (BiomeBase biome : biomes) {
                     if (biome != null) {
                     	if (biome != BiomeBase.PLAINS || biome != BiomeBase.RIVER) {
-                    		swap(biomes, biome, BiomeBase.ROOFED_FOREST);
+                    		swap(biomes, biome);
                     	}
                     }
                 }
@@ -25,11 +25,11 @@ public class BiomeChanger {
         }
     }
 
-    private static void swap(BiomeBase[] biomes, BiomeBase from, BiomeBase to) {
-        swap(biomes, from.id, to);
+    private static void swap(BiomeBase[] biomes, BiomeBase from) {
+        swap(biomes, from.id);
     }
 
-    private static void swap(BiomeBase[] biomes, int from, BiomeBase to) {
-        biomes[from] = to;
+    private static void swap(BiomeBase[] biomes, int from) {
+        biomes[from] = BiomeBase.ROOFED_FOREST;
     }
 }
