@@ -45,6 +45,7 @@ public class WorldConfig implements Listener {
                 event.setCancelled(true);
             } else if (item.getType().equals(Material.GRASS)) {
                 player.closeInventory();
+                Main.getInstance().getWorldListener().setEnable(true);
                 if (!Main.getInstance().initGameWorld()) {
                     player.sendMessage("§cImpossible de supprimer le monde de jeu actuel, un joueur est peut être encore dedans ?");
                     event.setCancelled(true);
@@ -54,6 +55,7 @@ public class WorldConfig implements Listener {
                 if (gameState.hasPregen) {
                     gameState.hasPregen = false;
                 }
+                Main.getInstance().getWorldListener().setEnable(false);
                 event.setCancelled(true);
             } else if (item.getType().equals(Material.EYE_OF_ENDER)) {
                 player.closeInventory();
