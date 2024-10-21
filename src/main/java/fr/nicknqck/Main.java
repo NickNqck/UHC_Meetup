@@ -27,6 +27,7 @@ import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
+import fr.nicknqck.utils.biome.BiomeChanger;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
@@ -88,6 +89,8 @@ public class Main extends JavaPlugin {
 	private FileConfiguration webhookConfig;
 	@Getter
 	private WorldConfig worldConfig;
+	@Getter
+	private WorldListener worldListener;
 
 	@Override
 	public void onEnable() {
@@ -125,6 +128,7 @@ public class Main extends JavaPlugin {
         registerRecipes();
 		saveDefaultWebhookConfig();
 		this.roleManager = new RoleManager();
+		BiomeChanger.init();
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -205,7 +209,9 @@ public class Main extends JavaPlugin {
 	}
 	private void registerEvents2(GameState gameState) {
 		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
-		getServer().getPluginManager().registerEvents(new WorldListener(), this);
+		WorldListener worldListener = new WorldListener();
+		getServer().getPluginManager().registerEvents(worldListener, this);
+		this.worldListener = worldListener;
 	}
 	private void registerCommands(GameState gameState) {
 		System.out.println("Starting registering commands");
