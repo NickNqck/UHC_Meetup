@@ -75,6 +75,7 @@ public class GyomeiV2 extends PillierRoles implements Listener {
         EventUtils.registerEvents(this);
         AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffects(getEffects()).addCustomLine("§7Vous possédez§c 2❤§c permanent§7 supplémentaire").setPowers(getPowers());
         this.desc = automaticDesc.getText();
+        setCanuseblade(true);
     }
 
     @EventHandler
