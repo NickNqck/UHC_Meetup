@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -76,12 +77,14 @@ public class TomiokaV2 extends PillierRoles {
         Book.setItemMeta(BookMeta);
         giveItem(owner, false, Book);
         addPower(new FindOthersPower(this));
+        AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffects(getEffects()).setPowers(getPowers()).addCustomLine("Vous possédez un livre enchanter§b Depth Strider III");
+        this.desc = automaticDesc.getText();
     }
 
     private static class FindOthersPower extends Power {
 
         public FindOthersPower(@NonNull RoleBase role) {
-            super("(Passif) Chercheur d'eau", new Cooldown(0), role, "§7Permet de savoir toute les "+(GameState.getInstance().isMinage() ? "§c5 minutes" : "§c2 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
+            super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", new Cooldown(0), role, "§7Permet de savoir toute les "+(GameState.getInstance().isMinage() ? "§c5 minutes" : "§c2 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
             new FinderRunnable(role.getGameState(), this);
         }
 
