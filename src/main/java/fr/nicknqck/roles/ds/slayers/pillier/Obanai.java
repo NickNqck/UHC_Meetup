@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import org.bukkit.entity.Player;
@@ -19,6 +20,12 @@ public class Obanai extends PillierRoles {
 		super(player);
 		this.setCanuseblade(true);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.EAU;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Obanai;

@@ -10,6 +10,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
@@ -45,6 +46,12 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> new YoriichiHealthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1), 40);
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.SOLEIL;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Yoriichi;

@@ -7,6 +7,7 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PacketDisplay;
@@ -30,6 +31,11 @@ public class Kagaya extends SlayerRoles {
 	private TextComponent desc;
 	public Kagaya(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.AUCUN;
 	}
 
 	@Override

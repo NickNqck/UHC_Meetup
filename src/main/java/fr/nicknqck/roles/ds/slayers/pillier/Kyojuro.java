@@ -6,6 +6,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -22,6 +23,11 @@ public class Kyojuro extends PillierRoles {
 	private boolean alliance = false;
 	public Kyojuro(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.FLAMME;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -32,7 +33,12 @@ public class Tengen extends PillierRoles {
 		this.setCanuseblade(true);
 	}
 
-    @Override
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.FOUDRE;
+	}
+
+	@Override
 	public Roles getRoles() {
 		return Roles.Tengen;
 	}

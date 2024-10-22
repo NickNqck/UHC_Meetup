@@ -6,6 +6,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -146,6 +147,11 @@ public class Inosuke extends SlayerRoles {
 			owner.sendMessage("Veuiller indiquer le pseudo d'un joueur");	
 			}
 		}
+	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.VENT;
 	}
 
 	@Override

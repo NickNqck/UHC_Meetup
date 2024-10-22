@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -20,6 +21,12 @@ public class Shinobu extends PillierRoles {
 		super(player);
         this.setCanuseblade(true);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.EAU;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Shinobu;

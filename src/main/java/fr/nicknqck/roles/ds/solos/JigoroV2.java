@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.utils.ArrowTargetUtils;
@@ -39,6 +40,11 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		super(player);
         pacte = Pacte.Non_Choisis;
     }
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.FOUDRE;
+	}
 
 	@Override
 	public void RoleGiven(GameState gameState) {

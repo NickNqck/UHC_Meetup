@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Cuboid;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,6 +25,12 @@ public class Tomioka extends PillierRoles {
 		super(player);
 		this.setCanuseblade(true);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.EAU;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Tomioka;

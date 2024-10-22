@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
@@ -260,6 +261,12 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
         super.onDSCommandSend(args, gameState);
     }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.EAU;
+    }
+
     @EventHandler
     private void onUHCPlayerKill(UHCPlayerKillEvent event){
         if (event.getPlayerKiller() != null) {

@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -124,6 +125,11 @@ public class Kanao extends SlayerRoles {
 			owner.sendMessage("Veuiller indiquer le pseudo d'un joueur");
 		}
 		super.onDSCommandSend(args, gameState);
+	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.EAU;
 	}
 
 	@Override

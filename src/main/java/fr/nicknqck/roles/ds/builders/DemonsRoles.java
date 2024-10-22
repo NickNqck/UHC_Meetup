@@ -10,4 +10,9 @@ public abstract class DemonsRoles extends DemonsSlayersRoles {
     }
     @NonNull
     public abstract DemonType getRank();
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.AUCUN;
+    }
 }

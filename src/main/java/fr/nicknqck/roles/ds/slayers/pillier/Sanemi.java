@@ -7,6 +7,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import fr.nicknqck.utils.RandomUtils;
@@ -139,6 +140,12 @@ public class Sanemi extends PillierRoles {
 		}
 		super.onDSCommandSend(args, gameState);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.VENT;
+	}
+
 	boolean usetpAll = false;
 	int dstpcooldown = 0;
 	int dstpuse = 0;

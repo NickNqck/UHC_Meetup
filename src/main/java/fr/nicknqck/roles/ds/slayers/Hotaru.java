@@ -7,6 +7,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -247,6 +248,12 @@ public class Hotaru extends SlayerRoles {
 			
 		}
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.AUCUN;
+	}
+
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {

@@ -11,6 +11,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -56,6 +57,11 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
     private final ItemStack soufleEauItem = new ItemBuilder(Material.NETHER_STAR).setName("§bSoufle de l'Eau").setUnbreakable(true).setDroppable(false).toItemStack();
     public PourfendeurV2(UUID player) {
         super(player);
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.TOUS;
     }
 
     @Override

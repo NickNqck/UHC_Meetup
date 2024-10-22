@@ -9,6 +9,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -34,6 +35,12 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 	public KyogaiV2(UUID player) {
 		super(player);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.AUCUN;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.KyogaiV2;

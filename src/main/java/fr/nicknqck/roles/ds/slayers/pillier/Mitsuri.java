@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,6 +21,12 @@ public class Mitsuri extends PillierRoles {
         super(player);
         setCanuseblade(true);
     }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.FLAMME;
+    }
+
     @Override
     public Roles getRoles() {
         return Roles.Mitsuri;

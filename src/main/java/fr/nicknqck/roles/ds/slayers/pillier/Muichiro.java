@@ -5,6 +5,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Gyokko;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -107,6 +108,12 @@ public class Muichiro extends PillierRoles {
 			}
 		}
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.VENT;
+	}
+
 	private Location zoneloc = null;
 	@Override
 	public void Update(GameState gameState) {

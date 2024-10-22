@@ -22,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.UUID;
 
 public class Nezuko extends DemonsRoles {
+
 	private int itemcooldown = 0;
 	private int regencooldown;
 	boolean PouvoirSanginaireNez = false;

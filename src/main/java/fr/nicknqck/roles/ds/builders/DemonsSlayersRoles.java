@@ -25,6 +25,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     private boolean lameincassable = false;
     private boolean canuseblade = false;
     public boolean hasblade = false;
+
     public DemonsSlayersRoles(UUID player) {
         super(player);
     }
@@ -74,4 +75,5 @@ public abstract class DemonsSlayersRoles extends RoleBase {
         }, 20);
     }
     public void onDSCommandSend(String[] args, GameState gameState) {}
+    public abstract Soufle getSoufle();
 }

@@ -8,6 +8,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -33,6 +34,11 @@ public class GyomeiV2 extends PillierRoles implements Listener {
 
     public GyomeiV2(UUID player) {
         super(player);
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.ROCHE;
     }
 
     @Override

@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.TripleMap;
@@ -41,6 +42,12 @@ public class Shinjuro extends DemonsSlayersRoles {
 		super(player);
 
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.FLAMME;
+	}
+
 	@Override
 	public void RoleGiven(GameState gameState) {
 		setCanuseblade(true);

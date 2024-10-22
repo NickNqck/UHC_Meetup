@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -25,6 +26,11 @@ public class SanemiV2 extends PillierRoles {
 
     public SanemiV2(UUID player) {
         super(player);
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.VENT;
     }
 
     @Override

@@ -11,6 +11,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -42,6 +43,11 @@ public class SlayerSolo extends DemonsSlayersRoles {
 
     public SlayerSolo(UUID player) {
         super(player);
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.TOUS;
     }
 
     @Override

@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -30,6 +31,11 @@ public class Kanae extends PillierRoles implements Listener {
     private KanaeRunnable runnable;
     public Kanae(UUID player) {
         super(player);
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.EAU;
     }
 
     @Override

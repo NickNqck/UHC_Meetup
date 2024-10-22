@@ -6,6 +6,7 @@ import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -231,5 +232,10 @@ public class ZenItsu extends SlayerRoles implements Listener {
             cdPassif = 60*20;
             Bukkit.getPlayer(getPlayer()).sendMessage("§7Vous venez d'activé votre§c /ds passif");
         }
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.FOUDRE;
     }
 }

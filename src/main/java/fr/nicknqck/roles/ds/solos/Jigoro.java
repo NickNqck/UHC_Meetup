@@ -8,6 +8,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.utils.Loc;
@@ -54,6 +55,12 @@ public class Jigoro extends DemonsSlayersRoles {
 		}, 20);
 		setLameIncassable(owner, true);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.FOUDRE;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Jigoro;

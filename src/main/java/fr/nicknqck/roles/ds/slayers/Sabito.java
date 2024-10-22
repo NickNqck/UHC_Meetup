@@ -8,6 +8,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.DemonMain;
 import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -29,6 +30,12 @@ public class Sabito extends SlayerRoles {
 	public Sabito(UUID player) {
 		super(player);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.EAU;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Sabito;
