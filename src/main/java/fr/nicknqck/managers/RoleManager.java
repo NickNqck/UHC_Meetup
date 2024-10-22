@@ -83,7 +83,7 @@ public class RoleManager {
     }
     private void registerDemonSlayer() throws Exception {
         //Register Slayers
-        registerRole(Gyomei.class);
+        registerRole(GyomeiV2.class);
         registerRole(Kanae.class);
         registerRole(Kyojuro.class);
         registerRole(Mitsuri.class);

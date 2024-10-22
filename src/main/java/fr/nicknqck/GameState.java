@@ -481,7 +481,7 @@ public class GameState{
 			role = new Muichiro(player);
 		break;
 		case Gyomei:
-			role = new Gyomei(player);
+			role = new GyomeiV2(player);
 			break;
 		case Daki:
 			role = new Daki(player);
