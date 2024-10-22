@@ -104,7 +104,12 @@ public class Main extends JavaPlugin {
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
 		registerEvents(gameState);
-		initGameWorld();
+		World arena = Bukkit.getWorld("arena");
+		if (arena == null) {
+			initGameWorld();
+		} else {
+			getWorldManager().setGameWorld(arena);
+		}
 		registerEvents2(gameState);
 		initPlugin(gameState);
 		EnableScoreboard(gameState);
@@ -329,7 +334,6 @@ public class Main extends JavaPlugin {
 		if (getScoreboardManager() != null) {
 			getScoreboardManager().onDisable();
 		}
-		deleteWorld();
 		System.out.println("["+PLUGIN_NAME+"] Disabled");
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
