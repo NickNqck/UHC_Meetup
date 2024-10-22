@@ -94,7 +94,7 @@ public class AutomaticDesc {
             }
             String[] description = power.getDescriptions();
             Cooldown cooldown = power.getCooldown();
-            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
+            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : "e pouvoir")+" \"");
             TextComponent powerName = new TextComponent(name);
             if (description != null && description.length > 0) {
                 StringBuilder d = new StringBuilder();
