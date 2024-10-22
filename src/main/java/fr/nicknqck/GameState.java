@@ -533,7 +533,7 @@ public class GameState{
 			role = new Demon_Simple(player);
 			break;
 		case Sanemi:
-			role = new Sanemi(player);
+			role = new SanemiV2(player);
 			break;
 		case Shinjuro:
 			role = new Shinjuro(player);
