@@ -146,6 +146,8 @@ public class HubConfig implements Listener {
                             }
                             Main.getInstance().getWorldListener().setEnable(false);
                         }
+                    } else if (item.getType().equals(Material.DIAMOND_PICKAXE) && Main.getInstance().isGoodServer()) {
+                        gameState.setMinage(!gameState.isMinage());
                     }
                     if (item.isSimilar(GUIItems.getx())) player.closeInventory();
                     event.setCancelled(true);

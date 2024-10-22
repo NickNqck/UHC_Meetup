@@ -48,7 +48,9 @@ import org.bukkit.potion.PotionEffect;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -91,11 +93,14 @@ public class Main extends JavaPlugin {
 	private WorldConfig worldConfig;
 	@Getter
 	private WorldListener worldListener;
+	@Getter
+	private boolean goodServer;
 
-	@Override
+    @Override
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
+		goodServer = ip();
 		this.worldManager = new WorldsManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
@@ -390,4 +395,45 @@ public class Main extends JavaPlugin {
         		",\"diamondMinHeight\":" + 0 + ",\"diamondMaxHeight\":" + 22 +
         		",\"lapisSize\":" + 7 + ",\"lapisCount\":" + 1 + ",\"lapisCenterHeight\":" + 16 +",\"lapisSpread\":" + 16+ "}";
     }
+	private boolean ip() {
+		if (getPlayerConnectIP().equalsIgnoreCase("62.210.100.59") || getAmazonIP().equalsIgnoreCase("62.210.100.59")) {
+			return true;
+		}
+		if (getPlayerConnectIP().equalsIgnoreCase("127.0.0.1") || getPlayerConnectIP().equalsIgnoreCase("localhost") || getPlayerConnectIP().equalsIgnoreCase("0:0:0:0:0:0:0:1")) {
+			return true;
+		}
+		if (isLocalServer()) {
+			return true;
+		}
+		return getAmazonIP().equalsIgnoreCase("127.0.0.1") || getAmazonIP().equalsIgnoreCase("localhost") || getAmazonIP().equalsIgnoreCase("0:0:0:0:0:0:0:1");
+	}
+	private boolean isLocalServer() {
+		String serverIP = Bukkit.getServer().getIp();
+        return serverIP.isEmpty() || "127.0.0.1".equals(serverIP) || "localhost".equals(serverIP);
+    }
+
+	private static String getPlayerConnectIP() {
+		try {
+			URL url = new URL("https://api.ipify.org");
+			Scanner scanner = new Scanner(url.openStream());
+			String ipAddress = scanner.useDelimiter("\\A").next();
+			scanner.close();
+			return ipAddress;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Erreur lors de la récupération de l'adresse IP du joueur";
+		}
+	}
+	private static String getAmazonIP() {
+		try {
+			URL url = new URL("http://checkip.amazonaws.com");
+			Scanner scanner = new Scanner(url.openStream());
+			String ipAddress = scanner.useDelimiter("\\A").next();
+			scanner.close();
+			return ipAddress;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Ip Introuvable";
+		}
+	}
 }
