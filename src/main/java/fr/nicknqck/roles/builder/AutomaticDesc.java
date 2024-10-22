@@ -94,12 +94,17 @@ public class AutomaticDesc {
             }
             String[] description = power.getDescriptions();
             Cooldown cooldown = power.getCooldown();
-            TextComponent textComponent = new TextComponent("\n\n§7Vous possédez l'item \"");
+            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
             TextComponent powerName = new TextComponent(name);
             if (description != null && description.length > 0) {
                 StringBuilder d = new StringBuilder();
+                int lines = 0;
                 for (String string : description) {
-                    d.append(string).append("\n");
+                    lines++;
+                    if (lines != 1) {
+                        d.append("\n");
+                    }
+                    d.append(string);
                 }
                 powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(d.toString())}));
             } else {
