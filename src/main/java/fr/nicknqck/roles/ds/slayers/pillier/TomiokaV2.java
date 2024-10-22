@@ -77,8 +77,14 @@ public class TomiokaV2 extends PillierRoles {
         Book.setItemMeta(BookMeta);
         giveItem(owner, false, Book);
         addPower(new FindOthersPower(this));
-        AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffects(getEffects()).setPowers(getPowers()).addCustomLine("Vous possédez un livre enchanter§b Depth Strider III");
+        AutomaticDesc automaticDesc = new AutomaticDesc(this)
+                .addEffects(getEffects())
+                .addCustomLine("§7Vous possédez un livre enchanter§b Depth Strider III")
+                .setPowers(getPowers());
         this.desc = automaticDesc.getText();
+        if (!gameState.isMinage()) {
+            owner.setLevel(owner.getLevel()+3);
+        }
     }
 
     private static class FindOthersPower extends Power {
