@@ -22,6 +22,9 @@ public abstract class ItemPower extends Power{
 
     protected ItemPower(String name, Cooldown cooldown, ItemBuilder item, RoleBase role, String... description) {
         super(name, cooldown, role, description);
+        if (description != null && description.length > 0) {
+            item.setLore(description);
+        }
         this.item = item.setUnbreakable(true).setDroppable(false).toItemStack();
     }
     public void call(Object event) {
