@@ -103,7 +103,7 @@ public class GyomeiV2 extends PillierRoles implements Listener {
         private boolean end = false;
 
         protected MarquePower(RoleBase role) {
-            super("§aMarque des Pourfendeurs§7 (§aGyomei§7)", new Cooldown(-500), new ItemBuilder(Material.NETHER_STAR).setName("§aMarque de Pourfender"), role
+            super("§aMarque des Pourfendeurs§7 (§aGyomei§7)", new Cooldown(-500), new ItemBuilder(Material.NETHER_STAR).setName("§aMarque des Pourfendeurs"), role
                     , "§c1 fois§7 par partie, vous permet d'obtenir§c +3❤ permanent§7 ainsi que l'effet§c Résistance I§7 pendant§c 5 minutes§7, cependant, vous§c mourrez§7 après l'utilisation.","","§7En tuant un§c joueur§7 appartenant au camp des§c Démons§7 vous obtiendrez§e +1/2💛§7 d'§eabsorbtion§7 au moment de l'activation§7.");
         }
 
