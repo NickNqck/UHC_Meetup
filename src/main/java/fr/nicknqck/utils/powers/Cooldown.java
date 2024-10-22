@@ -3,16 +3,18 @@ package fr.nicknqck.utils.powers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
+import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public final class Cooldown {
-    private final int cooldown;
+    @Getter
+    private final int originalCooldown;
     @Setter
     private int actualCooldown;
 
     public Cooldown(int cooldown) {
-        this.cooldown = cooldown;
+        this.originalCooldown = cooldown;
     }
 
     public int getCooldownRemaining() {
@@ -24,7 +26,7 @@ public final class Cooldown {
     }
 
     public void use() {
-        this.actualCooldown = cooldown;
+        this.actualCooldown = originalCooldown;
         new cdRemover(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
 

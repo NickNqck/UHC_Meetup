@@ -23,12 +23,14 @@ public abstract class Power {
     private int use;
     private boolean cooldownResetSended = true;
     private final RoleBase role;
+    private final String[] descriptions;
 
     public Power(@NonNull String name, Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
         this.name = name;
         this.cooldown = cooldown;
         this.use = 0;
         this.role = role;
+        this.descriptions = descriptions;
     }
 
     public boolean checkUse(Player player, Map<String, Object> args) {

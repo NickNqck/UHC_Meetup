@@ -3,11 +3,16 @@ package fr.nicknqck.roles.builder;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
 import java.util.Map;
 
 public class AutomaticDesc {
@@ -78,6 +83,46 @@ public class AutomaticDesc {
                     text.addExtra("§7 (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+").");
                     break;
             }
+        }
+        return this;
+    }
+    public final AutomaticDesc setPowers(List<Power> powers) {
+        for (Power power : powers) {
+            String name = power.getName();
+            if (power instanceof ItemPower) {
+                name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
+            }
+            String[] description = power.getDescriptions();
+            Cooldown cooldown = power.getCooldown();
+            TextComponent textComponent = new TextComponent("\n\n§7Vous possédez l'item \"");
+            TextComponent powerName = new TextComponent(name);
+            if (description != null && description.length > 0) {
+                StringBuilder d = new StringBuilder();
+                for (String string : description) {
+                    d.append(string).append("\n");
+                }
+                powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(d.toString())}));
+            } else {
+                powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune description trouver !")}));
+            }
+            textComponent.addExtra(powerName);
+            textComponent.addExtra("§7\"");
+            if (cooldown != null) {
+                switch (cooldown.getOriginalCooldown()) {
+                    case -500:
+                        textComponent.addExtra("§7 (1x/partie).");
+                        break;
+                    case 0:
+                        textComponent.addExtra("§7.");
+                        break;
+                    default:
+                        textComponent.addExtra("§7 (1x/"+StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown())+").");
+                        break;
+                }
+            } else {
+                textComponent.addExtra("§7.");
+            }
+            this.text.addExtra(textComponent);
         }
         return this;
     }
