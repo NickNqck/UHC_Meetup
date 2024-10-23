@@ -11,7 +11,7 @@ import fr.nicknqck.roles.ds.slayers.Makomo;
 import fr.nicknqck.roles.ds.slayers.Sabito;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.roles.ds.slayers.Urokodaki;
-import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import fr.nicknqck.roles.ds.slayers.pillier.TomiokaV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -116,7 +116,7 @@ public class DemonMain extends DemonInferieurRole {
 							killurokodaki = true;						
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"force 1 le jour");
 						}
-						if (role instanceof Tanjiro || role instanceof Sabito || role instanceof Tomioka || role instanceof Makomo) {
+						if (role instanceof Tanjiro || role instanceof Sabito || role instanceof TomiokaV2 || role instanceof Makomo) {
 							owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*2, 0, false, false), true);							
 							owner.sendMessage("Vous venez de tuez: "+victim.getName()+" qui était: "+role.getRoles()+" ce qui vous fait gagner résistance 1 pendant 2 minutes");
 						}

@@ -10,7 +10,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.DemonMain;
-import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import fr.nicknqck.roles.ds.slayers.pillier.TomiokaV2;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -139,7 +139,7 @@ public class Sabito extends SlayerRoles {
 			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
-					if (r instanceof Tomioka && !dietomioka) {
+					if (r instanceof TomiokaV2 && !dietomioka) {
 						dietomioka = true;
 						owner.sendMessage(ChatColor.GOLD+""+ r.getRoles()+ChatColor.GRAY+" est mort vous gagnez donc en utilisant votre Soufle de L'eau Speed 2 pendant 2 minutes au lieu de Speed 1 pendant 2 minutes, également le cooldown est réduit de 30 secondes");
 						}

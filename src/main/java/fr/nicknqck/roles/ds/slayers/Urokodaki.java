@@ -8,7 +8,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import fr.nicknqck.roles.ds.slayers.pillier.TomiokaV2;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -112,7 +112,7 @@ public class Urokodaki extends SlayerRoles {
 			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase role = gameState.getPlayerRoles().get(victim);
-					if (role instanceof Tomioka || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
+					if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
 						Random random = new Random();
 						int rint = random.nextInt(2);
 						System.out.println("Speed Urokodaki 1"+ owner.getWalkSpeed());
