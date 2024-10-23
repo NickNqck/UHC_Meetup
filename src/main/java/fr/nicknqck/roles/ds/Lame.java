@@ -38,6 +38,7 @@ public class Lame implements Listener{
 							Lames toGett;
 							List<Lames> lames = new ArrayList<>();
                             Collections.addAll(lames, Lames.values());
+							lames.removeAll(role.getCantHave());
 							Collections.shuffle(lames, Main.RANDOM);
 							Collections.shuffle(lames, Main.RANDOM);
 							Collections.shuffle(lames, Main.RANDOM);

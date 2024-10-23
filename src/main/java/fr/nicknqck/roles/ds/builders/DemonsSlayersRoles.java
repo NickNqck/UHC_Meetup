@@ -14,7 +14,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -25,6 +27,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     private boolean lameincassable = false;
     private boolean canuseblade = false;
     public boolean hasblade = false;
+    private final List<Lames> cantHave = new ArrayList<>();
 
     public DemonsSlayersRoles(UUID player) {
         super(player);

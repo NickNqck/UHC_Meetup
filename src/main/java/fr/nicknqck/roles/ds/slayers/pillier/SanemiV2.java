@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -69,6 +70,7 @@ public class SanemiV2 extends PillierRoles {
                 .setPowers(getPowers());
         this.textComponent = desc.getText();
         setCanuseblade(true);
+        getCantHave().add(Lames.NoFall);
     }
 
     @Override
