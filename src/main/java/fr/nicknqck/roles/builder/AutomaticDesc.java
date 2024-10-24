@@ -88,6 +88,7 @@ public class AutomaticDesc {
     }
     public final AutomaticDesc setPowers(List<Power> powers) {
         for (Power power : powers) {
+            if (power.getName() == null)continue;
             String name = power.getName();
             if (power instanceof ItemPower) {
                 name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
@@ -95,21 +96,7 @@ public class AutomaticDesc {
             String[] description = power.getDescriptions();
             Cooldown cooldown = power.getCooldown();
             TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : "e pouvoir")+" \"");
-            TextComponent powerName = new TextComponent(name);
-            if (description != null && description.length > 0) {
-                StringBuilder d = new StringBuilder();
-                int lines = 0;
-                for (String string : description) {
-                    lines++;
-                    if (lines != 1) {
-                        d.append("\n");
-                    }
-                    d.append(string);
-                }
-                powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(d.toString())}));
-            } else {
-                powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune description trouver !")}));
-            }
+            TextComponent powerName = getPowerName(name, description);
             textComponent.addExtra(powerName);
             textComponent.addExtra("§7\"");
             if (cooldown != null) {
@@ -131,6 +118,27 @@ public class AutomaticDesc {
         }
         return this;
     }
+
+    private TextComponent getPowerName(String name, String[] description) {
+        TextComponent powerName = new TextComponent(name);
+        if (description != null && description.length > 0) {
+            StringBuilder d = new StringBuilder();
+            int lines = 0;
+            for (String string : description) {
+                lines++;
+                if (lines != 1) {
+                    d.append("\n");
+                }
+                d.append(string);
+            }
+            BaseComponent[] hoverText = new BaseComponent[]{new TextComponent(d.toString())};
+            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText));
+        } else {
+            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune description trouver !")}));
+        }
+        return powerName;
+    }
+
     @SafeVarargs
     public final AutomaticDesc setCommands(TripleMap<HoverEvent, String, Integer>... hoverAndCooldown) {
         text.addExtra("\n\n" + "§7 - Commandes: ");
