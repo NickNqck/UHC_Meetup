@@ -97,7 +97,7 @@ public class GyomeiV2 extends PillierRoles implements Listener {
             if (gamePlayer == null)return;
             if (gamePlayer.getRole() == null)return;
             if (this.marquePower == null)return;
-            if (gamePlayer.getRole() instanceof DemonsRoles) {
+            if (gamePlayer.getRole() instanceof DemonsRoles && !this.marquePower.getCooldown().isInCooldown()) {
                 this.marquePower.demonsKills++;
                 event.getKiller().sendMessage("§7En tuant un§c démon§7 la puissance de votre "+this.marquePower.getItem().getItemMeta().getDisplayName()+"§7 de§c 1 point§7 ce qui vous fait montez à §c"+this.marquePower.demonsKills+"§7(§cs§7).");
             }
