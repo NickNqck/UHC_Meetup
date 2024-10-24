@@ -4,6 +4,7 @@ import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -20,7 +21,7 @@ public abstract class ItemPower extends Power{
     private final ItemStack item;
     private InteractType interactType;
 
-    protected ItemPower(String name, Cooldown cooldown, ItemBuilder item, RoleBase role, String... description) {
+    protected ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
         super(name, cooldown, role, description);
         if (description != null && description.length > 0) {
             item.setLore(description);
