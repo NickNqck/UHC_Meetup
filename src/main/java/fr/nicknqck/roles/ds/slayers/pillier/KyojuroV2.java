@@ -196,7 +196,7 @@ public class KyojuroV2 extends PillierRoles {
                     Player player = Bukkit.getPlayer(gamePlayer.getUuid());
                     if (player != null) {
                         Bukkit.getScheduler().runTask(power.getPlugin(), () -> {
-                            player.sendMessage("§7Fin du §cdash§7.");
+                            player.sendMessage("§7Votre§c dash§7 se termine.");
                             player.setAllowFlight(false);
                         });
                     }
