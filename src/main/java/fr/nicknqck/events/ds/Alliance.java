@@ -1,6 +1,7 @@
 package fr.nicknqck.events.ds;
 
 import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,7 +19,6 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
 import fr.nicknqck.roles.ds.solos.Shinjuro;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -27,7 +27,7 @@ import fr.nicknqck.utils.StringUtils;
 import java.util.UUID;
 
 public class Alliance extends EventBase{
-	private Kyojuro kyojuro;
+	private KyojuroV2 kyojuro;
 	private Shinjuro shinjuro;
 	@Override
 	public boolean PlayEvent(int gameTime) {
@@ -40,15 +40,16 @@ public class Alliance extends EventBase{
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p)) {
 							RoleBase role = gameState.getPlayerRoles().get(p);
-							if (role instanceof Kyojuro || role instanceof Shinjuro) {
+							if (role instanceof KyojuroV2 || role instanceof Shinjuro) {
 								role.setTeam(TeamList.Alliance);
-								if (role instanceof Kyojuro) {
-									Kyojuro k = (Kyojuro) role;
+								if (role instanceof KyojuroV2) {
+									KyojuroV2 k = (KyojuroV2) role;
 									k.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
 									k.owner.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
 									k.giveHealedHeartatInt(2);
 									this.kyojuro = k;
 									k.setAlliance(true);
+									k.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
 								}
 								if (role instanceof Shinjuro) {
 									Shinjuro s = (Shinjuro) role;
@@ -124,9 +125,9 @@ public class Alliance extends EventBase{
 					"",
 					"§7Dans cette évènement aléatoire le rôle de§e Shinjuro§7 et de§a Kyojuro§7 rentre en§6 alliance§7 pour vaincre tout les autres joueurs de la partie,",
 					"",
-					"§aKyojuro§7 gagne l'effet§c Force 1§7 proche de§e Shinjuro§7 (20blocs), également il gagne§c 2"+AllDesc.coeur+"§7 permanent",
+					"§aKyojuro§7 gagne l'effet§c Force 1§7 proche de§e Shinjuro§7 (§c20blocs§7) ainsi que l'effet§e Speed I§c permanent§7, également il gagne§c 2"+AllDesc.coeur+"§7 permanent, de plus, sa commande§6 /ds flamme§7 donnera l'effet§c Force I§7 à chaque coup",
 					"",
-					"§eShinjuro§7 gagne l'effet§c Force 1§7 proche de§a Kyojuro§7 (20blocs), également il gagne un traqueur jusqu'à la fin de la partie pointant vers§a Kyojuro",
+					"§eShinjuro§7 gagne l'effet§c Force 1§7 proche de§a Kyojuro§7 (§c20blocs§7), également il gagne un traqueur jusqu'à la fin de la partie pointant vers§a Kyojuro",
 					"",
 					"§7A la mort de l'un l'autre obtient l'effet§c Force I§7 permanent",
 					"",

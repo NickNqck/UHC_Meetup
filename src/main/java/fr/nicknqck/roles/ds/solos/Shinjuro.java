@@ -13,7 +13,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
+import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.TripleMap;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -174,7 +174,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Kyojuro && !killkyojuro) {
+						if (role instanceof KyojuroV2 && !killkyojuro) {
 							killkyojuro = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles().name()+ChatColor.GRAY+" maintenant en utilisant le Soufle du Feu vous obtiendrez l'effet: "+ChatColor.RED+"Speed 1"+ChatColor.GRAY+" permanent");
 						}

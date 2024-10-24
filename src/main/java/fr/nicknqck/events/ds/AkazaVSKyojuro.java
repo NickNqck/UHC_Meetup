@@ -4,7 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ds.demons.lune.Akaza;
-import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
+import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,7 +29,7 @@ import fr.nicknqck.utils.StringUtils;
 public class AkazaVSKyojuro extends EventBase{
 	private int i = 0;
 	private Akaza akaza;
-	private Kyojuro kyojuro;
+	private KyojuroV2 kyojuro;
 	private Location originalAkazaLocation;
 	private Location originalKyojuroLocation;
 	private boolean AkazaWin = false;
@@ -53,7 +53,7 @@ public class AkazaVSKyojuro extends EventBase{
 								Player pAkaza = gameState.getOwner(Roles.Akaza);
 								if (pAkaza != null && pkyojuro != null) {
 									Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
-									Kyojuro kyojuro = (Kyojuro) gameState.getPlayerRoles().get(pkyojuro);
+									KyojuroV2 kyojuro = (KyojuroV2) gameState.getPlayerRoles().get(pkyojuro);
 									this.akaza = akaza;
 									this.kyojuro = kyojuro;
 									this.originalAkazaLocation = pAkaza.getLocation();

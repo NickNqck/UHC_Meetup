@@ -17,6 +17,7 @@ import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
+import lombok.Setter;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
@@ -42,6 +43,8 @@ import java.util.UUID;
 public class KyojuroV2 extends PillierRoles {
 
     private TextComponent desc;
+    @Setter
+    private boolean alliance = false;
 
     public KyojuroV2(UUID player) {
         super(player);
@@ -94,7 +97,7 @@ public class KyojuroV2 extends PillierRoles {
 
         private boolean end;
 
-        public FlammePower(@NonNull RoleBase role) {
+        public FlammePower(@NonNull KyojuroV2 role) {
             super("§6/ds flamme", "flamme", new Cooldown(60*10), role, CommandType.DS, "§7Vous permet d'§6enflammer§7 les joueurs que vous frappez et ceux sur lesquelles vous tirez,","§7En frappant un joueur vous aurez§c 35%§7 de§c chance§7 de recevoir§c 5 secondes§7 de l'effet§c Force I§7.");
         }
 
@@ -115,7 +118,7 @@ public class KyojuroV2 extends PillierRoles {
             if (event.getDamager() instanceof Player) {
                 if (event.getDamager().getUniqueId().equals(getRole().getPlayer())){
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
-                    if (Main.RANDOM.nextInt(100) <= 35) {
+                    if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
                         ((Player) event.getDamager()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
                     }
                 }
@@ -123,7 +126,7 @@ public class KyojuroV2 extends PillierRoles {
                 Projectile projectile = (Projectile) event.getDamager();
                 if (projectile.getShooter() instanceof Player && ((Player) projectile.getShooter()).getUniqueId().equals(getRole().getPlayer())) {
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
-                    if (Main.RANDOM.nextInt(100) <= 35) {
+                    if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
                         ((Player) event.getDamager()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
                     }
                 }

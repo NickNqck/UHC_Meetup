@@ -85,7 +85,7 @@ public class RoleManager {
         //Register Slayers
         registerRole(GyomeiV2.class);
         registerRole(Kanae.class);
-        registerRole(Kyojuro.class);
+        registerRole(KyojuroV2.class);
         registerRole(Mitsuri.class);
         registerRole(Muichiro.class);
         registerRole(Obanai.class);
