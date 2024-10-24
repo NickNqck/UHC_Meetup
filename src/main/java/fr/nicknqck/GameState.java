@@ -478,7 +478,7 @@ public class GameState{
 			role = new Gyokko(player);
 			break;
 		case Muichiro:
-			role = new Muichiro(player);
+			role = new MuichiroV2(player);
 		break;
 		case Gyomei:
 			role = new GyomeiV2(player);
