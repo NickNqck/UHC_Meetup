@@ -149,7 +149,7 @@ public class KyojuroV2 extends PillierRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 runnable.time = 0;
                 player.setAllowFlight(true);
-                runnable.runTaskTimerAsynchronously(getPlugin(), 0, 5);
+                runnable.runTaskTimerAsynchronously(getPlugin(), 0, 1);
                 EventUtils.registerEvents(this);
                 return true;
             }
@@ -208,7 +208,7 @@ public class KyojuroV2 extends PillierRoles {
                 if (player != null) {
                     Vector v = player.getEyeLocation().getDirection();
                     v.setY(0.1);
-                    player.setVelocity(v.multiply(1.8));
+                    player.setVelocity(v.multiply(1));
                     Bukkit.getScheduler().runTask(power.getPlugin(), () -> {
                         for (final Location location : MathUtil.getCircle(player.getLocation(), 4.0)) {
                             final Block block = location.getWorld().getBlockAt(location);
