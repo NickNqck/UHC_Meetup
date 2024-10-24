@@ -16,7 +16,7 @@ public class EventUtils implements Listener{
 
     private final List<Listener> toUnregister = new ArrayList<>();
 
-    EventUtils() {
+    public EventUtils() {
         registerEvents(this);
     }
 

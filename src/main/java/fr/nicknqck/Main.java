@@ -207,6 +207,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemBuilderListener(), this);
 		new EffectsGiver();
+		new fr.nicknqck.utils.event.EventUtils();
 		getServer().getPluginManager().registerEvents(new WebHookListeners(gameState), this);
 		DeathManager manager = new DeathManager();
 		getServer().getPluginManager().registerEvents(manager, this);
