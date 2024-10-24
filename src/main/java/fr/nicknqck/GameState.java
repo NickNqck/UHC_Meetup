@@ -472,7 +472,7 @@ public class GameState{
 			role = new Akaza(player);
 			break;
 		case Kyojuro:
-			role = new Kyojuro(player);
+			role = new KyojuroV2(player);
 			break;
 		case Gyokko:
 			role = new Gyokko(player);
