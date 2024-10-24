@@ -11,6 +11,7 @@ import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,7 +48,7 @@ public class MuichiroV2 extends PillierRoles {
 
     @Override
     public GameState.Roles getRoles() {
-        return null;
+        return GameState.Roles.Muichiro;
     }
 
     @Override
@@ -74,8 +75,9 @@ public class MuichiroV2 extends PillierRoles {
     private static class T4ItemPower extends ItemPower implements Listener {
 
         protected T4ItemPower(@NonNull RoleBase role) {
-            super("§bSoufle de la Brume", new Cooldown(60), new ItemBuilder(Material.DIAMOND_SWORD).setName("§bLame de Muichiro"), role, "§7Lorsque vous§c tapez§7 un joueur vous lui infligerez§c 5 secondes de§4 Blindness I");
+            super("§bSoufle de la Brume", new Cooldown(60), new ItemBuilder(Material.DIAMOND_SWORD).setName("§bLame de Muichiro").addEnchant(Enchantment.DAMAGE_ALL, 4), role, "§7Lorsque vous§c tapez§7 un joueur vous lui infligerez§c 5 secondes de§4 Blindness I");
             EventUtils.registerRoleEvent(this);
+            setSendCooldown(false);
         }
 
         @Override
