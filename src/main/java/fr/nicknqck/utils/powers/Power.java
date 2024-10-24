@@ -24,6 +24,7 @@ public abstract class Power {
     private boolean cooldownResetSended = true;
     private final RoleBase role;
     private final String[] descriptions;
+    private boolean sendCooldown = true;
 
     public Power(@NonNull String name, Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
         this.name = name;
@@ -69,7 +70,9 @@ public abstract class Power {
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
-            role.sendCooldown(player, getCooldown().getCooldownRemaining());
+            if (isSendCooldown()) {
+                role.sendCooldown(player, getCooldown().getCooldownRemaining());
+            }
             return false;
         }
 
