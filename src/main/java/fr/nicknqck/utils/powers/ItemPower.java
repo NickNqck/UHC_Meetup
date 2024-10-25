@@ -1,10 +1,15 @@
 package fr.nicknqck.utils.powers;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -12,14 +17,18 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 @Getter
 public abstract class ItemPower extends Power{
 
     private final ItemStack item;
     private InteractType interactType;
+    @Setter
+    private boolean showCdInHand = true;
 
     protected ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
         super(name, cooldown, role, description);
@@ -27,6 +36,9 @@ public abstract class ItemPower extends Power{
             item.setLore(description);
         }
         this.item = item.setUnbreakable(true).setDroppable(false).toItemStack();
+        if (showCdInHand && cooldown != null && cooldown.getOriginalCooldown() > 0) {
+            new ShowCdRunnable(role.getPlayer(), cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+        }
     }
     public void call(Object event) {
         if (event instanceof PlayerInteractEvent) {
@@ -88,4 +100,37 @@ public abstract class ItemPower extends Power{
         DROP_ITEM
     }
 
+    private static class ShowCdRunnable extends BukkitRunnable {
+
+        private final UUID user;
+        private final Cooldown cooldown;
+        private final GameState gameState;
+        private final ItemStack item;
+
+        private ShowCdRunnable(UUID user, Cooldown cooldown, ItemStack item) {
+            this.user = user;
+            this.cooldown = cooldown;
+            this.gameState = GameState.getInstance();
+            this.item = item;
+            System.out.println("Started "+this+" for "+user);
+        }
+
+        @Override
+        public void run() {
+            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            Player player = Bukkit.getPlayer(user);
+            if (player != null) {
+                if (player.getItemInHand().isSimilar(item)) {
+                    if (cooldown.isInCooldown()){
+                        NMSPacket.sendActionBar(player, "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()));
+                    } else {
+                        NMSPacket.sendActionBar(player, item.getItemMeta().getDisplayName()+" est§c utilisable");
+                    }
+                }
+            }
+        }
+    }
 }
