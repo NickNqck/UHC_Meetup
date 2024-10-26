@@ -171,7 +171,8 @@ public class TengenV2 extends PillierRoles {
     private static class Kunai extends ItemPower implements Listener {
 
         protected Kunai(@NonNull RoleBase role) {
-            super("§cKunai empoisonné", new Cooldown(60), new ItemBuilder(Material.SNOW_BALL).setName("§cKunai empoisonné"), role, "coucou");
+            super("§cKunai empoisonné", new Cooldown(60), new ItemBuilder(Material.SNOW_BALL).setName("§cKunai empoisonné"), role,
+                    "§fBoule de neige§7 ayant§c 25%§7 de§c chance§7 de donner§c 6 secondes§7 de§2 Poison I§7 au joueur toucher");
             EventUtils.registerRoleEvent(this);
         }
 
