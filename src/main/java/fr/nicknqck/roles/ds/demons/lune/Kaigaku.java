@@ -4,6 +4,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
@@ -37,6 +38,12 @@ public class Kaigaku extends DemonsRoles {
 		getKnowedRoles().add(Muzan.class);
 		setLameIncassable(owner, true);
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.FOUDRE;
+	}
+
 	@Override
 	public @NonNull DemonType getRank() {
 		return DemonType.SUPERIEUR;

@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.scenarios.impl.FFA;
@@ -35,6 +36,11 @@ public class Kokushibo extends DemonsRoles {
 	public Kokushibo(UUID player) {
 		super(player);
 		regencooldown = 15;
+	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.LUNE;
 	}
 
 	@Override
