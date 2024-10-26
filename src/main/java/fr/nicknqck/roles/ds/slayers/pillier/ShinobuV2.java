@@ -61,7 +61,6 @@ public class ShinobuV2 extends PillierRoles {
 
     @Override
     public void resetCooldown() {
-
     }
 
     @Override
@@ -89,7 +88,8 @@ public class ShinobuV2 extends PillierRoles {
         private final List<UUID> affected;
 
         public PapillonsCommand(@NonNull RoleBase role) {
-            super("§a/ds papillons", "papillons", null, role, CommandType.DS, "");
+            super("§a/ds papillons", "papillons", null, role, CommandType.DS,
+                    "§7Vous permet de choisir qu'elles§c joueurs§7 seront affecter par votre §aSoins");
             this.heads = new HashMap<>();
             initMap();
             this.affected = new ArrayList<>();
@@ -106,6 +106,7 @@ public class ShinobuV2 extends PillierRoles {
         }
         private void initMap() {
             for (final GamePlayer gamePlayer : getRole().getGameState().getGamePlayer().values()) {
+                if (gamePlayer.getUuid().equals(getRole().getPlayer()))continue;
                 if (gamePlayer.isAlive() && gamePlayer.getRole() != null) {
                     Player player = Bukkit.getPlayer(gamePlayer.getUuid());
                     if (player != null) {
@@ -163,7 +164,10 @@ public class ShinobuV2 extends PillierRoles {
         private int gapToEat = -1;
 
         protected HealPower(@NonNull ShinobuV2 role) {
-            super("§aSoins", null, new ItemBuilder(Material.NETHER_STAR).setName("§aSoins"), role);
+            super("§aSoins", null, new ItemBuilder(Material.NETHER_STAR).setName("§aSoins"), role,
+                    "§7Lorsqu'un de vos protéger choisis via le§6 /ds papillons§7 est en dessous de§c 4❤§7 vous recevrez une notification pour le§d soigner§c complètement§7.",
+                    "",
+                    "§c! Pour pouvoir réutiliser ce pouvoir il faudrat que vous et/ou le dernier joueur soigner§c mangiez un total de§e 25 pommes d'or");
             setMaxUse(1);
             this.shinobuV2 = role;
             this.lastPlayerlow = role.getPlayer();
