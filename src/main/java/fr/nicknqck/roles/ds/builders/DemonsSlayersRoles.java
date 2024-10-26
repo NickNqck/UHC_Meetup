@@ -26,7 +26,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     private Lames lames;
     private boolean lameincassable = false;
     private boolean canuseblade = false;
-    public boolean hasblade = false;
+    private boolean hasblade = false;
     private final List<Lames> cantHave = new ArrayList<>();
 
     public DemonsSlayersRoles(UUID player) {

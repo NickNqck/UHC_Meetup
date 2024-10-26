@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
@@ -54,6 +55,20 @@ public class Lame implements Listener{
 				}
 			} else {
 				p.sendMessage("Il faut avoir un rôle pour obtenir une lame");
+			}
+		}
+	}
+	@EventHandler
+	private void onBattle(UHCPlayerBattleEvent event){
+		if (event.getDamager().getRole() != null && event.getDamager().getRole() instanceof DemonsSlayersRoles) {
+			DemonsSlayersRoles role = (DemonsSlayersRoles) event.getDamager().getRole();
+			if (role.isHasblade()) {
+				int i = role.getLames().getUsers().get(role.getPlayer());
+				role.getLames().getUsers().remove(role.getPlayer(), i);
+				if (Main.RANDOM.nextInt(100) < 10) {
+					i-=1;
+				}
+				role.getLames().getUsers().put(role.getPlayer(), i);
 			}
 		}
 	}
