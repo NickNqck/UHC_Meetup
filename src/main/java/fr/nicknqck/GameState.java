@@ -575,7 +575,7 @@ public class GameState{
 			role = new Yahaba(player);
 			break;
 		case Hotaru:
-			role = new Hotaru(player);
+			role = new HotaruV2(player);
 			break;
 		case Kumo:
 			role = new Kumo(player);
