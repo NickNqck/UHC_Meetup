@@ -542,7 +542,7 @@ public class GameState{
 			role = new Kyogai(player);
 			break;
 		case Kanae:
-			role = new Kanae(player);
+			role = new KanaeV2(player);
 			break;
 		case Rui:
 			role = new Rui(player);
