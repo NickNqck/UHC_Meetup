@@ -212,6 +212,7 @@ public class ShinobuV2 extends PillierRoles {
                             shinobu.sendMessage("§7Vous pouvez à nouveau§d soigner§7 l'un de vos allier");
                         }
                         setMaxUse(getMaxUse()+1);
+                        gapToEat = -1;
                     }
                 }
             }
