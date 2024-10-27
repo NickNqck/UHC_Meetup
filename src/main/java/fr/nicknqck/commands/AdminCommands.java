@@ -17,6 +17,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
+import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.rank.ChatRank;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -99,6 +100,11 @@ public class AdminCommands implements CommandExecutor{
 					}
 					if (!gameState.hasRoleNull(player)) {
 						gameState.getPlayerRoles().get(player).resetCooldown();
+						for (Power power :  gameState.getPlayerRoles().get(player).getPowers()) {
+							if (power.getCooldown() == null)continue;
+							if (!power.isSendCooldown())continue;
+							power.getCooldown().resetCooldown();
+						}
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
 						if (gameState.BijusEnable) {
 							for (Bijus bijus : Bijus.values()) {
