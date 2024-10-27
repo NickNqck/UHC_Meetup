@@ -472,6 +472,16 @@ public abstract class RoleBase implements IRole {
 		}
 		return toReturn;
 	}
+	public List<GamePlayer> getListGamePlayerFromRole(Class<? extends RoleBase> role) {
+		final List<GamePlayer> toReturn = new ArrayList<>();
+		for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+			if (gamePlayer.getRole() == null)continue;
+			if (gamePlayer.getRole().getClass().equals(role)) {
+				toReturn.add(gamePlayer);
+			}
+		}
+		return toReturn;
+	}
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {}
 	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {}
 	public void damage(Player target, double damage, int delay) {
