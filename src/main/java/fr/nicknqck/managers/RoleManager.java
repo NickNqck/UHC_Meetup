@@ -88,7 +88,7 @@ public class RoleManager {
         registerRole(KyojuroV2.class);
         registerRole(MitsuriV2.class);
         registerRole(MuichiroV2.class);
-        registerRole(Obanai.class);
+        registerRole(ObanaiV2.class);
         registerRole(SanemiV2.class);
         registerRole(ShinobuV2.class);
         registerRole(TomiokaV2.class);

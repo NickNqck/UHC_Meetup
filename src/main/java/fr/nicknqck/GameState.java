@@ -505,7 +505,7 @@ public class GameState{
 			role = new Kanao(player);
 			break;
 		case Obanai:
-			role = new Obanai(player);
+			role = new ObanaiV2(player);
 			break;
 		case Yoriichi:
 			role = new Yoriichi(player);
