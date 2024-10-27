@@ -128,9 +128,8 @@ public class BlockManager implements Listener{
             }
             if (Bukkit.getWorld("Kamui") != null) {
                 if (block.getWorld().getName().equals("Kamui")) {
-                    if (block.getType().equals(Material.STAINED_CLAY) || block.getType().equals(Material.COAL_BLOCK)) {
+                    if (type != Material.BRICK && type != Material.COBBLESTONE && type != Material.OBSIDIAN) {
                         e.setCancelled(true);
-                        block.setType(Material.AIR);
                         return;
                     }
                 }
@@ -168,6 +167,7 @@ public class BlockManager implements Listener{
 				}
 			}
         }
+		System.out.println(e.isCancelled());
 	}
 	@EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
