@@ -43,7 +43,7 @@ public abstract class ItemPower extends Power{
     public void call(Object event) {
         if (event instanceof PlayerInteractEvent) {
             this.interactType = InteractType.INTERACT;
-            HashMap<String, Object> args = new HashMap<String, Object>() {{
+            HashMap<String, Object> args = new HashMap<>() {{
                 put("event", event);
             }};
             this.checkUse(((PlayerInteractEvent) event).getPlayer(), args);
@@ -51,7 +51,7 @@ public abstract class ItemPower extends Power{
         }
         if (event instanceof PlayerDropItemEvent) {
             this.interactType = InteractType.DROP_ITEM;
-            HashMap<String, Object> args = new HashMap<String, Object>() {{
+            HashMap<String, Object> args = new HashMap<>() {{
                 put("event", event);
             }};
             this.checkUse(((PlayerDropItemEvent) event).getPlayer(), args);
@@ -59,7 +59,7 @@ public abstract class ItemPower extends Power{
         }
         if (event instanceof UHCPlayerBattleEvent) {
             this.interactType = InteractType.ATTACK_ENTITY;
-            HashMap<String, Object> args = new HashMap<String, Object>() {{
+            HashMap<String, Object> args = new HashMap<>() {{
                 put("event", event);
             }};
             this.checkUse((Player) ((UHCPlayerBattleEvent) event).getOriginEvent().getDamager(), args);
@@ -67,7 +67,7 @@ public abstract class ItemPower extends Power{
         }
         if (event instanceof PlayerInteractEntityEvent) {
             this.interactType = InteractType.INTERACT_ENTITY;
-            HashMap<String, Object> args = new HashMap<String, Object>() {{
+            HashMap<String, Object> args = new HashMap<>() {{
                 put("event", event);
             }};
             this.checkUse(((PlayerInteractEntityEvent) event).getPlayer(), args);
@@ -75,7 +75,7 @@ public abstract class ItemPower extends Power{
         }
         if (event instanceof BlockPlaceEvent) {
             this.interactType = InteractType.BLOCK_PLACE;
-            HashMap<String, Object> args = new HashMap<String, Object>() {{
+            HashMap<String, Object> args = new HashMap<>() {{
                 put("event", event);
             }};
             this.checkUse(((BlockPlaceEvent) event).getPlayer(), args);
@@ -83,7 +83,7 @@ public abstract class ItemPower extends Power{
         }
         if (event instanceof BlockBreakEvent) {
             this.interactType = InteractType.BLOCK_BREAK;
-            HashMap<String, Object> args = new HashMap<String, Object>() {{
+            HashMap<String, Object> args = new HashMap<>() {{
                 put("event", event);
             }};
             this.checkUse(((BlockBreakEvent) event).getPlayer(), args);
