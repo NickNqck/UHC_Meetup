@@ -213,6 +213,9 @@ public class DeathManager implements Listener {
         killedPlayer.setGameMode(GameMode.SPECTATOR);
         killedPlayer.updateInventory();
         killedPlayer.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 100, 0.0));
+        if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
+            gameState.getGamePlayer().get(killedPlayer.getUniqueId()).setKiller(playerKillEvent.getGamePlayerKiller());
+        }
         detectWin(gameState);
     }
     public void DisconnectKillHandler(@Nonnull GamePlayer gamePlayer) {

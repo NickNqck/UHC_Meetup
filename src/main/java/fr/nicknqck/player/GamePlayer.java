@@ -43,8 +43,10 @@ public class GamePlayer {
 	@NonNull
 	@Setter
 	private ItemStack[] lastInventoryContent;
-	@Getter
-	private PersonalScoreboard scoreboard;
+	private final PersonalScoreboard scoreboard;
+	@Setter
+	@Nullable
+    private GamePlayer killer;
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
 		this.playerName = gamePlayer.getName();
@@ -88,7 +90,8 @@ public class GamePlayer {
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
-	private static class DiscRunnable extends BukkitRunnable {
+
+    private static class DiscRunnable extends BukkitRunnable {
 		private final GamePlayer gamePlayer;
 		private DiscRunnable(GamePlayer gamePlayer) {
 			this.gamePlayer = gamePlayer;
