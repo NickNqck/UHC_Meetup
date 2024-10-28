@@ -521,7 +521,7 @@ public class GameState{
 			role = new Sabito(player);
 			break;
 		case Urokodaki:
-			role = new Urokodaki(player);
+			role = new UrokodakiV2(player);
 			break;
 		case Makomo:
 			role = new Makomo(player);

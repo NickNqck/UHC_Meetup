@@ -102,7 +102,7 @@ public class RoleManager {
         registerRole(PourfendeurV2.class);
         registerRole(Sabito.class);
         registerRole(Tanjiro.class);
-        registerRole(Urokodaki.class);
+        registerRole(UrokodakiV2.class);
         registerRole(ZenItsu.class);
         //Register Demons
         registerRole(Akaza.class);

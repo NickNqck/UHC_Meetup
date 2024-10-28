@@ -10,7 +10,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.slayers.Makomo;
 import fr.nicknqck.roles.ds.slayers.Sabito;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
-import fr.nicknqck.roles.ds.slayers.Urokodaki;
+import fr.nicknqck.roles.ds.slayers.UrokodakiV2;
 import fr.nicknqck.roles.ds.slayers.pillier.TomiokaV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -112,7 +112,7 @@ public class DemonMain extends DemonInferieurRole {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Urokodaki) {
+						if (role instanceof UrokodakiV2) {
 							killurokodaki = true;						
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"force 1 le jour");
 						}
