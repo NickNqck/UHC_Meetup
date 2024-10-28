@@ -242,7 +242,7 @@ public class GameListener implements Listener {
 								gameState.getPlayerRoles().get(p).onNight(gameState);
 							}
 						}
-						Bukkit.getPluginManager().callEvent(new NightEvent(gameState));
+						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, gameState.timeday));
 					}
 				}
 			}

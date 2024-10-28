@@ -248,7 +248,7 @@ public class AdminCommands implements CommandExecutor{
 									Bukkit.broadcastMessage("");
 									Main.getInstance().getWorldManager().getGameWorld().setTime(13000);
 									gameState.t = gameState.timeday;
-									Bukkit.getServer().getPluginManager().callEvent(new NightEvent(gameState));
+									Bukkit.getServer().getPluginManager().callEvent(new NightEvent(gameState, gameState.timeday));
 									return true;
 									
 						} else if (args[0].equalsIgnoreCase("jour")) {

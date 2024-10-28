@@ -15,12 +15,14 @@ import fr.nicknqck.GameState;
 public class NightEvent extends Event{
 	private static final HandlerList handlers = new HandlerList();
 	private final GameState gameState;
+	private final int timeNight;
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;
 	}
-	public NightEvent(GameState gameState) {
+	public NightEvent(GameState gameState, int timeday) {
 		this.gameState = gameState;
+		this.timeNight = timeday;
 	}
 
     public List<UUID> getInGamePlayersWithRole(){

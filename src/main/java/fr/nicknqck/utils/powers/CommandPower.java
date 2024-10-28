@@ -16,11 +16,11 @@ public abstract class CommandPower extends Power{
         this.commandType = commandType;
         this.arg0 = arg0;
     }
-    public void call(String[] args, final CommandType type, final Player player) {
+    public void call(String[] strings, final CommandType type, final Player player) {
         if (commandType.equals(type)) {
-            if (!args[0].equalsIgnoreCase(arg0))return;
+            if (!strings[0].equalsIgnoreCase(arg0))return;
             Map<String, Object> maps = new HashMap<>();
-            maps.put("args", args);
+            maps.put("args", strings);
             this.checkUse(player, maps);
         }
     }
