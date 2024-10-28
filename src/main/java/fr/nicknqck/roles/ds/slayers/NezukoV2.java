@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -86,11 +87,37 @@ public class NezukoV2 extends DemonsRoles {
         getKnowedRoles().add(Tanjiro.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new FormePower(this),true);
+        addPower(new SangPower(this), true);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> new TanjiroRunnable(getListGamePlayerFromRole(Tanjiro.class), this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20), 20);
         AutomaticDesc desc = new AutomaticDesc(this).setPowers(getPowers()).addEffects(getEffects());
         this.textComponent = desc.getText();
     }
+    private static class SangPower extends ItemPower implements Listener {
 
+        protected SangPower(@NonNull RoleBase role) {
+            super("§cSang Démoniaque", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§cSang Démoniaque"), role);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                player.sendMessage("§7Votre§4 sang§7 commence à§c bouilloner");
+                EventUtils.registerEvents(this);
+                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                    player.sendMessage("§7Votre§4 sang§7 est à nouveau tiède");
+                    EventUtils.unregisterEvents(this);
+                }, 20*30);
+                return true;
+            }
+            return false;
+        }
+        @EventHandler
+        private void onBattle(EntityDamageByEntityEvent event) {
+            if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
+                event.getDamager().setFireTicks(200);
+            }
+        }
+    }
     private static class FormePower extends ItemPower implements Listener {
 
         private final NezukoV2 nezukoV2;
