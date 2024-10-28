@@ -4,12 +4,9 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.events.Events;
-import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.utils.AttackUtils;
-import fr.nicknqck.utils.particles.MathUtil;
-import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -164,16 +161,6 @@ public class EntityDamageEvents implements Listener{
 							Player attacker = (Player) damageur;
 							if (gameState.shutdown.contains(attacker)) {
 								event.setCancelled(true);
-							}
-							if (gameState.getCharmed().contains(attacker)) {
-								if (gameState.getPlayerRoles().get(player) instanceof Mitsuri) {
-									attacker.sendMessage("Vous n'avez pas le pouvoir de tapée l'amour de votre vie");
-									double x = player.getLocation().getX();
-									double y = player.getLocation().getY();
-									double z = player.getLocation().getZ();
-									MathUtil.sendParticleTo(attacker, EnumParticle.HEART, x, y+2, z);
-									event.setCancelled(true);
-								}
 							}
 							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
 						}

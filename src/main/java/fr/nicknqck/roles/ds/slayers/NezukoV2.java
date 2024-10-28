@@ -136,10 +136,12 @@ public class NezukoV2 extends DemonsRoles {
                 getPlugin().getServer().getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     getCooldown().addSeconds(60*5);
                     nezukoV2.pauseForce = true;
+                    nezukoV2.getEffects().remove(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
                     Bukkit.getScheduler().runTask(getPlugin(), () -> {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, GameState.getInstance().isMinage() ? 20*60*5 : 20*60*3, 0, false, false));
                         Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                             nezukoV2.pauseForce = false;
+                            nezukoV2.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
                         }, GameState.getInstance().isMinage() ? 20*60*10 : 20*60*5);
                     });
                 }, 20*60*5);
@@ -208,9 +210,9 @@ public class NezukoV2 extends DemonsRoles {
             for (final GamePlayer gamePlayer : tanjiros) {
                 if (!gamePlayer.isAlive())continue;
                 if (gamePlayer.getLastLocation().distance(owner.getLocation()) <= 20) {
-                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                        owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true);
-                    });
+                    if (!nezukoV2.pauseForce){
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true));
+                    }
                     if (!does) {
                         timeHeal--;
                         does = true;

@@ -150,7 +150,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     cdDanse = 60*12;
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60*5, 0, false, false), true);
-                    List<Player> liste = getListPlayerFromRole(Nezuko.class);
+                    List<Player> liste = getListPlayerFromRole(NezukoV2.class);
                     if (!liste.isEmpty()) {
                         Location loc = event.getPlayer().getLocation();
                         for (Player p : liste) {
@@ -233,7 +233,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 if (target != null) {
                     if (!gameState.hasRoleNull(target)) {
                         RoleBase role = gameState.getPlayerRoles().get(target);
-                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof Nezuko || role.getOriginTeam().equals(TeamList.Demon);
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         owner.sendMessage("§c"+target.getName()+(demon ? "§7 est un§c démon" : "§7 n'est pas un§c démon"));
                         sentirUse = true;
                     }
@@ -249,7 +249,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 for (Player player : Loc.getNearbyPlayersExcept(owner, 30)) {
                     if (!gameState.hasRoleNull(player)) {
                         RoleBase role = gameState.getPlayerRoles().get(player);
-                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof Nezuko || role.getOriginTeam().equals(TeamList.Demon);
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         if (demon) {
                             amountDemon++;
                         }

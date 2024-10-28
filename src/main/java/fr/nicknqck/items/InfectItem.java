@@ -6,7 +6,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.slayers.Nezuko;
+import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
@@ -64,7 +64,7 @@ public class InfectItem implements Listener{
 						if (!gameState.hasRoleNull(p)) {
 							if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 								GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
-								if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() != TeamList.Demon && !(gamePlayer.getRole() instanceof Nezuko)) {
+								if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() != TeamList.Demon && !(gamePlayer.getRole() instanceof NezukoV2)) {
 									ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
 									SkullMeta meta = (SkullMeta) skull.getItemMeta();
 									meta.setOwner(p.getDisplayName());

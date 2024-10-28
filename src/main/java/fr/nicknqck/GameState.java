@@ -331,8 +331,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private List<Player> inSpecPlayers = new ArrayList<>();
-	@Getter
-	public ArrayList<Player> Charmed = new ArrayList<>();
 	@Setter
 	@Getter
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
@@ -380,10 +378,6 @@ public class GameState{
 	public void addInObiPlayers(Player player) {Obi.add(player);}
 	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
-
-	public void addCharmed(Player player){Charmed.add(player);}
-	public void delCharmed(Player player){Charmed.remove(player);}
-	
 	public ArrayList<Player> SleepingPlayer = new ArrayList<>();
 	public ArrayList<Player> getInSleepingPlayers() {return SleepingPlayer;}
 	public void setInSleepingPlayers(ArrayList<Player> SleepingPlayers) {SleepingPlayer = SleepingPlayers;}
@@ -448,7 +442,7 @@ public class GameState{
 			role = new Muzan(player);
 			break;
 		case Nezuko:
-			role = new Nezuko(player);
+			role = new NezukoV2(player);
 			break;
 		case Tanjiro:
 			role = new Tanjiro(player);

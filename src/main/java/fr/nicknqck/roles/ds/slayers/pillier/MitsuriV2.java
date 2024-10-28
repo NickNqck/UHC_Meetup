@@ -34,7 +34,7 @@ import java.util.UUID;
 public class MitsuriV2 extends PillierRoles implements Listener {
 
     private TextComponent desc;
-    private Obanai obanai;
+    private ObanaiV2 obanai;
     private boolean loveDeath = false;
 
     public MitsuriV2(UUID player) {
@@ -75,8 +75,8 @@ public class MitsuriV2 extends PillierRoles implements Listener {
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
                 if (gamePlayer.isAlive() && gamePlayer.getRole() != null) {
-                    if (gamePlayer.getRole() instanceof Obanai) {
-                        this.obanai = (Obanai) gamePlayer.getRole();
+                    if (gamePlayer.getRole() instanceof ObanaiV2) {
+                        this.obanai = (ObanaiV2) gamePlayer.getRole();
                         break;
                     }
                 }
@@ -105,7 +105,7 @@ public class MitsuriV2 extends PillierRoles implements Listener {
     }
     @EventHandler
     private void onDie(UHCDeathEvent event) {
-        if (event.getRole() instanceof Obanai && !loveDeath && getGamePlayer().isAlive()) {
+        if (event.getRole() instanceof ObanaiV2 && !loveDeath && getGamePlayer().isAlive()) {
             EffectWhen when = event.getGameState().isNightTime() ? EffectWhen.NIGHT : EffectWhen.DAY;
             onObanaiDeath(when);
         }

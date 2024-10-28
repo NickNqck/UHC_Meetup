@@ -13,7 +13,7 @@ import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.slayers.Nezuko;
+import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
 import org.bukkit.*;
@@ -128,7 +128,7 @@ public class DeathManager implements Listener {
             }
             if (gameState.getPlayerRoles().containsKey(killer)) {
                 RoleBase role = gameState.getPlayerRoles().get(killer);
-                if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
+                if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof NezukoV2) {
                     onDemonKill(killer.getName());
                 }
             }
@@ -162,7 +162,7 @@ public class DeathManager implements Listener {
                     }
                     if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
                         RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
-                        if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
+                        if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof NezukoV2) {
                             onDemonKill(killer.getName());
                         }
                     }
@@ -235,7 +235,7 @@ public class DeathManager implements Listener {
                 }
             }
         }
-        if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) || gamePlayer.getRole() instanceof Nezuko) {
+        if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) || gamePlayer.getRole() instanceof NezukoV2) {
             onDemonKill(gamePlayer.getPlayerName());
         }
         dropDeathItems(gamePlayer.getDeathLocation());
