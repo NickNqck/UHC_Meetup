@@ -83,7 +83,7 @@ public class TomiokaV2 extends PillierRoles {
                 .setPowers(getPowers());
         this.desc = automaticDesc.getText();
         if (!gameState.isMinage()) {
-            owner.setLevel(owner.getLevel()+3);
+            owner.setLevel(owner.getLevel()+6);
         }
     }
 
