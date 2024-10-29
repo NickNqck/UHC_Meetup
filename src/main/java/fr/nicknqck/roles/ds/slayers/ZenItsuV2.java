@@ -108,7 +108,12 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     private static class EcouterCommande extends CommandPower {
 
         public EcouterCommande(@NonNull RoleBase role) {
-            super("§c/ds ecouter <pseudo>", "ecouter", new Cooldown(60*10), role, CommandType.DS);
+            super("§c/ds ecouter <pseudo>", "ecouter", new Cooldown(60*10), role, CommandType.DS,
+                    "§7Pendant§c 5 minutes§7 vous permet de savoir lorsque:",
+                    "",
+                    "§7Le joueur viser §csubit§7/§cinflige§7 un§c coup",
+                    "",
+                    "§7Quand il y a un §cmort§7 autours du joueur (§c10 blocs§7)");
         }
 
         @Override
@@ -176,7 +181,8 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         private final ZenItsuV2 zenItsuV2;
 
         protected DieuFoudrePower(@NonNull ZenItsuV2 role) {
-            super("§eDieu de la foudre", new Cooldown(60*10), new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eDieu de la foudre"), role);
+            super("§eDieu de la foudre", new Cooldown(60*10), new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eDieu de la foudre"), role,
+                    "§7Vous donne l'effet§e Speed III§7 pendant§c 1 minute§7, puis vous donne pendant§c 3 minutes§7 les effets§c Slowness II§7 et§c Weakness I");
             this.zenItsuV2 = role;
         }
 
