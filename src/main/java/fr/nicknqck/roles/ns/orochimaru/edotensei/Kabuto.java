@@ -471,7 +471,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		this.solo = true;
 		owner.sendMessage("§7Vous êtes maintenant un rôle§e Solitaire§7.");
 		setTeam(TeamList.Kabuto);
-		this.edo.setCanEdoTensei(false);
+		this.edo.setCanEdoTensei(true);
 	}
 	private void onObitoDeny(@NonNull Player owner) {
 		owner.sendMessage("§7Cette saleté d'§dObito§7 a refuser de s'allier à vous, vous avez intérêt à lui faire regretter");
@@ -487,7 +487,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		this.edo.setCanEdoTensei(false);
 
 	}
-
 	public void onObitoCommand(String[] args, Obito role) {
 		if (!lastAlive)return;
 		if (args.length == 2) {
