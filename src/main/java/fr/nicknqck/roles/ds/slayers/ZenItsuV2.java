@@ -37,6 +37,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     private TextComponent textComponent;
     private boolean killKaigaku = false;
     private boolean winWithJigoro = false;
+    private boolean canHaveSpeed = true;
 
     public ZenItsuV2(UUID player) {
         super(player);
@@ -90,6 +91,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     private void onNight(NightEvent event) {
         final int middleOfTheNight = event.getTimeNight()/2;
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            if (!canHaveSpeed)return;
             owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), true);
             owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), true);
         }, 20L *middleOfTheNight);
@@ -190,10 +192,16 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         public boolean onUse(Player player, Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60+(zenItsuV2.killKaigaku ? 20*30 : 0), 2, false, false), true);
+                zenItsuV2.canHaveSpeed = false;
+                zenItsuV2.getEffects().remove(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
                 Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
                     if (zenItsuV2.winWithJigoro)return;
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*60*3, 1, false, false), true);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*60*3, 0, false, false), true);
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                        zenItsuV2.canHaveSpeed = true;
+                        zenItsuV2.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
+                    }, 20*60*3);
                 }, 20*60+(zenItsuV2.killKaigaku ? 20*30 : 0));
                 return true;
             }
