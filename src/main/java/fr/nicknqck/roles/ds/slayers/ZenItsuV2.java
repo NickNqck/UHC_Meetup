@@ -36,6 +36,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
 
     private TextComponent textComponent;
     private boolean killKaigaku = false;
+    private boolean winWithJigoro = false;
 
     public ZenItsuV2(UUID player) {
         super(player);
@@ -184,6 +185,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60+(zenItsuV2.killKaigaku ? 20*30 : 0), 2, false, false), true);
                 Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+                    if (zenItsuV2.winWithJigoro)return;
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*60*3, 1, false, false), true);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*60*3, 0, false, false), true);
                 }, 20*60+(zenItsuV2.killKaigaku ? 20*30 : 0));
