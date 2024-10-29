@@ -10,7 +10,7 @@ import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
 import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PacketDisplay;
+import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.WorldUtils;
 import net.md_5.bungee.api.chat.BaseComponent;

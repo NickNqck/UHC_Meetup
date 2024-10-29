@@ -1,4 +1,4 @@
-package fr.nicknqck.utils;
+package fr.nicknqck.utils.packets;
 
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;

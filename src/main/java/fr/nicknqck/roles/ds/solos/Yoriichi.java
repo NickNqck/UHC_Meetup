@@ -12,7 +12,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PacketDisplay;
+import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
