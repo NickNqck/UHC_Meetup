@@ -38,13 +38,9 @@ public class EdoTenseiUser implements Listener {
     private boolean canEdoTensei = true;
     public EdoTenseiUser(NSRoles role) {
         this.role = role;
-        EventUtils.registerEvents(this);
+        EventUtils.registerRoleEvent(this);
         this.killLocation = new LinkedHashMap<>();
         this.edoTenseis = new LinkedHashMap<>();
-    }
-    @EventHandler
-    private void onEndGame(EndGameEvent event) {
-        EventUtils.unregisterEvents(this);
     }
     @EventHandler
     private void onUHCKill(UHCPlayerKillEvent event){
