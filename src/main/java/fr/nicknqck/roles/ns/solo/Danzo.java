@@ -63,6 +63,7 @@ public class Danzo extends NSRoles {
 			if (nmbUchiwa == 0){
 				owner.sendMessage("§7Il n'y a pas de§c Uchiwa§7 dans la partie, vous obtenez donc directement l'effet§c Résistance I permanent");
 				killUchiwa = true;
+				((UchiwaFinders)getPowers().getFirst()).getFindersRunnable().cancel();
 			}
 		}, 20*10);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 0), EffectWhen.PERMANENT);
@@ -203,7 +204,6 @@ public class Danzo extends NSRoles {
 		Wither(),
 		AntiAbso()
 	}
-
 	@Override
 	public void resetCooldown() {
 		izanagiItemCD = 0;
@@ -253,7 +253,6 @@ public class Danzo extends NSRoles {
 			}
 		}
 	}
-
 	@Override
 	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {
 		super.onALLPlayerEat(e, item, eater);
@@ -264,7 +263,6 @@ public class Danzo extends NSRoles {
 			}, 1);
 		}
 	}
-
 	@Override
 	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
@@ -346,16 +344,18 @@ public class Danzo extends NSRoles {
 
 			private final Danzo danzo;
 			private final GamePlayer gamePlayer;
+			private final GameState gameState;
 
 			public FindersRunnable(Danzo role, GamePlayer gamePlayer) {
 				this.danzo = role;
 				this.gamePlayer = gamePlayer;
-				runTaskTimerAsynchronously(Main.getInstance(), 0, 20*120);
+				this.gameState = role.getGameState();
+				runTaskTimerAsynchronously(Main.getInstance(), 20, 20*120);
 			}
 
 			@Override
 			public void run() {
-				if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+				if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
 					cancel();
 					return;
 				}
