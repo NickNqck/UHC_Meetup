@@ -1,12 +1,13 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
@@ -99,25 +100,11 @@ public class GyutaroV2 extends DemonsRoles {
             return true;
         }
     }
-    /*private static class PassifPower extends CommandPower {
-        public PassifPower(@NonNull RoleBase role) {
+    private static class PassifCommandPower extends CommandPower {
+
+        public PassifCommandPower(@NonNull RoleBase role) {
             super("/ds faux", "faux", new Cooldown(0), role, CommandType.DS, "§7Vous permez d'activer/désactiver votre passif. (Desactiver par défauts)");
-
-
-
-        @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
-            if (!Passif) {
-                Passif = true;
-                player.sendMessage("§7Vous venez d'activer votre passif.");
-            } else {
-                Passif = false;
-                player.sendMessage("§7Vous venez de désactiver votre passif.");
-            }
-            return true;
         }
-    }
-
         @Override
         public boolean onUse(Player player, Map<String, Object> args) {
             if (!Passif) {
@@ -129,6 +116,5 @@ public class GyutaroV2 extends DemonsRoles {
             }
             return false;
         }
-}
-}*/
+    }
 }
