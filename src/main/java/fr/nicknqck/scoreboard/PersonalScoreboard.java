@@ -112,7 +112,7 @@ public class PersonalScoreboard {
 			}
     		objectiveSign.setLine(9, "§0");
     		if (!this.gameState.hasRoleNull(player)) {
-    			objectiveSign.setLine(10, premsg+"Kills:§6 "+this.gameState.getPlayerKills().get(player).size());
+    			objectiveSign.setLine(10, premsg+"Kills:§6 "+this.gameState.getPlayerKills().get(player.getUniqueId()).size());
     		}
     		objectiveSign.setLine(11, premsg+"§fCentre: §6"+ArrowTargetUtils.calculateArrow(player, new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))+new DecimalFormat("0").format(player.getLocation().distance(new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))));
     		if (this.gameState.roletab) {
@@ -158,7 +158,7 @@ public class PersonalScoreboard {
 					if (gameState.roleTimer < gameState.getInGameTime()) {
 						if (!gameState.hasRoleNull(player)) {
 							if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
-								TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
+								TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player.getUniqueId()).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
 							}
 						}
 					} else {

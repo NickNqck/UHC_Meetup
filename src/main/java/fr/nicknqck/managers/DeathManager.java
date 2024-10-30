@@ -140,10 +140,10 @@ public class DeathManager implements Listener {
                 }
                 if (gameState.getPlayerRoles().containsKey(p)) {
                     gameState.getPlayerRoles().get(p).PlayerKilled(killer, killedPlayer, gameState);
-                    if (!gameState.getPlayerKills().get(killer).containsKey(killedPlayer)) {
+                    if (!gameState.getPlayerKills().get(killer.getUniqueId()).containsKey(killedPlayer)) {
                         RoleBase fakeRole = gameState.getPlayerRoles().get(killedPlayer);
                         fakeRole.setOldRole(gameState.getPlayerRoles().get(killedPlayer).getOldRole());
-                        gameState.getPlayerKills().get(killer).put(killedPlayer, fakeRole);
+                        gameState.getPlayerKills().get(killer.getUniqueId()).put(killedPlayer, fakeRole);
                     }
                 }
             }
@@ -171,10 +171,10 @@ public class DeathManager implements Listener {
                         if (p == null)continue;
                         if (gameState.getPlayerRoles().containsKey(p))
                             gameState.getPlayerRoles().get(p).PlayerKilled((Player)arr.getShooter(), killedPlayer, gameState);
-                        if (!gameState.getPlayerKills().get((Player)arr.getShooter()).containsKey(killedPlayer)) {
+                        if (!gameState.getPlayerKills().get(((Player) arr.getShooter()).getUniqueId()).containsKey(killedPlayer)) {
                             RoleBase fakeRole = gameState.getPlayerRoles().get(killedPlayer);
                             fakeRole.setOldRole(gameState.getPlayerRoles().get(killedPlayer).getOldRole());
-                            gameState.getPlayerKills().get((Player)arr.getShooter()).put(killedPlayer, fakeRole);
+                            gameState.getPlayerKills().get(((Player) arr.getShooter()).getUniqueId()).put(killedPlayer, fakeRole);
                         }
                     }
                     for (UUID u : gameState.getInGamePlayers()) {

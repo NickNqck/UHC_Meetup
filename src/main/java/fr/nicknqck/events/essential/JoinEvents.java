@@ -133,9 +133,9 @@ public class JoinEvents implements Listener{
 		}
 		for (Player p : ((HashMap<Player, HashMap<Player, RoleBase>>)gameState.getPlayerKills().clone()).keySet()) {
 			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				HashMap<Player, RoleBase> hash = gameState.getPlayerKills().get(p);
-				gameState.getPlayerKills().remove(p);
-				gameState.getPlayerKills().put(player, hash);
+				HashMap<Player, RoleBase> hash = gameState.getPlayerKills().get(p.getUniqueId());
+				gameState.getPlayerKills().remove(p.getUniqueId());
+				gameState.getPlayerKills().put(player.getUniqueId(), hash);
 				System.out.println("kill Player: "+p);
 			}
 		}

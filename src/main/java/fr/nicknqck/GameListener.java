@@ -8,6 +8,7 @@ import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -381,7 +382,7 @@ public class GameListener implements Listener {
 						String win = winer == null ? "§cDéconnecter" : winer.getName();
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
 						assert winer != null;
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer).size()+"§f kill(s)";
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
 						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles().name();
                         SendToEveryone(Vainqueurs);
 					}
@@ -395,37 +396,45 @@ public class GameListener implements Listener {
 	        SendToEveryone(" ");
 	        SendToEveryone("Résumé de la partie");
 	        SendToEveryone(" ");
-	        if (!gameState.getInGamePlayers().isEmpty()) {
+			for (final UUID uuid : gameState.getGamePlayer().keySet()) {
+				Player p = Bukkit.getPlayer(uuid);
+				if (p != null) {
+					((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
+					gameState.addInLobbyPlayers(p);
+				}
+				final GamePlayer gamePlayer = gameState.getGamePlayer().get(uuid);
+				if (gamePlayer.getRole() == null)continue;
+				final RoleBase role = gamePlayer.getRole();
+				final StringBuilder s = new StringBuilder();
+			}
 					for (UUID uuid : gameState.getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(uuid);
 						if (p == null) continue;
-						((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
-						gameState.addInLobbyPlayers(p);
 						if (!gameState.hasRoleNull(p)) {
 							RoleBase prole = gameState.getPlayerRoles().get(p);
 							if (prole != null) {
 								StringBuilder s = new StringBuilder();
-								if (gameState.getPlayerKills().containsKey(p)) {
-									if (!gameState.getPlayerKills().get(p).isEmpty()) {
+								if (gameState.getPlayerKills().containsKey(p.getUniqueId())) {
+									if (!gameState.getPlayerKills().get(p.getUniqueId()).isEmpty()) {
 										int i = 0;
-										for (Player k : gameState.getPlayerKills().get(p).keySet()) {
+										for (Player k : gameState.getPlayerKills().get(p.getUniqueId()).keySet()) {
 											i++;
-											RoleBase role = gameState.getPlayerKills().get(p).get(k);
-											if (i != gameState.getPlayerKills().get(p).size()) {
+											RoleBase role = gameState.getPlayerKills().get(p.getUniqueId()).get(k);
+											if (i != gameState.getPlayerKills().get(p.getUniqueId()).size()) {
 												s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name()).append("§7)\n");
 											} else {
 												s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(prole.getTeamColor()).append(role.getRoles().name()).append("§7)");
 											}
 										}
-										SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill(s)");
+										SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(p.getUniqueId()).size()+"§f kill(s)");
 									} else {
-										SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill");
+										SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(p.getUniqueId()).size()+"§f kill");
 									}
 								}
 							}
 						}
                     }
-				}
+
 			gameState.getGamePlayer().clear();
 			System.out.println("end");
 			gameState.pregenNakime = false;

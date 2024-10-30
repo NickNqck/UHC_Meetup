@@ -572,11 +572,11 @@ public class AdminCommands implements CommandExecutor{
 										texte.addExtra("\n");
 										texte.addExtra("Camp actuel:§b "+StringUtils.replaceUnderscoreWithSpace(role.getTeamColor()+role.getTeam().name()));
 										texte.addExtra("\n");
-										texte.addExtra("Nombre de kill(s):§b "+gameState.getPlayerKills().get(p).size());
+										texte.addExtra("Nombre de kill(s):§b "+gameState.getPlayerKills().get(p.getUniqueId()).size());
 										texte.addExtra("\n");
 										texte.addExtra("Joueurs tués: ");
 										TextComponent hver = new TextComponent("§b[?]");
-										hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(!gameState.getPlayerKills().get(p).isEmpty() ? getListPlayers(gameState.getPlayerKills().get(p)) : "§7Aucun")}));
+										hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(!gameState.getPlayerKills().get(p.getUniqueId()).isEmpty() ? getListPlayers(gameState.getPlayerKills().get(p.getUniqueId())) : "§7Aucun")}));
 										texte.addExtra(hver);
 										texte.addExtra("\n");
 									} else {

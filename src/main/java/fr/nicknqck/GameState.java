@@ -100,6 +100,7 @@ public class GameState{
 	@Getter
 	public int TimingAssassin = 10;
 	public boolean morteclair = true;
+	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -335,7 +336,7 @@ public class GameState{
 	@Getter
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	@Getter
-	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
+	private final HashMap<UUID, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
 	public List<Player> igPlayers = new ArrayList<>();
 	@Getter
 	@Setter
@@ -415,7 +416,7 @@ public class GameState{
 
 	public void addInAvailableEvents(Events event) {availableEvents.add(event);}
 
-	public void addPlayerKills(Player player) {playerKills.put(player, new HashMap<>());}
+	public void addPlayerKills(Player player) {playerKills.put(player.getUniqueId(), new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
 	public void addInGameEvents(EventBase event) {inGameEvents.add(event);}
@@ -875,7 +876,6 @@ public class GameState{
 		System.out.println("Starting Assassin System");
 		assa.start(this);
 	}
-	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
