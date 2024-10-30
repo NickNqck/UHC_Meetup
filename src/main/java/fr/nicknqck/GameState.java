@@ -481,7 +481,7 @@ public class GameState{
 			role = new Daki(player);
 			break;
 		case Gyutaro:
-			role = new Gyutaro(player);
+			role = new GyutaroV2(player);
 			break;
 		case Inosuke:
 			role = new Inosuke(player);

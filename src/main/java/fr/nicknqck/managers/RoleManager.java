@@ -110,7 +110,7 @@ public class RoleManager {
         registerRole(Doma.class);
         registerRole(Enmu.class);
         registerRole(Gyokko.class);
-        registerRole(Gyutaro.class);
+        registerRole(GyutaroV2.class);
         registerRole(Hantengu.class);
         registerRole(HantenguV2.class);
         registerRole(Kaigaku.class);

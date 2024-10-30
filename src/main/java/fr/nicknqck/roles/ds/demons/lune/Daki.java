@@ -35,7 +35,7 @@ public class Daki extends DemonsRoles {
 				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Muzan) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
-				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Gyutaro) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof GyutaroV2) {
 					owner.sendMessage("La personne possédant le rôle de§c Gyutaro§r est:§c "+p.getName());
 				}
 			}
@@ -207,7 +207,7 @@ public class Daki extends DemonsRoles {
 			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
-					if (r instanceof Gyutaro) {
+					if (r instanceof GyutaroV2) {
 						diegyutaro = true;
 						owner.sendMessage(ChatColor.GOLD+"Gyutaro "+ChatColor.GRAY+"est mort définitivement ce qui viens de vous octroyez l'effet: "+ChatColor.RED+"résistance 1 permanent");
 					}
