@@ -404,37 +404,26 @@ public class GameListener implements Listener {
 				}
 				final GamePlayer gamePlayer = gameState.getGamePlayer().get(uuid);
 				if (gamePlayer.getRole() == null)continue;
-				final RoleBase role = gamePlayer.getRole();
+				final RoleBase role1 = gamePlayer.getRole();
 				final StringBuilder s = new StringBuilder();
-			}
-					for (UUID uuid : gameState.getInGamePlayers()) {
-						Player p = Bukkit.getPlayer(uuid);
-						if (p == null) continue;
-						if (!gameState.hasRoleNull(p)) {
-							RoleBase prole = gameState.getPlayerRoles().get(p);
-							if (prole != null) {
-								StringBuilder s = new StringBuilder();
-								if (gameState.getPlayerKills().containsKey(p.getUniqueId())) {
-									if (!gameState.getPlayerKills().get(p.getUniqueId()).isEmpty()) {
-										int i = 0;
-										for (Player k : gameState.getPlayerKills().get(p.getUniqueId()).keySet()) {
-											i++;
-											RoleBase role = gameState.getPlayerKills().get(p.getUniqueId()).get(k);
-											if (i != gameState.getPlayerKills().get(p.getUniqueId()).size()) {
-												s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name()).append("§7)\n");
-											} else {
-												s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(prole.getTeamColor()).append(role.getRoles().name()).append("§7)");
-											}
-										}
-										SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(p.getUniqueId()).size()+"§f kill(s)");
-									} else {
-										SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(p.getUniqueId()).size()+"§f kill");
-									}
-								}
+				if (gameState.getPlayerKills().containsKey(role1.getPlayer())) {
+					if (!gameState.getPlayerKills().get(role1.getPlayer()).isEmpty()) {
+						int i = 0;
+						for (Player k : gameState.getPlayerKills().get(role1.getPlayer()).keySet()) {
+							i++;
+							RoleBase role = gameState.getPlayerKills().get(role1.getPlayer()).get(k);
+							if (i != gameState.getPlayerKills().get(role1.getPlayer()).size()) {
+								s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name()).append("§7)\n");
+							} else {
+								s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role1.getTeamColor()).append(role.getRoles().name()).append("§7)");
 							}
 						}
-                    }
-
+						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
+					} else {
+						SendToEveryone(role1.getTeamColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeamColor()+role1.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill");
+					}
+				}
+			}
 			gameState.getGamePlayer().clear();
 			System.out.println("end");
 			gameState.pregenNakime = false;
