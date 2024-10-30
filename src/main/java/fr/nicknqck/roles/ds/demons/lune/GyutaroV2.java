@@ -24,7 +24,7 @@ public class GyutaroV2 extends DemonsRoles {
 
     private static boolean Passif = false;
     private DakiV2 daki;
-    private ItemStack FauxItem = new ItemBuilder(Material.DIAMOND_SWORD).setName("§xFaux Démoniaques").setLore("§7Inflige Wither quand vous tapez un joueur").addEnchant(Enchantment.DAMAGE_ALL, 3).toItemStack();
+    private ItemStack FauxItem = new ItemBuilder(Material.DIAMOND_SWORD).setName("§cFaux Démoniaques").setLore("§7Inflige Wither quand vous tapez un joueur").addEnchant(Enchantment.DAMAGE_ALL, 3).toItemStack();
 
     public GyutaroV2(UUID player) {
         super(player);
@@ -42,7 +42,7 @@ public class GyutaroV2 extends DemonsRoles {
 
     @Override
     public String getName() {
-        return "Guytaro";
+        return "Gyutaro";
     }
 
     @Override
@@ -70,7 +70,7 @@ public class GyutaroV2 extends DemonsRoles {
         private final GyutaroV2 gyutaroV2;
 
         protected RappelPower(@NonNull GyutaroV2 role) {
-            super("§cRappel", new Cooldown(60 * 10), new ItemBuilder(Material.NETHER_STAR), role, "§7Vous permez de vous téléporter à §cDaki §7si elle est présente dans un rayon de 50 blocs autour de vous et qu'elle possède moins de 7 " + AllDesc.coeur + "§7.");
+            super("§cRappel", new Cooldown(60 * 10), new ItemBuilder(Material.NETHER_STAR), role, "§7Vous permez de vous téléporter à §cDaki §7si elle est présente dans un rayon de §c50 blocs§7 autour de vous et qu'elle possède moins de 7❤§7.");
             this.gyutaroV2 = role;
         }
 
