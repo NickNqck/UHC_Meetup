@@ -55,7 +55,8 @@ public class AutomaticDesc {
         return this;
     }
     public AutomaticDesc addCustomText(TextComponent text) {
-        text.addExtra(text);
+        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point));
+        this.text.addExtra(text);
         return this;
     }
     public AutomaticDesc addItem(TextComponent textComponent, int cooldown) {
