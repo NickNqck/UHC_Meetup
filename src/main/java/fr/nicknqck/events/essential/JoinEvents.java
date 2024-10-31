@@ -1,6 +1,5 @@
 package fr.nicknqck.events.essential;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 import fr.nicknqck.player.GamePlayer;
@@ -19,7 +18,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.builder.RoleBase;
 import org.bukkit.potion.PotionEffect;
 
 public class JoinEvents implements Listener{
@@ -34,8 +32,6 @@ public class JoinEvents implements Listener{
 		Player player = event.getPlayer();
 		GameState gameState = GameState.getInstance();
 		Main.getInstance().getScoreboardManager().onLogin(player);
-		System.out.println("new Player: "+player);
-		printConsoleAndRegister(player);
 
 		// Join Message
 		String joinMessage = "";
@@ -105,53 +101,4 @@ public class JoinEvents implements Listener{
 			}
 		}
 	}
- 	@SuppressWarnings("unchecked")
-	private void printConsoleAndRegister(Player player) {
-		// Update Players
-		for (UUID u : gameState.getInGamePlayers()) {
-			Player p = Bukkit.getPlayer(u);
-			if (p == null)continue;
-			if (Bukkit.getPlayer(u) == player) {
-				System.out.println("game Player: "+p);
-			}
-		}
-		for (UUID u : gameState.getInLobbyPlayers()) {
-			Player p = Bukkit.getPlayer(u);
-			if (p == null)continue;
-			if (u.equals(player.getUniqueId())) {
-				gameState.getInLobbyPlayers().remove(p.getUniqueId());
-				gameState.getInLobbyPlayers().add(player.getUniqueId());
-				System.out.println("lobby Player: "+p);
-			}
-		}
-		for (Player p : gameState.getInSpecPlayers()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				gameState.getInSpecPlayers().remove(p);
-				gameState.getInSpecPlayers().add(player);
-				System.out.println("spec Player: "+p);
-			}
-		}
-		for (Player p : ((HashMap<Player, HashMap<Player, RoleBase>>)gameState.getPlayerKills().clone()).keySet()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				HashMap<Player, RoleBase> hash = gameState.getPlayerKills().get(p.getUniqueId());
-				gameState.getPlayerKills().remove(p.getUniqueId());
-				gameState.getPlayerKills().put(player.getUniqueId(), hash);
-				System.out.println("kill Player: "+p);
-			}
-		}
-		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (Bukkit.getPlayer(r.owner.getDisplayName()) == player) {
-				r.owner = player;
-				System.out.println("owner Player: "+r.owner);
-			}
-		}
-		for (Player p : ((HashMap<Player, RoleBase>)gameState.getPlayerRoles().clone()).keySet()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				RoleBase role = gameState.getPlayerRoles().get(p);
-				gameState.getPlayerRoles().remove(p);
-				gameState.getPlayerRoles().put(player, role);
-				System.out.println("role Player: "+p);
-			}
-		}
- 	}
 }
