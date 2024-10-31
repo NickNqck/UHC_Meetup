@@ -18,6 +18,8 @@ import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -84,7 +86,13 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         addPower(new DieuFoudrePower(this), true);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
         EventUtils.registerRoleEvent(this);
-        AutomaticDesc automaticDesc = new AutomaticDesc(this).setPowers(getPowers());
+        AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffects(getEffects())
+                .addCustomText(new TextComponent("§7Au milieu de la nuit, vous obtiendrez§c 1 minute§7 de§e Speed II §7et de §cForce I")).setPowers(getPowers())
+                .addParticularites(
+                        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                                new TextComponent("§7Si vous arrivez à tuer§c Kaigaku§7 vous obtiendrez§c 30s§7 de§e Speed III§c supplémentaire§7 en utilisant votre§e Dieu de la Foudre")
+                        })
+                );
         this.textComponent = automaticDesc.getText();
     }
     @EventHandler
