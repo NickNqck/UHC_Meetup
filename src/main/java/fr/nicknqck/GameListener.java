@@ -396,13 +396,14 @@ public class GameListener implements Listener {
 	        SendToEveryone(" ");
 	        SendToEveryone("Résumé de la partie");
 	        SendToEveryone(" ");
-			for (final UUID uuid : gameState.getGamePlayer().keySet()) {
+			final Map<UUID, GamePlayer> gamePlayers = new HashMap<>(gameState.getGamePlayer());
+			for (final UUID uuid : gamePlayers.keySet()) {
 				Player p = Bukkit.getPlayer(uuid);
 				if (p != null) {
 					((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
 					gameState.addInLobbyPlayers(p);
 				}
-				final GamePlayer gamePlayer = gameState.getGamePlayer().get(uuid);
+				final GamePlayer gamePlayer = gamePlayers.get(uuid);
 				if (gamePlayer.getRole() == null)continue;
 				final RoleBase role1 = gamePlayer.getRole();
 				final StringBuilder s = new StringBuilder();
@@ -412,11 +413,8 @@ public class GameListener implements Listener {
 						for (Player k : gameState.getPlayerKills().get(role1.getPlayer()).keySet()) {
 							i++;
 							RoleBase role = gameState.getPlayerKills().get(role1.getPlayer()).get(k);
-							if (i != gameState.getPlayerKills().get(role1.getPlayer()).size()) {
-								s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name()).append("§7)\n");
-							} else {
-								s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role1.getTeamColor()).append(role.getRoles().name()).append("§7)");
-							}
+							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name());
+							s.append(i == gameState.getPlayerKills().get(role1.getPlayer()).size() ? "§7)" : "§7)\n");
 						}
 						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
 					} else {
