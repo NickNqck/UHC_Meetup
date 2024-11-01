@@ -41,9 +41,6 @@ public class Lame implements Listener{
                             Collections.addAll(lames, Lames.values());
 							lames.removeAll(role.getCantHave());
 							Collections.shuffle(lames, Main.RANDOM);
-							Collections.shuffle(lames, Main.RANDOM);
-							Collections.shuffle(lames, Main.RANDOM);
-							Collections.shuffle(lames, Main.RANDOM);//Je mélange 4 fois pour bien assurer que ce sois au pif
 							toGett = lames.get(0);
 							toGett.getConsumer().accept(e);
 							giveLame(role, toGett);
