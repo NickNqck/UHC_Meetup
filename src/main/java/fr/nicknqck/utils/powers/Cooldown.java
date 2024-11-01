@@ -7,14 +7,19 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public final class Cooldown {
     @Getter
     private final int originalCooldown;
     @Setter
     private int actualCooldown;
+    @Getter
+    private final UUID uniqueId;
 
     public Cooldown(int cooldown) {
         this.originalCooldown = cooldown;
+        this.uniqueId = UUID.randomUUID();
     }
 
     public int getCooldownRemaining() {

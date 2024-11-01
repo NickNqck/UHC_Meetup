@@ -25,6 +25,7 @@ public abstract class Power {
     private final RoleBase role;
     private final String[] descriptions;
     private boolean sendCooldown = true;
+    private boolean workWhenInCooldown = false;
 
     public Power(@NonNull String name, Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
         this.name = name;
@@ -70,6 +71,7 @@ public abstract class Power {
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
+            if (isWorkWhenInCooldown())return true;
             if (isSendCooldown()) {
                 role.sendCooldown(player, getCooldown().getCooldownRemaining());
             }
@@ -90,7 +92,7 @@ public abstract class Power {
 
     public void onEndCooldown(final Cooldown cooldown) {
         if (this.cooldown == null)return;
-        if (cooldown.equals(this.getCooldown())) {//donc si c'est EXACTEMENT le même "Cooldown"
+        if (cooldown.getUniqueId().equals(this.getCooldown().getUniqueId())) {//donc si c'est EXACTEMENT le même "Cooldown"
             getRole().owner.sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
         }
     }
