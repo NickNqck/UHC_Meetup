@@ -407,7 +407,7 @@ public abstract class RoleBase implements IRole {
             Location position = vector.toLocation(player.getWorld());
             Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
             for (Entity entity : entities) {
-                if (entity instanceof Player && entity != player) {
+                if (entity instanceof Player && entity.getUniqueId() != player.getUniqueId()) {
                 	if (((Player)entity).getGameMode() != GameMode.SPECTATOR) {
                 		if (player.canSee((Player)entity) && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.1D)) {
                 			return (Player) entity;

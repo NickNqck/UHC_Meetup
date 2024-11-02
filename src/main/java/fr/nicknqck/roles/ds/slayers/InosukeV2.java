@@ -1,23 +1,28 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
@@ -27,7 +32,6 @@ import java.util.UUID;
 public class InosukeV2 extends SlayerRoles {
 
     private TextComponent textComponent;
-
 
     public InosukeV2(UUID player) {
         super(player);
@@ -54,9 +58,7 @@ public class InosukeV2 extends SlayerRoles {
     }
 
     @Override
-    public void resetCooldown() {
-
-    }
+    public void resetCooldown() {}
 
     @Override
     public ItemStack[] getItems() {
@@ -70,6 +72,7 @@ public class InosukeV2 extends SlayerRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new SentimentCommand(this));
+        addPower(new SentationItem(this), true);
         this.textComponent = new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
@@ -156,5 +159,59 @@ public class InosukeV2 extends SlayerRoles {
                         "m");
             }
         }
+    }
+    private static class SentationItem extends ItemPower {
+
+        protected SentationItem(@NonNull RoleBase role) {
+            super("§aPrésentiment Bestial", new Cooldown(60*5), new ItemBuilder(Material.PORK).setName("§aPrésentiment Bestial"), role);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                Player target = getRole().getTargetPlayer(player, 5.0);
+                if (target == null) {
+                    player.sendMessage("§cIl faut viser un joueur");
+                    return false;
+                }
+                final int rdm = Main.RANDOM.nextInt(4);
+                player.sendMessage(getInformations(target, rdm));
+            }
+            return false;
+        }
+        private String getInformations(final Player target, final int random) {
+            String toReturn= "§CBUUUUUUUUUUUUUUUG";
+            switch (random) {
+                case 0:
+                    toReturn = "§aVous sentez la force vitale de§c "+target.getDisplayName()+"§a il à l'air d'avoir §c"+
+                    new DecimalFormat("0").format(target.getMaxHealth())+"§a, on dirait même qu'il possède§c "+getHealthPercentage(target)+"§a.";
+                    break;
+                case 1:
+                    toReturn = "§aVous sentez la force de§c "+
+                            target.getDisplayName()+
+                            "§a il à l'air "+
+                            (target.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) ? "d'avoir l'effet " : "de ne pas avoir l'effet ")+
+                            "§c force§a et "+
+                            (target.hasPotionEffect(PotionEffectType.WEAKNESS) ? "d'avoir l'effet " : "de ne pas avoir l'effet")+
+                            "§7faiblesse";
+                    break;
+                case 2:
+                    toReturn = "§aVous sentez la puissance se trouvant dans les jambes de§c "+target.getDisplayName()+
+                            "§a il à l'air "+(target.hasPotionEffect(PotionEffectType.SPEED) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
+                            " §evitesse§a et "+(target.hasPotionEffect(PotionEffectType.SLOW) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+"§7 lenteur";
+                    break;
+                case 3:
+                    toReturn = "§aVous sentez la musculature de§c "+target.getDisplayName()+"§a il à l'air "+(target.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
+                            "§9 résistance";
+                    break;
+            }
+            return toReturn;
+        }
+        private String getHealthPercentage(Player target) {
+            double currentHealth = target.getHealth();
+            double maxHealth = target.getMaxHealth();
+            return new DecimalFormat("0").format((currentHealth / maxHealth) * 100)+"%";
+        }
+
     }
 }
