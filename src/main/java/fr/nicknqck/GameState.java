@@ -485,7 +485,7 @@ public class GameState{
 			role = new GyutaroV2(player);
 			break;
 		case Inosuke:
-			role = new Inosuke(player);
+			role = new InosukeV2(player);
 			break;
 		case Tengen:
 			role = new TengenV2(player);

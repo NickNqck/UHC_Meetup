@@ -5,7 +5,9 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import lombok.NonNull;
@@ -16,6 +18,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
 import java.util.Map;
@@ -66,6 +69,7 @@ public class InosukeV2 extends SlayerRoles {
     }
     @Override
     public void RoleGiven(GameState gameState) {
+        addPower(new SentimentCommand(this));
         this.textComponent = new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
@@ -84,8 +88,8 @@ public class InosukeV2 extends SlayerRoles {
             String[] args = (String[]) strings.get("args");
             if (args.length == 1) {
                 TextComponent component = new TextComponent("§7Voici la liste de tout les§c joueurs§7 autours de vous:\n\n");
-                for (final Player aroundPlayer : Loc.getNearbyPlayersExcept(player, 50)) {
-                    TextComponent toAdd = new TextComponent("§7 -§c "+aroundPlayer.getDisplayName()+"§7 (§c"+ new DecimalFormat("0").format(aroundPlayer.getLocation().distance(player.getLocation()))+"§7)\n");
+                for (final Player aroundPlayer : Loc.getNearbyPlayers(player, 50)) {
+                    TextComponent toAdd = new TextComponent("§7 -§c "+aroundPlayer.getDisplayName()+"§7 (§c"+ new DecimalFormat("0").format(aroundPlayer.getLocation().distance(player.getLocation()))+"m§7)\n");
                     toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                             new TextComponent("§a§lCLIQUEZ ICI POUR TRAQUER")
                     }));
@@ -110,11 +114,47 @@ public class InosukeV2 extends SlayerRoles {
                 }
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
+                    player.sendMessage("§7Commencement de la§c traque§7 contre§c "+target.getDisplayName());
                     setWorkWhenInCooldown(false);
                     traque = false;
+                    new TraqueRunnable(target.getUniqueId(), player.getUniqueId()).runTaskTimerAsynchronously(getPlugin(), 0, 1);
+                    return true;
+                } else {
+                    player.sendMessage("§c"+args[1]+" n'existe pas ou n'est pas connecter");
+                    return false;
                 }
             }
             return false;
+        }
+        private static class TraqueRunnable extends BukkitRunnable {
+
+            private final UUID uuidTarget;
+            private final UUID uuidUser;
+            private int timeRemaining = 20*20;//20 secondes
+
+            private TraqueRunnable(UUID uuidTarget, UUID uuidUser) {
+                this.uuidTarget = uuidTarget;
+                this.uuidUser = uuidUser;
+            }
+
+            @Override
+            public void run() {
+                if (timeRemaining == 0) {
+                    cancel();
+                    return;
+                }
+                timeRemaining--;
+                Player owner = Bukkit.getPlayer(uuidUser);
+                Player target = Bukkit.getPlayer(uuidTarget);
+                if (owner == null)return;
+                if (target == null)return;
+                NMSPacket.sendActionBar(owner, "§bTraque sur§c "+
+                        target.getDisplayName()+
+                        "§b:§c "+
+                        ArrowTargetUtils.calculateArrow(owner, target.getLocation())+
+                        new DecimalFormat("0").format(target.getLocation().distance(owner.getLocation()))+
+                        "m");
+            }
         }
     }
 }
