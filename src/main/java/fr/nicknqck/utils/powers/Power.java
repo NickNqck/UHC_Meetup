@@ -71,7 +71,7 @@ public abstract class Power {
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
-            if (isWorkWhenInCooldown())return true;
+            if (isWorkWhenInCooldown())return this.onUse(player, args);
             if (isSendCooldown()) {
                 role.sendCooldown(player, getCooldown().getCooldownRemaining());
             }
