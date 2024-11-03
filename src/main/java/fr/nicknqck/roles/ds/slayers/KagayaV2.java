@@ -1,7 +1,6 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -71,7 +70,6 @@ public class KagayaV2 extends SlayerRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 0), EffectWhen.PERMANENT);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> addPower(new ShowHealthPower(this)), 20);
         AutomaticDesc desc = new AutomaticDesc(this).addEffects(getEffects()).setPowers(getPowers());
         this.textComponent = desc.getText();
     }

@@ -1,24 +1,21 @@
 package fr.nicknqck.utils.packets;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-@Getter
-@Setter
+
 public class ArmorStandUtils {
 
     private Location loc;
     private String text;
-    private boolean gravity;
-    private boolean basePlate;
-    private boolean invisible;
+    private final boolean gravity;
+    private final boolean basePlate;
+    private final boolean invisible;
     private boolean customNameVisible;
-    private boolean marker;
+    private final boolean marker;
     private EntityArmorStand stand;
 
     public ArmorStandUtils(final Location loc, final String text) {
@@ -50,7 +47,7 @@ public class ArmorStandUtils {
     }
 
     public void teleport(final Location loc, final Player player) {
-        this.setLoc(loc);
+        this.loc = loc;
         final EntityPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
         this.stand.setLocation(loc.getX(), loc.getY() + (this.marker ? 2 : 0), loc.getZ(), loc.getYaw(), loc.getPitch());
         final PacketPlayOutEntityTeleport packet = new PacketPlayOutEntityTeleport(this.stand);
@@ -63,7 +60,7 @@ public class ArmorStandUtils {
         return this;
     }
     public void rename(final String text, final Player player) {
-        this.setText(text);
+        this.text = text;
         final EntityPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
         this.stand.setCustomName(text);
         final PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(this.stand.getId(), this.stand.getDataWatcher(), false);
