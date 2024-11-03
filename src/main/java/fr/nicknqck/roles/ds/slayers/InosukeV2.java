@@ -23,6 +23,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -163,6 +165,8 @@ public class InosukeV2 extends SlayerRoles {
     }
     private static class SentationCommand extends CommandPower {
 
+        private final List<UUID> targeted = new ArrayList<>();
+
         public SentationCommand(@NonNull RoleBase role) {
             super("§a/ds sentation <joueur>", "sentation", new Cooldown(60*6), role, CommandType.DS,
                     "§7En visant un joueur (à moins de§c 5 blocs§7), permet d'obtenir§c aléatoirement§7 l'une de ses informations: ",
@@ -182,8 +186,13 @@ public class InosukeV2 extends SlayerRoles {
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
+                    if (this.targeted.contains(target.getUniqueId())) {
+                        player.sendMessage("§cVous ne pouvez pas viser 2 fois le même joueur");
+                        return false;
+                    }
                     if (Loc.getNearbyPlayers(player, 5).contains(target)) {
                         player.sendMessage(getInformations(target));
+                        this.targeted.add(player.getUniqueId());
                         return true;
                     } else {
                         player.sendMessage("§c"+target.getDisplayName()+"§7 n'est pas asser proche de vous");
