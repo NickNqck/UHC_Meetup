@@ -160,7 +160,7 @@ public class InosukeV2 extends SlayerRoles {
     private static class SentationCommand extends CommandPower {
 
         public SentationCommand(@NonNull RoleBase role) {
-            super("/ds sentation <joueur>", "sentation", new Cooldown(60*6), role, CommandType.DS,
+            super("§a/ds sentation <joueur>", "sentation", new Cooldown(60*6), role, CommandType.DS,
                     "§7En visant un joueur (à moins de§c 5 blocs§7), permet d'obtenir§c aléatoirement§7 l'une de ses informations: ",
                     "",
                     "§8 • §7Vous obtiendrez le§c nombre§7 de§c point de vie§7 du joueur viser,",
