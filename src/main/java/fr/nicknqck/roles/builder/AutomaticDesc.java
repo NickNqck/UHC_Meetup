@@ -3,6 +3,7 @@ package fr.nicknqck.roles.builder;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
@@ -96,7 +97,7 @@ public class AutomaticDesc {
             }
             String[] description = power.getDescriptions();
             Cooldown cooldown = power.getCooldown();
-            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : "e pouvoir")+" \"");
+            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
             TextComponent powerName = getPowerName(name, description);
             textComponent.addExtra(powerName);
             textComponent.addExtra("§7\"");
