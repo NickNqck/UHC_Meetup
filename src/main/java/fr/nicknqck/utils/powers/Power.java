@@ -88,7 +88,7 @@ public abstract class Power {
         }
         return canUse;
     }
-    public abstract boolean onUse(Player player, Map<String, Object> args);
+    public abstract boolean onUse(Player player, Map<String, Object> map);
 
     public void onEndCooldown(final Cooldown cooldown) {
         if (this.cooldown == null)return;

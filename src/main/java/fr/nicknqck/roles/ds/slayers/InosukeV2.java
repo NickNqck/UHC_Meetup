@@ -8,18 +8,15 @@ import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
-import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -72,7 +69,7 @@ public class InosukeV2 extends SlayerRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new SentimentCommand(this));
-        addPower(new SentationItem(this), true);
+        addPower(new SentationCommand(this));
         this.textComponent = new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
@@ -160,40 +157,58 @@ public class InosukeV2 extends SlayerRoles {
             }
         }
     }
-    private static class SentationItem extends ItemPower {
+    private static class SentationCommand extends CommandPower {
 
-        protected SentationItem(@NonNull RoleBase role) {
-            super("§aPrésentiment Bestial", new Cooldown(60*5), new ItemBuilder(Material.PORK).setName("§aPrésentiment Bestial"), role);
+        public SentationCommand(@NonNull RoleBase role) {
+            super("/ds sentation <joueur>", "sentation", new Cooldown(60*6), role, CommandType.DS,
+                    "§7En visant un joueur (à moins de§c 5 blocs§7), permet d'obtenir§c aléatoirement§7 l'une de ses informations: ",
+                    "",
+                    "§8 • §7Vous obtiendrez le§c nombre§7 de§c point de vie§7 du joueur viser,",
+                    "",
+                    "§8 • §7Vous saurrez si le joueur possède l'effet§c force§7 et/ou l'effet§c faiblesse",
+                    "",
+                    "§8 • §7Vous saurrez si le joueur possède l'effet§c vitesse§7 et/ou l'effet§c lenteur",
+                    "",
+                    "§8 • §7Vous saurrez si le joueur possède l'effet§c résistance§7 ou non");
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                Player target = getRole().getTargetPlayer(player, 5.0);
-                if (target == null) {
-                    player.sendMessage("§cIl faut viser un joueur");
-                    return false;
-                }
-                final int rdm = Main.RANDOM.nextInt(4);
-                player.sendMessage(getInformations(target, rdm));
+        public boolean onUse(Player player, Map<String, Object> stringObjectMap) {
+            String[] args = (String[]) stringObjectMap.get("args");
+            if (args.length == 2) {
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    if (Loc.getNearbyPlayers(player, 5).contains(target)) {
+                        player.sendMessage(getInformations(target));
+                        return true;
+                    } else {
+                        player.sendMessage("§c"+target.getDisplayName()+"§7 n'est pas asser proche de vous");
+                        return false;
+                    }
+                } else {
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecter");
+                    return false;}
             }
+            player.sendMessage("§cCette commande prend un joueur en entrer");
             return false;
         }
-        private String getInformations(final Player target, final int random) {
-            String toReturn= "§CBUUUUUUUUUUUUUUUG";
+        private String getInformations(final Player target) {
+            final int random = Main.RANDOM.nextInt(4);
+            String toReturn= "§cSi vous voyez ce message c'est qu'il y a un bug au niveau du random";
             switch (random) {
                 case 0:
                     toReturn = "§aVous sentez la force vitale de§c "+target.getDisplayName()+"§a il à l'air d'avoir §c"+
-                    new DecimalFormat("0").format(target.getMaxHealth())+"§a, on dirait même qu'il possède§c "+getHealthPercentage(target)+"§a.";
+                            new DecimalFormat("0").format(target.getMaxHealth())+"❤ permanents§a, on dirait même qu'il possède§c "+
+                            getHealthPercentage(target)+"§a de sa vie maximum.";
                     break;
                 case 1:
                     toReturn = "§aVous sentez la force de§c "+
                             target.getDisplayName()+
                             "§a il à l'air "+
-                            (target.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) ? "d'avoir l'effet " : "de ne pas avoir l'effet ")+
+                            (target.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
                             "§c force§a et "+
                             (target.hasPotionEffect(PotionEffectType.WEAKNESS) ? "d'avoir l'effet " : "de ne pas avoir l'effet")+
-                            "§7faiblesse";
+                            "§7 faiblesse";
                     break;
                 case 2:
                     toReturn = "§aVous sentez la puissance se trouvant dans les jambes de§c "+target.getDisplayName()+
