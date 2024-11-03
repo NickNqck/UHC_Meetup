@@ -13,6 +13,7 @@ import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -82,6 +83,7 @@ public class KagayaV2 extends SlayerRoles {
             super("§avoir la vie des joueurs", null, role);
             EventUtils.registerRoleEvent(this);
             for (final UUID uuid : role.gameState.getGamePlayer().keySet()) {
+                if (uuid.equals(role.getPlayer()))continue;
                 ArmorStandUtils armorStand = new ArmorStandUtils(role.gameState.getGamePlayer().get(uuid).getLastLocation(), "TEST");
                 armorStand.display(role.owner);
                 this.armorStands.put(uuid, armorStand);
@@ -98,7 +100,8 @@ public class KagayaV2 extends SlayerRoles {
                 Player owner = Bukkit.getPlayer(getRole().getPlayer());
                 if (owner == null)return;
                 armorStands.get(event.getPlayer().getUniqueId()).rename("§c"+new DecimalFormat("0").format(event.getPlayer().getHealth())+"❤", owner);
-                armorStands.get(event.getPlayer().getUniqueId()).teleport(event.getTo(), owner);
+                final Location to = new Location(event.getTo().getWorld(), event.getTo().getX(), event.getTo().getY()+0.5, event.getTo().getZ());
+                armorStands.get(event.getPlayer().getUniqueId()).teleport(to, owner);
             }
         }
     }
