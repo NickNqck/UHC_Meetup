@@ -93,11 +93,17 @@ public class GamePlayer {
 
     private static class DiscRunnable extends BukkitRunnable {
 		private final GamePlayer gamePlayer;
+		private final GameState gameState;
 		private DiscRunnable(GamePlayer gamePlayer) {
 			this.gamePlayer = gamePlayer;
+			this.gameState = GameState.getInstance();
 		}
 		@Override
 		public void run() {
+			if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+				cancel();
+				return;
+			}
 			gamePlayer.setTimeDisconnectLeft(gamePlayer.getTimeDisconnectLeft()-1);
 			if (gamePlayer.getTimeDisconnectLeft() == 0) {
 				Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
