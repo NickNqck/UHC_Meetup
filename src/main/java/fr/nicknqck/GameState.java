@@ -497,7 +497,7 @@ public class GameState{
 			role = new ShinobuV2(player);
 			break;
 		case Kanao:
-			role = new Kanao(player);
+			role = new KanaoV2(player);
 			break;
 		case Obanai:
 			role = new ObanaiV2(player);
