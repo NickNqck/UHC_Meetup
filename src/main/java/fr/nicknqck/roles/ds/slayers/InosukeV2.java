@@ -80,7 +80,11 @@ public class InosukeV2 extends SlayerRoles {
         private boolean traque = false;
 
         public SentimentCommand(@NonNull RoleBase role) {
-            super("/ds sentiments", "sentiments", new Cooldown(60*10), role, CommandType.DS);
+            super("/ds sentiments", "sentiments", new Cooldown(60*10), role, CommandType.DS,
+                    "§7Vous permet d'obtenir la liste de tout les joueurs autours de vous (§c50 blocs§7)",
+                    "§7en cliquant sur l'un de ces joueurs vous pourrez le traquer pendant§c 20 secondes§7.",
+                    "",
+                    "§4! ATTENTION ! §cVous n'aurez que§4 10 secondes§c pour choisir un joueur à traquer");
         }
 
         @Override
