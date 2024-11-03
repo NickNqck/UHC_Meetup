@@ -86,6 +86,11 @@ public class IdentityChanger {
         }
     }
 
+    public static Property getSkin(Player target) {
+        GameProfile profileTarget = ((org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) target).getProfile();
+        return profileTarget.getProperties().get("textures").iterator().next();
+    }
+
     private static void sendPacket(final Packet<?> packet) {
         sendPacket(packet, null);
     }
