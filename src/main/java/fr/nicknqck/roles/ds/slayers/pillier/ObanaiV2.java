@@ -99,7 +99,10 @@ public class ObanaiV2 extends PillierRoles implements Listener{
     }
     @EventHandler
     private void onDie(UHCDeathEvent event) {
+        if (event.getRole() == null)return;
         if (event.getRole() instanceof MitsuriV2) {
+            if (event.getRole().getGamePlayer() == null)return;
+            if (event.getRole().getGamePlayer().getKiller() == null)return;
             onMitsuriDie(event.getGameState().isNightTime() ? EffectWhen.NIGHT: EffectWhen.DAY, event.getRole().getGamePlayer().getKiller().getPlayerName());
         }
     }
