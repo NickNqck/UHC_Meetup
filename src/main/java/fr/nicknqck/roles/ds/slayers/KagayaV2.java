@@ -69,7 +69,8 @@ public class KagayaV2 extends SlayerRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 0), EffectWhen.PERMANENT);
+       // givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 0), EffectWhen.PERMANENT);
+        addPower(new ShowHealthPower(this));
         AutomaticDesc desc = new AutomaticDesc(this).addEffects(getEffects()).setPowers(getPowers());
         this.textComponent = desc.getText();
     }
