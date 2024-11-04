@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 
 public abstract class GUIItems{
@@ -36,116 +35,7 @@ public abstract class GUIItems{
 		stack.setItemMeta(meta);
 		return stack;
 	}
-	
-	public static ItemStack getSouffleSoleil() {
-		ItemStack stack = new ItemStack(Material.DOUBLE_PLANT, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle du Soleil");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez l'accès à l'objet: ",
-				ChatColor.GOLD+"Souffle du Soleil: "+"Pendant 2 minutes, quand vous tapez un joueur il perd son absorbtion"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleLune() {
-		ItemStack stack = new ItemStack(Material.BED, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle de la Lune");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez force 1 la nuit"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleRoche() {
-		ItemStack stack = new ItemStack(Material.STONE, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle de la Roche");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez Résistance 1 le jour"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleEau() {
-		ItemStack stack = new ItemStack(Material.WATER_BUCKET, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle de l'Eau");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez:",
-				ChatColor.GOLD+"Botte en Diamant Depth Strider 1",
-				ChatColor.GOLD+"Souffle de l'Eau:§7 Vous donne Speed 1 pendant 3 minutes"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleFeu() {
-		ItemStack stack = new ItemStack(Material.FLINT_AND_STEEL, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle du Feu");
-		meta.setLore(Arrays.asList("§r"+"Quand vous taperez un joueur il y aura une chance sur 5 qu'il soit mis automatiquement mit en feu"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleFoudre() {
-		ItemStack stack = new ItemStack(Material.SKULL_ITEM, 1, (byte) 4);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle de la Foudre");
-		meta.setLore(Arrays.asList("§7"+"Vous obtiendrez: ",
-				ChatColor.GOLD+"Souffle de la Foudre: Eclair de Chaleur"+"§7 la prochaine personne que vous taperez ce verra infliger",
-				"§7 2"+AllDesc.coeur+" via un§e éclair§7 également elle ce verra obtenir l'effet "+AllDesc.slow+"§7 1 pendant 15 secondes"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleVent() {
-		ItemStack stack = new ItemStack(Material.FEATHER, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle du Vent");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez: ",
-				ChatColor.GOLD+"Souffle du Vent:§7 Vous donne "+AllDesc.Speed+"§7 2 pendant 2 minutes"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleAmour() {
-		ItemStack stack = new ItemStack(Material.APPLE, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle de l'Amour");
-		meta.setLore(Arrays.asList("§7Vous obtiendrez: ",
-				ChatColor.GOLD+"2§c❤§7 permanent supplémentaire"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleBrume() {
-		ItemStack stack = new ItemStack(Material.POTION, 1, (byte) 8238);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle de la Brume");
-		meta.setLore(Arrays.asList("§7Vous obtiendrez: ",
-				ChatColor.GOLD+"Souffle de la Brume:§7 vous donne invisibilité 1 pendant 2mins"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getSouffleSerpent() {
-		ItemStack stack = new ItemStack(Material.BARRIER, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle du Serpent");
-		meta.setLore(Arrays.asList("Vous obtiendrez: ",
-				ChatColor.GOLD+"Souffle du Serpent:§7 Pendant 1 minutes vous aurez 1chance/5 d'esquiver les coups"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
+
 	public static ItemStack getFilForce() {	
 		ItemStack stack = new ItemStack(Material.STRING, 1);
 		ItemMeta meta = stack.getItemMeta();
@@ -219,17 +109,6 @@ public abstract class GUIItems{
 		stack.setItemMeta(meta);
 		return stack;
 	}
-	public static ItemStack getSouffleFleur() {
-		ItemStack stack = new ItemStack(Material.RED_ROSE, 1, (byte) 2);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Souffle de la Fleur");
-		meta.setLore(Arrays.asList("§rVous obtiendrez une immunité au Poison"
-				));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
 	public static ItemStack getJigoroPacte1() {
 		ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 		ItemMeta meta = stack.getItemMeta();
@@ -278,40 +157,7 @@ public abstract class GUIItems{
 	 * 
 	 * 
 	 */
-	
-	  public static ItemStack getdiamondhelmet() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_HELMET, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pc, true);
-			meta.setLore(Arrays.asList("§r"+"Click to Change"));
-			stack.setItemMeta(meta);
-			return stack;
-		}
 
-	  public static ItemStack getdiamondchestplate() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pch, true);
-			meta.setLore(Arrays.asList("§r"+"Click to Change"));
-			stack.setItemMeta(meta);
-			return stack;
-		}
-	  public static ItemStack getironleggings() {
-		  ItemStack stack = new ItemStack(Material.IRON_LEGGINGS, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pl, true);
-		  meta.setLore(Arrays.asList("§r"+"Click to Change"));
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	  public static ItemStack getdiamondboots() {
-		  ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pb, true);
-		  meta.setLore(Arrays.asList("§r"+"Click to Change"));
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
 	  public static ItemStack getx() {
 		  ItemStack s = new ItemStack(Material.BARRIER, 1);
 		  ItemMeta m = s.getItemMeta();
@@ -380,26 +226,6 @@ public abstract class GUIItems{
 			stack.setItemMeta(meta);
 			return stack;
 		}
-		public static ItemStack getRoleInfo() {
-			ItemStack stack = new ItemStack(Material.BOOK, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Afficher le Role Info");
-			meta.setLore(Arrays.asList("(Actuellement) Activer"));
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getdisRoleInfo() {
-			ItemStack stack = new ItemStack(Material.BOOK, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Afficher le Role Info");
-			meta.setLore(Arrays.asList("(Actuellement) Désactiver"));
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			stack.setItemMeta(meta);
-			return stack;
-		}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		public static ItemStack getTabRoleInfo(GameState gameState) {
 			ItemStack stack = new ItemStack(Material.SIGN, 1);
@@ -414,7 +240,7 @@ public abstract class GUIItems{
 		private static String a(final GameState gameState) {
 			return gameState.roletab ? "Activer" : "Désactiver"; 
 		}
-		private final static String b(final GameState gameState) {
+		private static String b(final GameState gameState) {
 			return gameState.hasPregen ? "Faite" : "Pas faite";
 		}
 		public static ItemStack getPregen(GameState gameState) {
@@ -427,15 +253,7 @@ public abstract class GUIItems{
 			stack.setItemMeta(meta);
 			return stack;
 		}
-		
-		public static ItemStack XpBoostFer() {
-			ItemStack stack = new ItemStack(Material.IRON_INGOT, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Fer");
-			meta.setLore(Arrays.asList("§r"+"Choisissez les roles jouables dans cette partie"));			
-			stack.setItemMeta(meta);
-			return stack;
-		}
+
 		public static ItemStack getCrit(GameState gameState) {
 			ItemStack stack = new ItemStack(Material.IRON_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
@@ -490,14 +308,6 @@ public static ItemStack getSelectConfigButton() {
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§fConfiguration§7 ->§6 Inventaire");
 		meta.setLore(Collections.singletonList("§7Configurez l'inventaire"));
-		stack.setItemMeta(meta);
-		return stack;
-	}
-
-	public static ItemStack getBlackStainedGlassPane() {
-		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+" ");
 		stack.setItemMeta(meta);
 		return stack;
 	}
