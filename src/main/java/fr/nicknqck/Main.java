@@ -16,6 +16,7 @@ import fr.nicknqck.events.essential.inventorys.HubInventory;
 import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
 import fr.nicknqck.managers.DeathManager;
+import fr.nicknqck.managers.EventsManager;
 import fr.nicknqck.managers.RoleManager;
 import fr.nicknqck.managers.WorldsManager;
 import fr.nicknqck.player.EffectsGiver;
@@ -95,6 +96,8 @@ public class Main extends JavaPlugin {
 	private WorldListener worldListener;
 	@Getter
 	private boolean goodServer;
+	@Getter
+	private EventsManager eventsManager;
 
     @Override
 	public void onEnable() {
@@ -216,6 +219,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(worldConfig, this);
 		this.worldConfig = worldConfig;
 		this.deathManager = manager;
+		EventsManager eventsManager1 = new EventsManager();
+		getServer().getPluginManager().registerEvents(eventsManager1, this);
+		this.eventsManager = eventsManager1;
 		System.out.println("Ending registering events");
 	}
 	private void registerEvents2(GameState gameState) {

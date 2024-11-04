@@ -5,7 +5,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -174,103 +173,6 @@ public class HubConfig implements Listener {
                         Player p = Bukkit.getPlayer(u);
                         if (p == null)continue;
                         Main.getInstance().getInventories().updateSelectMDJ(p);
-                    }
-                    event.setCancelled(true);
-                    break;
-                case "§fConfiguration§7 -> §6Événements":
-                    if (item.getType() != Material.AIR) {
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getAdminWatchGUI());
-                            Main.getInstance().getInventories().updateAdminInventory(player);
-                        } else {
-                            for (Events e : Events.values()) {
-                                if (item.getItemMeta().getDisplayName().equals(e.getName())) {
-                                    if (e.equals(Events.DemonKingTanjiro)) {
-                                        if (action == InventoryAction.PICKUP_ALL) {
-                                            gameState.DKminTime += 60;
-                                        }
-                                        if (action == InventoryAction.PICKUP_HALF) {
-                                            if (gameState.DKminTime > 60) {
-                                                gameState.DKminTime -= 60;
-                                            }
-                                        }
-                                        if (action == InventoryAction.DROP_ONE_SLOT) {
-                                            if (gameState.DKTProba == 0) {
-                                                gameState.DKTProba = 101;
-                                            }
-                                            if (gameState.DKTProba > 0) {
-                                                gameState.DKTProba--;
-                                            }
-                                        }
-                                        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                                            if (gameState.DKTProba == 100) {
-                                                gameState.DKTProba = -1;
-                                            }
-                                            if (gameState.DKTProba < 100) {
-                                                gameState.DKTProba++;
-                                            }
-                                        }
-                                    }
-                                    if (e.equals(Events.AkazaVSKyojuro)) {
-                                        if (action == InventoryAction.PICKUP_ALL) {
-                                            gameState.AkazaVsKyojuroTime += 60;
-                                        }
-                                        if (action == InventoryAction.PICKUP_HALF) {
-                                            if (gameState.AkazaVsKyojuroTime > 60) {
-                                                gameState.AkazaVsKyojuroTime -= 60;
-                                            }
-                                        }
-                                        if (action == InventoryAction.DROP_ONE_SLOT) {
-                                            if (gameState.AkazaVSKyojuroProba == 0) {
-                                                gameState.AkazaVSKyojuroProba = 101;
-                                            }
-                                            if (gameState.AkazaVSKyojuroProba > 0) {
-                                                gameState.AkazaVSKyojuroProba--;
-                                            }
-                                        }
-                                        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                                            if (gameState.AkazaVSKyojuroProba == 100) {
-                                                gameState.AkazaVSKyojuroProba = -1;
-                                            }
-                                            if (gameState.AkazaVSKyojuroProba < 100) {
-                                                gameState.AkazaVSKyojuroProba++;
-                                            }
-                                        }
-                                    }
-                                    if (e.equals(Events.Alliance)) {
-                                        if (action == InventoryAction.PICKUP_ALL) {
-                                            gameState.AllianceTime += 60;
-                                        }
-                                        if (action == InventoryAction.PICKUP_HALF) {
-                                            if (gameState.AllianceTime > 60) {
-                                                gameState.AllianceTime -= 60;
-                                            }
-                                        }
-                                        if (action == InventoryAction.DROP_ONE_SLOT) {
-                                            if (gameState.AllianceProba == 0) {
-                                                gameState.AllianceProba = 101;
-                                            }
-                                            if (gameState.AllianceProba > 0) {
-                                                gameState.AllianceProba--;
-                                            }
-                                        }
-                                        if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                                            if (gameState.AllianceProba == 100) {
-                                                gameState.AllianceProba = -1;
-                                            }
-                                            if (gameState.AllianceProba < 100) {
-                                                gameState.AllianceProba++;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    for (UUID u : gameState.getInLobbyPlayers()) {
-                        Player p = Bukkit.getPlayer(u);
-                        if (p == null)continue;
-                        Main.getInstance().getInventories().updateEventInventory(p);
                     }
                     event.setCancelled(true);
                     break;

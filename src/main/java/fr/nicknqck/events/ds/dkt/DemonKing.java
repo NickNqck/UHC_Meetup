@@ -103,8 +103,6 @@ public class DemonKing extends EventBase{
 		return super.PlayEvent(gameTime);
 	}
 	@Override
-	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {}
-	@Override
 	public void setupEvent() {
 		setMinTime(GameState.getInstance().DKminTime);
 	}

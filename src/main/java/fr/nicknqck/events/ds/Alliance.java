@@ -68,7 +68,7 @@ public class Alliance extends EventBase{
 		}
 		return false;
 	}
-	@Override
+
 	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {
 		if (this.kyojuro != null && this.shinjuro != null) {
 			if (victim.getUniqueId().equals(kyojuro.getPlayer())) {

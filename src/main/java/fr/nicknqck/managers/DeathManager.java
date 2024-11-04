@@ -20,6 +20,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -63,18 +64,6 @@ public class DeathManager implements Listener {
         Bukkit.getPluginManager().callEvent(playerKillEvent);
         UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getPlayerRoles().get(killedPlayer));
         Bukkit.getPluginManager().callEvent(uhcDeathEvent);
-        for (EventBase event : gameState.getInGameEvents()) {
-            if (entityKiller instanceof Player) {
-                event.OnPlayerKilled((Player) entityKiller, killedPlayer, gameState);
-            } else if (entityKiller instanceof Arrow) {
-                Arrow arrow = (Arrow)entityKiller;
-                if (arrow.getShooter() instanceof Player) {
-                    event.OnPlayerKilled((Player) arrow.getShooter(), killedPlayer, gameState);
-                }
-            } else {
-                event.OnPlayerKilled(null, killedPlayer, gameState);
-            }
-        }
         boolean cantDie = false;
         if (!gameState.hasRoleNull(killedPlayer)) {
             if (gameState.getPlayerRoles().get(killedPlayer).onPreDie(entityKiller, gameState) || gameState.getPlayerRoles().get(killedPlayer).getGamePlayer().isCanRevive()) {

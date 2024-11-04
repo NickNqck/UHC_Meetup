@@ -74,8 +74,6 @@ public class AkazaVSKyojuro extends EventBase{
 		}
 		return super.PlayEvent(gameTime);
 	}
-	@Override
-	public void OnPlayerKilled(Player player, Player victim, GameState gameState) {}
 	private ItemStack Vague() {
 		return new ItemBuilder(Material.NETHER_STAR)
 				.setName("§6Vague Flamboyante")

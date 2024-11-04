@@ -5,7 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.chat.Chat;
-import fr.nicknqck.events.Events;
+import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
@@ -1209,56 +1209,8 @@ public class Inventories {
                 if (inv.getTitle().equals("§fConfiguration§7 -> §6Événements")) {
                     inv.clear();
                     inv.setItem(8, GUIItems.getSelectBackMenu());
-                    for (Events e : Events.values()) {
-                        ItemStack item;
-                        if (e == Events.DemonKingTanjiro) {
-                            if (gameState.getAvailableEvents().contains(e)) {
-                                item = new ItemBuilder(Material.BLAZE_ROD)
-                                        .addEnchant(Enchantment.ARROW_FIRE, 1)
-                                        .hideEnchantAttributes()
-                                        .setName(e.getName())
-                                        .setLore("§fTiming d'apparition:§6 "+StringUtils.secondsTowardsBeautifulinScoreboard(gameState.DKminTime),
-                                                "§a+1m§f (Clique gauche)",
-                                                "§c-1m§f (Clique droit)",
-                                                "§a+1%§f (Shift + Clique)",
-                                                "§c-1%§f (Drop)",
-                                                "§fPourcentage actuelle:§b "+gameState.DKTProba+"%")
-                                        .toItemStack();
-                                inv.addItem(item);
-                            }
-                        }
-                        if (e == Events.AkazaVSKyojuro) {
-                            if (gameState.getAvailableEvents().contains(e)) {
-                                item = new ItemBuilder(Material.IRON_SWORD)
-                                        .addEnchant(Enchantment.ARROW_DAMAGE, 1)
-                                        .hideAllAttributes()
-                                        .setName(e.getName())
-                                        .setLore("§fTiming d'apparition:§6 "+StringUtils.secondsTowardsBeautifulinScoreboard(gameState.AkazaVsKyojuroTime),
-                                                "§a+1m§f (Clique gauche)",
-                                                "§c-1m§f (Clique droit)",
-                                                "§a+1%§f (Shift + Clique)",
-                                                "§c-1%§f (Drop)",
-                                                "§fPourcentage actuelle:§b "+gameState.AkazaVSKyojuroProba+"%")
-                                        .toItemStack();
-                                inv.addItem(item);
-                            }
-                        }
-                        if (e == Events.Alliance) {
-                            if (gameState.getAvailableEvents().contains(e)) {
-                                item = new ItemBuilder(Material.LAVA_BUCKET)
-                                        .addEnchant(Enchantment.ARROW_DAMAGE, 1)
-                                        .hideAllAttributes()
-                                        .setName(e.getName())
-                                        .setLore("§fTiming d'apparition:§6 "+StringUtils.secondsTowardsBeautifulinScoreboard(gameState.AllianceTime),
-                                                "§a+1m§f (Clique gauche)",
-                                                "§c-1m§f (Clique droit)",
-                                                "§a+1%§f (Shift + Clique)",
-                                                "§c-1%§f (Drop)",
-                                                "§fPourcentage actuelle:§b "+gameState.AllianceProba+"%")
-                                        .toItemStack();
-                                inv.addItem(item);
-                            }
-                        }
+                    for (final Event event : Main.getInstance().getEventsManager().getEventsList()) {
+                        inv.addItem(event.getMenuItem());
                     }
                 }
             }

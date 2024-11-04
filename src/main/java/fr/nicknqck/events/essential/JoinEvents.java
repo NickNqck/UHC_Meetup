@@ -52,7 +52,7 @@ public class JoinEvents implements Listener{
 			if (gameState.getInGamePlayers().contains(event.getPlayer().getUniqueId())) {
 				GamePlayer gamePlayer = gameState.getGamePlayer().get(event.getPlayer().getUniqueId());
 				if (gamePlayer != null) {
-					gamePlayer.onJoin();
+					gamePlayer.onJoin(event.getPlayer());
 				}
 				event.setJoinMessage(null);
 				return;
