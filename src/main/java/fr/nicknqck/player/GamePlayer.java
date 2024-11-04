@@ -60,8 +60,9 @@ public class GamePlayer {
 		this.discRunnable = new DiscRunnable(this);
 		this.discRunnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
 	}
-	public void onJoin() {
+	public void onJoin(Player player) {
 		if (this.discRunnable != null) {
+			player.sendMessage(this.discRunnable.toSend);
 			this.discRunnable.cancel();
 			this.discRunnable = null;
 		}
@@ -90,14 +91,29 @@ public class GamePlayer {
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
-
+	public void sendMessage(final String... messages) {
+		Player owner = Bukkit.getPlayer(getUuid());
+		if (owner != null) {
+			owner.sendMessage(messages);
+		} else {
+			this.discRunnable.setMessagesToSend(messages);
+		}
+	}
     private static class DiscRunnable extends BukkitRunnable {
+
 		private final GamePlayer gamePlayer;
 		private final GameState gameState;
+		private String[] toSend = new String[0];
+
 		private DiscRunnable(GamePlayer gamePlayer) {
 			this.gamePlayer = gamePlayer;
 			this.gameState = GameState.getInstance();
 		}
+
+		private void setMessagesToSend(final String[] messages) {
+			this.toSend = messages;
+		}
+
 		@Override
 		public void run() {
 			if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
