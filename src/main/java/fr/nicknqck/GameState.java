@@ -886,9 +886,6 @@ public class GameState{
 				case DemonKingTanjiro:
 					addInGameEvents(Events.DemonKingTanjiro.getEvent());
 				break;
-				case Alliance:
-					addInGameEvents(Events.Alliance.getEvent());
-				break;
 				case AkazaVSKyojuro:
 					addInGameEvents(Events.AkazaVSKyojuro.getEvent());
 				break;

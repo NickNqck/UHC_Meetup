@@ -69,8 +69,8 @@ public class EventsManager implements Listener {
             for (final Event gameEvent : this.eventsList) {
                 if (inv.getTitle().equals("§f"+gameEvent.getName())) {
                     if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                        player.openInventory(GUIItems.getAdminWatchGUI());
-                        Main.getInstance().getInventories().updateAdminInventory(player);
+                        player.openInventory(GUIItems.getEventSelectGUI());
+                        Main.getInstance().getInventories().updateEventInventory(player);
                         event.setCancelled(true);
                         return;
                     }
@@ -78,7 +78,7 @@ public class EventsManager implements Listener {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                             gameEvent.setMinTimeProc(Math.min(gameEvent.getMaxTimeProc(), gameEvent.getMinTimeProc()+60));
                         } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                            gameEvent.setMinTimeProc(Math.max(60, gameEvent.getMinTimeProc())-60);
+                            gameEvent.setMinTimeProc(Math.max(120, gameEvent.getMinTimeProc())-60);
                         }
                     } else if (item.getItemMeta().getDisplayName().equals("§bTemp maximum")) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -98,17 +98,17 @@ public class EventsManager implements Listener {
         final Inventory gameInv = Bukkit.createInventory(player, 27, "§f"+name);
         gameInv.setItem(12, new ItemBuilder(Material.WATCH).setName("§bTemp minimum").setLore(
                 "",
-                "§fClique gauche:§a+1 minute",
+                "§fClique gauche: §a+1 minute",
                 "",
-                "§fClique droit:§c-1 minute",
+                "§fClique droit: §c-1 minute",
                 "",
                 "§bTemp minimum actuel: §c"+ StringUtils.secondsTowardsBeautiful(minTime)
         ).toItemStack());
         gameInv.setItem(14, new ItemBuilder(Material.WATCH).setName("§bTemp maximum").setLore(
                 "",
-                "§fClique gauche:§a+1 minute",
+                "§fClique gauche: §a+1 minute",
                 "",
-                "§fClique droit:§c-1 minute",
+                "§fClique droit: §c-1 minute",
                 "",
                 "§bTemp maximum actuel: §c"+ StringUtils.secondsTowardsBeautiful(maxTime)
         ).toItemStack());

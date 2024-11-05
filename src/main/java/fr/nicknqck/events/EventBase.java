@@ -9,8 +9,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nullable;
-
 public abstract class EventBase {
 	
 	public GameState gameState = GameState.getInstance();

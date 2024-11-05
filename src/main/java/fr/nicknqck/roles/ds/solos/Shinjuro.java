@@ -3,7 +3,6 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -32,6 +31,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Shinjuro extends DemonsSlayersRoles {
+
+	public boolean alliance = false;
 	private boolean usesoufle = false;
 	private int cooldownsake = 0;
 	private int souflecooldown = 0;
@@ -40,7 +41,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 	private TextComponent desc;
 	public Shinjuro(UUID player) {
 		super(player);
-
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 	}
 	@Override
  	public void Update(GameState gameState) {
-		if (Events.Alliance.getEvent().isActivated()) {
+		if (this.alliance) {
 			if (gameState.getOwner(Roles.Kyojuro) != null) {
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 					if (p.equals(gameState.getOwner(Roles.Kyojuro))) {
@@ -209,7 +209,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 				cancel();
 				return;
 			}
-			if (Events.Alliance.getEvent().isActivated()) {
+			if (shinjuro.alliance) {
 				if (shinjuro.gameState.getOwner(Roles.Kyojuro) != null) {
 					shinjuro.sendCustomActionBar(shinjuro.owner, Loc.getDirectionMate(shinjuro.owner, shinjuro.gameState.getOwner(Roles.Kyojuro), true));
 				}

@@ -52,6 +52,7 @@ public class AllianceV2 extends Event implements Listener {
                         s.owner.getInventory().removeItem(Items.getSake());
                         s.setSakeCooldown(-1);
                         this.shinjuro = s;
+                        this.shinjuro.alliance = true;
                     }
                 }
             }
