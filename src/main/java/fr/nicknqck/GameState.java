@@ -91,10 +91,6 @@ public class GameState{
 	@Setter
 	private int maxTimeSpawnBiju = 160;
 	public int DKTProba = 0;
-	public int AllianceProba = 0;
-	public int AllianceTime = 60;
-	public int AkazaVSKyojuroProba = 0;
-	public int AkazaVsKyojuroTime = 60;
 	public int nmbArrow = 24;
 	public boolean LaveTitans = true;
 	@Getter
@@ -882,14 +878,9 @@ public class GameState{
 	}
 	public void initEvents() {
 		for (Events eventType : getAvailableEvents()) {
-			switch (eventType) {
-				case DemonKingTanjiro:
-					addInGameEvents(Events.DemonKingTanjiro.getEvent());
-				break;
-				case AkazaVSKyojuro:
-					addInGameEvents(Events.AkazaVSKyojuro.getEvent());
-				break;
-				}
+            if (Objects.requireNonNull(eventType) == Events.DemonKingTanjiro) {
+                addInGameEvents(Events.DemonKingTanjiro.getEvent());
+            }
 
 		}
 	}

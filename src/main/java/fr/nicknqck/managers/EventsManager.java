@@ -6,6 +6,7 @@ import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.events.ds.AkazaVSKyojuroV2;
 import fr.nicknqck.events.ds.AllianceV2;
 import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.events.ds.dkt.DemonKingEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -32,6 +33,7 @@ public class EventsManager implements Listener {
     public EventsManager() {
         eventsList.add(new AllianceV2());
         eventsList.add(new AkazaVSKyojuroV2());
+        eventsList.add(new DemonKingEvent());
     }
 
     @EventHandler

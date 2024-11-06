@@ -1,13 +1,11 @@
 package fr.nicknqck.events;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.events.ds.AkazaVSKyojuro;
 import fr.nicknqck.events.ds.dkt.DemonKing;
 import lombok.Getter;
 
 public enum Events {
-	DemonKingTanjiro(new DemonKing(),"§cDemon King Tanjiro", GameState.getInstance().DKTProba),
-	AkazaVSKyojuro(new AkazaVSKyojuro(), "§cAkaza§6 vs§a Kyojuro", GameState.getInstance().AkazaVSKyojuroProba);
+	DemonKingTanjiro(new DemonKing(),"§cDemon King Tanjiro", GameState.getInstance().DKTProba);
 	
 	private final EventBase base;
 	@Getter
