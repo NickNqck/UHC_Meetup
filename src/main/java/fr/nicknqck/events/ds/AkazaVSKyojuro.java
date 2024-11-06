@@ -317,7 +317,7 @@ public class AkazaVSKyojuro extends EventBase{
 									attacker.damage(0.0);
 									if (attacker.getHealth() > 1.0) {
 										attacker.setHealth(attacker.getHealth()-1.0);
-									}else {
+									} else {
 										attacker.setHealth(1.0);
 									}
 									attacker.setFireTicks(attacker.getFireTicks()+100);

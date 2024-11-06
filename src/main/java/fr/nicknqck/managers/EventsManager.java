@@ -3,6 +3,7 @@ package fr.nicknqck.managers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.StartGameEvent;
+import fr.nicknqck.events.ds.AkazaVSKyojuroV2;
 import fr.nicknqck.events.ds.AllianceV2;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
@@ -30,6 +31,7 @@ public class EventsManager implements Listener {
 
     public EventsManager() {
         eventsList.add(new AllianceV2());
+        eventsList.add(new AkazaVSKyojuroV2());
     }
 
     @EventHandler
