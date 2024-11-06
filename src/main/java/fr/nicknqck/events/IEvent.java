@@ -8,4 +8,5 @@ public interface IEvent {
     String getName();
     void onProc(final GameState gameState);
     ItemStack getMenuItem();
+    boolean canProc(final GameState gameState);
 }

@@ -26,9 +26,8 @@ public class DemonKingEvent extends Event {
 
     @Override
     public void onProc(GameState gameState) {
-        if (gameState.attributedRole.contains(GameState.Roles.Tanjiro) && gameState.attributedRole.contains(GameState.Roles.Muzan) && gameState.DeadRole.contains(GameState.Roles.Muzan) && !gameState.DeadRole.contains(GameState.Roles.Tanjiro)) {
-            boolean tanjiroDemon = false;
-            for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+        boolean tanjiroDemon = false;
+        for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
                 if (gamePlayer.getRole() != null) {
                     if (gamePlayer.getRole() instanceof Tanjiro) {
                         Tanjiro role = (Tanjiro) gamePlayer.getRole();
@@ -53,7 +52,7 @@ public class DemonKingEvent extends Event {
                     }
                 }
             }
-            if (tanjiroDemon) {
+        if (tanjiroDemon) {
                 Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                     Bukkit.broadcastMessage(AllDesc.bar+"\n§rL'évènement aléatoire "+ getName()+" viens de ce déclancher, le rôle§c Tanjiro§f est maintenant dans le camp des Démons !\n"+AllDesc.bar);
                     gameState.demonKingTanjiro = true;
@@ -88,11 +87,15 @@ public class DemonKingEvent extends Event {
                     }
                 }, 20*60);
             }
-        }
     }
 
     @Override
     public ItemStack getMenuItem() {
         return new ItemBuilder(Material.REDSTONE_ORE).setName(getName()).setLore(getLore()).toItemStack();
+    }
+
+    @Override
+    public boolean canProc(final GameState gameState) {
+        return gameState.attributedRole.contains(GameState.Roles.Tanjiro) && gameState.attributedRole.contains(GameState.Roles.Muzan) && gameState.DeadRole.contains(GameState.Roles.Muzan) && !gameState.DeadRole.contains(GameState.Roles.Tanjiro);
     }
 }

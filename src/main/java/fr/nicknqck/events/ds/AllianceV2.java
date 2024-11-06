@@ -30,34 +30,32 @@ public class AllianceV2 extends Event implements Listener {
 
     @Override
     public void onProc(final GameState gameState) {
-        if (containsRoles(gameState)) {
-            for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
-                if (!gamePlayer.isAlive())continue;
-                if (gamePlayer.getRole() == null)continue;
-                if (gamePlayer.getRole() instanceof KyojuroV2 || gamePlayer.getRole() instanceof Shinjuro) {
-                    gamePlayer.getRole().setTeam(TeamList.Alliance);
-                    if (gamePlayer.getRole() instanceof KyojuroV2) {
-                        KyojuroV2 k = (KyojuroV2) gamePlayer.getRole();
-                        gamePlayer.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Shinjuro).getName());
-                        gamePlayer.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
-                        k.giveHealedHeartatInt(2);
-                        this.kyojuro = k;
-                        k.setAlliance(true);
-                        k.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
-                    }
-                    if (gamePlayer.getRole() instanceof Shinjuro) {
-                        Shinjuro s = (Shinjuro) gamePlayer.getRole();
-                        s.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Kyojuro).getName());
-                        s.owner.sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
-                        s.owner.getInventory().removeItem(Items.getSake());
-                        s.setSakeCooldown(-1);
-                        this.shinjuro = s;
-                        this.shinjuro.alliance = true;
-                    }
+        for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+            if (!gamePlayer.isAlive())continue;
+            if (gamePlayer.getRole() == null)continue;
+            if (gamePlayer.getRole() instanceof KyojuroV2 || gamePlayer.getRole() instanceof Shinjuro) {
+                gamePlayer.getRole().setTeam(TeamList.Alliance);
+                if (gamePlayer.getRole() instanceof KyojuroV2) {
+                    KyojuroV2 k = (KyojuroV2) gamePlayer.getRole();
+                    gamePlayer.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Shinjuro).getName());
+                    gamePlayer.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
+                    k.giveHealedHeartatInt(2);
+                    this.kyojuro = k;
+                    k.setAlliance(true);
+                    k.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
+                }
+                if (gamePlayer.getRole() instanceof Shinjuro) {
+                    Shinjuro s = (Shinjuro) gamePlayer.getRole();
+                    s.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Kyojuro).getName());
+                    s.owner.sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
+                    s.owner.getInventory().removeItem(Items.getSake());
+                    s.setSakeCooldown(-1);
+                    this.shinjuro = s;
+                    this.shinjuro.alliance = true;
                 }
             }
-            EventUtils.registerRoleEvent(this);
         }
+        EventUtils.registerRoleEvent(this);
     }
     @EventHandler
     private void onDeath(UHCDeathEvent event) {
@@ -73,6 +71,11 @@ public class AllianceV2 extends Event implements Listener {
     @Override
     public ItemStack getMenuItem() {
         return new ItemBuilder(Material.LAVA_BUCKET).setName(getName()).setLore(getLore()).toItemStack();
+    }
+
+    @Override
+    public boolean canProc(GameState gameState) {
+        return containsRoles(gameState);
     }
 
     private boolean containsRoles(final GameState gameState) {

@@ -48,28 +48,26 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
 
     @Override
     public void onProc(GameState gameState) {
-        if (containsRoles(gameState)) {
-            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-            Bukkit.dispatchCommand(console, "nakime E4jL5cOzv0sI2XqY7wNpD3Ab");
-            if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
-                Player pkyojuro = gameState.getOwner(GameState.Roles.Kyojuro);
-                Player pAkaza = gameState.getOwner(GameState.Roles.Akaza);
-                if (pAkaza != null && pkyojuro != null) {
-                    Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
-                    KyojuroV2 kyojuro = (KyojuroV2) gameState.getPlayerRoles().get(pkyojuro);
-                    this.akaza = akaza;
-                    this.kyojuro = kyojuro;
-                    this.originalAkazaLocation = pAkaza.getLocation();
-                    pAkaza.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -40, 6, -24.5, -90, 0));
-                    pAkaza.playSound(pAkaza.getEyeLocation(), "dsmtp.avsk", 10, 1);
-                    this.originalKyojuroLocation = pkyojuro.getLocation();
-                    pkyojuro.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -3.5, 7, -23.5, 90, 0));
-                    pkyojuro.playSound(pkyojuro.getLocation(), "dsmtp.avsk", 10, 1);
-                    Bukkit.getWorld("AkazaVSKyojuro").setGameRuleValue("randomTickSpeed", "3");
-                    Bukkit.broadcastMessage(getName()+"§r vient de ce déclancher !");
-                    EventUtils.registerRoleEvent(this);
-                    new CombatRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-                }
+        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+        Bukkit.dispatchCommand(console, "nakime E4jL5cOzv0sI2XqY7wNpD3Ab");
+        if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
+            Player pkyojuro = gameState.getOwner(GameState.Roles.Kyojuro);
+            Player pAkaza = gameState.getOwner(GameState.Roles.Akaza);
+            if (pAkaza != null && pkyojuro != null) {
+                Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
+                KyojuroV2 kyojuro = (KyojuroV2) gameState.getPlayerRoles().get(pkyojuro);
+                this.akaza = akaza;
+                this.kyojuro = kyojuro;
+                this.originalAkazaLocation = pAkaza.getLocation();
+                pAkaza.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -40, 6, -24.5, -90, 0));
+                pAkaza.playSound(pAkaza.getEyeLocation(), "dsmtp.avsk", 10, 1);
+                this.originalKyojuroLocation = pkyojuro.getLocation();
+                pkyojuro.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -3.5, 7, -23.5, 90, 0));
+                pkyojuro.playSound(pkyojuro.getLocation(), "dsmtp.avsk", 10, 1);
+                Bukkit.getWorld("AkazaVSKyojuro").setGameRuleValue("randomTickSpeed", "3");
+                Bukkit.broadcastMessage(getName()+"§r vient de ce déclancher !");
+                EventUtils.registerRoleEvent(this);
+                new CombatRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
         }
     }
@@ -118,6 +116,12 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
     public ItemStack getMenuItem() {
         return new ItemBuilder(Material.DIAMOND_SWORD).setName(getName()).setLore(getLore()).toItemStack();
     }
+
+    @Override
+    public boolean canProc(GameState gameState) {
+        return containsRoles(gameState);
+    }
+
     private boolean containsRoles(final GameState gameState) {
         return gameState.attributedRole.contains(GameState.Roles.Kyojuro) && !gameState.DeadRole.contains(GameState.Roles.Kyojuro) && gameState.attributedRole.contains(GameState.Roles.Akaza) && !gameState.DeadRole.contains(GameState.Roles.Akaza);
     }
