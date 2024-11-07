@@ -147,14 +147,20 @@ public class EventsManager implements Listener {
             }
             actualTime++;
             if (this.actualTime >= event.getMinTimeProc()) {
-                if (Main.RANDOM.nextInt(100) <= 5) {
-                    this.event.onProc(gameState);
-                    cancel();
-                    return;
+                if (this.event.canProc(this.gameState)) {
+                    if (Main.RANDOM.nextInt(100) <= 5) {
+                        this.event.onProc(gameState);
+                        cancel();
+                        return;
+                    }
                 }
             }
             if (this.actualTime == event.getMaxTimeProc()) {
-                this.event.onProc(gameState);
+                if (Main.RANDOM.nextInt(100) <= this.event.getPercent()){
+                    if (this.event.canProc(gameState)){
+                        this.event.onProc(gameState);
+                    }
+                }
                 cancel();
             }
         }
