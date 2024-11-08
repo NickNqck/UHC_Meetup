@@ -39,7 +39,9 @@ public class EventsManager implements Listener {
     @EventHandler
     private void onStartGame(StartGameEvent event) {
         for (final Event events : eventsList) {
-            new EventsRunnables(events, event.getGameState()).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            if (events.isEnable()){
+                new EventsRunnables(events, event.getGameState()).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
         }
     }
     @EventHandler
