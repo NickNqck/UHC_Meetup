@@ -1,7 +1,5 @@
 package fr.nicknqck;
 
-import fr.nicknqck.events.EventBase;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
@@ -315,10 +313,6 @@ public class GameState{
 	private ServerStates serverState = ServerStates.InLobby;
 	@Getter
 	private final HashMap<Roles, Integer> availableRoles = new HashMap<>();
-	@Getter
-	private final ArrayList<Events> availableEvents = new ArrayList<>();
-	@Getter
-	private final ArrayList<EventBase> inGameEvents = new ArrayList<>();
 	@Setter
 	@Getter
 	private List<UUID> inLobbyPlayers = new ArrayList<>();
@@ -410,12 +404,9 @@ public class GameState{
 
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
 
-	public void addInAvailableEvents(Events event) {availableEvents.add(event);}
-
 	public void addPlayerKills(Player player) {playerKills.put(player.getUniqueId(), new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
-	public void addInGameEvents(EventBase event) {inGameEvents.add(event);}
 	public RoleBase GiveRole(Player aziz) {
 		if (getPlayerRoles().containsKey(aziz)) return null;
 		//Roles roleType = getAvailableRoles().get(new Random().nextInt(getAvailableRoles().size()));
@@ -875,14 +866,6 @@ public class GameState{
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
-	}
-	public void initEvents() {
-		for (Events eventType : getAvailableEvents()) {
-            if (Objects.requireNonNull(eventType) == Events.DemonKingTanjiro) {
-                addInGameEvents(Events.DemonKingTanjiro.getEvent());
-            }
-
-		}
 	}
 	public int DKminTime = 60*30;
 

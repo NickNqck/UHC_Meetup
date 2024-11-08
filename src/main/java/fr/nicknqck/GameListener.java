@@ -3,7 +3,6 @@ package fr.nicknqck;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
@@ -19,7 +18,6 @@ import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
 import fr.nicknqck.utils.AntiLopsa;
 import fr.nicknqck.utils.PotionUtils;
-import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.powers.ItemPower;
@@ -67,9 +65,6 @@ public class GameListener implements Listener {
 		border.setSize(Border.getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
 			UpdateGame();
-			for (Events e : Events.values()) {
-				e.getEvent().onSecond();
-			}
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().onSecond(gameState);
 			}
@@ -274,13 +269,6 @@ public class GameListener implements Listener {
 					gameState.getGamePlayer().get(p.getUniqueId()).setLastInventoryContent(items.toArray(new ItemStack[0]));
 				}
 			}
-			for (Events value : Events.values()) {
-				if (gameState.getInGameTime() == value.getEvent().getMinTime()) {
-					if (RandomUtils.getOwnRandomProbability(value.getProba())) {
-						value.getEvent().PlayEvent(gameState.getInGameTime());
-					}
-				}
-			}
 			if (gameState.getActualPvPTimer() == 0){
 				gameState.setPvP(true);
 				SendToEveryone("(§c!§f) Le§c pvp§f est maintenant activé !");
@@ -309,7 +297,6 @@ public class GameListener implements Listener {
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
-			gameState.getInGameEvents().clear();
 			gameState.setInObiPlayers(new ArrayList<>());
 			gameState.setInSleepingPlayers(new ArrayList<>());
 			gameState.TitansRouge.clear();
@@ -329,10 +316,6 @@ public class GameListener implements Listener {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				Main.getInstance().getScoreboardManager().onLogout(p);
 				p.setPlayerListName(Bukkit.getPlayer(p.getUniqueId()).getName());
-			}
-			for (Events e : Events.values()) {
-				e.getEvent().resetCooldown();
-				e.getEvent().setActivated(false);
 			}
 			for (Bijus b : Bijus.values()) {
 				b.getBiju().resetCooldown();
@@ -785,9 +768,6 @@ public class GameListener implements Listener {
 						}
 					}
 				}
-			}
-			for (Events e : Events.values()) {
-				e.getEvent().onItemInteract(event, itemstack, player);
 			}
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);

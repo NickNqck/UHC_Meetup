@@ -7,7 +7,6 @@ import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
 import fr.nicknqck.commands.vanilla.Whitelist;
 import fr.nicknqck.config.GameConfig;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.blocks.BlockManager;
 import fr.nicknqck.events.blocks.BrickBlockListener;
 import fr.nicknqck.events.chat.Chat;
@@ -281,10 +280,7 @@ public class Main extends JavaPlugin {
 		for (GameState.Roles r : GameState.Roles.values()) {
 			gameState.addInAvailableRoles(r, 0);
 		}
-		System.out.println("init Events");
-		for (Events e : Events.values()) {
-			gameState.addInAvailableEvents(e);
-		}
+		System.out.println("init Players");
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
 		}

@@ -3,7 +3,6 @@ package fr.nicknqck.events.essential;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.utils.AttackUtils;
@@ -145,9 +144,6 @@ public class EntityDamageEvents implements Listener{
 				Player player = (Player) event.getEntity();
 				Entity damageur = event.getDamager();
 				double damage = event.getFinalDamage();
-				for (Events e : Events.values()) {
-					e.getEvent().onPlayerDamagedByPlayer(event, player, damageur);
-				}
 				if (damageur instanceof Player) {
 					Player damager = (Player) event.getDamager();
 					if (gameState.getPlayerRoles().containsKey(damager)) {

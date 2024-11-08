@@ -2,8 +2,6 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.EventBase;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.DemonKillEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -20,7 +18,6 @@ import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -182,9 +179,6 @@ public class DeathManager implements Listener {
         }
         for (Titans t : Titans.values()) {
             t.getTitan().PlayerKilled(killedPlayer, entityKiller);
-        }
-        for (Events event : Events.values()) {
-            event.getEvent().onPlayerKilled(entityKiller, killedPlayer, gameState);
         }
         gameState.delInGamePlayers(killedPlayer);
         gameState.addInSpecPlayers(killedPlayer);

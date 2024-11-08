@@ -3,7 +3,6 @@ package fr.nicknqck.commands.roles;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
@@ -35,11 +34,6 @@ public class DSmtpCommands implements CommandExecutor {
 			return true;
 		}
 		if (args.length >= 1) {
-            for (Events e : Events.values()) {
-                if (e.getEvent().onSubDSCommand((Player) sender, args)) {
-                    return true;
-                }
-            }
 			if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("role")) {
                     Player player = (Player) sender;

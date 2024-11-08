@@ -5,7 +5,6 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -51,13 +50,8 @@ public class HubListener implements Listener {
 		gameState.Assassin = null;
 		gameState.demonKingTanjiro = false;
 		gameState.canBeAssassin.clear();
-		for (Events e : Events.values()) {
-			e.setProba(e.getEvent().getProba());
-			e.getEvent().resetCooldown();
-		}
 		ItemsManager.instance.clearJspList();
 		gameState.t = gameState.timeday;
-		Events.initEvents();
 		gameState.setPlayerRoles(new HashMap<>());
 		gameState.getPlayerKills().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());
@@ -117,7 +111,6 @@ public class HubListener implements Listener {
 		}
 		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
-		gameState.initEvents();
 		for (Bijus b : Bijus.values()) {
 			b.getBiju().setHote(null);
 			b.getBiju().resetCooldown();
