@@ -35,6 +35,7 @@ public class DemonKingEvent extends Event {
                         if (owner != null) {
                             gameState.delInPlayerRoles(owner);
                             DemonKingTanjiroRole newRole = new DemonKingTanjiroRole(role.getPlayer());
+                            newRole.setSuffixString(role.getSuffixString());
                             gameState.addInPlayerRoles(owner, newRole);
                             newRole.setGamePlayer(gamePlayer);
                             gamePlayer.setRole(newRole);
@@ -47,6 +48,9 @@ public class DemonKingEvent extends Event {
                             newRole.setLames(role.getLames());
                             owner.sendMessage("Votre arrivé dans le camp des§c Démons§f restera secrète jusqu'à "+ StringUtils.secondsTowardsBeautiful(gameState.getInGameTime()+60));
                             tanjiroDemon = true;
+                            if (role.getTeam() != TeamList.Slayer) {
+                                newRole.setTeam(role.getTeam());
+                            }
                             break;
                         }
                     }
