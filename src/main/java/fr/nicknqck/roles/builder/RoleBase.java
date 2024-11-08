@@ -136,8 +136,6 @@ public abstract class RoleBase implements IRole {
 		return uuidOwner;
 	}
 	public void addPower(Power power) {
-	/*	TKGPowerAddToPlayerEvent event = new TKGPowerAddToPlayerEvent(this.plugin.getUhcapi(), power, this.getTKGPlayer());
-		this.plugin.getServer().getPluginManager().callEvent(event);*/
 		this.powers.add(power);
 	}
 	public void addPower(ItemPower itemPower, boolean give) {
@@ -183,7 +181,6 @@ public abstract class RoleBase implements IRole {
 	public void addBonusforce(double Bonusforce) {
 		setBonusForce(getBonusForce() + Bonusforce);
 	}
-	public void addresi(double resi) {setResi(getResi() + resi);}
 	public double getBonusResi() {return Bonusresi;}
 	public void setBonusResi(double Bonusresi) {this.Bonusresi = Bonusresi;}
 	public void addBonusResi(double Bonusresi) {setBonusResi(getBonusResi() + Bonusresi);}
