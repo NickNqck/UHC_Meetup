@@ -61,21 +61,15 @@ public class DeathManager implements Listener {
         Bukkit.getPluginManager().callEvent(playerKillEvent);
         UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getPlayerRoles().get(killedPlayer));
         Bukkit.getPluginManager().callEvent(uhcDeathEvent);
-        boolean cantDie = false;
-        if (!gameState.hasRoleNull(killedPlayer)) {
-            if (gameState.getPlayerRoles().get(killedPlayer).onPreDie(entityKiller, gameState) || gameState.getPlayerRoles().get(killedPlayer).getGamePlayer().isCanRevive()) {
-                cantDie = true;
-            }
-            if (gameState.getPlayerRoles().get(killedPlayer).getItems() != null) {
-                for (ItemStack item : gameState.getPlayerRoles().get(killedPlayer).getItems()) {
-                    if (killedPlayer.getInventory().contains(item)) {
-                        killedPlayer.getInventory().remove(item);
-                    }
+        if (this.cantDie(gameState, killedPlayer, entityKiller) || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
+            return;
+        }
+        if (gameState.getPlayerRoles().get(killedPlayer).getItems() != null) {
+            for (ItemStack item : gameState.getPlayerRoles().get(killedPlayer).getItems()) {
+                if (killedPlayer.getInventory().contains(item)) {
+                    killedPlayer.getInventory().remove(item);
                 }
             }
-        }
-        if (cantDie || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
-            return;
         }
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
@@ -266,6 +260,12 @@ public class DeathManager implements Listener {
             SendToEveryone(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");
         }
         SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
+    }
+    private boolean cantDie(final GameState gameState, final Player killedPlayer, final Entity entityKiller) {
+        if (!gameState.hasRoleNull(killedPlayer)) {
+            return gameState.getPlayerRoles().get(killedPlayer).onPreDie(entityKiller, gameState) || gameState.getPlayerRoles().get(killedPlayer).getGamePlayer().isCanRevive();
+        }
+        return false;
     }
     private void sendDiscDeathMessage(@Nonnull GamePlayer gamePlayer) {
         SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------§r§7 (§cDéconnexion§7)");
