@@ -64,13 +64,7 @@ public class DeathManager implements Listener {
         if (this.cantDie(gameState, killedPlayer, entityKiller) || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
             return;
         }
-        if (gameState.getPlayerRoles().get(killedPlayer).getItems() != null) {
-            for (ItemStack item : gameState.getPlayerRoles().get(killedPlayer).getItems()) {
-                if (killedPlayer.getInventory().contains(item)) {
-                    killedPlayer.getInventory().remove(item);
-                }
-            }
-        }
+
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setAlive(false);
@@ -194,6 +188,15 @@ public class DeathManager implements Listener {
             gameState.getGamePlayer().get(killedPlayer.getUniqueId()).setKiller(playerKillEvent.getGamePlayerKiller());
         }
         detectWin(gameState);
+    }
+    private void removeRoleItem(final GameState gameState, final Player player) {
+        if (gameState.getPlayerRoles().get(player).getItems() != null) {
+            for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
+                if (player.getInventory().contains(item)) {
+                    player.getInventory().remove(item);
+                }
+            }
+        }
     }
     public void DisconnectKillHandler(@Nonnull GamePlayer gamePlayer) {
         GameState gameState = GameState.getInstance();
