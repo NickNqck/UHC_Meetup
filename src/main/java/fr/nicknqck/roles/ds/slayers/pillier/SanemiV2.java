@@ -21,7 +21,7 @@ import org.bukkit.util.Vector;
 import java.util.Map;
 import java.util.UUID;
 
-public class SanemiV2 extends PillierRoles {
+public class SanemiV2 extends PilierRoles {
 
     private TextComponent textComponent;
 

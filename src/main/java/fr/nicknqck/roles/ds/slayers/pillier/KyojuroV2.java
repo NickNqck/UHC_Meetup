@@ -40,7 +40,7 @@ import org.bukkit.util.Vector;
 import java.util.Map;
 import java.util.UUID;
 
-public class KyojuroV2 extends PillierRoles {
+public class KyojuroV2 extends PilierRoles {
 
     private TextComponent desc;
     @Setter

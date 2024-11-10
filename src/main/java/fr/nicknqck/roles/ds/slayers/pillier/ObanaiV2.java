@@ -31,7 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class ObanaiV2 extends PillierRoles implements Listener{
+public class ObanaiV2 extends PilierRoles implements Listener{
 
     private TextComponent textComponent;
     private MitsuriV2 mitsuriV2;

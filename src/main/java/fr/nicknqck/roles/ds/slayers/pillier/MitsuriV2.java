@@ -31,7 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public class MitsuriV2 extends PillierRoles implements Listener {
+public class MitsuriV2 extends PilierRoles implements Listener {
 
     private TextComponent desc;
     private ObanaiV2 obanai;

@@ -27,7 +27,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Map;
 import java.util.UUID;
 
-public class GyomeiV2 extends PillierRoles implements Listener {
+public class GyomeiV2 extends PilierRoles implements Listener {
 
     private MarquePower marquePower;
     private TextComponent desc;

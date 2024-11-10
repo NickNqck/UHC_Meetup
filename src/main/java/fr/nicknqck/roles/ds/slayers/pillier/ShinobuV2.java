@@ -30,7 +30,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
-public class ShinobuV2 extends PillierRoles {
+public class ShinobuV2 extends PilierRoles {
 
     private TextComponent desc;
     private PapillonsCommand papillonsCommand;

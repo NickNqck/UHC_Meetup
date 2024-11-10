@@ -23,7 +23,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Map;
 import java.util.UUID;
 
-public class KanaeV2 extends PillierRoles{
+public class KanaeV2 extends PilierRoles {
 
     private TextComponent textComponent;
 

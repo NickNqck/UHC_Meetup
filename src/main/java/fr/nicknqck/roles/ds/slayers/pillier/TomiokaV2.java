@@ -25,7 +25,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public class TomiokaV2 extends PillierRoles {
+public class TomiokaV2 extends PilierRoles {
 
     private TextComponent desc;
 

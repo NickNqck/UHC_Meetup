@@ -15,7 +15,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
-import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
+import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -182,8 +182,8 @@ public class Akaza extends DemonsRoles implements Listener {
 			for (Player around : Loc.getNearbyPlayersExcept(owner, 10)) {
 				if (!akaza.getGameState().hasRoleNull(around)) {
 					RoleBase role = akaza.getGameState().getPlayerRoles().get(around);
-					if (role instanceof PillierRoles) {
-						PillierRoles pillierRoles = (PillierRoles) role;
+					if (role instanceof PilierRoles) {
+						PilierRoles pillierRoles = (PilierRoles) role;
 						if (pillierRoles.getGamePlayer().isAlive()) {
 							if (timeCroised.containsKey(pillierRoles.getName())) {
 								int i = timeCroised.get(pillierRoles.getName());

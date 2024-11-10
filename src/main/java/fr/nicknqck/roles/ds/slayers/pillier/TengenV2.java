@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class TengenV2 extends PillierRoles {
+public class TengenV2 extends PilierRoles {
 
     private TextComponent desc;
 

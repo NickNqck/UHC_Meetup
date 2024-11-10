@@ -8,7 +8,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
+import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.TripleMap;
@@ -71,7 +71,7 @@ public class Kagaya extends SlayerRoles {
 	private boolean pacte1 = false;
 	private boolean pacte2 = false;
 	public boolean pacte3 = false;
-	public PillierRoles pillier= null;
+	public PilierRoles pillier= null;
 	private final Map<UUID, PacketDisplay> seeHealth = new HashMap<>();
 	@Override
 	public void resetCooldown() {
@@ -105,18 +105,18 @@ public class Kagaya extends SlayerRoles {
 				pacte = Pacte.Pacte3;
 				pacte3 = true;				
 				owner.sendMessage("Vous venez de choisir le pacte: "+pacte.name());
-				List<PillierRoles> pilierRoles = new ArrayList<>();
+				List<PilierRoles> pilierRoles = new ArrayList<>();
 				for (UUID uuid : gameState.getInGamePlayers()) {
 					Player player = Bukkit.getPlayer(uuid);
 					if (player == null)continue;
 					if (gameState.hasRoleNull(player))continue;
-					if (gameState.getPlayerRoles().get(player) instanceof PillierRoles) {
-						pilierRoles.add((PillierRoles) gameState.getPlayerRoles().get(player));
+					if (gameState.getPlayerRoles().get(player) instanceof PilierRoles) {
+						pilierRoles.add((PilierRoles) gameState.getPlayerRoles().get(player));
 					}
 				}
 				if (!pilierRoles.isEmpty()) {
 					Collections.shuffle(pilierRoles, Main.RANDOM);
-					PillierRoles pilier = pilierRoles.get(0);
+					PilierRoles pilier = pilierRoles.get(0);
 					if (pilier == null) {
 						System.err.println("Kagaya pilier is null, HOW ?!");
 						return;

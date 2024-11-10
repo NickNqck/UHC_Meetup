@@ -25,7 +25,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
-public class MuichiroV2 extends PillierRoles {
+public class MuichiroV2 extends PilierRoles {
 
     private TextComponent desc;
 
