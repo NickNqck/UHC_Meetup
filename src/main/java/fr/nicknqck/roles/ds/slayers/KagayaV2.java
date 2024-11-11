@@ -7,6 +7,7 @@ import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
@@ -17,10 +18,14 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.ArmorStandUtils;
+import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -38,6 +43,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class KagayaV2 extends SlayerRoles {
+
+    private MaladieRunnable maladieRunnable;
 
     public KagayaV2(UUID player) {
         super(player);
@@ -79,11 +86,133 @@ public class KagayaV2 extends SlayerRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
+        this.maladieRunnable = new MaladieRunnable(this);
         addPower(new MaladieItem(this), true);
-    //    addPower(new ShowHealthPower(this));
+        addPower(new PredictionCommand(this));
         setMaxHealth(getMaxHealth()+2);
         owner.setMaxHealth(getMaxHealth());
         owner.setHealth(owner.getMaxHealth());
+    }
+    private static class PredictionCommand extends CommandPower implements Listener{
+
+        private final KagayaV2 kagaya;
+        private final Map<UUID, String> predictings;
+
+        public PredictionCommand(@NonNull KagayaV2 role) {
+            super("/ds prediction <joueur> <role>", "prediction", new Cooldown(5), role, CommandType.DS);
+            this.kagaya = role;
+            this.predictings = new HashMap<>();
+            EventUtils.registerRoleEvent(this);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            String[] args = (String[]) map.get("args");
+            if (args.length == 3) {
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    List<String> test = new ArrayList<>();
+                    for (IRole iRole : getPlugin().getRoleManager().getRolesRegistery().values()) {
+                        test.add(iRole.getName());
+                    }
+                    for (String string : test) {
+                        if (string.equalsIgnoreCase(args[2])) {
+                            player.sendMessage("§7Essayons de voir si§c "+target.getName()+"§7 est§c "+string);
+                            break;
+                        }
+                    }
+                    return true;
+                } else {
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté(e) !");
+                    return false;
+                }
+            }
+            player.sendMessage("§cCette commande prend un§b joueur§c et un§b rôle§c en compte");
+            return false;
+        }
+        @EventHandler
+        private void onDeath(UHCDeathEvent event) {
+            if (event.getRole() == null)return;
+            if (predictings.containsKey(event.getPlayer().getUniqueId())) {
+                if (event.getRole().getName().contains(this.predictings.get(event.getPlayer().getUniqueId()))) {
+                    final TextComponent toSend = new TextComponent("§c"+event.getPlayer().getName()+"§7 était belle et bien§c "+event.getRole().getName()+"§7, vous avez maintenant le choix entre:\n\n");
+                    HoverEvent hoverEvent = new HoverEvent(
+                            HoverEvent.Action.SHOW_TEXT,
+                            new BaseComponent[]{
+                                    new TextComponent("§a§lCLIQUEZ ICI POUR FAIRE VOTER CHOIX")
+                            }
+                    );
+                    final TextComponent choice1 = getChoice1(event, hoverEvent);
+                    choice1.addExtra("\n\n");
+                    final TextComponent choice2 = getChoice2(event, hoverEvent);
+                    toSend.addExtra(choice1);
+                    toSend.addExtra(choice2);
+
+                }
+            }
+        }
+
+        private TextComponent getChoice1(UHCDeathEvent event, HoverEvent hoverEvent) {
+            final TextComponent choice1 = new TextComponent("§aRegagner un brain de§c vie§7 (§a+§c1/2❤ permanent§7)");
+
+            choice1.setHoverEvent(hoverEvent);
+            choice1.setClickEvent(new ClickEvent(
+                    ClickEvent.Action.RUN_COMMAND,
+                    "/ds prediction "+ event.getPlayer().getUniqueId()+" coeur"
+            ));
+            return choice1;
+        }
+        private TextComponent getChoice2(UHCDeathEvent event, HoverEvent hoverEvent) {
+            final TextComponent choice2 = new TextComponent("§aRetarder l'inévitable§7 (Remet le timer de perde de§c coeur§7 à §c0§7)");
+            choice2.setHoverEvent(hoverEvent);
+            choice2.setClickEvent(new ClickEvent(
+                    ClickEvent.Action.RUN_COMMAND,
+                    "/ds prediction "+event.getPlayer().getUniqueId()+" time"
+            ));
+            return choice2;
+        }
+    }
+    private static class MaladieRunnable extends BukkitRunnable {
+
+        private final KagayaV2 kagaya;
+        private final GameState gameState;
+        private final int maxTime;
+        private int actualTime = 0;
+        private int stade = 0;
+
+        private MaladieRunnable(KagayaV2 kagaya) {
+            this.kagaya = kagaya;
+            this.gameState = kagaya.getGameState();
+            this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
+            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        }
+
+
+        @Override
+        public void run() {
+            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            if (!kagaya.getGamePlayer().isAlive())return;
+            if (this.actualTime == maxTime) {
+                this.augmentationStade();
+                Player owner = Bukkit.getPlayer(kagaya.getPlayer());
+                if (owner != null) {
+                    owner.sendMessage("§7Votre§2 maladie§7 s'aggrave, elle à atteind le §cniveau "+stade);
+                }
+                this.actualTime = 0;
+                return;
+            }
+            actualTime++;
+        }
+        private void augmentationStade() {
+            this.stade++;
+            this.kagaya.setMaxHealth(kagaya.getMaxHealth()-1);
+            if (this.kagaya.getMaxHealth() == 16) {
+                this.kagaya.addPower(new ShowHealthPower(kagaya));
+            }
+        }
     }
     private static class MaladieItem extends ItemPower implements Listener{
 
@@ -113,6 +242,7 @@ public class KagayaV2 extends SlayerRoles {
                     AllDesc.tab+"§7La porter de votre§9 résistance§7 augmente de§c 10 blocs",
                     AllDesc.tab+"§7Le pourcentage de chance pour obtenir le §cpseudo§7 du §ctueur§7 d'un pilier augmente de§c 25%",
                     AllDesc.tab+"§7Si§c Muzan§7 est mort, vous obtiendrez§c +1/2❤ permanent§7 par§c kill§7 fait par §cvous§7 ou votre§a pilier",
+                    AllDesc.tab+"§7Si§c Muzan§7 était déjà mort lors du passage au§c stade 4§7 alors vous ne §cperdrez§7 pas §c2❤ permanents",
                     "",
                     "§cA chaque stade vous perdrez 2❤ permanents");
             EventUtils.registerRoleEvent(this);
@@ -152,6 +282,10 @@ public class KagayaV2 extends SlayerRoles {
                 case 4:
                     this.runnable.distance = 40;
                     this.rdmKiller = 50;
+                    if (this.muzanDeath) {
+                        getRole().setMaxHealth(getRole().getMaxHealth()+4);
+                        owner.setMaxHealth(getRole().getMaxHealth());
+                    }
                 default:
                     break;
             }
