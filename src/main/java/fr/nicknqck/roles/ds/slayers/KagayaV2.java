@@ -103,12 +103,31 @@ public class KagayaV2 extends SlayerRoles {
             this.kagaya = role;
             this.predictings = new HashMap<>();
             EventUtils.registerRoleEvent(this);
+            setWorkWhenInCooldown(true);
         }
 
         @Override
         public boolean onUse(Player player, Map<String, Object> map) {
             String[] args = (String[]) map.get("args");
             if (args.length == 3) {
+                if (this.predictings.containsKey(UUID.fromString(args[1]))) {
+                    if (args[2].equals("coeur")) {
+                        getRole().setMaxHealth(getRole().getMaxHealth()+1);
+                        player.setMaxHealth(getRole().getMaxHealth());
+                        player.sendMessage("§7Vous avez récupérer un petit peut d'§aénergie vitale§7.");
+                        this.predictings.remove(UUID.fromString(args[1]));
+                        return true;
+                    } else if (args[2].equals("time")) {
+                        this.predictings.remove(UUID.fromString(args[1]));
+                        this.kagaya.maladieRunnable.actualTime = 0;
+                        player.sendMessage("§7Le temp avant l'expension de votre maladie à été réduit.");
+                        return true;
+                    }
+                }
+                if (getCooldown().isInCooldown()) {
+                    getRole().sendCooldown(player, getCooldown().getCooldownRemaining());
+                    return false;
+                }
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
                     List<String> test = new ArrayList<>();
@@ -117,6 +136,7 @@ public class KagayaV2 extends SlayerRoles {
                     }
                     for (String string : test) {
                         if (string.equalsIgnoreCase(args[2])) {
+                            this.predictings.put(target.getUniqueId(), string);
                             player.sendMessage("§7Essayons de voir si§c "+target.getName()+"§7 est§c "+string);
                             break;
                         }
@@ -147,7 +167,10 @@ public class KagayaV2 extends SlayerRoles {
                     final TextComponent choice2 = getChoice2(event, hoverEvent);
                     toSend.addExtra(choice1);
                     toSend.addExtra(choice2);
-
+                    Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                    if (owner != null) {
+                        owner.spigot().sendMessage(toSend);
+                    }
                 }
             }
         }
