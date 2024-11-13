@@ -78,7 +78,7 @@ public class MuichiroV2 extends PilierRoles {
     private static class T4ItemPower extends ItemPower implements Listener {
 
         protected T4ItemPower(@NonNull RoleBase role) {
-            super("§bSoufle de la Brume", new Cooldown(60), new ItemBuilder(Material.DIAMOND_SWORD).setName("§bLame de Muichiro").addEnchant(Enchantment.DAMAGE_ALL, 4), role,
+            super("§bLame de Muichiro", new Cooldown(60), new ItemBuilder(Material.DIAMOND_SWORD).setName("§bLame de Muichiro").addEnchant(Enchantment.DAMAGE_ALL, 4), role,
                     "§7Épée enchanter§c Tranchant IV","§7Lorsque vous§c tapez§7 un joueur vous lui infligerez§c 5 secondes§7 de§1 Blindness I");
             EventUtils.registerRoleEvent(this);
             setSendCooldown(false);
