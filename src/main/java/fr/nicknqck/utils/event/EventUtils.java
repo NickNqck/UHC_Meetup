@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 public class EventUtils implements Listener{
 
-    private final List<Listener> toUnregister = new ArrayList<>();
+    private static final List<Listener> toUnregister = new ArrayList<>();
 
     public EventUtils() {
         registerEvents(this);
@@ -31,6 +31,7 @@ public class EventUtils implements Listener{
     }
     public static void registerRoleEvent(Listener listener) {
         Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
+        toUnregister.add(listener);
         System.out.println("Registered event " + listener.getClass().getName().toLowerCase() +" (role)");
     }
     @EventHandler
