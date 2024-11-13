@@ -59,7 +59,7 @@ public class DeathManager implements Listener {
         final GameState gameState = GameState.getInstance();
         UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(killedPlayer, entityKiller, gameState);
         Bukkit.getPluginManager().callEvent(playerKillEvent);
-        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getPlayerRoles().get(killedPlayer));
+        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole());
         Bukkit.getPluginManager().callEvent(uhcDeathEvent);
         if (this.cantDie(gameState, killedPlayer, entityKiller) || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
             return;
@@ -69,7 +69,7 @@ public class DeathManager implements Listener {
             GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setAlive(false);
             gamePlayer.setDeathLocation(killedPlayer.getLocation());
-            gameState.getDeadRoles().add(gameState.getPlayerRoles().get(killedPlayer).getRoles());
+            gameState.getDeadRoles().add(gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole().getRoles());
         }
         for (ItemStack item : killedPlayer.getInventory().getContents()){
             if (item != null){
@@ -97,12 +97,12 @@ public class DeathManager implements Listener {
             for (UUID u : gameState.getInGamePlayers()) {
                 Player p = Bukkit.getPlayer(u);
                 if (p == null)continue;
-                if (gameState.getPlayerRoles().containsKey(p)) {
-                    gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(killedPlayer, killer, gameState);
+                if (!gameState.hasRoleNull(p)) {
+                    gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerKillAnotherPlayer(killedPlayer, killer, gameState);
                 }
             }
-            if (gameState.getPlayerRoles().containsKey(killer)) {
-                RoleBase role = gameState.getPlayerRoles().get(killer);
+            if (!gameState.hasRoleNull(killer)) {
+                RoleBase role = gameState.getGamePlayer().get(killer.getUniqueId()).getRole();
                 if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof NezukoV2) {
                     onDemonKill(killer.getName());
                 }
@@ -111,13 +111,13 @@ public class DeathManager implements Listener {
                 Player p = Bukkit.getPlayer(u);
                 if (p == null)continue;
                 if (!gameState.hasRoleNull(killedPlayer)) {
-                    gameState.getPlayerRoles().get(p).OnAPlayerDie(killedPlayer, gameState, killer);
+                    gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerDie(killedPlayer, gameState, killer);
                 }
-                if (gameState.getPlayerRoles().containsKey(p)) {
-                    gameState.getPlayerRoles().get(p).PlayerKilled(killer, killedPlayer, gameState);
-                    if (!gameState.getPlayerKills().get(killer.getUniqueId()).containsKey(killedPlayer)) {
-                        RoleBase fakeRole = gameState.getPlayerRoles().get(killedPlayer);
-                        fakeRole.setOldRole(gameState.getPlayerRoles().get(killedPlayer).getOldRole());
+                if (!gameState.hasRoleNull(p)) {
+                    gameState.getGamePlayer().get(p.getUniqueId()).getRole().PlayerKilled(killer, killedPlayer, gameState);
+                    if (!gameState.getPlayerKills().get(killer.getUniqueId()).containsKey(killedPlayer) && !gameState.hasRoleNull(killedPlayer)) {
+                        RoleBase fakeRole = gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole();
+                        fakeRole.setOldRole(gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole().getOldRole());
                         gameState.getPlayerKills().get(killer.getUniqueId()).put(killedPlayer, fakeRole);
                     }
                 }
@@ -131,12 +131,12 @@ public class DeathManager implements Listener {
                     for (UUID u : gameState.getInGamePlayers()) {
                         Player p = Bukkit.getPlayer(u);
                         if (p == null)continue;
-                        if (gameState.getPlayerRoles().containsKey(p)) {
-                            gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(killedPlayer, killer, gameState);
+                        if (!gameState.hasRoleNull(p)) {
+                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerKillAnotherPlayer(killedPlayer, killer, gameState);
                         }
                     }
-                    if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
-                        RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
+                    if (!gameState.hasRoleNull((Player)arr.getShooter())) {
+                        RoleBase role = gameState.getGamePlayer().get(((Player) arr.getShooter()).getUniqueId()).getRole();
                         if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof NezukoV2) {
                             onDemonKill(killer.getName());
                         }
@@ -144,11 +144,11 @@ public class DeathManager implements Listener {
                     for (UUID u : gameState.getInGamePlayers()) {
                         Player p = Bukkit.getPlayer(u);
                         if (p == null)continue;
-                        if (gameState.getPlayerRoles().containsKey(p))
-                            gameState.getPlayerRoles().get(p).PlayerKilled((Player)arr.getShooter(), killedPlayer, gameState);
+                        if (!gameState.hasRoleNull(p))
+                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().PlayerKilled((Player)arr.getShooter(), killedPlayer, gameState);
                         if (!gameState.getPlayerKills().get(((Player) arr.getShooter()).getUniqueId()).containsKey(killedPlayer)) {
-                            RoleBase fakeRole = gameState.getPlayerRoles().get(killedPlayer);
-                            fakeRole.setOldRole(gameState.getPlayerRoles().get(killedPlayer).getOldRole());
+                            RoleBase fakeRole = gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole();
+                            fakeRole.setOldRole(gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole().getOldRole());
                             gameState.getPlayerKills().get(((Player) arr.getShooter()).getUniqueId()).put(killedPlayer, fakeRole);
                         }
                     }
@@ -156,7 +156,7 @@ public class DeathManager implements Listener {
                         Player p = Bukkit.getPlayer(u);
                         if (p == null)continue;
                         if (!gameState.hasRoleNull(killedPlayer)) {
-                            gameState.getPlayerRoles().get(p).OnAPlayerDie(killedPlayer, gameState, killer);
+                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerDie(killedPlayer, gameState, killer);
                         }
                     }
                 } else {//La cause de la mort n'est pas un projectile
@@ -191,8 +191,8 @@ public class DeathManager implements Listener {
         detectWin(gameState);
     }
     private void removeRoleItem(final GameState gameState, final Player player) {
-        if (gameState.getPlayerRoles().get(player).getItems() != null) {
-            for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
+        if (!gameState.hasRoleNull(player) && gameState.getGamePlayer().get(player.getUniqueId()).getRole().getItems() != null) {
+            for (ItemStack item : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getItems()) {
                 if (player.getInventory().contains(item)) {
                     player.getInventory().remove(item);
                 }
@@ -235,7 +235,7 @@ public class DeathManager implements Listener {
             Player p = Bukkit.getPlayer(u);
             if (p == null)continue;
             if (!gameState.hasRoleNull(p)) {
-                RoleBase role2 = gameState.getPlayerRoles().get(p);
+                RoleBase role2 = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
                 if (role2.getOriginTeam() == TeamList.Demon || role2 instanceof Kaigaku) {
                     demons.add(u);
                     p.sendMessage("§cLe joueur§4 "+killerName+"§c à tué quelqu'un....");
