@@ -187,6 +187,7 @@ public abstract class RoleBase implements IRole {
 	public void GiveItems() {}
 	public void RoleGiven(GameState gameState) {}
 	public void Update(GameState gameState) {
+		Player owner = Bukkit.getPlayer(getPlayer());
 		if (owner != null) {
 			owner.setMaxHealth(getMaxHealth());
 			if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {

@@ -4,6 +4,7 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.impl.FFA;
@@ -156,8 +157,9 @@ public class PersonalScoreboard {
 					Player player = Bukkit.getPlayer(u);
 					if (player == null)continue;
 					if (gameState.roleTimer < gameState.getInGameTime()) {
-						if (!gameState.hasRoleNull(player)) {
-							if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
+						GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
+						if (gamePlayer != null) {
+							if (gamePlayer.getRole() != null && gamePlayer.getRole().getOriginTeam() != null) {
 								TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player.getUniqueId()).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
 							}
 						}

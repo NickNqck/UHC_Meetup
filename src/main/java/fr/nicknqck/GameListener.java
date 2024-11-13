@@ -773,22 +773,22 @@ public class GameListener implements Listener {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
 				if (!gameState.hasRoleNull(p)) {
-					gameState.getPlayerRoles().get(p).onALLPlayerInteract(event, player);
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().onALLPlayerInteract(event, player);
 				}
 			}
 			if (!gameState.hasRoleNull(player)) {
 				if (event.getAction().name().contains("RIGHT")){
-					event.setCancelled(gameState.getPlayerRoles().get(player).ItemUse(itemstack, gameState));
+					event.setCancelled(gameState.getGamePlayer().get(player.getUniqueId()).getRole().ItemUse(itemstack, gameState));
 				} else {
-					gameState.getPlayerRoles().get(player).onLeftClick(event, gameState);
+					gameState.getGamePlayer().get(player.getUniqueId()).getRole().onLeftClick(event, gameState);
 				}
 			}
 				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-						if (gameState.getPlayerRoles().containsKey(player)) {
+						if (!gameState.hasRoleNull(player)) {
 							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
-			        				RoleBase role = gameState.getPlayerRoles().get(player);
+			        				RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 									if (!(role instanceof Susamaru))return;
 		                			Susamaru sam = (Susamaru) role;
 		                			if (player != sam.owner)return;
@@ -833,7 +833,7 @@ public class GameListener implements Listener {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
-				gameState.getPlayerRoles().get(p).onAllPlayerMoove(e, e.getPlayer());
+				gameState.getGamePlayer().get(p.getUniqueId()).getRole().onAllPlayerMoove(e, e.getPlayer());
 			}
 		}
 		Player p = e.getPlayer();
