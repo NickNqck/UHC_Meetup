@@ -15,9 +15,11 @@ import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.ArmorStandUtils;
+import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
@@ -206,7 +208,8 @@ public class KagayaV2 extends SlayerRoles {
         private MaladieRunnable(KagayaV2 kagaya) {
             this.kagaya = kagaya;
             this.gameState = kagaya.getGameState();
-            this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
+            //this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
+            this.maxTime = 10;
             runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
 
@@ -228,12 +231,21 @@ public class KagayaV2 extends SlayerRoles {
                 return;
             }
             actualTime++;
+            Player owner = Bukkit.getPlayer(this.kagaya.getPlayer());
+            if (owner != null) {
+                NMSPacket.sendActionBar(owner, "§bTemp avant accentuation de la§2 maladie§b: §c"+ StringUtils.secondsTowardsBeautiful(this.maxTime-actualTime));
+            }
+            if (this.kagaya.getMaxHealth() <= 8.0) {
+                this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 à atteind son§c stade maximum§7.");
+                cancel();
+            }
         }
         private void augmentationStade() {
             this.stade++;
             this.kagaya.setMaxHealth(kagaya.getMaxHealth()-1);
-            if (this.kagaya.getMaxHealth() == 16) {
+            if (this.stade == 6) {
                 this.kagaya.addPower(new ShowHealthPower(kagaya));
+                this.kagaya.getGamePlayer().sendMessage("§7Vous avez gagner le pouvoir de§a voir la vie des joueurs");
             }
         }
     }
