@@ -322,7 +322,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private List<Player> inSpecPlayers = new ArrayList<>();
-	@Setter
 	@Getter
 	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	@Getter

@@ -418,7 +418,7 @@ public class GameListener implements Listener {
 			}
 			gameState.Shifter.clear();
 			gameState.setInSpecPlayers(new ArrayList<>());
-			gameState.setPlayerRoles(new HashMap<>());
+			gameState.getGamePlayer().clear();
 			gameState.DeadRole = new ArrayList<>();
 			if (!gameState.getInLobbyPlayers().isEmpty()) {
 				for (UUID u : gameState.getInLobbyPlayers()) {

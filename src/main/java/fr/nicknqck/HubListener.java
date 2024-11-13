@@ -52,7 +52,7 @@ public class HubListener implements Listener {
 		gameState.canBeAssassin.clear();
 		ItemsManager.instance.clearJspList();
 		gameState.t = gameState.timeday;
-		gameState.setPlayerRoles(new HashMap<>());
+		gameState.getPlayerRoles().clear();
 		gameState.getPlayerKills().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
