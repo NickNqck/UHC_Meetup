@@ -26,6 +26,7 @@ public abstract class Power {
     private final String[] descriptions;
     private boolean sendCooldown = true;
     private boolean workWhenInCooldown = false;
+    private boolean showInDesc = true;
 
     public Power(@NonNull String name, Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
         this.name = name;

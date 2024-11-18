@@ -91,6 +91,7 @@ public class AutomaticDesc {
     public final AutomaticDesc setPowers(List<Power> powers) {
         for (Power power : powers) {
             if (power.getName() == null)continue;
+            if (!power.isShowInDesc())continue;
             String name = power.getName();
             if (power instanceof ItemPower) {
                 name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
@@ -101,21 +102,25 @@ public class AutomaticDesc {
             TextComponent powerName = getPowerName(name, description);
             textComponent.addExtra(powerName);
             textComponent.addExtra("§7\"");
+            if (power.getUse() == power.getMaxUse()) {
+                textComponent.addExtra("§7 (§cInutilisable§7).");
+                this.text.addExtra(textComponent);
+                continue;
+            }
             if (cooldown != null) {
                 switch (cooldown.getOriginalCooldown()) {
                     case -500:
-                        textComponent.addExtra("§7 (1x/partie).");
-                        break;
-                    case 0:
-                        textComponent.addExtra("§7.");
+                        textComponent.addExtra("§7 (1x/partie)");
                         break;
                     default:
-                        textComponent.addExtra("§7 (1x/"+StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown())+").");
+                        textComponent.addExtra("§7 (1x/"+StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown())+")");
                         break;
                 }
-            } else {
-                textComponent.addExtra("§7.");
             }
+            if (power.getMaxUse() != -1) {
+                textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+            }
+            textComponent.addExtra("§7.");
             this.text.addExtra(textComponent);
         }
         return this;
