@@ -207,8 +207,8 @@ public class KagayaV2 extends SlayerRoles {
         private MaladieRunnable(KagayaV2 kagaya) {
             this.kagaya = kagaya;
             this.gameState = kagaya.getGameState();
-            //this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
-            this.maxTime = 10;
+            this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
+            //this.maxTime = 10;
             runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
         }
 
@@ -279,6 +279,7 @@ public class KagayaV2 extends SlayerRoles {
                 return false;
             }
         }
+
     }
     private static class MaladieItem extends ItemPower implements Listener{
 
@@ -455,6 +456,7 @@ public class KagayaV2 extends SlayerRoles {
                 armorStand.display(role.owner);
                 this.armorStands.put(uuid, armorStand);
             }
+            setShowInDesc(false);
         }
 
         @Override
