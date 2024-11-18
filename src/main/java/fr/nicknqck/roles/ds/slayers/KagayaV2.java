@@ -82,8 +82,7 @@ public class KagayaV2 extends SlayerRoles {
 
     @Override
     public TextComponent getComponent() {
-        AutomaticDesc desc = new AutomaticDesc(this).addEffects(getEffects()).addCustomLine("§7Vous possédez§c 1❤ permanent§7 supplémentaire").setPowers(getPowers());
-        return desc.getText();
+        return new AutomaticDesc(this).addEffects(getEffects()).addCustomLine("§7Vous possédez§c 1❤ permanent§7 supplémentaire").setPowers(getPowers()).getText();
     }
 
     @Override
@@ -210,7 +209,7 @@ public class KagayaV2 extends SlayerRoles {
             this.gameState = kagaya.getGameState();
             //this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
             this.maxTime = 10;
-            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
         }
 
 
@@ -223,10 +222,7 @@ public class KagayaV2 extends SlayerRoles {
             if (!kagaya.getGamePlayer().isAlive())return;
             if (this.actualTime == maxTime) {
                 this.augmentationStade();
-                Player owner = Bukkit.getPlayer(kagaya.getPlayer());
-                if (owner != null) {
-                    owner.sendMessage("§7Votre§2 maladie§7 s'aggrave, elle à atteind le §cniveau "+stade);
-                }
+                this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 s'aggrave, elle à atteind le §cniveau "+stade);
                 this.actualTime = 0;
                 return;
             }
@@ -246,6 +242,41 @@ public class KagayaV2 extends SlayerRoles {
             if (this.stade == 6) {
                 this.kagaya.addPower(new ShowHealthPower(kagaya));
                 this.kagaya.getGamePlayer().sendMessage("§7Vous avez gagner le pouvoir de§a voir la vie des joueurs");
+            } else if (this.stade == 8) {
+                this.kagaya.addPower(new PilierCommand(this.kagaya));
+                this.kagaya.getGamePlayer().sendMessage("§7Vous avez obtenu la capacité de savoir si un joueur est un§a pilier§7 ou§c non§6 /ds me§7 pour plus§c d'information");
+            }
+        }
+        private static class PilierCommand extends CommandPower {
+
+            public PilierCommand(@NonNull RoleBase role) {
+                super("/ds pilier <joueur>", "pilier", null, role, CommandType.DS);
+            }
+
+            @Override
+            public boolean onUse(Player player, Map<String, Object> map) {
+                String[] args = (String[]) map.get("args");
+                if (args.length == 2) {
+                    Player target = Bukkit.getPlayer(args[1]);
+                    if (target != null) {
+                        final GamePlayer gameTarget = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
+                        if (gameTarget != null) {
+                            if (gameTarget.isAlive()) {
+                                if (gameTarget.getRole() != null) {
+                                    if (gameTarget.getRole() instanceof PilierRoles){
+                                        player.sendMessage("§b"+gameTarget.getPlayerName()+"§a est bien un pilier");
+                                    }
+                                    return true;
+                                } else {
+                                    player.sendMessage("§b"+args[1]+"§c n'a pas de rôle.");
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecter ou n'est pas en vie.");
+                }
+                return false;
             }
         }
     }
