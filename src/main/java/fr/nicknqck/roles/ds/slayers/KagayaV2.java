@@ -3,26 +3,19 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
-import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.ArmorStandUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
-import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -31,14 +24,11 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
@@ -88,7 +78,7 @@ public class KagayaV2 extends SlayerRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         this.maladieRunnable = new MaladieRunnable(this);
-        addPower(new MaladieItem(this), true);
+       // addPower(new MaladieItem(this), true);
         addPower(new PredictionCommand(this));
         setMaxHealth(getMaxHealth()+2);
         owner.setMaxHealth(getMaxHealth());
@@ -207,9 +197,9 @@ public class KagayaV2 extends SlayerRoles {
         private MaladieRunnable(KagayaV2 kagaya) {
             this.kagaya = kagaya;
             this.gameState = kagaya.getGameState();
-            this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
-            //this.maxTime = 10;
-            runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
+            //this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
+            this.maxTime = 10;
+            runTaskTimerAsynchronously(Main.getInstance(), 40, 20);
         }
 
 
@@ -281,7 +271,7 @@ public class KagayaV2 extends SlayerRoles {
         }
 
     }
-    private static class MaladieItem extends ItemPower implements Listener{
+  /*  private static class MaladieItem extends ItemPower implements Listener{
 
         private int stade = 1;
         private final ResiMatesRunnable runnable;
@@ -442,7 +432,7 @@ public class KagayaV2 extends SlayerRoles {
                 }
             }
         }
-    }
+    }*/
     private static class ShowHealthPower extends Power implements Listener {
 
         private final Map<UUID, ArmorStandUtils> armorStands = new HashMap<>();
