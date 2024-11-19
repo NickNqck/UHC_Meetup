@@ -108,13 +108,10 @@ public class AutomaticDesc {
                 continue;
             }
             if (cooldown != null) {
-                switch (cooldown.getOriginalCooldown()) {
-                    case -500:
-                        textComponent.addExtra("§7 (1x/partie)");
-                        break;
-                    default:
-                        textComponent.addExtra("§7 (1x/"+StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown())+")");
-                        break;
+                if (cooldown.getOriginalCooldown() == -500) {
+                    textComponent.addExtra("§7 (1x/partie)");
+                } else {
+                    textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
                 }
             }
             if (power.getMaxUse() != -1) {
