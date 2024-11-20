@@ -2,6 +2,7 @@ package fr.nicknqck;
 
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.commands.*;
+import fr.nicknqck.commands.Color;
 import fr.nicknqck.commands.roles.*;
 import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
@@ -246,6 +247,7 @@ public class Main extends JavaPlugin {
 		getCommand("whitelist").setExecutor(new Whitelist(gameState));
 		getCommand("mc").setExecutor(new McCommands(gameState));
 		getCommand("discord").setExecutor(new Discord());
+		getCommand("color").setExecutor(new Color(gameState));
 		System.out.println("Ending registering commands");
 	}
 	private void clearMap(World world) {

@@ -44,6 +44,5 @@ commands:
   me:
     description: Custom from vanilla /me command
     permission: me.say
-  report:
-    description: Permet de report un bug facilement
-    permission: report.use
+  color:
+    description: Permet de colorier les autres joueurs de la partie
