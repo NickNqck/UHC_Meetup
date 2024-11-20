@@ -14,8 +14,6 @@ import fr.nicknqck.utils.TPS;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.packets.TabTitleManager;
 import fr.nicknqck.utils.rank.ChatRank;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -45,9 +43,6 @@ public class PersonalScoreboard {
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
     private final GameState gameState;
-	@Setter
-	@Getter
-	private boolean tab = false;
     PersonalScoreboard(Player player, GameState gameState){
         this.player = player;
         this.gameState = gameState;
@@ -138,7 +133,6 @@ public class PersonalScoreboard {
         objectiveSign.updateLines();
     }
 	public void setTab() {
-		setTab(true);
 		Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
 			if (gameState.getServerState() == GameState.ServerStates.InLobby) {
 				for (UUID u : gameState.getInLobbyPlayers()) {

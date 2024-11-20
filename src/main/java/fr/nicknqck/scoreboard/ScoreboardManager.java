@@ -52,13 +52,6 @@ public class ScoreboardManager {
             for (PersonalScoreboard scoreboard : scoreboards.values())
                 Main.getInstance().getExecutorMonoThread().execute(() -> scoreboard.setLines(ip));
         }, 80, 80, TimeUnit.MILLISECONDS);
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Main.getInstance(), () -> {
-            for (PersonalScoreboard scoreboard : getScoreboards().values()) {
-                if (!scoreboard.isTab()) {
-                    scoreboard.setTab();
-                }
-            }
-        }, 20, 20);
 
         reloadingTask = Main.getInstance().getScheduledExecutorService().scheduleAtFixedRate(() ->
         {
