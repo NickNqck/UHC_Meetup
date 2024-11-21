@@ -847,7 +847,7 @@ public class GameState{
 		}
 		attributedRole.add(roleType);
 		gamePlayer.setDeathLocation(aziz.getLocation());
-		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer));
+		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer, false));
 		return role;
 	}
 	@Getter

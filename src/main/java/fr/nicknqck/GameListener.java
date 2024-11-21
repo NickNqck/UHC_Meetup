@@ -17,6 +17,7 @@ import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
 import fr.nicknqck.utils.AntiLopsa;
+import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
@@ -244,6 +245,7 @@ public class GameListener implements Listener {
 			}
 			if (gameState.inGameTime == gameState.roleTimer) {
 				gameState.setRoleAttributed(true);
+				RoleBase lastRoleGive = (RoleBase) Main.getInstance().getRoleManager().getRolesRegistery().get(Susamaru.class);
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
@@ -251,9 +253,11 @@ public class GameListener implements Listener {
 					if (role != null){
 						role.RoleGiven(gameState);
 						role.GiveItems();
+						lastRoleGive = role;
 					}
 					Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage(ChatColor.RED+"Discord du mode de jeu: "+ChatColor.GOLD+"https://discord.gg/RF3D4Du8VN"), 20*10);//20ticks* le nombre de seconde voulue
 				}
+				Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, lastRoleGive, lastRoleGive.getRoles(), lastRoleGive.getGamePlayer(), true));
 			}
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
@@ -304,8 +308,8 @@ public class GameListener implements Listener {
 			TitanListener.getInstance().resetCooldown();
 			BetterItem.getRegisteredItems().clear();
 			PotionUtils.getNoFalls().clear();
-			fr.nicknqck.utils.AttackUtils.CantAttack.clear();
-			fr.nicknqck.utils.AttackUtils.CantReceveAttack.clear();
+			AttackUtils.CantAttack.clear();
+			AttackUtils.CantReceveAttack.clear();
 			if (gameState.getHokage() != null) {
 				gameState.getHokage().stop();
 			}

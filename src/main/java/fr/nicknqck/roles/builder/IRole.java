@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -12,7 +13,7 @@ public interface IRole {
 
     UUID getPlayer();
     String getName();
-    GameState.Roles getRoles();
+    @NonNull GameState.Roles getRoles();
     TeamList getOriginTeam();
     TeamList getTeam();
     Map<PotionEffect, EffectWhen> getEffects();
