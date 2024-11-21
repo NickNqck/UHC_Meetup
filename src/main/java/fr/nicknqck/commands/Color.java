@@ -2,23 +2,32 @@ package fr.nicknqck.commands;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
+import fr.nicknqck.utils.event.EventUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-public class Color implements CommandExecutor {
+public class Color implements CommandExecutor, Listener {
 
     private final GameState gameState;
+    private final Map<String, String> supportedColors;
 
     public Color(GameState gameState) {
         this.gameState = gameState;
+        this.supportedColors = new HashMap<>();
+        EventUtils.registerEvents(this);
+        addSupportedColors();
     }
 
     @Override
@@ -51,21 +60,37 @@ public class Color implements CommandExecutor {
             for (final String string : listargs) {
                 final Player target = Bukkit.getPlayer(string);
                 if (target == null)continue;
-                final String color = getColor(args[0]);
+                final String color = this.supportedColors.get(args[0]);
                 personalScoreboard.changeDisplayName(sender, target, color);
             }
             return true;
         }
-        commandSender.sendMessage("Pas valide sah");
+        commandSender.sendMessage("§cUne erreur c'est produite...");
         return false;
     }
-    private boolean isColor(String arg) {
-        return arg.equalsIgnoreCase("rouge");
+
+    private void addSupportedColors() {
+        this.supportedColors.put("Rouge", "§c");
+        this.supportedColors.put("Bleu", "§9");
+        this.supportedColors.put("Rose", "§d");
     }
-    private String getColor(String arg) {
-        if (arg.equalsIgnoreCase("Rouge")) {
-            return "§c";
+
+    private boolean isColor(String arg) {
+        for (final String string : this.supportedColors.keySet()) {
+            if (string.equalsIgnoreCase(arg)) {
+                return true;
+            }
         }
-        return "";
+        return false;
+    }
+    @EventHandler
+    private void onEndGame(EndGameEvent event) {
+        ScoreboardManager manager = Bukkit.getScoreboardManager();
+        if (manager != null) {
+            Scoreboard mainScoreboard = manager.getMainScoreboard();
+            for (Team team : mainScoreboard.getTeams()) {
+                team.unregister();
+            }
+        }
     }
 }
