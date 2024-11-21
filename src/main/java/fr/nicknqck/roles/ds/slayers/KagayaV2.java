@@ -84,6 +84,7 @@ public class KagayaV2 extends SlayerRoles {
         owner.setMaxHealth(getMaxHealth());
         owner.setHealth(owner.getMaxHealth());
     }
+
     private static class PredictionCommand extends CommandPower implements Listener{
 
         private final KagayaV2 kagaya;
@@ -221,10 +222,6 @@ public class KagayaV2 extends SlayerRoles {
             if (owner != null) {
                 NMSPacket.sendActionBar(owner, "§bTemp avant accentuation de la§2 maladie§b: §c"+ StringUtils.secondsTowardsBeautiful(this.maxTime-actualTime));
             }
-            if (this.kagaya.getMaxHealth() <= 8.0) {
-                this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 à atteind son§c stade maximum§7.");
-                cancel();
-            }
         }
         private void augmentationStade() {
             this.stade++;
@@ -235,6 +232,10 @@ public class KagayaV2 extends SlayerRoles {
             } else if (this.stade == 8) {
                 this.kagaya.addPower(new PilierCommand(this.kagaya));
                 this.kagaya.getGamePlayer().sendMessage("§7Vous avez obtenu la capacité de savoir si un joueur est un§a pilier§7 ou§c non§6 /ds me§7 pour plus§c d'information");
+            }
+            if (this.stade == 14) {
+                this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 à atteind son§c stade maximum§7.");
+                cancel();
             }
         }
         private static class PilierCommand extends CommandPower {
