@@ -32,10 +32,10 @@ public class GameConfig {
         this.stuffConfig = new StuffConfig();
     }
 
+    @Getter
+    @Setter
     public final static class StuffConfig {
 
-        @Getter
-        @Setter
         private int protectionBoost = 2;
         private int protectionLeggings = 3;
         private int protectionChestplate = 2;
