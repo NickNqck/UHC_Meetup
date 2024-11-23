@@ -46,13 +46,9 @@ public class InventoryConfig implements Listener {
             }
             if (item.getType() == Material.DIAMOND_CHESTPLATE) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.pch < 4) {
-                        GameState.pch++;
-                    }
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.max(4, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()+1));
                 }else {
-                    if (GameState.pch > 0) {
-                        GameState.pch--;
-                    }
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.min(1, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()-1));
                 }
             }
             if (item.getType() == Material.IRON_LEGGINGS) {

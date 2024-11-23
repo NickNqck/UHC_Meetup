@@ -884,7 +884,6 @@ public class GameState{
 	public static int eau = 1;
 	public static int lave = 0;
 	public static int pc = 2;//protection casque
-	public static int pch = 2;//protection chestplate
 
 	public void changeTabPseudo(final String name,final Player player) {
 		try {

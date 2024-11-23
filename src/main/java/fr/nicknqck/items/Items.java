@@ -290,7 +290,7 @@ public abstract class Items {
 		public static ItemStack getGyokkoPlastron() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pch, true);
+			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
 			meta.addEnchant(Enchantment.THORNS, 3, true);
 			meta.setDisplayName(ChatColor.GOLD+"Plastron de Gyokko");
 			meta.spigot().setUnbreakable(true);
@@ -796,7 +796,7 @@ public abstract class Items {
 		  public static ItemStack getdiamondchestplate() {
 				ItemStack stack = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pch, true);
+				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate(), true);
 				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
 				stack.setItemMeta(meta);
 				return stack;
