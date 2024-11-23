@@ -35,13 +35,9 @@ public class InventoryConfig implements Listener {
             event.setCancelled(true);
             if (item.getType() == Material.DIAMOND_HELMET) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.pc < 4) {
-                        GameState.pc++;
-                    }
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.min(4, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()+1));
                 }else {
-                    if (GameState.pc > 0) {
-                        GameState.pc--;
-                    }
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.max(1, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()-1));
                 }
             }
             if (item.getType() == Material.DIAMOND_CHESTPLATE) {

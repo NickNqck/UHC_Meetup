@@ -786,7 +786,7 @@ public abstract class Items {
 		  public static ItemStack getdiamondhelmet() {
 				ItemStack stack = new ItemStack(Material.DIAMOND_HELMET, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pc, true);
+				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet(), true);
 				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
 				stack.setItemMeta(meta);
 				return stack;

@@ -834,8 +834,8 @@ public class Inventories {
                     inv.setItem(0, new ItemBuilder(Material.DIAMOND_HELMET).setLore(
                                     "§a+1§f (Clique gauche)",
                                     "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+GameState.pc
-                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pc)
+                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet()
+                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
 
                             .toItemStack());
                     inv.setItem(9, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setLore(
