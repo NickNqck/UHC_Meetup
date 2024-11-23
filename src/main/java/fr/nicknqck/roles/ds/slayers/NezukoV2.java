@@ -58,7 +58,7 @@ public class NezukoV2 extends DemonsRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Nezuko;
     }
 
@@ -138,11 +138,11 @@ public class NezukoV2 extends DemonsRoles {
                     nezukoV2.pauseForce = true;
                     nezukoV2.getEffects().remove(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
                     Bukkit.getScheduler().runTask(getPlugin(), () -> {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, GameState.getInstance().isMinage() ? 20*60*5 : 20*60*3, 0, false, false));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, Main.getInstance().getGameConfig().isMinage() ? 20*60*5 : 20*60*3, 0, false, false));
                         Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                             nezukoV2.pauseForce = false;
                             nezukoV2.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-                        }, GameState.getInstance().isMinage() ? 20*60*10 : 20*60*5);
+                        }, Main.getInstance().getGameConfig().isMinage() ? 20*60*10 : 20*60*5);
                     });
                 }, 20*60*5);
                 return true;

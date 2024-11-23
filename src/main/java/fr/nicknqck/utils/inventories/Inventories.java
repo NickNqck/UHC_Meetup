@@ -782,7 +782,7 @@ public class Inventories {
                     inv.setItem(10, GUIItems.getSelectRoleButton());
 
                     if (Main.getInstance().isGoodServer()) {
-                        inv.setItem(12, new ItemBuilder(Material.DIAMOND_PICKAXE).setName("§cMinage").setLore("§7État: "+(gameState.isMinage() ? "§aActivé" : "§cDésactiver")).toItemStack());
+                        inv.setItem(12, new ItemBuilder(Material.DIAMOND_PICKAXE).setName("§cMinage").setLore("§7État: "+(Main.getInstance().getGameConfig().isMinage() ? "§aActivé" : "§cDésactiver")).toItemStack());
                     }
 
                     inv.setItem(13, GUIItems.getPregen(gameState));

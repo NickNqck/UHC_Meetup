@@ -1111,10 +1111,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private boolean TNTGrief = false;
-
-	@Getter
-	@Setter
-	private boolean minage = false;
 	@Getter
 	@Setter
 	private Hokage hokage;

@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -49,7 +50,7 @@ public class TomiokaV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Tomioka;
     }
 
@@ -82,7 +83,7 @@ public class TomiokaV2 extends PilierRoles {
                 .addCustomLine("§7Vous possédez un livre enchanter§b Depth Strider III")
                 .setPowers(getPowers());
         this.desc = automaticDesc.getText();
-        if (!gameState.isMinage()) {
+        if (!Main.getInstance().getGameConfig().isMinage()) {
             owner.setLevel(owner.getLevel()+6);
         }
     }
@@ -90,7 +91,8 @@ public class TomiokaV2 extends PilierRoles {
     private static class FindOthersPower extends Power {
 
         public FindOthersPower(@NonNull RoleBase role) {
-            super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", new Cooldown(0), role, "§7Permet de savoir toute les "+(GameState.getInstance().isMinage() ? "§c5 minutes" : "§c2 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
+            super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", new Cooldown(0), role,
+                    "§7Permet de savoir toute les "+(Main.getInstance().getGameConfig().isMinage() ? "§c5 minutes" : "§c2 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
             new FinderRunnable(role.getGameState(), this);
         }
 
@@ -109,7 +111,7 @@ public class TomiokaV2 extends PilierRoles {
             private FinderRunnable(GameState gameState, FindOthersPower power) {
                 this.gameState = gameState;
                 this.power = power;
-                if (gameState.isMinage()) {
+                if (Main.getInstance().getGameConfig().isMinage()) {
                     maxTime = 60*5;
                 } else {
                     maxTime = 60*2;

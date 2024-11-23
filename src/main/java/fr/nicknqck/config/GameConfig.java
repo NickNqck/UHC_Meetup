@@ -19,10 +19,21 @@ public class GameConfig {
     @Getter
     private int LavaEmptyTiming = 30;
     @Getter
+    @Setter
+    private boolean minage = false;
+    @Getter
     private final List<ItemStack> itemOnKill;
+    @Getter
+    private final StuffConfig stuffConfig;
     public GameConfig() {
         instance = this;
         this.itemOnKill = new ArrayList<>();
         itemOnKill.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
+        this.stuffConfig = new StuffConfig();
+    }
+    private static class StuffConfig {
+
+
+
     }
 }
