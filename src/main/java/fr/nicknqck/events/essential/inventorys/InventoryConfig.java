@@ -1,6 +1,7 @@
 package fr.nicknqck.events.essential.inventorys;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
@@ -67,13 +68,9 @@ public class InventoryConfig implements Listener {
             }
             if (item.getType() == Material.DIAMOND_BOOTS) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.pb < 4) {
-                        GameState.pb++;
-                    }
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionBoost(Math.min(4, Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost()+1));
                 } else {
-                    if (GameState.pb > 0) {
-                        GameState.pb--;
-                    }
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionBoost(Math.max(1, Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost()-1));
                 }
             }
             if (item.getItemMeta().hasDisplayName()) {

@@ -88,7 +88,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private int maxTimeSpawnBiju = 160;
-	public int DKTProba = 0;
 	public int nmbArrow = 24;
 	public boolean LaveTitans = true;
 	@Getter
@@ -866,7 +865,6 @@ public class GameState{
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
 	}
-	public int DKminTime = 60*30;
 
 	public int getroleNMB() {
 		int nmbrole = 0;
@@ -888,7 +886,7 @@ public class GameState{
 	public static int pc = 2;//protection casque
 	public static int pch = 2;//protection chestplate
 	public static int pl = 3;//protection leggings
-	public static int pb = 2;//protection boots
+
 	public void changeTabPseudo(final String name,final Player player) {
 		try {
             player.setPlayerListName(name);

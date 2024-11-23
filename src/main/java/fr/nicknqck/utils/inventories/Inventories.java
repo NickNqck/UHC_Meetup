@@ -849,10 +849,10 @@ public class Inventories {
                                     "§c-1§f (Clique droit)",
                                     "§r§fNiveau de protection:§b "+GameState.pl)
                             .toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.DIAMOND_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pb)
+                    inv.setItem(27, new ItemBuilder(Material.DIAMOND_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
                             .setLore("§a+1§f (Clique gauche)",
                                     "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+GameState.pb)
+                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost())
                             .toItemStack());
                     inv.setItem(45, GUIItems.getdiamondsword());
                     inv.setItem(46, GUIItems.getblock());

@@ -415,7 +415,7 @@ public abstract class Items {
 		public static ItemStack getGyokkoBoots() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pb, true);
+			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
 			meta.addEnchant(Enchantment.DEPTH_STRIDER, 2, true);
 			meta.setDisplayName(ChatColor.GOLD+"Botte de Gyokko");
 			meta.spigot().setUnbreakable(true);
@@ -1043,7 +1043,7 @@ public abstract class Items {
 		  public static ItemStack getdiamondboots() {
 				ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pb, true);
+				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost(), true);
 				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
 				stack.setItemMeta(meta);
 				return stack;

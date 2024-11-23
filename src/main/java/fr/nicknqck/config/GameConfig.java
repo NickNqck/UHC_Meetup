@@ -31,9 +31,15 @@ public class GameConfig {
         itemOnKill.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
         this.stuffConfig = new StuffConfig();
     }
-    private static class StuffConfig {
 
+    public final static class StuffConfig {
 
+        @Getter
+        @Setter
+        private int protectionBoost = 2;
+        private int protectionLeggings = 3;
+        private int protectionChestplate = 2;
+        private int protectionHelmet = 2;
 
     }
 }
