@@ -22,16 +22,14 @@ java {
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.32'
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
-   // compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo
-    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 
-    compileOnly files('T:\\Bureau\\Dev\\Serv\\serveur de test 2\\spigot.jar')
+    compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\spigot.jar')
 }
 
 shadowJar {
     // 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
 }
 
-setLibsDirName("T:\\Bureau\\Dev\\Serv\\serveur de test\\plugins")
+setLibsDirName("C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\plugins")
