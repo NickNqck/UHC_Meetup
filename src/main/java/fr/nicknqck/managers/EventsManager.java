@@ -127,7 +127,7 @@ public class EventsManager implements Listener {
                 return event;
             }
         }
-        return eventsList.getFirst();
+        return eventsList.get(0);
     }
     private static class EventsRunnables extends BukkitRunnable {
 

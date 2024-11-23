@@ -177,7 +177,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
                     player.sendMessage("§7Votre§2 Serpent§7 n'a trouver aucune information");
                 } else {
                     for (final String pseudo : roleBaseMap.keySet()) {
-                        final List<RoleBase> roles = new ArrayList<>(List.of(roleBaseMap.get(pseudo)));
+                        final List<RoleBase> roles = new ArrayList<>(Arrays.asList(roleBaseMap.get(pseudo)));
                         Collections.shuffle(roles, Main.RANDOM);
                         player.sendMessage(new String[]{
                                 "§7Voici la liste des potentiels tueurs de§c "+pseudo,

@@ -53,6 +53,8 @@ public class Danzo extends NSRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(2);
+		UchiwaFinders uchiwaFinders = new UchiwaFinders(this);
+		addPower(uchiwaFinders);
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			int nmbUchiwa = 0;
 			for (Player p : Bukkit.getOnlinePlayers()){
@@ -63,12 +65,11 @@ public class Danzo extends NSRoles {
 			if (nmbUchiwa == 0){
 				owner.sendMessage("§7Il n'y a pas de§c Uchiwa§7 dans la partie, vous obtenez donc directement l'effet§c Résistance I permanent");
 				killUchiwa = true;
-				((UchiwaFinders)getPowers().getFirst()).getFindersRunnable().cancel();
+				uchiwaFinders.getFindersRunnable().cancel();
 			}
 		}, 20*10);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 0), EffectWhen.PERMANENT);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED,1 , 0), EffectWhen.PERMANENT);
-		addPower(new UchiwaFinders(this));
 	}
 	@Override
 	public TeamList getOriginTeam() {
@@ -79,7 +80,7 @@ public class Danzo extends NSRoles {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull GameState.Roles getRoles() {
 		return Roles.Danzo;
 	}
 	@Override
