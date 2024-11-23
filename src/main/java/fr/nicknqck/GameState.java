@@ -323,7 +323,7 @@ public class GameState{
 	@Setter
 	private List<Player> inSpecPlayers = new ArrayList<>();
 	@Getter
-	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
+	private final HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	@Getter
 	private final HashMap<UUID, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
 	public List<Player> igPlayers = new ArrayList<>();
@@ -955,19 +955,7 @@ public class GameState{
 			return Items.ArcTridi();
 		}
 	}
-	public String sendGazBar(double number, double sizeChanger) {
-		double maxGaz = 100/sizeChanger;
-		double gaz = number/sizeChanger;
-		StringBuilder bar = new StringBuilder(" ");
-		for (double i = 0; i < gaz; i++) {
-			bar.append("§a|");
-		}
-		for (double i = gaz; i < maxGaz; i++) {
-			bar.append("§c|");
-		}
-		bar.append(" ");
-		return bar.toString();
-	}
+
 	public String sendIntBar(int fnmb, int nMax, int sizeChanger) {
 		int max = nMax/sizeChanger;
 		int nmb = fnmb/sizeChanger;

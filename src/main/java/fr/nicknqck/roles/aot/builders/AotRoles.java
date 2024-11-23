@@ -62,7 +62,7 @@ public abstract class AotRoles extends RoleBase {
                 if (role.owner.getItemInHand().isSimilar(role.gameState.EquipementTridi())) {
                     DecimalFormat df = new DecimalFormat("0.0");
                     //	sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"%"+aqua+" Cooldown:§6 "+actualTridiCooldown+"s");
-                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+role.gameState.sendGazBar(role.gazAmount, 2)+"§7(§b"+df.format(role.gazAmount)+"%§7), "+(role.getActualTridiCooldown() <= 0 ? role.gameState.EquipementTridi().getItemMeta().getDisplayName()+" utilisable" : StringUtils.secondsTowardsBeautiful(role.getActualTridiCooldown())));
+                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+sendGazBar(role.gazAmount)+"§7(§b"+df.format(role.gazAmount)+"%§7), "+(role.getActualTridiCooldown() <= 0 ? role.gameState.EquipementTridi().getItemMeta().getDisplayName()+" utilisable" : StringUtils.secondsTowardsBeautiful(role.getActualTridiCooldown())));
                 }
             }else if (role.getActualTridiCooldown() == 0){
                 role.owner.sendMessage("§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 utilisable !");
@@ -74,6 +74,19 @@ public abstract class AotRoles extends RoleBase {
                     role.sendCustomActionBar(role.owner, "§bGaz:§c "+df.format(role.gazAmount)+"% "+"§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§r:§6 Utilisable");
                 }
             }
+        }
+        private String sendGazBar(double number) {
+            double maxGaz = 100/ (double) 2;
+            double gaz = number/ (double) 2;
+            StringBuilder bar = new StringBuilder(" ");
+            for (double i = 0; i < gaz; i++) {
+                bar.append("§a|");
+            }
+            for (double i = gaz; i < maxGaz; i++) {
+                bar.append("§c|");
+            }
+            bar.append(" ");
+            return bar.toString();
         }
     }
 }
