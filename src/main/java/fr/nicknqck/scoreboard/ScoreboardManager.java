@@ -97,7 +97,7 @@ public class ScoreboardManager {
     }
 
     private String colorIpAt() {
-        String ip = "discord.gg/RF3D4Du8VN";
+        String ip = "discord.gg/6dWxCAEsfF";
 
         if (cooldown > 0) {
             cooldown--;

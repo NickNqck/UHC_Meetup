@@ -255,7 +255,7 @@ public class GameListener implements Listener {
 						role.GiveItems();
 						lastRoleGive = role;
 					}
-					Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage(ChatColor.RED+"Discord du mode de jeu: "+ChatColor.GOLD+"https://discord.gg/RF3D4Du8VN"), 20*10);//20ticks* le nombre de seconde voulue
+					Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage("§cDiscord du mode de jeu: §6https://discord.gg/6dWxCAEsfF"), 20*10);//20ticks* le nombre de seconde voulue
 				}
 				Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, lastRoleGive, lastRoleGive.getRoles(), lastRoleGive.getGamePlayer(), true));
 			}
