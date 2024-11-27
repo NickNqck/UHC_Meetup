@@ -5,6 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
+import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -15,6 +16,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -36,7 +39,6 @@ public class GamePlayer {
 	@Nullable
 	private DiscRunnable discRunnable;
 	@NotNull
-	@NonNull
 	@Setter
 	private Location lastLocation;
 	@NotNull
@@ -47,12 +49,14 @@ public class GamePlayer {
 	@Setter
 	@Nullable
     private GamePlayer killer;
+	private final ActionBarManager actionBarManager;
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
 		this.playerName = gamePlayer.getName();
 		this.lastLocation = gamePlayer.getLocation();
 		this.lastInventoryContent = gamePlayer.getInventory().getContents();
 		this.scoreboard = Main.getInstance().getScoreboardManager().getScoreboards().get(gamePlayer.getUniqueId());
+		this.actionBarManager = new ActionBarManager(this);
 		setAlive(true);
 		setCanRevive(false);
 	}
@@ -131,4 +135,68 @@ public class GamePlayer {
 			}
 		}
 	}
+	private static class ActionBarManager {
+
+		@Getter
+		private final GamePlayer gamePlayer;
+		private final Map<String, String> actionBars;
+		@Getter
+		private final ActionBarRunnable actionBarRunnable;
+
+        private ActionBarManager(GamePlayer gamePlayer) {
+            this.gamePlayer = gamePlayer;
+			this.actionBars = new LinkedHashMap<>();
+			this.actionBarRunnable = new ActionBarRunnable(this);
+        }
+
+		public void addToActionBar(final String key, final String value) {
+			if (actionBars.containsKey(key)) {
+				throw new Error("[ActionBarManager] Error ! key: "+key+" is already inside the Map");
+			}
+			this.actionBars.put(key, value);
+		}
+
+		public void updateActionBar(final String key, final String value) {
+			if (actionBars.containsKey(key)) {
+				this.actionBars.put(key, value);
+			} else {
+				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
+			}
+		}
+		public void removeInActionBar(final String key) {
+			if (actionBars.containsKey(key)) {
+				final String value = actionBars.get(key);
+				actionBars.remove(key, value);
+			} else {
+				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
+			}
+		}
+		private static class ActionBarRunnable extends BukkitRunnable {
+
+			private final GameState gameState;
+			private final ActionBarManager actionBarManager;
+
+            private ActionBarRunnable(ActionBarManager actionBarManager) {
+                this.actionBarManager = actionBarManager;
+				this.gameState = GameState.getInstance();
+            }
+
+            @Override
+			public void run() {
+				if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				if (this.actionBarManager.actionBars.isEmpty())return;
+				final Player player = Bukkit.getPlayer(this.actionBarManager.getGamePlayer().getUuid());
+				if (player == null)return;
+				StringBuilder string = new StringBuilder();
+				for (final String value : this.actionBarManager.actionBars.values()) {
+					 string.append(value).append(" §7|§r ");
+				}
+				NMSPacket.sendActionBar(player, string.toString());
+			}
+		}
+
+    }
 }
