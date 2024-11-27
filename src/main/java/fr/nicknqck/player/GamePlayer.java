@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -135,7 +135,7 @@ public class GamePlayer {
 			}
 		}
 	}
-	private static class ActionBarManager {
+	public static class ActionBarManager {
 
 		@Getter
 		private final GamePlayer gamePlayer;
@@ -143,21 +143,23 @@ public class GamePlayer {
 		@Getter
 		private final ActionBarRunnable actionBarRunnable;
 
-        private ActionBarManager(GamePlayer gamePlayer) {
+        public ActionBarManager(GamePlayer gamePlayer) {
             this.gamePlayer = gamePlayer;
-			this.actionBars = new LinkedHashMap<>();
+			this.actionBars = new HashMap<>();
 			this.actionBarRunnable = new ActionBarRunnable(this);
         }
 
 		public void addToActionBar(final String key, final String value) {
 			if (actionBars.containsKey(key)) {
-				throw new Error("[ActionBarManager] Error ! key: "+key+" is already inside the Map");
+				System.err.println("[ActionBarManager] Error ! key: "+key+" is already inside the Map");
+				return;
 			}
 			this.actionBars.put(key, value);
 		}
 
 		public void updateActionBar(final String key, final String value) {
 			if (actionBars.containsKey(key)) {
+				removeInActionBar(key);
 				this.actionBars.put(key, value);
 			} else {
 				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
@@ -179,6 +181,7 @@ public class GamePlayer {
             private ActionBarRunnable(ActionBarManager actionBarManager) {
                 this.actionBarManager = actionBarManager;
 				this.gameState = GameState.getInstance();
+				runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
 
             @Override
@@ -190,9 +193,14 @@ public class GamePlayer {
 				if (this.actionBarManager.actionBars.isEmpty())return;
 				final Player player = Bukkit.getPlayer(this.actionBarManager.getGamePlayer().getUuid());
 				if (player == null)return;
-				StringBuilder string = new StringBuilder();
+				final StringBuilder string = new StringBuilder();
+				int i = 0;
 				for (final String value : this.actionBarManager.actionBars.values()) {
-					 string.append(value).append(" §7|§r ");
+					i++;
+					if (value.isEmpty())continue;
+					string.append(value);
+					if (i == this.actionBarManager.actionBars.size())continue;
+					string.append(" §7|§r ");
 				}
 				NMSPacket.sendActionBar(player, string.toString());
 			}
