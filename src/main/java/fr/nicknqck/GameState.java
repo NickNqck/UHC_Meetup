@@ -45,6 +45,7 @@ import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.roles.valo.agents.Iso;
+import fr.nicknqck.roles.valo.agents.Neon;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -248,6 +249,7 @@ public class GameState{
 		Wither(TeamList.Solo, "mc", 1, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck"),
 		//Agent valorant (il n'y aura que Iso)
 		Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck"),
+		Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck"),
 		//Custom roles
 		LeComte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck"),
 		LeJuge(TeamList.Solo, "custom", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eLe Juge").toItemStack(), "§bNickNqck")
@@ -811,6 +813,9 @@ public class GameState{
 				break;
 			case Vache:
 				role = new Vache(player);
+				break;
+			case Neon:
+				role = new Neon(player);
 				break;
 		}
 		if (role == null) return null;
