@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -145,7 +145,7 @@ public class GamePlayer {
 
         public ActionBarManager(GamePlayer gamePlayer) {
             this.gamePlayer = gamePlayer;
-			this.actionBars = new HashMap<>();
+			this.actionBars = new LinkedHashMap<>();
 			this.actionBarRunnable = new ActionBarRunnable(this);
         }
 
@@ -159,8 +159,7 @@ public class GamePlayer {
 
 		public void updateActionBar(final String key, final String value) {
 			if (actionBars.containsKey(key)) {
-				removeInActionBar(key);
-				this.actionBars.put(key, value);
+				this.actionBars.replace(key, value);
 			} else {
 				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
 			}
