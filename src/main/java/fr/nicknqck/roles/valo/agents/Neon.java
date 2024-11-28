@@ -6,7 +6,9 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -21,6 +23,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -69,8 +73,55 @@ public class Neon extends RoleBase {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new SpeedItemPower(this), true);
+        addPower(new EclairRelaisPower(this), true);
     }
+    private static class VoieRapidePower extends ItemPower {
 
+        protected VoieRapidePower(@NonNull RoleBase role) {
+            super("§bVoie Rapide", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bVoie Rapide"), role);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                
+            }
+            return false;
+        }
+    }
+    private static class EclairRelaisPower extends ItemPower {
+
+        protected EclairRelaisPower(@NonNull RoleBase role) {
+            super("§bÉclair Relais", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bÉclair Relais"), role);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                final Player target = getRole().getTargetPlayer(player, 25.0);
+                if (target != null) {
+                    final List<Player> arounds1 = new ArrayList<>(Loc.getNearbyPlayers(player, 25));
+                    final StringBuilder stringBuilder = new StringBuilder("§7Voici la liste des personnes autours de vous:\n\n");
+                    arounds1.remove(player);
+                    for (final Player p : arounds1) {
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 2, false, false));
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20*15, 2, false, false));
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20*5, 2, false, false));
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*5, 2, false, false));
+                        p.sendMessage("§7Vous avez été toucher par l'"+getName()+"§7 de§b Neon");
+                        stringBuilder.append("§c").append(p.getDisplayName()).append("§7, ");
+                    }
+                    String string = stringBuilder.toString();
+                    string = string.substring(string.length()-3);
+                    player.sendMessage(string);
+                    return true;
+                } else {
+                    player.sendMessage("§cIl faut viser un joueur !");
+                }
+            }
+            return false;
+        }
+    }
     private static class SpeedItemPower extends ItemPower {
 
         private final SpeedRunnable runnable;
@@ -102,7 +153,7 @@ public class Neon extends RoleBase {
                     if (this.dashRemaining < 1) {
                         return false;
                     }
-                    final Vector direction = player.getLocation().getDirection();
+                    final Vector direction = player.getEyeLocation().getDirection();
                     direction.setY(0.1);
                     direction.multiply(1.8);
                     player.setVelocity(direction);
