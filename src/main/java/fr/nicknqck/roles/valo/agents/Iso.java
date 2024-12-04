@@ -13,6 +13,7 @@ import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.raytrace.RayTrace;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -77,6 +78,7 @@ public class Iso extends RoleBase {
     }
 
     @Override
+    @NonNull
     public GameState.Roles getRoles() {
         return GameState.Roles.Iso;
     }
