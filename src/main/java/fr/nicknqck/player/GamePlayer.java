@@ -164,6 +164,9 @@ public class GamePlayer {
 				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
 			}
 		}
+		public boolean containsKey(final String key) {
+			return this.actionBars.containsKey(key);
+		}
 		public void removeInActionBar(final String key) {
 			if (actionBars.containsKey(key)) {
 				final String value = actionBars.get(key);

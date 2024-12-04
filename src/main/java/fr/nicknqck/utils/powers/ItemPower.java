@@ -2,6 +2,7 @@ package fr.nicknqck.utils.powers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -37,7 +38,7 @@ public abstract class ItemPower extends Power{
         }
         this.item = item.setUnbreakable(true).setDroppable(false).toItemStack();
         if (showCdInHand && cooldown != null && cooldown.getOriginalCooldown() > 0) {
-            new ShowCdRunnable(role.getPlayer(), cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+            new ShowCdRunnable(role, cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 20);
         }
     }
     public void call(Object event) {
@@ -106,9 +107,11 @@ public abstract class ItemPower extends Power{
         private final Cooldown cooldown;
         private final GameState gameState;
         private final ItemStack item;
+        private final GamePlayer gamePlayer;
 
-        private ShowCdRunnable(UUID user, Cooldown cooldown, ItemStack item) {
-            this.user = user;
+        private ShowCdRunnable(RoleBase role, Cooldown cooldown, ItemStack item) {
+            this.user = role.getPlayer();
+            this.gamePlayer = role.getGamePlayer();
             this.cooldown = cooldown;
             this.gameState = GameState.getInstance();
             this.item = item;
@@ -121,13 +124,18 @@ public abstract class ItemPower extends Power{
                 cancel();
                 return;
             }
+            if (!this.gamePlayer.isAlive())return;
             Player player = Bukkit.getPlayer(user);
             if (player != null) {
                 if (player.getItemInHand().isSimilar(item)) {
-                    if (cooldown.isInCooldown()){
-                        NMSPacket.sendActionBar(player, "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()));
+                    if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
+                        this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                                "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
+                                item.getItemMeta().getDisplayName()+" est§c utilisable");
                     } else {
-                        NMSPacket.sendActionBar(player, item.getItemMeta().getDisplayName()+" est§c utilisable");
+                        this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                                "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
+                                item.getItemMeta().getDisplayName()+" est§c utilisable");
                     }
                 }
             }
