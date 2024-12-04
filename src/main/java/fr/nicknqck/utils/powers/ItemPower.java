@@ -37,7 +37,7 @@ public abstract class ItemPower extends Power{
         }
         this.item = item.setUnbreakable(true).setDroppable(false).toItemStack();
         if (showCdInHand && cooldown != null && cooldown.getOriginalCooldown() > 0) {
-            new ShowCdRunnable(role, cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+            new ShowCdRunnable(role, cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 2);
         }
     }
     public void call(Object event) {
@@ -136,6 +136,8 @@ public abstract class ItemPower extends Power{
                                 "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
                                 item.getItemMeta().getDisplayName()+" est§c utilisable");
                     }
+                } else if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
+                    this.gamePlayer.getActionBarManager().removeInActionBar(this.cooldown.getUniqueId().toString());
                 }
             }
         }
