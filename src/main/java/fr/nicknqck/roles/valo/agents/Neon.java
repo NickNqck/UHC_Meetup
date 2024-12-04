@@ -8,12 +8,16 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -74,6 +78,7 @@ public class Neon extends RoleBase {
     public void RoleGiven(GameState gameState) {
         addPower(new SpeedItemPower(this), true);
         addPower(new EclairRelaisPower(this), true);
+        addPower(new VoieRapidePower(this), true);
     }
     private static class VoieRapidePower extends ItemPower {
 
@@ -84,9 +89,34 @@ public class Neon extends RoleBase {
         @Override
         public boolean onUse(Player player, Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                
+                final List<Block> centre = getBlocksInFront(player);
+                for (final Block block : centre) {
+                    MathUtil.sendParticle(EnumParticle.EXPLOSION_NORMAL, block.getLocation());
+                    block.setType(Material.FIRE);
+                }
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60, 0, false, false), true);
             }
             return false;
+        }
+        private List<Block> getBlocksInFront(Player player) {
+            List<Block> blocks = new ArrayList<>();
+            Location eyeLocation = player.getEyeLocation();
+            Vector direction = eyeLocation.getDirection().normalize();
+
+            // Parcours des 15 blocs devant le joueur
+            for (int i = 1; i <= 20; i++) {
+                // Calcul de la position principale (directement devant)
+                Location frontLocation = eyeLocation.clone().add(direction.clone().multiply(i));
+
+                // Calcul et ajout des blocs à gauche et à droite
+                Vector right = direction.clone().crossProduct(new Vector(0, 1, 0)).normalize();
+                Location leftLocation = frontLocation.clone().add(right.clone().multiply(-2));
+                Location rightLocation = frontLocation.clone().add(right.clone().multiply(2));
+
+                blocks.add(frontLocation.getWorld().getHighestBlockAt(leftLocation));
+                blocks.add(frontLocation.getWorld().getHighestBlockAt(rightLocation));
+            }
+            return blocks;
         }
     }
     private static class EclairRelaisPower extends ItemPower {
