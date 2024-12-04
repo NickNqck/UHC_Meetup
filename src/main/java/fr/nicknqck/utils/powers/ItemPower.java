@@ -6,7 +6,6 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
