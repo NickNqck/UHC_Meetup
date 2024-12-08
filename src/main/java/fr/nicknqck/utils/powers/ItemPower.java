@@ -37,7 +37,7 @@ public abstract class ItemPower extends Power{
         }
         this.item = item.setUnbreakable(true).setDroppable(false).toItemStack();
         if (showCdInHand && cooldown != null && cooldown.getOriginalCooldown() > 0) {
-            new ShowCdRunnable(role, cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 2);
+            new ShowCdRunnable(role, cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 1);
         }
     }
     public void call(Object event) {
