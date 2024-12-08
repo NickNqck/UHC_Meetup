@@ -2,15 +2,18 @@ package fr.nicknqck.roles.valo.agents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -19,6 +22,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -154,14 +159,15 @@ public class Neon extends RoleBase {
     }
     private static class SpeedItemPower extends ItemPower {
 
-        private final SpeedRunnable runnable;
-        private int dashRemaining = 2;
+        private final DashPower dashPower;
+        private final CoursePower coursePower;
 
         protected SpeedItemPower(@NonNull RoleBase role) {
-            super("Vitesse Supérieure", null, new ItemBuilder(Material.NETHER_STAR).setName("§bVitesse Supérieure"), role,
-                    "");
-            this.runnable = new SpeedRunnable(this);
-            getRole().getGamePlayer().getActionBarManager().addToActionBar("neon.dash.count", "§cDashs§7: §c2§7/§62");
+            super("Vitesse Supérieure", null, new ItemBuilder(Material.NETHER_STAR).setName("§bVitesse Supérieure"), role);
+            this.dashPower = new DashPower(role);
+            this.coursePower = new CoursePower(role);
+            role.addPower(this.dashPower);
+            role.addPower(this.coursePower);
         }
 
         @Override
@@ -169,83 +175,135 @@ public class Neon extends RoleBase {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("RIGHT")) {
-                    if (this.runnable.start) {
-                        this.runnable.start = false;
-                        player.sendMessage("§7Vous avez désactiver votre§e Speed 2");
-                        player.removePotionEffect(PotionEffectType.SPEED);
-                    } else {
-                        this.runnable.start = true;
-                        player.sendMessage("§7Vous activer votre§e Speed 2");
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false), true);
-                    }
-                    return true;
+                    return this.coursePower.checkUse(player, map);
                 } else if (event.getAction().name().contains("LEFT")) {
-                    if (this.dashRemaining < 1) {
-                        return false;
-                    }
-                    final Vector direction = player.getEyeLocation().getDirection();
-                    direction.setY(0.1);
-                    direction.multiply(1.8);
-                    player.setVelocity(direction);
-                    this.dashRemaining--;
-                    getRole().getGamePlayer().getActionBarManager().updateActionBar("neon.dash.count", "§cDashs§7: §c"+dashRemaining+"§7/§62");
-                    return true;
+                    return this.dashPower.checkUse(player, map);
                 }
             }
             return false;
         }
-        private static final class SpeedRunnable extends BukkitRunnable {
+        private static final class CoursePower extends Power {
 
-            private final GameState gameState;
-            private double speedBar = 100.0;
-            private final GamePlayer gamePlayer;
-            private boolean start = false;
+            private final SpeedRunnable runnable;
 
-            private SpeedRunnable(SpeedItemPower speedItemPower) {
-                this.gamePlayer = speedItemPower.getRole().getGamePlayer();
-                this.gameState = GameState.getInstance();
-                this.gamePlayer.getActionBarManager().addToActionBar("valo.agents.neon.speedbar", "bar "+speedBar);
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            public CoursePower(@NonNull RoleBase role) {
+                super("§bCourse", null, role);
+                this.runnable = new SpeedRunnable(this);
             }
 
             @Override
-            public void run() {
-                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                    cancel();
-                    return;
+            public boolean onUse(Player player, Map<String, Object> map) {
+                if (this.runnable.start) {
+                    this.runnable.start = false;
+                    player.sendMessage("§7Vous avez désactiver votre§e Speed 2");
+                    player.removePotionEffect(PotionEffectType.SPEED);
+                } else {
+                    if (this.runnable.speedBar <= 1) {
+                        player.sendMessage("§7Vous n'avez pas asser d'énergie pour courir");
+                        return false;
+                    }
+                    this.runnable.start = true;
+                    player.sendMessage("§7Vous activer votre§e Speed 2");
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false), true);
                 }
-                this.gamePlayer.getActionBarManager().updateActionBar("valo.agents.neon.speedbar", "§bCharge: §7["+getCharge()+"§7 (§b"+getPercentage(this.speedBar)+"§7)]");
-                if (!this.start) {
-                    this.speedBar = Math.min(100.0, this.speedBar+0.5);
-                    return;
+                return true;
+            }
+            private static final class SpeedRunnable extends BukkitRunnable {
+
+                private final GameState gameState;
+                private double speedBar = 100.0;
+                private final GamePlayer gamePlayer;
+                private boolean start = false;
+
+                private SpeedRunnable(CoursePower speedItemPower) {
+                    this.gamePlayer = speedItemPower.getRole().getGamePlayer();
+                    this.gameState = GameState.getInstance();
+                    this.gamePlayer.getActionBarManager().addToActionBar("valo.agents.neon.speedbar", "bar "+speedBar);
+                    runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }
-                final Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
-                if (owner != null) {
-                    this.speedBar-=1;
-                    if (this.speedBar < 1) {
-                        this.start = false;
-                        owner.removePotionEffect(PotionEffectType.SPEED);
-                        owner.sendMessage("§7Vous n'avez plus assez d'énergie pour courir.");
+
+                @Override
+                public void run() {
+                    if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                        cancel();
+                        return;
+                    }
+                    this.gamePlayer.getActionBarManager().updateActionBar("valo.agents.neon.speedbar", "§bCharge: §7["+getCharge()+"§7 (§b"+getPercentage(this.speedBar)+"§7)]");
+                    if (!this.start) {
+                        this.speedBar = Math.min(100.0, this.speedBar+0.5);
+                        return;
+                    }
+                    final Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
+                    if (owner != null) {
+                        this.speedBar-=1;
+                        if (this.speedBar < 1) {
+                            this.start = false;
+                            owner.removePotionEffect(PotionEffectType.SPEED);
+                            owner.sendMessage("§7Vous n'avez plus assez d'énergie pour courir.");
+                        }
+                    }
+                }
+                private String getCharge() {
+                    double maxBar = 100.0;
+                    double bar = this.speedBar;
+                    StringBuilder sbar = new StringBuilder();
+                    for (double i = 0; i < bar; i++) {
+                        sbar.append("§a|");
+                    }
+                    for (double i = bar; i < maxBar; i++) {
+                        sbar.append("§c|");
+                    }
+                    return sbar.toString();
+                }
+                private String getPercentage(double value) {
+                    final DecimalFormat format = new DecimalFormat("0");
+                    return format.format((value / 100.0) * 100)+"%";
+                }
+
+            }
+        }
+        private static final class DashPower extends Power implements Listener{
+
+            private int killCount = 0;
+
+            public DashPower(@NonNull RoleBase role) {
+                super("§cDash§7 (§bNeon§7)", new Cooldown(180), role);
+                setMaxUse(2);
+                setShowInDesc(false);
+                EventUtils.registerRoleEvent(this);
+                getRole().getGamePlayer().getActionBarManager().addToActionBar("neon.dash.count", "§cDashs§7: §c2§7/§62");
+            }
+
+            @Override
+            public boolean onUse(Player player, Map<String, Object> map) {
+                final Vector direction = player.getEyeLocation().getDirection();
+                direction.setY(0.1);
+                direction.multiply(1.8);
+                player.setVelocity(direction);
+                getRole().getGamePlayer().getActionBarManager().updateActionBar("neon.dash.count", "§cDashs§7: §c"+(getUse()+1)+"§7/§6"+getMaxUse());
+                player.sendMessage("§7Vous avez utiliser un dash...");
+                if (this.getUse() == getMaxUse()) {
+                    getRole().getGamePlayer().getActionBarManager().removeInActionBar("neon.dash.count");
+                    getRole().getGamePlayer().sendMessage("§cVous n'avez plus de dash...");
+                }
+                return true;
+            }
+            @EventHandler
+            private void onKill(UHCPlayerKillEvent event) {
+                if (event.getGamePlayerKiller() != null) {
+                    if (!event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer()))return;
+                    if (this.getUse() <= this.getMaxUse() && this.getUse() > 0) {
+                        this.killCount++;
+                        if (this.killCount == 2) {
+                            setUse(getUse()-1);
+                            this.killCount = 0;
+                            getRole().getGamePlayer().getActionBarManager().updateActionBar("neon.dash.count", "§cDashs§7: §c"+(getUse())+"§7/§6"+getMaxUse());
+                        } else {
+                            event.getKiller().sendMessage("§7Plus que§c 1 kill§7 avant de gagner un§c dash§7.");
+                        }
                     }
                 }
             }
-            private String getCharge() {
-                double maxBar = 100.0;
-                double bar = this.speedBar;
-                StringBuilder sbar = new StringBuilder();
-                for (double i = 0; i < bar; i++) {
-                    sbar.append("§a|");
-                }
-                for (double i = bar; i < maxBar; i++) {
-                    sbar.append("§c|");
-                }
-                return sbar.toString();
-            }
-            private String getPercentage(double value) {
-                final DecimalFormat format = new DecimalFormat("0");
-                return format.format((value / 100.0) * 100)+"%";
-            }
-
         }
     }
 }
