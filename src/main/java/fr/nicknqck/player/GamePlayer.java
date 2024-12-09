@@ -151,7 +151,7 @@ public class GamePlayer {
 
 		public void addToActionBar(final String key, final String value) {
 			if (actionBars.containsKey(key)) {
-				System.err.println("[ActionBarManager] Error ! key: "+key+" is already inside the Map");
+				updateActionBar(key, value);
 				return;
 			}
 			this.actionBars.put(key, value);

@@ -88,7 +88,8 @@ public class Neon extends RoleBase {
     private static class VoieRapidePower extends ItemPower {
 
         protected VoieRapidePower(@NonNull RoleBase role) {
-            super("§bVoie Rapide", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bVoie Rapide"), role);
+            super("§bVoie Rapide", new Cooldown(60*3), new ItemBuilder(Material.NETHER_STAR).setName("§bVoie Rapide"), role,
+                    "§7Permet de crée un chemin entourer par§c deux§6 murs de feu§7 vers la ou vous regardez§7.");
         }
 
         @Override
@@ -127,7 +128,8 @@ public class Neon extends RoleBase {
     private static class EclairRelaisPower extends ItemPower {
 
         protected EclairRelaisPower(@NonNull RoleBase role) {
-            super("§bÉclair Relais", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bÉclair Relais"), role);
+            super("§bÉclair Relais", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bÉclair Relais"), role,
+                    "§7En visant un §cjoueur§7 vous permet ");
         }
 
         @Override
@@ -163,11 +165,16 @@ public class Neon extends RoleBase {
         private final CoursePower coursePower;
 
         protected SpeedItemPower(@NonNull RoleBase role) {
-            super("Vitesse Supérieure", null, new ItemBuilder(Material.NETHER_STAR).setName("§bVitesse Supérieure"), role);
-            this.dashPower = new DashPower(role);
+            super("Vitesse Supérieure", null, new ItemBuilder(Material.NETHER_STAR).setName("§bVitesse Supérieure"), role,
+                    "§7Vous possédez une bar de§b Charge§7, elle se régénère lorsque vous ne l'utiliser pas et s'utilise différemment en fonction du clique que vous faite:",
+                    "",
+                    "§bClique droit§7: Vous permet d'obtenir§e Speed II§7 (§cConssomation§7:§b 1%§7/s).",
+                    "",
+                    "§bClique gauche§7: Vous permet de faire un§c dash§7 en avant, vous gagnez§a +1§c dash§7 tout les§c 2 kills§7 (§cConssomation§7: §b5%§7) (2x/partie) (1x/2m)");
             this.coursePower = new CoursePower(role);
-            role.addPower(this.dashPower);
             role.addPower(this.coursePower);
+            this.dashPower = new DashPower(this);
+            role.addPower(this.dashPower);
         }
 
         @Override
@@ -189,6 +196,8 @@ public class Neon extends RoleBase {
             public CoursePower(@NonNull RoleBase role) {
                 super("§bCourse", null, role);
                 this.runnable = new SpeedRunnable(this);
+                setShowInDesc(false);
+                this.getRole().getGamePlayer().getActionBarManager().addToActionBar("valo.agents.neon.speedbar", "bar "+this.runnable.speedBar);
             }
 
             @Override
@@ -218,7 +227,6 @@ public class Neon extends RoleBase {
                 private SpeedRunnable(CoursePower speedItemPower) {
                     this.gamePlayer = speedItemPower.getRole().getGamePlayer();
                     this.gameState = GameState.getInstance();
-                    this.gamePlayer.getActionBarManager().addToActionBar("valo.agents.neon.speedbar", "bar "+speedBar);
                     runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }
 
@@ -265,9 +273,11 @@ public class Neon extends RoleBase {
         private static final class DashPower extends Power implements Listener{
 
             private int killCount = 0;
+            private final SpeedItemPower speedItemPower;
 
-            public DashPower(@NonNull RoleBase role) {
-                super("§cDash§7 (§bNeon§7)", new Cooldown(180), role);
+            public DashPower(@NonNull SpeedItemPower speedItemPower) {
+                super("§cDash§7 (§bNeon§7)", new Cooldown(120), speedItemPower.getRole());
+                this.speedItemPower = speedItemPower;
                 setMaxUse(2);
                 setShowInDesc(false);
                 EventUtils.registerRoleEvent(this);
@@ -276,6 +286,10 @@ public class Neon extends RoleBase {
 
             @Override
             public boolean onUse(Player player, Map<String, Object> map) {
+                if (this.speedItemPower.coursePower.runnable.speedBar <= 5) {
+                    player.sendMessage("§7Vous n'avez pas asser d'énergie pour dash");
+                    return false;
+                }
                 final Vector direction = player.getEyeLocation().getDirection();
                 direction.setY(0.1);
                 direction.multiply(1.8);
@@ -286,6 +300,7 @@ public class Neon extends RoleBase {
                     getRole().getGamePlayer().getActionBarManager().removeInActionBar("neon.dash.count");
                     getRole().getGamePlayer().sendMessage("§cVous n'avez plus de dash...");
                 }
+                this.speedItemPower.coursePower.runnable.speedBar-=5;
                 return true;
             }
             @EventHandler
