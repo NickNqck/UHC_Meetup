@@ -24,6 +24,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -129,7 +130,7 @@ public class Neon extends RoleBase {
 
         protected EclairRelaisPower(@NonNull RoleBase role) {
             super("§bÉclair Relais", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bÉclair Relais"), role,
-                    "§7En visant un §cjoueur§7 vous permet ");
+                    "§7En visant un §cjoueur§7 vous permet de le ralentir lui ainsi que les autres joueurs proche de lui pendant§c 15 secondes§7");
         }
 
         @Override
@@ -274,6 +275,7 @@ public class Neon extends RoleBase {
 
             private int killCount = 0;
             private final SpeedItemPower speedItemPower;
+            private boolean fallDamage = true;
 
             public DashPower(@NonNull SpeedItemPower speedItemPower) {
                 super("§cDash§7 (§bNeon§7)", new Cooldown(120), speedItemPower.getRole());
@@ -301,7 +303,20 @@ public class Neon extends RoleBase {
                     getRole().getGamePlayer().sendMessage("§cVous n'avez plus de dash...");
                 }
                 this.speedItemPower.coursePower.runnable.speedBar-=5;
+                this.fallDamage = false;
                 return true;
+            }
+            @EventHandler
+            private void onDamage(EntityDamageEvent event) {
+                if (event.getEntity().getUniqueId().equals(this.getRole().getPlayer())) {
+                    if (!this.fallDamage) {
+                        if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
+                            this.fallDamage = true;
+                            event.setDamage(0);
+                            event.setCancelled(true);
+                        }
+                    }
+                }
             }
             @EventHandler
             private void onKill(UHCPlayerKillEvent event) {
