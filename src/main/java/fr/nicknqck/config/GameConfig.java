@@ -25,6 +25,9 @@ public class GameConfig {
     private final List<ItemStack> itemOnKill;
     @Getter
     private final StuffConfig stuffConfig;
+    @Getter
+    private boolean laveTitans = true;
+
     public GameConfig() {
         instance = this;
         this.itemOnKill = new ArrayList<>();

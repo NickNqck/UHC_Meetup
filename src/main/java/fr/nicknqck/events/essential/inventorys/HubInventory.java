@@ -431,7 +431,7 @@ public class HubInventory implements Listener {
                             gameState.rod = !gameState.rod;
                         }
                         if (name.equals("§r§6Lave§f pour les titans (transformé)")) {
-                            gameState.LaveTitans = !gameState.LaveTitans;
+                            Main.getInstance().getGameConfig().setLaveTitans(!Main.getInstance().getGameConfig().isLaveTitans());
                         }
                         if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                             player.openInventory(GUIItems.getMahrGui());

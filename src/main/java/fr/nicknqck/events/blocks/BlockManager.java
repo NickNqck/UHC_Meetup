@@ -53,7 +53,7 @@ public class BlockManager implements Listener{
 	                }
 	            }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getWaterEmptyTiming());
 	        }
-	        if (!gameState.LaveTitans) {
+	        if (!Main.getInstance().getGameConfig().isLaveTitans()) {
 	        	if (!gameState.hasRoleNull(event.getPlayer())) {
 	        		if (gameState.getPlayerRoles().get(event.getPlayer()) instanceof AotRoles && ((AotRoles) gameState.getPlayerRoles().get(event.getPlayer())).isTransformedinTitan) {
 	        			if (event.getBucket() == Material.LAVA_BUCKET) {
