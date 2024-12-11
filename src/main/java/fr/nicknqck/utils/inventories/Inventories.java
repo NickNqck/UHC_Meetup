@@ -861,7 +861,7 @@ public class Inventories {
                     inv.setItem(50, GUIItems.getGoldenCarrot());
                     inv.setItem(51, GUIItems.getlave());
                     inv.setItem(52, GUIItems.geteau());
-                    inv.setItem(38, new ItemBuilder(Material.ARROW, gameState.nmbArrow).setName("§fFlèches").setLore("","§7Max:§c 64","§7Minimum:§c 1","§7Actuelle:§c "+gameState.nmbArrow).toItemStack());
+                    inv.setItem(38, new ItemBuilder(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).setName("§fFlèches").setLore("","§7Max:§c 64","§7Minimum:§c 1","§7Actuelle:§c "+Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).toItemStack());
                     //inv.setItem(9, GUIItems.getx());
 
                     inv.setItem(8, GUIItems.getSelectBackMenu());

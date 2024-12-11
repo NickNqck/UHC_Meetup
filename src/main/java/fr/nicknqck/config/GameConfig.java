@@ -40,6 +40,7 @@ public class GameConfig {
         private int protectionLeggings = 3;
         private int protectionChestplate = 2;
         private int protectionHelmet = 2;
+        private int nmbArrow = 24;
 
     }
 }

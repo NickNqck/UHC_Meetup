@@ -88,7 +88,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private int maxTimeSpawnBiju = 160;
-	public int nmbArrow = 24;
 	public boolean LaveTitans = true;
 	@Getter
 	public int TimingAssassin = 10;

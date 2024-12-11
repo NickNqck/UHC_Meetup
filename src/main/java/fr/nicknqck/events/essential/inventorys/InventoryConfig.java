@@ -182,13 +182,9 @@ public class InventoryConfig implements Listener {
             } else {
                 if (item.getType() == Material.ARROW) {
                     if (action.equals(InventoryAction.PICKUP_ALL)) {
-                        if (gameState.nmbArrow < 64) {
-                            gameState.nmbArrow++;
-                        }
+                        Main.getInstance().getGameConfig().getStuffConfig().setNmbArrow(Math.min(64, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()+1));
                     } else {
-                        if (gameState.nmbArrow > 0) {
-                            gameState.nmbArrow--;
-                        }
+                        Main.getInstance().getGameConfig().getStuffConfig().setNmbArrow(Math.max(1, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()-1));
                     }
                 }
             }
