@@ -140,7 +140,7 @@ public class Saiken extends Biju {
         @Override
         public void run() {
             timer++;
-            if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !isEnable()) {
+            if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !isEnable()) {
             	cancel();
             	return;
             }

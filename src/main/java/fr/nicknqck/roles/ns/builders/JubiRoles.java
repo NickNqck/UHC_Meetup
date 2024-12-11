@@ -61,7 +61,7 @@ public abstract class JubiRoles extends UchiwaRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 if (this.roles == null)return false;
-                if (!this.roles.getGameState().BijusEnable) {
+                if (!this.getPlugin().getGameConfig().isBijusEnable()) {
                     this.roles.getPowers().remove(this);
                     player.sendMessage("§7Les bijus sont désactiver pendant cette partie.");
                     player.setItemInHand(null);

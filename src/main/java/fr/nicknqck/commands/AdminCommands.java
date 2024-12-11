@@ -106,7 +106,7 @@ public class AdminCommands implements CommandExecutor{
 							power.getCooldown().resetCooldown();
 						}
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
-						if (gameState.BijusEnable) {
+						if (Main.getInstance().getGameConfig().isBijusEnable()) {
 							for (Bijus bijus : Bijus.values()) {
 								if (bijus.getBiju().getHote() != null &&bijus.getBiju().getHote() == player.getUniqueId()) {
 									bijus.getBiju().resetCooldown();
@@ -126,7 +126,7 @@ public class AdminCommands implements CommandExecutor{
 					if (!gameState.hasRoleNull(player)) {
 						gameState.getPlayerRoles().get(player).resetCooldown();
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
-						if (gameState.BijusEnable) {
+						if (Main.getInstance().getGameConfig().isBijusEnable()) {
 							for (Bijus bijus : Bijus.values()) {
 								if (bijus.getBiju().getHote() != null){
 									if (bijus.getBiju().getHote().equals(player.getUniqueId())){

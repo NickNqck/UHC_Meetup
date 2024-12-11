@@ -1,5 +1,6 @@
 package fr.nicknqck.bijus;
 
+import fr.nicknqck.Main;
 import lombok.Getter;
 import org.bukkit.Material;
 
@@ -33,7 +34,7 @@ public enum Bijus {
 	}
 
     public static void initBiju(GameState state) {
-		if (GameState.getInstance().BijusEnable) {
+		if (Main.getInstance().getGameConfig().isBijusEnable()) {
 			for (Bijus value : values()) {
 				if (value.getBiju().isEnable()) {
 					value.getBiju().setupBiju(state);

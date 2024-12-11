@@ -27,6 +27,8 @@ public class GameConfig {
     private final StuffConfig stuffConfig;
     @Getter
     private boolean laveTitans = true;
+    @Getter
+    private boolean BijusEnable = false;
 
     public GameConfig() {
         instance = this;
