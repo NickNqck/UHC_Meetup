@@ -73,7 +73,6 @@ public class GameState{
 	public int TridiCooldown = 16;
 	public boolean hasPregen = false;
 	public boolean pregenNakime = false;
-	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
 	@Getter
 	@Setter

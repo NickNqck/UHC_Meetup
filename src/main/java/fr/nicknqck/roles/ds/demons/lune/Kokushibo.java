@@ -64,12 +64,12 @@ public class Kokushibo extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kokushibo;
 	}
 	@Override
 	public String[] Desc() {
-		if (!gameState.demonKingTanjiro) {
+		if (!solo) {
 			return AllDesc.Kokushibo;
 		}else {
 			if (getOriginTeam().equals(TeamList.Solo)) {

@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class DemonKingEvent extends Event {
 
+    private boolean activated = false;
+
     @Override
     public String getName() {
         return "§cDemon King Tanjiro";
@@ -59,7 +61,7 @@ public class DemonKingEvent extends Event {
         if (tanjiroDemon) {
                 Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                     Bukkit.broadcastMessage(AllDesc.bar+"\n§rL'évènement aléatoire "+ getName()+" viens de ce déclancher, le rôle§c Tanjiro§f est maintenant dans le camp des Démons !\n"+AllDesc.bar);
-                    gameState.demonKingTanjiro = true;
+                    this.activated = true;
                     if (RandomUtils.getOwnRandomProbability(50)) {
                         for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
                             if (gamePlayer.getRole() != null) {
@@ -101,5 +103,10 @@ public class DemonKingEvent extends Event {
     @Override
     public boolean canProc(final GameState gameState) {
         return gameState.attributedRole.contains(GameState.Roles.Tanjiro) && gameState.attributedRole.contains(GameState.Roles.Muzan) && gameState.DeadRole.contains(GameState.Roles.Muzan) && !gameState.DeadRole.contains(GameState.Roles.Tanjiro);
+    }
+
+    @Override
+    public boolean isActivated() {
+        return this.activated;
     }
 }

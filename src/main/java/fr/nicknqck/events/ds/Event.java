@@ -14,6 +14,8 @@ public abstract class Event implements IEvent {
     private int minTimeProc = 60;
     private int maxTimeProc = 60*5;
 
+    public abstract boolean isActivated();
+
     public String[] getLore() {
         return new String[] {
                 "",

@@ -22,6 +22,7 @@ public class AllianceV2 extends Event implements Listener {
 
     private KyojuroV2 kyojuro;
     private Shinjuro shinjuro;
+    private boolean activated = false;
 
     @Override
     public String getName() {
@@ -56,6 +57,7 @@ public class AllianceV2 extends Event implements Listener {
             }
         }
         EventUtils.registerRoleEvent(this);
+        this.activated = true;
     }
     @EventHandler
     private void onDeath(UHCDeathEvent event) {
@@ -80,5 +82,10 @@ public class AllianceV2 extends Event implements Listener {
 
     private boolean containsRoles(final GameState gameState) {
         return gameState.attributedRole.contains(GameState.Roles.Kyojuro) && !gameState.DeadRole.contains(GameState.Roles.Kyojuro) && gameState.attributedRole.contains(GameState.Roles.Shinjuro) && !gameState.DeadRole.contains(GameState.Roles.Shinjuro);
+    }
+
+    @Override
+    public boolean isActivated() {
+        return this.activated;
     }
 }

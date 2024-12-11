@@ -48,7 +48,7 @@ public class HubListener implements Listener {
 		gameState.infected = null;
 		gameState.infecteur = null;
 		gameState.Assassin = null;
-		gameState.demonKingTanjiro = false;
+		Main.getInstance().getEventsManager().getEventsList().forEach(event -> event.setEnable(false));
 		gameState.canBeAssassin.clear();
 		ItemsManager.instance.clearJspList();
 		gameState.t = gameState.timeday;

@@ -40,6 +40,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
     private boolean KyojuroWin = false;
     private boolean endEvent = false;
     private boolean realEnd = false;
+    private boolean activated = false;
 
     @Override
     public String getName() {
@@ -68,6 +69,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 Bukkit.broadcastMessage(getName()+"§r vient de ce déclancher !");
                 EventUtils.registerRoleEvent(this);
                 new CombatRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                this.activated = true;
             }
         }
     }
@@ -144,6 +146,12 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
             }
         }
     }
+
+    @Override
+    public boolean isActivated() {
+        return this.activated;
+    }
+
     private static class VagueItemPower extends ItemPower implements Listener {
 
         protected VagueItemPower(@NonNull KyojuroV2 role) {
