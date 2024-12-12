@@ -787,7 +787,7 @@ public abstract class Items {
 				ItemStack stack = new ItemStack(Material.DIAMOND_HELMET, 1);
 				ItemMeta meta = stack.getItemMeta();
 				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet(), true);
-				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+				meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -797,7 +797,7 @@ public abstract class Items {
 				ItemStack stack = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
 				ItemMeta meta = stack.getItemMeta();
 				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate(), true);
-				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+				meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -818,7 +818,7 @@ public abstract class Items {
 				ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
 				ItemMeta meta = stack.getItemMeta();
 				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost(), true);
-				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+				meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -828,7 +828,7 @@ public abstract class Items {
 		ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.addEnchant(Enchantment.DAMAGE_ALL, GameState.sharpness, true);
-		meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+		meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -848,7 +848,7 @@ public abstract class Items {
 		ItemStack stack = new ItemStack(Material.BOW, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.addEnchant(Enchantment.ARROW_DAMAGE, GameState.power, true);
-		meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+		meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 		stack.setItemMeta(meta);
 		return stack;
 	}

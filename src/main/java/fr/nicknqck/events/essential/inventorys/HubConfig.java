@@ -405,7 +405,7 @@ public class HubConfig implements Listener {
                                 player.openInventory(Bukkit.createInventory(player, 9*4, "Configuration ->§6 Bijus"));
                                 Main.getInstance().getInventories().openConfigBijusInventory(player);
                             } else {
-                                gameState.BijusEnable = !gameState.BijusEnable;
+                                Main.getInstance().getGameConfig().setBijusEnable(!Main.getInstance().getGameConfig().isBijusEnable());
                             }
                         }
                         if (item.getItemMeta().getDisplayName().equals("§cInfection")) {

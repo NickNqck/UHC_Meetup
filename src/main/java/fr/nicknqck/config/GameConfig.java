@@ -11,6 +11,7 @@ import java.util.List;
 
 
 @Setter
+@Getter
 public class GameConfig {
     @Getter
     private static GameConfig instance;
@@ -29,6 +30,7 @@ public class GameConfig {
     private boolean laveTitans = true;
     @Getter
     private boolean BijusEnable = false;
+    private boolean stuffUnbreak = true;
 
     public GameConfig() {
         instance = this;
