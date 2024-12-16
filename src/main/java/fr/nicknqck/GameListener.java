@@ -247,12 +247,14 @@ public class GameListener implements Listener {
 				RoleBase lastRoleGive = (RoleBase) Main.getInstance().getRoleManager().getRolesRegistery().get(Susamaru.class);
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
+					System.out.println("Player: "+u.toString()+", can't have role because he was offline");
 					if (p == null)continue;
 					RoleBase role = gameState.GiveRole(p);
 					if (role != null){
 						role.RoleGiven(gameState);
 						role.GiveItems();
 						lastRoleGive = role;
+						Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, role, role.getRoles(), role.getGamePlayer(), false));
 					}
 					Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage("§cDiscord du mode de jeu: §6https://discord.gg/6dWxCAEsfF"), 20*10);//20ticks* le nombre de seconde voulue
 				}
