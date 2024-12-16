@@ -329,13 +329,6 @@ public class GameState{
 	@Getter
 	public boolean nightTime = false;
 	boolean prevNightTime = true;
-	boolean pvp = false;
-	public boolean getPvP() {
-		return pvp;
-	}
-	public void setPvP(boolean p) {
-		pvp = p;
-	}
 	boolean shrinking = false;
 	@Getter
 	@Setter
