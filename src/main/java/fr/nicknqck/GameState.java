@@ -343,8 +343,6 @@ public class GameState{
 	public Player infecteur = null;
 	public boolean roletab = false;
 	@Getter
-	public int critP = 20;
-	@Getter
 	private static GameState instance;
 	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();
