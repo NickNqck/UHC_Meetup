@@ -333,7 +333,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private int actualPvPTimer = getPvPTimer();
-	public int timeday = 60*5;
 	public int t = 0;//Utilisée dans GameListener
 	public int xpfer = 0;
 	public int xpor = 0;

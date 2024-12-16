@@ -385,7 +385,7 @@ public class Inventories {
                             "§r§fClique droit: §c-1 minutes"
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.WATCH).setName("§r§fDurée du jour (et de la nuit)").setLore(
-                            "§r§fDurée actuel:§6 "+ StringUtils.secondsTowardsBeautiful(gameState.timeday),
+                            "§r§fDurée actuel:§6 "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getMaxTimeDay()),
                             "§r§fClique gauche: §a+10 secondes",
                             "§r§fClique droit: §c-10 secondes"
                     ).toItemStack());

@@ -25,7 +25,7 @@ public class GameConfig {
     private boolean BijusEnable = false;
     private boolean stuffUnbreak = true;
     private boolean pvpEnable = false;
-
+    private int maxTimeDay = 60*5;
 
     public GameConfig() {
         instance = this;

@@ -55,7 +55,7 @@ public class EffectsGiver implements Listener {
                 for (PotionEffect potionEffect : roleBase.getEffects().keySet()) {
                     if (roleBase.getEffects().get(potionEffect).equals(EffectWhen.DAY)) {
                         new BukkitRunnable() {
-                            private int timeRemaining = event.getGameState().timeday;
+                            private int timeRemaining = Main.getInstance().getGameConfig().getMaxTimeDay();
                             private final UUID uuid = player.getUniqueId();
                             @Override
                             public void run() {
@@ -85,7 +85,7 @@ public class EffectsGiver implements Listener {
                 for (PotionEffect potionEffect : roleBase.getEffects().keySet()) {
                     if (roleBase.getEffects().get(potionEffect).equals(EffectWhen.NIGHT)) {
                         new BukkitRunnable() {
-                            private int timeRemaining = event.getGameState().timeday;
+                            private int timeRemaining = Main.getInstance().getGameConfig().getMaxTimeDay();
                             private final UUID uuid = player.getUniqueId();
                             @Override
                             public void run() {

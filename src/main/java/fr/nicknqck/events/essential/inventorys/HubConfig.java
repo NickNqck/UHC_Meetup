@@ -362,12 +362,12 @@ public class HubConfig implements Listener {
                         if (name.contains("Durée du jour (et de la nuit)")) {
                             if (ChatRank.isHost(player)) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    gameState.timeday+=10;
+                                    Main.getInstance().getGameConfig().setMaxTimeDay(Main.getInstance().getGameConfig().getMaxTimeDay()+10);
                                     player.updateInventory();
                                     Main.getInstance().getInventories().updateConfigInventory(player);
                                 } else {
                                     if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                        gameState.timeday-=10;
+                                        Main.getInstance().getGameConfig().setMaxTimeDay(Main.getInstance().getGameConfig().getMaxTimeDay()-10);
                                         player.updateInventory();
                                         Main.getInstance().getInventories().updateConfigInventory(player);
                                     }
