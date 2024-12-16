@@ -3,6 +3,7 @@ package fr.nicknqck.items;
 import java.util.Arrays;
 import java.util.Collections;
 
+import fr.nicknqck.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -258,7 +259,7 @@ public abstract class GUIItems{
 			ItemStack stack = new ItemStack(Material.IRON_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
 			meta.setDisplayName(ChatColor.GOLD+"Pourcentage de nerf des coups critique");
-			meta.setLore(Arrays.asList("§r"+"(50% = non nerf) "+ChatColor.GOLD+ gameState.critP+"%"));
+			meta.setLore(Arrays.asList("§r"+"(50% = non nerf) "+ChatColor.GOLD+ Main.getInstance().getGameConfig().getCritPercent()+"%"));
 			stack.setItemMeta(meta);
 			return stack;
 		}

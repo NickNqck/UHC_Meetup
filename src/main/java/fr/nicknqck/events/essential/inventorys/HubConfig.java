@@ -74,12 +74,12 @@ public class HubConfig implements Listener {
                         }
                     }  else if (item.isSimilar(GUIItems.getCrit(gameState))  && ChatRank.isHost(player)) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
-                            if (gameState.critP < 50) {
-                                gameState.critP+=1;
+                            if (Main.getInstance().getGameConfig().getCritPercent() < 50) {
+                                Main.getInstance().getGameConfig().setCritPercent(Main.getInstance().getGameConfig().getCritPercent()+1);
                             }
                         } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                            if (gameState.getCritP() > 0) {
-                                gameState.critP-=1;
+                            if (Main.getInstance().getGameConfig().getCritPercent() > 0) {
+                                Main.getInstance().getGameConfig().setCritPercent(Main.getInstance().getGameConfig().getCritPercent()-1);
                             }
                         }
                     } else if (item.isSimilar(Chat.getColoritem())) {
