@@ -405,7 +405,6 @@ public class GameState{
 		for (RoleBase r : getPlayerRoles().values()) {
             roles.remove(r.getRoles());
 		}
-		
 		Roles roleType;
 		roleType = roles.get(new Random().nextInt(roles.size()));
 		RoleBase role = null;
@@ -805,39 +804,7 @@ public class GameState{
 				break;
 		}
 		if (role == null) return null;
-       getInSpecPlayers().remove(aziz);
-		if (role.getRoles() != Roles.Slayer) {
-			if (!FFA.getFFA()) {
-				role.setTeam(role.getOriginTeam());
-			} else {
-				role.setTeam(TeamList.Solo);
-			}
-			System.out.println(role.getOriginTeam().name()+" for role "+role.getRoles().name());
-		}
-		role.gameState = this;
-		addInPlayerRoles(aziz, role);
-		fr.nicknqck.player.GamePlayer gamePlayer = getGamePlayer().get(player);
-		gamePlayer.setRole(role);
-		role.setGamePlayer(gamePlayer);
-		if (getPlayerRoles().size() == getInGamePlayers().size()) {
-			if (getPlayerRoles().get(aziz).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(aziz).getRoles().equals(Roles.Kyogai)) {
-				canBeAssassin.add(aziz);
-				System.out.println(aziz.getName()+" added to canBeAssassinList, size: "+canBeAssassin.size());
-			}
-			System.out.println("Giving Role Ended");
-			System.out.println("Preparing Assassin System");
-			Assassin assassin = new Assassin();
-			OnEndGiveRole(assassin);
-		} else {
-			System.out.println("Giving Role: "+getPlayerRoles().size()+"/"+getInGamePlayers().size());
-			if (getPlayerRoles().get(aziz).getOriginTeam() == TeamList.Demon) {
-				canBeAssassin.add(aziz);
-				System.out.println(aziz.getName()+" added to canBeAssassinList "+canBeAssassin.size());
-			}
-		}
-		attributedRole.add(roleType);
-		gamePlayer.setDeathLocation(aziz.getLocation());
-		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer, false));
+		print(aziz, role);
 		return role;
 	}
 	public RoleBase GiveRole2(Player player) {
@@ -854,12 +821,46 @@ public class GameState{
 			Class<? extends RoleBase> classRole = roleList.get(0);
             try {
                 role = classRole.getConstructor(UUID.class).newInstance(player.getUniqueId());
+				print(player, role);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
         }
 		return role;
+	}
+	private void print(final Player player, final RoleBase role) {
+		getInSpecPlayers().remove(player);
+		if (!FFA.getFFA()) {
+			role.setTeam(role.getOriginTeam());
+		} else {
+			role.setTeam(TeamList.Solo);
+		}
+		System.out.println(role.getOriginTeam().name()+" for role "+role.getRoles().name());
+		role.gameState = this;
+		addInPlayerRoles(player, role);
+		fr.nicknqck.player.GamePlayer gamePlayer = getGamePlayer().get(player.getUniqueId());
+		gamePlayer.setRole(role);
+		role.setGamePlayer(gamePlayer);
+		if (getPlayerRoles().size() == getInGamePlayers().size()) {
+			if (getPlayerRoles().get(player).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(player).getRoles().equals(Roles.Kyogai)) {
+				canBeAssassin.add(player);
+				System.out.println(player.getName()+" added to canBeAssassinList, size: "+canBeAssassin.size());
+			}
+			System.out.println("Giving Role Ended");
+			System.out.println("Preparing Assassin System");
+			Assassin assassin = new Assassin();
+			OnEndGiveRole(assassin);
+		} else {
+			System.out.println("Giving Role: "+getPlayerRoles().size()+"/"+getInGamePlayers().size());
+			if (getPlayerRoles().get(player).getOriginTeam() == TeamList.Demon) {
+				canBeAssassin.add(player);
+				System.out.println(player.getName()+" added to canBeAssassinList "+canBeAssassin.size());
+			}
+		}
+		attributedRole.add(role.getRoles());
+		gamePlayer.setDeathLocation(player.getLocation());
+		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
 	}
 	@Getter
 	public List<Roles> attributedRole = new ArrayList<>();
