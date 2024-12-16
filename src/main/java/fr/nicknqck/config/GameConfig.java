@@ -13,24 +13,18 @@ import java.util.List;
 @Setter
 @Getter
 public class GameConfig {
+
     @Getter
     private static GameConfig instance;
-    @Getter
     private int WaterEmptyTiming = 30;
-    @Getter
     private int LavaEmptyTiming = 30;
-    @Getter
-    @Setter
     private boolean minage = false;
-    @Getter
     private final List<ItemStack> itemOnKill;
-    @Getter
     private final StuffConfig stuffConfig;
-    @Getter
     private boolean laveTitans = true;
-    @Getter
     private boolean BijusEnable = false;
     private boolean stuffUnbreak = true;
+
 
     public GameConfig() {
         instance = this;
