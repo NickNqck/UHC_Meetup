@@ -30,8 +30,7 @@ public class RandomUtils {
         if (length <= 0) {
             throw new IllegalArgumentException("La longueur doit être supérieure à zéro.");
         }
-
-        Random random = new Random();
+        final Random random = Main.RANDOM;
         StringBuilder sb = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {

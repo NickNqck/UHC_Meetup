@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import java.util.Random;
 import java.util.UUID;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -28,7 +29,7 @@ public class Gyutaro extends DemonsRoles {
 		super(player);
 		setCanRespawn(true);
 		this.setResi(20);
-		}
+	}
 
 	@Override
 	public @NonNull DemonType getRank() {
@@ -214,7 +215,7 @@ public class Gyutaro extends DemonsRoles {
                     if (p != owner) {
 						if(p.getLocation().distance(owner.getLocation()) <= 30) {
 							if (gameState.getPlayerRoles().get(p).getRoles() != Roles.Daki ) {
-								Random random = new Random();
+								Random random = Main.RANDOM;
 								int rint = random.nextInt(2);
 								if (rint == 0) {
 									p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*30, 0, false, false));

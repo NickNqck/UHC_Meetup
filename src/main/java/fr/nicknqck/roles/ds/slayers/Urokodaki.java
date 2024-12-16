@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -113,7 +114,7 @@ public class Urokodaki extends SlayerRoles {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase role = gameState.getPlayerRoles().get(victim);
 					if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
-						Random random = new Random();
+						Random random = Main.RANDOM;
 						int rint = random.nextInt(2);
 						System.out.println("Speed Urokodaki 1"+ owner.getWalkSpeed());
 						if (rint == 0) {

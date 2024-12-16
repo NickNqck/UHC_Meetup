@@ -43,7 +43,7 @@ public class LocPlayer {
     }
 
     public Location getRandomPositionStart() {
-        Random ran = new Random();
+        Random ran = Main.RANDOM;
         int random = ran.nextInt(locs.size());
         return locs.get(random);
     }
