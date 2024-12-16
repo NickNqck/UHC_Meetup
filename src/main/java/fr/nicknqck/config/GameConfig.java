@@ -24,6 +24,7 @@ public class GameConfig {
     private boolean laveTitans = true;
     private boolean BijusEnable = false;
     private boolean stuffUnbreak = true;
+    private boolean pvpEnable = false;
 
 
     public GameConfig() {

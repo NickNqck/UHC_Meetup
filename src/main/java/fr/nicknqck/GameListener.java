@@ -113,7 +113,7 @@ public class GameListener implements Listener {
 			}
 			break;
 		case InGame:
-			Main.getInstance().getWorldManager().getGameWorld().setPVP(gameState.pvp);
+			Main.getInstance().getWorldManager().getGameWorld().setPVP(Main.getInstance().getGameConfig().isPvpEnable());
 			for (UUID u : gameState.getInGamePlayers()) {
 				if (gameState.inGameTime < 10) {
 					Player p = Bukkit.getPlayer(u);
@@ -274,7 +274,7 @@ public class GameListener implements Listener {
 				}
 			}
 			if (gameState.getActualPvPTimer() == 0){
-				gameState.setPvP(true);
+				Main.getInstance().getGameConfig().setPvpEnable(true);
 				SendToEveryone("(§c!§f) Le§c pvp§f est maintenant activé !");
 				gameState.setActualPvPTimer(-1);
 			} else {
@@ -298,7 +298,7 @@ public class GameListener implements Listener {
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
 			Border.setActualBorderSize(Border.getMaxBorderSize());
-			gameState.setPvP(false);
+			Main.getInstance().getGameConfig().setPvpEnable(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
 			gameState.setInObiPlayers(new ArrayList<>());

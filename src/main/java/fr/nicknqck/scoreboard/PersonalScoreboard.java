@@ -94,7 +94,7 @@ public class PersonalScoreboard {
     		objectiveSign.setLine(3, premsg+"§fGroupe:§6 "+this.gameState.getGroupe());
     		objectiveSign.setLine(4, "§a");
     		objectiveSign.setLine(5, premsg+"§fDurée: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getInGameTime()));
-    		if (this.gameState.getPvP()) {
+    		if (Main.getInstance().getGameConfig().isPvpEnable()) {
     			objectiveSign.setLine(6, premsg+"§fPvP:§c Activée");
     		} else {
 				objectiveSign.setLine(6, premsg+"§fPvP:§c "+ StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getActualPvPTimer()));
