@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -21,7 +22,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 public class UrokodakiV2 extends SlayerRoles {
@@ -97,8 +97,7 @@ public class UrokodakiV2 extends SlayerRoles {
         if (gameState.getServerState().equals(GameState.ServerStates.InGame)){
             RoleBase role = gameState.getPlayerRoles().get(player);
             if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito){
-                Random random = new Random();
-                int rint = random.nextInt(2);
+                int rint = Main.RANDOM.nextInt(2);
                 if (rint == 0){
                     this.addBonusforce(5);
                     owner.sendMessage("§7"+ player.getName()+" il possédait le rôle de: §6"+ role.getRoles() +"§7 vous obtenez donc 5% de "+AllDesc.Force);

@@ -1,6 +1,5 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import java.util.Random;
 import java.util.UUID;
 
 import fr.nicknqck.roles.builder.TeamList;
@@ -23,6 +22,8 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
+
+import static fr.nicknqck.Main.RANDOM;
 
 public class Gyokko extends DemonsRoles {
 
@@ -73,7 +74,6 @@ public class Gyokko extends DemonsRoles {
 		bullecooldown = 0;
 		pouvoircooldown = 0;
 	}
-	Random random = new Random();
 	@Override
 	public void Update(GameState gameState) {
 		if (owner.getItemInHand().isSimilar(Items.getPouvoirSanginaire())) {
@@ -137,7 +137,7 @@ public class Gyokko extends DemonsRoles {
 			if (pouvoircooldown <= 0) {
 				setInvincible(true);
 				Location ploc = owner.getLocation();
-				Location pot = new Location(Main.getInstance().getWorldManager().getGameWorld(), ploc.getX() + random.nextInt(15), ploc.getY(), ploc.getZ() + random.nextInt(15));
+				Location pot = new Location(Main.getInstance().getWorldManager().getGameWorld(), ploc.getX() + RANDOM.nextInt(15), ploc.getY(), ploc.getZ() + RANDOM.nextInt(15));
 				System.out.println(pot);
 				owner.teleport(pot);
 				setInvincible(false);

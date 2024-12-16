@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import fr.nicknqck.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -32,7 +33,7 @@ public class GamabuntaLoc {
 	private final Location loc4 = new Location(Bukkit.getWorld("Gamabunta"), -26.0, 6.0, -15.0);
 	
 	public Location getRandomPositionStart() {
-        Random ran = new Random();
+        Random ran = Main.RANDOM;
         int random = ran.nextInt(locs.size());
         return locs.get(random);
     }

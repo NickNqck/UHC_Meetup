@@ -406,7 +406,7 @@ public class GameState{
             roles.remove(r.getRoles());
 		}
 		Roles roleType;
-		roleType = roles.get(new Random().nextInt(roles.size()));
+		roleType = roles.get(Main.RANDOM.nextInt(roles.size()));
 		RoleBase role = null;
 		UUID player = aziz.getUniqueId();
 		if (!getGamePlayer().containsKey(player))return null;
