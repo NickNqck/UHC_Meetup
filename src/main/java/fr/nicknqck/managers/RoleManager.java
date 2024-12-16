@@ -7,6 +7,7 @@ import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.IRole;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.custom.LeComte;
 import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.ds.demons.*;
@@ -38,8 +39,8 @@ import java.util.UUID;
 @Getter
 public class RoleManager {
 
-    private final Map<Class<? extends IRole>, IRole> rolesRegistery;
-    private final Map<Class<? extends IRole>, Integer> rolesEnable;
+    private final Map<Class<? extends RoleBase>, IRole> rolesRegistery;
+    private final Map<Class<? extends RoleBase>, Integer> rolesEnable;
     public RoleManager() {
         this.rolesRegistery = new HashMap<>();
         this.rolesEnable = new HashMap<>();
@@ -49,7 +50,7 @@ public class RoleManager {
             e.printStackTrace();
         }
     }
-    public void addRole(Class<? extends IRole> role) {
+    public void addRole(Class<? extends RoleBase> role) {
         if (rolesEnable.containsKey(role)) {
             int roleCount = rolesEnable.get(role);
             rolesEnable.remove(role, roleCount);
@@ -58,7 +59,7 @@ public class RoleManager {
             rolesEnable.put(role, 1);
         }
     }
-    public void removeRole(Class<? extends IRole> role) {
+    public void removeRole(Class<? extends RoleBase> role) {
         if (rolesEnable.containsKey(role)) {
             int roleCount = rolesEnable.get(role);
             if (rolesEnable.get(role) > 1) {
@@ -77,7 +78,7 @@ public class RoleManager {
         registerNs();
         registerCustomRoles();
     }
-    private void registerRole(Class<? extends IRole> roleClass) throws Exception {
+    private void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
     }

@@ -60,6 +60,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class GameState{
@@ -837,6 +838,27 @@ public class GameState{
 		attributedRole.add(roleType);
 		gamePlayer.setDeathLocation(aziz.getLocation());
 		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer, false));
+		return role;
+	}
+	public RoleBase GiveRole2(Player player) {
+		if (getGamePlayer().containsKey(player.getUniqueId()))return null;
+		final Map<Class<? extends RoleBase>, Integer> map = new LinkedHashMap<>(Main.getInstance().getRoleManager().getRolesEnable());
+		final List<Class<? extends RoleBase>> roleList = new LinkedList<>();
+		for (final Class<? extends RoleBase> classRole : map.keySet()) {
+			if (map.getOrDefault(classRole, 0) < 1)continue;
+			roleList.add(classRole);
+		}
+		Collections.shuffle(roleList, Main.RANDOM);
+		RoleBase role = null;
+		if (!roleList.isEmpty()) {
+			Class<? extends RoleBase> classRole = roleList.get(0);
+            try {
+                role = classRole.getConstructor(UUID.class).newInstance(player.getUniqueId());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+        }
 		return role;
 	}
 	@Getter
