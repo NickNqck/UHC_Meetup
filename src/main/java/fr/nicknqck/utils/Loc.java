@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 
 public class Loc {
@@ -60,33 +60,6 @@ public class Loc {
     private static Vector getLeftHeadDirection(Player player) {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(direction.getZ(), 0.0, -direction.getX()).normalize();
-    }
-    public static String getCardinalDirection(Player player) {
-        double rotation = (player.getLocation().getYaw() - 90) % 360;
-        if (rotation < 0) {
-            rotation += 360.0;
-        }
-        if (0 <= rotation && rotation < 22.5) {
-            return "Nord";
-        } else if (22.5 <= rotation && rotation < 67.5) {
-            return "Nord Est";
-        } else if (67.5 <= rotation && rotation < 112.5) {
-            return "Est";
-        } else if (112.5 <= rotation && rotation < 157.5) {
-            return "Sud Est";
-        } else if (157.5 <= rotation && rotation < 202.5) {
-            return "Sud";
-        } else if (202.5 <= rotation && rotation < 247.5) {
-            return "Sud Ouest";
-        } else if (247.5 <= rotation && rotation < 292.5) {
-            return "Ouest";
-        } else if (292.5 <= rotation && rotation < 337.5) {
-            return "Nord Ouest";
-        } else if (337.5 <= rotation && rotation < 360.0) {
-            return "Nord";
-        } else {
-            return "Aucune";
-        }
     }
     public static void teleportBehindPlayer(final Player teleported,final Player target) {
     	Location loc = target.getLocation().clone();
@@ -134,44 +107,18 @@ public class Loc {
                 .forEach(toReturn::add);
         return toReturn;
     }
-    public static void inverseDirection(final Player user, final Player target) {
-        if (!getCardinalDirection(target).equals("Aucune")) {
-            Location tLoc = target.getLocation();
-            if (getCardinalDirection(target).equals("Nord")) {
-                tLoc.setYaw(180);
-            } else if (getCardinalDirection(target).equals("Nord Est")) {
-                tLoc.setYaw(220);
-            } else if (getCardinalDirection(target).equals("Est")) {
-                tLoc.setYaw(270);
-            } else if (getCardinalDirection(target).equals("Sud Est")) {
-                tLoc.setYaw(315);
-            } else if (getCardinalDirection(target).equals("Sud")) {
-                tLoc.setYaw(15);
-            } else if (getCardinalDirection(target).equals("Sud Ouest")) {
-                tLoc.setYaw(45);
-            } else if (getCardinalDirection(target).equals("Ouest")) {
-                tLoc.setYaw(90);
-            } else if (getCardinalDirection(target).equals("Nord Ouest")) {
-                tLoc.setYaw(130);
+    public static List<GamePlayer> getNearbyGamePlayers(Location loc, double distance) {
+        final List<GamePlayer> toReturn = new ArrayList<>();
+        for (final Player player : loc.getWorld().getPlayers()) {
+            if (player.getLocation().distance(loc) <= distance) {
+                if (GameState.getInstance().getGamePlayer().containsKey(player.getUniqueId())) {
+                    final GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(player.getUniqueId());
+                    if (!gamePlayer.isAlive())continue;
+                    toReturn.add(gamePlayer);
+                }
             }
-            target.teleport(tLoc);
-        }else {
-            user.sendMessage("§cVeuiller visée un joueur !");
-            System.out.println(user.getName()+" n'a pas de direction (inverseDirection methode)");
         }
-    }
-    public static void organicFly(final Player user, int maxJump) {
-    	new BukkitRunnable() {
-    		int jump = 0;
-			@Override
-			public void run() {
-				jump+=1;
-				user.teleport(new Location(user.getWorld(), user.getLocation().getX(), user.getLocation().getY()+1, user.getLocation().getZ(), user.getEyeLocation().getYaw(), user.getEyeLocation().getPitch()));
-				if (jump == maxJump) {
-					cancel();
-				}
-			}
-		}.runTaskTimer(Main.getInstance(), 1L, 2L);
+        return toReturn;
     }
     public static void inverserDirectionJoueur(Player joueurCible) {
         // Récupérer l'emplacement actuel du joueur
