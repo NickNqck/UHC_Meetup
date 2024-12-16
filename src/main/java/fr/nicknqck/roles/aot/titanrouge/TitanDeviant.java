@@ -17,7 +17,6 @@ import java.util.UUID;
 public class TitanDeviant extends TitansRoles {
 	public TitanDeviant(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

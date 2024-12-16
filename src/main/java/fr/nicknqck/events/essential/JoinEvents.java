@@ -1,9 +1,8 @@
 package fr.nicknqck.events.essential;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,12 +18,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.ItemsManager;
-import fr.nicknqck.roles.builder.RoleBase;
+import org.bukkit.potion.PotionEffect;
 
 public class JoinEvents implements Listener{
 	private final GameState gameState;
 	public JoinEvents() {
 		this.gameState = GameState.getInstance();
+		new ToggleFlyEvent();
 	}
 	
  	@EventHandler(priority = EventPriority.LOWEST)
@@ -32,8 +32,6 @@ public class JoinEvents implements Listener{
 		Player player = event.getPlayer();
 		GameState gameState = GameState.getInstance();
 		Main.getInstance().getScoreboardManager().onLogin(player);
-		System.out.println("new Player: "+player);
-		printConsoleAndRegister(player);
 
 		// Join Message
 		String joinMessage = "";
@@ -42,13 +40,24 @@ public class JoinEvents implements Listener{
 			gameState.addInLobbyPlayers(player);
 			player.setMaxHealth(20.0);
 			player.setGameMode(GameMode.ADVENTURE);
+			for (PotionEffect effect : player.getActivePotionEffects()) {
+				player.removePotionEffect(effect.getType());
+			}
 			ItemsManager.GiveHubItems(player);
-			player.teleport(new Location(Bukkit.getWorld("world"), 0, 151, 0));
+			player.teleport(new Location(Main.getInstance().getWorldManager().getLobbyWorld(), 0, 151, 0));
 			player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 			joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint le Lobby §c"+gameState.getInLobbyPlayers().size()+"§r/§6"+ gameState.getroleNMB() +"§r";
 			break;
 		case InGame:
-			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player) || !gameState.getInGamePlayers().contains(player)) {
+			if (gameState.getInGamePlayers().contains(event.getPlayer().getUniqueId())) {
+				GamePlayer gamePlayer = gameState.getGamePlayer().get(event.getPlayer().getUniqueId());
+				if (gamePlayer != null) {
+					gamePlayer.onJoin(event.getPlayer());
+				}
+				event.setJoinMessage(null);
+				return;
+			}
+			if(!gameState.getInSpecPlayers().contains(player) || !gameState.getInLobbyPlayers().contains(player.getUniqueId()) || !gameState.getInGamePlayers().contains(player.getUniqueId())) {
 				gameState.addInSpecPlayers(player);
 				joinMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.GREEN+" A rejoint la liste des Spectateurs";
 				player.setGameMode(GameMode.SPECTATOR);
@@ -65,6 +74,7 @@ public class JoinEvents implements Listener{
 	}
  	@EventHandler(priority = EventPriority.HIGHEST)
 	private void onCustomJoin(PlayerJoinEvent e) {
+		if (gameState.getServerState().equals(GameState.ServerStates.InGame))return;
 		gameState.updateGameCanLaunch();
 		UUID uuid = e.getPlayer().getUniqueId();
 		Player player = e.getPlayer();
@@ -91,51 +101,4 @@ public class JoinEvents implements Listener{
 			}
 		}
 	}
- 	@SuppressWarnings("unchecked")
-	private void printConsoleAndRegister(Player player) {
-		// Update Players
-		for (Player p : (ArrayList<Player>) gameState.getInGamePlayers().clone()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				gameState.getInGamePlayers().remove(p);
-				gameState.getInGamePlayers().add(player);
-				System.out.println("game Player: "+p);
-			}
-		}
-		for (Player p : (ArrayList<Player>) gameState.getInLobbyPlayers().clone()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				gameState.getInLobbyPlayers().remove(p);
-				gameState.getInLobbyPlayers().add(player);
-				System.out.println("lobby Player: "+p);
-			}
-		}
-		for (Player p : (ArrayList<Player>) gameState.getInSpecPlayers().clone()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				gameState.getInSpecPlayers().remove(p);
-				gameState.getInSpecPlayers().add(player);
-				System.out.println("spec Player: "+p);
-			}
-		}
-		for (Player p : ((HashMap<Player, HashMap<Player, RoleBase>>)gameState.getPlayerKills().clone()).keySet()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				HashMap<Player, RoleBase> hash = gameState.getPlayerKills().get(p);
-				gameState.getPlayerKills().remove(p);
-				gameState.getPlayerKills().put(player, hash);
-				System.out.println("kill Player: "+p);
-			}
-		}
-		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (Bukkit.getPlayer(r.owner.getDisplayName()) == player) {
-				r.owner = player;
-				System.out.println("owner Player: "+r.owner);
-			}
-		}
-		for (Player p : ((HashMap<Player, RoleBase>)gameState.getPlayerRoles().clone()).keySet()) {
-			if (Bukkit.getPlayer(p.getDisplayName()) == player) {
-				RoleBase role = gameState.getPlayerRoles().get(p);
-				gameState.getPlayerRoles().remove(p);
-				gameState.getPlayerRoles().put(player, role);
-				System.out.println("role Player: "+p);
-			}
-		}
- 	}
 }

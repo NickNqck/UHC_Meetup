@@ -3,6 +3,8 @@ package fr.nicknqck.events.blocks;
 import java.util.Arrays;
 
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,7 +18,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -38,10 +39,10 @@ public class BlockManager implements Listener{
 	}
 	
 	 @EventHandler
-	    public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
-	        Block block = event.getBlockClicked().getRelative(event.getBlockFace());
+	 public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
+		Block block = event.getBlockClicked().getRelative(event.getBlockFace());
 	        if (event.getBucket() == Material.WATER_BUCKET) {
-				if (gameState.WaterEmptyTiming <= 0)return;
+				if (Main.getInstance().getGameConfig().getWaterEmptyTiming() <= 0)return;
 	            new BukkitRunnable() {
 	                @Override
 	                public void run() {
@@ -50,9 +51,9 @@ public class BlockManager implements Listener{
 	                        cancel();
 	                    }
 	                }
-	            }.runTaskLater(Main.getInstance(), 20L *gameState.WaterEmptyTiming);
+	            }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getWaterEmptyTiming());
 	        }
-	        if (!gameState.LaveTitans) {
+	        if (!Main.getInstance().getGameConfig().isLaveTitans()) {
 	        	if (!gameState.hasRoleNull(event.getPlayer())) {
 	        		if (gameState.getPlayerRoles().get(event.getPlayer()) instanceof AotRoles && ((AotRoles) gameState.getPlayerRoles().get(event.getPlayer())).isTransformedinTitan) {
 	        			if (event.getBucket() == Material.LAVA_BUCKET) {
@@ -64,21 +65,15 @@ public class BlockManager implements Listener{
 	        	}
 	        }
 	        if (event.getBucket() == Material.LAVA_BUCKET) {
-				if (gameState.LavaEmptyTiming <= 0)return;
+				if (Main.getInstance().getGameConfig().getLavaEmptyTiming() <= 0)return;
 	        	new BukkitRunnable() {
 	        		public void run() {
 	        				block.setType(Material.AIR);
 	        				cancel();
 	        		}
-                }.runTaskLater(Main.getInstance(), 20L *gameState.LavaEmptyTiming);
+                }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getLavaEmptyTiming());
 	        }
 	    }
-	 @EventHandler
-	 public void onBucketFill(PlayerBucketFillEvent e) {
-		 if (!gameState.hasRoleNull(e.getPlayer())) {
-			 gameState.getPlayerRoles().get(e.getPlayer()).onBucketFill(e, e.getBucket());
-		 }
-	 }
 	@EventHandler
 	public void OnBlockPlaced(org.bukkit.event.block.BlockPlaceEvent event) {
 		for (ItemStack is : Arrays.asList(
@@ -100,7 +95,16 @@ public class BlockManager implements Listener{
 					}
 				}
 			}
-		}		
+			if (!gameState.hasRoleNull(event.getPlayer())) {
+				for (Power power : gameState.getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().getPowers()) {
+					if (power instanceof ItemPower) {
+						if (event.getItemInHand().isSimilar(((ItemPower) power).getItem()))  {
+							((ItemPower) power).call(event);
+						}
+					}
+				}
+			}
+		}
 	}
 	@EventHandler
 	public void BlockBreak(org.bukkit.event.block.BlockBreakEvent e) {
@@ -124,16 +128,8 @@ public class BlockManager implements Listener{
             }
             if (Bukkit.getWorld("Kamui") != null) {
                 if (block.getWorld().getName().equals("Kamui")) {
-                    if (block.getType().equals(Material.STAINED_CLAY) || block.getType().equals(Material.COAL_BLOCK)) {
+                    if (type != Material.BRICK && type != Material.COBBLESTONE && type != Material.OBSIDIAN) {
                         e.setCancelled(true);
-                        block.setType(Material.AIR);
-                        return;
-                    }
-                }
-            }
-            for (Player p : gameState.getInGamePlayers()) {
-                if (!gameState.hasRoleNull(p)) {
-                    if (gameState.getPlayerRoles().get(player).onAllPlayerBlockBreak(e, player, block)) {
                         return;
                     }
                 }
@@ -159,7 +155,19 @@ public class BlockManager implements Listener{
                     }
                 }
             }
+			if (!gameState.hasRoleNull(player)) {
+				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+					if (power instanceof ItemPower) {
+						for (ItemStack itemStack : e.getBlock().getDrops()) {
+							if (itemStack.isSimilar(((ItemPower) power).getItem())) {
+								((ItemPower) power).call(e);
+							}
+						}
+					}
+				}
+			}
         }
+		System.out.println(e.isCancelled());
 	}
 	@EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {

@@ -10,8 +10,9 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
-import fr.nicknqck.utils.PacketDisplay;
+import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -45,6 +46,12 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> new YoriichiHealthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1), 40);
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.SOLEIL;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Yoriichi;
@@ -111,7 +118,6 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 						sendCustomActionBar(owner, message);
 					}				
 			}
-				
 		}
 		super.Update(gameState);
 	}
@@ -135,7 +141,7 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner) {
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role.getRoles() == Roles.Kokushibo && !killkoku) {
@@ -160,7 +166,7 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	}
 	@EventHandler
 	private void onUHCDamage(UHCPlayerBattleEvent event) {
-		if (event.getDamager().getUuid().equals(getPlayer())) {
+		if (event.getDamager().getUuid().equals(getPlayer()) && event.isPatch()) {
 			if (activersoufle) {
 				Player victim = Bukkit.getPlayer(event.getVictim().getUuid());
 				if (victim != null) {

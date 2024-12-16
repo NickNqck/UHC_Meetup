@@ -7,6 +7,7 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -83,7 +84,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 				timePassedNearby.remove(p.getUniqueId(), i);
 				timePassedNearby.put(p.getUniqueId(), i+1);
 					if (timePassedNearby.get(p.getUniqueId()) == 60*3) {
-					owner.sendMessage("le rôle du joueur "+p.getName()+" est §c"+getPlayerRoles(p));
+					owner.sendMessage("le rôle du joueur "+p.getName()+" est §c"+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getName());
 					}
 			} else {
 				timePassedNearby.put(p.getUniqueId(), Integer.MAX_VALUE);
@@ -132,7 +133,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 

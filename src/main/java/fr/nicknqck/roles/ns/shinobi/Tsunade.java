@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -99,7 +100,9 @@ public class Tsunade extends ShinobiRoles {
 	private final List<UUID> inKatsuyu = new ArrayList<>();
 	private Inventory KatsuyuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 54, "§aKatsuyu");
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
 				if (inKatsuyu.contains(p.getUniqueId())) {
 					inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName("§a"+p.getName()).toItemStack());
@@ -115,7 +118,9 @@ public class Tsunade extends ShinobiRoles {
 		if (inv.getTitle().equals("§aKatsuyu") || inv.getName().equals("§aKatsuyu")) {
 			if (item != null && item.getType() == Material.SKULL_ITEM) {
 				if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (item.getItemMeta().getDisplayName().contains(p.getName())) {
 							if (inKatsuyu.contains(p.getUniqueId())) {
 								inKatsuyu.remove(p.getUniqueId());
@@ -134,7 +139,7 @@ public class Tsunade extends ShinobiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 

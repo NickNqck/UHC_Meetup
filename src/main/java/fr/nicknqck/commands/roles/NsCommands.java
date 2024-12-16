@@ -3,10 +3,17 @@ package fr.nicknqck.commands.roles;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.utils.powers.CommandPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -39,6 +46,135 @@ public class NsCommands implements CommandExecutor {
 			if (args.length >= 1) {
 				if (args[0].equalsIgnoreCase("roles")) {
 					sender.sendMessage(gameState.getRolesList());
+					return true;
+				}
+				if (args[0].equalsIgnoreCase("intelligences")) {
+					final List<NSRoles> genie = new ArrayList<>();
+					final List<NSRoles> intelligent = new ArrayList<>();
+					final List<NSRoles> moyenne = new ArrayList<>();
+					final List<NSRoles> peu = new ArrayList<>();
+					for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+						if (!gamePlayer.isAlive())continue;
+						if (gamePlayer.getRole() == null)continue;
+						if (gamePlayer.getRole() instanceof NSRoles) {
+							NSRoles role = (NSRoles) gamePlayer.getRole();
+							if (role.getIntelligence().equals(Intelligence.GENIE)) {
+								genie.add(role);
+							} else if (role.getIntelligence().equals(Intelligence.INTELLIGENT)) {
+								intelligent.add(role);
+							} else if (role.getIntelligence().equals(Intelligence.MOYENNE) || role.getIntelligence().equals(Intelligence.CONNUE)) {
+								moyenne.add(role);
+							} else if (role.getIntelligence().equals(Intelligence.PEUINTELLIGENT)) {
+								peu.add(role);
+							}
+						}
+					}
+					if (genie.isEmpty() && intelligent.isEmpty() && moyenne.isEmpty() && peu.isEmpty()) {
+						sender.sendMessage("§7Aucune personne n'a de rôle venant de l'univers de§a Naruto§7 n'est présent en jeu/vie");
+						return true;
+					}
+					sender.sendMessage("§7Voici la liste des§c roles§7 avec leurs§a intelligence§7:");
+					sender.sendMessage("");
+					if (!genie.isEmpty()) {
+						sender.sendMessage("§2§lGénie: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : genie) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
+					if (!intelligent.isEmpty()) {
+						sender.sendMessage("§a§lIntelligent: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : intelligent) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
+					if (!moyenne.isEmpty()) {
+						sender.sendMessage("§e§lMoyenne: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : moyenne) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
+					if (!peu.isEmpty()) {
+						sender.sendMessage("§c§lPeu Intelligent: ");
+						StringBuilder sb = new StringBuilder();
+						for (NSRoles roles : peu) {
+							sb.append(roles.getOriginTeam().getColor()).append(roles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+					}
+					return true;
+				}
+				if (args[0].equalsIgnoreCase("uchirang")) {
+					sender.sendMessage("§7Voici la liste des rangs des§4§l Uchiwas§7:");
+					sender.sendMessage("");
+					List<UchiwaRoles> legendaire = new ArrayList<>();
+					List<UchiwaRoles> cool = new ArrayList<>();
+					List<UchiwaRoles> useless = new ArrayList<>();
+					if (gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+						for (GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
+							if (gamePlayer.getRole() == null)continue;
+							if (gamePlayer.getRole() instanceof UchiwaRoles) {
+								if (((UchiwaRoles) gamePlayer.getRole()).getUchiwaType().equals(UchiwaRoles.UchiwaType.LEGENDAIRE)) {
+									legendaire.add((UchiwaRoles) gamePlayer.getRole());
+								} else if (((UchiwaRoles) gamePlayer.getRole()).getUchiwaType().equals(UchiwaRoles.UchiwaType.IMPORTANT)) {
+									cool.add((UchiwaRoles) gamePlayer.getRole());
+								} else if (((UchiwaRoles) gamePlayer.getRole()).getUchiwaType().equals(UchiwaRoles.UchiwaType.INUTILE)) {
+									useless.add((UchiwaRoles) gamePlayer.getRole());
+								}
+							}
+						}
+					} else {
+						for (IRole iRole : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+							if (iRole instanceof UchiwaRoles) {
+								if (((UchiwaRoles) iRole).getUchiwaType().equals(UchiwaRoles.UchiwaType.LEGENDAIRE)) {
+									legendaire.add((UchiwaRoles) iRole);
+								} else if (((UchiwaRoles) iRole).getUchiwaType().equals(UchiwaRoles.UchiwaType.IMPORTANT)) {
+									cool.add((UchiwaRoles) iRole);
+								} else if (((UchiwaRoles) iRole).getUchiwaType().equals(UchiwaRoles.UchiwaType.INUTILE)) {
+									useless.add((UchiwaRoles) iRole);
+								}
+							}
+						}
+					}
+					if (!legendaire.isEmpty()) {
+						sender.sendMessage("§dLégendaire§7: ");
+						StringBuilder sb = new StringBuilder();
+						for (UchiwaRoles uRoles : legendaire) {
+							sb.append(uRoles.getOriginTeam().getColor()).append(uRoles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+						sender.sendMessage("");
+					}
+					if (!cool.isEmpty()) {
+						sender.sendMessage("§cImportant§7: ");
+						StringBuilder sb = new StringBuilder();
+						for (UchiwaRoles uRoles : cool) {
+							sb.append(uRoles.getOriginTeam().getColor()).append(uRoles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+						sender.sendMessage("");
+					}
+					if (!useless.isEmpty()) {
+						sender.sendMessage("§aInutile§7: ");
+						StringBuilder sb = new StringBuilder();
+						for (UchiwaRoles uRoles : useless) {
+							sb.append(uRoles.getOriginTeam().getColor()).append(uRoles.getName()).append("§7, ");
+						}
+						String string = sb.substring(0, sb.toString().length()-3)+".";
+						sender.sendMessage(string);
+						sender.sendMessage("");
+					}
 					return true;
 				}
 				if (!gameState.hasRoleNull(sender)) {
@@ -105,11 +241,6 @@ public class NsCommands implements CommandExecutor {
 									b.getBiju().setHote(sender.getUniqueId());
 								}
 								gameState.setJubiCrafter(sender);
-								for (Player p : gameState.getInGamePlayers()) {
-									if (!gameState.hasRoleNull(p)) {
-										gameState.getPlayerRoles().get(p).onJubiInvoque(sender);
-									}
-								}
 								GameListener.SendToEveryone("");
 								GameListener.SendToEveryone("§c§lLe Jûbi à été invoquée !");
 								GameListener.SendToEveryone("");
@@ -130,6 +261,13 @@ public class NsCommands implements CommandExecutor {
 					if (!gameState.hasRoleNull(sender) && gameState.getPlayerRoles().get(sender).getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
 						NSRoles role = (NSRoles) gameState.getPlayerRoles().get(sender);
 						role.onNsCommand(args);
+						if (!role.getPowers().isEmpty()) {
+							for (Power power : role.getPowers()) {
+								if (power instanceof CommandPower) {
+									((CommandPower) power).call(args, CommandPower.CommandType.NS, sender);
+								}
+							}
+						}
 						if (role instanceof Obito) {
 							for (RoleBase r : gameState.getPlayerRoles().values()) {
 								if (r.getGamePlayer().isAlive()) {

@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
@@ -43,20 +44,9 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdDanse, cdSentir;
     private boolean sentirUse, useAssassin;
-    private final TextComponent automaticDesc;
+    private TextComponent automaticDesc;
     public Tanjiro(UUID player) {
         super(player);
-        getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
-        new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        setCanuseblade(true);
-        Lames.FireResistance.getUsers().put(player, Integer.MAX_VALUE);
-        AutomaticDesc desc = new AutomaticDesc(this);
-        desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
-        .setItems(new TripleMap<>(getDanseText().getHoverEvent(), getDanseText().getText(), 60*12))
-        .setCommands(new TripleMap<>(getSentir().getHoverEvent(), getSentir().getText(), 60*5), new TripleMap<>(getSentirJoueur().getHoverEvent(), getSentirJoueur().getText(), -500), new TripleMap<>(getAssassin().getHoverEvent(), getAssassin().getText(), -500))
-        .addParticularites(getKillAssassin().getHoverEvent());
-        this.automaticDesc = desc.getText();
 
     }
 
@@ -64,6 +54,21 @@ public class Tanjiro extends SlayerRoles implements Listener {
     public void GiveItems() {
         giveItem(owner, false, getItems());
         giveItem(owner, false, Items.getLamedenichirin());
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
+        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+        new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        setCanuseblade(true);
+        Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
+        AutomaticDesc desc = new AutomaticDesc(this);
+        desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
+                .setItems(new TripleMap<>(getDanseText().getHoverEvent(), getDanseText().getText(), 60*12))
+                .setCommands(new TripleMap<>(getSentir().getHoverEvent(), getSentir().getText(), 60*5), new TripleMap<>(getSentirJoueur().getHoverEvent(), getSentirJoueur().getText(), -500), new TripleMap<>(getAssassin().getHoverEvent(), getAssassin().getText(), -500))
+                .addParticularites(getKillAssassin().getHoverEvent());
+        this.automaticDesc = desc.getText();
     }
 
     @Override
@@ -145,7 +150,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     cdDanse = 60*12;
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60*5, 0, false, false), true);
-                    List<Player> liste = getListPlayerFromRole(Nezuko.class);
+                    List<Player> liste = getListPlayerFromRole(NezukoV2.class);
                     if (!liste.isEmpty()) {
                         Location loc = event.getPlayer().getLocation();
                         for (Player p : liste) {
@@ -173,7 +178,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private void onEndGame(EndGameEvent event) {
         HandlerList.unregisterAll(this);
     }
-
     @Override
     public void onDSCommandSend(String[] args, GameState gameState) {
         if (args[0].equalsIgnoreCase("assassin")) {
@@ -229,7 +233,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 if (target != null) {
                     if (!gameState.hasRoleNull(target)) {
                         RoleBase role = gameState.getPlayerRoles().get(target);
-                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof Nezuko || role.getOriginTeam().equals(TeamList.Demon);
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         owner.sendMessage("§c"+target.getName()+(demon ? "§7 est un§c démon" : "§7 n'est pas un§c démon"));
                         sentirUse = true;
                     }
@@ -245,7 +249,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 for (Player player : Loc.getNearbyPlayersExcept(owner, 30)) {
                     if (!gameState.hasRoleNull(player)) {
                         RoleBase role = gameState.getPlayerRoles().get(player);
-                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof Nezuko || role.getOriginTeam().equals(TeamList.Demon);
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         if (demon) {
                             amountDemon++;
                         }
@@ -257,6 +261,12 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
         super.onDSCommandSend(args, gameState);
     }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.EAU;
+    }
+
     @EventHandler
     private void onUHCPlayerKill(UHCPlayerKillEvent event){
         if (event.getPlayerKiller() != null) {

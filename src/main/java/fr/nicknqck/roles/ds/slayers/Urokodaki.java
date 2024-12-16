@@ -7,7 +7,8 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.roles.ds.slayers.pillier.TomiokaV2;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -22,19 +23,17 @@ import java.util.Random;
 import java.util.UUID;
 
 public class Urokodaki extends SlayerRoles {
-	private final TextComponent automaticDesc;
+	private TextComponent automaticDesc;
 	public Urokodaki(UUID player) {
 		super(player);
-		this.setCanuseblade(true);
-		AutomaticDesc automaticDesc = new AutomaticDesc(this);
-		automaticDesc.addCustomWhenEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, false), "dans l'§beau").addItem(
-				this.SoufleComponent(), 60*5
-		);
-		this.automaticDesc = automaticDesc.getText();
-		owner.spigot().sendMessage(this.automaticDesc);
 	}
 
-    @Override
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.EAU;
+	}
+
+	@Override
 	public Roles getRoles() {
 		return Roles.Urokodaki;
 	}
@@ -42,6 +41,16 @@ public class Urokodaki extends SlayerRoles {
 	@Override
 	public void resetCooldown() {
 		souflecooldown = 0;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		this.setCanuseblade(true);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this);
+		automaticDesc.addCustomWhenEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20, 0, false, false), "dans l'§beau").addItem(
+				this.SoufleComponent(), 60*5
+		);
+		this.automaticDesc = automaticDesc.getText();
 	}
 
 	@Override
@@ -100,10 +109,10 @@ public class Urokodaki extends SlayerRoles {
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim != owner) {
-			if (gameState.getInGamePlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase role = gameState.getPlayerRoles().get(victim);
-					if (role instanceof Tomioka || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
+					if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
 						Random random = new Random();
 						int rint = random.nextInt(2);
 						System.out.println("Speed Urokodaki 1"+ owner.getWalkSpeed());

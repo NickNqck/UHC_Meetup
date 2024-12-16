@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
@@ -21,13 +22,21 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
     private DemonsRoles lune;
     public DemonInferieurRole(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        super.RoleGiven(gameState);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             List<DemonsRoles> roles = new ArrayList<>();
-            for (Player p : gameState.getInGamePlayers()) {
+            for (UUID u : gameState.getInGamePlayers()) {
+                Player p = Bukkit.getPlayer(u);
+                if (p == null)continue;
                 if (!gameState.hasRoleNull(p)) {
                     RoleBase role = gameState.getPlayerRoles().get(p);
                     if (role instanceof DemonsRoles) {
-                        if (((DemonsRoles) role).getRank().equals(DemonType.LuneSuperieur)) {
+                        DemonsRoles d = (DemonsRoles) role;
+                        if (d.getRank().equals(DemonType.SUPERIEUR) || d.getRank().equals(DemonType.INFERIEUR)) {
                             roles.add((DemonsRoles) role);
                         }
                     }
@@ -46,6 +55,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
         }, 20*5);
         EventUtils.registerEvents(this);
     }
+
     @EventHandler
     private void onEndGame(EndGameEvent event) {
         EventUtils.unregisterEvents(this);

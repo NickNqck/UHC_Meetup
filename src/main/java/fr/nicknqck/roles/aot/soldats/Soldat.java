@@ -3,11 +3,13 @@ package fr.nicknqck.roles.aot.soldats;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +26,6 @@ public class Soldat extends SoldatsRoles {
 	public kit form = null;
 	public Soldat(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {
@@ -48,7 +49,7 @@ public class Soldat extends SoldatsRoles {
 		return "Soldat";
 	}
 
-	private String[] Garnison = new String[] {
+	private final String[] Garnison = new String[] {
             AllDesc.bar,
             "§lkit :§r Garnison",
             "",
@@ -60,7 +61,7 @@ public class Soldat extends SoldatsRoles {
             "",
             AllDesc.point+"Votre bouteille d'alcool possède 3 minutes de cooldown"
     };
-    private String[] Brigade = new String[] {
+    private final String[] Brigade = new String[] {
     		AllDesc.bar,
             "§lkit :§r Brigade Spécial",
             "",
@@ -69,7 +70,7 @@ public class Soldat extends SoldatsRoles {
             "",
             AllDesc.bar,
     };
-    private String[] Bataillon = new String[] {
+    private final String[] Bataillon = new String[] {
     		AllDesc.bar,
             "§lkit :§r Bataillon d'exploration",
             "",
@@ -81,7 +82,7 @@ public class Soldat extends SoldatsRoles {
     };
 @Override
 public void RoleGiven(GameState gameState) {
-	int rint = -5;
+	int rint;
 	do {
 		rint = RandomUtils.getRandomInt(0, 2);
 		System.out.println(rint);
@@ -114,15 +115,15 @@ public boolean ItemUse(ItemStack item, GameState gameState) {
 	owner.sendMessage("Vous venez d'utiliser votre bouteille d'alcool");
 	int rint = RandomUtils.getRandomInt(0, 2);
 	if (rint == 0) {
-		givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*1), 0, true);
+		givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60), 0, true);
 		cdalcool = 60*3;
 	} else {
 		if (rint == 1) {
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60*1), 0, true);
+			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60), 0, true);
 			cdalcool = 60*3;
 		} else {
 			if (rint == 2) {
-				givePotionEffet(owner, PotionEffectType.CONFUSION, 20*(20*1), 3, true);
+				givePotionEffet(owner, PotionEffectType.CONFUSION, 20*(20), 3, true);
 				cdalcool = 60*3;
 				
 			}
@@ -134,7 +135,9 @@ public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (cdcarabine <= 0) {
 			double min = 15;
 			Player target = null;
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (owner.canSee(p) && p != owner) {
 					double dist = Math.abs(p.getLocation().distance(owner.getLocation()));
 					if (dist < min) {
@@ -181,7 +184,8 @@ public void resetCooldown() {
 public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 	if (killer == owner) {
 		if (victim != null) {
-			if (getPlayerRoles(victim) instanceof TitansRoles || getPlayerRoles(victim) instanceof MahrRoles) {
+			GamePlayer gamePlayer = gameState.getGamePlayer().get(victim.getUniqueId());
+			if (gamePlayer.getRole() instanceof TitansRoles || gamePlayer.getRole() instanceof MahrRoles) {
 				int rint = RandomUtils.getRandomInt(0, 2);
 				if (rint == 0) {
 					addBonusResi(7);

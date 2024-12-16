@@ -3,14 +3,14 @@ package fr.nicknqck.commands.roles;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
-import fr.nicknqck.roles.ds.slayers.Kagaya;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
+import fr.nicknqck.utils.powers.CommandPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,9 +20,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class DSmtpCommands implements CommandExecutor {
-	GameState gameState;
+
+    private final GameState gameState;
 	
 	public DSmtpCommands(GameState gameState) {this.gameState = gameState;}
 
@@ -32,15 +34,10 @@ public class DSmtpCommands implements CommandExecutor {
 			return true;
 		}
 		if (args.length >= 1) {
-            for (Events e : Events.values()) {
-                if (e.getEvent().onSubDSCommand((Player) sender, args)) {
-                    return true;
-                }
-            }
 			if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("role")) {
                     Player player = (Player) sender;
-                    if (gameState.getInGamePlayers().contains(player)
+                    if (gameState.getInGamePlayers().contains(player.getUniqueId())
                             && gameState.getPlayerRoles().containsKey(player)) {
                         gameState.getPlayerRoles().get(player).OpenFormInventory(gameState);
                         return true;
@@ -105,32 +102,6 @@ public class DSmtpCommands implements CommandExecutor {
 						return true;
 					}
 				if (gameState.getServerState() == ServerStates.InGame) {
-					if (args[0].equalsIgnoreCase("getpillier")) {
-                        for (Player e : gameState.getInGamePlayers()) {
-                            Player s = (Player) sender;
-                            if (!gameState.hasRoleNull(s)) {
-                                if (gameState.getPlayerRoles().containsKey(s)) {
-                                    if (gameState.getPlayerRoles().containsKey(e)) {
-                                        if (gameState.getPlayerRoles().get(s) instanceof Kagaya) {
-                                            RoleBase r = gameState.getPlayerRoles().get(s);
-                                            Kagaya k = (Kagaya) r;
-                                            if (k.pacte3) {
-                                                if (k.access) {
-                                                    k.pillier = gameState.getPillier().get(0);
-                                                    k.pillier.sendMessage("Vous êtes le pillier de Kagaya");
-                                                    k.owner.sendMessage("Votre pillier est:§6 " + k.pillier.getName());
-                                                    return true;
-                                                }
-                                            } else {
-                                                k.owner.sendMessage("Vous n'avez pas fait le bon pacte donc vous ne pouvez pas faire cette commande !");
-                                                return true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
                         gameState.sendDescription((Player) sender);
                         return true;
@@ -148,7 +119,7 @@ public class DSmtpCommands implements CommandExecutor {
 			
 			if (args[0].equalsIgnoreCase("chat")) {
                 if (gameState.getPlayerRoles().containsKey(sender)) {
-                    if (!gameState.getInGamePlayers().contains(sender)) return false;
+                    if (!gameState.getInGamePlayers().contains(((Player) sender).getUniqueId())) return false;
 //Debut chat muzan kokushibo
                     if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo || gameState.getPlayerRoles().get(sender) instanceof Muzan) {
                         StringBuilder sb = new StringBuilder();
@@ -158,7 +129,9 @@ public class DSmtpCommands implements CommandExecutor {
                         }
                         String name2 = sb.toString();
                         String uwu = "(§c" + gameState.getPlayerRoles().get(sender).getRoles().name() + "§r)§c§l " + sender.getName() + "§r : " + name2;
-                        for (Player p : gameState.getInGamePlayers()) {
+                        for (UUID u : gameState.getInGamePlayers()) {
+                            Player p = Bukkit.getPlayer(u);
+                            if (p == null)continue;
                             if (gameState.getPlayerRoles().containsKey(p)) {
                                 if (gameState.getPlayerRoles().get(sender) instanceof Kokushibo) {
                                     if (gameState.getPlayerRoles().get(p) instanceof Muzan) {
@@ -187,7 +160,9 @@ public class DSmtpCommands implements CommandExecutor {
                         String name2 = sb.toString();
                         String owo = "(§6" + gameState.getPlayerRoles().get(sender).getRoles().name() + "§r)§6§l " + sender.getName() + "§r : " + name2;
                         if (gameState.JigoroV2Pacte2) {
-                            for (Player p : gameState.getInGamePlayers()) {
+                            for (UUID u : gameState.getInGamePlayers()) {
+                                Player p = Bukkit.getPlayer(u);
+                                if (p == null)continue;
                                 if (gameState.getPlayerRoles().containsKey(p)) {
                                     if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2) {
                                         if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {
@@ -216,6 +191,13 @@ public class DSmtpCommands implements CommandExecutor {
 					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getPlayerRoles().get(sender);
 					if (role.getGamePlayer().isAlive()) {
 						((DemonsSlayersRoles) gameState.getPlayerRoles().get(sender)).onDSCommandSend(args, gameState);
+                        if (!role.getPowers().isEmpty()) {
+                            for (Power power : role.getPowers()) {
+                                if (power instanceof CommandPower) {
+                                    ((CommandPower) power).call(args, CommandPower.CommandType.DS, (Player) sender);
+                                }
+                            }
+                        }
 					}
 					return true;
 				}

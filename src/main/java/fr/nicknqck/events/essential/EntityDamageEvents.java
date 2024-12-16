@@ -9,6 +9,7 @@ import fr.nicknqck.utils.AttackUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,6 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+
+import java.util.UUID;
 
 public class EntityDamageEvents implements Listener{
 
@@ -53,7 +56,9 @@ public class EntityDamageEvents implements Listener{
 				Player player = (Player) event.getEntity();
 				Player killer = player.getKiller();
 				double damage = event.getFinalDamage();
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (!gameState.hasRoleNull(p)) {
 						gameState.getPlayerRoles().get(p).onALLPlayerDamage(event, player);
 					}
@@ -80,23 +85,6 @@ public class EntityDamageEvents implements Listener{
 				if (gameState.shutdown.contains(player)) {
 					event.setCancelled(true);
 				}
-				if (event.getCause() == DamageCause.BLOCK_EXPLOSION || event.getCause() == DamageCause.ENTITY_EXPLOSION) {
-					if (gameState.getPlayerRoles().containsKey(player)) {
-						if (gameState.getPlayerRoles().get(player).onReceveExplosionDamage()) {
-							event.setDamage(0);
-							event.setCancelled(true);
-						}
-						for (Player p : gameState.getInGamePlayers()) {
-							if (!gameState.hasRoleNull(p)) {
-								if (!event.isCancelled()) {
-									gameState.getPlayerRoles().get(p).onAllPlayerDamageByExplosion(event, event.getCause(), p);
-								} else {
-									break;
-								}
-							}
-						}
-					}
-				}
 				if (gameState.getPlayerRoles().containsKey(player)) {
 					if (gameState.getPlayerRoles().get(player).isInvincible()) {
 						event.setCancelled(true);
@@ -107,7 +95,7 @@ public class EntityDamageEvents implements Listener{
 					event.setCancelled(true);
 				}
 				if ((player.getHealth()-damage) <= 0) {
-					if (gameState.getInGamePlayers().contains(player)) {
+					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 						if (gameState.getPlayerRoles().containsKey(player)) {
 							if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
 								for (Player p : Bukkit.getOnlinePlayers()) {
@@ -146,6 +134,59 @@ public class EntityDamageEvents implements Listener{
 					e.setDamage(0.0);
 					e.setCancelled(true);
 				}
+			}
+		}
+	}
+	@EventHandler(priority = EventPriority.HIGHEST)
+	private void OnDamagedEntityByEntity(EntityDamageByEntityEvent event) {
+		if (gameState.getServerState() == ServerStates.InGame) {
+			if (event.getEntity() instanceof Player) {
+				Player player = (Player) event.getEntity();
+				Entity damageur = event.getDamager();
+				double damage = event.getFinalDamage();
+				if (damageur instanceof Player) {
+					Player damager = (Player) event.getDamager();
+					if (!gameState.hasRoleNull(damager)) {
+						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().ItemUseAgainst(damager.getItemInHand(), player, gameState);
+						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().neoItemUseAgainst(damager.getItemInHand(), player, gameState, damager);
+						/*
+						 * (damager).getItemInHand() = ItemStack item
+						 * player = Player victim
+						 */
+						if (player != null) {
+							Player attacker = (Player) damageur;
+							if (gameState.shutdown.contains(attacker)) {
+								event.setCancelled(true);
+							}
+							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
+						}
+					}
+				}
+				assert player != null;
+				if (player.getHealth()-damage <= 0) {
+					if (event.getCause() != DamageCause.FALL) {
+						if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
+							if (!gameState.hasRoleNull(player)) {
+								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
+									assert damageur instanceof Player;
+									gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
+									event.setCancelled(true);
+								}
+							}
+						}
+					} else {
+						if (gameState.getPlayerRoles().containsKey(player)) {
+							if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
+								event.setDamage(0);
+								event.setCancelled(true);
+							}
+						}
+					}
+				}
+			}
+		} else {//else du serverstates.ingame
+			if (AntiPvP.isAntipvplobby()) {
+				event.setCancelled(true);
 			}
 		}
 	}

@@ -45,6 +45,8 @@ public class Matatabi extends Biju{
 	private Blaze blaze;
 	private Location spawn;
 	private GameState gameState;
+	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
+
 	@Override
 	public LivingEntity getLivingEntity() {
 		return blaze;
@@ -89,7 +91,7 @@ public class Matatabi extends Biju{
 
 	@Override
 	public String getName() {
-		return "§aMatatabi";
+		return "§6Matatabi";
 	}
 
 	@Override
@@ -126,7 +128,7 @@ public class Matatabi extends Biju{
 							if (!(entity instanceof Player)) continue;
 							Player player = (Player) entity;
 							player.setFireTicks(20 * 16);
-							player.sendMessage((getName() + " &fvient de vous mettre en &cfeu&f."));
+							player.sendMessage((getName() + " §fvient de vous mettre en §cfeu§f."));
 						}
 						timeAttack = 10;
 					}
@@ -148,7 +150,6 @@ public class Matatabi extends Biju{
 	public ItemStack getItem() {
 		return Items.Matatabi();
 	}
-	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
 	@Override
 	public int getTimeSpawn() {
 		return TimeSpawn;
@@ -162,7 +163,7 @@ public class Matatabi extends Biju{
 		@Override
 		public void run() {
 			timer++;
-			if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+			if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !isEnable()) {
 				cancel();
 				return;
 			}
@@ -178,7 +179,7 @@ public class Matatabi extends Biju{
 	}
 	@Override
 	public void onDeath(LivingEntity entity, List<ItemStack> drops) {
-		if (blaze != null && entity.getUniqueId() == blaze.getUniqueId()) {
+		if (blaze != null && entity.getUniqueId().equals(blaze.getUniqueId())) {
 			Player k = null;
 			if (entity.getKiller() instanceof Arrow) {
 				Arrow arrow = (Arrow) entity.getKiller();
@@ -203,9 +204,6 @@ public class Matatabi extends Biju{
 					spawnBiju();
 					return;
 				}
-			} else {
-				spawnBiju();
-				return;
 			}
 			this.blaze = null;
 			drops.clear();
@@ -224,7 +222,7 @@ public class Matatabi extends Biju{
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-							Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
+							Bukkit.broadcastMessage((getName() + " §fvient de réapparaître."));
 						} else {
 							cancel();
 						}
@@ -236,7 +234,12 @@ public class Matatabi extends Biju{
 
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setDurability((short) 4).setName(getName()).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore(getBijus().isEnable() ? "§aActivé" : "§cDésactivé").toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setDurability(4)
+				.setName(getName())
+				.addEnchant(Enchantment.ARROW_DAMAGE, 1)
+				.hideAllAttributes()
+				.setLore(isEnable() ? "§aActivé" : "§cDésactivé")
+				.toItemStack();
 	}
 
 	@Override
@@ -329,6 +332,5 @@ public class Matatabi extends Biju{
 		return false;
 	}
 	@Override
-	public void onJubiInvoc(Player invoquer) {
-	}
+	public void onJubiInvoc(Player invoquer) {}
 }

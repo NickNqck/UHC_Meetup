@@ -4,10 +4,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -17,17 +15,15 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import fr.nicknqck.utils.powers.KamuiUtils.Users;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -39,12 +35,18 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class Obito extends NSRoles {
+public class Obito extends JubiRoles {
 	public List<Player> Tsukuyomi = new ArrayList<>();
 	private fr.nicknqck.roles.ns.power.Izanami izanami;
 	private int cdNinjutsu = 0;
 	public Obito(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
+		System.out.println("Called RoleGiven in "+this);
 		setChakraType(Chakras.KATON);
 		if (!gameState.attributedRole.contains(Roles.Kakashi)) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
@@ -58,17 +60,12 @@ public class Obito extends NSRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull GameState.Roles getRoles() {
 		return Roles.Obito;
 	}
 	@Override
 	public String getName() {
 		return "Obito";
-	}
-
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Jubi;
 	}
      @Override
 	public String[] Desc() {
@@ -155,18 +152,11 @@ public class Obito extends NSRoles {
 	private ItemStack KamuiItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§dKamui").setLore("§7Permet de vous téléportez ou de téléporter un joueur dans le Kamui").toItemStack();
 	}
-	private ItemStack TraqueurItem() {
-		return new ItemBuilder(Material.COMPASS)
-				.setName("§dTraqueur")
-				.setLore("§7Permet de traquer les bijus")
-				.toItemStack();
-	}
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
 				GenjutsuItem(),
 				ninjutsuSpatioTemporelItem(),
-				KamuiItem(),
-				TraqueurItem()
+				KamuiItem()
 		};
 	}
 	private int cdTsukuyomi = 0;
@@ -183,8 +173,8 @@ public class Obito extends NSRoles {
 	}
 	private Inventory GenjutsuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cGenjutsu");
-		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+cd(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
-		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+cd(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
+		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+StringUtils.secondsTowardsBeautiful(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
+		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+StringUtils.secondsTowardsBeautiful(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
 		if (!Izanami) {
 			inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous permez d'infecter quelqu'un").toItemStack());
 		} else {
@@ -201,9 +191,9 @@ public class Obito extends NSRoles {
     private int cdSusano = -1;
 	private Inventory KamuiInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cKamui");
-		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+cd(cdArimasu),
+		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdArimasu),
 				"§7Permet de vous téléportez dans le Kamui").toItemStack());
-		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+cd(cdSonohoka),
+		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdSonohoka),
 				"§7Permet de téléporter un joueur dans le Kamui").toItemStack());
 		return inv;
 	}
@@ -274,32 +264,8 @@ public class Obito extends NSRoles {
 		}
 	}
 	private boolean hasIzanami = false;
-	private Bijus traqued = null;
 	@Override
-	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
-		if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-			if (player.getUniqueId() == owner.getUniqueId()) {
-				if (event.getItem().isSimilar(TraqueurItem())) {
-					if (traqued != null) {
-						if (traqued.getBiju().getMaster() == null) {
-							Location loc = traqued.getBiju().getSpawn();
-		                    owner.sendMessage(("&a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
-		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
-						} else {
-							owner.sendMessage(("§fVous traquez désormais " + Bukkit.getPlayer(traqued.getBiju().getMaster()).getName() + " §fqui se situe en :"));
-		                    Location loc = Bukkit.getPlayer(traqued.getBiju().getMaster()).getLocation();
-		                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
-		                    owner.setCompassTarget(loc);
-		                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
-						}
-					}
-				}
-			}
-		}
-	}
-	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 	@Override
@@ -361,28 +327,6 @@ public class Obito extends NSRoles {
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 		if (clicker.getUniqueId() == owner.getUniqueId()) {
 			if (inv != null && item != null && item.getType() != Material.AIR) {
-				if (inv.getTitle().equalsIgnoreCase("§7Traqueur de bijus")) {
-					event.setCancelled(true);
-					for (Bijus bijus : Bijus.values()) {
-						if (item.isSimilar(bijus.getBiju().getItem())) {
-							this.traqued = bijus;
-							owner.sendMessage("§7Vous traquez maintenant "+bijus.getBiju().getName());
-							if (bijus.getBiju().getMaster() == null) {
-								Location loc = bijus.getBiju().getSpawn();
-			                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
-			                    owner.setCompassTarget(loc);
-			                    owner.sendMessage("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn()));
-							} else {
-								owner.sendMessage(("§fVous traquez désormais " + Bukkit.getPlayer(bijus.getBiju().getMaster()).getName() + " §fqui se situe en :"));
-			                    Location loc = Bukkit.getPlayer(bijus.getBiju().getMaster()).getLocation();
-			                    owner.sendMessage(("§a" + loc.getBlockX() + "§f, §a" + loc.getBlockY() + "§f, §a" + loc.getBlockZ()));
-			                    owner.setCompassTarget(loc);
-			                    owner.sendMessage(("§a"+StringUtils.secondsTowardsBeautiful(traqued.getBiju().getTimeSpawn())));
-							}
-							break;
-						}
-					}
-				}
 				if (inv.getTitle().equals("§cKamui§7 ->§d Sonohaka")) {
 					if (item.getType() != Material.AIR) {
 						if (item.isSimilar(GUIItems.getSelectBackMenu())) {
@@ -590,20 +534,6 @@ public class Obito extends NSRoles {
 	}
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (item.isSimilar(TraqueurItem())) {
-			if (!gameState.BijusEnable) {
-				owner.sendMessage("§7Les Bijus sont désactivé...");
-				return true;
-			}
-			Inventory inv = Bukkit.createInventory(owner, 9, "§7Traqueur de bijus");
-			for (Bijus b : Bijus.values()) {
-				if (b.isEnable()) {
-					inv.addItem(b.getBiju().getItem());
-				}
-			}
-			owner.openInventory(inv);
-			return true;
-		}
 		if (item.hasItemMeta()) {
 			if (item.getItemMeta().hasDisplayName()) {
 				if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§cSusano")) {
@@ -635,8 +565,10 @@ public class Obito extends NSRoles {
 		}
 		if (item.isSimilar(ninjutsuSpatioTemporelItem())) {
 			if (cdNinjutsu <= 0) {
-				for (Player p : gameState.getInGamePlayers()) {
-					if (p.getUniqueId() != owner.getUniqueId()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					if (u != getPlayer()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						p.hidePlayer(owner);
 					}
 				}
@@ -692,7 +624,7 @@ public class Obito extends NSRoles {
 			if (obito.izanami.isAllTrue()) {
 				Player toIzanami = Bukkit.getPlayer(obito.izanami.getTarget());
 				if (toIzanami != null) {
-					obito.hasIzanami = obito.izanami.onSuccessfullInfection(obito, obito.getPlayerRoles(toIzanami));
+					obito.hasIzanami = obito.izanami.onSuccessfullInfection(obito, GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId()).getRole());
 					if (obito.hasIzanami){
 						cancel();
 					}

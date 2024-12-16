@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -30,6 +31,7 @@ import fr.nicknqck.Main;
  * along with SamaGamesAPI.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class ScoreboardManager {
+    @Getter
     private final Map<UUID, PersonalScoreboard> scoreboards;
     @SuppressWarnings({ "unused", "rawtypes" })
 	private final ScheduledFuture glowingTask;
@@ -37,7 +39,7 @@ public class ScoreboardManager {
 	private final ScheduledFuture reloadingTask;
     private int ipCharIndex;
     private int cooldown;
-    GameState gameState;
+    private final GameState gameState;
     public ScoreboardManager(GameState gameState) {
     	this.gameState = gameState;
         scoreboards = new HashMap<>();
@@ -60,7 +62,7 @@ public class ScoreboardManager {
 
     public void onDisable() {
     	if (scoreboards != null) {
-    		if (scoreboards.size() > 0) {
+    		if (!scoreboards.isEmpty()) {
     			scoreboards.values().forEach(PersonalScoreboard::onLogout);
     		}
     	}
@@ -95,7 +97,7 @@ public class ScoreboardManager {
     }
 
     private String colorIpAt() {
-        String ip = "discord.gg/RF3D4Du8VN";
+        String ip = "discord.gg/6dWxCAEsfF";
 
         if (cooldown > 0) {
             cooldown--;

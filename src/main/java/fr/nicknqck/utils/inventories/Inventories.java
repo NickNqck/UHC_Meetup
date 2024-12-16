@@ -2,9 +2,10 @@ package fr.nicknqck.utils.inventories;
 
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.chat.Chat;
-import fr.nicknqck.events.Events;
+import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
@@ -13,6 +14,7 @@ import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -49,6 +51,8 @@ public class Inventories {
         updateNSBrumeInventory(p);
         updateNSShinobiInventory(p);
         updateNSKumogakure(p);
+        updateMCInventory(p);
+        updateOverworldInventory(p);
     }
     public void updateSecretTitansInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
@@ -393,18 +397,18 @@ public class Inventories {
                             "§r§fClique droit: §c-10 secondes"
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
-                            "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(gameState.WaterEmptyTiming)+" > 1 minutes",
+                            "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
                             "§r§fClique gauche: §a+1 secondes",
                             "§r§fClique droit: §c-1 secondes",
                             "§r§f(0 secondes =§c désactiver"
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemp avant despawn de la§6 Lave").setLore(
-                            "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(gameState.LavaEmptyTiming)+" > 1 minutes",
+                            "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getLavaEmptyTiming())+" > 1 minutes",
                             "§r§fClique gauche: §a+1 seconde",
                             "§r§fClique droit: §c-1 seconde",
                             "§r§f(0 secondes =§c désactiver"
                     ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(gameState.BijusEnable ? "§aActivé" : "§cDésactivé","§r§fShift + Clique: Permet de configurer les bijus").toItemStack());
+                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getGameConfig().isBijusEnable() ? "§aActivé" : "§cDésactivé","§r§fShift + Clique: Permet de configurer les bijus").toItemStack());
                     inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
                             "§fTemp avant infection: ",
                             "§a+5s§f (Clique gauche)",
@@ -449,7 +453,7 @@ public class Inventories {
                     }else {
                         inv.setItem(11, new ItemBuilder(Material.BOW).setName("§rEquipement Tridimentionnel").setLore("§fÉquipement actuel:§l Arc Tridimentionnelle").toItemStack());
                     }
-                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(gameState.LaveTitans ? "§aActivé" : "§cDésactivé").toItemStack());
+                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(Main.getInstance().getGameConfig().isLaveTitans() ? "§aActivé" : "§cDésactivé").toItemStack());
                 }
             }
         }
@@ -776,6 +780,11 @@ public class Inventories {
                     }
                     inv.setItem(53, GUIItems.getx());
                     inv.setItem(10, GUIItems.getSelectRoleButton());
+
+                    if (Main.getInstance().isGoodServer()) {
+                        inv.setItem(12, new ItemBuilder(Material.DIAMOND_PICKAXE).setName("§cMinage").setLore("§7État: "+(Main.getInstance().getGameConfig().isMinage() ? "§aActivé" : "§cDésactiver")).toItemStack());
+                    }
+
                     inv.setItem(13, GUIItems.getPregen(gameState));
                     inv.setItem(16, new ItemBuilder(Material.GRASS).setName("§aChanger le monde de jeu").toItemStack());
                     inv.setItem(19, GUIItems.getSelectConfigButton());
@@ -825,25 +834,25 @@ public class Inventories {
                     inv.setItem(0, new ItemBuilder(Material.DIAMOND_HELMET).setLore(
                                     "§a+1§f (Clique gauche)",
                                     "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+GameState.pc
-                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pc)
+                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet()
+                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
 
                             .toItemStack());
                     inv.setItem(9, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setLore(
                                     "§a+1§f (Clique gauche)",
                                     "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+GameState.pch
-                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pch)
+                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()
+                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
                             .toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.IRON_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pl)
+                    inv.setItem(18, new ItemBuilder(Material.IRON_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
                             .setLore("§a+1§f (Clique gauche)",
                                     "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+GameState.pl)
+                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionLeggings())
                             .toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.DIAMOND_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pb)
+                    inv.setItem(27, new ItemBuilder(Material.DIAMOND_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
                             .setLore("§a+1§f (Clique gauche)",
                                     "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+GameState.pb)
+                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost())
                             .toItemStack());
                     inv.setItem(45, GUIItems.getdiamondsword());
                     inv.setItem(46, GUIItems.getblock());
@@ -852,7 +861,7 @@ public class Inventories {
                     inv.setItem(50, GUIItems.getGoldenCarrot());
                     inv.setItem(51, GUIItems.getlave());
                     inv.setItem(52, GUIItems.geteau());
-                    inv.setItem(38, new ItemBuilder(Material.ARROW, gameState.nmbArrow).setName("§fFlèches").setLore("","§7Max:§c 64","§7Minimum:§c 1","§7Actuelle:§c "+gameState.nmbArrow).toItemStack());
+                    inv.setItem(38, new ItemBuilder(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).setName("§fFlèches").setLore("","§7Max:§c 64","§7Minimum:§c 1","§7Actuelle:§c "+Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).toItemStack());
                     //inv.setItem(9, GUIItems.getx());
 
                     inv.setItem(8, GUIItems.getSelectBackMenu());
@@ -871,17 +880,22 @@ public class Inventories {
                     if (gameState.isAllMdjNull()) {
                         inv.setItem(13, new ItemBuilder(Material.SIGN).setName("§7Aucun mode de jeux activé !").toItemStack());
                     } else {
-                        if (gameState.getMdj() == GameState.MDJ.DS) {
-                            inv.setItem(13, GUIItems.getSelectDSButton());
-                        }
-                        if (gameState.getMdj() == GameState.MDJ.AOT) {
-                            inv.setItem(13, GUIItems.getSelectAOTButton());
-                        }
-                        if (gameState.getMdj() == GameState.MDJ.NS) {
-                            inv.setItem(13, GUIItems.getSelectNSButton());
+                        switch (gameState.getMdj()) {
+                            case DS:
+                                inv.setItem(13, GUIItems.getSelectDSButton());
+                                break;
+                            case MC:
+                                inv.setItem(13, GUIItems.getSelectMCButton());
+                                break;
+                            case AOT:
+                                inv.setItem(13, GUIItems.getSelectAOTButton());
+                                break;
+                            case NS:
+                                inv.setItem(13, GUIItems.getSelectNSButton());
+                                break;
                         }
                     }
-                    if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+                    if (ChatRank.isHost(player)) {
                         inv.setItem(25, new ItemBuilder(Material.BOOKSHELF).setName("Configuration du mode de jeu").toItemStack());
                     }
                     inv.setItem(26, GUIItems.getSelectBackMenu());
@@ -1178,7 +1192,7 @@ public class Inventories {
                     int i = 19;
                     for (Bijus bijus : Bijus.values()) {
                         ItemStack item = bijus.getBiju().getItemInMenu();
-                        item.setAmount(bijus.isEnable() ? 1 : 0);
+                        item.setAmount(bijus.getBiju().isEnable() ? 1 : 0);
                         inv.setItem(i, item);
                         i++;
                     }
@@ -1195,60 +1209,129 @@ public class Inventories {
                 if (inv.getTitle().equals("§fConfiguration§7 -> §6Événements")) {
                     inv.clear();
                     inv.setItem(8, GUIItems.getSelectBackMenu());
-                    for (Events e : Events.values()) {
-                        ItemStack item;
-                        if (e == Events.DemonKingTanjiro) {
-                            if (gameState.getAvailableEvents().contains(e)) {
-                                item = new ItemBuilder(Material.BLAZE_ROD)
-                                        .addEnchant(Enchantment.ARROW_FIRE, 1)
-                                        .hideEnchantAttributes()
-                                        .setName(e.getName())
-                                        .setLore("§fTiming d'apparition:§6 "+StringUtils.secondsTowardsBeautifulinScoreboard(gameState.DKminTime),
-                                                "§a+1m§f (Clique gauche)",
-                                                "§c-1m§f (Clique droit)",
-                                                "§a+1%§f (Shift + Clique)",
-                                                "§c-1%§f (Drop)",
-                                                "§fPourcentage actuelle:§b "+gameState.DKTProba+"%")
-                                        .toItemStack();
-                                inv.addItem(item);
-                            }
-                        }
-                        if (e == Events.AkazaVSKyojuro) {
-                            if (gameState.getAvailableEvents().contains(e)) {
-                                item = new ItemBuilder(Material.IRON_SWORD)
-                                        .addEnchant(Enchantment.ARROW_DAMAGE, 1)
-                                        .hideAllAttributes()
-                                        .setName(e.getName())
-                                        .setLore("§fTiming d'apparition:§6 "+StringUtils.secondsTowardsBeautifulinScoreboard(gameState.AkazaVsKyojuroTime),
-                                                "§a+1m§f (Clique gauche)",
-                                                "§c-1m§f (Clique droit)",
-                                                "§a+1%§f (Shift + Clique)",
-                                                "§c-1%§f (Drop)",
-                                                "§fPourcentage actuelle:§b "+gameState.AkazaVSKyojuroProba+"%")
-                                        .toItemStack();
-                                inv.addItem(item);
-                            }
-                        }
-                        if (e == Events.Alliance) {
-                            if (gameState.getAvailableEvents().contains(e)) {
-                                item = new ItemBuilder(Material.LAVA_BUCKET)
-                                        .addEnchant(Enchantment.ARROW_DAMAGE, 1)
-                                        .hideAllAttributes()
-                                        .setName(e.getName())
-                                        .setLore("§fTiming d'apparition:§6 "+StringUtils.secondsTowardsBeautifulinScoreboard(gameState.AllianceTime),
-                                                "§a+1m§f (Clique gauche)",
-                                                "§c-1m§f (Clique droit)",
-                                                "§a+1%§f (Shift + Clique)",
-                                                "§c-1%§f (Drop)",
-                                                "§fPourcentage actuelle:§b "+gameState.AllianceProba+"%")
-                                        .toItemStack();
-                                inv.addItem(item);
-                            }
-                        }
+                    for (final Event event : Main.getInstance().getEventsManager().getEventsList()) {
+                        inv.addItem(event.getMenuItem());
                     }
                 }
             }
         }
     }
+    public void updateMCInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§fRoles§7 ->§a Minecraft")) {
+                    inv.clear();
+                    inv.setItem(10, GUIItems.getSelectOverworldButton());
+                    inv.setItem(12, GUIItems.getSelectNetherButton());
+                    inv.setItem(26, GUIItems.getSelectBackMenu());
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+    public void updateOverworldInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§aMinecraft§7 ->§a Overworld")) {
+                    inv.clear();
+                    ItemStack glass = GUIItems.getGreenStainedGlassPane();
+                    inv.setItem(0, glass);
+                    inv.setItem(1, glass);
+                    inv.setItem(9, glass);//haut gauche
 
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    inv.setItem(7, glass);//haut droite
+                    inv.setItem(8, glass);
+                    inv.setItem(17, glass);
+
+                    inv.setItem(45, glass);
+                    inv.setItem(46, glass);
+                    inv.setItem(36, glass);//bas gauche
+
+                    inv.setItem(44, glass);
+                    inv.setItem(52, glass);
+                    inv.setItem(53, glass);//bas droite
+
+                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.OverWorld) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+    public void updateNetherInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§aMinecraft§7 ->§c Nether")) {
+                    inv.clear();
+                    ItemStack glass = GUIItems.getRedStainedGlassPane();
+                    inv.setItem(0, glass);
+                    inv.setItem(1, glass);
+                    inv.setItem(9, glass);//haut gauche
+
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    inv.setItem(7, glass);//haut droite
+                    inv.setItem(8, glass);
+                    inv.setItem(17, glass);
+
+                    inv.setItem(45, glass);
+                    inv.setItem(46, glass);
+                    inv.setItem(36, glass);//bas gauche
+
+                    inv.setItem(44, glass);
+                    inv.setItem(52, glass);
+                    inv.setItem(53, glass);//bas droite
+
+                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Nether) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
 }

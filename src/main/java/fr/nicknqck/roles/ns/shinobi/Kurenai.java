@@ -11,6 +11,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -20,14 +21,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-import static fr.nicknqck.player.StunManager.stun;
 
 public class Kurenai extends ShinobiRoles {
     private final ItemStack BoisItem = new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu des bois").setLore("§7Vous permet d'empêcher le joueur viser de bouger").toItemStack();
@@ -52,6 +51,11 @@ public class Kurenai extends ShinobiRoles {
         super.RoleGiven(gameState);
         setChakraType(getRandomChakras());
         setCanBeHokage(true);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+            if (gameState.getAttributedRole().contains(GameState.Roles.Asuma)) {
+                new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+        }, 20);
     }
 
     @Override
@@ -106,11 +110,6 @@ public class Kurenai extends ShinobiRoles {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c Genjutsu temporel§7.");
             }
         }
-        if (getPlayerFromRole(GameState.Roles.Asuma) != null){
-            if (Loc.getNearbyPlayers(getPlayerFromRole(GameState.Roles.Asuma), 15).contains(owner)){
-                givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-            }
-        }
     }
 
     @Override
@@ -127,7 +126,7 @@ public class Kurenai extends ShinobiRoles {
             }
             owner.sendMessage("§7Vous utiliser votre§c Genjutsu§7 sur§a "+target.getDisplayName());
             owner.setGameMode(GameMode.SPECTATOR);
-            stun(target.getUniqueId(), 5.0, false);
+            gameState.getGamePlayer().get(target.getUniqueId()).stun(5*20);
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                 Location loc = target.getLocation();
                 loc.setX(loc.getX()+Math.cos(Math.toRadians(-target.getEyeLocation().getYaw()+90)));
@@ -159,7 +158,7 @@ public class Kurenai extends ShinobiRoles {
     }
 
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.INTELLIGENT;
     }
 
@@ -167,7 +166,30 @@ public class Kurenai extends ShinobiRoles {
     public String getName() {
         return "Kurenai";
     }
+    private static class ForceRunneable extends BukkitRunnable {
+        private final Kurenai kurenai;
+        public ForceRunneable(Kurenai kurenai) {
+            this.kurenai = kurenai;
+        }
 
+        @Override
+        public void run() {
+            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            if (!kurenai.getGamePlayer().isAlive()) return;
+            List<Player> aList = new ArrayList<>(kurenai.getListPlayerFromRole(Asuma.class));
+            if (aList.isEmpty()) {
+                return;
+            }
+            for (Player p : aList) {
+                if (Loc.getNearbyPlayersExcept(p, 15).contains(kurenai.owner)) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> kurenai.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true));
+                }
+            }
+        }
+    }
     private static class KurenaiRunnable extends BukkitRunnable implements Listener {
         private final Location initLocation;
         private int timeRemaining = 60;

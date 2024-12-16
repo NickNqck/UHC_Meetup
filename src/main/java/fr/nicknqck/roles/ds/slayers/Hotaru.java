@@ -7,6 +7,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -147,7 +148,7 @@ public class Hotaru extends SlayerRoles {
 				Player cible = Bukkit.getPlayer(args[1]);
 					if (actualdslameuse <5) {
 						if (cible != null) {
-							if (!gameState.getInGamePlayers().contains(cible)) {
+							if (!gameState.getInGamePlayers().contains(cible.getUniqueId())) {
 							owner.sendMessage("Vous ne pouvez pas obtenir d'information sur un joueur qui n'est pas en jeu");
 							}
 							if (cible.getInventory().contains(Items.getLamedenichirincoeur())) {
@@ -168,8 +169,8 @@ public class Hotaru extends SlayerRoles {
 							if (cible.getInventory().contains(Items.getLamedenichirinspeed())) {
 							owner.sendMessage("Ce joueur possède une lame de§e speed");
 							}
-							if (!gameState.hasRoleNull(cible)) {
-								if (!gameState.getPlayerRoles().get(cible).hasblade) {
+							if (!gameState.hasRoleNull(cible) && gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles) {
+								if (!((DemonsSlayersRoles) gameState.getPlayerRoles().get(cible)).isHasblade()) {
 								owner.sendMessage("Ce joueurs ne possède pas de lame");
 								}
 							}
@@ -188,7 +189,7 @@ public class Hotaru extends SlayerRoles {
 				Player cible = Bukkit.getPlayer(args[1]);
 					if (!hasdsunbreak) {
 						if (cible != null) {
-							if (!gameState.getInGamePlayers().contains(cible)) {
+							if (!gameState.getInGamePlayers().contains(cible.getUniqueId())) {
 							owner.sendMessage("Impossible de rendre la lame d'un mort incassable !");
 							}
 						if (!gameState.hasRoleNull(cible)) {
@@ -218,7 +219,7 @@ public class Hotaru extends SlayerRoles {
 					Player cible = Bukkit.getPlayer(args[1]);
 					if (actualdsrepair < 5) {
 						if (cible != null) {
-							if (!gameState.getInGamePlayers().contains(cible)) {
+							if (!gameState.getInGamePlayers().contains(cible.getUniqueId())) {
 								owner.sendMessage("Impossible de rendre la lame d'un mort incassable !");
 							}
 							for (Lames lames : Lames.values()) {
@@ -247,6 +248,12 @@ public class Hotaru extends SlayerRoles {
 			
 		}
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.AUCUN;
+	}
+
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {

@@ -12,6 +12,7 @@ import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,15 +34,13 @@ public class EdoTenseiUser implements Listener {
     private final Map<UUID, Location> killLocation;
     private final Map<UUID, RoleBase> edoTenseis;
     private final NSRoles role;
+    @Setter
+    private boolean canEdoTensei = true;
     public EdoTenseiUser(NSRoles role) {
         this.role = role;
-        EventUtils.registerEvents(this);
+        EventUtils.registerRoleEvent(this);
         this.killLocation = new LinkedHashMap<>();
         this.edoTenseis = new LinkedHashMap<>();
-    }
-    @EventHandler
-    private void onEndGame(EndGameEvent event) {
-        EventUtils.unregisterEvents(this);
     }
     @EventHandler
     private void onUHCKill(UHCPlayerKillEvent event){
@@ -69,6 +68,11 @@ public class EdoTenseiUser implements Listener {
                     }
                     if (this.killLocation.isEmpty()) {
                         event.getPlayer().sendMessage("§7Il faut avoir tuer un joueur pour utiliser cette technique.");
+                        event.setCancelled(true);
+                        return;
+                    }
+                    if (!canEdoTensei) {
+                        event.getPlayer().sendMessage("§cVous ne pouvez pas utiliser ce pouvoir !");
                         event.setCancelled(true);
                         return;
                     }
@@ -115,7 +119,7 @@ public class EdoTenseiUser implements Listener {
                                         this.role.setMaxHealth(this.role.getMaxHealth()-4.0);
                                         owner.setMaxHealth(this.role.getMaxHealth());
                                         clicked.teleport(owner);
-                                        role.giveItem(clicked, false, role.getItems());
+                                        role.GiveItems();
                                         killLocation.remove(clicked.getUniqueId());
                                         clicked.resetTitle();
                                         clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+this.role.getTeam().getName());

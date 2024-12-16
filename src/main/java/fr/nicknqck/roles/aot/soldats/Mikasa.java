@@ -19,7 +19,6 @@ public class Mikasa extends SoldatsRoles {
 
 	public Mikasa(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 		setAckerMan(true);
 	}
 	@Override

@@ -9,11 +9,13 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -35,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Sasuke extends OrochimaruRoles {
+public class Sasuke extends UchiwaRoles {
 
 	private Izanami izanami;
 	@Getter
@@ -53,6 +55,16 @@ public class Sasuke extends OrochimaruRoles {
 	
 	public Sasuke(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public UchiwaType getUchiwaType() {
+		return UchiwaType.IMPORTANT;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		setChakraType(Chakras.KATON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
@@ -68,10 +80,17 @@ public class Sasuke extends OrochimaruRoles {
 		}, 20*5);
 		setCanBeHokage(true);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Sasuke;
 	}
+
+	@Override
+	public TeamList getOriginTeam() {
+		return TeamList.Orochimaru;
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Orochimaru, 1);
@@ -140,8 +159,8 @@ public class Sasuke extends OrochimaruRoles {
 	}
 	private Inventory GenjutsuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cGenjutsu");
-		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+cd(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
-		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+cd(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
+		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+ StringUtils.secondsTowardsBeautiful(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
+		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+StringUtils.secondsTowardsBeautiful(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
 		if (!hasIzanami) {
 			inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous permez d'infecter quelqu'un").toItemStack());
 		} else {
@@ -273,7 +292,7 @@ public class Sasuke extends OrochimaruRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 
@@ -496,7 +515,7 @@ public class Sasuke extends OrochimaruRoles {
 							cancel();
 							return;
 						}
-						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+cd(SusanoCD-(60*10)));
+						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
 						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
@@ -595,7 +614,7 @@ public class Sasuke extends OrochimaruRoles {
 				Player owner = Bukkit.getPlayer(sasuke.izanami.getUser());
 				Player toIzanami = Bukkit.getPlayer(sasuke.izanami.getTarget());
 				if (owner != null && toIzanami != null) {
-					boolean reussite = sasuke.izanami.onSuccessfullInfection(sasuke, sasuke.getPlayerRoles(toIzanami));
+					boolean reussite = sasuke.izanami.onSuccessfullInfection(sasuke, GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId()).getRole());
 					if (reussite) {
 						sasuke.infectFinish = true;
 						cancel();

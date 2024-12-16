@@ -3,8 +3,10 @@ package fr.nicknqck.roles.aot.builders;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -12,6 +14,9 @@ import java.text.DecimalFormat;
 import java.util.UUID;
 
 public abstract class AotRoles extends RoleBase {
+    @Getter
+    @Setter
+    private int actualTridiCooldown;
     public boolean canShift = false;
     public boolean isTransformedinTitan = false;
     public double RodSpeedMultipliyer = 0;
@@ -23,8 +28,23 @@ public abstract class AotRoles extends RoleBase {
         super(player);
         gazAmount= 100.0;
         new RodCooldownRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        actualTridiCooldown = -1;
     }
     public void onAotCommands(String arg, String[] args, GameState gameState) {}
+    public void TransfoEclairxMessage(Player player) {
+        gameState.spawnLightningBolt(player.getWorld(), player.getLocation());
+        for (UUID u : gameState.getInGamePlayers()) {
+            Player p = Bukkit.getPlayer(u);
+            if (p == null)continue;
+            p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");
+        }
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        gameState.GiveRodTridi(owner);
+    }
+
     private static class RodCooldownRunnable extends BukkitRunnable {
         private final AotRoles role;
         public RodCooldownRunnable(AotRoles role) {
@@ -42,7 +62,7 @@ public abstract class AotRoles extends RoleBase {
                 if (role.owner.getItemInHand().isSimilar(role.gameState.EquipementTridi())) {
                     DecimalFormat df = new DecimalFormat("0.0");
                     //	sendCustomActionBar(owner, aqua+"Gaz:§c "+df.format(gazAmount)+"%"+aqua+" Cooldown:§6 "+actualTridiCooldown+"s");
-                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+role.gameState.sendGazBar(role.gazAmount, 2)+"§7(§b"+df.format(role.gazAmount)+"%§7), Cooldown:§b "+role.cd(role.getActualTridiCooldown()));
+                    role.sendCustomActionBar(role.owner, "Gaz restant§8»"+sendGazBar(role.gazAmount)+"§7(§b"+df.format(role.gazAmount)+"%§7), "+(role.getActualTridiCooldown() <= 0 ? role.gameState.EquipementTridi().getItemMeta().getDisplayName()+" utilisable" : StringUtils.secondsTowardsBeautiful(role.getActualTridiCooldown())));
                 }
             }else if (role.getActualTridiCooldown() == 0){
                 role.owner.sendMessage("§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 utilisable !");
@@ -54,6 +74,19 @@ public abstract class AotRoles extends RoleBase {
                     role.sendCustomActionBar(role.owner, "§bGaz:§c "+df.format(role.gazAmount)+"% "+"§7§l"+role.gameState.EquipementTridi().getItemMeta().getDisplayName()+"§r:§6 Utilisable");
                 }
             }
+        }
+        private String sendGazBar(double number) {
+            double maxGaz = 100/ (double) 2;
+            double gaz = number/ (double) 2;
+            StringBuilder bar = new StringBuilder(" ");
+            for (double i = 0; i < gaz; i++) {
+                bar.append("§a|");
+            }
+            for (double i = gaz; i < maxGaz; i++) {
+                bar.append("§c|");
+            }
+            bar.append(" ");
+            return bar.toString();
         }
     }
 }

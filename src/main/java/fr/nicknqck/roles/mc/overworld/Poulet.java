@@ -10,9 +10,9 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -102,12 +102,14 @@ public class Poulet extends OverWorldRoles {
 
                     @Override
                     public void run() {
-                        if (gameState.getInGamePlayers().contains(owner)) {
+                        if (gameState.getInGamePlayers().contains(getPlayer())) {
                             i++;
                             if (i == 4) {
                                 owner.sendMessage("Vous ne pouvez plus voler.");
-                                owner.setFlying(false);
-                                owner.setAllowFlight(false);
+                                Bukkit.getScheduler().runTask(Main.getInstance(), ()->{
+                                    owner.setFlying(false);
+                                    owner.setAllowFlight(false);
+                                });
                                 cdplume = 60 * 5;
                                 cancel();
 
@@ -116,7 +118,7 @@ public class Poulet extends OverWorldRoles {
                             cancel();
                         }
                     }
-                }.runTaskTimer(Main.getInstance(), 0, 20);
+                }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             } else {
                 sendCooldown(owner, cdplume);
                 return true;

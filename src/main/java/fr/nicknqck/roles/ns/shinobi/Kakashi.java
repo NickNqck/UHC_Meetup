@@ -15,6 +15,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.powers.KamuiUtils;
 import fr.nicknqck.utils.powers.KamuiUtils.Users;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
@@ -34,6 +35,11 @@ public class Kakashi extends ShinobiRoles {
 
 	public Kakashi(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		setChakraType(Chakras.RAITON);
 		if (!gameState.attributedRole.contains(Roles.Obito)) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
@@ -43,7 +49,7 @@ public class Kakashi extends ShinobiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 
@@ -102,9 +108,9 @@ public class Kakashi extends ShinobiRoles {
     private int cdArimasu = 0;
     private Inventory KamuiInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cKamui");
-		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+cd(cdArimasu),
+		inv.setItem(3, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdArimasu),
 				"§7Permet de vous téléportez dans le Kamui").toItemStack());
-		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+cd(cdSonohoka),
+		inv.setItem(7, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(cdSonohoka),
 				"§7Permet de téléporter un joueur dans le Kamui").toItemStack());
 		return inv;
 	}

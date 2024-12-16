@@ -1,61 +1,44 @@
 package fr.nicknqck;
 
-import com.avaje.ebean.validation.NotNull;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.EventBase;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.demons.Susamaru;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.Nezuko;
-import fr.nicknqck.roles.ds.slayers.pillier.Mitsuri;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.scenarios.impl.AntiPvP;
-import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
 import fr.nicknqck.utils.AntiLopsa;
+import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.PotionUtils;
-import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.particles.MathUtil;
+import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.KamuiUtils;
+import fr.nicknqck.utils.powers.Power;
+import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -68,10 +51,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GameListener implements Listener {
 
@@ -79,7 +59,6 @@ public class GameListener implements Listener {
 	public WorldBorder border;
 	@Getter
 	private static GameListener Instance;
-//	private BukkitScheduler gameTimer = Bukkit.getServer().getScheduler(); // Seconds
 	public GameListener(GameState gameState) {
 		this.gameState = gameState;
 		Instance = this;
@@ -87,9 +66,6 @@ public class GameListener implements Listener {
 		border.setSize(Border.getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
 			UpdateGame();
-			for (Events e : Events.values()) {
-				e.getEvent().onSecond();
-			}
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().onSecond(gameState);
 			}
@@ -103,21 +79,27 @@ public class GameListener implements Listener {
 	private void UpdateGame() {
 		switch(gameState.getServerState()) {
 		case InLobby:
+			gameState.setRoleAttributed(false);
 			World world = Bukkit.getWorld("world");
-			for (Player p : gameState.getInLobbyPlayers()) {
+			for (UUID u : gameState.getInLobbyPlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (p.getLocation().getY() < 100 && !p.isFlying() && p.getGameMode() != GameMode.CREATIVE) {
-					p.setMaxHealth(20.0);
-					p.setHealth(p.getMaxHealth());
-					p.setFoodLevel(20);
-					p.teleport(new Location(world, 0, 151, 0));
-					p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+					if (!p.getGameMode().equals(GameMode.CREATIVE) && !p.getGameMode().equals(GameMode.SPECTATOR)) {
+						p.setMaxHealth(20.0);
+						p.setHealth(p.getMaxHealth());
+						p.setFoodLevel(20);
+						p.teleport(new Location(world, 0, 151, 0));
+						p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+					}
 				}
 				if (p.getGameMode() != GameMode.ADVENTURE) {
-					if (!p.isOp() && !gameState.getHost().contains(p.getUniqueId())) {
+					if (!ChatRank.isHost(p)) {
 						p.setGameMode(GameMode.ADVENTURE);
 					}
 				}
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 0, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 0, false, false));
 				world.setWeatherDuration(0);
 				p.getWorld().setWeatherDuration(0);
 				p.getWorld().setStorm(false);
@@ -126,19 +108,22 @@ public class GameListener implements Listener {
 				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
 				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
 				if (!gameState.getInSleepingPlayers().isEmpty()) gameState.getInSleepingPlayers().clear();
-				if (!gameState.getPillier().isEmpty())gameState.getPillier().clear();
 				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
-				if (!gameState.getInLobbyPlayers().contains(p))gameState.addInLobbyPlayers(p);
+				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId()))gameState.addInLobbyPlayers(p);
 			}
 			break;
 		case InGame:
 			Main.getInstance().getWorldManager().getGameWorld().setPVP(gameState.pvp);
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
 				if (gameState.inGameTime < 10) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
 				}
-				if (gameState.infected != null && gameState.infected.getUniqueId() == p.getUniqueId()) {
+				if (gameState.infected != null && gameState.infected.getUniqueId() == u) {
 					if (gameState.nightTime) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						gameState.getPlayerRoles().get(p).givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
 						if (!infectedgiveforce) {
 							infectedgiveforce = true;
@@ -152,29 +137,33 @@ public class GameListener implements Listener {
 			}
 			AntiLopsa.startWorldBorderChecker();
 			if (Hastey_Boys.isHasteyBoys()) {
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					ItemStack is = p.getItemInHand();
 					ItemMeta meta = is.getItemMeta();
 					Material m = is.getType();
 					if (meta != null) {
-								if (!meta.hasEnchant(Enchantment.DIG_SPEED)) {
-									if (!meta.hasEnchants()) {
-										if (!meta.spigot().isUnbreakable()) {
-                                            if (m == Material.IRON_PICKAXE || m == Material.IRON_SPADE || m == Material.IRON_AXE || m == Material.DIAMOND_PICKAXE || m == Material.DIAMOND_SPADE || m == Material.DIAMOND_AXE || m == Material.GOLD_PICKAXE || m == Material.GOLD_SPADE || m == Material.GOLD_AXE || m == Material.WOOD_PICKAXE || m == Material.WOOD_SPADE || m == Material.WOOD_AXE || m == Material.STONE_AXE || m == Material.STONE_PICKAXE || m == Material.STONE_SPADE) {
-                                                meta.addEnchant(Enchantment.DIG_SPEED, 3, true);
-                                                meta.addEnchant(Enchantment.DURABILITY, 3, true);
-                                                is.setItemMeta(meta);
-                                                p.sendMessage(Hastey_Boys.hasteyboy() + ChatColor.WHITE + "Enchantement de votre item");
-                                                p.updateInventory();
-                                            }
-                                        }
+						if (!meta.hasEnchant(Enchantment.DIG_SPEED)) {
+							if (!meta.hasEnchants()) {
+								if (!meta.spigot().isUnbreakable()) {
+									if (m == Material.IRON_PICKAXE || m == Material.IRON_SPADE || m == Material.IRON_AXE || m == Material.DIAMOND_PICKAXE || m == Material.DIAMOND_SPADE || m == Material.DIAMOND_AXE || m == Material.GOLD_PICKAXE || m == Material.GOLD_SPADE || m == Material.GOLD_AXE || m == Material.WOOD_PICKAXE || m == Material.WOOD_SPADE || m == Material.WOOD_AXE || m == Material.STONE_AXE || m == Material.STONE_PICKAXE || m == Material.STONE_SPADE) {
+										meta.addEnchant(Enchantment.DIG_SPEED, 3, true);
+                                        meta.addEnchant(Enchantment.DURABILITY, 3, true);
+                                        is.setItemMeta(meta);
+                                        p.sendMessage(Hastey_Boys.hasteyboy() + ChatColor.WHITE + "Enchantement de votre item");
+                                        p.updateInventory();
 									}
-								}				
+								}
 							}
 						}
 					}
+				}
+			}
 			if (Hastey_Babys.isHasteyBabys()) {
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					ItemStack is = p.getItemInHand();
 					ItemMeta meta = is.getItemMeta();
 					Material m = is.getType();
@@ -227,7 +216,9 @@ public class GameListener implements Listener {
 						SendToEveryone("\n §bIl fait maintenant jour");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 						gameState.t = gameState.timeday;
-						for (Player p : gameState.getInGamePlayers()) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
 							if (gameState.getPlayerRoles().containsKey(p)) {
 								gameState.getPlayerRoles().get(p).onDay(gameState);
 							}
@@ -241,34 +232,45 @@ public class GameListener implements Listener {
 						SendToEveryone("\n §bIl fait maintenant nuit\n");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 						gameState.t = gameState.timeday;
-						for (Player p : gameState.getInGamePlayers()) {
+						for (UUID u : gameState.getInGamePlayers()) {
+							Player p = Bukkit.getPlayer(u);
+							if (p == null)continue;
 							if (gameState.getPlayerRoles().containsKey(p)) {
 								gameState.getPlayerRoles().get(p).onNight(gameState);
 							}
 						}
-						Bukkit.getPluginManager().callEvent(new NightEvent(gameState));
+						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, gameState.timeday));
 					}
 				}
 			}
 			if (gameState.inGameTime == gameState.roleTimer) {
-				for (Player p : gameState.getInGamePlayers()) {
+				gameState.setRoleAttributed(true);
+				RoleBase lastRoleGive = (RoleBase) Main.getInstance().getRoleManager().getRolesRegistery().get(Susamaru.class);
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					RoleBase role = gameState.GiveRole(p);
 					if (role != null){
 						role.RoleGiven(gameState);
 						role.GiveItems();
+						lastRoleGive = role;
 					}
+					Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage("§cDiscord du mode de jeu: §6https://discord.gg/6dWxCAEsfF"), 20*10);//20ticks* le nombre de seconde voulue
 				}
+				Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, lastRoleGive, lastRoleGive.getRoles(), lastRoleGive.getGamePlayer(), true));
 			}
-			for (Player p : gameState.getInGamePlayers()) {
-				if (gameState.getPlayerRoles().containsKey(p)) {
-					gameState.getPlayerRoles().get(p).Update(gameState);
-				}
-			}
-			for (Events value : Events.values()) {
-				if (gameState.getInGameTime() == value.getEvent().getMinTime()) {
-					if (RandomUtils.getOwnRandomProbability(value.getProba())) {
-						value.getEvent().PlayEvent(gameState.getInGameTime());
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
+				if (!gameState.hasRoleNull(p)) {
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().Update(gameState);
+					List<ItemStack> items = new ArrayList<>();
+					for (ItemStack item : p.getInventory().getContents()) {
+						if (item == null)continue;
+						if (item.getType().equals(Material.AIR))continue;
+						items.add(item);
 					}
+					gameState.getGamePlayer().get(p.getUniqueId()).setLastInventoryContent(items.toArray(new ItemStack[0]));
 				}
 			}
 			if (gameState.getActualPvPTimer() == 0){
@@ -296,11 +298,9 @@ public class GameListener implements Listener {
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
 			Border.setActualBorderSize(Border.getMaxBorderSize());
-			gameState.getGamePlayer().clear();
 			gameState.setPvP(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
-			gameState.getInGameEvents().clear();
 			gameState.setInObiPlayers(new ArrayList<>());
 			gameState.setInSleepingPlayers(new ArrayList<>());
 			gameState.TitansRouge.clear();
@@ -308,8 +308,8 @@ public class GameListener implements Listener {
 			TitanListener.getInstance().resetCooldown();
 			BetterItem.getRegisteredItems().clear();
 			PotionUtils.getNoFalls().clear();
-			fr.nicknqck.utils.AttackUtils.CantAttack.clear();
-			fr.nicknqck.utils.AttackUtils.CantReceveAttack.clear();
+			AttackUtils.CantAttack.clear();
+			AttackUtils.CantReceveAttack.clear();
 			if (gameState.getHokage() != null) {
 				gameState.getHokage().stop();
 			}
@@ -320,10 +320,6 @@ public class GameListener implements Listener {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				Main.getInstance().getScoreboardManager().onLogout(p);
 				p.setPlayerListName(Bukkit.getPlayer(p.getUniqueId()).getName());
-			}
-			for (Events e : Events.values()) {
-				e.getEvent().resetCooldown();
-				e.getEvent().setActivated(false);
 			}
 			for (Bijus b : Bijus.values()) {
 				b.getBiju().resetCooldown();
@@ -337,7 +333,9 @@ public class GameListener implements Listener {
 			gameState.attributedRole.clear();
 			KamuiUtils.resetUtils();
 			gameState.setHokage(null);
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				ItemsManager.ClearInventory(p);
 				if (!gameState.hasRoleNull(p)) {
 					RoleBase r = gameState.getPlayerRoles().get(p);
@@ -367,9 +365,11 @@ public class GameListener implements Listener {
                     SendToEveryone(Vainqueurs);
 				} else {
 					if (gameState.getInGamePlayers().get(0) != null) {
-						Player winer = gameState.getInGamePlayers().get(0);
-						String Vainqueurs = "Vainqueur:§l "+team.getColor()+winer.getName();
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer).size()+"§f kill(s)";
+						Player winer = Bukkit.getPlayer(gameState.getInGamePlayers().get(0));
+						String win = winer == null ? "§cDéconnecter" : winer.getName();
+						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
+						assert winer != null;
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
 						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles().name();
                         SendToEveryone(Vainqueurs);
 					}
@@ -383,53 +383,52 @@ public class GameListener implements Listener {
 	        SendToEveryone(" ");
 	        SendToEveryone("Résumé de la partie");
 	        SendToEveryone(" ");
-	        if (!gameState.getInGamePlayers().isEmpty()) {
-
-					for (Player p : Bukkit.getOnlinePlayers()) {
-						((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
-						gameState.addInLobbyPlayers(p);
-						if (!gameState.hasRoleNull(p)) {
-							RoleBase prole = gameState.getPlayerRoles().get(p);
-							if (prole != null) {
-								StringBuilder s = new StringBuilder();
-								if (gameState.getPlayerKills().containsKey(p)) {
-									if (!gameState.getPlayerKills().get(p).isEmpty()) {
-										int i = 0;
-										for (Player k : gameState.getPlayerKills().get(p).keySet()) {
-											i++;
-											if (i != gameState.getPlayerKills().get(p).size()) {
-												s.append("§7 - §f").append(prole.getTeamColor(k)).append(k.getName()).append("§7 (").append(prole.getTeamColor(k)).append(prole.getPlayerRoles(k).getRoles().name()).append("§7)\n");
-											} else {
-												s.append("§7 - §f").append(prole.getTeamColor(k)).append(k.getName()).append("§7 (").append(prole.getTeamColor(k)).append(prole.getPlayerRoles(k).getRoles().name()).append("§7)");
-											}
-										}
-										SendToEveryoneWithHoverMessage(prole.getTeamColor()+p.getDisplayName(), "§f ("+prole.getTeamColor()+prole.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill(s)");
-									} else {
-										SendToEveryone(prole.getTeamColor()+p.getDisplayName()+"§f ("+prole.getTeamColor()+prole.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(p).size()+"§f kill");
-									}
-								}
-							}
-						}
-                    }
+			final Map<UUID, GamePlayer> gamePlayers = new HashMap<>(gameState.getGamePlayer());
+			for (final UUID uuid : gamePlayers.keySet()) {
+				Player p = Bukkit.getPlayer(uuid);
+				if (p != null) {
+					((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0); // Supprime les fleches du joueur
+					gameState.addInLobbyPlayers(p);
 				}
-
+				final GamePlayer gamePlayer = gamePlayers.get(uuid);
+				if (gamePlayer.getRole() == null)continue;
+				final RoleBase role1 = gamePlayer.getRole();
+				final StringBuilder s = new StringBuilder();
+				if (gameState.getPlayerKills().containsKey(role1.getPlayer())) {
+					if (!gameState.getPlayerKills().get(role1.getPlayer()).isEmpty()) {
+						int i = 0;
+						for (Player k : gameState.getPlayerKills().get(role1.getPlayer()).keySet()) {
+							i++;
+							RoleBase role = gameState.getPlayerKills().get(role1.getPlayer()).get(k);
+							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name());
+							s.append(i == gameState.getPlayerKills().get(role1.getPlayer()).size() ? "§7)" : "§7)\n");
+						}
+						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
+					} else {
+						SendToEveryone(role1.getTeamColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeamColor()+role1.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill");
+					}
+				}
+			}
+			gameState.getGamePlayer().clear();
 			System.out.println("end");
 			gameState.pregenNakime = false;
 			gameState.setInGamePlayers(new ArrayList<>());
 			BijuListener.getInstance().resetCooldown();
 			for (Player p : gameState.getInSpecPlayers()) {
-				if (!gameState.getInLobbyPlayers().contains(p)) {
+				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId())) {
 					gameState.addInLobbyPlayers(p);
 					p.setGameMode(GameMode.ADVENTURE);
 				}
 			}
 			gameState.Shifter.clear();
 			gameState.setInSpecPlayers(new ArrayList<>());
-			gameState.setPlayerRoles(new HashMap<>());
+			gameState.getGamePlayer().clear();
 			gameState.DeadRole = new ArrayList<>();
 			if (!gameState.getInLobbyPlayers().isEmpty()) {
-				for (Player p : gameState.getInLobbyPlayers()) {
-					if (p != null && p.isOnline()) {
+				for (UUID u : gameState.getInLobbyPlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+					if (p.isOnline()) {
 						p.setGameMode(GameMode.ADVENTURE);
 						p.setMaxHealth(20.0);
 						p.getInventory().clear();
@@ -439,8 +438,7 @@ public class GameListener implements Listener {
 						ItemsManager.GiveHubItems(p);
 						p.teleport(new Location(Bukkit.getWorld("world"), 0.0, 151.0, 0.0));
 					}
-                    assert p != null;
-                    if (!p.isOnline())gameState.getInLobbyPlayers().remove(p);
+                    if (!p.isOnline())gameState.getInLobbyPlayers().remove(p.getUniqueId());
 				}
 			}
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -499,7 +497,7 @@ public class GameListener implements Listener {
 		}
 		return loc;
 	}
-	public static Location generateRandomLocation(final GameState gameState,final World world) {
+	public static Location generateRandomLocation(final World world) {
 	    Location loc;
 	    do {
 	        float x = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
@@ -509,189 +507,6 @@ public class GameListener implements Listener {
 	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
 	    return loc;
 	}
-	public void DeathMessage(Player victim) {
-			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-			SendToEveryone(victim.getDisplayName()+"§7 est mort,");
-			if (!gameState.hasRoleNull(victim)) {
-				World world = Bukkit.getWorld("nakime");
-				RoleBase role = gameState.getPlayerRoles().get(victim);
-				if (world != null && victim.getWorld().equals(world)){
-					SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? role.getTeam().getColor()+role.getName() : "§k"+victim.getDisplayName()));
-				} else {
-					SendToEveryone("§7Son rôle était: "+role.getTeam().getColor()+role.getName()+role.getSuffixString());
-				}
-			} else {
-				SendToEveryone(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");
-			}
-			SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-	}
-	@NotNull
-	public void DeathHandler(final Player player,final Entity damager,final Double damage,final GameState gameState) {
-		UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(player, damager, gameState);
-		Bukkit.getPluginManager().callEvent(playerKillEvent);
-		UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(player, gameState, gameState.getPlayerRoles().get(player));
-		Bukkit.getPluginManager().callEvent(uhcDeathEvent);
-		for (EventBase event : gameState.getInGameEvents()) {
-			if (damager instanceof Player) {
-				event.OnPlayerKilled((Player) damager, player, gameState);
-			} else if (damager instanceof Arrow) {
-				Arrow arrow = (Arrow)damager;
-				if (arrow.getShooter() instanceof Player) {
-					event.OnPlayerKilled((Player) arrow.getShooter(), player, gameState);
-				}
-			} else {
-				event.OnPlayerKilled(null, player, gameState);
-			}
-		}
-		boolean cantDie = false;
-		if (!gameState.hasRoleNull(player)) {
-			if (gameState.getPlayerRoles().get(player).onPreDie(damager, gameState) || gameState.getPlayerRoles().get(player).getGamePlayer().isCanRevive()) {
-				cantDie = true;
-			}
-			if (gameState.getPlayerRoles().get(player).getItems() != null) {
-				for (ItemStack item : gameState.getPlayerRoles().get(player).getItems()) {
-					if (player.getInventory().contains(item)) {
-						player.getInventory().remove(item);
-					}
-				}
-			}
-		}
-		if (cantDie || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
-			return;
-		}
-		GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
-		gamePlayer.setAlive(false);
-		gamePlayer.setDeathLocation(player.getLocation());
-        gameState.getDeadRoles().add(gameState.getPlayerRoles().get(player).getRoles());
-        for (ItemStack item : player.getInventory().getContents()){
-			if (item != null){
-				if (item.getType() != Material.AIR){
-					if (item.getAmount() <= 64){
-						if (item.getAmount() > 0) {
-							dropItem(player.getLocation().clone(), item.clone());
-						} else {
-							dropItem(player.getLocation().clone(), new ItemBuilder(item).setAmount(1).toItemStack());
-						}
-					}
-				}
-			}
-		}
-		if (gameState.getHokage() != null) {
-			gameState.getHokage().onDeath(player, damager, gameState);
-		}
-		dropItem(player.getLocation(), new ItemStack(Material.GOLDEN_APPLE, 2));
-		if (damager != null) {
-			//damager = le tueur
-            //player = la victim/le mort
-			if (damager instanceof Player) {
-				Player killer = (Player) damager;
-                DeathMessage(player);
-                for (Player p : gameState.getInGamePlayers()) {
-					if (gameState.getPlayerRoles().containsKey(p)) {
-						gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
-					}
-				}
-				if (gameState.getPlayerRoles().containsKey(damager)) {
-					RoleBase role = gameState.getPlayerRoles().get(damager);
-					if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
-						for (Player p : gameState.getInGamePlayers()) {
-							if (!gameState.hasRoleNull(p)) {
-								RoleBase role2 = gameState.getPlayerRoles().get(p);
-								if (role2.getTeam().equals(TeamList.Demon) || role2.getOriginTeam().equals(TeamList.Demon)) {
-                                        p.sendMessage("§cLe joueur§4 "+damager.getName()+"§c à tué quelqu'un....");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    for (Player p : gameState.getInGamePlayers()) {
-                        if (gameState.getPlayerRoles().containsKey(p)) {
-                            gameState.getPlayerRoles().get(p).PlayerKilled((Player)damager, player, gameState);
-                            if (!gameState.getPlayerKills().get(damager).containsKey(player)) {
-                                RoleBase fakeRole = gameState.getPlayerRoles().get(player);
-                                fakeRole.setOldRole(gameState.getPlayerRoles().get(player).getOldRole());
-                                gameState.getPlayerKills().get(damager).put(player, fakeRole);
-                            }
-                        }
-                    }
-                    for (Player p : gameState.getInGamePlayers()) {
-                        if (!gameState.hasRoleNull(player)) {
-                            gameState.getPlayerRoles().get(p).OnAPlayerDie(player, gameState, damager);
-                        }
-                    }
-                }else {
-                    if (damager instanceof Arrow) {
-                        Arrow arr = (Arrow) damager;
-                        if (arr.getShooter() instanceof Player) {
-                            Player killer = (Player) arr.getShooter();
-                            DeathMessage(player);
-                            for (Player p : gameState.getInGamePlayers()) {
-                                if (gameState.getPlayerRoles().containsKey(p)) {
-                                    gameState.getPlayerRoles().get(p).OnAPlayerKillAnotherPlayer(player, killer, gameState);
-                                }
-                            }
-                            if (gameState.getPlayerRoles().containsKey((Player)arr.getShooter())) {
-                                RoleBase role = gameState.getPlayerRoles().get((Player)arr.getShooter());
-                                if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof Nezuko) {
-                                    for (Player p : gameState.getInGamePlayers()) {
-                                        if (!gameState.hasRoleNull(p)) {
-                                            RoleBase role2 = gameState.getPlayerRoles().get(p);
-                                            if (role2.getOldTeam() == TeamList.Demon || role2 instanceof Kaigaku) {
-                                                p.sendMessage("§cLe joueur§4 "+damager.getName()+"§c à tué quelqu'un....");
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            for (Player p : gameState.getInGamePlayers()) {
-                                if (gameState.getPlayerRoles().containsKey(p))
-                                    gameState.getPlayerRoles().get(p).PlayerKilled((Player)arr.getShooter(), player, gameState);
-                                if (!gameState.getPlayerKills().get((Player)arr.getShooter()).containsKey(player)) {
-                                    RoleBase fakeRole = gameState.getPlayerRoles().get(player);
-                                    fakeRole.setOldRole(gameState.getPlayerRoles().get(player).getOldRole());
-                                    gameState.getPlayerKills().get((Player)arr.getShooter()).put(player, fakeRole);
-                                }
-                            }
-                            for (Player p : gameState.getInGamePlayers()) {
-                                if (!gameState.hasRoleNull(player)) {
-                                    gameState.getPlayerRoles().get(p).OnAPlayerDie(player, gameState, damager);
-                                }
-                            }
-                        }else {
-                            DeathMessage(player);
-                        }
-                    }else {
-                        DeathMessage(player);
-                    }
-                }
-                for (Titans t : Titans.values()) {
-                    t.getTitan().PlayerKilled(player, damager);
-                }
-            } else {//Fin du if damager != null
-                DeathMessage(player);
-            }
-			for (Events event : Events.values()) {
-				event.getEvent().onPlayerKilled(damager, player, gameState);
-			}
-        gameState.delInGamePlayers(player);
-        gameState.addInSpecPlayers(player);
-        if (gameState.morteclair) {
-            player.getWorld().strikeLightningEffect(player.getLocation());
-        }
-        if (gameState.getInGamePlayers().size()-1 <= 0) {
-				ItemsManager.ClearInventory(player);
-			} else {
-				dropItem(player.getLocation(), new ItemStack(Material.ARROW, 8));
-				dropItem(player.getLocation(), new ItemStack(Material.BRICK, 16));
-			}
-			player.setMaxHealth(20.0);
-			player.setHealth(player.getMaxHealth());
-			player.setFoodLevel(20);
-			player.setGameMode(GameMode.SPECTATOR);
-			ItemsManager.ClearInventory(player);
-			player.updateInventory();
-			detectWin(gameState);
-	}
 	private static int trueCount(boolean... b) {
         int sum = 0;
         for (boolean b1 : b) {
@@ -699,20 +514,6 @@ public class GameListener implements Listener {
         }
         return sum;
     }
-	@EventHandler(priority = EventPriority.HIGHEST)
-	private void VanillaDeath(PlayerDeathEvent e) {
-		e.setDroppedExp(5);
-		e.getEntity().getInventory().clear();
-		e.setDeathMessage(null);
-	}
-	@EventHandler
-	private void onEntityDeath(EntityDeathEvent e){
-		if (e.getEntity() instanceof Player){
-			DeathHandler((Player) e.getEntity(), e.getEntity().getKiller(), e.getEntity().getLastDamage(), gameState);
-			e.setDroppedExp(15);
-			e.getDrops().clear();
-		}
-	}
 	public static void detectWin(GameState gameState) {
         List<Player> players = new ArrayList<>(gameState.igPlayers);
 		players.removeAll(gameState.getInSpecPlayers());
@@ -722,92 +523,81 @@ public class GameListener implements Listener {
 			gameState.sendTitleToAll("§fVictoire de", "§7Personne", false);
             gameDone = true;
         }
-		boolean Slayer = false;
+		boolean Slayer = false, Demon = false, Solo = false, Jigoro = false, Alliance = false;
 		
-		boolean Demon = false;
+		boolean Mahr = false, Titans = false, Soldat = false;
 		
-		boolean Solo = false;
-		
-		boolean Jigoro = false;
-		
-		boolean Mahr = false;
-		
-		boolean Titans = false;
-		
-		boolean Soldat = false;
-		
-		boolean Jubi = false;
-		
-		boolean Alliance = false;
-		
-		boolean Orochimaru = false;
-		
-		boolean Akatsuki = false;
-		
-		boolean Sasuke = false;
-		
-		boolean Brume = false;
-		
-		boolean Shinobi = false;
-		
-		boolean Kumogakure = false;
-		boolean Kabuto = false;
-		for (Player player2 : gameState.getInGamePlayers()) {
+		boolean Jubi = false, Orochimaru = false, Akatsuki = false, Sasuke = false, Brume = false, Shinobi = false, Kumogakure = false, Kabuto = false;
+
+		boolean OverWorld = false, Nether = false;
+
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player player2 = Bukkit.getPlayer(u);
+			if (player2 == null)continue;
 			if (gameState.getPlayerRoles().get(player2) != null) {
 				RoleBase role = gameState.getPlayerRoles().get(player2);
 				switch (role.getTeam()) {
-				case Akatsuki:
-					Akatsuki = true;
-					break;
-				case Alliance:
-					Alliance = true;
-					break;
-				case Demon:
-					Demon = true;
-					break;
-				case Jigoro:
-					Jigoro = true;
-					break;
-				case Jubi:
-					Jubi = true;
-					break;
-				case Kumogakure:
-					Kumogakure = true;
-					break;
-				case Mahr:
-					Mahr = true;
-					break;
-				case Orochimaru:
-					Orochimaru = true;
-					break;
-				case Sasuke:
-					Sasuke = true;
-					break;
-				case Shinobi:
-					Shinobi = true;
-					break;
-				case Slayer:
-					Slayer = true;
-					break;
-				case Soldat:
-					Soldat = true;
-					break;
-				case Solo:
-					Solo = true;
-					break;
-				case Titan:
-					Titans = true;
-					break;
-				case Zabuza_et_Haku:
-					Brume = true;
-					break;
-				case Kabuto:
-					Kabuto = true;
-					break;
+					case Akatsuki:
+						Akatsuki = true;
+						break;
+					case Alliance:
+						Alliance = true;
+						break;
+					case Demon:
+						Demon = true;
+						break;
+					case Jigoro:
+						Jigoro = true;
+						break;
+					case Jubi:
+						Jubi = true;
+						break;
+					case Kumogakure:
+						Kumogakure = true;
+						break;
+					case Mahr:
+						Mahr = true;
+						break;
+					case Orochimaru:
+						Orochimaru = true;
+						break;
+					case Sasuke:
+						Sasuke = true;
+						break;
+					case Shinobi:
+						Shinobi = true;
+						break;
+					case Slayer:
+						Slayer = true;
+						break;
+					case Soldat:
+						Soldat = true;
+						break;
+					case Solo:
+						Solo = true;
+						break;
+					case Titan:
+						Titans = true;
+						break;
+					case Zabuza_et_Haku:
+						Brume = true;
+						break;
+					case Kabuto:
+						Kabuto = true;
+						break;
+					case OverWorld:
+						OverWorld = true;
+						break;
+					case Nether:
+						Nether = true;
+						break;
 				}
 			}
 		}
-		int i = trueCount(Slayer, Demon, Solo, Jigoro, Mahr, Titans, Soldat, Jubi, Alliance, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto);
+		int i = trueCount(Slayer, Demon, Solo, Jigoro, Alliance,
+				Mahr, Titans, Soldat,
+				Jubi, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto,
+				OverWorld, Nether);
 		if (gameDone) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.hasRoleNull(p)) {
@@ -893,93 +683,17 @@ public class GameListener implements Listener {
 				winer = TeamList.Kabuto;
 				gameDone = true;
 			}
+			if (OverWorld) {
+				winer = TeamList.OverWorld;
+				gameDone = true;
+			}
+			if (Nether) {
+				winer = TeamList.Nether;
+				gameDone = true;
+			}
 		}
 		if (gameDone){
 			EndGame(gameState, winer);
-		}
-	}
-	@EventHandler(priority = EventPriority.HIGHEST)
-	private void OnDamagedEntityByEntity(EntityDamageByEntityEvent event) {
-		if (gameState.getServerState() == ServerStates.InGame) {
-			if (event.getEntity() instanceof Player) {
-				Player player = (Player) event.getEntity();
-				Entity damageur = event.getDamager();
-				double damage = event.getFinalDamage();
-				for (Events e : Events.values()) {
-					e.getEvent().onPlayerDamagedByPlayer(event, player, damageur);
-				}
-				if (damageur instanceof Player) {
-					Player damager = (Player) event.getDamager();					
-					if (gameState.getPlayerRoles().containsKey(damager)) {
-						gameState.getPlayerRoles().get(damager).ItemUseAgainst(damager.getItemInHand(), player, gameState);
-						gameState.getPlayerRoles().get(damager).neoItemUseAgainst(damager.getItemInHand(), player, gameState, damager);
-						/*
-						 * (damager).getItemInHand() = ItemStack item
-						 * player = Player victim
-						 * gameState = GameState gameState
-						 */
-						if (player != null) {
-							Player attacker = (Player) damageur;
-                            if (gameState.shutdown.contains(attacker)) {
-								event.setCancelled(true);
-							}
-							if (gameState.getCharmed().contains(attacker)) {
-								if (gameState.getPlayerRoles().get(player) instanceof Mitsuri) {
-									attacker.sendMessage("Vous n'avez pas le pouvoir de tapée l'amour de votre vie");
-									double x = player.getLocation().getX();
-									double y = player.getLocation().getY();
-									double z = player.getLocation().getZ();
-									MathUtil.sendParticleTo(attacker, EnumParticle.HEART, x, y+2, z);
-									event.setCancelled(true);
-								}
-							}
-						if (gameState.getPlayerRoles().get(player).getRoles().equals(Roles.Slayer) && FFA.getFFA()) {
-							FFA_Pourfendeur f = (FFA_Pourfendeur) gameState.getPlayerRoles().get(player);
-							if (f.getPlayerRoles(f.owner).getRoles() == Roles.Slayer) {
-								if (f.owner == player) {
-									if (f.Serpent) {
-										if (f.serpentactualtime >= 0) {
-											if (RandomUtils.getOwnRandomProbability(20)) {
-												f.owner.sendMessage("Vous venez d'esquiver un coup grâce à votre Soufle");
-												event.setCancelled(true);	
-											}							
-										}
-									}
-								}
-							}
-						}
-							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
-							if (gameState.getPlayerRoles().get(player).CancelAttack)event.setCancelled(true);
-						}
-					}
-				}
-                assert player != null;
-                if (player.getHealth()-damage <= 0) {
-					if (event.getCause() != DamageCause.FALL) {
-						if (gameState.getInGamePlayers().contains(player)) {
-							if (!gameState.hasRoleNull(player)) {
-								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
-                                    assert damageur instanceof Player;
-                                    gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
-									event.setCancelled(true);
-									return;
-								}
-							}
-						}
-					} else {
-						if (gameState.getPlayerRoles().containsKey(player)) {
-							if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
-								event.setDamage(0);
-								event.setCancelled(true);
-							}
-						}
-					}
-				}				
-			}
-		} else {//else du serverstates.ingame
-			if (AntiPvP.isAntipvplobby()) {
-				event.setCancelled(true);
-			}
 		}
 	}
 	@EventHandler
@@ -1008,7 +722,7 @@ public class GameListener implements Listener {
 				gameState.getPlayerRoles().get(clicker).onInventoryClick(event, item, inv, clicker);
 			}
 			for (Player p : Bukkit.getOnlinePlayers()){
-				if (gameState.getInGamePlayers().contains(p)) {
+				if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 					if (!gameState.hasRoleNull(p)) {
 						gameState.getPlayerRoles().get(p).onAllPlayerInventoryClick(event, item, inv, clicker);
 					}
@@ -1049,29 +763,38 @@ public class GameListener implements Listener {
 		Player player = event.getPlayer();
 		if (event.hasItem()) {
 			ItemStack itemstack = event.getItem();
-			for (Events e : Events.values()) {
-				e.getEvent().onItemInteract(event, itemstack, player);
+			if (!gameState.hasRoleNull(player)) {
+				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+					if (power instanceof ItemPower) {
+						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
+							event.setCancelled(true);
+							((ItemPower) power).call(event);
+						}
+					}
+				}
 			}
-			for (Player p : gameState.getInGamePlayers()) {
+			for (UUID u : gameState.getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				if (!gameState.hasRoleNull(p)) {
-					gameState.getPlayerRoles().get(p).onALLPlayerInteract(event, player);
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().onALLPlayerInteract(event, player);
 				}
 			}
 			if (!gameState.hasRoleNull(player)) {
 				if (event.getAction().name().contains("RIGHT")){
-					event.setCancelled(gameState.getPlayerRoles().get(player).ItemUse(itemstack, gameState));
+					event.setCancelled(gameState.getGamePlayer().get(player.getUniqueId()).getRole().ItemUse(itemstack, gameState));
 				} else {
-					gameState.getPlayerRoles().get(player).onLeftClick(event, gameState);
+					gameState.getGamePlayer().get(player.getUniqueId()).getRole().onLeftClick(event, gameState);
 				}
 			}
 				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-					if (gameState.getInGamePlayers().contains(player)) {
-						if (gameState.getPlayerRoles().containsKey(player)) {
+					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
+						if (!gameState.hasRoleNull(player)) {
 							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
-			        				RoleBase role = gameState.getPlayerRoles().get(player);
+			        				RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
+									if (!(role instanceof Susamaru))return;
 		                			Susamaru sam = (Susamaru) role;
-		                			if (role.getPlayerRoles(player).getRoles() != Roles.Susamaru)return;
 		                			if (player != sam.owner)return;
 		                			if (sam.Niveau1 && !sam.Niveau2 && sam.changecd <= 0) {
 		                				sam.Niveau1 = false;
@@ -1095,7 +818,7 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void OnPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
-		if (gameState.getInGamePlayers().contains(player)) {
+		if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 			if (!gameState.hasRoleNull(player)) {
 				if (gameState.getPlayerRoles().get(player).getRoles() == null) {
 					event.setCancelled(true);
@@ -1110,15 +833,24 @@ public class GameListener implements Listener {
 	}
 	@EventHandler
 	public void OnMoove(PlayerMoveEvent e) {
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
-				gameState.getPlayerRoles().get(p).onAllPlayerMoove(e, e.getPlayer());
+				gameState.getGamePlayer().get(p.getUniqueId()).getRole().onAllPlayerMoove(e, e.getPlayer());
 			}
 		}
 		Player p = e.getPlayer();
 		Location from = e.getFrom();
 		Location to = e.getTo();
 		if(to == null) return;
+		if (gameState.getServerState().equals(ServerStates.InGame)) {
+			if (!gameState.getGamePlayer().isEmpty()) {
+				if (gameState.getGamePlayer().containsKey(e.getPlayer().getUniqueId())) {
+					gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).setLastLocation(e.getFrom());
+				}
+			}
+		}
 		if (to.getY() < 0) {
 			p.teleport(new Location(to.getWorld(), to.getX(), to.getWorld().getHighestBlockYAt(to), to.getZ()));
 		}
@@ -1171,7 +903,7 @@ public class GameListener implements Listener {
         Recipe recipe = event.getRecipe();
 
         // Vérifier si le craft correspond au craft personnalisé
-        if (recipe instanceof ShapedRecipe && ((ShapedRecipe) recipe).getResult() == Items.getLamedenichirin()) {
+        if (recipe instanceof ShapedRecipe && recipe.getResult() == Items.getLamedenichirin()) {
             // Vérifier si tous les ingrédients sont présents
             ItemStack[] matrix = inventory.getMatrix();
             if (matrix[0] != null && matrix[1] != null && matrix[2] != null &&

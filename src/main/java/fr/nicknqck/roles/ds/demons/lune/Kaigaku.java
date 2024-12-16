@@ -4,10 +4,13 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -20,7 +23,6 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.RandomUtils;
 
 import java.util.UUID;
 
@@ -36,9 +38,15 @@ public class Kaigaku extends DemonsRoles {
 		getKnowedRoles().add(Muzan.class);
 		setLameIncassable(owner, true);
 	}
+
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public Soufle getSoufle() {
+		return Soufle.FOUDRE;
+	}
+
+	@Override
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 	@Override
 	public Roles getRoles() {
@@ -97,7 +105,7 @@ public class Kaigaku extends DemonsRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof ZenItsu) {
@@ -109,19 +117,21 @@ public class Kaigaku extends DemonsRoles {
 				}
 			}
 			if (gameState.JigoroV2Pacte2) {
-				if (gameState.getInGamePlayers().contains(victim) && gameState.getInGamePlayers().contains(killer)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId()) && gameState.getInGamePlayers().contains(killer.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim) || gameState.getPlayerRoles().containsKey(killer)) {
 						if (killer == owner) {
 							String msg = "Vous avez reçus 1 demi"+AllDesc.coeur+" permanent car§6 Jigoro§r ou§6 Kaigaku à fait un kill";
 							owner.sendMessage(msg);
 							setMaxHealth(getMaxHealth()+1.0);
 							owner.updateInventory();
-							for (Player p : gameState.getInGamePlayers()) {
+							for (UUID u : gameState.getInGamePlayers()) {
+								Player p = Bukkit.getPlayer(u);
+								if (p == null)continue;
 								if (gameState.getPlayerRoles().containsKey(p)) {
 									if (gameState.getPlayerRoles().get(p) instanceof JigoroV2) {
 										Player jigoro = gameState.getPlayerRoles().get(p).owner;
 										jigoro.sendMessage(msg);
-										getPlayerRoles(jigoro).setMaxHealth(getPlayerRoles(jigoro).getMaxHealth()+1.0);
+										gameState.getGamePlayer().get(jigoro.getUniqueId()).getRole().setMaxHealth(gameState.getGamePlayer().get(jigoro.getUniqueId()).getRole().getMaxHealth()+1.0);
 										jigoro.updateInventory();
 									}
 								}

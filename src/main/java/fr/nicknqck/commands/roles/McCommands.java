@@ -1,6 +1,8 @@
 package fr.nicknqck.commands.roles;
 
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
+import fr.nicknqck.utils.powers.CommandPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,7 +30,15 @@ public class McCommands implements CommandExecutor{
 						gameState.sendDescription(sender);
                     } else {
 						if (!(gameState.getPlayerRoles().get(sender) instanceof UHCMcRoles))return false;
-						if (gameState.getPlayerRoles().get(sender).getGamePlayer().isAlive()) {
+						UHCMcRoles role = (UHCMcRoles) gameState.getPlayerRoles().get(sender);
+						if (role.getGamePlayer().isAlive()) {
+							if (!role.getPowers().isEmpty()) {
+								for (Power power : role.getPowers()) {
+									if (power instanceof CommandPower) {
+										((CommandPower) power).call(args, CommandPower.CommandType.MC, sender);
+									}
+								}
+							}
 							((UHCMcRoles) gameState.getPlayerRoles().get(sender)).onMcCommand(args);
 						}
                     }

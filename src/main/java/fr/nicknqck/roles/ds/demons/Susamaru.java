@@ -6,7 +6,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
-import org.bukkit.entity.Player;
+import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -18,8 +18,8 @@ public class Susamaru extends DemonInferieurRole {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 
 	@Override

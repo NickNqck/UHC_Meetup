@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
+import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 
 public class GetterList {
     private final GameState gameState;
+    
     public GetterList(GameState gameState) {
         this.gameState = gameState;
     }
@@ -24,10 +26,12 @@ public class GetterList {
             for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
                 if (role instanceof DemonsRoles) {
                     DemonsRoles demon = (DemonsRoles) role;
-                    if (demon.getRank().name().contains("Lune")){
+                    if (!demon.getRank().equals(DemonType.DEMON)){
                         Player list = Bukkit.getPlayer(demon.getPlayer());
                         if (list != null){
-                            text.addExtra("\n§7 - §c"+list.getName());
+                            if (demon.getGamePlayer().isAlive()) {
+                                text.addExtra("\n§7 - §c"+list.getName());
+                            }
                         }
                     }
                 }

@@ -2,7 +2,6 @@ package fr.nicknqck.events.custom;
 
 import fr.nicknqck.GameState;
 import lombok.Getter;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -17,13 +16,13 @@ public class StartGameEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final GameState gameState;
     private final List<UUID> inGamePlayers = new ArrayList<>();
-    public StartGameEvent(GameState gameState) {
+    private final List<GameState.Roles> igRoles;
+
+    public StartGameEvent(GameState gameState, List<GameState.Roles> rolesList) {
         this.gameState = gameState;
-        for (Player p : gameState.getInGamePlayers()){
-            inGamePlayers.add(p.getUniqueId());
-        }
-        System.out.println("StartGameEvent has been called !");
+        this.igRoles = rolesList;
     }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;

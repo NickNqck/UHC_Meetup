@@ -15,12 +15,14 @@ public class RoleGiveEvent extends Event {
     private final GameState.Roles type;
     private final GamePlayer gamePlayer;
     private static final HandlerList handlers = new HandlerList();
-    public RoleGiveEvent(GameState gameState, RoleBase role, GameState.Roles roleType, GamePlayer gamePlayer) {
+    private final boolean endGive;
+    public RoleGiveEvent(GameState gameState, RoleBase role, GameState.Roles roleType, GamePlayer gamePlayer, final boolean end) {
         super();
         this.gameState = gameState;
         this.role = role;
         this.type = roleType;
         this.gamePlayer = gamePlayer;
+        this.endGive = end;
     }
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {

@@ -1,7 +1,5 @@
 package fr.nicknqck;
 
-import fr.nicknqck.events.EventBase;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
@@ -23,18 +21,21 @@ import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
-import fr.nicknqck.roles.mc.overworld.AraigneeVenimeuse;
-import fr.nicknqck.roles.mc.overworld.Poulet;
-import fr.nicknqck.roles.mc.overworld.Squelette;
-import fr.nicknqck.roles.mc.overworld.Zombie;
+import fr.nicknqck.roles.mc.nether.Blaze;
+import fr.nicknqck.roles.mc.nether.Brute;
+import fr.nicknqck.roles.mc.nether.MagmaCube;
+import fr.nicknqck.roles.mc.overworld.*;
 import fr.nicknqck.roles.mc.solo.Warden;
 import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.roles.ns.akatsuki.*;
+import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
 import fr.nicknqck.roles.ns.shinobi.*;
+import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
+import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
@@ -44,6 +45,7 @@ import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import fr.nicknqck.roles.valo.agents.Iso;
+import fr.nicknqck.roles.valo.agents.Neon;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -66,35 +68,28 @@ public class GameState{
 	private int timeProcHokage = 90;
 	@Getter
 	private final List<Roles> deadRoles = new ArrayList<>();
-	public boolean BijusEnable = false;
-	public boolean stuffUnbreak = true;
 	public int TridiCooldown = 16;
 	public boolean hasPregen = false;
-	public int WaterEmptyTiming = 30;
-	public int LavaEmptyTiming = 30;
 	public boolean pregenNakime = false;
-	public boolean demonKingTanjiro = false;
 	public boolean gameCanLaunch = false;
 	@Getter
-	private Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
+	@Setter
+	private boolean roleAttributed = false;
+	@Getter
+	private final Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
 	@Setter
 	@Getter
 	private int groupe = 5;
 	@Getter
 	@Setter
 	private int minTimeSpawnBiju = 90;
-	public int DKTProba = 0;
-	public int AllianceProba = 0;
-	public int AllianceTime = 60;
-	public int AkazaVSKyojuroProba = 0;
-	public int AkazaVsKyojuroTime = 60;
-	public int nmbArrow = 24;
-	public boolean LaveTitans = true;
+	@Getter
+	@Setter
+	private int maxTimeSpawnBiju = 160;
 	@Getter
 	public int TimingAssassin = 10;
 	public boolean morteclair = true;
-	@Getter
-	public final List<UUID> Host = new ArrayList<>();
+	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 	public enum ServerStates {
 		InLobby,
 		InGame,
@@ -103,91 +98,92 @@ public class GameState{
 	@Getter
 	public enum Roles {
 		//Solo ds
-		Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("Yoriichi").toItemStack(), "§bNickNqck"),
-		Jigoro(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("Jigoro").toItemStack(), "§bNickNqck"),
-		Shinjuro(TeamList.Solo, "ds", 2, new ItemBuilder(Material.LAVA_BUCKET).setName("Shinjuro").toItemStack(), "§bNickNqck"),
-		JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("JigoroV2").toItemStack(), "§bNickNqck"),
-		KyogaiV2(TeamList.Solo, "ds", 5, new ItemBuilder(Material.STICK).setName("KyogaiV2").toItemStack(), "§bNickNqck"),
-		ShinjuroV2(TeamList.Solo, "ds", 6, new ItemBuilder(Material.FLINT_AND_STEEL).setName("ShinjuroV2").toItemStack(), "§bNickNqck"),
+		Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
+		Jigoro(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
+		Shinjuro(TeamList.Solo, "ds", 2, new ItemBuilder(Material.LAVA_BUCKET).setName("§eShinjuro").toItemStack(), "§bNickNqck"),
+		ShinjuroV2(TeamList.Solo, "ds", 3, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§eShinjuro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
+		JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("§eJigoro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
+		KyogaiV2(TeamList.Solo, "ds", 5, new ItemBuilder(Material.STICK).setName("§eKyogai §7(§6V2§7)").toItemStack(), "§bNickNqck"),
+		SlayerSolo(TeamList.Solo, "ds", 6, new ItemBuilder(Material.IRON_SWORD).setName("§ePourfendeur Solitaire").toItemStack(), "§bNickNqck"),
 		//Démons ds
-		Muzan(TeamList.Demon, "ds", 0, new ItemBuilder(Material.REDSTONE_ORE).setName("Muzan").toItemStack(), "§bNickNqck"),
-		Kokushibo(TeamList.Demon, "ds", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("Kokushibo").toItemStack(), "§bNickNqck"),
-		Doma(TeamList.Demon, "ds", 2, new ItemBuilder(Material.PACKED_ICE).setName("Doma").toItemStack(), "§bNickNqck"),
-		Akaza(TeamList.Demon, "ds", 3, new ItemBuilder(Material.APPLE).setName("Akaza").toItemStack(), "§bNickNqck"),
-		Nakime(TeamList.Demon, "ds", 18, new ItemBuilder(Material.MAGMA_CREAM).setName("Nakime").toItemStack(), "§bNickNqck"),
-		Hantengu(TeamList.Demon, "ds", 4, new ItemBuilder(Material.RABBIT_FOOT).setName("Hantengu").toItemStack(), "§bNickNqck"),
-		HantenguV2(TeamList.Demon, "ds", 11, new ItemBuilder(Material.NETHER_STAR).setName("HantenguV2").toItemStack(), "§bNickNqck"),
-		Gyokko(TeamList.Demon, "ds", 5, new ItemBuilder(Material.FLOWER_POT_ITEM).setName("Gyokko").toItemStack(), "§bNickNqck"),
-		Daki(TeamList.Demon, "ds", 6, new ItemBuilder(Material.IRON_FENCE).setName("Daki").toItemStack(), "§bNickNqck"),
-		Gyutaro(TeamList.Demon, "ds", 7, new ItemBuilder(Material.DIAMOND_HOE).setName("Gyutaro").toItemStack(), "§bNickNqck"),
-		Kaigaku(TeamList.Demon, "ds", 8, new ItemBuilder(Material.YELLOW_FLOWER).setName("Kaigaku").toItemStack(), "§bNickNqck"),
-		Enmu(TeamList.Demon, "ds", 19, new ItemBuilder(Material.EYE_OF_ENDER).setName("Enmu").toItemStack(), "§bNickNqck"),
-		Rui(TeamList.Demon, "ds", 16, new ItemBuilder(Material.STRING).setName("Rui").toItemStack(), "§bNickNqck"),
-		Kyogai(TeamList.Demon, "ds", 3, new ItemBuilder(Material.DISPENSER).setName("Kyogai").toItemStack(), "§bNickNqck"),
-		Susamaru(TeamList.Demon, "ds", 9, new ItemBuilder(Material.BOW).setName("Susamaru").toItemStack(), "§bNickNqck"),
-		Furuto(TeamList.Demon, "ds", 10, new ItemBuilder(Material.NETHER_BRICK).setName("Furuto").toItemStack(), "§bNickNqck"),
-		DemonSimpleV2(TeamList.Demon, "ds", 12, new ItemBuilder(Material.NETHER_STALK).setName("DemonSimpleV2").toItemStack(), "§bMega02600"),
-		Yahaba(TeamList.Demon, "ds", 13, new ItemBuilder(Material.COMPASS).setName("Yahaba").toItemStack(), "§bNickNqck"),
-		DemonMain(TeamList.Demon, "ds", 14, new ItemBuilder(Material.SKULL_ITEM).setName("DemonMain").setDurability(3).toItemStack(), "§bNickNqck"),
-		Demon(TeamList.Demon, "ds", 15, new ItemBuilder(Material.NETHER_FENCE).setName("Demon").toItemStack(), "§bNickNqck"),
-		Kumo(TeamList.Demon, "ds", 17, new ItemBuilder(Material.WEB).setName("Kumo").toItemStack(), "§bNickNqck"),
+		Muzan(TeamList.Demon, "ds", 0, new ItemBuilder(Material.REDSTONE_ORE).setName("§cMuzan").toItemStack(), "§bNickNqck"),
+		Kokushibo(TeamList.Demon, "ds", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cKokushibo").toItemStack(), "§bNickNqck"),
+		Doma(TeamList.Demon, "ds", 2, new ItemBuilder(Material.PACKED_ICE).setName("§cDoma").toItemStack(), "§bNickNqck"),
+		Akaza(TeamList.Demon, "ds", 3, new ItemBuilder(Material.APPLE).setName("§cAkaza").toItemStack(), "§bNickNqck"),
+		Nakime(TeamList.Demon, "ds", 18, new ItemBuilder(Material.MAGMA_CREAM).setName("§cNakime").toItemStack(), "§bNickNqck"),
+		Hantengu(TeamList.Demon, "ds", 4, new ItemBuilder(Material.RABBIT_FOOT).setName("§cHantengu").toItemStack(), "§bNickNqck"),
+		HantenguV2(TeamList.Demon, "ds", 11, new ItemBuilder(Material.NETHER_STAR).setName("§cHantengu§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
+		Gyokko(TeamList.Demon, "ds", 5, new ItemBuilder(Material.FLOWER_POT_ITEM).setName("§cGyokko").toItemStack(), "§bNickNqck"),
+		Daki(TeamList.Demon, "ds", 6, new ItemBuilder(Material.IRON_FENCE).setName("§cDaki").toItemStack(), "§bNickNqck"),
+		Gyutaro(TeamList.Demon, "ds", 7, new ItemBuilder(Material.DIAMOND_HOE).setName("§cGyutaro").toItemStack(), "§bNickNqck"),
+		Kaigaku(TeamList.Demon, "ds", 8, new ItemBuilder(Material.YELLOW_FLOWER).setName("§cKaigaku").toItemStack(), "§bNickNqck"),
+		Enmu(TeamList.Demon, "ds", 19, new ItemBuilder(Material.EYE_OF_ENDER).setName("§cEnmu").toItemStack(), "§bNickNqck"),
+		Rui(TeamList.Demon, "ds", 16, new ItemBuilder(Material.STRING).setName("§cRui").toItemStack(), "§bNickNqck"),
+		Kyogai(TeamList.Demon, "ds", 3, new ItemBuilder(Material.DISPENSER).setName("§cKyogai").toItemStack(), "§bNickNqck"),
+		Susamaru(TeamList.Demon, "ds", 9, new ItemBuilder(Material.BOW).setName("§cSusamaru").toItemStack(), "§bNickNqck"),
+		Furuto(TeamList.Demon, "ds", 10, new ItemBuilder(Material.NETHER_BRICK).setName("§cFuruto").toItemStack(), "§bNickNqck"),
+		DemonSimpleV2(TeamList.Demon, "ds", 12, new ItemBuilder(Material.NETHER_STALK).setName("§cDemonSimple§7 (§6V2§7)").toItemStack(), "§bMega02600"),
+		Yahaba(TeamList.Demon, "ds", 13, new ItemBuilder(Material.COMPASS).setName("§cYahaba").toItemStack(), "§bNickNqck"),
+		DemonMain(TeamList.Demon, "ds", 14, new ItemBuilder(Material.SKULL_ITEM).setName("§cDemon Main").setDurability(3).toItemStack(), "§bNickNqck"),
+		Demon(TeamList.Demon, "ds", 15, new ItemBuilder(Material.NETHER_FENCE).setName("§cDemon Simple").toItemStack(), "§bNickNqck"),
+		Kumo(TeamList.Demon, "ds", 17, new ItemBuilder(Material.WEB).setName("§cKumo").toItemStack(), "§bNickNqck"),
 		//Slayer ds
-		Nezuko(TeamList.Slayer, "ds", 0, new ItemBuilder(Material.REDSTONE).setName("Nezuko").toItemStack(), "§bNickNqck"),
-		Tanjiro(TeamList.Slayer, "ds", 1, new ItemBuilder(Material.BLAZE_ROD).setName("Tanjiro").toItemStack(), "§bNickNqck"),
-		Tomioka(TeamList.Slayer, "ds", 2, new ItemBuilder(Material.WATER_BUCKET).setName("Tomioka").toItemStack(), "§bNickNqck"),
-		Kyojuro(TeamList.Slayer, "ds", 3, new ItemBuilder(Material.FLINT_AND_STEEL).setName("Kyojuro").toItemStack(), "§bNickNqck"),
-		Muichiro(TeamList.Slayer, "ds", 4, new ItemBuilder(Material.FEATHER).setName("Muichiro").toItemStack(), "§bNickNqck"),
-		Gyomei(TeamList.Slayer, "ds", 5, new ItemBuilder(Material.IRON_AXE).setName("Gyomei").toItemStack(), "§bNickNqck"),
-		Sanemi(TeamList.Slayer, "ds", 6, new ItemBuilder(Material.QUARTZ).setName("Sanemi").toItemStack(), "§bNickNqck"),
-		Tengen(TeamList.Slayer, "ds", 7, new ItemBuilder(Material.JUKEBOX).setName("Tengen").toItemStack(), "§bNickNqck"),
-		Shinobu(TeamList.Slayer, "ds", 8, new ItemBuilder(Material.SPIDER_EYE).setName("Shinobu").toItemStack(), "§bNickNqck"),
-		Obanai(TeamList.Slayer, "ds", 9, new ItemBuilder(Material.GOLDEN_CARROT).setName("Obanai").toItemStack(), "§bNickNqck"),
-		ZenItsu(TeamList.Slayer, "ds", 10, new ItemBuilder(Material.GLOWSTONE_DUST).setName("ZenItsu").toItemStack(), "§bNickNqck"),
-		Inosuke(TeamList.Slayer, "ds", 11, new ItemBuilder(Material.PORK).setName("Inosuke").toItemStack(), "§bNickNqck"),
-		Kanao(TeamList.Slayer, "ds", 12, new ItemBuilder(Material.LEATHER_BOOTS).setName("Kanao").toItemStack(), "§bNickNqck"),
-		Slayer(TeamList.Slayer, "ds", 13, new ItemBuilder(Material.IRON_SWORD).setName("Slayer").toItemStack(), "§bNickNqck"),
-		Sabito(TeamList.Slayer, "ds", 14, new ItemBuilder(Material.POTION).setDurability((short)0).setName("Sabito").toItemStack(), "§bNickNqck"),
-		Urokodaki(TeamList.Slayer, "ds", 15, new ItemBuilder(Material.WATER_LILY).setName("Urokodaki").toItemStack(), "§bNickNqck"),
-		Makomo(TeamList.Slayer, "ds", 16, new ItemBuilder(Material.BOWL).setName("Makomo").toItemStack(), "§bNickNqck"),
-		Kanae(TeamList.Slayer, "ds", 17, new ItemBuilder(Material.DIAMOND_SWORD).setName("Kanae").toItemStack(), "§bNickNqck"),
-		Mitsuri(TeamList.Slayer, "ds", 18, new ItemBuilder(Material.RED_ROSE).setName("Mitsuri").toItemStack(), "§bNickNqck"),
-		Kagaya(TeamList.Slayer, "ds", 19, new ItemBuilder(Material.CHEST).setName("Kagaya").toItemStack(), "§bNickNqck"),
-		Hotaru(TeamList.Slayer, "ds", 20, new ItemBuilder(Material.ANVIL).setName("Hotaru").toItemStack(), "§bNickNqck"),
-		
+		Kagaya(TeamList.Slayer, "ds", 0, new ItemBuilder(Material.CHEST).setName("§aKagaya").toItemStack(), "§bNickNqck"),
+		Gyomei(TeamList.Slayer, "ds", 1, new ItemBuilder(Material.IRON_AXE).setName("§aGyomei").toItemStack(), "§bNickNqck"),
+		Sanemi(TeamList.Slayer, "ds", 2, new ItemBuilder(Material.QUARTZ).setName("§aSanemi").toItemStack(), "§bNickNqck"),
+		Tomioka(TeamList.Slayer, "ds", 3, new ItemBuilder(Material.WATER_BUCKET).setName("§aTomioka").toItemStack(), "§bNickNqck"),
+		Kyojuro(TeamList.Slayer, "ds", 4, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§aKyojuro").toItemStack(), "§bNickNqck"),
+		Muichiro(TeamList.Slayer, "ds", 5, new ItemBuilder(Material.FEATHER).setName("§aMuichiro").toItemStack(), "§bNickNqck"),
+		Tengen(TeamList.Slayer, "ds", 6, new ItemBuilder(Material.JUKEBOX).setName("§aTengen").toItemStack(), "§bNickNqck"),
+		Shinobu(TeamList.Slayer, "ds", 7, new ItemBuilder(Material.SPIDER_EYE).setName("§aShinobu").toItemStack(), "§bNickNqck"),
+		Mitsuri(TeamList.Slayer, "ds", 8, new ItemBuilder(Material.RED_ROSE).setName("§aMitsuri").toItemStack(), "§bNickNqck"),
+		Obanai(TeamList.Slayer, "ds", 9, new ItemBuilder(Material.GOLDEN_CARROT).setName("§aObanai").toItemStack(), "§bNickNqck"),
+		Kanae(TeamList.Slayer, "ds", 10, new ItemBuilder(Material.DIAMOND_SWORD).setName("§aKanae").toItemStack(), "§bNickNqck"),
+
+		Tanjiro(TeamList.Slayer, "ds", 11, new ItemBuilder(Material.BLAZE_ROD).setName("§aTanjiro").toItemStack(), "§bNickNqck"),
+		Nezuko(TeamList.Slayer, "ds", 12, new ItemBuilder(Material.REDSTONE).setName("§aNezuko").toItemStack(), "§bNickNqck"),
+		ZenItsu(TeamList.Slayer, "ds", 13, new ItemBuilder(Material.GLOWSTONE_DUST).setName("§aZenItsu").toItemStack(), "§bNickNqck"),
+		Inosuke(TeamList.Slayer, "ds", 14, new ItemBuilder(Material.PORK).setName("§aInosuke").toItemStack(), "§bNickNqck"),
+		Kanao(TeamList.Slayer, "ds", 15, new ItemBuilder(Material.LEATHER_BOOTS).setName("§aKanao").toItemStack(), "§bNickNqck"),
+		Sabito(TeamList.Slayer, "ds", 16, new ItemBuilder(Material.POTION).setDurability(0).setName("§aSabito").toItemStack(), "§bNickNqck"),
+		Urokodaki(TeamList.Slayer, "ds", 17, new ItemBuilder(Material.WATER_LILY).setName("§aUrokodaki").toItemStack(), "§bNickNqck"),
+		Makomo(TeamList.Slayer, "ds", 18, new ItemBuilder(Material.BOWL).setName("§aMakomo").toItemStack(), "§bNickNqck"),
+		Hotaru(TeamList.Slayer, "ds", 19, new ItemBuilder(Material.ANVIL).setName("§aHotaru").toItemStack(), "§bNickNqck"),
+		Slayer(TeamList.Slayer, "ds", 20, new ItemBuilder(Material.IRON_SWORD).setName("§aPourfendeur Simple").toItemStack(), "§bNickNqck"),
 		//Mahr aot
-		Reiner(TeamList.Mahr, "aot", 0, new ItemBuilder(Material.QUARTZ).setName("Reiner").toItemStack(), "§bNickNqck"),
-		Pieck(TeamList.Mahr, "aot", 1, new ItemBuilder(Material.CHEST).setName("Pieck").toItemStack(), "§bNickNqck"),
-		Bertolt(TeamList.Mahr, "aot", 2, new ItemBuilder(Material.MAGMA_CREAM).setName("Bertolt").toItemStack(), "§bNickNqck"),
-		Porco(TeamList.Mahr, "aot", 3, new ItemBuilder(Material.SLIME_BALL).setName("Porco").toItemStack(), "§bNickNqck"),
-		Magath(TeamList.Mahr, "aot", 4, new ItemBuilder(Material.COMPASS).setName("Magath").toItemStack(), "§bNickNqck"),
-		Lara(TeamList.Mahr, "aot", 5, new ItemBuilder(Material.IRON_BLOCK).setName("Lara").toItemStack(), "§bNickNqck"),
+		Reiner(TeamList.Mahr, "aot", 0, new ItemBuilder(Material.QUARTZ).setName("§9Reiner").toItemStack(), "§bNickNqck"),
+		Pieck(TeamList.Mahr, "aot", 1, new ItemBuilder(Material.CHEST).setName("§9Pieck").toItemStack(), "§bNickNqck"),
+		Bertolt(TeamList.Mahr, "aot", 2, new ItemBuilder(Material.MAGMA_CREAM).setName("§9Bertolt").toItemStack(), "§bNickNqck"),
+		Porco(TeamList.Mahr, "aot", 3, new ItemBuilder(Material.SLIME_BALL).setName("§9Porco").toItemStack(), "§bNickNqck"),
+		Magath(TeamList.Mahr, "aot", 4, new ItemBuilder(Material.COMPASS).setName("§9Magath").toItemStack(), "§bNickNqck"),
+		Lara(TeamList.Mahr, "aot", 5, new ItemBuilder(Material.IRON_BLOCK).setName("§9Lara").toItemStack(), "§bNickNqck"),
 		//Titans aot
-		TitanBestial(TeamList.Titan, "aot", 2, new ItemBuilder(Material.MOB_SPAWNER).setName("Titan Bestial").toItemStack(), "§bNickNqck"),
-		PetitTitan(TeamList.Titan, "aot", 0, new ItemBuilder(Material.FEATHER).setName("PetitTitan").toItemStack(), "§bNickNqck"),
-		GrandTitan(TeamList.Titan, "aot", 1, new ItemBuilder(Material.STICK).setName("GrandTitan").toItemStack(), "§bNickNqck"),
-		TitanDeviant(TeamList.Titan, "aot", 4, new ItemBuilder(Material.SNOW_BALL).setName("Titan Deviant").toItemStack(), "§bNickNqck"),
-		Jelena(TeamList.Titan, "aot", 3, new ItemBuilder(Material.CHEST).setName("Jelena").toItemStack(), "§bNickNqck"),
+		TitanBestial(TeamList.Titan, "aot", 2, new ItemBuilder(Material.MOB_SPAWNER).setName("§cTitan Bestial").toItemStack(), "§bNickNqck"),
+		PetitTitan(TeamList.Titan, "aot", 0, new ItemBuilder(Material.FEATHER).setName("§cPetit Titan").toItemStack(), "§bNickNqck"),
+		GrandTitan(TeamList.Titan, "aot", 1, new ItemBuilder(Material.STICK).setName("§cGrand Titan").toItemStack(), "§bNickNqck"),
+		TitanDeviant(TeamList.Titan, "aot", 4, new ItemBuilder(Material.SNOW_BALL).setName("§cTitan Deviant").toItemStack(), "§bNickNqck"),
+		Jelena(TeamList.Titan, "aot", 3, new ItemBuilder(Material.CHEST).setName("§cJelena").toItemStack(), "§bNickNqck"),
 		//Soldat aot
-		Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("Livai").toItemStack(), "§bMega02600"),
-		Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("Soldat").toItemStack(), "§bMega02600"),
-		Erwin(TeamList.Soldat, "aot", 2, new ItemBuilder(Material.SIGN).setName("Erwin").toItemStack(), "§bNickNqck"),
-		Armin(TeamList.Soldat, "aot", 3, new ItemBuilder(Material.CHEST).setName("Armin").toItemStack(), "§bNickNqck"),
-		Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("Eclaireur").toItemStack(), "§bMega02600"),
-		Jean(TeamList.Soldat, "aot", 5, new ItemBuilder(Material.FIREWORK).setName("Jean").toItemStack(), "§bMega02600"),
-		Onyankopon(TeamList.Soldat, "aot", 6, new ItemBuilder(Material.ENDER_PEARL).setName("Onyankopon").toItemStack(), "§bMega02600"),
-		Hansi(TeamList.Soldat, "aot", 7, new ItemBuilder(Material.THIN_GLASS).setName("Hansi").toItemStack(), "§bNickNqck"),
-		Sasha(TeamList.Soldat, "aot", 8, new ItemBuilder(Material.BOW).setName("Sasha").toItemStack(), "§bNickNqck"),
-		Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("Conny").toItemStack(), "§bMega02600"),
+		Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("§aLivai").toItemStack(), "§bMega02600"),
+		Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("§aSoldat").toItemStack(), "§bMega02600"),
+		Erwin(TeamList.Soldat, "aot", 2, new ItemBuilder(Material.SIGN).setName("§aErwin").toItemStack(), "§bNickNqck"),
+		Armin(TeamList.Soldat, "aot", 3, new ItemBuilder(Material.CHEST).setName("§aArmin").toItemStack(), "§bNickNqck"),
+		Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("§aEclaireur").toItemStack(), "§bMega02600"),
+		Jean(TeamList.Soldat, "aot", 5, new ItemBuilder(Material.FIREWORK).setName("§aJean").toItemStack(), "§bMega02600"),
+		Onyankopon(TeamList.Soldat, "aot", 6, new ItemBuilder(Material.ENDER_PEARL).setName("§aOnyankopon").toItemStack(), "§bMega02600"),
+		Hansi(TeamList.Soldat, "aot", 7, new ItemBuilder(Material.THIN_GLASS).setName("§aHansi").toItemStack(), "§bNickNqck"),
+		Sasha(TeamList.Soldat, "aot", 8, new ItemBuilder(Material.BOW).setName("§aSasha").toItemStack(), "§bNickNqck"),
+		Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("§aConny").toItemStack(), "§bMega02600"),
 		//Solo Aot
-		Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("Eren").toItemStack(), "§bNickNqck"),
-		Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("Gabi").toItemStack(), "§bNickNqck"),
-		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("Titan Ultime").toItemStack(), "§bNickNqck"),
+		Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("§eEren").toItemStack(), "§bNickNqck"),
+		Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("§eGabi").toItemStack(), "§bNickNqck"),
+		TitanUltime(TeamList.Solo, "aot", 12, new ItemBuilder(Material.QUARTZ).setName("§eTitan Ultime").toItemStack(), "§bNickNqck"),
 		//Jubi ns
-		Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("Madara").toItemStack(), "§aYukan"),
-		Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("Obito").toItemStack(), "§aYukan"),
+		Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dMadara").toItemStack(), "§aYukan"),
+		Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("§dObito").toItemStack(), "§aYukan"),
 		//Solo ns
-		Gaara(TeamList.Solo, "ns", 0, new ItemBuilder(Material.SAND).setName("Gaara").toItemStack(), "§bNickNqck"),
-		Danzo(TeamList.Solo, "ns", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("Danzo").toItemStack(), "§bNickNqck"),
+		Gaara(TeamList.Solo, "ns", 0, new ItemBuilder(Material.SAND).setName("§eGaara").toItemStack(), "§bNickNqck"),
+		Danzo(TeamList.Solo, "ns", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eDanzo").toItemStack(), "§bNickNqck"),
 		//Orochimaru ns
 		Orochimaru(TeamList.Orochimaru, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§5Orochimaru").toItemStack(), "§bNickNqck"),
 		Kabuto(TeamList.Orochimaru, "ns", 1, new ItemBuilder(Material.WATER_LILY).setName("§5Kabuto").toItemStack(), "§bNickNqck"),
@@ -206,6 +202,7 @@ public class GameState{
 		Kakuzu(TeamList.Akatsuki, "ns", 8, new ItemBuilder(Material.ROTTEN_FLESH).setName("§cKakuzu").toItemStack(), "§bNickNqck"),
 		ZetsuNoir(TeamList.Akatsuki, "ns", 9, new ItemBuilder(Material.INK_SACK).setName("§cZetsu Noir").toItemStack(), "§bMega02600"),
 		ZetsuBlanc(TeamList.Akatsuki, "ns", 10, new ItemBuilder(Material.BONE).setName("§cZetsu Blanc").toItemStack(), "§bMega02600"),
+		ZetsuBlancV2(TeamList.Akatsuki, "ns", 11, new ItemBuilder(Material.ENDER_CHEST).setName("§cZetsu Blanc§7 (§6V2§7)").toItemStack(), "§bByC3RV0L3NT"),
 		//Shinobi
 		Naruto(TeamList.Shinobi, "ns", 0, new ItemBuilder(Material.INK_SACK).setDurability(14).setName("§aNaruto").toItemStack(), "§bNickNqck"),
 		Sakura(TeamList.Shinobi, "ns", 1, new ItemBuilder(Material.POTION).setDurability(8229).setName("§aSakura").toItemStack(), "§bNickNqck"),
@@ -223,6 +220,7 @@ public class GameState{
 		Kurenai(TeamList.Shinobi, "ns", 13, new ItemBuilder(Material.INK_SACK).setDurability(1).setName("§aKurenai").toItemStack(), "§bNickNqck"),
 		Shikamaru(TeamList.Shinobi, "ns", 14, new ItemBuilder(Material.SPIDER_EYE).setName("§aShikamaru").toItemStack(), "§bNickNqck"),
 		Ino(TeamList.Shinobi, "ns", 15, new ItemBuilder(Material.ARMOR_STAND).setName("§aIno").toItemStack(), "§bNickNqck"),
+		Fugaku(TeamList.Shinobi, "ns", 16, new ItemBuilder(Material.MAGMA_CREAM).setName("§aFugaku").toItemStack(), "§bNickNqck"),
 		//Haku et Zabuza
 		Zabuza(TeamList.Zabuza_et_Haku, "ns", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bZabuza").toItemStack(), "§aYukan"),
 		Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan"),
@@ -234,12 +232,19 @@ public class GameState{
 		Zombie(TeamList.OverWorld, "mc", 1, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack(), "§bMega02600"),
 		Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack(), "§bMega02600"),
 		AraigneeVenimeuse(TeamList.OverWorld, "mc", 3, new ItemBuilder(Material.SPIDER_EYE).setName("§aAraignée Venimeuse").toItemStack(), "§bMega02600"),
+		GolemDeFer(TeamList.OverWorld, "mc", 4, new ItemBuilder(Material.IRON_BLOCK).setName("§aGolem De Fer").toItemStack(), "§bMega02600"),
+		Vache(TeamList.OverWorld, "mc", 5, new ItemBuilder(Material.MILK_BUCKET).setName("§aVache").toItemStack(), "§bRémi"),
+		//Nether
+		Blaze(TeamList.Nether, "mc", 0, new ItemBuilder(Material.BLAZE_ROD).setName("§cBlaze").toItemStack(), "§bMega02600"),
+		Brute(TeamList.Nether, "mc", 1, new ItemBuilder(Material.GOLD_AXE).setName("§cBrute").toItemStack(), "§bMega02600"),
+		MagmaCube(TeamList.Nether, "mc", 2, new ItemBuilder(Material.MAGMA_CREAM).setName("§cMagma Cube").toItemStack(), "§bMega02600"),
 
 		//Solo mc
 		Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
 		Wither(TeamList.Solo, "mc", 1, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck"),
 		//Agent valorant (il n'y aura que Iso)
 		Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck"),
+		Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck"),
 		//Custom roles
 		LeComte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck"),
 		LeJuge(TeamList.Solo, "custom", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eLe Juge").toItemStack(), "§bNickNqck")
@@ -256,13 +261,14 @@ public class GameState{
 			this.item = item;
 			this.gDesign = GDesign;
 		}
-		}
+	}
 	@Getter
 	public enum MDJ{
 		Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack()),
 		DS(new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
 		AOT(new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
-		NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack());
+		NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack()),
+		MC(new ItemBuilder(Material.GRASS).setName("§aMinecraft").toItemStack());
 
 		private final ItemStack item;
 		MDJ(ItemStack item) {
@@ -283,6 +289,7 @@ public class GameState{
 			return itemC;
 		}
 	}
+	@NonNull
 	@Getter
 	@Setter
 	private MDJ mdj = MDJ.Aucun;
@@ -302,26 +309,19 @@ public class GameState{
 	private ServerStates serverState = ServerStates.InLobby;
 	@Getter
 	private final HashMap<Roles, Integer> availableRoles = new HashMap<>();
-	@Getter
-	private final ArrayList<Events> availableEvents = new ArrayList<>();
-	@Getter
-	private final ArrayList<EventBase> inGameEvents = new ArrayList<>();
 	@Setter
 	@Getter
-	private ArrayList<Player> inLobbyPlayers = new ArrayList<>();
+	private List<UUID> inLobbyPlayers = new ArrayList<>();
 	@Setter
 	@Getter
-	private ArrayList<Player> inGamePlayers = new ArrayList<>();
+	private List<UUID> inGamePlayers = new ArrayList<>();
 	@Getter
 	@Setter
-	private ArrayList<Player> inSpecPlayers = new ArrayList<>();
+	private List<Player> inSpecPlayers = new ArrayList<>();
 	@Getter
-	public ArrayList<Player> Charmed = new ArrayList<>();
-	@Setter
+	private final HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	@Getter
-	private HashMap<Player, RoleBase> playerRoles = new HashMap<>();
-	@Getter
-	private final HashMap<Player, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
+	private final HashMap<UUID, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
 	public List<Player> igPlayers = new ArrayList<>();
 	@Getter
 	@Setter
@@ -354,9 +354,6 @@ public class GameState{
 	public int critP = 20;
 	@Getter
 	private static GameState instance;
-	@Getter
-	@Setter
-	private int maxTimeSpawnBiju = 60*5;
 	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
@@ -367,12 +364,6 @@ public class GameState{
 	public void addInObiPlayers(Player player) {Obi.add(player);}
 	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
-	@Getter
-	public ArrayList<Player> Pillier = new ArrayList<>();
-
-	public void addCharmed(Player player){Charmed.add(player);}
-	public void delCharmed(Player player){Charmed.remove(player);}
-	
 	public ArrayList<Player> SleepingPlayer = new ArrayList<>();
 	public ArrayList<Player> getInSleepingPlayers() {return SleepingPlayer;}
 	public void setInSleepingPlayers(ArrayList<Player> SleepingPlayers) {SleepingPlayer = SleepingPlayers;}
@@ -383,13 +374,13 @@ public class GameState{
 		instance = this;
 	}
 
-	public void addInLobbyPlayers(Player player) {inLobbyPlayers.add(player);}
+	public void addInLobbyPlayers(Player player) {inLobbyPlayers.add(player.getUniqueId());}
 
-	public void delInLobbyPlayers(Player player) {inLobbyPlayers.remove(player);}
+	public void delInLobbyPlayers(Player player) {inLobbyPlayers.remove(player.getUniqueId());}
 
-	public void addInGamePlayers(Player player) {inGamePlayers.add(player);}
+	public void addInGamePlayers(Player player) {inGamePlayers.add(player.getUniqueId());}
 
-	public void delInGamePlayers(Player player) {inGamePlayers.remove(player);}
+	public void delInGamePlayers(Player player) {inGamePlayers.remove(player.getUniqueId());}
 
 	public void addInSpecPlayers(Player player) {inSpecPlayers.add(player);}
 
@@ -399,28 +390,22 @@ public class GameState{
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final Player player) {
-        return getPlayerRoles().get(player) == null || getPlayerRoles().get(player).getRoles() == null || !getPlayerRoles().containsKey(player);
+		if (player == null)return true;
+		if (getGamePlayer().containsKey(player.getUniqueId())) {
+            return getGamePlayer().get(player.getUniqueId()).getRole() == null;
+        }
+        return !getGamePlayer().containsKey(player.getUniqueId()) || !isRoleAttributed();
 	}
 
-	public void setAvailableRoles(HashMap<Roles, Integer> availableRole) {availableRole = availableRoles;}
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
-	public void delInAvailableRoles(Roles role) {availableRoles.remove(role);}
 
-	public void setAvailableEvents(ArrayList<Events> availableEvent) {availableEvent= availableEvents;}
-	public void addInAvailableEvents(Events event) {availableEvents.add(event);}
-	public void delInAvailableEvents(Events event) {availableEvents.remove(event);}
-
-	public void setPlayerKills(HashMap<Player, HashMap<Player, RoleBase>> playerKill) {playerKill = playerKills;}
-	public void addPlayerKills(Player player) {playerKills.put(player, new HashMap<Player, RoleBase>());}
+	public void addPlayerKills(Player player) {playerKills.put(player.getUniqueId(), new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
-	public void setInGameEvents(ArrayList<EventBase> inGameEvent) {inGameEvent = inGameEvents;}
-	public void addInGameEvents(EventBase event) {inGameEvents.add(event);}
-	public void delInGameEvents(EventBase event) {inGameEvents.remove(event);}
 	public RoleBase GiveRole(Player aziz) {
 		if (getPlayerRoles().containsKey(aziz)) return null;
 		//Roles roleType = getAvailableRoles().get(new Random().nextInt(getAvailableRoles().size()));
-		ArrayList<Roles> roles = new ArrayList<Roles>();
+		ArrayList<Roles> roles = new ArrayList<>();
 		for (Roles role : getAvailableRoles().keySet()) {
 			for (int i = 0; i < getAvailableRoles().get(role); i++) {
 				roles.add(role);
@@ -434,12 +419,13 @@ public class GameState{
 		roleType = roles.get(new Random().nextInt(roles.size()));
 		RoleBase role = null;
 		UUID player = aziz.getUniqueId();
+		if (!getGamePlayer().containsKey(player))return null;
 		switch(roleType) {
 		case Muzan:
 			role = new Muzan(player);
 			break;
 		case Nezuko:
-			role = new Nezuko(player);
+			role = new NezukoV2(player);
 			break;
 		case Tanjiro:
 			role = new Tanjiro(player);
@@ -451,64 +437,59 @@ public class GameState{
 			role = new Jigoro(player);
 			break;
 		case ZenItsu:
-			role = new ZenItsu(player);
+			role = new ZenItsuV2(player);
 			break;
 		case Kaigaku:
 			role = new Kaigaku(player);
 			break;
 		case Tomioka:
-			role = new Tomioka(player);
+			role = new TomiokaV2(player);
 			break;
 		case Akaza:
 			role = new Akaza(player);
 			break;
 		case Kyojuro:
-			role = new Kyojuro(player);
+			role = new KyojuroV2(player);
 			break;
 		case Gyokko:
 			role = new Gyokko(player);
 			break;
 		case Muichiro:
-			role = new Muichiro(player);
+			role = new MuichiroV2(player);
 		break;
 		case Gyomei:
-			role = new Gyomei(player);
+			role = new GyomeiV2(player);
 			break;
 		case Daki:
 			role = new Daki(player);
 			break;
 		case Gyutaro:
-			role = new Gyutaro(player);
+			role = new GyutaroV2(player);
 			break;
 		case Inosuke:
-			role = new Inosuke(player);
+			role = new InosukeV2(player);
 			break;
 		case Tengen:
-			role = new Tengen(player);
+			role = new TengenV2(player);
 			break;
 		case Doma:
 			role = new Doma(player);
 			break;
 		case Shinobu:
-			role = new Shinobu(player);
+			role = new ShinobuV2(player);
 			break;
 		case Kanao:
-			role = new Kanao(player);
+			role = new KanaoV2(player);
 			break;
 		case Obanai:
-			role = new Obanai(player);
+			role = new ObanaiV2(player);
 			break;
 		case Yoriichi:
 			role = new Yoriichi(player);
 			break;
 		case Slayer:
-			if (!FFA.getFFA()) {
-				role = new Pourfendeur(player);
-				role.setTeam(TeamList.Slayer);
-			} else {
-				role = new FFA_Pourfendeur(player);
-				role.setTeam(TeamList.Solo);
-			}
+			role = new PourfendeurV2(player);
+			role.setTeam(TeamList.Slayer);
 			break;
 		case DemonMain:
 			role = new DemonMain(player);
@@ -517,7 +498,7 @@ public class GameState{
 			role = new Sabito(player);
 			break;
 		case Urokodaki:
-			role = new Urokodaki(player);
+			role = new UrokodakiV2(player);
 			break;
 		case Makomo:
 			role = new Makomo(player);
@@ -529,7 +510,7 @@ public class GameState{
 			role = new Demon_Simple(player);
 			break;
 		case Sanemi:
-			role = new Sanemi(player);
+			role = new SanemiV2(player);
 			break;
 		case Shinjuro:
 			role = new Shinjuro(player);
@@ -538,7 +519,7 @@ public class GameState{
 			role = new Kyogai(player);
 			break;
 		case Kanae:
-			role = new Kanae(player);
+			role = new KanaeV2(player);
 			break;
 		case Rui:
 			role = new Rui(player);
@@ -547,10 +528,10 @@ public class GameState{
 			role = new Enmu(player);
 			break;
 		case Mitsuri:
-			role = new Mitsuri(player);
+			role = new MitsuriV2(player);
 			break;
 		case Kagaya:
-			role = new Kagaya(player);
+			role = new KagayaV2(player);
 			break;
 		case Susamaru:
 			role = new Susamaru(player);
@@ -571,7 +552,7 @@ public class GameState{
 			role = new Yahaba(player);
 			break;
 		case Hotaru:
-			role = new Hotaru(player);
+			role = new HotaruV2(player);
 			break;
 		case Kumo:
 			role = new Kumo(player);
@@ -739,10 +720,10 @@ public class GameState{
 			role = new Deidara(player);
 			break;
 		case Gai:
-			role = new Gai(player);
+			role = new GaiV2(player);
 			break;
 		case RockLee:
-			role = new RockLee(player);
+			role = new RockLeeV2(player);
 			break;
 		case Hidan:
 			role = new Hidan(player);
@@ -804,6 +785,33 @@ public class GameState{
 		case AraigneeVenimeuse:
 			role = new AraigneeVenimeuse(player);
 			break;
+		case Fugaku:
+			role = new Fugaku(player);
+			break;
+		case Blaze:
+			role = new Blaze(player);
+			break;
+		case GolemDeFer:
+			role = new GolemDeFer(player);
+			break;
+		case Brute:
+			role = new Brute(player);
+			break;
+		case MagmaCube:
+			role = new MagmaCube(player);
+			break;
+			case SlayerSolo:
+				role = new SlayerSolo(player);
+				break;
+			case ZetsuBlancV2:
+				role = new ZetsuBlancV2(player);
+				break;
+			case Vache:
+				role = new Vache(player);
+				break;
+			case Neon:
+				role = new Neon(player);
+				break;
 		}
 		if (role == null) return null;
        getInSpecPlayers().remove(aziz);
@@ -817,9 +825,9 @@ public class GameState{
 		}
 		role.gameState = this;
 		addInPlayerRoles(aziz, role);
-		fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(player);
+		fr.nicknqck.player.GamePlayer gamePlayer = getGamePlayer().get(player);
+		gamePlayer.setRole(role);
 		role.setGamePlayer(gamePlayer);
-		role.getGameState().getGamePlayer().put(player, gamePlayer);
 		if (getPlayerRoles().size() == getInGamePlayers().size()) {
 			if (getPlayerRoles().get(aziz).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(aziz).getRoles().equals(Roles.Kyogai)) {
 				canBeAssassin.add(aziz);
@@ -838,7 +846,7 @@ public class GameState{
 		}
 		attributedRole.add(roleType);
 		gamePlayer.setDeathLocation(aziz.getLocation());
-		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer));
+		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, roleType, gamePlayer, false));
 		return role;
 	}
 	@Getter
@@ -853,27 +861,10 @@ public class GameState{
 		System.out.println("Starting Assassin System");
 		assa.start(this);
 	}
-	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 
 	public void updateGameCanLaunch() {
-		gameCanLaunch = (inLobbyPlayers.size() == this.getroleNMB());}
-	public void initEvents() {
-		for (Events eventType : getAvailableEvents()) {
-			switch (eventType) {
-				case DemonKingTanjiro:
-					addInGameEvents(Events.DemonKingTanjiro.getEvent());
-				break;
-				case Alliance:
-					addInGameEvents(Events.Alliance.getEvent());
-				break;
-				case AkazaVSKyojuro:
-					addInGameEvents(Events.AkazaVSKyojuro.getEvent());
-				break;
-				}
-
-		}
+		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
 	}
-	public int DKminTime = 60*30;
 
 	public int getroleNMB() {
 		int nmbrole = 0;
@@ -892,28 +883,14 @@ public class GameState{
 	public static int pearl = 1;
 	public static int eau = 1;
 	public static int lave = 0;
-	public static int pc = 2;//protection casque
-	public static int pch = 2;//protection chestplate
-	public static int pl = 3;//protection leggings
-	public static int pb = 2;//protection boots
+
 	public void changeTabPseudo(final String name,final Player player) {
 		try {
             player.setPlayerListName(name);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
 	}
-	public void changePseudo(String name, Player player) {
-		net.minecraft.server.v1_8_R3.EntityPlayer ePlayer = ((org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) player).getHandle();
-        com.mojang.authlib.GameProfile profile = ePlayer.getProfile();
-        try {
-            java.lang.reflect.Field f = profile.getClass().getDeclaredField("name");
-            f.setAccessible(true);
-            f.set(profile, name);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 	public void spawnLightningBolt(World world, Location loc) {world.strikeLightningEffect(loc);}
 	public boolean isApoil(Player player) {
 		boolean apoil;
@@ -937,11 +914,12 @@ public class GameState{
 			if (!hasRoleNull(player)) {
 				if (getInSpecPlayers().contains(player)) {
 					delInSpecPlayers(player);
-					if (!getInGamePlayers().contains(player)){
+					if (!getInGamePlayers().contains(player.getUniqueId())){
 						addInGamePlayers(player);
 					}
 					player.setGameMode(GameMode.SURVIVAL);
 					player.teleport(getGamePlayer().get(player.getUniqueId()).getDeathLocation());
+					getGamePlayer().get(player.getUniqueId()).setAlive(true);
 				}
 			}
 		}
@@ -972,49 +950,19 @@ public class GameState{
 			return Items.ArcTridi();
 		}
 	}
-	public String sendGazBar(double number, double sizeChanger) {
-		double maxGaz = 100/sizeChanger;
-		double gaz = number/sizeChanger;
-		String bar = " ";
-		for (double i = 0; i < gaz; i++) {
-			bar += "§a|";
-		}
-		for (double i = gaz; i < maxGaz; i++) {
-			bar += "§c|";
-		}
-		bar += " ";
-		return bar;
-	}
+
 	public String sendIntBar(int fnmb, int nMax, int sizeChanger) {
 		int max = nMax/sizeChanger;
 		int nmb = fnmb/sizeChanger;
-		String bar = " "; 
+		StringBuilder bar = new StringBuilder(" ");
 		for (int i = 0; i < nmb; i++) {
-			bar += "§a|";
+			bar.append("§a|");
 		}
 		for (int i = nmb; i < max; i++) {
-			bar += "§c|";
+			bar.append("§c|");
 		}
-		bar += " ";
-		return bar;
-	}
-	public int getAttributedRolesNMB(Roles role) {
-		if (role == null) {
-			return 0;
-		}
-		int i = 0;
-		int a = 0;
-		for (Roles r : attributedRole) {
-			a++;
-			if (r == role) {
-				i++;
-			}
-		}
-		if (a == attributedRole.size()) {
-			return i;
-		}else {
-			return 0;
-		}
+		bar.append(" ");
+		return bar.toString();
 	}
 	public void sendDescription(Player player) {
 		if (!hasRoleNull(player)) {
@@ -1026,7 +974,9 @@ public class GameState{
 			RoleBase role = getPlayerRoles().get(player);
 			if (!role.getKnowedRoles().isEmpty()) {
 				for (Class<? extends RoleBase> know : role.getKnowedRoles()) {
-					for (Player p : getInGamePlayers()) {
+					for (UUID u : getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (!hasRoleNull(p)) {
 							if (getPlayerRoles().get(p).getClass().equals(know)) {
 								String teamColor = getPlayerRoles().get(p).getOriginTeam().getColor();
@@ -1044,7 +994,9 @@ public class GameState{
 		}
 	}
 	public Player getOwner(Roles role) {
-		for (Player p : getInGamePlayers()) {
+		for (UUID u : getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!hasRoleNull(p)) {
 				if (getPlayerRoles().get(p).getRoles() == role) {
 					return p;
@@ -1062,22 +1014,22 @@ public class GameState{
 		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
 			for (RoleBase e : getPlayerRoles().values()) {
-				if (e.getOldTeam() == null){
-					e.setOldTeamList(e.getRoles().getTeam());
+				if (e.getOriginTeam() == null){
+					e.setTeam(e.getRoles().getTeam());
 				}
-				if (e.getOldTeam() != null) {
+				if (e.getOriginTeam() != null) {
 					if (e.owner != null && !e.owner.getGameMode().equals(GameMode.SPECTATOR)) {
-						if (hashMap.get(e.getOldTeam()) == null){
+						if (hashMap.get(e.getOriginTeam()) == null){
 							List<Roles> r = new ArrayList<>();
-							hashMap.put(e.getOldTeam(), r);
+							hashMap.put(e.getOriginTeam(), r);
 						}
 						if (Main.isDebug()){
 							System.out.println(e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
 						}
-						List<Roles> aList = hashMap.get(e.getOldTeam());
+						List<Roles> aList = hashMap.get(e.getOriginTeam());
 						aList.add(e.getRoles());
-						hashMap.remove(e.getOldTeam(), hashMap.get(e.getOldTeam()));
-						hashMap.put(e.getOldTeam(), aList);
+						hashMap.remove(e.getOriginTeam(), hashMap.get(e.getOriginTeam()));
+						hashMap.put(e.getOriginTeam(), aList);
 					}
 				}
 			}
@@ -1142,10 +1094,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private boolean TNTGrief = false;
-
-	@Getter
-	@Setter
-	private boolean minage = false;
 	@Getter
 	@Setter
 	private Hokage hokage;

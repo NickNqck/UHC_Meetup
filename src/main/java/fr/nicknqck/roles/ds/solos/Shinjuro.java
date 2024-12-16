@@ -3,7 +3,6 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -12,7 +11,8 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
-import fr.nicknqck.roles.ds.slayers.pillier.Kyojuro;
+import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.TripleMap;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -31,6 +31,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class Shinjuro extends DemonsSlayersRoles {
+
+	public boolean alliance = false;
 	private boolean usesoufle = false;
 	private int cooldownsake = 0;
 	private int souflecooldown = 0;
@@ -39,8 +41,13 @@ public class Shinjuro extends DemonsSlayersRoles {
 	private TextComponent desc;
 	public Shinjuro(UUID player) {
 		super(player);
-
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.FLAMME;
+	}
+
 	@Override
 	public void RoleGiven(GameState gameState) {
 		setCanuseblade(true);
@@ -99,7 +106,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 	}
 	@Override
  	public void Update(GameState gameState) {
-		if (Events.Alliance.getEvent().isActivated()) {
+		if (this.alliance) {
 			if (gameState.getOwner(Roles.Kyojuro) != null) {
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 					if (p.equals(gameState.getOwner(Roles.Kyojuro))) {
@@ -164,10 +171,10 @@ public class Shinjuro extends DemonsSlayersRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner) {
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Kyojuro && !killkyojuro) {
+						if (role instanceof KyojuroV2 && !killkyojuro) {
 							killkyojuro = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles().name()+ChatColor.GRAY+" maintenant en utilisant le Soufle du Feu vous obtiendrez l'effet: "+ChatColor.RED+"Speed 1"+ChatColor.GRAY+" permanent");
 						}
@@ -202,7 +209,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 				cancel();
 				return;
 			}
-			if (Events.Alliance.getEvent().isActivated()) {
+			if (shinjuro.alliance) {
 				if (shinjuro.gameState.getOwner(Roles.Kyojuro) != null) {
 					shinjuro.sendCustomActionBar(shinjuro.owner, Loc.getDirectionMate(shinjuro.owner, shinjuro.gameState.getOwner(Roles.Kyojuro), true));
 				}

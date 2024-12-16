@@ -1,6 +1,5 @@
 package fr.nicknqck.roles.ns.shinobi;
 
-import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
@@ -10,9 +9,9 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -34,7 +33,7 @@ public class Gai extends ShinobiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
 
@@ -140,7 +139,7 @@ public class Gai extends ShinobiRoles {
 					int intVie = 60*6;
 					@Override
 					public void run() {
-						if (gameState.getInGamePlayers().contains(owner)) {
+						if (gameState.getInGamePlayers().contains(getPlayer())) {
 						intVie --;
 						} else {
 							cancel();
@@ -213,7 +212,7 @@ public class Gai extends ShinobiRoles {
 							cancel();
 						}
 						if (in == 10) {
-							GameListener.getInstance().DeathHandler(owner, owner, 50000.0, gameState);
+							Main.getInstance().getDeathManager().KillHandler(owner, owner);
 							cancel();
 						}
 					

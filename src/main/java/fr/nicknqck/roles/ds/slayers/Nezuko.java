@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.UUID;
 
 public class Nezuko extends DemonsRoles {
+
 	private int itemcooldown = 0;
 	private int regencooldown;
 	boolean PouvoirSanginaireNez = false;
@@ -31,21 +33,15 @@ public class Nezuko extends DemonsRoles {
 		super(player);
 		regencooldown = 20;
 		this.setResi(20);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Tanjiro) {
-					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
-				}
-			}
-		}, 20);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Tanjiro.class), 20);
 	}
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Slayer;
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneInferieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.NEZUKO;
 	}
 
 	@Override
@@ -54,13 +50,6 @@ public class Nezuko extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Tanjiro) {
-					owner.sendMessage("La personne possédant le rôle de §aTanjiro§r est:§a "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.Nezuko;
 	}
 	@Override
@@ -111,7 +100,7 @@ public class Nezuko extends DemonsRoles {
 			firezone = false;
 		}
 		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (!gameState.getInGamePlayers().contains(r.owner)) continue;
+			if (!gameState.getInGamePlayers().contains(r.getPlayer())) continue;
 			if (r instanceof Tanjiro && r.owner.getWorld().equals(owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*2, 0, false, false));

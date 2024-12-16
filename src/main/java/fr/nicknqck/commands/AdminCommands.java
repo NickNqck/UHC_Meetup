@@ -15,18 +15,14 @@ import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.slayers.FFA_Pourfendeur;
-import fr.nicknqck.roles.ds.slayers.Pourfendeur;
-import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
+import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.rank.ChatRank;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,6 +31,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AdminCommands implements CommandExecutor{
 
@@ -72,18 +69,14 @@ public class AdminCommands implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("name")) {
 				if (sender instanceof Player) {
-					if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+					if (ChatRank.isHost(sender)) {
 						StringBuilder sb = new StringBuilder();
 						for (int i = 1;i<args.length;i++) {
 							sb.append(" ");
 							if (args[i].contains("#MDJ")||args[i].contains("#MDj")||args[i].contains("#Mdj")||args[i].contains("#MdJ")||args[i].contains("#mdj")||args[i].contains("#mDj")){
 								String replaced;
-								if (gameState.getMdj() != null) {
-									replaced = args[i].replace(args[i], gameState.getMdj().name());
-								} else {
-									replaced = args[i].replace("#MDJ", "Aucun");
-								}
-								sb.append(ChatColor.translateAlternateColorCodes('&', replaced));
+                                replaced = args[i].replace(args[i], gameState.getMdj().name());
+                                sb.append(ChatColor.translateAlternateColorCodes('&', replaced));
 							} else {
 								sb.append(ChatColor.translateAlternateColorCodes('&', args[i]));
 							}
@@ -107,8 +100,13 @@ public class AdminCommands implements CommandExecutor{
 					}
 					if (!gameState.hasRoleNull(player)) {
 						gameState.getPlayerRoles().get(player).resetCooldown();
+						for (Power power :  gameState.getPlayerRoles().get(player).getPowers()) {
+							if (power.getCooldown() == null)continue;
+							if (!power.isSendCooldown())continue;
+							power.getCooldown().resetCooldown();
+						}
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
-						if (gameState.BijusEnable) {
+						if (Main.getInstance().getGameConfig().isBijusEnable()) {
 							for (Bijus bijus : Bijus.values()) {
 								if (bijus.getBiju().getHote() != null &&bijus.getBiju().getHote() == player.getUniqueId()) {
 									bijus.getBiju().resetCooldown();
@@ -128,7 +126,7 @@ public class AdminCommands implements CommandExecutor{
 					if (!gameState.hasRoleNull(player)) {
 						gameState.getPlayerRoles().get(player).resetCooldown();
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
-						if (gameState.BijusEnable) {
+						if (Main.getInstance().getGameConfig().isBijusEnable()) {
 							for (Bijus bijus : Bijus.values()) {
 								if (bijus.getBiju().getHote() != null){
 									if (bijus.getBiju().getHote().equals(player.getUniqueId())){
@@ -182,7 +180,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
-					if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+					if (ChatRank.isHost(sender)) {
 						if (gameState.getServerState() == ServerStates.InLobby) {
 							if (args[0].equalsIgnoreCase("start")) {
 								if (gameState.gameCanLaunch) {
@@ -217,6 +215,24 @@ public class AdminCommands implements CommandExecutor{
 								}
 								return true;
 							}
+							if (args[0].equalsIgnoreCase("preview")) {
+								World world = Main.getInstance().getWorldManager().getGameWorld();
+								if (world == null) {
+									player.sendMessage("§7Le monde de jeu n'a pas été crée");
+                                } else {
+									if (player.getWorld().equals(world)) {
+										player.sendMessage("§7Vous quittez la§c preview§7 de§c arena");
+										player.teleport(new Location(Main.getInstance().getWorldManager().getLobbyWorld(), 0, 152, 0));
+										player.setGameMode(GameMode.ADVENTURE);
+										return true;
+									}
+									player.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0, Main.getInstance().getWorldManager().getGameWorld().getHighestBlockYAt(0, 0)+1, 0));
+									player.setGameMode(GameMode.SPECTATOR);
+									player.sendMessage("§7Pour quitter la§c preview§7 du monde il faudra faire la commande§6 /a preview");
+									return true;
+                                }
+                                return true;
+                            }
 						}
 						
 						if (gameState.getServerState() != ServerStates.InGame)return false;
@@ -232,7 +248,7 @@ public class AdminCommands implements CommandExecutor{
 									Bukkit.broadcastMessage("");
 									Main.getInstance().getWorldManager().getGameWorld().setTime(13000);
 									gameState.t = gameState.timeday;
-									Bukkit.getServer().getPluginManager().callEvent(new NightEvent(gameState));
+									Bukkit.getServer().getPluginManager().callEvent(new NightEvent(gameState, gameState.timeday));
 									return true;
 									
 						} else if (args[0].equalsIgnoreCase("jour")) {
@@ -263,7 +279,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("giveblade")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							Player p = (Player) sender;
 							p.getInventory().addItem(Items.getLamedenichirin());
 							Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+sender.getName());
@@ -279,7 +295,7 @@ public class AdminCommands implements CommandExecutor{
 			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("setgroupe")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								if (gameState.getServerState() != null) {
 									if (gameState.getServerState() == ServerStates.InGame) {
@@ -287,7 +303,9 @@ public class AdminCommands implements CommandExecutor{
 											int grp = Integer.parseInt(args[1]);
 											if (grp > 0) {
 												gameState.setGroupe(grp);
-												for (Player p : gameState.getInGamePlayers()) {
+												for (UUID u : gameState.getInGamePlayers()) {
+													Player p = Bukkit.getPlayer(u);
+													if (p == null)continue;
 													p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
 													NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
 													p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");
@@ -382,11 +400,11 @@ public class AdminCommands implements CommandExecutor{
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
                                 } else {
-									if (gameState.getHost().contains(p.getUniqueId())) {
+									if (ChatRank.isHost(p)) {
 										sender.sendMessage("Cette personne est déjà host...");
                                     } else {
 										p.addAttachment(Main.getInstance(), "Host", true);
-										gameState.getHost().add(p.getUniqueId());
+										ChatRank.Host.add(p.getUniqueId());
 										sender.sendMessage("Vous avez ajouter "+p.getName()+" à la list(e) des hosts");
 										Bukkit.broadcastMessage(p.getName()+" est maintenant host");
                                     }
@@ -402,14 +420,14 @@ public class AdminCommands implements CommandExecutor{
                 }
 				if (args[0].equalsIgnoreCase("delHost") || args[0].equalsIgnoreCase("removeHost")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
                                 } else {
-									if (gameState.getHost().contains(p.getUniqueId())) {
-										gameState.getHost().remove(p.getUniqueId());
+									if (ChatRank.Host.contains(p.getUniqueId())) {
+										ChatRank.Host.remove(p.getUniqueId());
 										p.addAttachment(Main.getInstance(), "Host", false);
 										sender.sendMessage(p.getName()+" n'est plus host");
                                     } else {
@@ -457,45 +475,9 @@ public class AdminCommands implements CommandExecutor{
                         }
                     return true;
                 }
-				if (args[0].equalsIgnoreCase("cheat")) {
-					if (sender instanceof Player) {
-						Player s = (Player) sender;
-						if (s.isOp() || gameState.getHost().contains(s.getUniqueId())) {
-							if (args[1] != null) {
-								Player p = Bukkit.getPlayer(args[1]);
-								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
-									return true;
-								} else {
-									if (!gameState.hasRoleNull(p)) {
-										if (gameState.getPlayerRoles().containsKey(p)) {
-											if (gameState.getPlayerRoles().get(p).getRoles() == Roles.Slayer) {
-                                                RoleBase r;
-                                                if (FFA.getFFA()) {
-                                                    r = gameState.getPlayerRoles().get(p);
-													FFA_Pourfendeur fp = (FFA_Pourfendeur) r;
-													fp.cheat = true;
-													fp.owner.sendMessage("Vous avez bien cheater pour obtenir le souffle de l'univers");
-                                                } else {
-                                                    r = gameState.getPlayerRoles().get(s);
-													Pourfendeur fp = (Pourfendeur) r;
-													fp.owner.sendMessage("");
-                                                }
-                                                return true;
-                                            }
-										}
-									}						
-								}					
-							} else {
-								sender.sendMessage("Il faut préciser un joueur");
-								return true;
-							}
-						}
-					}
-				}
 				if (args[0].equalsIgnoreCase("effect")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -523,7 +505,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("role")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
@@ -545,21 +527,21 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("revive")) {
 					if (sender instanceof Player) {
-						if (sender.isOp() || gameState.getHost().contains(((Player) sender).getUniqueId())) {
+						if (ChatRank.isHost(sender)) {
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
 									return true;
 								} else {
-									if (gameState.getPlayerRoles().containsKey(p)) {
-									gameState.RevivePlayer(p);
-									sender.sendMessage(p.getName()+" à bien été réssucité");
-									HubListener.getInstance().giveStartInventory(p);
-									gameState.getPlayerRoles().get(p).GiveItems();
-									gameState.getPlayerRoles().get(p).setMaxHealth(20.0);
-									gameState.getPlayerRoles().get(p).RoleGiven(gameState);
-									return true;
+									if (!gameState.hasRoleNull(p)) {
+										gameState.RevivePlayer(p);
+										sender.sendMessage(p.getName()+" à bien été réssucité");
+										HubListener.getInstance().giveStartInventory(p);
+										gameState.getPlayerRoles().get(p).GiveItems();
+										gameState.getPlayerRoles().get(p).setMaxHealth(20.0);
+										gameState.getPlayerRoles().get(p).RoleGiven(gameState);
+										return true;
 									}
 								}
 							} else {
@@ -590,11 +572,11 @@ public class AdminCommands implements CommandExecutor{
 										texte.addExtra("\n");
 										texte.addExtra("Camp actuel:§b "+StringUtils.replaceUnderscoreWithSpace(role.getTeamColor()+role.getTeam().name()));
 										texte.addExtra("\n");
-										texte.addExtra("Nombre de kill(s):§b "+gameState.getPlayerKills().get(p).size());
+										texte.addExtra("Nombre de kill(s):§b "+gameState.getPlayerKills().get(p.getUniqueId()).size());
 										texte.addExtra("\n");
 										texte.addExtra("Joueurs tués: ");
 										TextComponent hver = new TextComponent("§b[?]");
-										hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(!gameState.getPlayerKills().get(p).isEmpty() ? getListPlayers(gameState.getPlayerKills().get(p)) : "§7Aucun")}));
+										hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(!gameState.getPlayerKills().get(p.getUniqueId()).isEmpty() ? getListPlayers(gameState.getPlayerKills().get(p.getUniqueId())) : "§7Aucun")}));
 										texte.addExtra(hver);
 										texte.addExtra("\n");
 									} else {

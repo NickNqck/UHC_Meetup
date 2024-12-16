@@ -4,6 +4,6 @@ cooldownTime: 10 #10 est le temp en seconde entre chaque utilisation du /
 #Pour mettre à jour le message il faut reload le plugin
 mumble: <non défini>
 port: 64747
-key: "https://discord.gg/Bk4AjTmcaX"
+key: "https://discord.gg/6dWxCAEsfF"
 debug: false
 gameworld: world

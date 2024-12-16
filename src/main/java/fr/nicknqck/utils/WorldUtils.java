@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -22,11 +23,8 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
 
 public class WorldUtils {
 
+    @Getter
     private static final DecimalFormat decimalFormater = new DecimalFormat("#.##");
-
-    public static DecimalFormat getDecimalFormater() {
-        return decimalFormater;
-    }
 
     public static void spawnParticle(final Location loc, final EnumParticle particle) {
         for (final Player online : Bukkit.getOnlinePlayers()) {
@@ -36,12 +34,6 @@ public class WorldUtils {
 
     public static String getBeautyHealth(final Player player) {
         return getDecimalFormater().format(player.getHealth() + ((CraftPlayer) player).getHandle().getAbsorptionHearts());
-    }
-
-    public static void spawnParticle(final Location loc, final EnumParticle particle, final float xOffset, final float yOffset, final float zOffset, final float speed, final int count) {
-        for (final Player online : Bukkit.getOnlinePlayers()) {
-            spawnParticle(online, loc, particle, xOffset, yOffset, zOffset, speed, count);
-        }
     }
 
     public static void spawnColoredParticle(final Location loc, final EnumParticle particle, final float red, final float green, final float blue) {
@@ -64,32 +56,6 @@ public class WorldUtils {
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
 
-    public static void spawnParticle(final Location loc, final Effect particle) {
-        loc.getWorld().playEffect(loc, particle, 1);
-    }
-
-    public static void spawnFakeLightning(final Player player, final Location loc) {
-        spawnFakeLightning(player, loc, false);
-    }
-
-    public static void spawnFakeLightning(final Player player, final Location loc, final boolean isEffect) {
-        final EntityPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
-        final EntityLightning lightning = new EntityLightning(nmsPlayer.getWorld(), loc.getX(), loc.getY(), loc.getZ(), isEffect, false);
-        nmsPlayer.playerConnection.sendPacket(new PacketPlayOutSpawnEntityWeather(lightning));
-        player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 1.0f, 1.0f);
-    }
-    public static void spawnFakeLightning(final Player player, final Location loc, final boolean isEffect, final boolean sendtoEveryone) {
-    	if (sendtoEveryone) {
-    		for (Player p : Bukkit.getOnlinePlayers()) {
-    			spawnFakeLightning(p, loc, isEffect);
-    		}
-    	}else {
-    		spawnFakeLightning(player, loc, isEffect);
-    	}
-        
-    }
-
-
     public static double getDistanceBetweenTwoLocations(final Location one, final Location two) {
         final double minX = Math.min(one.getX(), two.getX());
         final double maxX = Math.max(one.getX(), two.getX());
@@ -98,10 +64,6 @@ public class WorldUtils {
         final double xDiff = maxX - minX;
         final double zDiff = maxZ - minZ;
         return Math.sqrt(xDiff * xDiff + zDiff * zDiff);
-    }
-
-    public static void createBeautyExplosion(final Location loc, final int power) {
-        createBeautyExplosion(loc, power, false);
     }
 
     public static void createBeautyExplosion(final Location loc, final int power, final boolean fire) {

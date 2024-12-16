@@ -1,10 +1,23 @@
 package fr.nicknqck.player;
 
+import com.avaje.ebean.validation.NotNull;
+import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.scoreboard.PersonalScoreboard;
+import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -15,13 +28,185 @@ public class GamePlayer {
 	private boolean isAlive;
 	@Setter
 	private boolean canRevive = false;
+	@org.bukkit.craftbukkit.libs.jline.internal.Nullable
 	@Setter
 	private RoleBase role;
 	@Setter
 	private Location deathLocation;
-	public GamePlayer(UUID gamePlayer){
-		this.uuid = gamePlayer;
+	@Setter
+	private int timeDisconnectLeft = 60*5;
+	private final String playerName;
+	@Nullable
+	private DiscRunnable discRunnable;
+	@NotNull
+	@Setter
+	private Location lastLocation;
+	@NotNull
+	@NonNull
+	@Setter
+	private ItemStack[] lastInventoryContent;
+	private final PersonalScoreboard scoreboard;
+	@Setter
+	@Nullable
+    private GamePlayer killer;
+	private final ActionBarManager actionBarManager;
+	public GamePlayer(Player gamePlayer){
+		this.uuid = gamePlayer.getUniqueId();
+		this.playerName = gamePlayer.getName();
+		this.lastLocation = gamePlayer.getLocation();
+		this.lastInventoryContent = gamePlayer.getInventory().getContents();
+		this.scoreboard = Main.getInstance().getScoreboardManager().getScoreboards().get(gamePlayer.getUniqueId());
+		this.actionBarManager = new ActionBarManager(this);
 		setAlive(true);
 		setCanRevive(false);
 	}
+	public void onQuit() {
+		this.discRunnable = new DiscRunnable(this);
+		this.discRunnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+	}
+	public void onJoin(Player player) {
+		if (this.discRunnable != null) {
+			player.sendMessage(this.discRunnable.toSend);
+			this.discRunnable.cancel();
+			this.discRunnable = null;
+		}
+	}
+	public void stun(int tick) {
+		Player player = Bukkit.getPlayer(getUuid());
+		if (player == null)return;
+		new BukkitRunnable() {
+			private int ticks = tick;
+			private final Location stunLocation = player.getLocation();
+			@Override
+			public void run() {
+				if (ticks == 0 || !isAlive || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				Player player = Bukkit.getPlayer(getUuid());
+				if (player == null)return;
+				if (!player.getWorld().equals(stunLocation.getWorld())) {
+					cancel();
+					return;
+				}
+				player.teleport(stunLocation);
+				ticks--;
+
+			}
+		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+	}
+	public void sendMessage(final String... messages) {
+		Player owner = Bukkit.getPlayer(getUuid());
+		if (owner != null) {
+			owner.sendMessage(messages);
+		} else {
+			this.discRunnable.setMessagesToSend(messages);
+		}
+	}
+    private static class DiscRunnable extends BukkitRunnable {
+
+		private final GamePlayer gamePlayer;
+		private final GameState gameState;
+		private String[] toSend = new String[0];
+
+		private DiscRunnable(GamePlayer gamePlayer) {
+			this.gamePlayer = gamePlayer;
+			this.gameState = GameState.getInstance();
+		}
+
+		private void setMessagesToSend(final String[] messages) {
+			this.toSend = messages;
+		}
+
+		@Override
+		public void run() {
+			if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+				cancel();
+				return;
+			}
+			gamePlayer.setTimeDisconnectLeft(gamePlayer.getTimeDisconnectLeft()-1);
+			if (gamePlayer.getTimeDisconnectLeft() == 0) {
+				Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+					GameState.getInstance().getInGamePlayers().remove(gamePlayer.getUuid());
+					Main.getInstance().getDeathManager().DisconnectKillHandler(gamePlayer);
+					gamePlayer.discRunnable = null;
+				});
+				cancel();
+			}
+		}
+	}
+	public static class ActionBarManager {
+
+		@Getter
+		private final GamePlayer gamePlayer;
+		private final Map<String, String> actionBars;
+		@Getter
+		private final ActionBarRunnable actionBarRunnable;
+
+        public ActionBarManager(GamePlayer gamePlayer) {
+            this.gamePlayer = gamePlayer;
+			this.actionBars = new LinkedHashMap<>();
+			this.actionBarRunnable = new ActionBarRunnable(this);
+        }
+
+		public void addToActionBar(final String key, final String value) {
+			if (actionBars.containsKey(key)) {
+				updateActionBar(key, value);
+				return;
+			}
+			this.actionBars.put(key, value);
+		}
+
+		public void updateActionBar(final String key, final String value) {
+			if (actionBars.containsKey(key)) {
+				this.actionBars.replace(key, value);
+			} else {
+				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
+			}
+		}
+		public boolean containsKey(final String key) {
+			return this.actionBars.containsKey(key);
+		}
+		public void removeInActionBar(final String key) {
+			if (actionBars.containsKey(key)) {
+				final String value = actionBars.get(key);
+				actionBars.remove(key, value);
+			} else {
+				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
+			}
+		}
+		private static class ActionBarRunnable extends BukkitRunnable {
+
+			private final GameState gameState;
+			private final ActionBarManager actionBarManager;
+
+            private ActionBarRunnable(ActionBarManager actionBarManager) {
+                this.actionBarManager = actionBarManager;
+				this.gameState = GameState.getInstance();
+				runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+
+            @Override
+			public void run() {
+				if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				if (this.actionBarManager.actionBars.isEmpty())return;
+				final Player player = Bukkit.getPlayer(this.actionBarManager.getGamePlayer().getUuid());
+				if (player == null)return;
+				final StringBuilder string = new StringBuilder();
+				int i = 0;
+				for (final String value : this.actionBarManager.actionBars.values()) {
+					i++;
+					if (value.isEmpty())continue;
+					string.append(value);
+					if (i == this.actionBarManager.actionBars.size())continue;
+					string.append(" §7|§r ");
+				}
+				NMSPacket.sendActionBar(player, string.toString());
+			}
+		}
+
+    }
 }

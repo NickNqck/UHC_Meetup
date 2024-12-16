@@ -2,12 +2,12 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
-import org.bukkit.Bukkit;
+import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -22,12 +22,17 @@ public class Demon_Simple extends DemonInferieurRole implements Listener {
 	private double force;
 	public Demon_Simple(UUID player) {
 		super(player);
-		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
+		EventUtils.registerEvents(this);
+	}
+
+	@Override
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 	@Override
 	public TeamList getOriginTeam() {

@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.UUID;
+
 public class Patch implements Listener{
 	private final GameState gameState;
 	public Patch(GameState gameState) {
@@ -29,7 +31,9 @@ public class Patch implements Listener{
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
 		}
 		if (!(event.getEntity() instanceof Player)) return;
-        for (Player a : gameState.getInGamePlayers()) {
+        for (UUID u : gameState.getInGamePlayers()) {
+			Player a = Bukkit.getPlayer(u);
+			if (a == null)continue;
         	if (!gameState.hasRoleNull(a)) {
         		gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntity(event, (Player) event.getEntity(), event.getDamager());
         	}
@@ -38,7 +42,9 @@ public class Patch implements Listener{
         Player damager = (Player) event.getDamager();
         Player victim = (Player) event.getEntity();
      	if (damager.getItemInHand() == null) return;
-	  	if (Main.isDebug())System.out.println("Original Damage: "+event.getDamage());
+	  	if (Main.isDebug()){
+			  System.out.println("Original Damage: "+event.getDamage());
+		}
       	for (Titans titans : Titans.values()) {
     	  titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event);
       }
@@ -69,11 +75,12 @@ public class Patch implements Listener{
 			event.setDamage(event.getDamage()*1.2);
             return;
          }
-        if (gameState.getPlayerRoles().get(victim).getAllResi() >= 100) {
+		double allResi = gameState.getPlayerRoles().get(victim).getBonusResi() + gameState.getGamePlayer().get(victim.getUniqueId()).getRole().getResi();
+        if (allResi >= 100) {
             event.setCancelled(true);
         }
         if (victim.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-			ApplyResi(event, gameState.getPlayerRoles().get(victim).getAllResi(), true);
+			ApplyResi(event, allResi, true);
 		} else {
 			if (gameState.getPlayerRoles().containsKey(victim)) {
 				ApplyResi(event, gameState.getPlayerRoles().get(victim).getBonusResi(), false);
@@ -83,7 +90,9 @@ public class Patch implements Listener{
 		battleEvent2.setDamage(event.getDamage());
 		Bukkit.getPluginManager().callEvent(battleEvent2);
 		event.setDamage(battleEvent2.getDamage());
-        for (Player a : gameState.getInGamePlayers()) {
+        for (UUID u : gameState.getInGamePlayers()) {
+			Player a = Bukkit.getPlayer(u);
+			if (a == null)continue;
         	if (!gameState.hasRoleNull(a)) {
         		if (!event.isCancelled()) {
         			gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntityAfterPatch(event, victim, damager);

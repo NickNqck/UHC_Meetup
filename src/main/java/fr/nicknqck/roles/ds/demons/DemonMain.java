@@ -10,8 +10,10 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.slayers.Makomo;
 import fr.nicknqck.roles.ds.slayers.Sabito;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
-import fr.nicknqck.roles.ds.slayers.Urokodaki;
-import fr.nicknqck.roles.ds.slayers.pillier.Tomioka;
+import fr.nicknqck.roles.ds.slayers.UrokodakiV2;
+import fr.nicknqck.roles.ds.slayers.pillier.TomiokaV2;
+import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,8 +42,8 @@ public class DemonMain extends DemonInferieurRole {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 
 	@Override
@@ -81,7 +83,9 @@ public class DemonMain extends DemonInferieurRole {
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(Items.getPouvoirSanginaire())) {
 			if (itemcooldown <= 0) {
-				for(Player p : gameState.getInGamePlayers()) {
+				for(UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (p!= owner) {
 						  if(p.getLocation().distance(owner.getLocation()) <= 30) {
 							  if (p.getHealth() > 3.0) {
@@ -105,14 +109,14 @@ public class DemonMain extends DemonInferieurRole {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Urokodaki) {
+						if (role instanceof UrokodakiV2) {
 							killurokodaki = true;						
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"force 1 le jour");
 						}
-						if (role instanceof Tanjiro || role instanceof Sabito || role instanceof Tomioka || role instanceof Makomo) {
+						if (role instanceof Tanjiro || role instanceof Sabito || role instanceof TomiokaV2 || role instanceof Makomo) {
 							owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*2, 0, false, false), true);							
 							owner.sendMessage("Vous venez de tuez: "+victim.getName()+" qui était: "+role.getRoles()+" ce qui vous fait gagner résistance 1 pendant 2 minutes");
 						}

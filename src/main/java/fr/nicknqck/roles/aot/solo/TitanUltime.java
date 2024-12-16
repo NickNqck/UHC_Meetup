@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -25,7 +26,6 @@ public class TitanUltime extends TitansRoles {
 	public TitanUltime(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		gameState.GiveRodTridi(owner);
 		addBonusforce(10.0);
 	}
 	@Override
@@ -120,7 +120,8 @@ public class TitanUltime extends TitansRoles {
 		if (killer == owner) {
 			if (victim != null) {
 				if (killtitan)return;
-				if (getPlayerRoles(victim).getOriginTeam() == TeamList.Titan) {
+				GamePlayer gamePlayer = gameState.getGamePlayer().get(victim.getUniqueId());
+				if (gamePlayer.getRole().getOriginTeam() == TeamList.Titan) {
 					killtitan = true;
 					if (countEmptySlots(owner) > 0 ) {
 						owner.getInventory().addItem(getItems());

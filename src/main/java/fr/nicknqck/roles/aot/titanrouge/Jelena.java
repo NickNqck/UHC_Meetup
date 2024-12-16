@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.titanrouge;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.Bukkit;
@@ -17,7 +18,6 @@ public class Jelena extends TitansRoles {
 
 	public Jelena(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {
@@ -60,7 +60,8 @@ public class Jelena extends TitansRoles {
 				        // Copier le contenu de l'inventaire du joueur cible dans l'inventaire double coffre
 				        for (int i = 0; i < target.getInventory().getSize(); i++) {
 				            ItemStack item = target.getInventory().getItem(i);
-				            if (getPlayerRoles(target).getRoles() != Roles.Eren) {
+							GamePlayer gamePlayer = gameState.getGamePlayer().get(target.getUniqueId());
+				            if (gamePlayer.getRole().getRoles() != Roles.Eren) {
 				            	if (item != null && item.getType() != Material.AIR) {
 					            	doubleChest.setItem(i, item.clone());
 					            }

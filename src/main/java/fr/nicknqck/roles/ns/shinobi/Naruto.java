@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -11,8 +12,7 @@ import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
-import fr.nicknqck.utils.StringUtils;
-import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EntityLiving;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
@@ -30,6 +30,15 @@ import org.bukkit.util.Vector;
 import java.util.UUID;
 
 public class Naruto extends ShinobiRoles {
+	private int cdRasengan = 0;
+	private int AmitieKyubi = 0;
+	private int cdKyubi = 0;
+	private int timeVillager = 0;
+	private int cdClone = 0;
+	private boolean useSmell = false;
+	private Villager villager = null;
+	private final ItemStack kyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6Kyubi").setLore("§7Vous donne plus ou moins d'effet en fonction de votre tôt d'amitié avec§6 Kurama").toItemStack();
+	private final ItemStack rasenganItem = new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan").setLore("§7Vous permet de rassembler votre Chakra en un point").toItemStack();
 
 	public Naruto(UUID player) {
 		super(player);
@@ -41,10 +50,9 @@ public class Naruto extends ShinobiRoles {
 		return Roles.Naruto;
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
-
 	@Override
 	public String[] Desc() {
 		return new String[] {
@@ -53,8 +61,6 @@ public class Naruto extends ShinobiRoles {
 				AllDesc.objectifteam+"§aShinobi",
 				"",
 				AllDesc.items,
-				"",
-				AllDesc.point+"§aSenjutsu§f: Vous permet en restant immobile pendant un certain temp de gagner les effets§e Speed 1§f et§c Force 1§f pendant ce même temp (5 minutes maximum)",
 				"",
 				AllDesc.point+"§aRasengan§f: Lorsque vous frappez un joueur avec, crée une explosion infligeant§c 2"+AllDesc.coeur+".§7 (1x/2m)",
 				"",
@@ -65,11 +71,13 @@ public class Naruto extends ShinobiRoles {
 				"§8 -§f Entre§a 81%§f et§a 100%§f: Vous offre les effets§e Speed 2§f et§c Force 1§f pendant 5 minutes ainsi que§c 2"+AllDesc.coeur+".§7 (1x/5m)",
 				"",
 				"Le cooldown est de 8 minutes au départ et réduit de 1 minutes a chaque stade",
+				"",
 				AllDesc.commande,
 				"",
 				AllDesc.point+"§6/ns smell <joueur>§f: Si votre amitié avec§6 Kyubi§f est a 100%, vous permet en visant un joueur d'obtenir son camp.§7 (1x/5min)",
 				"",
 				AllDesc.point+"§6/ns clone§f: Crée un clone à votre position exacte, pendant tout le temp ou il restera vous accumulerez de l'énergie Senjutsu",
+				"",
 				AllDesc.particularite,
 				"",
 				"Lorsque le§d Jubi§f est invoquée, votre amitié avec§6 Kyubi§f monte a§a 100%",
@@ -78,29 +86,17 @@ public class Naruto extends ShinobiRoles {
 				AllDesc.bar
 		};
 	}
-	private ItemStack KyubiItem() {
-		return new ItemBuilder(Material.NETHER_STAR).setName("§6Kyubi").setLore("§7Vous donne plus ou moins d'effet en fonction de votre tôt d'amitié avec§6 Kurama").toItemStack();
-	}
-	private ItemStack SenjutsuItem() {
-		return new ItemBuilder(Material.NETHER_STAR).setName("§aSenjutsu").setLore("§7Vous permet de canaliser l'énergie naturel").toItemStack();
-	}
-	private ItemStack RasenganItem() {
-		return new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan").setLore("§7Vous permet de rassembler votre Chakra en un point").toItemStack();
-	}
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				SenjutsuItem(),
-				RasenganItem(),
-				KyubiItem()
+				rasenganItem,
+				kyubiItem
 		};
 	}
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
-	private boolean useSmell = false;
-	private Villager villager = null;
 	@Override
 	public void onNsCommand(String[] args) {
 		if (args[0].equalsIgnoreCase("smell")){
@@ -110,13 +106,10 @@ public class Naruto extends ShinobiRoles {
 						Player target = Bukkit.getPlayer(args[1]);
 						if (target != null) {
 							if (!gameState.hasRoleNull(target)) {
-								if (getTeam(target) != null) {
-									owner.sendMessage(target.getName()+"§a est dans le camp: "+getTeamColor(target)+StringUtils.replaceUnderscoreWithSpace(getTeam(target).name()));
-									useSmell = true;
-								} else {
-									owner.sendMessage("§cCe joueur n'appartient pas a une équipe !");
-								}
-							} else {
+                                gameState.getGamePlayer().get(target.getUniqueId());
+                                owner.sendMessage(target.getName() + "§a est dans le camp: " +gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam().getName());
+                                useSmell = true;
+                            } else {
 								owner.sendMessage("§cCe joueur ne possède aucun rôle !");
 							}
 						} else {
@@ -134,56 +127,64 @@ public class Naruto extends ShinobiRoles {
 		}
 		if (args[0].equalsIgnoreCase("clone")) {
 			if (this.villager == null) {
-				this.villager = (Villager) owner.getLocation().getWorld().spawnEntity(owner.getLocation(), EntityType.VILLAGER);
-				villager.setCustomName("§aNaruto");
-				villager.setCustomNameVisible(true);
-				villager.setAdult();
-				EntityLiving nmsEntity = ((CraftLivingEntity) villager).getHandle();
-		        ((CraftLivingEntity) nmsEntity.getBukkitEntity()).setRemoveWhenFarAway(false);
-		        timeVillager = 0;
-		        villager.setProfession(Villager.Profession.PRIEST);
-		        new BukkitRunnable() {
-					final Location loc = villager.getLocation().clone();
-					@Override
-					public void run() {
-						if (villager == null) {
-							cancel();
-							return;
+				if (cdClone <= 0) {
+					this.villager = (Villager) owner.getLocation().getWorld().spawnEntity(owner.getLocation(), EntityType.VILLAGER);
+					villager.setCustomName("§aNaruto");
+					villager.setCustomNameVisible(true);
+					villager.setAdult();
+					EntityLiving nmsEntity = ((CraftLivingEntity) villager).getHandle();
+					((CraftLivingEntity) nmsEntity.getBukkitEntity()).setRemoveWhenFarAway(false);
+					timeVillager = 0;
+					villager.setProfession(Villager.Profession.PRIEST);
+					new BukkitRunnable() {
+						final Location loc = villager.getLocation().clone();
+						@Override
+						public void run() {
+							if (villager == null) {
+								cancel();
+								return;
+							}
+							if (villager.isDead()) {
+								cancel();
+								return;
+							}
+							villager.teleport(loc);
 						}
-						if (villager.isDead()) {
-							cancel();
-							return;
-						}
-						villager.teleport(loc);
-					}
-				}.runTaskTimer(Main.getInstance(), 0, 1);
+					}.runTaskTimer(Main.getInstance(), 0, 1);
+					this.cdClone = Integer.MAX_VALUE;
+				} else {
+					sendCooldown(owner, this.cdClone);
+				}
 			} else {
 				villager.damage(999.0, owner);
 				villager = null;
+				this.cdClone = 60*5;
 				givePotionEffet(PotionEffectType.SPEED, 20*timeVillager, 1, true);
 				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*timeVillager, 1, true);
 				timeVillager = 0;
 				owner.sendMessage("§7Vous avez sacrifié votre§a clone§7, vous obtenez donc l'énergie qu'il avait accumulé jusqu'ici");
-				MathUtil.spawnMoovingCircle(EnumParticle.VILLAGER_HAPPY, owner.getLocation(), 5, 10, null);
             }
 		}
 	}
-	private int cdRasengan = 0;
-	private int idleTime = 0;
-	private int cdSenjutsu = 0;
-	private int AmitieKyubi = 0;
-	private int cdKyubi = 0;
-	private int timeVillager = 0;
-	private int cdClone = 0;
 	@Override
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		if (villager != null) {
-			if (entity.getUniqueId().equals(villager.getUniqueId()) && entity.getLastDamage() < 100) {
-				owner.sendMessage("§7Votre§a clone§7 a été tué, il avait cependant eu le temp d'obtenir des informations, voici la liste des§c joueurs§7 proche du lui de sa mort:");
-				Loc.getNearbyPlayers(villager, 10).stream().filter(p -> !gameState.hasRoleNull(p)).filter(p -> gameState.getInGamePlayers().contains(p)).filter(p -> !p.hasPotionEffect(PotionEffectType.INVISIBILITY)).forEach(p -> owner.sendMessage("§7 - §a"+p.getDisplayName()));
+			if (entity.getUniqueId().equals(villager.getUniqueId()) && e.getEntity().getLastDamage() < 100) {
+				StringBuilder sb = new StringBuilder();
+				for (Player p : Loc.getNearbyPlayersExcept(villager, 15)) {
+					if (gameState.hasRoleNull(p))continue;
+					if (!gameState.getInGamePlayers().contains(p.getUniqueId()))continue;
+					if (p.hasPotionEffect(PotionEffectType.INVISIBILITY))continue;
+					RoleBase role = gameState.getPlayerRoles().get(p);
+					sb.append("§7 - ").append(role.getOriginTeam().getColor()).append(role.getName()).append("\n");
+				}
+				Player owner = Bukkit.getPlayer(getPlayer());
+				if (owner != null) {
+					owner.sendMessage("§7Votre§a clone§7 a été tué, il avait cependant eu le temp d'obtenir des informations, voici la liste des§c roles§7 proche du lui de sa mort:");
+					owner.sendMessage(sb.toString());
+					givePotionEffet(owner, PotionEffectType.SPEED, 20*timeVillager, 1, true);
+				}
 				villager = null;
-				givePotionEffet(PotionEffectType.SPEED, 20*timeVillager, 1, true);
-				
 				timeVillager = 0;
 				return true;
 			}
@@ -192,7 +193,7 @@ public class Naruto extends ShinobiRoles {
 	}
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (item.isSimilar(KyubiItem())) {
+		if (item.isSimilar(kyubiItem)) {
 			if (cdKyubi <= 0) {
 				if (AmitieKyubi <= 25) {
 					givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
@@ -288,36 +289,7 @@ public class Naruto extends ShinobiRoles {
 				return true;
 			}
 		}
-		if (item.isSimilar(SenjutsuItem())) {
-			if (cdSenjutsu <= 0) {
-				if (!na) {
-					owner.sendMessage("§aVous commencez a amassé de l'§fénergie naturelle");
-					na = true;
-					new BukkitRunnable() {
-						final Location oLoc = owner.getLocation().clone();
-						@Override
-						public void run() {
-							idleTime++;
-							if (oLoc.distance(owner.getLocation()) > 0.9 || idleTime == 60*5) {
-								owner.sendMessage("§cVous n'amassez plus d'§fénergie naturelle");
-								givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*idleTime, 1, false);
-								givePotionEffet(PotionEffectType.SPEED, 20*idleTime, 1, false);
-								cdSenjutsu = idleTime*2;
-								na =false;
-								cancel();
-							} else {
-								sendCustomActionBar(owner, "Énergie amassé: "+cd(idleTime));
-							}
-						}
-					}.runTaskTimer(Main.getInstance(), 0, 20);
-					return true;
-				}
-			} else {
-				sendCooldown(owner, cdSenjutsu);
-				return true;
-			}
-		}
-		if (item.isSimilar(RasenganItem())) {
+		if (item.isSimilar(rasenganItem)) {
 			if (cdRasengan <= 0) {
 				owner.sendMessage("§7Il faut frapper un joueur pour crée une explosion.");
             } else {
@@ -327,13 +299,12 @@ public class Naruto extends ShinobiRoles {
         }
 		return super.ItemUse(item, gameState);
 	}
-	private boolean na = false;
 	@Override
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {
 		if (entity.getUniqueId() == owner.getUniqueId()) {
-			if (owner.getItemInHand().isSimilar(RasenganItem())) {
+			if (owner.getItemInHand().isSimilar(rasenganItem)) {
 				if (cdRasengan <= 0) {
-					MathUtil.sendParticle(EnumParticle.EXPLOSION_LARGE, victim.getLocation());
+					fr.nicknqck.utils.particles.MathUtil.sendParticle(EnumParticle.EXPLOSION_LARGE, victim.getLocation());
 					Heal(victim, -4);
 					victim.damage(0.0);
 					Location loc = victim.getLocation();
@@ -370,13 +341,6 @@ public class Naruto extends ShinobiRoles {
 				owner.sendMessage("§7Vous pouvez à nouveau utiliser un§a clone");
 			}
 		}
-		if (cdSenjutsu >= 0) {
-			cdSenjutsu--;
-			if (cdSenjutsu == 0) {
-				owner.sendMessage("§7Vous pouvez a nouveau utiliser le§a Senjutsu");
-				idleTime = 0;
-			}
-		}
 		if (cdKyubi >= 0) {
 			cdKyubi--;
 			if (cdKyubi == 0) {
@@ -392,8 +356,6 @@ public class Naruto extends ShinobiRoles {
 	}
 	@Override
 	public void resetCooldown() {
-		cdSenjutsu = 0;
-		idleTime = 0;
 		cdRasengan = 0;
 		cdKyubi = 0;
 		useSmell = false;
@@ -401,7 +363,6 @@ public class Naruto extends ShinobiRoles {
 		timeVillager = 0;
 		villager = null;
 	}
-
 	@Override
 	public String getName() {
 		return "Naruto";

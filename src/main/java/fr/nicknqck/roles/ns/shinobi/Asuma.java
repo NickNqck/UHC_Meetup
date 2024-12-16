@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -98,8 +99,8 @@ public class Asuma extends ShinobiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
-		return null;
+	public @NonNull Intelligence getIntelligence() {
+		return Intelligence.CONNUE;
 	}
 
 	@Override

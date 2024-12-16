@@ -3,13 +3,17 @@ package fr.nicknqck.roles.ds.demons;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.slayers.Nezuko;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.slayers.NezukoV2;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -27,8 +31,8 @@ public class Muzan extends DemonsRoles {
 	}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.Demon;
+	public @NonNull DemonType getRank() {
+		return DemonType.DEMON;
 	}
 	@Override
 	public TeamList getOriginTeam() {
@@ -74,7 +78,6 @@ public class Muzan extends DemonsRoles {
 			if (owner.getHealth() != this.getMaxHealth()) {
 				if (regencooldown >= 1){regencooldown--;}
 				if (regencooldown == 0) {
-					//owner.sendMessage(ChatColor.GREEN+"Vous venez de régénérer 1 demi-coeur suite à votre pouvoir de régénération");
 					regencooldown = 10;
 					Heal(owner, 1.0);
 				}
@@ -87,10 +90,10 @@ public class Muzan extends DemonsRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Nezuko) {
+						if (role instanceof NezukoV2) {
 							killnez = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Nezuko "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour ainsi que speed 1 la nuit"+ChatColor.GRAY+", votre "+ChatColor.GOLD+"PouvoirSanginaire "+ChatColor.GRAY+"c'est également amélioré vous offrant"+ChatColor.RED+" Speed 1 le jour et Résistance 2 la nuit");
 						}
@@ -108,11 +111,12 @@ public class Muzan extends DemonsRoles {
 				if (target != null) {
 					if (!hasBoost) {
 						if (gameState.hasRoleNull(target))return;
-						if (getPlayerRoles(target).getOldTeam().equals(TeamList.Demon)) {
+						GamePlayer gamePlayer = gameState.getGamePlayer().get(target.getUniqueId());
+						if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) ||gamePlayer.getRole().getTeam().equals(TeamList.Demon)) {
 							target.sendMessage("§cMuzan§7 vous à offert son boost de§c 10% de force");
 							hasBoost = true;
-							owner.sendMessage("§7Vous avez donné§c 10% de force§7 à§l "+target.getName());
-							getPlayerRoles(target).addBonusforce(10);
+							owner.sendMessage("§7Vous avez donné§c 10% de§c force§7 à§l "+target.getName());
+							gamePlayer.getRole().addBonusforce(10);
 						}else {
 							owner.sendMessage("Vous ne pouvez pas boost un humain !");
 						}
@@ -133,16 +137,24 @@ public class Muzan extends DemonsRoles {
 			if (args.length == 2) {
 				if (args[1] != null) {
 					Player player = Bukkit.getPlayer(args[1]);
-						if (gameState.getInGamePlayers().contains(player) && !gameState.hasRoleNull(player)) {
+					if (player == null) {
+						owner.sendMessage("§c"+args[1]+" n'est pas connecter");
+						return;
+					}
+						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player)) {
 							if (gameState.infected == null && gameState.infecteur == null) {
-								if (getPlayerRoles(player).getOldTeam() == TeamList.Demon || getPlayerRoles(player) instanceof Nezuko) {
+								GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
+								if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() == TeamList.Demon || gamePlayer.getRole() instanceof NezukoV2) {
 									giveItem(player, false, Items.getInfection());
 									owner.sendMessage("Vous avez donné le Pouvoir de l'infection à§c "+player.getName());
 									player.sendMessage("Le grand§c Muzan§r vous à donné le pouvoir de l'infection, faite s'en bonne usage...");
 									gameState.infecteur = player;
-								}		
+									InfectItem.getInstance().setInfecteur((DemonsSlayersRoles) gamePlayer.getRole());
+								} else {
+									owner.sendMessage("§c"+args[1]+"§7 ne peut pas recevoir l'§cinfection");
+								}
 							} else {
-								owner.sendMessage("Il y à déjà quelqu'un qui possède le pouvoir de l'§cinfection§r (§c"+gameState.infecteur.getName()+"§r)");
+								owner.sendMessage("Il y à déjà quelqu'un qui possède le pouvoir de l'§cinfection§r (§c"+InfectItem.getInstance().getInfecteur().owner.getName()+"§r)");
 							}
 						} else {
 							owner.sendMessage("La personne visée n'a pas de rôle ou n'est pas en jeu");

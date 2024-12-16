@@ -5,13 +5,16 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Itachi extends AkatsukiRoles {
+public class Itachi extends UchiwaRoles {
 
 	private Izanami izanami;
 	private int SusanoCD = 0;
@@ -45,10 +48,22 @@ public class Itachi extends AkatsukiRoles {
 		super(player);
 		setChakraType(Chakras.KATON);
 	}
+
+	@Override
+	public UchiwaType getUchiwaType() {
+		return UchiwaType.IMPORTANT;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Itachi;
 	}
+
+	@Override
+	public TeamList getOriginTeam() {
+		return TeamList.Akatsuki;
+	}
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Kisame, 1);
@@ -92,8 +107,8 @@ public class Itachi extends AkatsukiRoles {
 	}
 	private Inventory GenjutsuInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§cGenjutsu");
-		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+cd(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
-		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+cd(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
+		inv.setItem(0,new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").setLore("§7Cooldown§l "+ StringUtils.secondsTowardsBeautiful(cdTsukuyomi),"§7Permet d'immobiliser les joueurs autour de vous").toItemStack());
+		inv.setItem(4,new ItemBuilder(Material.IRON_SWORD).setName("§cAttaque").setLore("§7Cooldown§l "+StringUtils.secondsTowardsBeautiful(cdAttaque),"§7Vous permez de vous téléportez sur un joueur au alentour").toItemStack());
 		if (izanami == null) {
 			inv.setItem(8,new ItemBuilder(Material.NETHER_STAR).setName("§dIzanami").setLore("§7Vous permez d'infecter quelqu'un").toItemStack());
 		} else {
@@ -225,7 +240,7 @@ public class Itachi extends AkatsukiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 	private void openIzanamiInventory() {
@@ -272,7 +287,7 @@ public class Itachi extends AkatsukiRoles {
 	}
 	private ItemStack AmateratsuItem() {
 		return new ItemBuilder(Material.NETHER_STAR)
-				.setName("§cAmateratsu")
+				.setName("§cAmaterasu")
 				.setLore("§7Permet en visant un joueur de le mettre en feu")
 				.toItemStack();
 	}
@@ -369,7 +384,7 @@ public class Itachi extends AkatsukiRoles {
 							cancel();
 							return;
 						}
-						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+cd(SusanoCD-(60*10)));
+						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
 						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
@@ -465,7 +480,7 @@ public class Itachi extends AkatsukiRoles {
 			if (itachi.izanami.isAllTrue()) {
 				Player toIzanami = Bukkit.getPlayer(itachi.izanami.getTarget());
 				if (toIzanami != null) {
-					itachi.infectFinish = itachi.izanami.onSuccessfullInfection(itachi, itachi.getPlayerRoles(toIzanami));
+					itachi.infectFinish = itachi.izanami.onSuccessfullInfection(itachi, itachi.getGameState().getGamePlayer().get(toIzanami.getUniqueId()).getRole());
 					if (itachi.infectFinish){
 						cancel();
 					}

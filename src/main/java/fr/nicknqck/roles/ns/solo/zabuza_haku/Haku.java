@@ -11,6 +11,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.raytrace.RayTrace;
+import lombok.NonNull;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -27,6 +28,11 @@ public class Haku extends NSRoles {
 	private int bulleHakuCD = 0;
 	public Haku(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		setChakraType(Chakras.SUITON);
 		setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
@@ -36,6 +42,7 @@ public class Haku extends NSRoles {
 			}
 		}, 20*10);
 	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.Haku;
@@ -241,7 +248,7 @@ public class Haku extends NSRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;
 	}
 

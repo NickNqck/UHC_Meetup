@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.mahr;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -22,7 +23,6 @@ public class Magath extends MahrRoles {
 		super(player);
 		giveHealedHeartatInt(4.0);
 		toSearch = null;
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {
@@ -34,7 +34,8 @@ public class Magath extends MahrRoles {
 		if (toSearch != null) {
 			DecimalFormat df = new DecimalFormat("0");
 			sendCustomActionBar(owner, toSearch.getName()+ArrowTargetUtils.calculateArrow(owner, toSearch.getLocation())+"("+df.format(owner.getLocation().distance(toSearch.getLocation()))+")");
-			if (getPlayerRoles(toSearch) instanceof AotRoles && ((AotRoles) getPlayerRoles(toSearch)).isTransformedinTitan && toSearch.getWorld().equals(owner.getWorld())) {
+			GamePlayer gamePlayer = gameState.getGamePlayer().get(toSearch.getUniqueId());
+			if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).isTransformedinTitan && toSearch.getWorld().equals(owner.getWorld())) {
 				if (owner.getLocation().distance(toSearch.getLocation()) <= 15){
 					setResi(20);
 					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
@@ -86,7 +87,7 @@ public class Magath extends MahrRoles {
 							return;
 						}
 						if (!gameState.hasRoleNull(target)) {
-							RoleBase role = getPlayerRoles(target);
+							RoleBase role = gameState.getGamePlayer().get(target.getUniqueId()).getRole();
 							if (role instanceof MahrRoles) {
 								if (toSearch == null) {
 									toSearch = target;

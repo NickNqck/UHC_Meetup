@@ -10,11 +10,16 @@ import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.rank.ChatRank;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /*
@@ -38,10 +43,14 @@ public class PersonalScoreboard {
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
     private final GameState gameState;
+	@Getter
+	private final Map<UUID, String> colors;
+
     PersonalScoreboard(Player player, GameState gameState){
         this.player = player;
         this.gameState = gameState;
         uuid = player.getUniqueId();
+		this.colors = new HashMap<>();
         objectiveSign = new ObjectiveSign("sidebar", Main.getInstance().PLUGIN_NAME);
         
         reloadData();
@@ -72,7 +81,7 @@ public class PersonalScoreboard {
     			RoleBase role = this.gameState.getPlayerRoles().get(player);
 				String roleName = role.getName();
 				String iRole = "§fRôle: ";
-				if (premsg.length()+iRole.length()+ roleName.length() >= 40) {
+				if (premsg.length()+iRole.length()+ roleName.length() + role.getTeam().getColor().length() >= 40) {
 					roleName = role.getRoles().name();
 				}
     			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
@@ -103,7 +112,7 @@ public class PersonalScoreboard {
 			}
     		objectiveSign.setLine(9, "§0");
     		if (!this.gameState.hasRoleNull(player)) {
-    			objectiveSign.setLine(10, premsg+"Kills:§6 "+this.gameState.getPlayerKills().get(player).size());
+    			objectiveSign.setLine(10, premsg+"Kills:§6 "+this.gameState.getPlayerKills().get(player.getUniqueId()).size());
     		}
     		objectiveSign.setLine(11, premsg+"§fCentre: §6"+ArrowTargetUtils.calculateArrow(player, new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))+new DecimalFormat("0").format(player.getLocation().distance(new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))));
     		if (this.gameState.roletab) {
@@ -131,4 +140,24 @@ public class PersonalScoreboard {
         objectiveSign.removeReceiver(Bukkit.getServer().getOfflinePlayer(uuid));
         System.out.println("removing "+Bukkit.getPlayer(uuid).getName()+" from PersonalScoreboard");
     }
+	public void changeDisplayName(final Player sender, final Player target, final String color) {
+        this.getColors().remove(target.getUniqueId());
+		this.getColors().put(target.getUniqueId(), color);
+		setCustomName(sender, target, color);
+	}
+	/*@param
+        - player = Le mec qui verra le pseudo
+        - target = Le mec à qui on veut changer le pseudo
+        - customName = Le nom qui sera afficher
+     */
+	private void setCustomName(Player player, Player target, String customName) {
+		Scoreboard scoreboard = player.getScoreboard();
+		Team team = scoreboard.getTeam(target.getName());
+		if (team == null) {
+			team = scoreboard.registerNewTeam(target.getName());
+		}
+		team.setPrefix(customName);
+		team.setCanSeeFriendlyInvisibles(false);
+		team.addEntry(target.getName());
+	}
 }

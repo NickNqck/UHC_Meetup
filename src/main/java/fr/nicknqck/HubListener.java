@@ -5,17 +5,17 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.Events;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.ns.Hokage;
+import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.*;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -26,9 +26,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class HubListener implements Listener {
 	private final GameState gameState;
@@ -41,41 +40,32 @@ public class HubListener implements Listener {
 			System.out.println("Impossible de start la partie");
 			return;
 		}
-		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-		Bukkit.dispatchCommand(console, "worldborder center 0.0 0.0");
-		Bukkit.dispatchCommand(console, "worldborder damage amount 0");
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.setInLobbyPlayers(new ArrayList<>());
-		gameState.igPlayers.addAll(gameState.getInGamePlayers());
+		gameState.igPlayers.addAll(gameState.getInGamePlayers().stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).map(Bukkit::getPlayer).collect(Collectors.toList()));
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
 		gameState.infected = null;
 		gameState.infecteur = null;
 		gameState.Assassin = null;
-		gameState.demonKingTanjiro = false;
+		Main.getInstance().getEventsManager().getEventsList().forEach(event -> event.setEnable(false));
 		gameState.canBeAssassin.clear();
-		for (Events e : Events.values()) {
-			e.setProba(e.getEvent().getProba());
-			e.getEvent().resetCooldown();
-		}
 		ItemsManager.instance.clearJspList();
 		gameState.t = gameState.timeday;
-		Events.initEvents();
-		gameState.setPlayerRoles(new HashMap<>());
-		gameState.setPlayerKills(new HashMap<>());
+		gameState.getPlayerRoles().clear();
+		gameState.getPlayerKills().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
 		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
 		if (gameState.JigoroV2Pacte2)gameState.JigoroV2Pacte2 = false;
 		if (gameState.JigoroV2Pacte3)gameState.JigoroV2Pacte3 = false;
-		TitanListener.getInstance().onStartGame();
 		for (Entity e : Main.getInstance().getWorldManager().getGameWorld().getEntities()) {
 			if (e instanceof Player) continue;
 			e.remove();
 		}
 		// Debug Affichages des roles InGame
 		int roleNmb = 0;
-		
+		List<Roles> rolesList = new ArrayList<>();
 		for (Roles r : gameState.getAvailableRoles().keySet()) {
 			if (Main.isDebug()){
 				System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
@@ -83,11 +73,24 @@ public class HubListener implements Listener {
 			roleNmb += gameState.getAvailableRoles().get(r);
 			if (gameState.getAvailableRoles().get(r) == 0){
 				gameState.getDeadRoles().add(r);
+			} else {
+				rolesList.add(r);
 			}
 		}
 		System.out.println("lobby: "+gameState.getInLobbyPlayers().size()+", roles: "+roleNmb+", equal: "+(gameState.getInLobbyPlayers().size() == roleNmb));
 		
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null) {
+				System.out.println("canceled start game, because "+u.toString()+" is Player null");
+				gameState.getInGamePlayers().clear();
+				for (Player player : Bukkit.getOnlinePlayers()) {
+					gameState.getInLobbyPlayers().add(player.getUniqueId());
+				}
+				gameState.igPlayers.clear();
+				return;
+			}
+			p.updateInventory();
 			p.setMaxHealth(20.0);
 			p.setHealth(20.0);
 			p.setFoodLevel(20);
@@ -103,10 +106,11 @@ public class HubListener implements Listener {
 			gameState.addPlayerKills(p);
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);
+			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);
+			gameState.getGamePlayer().put(u, gamePlayer);
 		}
+		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
-		// Supression de la plateforme
-		gameState.initEvents();
 		for (Bijus b : Bijus.values()) {
 			b.getBiju().setHote(null);
 			b.getBiju().resetCooldown();
@@ -114,19 +118,20 @@ public class HubListener implements Listener {
 		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
 		BijuListener.getInstance().resetCooldown();
 		Bijus.initBiju(gameState);
-		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState));
+		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState, rolesList));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (gameState.getMdj() != null && gameState.getMdj().equals(MDJ.NS)){
+			if (gameState.getMdj().equals(MDJ.NS)){
 				if (gameState.getHokage() == null){
 					gameState.setHokage(new Hokage(gameState.getTimeProcHokage()-10, gameState));
 				}
 				gameState.getHokage().run();
 			}
-		}, 100);
+		}, 220);
 		System.out.println("Ended StartGame");
 	}
+
 	public void giveStartInventory(Player p) {
 		Main.getInstance().getScoreboardManager().update(p);
 		ItemsManager.ClearInventory(p);
@@ -136,7 +141,7 @@ public class HubListener implements Listener {
 				p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, GameState.pearl));
 			}
 			p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
-			p.getInventory().setItem(9, new ItemStack(Material.ARROW, gameState.nmbArrow));
+			p.getInventory().setItem(9, new ItemStack(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()));
 			p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
 			p.getInventory().setItem(11, Items.getironshovel());
 			p.getInventory().setItem(12, Items.getironpickaxe());
@@ -212,7 +217,7 @@ public class HubListener implements Listener {
 			// Si click droit alors afficher un menu (AdminWatch)
 			if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				if (itemstack.isSimilar(ItemsManager.adminWatch)) {
-					if (player.isOp() || gameState.getHost().contains(player.getUniqueId())) {
+					if (ChatRank.isHost(player)) {
 						player.openInventory(GUIItems.getAdminWatchGUI());
 		    			Main.getInstance().getInventories().updateAdminInventory(player);
 					} else {
@@ -227,9 +232,10 @@ public class HubListener implements Listener {
 	@Setter
 	@Getter
 	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
+
 	public final void StartGame(final Player player) {
 		gameState.updateGameCanLaunch();
-		if (player.isOp() || gameState.getHost().contains(player.getUniqueId()) && gameState.gameCanLaunch) {
+		if (ChatRank.isHost(player) && gameState.gameCanLaunch) {
 			StartGame();
 			player.closeInventory();
 		} else {

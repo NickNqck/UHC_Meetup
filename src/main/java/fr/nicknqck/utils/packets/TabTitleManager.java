@@ -3,6 +3,7 @@ package fr.nicknqck.utils.packets;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -12,6 +13,23 @@ import static fr.nicknqck.utils.packets.NMSPacket.sendPacket;
 
 public class TabTitleManager {
 
+    private final Player player;
+    private final String header;
+    private final String footer;
+
+    public TabTitleManager(final Player player, @Nullable String header, @Nullable String footer) {
+        this.player = player;
+        if (header == null) {
+            header = "";
+        }
+        header = ChatColor.translateAlternateColorCodes('&', header);
+        this.header = header;
+        if (footer == null) {
+            footer = "";
+        }
+        footer = ChatColor.translateAlternateColorCodes('&', footer);
+        this.footer = footer;
+    }
     public static void sendTabTitle(Player player, String header, String footer) {
         if (header == null)
             header = "";

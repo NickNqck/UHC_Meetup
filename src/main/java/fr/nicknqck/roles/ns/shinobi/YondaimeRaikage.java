@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +26,7 @@ public class YondaimeRaikage extends ShinobiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 
@@ -100,7 +101,7 @@ public class YondaimeRaikage extends ShinobiRoles {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
-							if (timeLeft <=0 || !armureActived || !gameState.getInGamePlayers().contains(owner)) {
+							if (timeLeft <=0 || !armureActived || !gameState.getInGamePlayers().contains(owner.getUniqueId())) {
 								if (timeLeft <= 0) {
 									owner.sendMessage("§7Désactivation de votre§e Armure Raiton");
 									owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);

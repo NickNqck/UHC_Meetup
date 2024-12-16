@@ -8,9 +8,11 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,11 +33,16 @@ public class Jiraya extends ShinobiRoles {
 
 	public Jiraya(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.KATON);
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "nakime Gamabunta8vzqzZvv189Zbxc:!");
 		setCanBeHokage(true);
 	}
+
 	@Override
 	public GameState.Roles getRoles() {
 		return Roles.Jiraya;
@@ -159,12 +166,12 @@ public class Jiraya extends ShinobiRoles {
 							
 							@Override
 							public void run() {
-								if (cdGamabunta <= 60*8 || !gameState.getInGamePlayers().contains(owner)) {
+								if (cdGamabunta <= 60*8 || !gameState.getInGamePlayers().contains(getPlayer())) {
 									cancel();
 								}
 								int truc = cdGamabunta-(60*8);
 								for (Player p : Loc.getNearbyPlayers(owner, 150)) {
-									sendCustomActionBar(p, "§bTemp restant dans§c Gamabunta§b:§c "+cd(truc));
+									sendCustomActionBar(p, "§bTemp restant dans§c Gamabunta§b:§c "+ StringUtils.secondsTowardsBeautiful(truc));
 								}
 							}
 						}.runTaskTimer(Main.getInstance(), 0, 20);
@@ -222,7 +229,7 @@ public class Jiraya extends ShinobiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 

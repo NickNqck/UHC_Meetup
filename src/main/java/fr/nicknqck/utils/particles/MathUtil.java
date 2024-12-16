@@ -1,12 +1,10 @@
 package fr.nicknqck.utils.particles;
 
 import fr.nicknqck.Main;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -19,7 +17,26 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class MathUtil {
-	
+
+    public static void spawnColoredParticle(@NonNull Location loc, @NonNull EnumParticle particle, float red, float green, float blue) {
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            spawnColoredParticle(online, loc, particle, red, green, blue);
+        }
+    }
+    public static void spawnColoredParticle(@NonNull Player player, @NonNull Location loc, @NonNull EnumParticle particle, float red, float green, float blue) {
+        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(particle, true, (float) loc.getX(), (float) loc.getY(), (float) loc.getZ(), red, green, blue, 1.0F, 0);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    }
+
+    public static void spawnParticle(Location location, float r, float g, float b) {
+        location.getWorld().spigot().playEffect(location, Effect.COLOURED_DUST, 0, 1, r / 255, g / 255, b / 255, 1, 0, 64);
+    }
+
+
+    public static void spawnParticle(Location location, float r, float g, float b, Player... players) {
+        for (Player player : players)
+            player.spigot().playEffect(location, Effect.COLOURED_DUST, 0, 1, r / 255, g / 255, b / 255, 1, 0, 64);
+    }
     public static void sendParticle(final EnumParticle particle, final Location location) {
         sendParticle(particle, location.getX(), location.getY(), location.getZ(), location.getWorld());
     }
@@ -101,34 +118,7 @@ public class MathUtil {
             sendParticle(particle, x, y+1, z, startLocation.getWorld());
         }
     }
-
-    public static void sendHeadParticle(final EnumParticle particle, final Location center, final double radius, final int amount) {
-        final double increment = 6.283185307179586 / amount;
-        for (int i = 0; i < amount; ++i) {
-            final double angle = i * increment;
-            final double x = center.getX() + radius * cos(angle);
-            final double z = center.getZ() + radius * sin(angle);
-            sendParticle(particle, x, center.getY() + 2.5, z, center.getWorld());
-        }
-    }
-    public static List<Location> getSphere(final Location centerBlock, final int radius, final boolean hollow) {
-        final List<Location> circleBlocks = new ArrayList<>();
-        final int bX = centerBlock.getBlockX();
-        final int bY = centerBlock.getBlockY();
-        final int bZ = centerBlock.getBlockZ();
-        for (int x = bX - radius; x <= bX + radius; ++x) {
-            for (int y = bY - radius; y <= bY + radius; ++y) {
-                for (int z = bZ - radius; z <= bZ + radius; ++z) {
-                    final double distance = (bX - x) * (bX - x) + (bZ - z) * (bZ - z) + (bY - y) * (bY - y);
-                    if (distance < radius * radius && (!hollow || distance >= (radius - 1) * (radius - 1))) {
-                        circleBlocks.add(new Location(centerBlock.getWorld(), x, y, z));
-                    }
-                }
-            }
-        }
-        return circleBlocks;
-    }
-    private List<FallingBlock> fallingBlocks = new ArrayList<>();
+    private final List<FallingBlock> fallingBlocks = new ArrayList<>();
     public Set<Location> sphere(Location location, int radius, boolean hollow){
         Set<Location> blocks = new HashSet<>();
         World world = location.getWorld();
@@ -232,7 +222,6 @@ public class MathUtil {
         }
         return fallingBlocks;
     }
-
     private Set<Location> makeHollow(Set<Location> blocks, boolean sphere){
         Set<Location> edge = new HashSet<Location>();
         if(!sphere){

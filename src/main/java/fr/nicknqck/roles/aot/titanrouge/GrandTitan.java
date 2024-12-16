@@ -10,7 +10,6 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -21,7 +20,6 @@ public class GrandTitan extends TitansRoles {
 	public GrandTitan(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

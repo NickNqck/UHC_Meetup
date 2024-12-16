@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -14,11 +15,12 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
-import fr.nicknqck.roles.ds.slayers.pillier.PillierRoles;
+import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -39,13 +41,16 @@ import java.util.UUID;
 public class Akaza extends DemonsRoles implements Listener {
 
 	private int regencooldown = 0;
-	private final TextComponent desc;
-	private final AkazaPilierRunnable runnable;
+	private TextComponent desc;
+	private AkazaPilierRunnable runnable;
 	private int coupInfliged = 0;
 	private int coupToInflig = 50;
 	public Akaza(UUID player) {
 		super(player);
-		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
 		getKnowedRoles().add(Muzan.class);
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
@@ -54,13 +59,28 @@ public class Akaza extends DemonsRoles implements Listener {
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Tout les§c 50 coups§7 infliger vous gagnerez§c 30 secondes§7 de l'effet§c Résistance I§7.")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque mort d'une§c lune supérieur§7 les coups requis pour obtenir l'effet§c Résistance I§7 réduise de§c 5§7.")}));
 		this.desc = desc.getText();
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		this.runnable = new AkazaPilierRunnable(this);
 		this.runnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
 		EventUtils.registerEvents(this);
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+			int amount = 5;
+			for (GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+                if (gamePlayer.getRole() instanceof DemonsRoles) {
+					DemonsRoles role = (DemonsRoles) gamePlayer.getRole();
+					if (role.getPlayer().equals(getPlayer()))continue;
+					if (role.getRank().equals(DemonType.SUPERIEUR)) {
+						amount--;
+					}
+                }
+            }
+			coupToInflig -= (amount*5);
+		}, 20);
 	}
+
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 	@Override
 	public TeamList getOriginTeam() {
@@ -126,7 +146,7 @@ public class Akaza extends DemonsRoles implements Listener {
 			if (!event.getGameState().hasRoleNull(event.getPlayer())) {
 				if (event.getGameState().getPlayerRoles().get(event.getPlayer()) instanceof DemonsRoles) {
 					DemonsRoles role = (DemonsRoles) event.getGameState().getPlayerRoles().get(event.getPlayer());
-					if (role.getRank().equals(DemonType.LuneSuperieur)) {
+					if (role.getRank().equals(DemonType.SUPERIEUR)) {
 						this.coupToInflig-=5;
 					}
 				}
@@ -162,8 +182,8 @@ public class Akaza extends DemonsRoles implements Listener {
 			for (Player around : Loc.getNearbyPlayersExcept(owner, 10)) {
 				if (!akaza.getGameState().hasRoleNull(around)) {
 					RoleBase role = akaza.getGameState().getPlayerRoles().get(around);
-					if (role instanceof PillierRoles) {
-						PillierRoles pillierRoles = (PillierRoles) role;
+					if (role instanceof PilierRoles) {
+						PilierRoles pillierRoles = (PilierRoles) role;
 						if (pillierRoles.getGamePlayer().isAlive()) {
 							if (timeCroised.containsKey(pillierRoles.getName())) {
 								int i = timeCroised.get(pillierRoles.getName());

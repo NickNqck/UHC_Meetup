@@ -1,11 +1,18 @@
 package fr.nicknqck.roles.aot.soldats;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -20,9 +27,10 @@ import java.util.UUID;
 
 public class Sasha extends SoldatsRoles {
 
+	private TextComponent desc;
+	private final ItemStack arcItem = new ItemBuilder(Material.BOW).setUnbreakable(false).addEnchant(Enchantment.ARROW_DAMAGE, 3).setName("§aArc de Chasseur").setDroppable(false).toItemStack();
 	public Sasha(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {
@@ -30,35 +38,48 @@ public class Sasha extends SoldatsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		return new String[] {
-				AllDesc.bar,
-				AllDesc.role+"Sasha",
-				"",
-				AllDesc.items,
-				"§732 flèche vous sont donnez à l'annonce des rôles",
-				AllDesc.point+"§7Lorsque vous tirez sur un joueur avec un arc enchanté vous pourrez infliger des effets à la personne touché en fonction de ou elle à été touchée: ",
-				"Tête:§7 Inflige l'effet "+AllDesc.blind+" 1 pendant 7s",
-				"Torse:§7 Inflige 1"+AllDesc.coeur+" de dégat supplémentaire",
-				"Jambe:§7 Inflige l'effet "+AllDesc.slow+" 1 pendant 7s",
-				AllDesc.bar
+		return new String[0];
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		AutomaticDesc desc = new AutomaticDesc(this);
+		desc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous tirez une flèche sur un§c joueur§7 avec votre§a Arc de Chasseur§7 vous lui infligerez des effets en fonction de la zone toucher:\n\n"
+		+AllDesc.tab+"§aTête§7: Inflige l'effet§9 Blindness I§7 pendant§c 7 secondes§7.\n\n"
+		+AllDesc.tab+"§aTorse§7: Augmente les dégats de§a +§c1"+AllDesc.coeur+"\n\n"
+		+AllDesc.tab+"§aJambe§7: Inflige l'effet§l Slowness I§r§7 pendant§c 7 secondes§7.")}), "§aArc de Chasseur", 60));
+		this.desc = desc.getText();
+	}
+
+	@Override
+	public TextComponent getComponent() {
+		return this.desc;
+	}
+
+	@Override
+	public ItemStack[] getItems() {
+		return new ItemStack[] {
+				arcItem
 		};
 	}
 	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
 	public void GiveItems() {
+		giveItem(owner, false, getItems());
 		owner.getInventory().addItem(new ItemStack(Material.ARROW, 32));//give 32 flèches
+		gameState.GiveRodTridi(owner);
 	}
 	private int cooldown = 0;
 	@Override
 	public void onProjectileLaunch(Projectile projectile, Player shooter) {
 		if (projectile instanceof Arrow) {
 			if (shooter == owner) {
-				if (shooter.getItemInHand().isSimilar(Items.getbow())){
+				if (shooter.getItemInHand().isSimilar(arcItem)){
 					Arrow fleche = (Arrow) projectile;
 					if (fleche.getShooter() == shooter){
+						if (cooldown > 0) {
+							sendCooldown(owner, cooldown);
+							return;
+						}
 						projectile.setMetadata("SashaArrow", new FixedMetadataValue(Main.getInstance(), shooter.getLocation()));
 					}
 				}
@@ -79,13 +100,12 @@ public class Sasha extends SoldatsRoles {
 			if (victim != null) {
 				if (arrow.getShooter() instanceof Player) {
 					Player shooter = (Player) arrow.getShooter();
-					if (shooter == owner) {
+					if (shooter.getUniqueId().equals(getPlayer())) {
 						if (arrow.hasMetadata("SashaArrow")) {
 							if (cooldown <= 0) {
 			                    Vector arrowLocation = arrow.getLocation().toVector();
 			                    Vector targetLocation = victim.getLocation().toVector();
-			                    
-			                    // Vérifiez la partie du corps touchée en fonction de la hauteur de la cible
+
 			                    double heightDifference = arrowLocation.getY() - targetLocation.getY();
 			                    if (heightDifference > 1.5) {
 			                        shooter.sendMessage("§7Tu as touché la tête de§a " + victim.getName());
@@ -101,6 +121,7 @@ public class Sasha extends SoldatsRoles {
 			                        victim.sendMessage("§7Vous avez été toucher par l'arc de§a Sasha§7 au niveau de votre torse");
 			                        victim.sendMessage("§aSasha§7 vous à infliger§l 1"+AllDesc.Coeur("§c"));
 			                    }
+								cooldown = 60;
 							}
 						}
 					}
@@ -111,5 +132,15 @@ public class Sasha extends SoldatsRoles {
 	@Override
 	public void resetCooldown() {
 		cooldown = 0;
+	}
+
+	@Override
+	public void Update(GameState gameState) {
+		if (cooldown >= 0) {
+			cooldown--;
+			if (cooldown == 0) {
+				owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§a Arc de Chasseur");
+			}
+		}
 	}
 }

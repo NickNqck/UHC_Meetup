@@ -114,7 +114,9 @@ public class Colossal extends Titan{
 				if (cerclecooldown >= 100) {
 					if (getListener().getColossal() == null)return;
 					MathUtil.sendCircleParticle(EnumParticle.FLAME, player.getLocation(), 8, 24);
-					for (Player p : GameState.getInstance().getInGamePlayers()) {
+					for (UUID u : GameState.getInstance().getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (p.getLocation().distance(player.getLocation()) <= 8) {
 							p.setFireTicks(p.getFireTicks()+60);
 						}

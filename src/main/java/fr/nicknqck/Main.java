@@ -1,38 +1,47 @@
 package fr.nicknqck;
 
-import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.commands.*;
+import fr.nicknqck.commands.Color;
 import fr.nicknqck.commands.roles.*;
 import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
 import fr.nicknqck.commands.vanilla.Whitelist;
-import fr.nicknqck.events.Events;
+import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.events.blocks.BlockManager;
 import fr.nicknqck.events.blocks.BrickBlockListener;
 import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.essential.*;
+import fr.nicknqck.events.essential.inventorys.HubInventory;
+import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
+import fr.nicknqck.managers.DeathManager;
+import fr.nicknqck.managers.EventsManager;
+import fr.nicknqck.managers.RoleManager;
+import fr.nicknqck.managers.WorldsManager;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
+import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
+import fr.nicknqck.utils.biome.BiomeChanger;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
-import fr.nicknqck.utils.packets.NMSPacket;
-import fr.nicknqck.utils.packets.TabTitleManager;
-import fr.nicknqck.worlds.WorldFillTask;
+import fr.nicknqck.worlds.WorldListener;
+import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import lombok.Getter;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,7 +49,9 @@ import org.bukkit.potion.PotionEffect;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -51,7 +62,7 @@ Programming: NickNack, Mega02600
 Roles: NickNack, Mega02600
 */
 
-public class Main extends JavaPlugin implements Listener{
+public class Main extends JavaPlugin {
 
 	public final String PLUGIN_NAME = "UHC-Meetup";
 	@Getter
@@ -72,25 +83,44 @@ public class Main extends JavaPlugin implements Listener{
 	@Getter
 	private RoleManager roleManager;
 	@Getter
-	private Loc locUtils;
-	@Getter
 	private WorldsManager worldManager;
-	@Override
+	@Getter
+	private GameConfig gameConfig;
+	@Getter
+	private DeathManager deathManager;
+	@Getter
+	private FileConfiguration webhookConfig;
+	@Getter
+	private WorldConfig worldConfig;
+	@Getter
+	private WorldListener worldListener;
+	@Getter
+	private boolean goodServer;
+	@Getter
+	private EventsManager eventsManager;
+
+    @Override
 	public void onEnable() {
 		Instance = this;
 		RANDOM = new Random();
-		this.roleManager = new RoleManager();
-		this.locUtils = new Loc();
+		goodServer = ip();
 		this.worldManager = new WorldsManager();
 		GameState gameState = new GameState();
 		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
+		this.gameConfig = new GameConfig();
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
-		initGameWorld();
+		registerEvents(gameState);
+		World arena = Bukkit.getWorld("arena");
+		if (arena == null) {
+			initGameWorld();
+		} else {
+			getWorldManager().setGameWorld(arena);
+		}
+		registerEvents2(gameState);
 		initPlugin(gameState);
 		EnableScoreboard(gameState);
-		registerEvents(gameState);
 		registerCommands(gameState);
 		clearMap(getWorldManager().getLobbyWorld());
 		for (Player p : Bukkit.getOnlinePlayers()) {
@@ -107,11 +137,29 @@ public class Main extends JavaPlugin implements Listener{
 			p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
 		System.out.println("["+PLUGIN_NAME+"] Enabled");
-		giveTab(gameState);
 		saveDefaultConfig();
         registerRecipes();
+		saveDefaultWebhookConfig();
+		this.roleManager = new RoleManager();
+		BiomeChanger.init();
 		System.out.println("ENDING ONENABLE");
     }
+	private void saveDefaultWebhookConfig() {
+		File webhookFile = new File(getDataFolder(), "webhook.yml");
+
+		if (!webhookFile.exists()) {
+			getLogger().info("Creation du fichier webhook.yml par defaut...");
+			saveResource("webhook.yml", false);
+		} else {
+			getLogger().info("Fichier webhook.yml deja present.");
+		}
+		updateWebHookConfig();
+	}
+	public void updateWebHookConfig() {
+		File webhookFile = new File(getDataFolder(), "webhook.yml");
+        webhookConfig = YamlConfiguration.loadConfiguration(webhookFile);
+		System.out.println("WebHook updated");
+	}
 	private void registerRecipes() {
 		System.out.println("Starting registering recipes");
 		ItemStack result = Items.getLamedenichirin();
@@ -133,18 +181,17 @@ public class Main extends JavaPlugin implements Listener{
         getScoreboardManager().onEnable();
 		System.out.println("End enable scoreboard");
 	}
+
 	private void registerEvents(GameState gameState) {
 		System.out.println("Starting registering events");
 		getServer().getPluginManager().registerEvents(new WeatherEvents(), this);
 		getServer().getPluginManager().registerEvents(new TimberPvP(), this);
-		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new JoinEvents(), this);
 		getServer().getPluginManager().registerEvents(new QuitEvents(), this);
 		getServer().getPluginManager().registerEvents(new EntityDamageEvents()	,this);
 		getServer().getPluginManager().registerEvents(new RodTridimensionnelle(gameState), this);
 		getServer().getPluginManager().registerEvents(new PotionUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubListener(gameState), this);
-		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
 		getServer().getPluginManager().registerEvents(new HomingBow(gameState), this);
 		getServer().getPluginManager().registerEvents(new BlockManager(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemsManager(gameState), this);
@@ -163,7 +210,25 @@ public class Main extends JavaPlugin implements Listener{
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
 		getServer().getPluginManager().registerEvents(new ItemBuilderListener(), this);
 		new EffectsGiver();
+		new fr.nicknqck.utils.event.EventUtils();
+		getServer().getPluginManager().registerEvents(new WebHookListeners(gameState), this);
+		DeathManager manager = new DeathManager();
+		getServer().getPluginManager().registerEvents(manager, this);
+		EventUtils.registerEvents(new BanquePower());
+		WorldConfig worldConfig = new WorldConfig(gameState);
+		getServer().getPluginManager().registerEvents(worldConfig, this);
+		this.worldConfig = worldConfig;
+		this.deathManager = manager;
+		EventsManager eventsManager1 = new EventsManager();
+		getServer().getPluginManager().registerEvents(eventsManager1, this);
+		this.eventsManager = eventsManager1;
 		System.out.println("Ending registering events");
+	}
+	private void registerEvents2(GameState gameState) {
+		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
+		WorldListener worldListener = new WorldListener();
+		getServer().getPluginManager().registerEvents(worldListener, this);
+		this.worldListener = worldListener;
 	}
 	private void registerCommands(GameState gameState) {
 		System.out.println("Starting registering commands");
@@ -182,6 +247,7 @@ public class Main extends JavaPlugin implements Listener{
 		getCommand("whitelist").setExecutor(new Whitelist(gameState));
 		getCommand("mc").setExecutor(new McCommands(gameState));
 		getCommand("discord").setExecutor(new Discord());
+		getCommand("color").setExecutor(new Color(gameState));
 		System.out.println("Ending registering commands");
 	}
 	private void clearMap(World world) {
@@ -216,52 +282,10 @@ public class Main extends JavaPlugin implements Listener{
 		for (GameState.Roles r : GameState.Roles.values()) {
 			gameState.addInAvailableRoles(r, 0);
 		}
-		System.out.println("init Events");
-		for (Events e : Events.values()) {
-			gameState.addInAvailableEvents(e);
-		}
+		System.out.println("init Players");
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.setGameMode(GameMode.ADVENTURE);
 		}
-		System.out.println("init FastInv");
-	}
-	private void giveTab(GameState gameState) {
-		System.out.println("Starting give tab");
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-			if (gameState.getServerState() == ServerStates.InLobby) {
-				for (Player p : gameState.getInLobbyPlayers()) {
-				//	NMSPacket.sendTabTitle(p, null, null);
-					NMSPacket.sendTabTitle(p,
-							gameState.msgBoard + "\n",
-							"\n" +
-									"§7Joueurs: §c" + gameState.getInLobbyPlayers().size() +"§r/§6"+gameState.getroleNMB()+ "\n"
-									+ "\n§6§l TPS: "+ TPS.getAverageTPS(1)+" "
-									+ "§cdiscord.gg/RF3D4Du8VN");
-				}
-			}
-			if (gameState.getServerState() == ServerStates.InGame) {
-				for (Player player : gameState.getInGamePlayers()) {
-					if (gameState.roleTimer < gameState.getInGameTime()) {
-		        		if (!gameState.hasRoleNull(player)) {
-		        			if (gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
-				            	TabTitleManager.sendTabTitle(player, gameState.msgBoard+ "\n", "\n" + ChatColor.GRAY + "Kills: " + ChatColor.GOLD + gameState.getPlayerKills().get(player).size() + "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
-				         }
-		        		}		        		 
-		        	} else {
-		        		int time = gameState.roleTimer-gameState.getInGameTime();
-				    	String trm = time/60 < 10 ? "0"+time/60 : time/60+"";
-				    	String trs = time%60 < 10 ? "0"+time%60 : time%60+"";
-		        		TabTitleManager.sendTabTitle(player, gameState.msgBoard + "\n", "\n" + ChatColor.GRAY + "Role: " + ChatColor.GOLD + trm +"§rm§6"+trs+"§rs"+ "\n" + "\n" + "§7Plugin by§r: §bNickNqck");
-		        	}
-				}
-			}
-			if (gameState.getServerState() == ServerStates.GameEnded) {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					NMSPacket.clearTitle(p);
-				}
-			}
-		}, 1, 1);
-		System.out.println("Ending give tab");
 	}
 	private void spawnPlatform(World world) {
 		System.out.println("Spawning GLASS platform");
@@ -272,21 +296,14 @@ public class Main extends JavaPlugin implements Listener{
 		}
 		System.out.println("Ended GLASS platform");
 	}
-	public void initGameWorld() {
-		for (World world : Bukkit.getWorlds()) {
-			if (world.getName().equals("arena")) {
-				File worldFolder = world.getWorldFolder();
-				Bukkit.unloadWorld(world, false);
-				try {
-					FileUtils.deleteDirectory(worldFolder);
-					System.out.println("Deleted world "+worldFolder.getName());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	public boolean initGameWorld() {
+		if (!deleteWorld())return false;
 		WorldCreator creator = new WorldCreator("arena");
+		System.out.println("Seed: "+creator.seed());
+		System.out.println("Original Base Settings: "+creator.generatorSettings());
+		System.out.println("Original Base : "+creator.generator());
 		creator.generatorSettings(getBase());
+		System.out.println("After Config Base Settings: "+creator.generatorSettings());
 		World gameWorld = creator.createWorld();
 		gameWorld.setTime(6000);
 		gameWorld.setGameRuleValue("doMobSpawning", "false");
@@ -301,6 +318,26 @@ public class Main extends JavaPlugin implements Listener{
 		gameWorld.setGameRuleValue("doFireTick", "false");
 		getWorldManager().setGameWorld(gameWorld);
 		System.out.println("Created world gameWorld");
+		return true;
+	}
+	private boolean deleteWorld() {
+		for (World world : Bukkit.getWorlds()) {
+			if (world.getName().equals("arena")) {
+				File worldFolder = world.getWorldFolder();
+				if (!world.getPlayers().isEmpty()) {
+					System.out.println("Can't delete world \""+ "arena" +"\" because "+world.getPlayers().size()+" is inside");
+					return false;
+				}
+				Bukkit.unloadWorld(world, false);
+				try {
+					FileUtils.deleteDirectory(worldFolder);
+					System.out.println("Deleted world "+worldFolder.getName());
+				} catch (IOException e) {
+					e.fillInStackTrace();
+				}
+			}
+		}
+		return true;
 	}
 	@Override
 	public void onDisable() {
@@ -314,7 +351,6 @@ public class Main extends JavaPlugin implements Listener{
 				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);
 			}
 		}
-		System.out.println("["+PLUGIN_NAME+"] "+getBase());
 	}
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");
@@ -324,10 +360,10 @@ public class Main extends JavaPlugin implements Listener{
 		return debug;
 	}
 	private String getBase() {
-        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 1000+
-        		",\"depthNoiseScaleZ\":" + 1000 +
+        return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + (600+getWorldConfig().getCaveBooster())+
+        		",\"depthNoiseScaleZ\":" + (600+getWorldConfig().getCaveBooster()) +
         		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +
-				"\"seaLevel\":" + 60 +
+				"\"seaLevel\":" + 62 +
         		",\"useCaves\":" + true + //S'il y aura des caves ou non
         		",\"useDungeons\":" + true + //S'il y aura des dongeons ou non
         		",\"dungeonChance\":" + 8 + //Probo dongeon 8 = vanilla
@@ -352,16 +388,57 @@ public class Main extends JavaPlugin implements Listener{
         		",\"ironCount\":" + 20 + 
         		",\"ironMinHeight\":" + 0 + 
         		",\"ironMaxHeight\":" + 64 + 
-        		",\"goldSize\":" + 11 +
-        		",\"goldCount\":" + 4 +
+        		",\"goldSize\":" + 10 +
+        		",\"goldCount\":" + (3+getWorldConfig().getGoldBooster()) +
         		",\"goldMinHeight\":" + 0 + 
         		",\"goldMaxHeight\":" + 32 + 
         		",\"redstoneSize\":" + 8 + 
         		",\"redstoneCount\":" + 20 + 
         		",\"redstoneMinHeight\":" + 0 + 
         		",\"redstoneMaxHeight\":" + 16+ 
-        		",\"diamondSize\":" + 8 + ",\"diamondCount\":" + 1 +
+        		",\"diamondSize\":" + 8 + ",\"diamondCount\":" + (1+getWorldConfig().getDiamondBooster()) +
         		",\"diamondMinHeight\":" + 0 + ",\"diamondMaxHeight\":" + 22 +
         		",\"lapisSize\":" + 7 + ",\"lapisCount\":" + 1 + ",\"lapisCenterHeight\":" + 16 +",\"lapisSpread\":" + 16+ "}";
     }
+	private boolean ip() {
+		if (getPlayerConnectIP().equalsIgnoreCase("62.210.100.59") || getAmazonIP().equalsIgnoreCase("62.210.100.59")) {
+			return true;
+		}
+		if (getPlayerConnectIP().equalsIgnoreCase("127.0.0.1") || getPlayerConnectIP().equalsIgnoreCase("localhost") || getPlayerConnectIP().equalsIgnoreCase("0:0:0:0:0:0:0:1")) {
+			return true;
+		}
+		if (isLocalServer()) {
+			return true;
+		}
+		return getAmazonIP().equalsIgnoreCase("127.0.0.1") || getAmazonIP().equalsIgnoreCase("localhost") || getAmazonIP().equalsIgnoreCase("0:0:0:0:0:0:0:1");
+	}
+	private boolean isLocalServer() {
+		String serverIP = Bukkit.getServer().getIp();
+        return serverIP.isEmpty() || "127.0.0.1".equals(serverIP) || "localhost".equals(serverIP);
+    }
+
+	private static String getPlayerConnectIP() {
+		try {
+			URL url = new URL("https://api.ipify.org");
+			Scanner scanner = new Scanner(url.openStream());
+			String ipAddress = scanner.useDelimiter("\\A").next();
+			scanner.close();
+			return ipAddress;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Erreur lors de la récupération de l'adresse IP du joueur";
+		}
+	}
+	private static String getAmazonIP() {
+		try {
+			URL url = new URL("http://checkip.amazonaws.com");
+			Scanner scanner = new Scanner(url.openStream());
+			String ipAddress = scanner.useDelimiter("\\A").next();
+			scanner.close();
+			return ipAddress;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Ip Introuvable";
+		}
+	}
 }

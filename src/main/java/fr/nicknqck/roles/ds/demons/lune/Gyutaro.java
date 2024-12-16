@@ -6,6 +6,8 @@ import java.util.UUID;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,8 +31,8 @@ public class Gyutaro extends DemonsRoles {
 		}
 
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 
 	@Override
@@ -97,7 +99,7 @@ public class Gyutaro extends DemonsRoles {
 			}
 		}
 		if (victim != owner) {
-			if (gameState.getInGamePlayers().contains(victim)) {
+			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 				if (gameState.getPlayerRoles().containsKey(victim)) {
 					RoleBase r = gameState.getPlayerRoles().get(victim);
 					if (r instanceof Daki && !diedaki) {
@@ -138,7 +140,7 @@ public class Gyutaro extends DemonsRoles {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
 		}
 		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (!gameState.getInGamePlayers().contains(r.owner)) continue;
+			if (!gameState.getInGamePlayers().contains(r.getPlayer())) continue;
 			if (r instanceof Daki && owner.getWorld().equals(r.owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*2, 0, false, false), true);
@@ -176,7 +178,9 @@ public class Gyutaro extends DemonsRoles {
 			if (faucillecooldown <= 0) {
 				double min = 25;
 				Player target = null;
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (owner.canSee(p) && p != owner) {
 						double dist = Math.abs(p.getLocation().distance(owner.getLocation()));
 						if (dist < min) {
@@ -204,24 +208,25 @@ public class Gyutaro extends DemonsRoles {
 		if (item.isSimilar(Items.getPouvoirSanginaire())) {
 			if (itemcooldown <= 0) {
 				owner.sendMessage("Exécution de votre: "+ChatColor.GOLD+" Pouvoir Sanginaire");
-				for(Player p : gameState.getInGamePlayers()) {
-					Player player = p;
-					if (player != owner) {
+				for(UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
+                    if (p != owner) {
 						if(p.getLocation().distance(owner.getLocation()) <= 30) {
-							if (gameState.getPlayerRoles().get(player).getRoles() != Roles.Daki ) {
+							if (gameState.getPlayerRoles().get(p).getRoles() != Roles.Daki ) {
 								Random random = new Random();
 								int rint = random.nextInt(2);
 								if (rint == 0) {
-									player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*30, 0, false, false));
-									owner.sendMessage(ChatColor.WHITE+"Le joueur: "+ChatColor.GOLD+ player.getName() + ChatColor.WHITE+" à reçue Poison 1 pendant 30 secondes");
+									p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*30, 0, false, false));
+									owner.sendMessage(ChatColor.WHITE+"Le joueur: "+ChatColor.GOLD+ p.getName() + ChatColor.WHITE+" à reçue Poison 1 pendant 30 secondes");
 								}
 								if (rint == 1) {
-									player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*15, 1, false, false));
-									owner.sendMessage(ChatColor.WHITE+"Le joueur: "+ChatColor.GOLD+ player.getName() + ChatColor.WHITE+" à reçue Poison 2 pendant 15 secondes");
+									p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*15, 1, false, false));
+									owner.sendMessage(ChatColor.WHITE+"Le joueur: "+ChatColor.GOLD+ p.getName() + ChatColor.WHITE+" à reçue Poison 2 pendant 15 secondes");
 								}
 								if (rint == 2) {
-									player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*30, 0, false, false));
-									owner.sendMessage(ChatColor.GRAY+"Le joueur: "+ChatColor.GOLD+ player.getName() + ChatColor.GRAY+" à reçue Poison 1 pendant 30 secondes");
+									p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*30, 0, false, false));
+									owner.sendMessage(ChatColor.GRAY+"Le joueur: "+ChatColor.GOLD+ p.getName() + ChatColor.GRAY+" à reçue Poison 1 pendant 30 secondes");
 								}
 								p.sendMessage("Vous avez été toucher par le Pouvoir Sanginaire de Gyutaro");
 							}

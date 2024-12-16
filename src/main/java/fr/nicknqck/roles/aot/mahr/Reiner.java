@@ -6,7 +6,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -16,8 +15,7 @@ public class Reiner extends MahrRoles {
 	public Reiner(UUID player) {
 		super(player);
 		gameState.Shifter.add(owner);
-		gameState.GiveRodTridi(owner);
-		Titans.Cuirasse.getTitan().getListener().setCuirasse(owner.getUniqueId());
+		Titans.Cuirasse.getTitan().getListener().setCuirasse(player);
 	}
 	@Override
 	public Roles getRoles() {

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.builders;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -23,6 +26,9 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     private Lames lames;
     private boolean lameincassable = false;
     private boolean canuseblade = false;
+    private boolean hasblade = false;
+    private final List<Lames> cantHave = new ArrayList<>();
+
     public DemonsSlayersRoles(UUID player) {
         super(player);
     }
@@ -52,10 +58,12 @@ public abstract class DemonsSlayersRoles extends RoleBase {
         return null;
     }
     public void setLameIncassable(Player target, boolean a) {
+        if (target == null)return;
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
             if (!gameState.hasRoleNull(target)) {
-                if (getPlayerRoles(target) instanceof DemonsSlayersRoles) {
-                    DemonsSlayersRoles role = (DemonsSlayersRoles) getPlayerRoles(target);
+                GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());
+                if (GP.getRole() instanceof DemonsSlayersRoles) {
+                    DemonsSlayersRoles role = (DemonsSlayersRoles) GP.getRole();
                     role.setLameincassable(a);
                     if (a) {
                         sendMessageAfterXseconde(target, "Votre lame est devenue incassable", 1);
@@ -70,4 +78,5 @@ public abstract class DemonsSlayersRoles extends RoleBase {
         }, 20);
     }
     public void onDSCommandSend(String[] args, GameState gameState) {}
+    public abstract Soufle getSoufle();
 }

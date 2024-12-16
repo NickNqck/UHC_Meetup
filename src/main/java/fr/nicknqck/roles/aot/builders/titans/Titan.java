@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.StringUtils;
 
@@ -52,9 +51,17 @@ public abstract class Titan {
 	public void TransfoMessage(Player player, boolean eclair) {
 		if (eclair) {
 			GameState.getInstance().spawnLightningBolt(player.getWorld(), player.getLocation());
-			for (Player p : getState().getInGamePlayers()) {p.playSound(p.getLocation(), "aotmtp.transfo", 8, 1);}
+			for (UUID u : getState().getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
+				p.playSound(p.getLocation(), "aotmtp.transfo", 8, 1);
+			}
 		}
-		for (Player p : GameState.getInstance().getInGamePlayers()) {p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");}
+		for (UUID u : GameState.getInstance().getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
+			p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");
+		}
 	}
 	public void TransfoMessage(UUID uuid, boolean eclair) {
 		Player player = Bukkit.getPlayer(uuid);

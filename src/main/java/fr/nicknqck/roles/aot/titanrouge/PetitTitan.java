@@ -4,7 +4,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -22,8 +21,7 @@ public class PetitTitan extends TitansRoles {
 	public PetitTitan(UUID player) {
 		super(player);
 		gameState.TitansRouge.add(owner);
-		gameState.GiveRodTridi(owner);
-		}
+	}
 	@Override
 	public Roles getRoles() {
 		return Roles.PetitTitan;

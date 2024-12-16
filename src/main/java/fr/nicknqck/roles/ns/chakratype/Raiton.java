@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.ns.Chakra;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -13,12 +14,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakra;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.RandomUtils;
 import net.minecraft.server.v1_8_R3.DamageSource;
 
-public class Raiton extends Chakra {
+public class Raiton implements Chakra {
 
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity victim) {

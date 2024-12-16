@@ -18,7 +18,6 @@ public class TitanSouriant extends TitansRoles {
 
 	public TitanSouriant(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 	}
 	@Override
 	public Roles getRoles() {

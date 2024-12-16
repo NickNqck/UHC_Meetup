@@ -17,6 +17,8 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
 import net.minecraft.server.v1_8_R3.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 
+import java.lang.reflect.Field;
+
 public class IdentityChanger {
 
     public static void changeSkin(final Player player, final Property skin, final boolean forPlayer) {
@@ -80,10 +82,24 @@ public class IdentityChanger {
     public static void changePlayerName(final Player player, final String name) {
         final GameProfile profile = ((CraftPlayer) player).getProfile();
         try {
-            VariablesUtils.updateVariablePrivateFinal(profile, "name", name);
+            updateVariablePrivateFinal(profile, name);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+    }
+    private static void updateVariablePrivateFinal(final Object obj, final Object newValue) throws Exception {
+        final Field field = obj.getClass().getDeclaredField("name");
+        field.setAccessible(true);
+        final Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & 0xFFFFFFEF);
+        modifiersField.setAccessible(false);
+        field.set(obj, newValue);
+        field.setAccessible(false);
+    }
+    public static Property getSkin(Player target) {
+        GameProfile profileTarget = ((org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) target).getProfile();
+        return profileTarget.getProperties().get("textures").iterator().next();
     }
 
     private static void sendPacket(final Packet<?> packet) {

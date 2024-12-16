@@ -3,11 +3,17 @@ package fr.nicknqck.roles.builder;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.powers.CommandPower;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
 import java.util.Map;
 
 public class AutomaticDesc {
@@ -18,6 +24,7 @@ public class AutomaticDesc {
     public AutomaticDesc(IRole role) {
         this.role = role;
         text = new TextComponent(AllDesc.bar);
+        if (role == null)return;
         addRoleName();
         addObjectif();
     }
@@ -44,6 +51,15 @@ public class AutomaticDesc {
         }
         return this;
     }
+    public AutomaticDesc addCustomLine(String line) {
+        text.addExtra(new TextComponent("\n\n"+AllDesc.point+line));
+        return this;
+    }
+    public AutomaticDesc addCustomText(TextComponent text) {
+        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point));
+        this.text.addExtra(text);
+        return this;
+    }
     public AutomaticDesc addItem(TextComponent textComponent, int cooldown) {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item "));
         text.addExtra(textComponent);
@@ -58,10 +74,75 @@ public class AutomaticDesc {
             text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
             text.addExtra(interogativDot);
             text.addExtra("§7\" ");
-            text.addExtra(new TextComponent("§7"+(tripleMap.getThird() > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+")" : "" )+"."));
+            switch (tripleMap.getThird()) {
+                case -500:
+                    text.addExtra("§7 (1x/partie).");
+                    break;
+                case 0:
+                    text.addExtra("§7.");
+                    break;
+                default:
+                    text.addExtra("§7 (1x/"+StringUtils.secondsTowardsBeautiful(tripleMap.getThird())+").");
+                    break;
+            }
         }
         return this;
     }
+    public final AutomaticDesc setPowers(List<Power> powers) {
+        for (Power power : powers) {
+            if (power.getName() == null)continue;
+            if (!power.isShowInDesc())continue;
+            String name = power.getName();
+            if (power instanceof ItemPower) {
+                name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
+            }
+            String[] description = power.getDescriptions();
+            Cooldown cooldown = power.getCooldown();
+            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
+            TextComponent powerName = getPowerName(name, description);
+            textComponent.addExtra(powerName);
+            textComponent.addExtra("§7\"");
+            if (power.getUse() == power.getMaxUse()) {
+                textComponent.addExtra("§7 (§cInutilisable§7).");
+                this.text.addExtra(textComponent);
+                continue;
+            }
+            if (cooldown != null) {
+                if (cooldown.getOriginalCooldown() == -500) {
+                    textComponent.addExtra("§7 (1x/partie)");
+                } else {
+                    textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
+                }
+            }
+            if (power.getMaxUse() != -1) {
+                textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+            }
+            textComponent.addExtra("§7.");
+            this.text.addExtra(textComponent);
+        }
+        return this;
+    }
+
+    private TextComponent getPowerName(String name, String[] description) {
+        TextComponent powerName = new TextComponent(name);
+        if (description != null && description.length > 0) {
+            StringBuilder d = new StringBuilder();
+            int lines = 0;
+            for (String string : description) {
+                lines++;
+                if (lines != 1) {
+                    d.append("\n");
+                }
+                d.append(string);
+            }
+            BaseComponent[] hoverText = new BaseComponent[]{new TextComponent(d.toString())};
+            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText));
+        } else {
+            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune description trouver !")}));
+        }
+        return powerName;
+    }
+
     @SafeVarargs
     public final AutomaticDesc setCommands(TripleMap<HoverEvent, String, Integer>... hoverAndCooldown) {
         text.addExtra("\n\n" + "§7 - Commandes: ");

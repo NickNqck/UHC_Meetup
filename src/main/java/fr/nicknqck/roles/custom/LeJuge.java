@@ -11,6 +11,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -27,13 +28,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class LeJuge extends CustomRolesBase implements Listener {
-    private final TextComponent automaticDesc;
-    private final int timeKill;
-    private final KillRunnable killRunnable;
+    private TextComponent automaticDesc;
+    private int timeKill;
+    private KillRunnable killRunnable;
+    private boolean minage;
 
     public LeJuge(UUID player) {
         super(player);
-        if (getGameState().isMinage()) {
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        this.minage = Main.getInstance().getGameConfig().isMinage();
+        if (minage) {
             timeKill = 60*10;
         } else {
             timeKill = 60*5;
@@ -41,11 +48,11 @@ public class LeJuge extends CustomRolesBase implements Listener {
         getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffects(getEffects());
-        desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toute les§c "+ StringUtils.secondsTowardsBeautiful(timeKill)+"§7 vous recevez une cible, si vous arrivez à la tuer vous obtiendrez un§c pourcentage§7 d'un effet aléatoire parmis:§b Speed§7,§c Force§7 et§9 Résistance§7,\n§7Sinon, si vous n'y arriver pas vous perdrez§c "+(getGameState().isMinage() ? "1/2" : "1")+ AllDesc.coeur+"§7 de manière§c permanente§7.")}));
+        desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toute les§c "+ StringUtils.secondsTowardsBeautiful(timeKill)+"§7 vous recevez une cible, si vous arrivez à la tuer vous obtiendrez un§c pourcentage§7 d'un effet aléatoire parmis:§b Speed§7,§c Force§7 et§9 Résistance§7,\n§7Sinon, si vous n'y arriver pas vous perdrez§c "+(minage ? "1/2" : "1")+ AllDesc.coeur+"§7 de manière§c permanente§7.")}));
         this.automaticDesc = desc.getText();
         this.killRunnable = new KillRunnable(this);
         killRunnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), this.killRunnable::chooseTarget, gameState.isMinage() ? 20*60*10:  20*100);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), this.killRunnable::chooseTarget, minage ? 20*60*10:  20*100);
     }
 
     @Override
@@ -54,7 +61,7 @@ public class LeJuge extends CustomRolesBase implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.LeJuge;
     }
 
@@ -115,7 +122,7 @@ public class LeJuge extends CustomRolesBase implements Listener {
                 actualTimer--;
                 if (actualTimer == 0) {
                     if (!killTarget && uuidTarget != null) {
-                        leJuge.setMaxHealth(leJuge.getMaxHealth()-(leJuge.getGameState().isMinage() ? 2 : 1));
+                        leJuge.setMaxHealth(leJuge.getMaxHealth()-(leJuge.minage ? 2 : 1));
                         Player player = Bukkit.getPlayer(leJuge.getPlayer());
                         if (player != null) {
                             player.sendMessage("§7Vous avez perdu de la§c vie§7 suite à l'échec de votre mission.");
@@ -128,9 +135,11 @@ public class LeJuge extends CustomRolesBase implements Listener {
         }
         private void chooseTarget() {
             final GameState gameState = leJuge.getGameState();
-            final List<Player> igPlayers = new ArrayList<>(gameState.getInGamePlayers());
+            final List<UUID> igPlayers = new ArrayList<>(gameState.getInGamePlayers());
             final List<Player> goodPlayers = new ArrayList<>();
-            for (final Player p : igPlayers) {
+            for (final UUID u : igPlayers) {
+                Player p = Bukkit.getPlayer(u);
+                if (p == null)continue;
                 if (!gameState.hasRoleNull(p)) {
                     RoleBase role = gameState.getPlayerRoles().get(p);
                     if (!role.getOriginTeam().equals(TeamList.Solo) && !role.getOriginTeam().equals(TeamList.Jubi) && !role.getOriginTeam().equals(TeamList.Kumogakure)) {

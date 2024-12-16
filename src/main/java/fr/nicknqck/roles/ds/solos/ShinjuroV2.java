@@ -8,6 +8,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -136,6 +137,11 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
                 owner.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
             }
         }
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.FLAMME;
     }
 
     private static class ShinjuroRunnable extends BukkitRunnable {

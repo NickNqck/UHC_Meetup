@@ -1,9 +1,10 @@
 package fr.nicknqck.events.essential;
 
-import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.utils.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,11 +31,13 @@ public class QuitEvents implements Listener{
 		gameState.updateGameCanLaunch();
 	    if (gameState.getServerState() == ServerStates.InGame) {
 	        String quitMessage = "";
-	        if (gameState.getInGamePlayers().contains(player)) {
-	        GameListener.getInstance().DeathHandler(player, player, 9999.0, gameState);
-	        quitMessage = "(Game) "+ChatColor.LIGHT_PURPLE + player.getDisplayName() + ChatColor.RED + " A quitté(e) la partie" + ChatColor.RED + " Il meurt donc suite à la déconnexion";
-	        gameState.delInGamePlayers(player);
-	        } else if (gameState.getInLobbyPlayers().contains(player)){
+	        if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
+				//   GameListener.getInstance().DeathHandler(player, player, 9999.0, gameState);
+				GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
+				quitMessage = "(Game)§b "+ player.getDisplayName() + "§f c'est déconnecter, il mourra suite à sa déconnexion d'ici§c "+ StringUtils.secondsTowardsBeautiful(gamePlayer.getTimeDisconnectLeft());
+				gamePlayer.onQuit();
+				//gameState.delInGamePlayers(player);
+	        } else if (gameState.getInLobbyPlayers().contains(player.getUniqueId())){
 	        gameState.delInLobbyPlayers(player);
 	        quitMessage = "(Lobby) "+ChatColor.LIGHT_PURPLE + player.getDisplayName() + ChatColor.RED + " A quitté(e) la partie";
 	        } else if (gameState.getInSpecPlayers().contains(player)) {
@@ -43,7 +46,7 @@ public class QuitEvents implements Listener{
 	        }
 	        event.setQuitMessage(quitMessage);
 	        System.out.println("Le joueur: " + player.getName() + " c'est deconnecter il est donc mort suite a ceci");
-			GameListener.detectWin(gameState);
+		//	GameListener.detectWin(gameState);
 	    }
 	}
 }

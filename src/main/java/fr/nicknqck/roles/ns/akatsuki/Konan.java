@@ -13,6 +13,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.particles.WingsEffect;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -46,10 +47,12 @@ public class Konan extends AkatsukiRoles {
 	@Override
 	public String[] Desc() {
 		List<Player> mates = new ArrayList<>();
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
-				if (getOldTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
-					if (getOldTeam(p) == TeamList.Akatsuki || getPlayerRoles(p) instanceof Obito) {
+				if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
+					if (getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
 						mates.add(p);
 					}
 				}
@@ -159,7 +162,7 @@ public class Konan extends AkatsukiRoles {
 	}
 
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 

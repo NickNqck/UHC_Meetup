@@ -7,7 +7,6 @@ import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.betteritem.BetterItemEvent;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -18,7 +17,6 @@ public class Livai extends SoldatsRoles {
 
 	public Livai(UUID player) {
 		super(player);
-		gameState.GiveRodTridi(owner);
 		setAckerMan(true);
 	}
 	@Override
@@ -134,12 +132,7 @@ public class Livai extends SoldatsRoles {
 		@Override
 		public void onEndGame() {
 			ItemStack stack = gameState.EquipementTridi();
-			Predicate<BetterItemEvent> eventPredicate  = new Predicate<BetterItemEvent>() {
-				@Override
-				public boolean test(BetterItemEvent t) {
-					return false;
-				}
-			};
+			Predicate<BetterItemEvent> eventPredicate  = t -> false;
 			BetterItem item = new BetterItem(stack, eventPredicate);
 			BetterItem.registeredItems.remove(item);
 		}

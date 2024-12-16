@@ -3,14 +3,21 @@ package fr.nicknqck.roles.ns.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.powers.Power;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,13 +26,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Danzo extends NSRoles {
 
@@ -35,6 +41,11 @@ public class Danzo extends NSRoles {
 	private int coupToScelled = 0;
 	private boolean SceauActived = false;
 	private final List<UUID> cantHaveAbso = new ArrayList<>();
+	@Getter
+	@Setter
+	private boolean killHokage = false;
+	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
+
 	public Danzo(UUID player) {
 		super(player);
 		setChakraType(Chakras.FUTON);
@@ -42,6 +53,8 @@ public class Danzo extends NSRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(2);
+		UchiwaFinders uchiwaFinders = new UchiwaFinders(this);
+		addPower(uchiwaFinders);
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			int nmbUchiwa = 0;
 			for (Player p : Bukkit.getOnlinePlayers()){
@@ -52,21 +65,22 @@ public class Danzo extends NSRoles {
 			if (nmbUchiwa == 0){
 				owner.sendMessage("§7Il n'y a pas de§c Uchiwa§7 dans la partie, vous obtenez donc directement l'effet§c Résistance I permanent");
 				killUchiwa = true;
+				uchiwaFinders.getFindersRunnable().cancel();
 			}
 		}, 20*10);
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1, 0), EffectWhen.PERMANENT);
+		givePotionEffect(new PotionEffect(PotionEffectType.SPEED,1 , 0), EffectWhen.PERMANENT);
 	}
-
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
-
 	@Override
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull GameState.Roles getRoles() {
 		return Roles.Danzo;
 	}
 	@Override
@@ -97,6 +111,7 @@ public class Danzo extends NSRoles {
 				"",
 				"Si vous parvenez à tuer un membre du clan§4§l Uchiwa§f vous obtiendrez l'effet "+AllDesc.Resi+"§9 1 permanent",
 				"Vous infligez§c +10%§f de dégat au§4§l Uchiwa",
+				"Toute les§c 2 minutes§7 vous obtenez l'information si un§4§l Uchiwa§7 est présent autours de vous ou non (§c15 blocs§7), s'il y en a un vous obtiendrez son rang (§6/ns uchirang§7)",
 				"",
 				AllDesc.chakra+getChakras().getShowedName(),
 				AllDesc.bar
@@ -104,8 +119,6 @@ public class Danzo extends NSRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (killUchiwa) {
 			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 		}
@@ -177,10 +190,11 @@ public class Danzo extends NSRoles {
 		}
 	}
 	private boolean isUchiwa(Player p){
-		return getListPlayerFromRole(Roles.Madara).contains(p) || getListPlayerFromRole(Roles.Obito).contains(p) || getListPlayerFromRole(Roles.Sasuke).contains(p) || getListPlayerFromRole(Roles.Itachi).contains(p);
+		if (!gameState.hasRoleNull(p)) {
+            return gameState.getPlayerRoles().get(p) instanceof UchiwaRoles;
+		}
+		return false;
 	}
-
-	private final HashMap<Player, SceauAction> inSceau = new HashMap<>();
 
 	@Override
 	public String getName() {
@@ -191,7 +205,6 @@ public class Danzo extends NSRoles {
 		Wither(),
 		AntiAbso()
 	}
-
 	@Override
 	public void resetCooldown() {
 		izanagiItemCD = 0;
@@ -241,7 +254,6 @@ public class Danzo extends NSRoles {
 			}
 		}
 	}
-
 	@Override
 	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {
 		super.onALLPlayerEat(e, item, eater);
@@ -252,9 +264,8 @@ public class Danzo extends NSRoles {
 			}, 1);
 		}
 	}
-
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.INTELLIGENT;
 	}
 
@@ -313,5 +324,68 @@ public class Danzo extends NSRoles {
             return true;
         }
 		return super.ItemUse(item, gameState);
+	}
+
+	@Getter
+    private static class UchiwaFinders extends Power {
+
+		private final FindersRunnable findersRunnable;
+
+		public UchiwaFinders(Danzo role) {
+			super("Chercheur d'Uchiwa", null, role);
+			this.findersRunnable = new FindersRunnable(role, role.getGamePlayer());
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> args) {
+			return false;
+		}
+		@Getter
+		private static class FindersRunnable extends BukkitRunnable {
+
+			private final Danzo danzo;
+			private final GamePlayer gamePlayer;
+			private final GameState gameState;
+
+			public FindersRunnable(Danzo role, GamePlayer gamePlayer) {
+				this.danzo = role;
+				this.gamePlayer = gamePlayer;
+				this.gameState = role.getGameState();
+				runTaskTimerAsynchronously(Main.getInstance(), 20, 20*120);
+			}
+
+			@Override
+			public void run() {
+				if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
+				if (!gamePlayer.isAlive() || owner == null) {
+					return;
+				}
+
+				List<Player> players = Loc.getNearbyPlayers(gamePlayer.getLastLocation(), 15);
+				if (players.isEmpty()) {
+					owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autours de vous (§c15 blocs§7)");
+					return;
+				}
+				int nmbUchiwa = 0;
+				for (Player player : players) {
+					if (!danzo.getGameState().getGamePlayer().containsKey(player.getUniqueId())) continue;
+					GamePlayer gm = danzo.getGameState().getGamePlayer().get(player.getUniqueId());
+					if (!gm.isAlive())continue;
+					if (gm.getRole() == null)continue;
+					if (gm.getRole() instanceof UchiwaRoles) {
+						nmbUchiwa++;
+						owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autours de vous, son aura vous fait donné l'impression qu'il est§c "+((UchiwaRoles) gm.getRole()).getUchiwaType().getName());
+						break;
+					}
+				}
+				if (nmbUchiwa == 0) {
+					owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autours de vous (§c15 blocs§7)");
+				}
+			}
+		}
 	}
 }

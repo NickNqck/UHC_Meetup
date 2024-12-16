@@ -26,27 +26,6 @@ public abstract class Items {
 		stack.setItemMeta(meta);
 		return stack;
 	}
-	
-	  public static ItemStack getgoldenapple() {
-	        ItemStack stack = new ItemStack(Material.GOLDEN_APPLE, 1);
-	        ItemMeta meta = stack.getItemMeta();
-	        stack.setItemMeta(meta);
-	        return stack;
-	  }
-	  public static ItemStack BulleHaku() {
-	        ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-	        ItemMeta meta = stack.getItemMeta();
-	        meta.setDisplayName(ChatColor.AQUA+"Bulle d'Haku");
-	        meta.setLore(Arrays.asList("§7Blleudkua44255"));
-	        stack.setItemMeta(meta);
-	        return stack;
-	  }
-	  public static ItemStack Kurama() {
-		  return new ItemBuilder(Material.INK_SACK)
-				  .setDurability((short)14)
-				  .setName("§6§lKurama")
-				  .toItemStack();
-	  }
 	  public static ItemStack Matatabi() {
 	        ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 	        ItemMeta meta = stack.getItemMeta();
@@ -178,16 +157,6 @@ public abstract class Items {
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
-	  public static ItemStack getLamedenichirinrouge() {
-		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"Lame de Nichirin (Rouge)");
-		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-
 
 	  public static ItemStack getJoueurZenItsuSpeed() {
 		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
@@ -275,17 +244,6 @@ public abstract class Items {
 			stack.setItemMeta(meta);
 			return stack;
 		}
-		public static ItemStack getDSTanjiroDance() {
-			ItemStack stack = new ItemStack(Material.BLAZE_ROD, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Dance du Dieu du Feu");
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-			meta.spigot().setUnbreakable(true);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			stack.setItemMeta(meta);
-			return stack;
-		}
 		public static ItemStack getSoufleDeLeau() {
 			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 			ItemMeta meta = stack.getItemMeta();
@@ -297,85 +255,12 @@ public abstract class Items {
 			stack.setItemMeta(meta);
 			return stack;
 		}
-		public static ItemStack getSoufleBrume() {
-			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Soufle de la Brume");
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-			meta.spigot().setUnbreakable(true);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public final static ItemStack getSouffleSerpent() {
-			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Soufle du Serpent");
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-			meta.spigot().setUnbreakable(true);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getSlayerMark() {
-			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Marque des Pourfendeurs de Démon");
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-			meta.spigot().setUnbreakable(true);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getTomiokaBoots() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
-			meta.addEnchant(Enchantment.DEPTH_STRIDER, 3, true);
-			meta.setDisplayName(ChatColor.GOLD+"Botte du Pillier de l'Eau");
-			meta.spigot().setUnbreakable(true);
-			stack.setItemMeta(meta);
-			return stack;
-		}
 		public static ItemStack getUrokodakiBoots() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
 			ItemMeta meta = stack.getItemMeta();
 			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
 			meta.addEnchant(Enchantment.DEPTH_STRIDER, 2, true);
 			meta.setDisplayName(ChatColor.GOLD+"Botte d'ancien Pillier de l'Eau");
-			meta.spigot().setUnbreakable(true);
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getWaterBoots() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
-			meta.addEnchant(Enchantment.DEPTH_STRIDER, 1, true);
-			meta.setDisplayName(ChatColor.GOLD+"Botte du Soufle de l'Eau");
-			meta.spigot().setUnbreakable(true);
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getWaterBoots2() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
-			meta.addEnchant(Enchantment.DEPTH_STRIDER, 2, true);
-			meta.setDisplayName(ChatColor.GOLD+"Botte du Soufle de l'Eau");
-			meta.spigot().setUnbreakable(true);
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getWaterBoots3() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
-			meta.addEnchant(Enchantment.DEPTH_STRIDER, 3, true);
-			meta.setDisplayName(ChatColor.GOLD+"Botte du Soufle de l'Eau");
 			meta.spigot().setUnbreakable(true);
 			stack.setItemMeta(meta);
 			return stack;
@@ -405,7 +290,7 @@ public abstract class Items {
 		public static ItemStack getGyokkoPlastron() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pch, true);
+			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
 			meta.addEnchant(Enchantment.THORNS, 3, true);
 			meta.setDisplayName(ChatColor.GOLD+"Plastron de Gyokko");
 			meta.spigot().setUnbreakable(true);
@@ -415,7 +300,7 @@ public abstract class Items {
 		public static ItemStack getGyokkoBoots() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pb, true);
+			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
 			meta.addEnchant(Enchantment.DEPTH_STRIDER, 2, true);
 			meta.setDisplayName(ChatColor.GOLD+"Botte de Gyokko");
 			meta.spigot().setUnbreakable(true);
@@ -470,28 +355,6 @@ public abstract class Items {
 			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 			ItemMeta meta = stack.getItemMeta();
 			meta.setDisplayName(ChatColor.GOLD+"Faucille");
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-			meta.spigot().setUnbreakable(true);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getSoufleduSonTonnerre() {
-			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.YELLOW+"Tonnerre");
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-			meta.spigot().setUnbreakable(true);
-			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getSoufleduSonGlasMorteldAvici() {
-			ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Glas Mortel d'Avici");
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -585,17 +448,6 @@ public abstract class Items {
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
-		  public static ItemStack getSoufleduSerpent() {
-				ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-				ItemMeta meta = stack.getItemMeta();
-				meta.setDisplayName(ChatColor.GOLD+"Soufle du Serpent");
-				meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-				meta.spigot().setUnbreakable(true);
-				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-				stack.setItemMeta(meta);
-				return stack;
-			}
 		  public static ItemStack getSoufleduSoleil() {
 				ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 				ItemMeta meta = stack.getItemMeta();
@@ -604,64 +456,6 @@ public abstract class Items {
 				meta.spigot().setUnbreakable(true);
 				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-				stack.setItemMeta(meta);
-				return stack;
-			}
-		  public static ItemStack getShinobuMedicament()  {
-			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Médicaments");
-			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-			  meta.spigot().setUnbreakable(true);
-			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			  stack.setItemMeta(meta);
-			  return stack;
-			  
-		  }
-		  public static ItemStack getShinobuInjection()  {
-			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Injection");
-			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-			  meta.spigot().setUnbreakable(true);
-			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			  stack.setItemMeta(meta);
-			  return stack;
-		  }
-		  public static ItemStack getSoufleFoudre5iememouvement() {
-			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-			  ItemMeta meta = stack.getItemMeta();
-			  meta.setDisplayName(ChatColor.GOLD+"Eclair de Chaleur");
-			  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-			  meta.spigot().setUnbreakable(true);
-			  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			  stack.setItemMeta(meta);
-			  return stack;
-		  }
-		  public static ItemStack getSoufleduVent() {
-				ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-				ItemMeta meta = stack.getItemMeta();
-				meta.setDisplayName(ChatColor.GOLD+"Soufle du Vent");
-				meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-				meta.spigot().setUnbreakable(true);
-				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-				stack.setItemMeta(meta);
-				return stack;
-			}
-		  public static ItemStack getSoufleDeLunivers() {
-				ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-				ItemMeta meta = stack.getItemMeta();
-				meta.setDisplayName(ChatColor.GOLD+"Soufle De L'Univers");
-				meta.addEnchant(Enchantment.ARROW_DAMAGE, 6, true);
-				meta.spigot().setUnbreakable(true);
-				meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				
-				meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+".",
-						"Inspiration: "+ChatColor.GOLD+"www.youtube.com/@somioka"));
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -803,16 +597,6 @@ public abstract class Items {
 			  stack.setItemMeta(meta);
 			  return stack;
 		  }
-		  public static ItemStack getEpeefleuriale() {
-				ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
-				ItemMeta meta = stack.getItemMeta();
-				meta.setDisplayName(ChatColor.GOLD+"Épée fleuriale");
-				meta.addEnchant(Enchantment.DAMAGE_ALL, 3, true);
-				meta.spigot().setUnbreakable(true);
-				stack.setItemMeta(meta);
-				return stack;
-			}
-		  
 		  public static ItemStack getFils() {
 			  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 			  ItemMeta meta = stack.getItemMeta();
@@ -912,16 +696,6 @@ public abstract class Items {
 		         stack.setItemMeta(meta);
 		         return stack;
 		     }
-		     public static ItemStack getCercledeFeu() {
-		         ItemStack stack = new ItemStack(Material.MAGMA_CREAM, 1);
-		         ItemMeta meta = stack.getItemMeta();
-		         meta.setDisplayName(ChatColor.RED+"Cercle de Feu");
-		         meta.addEnchant(Enchantment.DEPTH_STRIDER, 6, true);
-		         meta.spigot().setUnbreakable(true);
-		         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		         stack.setItemMeta(meta);
-		         return stack;
-		     }
 		     public static ItemStack geteclairmort() {
 		 		ItemStack stack = new ItemStack(Material.INK_SACK, 1, (byte) 11);
 		 		ItemMeta meta = stack.getItemMeta();
@@ -1012,8 +786,8 @@ public abstract class Items {
 		  public static ItemStack getdiamondhelmet() {
 				ItemStack stack = new ItemStack(Material.DIAMOND_HELMET, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pc, true);
-				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet(), true);
+				meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -1022,8 +796,8 @@ public abstract class Items {
 		  public static ItemStack getdiamondchestplate() {
 				ItemStack stack = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pch, true);
-				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate(), true);
+				meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -1032,7 +806,7 @@ public abstract class Items {
 		  public static ItemStack getironleggings() {
 				ItemStack stack = new ItemStack(Material.IRON_LEGGINGS, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pl, true);
+				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionLeggings(), true);
 				meta.spigot().setUnbreakable(true);
 				stack.setItemMeta(meta);
 				return stack;
@@ -1043,8 +817,8 @@ public abstract class Items {
 		  public static ItemStack getdiamondboots() {
 				ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
 				ItemMeta meta = stack.getItemMeta();
-				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, GameState.pb, true);
-				meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+				meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost(), true);
+				meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 				stack.setItemMeta(meta);
 				return stack;
 			}
@@ -1054,7 +828,7 @@ public abstract class Items {
 		ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.addEnchant(Enchantment.DAMAGE_ALL, GameState.sharpness, true);
-		meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+		meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -1074,7 +848,7 @@ public abstract class Items {
 		ItemStack stack = new ItemStack(Material.BOW, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.addEnchant(Enchantment.ARROW_DAMAGE, GameState.power, true);
-		meta.spigot().setUnbreakable(GameState.getInstance().stuffUnbreak);
+		meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 		stack.setItemMeta(meta);
 		return stack;
 	}

@@ -9,6 +9,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.DemonMain;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.ChatComponentText;
@@ -23,14 +24,16 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.UUID;
 
 public class Makomo extends SlayerRoles {
-	private final TextComponent automaticDesc;
+	private TextComponent automaticDesc;
 	public Makomo(UUID player) {
 		super(player);
-		setCanuseblade(true);
-		getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-		AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0), EffectWhen.PERMANENT);
-		this.automaticDesc = automaticDesc.getText();
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.EAU;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Makomo;
@@ -38,6 +41,15 @@ public class Makomo extends SlayerRoles {
 	@Override
 	public String[] Desc() {
 		return AllDesc.Makomo;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
+		setCanuseblade(true);
+		getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+		AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0), EffectWhen.PERMANENT);
+		this.automaticDesc = automaticDesc.getText();
 	}
 
 	@Override
@@ -103,7 +115,7 @@ public class Makomo extends SlayerRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != owner) {
-				if (gameState.getInGamePlayers().contains(victim)) {
+				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (gameState.getPlayerRoles().containsKey(victim)) {
 						RoleBase role = gameState.getPlayerRoles().get(victim);
 						if (role instanceof DemonMain) {

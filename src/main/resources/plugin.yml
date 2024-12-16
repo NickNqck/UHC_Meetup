@@ -44,3 +44,5 @@ commands:
   me:
     description: Custom from vanilla /me command
     permission: me.say
+  color:
+    description: Permet de colorier les autres joueurs de la partie

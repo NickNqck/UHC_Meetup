@@ -6,6 +6,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Doma;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +34,6 @@ public class Inosuke extends SlayerRoles {
 	private int perforationcooldown = 0;
 	private int mutilationcooldown = 0;
 	private int tailladecooldown = 0;
-	private boolean killdoma = false;
 	private boolean perfoactiver = false;
 	private boolean useblade = false;
 	@Override
@@ -87,9 +87,11 @@ public class Inosuke extends SlayerRoles {
 		}
 		if (item.isSimilar(Items.getSoufledelaBêteMutilationFurieuse())) {
 			if (mutilationcooldown <= 0) {
-				for(Player p : gameState.getInGamePlayers()) {
-					if (p!= owner) {
-						  if(p.getLocation().distance(owner.getLocation()) <= 30) {
+				for(UUID u : gameState.getInGamePlayers()) {
+					if (u!= getPlayer()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
+						if(p.getLocation().distance(owner.getLocation()) <= 30) {
 							  p.setHealth(p.getHealth() - 3.0);
 							  p.sendMessage(ChatColor.WHITE+"Vous avez touchez par le: "+ChatColor.GOLD+"Cinquième Croc: Mutilation Furieuse");
 							  owner.sendMessage(ChatColor.WHITE+"Activation de votre: "+ChatColor.GOLD+"Cinquième Croc: Mutillation Furieuse");
@@ -105,9 +107,7 @@ public class Inosuke extends SlayerRoles {
 			if (tailladecooldown <= 0) {
 				owner.sendMessage(ChatColor.WHITE+"Activation de votre: "+ChatColor.GOLD+"Neuvième Croc: Taillade Ondulante Divine");
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*120, 0, false, false));
-				if (!killdoma) {
-					owner.setHealth(owner.getHealth() - 4.0);
-				}
+				owner.setHealth(owner.getHealth() - 4.0);
 				tailladecooldown = 60*5;
 			} else {
 				sendCooldown(owner, tailladecooldown);
@@ -126,24 +126,7 @@ public class Inosuke extends SlayerRoles {
 		}
 		super.ItemUseAgainst(item, victim, gameState);
 	}
-	@Override
-	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (killer == owner) {
-			if (victim != owner){
-				if (gameState.getInGamePlayers().contains(victim)) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
-						if (role instanceof Doma) {
-							killdoma = true;						
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous ne prendrez plus de mallus avec votre: "+ChatColor.GOLD+"Taillade Ondulante Divine");
-						
-						}
-					}
-				}
-			}
-		}
-		super.PlayerKilled(killer, victim, gameState);
-	}
+
 	@Override
 	public void onDSCommandSend(String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("aura")) {
@@ -164,6 +147,11 @@ public class Inosuke extends SlayerRoles {
 			owner.sendMessage("Veuiller indiquer le pseudo d'un joueur");	
 			}
 		}
+	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.VENT;
 	}
 
 	@Override

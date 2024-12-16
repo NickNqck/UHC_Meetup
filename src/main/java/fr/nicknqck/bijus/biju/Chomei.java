@@ -161,7 +161,7 @@ public class Chomei extends Biju {
         @Override
         public void run() {
             timer++;
-            if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+            if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !getBijus().getBiju().isEnable()) {
             	cancel();
             	return;
             }
@@ -220,7 +220,7 @@ public class Chomei extends Biju {
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " §fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }
@@ -333,7 +333,7 @@ public class Chomei extends Biju {
 
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setDurability(10).setName(getName()).setLore(getBijus().isEnable() ? "§aActivé" : "§cDésactivé").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setDurability(10).setName(getName()).setLore(getBijus().getBiju().isEnable() ? "§aActivé" : "§cDésactivé").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
 
 	@Override

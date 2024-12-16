@@ -9,6 +9,8 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -32,11 +34,13 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 
 	public KyogaiV2(UUID player) {
 		super(player);
-		owner.getInventory().addItem(getItems());
-		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
-		this.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.AUCUN;
+	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.KyogaiV2;
@@ -44,6 +48,10 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(owner, 3);
+		owner.getInventory().addItem(getItems());
+		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+		this.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
+		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
 	public TeamList getOriginTeam() {
@@ -206,7 +214,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 			Player owner = Bukkit.getPlayer(event.getDamager().getUuid());
 			Player victim = Bukkit.getPlayer(event.getVictim().getUuid());
 			if (owner != null && victim != null) {//Les deux joueurs sont encore connecter
-				if (Main.getInstance().getLocUtils().getPlayerFacing(owner).equals(Main.getInstance().getLocUtils().getPlayerFacing(victim))) {//si ils regardent la même direction
+				if (Loc.getPlayerFacing(owner).equals(Loc.getPlayerFacing(victim))) {//si ils regardent la même direction
 					if (RandomUtils.getRandomProbability(15)){
 						Heal(victim, -2);
 						owner.sendMessage("§7§l"+victim.getName()+"§7 à subit 1"+AllDesc.coeur+"§7 de dégat supplémentaire");
@@ -218,7 +226,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 			Player owner = Bukkit.getPlayer(event.getVictim().getUuid());
 			Player damager = Bukkit.getPlayer(event.getDamager().getUuid());
 			if (owner != null && damager != null) {//Les deux joueurs sont encore connecter
-				if (Main.getInstance().getLocUtils().getPlayerFacing(owner).equals(Main.getInstance().getLocUtils().getPlayerFacing(damager))) {//si ils regardent la même direction
+				if (Loc.getPlayerFacing(owner).equals(Loc.getPlayerFacing(damager))) {//si ils regardent la même direction
 					if (RandomUtils.getRandomProbability(20)) {//donc 20% de chance de donner speed 1 a kyogai
 						givePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
 						owner.sendMessage("§7Vous avez gagné l'effet "+AllDesc.Speed+"§b 1§7 suite à là douleurs");
@@ -247,13 +255,13 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 				if (owner.getItemInHand().isSimilar(kyogaiV2.Tambour())) {
 					switch (kyogaiV2.model) {
 						case Head:
-							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownHead));
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+ StringUtils.secondsTowardsBeautiful(kyogaiV2.cooldownHead));
 							break;
 						case Leg:
-							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownLeg));
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+StringUtils.secondsTowardsBeautiful(kyogaiV2.cooldownLeg));
 							break;
 						case Back:
-							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+kyogaiV2.cd(kyogaiV2.cooldownShoulder));
+							kyogaiV2.sendCustomActionBar(owner, "§7(§c"+kyogaiV2.model.name()+"§7)"+kyogaiV2.getItemNameInHand(owner)+" "+StringUtils.secondsTowardsBeautiful(kyogaiV2.cooldownShoulder));
 							break;
 						default:
 							break;

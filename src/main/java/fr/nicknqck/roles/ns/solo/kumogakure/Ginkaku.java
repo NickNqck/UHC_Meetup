@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.player.StunManager;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -13,6 +12,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.StringUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -58,7 +58,7 @@ public class Ginkaku extends NSRoles {
 		return Roles.Ginkaku;
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
 
@@ -122,7 +122,7 @@ public class Ginkaku extends NSRoles {
 					//	private final PacketDisplay dp = display;
 						@Override
 						public void run() {
-							if (!gameState.getServerState().equals(ServerStates.InGame) || !gameState.getInGamePlayers().contains(owner)){
+							if (!gameState.getServerState().equals(ServerStates.InGame) || !gameState.getInGamePlayers().contains(owner.getUniqueId())){
 								cancel();
 							}
 							if (timeRemaining == 0){
@@ -353,7 +353,7 @@ public class Ginkaku extends NSRoles {
 				if (gTarget != null){
 					if (Bukkit.getPlayer(gTarget) != null){
 						if (!gameState.hasRoleNull(Bukkit.getPlayer(gTarget))){
-							StunManager.stun(gTarget, 5.0, false);
+							gameState.getGamePlayer().get(gTarget).stun(5*20);
 						}
 					}
 					gTarget = null;

@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.Sasuke;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -62,10 +63,12 @@ public class Orochimaru extends OrochimaruRoles {
 			}
 		}
 		List<Player> mates = new ArrayList<>();
-		for (Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (!gameState.hasRoleNull(p)) {
-				if (getTeam(p) != null && p.getUniqueId() != owner.getUniqueId()) {
-					if (getTeam(p) == TeamList.Orochimaru || getPlayerRoles(p) instanceof Sasuke) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() != null && p.getUniqueId() != getPlayer()) {
+					if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() == TeamList.Orochimaru || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Sasuke) {
 						mates.add(p);
 					}
 				}
@@ -109,12 +112,12 @@ public class Orochimaru extends OrochimaruRoles {
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (killer.getUniqueId() == owner.getUniqueId()) {
 			((CraftPlayer) owner).getHandle().setAbsorptionHearts(((CraftPlayer) owner).getHandle().getAbsorptionHearts()+4.0f);
-			if (getPlayerRoles(player) instanceof NSRoles && ((NSRoles) getPlayerRoles(player)).getChakras() != null) {
+			if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof NSRoles && (((NSRoles)gameState.getGamePlayer().get(player.getUniqueId()).getRole())).getChakras() != null) {
 				if (RandomUtils.getOwnRandomProbability(25)) {
-					if (!chakrasVoled.contains(((NSRoles) getPlayerRoles(player)).getChakras())) {
-						chakrasVoled.add(((NSRoles) getPlayerRoles(player)).getChakras());
-						((NSRoles) getPlayerRoles(player)).getChakras().getChakra().getList().add(owner.getUniqueId());
-						owner.sendMessage("§7Vous maitrisez maintenant la nature de Chakra: "+ ((NSRoles) getPlayerRoles(player)).getChakras().getShowedName());
+					if (!chakrasVoled.contains(((NSRoles)gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getChakras())) {
+						chakrasVoled.add(((NSRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getChakras());
+						((NSRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getChakras().getChakra().getList().add(owner.getUniqueId());
+						owner.sendMessage("§7Vous maitrisez maintenant la nature de Chakra: "+ ((NSRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getChakras().getShowedName());
 					}
 				}
 			}
@@ -138,7 +141,7 @@ public class Orochimaru extends OrochimaruRoles {
 		}
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.GENIE;
 	}
 

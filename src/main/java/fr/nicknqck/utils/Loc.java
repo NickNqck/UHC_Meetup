@@ -61,7 +61,6 @@ public class Loc {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(direction.getZ(), 0.0, -direction.getX()).normalize();
     }
-	
     public static String getCardinalDirection(Player player) {
         double rotation = (player.getLocation().getYaw() - 90) % 360;
         if (rotation < 0) {
@@ -185,7 +184,7 @@ public class Loc {
         // Mettre à jour la nouvelle position du joueur
         joueurCible.teleport(location);
     }
-    public String getPlayerFacing(Player player) {
+    public static String getPlayerFacing(Player player) {
         Vector direction = player.getLocation().getDirection();
         double x = direction.getX();
         double z = direction.getZ();
@@ -196,7 +195,6 @@ public class Loc {
             return z > 0 ? "SOUTH" : "NORTH";
         }
     }
-
     public static double getDirectionTo(final Player paramPlayer, final Location paramLocation) {
         final Location localLocation = paramPlayer.getLocation().clone();
         localLocation.setY(0.0);
@@ -211,7 +209,6 @@ public class Loc {
         }
         return d1;
     }
-    
     public static Player getNearestPlayerforNakime(Player referencePlayer, double radius, GameState gameState) {
         Player nearestPlayer = null;
         double nearestDistanceSquared = Double.MAX_VALUE;

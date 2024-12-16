@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
 import fr.nicknqck.roles.builder.TeamList;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -33,8 +35,7 @@ public class Eren extends AotRoles {
 	public Eren(UUID player) {
 		super(player);
 		canShift = true;
-		gameState.GiveRodTridi(owner);
-		Titans.Assaillant.getTitan().getListener().setAssaillant(owner.getUniqueId());
+		Titans.Assaillant.getTitan().getListener().setAssaillant(player);
 	}
 	@Override
 	public Roles getRoles() {
@@ -83,7 +84,7 @@ public class Eren extends AotRoles {
 
 	private int cdbertolt = -1;
 	private int cdPorco = -1;
-	private List<ItemStack> itemToRecup = new ArrayList<>();
+	private final List<ItemStack> itemToRecup = new ArrayList<>();
 	
 	ItemStack Cercle() {
 		return BetterItem.of((new ItemBuilder(Material.MAGMA_CREAM)).setName("§c§lCercle de Feu").setLore("§7"+StringID).toItemStack(), (event) -> {
@@ -213,31 +214,32 @@ public class Eren extends AotRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
 			if (victim != null) {
-				if (getPlayerRoles(victim) instanceof Bertolt) {
+				GamePlayer gamePlayer = gameState.getGamePlayer().get(victim.getUniqueId());
+				if (gamePlayer.getRole() instanceof Bertolt) {
 					killBertolt = true;
 					giveItem(owner, false, Cercle());
 					owner.sendMessage("§7Vous venez de tuez le joueur possédant le§9 Titan Colossal§7, vous obtenez donc l'item "+Cercle().getItemMeta().getDisplayName());
 					cdbertolt = 0;
 				}
-				if (getPlayerRoles(victim) instanceof TitanBestial) {
+				if (gamePlayer.getRole() instanceof TitanBestial) {
 					killBestial = true;
 					owner.sendMessage("Vous venez de tuez le titan Bestial vous obtnez donc la liste des Titans");
 				}
-				if (getPlayerRoles(victim) instanceof Pieck) {
+				if (gamePlayer.getRole() instanceof Pieck) {
 					killPieck = true;
 					owner.sendMessage("Vous de tuez le joueur possédant le rôle Pieck vous obtiendrez donc "+AllDesc.Speed+" 2 durant votre transformation");
 				}
-				if (getPlayerRoles(victim) instanceof Lara) {
+				if (gamePlayer.getRole() instanceof Lara) {
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Lara§f vous obtenez donc 2"+AllDesc.coeur+" supplémentaire");
 					giveHealedHeartatInt(owner, 2);
 				}
-				if (getPlayerRoles(victim) instanceof Porco) {
+				if (gamePlayer.getRole() instanceof Porco) {
 					killPorco = true;
 					giveItem(owner, false, Saut());
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Porco§f vous obtenez donc son§l Saut");
 					cdPorco = 0;
 				}
-				if (getPlayerRoles(victim) instanceof Reiner) {
+				if (gamePlayer.getRole() instanceof Reiner) {
 					giveHealedHeartatInt(owner, 2);
 					owner.sendMessage("Vous venez de tuez le joueur possédant le§9 Titan Cuirasse§f vous obtenez donc 2"+AllDesc.coeur+" supplémentaire");
 				}
@@ -258,7 +260,9 @@ public class Eren extends AotRoles {
 			if (isTransformedinTitan) {
 				if (cdbertolt >= 60) {
 					MathUtil.sendCircleParticle(EnumParticle.FLAME, owner.getLocation(), 8, 24);
-					for (Player p : gameState.getInGamePlayers()) {
+					for (UUID u : gameState.getInGamePlayers()) {
+						Player p = Bukkit.getPlayer(u);
+						if (p == null)continue;
 						if (p.getLocation().distance(owner.getLocation()) <= 8) {
 							p.setFireTicks(60);
 						}

@@ -24,7 +24,7 @@ public class AllDesc{
 	public final static String effet = ChatColor.BOLD+"Effet: ";
 	public final static String capacite = ChatColor.BOLD+"Capacité: ";
 	public final static String role = "§lRôle§r:§6 ";
-	public final static String point = ChatColor.DARK_GRAY + " • §r";
+	public final static String point = "§8 • §r";
 	public final static String objectifteam = "§fVotre objectif est de gagner avec le camp: ";
 	public final static String objectifsolo = "§fVotre objectif est de gagner ";
 	public final static String particularite = ChatColor.BOLD + "Particularité: ";

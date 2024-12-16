@@ -9,11 +9,13 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -29,47 +31,45 @@ import java.util.UUID;
 
 public class Kokushibo extends DemonsRoles {
 	private int itemcooldown = 0;
-	private int regencooldown = 0;
-	public boolean solo = false;
+	private int regencooldown;
+	public boolean solo;
 	public Kokushibo(UUID player) {
 		super(player);
 		regencooldown = 15;
+	}
+
+	@Override
+	public Soufle getSoufle() {
+		return Soufle.LUNE;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Muzan.class), 20);
 		setLameIncassable(owner, true);
 		solo = false;
 		killtanjiro = false;
 	}
+
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kokushibo;
 	}
 	@Override
 	public String[] Desc() {
-		if (!gameState.demonKingTanjiro) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				for (Player p : gameState.getInGamePlayers()) {
-					if (getPlayerRoles(p) instanceof Muzan) {
-						owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-					}
-				}
-			}, 20);
+		if (!solo) {
 			return AllDesc.Kokushibo;
 		}else {
 			if (getOriginTeam().equals(TeamList.Solo)) {
@@ -203,7 +203,7 @@ public class Kokushibo extends DemonsRoles {
 		if (regencooldown>=1) regencooldown-=1;
 		super.Update(gameState);
 	}
-public boolean killtanjiro = false;
+public boolean killtanjiro;
 	@Override
 	public void OpenFormInventory(GameState gameState) {
 		if (!killtanjiro) {
@@ -256,7 +256,7 @@ public boolean killtanjiro = false;
 		}
 		super.FormChoosen(item, gameState);
 	}
-	public double orginalMaxHealth = 20.0;
+	public double orginalMaxHealth;
 
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
@@ -274,7 +274,7 @@ public boolean killtanjiro = false;
 					owner.sendMessage("Vous venez de tuez:§l "+victim.getName()+"§r vous gagnez donc "+AllDesc.Resi+" 1 pendant 3minutes");
 					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
-					if (getPlayerRoles(victim) instanceof Tanjiro) {
+					if (gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof Tanjiro) {
 						owner.sendMessage("§7Vous avez réussis à vaincre cette imposteur de§a Tanjiro§7, vous avez maintenant un choix qui s'offre à vous... (§l/ds role§7)");
 						killtanjiro = true;
 					}
@@ -303,7 +303,9 @@ public boolean killtanjiro = false;
 				GameListener.SendToEveryone("§6Kokushibo §rà mis la §9nuit");
 				owner.getInventory().addItem(Items.getkokushibosword());
 				itemcooldown = gameState.timeday*2;
-				for (Player p : gameState.getInGamePlayers()) {
+				for (UUID u : gameState.getInGamePlayers()) {
+					Player p = Bukkit.getPlayer(u);
+					if (p == null)continue;
 					if (gameState.getPlayerRoles().containsKey(p)) {
 						gameState.getPlayerRoles().get(p).onNight(gameState);
 					}

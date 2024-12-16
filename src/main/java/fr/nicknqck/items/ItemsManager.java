@@ -3,7 +3,10 @@ package fr.nicknqck.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -67,7 +70,9 @@ public class ItemsManager implements Listener {
 		Player player = event.getPlayer();
 		if (!gameState.getPlayerRoles().containsKey(player))return;
 		gameState.getPlayerRoles().get(player).onEat(item, gameState);
-		for (Player ig : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player ig = Bukkit.getPlayer(u);
+			if (ig == null)continue;
 			if (!gameState.hasRoleNull(ig)) {
 				gameState.getPlayerRoles().get(ig).onALLPlayerEat(event, item, player);
 			}
@@ -96,11 +101,6 @@ public class ItemsManager implements Listener {
 		ItemStack s = e.getItem().getItemStack();
 		if (gameState.getPlayerRoles().containsKey(e.getPlayer())) {
 			e.setCancelled(gameState.getPlayerRoles().get(e.getPlayer()).onPickupItem(e.getItem()));
-		}
-		for (Player p : gameState.getInGamePlayers()) {
-			if (!gameState.hasRoleNull(p)) {
-				gameState.getPlayerRoles().get(p).onALLPlayerRecupItem(e, s);
-			}
 		}
 		if (s.hasItemMeta()) {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
@@ -137,11 +137,16 @@ public class ItemsManager implements Listener {
 			if (event.getItemDrop().getItemStack().hasItemMeta()) {
 				if (meta.hasLore() || jsp.contains(event.getItemDrop().getItemStack())|| event.getItemDrop().getItemStack().isSimilar(gameState.EquipementTridi())) {
 					event.setCancelled(true);
+					return;
 				}
 			}
-			for (Player p : gameState.getInGamePlayers()) {
-				if (!gameState.hasRoleNull(p)) {
-					gameState.getPlayerRoles().get(p).onALLPlayerDropItem(event, player, event.getItemDrop().getItemStack());
+		}
+		if (!gameState.hasRoleNull(player)) {
+			for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+				if (power instanceof ItemPower) {
+					if (event.getItemDrop().getItemStack().isSimilar(((ItemPower) power).getItem())) {
+						((ItemPower) power).call(event);
+					}
 				}
 			}
 		}

@@ -137,7 +137,7 @@ public class Zombie extends OverWorldRoles {
     @Override
     public void PlayerKilled(Player killer, Player victim, GameState gameState) {
         if (killer.getUniqueId() == owner.getUniqueId()){
-            if (gameState.getInGamePlayers().contains(victim)){
+            if (gameState.getInGamePlayers().contains(victim.getUniqueId())){
                 owner.sendMessage("Vous venez de tuer un joueur vous obtenez donc un §cCerveau §rsupplémentaire et vous donc à §c"+nmbCerveau);
                 nmbCerveau++;
             }
@@ -179,7 +179,7 @@ public class Zombie extends OverWorldRoles {
         if (moover.getUniqueId() == owner.getUniqueId()){
             if (!SqueletteSound) {
                 for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
-                    if (getPlayerRoles(p) instanceof Zombie) {
+                    if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Zombie) {
                         playSound(owner, "entity.squelette.ambient");
                         SqueletteSound = true;
                     }

@@ -1,10 +1,6 @@
 package fr.nicknqck.roles.ns;
 
-import fr.nicknqck.roles.ns.chakratype.Doton;
-import fr.nicknqck.roles.ns.chakratype.Futon;
-import fr.nicknqck.roles.ns.chakratype.Katon;
-import fr.nicknqck.roles.ns.chakratype.Raiton;
-import fr.nicknqck.roles.ns.chakratype.Suiton;
+import fr.nicknqck.roles.ns.chakratype.*;
 
 public enum Chakras {
 

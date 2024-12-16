@@ -6,8 +6,10 @@ import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
+import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -35,8 +37,13 @@ public class ZenItsu extends SlayerRoles implements Listener {
 
     public ZenItsu(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        super.RoleGiven(gameState);
         setCanuseblade(true);
-        Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
+        EventUtils.registerEvents(this);
         new ZenitsuRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
 
@@ -225,5 +232,10 @@ public class ZenItsu extends SlayerRoles implements Listener {
             cdPassif = 60*20;
             Bukkit.getPlayer(getPlayer()).sendMessage("§7Vous venez d'activé votre§c /ds passif");
         }
+    }
+
+    @Override
+    public Soufle getSoufle() {
+        return Soufle.FOUDRE;
     }
 }

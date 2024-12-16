@@ -78,7 +78,7 @@ public class Squelette extends OverWorldRoles {
 
     @Override
     public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-        if (gameState.getInGamePlayers().contains(killer)) {
+        if (gameState.getInGamePlayers().contains(killer.getUniqueId())) {
             if (victim.getUniqueId() == owner.getUniqueId()) {
                 giveItem(killer, false, BontoutouItem);
                 killer.sendMessage("Vous venez de tuez §a" + owner.getName() + " §rqui était §aSquelette §r,vous obtenez donc un os §aBon TouTou §rqui vous permez d'apprivoiser un loup");
@@ -117,7 +117,7 @@ public class Squelette extends OverWorldRoles {
         if (moover.getUniqueId() == owner.getUniqueId()) {
             if (!ZombieSound) {
                 for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
-                    if (getPlayerRoles(p) instanceof Zombie) {
+                    if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Zombie) {
                         playSound(owner, "entity.zombie.ambient");
                         ZombieSound = true;
                     }

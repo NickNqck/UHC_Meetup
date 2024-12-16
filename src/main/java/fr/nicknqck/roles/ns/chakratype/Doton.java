@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.ns.Chakra;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -15,11 +16,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakra;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Doton extends Chakra{
+public class Doton implements Chakra {
 
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {}
@@ -28,7 +28,7 @@ public class Doton extends Chakra{
 	public Chakras getChakres() {
 		return Chakras.DOTON;
 	}
-	private List<UUID> Doton = new ArrayList<>();
+	private final List<UUID> Doton = new ArrayList<>();
 	@Override
 	public List<UUID> getList() {
 		return Doton;
@@ -47,7 +47,11 @@ public class Doton extends Chakra{
 
 	@Override
 	public void onEntityDamage(EntityDamageEvent event, Player player) {
-		if (RandomUtils.getOwnRandomProbability(3) && Doton.contains(player.getUniqueId())) {
+		if (event.isCancelled())return;
+		if (!Doton.contains(player.getUniqueId()))return;
+		if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL))return;
+		if (RandomUtils.getOwnRandomProbability(3)) {
+			player.setNoDamageTicks(15);
 			player.sendMessage("§7Vous avez esquivé un coup grâce à votre Chakra.");
 			event.setCancelled(true);
 		}

@@ -66,7 +66,7 @@ public class Arctridi implements Listener{
                         noFall.add(player);
             			Location initLoc = player.getLocation();
                         player.teleport(arrow.getLocation().add(0, 1, 0).setDirection(finalVelocity));
-                        gameState.getPlayerRoles().get(player).setActualTridiCooldown(gameState.TridiCooldown);
+                        ((AotRoles) gameState.getPlayerRoles().get(player)).setActualTridiCooldown(gameState.TridiCooldown);
                         Location endLoc = player.getLocation();//Like initLoc but after TP
                         double distance = initLoc.distance(endLoc);
                         double gazToRemove = distance/8;
@@ -79,8 +79,8 @@ public class Arctridi implements Listener{
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> noFall.remove(player), 20*5);
                 	}
                 } else {
-                	if (gameState.getPlayerRoles().get(player).getActualTridiCooldown() > 0) {
-                        gameState.getPlayerRoles().get(player).sendCooldown(player, gameState.getPlayerRoles().get(player).getActualTridiCooldown());
+                	if (((AotRoles) gameState.getPlayerRoles().get(player)).getActualTridiCooldown() > 0) {
+                        gameState.getPlayerRoles().get(player).sendCooldown(player, ((AotRoles) gameState.getPlayerRoles().get(player)).getActualTridiCooldown());
                 	}
                 	if (role.isTransformedinTitan) {
                 		player.sendMessage(gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 n'a pas supporté votre poid de Titan");

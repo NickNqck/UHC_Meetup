@@ -72,7 +72,7 @@ public class SonGoku extends Biju {
         this.gameState = gameState;
         new SonGokuRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
         World world = spawn.getWorld();
-        System.out.println("SonGoku will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
+        System.out.println("Son Goku will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
     }
     @Override
     public String getName() {
@@ -84,7 +84,7 @@ public class SonGoku extends Biju {
     }
     @Override
     public void spawnBiju() {
-        this.magma_cube = (MagmaCube) Bukkit.getWorld("world").spawnEntity(this.spawn, EntityType.MAGMA_CUBE);
+        this.magma_cube = (MagmaCube) this.spawn.getWorld().spawnEntity(this.spawn, EntityType.MAGMA_CUBE);
         magma_cube.setCustomName(this.getName());
         magma_cube.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
         magma_cube.setMaxHealth(2);
@@ -133,7 +133,7 @@ public class SonGoku extends Biju {
         @Override
         public void run() {
             timer++;
-            if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+            if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !isEnable()) {
             	cancel();
             	return;
             }
@@ -200,7 +200,7 @@ public class SonGoku extends Biju {
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " §fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }
@@ -288,7 +288,7 @@ public class SonGoku extends Biju {
 
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setDyeColor(DyeColor.ORANGE).setName(getName()).setLore(getBijus().isEnable() ? "§r§aActivé" : "§r§cDésactivé").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setDyeColor(DyeColor.ORANGE).setName(getName()).setLore(isEnable() ? "§r§aActivé" : "§r§cDésactivé").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
 
 	@Override

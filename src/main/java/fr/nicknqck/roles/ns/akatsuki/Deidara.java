@@ -9,9 +9,12 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.Getter;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -46,7 +49,7 @@ public class Deidara extends AkatsukiRoles {
 		return Roles.Deidara;
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.MOYENNE;
 	}
 
@@ -132,7 +135,7 @@ public class Deidara extends AkatsukiRoles {
 							owner.setFlying(true);
 							new BukkitRunnable() {
 								int i = 10;
-								Location loc = owner.getLocation().clone();
+								final Location loc = owner.getLocation().clone();
 								@SuppressWarnings("deprecation")
 								@Override
 								public void run() {
@@ -160,14 +163,12 @@ public class Deidara extends AkatsukiRoles {
 											}
 											loc.getBlock().setType(Material.AIR);
 											for (Player p : Loc.getNearbyPlayers(loc, 0.85)) {
-												GameListener.getInstance().DeathHandler(p, owner, p.getMaxHealth()+10.0, gameState);
+												Main.getInstance().getDeathManager().KillHandler(p, owner);
 											}
 										}
 										GameListener.SendToEveryone("§4§lL'art est explosion !");
 										cancel();
-										Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-											setOldBlockwMap();
-							            }, 20*60*3);
+										Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> setOldBlockwMap(), 20*60*3);
 										cancel();
 										return;
 									}
@@ -180,7 +181,7 @@ public class Deidara extends AkatsukiRoles {
 			}
 		}
 	}
-	private HashMap<Block, Integer> map = new HashMap<>();
+	private final HashMap<Block, Integer> map = new HashMap<>();
 	@SuppressWarnings("deprecation")
 	private void setOldBlockwMap() {
 		map.keySet().stream().filter(n -> n.getTypeId() != 162).filter(e -> e.getTypeId() != 161).forEach(loc -> loc.setType(Material.getMaterial(map.get(loc))));
@@ -229,20 +230,18 @@ public class Deidara extends AkatsukiRoles {
 		return "Deidara";
 	}
 
-	private enum Mode {
+	@Getter
+    private enum Mode {
 		C1(new ItemBuilder(Material.SULPHUR).setName("§cC1").toItemStack()),
 		C2(new ItemBuilder(Material.FEATHER).setName("§cC2").toItemStack()),
 		C3(new ItemBuilder(Material.TNT).setName("§cC3").toItemStack()),
 		C4(new ItemBuilder(Material.POTION).setDurability(16420).setName("§cC4").toItemStack()),
 		ArtUltime(new ItemBuilder(Material.STONE).setName("§cArt Ultime").toItemStack());
-		ItemStack item;
-		private Mode(ItemStack e) {
+		final ItemStack item;
+		Mode(ItemStack e) {
 			this.item = e;
 		}
-		public ItemStack getItem() {
-			return item;
-		}
-	}
+    }
 	private Mode mode = Mode.C1;
 	private Inventory BakutonInventory() {
 		Inventory inv = Bukkit.createInventory(owner, 9, "§6Bakûton");
@@ -270,16 +269,16 @@ public class Deidara extends AkatsukiRoles {
 	public void Update(GameState gameState) {
 		if (owner.getItemInHand().isSimilar(ArcExplosifItem()) || owner.getItemInHand().isSimilar(BakutonItem())) {
 			if (mode == Mode.C1) {
-				sendCustomActionBar(owner, "§7(§cC1§7) Cooldown: "+cd(cdC1));
+				sendCustomActionBar(owner, "§7(§cC1§7) Cooldown: "+ StringUtils.secondsTowardsBeautiful(cdC1));
 			}
 			if (mode == Mode.C2) {
-				sendCustomActionBar(owner, "§7(§cC2§7) Cooldown: "+cd(cdC2));
+				sendCustomActionBar(owner, "§7(§cC2§7) Cooldown: "+StringUtils.secondsTowardsBeautiful(cdC2));
 			}
 			if (mode == Mode.C3) {
-				sendCustomActionBar(owner, "§7(§cC3§7) Cooldown: "+cd(cdC3));
+				sendCustomActionBar(owner, "§7(§cC3§7) Cooldown: "+StringUtils.secondsTowardsBeautiful(cdC3));
 			}
 			if (mode == Mode.C4) {
-				sendCustomActionBar(owner, "§7(§cC4§7) Cooldown: "+cd(cdC4));
+				sendCustomActionBar(owner, "§7(§cC4§7) Cooldown: "+StringUtils.secondsTowardsBeautiful(cdC4));
 			}
 			if (mode == Mode.ArtUltime) {
 				sendCustomActionBar(owner, "§7Le jour de l'§cArt Ultime§7 est arrivé !");
@@ -401,7 +400,7 @@ public class Deidara extends AkatsukiRoles {
 							@Override
 							public void run() {
 								i--;
-								if (gameState.getServerState() != ServerStates.InGame || !gameState.getInGamePlayers().contains(owner) || i ==0) {
+								if (gameState.getServerState() != ServerStates.InGame || !gameState.getInGamePlayers().contains(getPlayer()) || i ==0) {
 									owner.setFlying(false);
 									owner.setAllowFlight(false);
 									owner.setFallDistance(0.0f);

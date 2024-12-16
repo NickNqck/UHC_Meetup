@@ -11,6 +11,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -55,7 +56,7 @@ public class Kinkaku extends NSRoles {
         return GameState.Roles.Kinkaku;
     }
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
 
@@ -137,9 +138,9 @@ public class Kinkaku extends NSRoles {
         super.OnAPlayerDie(player, gameState, killer);
         if (owner != null && killer.getUniqueId().equals(owner.getUniqueId())){
             if (owner.getItemInHand().isSimilar(EventailItem)){
-                if (getPlayerRoles(player) instanceof NSRoles && ((NSRoles) getPlayerRoles(player)).hasChakras() && !((NSRoles) getPlayerRoles(player)).getChakras().getChakra().getList().contains(owner.getUniqueId())){
-                    ((NSRoles) getPlayerRoles(player)).getChakras().getChakra().getList().add(owner.getUniqueId());
-                    owner.sendMessage("En tuant§c "+player.getDisplayName()+"§f vous avez obtenue sa nature de Chakra: "+ ((NSRoles) getPlayerRoles(player)).getChakras().getShowedName());
+                if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof NSRoles && ((NSRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).hasChakras() && !((NSRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getChakras().getChakra().getList().contains(owner.getUniqueId())){
+                    ((NSRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getChakras().getChakra().getList().add(owner.getUniqueId());
+                    owner.sendMessage("En tuant§c "+player.getDisplayName()+"§f vous avez obtenue sa nature de Chakra: "+ ((NSRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getChakras().getShowedName());
                 }
             }
         }

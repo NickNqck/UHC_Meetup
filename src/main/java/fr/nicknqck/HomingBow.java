@@ -32,7 +32,7 @@ public class HomingBow implements Listener {
 		if (projectile.getShooter() instanceof Player) {
 			Player shooter = (Player) projectile.getShooter();
 			if (!gameState.hasRoleNull(shooter)) {
-				gameState.getPlayerRoles().get(shooter).onProjectileLaunch(event, shooter);
+				gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileLaunch(event, shooter);
 			}
 		}
         if (projectile instanceof Arrow) {
@@ -40,7 +40,7 @@ public class HomingBow implements Listener {
             if (arrow.getShooter() instanceof Player) {
                 Player shooter = (Player) arrow.getShooter();
                 if (!gameState.hasRoleNull(shooter)) {
-                	gameState.getPlayerRoles().get(shooter).onProjectileLaunch(event.getEntity(), shooter);
+                	gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileLaunch(event.getEntity(), shooter);
                     if (isSpecialPlayer(shooter) && shooter.getItemInHand().equals(Items.getSusamaruBow())) {
                  	   truc = true;
                  	   RoleBase role = gameState.getPlayerRoles().get(shooter);
@@ -91,7 +91,7 @@ public class HomingBow implements Listener {
 		if (event.getEntity().getShooter() instanceof Player) {
 			Player shooter = (Player) event.getEntity().getShooter();
 			if (!gameState.hasRoleNull(shooter)) {
-				gameState.getPlayerRoles().get(shooter).onProjectileHit(event, shooter);
+				gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileHit(event, shooter);
 			}
 		}
 	    if (event.getEntity() instanceof Arrow) {
@@ -142,7 +142,7 @@ public class HomingBow implements Listener {
 	}
 	private boolean isSpecialPlayer(Player player) {
 		if (gameState.getServerState().equals(ServerStates.InGame)) {
-			if (gameState.getInGamePlayers().contains(player)) {
+			if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 				if (!gameState.hasRoleNull(player)) {
 					return gameState.getPlayerRoles().get(player) instanceof Susamaru;
 				}

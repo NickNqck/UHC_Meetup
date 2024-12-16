@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -31,9 +32,14 @@ public class Jugo extends OrochimaruRoles {
 	private boolean kimimaroDeath = false;
 	private int marqueCD = 0;
 	private boolean orochimaruDeath = false;
-	private final TextComponent desc;
+	private TextComponent desc;
 	public Jugo(UUID player) {
 		super(player);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		super.RoleGiven(gameState);
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
@@ -57,12 +63,13 @@ public class Jugo extends OrochimaruRoles {
 		this.desc = automaticDesc.getText();
 		getKnowedRoles().add(Kimimaro.class);
 	}
+
 	@Override
 	public Roles getRoles() {
 		return Roles.Jugo;
 	}
 	@Override
-	public Intelligence getIntelligence() {
+	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
 	@Override

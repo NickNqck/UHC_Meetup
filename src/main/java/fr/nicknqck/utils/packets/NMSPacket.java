@@ -81,33 +81,6 @@ public class NMSPacket {
     public static void clearTitle(Player player) {
         sendTitle(player, 0, 0, 0, "", "");
     }
-
-    public static void sendTabTitle(Player player, String header, String footer) {
-        if (header == null)
-            header = "";
-        header = ChatColor.translateAlternateColorCodes('&', header);
-        if (footer == null)
-            footer = "";
-        footer = ChatColor.translateAlternateColorCodes('&', footer);
-        header = header.replaceAll("%player%", player.getDisplayName());
-        footer = footer.replaceAll("%player%", player.getDisplayName());
-        try {
-            Object tabHeader = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", new Class[] { String.class }).invoke(null, "{\"text\":\"" + header + "\"}");
-            Object tabPlayers = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", new Class[] { String.class }).invoke(null, "{\"text\":\"" + header + "\"}");
-            Object tabFooter = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", new Class[] { String.class }).invoke(null, "{\"text\":\"" + footer + "\"}");
-            Constructor<?> titleConstructor = getNMSClass("PacketPlayOutPlayerListHeaderFooter").getConstructor();
-            Object packet = titleConstructor.newInstance();
-            Field aField = packet.getClass().getDeclaredField("a");
-            aField.setAccessible(true);
-            aField.set(packet, tabHeader);
-            Field bField = packet.getClass().getDeclaredField("b");
-            bField.setAccessible(true);
-            bField.set(packet, tabFooter);
-            sendPacket(player, packet);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
     
     public static void sendActionBar(Player player, String message) {
         try{

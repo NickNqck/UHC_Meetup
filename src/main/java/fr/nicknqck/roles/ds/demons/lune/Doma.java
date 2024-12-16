@@ -2,7 +2,6 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -10,6 +9,8 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,21 +24,15 @@ public class Doma extends DemonsRoles {
 	public Doma(UUID player) {
 		super(player);
 		this.setResi(20);
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
+		getKnowedRoles().add(Muzan.class);
 	}
 	@Override
 	public TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
-	public DemonType getRank() {
-		return DemonType.LuneSuperieur;
+	public @NonNull DemonType getRank() {
+		return DemonType.SUPERIEUR;
 	}
 
 	@Override
@@ -46,13 +41,6 @@ public class Doma extends DemonsRoles {
 	}
 	@Override
 	public String[] Desc() {
-		org.bukkit.Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			for (Player p : gameState.getInGamePlayers()) {
-				if (getPlayerRoles(p) instanceof Muzan) {
-					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
-				}
-			}
-		}, 20);
 		return AllDesc.Doma;
 	}
 	
@@ -95,7 +83,9 @@ public class Doma extends DemonsRoles {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*3, 0, false, false), true);
 		}
 		if (zonedeglace) {
-		for(Player p : gameState.getInGamePlayers()) {
+		for (UUID u : gameState.getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
 			if (p != owner && p.getWorld().equals(owner.getWorld())) {
 				if(p.getLocation().distance(owner.getLocation()) <= 5) {
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*3, 2, false, false), true);

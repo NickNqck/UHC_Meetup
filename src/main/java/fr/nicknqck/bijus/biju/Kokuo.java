@@ -124,7 +124,7 @@ public class Kokuo extends Biju {
         @Override
         public void run() {
         	timer++;
-        	if (gameState.getServerState() != ServerStates.InGame || !gameState.BijusEnable || !getBijus().isEnable()) {
+        	if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !isEnable()) {
             	cancel();
             	return;
             }
@@ -186,7 +186,7 @@ public class Kokuo extends Biju {
 					if (i == 60*5) {
 						if (!NobodyHaveBiju(getBijus())) {
 							spawnBiju();
-		                    Bukkit.broadcastMessage((getName() + " &fvient de réapparaître."));
+		                    Bukkit.broadcastMessage((getName() + " §fvient de réapparaître."));
 		                } else {
 		                	cancel();
 		                }
@@ -216,7 +216,9 @@ public class Kokuo extends Biju {
 	@Override
 	public void onSecond(GameState gameState) {
 		if (BijuListener.getInstance().getKokuoCooldown() == 60*15) {
-			for (Player p : GameState.getInstance().getInGamePlayers()) {
+			for (UUID u : GameState.getInstance().getInGamePlayers()) {
+				Player p = Bukkit.getPlayer(u);
+				if (p == null)continue;
 				for (Bijus value : Bijus.values()) {
 					if (value.getBiju().getName().equals(getName())) {//je vérifie si le nom du bijus trouvé dans le for est celui de Isobu
 						if (value.getBiju().getMaster().equals(p.getUniqueId())) {
@@ -268,7 +270,7 @@ public class Kokuo extends Biju {
 	public void onProjectileHit(ProjectileHitEvent e, Bijus bijus, Projectile projectile) {}
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setName(getName()).setDyeColor(DyeColor.GRAY).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore(getBijus().isEnable() ? "§r§aActivé" : "§r§cDésactivé").toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setName(getName()).setDyeColor(DyeColor.GRAY).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore(isEnable() ? "§r§aActivé" : "§r§cDésactivé").toItemStack();
 	}
 	@Override
 	public Bijus getBijus() {

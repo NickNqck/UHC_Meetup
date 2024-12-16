@@ -6,6 +6,8 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -27,8 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Setter
+@Getter
 public abstract class Biju {
-	public abstract void setupBiju(GameState gameState);	
+
+	private boolean enable = true;
+
+	public abstract void setupBiju(GameState gameState);
 	public abstract void spawnBiju();
 	public abstract LivingEntity getLivingEntity();
 	public abstract String getName();
@@ -104,9 +111,11 @@ public abstract class Biju {
 	}
 	public UUID getMaster() {
         UUID toReturn = null;
-        for (Player aliveOnlinePlayer : GameState.getInstance().getInGamePlayers()) {
-            if (hasBiju(aliveOnlinePlayer) && getBiju(aliveOnlinePlayer) == this) {
-                toReturn = aliveOnlinePlayer.getUniqueId();
+        for (UUID u : GameState.getInstance().getInGamePlayers()) {
+			Player p = Bukkit.getPlayer(u);
+			if (p == null)continue;
+            if (hasBiju(p) && getBiju(p) == this) {
+                toReturn = u;
                 break;
             }
         }

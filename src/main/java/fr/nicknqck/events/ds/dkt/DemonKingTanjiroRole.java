@@ -9,6 +9,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.WorldUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -72,8 +73,8 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     }
 
     @Override
-    public DemonType getRank() {
-        return DemonType.LuneSuperieur;
+    public @NonNull DemonType getRank() {
+        return DemonType.SUPERIEUR;
     }
     @EventHandler
     private void onEndGame(EndGameEvent event) {
