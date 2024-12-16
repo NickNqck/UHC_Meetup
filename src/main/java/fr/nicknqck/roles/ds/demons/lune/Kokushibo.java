@@ -299,10 +299,10 @@ public boolean killtanjiro;
 			if (itemcooldown <= 0) {
 				owner.sendMessage("Activation de votre:"+ChatColor.BOLD+" Pouvoir Sanginaire");
 				gameState.nightTime = true;
-				gameState.t = gameState.timeday;
+				gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 				GameListener.SendToEveryone("§6Kokushibo §rà mis la §9nuit");
 				owner.getInventory().addItem(Items.getkokushibosword());
-				itemcooldown = gameState.timeday*2;
+				itemcooldown = Main.getInstance().getGameConfig().getMaxTimeDay()*2;
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;

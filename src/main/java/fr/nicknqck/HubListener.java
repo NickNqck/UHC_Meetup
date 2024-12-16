@@ -51,7 +51,7 @@ public class HubListener implements Listener {
 		Main.getInstance().getEventsManager().getEventsList().forEach(event -> event.setEnable(false));
 		gameState.canBeAssassin.clear();
 		ItemsManager.instance.clearJspList();
-		gameState.t = gameState.timeday;
+		gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 		gameState.getPlayerRoles().clear();
 		gameState.getPlayerKills().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());

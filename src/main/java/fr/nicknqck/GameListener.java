@@ -209,13 +209,13 @@ public class GameListener implements Listener {
 			} else {
 				gameState.t--;
 				if (gameState.t <= 0) {
+					gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 					if (gameState.nightTime) {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 						gameState.nightTime = false;
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant jour");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-						gameState.t = gameState.timeday;
 						for (UUID u : gameState.getInGamePlayers()) {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
@@ -231,7 +231,6 @@ public class GameListener implements Listener {
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant nuit\n");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-						gameState.t = gameState.timeday;
 						for (UUID u : gameState.getInGamePlayers()) {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
@@ -239,7 +238,7 @@ public class GameListener implements Listener {
 								gameState.getPlayerRoles().get(p).onNight(gameState);
 							}
 						}
-						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, gameState.timeday));
+						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
 					}
 				}
 			}
