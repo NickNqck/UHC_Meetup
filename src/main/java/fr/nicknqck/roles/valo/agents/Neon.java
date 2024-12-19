@@ -101,7 +101,8 @@ public class Neon extends RoleBase {
                     MathUtil.sendParticle(EnumParticle.EXPLOSION_NORMAL, block.getLocation());
                     block.setType(Material.FIRE);
                 }
-                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60, 0, false, false), true);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 200, 0, false, false), true);
+                return true;
             }
             return false;
         }
