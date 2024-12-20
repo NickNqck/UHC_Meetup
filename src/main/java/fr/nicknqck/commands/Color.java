@@ -3,12 +3,12 @@ package fr.nicknqck.commands;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,7 +20,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.Wool;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
@@ -30,13 +29,10 @@ import java.util.*;
 public class Color implements CommandExecutor, Listener {
 
     private final GameState gameState;
-    private final Map<Wool, String> supportedColors;
 
     public Color(GameState gameState) {
         this.gameState = gameState;
-        this.supportedColors = new HashMap<>();
         EventUtils.registerEvents(this);
-        registerColors();
     }
 
     @Override
@@ -64,67 +60,63 @@ public class Color implements CommandExecutor, Listener {
             }
             if (!playerList.isEmpty()) {
                 final Inventory inv = Bukkit.createInventory(sender, 54, "§cChoix des couleurs");
-                final List<Wool> woolList = new ArrayList<>(this.supportedColors.keySet());
                 final Map<ItemStack, String> colors = new HashMap<>();
-                for (int i = 20; i <= 40; i++) {
-                    if (i > 24 && i < 29)continue;
-                    if (!woolList.isEmpty()) {
-                        Wool wool = woolList.get(0);
-                        if (wool == null)continue;
-                        final ItemStack item = new ItemBuilder(Material.WOOL).setDyeColor(wool.getColor()).setName(this.supportedColors.get(wool)+wool.getColor().name()).toItemStack();
-                        inv.setItem(i, item);
-                        colors.put(item, this.supportedColors.get(wool));
-                        woolList.remove(0);
-                    }
-                }
+                inv.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(5).setName(" ").toItemStack());
+                inv.setItem(1, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+                inv.setItem(4, GUIItems.getSelectBackMenu());
+                inv.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+
+                inv.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(5).setName(" ").toItemStack());
+                inv.setItem(7, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+                inv.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+
+                inv.setItem(45, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(5).setName(" ").toItemStack());
+                inv.setItem(46, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+                inv.setItem(45-9, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+
+                inv.setItem(53, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(5).setName(" ").toItemStack());
+                inv.setItem(52, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+                inv.setItem(53-9, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
+
+                final ItemStack red = new ItemBuilder(Material.INK_SACK).setName("§cRouge").setDurability(1).toItemStack();
+                final ItemStack yellow = new ItemBuilder(Material.INK_SACK).setName("§eJaune").setDurability(11).toItemStack();
+                final ItemStack bleu = new ItemBuilder(Material.INK_SACK).setName("§9Bleu").setDurability(4).toItemStack();
+                final ItemStack bleuciel = new ItemBuilder(Material.INK_SACK).setName("§bAqua").setDurability(12).toItemStack();
+                final ItemStack rose = new ItemBuilder(Material.INK_SACK).setName("§dRose").setDurability(9).toItemStack();
+                final ItemStack violet = new ItemBuilder(Material.INK_SACK).setName("§5Violet").setDurability(5).toItemStack();
+                final ItemStack orange = new ItemBuilder(Material.INK_SACK).setName("§6Orange").setDurability(14).toItemStack();
+                final ItemStack vertclair = new ItemBuilder(Material.INK_SACK).setName("§aVert").setDurability(10).toItemStack();
+                final ItemStack vertfonce = new ItemBuilder(Material.INK_SACK).setName("§2Vert foncé").setDurability(2).toItemStack();
+                final ItemStack rougefonce = new ItemBuilder(Material.REDSTONE).setName("§4Rouge foncé").toItemStack();
+
+                inv.setItem(20, red);
+                inv.setItem(21, yellow);
+                inv.setItem(22, bleu);
+                inv.setItem(23, bleuciel);
+                inv.setItem(24, rose);
+                inv.setItem(29, violet);
+                inv.setItem(30, orange);
+                inv.setItem(31, vertclair);
+                inv.setItem(32, vertfonce);
+                inv.setItem(33, rougefonce);
                 sender.openInventory(inv);
+
+                colors.put(red, "§c");
+                colors.put(yellow, "§e");
+                colors.put(bleu, "§9");
+                colors.put(bleuciel, "§b");
+                colors.put(rose, "§d");
+                colors.put(violet, "§5");
+                colors.put(orange, "§6");
+                colors.put(vertclair, "§a");
+                colors.put(vertfonce, "§2");
+                colors.put(rougefonce, "§4");
                 new ColorSetter(sender.getUniqueId(), playerList, colors);
             }
             return true;
         }
         commandSender.sendMessage("§cUne erreur c'est produite...");
         return false;
-    }
-    private void registerColors() {
-        for (final DyeColor dyeColor : DyeColor.values()) {
-            if (dyeColor.equals(DyeColor.ORANGE) || dyeColor.equals(DyeColor.MAGENTA) || dyeColor.equals(DyeColor.SILVER) || dyeColor.equals(DyeColor.CYAN))continue;
-            if (dyeColor.equals(DyeColor.WHITE) || dyeColor.equals(DyeColor.BLACK))continue;
-            this.supportedColors.put(new Wool(dyeColor), getColorfromDyeColor(dyeColor));
-        }
-    }
-    private String getColorfromDyeColor(final DyeColor dyeColor) {
-        switch (dyeColor) {
-            case WHITE:
-                return "§f";
-            case BROWN:
-                return "§6";
-            case PINK:
-                return "§d";
-            case LIGHT_BLUE:
-                return "§b";
-            case YELLOW:
-                return "§e";
-            case LIME:
-                return "§a";
-            case GRAY:
-                return "§7";
-            case SILVER:
-                return "§7"; // Silver est traité comme Gray ici
-            case CYAN:
-                return "§3";
-            case PURPLE:
-                return "§5";
-            case BLUE:
-                return "§9";
-            case GREEN:
-                return "§2";
-            case RED:
-                return "§c";
-            case BLACK:
-                return "§0";
-            default:
-                return "§f"; // Blanc par défaut
-        }
     }
     @EventHandler
     private void onEndGame(EndGameEvent event) {
@@ -167,11 +159,17 @@ public class Color implements CommandExecutor, Listener {
                     if (event.getCurrentItem().getItemMeta() == null)return;
                     if (event.getCurrentItem().getItemMeta().getDisplayName() == null)return;
                     if (!(event.getWhoClicked() instanceof Player))return;
-                    if (event.getCurrentItem().getType().equals(Material.WOOL)) {
+                    if (event.getCurrentItem().getType().equals(Material.INK_SACK) || event.getCurrentItem().getType().equals(Material.REDSTONE)) {
                         if (colors.containsKey(event.getCurrentItem())) {
                             for (final Player target : this.toColor) {
+                                if (target == null)continue;
                                 Main.getInstance().getScoreboardManager().getScoreboards().get(uuid).changeDisplayName((Player) event.getWhoClicked(), target, this.colors.get(event.getCurrentItem()));
                             }
+                            event.getWhoClicked().closeInventory();
+                        }
+                    } else {
+                        if (event.getCurrentItem().isSimilar(GUIItems.getSelectBackMenu())) {
+                            event.getWhoClicked().sendMessage("§7Vous avez§c annulé§7 la coloration d'un ou plusieurs joueur(s)");
                             event.getWhoClicked().closeInventory();
                         }
                     }
