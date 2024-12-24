@@ -1,5 +1,7 @@
 package fr.nicknqck.managers;
 
+import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.Eren;
@@ -32,9 +34,8 @@ import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
 import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 @Getter
 public class RoleManager {
@@ -224,5 +225,27 @@ public class RoleManager {
         //Register Custom Roles
         registerRole(LeComte.class);
         registerRole(LeJuge.class);
+    }
+    private final RoleBase getRandomRole(final UUID uuid) {
+        if (GameState.getInstance().getGamePlayer().containsKey(uuid))return null;
+        final Map<Class<? extends RoleBase>, Integer> map = new LinkedHashMap<>(Main.getInstance().getRoleManager().getRolesEnable());
+        final List<Class<? extends RoleBase>> roleList = new LinkedList<>();
+        for (final Class<? extends RoleBase> classRole : map.keySet()) {
+            if (map.getOrDefault(classRole, 0) < 1)continue;
+            roleList.add(classRole);
+        }
+        RoleBase role = null;
+        Collections.shuffle(roleList, Main.RANDOM);
+        if (!roleList.isEmpty()) {
+            Class<? extends RoleBase> classRole = roleList.get(0);
+            try {
+                role = classRole.getConstructor(UUID.class).newInstance(uuid);
+                GameState.getInstance().print(uuid, role);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return role;
     }
 }
