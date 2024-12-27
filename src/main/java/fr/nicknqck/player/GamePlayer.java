@@ -61,12 +61,16 @@ public class GamePlayer {
 		setCanRevive(false);
 	}
 	public void onQuit() {
-		this.discRunnable = new DiscRunnable(this);
+		if (this.discRunnable == null){
+			this.discRunnable = new DiscRunnable(this);
+		}
 		this.discRunnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+		this.discRunnable.online = false;
 	}
 	public void onJoin(Player player) {
 		if (this.discRunnable != null) {
 			player.sendMessage(this.discRunnable.toSend);
+			this.discRunnable.online = true;
 			this.discRunnable.cancel();
 			this.discRunnable = null;
 		}
@@ -103,11 +107,13 @@ public class GamePlayer {
 			this.discRunnable.setMessagesToSend(messages);
 		}
 	}
-    private static class DiscRunnable extends BukkitRunnable {
+    public static class DiscRunnable extends BukkitRunnable {
 
 		private final GamePlayer gamePlayer;
 		private final GameState gameState;
 		private String[] toSend = new String[0];
+		@Getter
+		private boolean online = true;
 
 		private DiscRunnable(GamePlayer gamePlayer) {
 			this.gamePlayer = gamePlayer;
@@ -132,6 +138,7 @@ public class GamePlayer {
 					gamePlayer.discRunnable = null;
 				});
 				cancel();
+				this.online = false;
 			}
 		}
 	}

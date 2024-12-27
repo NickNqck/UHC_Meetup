@@ -73,7 +73,7 @@ public class ItemsManager implements Listener {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player ig = Bukkit.getPlayer(u);
 			if (ig == null)continue;
-			if (!gameState.hasRoleNull(ig)) {
+			if (!gameState.hasRoleNull(ig.getUniqueId())) {
 				gameState.getPlayerRoles().get(ig).onALLPlayerEat(event, item, player);
 			}
 		}
@@ -108,7 +108,7 @@ public class ItemsManager implements Listener {
 					if (s.getItemMeta().hasDisplayName()) {
 						String name = s.getItemMeta().getDisplayName();
 						if (name.equalsIgnoreCase("§dGyûki") || name.equalsIgnoreCase("§6Kyubi") || name.equalsIgnoreCase("§6Kyûbi")) {
-							if (!gameState.hasRoleNull(e.getPlayer())) {
+							if (!gameState.hasRoleNull(e.getPlayer().getUniqueId())) {
 								if (gameState.getPlayerRoles().get(e.getPlayer()).getOriginTeam().equals(TeamList.Jubi)) {
 									return;
 								}
@@ -141,7 +141,7 @@ public class ItemsManager implements Listener {
 				}
 			}
 		}
-		if (!gameState.hasRoleNull(player)) {
+		if (!gameState.hasRoleNull(player.getUniqueId())) {
 			for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
 				if (power instanceof ItemPower) {
 					if (event.getItemDrop().getItemStack().isSimilar(((ItemPower) power).getItem())) {

@@ -8,6 +8,7 @@ import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -25,7 +26,7 @@ public class Hotaru extends SlayerRoles {
 		setLames(null);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Hotaru;
 	}
 	@Override
@@ -169,7 +170,7 @@ public class Hotaru extends SlayerRoles {
 							if (cible.getInventory().contains(Items.getLamedenichirinspeed())) {
 							owner.sendMessage("Ce joueur possède une lame de§e speed");
 							}
-							if (!gameState.hasRoleNull(cible) && gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles) {
+							if (!gameState.hasRoleNull(cible.getUniqueId()) && gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles) {
 								if (!((DemonsSlayersRoles) gameState.getPlayerRoles().get(cible)).isHasblade()) {
 								owner.sendMessage("Ce joueurs ne possède pas de lame");
 								}
@@ -192,7 +193,7 @@ public class Hotaru extends SlayerRoles {
 							if (!gameState.getInGamePlayers().contains(cible.getUniqueId())) {
 							owner.sendMessage("Impossible de rendre la lame d'un mort incassable !");
 							}
-						if (!gameState.hasRoleNull(cible)) {
+						if (!gameState.hasRoleNull(cible.getUniqueId())) {
 							if (gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles){
 								((DemonsSlayersRoles) gameState.getPlayerRoles().get(cible)).setLameIncassable(cible, true);
 							}

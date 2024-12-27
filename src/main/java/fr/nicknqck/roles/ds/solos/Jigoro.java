@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsu;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -62,7 +63,7 @@ public class Jigoro extends DemonsSlayersRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jigoro;
 	}
 
@@ -148,7 +149,7 @@ public class Jigoro extends DemonsSlayersRoles {
 		if (Zoneactiver2) {
 			MathUtil.sendCircleParticle(EnumParticle.VILLAGER_ANGRY, owner.getLocation(), 10, 15);
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 15)) {
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 						if (cooldowndegat <= 0 && p != owner) {
 							if (p.getHealth() > 4.0) {

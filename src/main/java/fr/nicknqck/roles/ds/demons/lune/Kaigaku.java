@@ -49,7 +49,7 @@ public class Kaigaku extends DemonsRoles {
 		return DemonType.SUPERIEUR;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kaigaku;
 	}
 	@Override
@@ -154,7 +154,7 @@ public class Kaigaku extends DemonsRoles {
 				cooldowntroisiememouvement = 5*60;
 				owner.sendMessage(ChatColor.GREEN+"Exécution du"+ChatColor.GOLD+" Troisème mouvement du soufle de la foudre.");
 				for(Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
-					if (!gameState.hasRoleNull(p)) {
+					if (!gameState.hasRoleNull(p.getUniqueId())) {
 						if (p.getHealth() > 4.0) {
 							p.setHealth(p.getHealth() - 4.0);
 						} else {

@@ -24,7 +24,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 		setChakraType(Chakras.DOTON);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.ZetsuNoir;
 	}
 	@Override
@@ -76,7 +76,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 			givePotionEffet(PotionEffectType.INVISIBILITY, 20*2, 1, true);
 			givePotionEffet(PotionEffectType.SPEED, 20*2, 2, true);
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-				if (gameState.hasRoleNull(p)) {
+				if (gameState.hasRoleNull(p.getUniqueId())) {
 					return;
 				} 
 			if (timePassedNearby.containsKey(p.getUniqueId())) {

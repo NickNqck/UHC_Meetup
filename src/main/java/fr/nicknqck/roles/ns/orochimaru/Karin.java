@@ -29,7 +29,7 @@ public class Karin extends OrochimaruRoles {
 		timePassedNearby.clear();
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Karin;
 	}
 	@Override
@@ -139,7 +139,7 @@ public class Karin extends OrochimaruRoles {
 			}
 		}
 		for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-			if (gameState.hasRoleNull(p)) {
+			if (gameState.hasRoleNull(p.getUniqueId())) {
 				return;
 			}
 			if (timePassedNearby.containsKey(p.getUniqueId())) {

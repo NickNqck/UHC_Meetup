@@ -60,7 +60,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class GameState{
@@ -380,12 +379,12 @@ public class GameState{
 	public void addInPlayerRoles(Player player, RoleBase role) {playerRoles.put(player, role);}
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
-	public final boolean hasRoleNull(final Player player) {
-		if (player == null)return true;
-		if (getGamePlayer().containsKey(player.getUniqueId())) {
-            return getGamePlayer().get(player.getUniqueId()).getRole() == null;
+	public final boolean hasRoleNull(final UUID uuid) {
+		if (uuid == null)return true;
+		if (getGamePlayer().containsKey(uuid)) {
+            return getGamePlayer().get(uuid).getRole() == null;
         }
-        return !getGamePlayer().containsKey(player.getUniqueId()) || !isRoleAttributed();
+        return !getGamePlayer().containsKey(uuid) || !isRoleAttributed();
 	}
 
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
@@ -820,9 +819,6 @@ public class GameState{
 					System.out.println(player.getName()+" added to canBeAssassinList, size: "+canBeAssassin.size());
 				}
 				System.out.println("Giving Role Ended");
-				System.out.println("Preparing Assassin System");
-				Assassin assassin = new Assassin();
-				OnEndGiveRole(assassin);
 			} else {
 				System.out.println("Giving Role: "+getPlayerRoles().size()+"/"+getInGamePlayers().size());
 				if (getPlayerRoles().get(player).getOriginTeam() == TeamList.Demon) {
@@ -847,14 +843,6 @@ public class GameState{
 	public List<Roles> attributedRole = new ArrayList<>();
 	public ArrayList<Player> canBeAssassin = new ArrayList<>();
 	public Player Assassin = null;
-	public void OnEndGiveRole(Assassin assa) {
-		if (canBeAssassin.isEmpty()) {
-			System.out.println("Can't Enable to Start Assassin System because size of TeamList.Demon < 1");
-			return;
-		}
-		System.out.println("Starting Assassin System");
-		assa.start(this);
-	}
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
@@ -905,7 +893,7 @@ public class GameState{
     }
 	public void RevivePlayer(@NonNull Player player) {
         if (getServerState() == ServerStates.InGame) {
-			if (!hasRoleNull(player)) {
+			if (!hasRoleNull(player.getUniqueId())) {
 				if (getInSpecPlayers().contains(player)) {
 					delInSpecPlayers(player);
 					if (!getInGamePlayers().contains(player.getUniqueId())){
@@ -959,7 +947,7 @@ public class GameState{
 		return bar.toString();
 	}
 	public void sendDescription(Player player) {
-		if (!hasRoleNull(player)) {
+		if (!hasRoleNull(player.getUniqueId())) {
 			for (Titans t : Titans.values()) {
 				t.getTitan().onGetDescription(player);
 			}
@@ -971,7 +959,7 @@ public class GameState{
 					for (UUID u : getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
-						if (!hasRoleNull(p)) {
+						if (!hasRoleNull(u)) {
 							if (getPlayerRoles().get(p).getClass().equals(know)) {
 								String teamColor = getPlayerRoles().get(p).getOriginTeam().getColor();
 								player.sendMessage(teamColor+p.getDisplayName()+"§7 possède le rôle: "+teamColor+getPlayerRoles().get(p).getName());
@@ -991,7 +979,7 @@ public class GameState{
 		for (UUID u : getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!hasRoleNull(p)) {
+			if (!hasRoleNull(p.getUniqueId())) {
 				if (getPlayerRoles().get(p).getRoles() == role) {
 					return p;
 				}

@@ -19,6 +19,7 @@ import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -77,7 +78,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Tanjiro;
     }
 
@@ -231,7 +232,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 }
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    if (!gameState.hasRoleNull(target)) {
+                    if (!gameState.hasRoleNull(target.getUniqueId())) {
                         RoleBase role = gameState.getPlayerRoles().get(target);
                         boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         owner.sendMessage("§c"+target.getName()+(demon ? "§7 est un§c démon" : "§7 n'est pas un§c démon"));
@@ -247,7 +248,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 }
                 int amountDemon = 0;
                 for (Player player : Loc.getNearbyPlayersExcept(owner, 30)) {
-                    if (!gameState.hasRoleNull(player)) {
+                    if (!gameState.hasRoleNull(player.getUniqueId())) {
                         RoleBase role = gameState.getPlayerRoles().get(player);
                         boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         if (demon) {

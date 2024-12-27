@@ -101,11 +101,11 @@ public class Kyogai extends DemonsRoles {
 					Player e = Bukkit.getPlayer(u);
 					if (e == null)continue;
 					if (gameState.getPlayerRoles().get(e) != null) {
-						if (!gameState.hasRoleNull(e)) {
+						if (!gameState.hasRoleNull(e.getUniqueId())) {
 							for (UUID as : gameState.getInGamePlayers()) {
 								Player s = Bukkit.getPlayer(as);
 								if (s == null)continue;
-								if (!gameState.hasRoleNull(s)) {
+								if (!gameState.hasRoleNull(s.getUniqueId())) {
 										if (gameState.getAvailableRoles().containsKey(Roles.Muzan)) {
 											if (gameState.getPlayerRoles().get(e) instanceof Muzan) {
 												s.sendMessage("Le joueur §6"+s.getName()+"§r est§6 "+gameState.getPlayerRoles().get(e).getRoles().name());

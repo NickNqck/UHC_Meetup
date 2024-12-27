@@ -41,7 +41,7 @@ public class Yahaba extends DemonInferieurRole {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Yahaba;
 	}
 	@Override
@@ -110,7 +110,7 @@ public class Yahaba extends DemonInferieurRole {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					if (gameState.getPlayerRoles().get(p) instanceof SlayerRoles) {
 						roles.add((SlayerRoles) gameState.getPlayerRoles().get(p));
 					}

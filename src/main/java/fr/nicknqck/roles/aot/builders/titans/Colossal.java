@@ -180,7 +180,7 @@ public class Colossal extends Titan{
 		if (getListener().getColossal() != null) {
 			if (getListener().getColossal().equals(player.getUniqueId())) {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-					if (!GameState.getInstance().hasRoleNull(p)) {
+					if (!GameState.getInstance().hasRoleNull(p.getUniqueId())) {
 						if (getPlayerRole(p).isCanVoleTitan() && canStealTitan(p)) {
 							p.sendMessage("§7Vous pouvez maintenant volé le Titan§9 Colossal§7 avec la commande§l /aot steal");
 							canVoleColossal.add(p);
@@ -200,7 +200,7 @@ public class Colossal extends Titan{
 	public void onSteal(Player sender, String[] args) {
 		if (getListener().getColossal() == null) {
 			if (canVoleColossal.contains(sender)) {
-				if (getState().hasRoleNull(sender)) {
+				if (getState().hasRoleNull(sender.getUniqueId())) {
 					canVoleColossal.remove(sender);
 					sender.sendMessage("§7Impossible de volé ce Titan");
 					return;

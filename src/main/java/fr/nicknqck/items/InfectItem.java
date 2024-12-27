@@ -61,7 +61,7 @@ public class InfectItem implements Listener{
 					Inventory inv = Bukkit.createInventory(e.getPlayer(), 27, "Infection");
 					Player a = e.getPlayer();
 					for (Player p : Loc.getNearbyPlayers(a, 30)) {
-						if (!gameState.hasRoleNull(p)) {
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
 							if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 								GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 								if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() != TeamList.Demon && !(gamePlayer.getRole() instanceof NezukoV2)) {
@@ -140,7 +140,7 @@ public class InfectItem implements Listener{
 								for (UUID u : gameState.getInGamePlayers()) {
 									Player p = Bukkit.getPlayer(u);
 									if (p == null)continue;
-									if (!gameState.hasRoleNull(p)) {
+									if (!gameState.hasRoleNull(p.getUniqueId())) {
 										if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles) {
 											p.sendMessage("§cL'infection a échoué");
 										}

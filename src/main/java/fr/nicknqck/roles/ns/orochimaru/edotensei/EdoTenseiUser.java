@@ -2,7 +2,6 @@ package fr.nicknqck.roles.ns.orochimaru.edotensei;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
-import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -106,7 +105,7 @@ public class EdoTenseiUser implements Listener {
                                 Player clicked = Bukkit.getPlayer(event.getCurrentItem().getItemMeta().getDisplayName());
                                 if (clicked != null) {
                                     GameState gameState = GameState.getInstance();
-                                    if (!gameState.hasRoleNull(clicked)) {
+                                    if (!gameState.hasRoleNull(clicked.getUniqueId())) {
                                         RoleBase role = gameState.getPlayerRoles().get(clicked);
                                         Player owner = (Player) event.getWhoClicked();
                                         edoTenseis.put(clicked.getUniqueId(), role);

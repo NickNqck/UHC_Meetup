@@ -54,7 +54,7 @@ public class Ginkaku extends NSRoles {
 		}, 100);
 	}
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull GameState.Roles getRoles() {
 		return Roles.Ginkaku;
 	}
 	@Override
@@ -352,7 +352,7 @@ public class Ginkaku extends NSRoles {
 			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 				if (gTarget != null){
 					if (Bukkit.getPlayer(gTarget) != null){
-						if (!gameState.hasRoleNull(Bukkit.getPlayer(gTarget))){
+						if (!gameState.hasRoleNull(gTarget)){
 							gameState.getGamePlayer().get(gTarget).stun(5*20);
 						}
 					}

@@ -263,7 +263,7 @@ public class GameListener implements Listener {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					gameState.getGamePlayer().get(p.getUniqueId()).getRole().Update(gameState);
 					List<ItemStack> items = new ArrayList<>();
 					for (ItemStack item : p.getInventory().getContents()) {
@@ -338,7 +338,7 @@ public class GameListener implements Listener {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
 				ItemsManager.ClearInventory(p);
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					RoleBase r = gameState.getPlayerRoles().get(p);
 					r.setBonusForce(0);
 					r.setBonusResi(0);
@@ -601,7 +601,7 @@ public class GameListener implements Listener {
 				OverWorld, Nether);
 		if (gameDone) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					gameState.getPlayerRoles().get(p).onEndGame();
 				}
 			}
@@ -708,7 +708,7 @@ public class GameListener implements Listener {
 		if (inv.getTitle().equals("§c/ds claim") || inv.getTitle().equals("§c/claim")) {
 			if (item != null && item.getType() != Material.AIR && item.getType() != Material.STAINED_GLASS_PANE) {
 				Player p = Bukkit.getPlayer(event.getWhoClicked().getName());
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					gameState.getPlayerRoles().get(p).giveItem(p, true, item);
 					p.updateInventory();
 				}
@@ -719,12 +719,12 @@ public class GameListener implements Listener {
 		}
 		if (event.getWhoClicked() instanceof Player) {
 			Player clicker = (Player)event.getWhoClicked();
-			if (!gameState.hasRoleNull(clicker)) {
+			if (!gameState.hasRoleNull(clicker.getUniqueId())) {
 				gameState.getPlayerRoles().get(clicker).onInventoryClick(event, item, inv, clicker);
 			}
 			for (Player p : Bukkit.getOnlinePlayers()){
 				if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
-					if (!gameState.hasRoleNull(p)) {
+					if (!gameState.hasRoleNull(p.getUniqueId())) {
 						gameState.getPlayerRoles().get(p).onAllPlayerInventoryClick(event, item, inv, clicker);
 					}
 				}
@@ -764,7 +764,7 @@ public class GameListener implements Listener {
 		Player player = event.getPlayer();
 		if (event.hasItem()) {
 			ItemStack itemstack = event.getItem();
-			if (!gameState.hasRoleNull(player)) {
+			if (!gameState.hasRoleNull(player.getUniqueId())) {
 				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
 					if (power instanceof ItemPower) {
 						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
@@ -777,11 +777,11 @@ public class GameListener implements Listener {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					gameState.getGamePlayer().get(p.getUniqueId()).getRole().onALLPlayerInteract(event, player);
 				}
 			}
-			if (!gameState.hasRoleNull(player)) {
+			if (!gameState.hasRoleNull(player.getUniqueId())) {
 				if (event.getAction().name().contains("RIGHT")){
 					event.setCancelled(gameState.getGamePlayer().get(player.getUniqueId()).getRole().ItemUse(itemstack, gameState));
 				} else {
@@ -790,7 +790,7 @@ public class GameListener implements Listener {
 			}
 				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-						if (!gameState.hasRoleNull(player)) {
+						if (!gameState.hasRoleNull(player.getUniqueId())) {
 							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
 			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
 			        				RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
@@ -820,11 +820,9 @@ public class GameListener implements Listener {
 	public void OnPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
 		if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-			if (!gameState.hasRoleNull(player)) {
-				if (gameState.getPlayerRoles().get(player).getRoles() == null) {
-					event.setCancelled(true);
-				}
-			}
+			if (!gameState.hasRoleNull(player.getUniqueId())) {
+                gameState.getPlayerRoles().get(player).getRoles();
+            }
 		}
 	}
 	public static void dropItem(final Location loc, final ItemStack item) {loc.getWorld().dropItem(loc.clone().add(0.5D, 0.3D, 0.5D), item);
@@ -837,7 +835,7 @@ public class GameListener implements Listener {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(u)) {
 				gameState.getGamePlayer().get(p.getUniqueId()).getRole().onAllPlayerMoove(e, e.getPlayer());
 			}
 		}

@@ -169,7 +169,7 @@ public class Saiken extends Biju {
                 k = entity.getKiller();
 			}
         	if (k != null) {
-        		if (!gameState.hasRoleNull(k)) {
+        		if (!gameState.hasRoleNull(k.getUniqueId())) {
         			gameState.getPlayerRoles().get(k).giveItem(k, true, getItem());
         			Bukkit.broadcastMessage("§a" + getName() + " §fa été tué.");
         			if (hisMaster(k)) {

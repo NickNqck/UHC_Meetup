@@ -34,7 +34,7 @@ public class Tsunade extends ShinobiRoles {
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Tsunade;
 	}
 	@Override
@@ -103,7 +103,7 @@ public class Tsunade extends ShinobiRoles {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(p.getUniqueId())) {
 				if (inKatsuyu.contains(p.getUniqueId())) {
 					inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName("§a"+p.getName()).toItemStack());
 				} else {

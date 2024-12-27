@@ -42,7 +42,7 @@ public class Kakuzu extends AkatsukiRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kakuzu;
 	}
 	@Override
@@ -93,7 +93,7 @@ public class Kakuzu extends AkatsukiRoles {
 	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (!gameState.hasRoleNull(victim) && gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof NSRoles) {
+		if (!gameState.hasRoleNull(victim.getUniqueId()) && gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof NSRoles) {
 			NSRoles vRole = (NSRoles) gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 			if ((vRole.getChakras() != null && victim != owner && killer == owner && !ChakrasOwned.containsKey(vRole.getChakras()))) {
 				ChakrasOwned.put(vRole.getChakras(), true);
@@ -111,7 +111,7 @@ public class Kakuzu extends AkatsukiRoles {
 				cdCorpsRapiece=	60*3+5;
 				HashMap<Player, Location> rap = new HashMap<>();
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-					if (!gameState.hasRoleNull(p)) {
+					if (!gameState.hasRoleNull(p.getUniqueId())) {
 						if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() != getOriginTeam()) {
 							rap.put(p, p.getLocation());
 							owner.sendMessage("§7Vos§c Corps Rapiécé§7 on touché§c "+p.getDisplayName());

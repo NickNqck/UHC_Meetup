@@ -367,7 +367,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
                 timeRemaining--;
                 if (!croised) {//donc je fais le code juste en dessous que s'il n'a croiser personne
                     for (Player p : Loc.getNearbyPlayersExcept(owner, 10)) {
-                        if (fugaku.getGameState().hasRoleNull(p))continue;
+                        if (fugaku.getGameState().hasRoleNull(p.getUniqueId()))continue;
                         RoleBase role = fugaku.getGameState().getPlayerRoles().get(p);
                         if (!role.getGamePlayer().isAlive())continue;
                         if (role instanceof UchiwaRoles || role instanceof Danzo ||role instanceof Kakashi) {

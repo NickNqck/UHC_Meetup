@@ -140,7 +140,7 @@ public class LeJuge extends CustomRolesBase implements Listener {
             for (final UUID u : igPlayers) {
                 Player p = Bukkit.getPlayer(u);
                 if (p == null)continue;
-                if (!gameState.hasRoleNull(p)) {
+                if (!gameState.hasRoleNull(p.getUniqueId())) {
                     RoleBase role = gameState.getPlayerRoles().get(p);
                     if (!role.getOriginTeam().equals(TeamList.Solo) && !role.getOriginTeam().equals(TeamList.Jubi) && !role.getOriginTeam().equals(TeamList.Kumogakure)) {
                         goodPlayers.add(p);

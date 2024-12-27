@@ -134,7 +134,7 @@ public class TomiokaV2 extends PilierRoles {
                     if (owner != null) {
                         boolean isPresent = false;
                         for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-                            if (!gameState.hasRoleNull(p)) {
+                            if (!gameState.hasRoleNull(p.getUniqueId())) {
                                 GamePlayer gm = gameState.getGamePlayer().get(p.getUniqueId());
                                 if (gm.isAlive()) {
                                     if (gm.getRole() instanceof DemonsSlayersRoles) {

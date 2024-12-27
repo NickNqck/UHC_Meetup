@@ -37,7 +37,7 @@ public class Orochimaru extends OrochimaruRoles {
 		chakrasVoled.add(getChakras());
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Orochimaru;
 	}
 	@Override
@@ -66,7 +66,7 @@ public class Orochimaru extends OrochimaruRoles {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(p.getUniqueId())) {
 				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() != null && p.getUniqueId() != getPlayer()) {
 					if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() == TeamList.Orochimaru || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Sasuke) {
 						mates.add(p);

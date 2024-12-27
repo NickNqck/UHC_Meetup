@@ -145,7 +145,7 @@ public class BijuListener implements Listener{
         				event.getPlayer().sendMessage("§7Vous n'êtes pas§c l'hôte§7 de§d Jûbi");
         				return;
         			}
-        			if (!GameState.getInstance().hasRoleNull(event.getPlayer())) {
+        			if (!GameState.getInstance().hasRoleNull(event.getPlayer().getUniqueId())) {
         				RoleBase role = GameState.getInstance().getPlayerRoles().get(event.getPlayer());
         				role.givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*300, 1, true);
         				role.givePotionEffet(PotionEffectType.SPEED, 20*300, 2, true);
@@ -215,7 +215,7 @@ public class BijuListener implements Listener{
 		for (UUID u : GameState.getInstance().getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!GameState.getInstance().hasRoleNull(p)) {
+			if (!GameState.getInstance().hasRoleNull(p.getUniqueId())) {
 				if (GameState.getInstance().getPlayerRoles().get(p).onEntityDeath(e, e.getEntity())) {
 					return;
 				}

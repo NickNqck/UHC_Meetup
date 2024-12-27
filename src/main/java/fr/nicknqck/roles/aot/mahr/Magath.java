@@ -9,6 +9,7 @@ import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +26,7 @@ public class Magath extends MahrRoles {
 		toSearch = null;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Magath;
 	}
 	private Player toSearch;
@@ -86,7 +87,7 @@ public class Magath extends MahrRoles {
 							target.sendMessage("§cVous ne pouvez pas vous traquer vous même !");
 							return;
 						}
-						if (!gameState.hasRoleNull(target)) {
+						if (!gameState.hasRoleNull(target.getUniqueId())) {
 							RoleBase role = gameState.getGamePlayer().get(target.getUniqueId()).getRole();
 							if (role instanceof MahrRoles) {
 								if (toSearch == null) {

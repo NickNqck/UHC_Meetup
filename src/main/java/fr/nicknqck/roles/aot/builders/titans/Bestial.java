@@ -335,7 +335,7 @@ public class Bestial extends Titan implements Listener {
 		if (getOwner() != null) {
 			if (player.getUniqueId() == getOwner()) {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30)) {
-					if (!getState().hasRoleNull(p)) {
+					if (!getState().hasRoleNull(p.getUniqueId())) {
 						if (getPlayerRole(p.getUniqueId()).isCanVoleTitan() && canStealTitan(p)) {
 							canSteal.add(p);
 							p.sendMessage("§7Vous pouvez maintenant volé le Titan "+getName()+"§7 avec la commande§l /aot steal");

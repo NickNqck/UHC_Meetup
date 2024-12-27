@@ -29,7 +29,7 @@ public class Lame implements Listener{
 		if (item.isSimilar(Items.getLamedenichirin())) {
 			GameState gameState = GameState.getInstance();
 			if(gameState.getServerState() != ServerStates.InGame)return;
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(p.getUniqueId())) {
 				if (gameState.getPlayerRoles().get(p) instanceof DemonsSlayersRoles) {
 					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getPlayerRoles().get(p);
 					if (role.isCanuseblade()) {

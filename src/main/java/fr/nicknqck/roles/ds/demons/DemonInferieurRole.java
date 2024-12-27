@@ -32,7 +32,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
             for (UUID u : gameState.getInGamePlayers()) {
                 Player p = Bukkit.getPlayer(u);
                 if (p == null)continue;
-                if (!gameState.hasRoleNull(p)) {
+                if (!gameState.hasRoleNull(p.getUniqueId())) {
                     RoleBase role = gameState.getPlayerRoles().get(p);
                     if (role instanceof DemonsRoles) {
                         DemonsRoles d = (DemonsRoles) role;
@@ -62,7 +62,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
     }
     @EventHandler
     private void onUHCDeath(UHCDeathEvent event) {
-        if (!event.getGameState().hasRoleNull(event.getPlayer()) && this.lune != null) {
+        if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()) && this.lune != null) {
             if (event.getGameState().getPlayerRoles().get(event.getPlayer()) instanceof DemonsRoles) {
                 DemonsRoles role = (DemonsRoles) event.getGameState().getPlayerRoles().get(event.getPlayer());
                 if (role.getPlayer().equals(this.lune.getPlayer())) {

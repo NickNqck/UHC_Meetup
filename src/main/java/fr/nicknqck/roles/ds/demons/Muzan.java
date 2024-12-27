@@ -39,7 +39,7 @@ public class Muzan extends DemonsRoles {
 		return TeamList.Demon;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Muzan;
 	}
 	@Override
@@ -110,7 +110,7 @@ public class Muzan extends DemonsRoles {
 				Player target = Bukkit.getPlayer(args[1]);
 				if (target != null) {
 					if (!hasBoost) {
-						if (gameState.hasRoleNull(target))return;
+						if (gameState.hasRoleNull(target.getUniqueId()))return;
 						GamePlayer gamePlayer = gameState.getGamePlayer().get(target.getUniqueId());
 						if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) ||gamePlayer.getRole().getTeam().equals(TeamList.Demon)) {
 							target.sendMessage("§cMuzan§7 vous à offert son boost de§c 10% de force");
@@ -141,7 +141,7 @@ public class Muzan extends DemonsRoles {
 						owner.sendMessage("§c"+args[1]+" n'est pas connecter");
 						return;
 					}
-						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player)) {
+						if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player.getUniqueId())) {
 							if (gameState.infected == null && gameState.infecteur == null) {
 								GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
 								if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() == TeamList.Demon || gamePlayer.getRole() instanceof NezukoV2) {

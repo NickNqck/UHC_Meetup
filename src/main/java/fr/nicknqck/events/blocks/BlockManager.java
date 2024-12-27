@@ -54,7 +54,7 @@ public class BlockManager implements Listener{
 	            }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getWaterEmptyTiming());
 	        }
 	        if (!Main.getInstance().getGameConfig().isLaveTitans()) {
-	        	if (!gameState.hasRoleNull(event.getPlayer())) {
+	        	if (!gameState.hasRoleNull(event.getPlayer().getUniqueId())) {
 	        		if (gameState.getPlayerRoles().get(event.getPlayer()) instanceof AotRoles && ((AotRoles) gameState.getPlayerRoles().get(event.getPlayer())).isTransformedinTitan) {
 	        			if (event.getBucket() == Material.LAVA_BUCKET) {
 	            			event.getPlayer().sendMessage("§7Impossible de poser de la§c§l lave§7 lorsque vous êtes§l transformé en titan§7 !");
@@ -95,7 +95,7 @@ public class BlockManager implements Listener{
 					}
 				}
 			}
-			if (!gameState.hasRoleNull(event.getPlayer())) {
+			if (!gameState.hasRoleNull(event.getPlayer().getUniqueId())) {
 				for (Power power : gameState.getGamePlayer().get(event.getPlayer().getUniqueId()).getRole().getPowers()) {
 					if (power instanceof ItemPower) {
 						if (event.getItemInHand().isSimilar(((ItemPower) power).getItem()))  {
@@ -155,7 +155,7 @@ public class BlockManager implements Listener{
                     }
                 }
             }
-			if (!gameState.hasRoleNull(player)) {
+			if (!gameState.hasRoleNull(player.getUniqueId())) {
 				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
 					if (power instanceof ItemPower) {
 						for (ItemStack itemStack : e.getBlock().getDrops()) {

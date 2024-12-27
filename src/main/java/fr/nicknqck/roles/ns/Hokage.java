@@ -65,7 +65,7 @@ public class Hokage {
                         for (UUID u : gameState.getInGamePlayers()) {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
-							if (gameState.hasRoleNull(p))continue;
+							if (gameState.hasRoleNull(u))continue;
 							if (gameState.getPlayerRoles().get(p).getClass().equals(Danzo.class)) {
 								if (!u.equals(fH.getUniqueId())) {
 									p.sendMessage("§7Voici le rôle de l'Hokage: §a"+gameState.getPlayerRoles().get(fH).getName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)");
@@ -96,7 +96,7 @@ public class Hokage {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			System.out.println(p.getDisplayName()+" can be Hokage ?");
-			if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof NSRoles) {
+			if (!gameState.hasRoleNull(u) && gameState.getPlayerRoles().get(p) instanceof NSRoles) {
 				if (gameState.getPlayerRoles().get(p) instanceof Danzo){
 					danzo = (Danzo) gameState.getPlayerRoles().get(p);
 					System.out.println("p = "+p.getName()+" est Danzo");
@@ -123,7 +123,7 @@ public class Hokage {
 			return;
 		}
 		if (player.getUniqueId().equals(Hokage)) {
-			if (!gameState.hasRoleNull(player)){
+			if (!gameState.hasRoleNull(player.getUniqueId())){
 				if (gameState.getGamePlayer().containsKey(entityKiller.getUniqueId())) {
 					if (gameState.getGamePlayer().get(entityKiller.getUniqueId()).getRole() != null) {
 						if (gameState.getGamePlayer().get(entityKiller.getUniqueId()).getRole() instanceof Danzo) {

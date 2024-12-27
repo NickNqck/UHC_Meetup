@@ -8,6 +8,7 @@ import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ public class Gabi extends AotRoles {
 		setCanVoleTitan(true);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Gabi;
 	}
 
@@ -47,7 +48,7 @@ public class Gabi extends AotRoles {
 					for (UUID u : gameState.getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
-						if (!gameState.hasRoleNull(p)) {
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
 							GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 							if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).canShift) {
 								if (!inList.contains(p.getUniqueId())) {
@@ -70,7 +71,7 @@ public class Gabi extends AotRoles {
 					for (UUID u : gameState.getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
-						if (!gameState.hasRoleNull(p)) {
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
 							GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 							if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).canShift) {
 								if (!inList.contains(p.getUniqueId())) {
@@ -97,7 +98,7 @@ public class Gabi extends AotRoles {
 					for (UUID u : gameState.getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
-						if (!gameState.hasRoleNull(p)) {
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
 							GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 							if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).canShift) {
 								if (!inList.contains(p.getUniqueId())) {

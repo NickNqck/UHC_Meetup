@@ -13,6 +13,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.WorldUtils;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -39,7 +40,7 @@ public class Kagaya extends SlayerRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kagaya;
 	}
 	@Override
@@ -109,7 +110,7 @@ public class Kagaya extends SlayerRoles {
 				for (UUID uuid : gameState.getInGamePlayers()) {
 					Player player = Bukkit.getPlayer(uuid);
 					if (player == null)continue;
-					if (gameState.hasRoleNull(player))continue;
+					if (gameState.hasRoleNull(player.getUniqueId()))continue;
 					if (gameState.getPlayerRoles().get(player) instanceof PilierRoles) {
 						pilierRoles.add((PilierRoles) gameState.getPlayerRoles().get(player));
 					}

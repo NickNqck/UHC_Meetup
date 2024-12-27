@@ -25,7 +25,7 @@ public class AotCommands implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("roles")) {
                     sender.sendMessage(gameState.getRolesList());
                 }
-				if (!gameState.hasRoleNull(player)) {
+				if (!gameState.hasRoleNull(player.getUniqueId())) {
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
 						gameState.sendDescription(player);
                     } else {
