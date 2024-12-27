@@ -42,7 +42,7 @@ public class RodTridimensionnelle implements Listener {
         	event.setCancelled(true);
         }
         Player player = (Player) event.getEntity().getShooter();
-        if (!gameState.hasRoleNull(player)) {
+        if (!gameState.hasRoleNull(player.getUniqueId())) {
         	RoleBase roleBase = gameState.getPlayerRoles().get(player);
         	if (roleBase instanceof KillerBee) {
         		if (((KillerBee) roleBase).isCanTentacule()) {
@@ -126,7 +126,7 @@ public class RodTridimensionnelle implements Listener {
                 cancel();
                 return;
             }
-            if (gameState.hasRoleNull(player)) {
+            if (gameState.hasRoleNull(player.getUniqueId())) {
                 cancel();
                 return;
             }

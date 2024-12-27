@@ -37,7 +37,7 @@ public class Konan extends AkatsukiRoles {
 		setNoFall(true);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Konan;
 	}
 	@Override
@@ -50,7 +50,7 @@ public class Konan extends AkatsukiRoles {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(p.getUniqueId())) {
 				if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
 					if (getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
 						mates.add(p);

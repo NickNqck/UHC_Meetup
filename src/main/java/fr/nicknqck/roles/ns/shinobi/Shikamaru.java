@@ -47,7 +47,7 @@ public class Shikamaru extends ShinobiRoles {
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
     }
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Shikamaru;
     }
     @Override
@@ -182,7 +182,7 @@ public class Shikamaru extends ShinobiRoles {
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    if (!gameState.hasRoleNull(target)) {
+                    if (!gameState.hasRoleNull(target.getUniqueId())) {
                         if (gameState.getPlayerRoles().get(target) instanceof NSRoles){
                             Intelligence intelligence = ((NSRoles) gameState.getPlayerRoles().get(target)).getIntelligence();
                             if (intelligence.equals(Intelligence.CONNUE)) {

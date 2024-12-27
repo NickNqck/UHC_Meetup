@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -165,7 +164,7 @@ public class Loc {
             if (!onlinePlayer.equals(referencePlayer)) {
             	if (referencePlayer.getWorld().getName().equals("nakime")) {
             		if (onlinePlayer.getWorld().equals(referencePlayer.getWorld())) {
-                		if (!gameState.hasRoleNull(onlinePlayer)) {
+                		if (!gameState.hasRoleNull(onlinePlayer.getUniqueId())) {
                 			if (gameState.getPlayerRoles().get(onlinePlayer).getOriginTeam() != TeamList.Demon) {
                 				double distanceSquared = referencePlayer.getLocation().distanceSquared(onlinePlayer.getLocation());
 

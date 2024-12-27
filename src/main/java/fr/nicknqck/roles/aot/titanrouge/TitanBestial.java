@@ -14,6 +14,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +41,7 @@ public class TitanBestial extends TitansRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.TitanBestial;
 	}
 	@Override
@@ -105,7 +106,7 @@ public class TitanBestial extends TitansRoles {
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
-					if (!gameState.hasRoleNull(p)) {
+					if (!gameState.hasRoleNull(p.getUniqueId())) {
 						GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 						if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Titan)) {
 							Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -128,7 +129,7 @@ public class TitanBestial extends TitansRoles {
 	public void Update(GameState gameState) {
 		if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())){
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 30)) {
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 					if (gamePlayer.getRole() instanceof Soldat) {
 						if (!canBeTransformed.contains(p)) {
@@ -152,7 +153,7 @@ public class TitanBestial extends TitansRoles {
 		if (isTransformedinTitan) {
 		if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			for (Player p : Loc.getNearbyPlayers(owner, 20)) {
-				if (!gameState.hasRoleNull(p) && gameState.getPlayerRoles().get(p) instanceof AotRoles) {
+				if (!gameState.hasRoleNull(p.getUniqueId()) && gameState.getPlayerRoles().get(p) instanceof AotRoles) {
 					AotRoles role = (AotRoles) gameState.getPlayerRoles().get(p);
 					if (role.isTransformedinTitan) {
 						if (role instanceof PetitTitan || role instanceof GrandTitan) {

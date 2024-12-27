@@ -52,7 +52,7 @@ public class Nakime extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Nakime;
 	}
 	@Override
@@ -75,7 +75,7 @@ public class Nakime extends DemonsRoles {
 						if (cd <= 0) {
 							for (Player p : Bukkit.getOnlinePlayers()) {
 								if (p.getWorld().getName().equalsIgnoreCase("nakime")) {
-									if (!gameState.hasRoleNull(p)) {
+									if (!gameState.hasRoleNull(p.getUniqueId())) {
 										if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getRoles() != Roles.Nakime) {
 											LocPlayer loc = new LocPlayer(Main.getInstance().getWorldManager().getNakimeWorld());
 											p.teleport(loc.getRandomPositionRespawn());

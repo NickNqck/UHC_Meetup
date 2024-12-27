@@ -25,7 +25,7 @@ public class DayEvent extends Event {
 
 	public List<UUID> getInGamePlayersWithRole(){
 		List<UUID> toReturn = new ArrayList<>(getGameState().getInGamePlayers());
-		toReturn.stream().filter(u -> Bukkit.getPlayer(u) != null).filter(p -> getGameState().hasRoleNull(Bukkit.getPlayer(p))).forEach(toReturn::remove);
+		toReturn.stream().filter(u -> Bukkit.getPlayer(u) != null).filter(p -> getGameState().hasRoleNull(Bukkit.getPlayer(p).getUniqueId())).forEach(toReturn::remove);
 		return toReturn;
 	}
 	public static HandlerList getHandlerList() {

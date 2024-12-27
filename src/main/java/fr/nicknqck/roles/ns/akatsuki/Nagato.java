@@ -44,7 +44,7 @@ public class Nagato extends AkatsukiRoles {
         setChakraType(Chakras.SUITON);
     }
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Nagato;
     }
     @Override
@@ -60,7 +60,7 @@ public class Nagato extends AkatsukiRoles {
         for (UUID u : gameState.getInGamePlayers()) {
             Player p = Bukkit.getPlayer(u);
             if (p == null)continue;
-            if (!gameState.hasRoleNull(p)) {
+            if (!gameState.hasRoleNull(p.getUniqueId())) {
                 if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
                     if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
                         mates.add(p);
@@ -115,7 +115,7 @@ public class Nagato extends AkatsukiRoles {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null){
                     if (Loc.getNearbyPlayersExcept(owner, 15).contains(target)){
-                        if (!gameState.hasRoleNull(target)){
+                        if (!gameState.hasRoleNull(target.getUniqueId())){
                             owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getRoles().getTeam().getColor()+target.getDisplayName()+"§f possède le rôle: "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName());
                             useJikogudo++;
                         }
@@ -136,7 +136,7 @@ public class Nagato extends AkatsukiRoles {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null){
                     if (Loc.getNearbyPlayersExcept(owner, 15).contains(target)){
-                        if (!gameState.hasRoleNull(target)){
+                        if (!gameState.hasRoleNull(target.getUniqueId())){
                             owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole()+target.getDisplayName()+"§7 est dans le camp: "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam().getName()+"§7, et possède exactement "+ GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE)+"§e pommes d'or");
                             useNingendo++;
                         } else {

@@ -36,7 +36,7 @@ public class Arctridi implements Listener{
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             ItemStack bow = event.getBow();
-            if (!gameState.hasRoleNull(player)) {
+            if (!gameState.hasRoleNull(player.getUniqueId())) {
             	if (!bow.getType().equals(Material.BOW))return;
             	if (bow.isSimilar(gameState.EquipementTridi())) {
                     Arrow arrow = (Arrow) event.getProjectile();
@@ -54,7 +54,7 @@ public class Arctridi implements Listener{
     	if (gameState.getServerState() != ServerStates.InGame)return;
     	if (event.getEntity() instanceof Arrow && event.getEntity().getShooter() instanceof Player) {
             Player player = (Player) event.getEntity().getShooter();
-            if (gameState.hasRoleNull(player))return;
+            if (gameState.hasRoleNull(player.getUniqueId()))return;
     		if (event.getEntity().hasMetadata("teleportArrow "+gameState.getPlayerRoles().get(player).roleID) && gameState.getPlayerRoles().get(player) instanceof AotRoles) {
                 Arrow arrow = (Arrow) event.getEntity();
                 AotRoles role = (AotRoles) gameState.getPlayerRoles().get(player);

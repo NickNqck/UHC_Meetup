@@ -31,7 +31,7 @@ public class HomingBow implements Listener {
 		Projectile projectile = event.getEntity();
 		if (projectile.getShooter() instanceof Player) {
 			Player shooter = (Player) projectile.getShooter();
-			if (!gameState.hasRoleNull(shooter)) {
+			if (!gameState.hasRoleNull(shooter.getUniqueId())) {
 				gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileLaunch(event, shooter);
 			}
 		}
@@ -39,7 +39,7 @@ public class HomingBow implements Listener {
             Arrow arrow = (Arrow) projectile;
             if (arrow.getShooter() instanceof Player) {
                 Player shooter = (Player) arrow.getShooter();
-                if (!gameState.hasRoleNull(shooter)) {
+                if (!gameState.hasRoleNull(shooter.getUniqueId())) {
                 	gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileLaunch(event.getEntity(), shooter);
                     if (isSpecialPlayer(shooter) && shooter.getItemInHand().equals(Items.getSusamaruBow())) {
                  	   truc = true;
@@ -90,7 +90,7 @@ public class HomingBow implements Listener {
 	public void onProjectileHit(ProjectileHitEvent event) {
 		if (event.getEntity().getShooter() instanceof Player) {
 			Player shooter = (Player) event.getEntity().getShooter();
-			if (!gameState.hasRoleNull(shooter)) {
+			if (!gameState.hasRoleNull(shooter.getUniqueId())) {
 				gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileHit(event, shooter);
 			}
 		}
@@ -98,7 +98,7 @@ public class HomingBow implements Listener {
 	        Arrow arrow = (Arrow) event.getEntity();
 	        if (arrow.getShooter() instanceof Player) {
 	            Player shooter = (Player) arrow.getShooter();
-	            if (!gameState.hasRoleNull(shooter)) {
+	            if (!gameState.hasRoleNull(shooter.getUniqueId())) {
 	            	gameState.getPlayerRoles().get(shooter).onProjectileHit(event.getEntity(), shooter);
 		            if (isSpecialPlayer(shooter)) {
 		                if (truc) {
@@ -143,7 +143,7 @@ public class HomingBow implements Listener {
 	private boolean isSpecialPlayer(Player player) {
 		if (gameState.getServerState().equals(ServerStates.InGame)) {
 			if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-				if (!gameState.hasRoleNull(player)) {
+				if (!gameState.hasRoleNull(player.getUniqueId())) {
 					return gameState.getPlayerRoles().get(player) instanceof Susamaru;
 				}
 			}

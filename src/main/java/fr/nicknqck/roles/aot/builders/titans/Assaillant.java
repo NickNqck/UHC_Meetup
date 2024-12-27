@@ -120,7 +120,7 @@ public class Assaillant extends Titan {
 			if (getOwner() != null) {
 				if (player.getUniqueId() == getOwner()) {
 					for (Player p : Loc.getNearbyPlayersExcept(player, 30)) {
-						if (!getState().hasRoleNull(p)) {
+						if (!getState().hasRoleNull(p.getUniqueId())) {
 							if (getPlayerRole(p.getUniqueId()).isCanVoleTitan() && canStealTitan(p)) {
 								canSteal.add(p);
 								p.sendMessage("§7Vous pouvez maintenant volé le Titan§9 "+"§7 avec la commande§l /aot steal");

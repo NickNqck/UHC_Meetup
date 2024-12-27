@@ -46,7 +46,7 @@ public class Naruto extends ShinobiRoles {
 		setCanBeHokage(true);
 	}
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull GameState.Roles getRoles() {
 		return Roles.Naruto;
 	}
 	@Override
@@ -105,7 +105,7 @@ public class Naruto extends ShinobiRoles {
 					if (args.length == 2) {
 						Player target = Bukkit.getPlayer(args[1]);
 						if (target != null) {
-							if (!gameState.hasRoleNull(target)) {
+							if (!gameState.hasRoleNull(target.getUniqueId())) {
                                 gameState.getGamePlayer().get(target.getUniqueId());
                                 owner.sendMessage(target.getName() + "§a est dans le camp: " +gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam().getName());
                                 useSmell = true;
@@ -172,7 +172,7 @@ public class Naruto extends ShinobiRoles {
 			if (entity.getUniqueId().equals(villager.getUniqueId()) && e.getEntity().getLastDamage() < 100) {
 				StringBuilder sb = new StringBuilder();
 				for (Player p : Loc.getNearbyPlayersExcept(villager, 15)) {
-					if (gameState.hasRoleNull(p))continue;
+					if (gameState.hasRoleNull(p.getUniqueId()))continue;
 					if (!gameState.getInGamePlayers().contains(p.getUniqueId()))continue;
 					if (p.hasPotionEffect(PotionEffectType.INVISIBILITY))continue;
 					RoleBase role = gameState.getPlayerRoles().get(p);

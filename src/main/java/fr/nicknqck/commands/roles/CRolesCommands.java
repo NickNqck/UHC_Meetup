@@ -19,7 +19,7 @@ public class CRolesCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (commandSender instanceof Player) {
-            if (!gameState.hasRoleNull((Player) commandSender)) {
+            if (!gameState.hasRoleNull(((Player) commandSender).getUniqueId())) {
                 Player sender = (Player) commandSender;
                 if (gameState.getPlayerRoles().get(sender) instanceof CustomRolesBase) {
                     CustomRolesBase role = (CustomRolesBase) gameState.getPlayerRoles().get(sender);

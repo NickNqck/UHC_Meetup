@@ -65,7 +65,7 @@ public class Jugo extends OrochimaruRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jugo;
 	}
 	@Override
@@ -112,7 +112,7 @@ public class Jugo extends OrochimaruRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (!gameState.hasRoleNull(player)) {
+		if (!gameState.hasRoleNull(player.getUniqueId())) {
 			if (getListPlayerFromRole(Roles.Kimimaro).contains(player) &&!kimimaroDeath) {
 				onKimimaroDeath(true);
 			}
@@ -156,7 +156,7 @@ public class Jugo extends OrochimaruRoles {
 							if (gameState.getServerState() != GameState.ServerStates.InGame) {
 								cancel();
 							}
-							if (owner != null && !gameState.hasRoleNull(owner) && i >= 60*3) {
+							if (owner != null && !gameState.hasRoleNull(owner.getUniqueId()) && i >= 60*3) {
 								setTeam(oldTeam);
 							}
 						}

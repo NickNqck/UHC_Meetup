@@ -36,7 +36,7 @@ public class NsCommands implements CommandExecutor {
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e)).filter(e -> gameState.getPlayerRoles().get(e).getRoles() == roles).forEach(e -> toReturn.add(e.getPlayer()));
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e.getUniqueId())).filter(e -> gameState.getPlayerRoles().get(e).getRoles() == roles).forEach(e -> toReturn.add(e.getPlayer()));
 		return toReturn;
 	}
 	@Override
@@ -177,7 +177,7 @@ public class NsCommands implements CommandExecutor {
 					}
 					return true;
 				}
-				if (!gameState.hasRoleNull(sender)) {
+				if (!gameState.hasRoleNull(sender.getUniqueId())) {
 					if (args[0].equalsIgnoreCase("me")) {
 						gameState.sendDescription(sender);
 						return true;
@@ -258,7 +258,7 @@ public class NsCommands implements CommandExecutor {
                         }
                         return true;
                     }
-					if (!gameState.hasRoleNull(sender) && gameState.getPlayerRoles().get(sender).getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
+					if (!gameState.hasRoleNull(sender.getUniqueId()) && gameState.getPlayerRoles().get(sender).getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
 						NSRoles role = (NSRoles) gameState.getPlayerRoles().get(sender);
 						role.onNsCommand(args);
 						if (!role.getPowers().isEmpty()) {

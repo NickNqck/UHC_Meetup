@@ -30,7 +30,7 @@ public class EffectsGiver implements Listener {
                     for (UUID u : gameState.getInGamePlayers()) {
                         Player player = Bukkit.getPlayer(u);
                         if (player == null)continue;
-                        if (!gameState.hasRoleNull(player)) {
+                        if (!gameState.hasRoleNull(player.getUniqueId())) {
                             RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
                             if (!role.getEffects().isEmpty()) {
                                 for (PotionEffect effect : role.getEffects().keySet()) {

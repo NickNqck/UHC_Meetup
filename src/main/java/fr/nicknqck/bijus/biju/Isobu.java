@@ -133,7 +133,7 @@ public class Isobu extends Biju{
                 k = entity.getKiller();
 			}
         	if (k != null) {
-        		if (!gameState.hasRoleNull(k)) {
+        		if (!gameState.hasRoleNull(k.getUniqueId())) {
         			for (Player p : Bukkit.getOnlinePlayers()) {
         				if (p.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
         					p.removePotionEffect(PotionEffectType.SLOW_DIGGING);

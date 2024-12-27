@@ -8,6 +8,7 @@ import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -28,7 +29,7 @@ public class Jean extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jean;
 	}
 	@Override
@@ -76,7 +77,7 @@ public class Jean extends SoldatsRoles {
 				List<Player> mechant = new ArrayList<>();
 				List<Player> inZone = new ArrayList<>();
 				for (Player p : Loc.getNearbyPlayers(owner, 25)) {//Pour chaque joueur étant à moins de 25 blocs du l'owner du rôle
-					if (!gameState.hasRoleNull(p)) {//si ce même joueur possède un rôle
+					if (!gameState.hasRoleNull(p.getUniqueId())) {//si ce même joueur possède un rôle
 						GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 						if (gamePlayer.getRole().getRoles() != Roles.Gabi && gamePlayer.getRole().getRoles() != Roles.Eren && gamePlayer.getRole().getRoles() != Roles.Jelena) {//S'il n'est pas Gabi ou Eren ou Jelena
 							if (gamePlayer.getRole().getOriginTeam() != TeamList.Soldat) {//S'il n'est pas dans la team Soldat

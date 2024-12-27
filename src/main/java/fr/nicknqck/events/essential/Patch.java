@@ -34,7 +34,7 @@ public class Patch implements Listener{
         for (UUID u : gameState.getInGamePlayers()) {
 			Player a = Bukkit.getPlayer(u);
 			if (a == null)continue;
-        	if (!gameState.hasRoleNull(a)) {
+        	if (!gameState.hasRoleNull(a.getUniqueId())) {
         		gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntity(event, (Player) event.getEntity(), event.getDamager());
         	}
         }
@@ -48,12 +48,12 @@ public class Patch implements Listener{
       	for (Titans titans : Titans.values()) {
     	  titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event);
       }
-      	if (gameState.hasRoleNull(damager)) {
+      	if (gameState.hasRoleNull(damager.getUniqueId())) {
 		  damager.sendMessage("§cPvP§r interdit avant les rôles !");
 		  event.setCancelled(true);
 		  return;
 	  	}
-		if (gameState.hasRoleNull(victim)) {
+		if (gameState.hasRoleNull(victim.getUniqueId())) {
 			damager.sendMessage("§cPvP§r interdit avant les rôles !");
 			event.setCancelled(true);
 			return;
@@ -93,7 +93,7 @@ public class Patch implements Listener{
         for (UUID u : gameState.getInGamePlayers()) {
 			Player a = Bukkit.getPlayer(u);
 			if (a == null)continue;
-        	if (!gameState.hasRoleNull(a)) {
+        	if (!gameState.hasRoleNull(a.getUniqueId())) {
         		if (!event.isCancelled()) {
         			gameState.getPlayerRoles().get(a).onALLPlayerDamageByEntityAfterPatch(event, victim, damager);
         		}

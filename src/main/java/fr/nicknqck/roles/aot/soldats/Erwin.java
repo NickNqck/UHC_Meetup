@@ -7,6 +7,7 @@ import fr.nicknqck.roles.aot.solo.Eren;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +19,7 @@ public class Erwin extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Erwin;
 	}
 	@Override
@@ -52,7 +53,7 @@ public class Erwin extends SoldatsRoles {
 						owner.sendMessage("Il faut indiqué un pseudo correcte");
 					}else {
 						if (cmdUse < maxcmdUse) {
-							if (gameState.hasRoleNull(target)) {
+							if (gameState.hasRoleNull(target.getUniqueId())) {
 								owner.sendMessage("La personne visée ne possède pas de rôle veuiller visée quelqu'un d'autre");
 							}else {
 								if (gameState.getPlayerRoles().get(target).getOriginTeam() != null) {

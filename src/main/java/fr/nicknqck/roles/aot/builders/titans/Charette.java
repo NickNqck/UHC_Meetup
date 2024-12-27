@@ -77,7 +77,7 @@ public class Charette extends Titan {
 	  if (getListener().getCharette() !=null) {
 		  if (getListener().getCharette().equals(player.getUniqueId())) {
 			  for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-				  if (!getState().hasRoleNull(p)) {
+				  if (!getState().hasRoleNull(p.getUniqueId())) {
 					  if (getPlayerRole(p.getUniqueId()).isCanVoleTitan() && canStealTitan(p)) {
 						  p.sendMessage("§7Vous pouvez mainteant volé le Titan§9 Charette§7 avec la commande§6 /aot steal");
 						  canVoleCharette.add(p);

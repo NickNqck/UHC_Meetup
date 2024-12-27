@@ -36,13 +36,13 @@ public abstract class Titan {
 	public AotRoles getPlayerRole(UUID uuid) {
 		Player target = Bukkit.getPlayer(uuid);
 		if (target == null)return null;
-		if (!GameState.getInstance().hasRoleNull(target) && GameState.getInstance().getPlayerRoles().get(target) instanceof AotRoles) {
+		if (!GameState.getInstance().hasRoleNull(target.getUniqueId()) && GameState.getInstance().getPlayerRoles().get(target) instanceof AotRoles) {
 			return (AotRoles) GameState.getInstance().getPlayerRoles().get(target);
 		}
 		return null;
 	}
 	public AotRoles getPlayerRole(Player player) {
-		if (!GameState.getInstance().hasRoleNull(player) && GameState.getInstance().getPlayerRoles().get(player) instanceof AotRoles) {
+		if (!GameState.getInstance().hasRoleNull(player.getUniqueId()) && GameState.getInstance().getPlayerRoles().get(player) instanceof AotRoles) {
 			return (AotRoles) GameState.getInstance().getPlayerRoles().get(player);
 		}
 		return null;

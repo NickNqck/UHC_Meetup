@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class Jelena extends TitansRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jelena;
 	}
 	@Override
@@ -52,7 +53,7 @@ public class Jelena extends TitansRoles {
 		if (args.length == 2) {
 			if (args[1] != null) {
 				Player target = Bukkit.getPlayer(args[1]);
-				if (!gameState.hasRoleNull(target)) {
+				if (!gameState.hasRoleNull(target.getUniqueId())) {
 					if (invuse > 0) {
 						   // Créer un nouvel inventaire avec la taille d'un double coffre (54 emplacements)
 				        Inventory doubleChest = Bukkit.createInventory(owner, 54, "Inventaire de " + target.getName());

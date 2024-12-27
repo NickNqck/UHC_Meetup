@@ -85,7 +85,7 @@ public class BanquePower implements Listener {
     private void onKill(UHCPlayerKillEvent event) {
         if (zetsus.contains(event.getKiller().getUniqueId())) {
             if (event.getPlayerKiller() == null)return;
-            if (!event.getGameState().hasRoleNull(event.getPlayerKiller())) {
+            if (!event.getGameState().hasRoleNull(event.getPlayerKiller().getUniqueId())) {
                 RoleBase role = event.getGameState().getGamePlayer().get(event.getKiller().getUniqueId()).getRole();
                 if (!(role instanceof ZetsuBlancV2))return;
                 if (!getPermanentPotionEffects(event.getVictim()).isEmpty()) {

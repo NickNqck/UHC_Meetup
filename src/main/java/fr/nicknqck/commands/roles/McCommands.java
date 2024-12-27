@@ -25,7 +25,7 @@ public class McCommands implements CommandExecutor{
 					sender.sendMessage(gameState.getRolesList());
 					return true;
 				}
-				if (!gameState.hasRoleNull(sender)) {
+				if (!gameState.hasRoleNull(sender.getUniqueId())) {
 					if (args[0].equalsIgnoreCase("me")) {
 						gameState.sendDescription(sender);
                     } else {

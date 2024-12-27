@@ -98,7 +98,7 @@ public class AdminCommands implements CommandExecutor{
 						sender.sendMessage("§7Veuiller cibler un joueuer éxistant");
 						return true;
 					}
-					if (!gameState.hasRoleNull(player)) {
+					if (!gameState.hasRoleNull(player.getUniqueId())) {
 						gameState.getPlayerRoles().get(player).resetCooldown();
 						for (Power power :  gameState.getPlayerRoles().get(player).getPowers()) {
 							if (power.getCooldown() == null)continue;
@@ -123,7 +123,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (sender instanceof Player) {
 					Player player = (Player)sender;
-					if (!gameState.hasRoleNull(player)) {
+					if (!gameState.hasRoleNull(player.getUniqueId())) {
 						gameState.getPlayerRoles().get(player).resetCooldown();
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
 						if (Main.getInstance().getGameConfig().isBijusEnable()) {
@@ -373,7 +373,7 @@ public class AdminCommands implements CommandExecutor{
 						Player p = Bukkit.getPlayer(args[1]);
 						if (p != null){
 							if (gameState.getServerState().equals(ServerStates.InGame)){
-								if (!gameState.hasRoleNull(p) && !gameState.getInSpecPlayers().contains(p)){
+								if (!gameState.hasRoleNull(p.getUniqueId()) && !gameState.getInSpecPlayers().contains(p)){
 									for (TeamList team : TeamList.values()){
 										if (args[0].equalsIgnoreCase(team.name())){
 											if (!gameState.getPlayerRoles().get(p).getOriginTeam().equals(team)){
@@ -534,7 +534,7 @@ public class AdminCommands implements CommandExecutor{
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
 									return true;
 								} else {
-									if (!gameState.hasRoleNull(p)) {
+									if (!gameState.hasRoleNull(p.getUniqueId())) {
 										gameState.RevivePlayer(p);
 										sender.sendMessage(p.getName()+" à bien été réssucité");
 										HubListener.getInstance().giveStartInventory(p);
@@ -564,7 +564,7 @@ public class AdminCommands implements CommandExecutor{
 									texte.addExtra("\n");
 									texte.addExtra("UUID:§b "+p.getUniqueId().toString()+"\n");
 									texte.addExtra("\n");
-									if (!gameState.hasRoleNull(p)) {
+									if (!gameState.hasRoleNull(p.getUniqueId())) {
 										RoleBase role = gameState.getPlayerRoles().get(p);
 										texte.addExtra("Role:§b "+role.getOriginTeam().getColor()+role.getName());
 										texte.addExtra("\n");
@@ -629,7 +629,7 @@ public class AdminCommands implements CommandExecutor{
 				if (args[0].equalsIgnoreCase("camp")) {
 					Player p = Bukkit.getPlayer(args[1]);
 					if (p != null) {
-						if (!gameState.hasRoleNull(p)) {
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
 							for (TeamList team : TeamList.values()) {
 								if (team.name().equalsIgnoreCase(args[2])) {
 									gameState.getPlayerRoles().get(p).setTeam(team);

@@ -55,9 +55,9 @@ public class Chat implements Listener{
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player ig = Bukkit.getPlayer(u);
 					if (ig == null)continue;
-					if (!gameState.hasRoleNull(ig)) {
+					if (!gameState.hasRoleNull(u)) {
 						if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
-							if (!gameState.hasRoleNull(p)) {
+							if (!gameState.hasRoleNull(p.getUniqueId())) {
 								gameState.getPlayerRoles().get(ig).onAllPlayerChat(e, p);
 							}
 						}

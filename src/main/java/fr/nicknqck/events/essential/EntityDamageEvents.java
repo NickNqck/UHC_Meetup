@@ -59,7 +59,7 @@ public class EntityDamageEvents implements Listener{
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
-					if (!gameState.hasRoleNull(p)) {
+					if (!gameState.hasRoleNull(p.getUniqueId())) {
 						gameState.getPlayerRoles().get(p).onALLPlayerDamage(event, player);
 					}
 				}
@@ -146,7 +146,7 @@ public class EntityDamageEvents implements Listener{
 				double damage = event.getFinalDamage();
 				if (damageur instanceof Player) {
 					Player damager = (Player) event.getDamager();
-					if (!gameState.hasRoleNull(damager)) {
+					if (!gameState.hasRoleNull(damager.getUniqueId())) {
 						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().ItemUseAgainst(damager.getItemInHand(), player, gameState);
 						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().neoItemUseAgainst(damager.getItemInHand(), player, gameState, damager);
 						/*
@@ -166,7 +166,7 @@ public class EntityDamageEvents implements Listener{
 				if (player.getHealth()-damage <= 0) {
 					if (event.getCause() != DamageCause.FALL) {
 						if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-							if (!gameState.hasRoleNull(player)) {
+							if (!gameState.hasRoleNull(player.getUniqueId())) {
 								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
 									assert damageur instanceof Player;
 									gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);

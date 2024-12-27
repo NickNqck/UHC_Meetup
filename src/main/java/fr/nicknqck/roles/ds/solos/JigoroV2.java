@@ -63,7 +63,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		return TeamList.Solo;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.JigoroV2;
 	}
 	@Override
@@ -159,7 +159,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 						for (UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
-							if (!gameState.hasRoleNull(p)) {//vérifie que p a un role
+							if (!gameState.hasRoleNull(u)) {//vérifie que p a un role
 								if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {//si p est kaigaku
 									owner.sendMessage(p.getName()+" est§c Kaigaku");
 									kaigaku = (Kaigaku) gameState.getPlayerRoles().get(p);
@@ -365,7 +365,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		if (event.getGamePlayerKiller() != null) {
 			if (!event.isCancel()) {
 				if (this.pacte == Pacte.PacteKaigaku){
-					if (gameState.hasRoleNull(event.getVictim()))return;
+					if (gameState.hasRoleNull(event.getVictim().getUniqueId()))return;
 					if (!(gameState.getPlayerRoles().get(event.getVictim()) instanceof ZenItsu))return;
 					RoleBase role = event.getGamePlayerKiller().getRole();
 					if (role.getPlayer().equals(getPlayer())) {

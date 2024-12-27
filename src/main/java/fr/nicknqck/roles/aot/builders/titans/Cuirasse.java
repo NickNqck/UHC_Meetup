@@ -140,7 +140,7 @@ public class Cuirasse extends Titan{
 		if (getOwner() != null) {
 			if (getListener().getCuirasse() == player.getUniqueId()) {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-					if (getState().hasRoleNull(p))return;
+					if (getState().hasRoleNull(p.getUniqueId()))return;
 					if (getPlayerRole(p).isCanVoleTitan()&&canStealTitan(p)) {
 						canSteal.add(p);
 						p.sendMessage("§7Vous pouvez maintenant volé le Titan§9 Cuirassé§7 avec la commande§l /aot steal");
@@ -168,7 +168,7 @@ public class Cuirasse extends Titan{
 	public ItemStack CuirasseItem() {
 		return new ItemBuilder(Material.QUARTZ).setName("§f§lCuirasse").setLore("§7Permet de mettre/enlever votre cuirasse").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
-	private List<Player> canSteal = new ArrayList<>();
+	private final List<Player> canSteal = new ArrayList<>();
 	@Override
 	public void onSteal(Player sender, String[] args) {
 		if (canSteal.contains(sender)) {

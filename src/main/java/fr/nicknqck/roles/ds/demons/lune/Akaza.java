@@ -87,7 +87,7 @@ public class Akaza extends DemonsRoles implements Listener {
 		return TeamList.Demon;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Akaza;
 	}
 	@Override
@@ -143,7 +143,7 @@ public class Akaza extends DemonsRoles implements Listener {
 	@EventHandler
 	private void onUHCDeath(UHCDeathEvent event) {
 		if (!event.isCancelled()) {
-			if (!event.getGameState().hasRoleNull(event.getPlayer())) {
+			if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId())) {
 				if (event.getGameState().getPlayerRoles().get(event.getPlayer()) instanceof DemonsRoles) {
 					DemonsRoles role = (DemonsRoles) event.getGameState().getPlayerRoles().get(event.getPlayer());
 					if (role.getRank().equals(DemonType.SUPERIEUR)) {
@@ -180,7 +180,7 @@ public class Akaza extends DemonsRoles implements Listener {
 				}
 			}
 			for (Player around : Loc.getNearbyPlayersExcept(owner, 10)) {
-				if (!akaza.getGameState().hasRoleNull(around)) {
+				if (!akaza.getGameState().hasRoleNull(around.getUniqueId())) {
 					RoleBase role = akaza.getGameState().getPlayerRoles().get(around);
 					if (role instanceof PilierRoles) {
 						PilierRoles pillierRoles = (PilierRoles) role;

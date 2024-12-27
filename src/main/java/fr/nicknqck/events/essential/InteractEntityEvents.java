@@ -14,7 +14,7 @@ public class InteractEntityEvents implements Listener {
         if (!event.isCancelled()) {
             GameState gameState = GameState.getInstance();
             Player player = event.getPlayer();
-            if (!gameState.hasRoleNull(player)) {
+            if (!gameState.hasRoleNull(player.getUniqueId())) {
                 for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
                     if (power instanceof ItemPower) {
                         if (event.getPlayer().getItemInHand().isSimilar(((ItemPower) power).getItem())) {
