@@ -22,9 +22,14 @@ public class Magath extends MahrRoles {
 
 	public Magath(UUID player) {
 		super(player);
-		giveHealedHeartatInt(4.0);
 		toSearch = null;
 	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		giveHealedHeartatInt(4.0);
+	}
+
 	@Override
 	public @NonNull Roles getRoles() {
 		return Roles.Magath;
