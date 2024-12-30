@@ -230,7 +230,7 @@ public class RoleManager {
         //Si le mec est déjà un GamePlayer, je renvoie null
         if (GameState.getInstance().getGamePlayer().containsKey(uuid))return null;
         //Création d'une Map à partir des rôles activés
-        final Map<Class<? extends RoleBase>, Integer> map = new LinkedHashMap<>(Main.getInstance().getRoleManager().getRolesEnable());
+        final Map<Class<? extends RoleBase>, Integer> map = new LinkedHashMap<>(getRolesEnable());
         final List<Class<? extends RoleBase>> roleList = new LinkedList<>();
         //J'utilise ce code pour remplir roleList des rôles ayant un nombre supérieur a 0
         for (final Class<? extends RoleBase> classRole : map.keySet()) {
