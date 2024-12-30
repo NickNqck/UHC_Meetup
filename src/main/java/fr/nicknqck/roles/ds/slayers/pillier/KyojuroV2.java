@@ -125,9 +125,10 @@ public class KyojuroV2 extends PilierRoles {
             } else if (event.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) event.getDamager();
                 if (projectile.getShooter() instanceof Player && ((Player) projectile.getShooter()).getUniqueId().equals(getRole().getPlayer())) {
+                    Player shooter = (Player) projectile.getShooter();
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
                     if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
-                        ((Player) event.getDamager()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
+                        shooter.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
                     }
                 }
             }
