@@ -226,23 +226,31 @@ public class RoleManager {
         registerRole(LeComte.class);
         registerRole(LeJuge.class);
     }
-    private final RoleBase getRandomRole(final UUID uuid) {
+    private RoleBase getRandomRole(final UUID uuid) {
+        //Si le mec est déjà un GamePlayer, je renvoie null
         if (GameState.getInstance().getGamePlayer().containsKey(uuid))return null;
+        //Création d'une Map à partir des rôles activés
         final Map<Class<? extends RoleBase>, Integer> map = new LinkedHashMap<>(Main.getInstance().getRoleManager().getRolesEnable());
         final List<Class<? extends RoleBase>> roleList = new LinkedList<>();
+        //J'utilise ce code pour remplir roleList des rôles ayant un nombre supérieur a 0
         for (final Class<? extends RoleBase> classRole : map.keySet()) {
             if (map.getOrDefault(classRole, 0) < 1)continue;
             roleList.add(classRole);
         }
         RoleBase role = null;
+        //La je mélance le roleList
         Collections.shuffle(roleList, Main.RANDOM);
         if (!roleList.isEmpty()) {
+            //Grace au mélance je get un rôle au hasard
             Class<? extends RoleBase> classRole = roleList.get(0);
             try {
+                //La j'instancie le rôle avec l'UUID qui a été donner au début
                 role = classRole.getConstructor(UUID.class).newInstance(uuid);
+                //La j'envoie des infos à la console
                 GameState.getInstance().print(uuid, role);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
+                //Si ça bug je l'envoie dans la console
                 throw new RuntimeException(e);
             }
         }
