@@ -10,8 +10,7 @@ public final class EasyRoleAdder {
         if (!Main.getInstance().getGameConfig().isOldRoleSystem()) {
             for (Class<? extends RoleBase> classs : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
                 if (name.equalsIgnoreCase(classs.getName()) || name.equalsIgnoreCase(classs.toString()) || name.equalsIgnoreCase(Main.getInstance().getRoleManager().getRolesRegistery().get(classs).getName())) {
-                    int amount = Main.getInstance().getRoleManager().getRolesEnable().get(classs);
-                    Main.getInstance().getRoleManager().getRolesEnable().replace(classs, amount+1);
+                    Main.getInstance().getRoleManager().addRole(classs);
                     GameState.getInstance().updateGameCanLaunch();
                     break;
                 }
