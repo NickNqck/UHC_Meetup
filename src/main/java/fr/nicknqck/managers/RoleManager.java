@@ -226,7 +226,7 @@ public class RoleManager {
         registerRole(LeComte.class);
         registerRole(LeJuge.class);
     }
-    private RoleBase getRandomRole(final UUID uuid) {
+    public RoleBase getRandomRole(final UUID uuid) {
         //Si le mec est déjà un GamePlayer, je renvoie null
         if (GameState.getInstance().getGamePlayer().containsKey(uuid))return null;
         //Création d'une Map à partir des rôles activés

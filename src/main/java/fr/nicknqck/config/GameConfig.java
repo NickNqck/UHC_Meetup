@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @Getter
 public class GameConfig {
-
     @Getter
     private static GameConfig instance;
     private int WaterEmptyTiming = 30;
@@ -27,6 +26,7 @@ public class GameConfig {
     private boolean pvpEnable = false;
     private int maxTimeDay = 60*5;
     private int critPercent = 20;
+    private boolean oldRoleSystem = true;
 
     public GameConfig() {
         instance = this;
