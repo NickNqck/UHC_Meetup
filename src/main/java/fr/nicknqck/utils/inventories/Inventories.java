@@ -416,6 +416,7 @@ public class Inventories {
                             "§fTemp actuelle:§b "+StringUtils.secondsTowardsBeautiful(GameState.getInstance().timewaitingbeinfected)
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(gameState.isTNTGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
+                    inv.addItem(new ItemBuilder(Material.COMPASS).setName("§fAncien système de rôle").setLore(Main.getInstance().getGameConfig().isOldRoleSystem() ? "§aActivé" : "§cDésactivé").toItemStack());
                     inv.setItem(26, GUIItems.getSelectBackMenu());
                 }
             }
