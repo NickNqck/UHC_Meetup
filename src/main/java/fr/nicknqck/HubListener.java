@@ -105,6 +105,7 @@ public class HubListener implements Listener {
 			giveStartInventory(p);
 			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);
 			gameState.getGamePlayer().put(u, gamePlayer);
+			System.out.println("Player "+p+" a ete ajouter a la partie");
 		}
 		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;

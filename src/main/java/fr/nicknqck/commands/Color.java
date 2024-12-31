@@ -161,11 +161,13 @@ public class Color implements CommandExecutor, Listener {
                     if (!(event.getWhoClicked() instanceof Player))return;
                     if (event.getCurrentItem().getType().equals(Material.INK_SACK) || event.getCurrentItem().getType().equals(Material.REDSTONE)) {
                         if (colors.containsKey(event.getCurrentItem())) {
+                            Player clicker = (Player) event.getWhoClicked();
                             for (final Player target : this.toColor) {
                                 if (target == null)continue;
-                                Main.getInstance().getScoreboardManager().getScoreboards().get(uuid).changeDisplayName((Player) event.getWhoClicked(), target, this.colors.get(event.getCurrentItem()));
+                                Main.getInstance().getScoreboardManager().getScoreboards().get(uuid)
+                                        .changeDisplayName(clicker, target, this.colors.get(event.getCurrentItem()));
                             }
-                            event.getWhoClicked().closeInventory();
+                            clicker.closeInventory();
                         }
                     } else {
                         if (event.getCurrentItem().isSimilar(GUIItems.getSelectBackMenu())) {
