@@ -419,9 +419,6 @@ public class HubConfig implements Listener {
                                 }
                             }
                         }
-                        if (item.getItemMeta().getDisplayName().equals("§fAncien système de rôle")) {
-                            Main.getInstance().getGameConfig().setOldRoleSystem(!Main.getInstance().getGameConfig().isOldRoleSystem());
-                        }
                     }
                     for (UUID u : gameState.getInLobbyPlayers()) {
                         Player p = Bukkit.getPlayer(u);
