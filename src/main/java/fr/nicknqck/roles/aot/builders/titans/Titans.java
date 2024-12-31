@@ -1,5 +1,8 @@
 package fr.nicknqck.roles.aot.builders.titans;
 
+import lombok.Getter;
+
+@Getter
 public enum Titans {
 	
 	Colossal(new Colossal()),
@@ -10,12 +13,9 @@ public enum Titans {
 	Assaillant(new Assaillant()),
 	Bestial(new Bestial());
 	
-	Titan titan;
-	private Titans(Titan titan) {
+	final Titan titan;
+	Titans(Titan titan) {
 		this.titan = titan;
 	}
-	
-	public Titan getTitan() {
-		return titan;
-	}
+
 }

@@ -49,7 +49,7 @@ public class Patch implements Listener{
         Player victim = (Player) event.getEntity();
      	if (damager.getItemInHand() == null) return;
 
-      	for (Titans titans : Titans.values()) {
+      	for (final Titans titans : Titans.values()) {
 			  titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event);
 		  }
       	if (gameState.hasRoleNull(damager.getUniqueId())) {
