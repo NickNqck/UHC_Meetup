@@ -848,16 +848,17 @@ public class GameState{
 
 	public int getroleNMB() {
 		int nmbrole = 0;
-		/*for (Roles r : getAvailableRoles().keySet()) {
+		//Ancien système de rôle
+		for (Roles r : getAvailableRoles().keySet()) {
 			nmbrole += getAvailableRoles().get(r);
-		}//Ancien système de rôle
-		*/
+		}
+		/*Nouveau système de rôle
 		final Map<Class<? extends RoleBase>, Integer> map = new LinkedHashMap<>(Main.getInstance().getRoleManager().getRolesEnable());
 		//J'utilise ce code pour remplir roleList des rôles ayant un nombre supérieur a 0
 		for (final Class<? extends RoleBase> classRole : map.keySet()) {
 			if (map.getOrDefault(classRole, 0) < 1)continue;
 			nmbrole+=map.get(classRole);
-		}
+		}*/
 		return nmbrole;
 	}
 	@Getter
