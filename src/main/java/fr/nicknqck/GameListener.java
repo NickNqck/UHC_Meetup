@@ -252,11 +252,8 @@ public class GameListener implements Listener {
 						continue;
 					}
                     RoleBase role;
-                    if (Main.getInstance().getGameConfig().isOldRoleSystem()) {
-                        role = gameState.GiveRole(p);
-                    } else {
-                        role = Main.getInstance().getRoleManager().getRandomRole(u);
-                    }
+					//role = gameState.GiveRole(p);// (Ancien système de rôle)
+					role = Main.getInstance().getRoleManager().getRandomRole(u);
                     if (role != null){
                         role.RoleGiven(gameState);
                         role.GiveItems();

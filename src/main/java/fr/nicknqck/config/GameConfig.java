@@ -26,7 +26,6 @@ public class GameConfig {
     private boolean pvpEnable = false;
     private int maxTimeDay = 60*5;
     private int critPercent = 20;
-    private boolean oldRoleSystem = true;
 
     public GameConfig() {
         instance = this;
