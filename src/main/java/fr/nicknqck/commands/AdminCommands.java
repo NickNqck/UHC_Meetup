@@ -9,6 +9,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
+import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
@@ -337,18 +338,7 @@ public class AdminCommands implements CommandExecutor{
 				if (args[0].equalsIgnoreCase("addRole")) {
 					if (args[1] != null) {
 						if (!sender.isOp())return true;
-						for (Roles roles : Roles.values()) {
-							if (roles.name().equalsIgnoreCase(args[1])) {
-								gameState.addInAvailableRoles(roles, Math.min(gameState.getInLobbyPlayers().size(), gameState.getAvailableRoles().get(roles)+1));
-								gameState.updateGameCanLaunch();
-								if (gameState.getAvailableRoles().containsKey(roles)) {
-									System.out.println(roles.name()+" a bien ete ajouter au roles valable pour la prochaine partie");
-								}else {
-									System.err.println(roles.name()+" n'a pas ete ajouter au roles valable pour la prochaine partie");
-								}
-								return true;
-							}
-						}
+						EasyRoleAdder.addRoles(args[1]);
 					}else {
 						sender.sendMessage("La commande est /a addRole <nom du Role>");
 						return true;
