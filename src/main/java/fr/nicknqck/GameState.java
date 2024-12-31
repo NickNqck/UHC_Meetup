@@ -309,9 +309,8 @@ public class GameState{
 	private ServerStates serverState = ServerStates.InLobby;
 	@Getter
 	private final HashMap<Roles, Integer> availableRoles = new HashMap<>();
-	@Setter
 	@Getter
-	private List<UUID> inLobbyPlayers = new ArrayList<>();
+	private final List<UUID> inLobbyPlayers = new ArrayList<>();
 	@Setter
 	@Getter
 	private List<UUID> inGamePlayers = new ArrayList<>();
@@ -322,7 +321,6 @@ public class GameState{
 	private final HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	@Getter
 	private final HashMap<UUID, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
-	public List<Player> igPlayers = new ArrayList<>();
 	@Getter
 	@Setter
 	int inGameTime = 0;

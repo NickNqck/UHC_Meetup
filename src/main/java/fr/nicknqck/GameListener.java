@@ -198,10 +198,10 @@ public class GameListener implements Listener {
 				SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 				Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 				Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("doDaylightCycle", "false");
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					for (Player p : Bukkit.getOnlinePlayers()) {
-						if (gameState.getPlayerRoles().containsKey(p)) {
-							gameState.getPlayerRoles().get(p).onDay(gameState);
+				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+					for (final Player p : Bukkit.getOnlinePlayers()) {
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().onDay(gameState);
 						}
 					}
 					Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
@@ -520,7 +520,12 @@ public class GameListener implements Listener {
         return sum;
     }
 	public static void detectWin(GameState gameState) {
-        List<Player> players = new ArrayList<>(gameState.igPlayers);
+        List<Player> players = new ArrayList<>();
+		for (final UUID uuid : gameState.getInGamePlayers()) {
+			Player player = Bukkit.getPlayer(uuid);
+			if (player == null)continue;
+			players.add(player);
+		}
 		players.removeAll(gameState.getInSpecPlayers());
 		boolean gameDone = false;
 		TeamList winer = null;

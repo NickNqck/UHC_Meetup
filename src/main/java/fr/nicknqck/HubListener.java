@@ -27,7 +27,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HubListener implements Listener {
 	private final GameState gameState;
@@ -42,8 +41,7 @@ public class HubListener implements Listener {
 		}
 		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
-		gameState.setInLobbyPlayers(new ArrayList<>());
-		gameState.igPlayers.addAll(gameState.getInGamePlayers().stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).map(Bukkit::getPlayer).collect(Collectors.toList()));
+		gameState.getInLobbyPlayers().clear();
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
 		gameState.infected = null;
 		gameState.infecteur = null;
@@ -57,8 +55,8 @@ public class HubListener implements Listener {
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
 		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
-		if (gameState.JigoroV2Pacte2)gameState.JigoroV2Pacte2 = false;
-		if (gameState.JigoroV2Pacte3)gameState.JigoroV2Pacte3 = false;
+		gameState.JigoroV2Pacte2 = false;
+		gameState.JigoroV2Pacte3 = false;
 		for (Entity e : Main.getInstance().getWorldManager().getGameWorld().getEntities()) {
 			if (e instanceof Player) continue;
 			e.remove();
@@ -87,7 +85,6 @@ public class HubListener implements Listener {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					gameState.getInLobbyPlayers().add(player.getUniqueId());
 				}
-				gameState.igPlayers.clear();
 				return;
 			}
 			p.updateInventory();
