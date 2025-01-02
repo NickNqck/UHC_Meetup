@@ -39,7 +39,7 @@ public class HubListener implements Listener {
 			System.out.println("Impossible de start la partie");
 			return;
 		}
-		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
+		gameState.setInGamePlayers(new ArrayList<>(gameState.getInLobbyPlayers()));
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.getInLobbyPlayers().clear();
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
