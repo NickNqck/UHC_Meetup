@@ -343,7 +343,7 @@ public class GameListener implements Listener {
 				if (p == null)continue;
 				ItemsManager.ClearInventory(p);
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
-					RoleBase r = gameState.getPlayerRoles().get(p);
+					RoleBase r = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 					r.setBonusForce(0);
 					r.setBonusResi(0);
 					r.setResi(0);
