@@ -74,7 +74,6 @@ public class JoinEvents implements Listener{
 	}
  	@EventHandler(priority = EventPriority.HIGHEST)
 	private void onCustomJoin(PlayerJoinEvent e) {
-		e.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		if (gameState.getServerState().equals(GameState.ServerStates.InGame))return;
 		gameState.updateGameCanLaunch();
 		UUID uuid = e.getPlayer().getUniqueId();
