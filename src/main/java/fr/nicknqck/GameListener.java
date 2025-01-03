@@ -124,7 +124,9 @@ public class GameListener implements Listener {
 					if (gameState.nightTime) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
-						gameState.getPlayerRoles().get(p).givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
+						if (!gameState.hasRoleNull(p.getUniqueId())){
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
+						}
 						if (!infectedgiveforce) {
 							infectedgiveforce = true;
 						}
@@ -217,14 +219,11 @@ public class GameListener implements Listener {
 						SendToEveryone("\n §bIl fait maintenant jour");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 						for (UUID u : gameState.getInGamePlayers()) {
-							Player p = Bukkit.getPlayer(u);
-							if (p == null)continue;
-							if (gameState.getPlayerRoles().containsKey(p)) {
-								gameState.getPlayerRoles().get(p).onDay(gameState);
+							if (!gameState.hasRoleNull(u)) {
+								gameState.getGamePlayer().get(u).getRole().onDay(gameState);
 							}
 						}
 						Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
-						//detectWin(gameState);
 					} else {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(16500);
 						gameState.nightTime = true;
@@ -232,10 +231,8 @@ public class GameListener implements Listener {
 						SendToEveryone("\n §bIl fait maintenant nuit\n");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 						for (UUID u : gameState.getInGamePlayers()) {
-							Player p = Bukkit.getPlayer(u);
-							if (p == null)continue;
-							if (gameState.getPlayerRoles().containsKey(p)) {
-								gameState.getPlayerRoles().get(p).onNight(gameState);
+							if (!gameState.hasRoleNull(u)) {
+								gameState.getGamePlayer().get(u).getRole().onNight(gameState);
 							}
 						}
 						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
@@ -374,8 +371,8 @@ public class GameListener implements Listener {
 						String win = winer == null ? "§cDéconnecter" : winer.getName();
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
 						assert winer != null;
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
-						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles().name();
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
+						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().name();
                         SendToEveryone(Vainqueurs);
 					}
 				}
@@ -544,8 +541,8 @@ public class GameListener implements Listener {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player player2 = Bukkit.getPlayer(u);
 			if (player2 == null)continue;
-			if (gameState.getPlayerRoles().get(player2) != null) {
-				RoleBase role = gameState.getPlayerRoles().get(player2);
+			if (!gameState.hasRoleNull(u)) {
+				RoleBase role = gameState.getGamePlayer().get(u).getRole();
 				switch (role.getTeam()) {
 					case Akatsuki:
 						Akatsuki = true;
@@ -611,7 +608,7 @@ public class GameListener implements Listener {
 		if (gameDone) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
-					gameState.getPlayerRoles().get(p).onEndGame();
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().onEndGame();
 				}
 			}
 			System.out.println("game ending");
@@ -718,7 +715,7 @@ public class GameListener implements Listener {
 			if (item != null && item.getType() != Material.AIR && item.getType() != Material.STAINED_GLASS_PANE) {
 				Player p = Bukkit.getPlayer(event.getWhoClicked().getName());
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
-					gameState.getPlayerRoles().get(p).giveItem(p, true, item);
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().giveItem(p, true, item);
 					p.updateInventory();
 				}
 				p.updateInventory();
@@ -729,12 +726,12 @@ public class GameListener implements Listener {
 		if (event.getWhoClicked() instanceof Player) {
 			Player clicker = (Player)event.getWhoClicked();
 			if (!gameState.hasRoleNull(clicker.getUniqueId())) {
-				gameState.getPlayerRoles().get(clicker).onInventoryClick(event, item, inv, clicker);
+				gameState.getGamePlayer().get(clicker.getUniqueId()).getRole().onInventoryClick(event, item, inv, clicker);
 			}
 			for (Player p : Bukkit.getOnlinePlayers()){
 				if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 					if (!gameState.hasRoleNull(p.getUniqueId())) {
-						gameState.getPlayerRoles().get(p).onAllPlayerInventoryClick(event, item, inv, clicker);
+						gameState.getGamePlayer().get(p.getUniqueId()).getRole().onAllPlayerInventoryClick(event, item, inv, clicker);
 					}
 				}
 			}
@@ -758,8 +755,10 @@ public class GameListener implements Listener {
 					if (item != null && item.getType() != Material.AIR && item.getType() != Material.STAINED_GLASS_PANE) {
 					    Player p = Bukkit.getPlayer(event.getWhoClicked().getName());
 					    p.closeInventory();
-					    gameState.getPlayerRoles().get(p).FormChoosen(item, gameState);
-					    gameState.getPlayerRoles().get(p).neoFormChoosen(item, inv, event.getSlot(), gameState);
+						if (!gameState.hasRoleNull(p.getUniqueId())){
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().FormChoosen(item, gameState);
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().neoFormChoosen(item, inv, event.getSlot(), gameState);
+						}
 					}
 				}
 				break;
@@ -830,7 +829,7 @@ public class GameListener implements Listener {
 		Player player = event.getPlayer();
 		if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 			if (!gameState.hasRoleNull(player.getUniqueId())) {
-                gameState.getPlayerRoles().get(player).getRoles();
+                gameState.getGamePlayer().get(player.getUniqueId()).getRole().getRoles();
             }
 		}
 	}
