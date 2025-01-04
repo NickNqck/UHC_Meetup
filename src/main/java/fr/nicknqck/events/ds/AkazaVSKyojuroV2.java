@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ds.demons.lune.Akaza;
 import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
@@ -52,8 +53,8 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.dispatchCommand(console, "nakime E4jL5cOzv0sI2XqY7wNpD3Ab");
         if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
-            Player pkyojuro = gameState.getOwner(GameState.Roles.Kyojuro);
-            Player pAkaza = gameState.getOwner(GameState.Roles.Akaza);
+            Player pkyojuro = findOwner(GameState.Roles.Kyojuro);
+            Player pAkaza = findOwner(GameState.Roles.Akaza);
             if (pAkaza != null && pkyojuro != null) {
                 Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
                 KyojuroV2 kyojuro = (KyojuroV2) gameState.getPlayerRoles().get(pkyojuro);
@@ -72,6 +73,19 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 this.activated = true;
             }
         }
+    }
+
+    private Player findOwner(@NonNull final GameState.Roles roles) {
+        for (final GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
+            if (gamePlayer.isAlive() && gamePlayer.getRole() != null) {
+                if (gamePlayer.getRole().getRoles().equals(roles)) {
+                    Player player = Bukkit.getPlayer(gamePlayer.getUuid());
+                    if (player == null)continue;
+                    return player;
+                }
+            }
+        }
+        return null;
     }
 
     @SuppressWarnings("deprecation")
