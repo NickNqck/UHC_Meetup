@@ -804,22 +804,22 @@ public class GameState{
 		print(player, role);
 		return role;
 	}
-	public void print(final UUID uuid, final RoleBase role) {
+	public void print(@NonNull final UUID uuid,@NonNull final RoleBase role) {
 		fr.nicknqck.player.GamePlayer gamePlayer = getGamePlayer().get(uuid);
 		final Player player = Bukkit.getPlayer(uuid);
 		if (player != null){
 			getInSpecPlayers().remove(player);
 			System.out.println(role.getOriginTeam().name()+" for role "+role.getRoles().name());
 			addInPlayerRoles(player, role);
-			if (getPlayerRoles().size() == getInGamePlayers().size()) {
-				if (getPlayerRoles().get(player).getOriginTeam() == TeamList.Demon && !getPlayerRoles().get(player).getRoles().equals(Roles.Kyogai)) {
+			if (getGamePlayer().size() == getInGamePlayers().size()) {
+				if (role.getOriginTeam() == TeamList.Demon && !role.getRoles().equals(Roles.Kyogai)) {
 					canBeAssassin.add(player);
 					System.out.println(player.getName()+" added to canBeAssassinList, size: "+canBeAssassin.size());
 				}
 				System.out.println("Giving Role Ended");
 			} else {
-				System.out.println("Giving Role: "+getPlayerRoles().size()+"/"+getInGamePlayers().size());
-				if (getPlayerRoles().get(player).getOriginTeam() == TeamList.Demon) {
+				System.out.println("Giving Role: "+getGamePlayer().size()+"/"+getInGamePlayers().size());
+				if (role.getOriginTeam() == TeamList.Demon) {
 					canBeAssassin.add(player);
 					System.out.println(player.getName()+" added to canBeAssassinList "+canBeAssassin.size());
 				}
@@ -957,18 +957,19 @@ public class GameState{
 			for (Titans t : Titans.values()) {
 				t.getTitan().onGetDescription(player);
 			}
-			player.sendMessage(getPlayerRoles().get(player).Desc());
-			player.spigot().sendMessage(getPlayerRoles().get(player).getComponent());
-			RoleBase role = getPlayerRoles().get(player);
+			final RoleBase role = getGamePlayer().get(player.getUniqueId()).getRole();
+			player.sendMessage(role.Desc());
+			player.spigot().sendMessage(role.getComponent());
 			if (!role.getKnowedRoles().isEmpty()) {
 				for (Class<? extends RoleBase> know : role.getKnowedRoles()) {
 					for (UUID u : getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
 						if (!hasRoleNull(u)) {
-							if (getPlayerRoles().get(p).getClass().equals(know)) {
-								String teamColor = getPlayerRoles().get(p).getOriginTeam().getColor();
-								player.sendMessage(teamColor+p.getDisplayName()+"§7 possède le rôle: "+teamColor+getPlayerRoles().get(p).getName());
+							final RoleBase pRole = getGamePlayer().get(u).getRole();
+							if (pRole.getClass().equals(know)) {
+								String teamColor = pRole.getOriginTeam().getColor();
+								player.sendMessage(teamColor+p.getDisplayName()+"§7 possède le rôle: "+teamColor+pRole.getName());
 							}
 						}
 					}
@@ -986,7 +987,7 @@ public class GameState{
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			if (!hasRoleNull(p.getUniqueId())) {
-				if (getPlayerRoles().get(p).getRoles() == role) {
+				if (getGamePlayer().get(p.getUniqueId()).getRole().getRoles() == role) {
 					return p;
 				}
 			}
@@ -1001,18 +1002,23 @@ public class GameState{
 		}
 		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
-			for (RoleBase e : getPlayerRoles().values()) {
+			for (GamePlayer gamePlayer : getGamePlayer().values()) {
+				if (gamePlayer == null)continue;
+				if (gamePlayer.getRole() == null)continue;
+				if (!gamePlayer.isAlive())continue;
+				final RoleBase e = gamePlayer.getRole();
 				if (e.getOriginTeam() == null){
 					e.setTeam(e.getRoles().getTeam());
 				}
 				if (e.getOriginTeam() != null) {
-					if (e.owner != null && !e.owner.getGameMode().equals(GameMode.SPECTATOR)) {
+					final Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
+					if (owner != null && !owner.getGameMode().equals(GameMode.SPECTATOR)) {
 						if (hashMap.get(e.getOriginTeam()) == null){
 							List<Roles> r = new ArrayList<>();
 							hashMap.put(e.getOriginTeam(), r);
 						}
 						if (Main.isDebug()){
-							System.out.println(e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
+							System.out.println("[getRoleList] "+e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
 						}
 						List<Roles> aList = hashMap.get(e.getOriginTeam());
 						aList.add(e.getRoles());
