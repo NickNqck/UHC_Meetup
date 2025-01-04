@@ -6,7 +6,6 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -54,7 +53,7 @@ public class TengenV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Tengen;
     }
 
@@ -114,8 +113,6 @@ public class TengenV2 extends PilierRoles {
                     armorContents.put(4, player.getInventory().getBoots());
                     player.getInventory().setBoots(null);
                 }
-                AttackUtils.CantAttack.add(player.getUniqueId());
-                AttackUtils.CantReceveAttack.add(player.getUniqueId());
                 invisible = true;
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     if (invisible) {
@@ -130,8 +127,6 @@ public class TengenV2 extends PilierRoles {
         private void removeInvisibility() {
             Player owner = Bukkit.getPlayer(getRole().getPlayer());
             if (owner == null)return;
-            AttackUtils.CantAttack.remove(owner.getUniqueId());
-            AttackUtils.CantReceveAttack.remove(owner.getUniqueId());
             owner.sendMessage("§cVous n'êtes plus invisible.");
             owner.removePotionEffect(PotionEffectType.INVISIBILITY);
             if (armorContents.get(1) != null) {
@@ -147,8 +142,7 @@ public class TengenV2 extends PilierRoles {
                 owner.getInventory().setBoots(armorContents.get(4));
             }
             invisible = false;
-            Bukkit.getScheduler().runTask(getPlugin(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true));
-
+            Bukkit.getScheduler().runTask(getPlugin(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), true));
         }
         @EventHandler
         private void onSprint(PlayerToggleSprintEvent event) {
@@ -160,11 +154,15 @@ public class TengenV2 extends PilierRoles {
         }
         @EventHandler
         private void onDamageByEntity(EntityDamageByEntityEvent event) {
-            if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-                if (getCooldown().getCooldownRemaining() >= 60*5) {
-                    removeInvisibility();
-                    event.setDamage(event.getDamage()*1.5);
-                }
+            if (!(event.getEntity() instanceof Player))return;
+            if (!(event.getDamager() instanceof Player))return;
+            if (getCooldown().getCooldownRemaining() < 60*5)return;
+            if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
+                removeInvisibility();
+                event.setDamage(event.getDamage()*1.5);
+            }
+            if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
+                event.setCancelled(true);
             }
         }
     }
