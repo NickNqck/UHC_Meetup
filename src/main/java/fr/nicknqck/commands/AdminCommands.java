@@ -64,7 +64,7 @@ public class AdminCommands implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("list")) {
 				if ((sender instanceof Player && ChatRank.hasRank(((Player) sender).getUniqueId()) && ChatRank.isHost(((Player) sender).getUniqueId())) || sender.hasPermission("Host")) {
-					gameState.getPlayerRoles().forEach((key, value) -> sender.sendMessage("§7 -§f "+key.getName()+"§7 -> "+value.getTeamColor()+value.getRoles().name()));
+					gameState.getGamePlayer().forEach((key, value) -> sender.sendMessage("§7 - "+value.getPlayerName()+"§7 -> "+value.getRole().getTeamColor()+value.getRole().getName()));
 					return true;
 				}
 			}
@@ -100,8 +100,8 @@ public class AdminCommands implements CommandExecutor{
 						return true;
 					}
 					if (!gameState.hasRoleNull(player.getUniqueId())) {
-						gameState.getPlayerRoles().get(player).resetCooldown();
-						for (Power power :  gameState.getPlayerRoles().get(player).getPowers()) {
+						gameState.getGamePlayer().get(player.getUniqueId()).getRole().resetCooldown();
+						for (Power power :  gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
 							if (power.getCooldown() == null)continue;
 							if (!power.isSendCooldown())continue;
 							power.getCooldown().resetCooldown();
@@ -125,7 +125,7 @@ public class AdminCommands implements CommandExecutor{
 				if (sender instanceof Player) {
 					Player player = (Player)sender;
 					if (!gameState.hasRoleNull(player.getUniqueId())) {
-						gameState.getPlayerRoles().get(player).resetCooldown();
+						gameState.getGamePlayer().get(player.getUniqueId()).getRole().resetCooldown();
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
 						if (Main.getInstance().getGameConfig().isBijusEnable()) {
 							for (Bijus bijus : Bijus.values()) {
@@ -366,8 +366,8 @@ public class AdminCommands implements CommandExecutor{
 								if (!gameState.hasRoleNull(p.getUniqueId()) && !gameState.getInSpecPlayers().contains(p)){
 									for (TeamList team : TeamList.values()){
 										if (args[0].equalsIgnoreCase(team.name())){
-											if (!gameState.getPlayerRoles().get(p).getOriginTeam().equals(team)){
-												gameState.getPlayerRoles().get(p).setTeam(team);
+											if (!gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam().equals(team)){
+												gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(team);
 												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+team.getColor()+" "+team.name());
 												p.sendMessage("Vous appartenez maintenant au camp des"+team.getColor()+" "+team.name());
 												GameListener.SendToEveryone("Un joueur à rejoint le camp des "+team.getColor()+team.name()+"§r par un Administrateur/Host");
@@ -474,15 +474,17 @@ public class AdminCommands implements CommandExecutor{
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
 									return true;
 								} else {
-									if (gameState.getPlayerRoles().containsKey(p)) {
+									if (!gameState.hasRoleNull(p.getUniqueId())) {
+										final RoleBase role = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+										final String speed = Bukkit.getPlayer(role.getPlayer()) != null ? Bukkit.getPlayer(role.getPlayer()).getWalkSpeed()+"" : "?";
 										sender.sendMessage(new String[] {
 												"§bVoici les effets du joueur "+p.getName()+ChatColor.DARK_GRAY+"§o§m-----------------------------------",
 												"",
-												AllDesc.Resi+": "+ gameState.getPlayerRoles().get(p).getResi()+"% + " +gameState.getPlayerRoles().get(p).getBonusResi()+"%",
+												AllDesc.Resi+": "+ role.getResi()+"% + " +role.getBonusResi()+"%",
 												"",
-												ChatColor.RED+"Force: 20% + "+gameState.getPlayerRoles().get(p).getBonusForce()+"%",
+												ChatColor.RED+"Force: 20% + "+role.getBonusForce()+"%",
 												"",
-												ChatColor.AQUA+"Speed: "+gameState.getPlayerRoles().get(p).owner.getWalkSpeed(),
+												ChatColor.AQUA+"Speed: "+speed,
 												"",
 												ChatColor.DARK_GRAY+"§o§m-----------------------------------"
 										});
@@ -502,9 +504,9 @@ public class AdminCommands implements CommandExecutor{
 									sender.sendMessage("Veuiller indiquer un pseudo correcte");
 									return true;
 								} else {
-									if (gameState.getPlayerRoles().containsKey(p)) {
+									if (!gameState.hasRoleNull(p.getUniqueId())) {
 									Bukkit.broadcastMessage("Le joueur: "+sender.getName()+" connais maintenant le rôle du joueur: "+p.getName());
-									sender.sendMessage("Le rôle de la personne: "+p.getName()+" est "+gameState.getPlayerRoles().get(p).getOriginTeam().getColor()+gameState.getPlayerRoles().get(p).getRoles().name());
+									sender.sendMessage("Le rôle de la personne: "+p.getName()+" est "+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam().getColor()+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getName());
 									return true;
 									}
 								}
@@ -528,9 +530,10 @@ public class AdminCommands implements CommandExecutor{
 										gameState.RevivePlayer(p);
 										sender.sendMessage(p.getName()+" à bien été réssucité");
 										HubListener.getInstance().giveStartInventory(p);
-										gameState.getPlayerRoles().get(p).GiveItems();
-										gameState.getPlayerRoles().get(p).setMaxHealth(20.0);
-										gameState.getPlayerRoles().get(p).RoleGiven(gameState);
+										final RoleBase role = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+										role.GiveItems();
+										role.setMaxHealth(20.0);
+										role.RoleGiven(gameState);
 										return true;
 									}
 								}
@@ -555,7 +558,7 @@ public class AdminCommands implements CommandExecutor{
 									texte.addExtra("UUID:§b "+p.getUniqueId().toString()+"\n");
 									texte.addExtra("\n");
 									if (!gameState.hasRoleNull(p.getUniqueId())) {
-										RoleBase role = gameState.getPlayerRoles().get(p);
+										RoleBase role = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 										texte.addExtra("Role:§b "+role.getOriginTeam().getColor()+role.getName());
 										texte.addExtra("\n");
 										texte.addExtra("Camp d'origine:§b "+ StringUtils.replaceUnderscoreWithSpace(role.getOriginTeam().getColor()+role.getOriginTeam().name()));
@@ -622,7 +625,7 @@ public class AdminCommands implements CommandExecutor{
 						if (!gameState.hasRoleNull(p.getUniqueId())) {
 							for (TeamList team : TeamList.values()) {
 								if (team.name().equalsIgnoreCase(args[2])) {
-									gameState.getPlayerRoles().get(p).setTeam(team);
+									gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(team);
 									break;
 								}
 							}
