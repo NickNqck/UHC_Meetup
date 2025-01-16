@@ -2,6 +2,7 @@ package fr.nicknqck.commands.roles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
@@ -36,7 +37,7 @@ public class NsCommands implements CommandExecutor {
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
 		List<Player> toReturn = new ArrayList<>();
-		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e.getUniqueId())).filter(e -> gameState.getPlayerRoles().get(e).getRoles() == roles).forEach(e -> toReturn.add(e.getPlayer()));
+		Bukkit.getOnlinePlayers().stream().filter(e -> !gameState.hasRoleNull(e.getUniqueId())).filter(e -> gameState.getGamePlayer().get(e.getUniqueId()).getRole().getRoles() == roles).forEach(e -> toReturn.add(e.getPlayer()));
 		return toReturn;
 	}
 	@Override
@@ -245,11 +246,13 @@ public class NsCommands implements CommandExecutor {
 								GameListener.SendToEveryone("§c§lLe Jûbi à été invoquée !");
 								GameListener.SendToEveryone("");
 								for (Player p : Bukkit.getOnlinePlayers()) {
-									gameState.getPlayerRoles().get(sender).playSound(p, "mob.enderdragon.end");
+									if (!gameState.hasRoleNull(p.getUniqueId())){
+										gameState.getGamePlayer().get(sender.getUniqueId()).getRole().playSound(p, "mob.enderdragon.end");
+									}
 								}
 								//Pour la liste des sons
 								//https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/mapping-and-modding-tutorials/2213619-1-8-all-playsound-sound-arguments
-								gameState.getPlayerRoles().get(sender).giveItem(sender, true, BijuListener.getInstance().JubiItem());
+								gameState.getGamePlayer().get(sender.getUniqueId()).getRole().giveItem(sender, true, BijuListener.getInstance().JubiItem());
                             } else {
 								send.sendMessage("§7Vous n'avez pas asser de§d Biju");
                             }
@@ -258,8 +261,8 @@ public class NsCommands implements CommandExecutor {
                         }
                         return true;
                     }
-					if (!gameState.hasRoleNull(sender.getUniqueId()) && gameState.getPlayerRoles().get(sender).getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
-						NSRoles role = (NSRoles) gameState.getPlayerRoles().get(sender);
+					if (!gameState.hasRoleNull(sender.getUniqueId()) && gameState.getGamePlayer().get(sender.getUniqueId()).getRole().getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
+						NSRoles role = (NSRoles) gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
 						role.onNsCommand(args);
 						if (!role.getPowers().isEmpty()) {
 							for (Power power : role.getPowers()) {
@@ -269,7 +272,9 @@ public class NsCommands implements CommandExecutor {
 							}
 						}
 						if (role instanceof Obito) {
-							for (RoleBase r : gameState.getPlayerRoles().values()) {
+							for (final UUID u : gameState.getInGamePlayers()) {
+								if (gameState.hasRoleNull(u))continue;
+								final RoleBase r = gameState.getGamePlayer().get(u).getRole();
 								if (r.getGamePlayer().isAlive()) {
 									if (r instanceof Kabuto) {
 										Kabuto kabuto = (Kabuto) r;

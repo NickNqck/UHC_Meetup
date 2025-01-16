@@ -43,7 +43,7 @@ public class AotCommands implements CommandExecutor {
 								for (Titans t : Titans.values()) {
 									t.getTitan().onSubCommand(player, args);
 								}
-								if (gameState.getPlayerRoles().get(player) instanceof AotRoles) {
+								if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof AotRoles) {
 									AotRoles aotRoles = (AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 									if (aotRoles.getGamePlayer().isAlive()) {
 										aotRoles.onAotCommands(arg, args, gameState);
