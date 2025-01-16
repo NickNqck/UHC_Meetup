@@ -58,7 +58,7 @@ public class Chat implements Listener{
 					if (!gameState.hasRoleNull(u)) {
 						if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
 							if (!gameState.hasRoleNull(p.getUniqueId())) {
-								gameState.getPlayerRoles().get(ig).onAllPlayerChat(e, p);
+								gameState.getGamePlayer().get(ig.getUniqueId()).getRole().onAllPlayerChat(e, p);
 							}
 						}
 					}
