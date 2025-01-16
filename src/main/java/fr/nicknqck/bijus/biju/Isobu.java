@@ -139,7 +139,7 @@ public class Isobu extends Biju{
         					p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
         				}
         			}
-        			gameState.getPlayerRoles().get(k).giveItem(k, true, getItem());
+        			gameState.getGamePlayer().get(k.getUniqueId()).getRole().giveItem(k, true, getItem());
         			Bukkit.broadcastMessage("§a" + getName() + " §fa été tué.");
         			if (hisMaster(k)) {
         				k.sendMessage("§7Vous avez récupéré "+getName());
@@ -235,7 +235,7 @@ public class Isobu extends Biju{
 	        	sendCooldown(player, BijuListener.getInstance().getIsobuCooldown());
 	            return;
 	        }
-	        GameState.getInstance().getPlayerRoles().get(player).giveHealedHeartatInt(player, 2);
+	        GameState.getInstance().getGamePlayer().get(player.getUniqueId()).getRole().giveHealedHeartatInt(player, 2);
 	        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 5 * 20 * 60, 0, false, false), true);
 	        player.sendMessage("Vous venez d'activé "+getName());
 	        BijuListener.getInstance().setIsobuDamage(player.getUniqueId());
@@ -252,7 +252,7 @@ public class Isobu extends Biju{
 					if (value.getBiju().getName().equals(getName())) {//je vérifie si le nom du bijus trouvé dans le for est celui de Isobu
 						if (value.getBiju().getMaster().equals(p.getUniqueId())) {
 							p.sendMessage("Vous n'êtes plus sous l'effet de "+getName());
-							GameState.getInstance().getPlayerRoles().get(p).setMaxHealth(GameState.getInstance().getPlayerRoles().get(p).getMaxHealth()-4);
+							GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().setMaxHealth(GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().getMaxHealth()-4);
 						}
 					}
 				}
