@@ -21,8 +21,8 @@ public class CRolesCommands implements CommandExecutor {
         if (commandSender instanceof Player) {
             if (!gameState.hasRoleNull(((Player) commandSender).getUniqueId())) {
                 Player sender = (Player) commandSender;
-                if (gameState.getPlayerRoles().get(sender) instanceof CustomRolesBase) {
-                    CustomRolesBase role = (CustomRolesBase) gameState.getPlayerRoles().get(sender);
+                if (gameState.getGamePlayer().get(sender.getUniqueId()).getRole() instanceof CustomRolesBase) {
+                    CustomRolesBase role = (CustomRolesBase) gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
                     if (role.getGamePlayer().isAlive()) {
                         if (!role.getPowers().isEmpty()) {
                             for (Power power : role.getPowers()) {
