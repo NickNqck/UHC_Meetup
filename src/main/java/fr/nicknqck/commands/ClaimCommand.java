@@ -21,7 +21,7 @@ public class ClaimCommand implements CommandExecutor {
 		if (s instanceof Player) {
 			Player sender = (Player)s;
 			if (!gameState.hasRoleNull(sender.getUniqueId())) {
-				RoleBase role = gameState.getPlayerRoles().get(sender);
+				RoleBase role = gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
 				if (!role.toClaim.isEmpty()) {
 					if (role.toClaim.size() <= 9) {
 						org.bukkit.inventory.Inventory inv = Bukkit.createInventory(sender, 9, "§c/claim");
