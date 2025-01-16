@@ -153,7 +153,7 @@ public class Kokuo extends Biju {
 			}
         	if (k != null) {
         		if (!gameState.hasRoleNull(k.getUniqueId())) {
-        			gameState.getPlayerRoles().get(k).giveItem(k, true, getItem());
+        			gameState.getGamePlayer().get(k.getUniqueId()).getRole().giveItem(k, true, getItem());
         			Bukkit.broadcastMessage("§a" + getName() + " §fa été tué.");
         			if (hisMaster(k)) {
         				k.sendMessage("§7Vous avez récupéré "+getName());
@@ -223,7 +223,7 @@ public class Kokuo extends Biju {
 					if (value.getBiju().getName().equals(getName())) {//je vérifie si le nom du bijus trouvé dans le for est celui de Isobu
 						if (value.getBiju().getMaster().equals(p.getUniqueId())) {
 							p.sendMessage("Vous n'êtes plus sous l'effet de "+getName());
-							GameState.getInstance().getPlayerRoles().get(p).setMaxHealth(GameState.getInstance().getPlayerRoles().get(p).getMaxHealth()-4);
+							GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().setMaxHealth(GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().getMaxHealth()-4);
 						}
 					}
 				}

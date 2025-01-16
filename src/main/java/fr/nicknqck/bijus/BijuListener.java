@@ -146,7 +146,7 @@ public class BijuListener implements Listener{
         				return;
         			}
         			if (!GameState.getInstance().hasRoleNull(event.getPlayer().getUniqueId())) {
-        				RoleBase role = GameState.getInstance().getPlayerRoles().get(event.getPlayer());
+        				RoleBase role = GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
         				role.givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*300, 1, true);
         				role.givePotionEffet(PotionEffectType.SPEED, 20*300, 2, true);
         				role.givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*300, 1, true);
@@ -168,7 +168,7 @@ public class BijuListener implements Listener{
 							@Override
 							public void run() {
 								i--;
-								if (i == 0 || GameState.getInstance().getServerState() != ServerStates.InGame || !GameState.getInstance().getInGamePlayers().contains(event.getPlayer())) {
+								if (i == 0 || GameState.getInstance().getServerState() != ServerStates.InGame || !GameState.getInstance().getInGamePlayers().contains(event.getPlayer().getUniqueId())) {
 									if (GameState.getInstance().getJubiCrafter() != null) {
 										GameState.getInstance().getJubiCrafter().sendMessage("§7Vous n'êtes plus sous l'effet du§d Jûbi");
 										GameState.getInstance().getJubiCrafter().removePotionEffect(PotionEffectType.REGENERATION);
@@ -216,7 +216,7 @@ public class BijuListener implements Listener{
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			if (!GameState.getInstance().hasRoleNull(p.getUniqueId())) {
-				if (GameState.getInstance().getPlayerRoles().get(p).onEntityDeath(e, e.getEntity())) {
+				if (GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().onEntityDeath(e, e.getEntity())) {
 					return;
 				}
 			}
