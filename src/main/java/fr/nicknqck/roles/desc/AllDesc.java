@@ -359,9 +359,9 @@ public class AllDesc{
 			"",
 			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur vous obtiendrez 1 demi"+coeur+" permanent"),
 			"",
-			ChatColor.BOLD + " Commande: ",
+			particularite,
             "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+"/ds chat"+ChatColor.RESET+ " Vous permet de parler avec votre patron§c Muzan",
+            ChatColor.DARK_GRAY + " • Lorsque vous envoyez un message dans le§c chat§f commençant par un \"§c!§f\", vous permet de parler avec§c Muzan",
             "",
 			bar
 	};
@@ -405,9 +405,11 @@ public class AllDesc{
 			"",
 			(ChatColor.BOLD+"Commande: "),
 			"",
-			ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"/ds chat"+ChatColor.RESET+" Vous permet de parler avec votre subordonné de§c Kokushibo",
-			"",
 			ChatColor.DARK_GRAY+" • "+"§6§l/ds give§r Vous permet en spécifiant un joueur de lui donner le pouvoir de l'§cinfection§r, il pourra alors via un item séléctionné un joueur pour le rallier au camp des§c démons§r ("+ChatColor.DARK_RED+"ATTENTION§r: ce pouvoir ne permet d'infecter que les rôles§f Slayers§r)",
+			"",
+			particularite,
+			"",
+			ChatColor.DARK_GRAY + " • Lorsque vous envoyez un message dans le§c chat§f commençant par un \"§c!§f\", vous permet de parler avec§c Kokushibo",
 			"",
 			bar
 	};
