@@ -5,6 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
@@ -13,12 +14,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class GamePlayer {
@@ -50,6 +52,8 @@ public class GamePlayer {
 	@Nullable
     private GamePlayer killer;
 	private final ActionBarManager actionBarManager;
+	private final List<ChatWithManager> chatWithManager;
+
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
 		this.playerName = gamePlayer.getName();
@@ -57,6 +61,7 @@ public class GamePlayer {
 		this.lastInventoryContent = gamePlayer.getInventory().getContents();
 		this.scoreboard = Main.getInstance().getScoreboardManager().getScoreboards().get(gamePlayer.getUniqueId());
 		this.actionBarManager = new ActionBarManager(this);
+		this.chatWithManager = new ArrayList<>();
 		setAlive(true);
 		setCanRevive(false);
 	}
@@ -106,6 +111,10 @@ public class GamePlayer {
 		} else {
 			this.discRunnable.setMessagesToSend(messages);
 		}
+	}
+	@SafeVarargs
+    public final void startChatWith(final String begin, final String constructor, final Class<? extends RoleBase>... roleToTalks) {
+		this.chatWithManager.add(new ChatWithManager(begin, constructor, this, roleToTalks));
 	}
     public static class DiscRunnable extends BukkitRunnable {
 
@@ -216,4 +225,38 @@ public class GamePlayer {
 		}
 
     }
+	public static class ChatWithManager implements Listener {
+
+		final String constructor;
+		final String starter;
+		final List<Class<? extends RoleBase>> toTalk;
+		final GamePlayer me;
+
+		@SafeVarargs
+        public ChatWithManager(@NonNull final String starter, @NonNull String constructor, @NonNull GamePlayer me, Class<? extends RoleBase>... toTalk) {
+            this.constructor = constructor;
+            this.toTalk = new ArrayList<>(Arrays.asList(toTalk));
+            this.me = me;
+			this.starter = starter;
+            EventUtils.registerRoleEvent(this);
+		}
+
+		@EventHandler
+		private void onChat(@NonNull AsyncPlayerChatEvent event) {
+			if (event.getPlayer().getUniqueId().equals(me.getUuid())) {
+				if (!event.getMessage().startsWith(constructor))return;
+				if (!me.isAlive())return;
+				final GameState gameState = GameState.getInstance();
+				for (final UUID uuid : gameState.getInGamePlayers()) {
+					if (!gameState.hasRoleNull(uuid)) {
+						final RoleBase role = gameState.getGamePlayer().get(uuid).getRole();
+						if (!toTalk.contains(role.getClass()))continue;
+						role.getGamePlayer().sendMessage(starter+"§7"+ event.getMessage().substring(constructor.length()));
+					}
+				}
+				me.sendMessage(starter+"§7"+ event.getMessage().substring(constructor.length()));
+			}
+		}
+
+	}
 }

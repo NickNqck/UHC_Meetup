@@ -5,7 +5,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.pregen.PregenerationTask;
@@ -81,44 +80,6 @@ public class HubConfig implements Listener {
                             if (Main.getInstance().getGameConfig().getCritPercent() > 0) {
                                 Main.getInstance().getGameConfig().setCritPercent(Main.getInstance().getGameConfig().getCritPercent()-1);
                             }
-                        }
-                    } else if (item.isSimilar(Chat.getColoritem())) {
-                        if (action.equals(InventoryAction.PICKUP_ALL)) {
-                            ChatColor c = Chat.getopColor();
-                            if (c == ChatColor.RED) Chat.setopColor(ChatColor.GOLD);
-                            if (c == ChatColor.GOLD) Chat.setopColor(ChatColor.YELLOW);
-                            if (c == ChatColor.YELLOW) Chat.setopColor(ChatColor.DARK_GREEN);
-                            if (c == ChatColor.DARK_GREEN) Chat.setopColor(ChatColor.GREEN);
-                            if (c == ChatColor.GREEN) Chat.setopColor(ChatColor.AQUA);
-                            if (c == ChatColor.AQUA) Chat.setopColor(ChatColor.DARK_AQUA);
-                            if (c == ChatColor.DARK_AQUA) Chat.setopColor(ChatColor.DARK_BLUE);
-                            if (c == ChatColor.DARK_BLUE) Chat.setopColor(ChatColor.BLUE);
-                            if (c == ChatColor.BLUE) Chat.setopColor(ChatColor.LIGHT_PURPLE);
-                            if (c == ChatColor.LIGHT_PURPLE) Chat.setopColor(ChatColor.DARK_PURPLE);
-                            if (c == ChatColor.DARK_PURPLE) Chat.setopColor(ChatColor.WHITE);
-                            if (c == ChatColor.WHITE) Chat.setopColor(ChatColor.GRAY);
-                            if (c == ChatColor.GRAY) Chat.setopColor(ChatColor.DARK_GRAY);
-                            if (c == ChatColor.DARK_GRAY) Chat.setopColor(ChatColor.BLACK);
-                            if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_RED);
-                            if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.RED);
-                        } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                            ChatColor c = Chat.getopColor();
-                            if (c == ChatColor.RED) Chat.setopColor(ChatColor.DARK_RED);
-                            if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.BLACK);
-                            if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_GRAY);
-                            if (c == ChatColor.DARK_GRAY) Chat.setopColor(ChatColor.GRAY);
-                            if (c == ChatColor.GRAY) Chat.setopColor(ChatColor.WHITE);
-                            if (c == ChatColor.WHITE)Chat.setopColor(ChatColor.DARK_PURPLE);
-                            if (c == ChatColor.DARK_PURPLE) Chat.setopColor(ChatColor.LIGHT_PURPLE);
-                            if (c == ChatColor.LIGHT_PURPLE) Chat.setopColor(ChatColor.BLUE);
-                            if (c == ChatColor.BLUE) Chat.setopColor(ChatColor.DARK_BLUE);
-                            if (c == ChatColor.DARK_BLUE) Chat.setopColor(ChatColor.DARK_AQUA);
-                            if (c == ChatColor.DARK_AQUA) Chat.setopColor(ChatColor.AQUA);
-                            if (c == ChatColor.AQUA) Chat.setopColor(ChatColor.GREEN);
-                            if (c == ChatColor.GREEN) Chat.setopColor(ChatColor.DARK_GREEN);
-                            if (c == ChatColor.DARK_GREEN) Chat.setopColor(ChatColor.YELLOW);
-                            if (c == ChatColor.YELLOW) Chat.setopColor(ChatColor.GOLD);
-                            if (c == ChatColor.GOLD) Chat.setopColor(ChatColor.RED);
                         }
                     } else if (item.isSimilar(GUIItems.getPregen(gameState))) {
                         if (!gameState.hasPregen){

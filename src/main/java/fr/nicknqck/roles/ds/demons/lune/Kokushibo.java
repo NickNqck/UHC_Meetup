@@ -52,6 +52,7 @@ public class Kokushibo extends DemonsRoles {
 		setLameIncassable(owner, true);
 		solo = false;
 		killtanjiro = false;
+		getGamePlayer().startChatWith("§cKokushibo: ", "!", Muzan.class);
 	}
 
 	@Override
