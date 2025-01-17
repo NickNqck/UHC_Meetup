@@ -796,7 +796,6 @@ public class Inventories {
                     } else {
                         inv.setItem(40, AntiPvP.getnotlobbypvp());
                     }
-                    inv.setItem(34, Chat.getColoritem());
                     inv.setItem(43, GUIItems.getCrit(gameState));
                 }
             }

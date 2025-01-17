@@ -5,20 +5,16 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
 import java.util.UUID;
 
-public class Chat implements Listener{
-	private static ChatColor opcolor = ChatColor.RED;
+public class Chat implements Listener {
+
     private final GameState gameState;
 	
 	public Chat(GameState gameState) {
@@ -30,7 +26,7 @@ public class Chat implements Listener{
 	public void onPlayerTalk(org.bukkit.event.player.PlayerChatEvent e) {
 		Player p = e.getPlayer();
 		String msg = e.getMessage();
-		String debut = ChatColor.GRAY+"§l» §r";
+		String debut = "§7§l» §r";
 		ChatRank rank = ChatRank.getPlayerGrade(p);
 		if (rank.equals(ChatRank.Op)) {
 			if (msg.startsWith("@")) {
@@ -73,15 +69,5 @@ public class Chat implements Listener{
 		String message = event.getMessage();
 		message = message.replace("&", "§");
 		event.setMessage(message);
-	}
-	public static ChatColor getopColor() {return opcolor;}
-	public static void setopColor(ChatColor c) {opcolor = c;}
-	public static ItemStack getColoritem() {
-		ItemStack stack = new ItemStack(Material.FEATHER, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(getopColor()+"Une phrase au hasard");
-		meta.setLore(Collections.singletonList("Clique pour changer la couleur des gens qui sont op sur le serveur"));
-		stack.setItemMeta(meta);
-		return stack;
 	}
 }

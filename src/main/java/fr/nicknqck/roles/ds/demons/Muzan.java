@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
 import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -53,7 +54,10 @@ public class Muzan extends DemonsRoles {
 		return new ItemStack[0];
 	}
 	@Override
-	public void RoleGiven(GameState gameState) {setResi(20);}
+	public void RoleGiven(GameState gameState) {
+		setResi(20);
+		getGamePlayer().startChatWith("§cMuzan: ", "!", Kokushibo.class);
+	}
 	@Override
 	public void Update(GameState gameState) {
 		if (killnez) {
