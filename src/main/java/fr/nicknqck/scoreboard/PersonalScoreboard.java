@@ -72,13 +72,13 @@ public class PersonalScoreboard {
     		
     		objectiveSign.setLine(0, "§c");
     		if (!this.gameState.hasRoleNull(player.getUniqueId())) {
-    			RoleBase role = this.gameState.getPlayerRoles().get(player);
+    			RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 				String roleName = role.getName();
 				String iRole = "§fRôle: ";
 				if (premsg.length()+iRole.length()+ roleName.length() + role.getTeam().getColor().length() >= 40) {
 					roleName = role.getRoles().name();
 				}
-    			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
+    			if (role.getTeam() != null) {
     				objectiveSign.setLine(1, premsg+iRole+role.getTeam().getColor()+roleName);
     			}else {
     				objectiveSign.setLine(1, premsg+iRole+roleName);
@@ -112,10 +112,11 @@ public class PersonalScoreboard {
     		if (this.gameState.roletab) {
     			if (this.gameState.roleTimer < this.gameState.getInGameTime()) {
     				if (!this.gameState.hasRoleNull(player.getUniqueId())) {
-    					if (this.gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
-    						this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).getOriginTeam().getColor()+this.gameState.getPlayerRoles().get(player).getRoles().name()+" "+player.getDisplayName(), player);
+						final RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
+    					if (role.getOriginTeam() != null) {
+    						this.gameState.changeTabPseudo(role.getOriginTeam().getColor()+role.getRoles().name()+" "+player.getDisplayName(), player);
 						}else {
-							this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).getRoles().name()+" "+player.getDisplayName(), player);
+							this.gameState.changeTabPseudo(role.getRoles().name()+" "+player.getDisplayName(), player);
 						}
     				}
     			}
@@ -123,7 +124,7 @@ public class PersonalScoreboard {
     		if (gameState.getJubiCrafter() != null) {
     			if (gameState.getJubiCrafter().getUniqueId().equals(player.getUniqueId())) {
     				gameState.changeTabPseudo("§dJubi "+player.getDisplayName(), player);
-    			} else if (gameState.getPlayerRoles().get(player).getOriginTeam().equals(TeamList.Jubi)) {
+    			} else if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getOriginTeam().equals(TeamList.Jubi)) {
     				gameState.changeTabPseudo("§d "+player.getDisplayName(), player);
     			}
     		}

@@ -165,7 +165,7 @@ public class Loc {
             	if (referencePlayer.getWorld().getName().equals("nakime")) {
             		if (onlinePlayer.getWorld().equals(referencePlayer.getWorld())) {
                 		if (!gameState.hasRoleNull(onlinePlayer.getUniqueId())) {
-                			if (gameState.getPlayerRoles().get(onlinePlayer).getOriginTeam() != TeamList.Demon) {
+                			if (gameState.getGamePlayer().get(onlinePlayer.getUniqueId()).getRole().getOriginTeam() != TeamList.Demon) {
                 				double distanceSquared = referencePlayer.getLocation().distanceSquared(onlinePlayer.getLocation());
 
                                 if (distanceSquared <= radius * radius && distanceSquared < nearestDistanceSquared) {
