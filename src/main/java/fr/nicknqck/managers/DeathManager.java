@@ -254,7 +254,7 @@ public class DeathManager implements Listener {
         SendToEveryone(victim.getDisplayName()+"§7 est mort,");
         if (!GameState.getInstance().hasRoleNull(victim.getUniqueId())) {
             World world = Bukkit.getWorld("nakime");
-            RoleBase role = GameState.getInstance().getPlayerRoles().get(victim);
+            RoleBase role = GameState.getInstance().getGamePlayer().get(victim.getUniqueId()).getRole();
             if (world != null && victim.getWorld().equals(world)){
                 SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? role.getTeam().getColor()+role.getName() : "§k"+victim.getDisplayName()));
             } else {
