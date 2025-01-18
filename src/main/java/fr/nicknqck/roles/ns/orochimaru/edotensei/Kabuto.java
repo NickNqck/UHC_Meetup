@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -376,7 +377,9 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	private void verifyAliveOrochimaru(GameState gameState) {
 		int amountDeath = 0;
 		int amountIG = 0;
-		for (RoleBase role : gameState.getPlayerRoles().values()) {
+		for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+			if (gameState.hasRoleNull(gamePlayer.getUuid()))continue;
+			final RoleBase role = gamePlayer.getRole();
 			if (role.getOriginTeam().equals(TeamList.Orochimaru)) {
 				amountIG++;
 				if (!role.getGamePlayer().isAlive()) {

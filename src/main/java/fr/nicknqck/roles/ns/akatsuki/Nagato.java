@@ -62,7 +62,7 @@ public class Nagato extends AkatsukiRoles {
             if (p == null)continue;
             if (!gameState.hasRoleNull(p.getUniqueId())) {
                 if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
-                    if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
+                    if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
                         mates.add(p);
                     }
                 }
