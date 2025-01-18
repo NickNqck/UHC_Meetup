@@ -56,7 +56,7 @@ public class Erwin extends SoldatsRoles {
 							if (gameState.hasRoleNull(target.getUniqueId())) {
 								owner.sendMessage("La personne visée ne possède pas de rôle veuiller visée quelqu'un d'autre");
 							}else {
-								if (gameState.getPlayerRoles().get(target).getOriginTeam() != null) {
+								if (gameState.getGamePlayer().get(target.getUniqueId()).getRole().getOriginTeam() != null) {
 									if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof Eren) {
 										owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+target.getName()+"§r appartient au camp des§a "+TeamList.Soldat.name());
 										cmdUse+=1;
@@ -67,7 +67,7 @@ public class Erwin extends SoldatsRoles {
 											target.sendMessage(AllDesc.bar);
 										}
 									}else {
-										owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+target.getName()+"§r appartient au camp des "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+gameState.getPlayerRoles().get(target).getOriginTeam().name());
+										owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+target.getName()+"§r appartient au camp des "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getOriginTeam().name());
 										cmdUse+=1;
 										int r = RandomUtils.getRandomInt(0, 2);
 										if (r < 1) {
