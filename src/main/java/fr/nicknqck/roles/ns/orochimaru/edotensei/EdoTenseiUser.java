@@ -106,7 +106,7 @@ public class EdoTenseiUser implements Listener {
                                 if (clicked != null) {
                                     GameState gameState = GameState.getInstance();
                                     if (!gameState.hasRoleNull(clicked.getUniqueId())) {
-                                        RoleBase role = gameState.getPlayerRoles().get(clicked);
+                                        RoleBase role = gameState.getGamePlayer().get(clicked.getUniqueId()).getRole();
                                         Player owner = (Player) event.getWhoClicked();
                                         edoTenseis.put(clicked.getUniqueId(), role);
                                         owner.closeInventory();
