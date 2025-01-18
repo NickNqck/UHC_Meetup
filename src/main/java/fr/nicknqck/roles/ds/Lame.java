@@ -30,8 +30,8 @@ public class Lame implements Listener{
 			GameState gameState = GameState.getInstance();
 			if(gameState.getServerState() != ServerStates.InGame)return;
 			if (!gameState.hasRoleNull(p.getUniqueId())) {
-				if (gameState.getPlayerRoles().get(p) instanceof DemonsSlayersRoles) {
-					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getPlayerRoles().get(p);
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof DemonsSlayersRoles) {
+					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 					if (role.isCanuseblade()) {
 						if (role.getLames() != null) {
 							p.sendMessage("§cVous avez déjà une lame de nichirin");
