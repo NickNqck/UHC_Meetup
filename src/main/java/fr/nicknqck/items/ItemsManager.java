@@ -68,27 +68,26 @@ public class ItemsManager implements Listener {
 	public void OnItemConsumed(PlayerItemConsumeEvent event) {
 		ItemStack item = event.getItem();
 		Player player = event.getPlayer();
-		if (!gameState.getPlayerRoles().containsKey(player))return;
-		gameState.getPlayerRoles().get(player).onEat(item, gameState);
+		if (gameState.hasRoleNull(player.getUniqueId()))return;
+		final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
+		role.onEat(item, gameState);
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player ig = Bukkit.getPlayer(u);
 			if (ig == null)continue;
 			if (!gameState.hasRoleNull(ig.getUniqueId())) {
-				gameState.getPlayerRoles().get(ig).onALLPlayerEat(event, item, player);
+				gameState.getGamePlayer().get(u).getRole().onALLPlayerEat(event, item, player);
 			}
 		}
 		if (item.getType() == Material.GOLDEN_APPLE) {
-			RoleBase role = gameState.getPlayerRoles().get(player);
-			if (role == null)return;
-			player.updateInventory();
+            player.updateInventory();
 			if (Anti_Abso.isAntiabsoall()) {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {	
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20*60*2, 0, false, false), true);
 					player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*4, 1, false, false), true);
 	        }, 1);	
 			} else if (Anti_Abso.isAntiabsoinvi()) {
 				if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 						player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20*60*2, 0, false, false), true);
 						player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*4, 1, false, false), true);
 					}, 1);
