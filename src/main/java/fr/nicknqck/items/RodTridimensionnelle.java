@@ -130,6 +130,7 @@ public class RodTridimensionnelle implements Listener {
                 cancel();
                 return;
             }
+            final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
             this.fishHook.setVelocity(new Vector(0, 0, 0));
             double vectorX = this.loc.getX() - this.player.getLocation().getX();
             double vectorY = this.loc.getY() - this.player.getLocation().getY();
@@ -137,9 +138,9 @@ public class RodTridimensionnelle implements Listener {
             Vector v = (new Vector(vectorX, vectorY, vectorZ)).add(new Vector(0, 3, 0)).multiply(0.02D);
             if (this.player.getLocation().distance(this.fishHook.getLocation()) > 10.0D) {
                 double speedMultiplier = 0;
-                if (gameState.getPlayerRoles().get(player) instanceof AotRoles){
-                    speedMultiplier = ((AotRoles) gameState.getPlayerRoles().get(player)).RodSpeedMultipliyer;
-                } else if (gameState.getPlayerRoles().get(player) instanceof KillerBee) {
+                if (role instanceof AotRoles){
+                    speedMultiplier = ((AotRoles) role).RodSpeedMultipliyer;
+                } else if (role instanceof KillerBee) {
                     speedMultiplier = 0;
                 }
                 v.multiply(0.85D+speedMultiplier);
@@ -159,19 +160,19 @@ public class RodTridimensionnelle implements Listener {
             cancel();
             double r = loc.distance(initLoc)/2;
             if (bool) {
-                if (!(gameState.getPlayerRoles().get(player) instanceof AotRoles))return;
-                AotRoles role = (AotRoles) gameState.getPlayerRoles().get(player);
-            	if (role.gazAmount - r <= 0) {
-                	role.gazAmount = 0;
-                }else{
-                	role.gazAmount -= r;
+                if (!(role instanceof AotRoles))return;
+                AotRoles aotRoles = (AotRoles) role;
+            	if (aotRoles.gazAmount - r <= 0) {
+                	aotRoles.gazAmount = 0;
+                } else{
+                	aotRoles.gazAmount -= r;
                 }
                 DecimalFormat df = new DecimalFormat("0.0");
-                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(role.gazAmount)+"%");
-                role.setActualTridiCooldown(gameState.TridiCooldown);
+                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(aotRoles.gazAmount)+"%");
+                aotRoles.setActualTridiCooldown(gameState.TridiCooldown);
             } else {
-                if (gameState.getPlayerRoles().get(player) instanceof KillerBee) {
-                    ((KillerBee) gameState.getPlayerRoles().get(player)).onTentaculeEnd(r);
+                if (role instanceof KillerBee) {
+                    ((KillerBee) role).onTentaculeEnd(r);
                 }
             }
         }
