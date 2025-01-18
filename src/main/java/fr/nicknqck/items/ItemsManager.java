@@ -98,8 +98,8 @@ public class ItemsManager implements Listener {
 	@EventHandler
 	public void PlayerRecupItemEvent(PlayerPickupItemEvent e) {
 		ItemStack s = e.getItem().getItemStack();
-		if (gameState.getPlayerRoles().containsKey(e.getPlayer())) {
-			e.setCancelled(gameState.getPlayerRoles().get(e.getPlayer()).onPickupItem(e.getItem()));
+		if (!gameState.hasRoleNull(e.getPlayer().getUniqueId())) {
+			e.setCancelled(gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).getRole().onPickupItem(e.getItem()));
 		}
 		if (s.hasItemMeta()) {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
@@ -108,7 +108,7 @@ public class ItemsManager implements Listener {
 						String name = s.getItemMeta().getDisplayName();
 						if (name.equalsIgnoreCase("§dGyûki") || name.equalsIgnoreCase("§6Kyubi") || name.equalsIgnoreCase("§6Kyûbi")) {
 							if (!gameState.hasRoleNull(e.getPlayer().getUniqueId())) {
-								if (gameState.getPlayerRoles().get(e.getPlayer()).getOriginTeam().equals(TeamList.Jubi)) {
+								if (gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).getRole().getOriginTeam().equals(TeamList.Jubi)) {
 									return;
 								}
 							}

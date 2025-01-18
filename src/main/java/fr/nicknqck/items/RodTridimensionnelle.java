@@ -43,7 +43,7 @@ public class RodTridimensionnelle implements Listener {
         }
         Player player = (Player) event.getEntity().getShooter();
         if (!gameState.hasRoleNull(player.getUniqueId())) {
-        	RoleBase roleBase = gameState.getPlayerRoles().get(player);
+        	RoleBase roleBase = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
         	if (roleBase instanceof KillerBee) {
         		if (((KillerBee) roleBase).isCanTentacule()) {
         			FishHook fishHook = (FishHook) event.getEntity();
