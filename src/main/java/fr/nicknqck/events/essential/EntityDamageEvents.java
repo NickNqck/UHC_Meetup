@@ -60,15 +60,15 @@ public class EntityDamageEvents implements Listener{
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
 					if (!gameState.hasRoleNull(p.getUniqueId())) {
-						gameState.getPlayerRoles().get(p).onALLPlayerDamage(event, player);
+						gameState.getGamePlayer().get(p.getUniqueId()).getRole().onALLPlayerDamage(event, player);
 					}
 				}
 				for (Chakras ch : Chakras.values()) {
 					ch.getChakra().onEntityDamage(event, player);
 				}
 				if (event.getCause() == DamageCause.FALL) {
-					if (gameState.getPlayerRoles().containsKey(player)) {
-						if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
+					if (!gameState.hasRoleNull(player.getUniqueId())) {
+						if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isHasNoFall()) {
 							event.setCancelled(true);
 						} else {
 							if (player.getWorld().getName().equals("nakime")) {
@@ -78,15 +78,15 @@ public class EntityDamageEvents implements Listener{
 					}
 				}
 				if (event.getCause() == DamageCause.LIGHTNING) {
-					if (gameState.getPlayerRoles().containsKey(player)) {
+					if (!gameState.hasRoleNull(player.getUniqueId())) {
 						event.setCancelled(true);
 					}
 				}
 				if (gameState.shutdown.contains(player)) {
 					event.setCancelled(true);
 				}
-				if (gameState.getPlayerRoles().containsKey(player)) {
-					if (gameState.getPlayerRoles().get(player).isInvincible()) {
+				if (!gameState.hasRoleNull(player.getUniqueId())) {
+					if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isInvincible()) {
 						event.setCancelled(true);
 						return;
 					}
@@ -96,12 +96,12 @@ public class EntityDamageEvents implements Listener{
 				}
 				if ((player.getHealth()-damage) <= 0) {
 					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-						if (gameState.getPlayerRoles().containsKey(player)) {
-							if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
-								for (Player p : Bukkit.getOnlinePlayers()) {
+						if (!gameState.hasRoleNull(player.getUniqueId())) {
+							if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isCanRespawn()) {
+								for (final Player p : Bukkit.getOnlinePlayers()) {
 									p.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 								}
-								gameState.getPlayerRoles().get(player).PlayerKilled(killer, player, gameState);
+								gameState.getGamePlayer().get(player.getUniqueId()).getRole().PlayerKilled(killer, player, gameState);
 							}							
 						} else {
 							GameListener.RandomTp(player);
