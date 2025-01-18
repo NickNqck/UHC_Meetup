@@ -123,7 +123,7 @@ public class DSmtpCommands implements CommandExecutor {
                 if (!gameState.hasRoleNull(((Player) sender).getUniqueId())) {
                     if (!gameState.getInGamePlayers().contains(((Player) sender).getUniqueId())) return false;
 //Debut chat JigoroV2 Kaigaku
-                    if (gameState.getPlayerRoles().get(sender) instanceof JigoroV2 || gameState.getPlayerRoles().get(sender) instanceof Kaigaku) {//vérifie si le rôle du sender
+                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof JigoroV2 || gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof Kaigaku) {//vérifie si le rôle du sender
                         StringBuilder sb = new StringBuilder();
                         for (int i = 1; i < args.length; i++) {
                             sb.append(" ");

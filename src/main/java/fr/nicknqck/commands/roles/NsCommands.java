@@ -261,7 +261,7 @@ public class NsCommands implements CommandExecutor {
                         }
                         return true;
                     }
-					if (!gameState.hasRoleNull(sender.getUniqueId()) && gameState.getGamePlayer().get(sender.getUniqueId()).getRole().getGamePlayer().isAlive() && gameState.getPlayerRoles().get(sender) instanceof NSRoles){
+					if (!gameState.hasRoleNull(sender.getUniqueId()) && gameState.getGamePlayer().get(sender.getUniqueId()).getRole().getGamePlayer().isAlive() && gameState.getGamePlayer().get(sender.getUniqueId()).getRole() instanceof NSRoles){
 						NSRoles role = (NSRoles) gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
 						role.onNsCommand(args);
 						if (!role.getPowers().isEmpty()) {
