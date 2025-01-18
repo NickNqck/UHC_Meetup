@@ -40,8 +40,7 @@ public class Arctridi implements Listener{
             	if (!bow.getType().equals(Material.BOW))return;
             	if (bow.isSimilar(gameState.EquipementTridi())) {
                     Arrow arrow = (Arrow) event.getProjectile();
-                    arrow.setMetadata("teleportArrow "+gameState.getPlayerRoles().get(player).roleID, new FixedMetadataValue(Main.getInstance(), player.getLocation()));
-                    System.out.println(arrow.getMetadata("teleportArrow "+gameState.getPlayerRoles().get(player).roleID));
+                    arrow.setMetadata("teleportArrow "+gameState.getGamePlayer().get(player.getUniqueId()).getRole().roleID, new FixedMetadataValue(Main.getInstance(), player.getLocation()));
                 }
             } else {
             	event.setCancelled(true);
@@ -55,9 +54,10 @@ public class Arctridi implements Listener{
     	if (event.getEntity() instanceof Arrow && event.getEntity().getShooter() instanceof Player) {
             Player player = (Player) event.getEntity().getShooter();
             if (gameState.hasRoleNull(player.getUniqueId()))return;
-    		if (event.getEntity().hasMetadata("teleportArrow "+gameState.getPlayerRoles().get(player).roleID) && gameState.getPlayerRoles().get(player) instanceof AotRoles) {
+    		if (event.getEntity().hasMetadata("teleportArrow "+gameState.getGamePlayer().get(player.getUniqueId()).getRole().roleID) &&
+                    gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof AotRoles) {
                 Arrow arrow = (Arrow) event.getEntity();
-                AotRoles role = (AotRoles) gameState.getPlayerRoles().get(player);
+                AotRoles role = (AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole();
                 if (role.getActualTridiCooldown() <= 0 && !role.isTransformedinTitan) {
                 	if (role.gazAmount >0) {
                 		Vector arrowVelocity = arrow.getVelocity();
@@ -66,7 +66,7 @@ public class Arctridi implements Listener{
                         noFall.add(player);
             			Location initLoc = player.getLocation();
                         player.teleport(arrow.getLocation().add(0, 1, 0).setDirection(finalVelocity));
-                        ((AotRoles) gameState.getPlayerRoles().get(player)).setActualTridiCooldown(gameState.TridiCooldown);
+                        role.setActualTridiCooldown(gameState.TridiCooldown);
                         Location endLoc = player.getLocation();//Like initLoc but after TP
                         double distance = initLoc.distance(endLoc);
                         double gazToRemove = distance/8;
@@ -74,13 +74,13 @@ public class Arctridi implements Listener{
                         	role.gazAmount-=gazToRemove;
                         	DecimalFormat df = new DecimalFormat("0.0");
                         	player.sendMessage("§7Vous avez perdu§c "+df.format(gazToRemove)+"%§7 de gaz, il ne vous reste que §c"+df.format(role.gazAmount)+"%");
-                        	event.getEntity().removeMetadata("teleportArrow "+gameState.getPlayerRoles().get((Player)event.getEntity().getShooter()).roleID, Main.getInstance());
+                        	event.getEntity().removeMetadata("teleportArrow "+gameState.getGamePlayer().get(((Player) event.getEntity().getShooter()).getUniqueId()).getRole().roleID, Main.getInstance());
                         }
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> noFall.remove(player), 20*5);
                 	}
                 } else {
-                	if (((AotRoles) gameState.getPlayerRoles().get(player)).getActualTridiCooldown() > 0) {
-                        gameState.getPlayerRoles().get(player).sendCooldown(player, ((AotRoles) gameState.getPlayerRoles().get(player)).getActualTridiCooldown());
+                	if (((AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getActualTridiCooldown() > 0) {
+                        gameState.getGamePlayer().get(player.getUniqueId()).getRole().sendCooldown(player, ((AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getActualTridiCooldown());
                 	}
                 	if (role.isTransformedinTitan) {
                 		player.sendMessage(gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 n'a pas supporté votre poid de Titan");
