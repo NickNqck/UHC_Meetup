@@ -51,7 +51,7 @@ public class UHCPlayerKillEvent extends Event {
 	public GamePlayer getGamePlayerKiller(){
 		if (getPlayerKiller() != null){
 			if (!getGameState().hasRoleNull(getPlayerKiller().getUniqueId())){
-				return getGameState().getPlayerRoles().get(getPlayerKiller()).getGamePlayer();
+				return getGameState().getGamePlayer().get(getPlayerKiller().getUniqueId());
 			}
 		}
 		return null;
