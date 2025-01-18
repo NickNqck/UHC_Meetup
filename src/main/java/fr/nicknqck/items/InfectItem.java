@@ -141,7 +141,7 @@ public class InfectItem implements Listener{
 									Player p = Bukkit.getPlayer(u);
 									if (p == null)continue;
 									if (!gameState.hasRoleNull(p.getUniqueId())) {
-										if (gameState.getPlayerRoles().get(p) instanceof DemonsRoles) {
+										if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof DemonsRoles) {
 											p.sendMessage("§cL'infection a échoué");
 										}
 									}
@@ -163,17 +163,18 @@ public class InfectItem implements Listener{
 							for (UUID u : gameState.getInGamePlayers()) {
 								Player z = Bukkit.getPlayer(u);
 								if (z == null)continue;
-								if (gameState.getPlayerRoles().get(z).getOriginTeam() == TeamList.Demon) {
+								if (gameState.hasRoleNull(u)) continue;
+								if (gameState.getGamePlayer().get(u).getRole().getOriginTeam() == TeamList.Demon) {
 									z.sendMessage("§4Un joueur à été infecté et à rejoins le camp des§c Démons");
 								}
 							}
 							gameState.infected = p;
 							clicker.sendMessage(p.getName()+" à été infecté");
-							if (gameState.getPlayerRoles().get(p).getTeam() != TeamList.Slayer) {
+							if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() != TeamList.Slayer) {
 								p.sendMessage("Vous avez été infecté mais comme vous n'étiez pas du camp§a Slayer§r vous n'avez pas pus être infecté, vous restez donc dans votre camp d'origine");
 							}
-							if (gameState.getPlayerRoles().get(p).getTeam() == TeamList.Slayer) {
-								gameState.getPlayerRoles().get(p).setTeam(TeamList.Demon);
+							if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() == TeamList.Slayer) {
+								gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(TeamList.Demon);
 							}
 							p.resetTitle();
 							p.sendMessage("Voici l'identité de votre§c infecteur§f:§c§l "+gameState.infecteur.getName());
