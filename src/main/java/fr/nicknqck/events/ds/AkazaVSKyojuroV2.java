@@ -56,8 +56,8 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
             Player pkyojuro = findOwner(GameState.Roles.Kyojuro);
             Player pAkaza = findOwner(GameState.Roles.Akaza);
             if (pAkaza != null && pkyojuro != null) {
-                Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
-                KyojuroV2 kyojuro = (KyojuroV2) gameState.getPlayerRoles().get(pkyojuro);
+                Akaza akaza = (Akaza) gameState.getGamePlayer().get(pAkaza.getUniqueId()).getRole();
+                KyojuroV2 kyojuro = (KyojuroV2) gameState.getGamePlayer().get(pkyojuro.getUniqueId()).getRole();
                 this.akaza = akaza;
                 this.kyojuro = kyojuro;
                 this.originalAkazaLocation = pAkaza.getLocation();
