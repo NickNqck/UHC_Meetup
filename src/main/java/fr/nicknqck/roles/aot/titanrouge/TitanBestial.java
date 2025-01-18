@@ -153,8 +153,8 @@ public class TitanBestial extends TitansRoles {
 		if (isTransformedinTitan) {
 		if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			for (Player p : Loc.getNearbyPlayers(owner, 20)) {
-				if (!gameState.hasRoleNull(p.getUniqueId()) && gameState.getPlayerRoles().get(p) instanceof AotRoles) {
-					AotRoles role = (AotRoles) gameState.getPlayerRoles().get(p);
+				if (!gameState.hasRoleNull(p.getUniqueId()) && gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof AotRoles) {
+					AotRoles role = (AotRoles) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 					if (role.isTransformedinTitan) {
 						if (role instanceof PetitTitan || role instanceof GrandTitan) {
 								role.givePotionEffet(role.owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
