@@ -158,7 +158,7 @@ public class EntityDamageEvents implements Listener{
 							if (gameState.shutdown.contains(attacker)) {
 								event.setCancelled(true);
 							}
-							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
+							gameState.getGamePlayer().get(player.getUniqueId()).getRole().neoAttackedByPlayer(attacker, gameState);
 						}
 					}
 				}
@@ -167,16 +167,16 @@ public class EntityDamageEvents implements Listener{
 					if (event.getCause() != DamageCause.FALL) {
 						if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 							if (!gameState.hasRoleNull(player.getUniqueId())) {
-								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
+								if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isCanRespawn()) {
 									assert damageur instanceof Player;
-									gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
+									gameState.getGamePlayer().get(player.getUniqueId()).getRole().PlayerKilled((Player)damageur, player, gameState);
 									event.setCancelled(true);
 								}
 							}
 						}
 					} else {
-						if (gameState.getPlayerRoles().containsKey(player)) {
-							if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
+						if (!gameState.hasRoleNull(player.getUniqueId())) {
+							if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isHasNoFall()) {
 								event.setDamage(0);
 								event.setCancelled(true);
 							}
