@@ -72,9 +72,9 @@ public class BulleGyokko implements Listener{
 	public void onItemInteract(PlayerInteractEvent e) {
 		if (gameState.getServerState() != ServerStates.InGame)return;
 		Player player = e.getPlayer();
-		if (gameState.getPlayerRoles().containsKey(player)) {
-			if (gameState.getPlayerRoles().get(player) instanceof Gyokko) {
-				Gyokko gyokko = (Gyokko)gameState.getPlayerRoles().get(player);
+		if (!gameState.hasRoleNull(player.getUniqueId())) {
+			if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Gyokko) {
+				Gyokko gyokko = (Gyokko)gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 				player = gyokko.owner;
 				if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					if (!player.getItemInHand().isSimilar(getBulleGyokko()))return;
