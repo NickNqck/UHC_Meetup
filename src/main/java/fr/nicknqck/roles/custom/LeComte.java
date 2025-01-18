@@ -237,7 +237,7 @@ public class LeComte extends CustomRolesBase implements Listener {
                     }
                 } else if (time == 60*3) {
                     if (!leCompte.getGameState().hasRoleNull(target.getUniqueId())) {
-                        RoleBase role = leCompte.getGameState().getPlayerRoles().get(target);
+                        RoleBase role = leCompte.getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                         owner.sendMessage("§c"+target.getName()+"§7 est le rôle "+role.getOriginTeam().getColor()+role.getName());
                     }
                     owner.sendMessage("§7Votre inspection prend fin, vous obtiendrez§e 5 pommes d'or§7 en tuant §c"+target.getName());
