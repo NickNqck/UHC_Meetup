@@ -111,14 +111,18 @@ public class GamePlayer {
 				if (blind) {
 					Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0, false, false), true));
 				}
-				if (text) {
-					player.sendTitle("", "§7Vous êtes immobilisé !");
+				if (text && isGoodNumber(ticks)) {
+					player.sendTitle("§7Vous êtes immobilisé", "§7Il reste§c "+(ticks/20)+"!");
 				}
 				ticks--;
 
 			}
 		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
+	private boolean isGoodNumber(int number) {
+		return number % 20 == 0;
+	}
+
 	public void sendMessage(final String... messages) {
 		Player owner = Bukkit.getPlayer(getUuid());
 		if (owner != null) {
