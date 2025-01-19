@@ -183,10 +183,10 @@ public class Shikamaru extends ShinobiRoles {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
                     if (!gameState.hasRoleNull(target.getUniqueId())) {
-                        if (gameState.getPlayerRoles().get(target) instanceof NSRoles){
-                            Intelligence intelligence = ((NSRoles) gameState.getPlayerRoles().get(target)).getIntelligence();
+                        if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof NSRoles){
+                            Intelligence intelligence = ((NSRoles) gameState.getGamePlayer().get(target.getUniqueId()).getRole()).getIntelligence();
                             if (intelligence.equals(Intelligence.CONNUE)) {
-                                owner.sendMessage("§7Le rôle de§c "+target.getDisplayName()+"§7 est "+gameState.getPlayerRoles().get(target).getName());
+                                owner.sendMessage("§7Le rôle de§c "+target.getDisplayName()+"§7 est "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getName());
                             } else {
                                 owner.sendMessage("§c"+target.getDisplayName()+"§7 est§a "+intelligence.getName());
                             }
