@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.Muzan;
@@ -71,16 +72,18 @@ public class Enmu extends DemonsRoles {
 		if (gameState.nightTime) owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*5, 0, false, false), true);
 		if (itemcooldown >=1)itemcooldown--;
 		if (timesleep >=1)timesleep--;
-			if (timesleep == 0 && itemcooldown > 0) {
-				for (RoleBase r : gameState.getPlayerRoles().values()) {
-					if (gameState.getInSleepingPlayers().contains(r.owner)) {
-						gameState.delInSleepingPlayers(r.owner);
-						r.owner.sendMessage("Vous n'êtes plus endormie");
-						if (r.owner.getAllowFlight())r.owner.setAllowFlight(false);
-						if (r.owner.isFlying())r.owner.setFlying(false);
-					}
+		if (timesleep == 0 && itemcooldown > 0) {
+			for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+				final Player player = Bukkit.getPlayer(gamePlayer.getUuid());
+				if (player == null)continue;
+				if (gameState.getInSleepingPlayers().contains(player)) {
+					gameState.delInSleepingPlayers(player);
+					player.sendMessage("Vous n'êtes plus endormie");
+					if (player.getAllowFlight())player.setAllowFlight(false);
+					if (player.isFlying())player.setFlying(false);
 				}
 			}
+		}
 		super.Update(gameState);
 	}	
 	@Override
