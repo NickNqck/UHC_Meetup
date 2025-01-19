@@ -33,7 +33,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
                 Player p = Bukkit.getPlayer(u);
                 if (p == null)continue;
                 if (!gameState.hasRoleNull(p.getUniqueId())) {
-                    RoleBase role = gameState.getPlayerRoles().get(p);
+                    final RoleBase role = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
                     if (role instanceof DemonsRoles) {
                         DemonsRoles d = (DemonsRoles) role;
                         if (d.getRank().equals(DemonType.SUPERIEUR) || d.getRank().equals(DemonType.INFERIEUR)) {
@@ -63,8 +63,8 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
     @EventHandler
     private void onUHCDeath(UHCDeathEvent event) {
         if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()) && this.lune != null) {
-            if (event.getGameState().getPlayerRoles().get(event.getPlayer()) instanceof DemonsRoles) {
-                DemonsRoles role = (DemonsRoles) event.getGameState().getPlayerRoles().get(event.getPlayer());
+            if (event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole() instanceof DemonsRoles) {
+                final DemonsRoles role = (DemonsRoles) event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
                 if (role.getPlayer().equals(this.lune.getPlayer())) {
                     getMessageOnDescription().remove("§7Votre§c lune§7 est §c"+event.getPlayer().getName());
                 }

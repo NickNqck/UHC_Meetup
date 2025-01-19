@@ -199,7 +199,7 @@ public class Furuto extends DemonInferieurRole {
                                // owner.sendMessage("Vous venez d'activer votre§6 Flûte");
                 			}
                 			if (r == 3) {
-                				if (gameState.getPlayerRoles().get(p).getOriginTeam() == TeamList.Demon) {
+                				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() == TeamList.Demon) {
                 					if (!gameState.nightTime) {
                     					if (!p.hasPotionEffect(PotionEffectType.JUMP)) {
                     						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20*60, 0, false, false), true);
