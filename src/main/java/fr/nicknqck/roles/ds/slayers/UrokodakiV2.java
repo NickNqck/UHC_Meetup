@@ -49,7 +49,7 @@ public class UrokodakiV2 extends SlayerRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Urokodaki;
     }
 
@@ -95,7 +95,7 @@ public class UrokodakiV2 extends SlayerRoles {
     @Override
     public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
         if (gameState.getServerState().equals(GameState.ServerStates.InGame)){
-            RoleBase role = gameState.getPlayerRoles().get(player);
+            final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
             if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito){
                 int rint = Main.RANDOM.nextInt(2);
                 if (rint == 0){
