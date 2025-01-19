@@ -438,8 +438,8 @@ public class Hantengu extends DemonsRoles {
 		public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 			if (killer == owner && victim != owner && form == Form.Sekido) {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 							this.killforce+=5;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 5% de Force");
 							addBonusforce(killforce);
