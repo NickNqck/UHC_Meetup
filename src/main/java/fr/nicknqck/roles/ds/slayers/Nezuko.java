@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -99,11 +100,14 @@ public class Nezuko extends DemonsRoles {
 		if (itemcooldown <= 60*10-20) {
 			firezone = false;
 		}
-		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (!gameState.getInGamePlayers().contains(r.getPlayer())) continue;
-			if (r instanceof Tanjiro && r.owner.getWorld().equals(owner.getWorld())) {
-				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
-					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*2, 0, false, false));
+		for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+			if (gamePlayer.getRole() == null) continue;
+			if (!gamePlayer.isAlive())continue;
+			final RoleBase role = gamePlayer.getRole();
+			if (role instanceof Tanjiro && gamePlayer.getLastLocation().getWorld().equals(this.getGamePlayer().getLastLocation().getWorld())) {
+				if (gamePlayer.getLastLocation().distance(getGamePlayer().getLastLocation()) <= 30){
+					givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				}
 			}
 		}
 		if (owner.getItemInHand().isSimilar(Items.getPouvoirSanginaire())) {

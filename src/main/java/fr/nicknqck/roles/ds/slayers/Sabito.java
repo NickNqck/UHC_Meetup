@@ -137,8 +137,8 @@ public class Sabito extends SlayerRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim != owner) {
 			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-				if (gameState.getPlayerRoles().containsKey(victim)) {
-					RoleBase r = gameState.getPlayerRoles().get(victim);
+				if (!gameState.hasRoleNull(victim.getUniqueId())) {
+					final RoleBase r = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 					if (r instanceof TomiokaV2 && !dietomioka) {
 						dietomioka = true;
 						owner.sendMessage(ChatColor.GOLD+""+ r.getRoles()+ChatColor.GRAY+" est mort vous gagnez donc en utilisant votre Soufle de L'eau Speed 2 pendant 2 minutes au lieu de Speed 1 pendant 2 minutes, également le cooldown est réduit de 30 secondes");
