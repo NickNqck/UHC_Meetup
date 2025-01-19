@@ -307,8 +307,8 @@ public boolean killtanjiro;
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
-					if (gameState.getPlayerRoles().containsKey(p)) {
-						gameState.getPlayerRoles().get(p).onNight(gameState);
+					if (!gameState.hasRoleNull(u)) {
+						gameState.getGamePlayer().get(u).getRole().onNight(gameState);
 					}
 				}
 			} else {
