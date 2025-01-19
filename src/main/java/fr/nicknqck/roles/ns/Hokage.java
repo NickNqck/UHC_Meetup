@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import org.bukkit.Bukkit;
@@ -60,15 +61,16 @@ public class Hokage {
 						GameListener.SendToEveryone("§bLe conseil viens d'élire un nouvelle§e Hokage§b, le village est");
 						GameListener.SendToEveryoneWithHoverMessage("§b maintenant sous le commandement de ", "§e"+fH.getDisplayName(), "§7La personne désigné comme étant l'§cHokage§7 obtient§c 10%§7 de§c Force§7 et de§9 Résistance", "§e.");
 						Hokage = fH.getUniqueId();
-						gameState.getPlayerRoles().get(fH).addBonusforce(10);
-						gameState.getPlayerRoles().get(fH).addBonusResi(10);
+						final RoleBase role = gameState.getGamePlayer().get(Hokage).getRole();
+						role.addBonusforce(10);
+						role.addBonusResi(10);
                         for (UUID u : gameState.getInGamePlayers()) {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
 							if (gameState.hasRoleNull(u))continue;
-							if (gameState.getPlayerRoles().get(p).getClass().equals(Danzo.class)) {
+							if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Danzo) {
 								if (!u.equals(fH.getUniqueId())) {
-									p.sendMessage("§7Voici le rôle de l'Hokage: §a"+gameState.getPlayerRoles().get(fH).getName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)");
+									p.sendMessage("§7Voici le rôle de l'Hokage: §a"+gameState.getGamePlayer().get(fH.getUniqueId()).getRole().getName()+"§f (§cAttention vous êtes le seul joueur à avoir cette information§f)");
 								}
 							}
 						}
@@ -96,13 +98,13 @@ public class Hokage {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			System.out.println(p.getDisplayName()+" can be Hokage ?");
-			if (!gameState.hasRoleNull(u) && gameState.getPlayerRoles().get(p) instanceof NSRoles) {
-				if (gameState.getPlayerRoles().get(p) instanceof Danzo){
-					danzo = (Danzo) gameState.getPlayerRoles().get(p);
+			if (!gameState.hasRoleNull(u) && gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof NSRoles) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Danzo){
+					danzo = (Danzo) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 					System.out.println("p = "+p.getName()+" est Danzo");
 				}
-				if (((NSRoles) gameState.getPlayerRoles().get(p)).isCanBeHokage()) {
-					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getPlayerRoles().get(p).getName());
+				if (((NSRoles) gameState.getGamePlayer().get(p.getUniqueId()).getRole()).isCanBeHokage()) {
+					System.out.println(p.getDisplayName()+" has been choosed, role: "+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getName());
 					return p;
 				}
 			}
@@ -133,8 +135,8 @@ public class Hokage {
 					}
 				}
 				this.Hokage = null;
-				gameState.getPlayerRoles().get(player).addBonusforce(-10);
-				gameState.getPlayerRoles().get(player).addBonusResi(-10);
+				gameState.getGamePlayer().get(player.getUniqueId()).getRole().addBonusforce(-10);
+				gameState.getGamePlayer().get(player.getUniqueId()).getRole().addBonusResi(-10);
 			}
 			run();
 		}

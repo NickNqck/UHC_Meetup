@@ -172,8 +172,8 @@ public class Shinjuro extends DemonsSlayersRoles {
 		if (killer == owner) {
 			if (victim != owner) {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role instanceof KyojuroV2 && !killkyojuro) {
 							killkyojuro = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles().name()+ChatColor.GRAY+" maintenant en utilisant le Soufle du Feu vous obtiendrez l'effet: "+ChatColor.RED+"Speed 1"+ChatColor.GRAY+" permanent");
