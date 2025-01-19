@@ -2,6 +2,7 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
@@ -21,9 +22,11 @@ public class GetterList {
     }
 
     public void getDemonList(Player player){
-        if (!gameState.getPlayerRoles().isEmpty()){
+        if (!gameState.getGamePlayer().isEmpty()){
             TextComponent text = new TextComponent("§cListe des lunes:\n");
-            for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
+            for (final GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()){
+                if (gamePlayer.getRole() == null) continue;
+                final RoleBase role = gamePlayer.getRole();
                 if (role instanceof DemonsRoles) {
                     DemonsRoles demon = (DemonsRoles) role;
                     if (!demon.getRank().equals(DemonType.DEMON)){
@@ -41,9 +44,11 @@ public class GetterList {
         }
     }
     public void getMahrList(Player player){
-        if (!gameState.getPlayerRoles().isEmpty()){
+        if (!gameState.getGamePlayer().isEmpty()){
             TextComponent text = new TextComponent("§9Liste des Mahrs:\n");
-            for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
+            for (final GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()){
+                if (gamePlayer.getRole() == null)continue;
+                final RoleBase role = gamePlayer.getRole();
                 if (role instanceof MahrRoles) {
                     MahrRoles mahr = (MahrRoles ) role;
                     Player list = Bukkit.getPlayer(mahr.getPlayer());
@@ -57,9 +62,11 @@ public class GetterList {
         }
     }
     public void getTitanRougeList(Player player){
-        if (!gameState.getPlayerRoles().isEmpty()){
+        if (!gameState.getGamePlayer().isEmpty()){
             TextComponent text = new TextComponent("§cListe des Titans Rouge:\n");
-            for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
+            for (final GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()){
+                if (gamePlayer.getRole() == null)continue;
+                final RoleBase role = gamePlayer.getRole();
                 if (role instanceof TitansRoles) {
                     TitansRoles Titans = (TitansRoles ) role;
                     if (!(role instanceof TitanBestial)){
@@ -67,21 +74,6 @@ public class GetterList {
                         if (list != null){
                             text.addExtra("\n§7 - §c"+list.getName());
                         }
-                    }
-                }
-            }
-            text.addExtra("\n");
-            Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.spigot().sendMessage(text), 1L);
-        }
-    }
-    public void getAkatsukiList(Player player){
-        if (!gameState.getPlayerRoles().isEmpty()){
-            TextComponent text = new TextComponent("§cListe de l'Akatsuki:\n");
-            for (RoleBase role : GameState.getInstance().getPlayerRoles().values()){
-                if (role instanceof AkatsukiRoles || role instanceof Obito) {
-                    Player list = Bukkit.getPlayer(role.getPlayer());
-                    if (list != null){
-                        text.addExtra("\n§7 - §c"+list.getName());
                     }
                 }
             }
