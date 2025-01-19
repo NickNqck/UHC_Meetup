@@ -142,8 +142,8 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 		if (killer == owner) {
 			if (victim != owner) {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role.getRoles() == Roles.Kokushibo && !killkoku) {
 							killkoku = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles()+ChatColor.GRAY+" maintenant la nuit vous posséderez l'effet: "+AllDesc.Resi+" 1");
