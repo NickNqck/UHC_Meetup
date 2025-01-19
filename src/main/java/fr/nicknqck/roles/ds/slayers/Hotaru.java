@@ -170,8 +170,8 @@ public class Hotaru extends SlayerRoles {
 							if (cible.getInventory().contains(Items.getLamedenichirinspeed())) {
 							owner.sendMessage("Ce joueur possède une lame de§e speed");
 							}
-							if (!gameState.hasRoleNull(cible.getUniqueId()) && gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles) {
-								if (!((DemonsSlayersRoles) gameState.getPlayerRoles().get(cible)).isHasblade()) {
+							if (!gameState.hasRoleNull(cible.getUniqueId()) && gameState.getGamePlayer().get(cible.getUniqueId()).getRole() instanceof DemonsSlayersRoles) {
+								if (!((DemonsSlayersRoles) gameState.getGamePlayer().get(cible.getUniqueId()).getRole()).isHasblade()) {
 								owner.sendMessage("Ce joueurs ne possède pas de lame");
 								}
 							}
@@ -194,11 +194,11 @@ public class Hotaru extends SlayerRoles {
 							owner.sendMessage("Impossible de rendre la lame d'un mort incassable !");
 							}
 						if (!gameState.hasRoleNull(cible.getUniqueId())) {
-							if (gameState.getPlayerRoles().get(cible) instanceof DemonsSlayersRoles){
-								((DemonsSlayersRoles) gameState.getPlayerRoles().get(cible)).setLameIncassable(cible, true);
+							if (gameState.getGamePlayer().get(cible.getUniqueId()).getRole() instanceof DemonsSlayersRoles){
+								((DemonsSlayersRoles) gameState.getGamePlayer().get(cible.getUniqueId()).getRole()).setLameIncassable(cible, true);
 							}
                         }
-                            gameState.getPlayerRoles().get(cible).sendMessageAfterXseconde(cible, "§aHotaru§f à rendu votre Lame de Nichirin incassable", 1);
+                            gameState.getGamePlayer().get(cible.getUniqueId()).getRole().sendMessageAfterXseconde(cible, "§aHotaru§f à rendu votre Lame de Nichirin incassable", 1);
                             sendMessageAfterXseconde(owner, "Vous avez rendu la lame de "+cible.getName()+" incassable", 1);
                             hasdsunbreak = true;
                         } else {
@@ -229,7 +229,7 @@ public class Hotaru extends SlayerRoles {
 									lames.getUsers().put(cible.getUniqueId(), 40);
 								}
 							}
-							gameState.getPlayerRoles().get(cible).sendMessageAfterXseconde(cible, "§aHotaru§f à réparer votre lame jusqu'à son état maximal", 1);
+							gameState.getGamePlayer().get(cible.getUniqueId()).getRole().sendMessageAfterXseconde(cible, "§aHotaru§f à réparer votre lame jusqu'à son état maximal", 1);
 							owner.sendMessage("Vous avez augmenté la durabilité de la lame de "+cible.getName()+" de 40");
 							actualdsrepair+=1;
 							owner.sendMessage("Il ne vous reste que: "+(5-actualdsrepair));

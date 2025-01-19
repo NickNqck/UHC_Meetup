@@ -111,8 +111,8 @@ public class Kagaya extends SlayerRoles {
 					Player player = Bukkit.getPlayer(uuid);
 					if (player == null)continue;
 					if (gameState.hasRoleNull(player.getUniqueId()))continue;
-					if (gameState.getPlayerRoles().get(player) instanceof PilierRoles) {
-						pilierRoles.add((PilierRoles) gameState.getPlayerRoles().get(player));
+					if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof PilierRoles) {
+						pilierRoles.add((PilierRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole());
 					}
 				}
 				if (!pilierRoles.isEmpty()) {
