@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -106,8 +107,8 @@ public class Kaigaku extends DemonsRoles {
 		if (killer == owner) {
 			if (victim != owner){
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role instanceof ZenItsu) {
 							killzen = true;						
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.getRoles()+" "+ChatColor.GRAY+"vous obtenez donc sa capacité qui est que quand vous mettez un coup avec votre épée il y à 1 chance sur 10 que la cible ce prenne "+ChatColor.RED+"1 coeur de dégat"+ChatColor.GRAY+" via un éclair");
@@ -118,7 +119,7 @@ public class Kaigaku extends DemonsRoles {
 			}
 			if (gameState.JigoroV2Pacte2) {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId()) && gameState.getInGamePlayers().contains(killer.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim) || gameState.getPlayerRoles().containsKey(killer)) {
+					if (!gameState.hasRoleNull(victim.getUniqueId()) || !gameState.hasRoleNull(killer.getUniqueId())) {
 						if (killer == owner) {
 							String msg = "Vous avez reçus 1 demi"+AllDesc.coeur+" permanent car§6 Jigoro§r ou§6 Kaigaku à fait un kill";
 							owner.sendMessage(msg);
@@ -127,12 +128,11 @@ public class Kaigaku extends DemonsRoles {
 							for (UUID u : gameState.getInGamePlayers()) {
 								Player p = Bukkit.getPlayer(u);
 								if (p == null)continue;
-								if (gameState.getPlayerRoles().containsKey(p)) {
-									if (gameState.getPlayerRoles().get(p) instanceof JigoroV2) {
-										Player jigoro = gameState.getPlayerRoles().get(p).owner;
+								if (!gameState.hasRoleNull(u)) {
+									if (gameState.getGamePlayer().get(u).getRole() instanceof JigoroV2) {
+										final GamePlayer jigoro = gameState.getGamePlayer().get(u);
 										jigoro.sendMessage(msg);
-										gameState.getGamePlayer().get(jigoro.getUniqueId()).getRole().setMaxHealth(gameState.getGamePlayer().get(jigoro.getUniqueId()).getRole().getMaxHealth()+1.0);
-										jigoro.updateInventory();
+										jigoro.getRole().setMaxHealth(jigoro.getRole().getMaxHealth()+1.0);
 									}
 								}
 							}
