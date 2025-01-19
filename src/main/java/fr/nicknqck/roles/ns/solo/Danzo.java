@@ -191,7 +191,7 @@ public class Danzo extends NSRoles {
 	}
 	private boolean isUchiwa(Player p){
 		if (!gameState.hasRoleNull(p.getUniqueId())) {
-            return gameState.getPlayerRoles().get(p) instanceof UchiwaRoles;
+            return gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof UchiwaRoles;
 		}
 		return false;
 	}

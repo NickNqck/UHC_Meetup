@@ -303,7 +303,7 @@ public class Haku extends NSRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		super.PlayerKilled(killer, victim, gameState);
 		if (!gameState.hasRoleNull(victim.getUniqueId())){
-			if (gameState.getPlayerRoles().get(victim) instanceof Zabuza && maxCDHaku != 60*3) {
+			if (gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof Zabuza && maxCDHaku != 60*3) {
 				onZabuzaDeath(true);
 			}
 		}
