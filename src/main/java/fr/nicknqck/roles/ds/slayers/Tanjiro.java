@@ -233,7 +233,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
                     if (!gameState.hasRoleNull(target.getUniqueId())) {
-                        RoleBase role = gameState.getPlayerRoles().get(target);
+                        final RoleBase role = gameState.getGamePlayer().get(target.getUniqueId()).getRole();
                         boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         owner.sendMessage("§c"+target.getName()+(demon ? "§7 est un§c démon" : "§7 n'est pas un§c démon"));
                         sentirUse = true;
@@ -249,7 +249,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 int amountDemon = 0;
                 for (Player player : Loc.getNearbyPlayersExcept(owner, 30)) {
                     if (!gameState.hasRoleNull(player.getUniqueId())) {
-                        RoleBase role = gameState.getPlayerRoles().get(player);
+                        final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
                         boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
                         if (demon) {
                             amountDemon++;
