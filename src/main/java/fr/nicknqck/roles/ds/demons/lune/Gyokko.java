@@ -157,8 +157,8 @@ public class Gyokko extends DemonsRoles {
 		if (killer == owner) {
 			if (victim != owner){
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role instanceof MuichiroV2) {
 							killmuichiro = true;
 							giveItem(owner, false, Items.getGyokkoBoots());
