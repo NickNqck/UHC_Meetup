@@ -185,8 +185,8 @@ public class Jigoro extends DemonsSlayersRoles {
 		if (killer == owner) {
 			if (victim != owner){
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role instanceof ZenItsu && !killzen) {
 							giveItem(owner, false, Items.getJoueurZenItsuSpeed());
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Zen'Itsu "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour"+ChatColor.GRAY+", ainsi que l'accès au: "+ChatColor.GOLD+"Premier Mouvement du Soufle de la Foudre"+ChatColor.GRAY+" qui vous donnera Speed 3 pendant 1 minutes");
