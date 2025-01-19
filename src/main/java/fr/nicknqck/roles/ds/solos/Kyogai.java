@@ -46,7 +46,7 @@ public class Kyogai extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kyogai;
 	}
 	@Override
@@ -286,8 +286,8 @@ public class Kyogai extends DemonsRoles {
 		if (killer != owner)return;
 		if (victim == owner)return;
 		if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-			if (gameState.getPlayerRoles().containsKey(victim)) {
-				RoleBase role = gameState.getPlayerRoles().get(victim);
+			if (!gameState.hasRoleNull(victim.getUniqueId())) {
+				RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 		if (camp == Camp.Solo) {		
 			if (role instanceof Muzan && !killmuzan) {
 				killmuzan = true;

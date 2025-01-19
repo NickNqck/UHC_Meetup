@@ -160,10 +160,10 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
 							if (!gameState.hasRoleNull(u)) {//vérifie que p a un role
-								if (gameState.getPlayerRoles().get(p) instanceof Kaigaku) {//si p est kaigaku
+								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Kaigaku) {//si p est kaigaku
 									owner.sendMessage(p.getName()+" est§c Kaigaku");
-									kaigaku = (Kaigaku) gameState.getPlayerRoles().get(p);
-									gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
+									kaigaku = (Kaigaku) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+									gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(TeamList.Jigoro);
 									setTeam(TeamList.Jigoro);
 									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
 									kaigaku.getKnowedRoles().add(this.getClass());
@@ -184,11 +184,11 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 						for (UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
-							if (gameState.getPlayerRoles().containsKey(p)) {//vérifie que p a un role
-								if (gameState.getPlayerRoles().get(p) instanceof ZenItsu) {//si p est ZenItsu
+							if (!gameState.hasRoleNull(u)) {//vérifie que p a un role
+								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof ZenItsu) {//si p est ZenItsu
 									owner.sendMessage(p.getName()+" est§a ZenItsu");
-									zen = (ZenItsu) gameState.getPlayerRoles().get(p);
-									gameState.getPlayerRoles().get(p).setTeam(TeamList.Jigoro);
+									zen = (ZenItsu) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+									gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(TeamList.Jigoro);
 									setTeam(TeamList.Jigoro);
 									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
 									p.sendMessage("Vous avez rejoint la team "+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam().getName());
@@ -308,8 +308,8 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 			if (killer.getUniqueId() == getPlayer()) {
 				if (victim.getUniqueId() != getPlayer()){
 					if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-						if (gameState.getPlayerRoles().containsKey(victim)) {
-							RoleBase role = gameState.getPlayerRoles().get(victim);
+						if (!gameState.hasRoleNull(victim.getUniqueId())) {
+							RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 							if (role instanceof ZenItsu) {
 								if (!killzen) {
 									addSpeedAtInt(owner, 10);
@@ -331,7 +331,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		}
 		if (pacte == Pacte.PacteKaigaku) {
 			if (gameState.getInGamePlayers().contains(victim.getUniqueId()) && gameState.getInGamePlayers().contains(killer.getUniqueId())) {
-				if (gameState.getPlayerRoles().containsKey(victim) || gameState.getPlayerRoles().containsKey(killer)) {
+				if (!gameState.hasRoleNull(victim.getUniqueId()) || !gameState.hasRoleNull(killer.getUniqueId())) {
 					if (killer == owner) {
 						String msg = "Vous avez reçus 1 demi§c❤§r permanent car§6 Jigoro§r ou§6 Kaigaku à fait un kill";
 						owner.sendMessage(msg);
@@ -366,7 +366,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 			if (!event.isCancel()) {
 				if (this.pacte == Pacte.PacteKaigaku){
 					if (gameState.hasRoleNull(event.getVictim().getUniqueId()))return;
-					if (!(gameState.getPlayerRoles().get(event.getVictim()) instanceof ZenItsu))return;
+					if (!(gameState.getGamePlayer().get(event.getVictim().getUniqueId()).getRole() instanceof ZenItsu))return;
 					RoleBase role = event.getGamePlayerKiller().getRole();
 					if (role.getPlayer().equals(getPlayer())) {
 						event.getPlayerKiller().sendMessage("§7En tuant§a Zen'Itsu§7 vous avez obtenue l'effet§c Force I§7 permanent.");
