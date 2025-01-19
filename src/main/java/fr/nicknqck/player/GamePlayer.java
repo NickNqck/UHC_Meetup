@@ -18,6 +18,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -81,6 +83,13 @@ public class GamePlayer {
 		}
 	}
 	public void stun(int tick) {
+		stun(tick, false, true);
+	}
+	public void stun(final int tick, final boolean blind) {
+		stun(tick, blind, true);
+	}
+	@SuppressWarnings("deprecation")
+	public void stun(final int tick, final boolean blind, final boolean text) {
 		Player player = Bukkit.getPlayer(getUuid());
 		if (player == null)return;
 		new BukkitRunnable() {
@@ -99,6 +108,12 @@ public class GamePlayer {
 					return;
 				}
 				player.teleport(stunLocation);
+				if (blind) {
+					Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0, false, false), true));
+				}
+				if (text) {
+					player.sendTitle("", "§7Vous êtes immobilisé !");
+				}
 				ticks--;
 
 			}
