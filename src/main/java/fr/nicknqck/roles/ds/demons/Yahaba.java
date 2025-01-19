@@ -111,8 +111,8 @@ public class Yahaba extends DemonInferieurRole {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
-					if (gameState.getPlayerRoles().get(p) instanceof SlayerRoles) {
-						roles.add((SlayerRoles) gameState.getPlayerRoles().get(p));
+					if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof SlayerRoles) {
+						roles.add((SlayerRoles) gameState.getGamePlayer().get(p.getUniqueId()).getRole());
 					}
 				}
 			}

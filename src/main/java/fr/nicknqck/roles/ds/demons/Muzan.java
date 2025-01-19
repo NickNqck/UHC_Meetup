@@ -95,8 +95,8 @@ public class Muzan extends DemonsRoles {
 		if (killer == owner) {
 			if (victim != owner){
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role instanceof NezukoV2) {
 							killnez = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Nezuko "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour ainsi que speed 1 la nuit"+ChatColor.GRAY+", votre "+ChatColor.GOLD+"PouvoirSanginaire "+ChatColor.GRAY+"c'est également amélioré vous offrant"+ChatColor.RED+" Speed 1 le jour et Résistance 2 la nuit");
