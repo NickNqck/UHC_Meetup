@@ -143,6 +143,7 @@ public class EnmuV2 extends DemonsRoles {
 
             public CliqueGauche(@NonNull RoleBase role) {
                 super("§cEndormissement§7 (§fClique gauche§7)", new Cooldown(60*20), role);
+                setShowInDesc(false);
             }
 
             @Override
