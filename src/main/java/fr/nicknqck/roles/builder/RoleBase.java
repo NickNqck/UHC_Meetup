@@ -99,10 +99,8 @@ public abstract class RoleBase implements IRole {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
                 owner.sendMessage(ChatColor.BOLD + "Camp: " + this.getTeam().getColor() + StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
                 System.out.println(owner.getName() +" Team: "+ this.getTeam());
-                if (this.getRoles() != null) {
-					System.out.println(owner.getName() +" Role: "+ getRoles().name());
-				}
-			}, 20);
+                System.out.println(owner.getName() + " Role: " + getRoles().name());
+            }, 20);
 			this.uuidOwner = owner.getUniqueId();
 			owner.sendMessage("");
 			owner.setAllowFlight(false);

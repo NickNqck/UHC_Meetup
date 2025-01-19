@@ -80,6 +80,9 @@ public class GamePlayer {
 			this.discRunnable.online = true;
 			this.discRunnable.cancel();
 			this.discRunnable = null;
+			if (getRole() != null) {
+				getRole().owner = player;
+			}
 		}
 	}
 	public void stun(int tick) {
