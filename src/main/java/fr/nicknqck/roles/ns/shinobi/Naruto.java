@@ -175,7 +175,7 @@ public class Naruto extends ShinobiRoles {
 					if (gameState.hasRoleNull(p.getUniqueId()))continue;
 					if (!gameState.getInGamePlayers().contains(p.getUniqueId()))continue;
 					if (p.hasPotionEffect(PotionEffectType.INVISIBILITY))continue;
-					RoleBase role = gameState.getPlayerRoles().get(p);
+					RoleBase role = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 					sb.append("§7 - ").append(role.getOriginTeam().getColor()).append(role.getName()).append("\n");
 				}
 				Player owner = Bukkit.getPlayer(getPlayer());
