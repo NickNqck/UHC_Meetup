@@ -111,8 +111,8 @@ public class Urokodaki extends SlayerRoles {
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim != owner) {
 			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-				if (gameState.getPlayerRoles().containsKey(victim)) {
-					RoleBase role = gameState.getPlayerRoles().get(victim);
+				if (!gameState.hasRoleNull(victim.getUniqueId())) {
+					final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 					if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito) {
 						Random random = Main.RANDOM;
 						int rint = random.nextInt(2);
