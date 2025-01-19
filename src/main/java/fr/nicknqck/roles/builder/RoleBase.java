@@ -306,7 +306,7 @@ public abstract class RoleBase implements IRole {
 				if (gameState.getInSpecPlayers().contains(p))return;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					if (getListPlayerFromRole(toknow).contains(p)) {
-						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p.getUniqueId()) && gameState.getPlayerRoles().get(p).getOriginTeam() != null) {
+						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p.getUniqueId()) && gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() != null) {
 							knower.sendMessage("Le joueur possédant le rôle de "+toknow.getTeam().getColor()+toknow.name()+"§f est "+p.getName());
 						}
 					}
@@ -464,8 +464,8 @@ public abstract class RoleBase implements IRole {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
 			if (!gameState.hasRoleNull(p.getUniqueId())) {
-				if (gameState.getPlayerRoles().get(p).getClass().equals(role)) {
-					if (gameState.getPlayerRoles().get(p).getGamePlayer().isAlive()){
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getClass().equals(role)) {
+					if (gameState.getGamePlayer().get(p.getUniqueId()).isAlive()){
 						toReturn.add(p);
 					}
 				}
