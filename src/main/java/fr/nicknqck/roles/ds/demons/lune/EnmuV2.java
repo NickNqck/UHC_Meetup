@@ -94,6 +94,7 @@ public class EnmuV2 extends DemonsRoles {
                     "",
                     "§7Un joueur§c endormie§7 ne peut pas bouger mais il peut être§c frappé§7,",
                     "§7Les§c démons§7 étant§c endormie§7 seront toucher§c 2x§7 moins longtemps (dont§a Nezuko§7)");
+            setShowCdInDesc(false);
             this.cliqueDroit = new CliqueDroit(getRole());
             getRole().addPower(this.cliqueDroit);
             this.cliqueGauche = new CliqueGauche(getRole());
