@@ -89,7 +89,7 @@ public class AutomaticDesc {
         return this;
     }
     public final AutomaticDesc setPowers(List<Power> powers) {
-        for (Power power : powers) {
+        for (final Power power : powers) {
             if (power.getName() == null)continue;
             if (!power.isShowInDesc())continue;
             String name = power.getName();
@@ -107,15 +107,17 @@ public class AutomaticDesc {
                 this.text.addExtra(textComponent);
                 continue;
             }
-            if (cooldown != null) {
-                if (cooldown.getOriginalCooldown() == -500) {
-                    textComponent.addExtra("§7 (1x/partie)");
-                } else {
-                    textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
+            if (power.isShowCdInDesc()) {
+                if (cooldown != null) {
+                    if (cooldown.getOriginalCooldown() == -500) {
+                        textComponent.addExtra("§7 (1x/partie)");
+                    } else {
+                        textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
+                    }
                 }
-            }
-            if (power.getMaxUse() != -1) {
-                textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+                if (power.getMaxUse() != -1) {
+                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+                }
             }
             textComponent.addExtra("§7.");
             this.text.addExtra(textComponent);
