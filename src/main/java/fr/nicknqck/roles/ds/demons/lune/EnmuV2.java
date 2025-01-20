@@ -8,6 +8,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
@@ -15,6 +16,7 @@ import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -86,13 +88,20 @@ public class EnmuV2 extends DemonsRoles {
             super("§cEndormissement", new Cooldown(5), new ItemBuilder(Material.FERMENTED_SPIDER_EYE).setName("§cEndormissement"), role,
                     "§7Vous permet d'§cendormir§7 un ou plusieurs joueur(s) en fonction de votre clique:",
                     "",
-                    "§8 • §fClique droit:§7 En §cvisant§7 un joueur, vous permet de l'§cendormir§7 pendant§c 8 secondes",
+                    "§8 • §fClique droit:§7 En §cvisant§7 un joueur, vous permet de l'§cendormir§7 pendant§c 8 secondes§7 (1x/10m)",
                     "",
-                    "§8 • §fClique gauche:§7 Vous permet d'endormir tout joueurs présent autours de vous dans un rayon de§c 30 blocs§7 pendant§c 10 secondes");
+                    "§8 • §fClique gauche:§7 Vous permet d'endormir tout joueurs présent autours de vous dans un rayon de§c 30 blocs§7 pendant§c 3 secondes§7 (1x/15m)",
+                    "",
+                    "§7Un joueur§c endormie§7 ne peut pas bouger mais il peut être§c frappé§7,",
+                    "§7Les§c démons§7 étant§c endormie§7 seront toucher§c 2x§7 moins longtemps (dont§a Nezuko§7)");
             this.cliqueDroit = new CliqueDroit(getRole());
             getRole().addPower(this.cliqueDroit);
             this.cliqueGauche = new CliqueGauche(getRole());
             getRole().addPower(this.cliqueGauche);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                getShowCdRunnable().setCustomText(true);
+                getShowCdRunnable().setCustomTexte("§fClique droit est§c utilisable§7 |§f Clique gauche est§c utilisable");
+            }, 10);
         }
 
         @Override
@@ -107,6 +116,16 @@ public class EnmuV2 extends DemonsRoles {
             }
             return false;
         }
+
+        @Override
+        public void tryUpdateActionBar() {
+            getShowCdRunnable().setCustomTexte((this.cliqueDroit.getCooldown().isInCooldown() ?
+                    "§fClique droit: §c"+ StringUtils.secondsTowardsBeautiful(this.cliqueDroit.getCooldown().getCooldownRemaining()) :
+                    "§fClique droit est§c utilisable") + "§7 | " + (this.cliqueGauche.getCooldown().isInCooldown() ?
+                    "§fClique gauche: §c"+StringUtils.secondsTowardsBeautiful(this.cliqueGauche.getCooldown().getCooldownRemaining()):
+                    "§fClique gauche est§c utilisable"));
+        }
+
         private static class CliqueDroit extends Power {
 
             public CliqueDroit(@NonNull RoleBase role) {
@@ -142,7 +161,7 @@ public class EnmuV2 extends DemonsRoles {
         private static class CliqueGauche extends Power {
 
             public CliqueGauche(@NonNull RoleBase role) {
-                super("§cEndormissement§7 (§fClique gauche§7)", new Cooldown(60*20), role);
+                super("§cEndormissement§7 (§fClique gauche§7)", new Cooldown(60*15), role);
                 setShowInDesc(false);
             }
 
@@ -158,9 +177,9 @@ public class EnmuV2 extends DemonsRoles {
                     if (!gameState.hasRoleNull(target.getUniqueId())) {
                         final GamePlayer gameTarget = gameState.getGamePlayer().get(target.getUniqueId());
                         if (gameTarget.getRole() instanceof DemonsRoles) {
-                            gameTarget.stun(100, true);
+                            gameTarget.stun(30, true);
                         } else {
-                            gameTarget.stun(200, true);
+                            gameTarget.stun(60, true);
                         }
                     }
                 }
