@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ public abstract class ItemPower extends Power{
     private InteractType interactType;
     @Setter
     private boolean showCdInHand = true;
+    private final ShowCdRunnable showCdRunnable;
 
     protected ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
         super(name, cooldown, role, description);
@@ -37,7 +39,10 @@ public abstract class ItemPower extends Power{
         }
         this.item = item.setUnbreakable(true).setDroppable(false).toItemStack();
         if (showCdInHand && cooldown != null && cooldown.getOriginalCooldown() > 0) {
-            new ShowCdRunnable(role, cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 1);
+            this.showCdRunnable = new ShowCdRunnable(role, cooldown, this.item);
+            this.showCdRunnable.runTaskTimerAsynchronously(getPlugin(), 0, 1);
+        } else {
+            this.showCdRunnable = null;
         }
     }
     public void call(Object event) {
@@ -100,15 +105,21 @@ public abstract class ItemPower extends Power{
         DROP_ITEM
     }
 
-    private static class ShowCdRunnable extends BukkitRunnable {
+    public static class ShowCdRunnable extends BukkitRunnable {
 
         private final UUID user;
         private final Cooldown cooldown;
         private final GameState gameState;
         private final ItemStack item;
         private final GamePlayer gamePlayer;
+        @Getter
+        @Setter
+        private boolean isCustomText = false;
+        @Getter
+        @Setter
+        private String customText = "";
 
-        private ShowCdRunnable(RoleBase role, Cooldown cooldown, ItemStack item) {
+        public ShowCdRunnable(RoleBase role, Cooldown cooldown, ItemStack item) {
             this.user = role.getPlayer();
             this.gamePlayer = role.getGamePlayer();
             this.cooldown = cooldown;
@@ -128,17 +139,35 @@ public abstract class ItemPower extends Power{
             if (player != null) {
                 if (player.getItemInHand().isSimilar(item)) {
                     if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
-                        this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
-                                "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
-                                item.getItemMeta().getDisplayName()+" est§c utilisable");
+                        updateActionBar();
                     } else {
-                        this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
-                                "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
-                                item.getItemMeta().getDisplayName()+" est§c utilisable");
+                        createActionBar();
                     }
                 } else if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
                     this.gamePlayer.getActionBarManager().removeInActionBar(this.cooldown.getUniqueId().toString());
                 }
+            }
+        }
+        private void updateActionBar() {
+            if (this.isCustomText()) {
+                this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                        this.customText :
+                        this.item.getItemMeta().getDisplayName()+" est utilisable");
+            } else {
+                this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                        "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
+                        item.getItemMeta().getDisplayName()+" est§c utilisable");
+            }
+        }
+        private void createActionBar() {
+            if (this.isCustomText()) {
+                this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                        this.getCustomText() :
+                        this.item.getItemMeta().getDisplayName()+" est§c utilisable");
+            } else {
+                this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                        "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
+                        item.getItemMeta().getDisplayName()+" est§c utilisable");
             }
         }
     }
