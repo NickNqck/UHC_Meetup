@@ -94,7 +94,11 @@ public class AutomaticDesc {
             if (!power.isShowInDesc())continue;
             String name = power.getName();
             if (power instanceof ItemPower) {
-                name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
+                if (((ItemPower) power).getItem().getItemMeta().hasDisplayName()){
+                    name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
+                } else {
+                    name = "§cLe nom n'a pas été définie";
+                }
             }
             String[] description = power.getDescriptions();
             Cooldown cooldown = power.getCooldown();
