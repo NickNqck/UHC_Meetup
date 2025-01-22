@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -16,15 +17,16 @@ import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class EnmuV2 extends DemonsRoles {
 
@@ -77,8 +79,191 @@ public class EnmuV2 extends DemonsRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new EndormissementPower(this), true);
+        addPower(new SommeilUltime(this), true);
     }
+    private static class SommeilUltime extends ItemPower {
 
+        private final World arena;
+        private final Map<UUID, Integer> duelMap = new HashMap<>();
+
+        protected SommeilUltime(@NonNull RoleBase role) {
+            super("§fSommeil Ultime", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§fSommeil ultime"), role,
+                    "§7En visant un joueur, vous permet de charger sa§b bar de sommeil§7, une fois remplie vous pourrez alors l'affronter dans un§c duel",
+                    "§7durant ce duel, aucun joueur ne pourra utiliser de §cpouvoir§7, également, votre adversaire ne possédera aucun effet,",
+                    "",
+                    "§7Si vous perdez votre§c duel§7 vous réapparaitrez en perdant§c 2❤ permanents§7 ainsi que ce pouvoir",
+                    "",
+                    "§7Si vous gagnez votre§c duel§7 vous obtiendrez §c1/2❤ permanent§7,",
+                    "§7Si la personne que vous aviez tué était un§a pilier§7 ou un rôle§e solitaire§7 vous gagnerez §c1/2❤ permanent§7 en§c plus§7.");
+            this.arena = getWorld();
+            clearArena();
+            setMaxUse(1);
+        }
+
+        private World getWorld() {
+            Main.getInstance().deleteWorld("enmuv2_duel");
+            final WorldCreator worldCreator = new WorldCreator("enmuv2_duel");
+            worldCreator.generator(getBase());
+            final World world = worldCreator.createWorld();
+            final WorldBorder worldBorder = this.arena.getWorldBorder();
+            worldBorder.setCenter(0.0, 0.0);
+            worldBorder.setSize(100.0);
+            world.setGameRuleValue("doMobSpawning", "false");
+            world.setGameRuleValue("doDaylightCycle", "false");
+            world.setGameRuleValue("spectatorsGenerateChunks", "false");
+            world.setGameRuleValue("naturalRegeneration", "false");
+            world.setGameRuleValue("announceAdvancements", "false");
+            world.setDifficulty(Difficulty.HARD);
+            world.setSpawnLocation(0, world.getHighestBlockYAt(0, 0), 0);
+            world.setGameRuleValue("doMobSpawning", "false");
+            world.setGameRuleValue("doFireTick", "false");
+            return world;
+        }
+        private String getBase() {
+            return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + 600+
+                    ",\"depthNoiseScaleZ\":" + 600 +
+                    ",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +
+                    "\"seaLevel\":" + 10 +
+                    ",\"useCaves\":" + false + //S'il y aura des caves ou non
+                    ",\"useDungeons\":" + false + //S'il y aura des dongeons ou non
+                    ",\"dungeonChance\":" + 8 + //Probo dongeon 8 = vanilla
+                    ",\"useStrongholds\":" + false + //S'il y aura des strongholds
+                    ",\"useVillages\":" + false + //S'il y aura des villages ou non
+                    ",\"useMineShafts\":" + false + //S'il y aura des mineshafts ou non
+                    ",\"useTemples\":" + false + //S'il y aura des temples de la jungle
+                    ",\"useMonuments\":" + false+ //
+                    ",\"useRavines\":" + false + //Si il y aura des failles ou non
+                    ",\"useWaterLakes\":" + false + //S'il y aura des lacs d'eau
+                    ",\"waterLakeChance\":" + 2 + //La proba d'avoir des lacs d'eau 4 = vanilla
+                    ",\"useLavaLakes\":" + false + //S'il y aura des lacs de lave ou non
+                    ",\"lavaLakeChance\":" + 20 + //S'il y aura des lacs de lave 80 = vanilla
+                    ",\"useLavaOceans\":" + false + //Si on remplace les Océans d'eau par de la lave ou non
+                    ",\"fixedBiome\":-1,\"biomeSize\":4,\"riverSize\":" + 4 + //Taille des rivières 4 = vanilla
+                    ",\"dirtSize\":33,\"dirtCount\":10,\"dirtMinHeight\":0,\"dirtMaxHeight\":256,\"gravelSize\":33,\"gravelCount\":8,\"gravelMinHeight\":0,\"gravelMaxHeight\":256,\"graniteSize\":33,\"graniteCount\":10,\"graniteMinHeight\":0,\"graniteMaxHeight\":80,\"dioriteSize\":33,\"dioriteCount\":10,\"dioriteMinHeight\":0,\"dioriteMaxHeight\":80,\"andesiteSize\":33,\"andesiteCount\":10,\"andesiteMinHeight\":0,\"andesiteMaxHeight\":80"+
+                    ",\"coalSize\":"+ 17 +
+                    ",\"coalCount\":" + 20 +
+                    ",\"coalMinHeight\":" + 0 +
+                    ",\"coalMaxHeight\":"+ 128 +
+                    ",\"ironSize\":" + 9+
+                    ",\"ironCount\":" + 20 +
+                    ",\"ironMinHeight\":" + 0 +
+                    ",\"ironMaxHeight\":" + 64 +
+                    ",\"goldSize\":" + 10 +
+                    ",\"goldCount\":" + 3 +
+                    ",\"goldMinHeight\":" + 0 +
+                    ",\"goldMaxHeight\":" + 32 +
+                    ",\"redstoneSize\":" + 8 +
+                    ",\"redstoneCount\":" + 20 +
+                    ",\"redstoneMinHeight\":" + 0 +
+                    ",\"redstoneMaxHeight\":" + 16+
+                    ",\"diamondSize\":" + 8 + ",\"diamondCount\":" + 1 +
+                    ",\"diamondMinHeight\":" + 0 + ",\"diamondMaxHeight\":" + 22 +
+                    ",\"lapisSize\":" + 7 + ",\"lapisCount\":" + 1 + ",\"lapisCenterHeight\":" + 16 +",\"lapisSpread\":" + 16+ "}";
+        }
+        private void clearArena() {
+            for (int x = -150; x <= 150; x++) {
+                for (int z = -150; z <= 150; z++) {
+                    for (int y = 59; y <= 65; y++) {
+                        final Block block = this.arena.getBlockAt(x ,y ,z);
+                        final String name = block.getType().name();
+                        if (name.contains("WATER") || name.contains("LAVA")) {
+                            block.setType(Material.AIR);
+                        }
+                    }
+                }
+            }
+        }
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                player.teleport(new Location(this.arena, 0, this.arena.getHighestBlockYAt(0, 0), 0), PlayerTeleportEvent.TeleportCause.PLUGIN);
+                final Player target = RayTrace.getTargetPlayer(player, 30, Objects::nonNull);
+                if (target == null) {
+                    player.sendMessage("§cIl faut viser un joueur !");
+                    return false;
+                }
+                final GamePlayer gameTarget = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
+                if (gameTarget == null) {
+                    player.sendMessage("§cIl faut viser un joueur !§7 (le joueur viser n'a pas de rôle)");
+                    return false;
+                }
+                if (this.duelMap.containsKey(target.getUniqueId())) {
+                    player.sendMessage("§c"+target.getName()+"§7 a déjà été placer dans votre sommeil");
+                    return false;
+                }
+                if (this.duelMap.isEmpty()) {//pour pouvoir lancer mon runnable QUE quand le pouvoir est utiliser (pour pas le démarrer inutilement)
+                    new SommeilRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+                }
+                this.duelMap.put(target.getUniqueId(), 60*5);
+
+            }
+            return false;
+        }
+        private void tryStartDuel(final Player target, final Player owner) {
+            target.getLocation().getBlock().setType(Material.SIGN);
+            final Sign sign = (Sign) target.getLocation().getBlock();
+            sign.setLine(1, "zzz");
+            owner.sendMessage("§7Vous avez§c endormie§7 le joueur: "+target.getDisplayName());
+            target.sendMessage("§7Vous avez été§c endormie§7 par§c Enmu§7 (§6V2§7)");
+            final Location loc1 = new Location(this.arena, 25, this.arena.getHighestBlockYAt(25, 25), 25);
+            final Location loc2 = new Location(this.arena, -25, this.arena.getHighestBlockYAt(-25, -25), -25);
+            target.teleport(loc2, PlayerTeleportEvent.TeleportCause.PLUGIN);
+            owner.teleport(loc1, PlayerTeleportEvent.TeleportCause.PLUGIN);
+            getRole().getGamePlayer().setLastLocation(loc1);
+        }
+
+        private static class SommeilRunnable extends BukkitRunnable {
+
+            private final GameState gameState;
+            private final SommeilUltime sommeilUltime;
+
+            private SommeilRunnable(SommeilUltime sommeilUltime) {
+                this.sommeilUltime = sommeilUltime;
+                this.gameState = GameState.getInstance();
+                sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemp avant sommeil:§c 5 minutes");
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                if (!this.sommeilUltime.getRole().getGamePlayer().isAlive()) {
+                    return;
+                }
+                if (this.sommeilUltime.getRole().getGamePlayer().getLastLocation().getWorld().getName().equals("enmuv2_duel")) {
+                    return;
+                }
+                final Player owner = this.sommeilUltime.getPlugin().getServer().getPlayer(this.sommeilUltime.getRole().getPlayer());
+                if (owner == null) {
+                    return;
+                }
+                boolean edit = false;
+                UUID uuid = null;
+                for (final Player around : Loc.getNearbyPlayers(owner.getLocation(), 30)) {
+                    if (this.sommeilUltime.duelMap.containsKey(around.getUniqueId())) {
+                        Integer time = this.sommeilUltime.duelMap.get(around.getUniqueId());
+                        if (time < 0)continue;
+                        this.sommeilUltime.duelMap.remove(around.getUniqueId(), time);
+                        time--;
+                        this.sommeilUltime.duelMap.put(around.getUniqueId(), time);
+                        edit = true;
+                        uuid = around.getUniqueId();
+                        if (time == 0) {
+                            this.sommeilUltime.tryStartDuel(around, owner);
+                            edit = false;
+                        }
+                    }
+                }
+                if (edit) {
+                    this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemp avant sommeil:§c "+StringUtils.secondsTowardsBeautiful(this.sommeilUltime.duelMap.get(uuid)));
+                } else {
+                    this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().removeInActionBar("enmuv2.dueltime");
+                }
+            }
+        }
+    }
     private static class EndormissementPower extends ItemPower {
 
         private final CliqueDroit cliqueDroit;
