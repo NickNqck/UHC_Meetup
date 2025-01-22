@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -110,6 +111,9 @@ public class RayTrace
                     final Player target = (Player) entity;
                     if (playerPredicate != null && !playerPredicate.test(target)) {
                         continue;
+                    }
+                    if (target.getGameMode().equals(GameMode.SPECTATOR) || target.getGameMode().equals(GameMode.CREATIVE)) {
+                        return null;
                     }
                     return target;
                 }
