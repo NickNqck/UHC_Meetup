@@ -297,7 +297,7 @@ public class Main extends JavaPlugin {
 		System.out.println("Ended GLASS platform");
 	}
 	public boolean initGameWorld() {
-		if (!deleteWorld())return false;
+		if (!deleteWorld("arena"))return false;
 		WorldCreator creator = new WorldCreator("arena");
 		System.out.println("Seed: "+creator.seed());
 		System.out.println("Original Base Settings: "+creator.generatorSettings());
@@ -320,12 +320,12 @@ public class Main extends JavaPlugin {
 		System.out.println("Created world gameWorld");
 		return true;
 	}
-	private boolean deleteWorld() {
+	public boolean deleteWorld(final String worldName) {
 		for (World world : Bukkit.getWorlds()) {
-			if (world.getName().equals("arena")) {
+			if (world.getName().equals(worldName)) {
 				File worldFolder = world.getWorldFolder();
 				if (!world.getPlayers().isEmpty()) {
-					System.out.println("Can't delete world \""+ "arena" +"\" because "+world.getPlayers().size()+" is inside");
+					System.out.println("Can't delete world \""+ worldName +"\" because "+world.getPlayers().size()+" is inside");
 					return false;
 				}
 				Bukkit.unloadWorld(world, false);
