@@ -111,7 +111,7 @@ public class EnmuV2 extends DemonsRoles {
             final WorldCreator worldCreator = new WorldCreator("enmuv2_duel");
             worldCreator.generator(getBase());
             final World world = worldCreator.createWorld();
-            final WorldBorder worldBorder = this.arena.getWorldBorder();
+            final WorldBorder worldBorder = world.getWorldBorder();
             worldBorder.setCenter(0.0, 0.0);
             worldBorder.setSize(100.0);
             world.setGameRuleValue("doMobSpawning", "false");
