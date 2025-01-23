@@ -469,7 +469,7 @@ public class GameListener implements Listener {
 			GameListener.getInstance().sendHoverMessage(p, prefix, HoverWord, HoverContent, suffix);
 		}
 	}
-	public static Location RandomTp(@NonNull final Entity entity) {
+	public static void RandomTp(@NonNull final Entity entity) {
 		Location loc = null;
 		final World world = Main.getInstance().getWorldManager().getGameWorld();
 		while (loc == null || world.getBlockAt(loc).getType().name().contains("WATER") || world.getBlockAt(loc).getType().name().contains("LAVA")) {
@@ -483,9 +483,8 @@ public class GameListener implements Listener {
 		if (entity instanceof Player) {
 			((Player)entity).playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
-		return loc;
 	}
-	public static Location RandomTp(final Entity entity, final World world) {
+	public static void RandomTp(@NonNull final Entity entity, @NonNull final World world) {
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
 			float x = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
@@ -493,20 +492,19 @@ public class GameListener implements Listener {
 			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize(), 0, z-Border.getActualBorderSize())).getLocation();
 		}
 		loc.setY(loc.getY()+1);
-		if (entity != null) entity.teleport(loc);
+        entity.teleport(loc);
 		if (entity instanceof Player) {
 			((Player)entity).playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
-		return loc;
 	}
-	public static Location generateRandomLocation(final World world) {
+	public static Location generateRandomLocation(@NonNull final World world) {
 	    Location loc;
 	    do {
-	        float x = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
-	        float z = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
+	        float x = Border.getActualBorderSize() * (Main.RANDOM.nextFloat() * (Main.RANDOM.nextBoolean() ? 1 : Main.RANDOM.nextFloat()));
+	        float z = Border.getActualBorderSize() * (Main.RANDOM.nextFloat() * (Main.RANDOM.nextBoolean() ? 1 : Main.RANDOM.nextFloat()));
 	        loc = world.getHighestBlockAt(new Location(world, x - Border.getActualBorderSize() / 2, 0, z - Border.getActualBorderSize() / 2)).getLocation();
 	        loc.setY(loc.getY() + 1);
-	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
+	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().name().contains("LAVA"));
 	    return loc;
 	}
 	private static int trueCount(boolean... b) {
