@@ -98,7 +98,7 @@ public class EnmuV2 extends DemonsRoles {
         protected SommeilUltime(@NonNull RoleBase role) {
             super("§fSommeil Ultime", new Cooldown(60*15), new ItemBuilder(Material.NETHER_STAR).setName("§fSommeil ultime"), role,
                     "§7En visant un joueur, vous permet de charger sa§b bar de sommeil§7, une fois remplie vous pourrez alors l'affronter dans un§c duel",
-                    "§7durant ce duel, aucun joueur ne pourra utiliser de §cpouvoir§7, également, votre adversaire ne possédera aucun effet,",
+                    "§7durant ce duel, aucun joueur ne pourra utiliser de§c pouvoir§7, également, votre adversaire ne possédera aucun effet,",
                     "",
                     "§7Si vous perdez votre§c duel§7 vous réapparaitrez en perdant§c 2❤ permanents§7 ainsi que ce pouvoir",
                     "",
