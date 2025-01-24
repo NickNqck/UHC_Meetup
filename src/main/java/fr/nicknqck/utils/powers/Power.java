@@ -67,8 +67,8 @@ public abstract class Power {
                 player.sendMessage(powerActivateEvent.getCancelMessage());
             } else {
                 player.sendMessage("§cDésolé, pouvoir inutilisable.");
-                return false;
             }
+            return false;
         }
 
         Cooldown powerCooldown = this.getCooldown();
