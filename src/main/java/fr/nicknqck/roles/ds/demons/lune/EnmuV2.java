@@ -96,7 +96,7 @@ public class EnmuV2 extends DemonsRoles {
         private final Map<UUID, Integer> duelMap = new HashMap<>();
 
         protected SommeilUltime(@NonNull RoleBase role) {
-            super("§fSommeil Ultime", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§fSommeil ultime"), role,
+            super("§fSommeil Ultime", new Cooldown(60*15), new ItemBuilder(Material.NETHER_STAR).setName("§fSommeil ultime"), role,
                     "§7En visant un joueur, vous permet de charger sa§b bar de sommeil§7, une fois remplie vous pourrez alors l'affronter dans un§c duel",
                     "§7durant ce duel, aucun joueur ne pourra utiliser de §cpouvoir§7, également, votre adversaire ne possédera aucun effet,",
                     "",
@@ -185,7 +185,6 @@ public class EnmuV2 extends DemonsRoles {
         @Override
         public boolean onUse(Player player, Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.teleport(new Location(this.arena, 0, this.arena.getHighestBlockYAt(0, 0), 0), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 final Player target = RayTrace.getTargetPlayer(player, 30, Objects::nonNull);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
@@ -200,24 +199,25 @@ public class EnmuV2 extends DemonsRoles {
                     player.sendMessage("§c"+target.getName()+"§7 a déjà été placer dans votre sommeil");
                     return false;
                 }
-                if (this.duelMap.isEmpty()) {//pour pouvoir lancer mon runnable QUE quand le pouvoir est utilisé (pour pas le démarrer inutilement)
-                    new SommeilRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
-                }
-                this.duelMap.put(target.getUniqueId(), 60*5);
-
+                new SommeilRunnable(this, target.getUniqueId()).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+                this.duelMap.put(target.getUniqueId(), 30);
+                return true;
             }
             return false;
         }
         private void tryStartDuel(final Player target, final Player owner) {
-            target.getLocation().getBlock().setType(Material.SIGN);
-            final Sign sign = (Sign) target.getLocation().getBlock();
+            target.getLocation().getBlock().setType(Material.SIGN_POST);
+            final Sign sign = (Sign) target.getLocation().getBlock().getState();
             sign.setLine(1, "zzz");
+            sign.update();
             owner.sendMessage("§7Vous avez§c endormie§7 le joueur: "+target.getDisplayName());
             target.sendMessage("§7Vous avez été§c endormie§7 par§c Enmu§7 (§6V2§7)");
             final Location loc1 = new Location(this.arena, 25, this.arena.getHighestBlockYAt(25, 25), 25);
             final Location loc2 = new Location(this.arena, -25, this.arena.getHighestBlockYAt(-25, -25), -25);
-            target.teleport(loc2, PlayerTeleportEvent.TeleportCause.PLUGIN);
-            owner.teleport(loc1, PlayerTeleportEvent.TeleportCause.PLUGIN);
+            Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                target.teleport(loc2, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                owner.teleport(loc1, PlayerTeleportEvent.TeleportCause.PLUGIN);
+            });
             getRole().getGamePlayer().setLastLocation(loc1);
             for (final PotionEffect potionEffect : target.getActivePotionEffects()) {
                 target.removePotionEffect(potionEffect.getType());
@@ -312,7 +312,7 @@ public class EnmuV2 extends DemonsRoles {
                         final Location loc = GameListener.generateRandomLocation(Bukkit.getWorld("enmuv2_duel"));
                         final Player owner = Bukkit.getPlayer(winer.getUuid());
                         if (owner != null) {
-                            owner.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN));
                             cancel();
                         }
                         this.winer.getActionBarManager().removeInActionBar("enmuv2.duelend");
@@ -327,10 +327,12 @@ public class EnmuV2 extends DemonsRoles {
 
             private final GameState gameState;
             private final SommeilUltime sommeilUltime;
+            private final UUID uuid;
 
-            private SommeilRunnable(SommeilUltime sommeilUltime) {
+            private SommeilRunnable(@NonNull final SommeilUltime sommeilUltime, @NonNull final UUID uuidTarget) {
                 this.sommeilUltime = sommeilUltime;
-                this.gameState = GameState.getInstance();
+                this.gameState = sommeilUltime.getRole().getGameState();
+                this.uuid = uuidTarget;
                 sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemp avant sommeil:§c 5 minutes");
             }
 
@@ -350,27 +352,21 @@ public class EnmuV2 extends DemonsRoles {
                 if (owner == null) {
                     return;
                 }
-                boolean edit = false;
-                UUID uuid = null;
                 for (final Player around : Loc.getNearbyPlayers(owner.getLocation(), 30)) {
-                    if (this.sommeilUltime.duelMap.containsKey(around.getUniqueId())) {
+                    if (this.sommeilUltime.duelMap.containsKey(around.getUniqueId()) && this.uuid.equals(around.getUniqueId())) {
                         Integer time = this.sommeilUltime.duelMap.get(around.getUniqueId());
                         if (time < 0)continue;
                         this.sommeilUltime.duelMap.remove(around.getUniqueId(), time);
                         time--;
                         this.sommeilUltime.duelMap.put(around.getUniqueId(), time);
-                        edit = true;
-                        uuid = around.getUniqueId();
+                        this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().updateActionBar("enmuv2.dueltime", "§bTemp avant sommeil:§c "+StringUtils.secondsTowardsBeautiful(this.sommeilUltime.duelMap.get(uuid)));
                         if (time == 0) {
                             this.sommeilUltime.tryStartDuel(around, owner);
-                            edit = false;
+                            this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().removeInActionBar("enmuv2.dueltime");
+                            cancel();
+                            break;
                         }
                     }
-                }
-                if (edit) {
-                    this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemp avant sommeil:§c "+StringUtils.secondsTowardsBeautiful(this.sommeilUltime.duelMap.get(uuid)));
-                } else {
-                    this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().removeInActionBar("enmuv2.dueltime");
                 }
             }
         }
