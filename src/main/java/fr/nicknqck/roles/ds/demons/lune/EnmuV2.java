@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -270,6 +271,17 @@ public class EnmuV2 extends DemonsRoles {
                 if (winer != null) {
                     new ReturnBackRunnable(this.gameState, winer).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                 }
+            }
+            @EventHandler
+            private void PowerActiveEvent(@NonNull final PowerActivateEvent event) {
+                if (event.getPlayer().getWorld().getName().equals("enmuv2_duel")) {
+                    event.setCancel(true);
+                    event.setCancelMessage("§cCe pouvoir n'est pas utilisable ici !");
+                }
+            }
+            @EventHandler//Il faut créer l'event:]
+            private void EffectGiveEvent() {
+
             }
             private static class ReturnBackRunnable extends BukkitRunnable {
 
