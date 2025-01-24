@@ -198,8 +198,6 @@ public class GamePlayer {
 		public void updateActionBar(final String key, final String value) {
 			if (actionBars.containsKey(key)) {
 				this.actionBars.replace(key, value);
-			} else {
-				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
 			}
 		}
 		public boolean containsKey(final String key) {
@@ -209,8 +207,6 @@ public class GamePlayer {
 			if (actionBars.containsKey(key)) {
 				final String value = actionBars.get(key);
 				actionBars.remove(key, value);
-			} else {
-				throw new Error("[ActionBarManager] Error ! key: "+key+" isn't inside the Map");
 			}
 		}
 		private static class ActionBarRunnable extends BukkitRunnable {
