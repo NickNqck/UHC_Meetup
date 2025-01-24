@@ -61,7 +61,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.ZenItsu;
     }
 
@@ -133,6 +133,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
                     new EcouterTargeter(this, target);
+                    return true;
                 }
             }
             return false;
@@ -156,7 +157,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
             public EcouterTargeter(EcouterCommande ecouterCommande, Player target) {
                 this.ecouterCommande = ecouterCommande;
                 this.tUUID = target.getUniqueId();
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(ecouterCommande.getPlugin(), () -> {
                     EventUtils.unregisterEvents(this);
                     this.ecouterCommande.getCooldown().addSeconds(60*5);
