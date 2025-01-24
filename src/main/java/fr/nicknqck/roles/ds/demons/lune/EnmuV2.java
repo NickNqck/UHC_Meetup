@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -31,6 +32,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -100,7 +102,7 @@ public class EnmuV2 extends DemonsRoles {
                     "",
                     "§7Si vous perdez votre§c duel§7 vous réapparaitrez en perdant§c 2❤ permanents§7 ainsi que ce pouvoir",
                     "",
-                    "§7Si vous gagnez votre§c duel§7 vous obtiendrez §c1/2❤ permanent§7,",
+                    "§7Si vous gagnez votre§c duel§7 vous obtiendrez §c1/2❤ permanent§7, ainsi qu'une utilisation de ce pouvoir",
                     "§7Si la personne que vous aviez tué était un§a pilier§7 ou un rôle§e solitaire§7 vous gagnerez §c1/2❤ permanent§7 en§c plus§7.");
             this.arena = getWorld();
             clearArena();
@@ -198,7 +200,7 @@ public class EnmuV2 extends DemonsRoles {
                     player.sendMessage("§c"+target.getName()+"§7 a déjà été placer dans votre sommeil");
                     return false;
                 }
-                if (this.duelMap.isEmpty()) {//pour pouvoir lancer mon runnable QUE quand le pouvoir est utiliser (pour pas le démarrer inutilement)
+                if (this.duelMap.isEmpty()) {//pour pouvoir lancer mon runnable QUE quand le pouvoir est utilisé (pour pas le démarrer inutilement)
                     new SommeilRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
                 }
                 this.duelMap.put(target.getUniqueId(), 60*5);
@@ -217,6 +219,9 @@ public class EnmuV2 extends DemonsRoles {
             target.teleport(loc2, PlayerTeleportEvent.TeleportCause.PLUGIN);
             owner.teleport(loc1, PlayerTeleportEvent.TeleportCause.PLUGIN);
             getRole().getGamePlayer().setLastLocation(loc1);
+            for (final PotionEffect potionEffect : target.getActivePotionEffects()) {
+                target.removePotionEffect(potionEffect.getType());
+            }
             new DuelManager(this);
         }
         private static class DuelManager implements Listener {
@@ -279,9 +284,12 @@ public class EnmuV2 extends DemonsRoles {
                     event.setCancelMessage("§cCe pouvoir n'est pas utilisable ici !");
                 }
             }
-            @EventHandler//Il faut créer l'event:]
-            private void EffectGiveEvent() {
-
+            @EventHandler
+            private void EffectGiveEvent(final EffectGiveEvent effectGiveEvent) {
+                if (effectGiveEvent.getPlayer().getWorld().getName().equals("enmuv2_duel")) {
+                    if (effectGiveEvent.getPlayer().getUniqueId().equals(this.sommeilUltime.getRole().getPlayer()))return;
+                    effectGiveEvent.setCancelled(true);
+                }
             }
             private static class ReturnBackRunnable extends BukkitRunnable {
 
