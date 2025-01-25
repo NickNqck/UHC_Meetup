@@ -100,7 +100,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!canHaveSpeed)return;
             givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), EffectWhen.NOW);
-            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 1, false, false), EffectWhen.NOW);
+            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), EffectWhen.NOW);
         }, 20L *middleOfTheNight);
     }
     @EventHandler
