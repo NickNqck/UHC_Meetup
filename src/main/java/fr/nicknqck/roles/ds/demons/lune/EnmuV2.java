@@ -9,6 +9,7 @@ import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -34,6 +35,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -82,12 +84,14 @@ public class EnmuV2 extends DemonsRoles {
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
+                .addEffects(getEffects())
                 .setPowers(getPowers())
                 .getText();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new EndormissementPower(this), true);
         addPower(new SommeilUltime(this), true);
     }
@@ -223,7 +227,7 @@ public class EnmuV2 extends DemonsRoles {
             for (final PotionEffect potionEffect : target.getActivePotionEffects()) {
                 target.removePotionEffect(potionEffect.getType());
             }
-            new DuelManager(this, target.getLocation());
+            new DuelManager(this);
         }
         private static class DuelManager implements Listener {
 
@@ -231,12 +235,10 @@ public class EnmuV2 extends DemonsRoles {
             private final SommeilUltime sommeilUltime;
             private ItemStack[] enmuItems;
             private ItemStack[] enmuArmors;
-            private final Location targetInitLoc;
 
-            private DuelManager(SommeilUltime sommeilUltime, final Location targetInitLoc) {
+            private DuelManager(SommeilUltime sommeilUltime) {
                 this.sommeilUltime = sommeilUltime;
                 this.gameState = sommeilUltime.getRole().getGameState();
-                this.targetInitLoc = targetInitLoc;
                 EventUtils.registerRoleEvent(this);
                 final Player owner = Bukkit.getPlayer(sommeilUltime.getRole().getPlayer());
                 if (owner != null) {
@@ -306,13 +308,7 @@ public class EnmuV2 extends DemonsRoles {
             }
             @EventHandler
             private void onEndGame(final EndGameEvent event) {
-                final World world = Bukkit.getWorld("enmuv2_duel");
-                if (world != null) {
-                    for (final Chunk chunk : world.getLoadedChunks()) {
-                        chunk.unload();
-                    }
-                    Main.getInstance().deleteWorld("enmuv2_duel");
-                }
+                Main.getInstance().deleteWorld("enmuv2_duel");
             }
 
             private static class ReturnBackRunnable extends BukkitRunnable {
