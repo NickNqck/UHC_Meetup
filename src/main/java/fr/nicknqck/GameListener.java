@@ -500,11 +500,17 @@ public class GameListener implements Listener {
 	public static Location generateRandomLocation(@NonNull final World world) {
 	    Location loc;
 	    do {
-	        float x = Border.getActualBorderSize() * (Main.RANDOM.nextFloat() * (Main.RANDOM.nextBoolean() ? 1 : Main.RANDOM.nextFloat()));
-	        float z = Border.getActualBorderSize() * (Main.RANDOM.nextFloat() * (Main.RANDOM.nextBoolean() ? 1 : Main.RANDOM.nextFloat()));
+			float number = Border.getActualBorderSize();
+	        float x = (float) ((Main.RANDOM.nextDouble() * 2 * number) - number);
+			System.out.println("x:  ->  "+x);
+	        float z = (float) ((Main.RANDOM.nextDouble() * 2 * number) - number);
+			System.out.println("z:  ->  "+z);
 	        loc = world.getHighestBlockAt(new Location(world, x - Border.getActualBorderSize() / 2, 0, z - Border.getActualBorderSize() / 2)).getLocation();
 	        loc.setY(loc.getY() + 1);
-	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().name().contains("LAVA"));
+			System.out.println("Loc:  ->  "+loc);
+	    } while (loc.getX() <= -(Border.getMaxBorderSize()-10) || loc.getX() >= (Border.getMaxBorderSize()-10)
+				|| loc.getZ() <= -(Border.getMaxBorderSize()-10) || loc.getZ() >= (Border.getMaxBorderSize()-10)
+				|| loc.getBlock().getType().name().contains("LAVA") || loc.getBlock().getType().name().contains("WATER"));
 	    return loc;
 	}
 	private static int trueCount(boolean... b) {
