@@ -49,7 +49,7 @@ public class MuichiroV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Muichiro;
     }
 
@@ -89,9 +89,9 @@ public class MuichiroV2 extends PilierRoles {
             return false;
         }
         @EventHandler
-        private void onBattle(EntityDamageByEntityEvent event) {
+        private void onBattle(final EntityDamageByEntityEvent event) {
             if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
-                if (!getCooldown().isInCooldown() && ((Player) event.getDamager()).getItemInHand().isSimilar(getItem())) {
+                if (!getCooldown().isInCooldown() && ((Player) event.getDamager()).getItemInHand().isSimilar(getItem()) && checkUse(((Player) event.getDamager()), new HashMap<>())) {
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 0, false, false));
                     getCooldown().use();
                 }
