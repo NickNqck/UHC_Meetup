@@ -333,19 +333,19 @@ public class EnmuV2 extends DemonsRoles {
                         return;
                     }
                     if (this.timeLeft <= 0) {
-                        final Location loc = GameListener.generateRandomLocation(Bukkit.getWorld("arena"));
-                        final Player owner = Bukkit.getPlayer(winer.getUuid());
-                        if (owner != null) {
-                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                        Bukkit.getScheduler().runTask(this.duelManager.sommeilUltime.getPlugin(), () -> {
+                            final Location loc = GameListener.generateRandomLocation(Bukkit.getWorld("arena"));
+                            final Player owner = Bukkit.getPlayer(winer.getUuid());
+                            if (owner != null) {
                                 owner.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
                                 if (this.enmuLOOSE) {
                                     owner.getInventory().setArmorContents(this.duelManager.enmuArmors);
                                     owner.getInventory().setContents(this.duelManager.enmuItems);
                                     owner.updateInventory();
                                 }
-                            });
-                            cancel();
-                        }
+                            }
+                        });
+                        cancel();
                         this.winer.getActionBarManager().removeInActionBar("enmuv2.duelend");
                         return;
                     }
