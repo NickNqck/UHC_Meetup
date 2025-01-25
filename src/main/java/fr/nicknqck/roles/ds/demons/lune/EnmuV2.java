@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EffectGiveEvent;
+import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -206,15 +207,15 @@ public class EnmuV2 extends DemonsRoles {
             return false;
         }
         private void tryStartDuel(final Player target, final Player owner) {
-            target.getLocation().getBlock().setType(Material.SIGN_POST);
-            final Sign sign = (Sign) target.getLocation().getBlock().getState();
-            sign.setLine(1, "zzz");
-            sign.update();
             owner.sendMessage("§7Vous avez§c endormie§7 le joueur: "+target.getDisplayName());
             target.sendMessage("§7Vous avez été§c endormie§7 par§c Enmu§7 (§6V2§7)");
             final Location loc1 = new Location(this.arena, 25, this.arena.getHighestBlockYAt(25, 25), 25);
             final Location loc2 = new Location(this.arena, -25, this.arena.getHighestBlockYAt(-25, -25), -25);
             Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                target.getLocation().getBlock().setType(Material.SIGN_POST);
+                final Sign sign = (Sign) target.getLocation().getBlock().getState();
+                sign.setLine(1, "zzz");
+                sign.update();
                 target.teleport(loc2, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 owner.teleport(loc1, PlayerTeleportEvent.TeleportCause.PLUGIN);
             });
@@ -222,17 +223,28 @@ public class EnmuV2 extends DemonsRoles {
             for (final PotionEffect potionEffect : target.getActivePotionEffects()) {
                 target.removePotionEffect(potionEffect.getType());
             }
-            new DuelManager(this);
+            new DuelManager(this, target.getLocation());
         }
         private static class DuelManager implements Listener {
 
             private final GameState gameState;
             private final SommeilUltime sommeilUltime;
+            private ItemStack[] enmuItems;
+            private ItemStack[] enmuArmors;
+            private final Location targetInitLoc;
 
-            private DuelManager(SommeilUltime sommeilUltime) {
+            private DuelManager(SommeilUltime sommeilUltime, final Location targetInitLoc) {
                 this.sommeilUltime = sommeilUltime;
                 this.gameState = sommeilUltime.getRole().getGameState();
+                this.targetInitLoc = targetInitLoc;
                 EventUtils.registerRoleEvent(this);
+                final Player owner = Bukkit.getPlayer(sommeilUltime.getRole().getPlayer());
+                if (owner != null) {
+                    this.enmuItems = owner.getInventory().getContents();
+                    this.enmuArmors = owner.getInventory().getArmorContents();
+                } else {
+                    this.enmuItems = sommeilUltime.getRole().getGamePlayer().getLastInventoryContent();
+                }
             }
 
             @EventHandler
@@ -241,14 +253,14 @@ public class EnmuV2 extends DemonsRoles {
                 if (!event.getKiller().getWorld().getName().equals("enmuv2_duel"))return;
                 final GamePlayer victim = this.gameState.getGamePlayer().get(event.getVictim().getUniqueId());
                 if (victim == null)return;
-                GamePlayer winer = null;
                 //Si le gagnant c'est Enmu
                 if (event.getGamePlayerKiller().getUuid().equals(this.sommeilUltime.getRole().getPlayer())) {
                     this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);
                     event.getPlayerKiller().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     event.getGamePlayerKiller().sendMessage("§7Bravo, vous avez vaincu§c "+victim.getPlayerName()+"§7 dans son sommeil, vous gagnez donc§a +§c1/2❤ permanent§7 ainsi qu'une utilisation de ce pouvoir, vous serez téléporter en dehors du rêve dans§c 10 secondes§7.");
                     this.sommeilUltime.setMaxUse(this.sommeilUltime.getMaxUse()+1);
-                    winer = event.getGamePlayerKiller();
+                    //Du coup la je vais tp QUE enmu
+                    new ReturnBackRunnable(this, event.getGamePlayerKiller()).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     if (victim.getRole() != null) {
                         if (victim.getRole() instanceof PilierRoles) {
                             event.getGamePlayerKiller().sendMessage("§7On dirait que vous avez vaincu un§a pilier§7, vous gagnez donc§a +§c1/2❤ permanent");
@@ -270,11 +282,12 @@ public class EnmuV2 extends DemonsRoles {
                     victim.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()-4.0);
                     event.getVictim().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     victim.sendMessage("§7Vous avez perdu votre§c duel§7, pourtant il était à votre avantage... Tant pis vous allez ressusciter dans§c 10 secondes§7 en perdant§c 2❤ permanents");
-                    winer = event.getGamePlayerKiller();
+                    //Et la je tp les deux joueurs avec chacun sont propres runnable
+                    new ReturnBackRunnable(this, event.getGamePlayerKiller()).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
+                    new ReturnBackRunnable(this, victim).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
+                    this.enmuItems = event.getVictim().getInventory().getContents();
+                    this.enmuArmors = event.getVictim().getInventory().getArmorContents();
                     event.setCancel(true);
-                }
-                if (winer != null) {
-                    new ReturnBackRunnable(this.gameState, winer).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                 }
             }
             @EventHandler
@@ -291,15 +304,28 @@ public class EnmuV2 extends DemonsRoles {
                     effectGiveEvent.setCancelled(true);
                 }
             }
+            @EventHandler
+            private void onEndGame(final EndGameEvent event) {
+                final World world = Bukkit.getWorld("enmuv2_duel");
+                if (world != null) {
+                    for (final Chunk chunk : world.getLoadedChunks()) {
+                        chunk.unload();
+                    }
+                    Main.getInstance().deleteWorld("enmuv2_duel");
+                }
+            }
+
             private static class ReturnBackRunnable extends BukkitRunnable {
 
                 private int timeLeft = 10;
-                private final GameState gameState;
                 private final GamePlayer winer;
+                private final DuelManager duelManager;
+                private final GameState gameState;
 
-                private ReturnBackRunnable(GameState gameState, GamePlayer winer) {
-                    this.gameState = gameState;
+                private ReturnBackRunnable(final DuelManager duelManager, GamePlayer winer) {
+                    this.duelManager = duelManager;
                     this.winer = winer;
+                    this.gameState = duelManager.gameState;
                 }
 
                 @Override
@@ -309,7 +335,7 @@ public class EnmuV2 extends DemonsRoles {
                         return;
                     }
                     if (this.timeLeft <= 0) {
-                        final Location loc = GameListener.generateRandomLocation(Bukkit.getWorld("enmuv2_duel"));
+                        final Location loc = GameListener.generateRandomLocation(Bukkit.getWorld("arena"));
                         final Player owner = Bukkit.getPlayer(winer.getUuid());
                         if (owner != null) {
                             Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN));
