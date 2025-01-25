@@ -14,7 +14,8 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.slayers.ZenItsu;
+import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
+import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -51,7 +52,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		super.RoleGiven(gameState);
 		pacte = Pacte.Non_Choisis;
 		setCanuseblade(true);
-		getKnowedRoles().add(ZenItsu.class);
+		getKnowedRoles().add(ZenItsuV2.class);
 		getKnowedRoles().add(Kaigaku.class);
 		setLameIncassable(owner, true);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
@@ -102,7 +103,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 	private boolean killkai = false;
 	private boolean killtwo = false;
 	private Kaigaku kaigaku;
-	private ZenItsu zen;
+	private ZenItsuV2 zen;
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
@@ -185,9 +186,9 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
 							if (!gameState.hasRoleNull(u)) {//vérifie que p a un role
-								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof ZenItsu) {//si p est ZenItsu
+								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof ZenItsuV2) {//si p est ZenItsu
 									owner.sendMessage(p.getName()+" est§a ZenItsu");
-									zen = (ZenItsu) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+									zen = (ZenItsuV2) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 									gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(TeamList.Jigoro);
 									setTeam(TeamList.Jigoro);
 									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
@@ -310,7 +311,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 					if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 						if (!gameState.hasRoleNull(victim.getUniqueId())) {
 							RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
-							if (role instanceof ZenItsu) {
+							if (role instanceof ZenItsuV2) {
 								if (!killzen) {
 									addSpeedAtInt(owner, 10);
 									owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Zen'Itsu "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"résistance 1 le jour"+ChatColor.GRAY+", ainsi que "+ChatColor.GOLD+"10% de Speed");
@@ -366,7 +367,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 			if (!event.isCancel()) {
 				if (this.pacte == Pacte.PacteKaigaku){
 					if (gameState.hasRoleNull(event.getVictim().getUniqueId()))return;
-					if (!(gameState.getGamePlayer().get(event.getVictim().getUniqueId()).getRole() instanceof ZenItsu))return;
+					if (!(gameState.getGamePlayer().get(event.getVictim().getUniqueId()).getRole() instanceof ZenItsuV2))return;
 					RoleBase role = event.getGamePlayerKiller().getRole();
 					if (role.getPlayer().equals(getPlayer())) {
 						event.getPlayerKiller().sendMessage("§7En tuant§a Zen'Itsu§7 vous avez obtenue l'effet§c Force I§7 permanent.");
