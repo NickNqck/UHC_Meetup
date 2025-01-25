@@ -99,7 +99,7 @@ public class HomingBow implements Listener {
 	        if (arrow.getShooter() instanceof Player) {
 	            Player shooter = (Player) arrow.getShooter();
 	            if (!gameState.hasRoleNull(shooter.getUniqueId())) {
-	            	gameState.getPlayerRoles().get(shooter).onProjectileHit(event.getEntity(), shooter);
+	            	gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileHit(event.getEntity(), shooter);
 		            if (isSpecialPlayer(shooter)) {
 		                if (truc) {
 		                    RoleBase role = gameState.getPlayerRoles().get(shooter);
