@@ -67,7 +67,6 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
 
     @Override
     public void resetCooldown() {
-
     }
 
     @Override
@@ -100,8 +99,8 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         final int middleOfTheNight = event.getTimeNight()/2;
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!canHaveSpeed)return;
-            owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), true);
-            owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), true);
+            givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), EffectWhen.NOW);
+            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 1, false, false), EffectWhen.NOW);
         }, 20L *middleOfTheNight);
     }
     @EventHandler

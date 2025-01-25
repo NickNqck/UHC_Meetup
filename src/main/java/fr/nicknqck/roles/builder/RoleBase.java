@@ -6,6 +6,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
@@ -565,6 +566,17 @@ public abstract class RoleBase implements IRole {
 		return new TextComponent("");
 	}
 	public void givePotionEffect(PotionEffect effect, EffectWhen when) {
+		if (when.equals(EffectWhen.NOW)) {
+			final Player owner = Bukkit.getPlayer(getPlayer());
+			if (owner != null) {
+				final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(owner, this, effect, when);
+				Bukkit.getPluginManager().callEvent(effectGiveEvent);
+				if (!effectGiveEvent.isCancelled()) {
+					owner.addPotionEffect(effect, true);
+				}
+			}
+			return;
+		}
 		getEffects().put(effect, when);
 	}
 }
