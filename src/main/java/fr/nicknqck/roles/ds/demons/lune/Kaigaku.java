@@ -8,7 +8,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.Muzan;
-import fr.nicknqck.roles.ds.slayers.ZenItsu;
+import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.roles.ds.solos.JigoroV2;
 import fr.nicknqck.utils.Loc;
 import lombok.NonNull;
@@ -36,7 +36,7 @@ public class Kaigaku extends DemonsRoles {
 	public Kaigaku(UUID player) {
 		super(player);
 		this.setCanuseblade(true);
-		getKnowedRoles().add(ZenItsu.class);
+		getKnowedRoles().add(ZenItsuV2.class);
 		getKnowedRoles().add(Muzan.class);
 		setLameIncassable(owner, true);
 	}
@@ -113,7 +113,7 @@ public class Kaigaku extends DemonsRoles {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (!gameState.hasRoleNull(victim.getUniqueId())) {
 						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
-						if (role instanceof ZenItsu) {
+						if (role instanceof ZenItsuV2) {
 							killzen = true;						
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+role.getRoles()+" "+ChatColor.GRAY+"vous obtenez donc sa capacité qui est que quand vous mettez un coup avec votre épée il y à 1 chance sur 10 que la cible ce prenne "+ChatColor.RED+"1 coeur de dégat"+ChatColor.GRAY+" via un éclair");
 						

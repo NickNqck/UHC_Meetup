@@ -10,7 +10,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.slayers.ZenItsu;
+import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 import lombok.NonNull;
@@ -51,7 +51,7 @@ public class Jigoro extends DemonsSlayersRoles {
 		this.setCanuseblade(true);
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			getKnowedRoles().add(ZenItsu.class);
+			getKnowedRoles().add(ZenItsuV2.class);
 			getKnowedRoles().add(Kaigaku.class);
 		}, 20);
 		setLameIncassable(owner, true);
@@ -187,7 +187,7 @@ public class Jigoro extends DemonsSlayersRoles {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (!gameState.hasRoleNull(victim.getUniqueId())) {
 						RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
-						if (role instanceof ZenItsu && !killzen) {
+						if (role instanceof ZenItsuV2 && !killzen) {
 							giveItem(owner, false, Items.getJoueurZenItsuSpeed());
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+"Zen'Itsu "+ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour"+ChatColor.GRAY+", ainsi que l'accès au: "+ChatColor.GOLD+"Premier Mouvement du Soufle de la Foudre"+ChatColor.GRAY+" qui vous donnera Speed 3 pendant 1 minutes");
 							killzen = true;
