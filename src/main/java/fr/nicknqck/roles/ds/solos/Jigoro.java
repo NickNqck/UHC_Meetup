@@ -79,7 +79,7 @@ public class Jigoro extends DemonsSlayersRoles {
 		cooldownquatriememouvement = 0;
 		cooldownzone = 0;
 	}
-	boolean giveforce = false;
+
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Kaigaku, 1);
