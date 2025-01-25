@@ -46,8 +46,10 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
                 Collections.shuffle(roles, Main.RANDOM);
                 DemonsRoles lune = roles.get(0);
                 if (lune != null) {
-                    getMessageOnDescription().add("§7Votre§c lune§7 est §c"+lune.owner.getName());
+                    getMessageOnDescription().add("§7Votre§c lune§7 est §c"+lune.getGamePlayer().getPlayerName());
                     this.lune = lune;
+                } else {
+                    getGamePlayer().sendMessage("§7Vous n'avez pas pus avoir de lune (Null)");
                 }
             } else {
                 getMessageOnDescription().add("§7Aucune§c Lunes§7 n'a pus vous êtres assigner.");
