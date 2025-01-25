@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -98,10 +99,13 @@ public class Kaigaku extends DemonsRoles {
 		if (cooldowntroisiememouvement >= 1) {
 			cooldowntroisiememouvement--;
 		}
-		if (gameState.nightTime) {
-			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
-		}
 	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
+	}
+
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
