@@ -14,6 +14,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -92,6 +93,7 @@ public class EnmuV2 extends DemonsRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
+        getKnowedRoles().add(Muzan.class);
         addPower(new EndormissementPower(this), true);
         addPower(new SommeilUltime(this), true);
     }
@@ -284,6 +286,9 @@ public class EnmuV2 extends DemonsRoles {
                     victim.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()-4.0);
                     event.getVictim().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     victim.sendMessage("§7Vous avez perdu votre§c duel§7, pourtant il était à votre avantage... Tant pis vous allez ressusciter dans§c 10 secondes§7 en perdant§c 2❤ permanents");
+                    for (final ItemStack itemStack : this.enmuItems) {
+                        GameListener.dropItem(event.getVictim().getLocation(), itemStack);
+                    }
                     //Et la je tp les deux joueurs avec chacun sont propres runnable
                     new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     new ReturnBackRunnable(this, victim, true).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
