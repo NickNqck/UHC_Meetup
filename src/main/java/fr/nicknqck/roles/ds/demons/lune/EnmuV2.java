@@ -287,6 +287,8 @@ public class EnmuV2 extends DemonsRoles {
                     event.getVictim().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     victim.sendMessage("§7Vous avez perdu votre§c duel§7, pourtant il était à votre avantage... Tant pis vous allez ressusciter dans§c 10 secondes§7 en perdant§c 2❤ permanents");
                     for (final ItemStack itemStack : this.enmuItems) {
+                        if (itemStack == null)continue;
+                        if (itemStack.getType().equals(Material.AIR))continue;
                         GameListener.dropItem(event.getVictim().getLocation(), itemStack);
                     }
                     //Et la je tp les deux joueurs avec chacun sont propres runnable
