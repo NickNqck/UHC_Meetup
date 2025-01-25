@@ -260,7 +260,7 @@ public class EnmuV2 extends DemonsRoles {
                     event.getGamePlayerKiller().sendMessage("§7Bravo, vous avez vaincu§c "+victim.getPlayerName()+"§7 dans son sommeil, vous gagnez donc§a +§c1/2❤ permanent§7 ainsi qu'une utilisation de ce pouvoir, vous serez téléporter en dehors du rêve dans§c 10 secondes§7.");
                     this.sommeilUltime.setMaxUse(this.sommeilUltime.getMaxUse()+1);
                     //Du coup la je vais tp QUE enmu
-                    new ReturnBackRunnable(this, event.getGamePlayerKiller()).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
+                    new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     if (victim.getRole() != null) {
                         if (victim.getRole() instanceof PilierRoles) {
                             event.getGamePlayerKiller().sendMessage("§7On dirait que vous avez vaincu un§a pilier§7, vous gagnez donc§a +§c1/2❤ permanent");
@@ -283,8 +283,8 @@ public class EnmuV2 extends DemonsRoles {
                     event.getVictim().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     victim.sendMessage("§7Vous avez perdu votre§c duel§7, pourtant il était à votre avantage... Tant pis vous allez ressusciter dans§c 10 secondes§7 en perdant§c 2❤ permanents");
                     //Et la je tp les deux joueurs avec chacun sont propres runnable
-                    new ReturnBackRunnable(this, event.getGamePlayerKiller()).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
-                    new ReturnBackRunnable(this, victim).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
+                    new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
+                    new ReturnBackRunnable(this, victim, true).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     this.enmuItems = event.getVictim().getInventory().getContents();
                     this.enmuArmors = event.getVictim().getInventory().getArmorContents();
                     event.setCancel(true);
@@ -321,11 +321,13 @@ public class EnmuV2 extends DemonsRoles {
                 private final GamePlayer winer;
                 private final DuelManager duelManager;
                 private final GameState gameState;
+                private final boolean enmuLOOSE;
 
-                private ReturnBackRunnable(final DuelManager duelManager, GamePlayer winer) {
+                private ReturnBackRunnable(final DuelManager duelManager, GamePlayer winer, final boolean enmuLoose) {
                     this.duelManager = duelManager;
                     this.winer = winer;
                     this.gameState = duelManager.gameState;
+                    this.enmuLOOSE = enmuLoose;
                 }
 
                 @Override
@@ -338,7 +340,14 @@ public class EnmuV2 extends DemonsRoles {
                         final Location loc = GameListener.generateRandomLocation(Bukkit.getWorld("arena"));
                         final Player owner = Bukkit.getPlayer(winer.getUuid());
                         if (owner != null) {
-                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN));
+                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                owner.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                                if (this.enmuLOOSE) {
+                                    owner.getInventory().setArmorContents(this.duelManager.enmuArmors);
+                                    owner.getInventory().setContents(this.duelManager.enmuItems);
+                                    owner.updateInventory();
+                                }
+                            });
                             cancel();
                         }
                         this.winer.getActionBarManager().removeInActionBar("enmuv2.duelend");
