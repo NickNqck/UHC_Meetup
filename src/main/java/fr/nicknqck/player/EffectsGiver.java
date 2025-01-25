@@ -40,7 +40,7 @@ public class EffectsGiver implements Listener {
                                             final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, role, potionEffect, EffectWhen.DAY);
                                             Bukkit.getPluginManager().callEvent(effectGiveEvent);
                                             if (!effectGiveEvent.isCancelled()){
-                                                player.addPotionEffect(potionEffect, true);
+                                                player.addPotionEffect(potionEffect);
                                             }
                                         });
                                     }
