@@ -353,7 +353,7 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("Configuration de la partie")) {
+                if (inv.getTitle().equals("§fConfiguration de la partie")) {
                     inv.clear();
                     inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(5).setName("§r§fTaille de la bordure maximum").setLore(
                             "§r§f[50b < "+ Border.getMaxBorderSize()+" > 2400b",

@@ -482,7 +482,7 @@ public static ItemStack getSelectConfigButton() {
 	}
 	
 	public static Inventory getConfigSelectGUI() {
-        return Bukkit.createInventory(null, 27, "Configuration de la partie");
+        return Bukkit.createInventory(null, 27, "§fConfiguration de la partie");
 	}
 
 	public static Inventory getRoleSelectGUI() {
