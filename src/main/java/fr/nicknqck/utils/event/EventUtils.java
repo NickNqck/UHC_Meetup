@@ -37,8 +37,9 @@ public class EventUtils implements Listener{
     @EventHandler
     private void onEndGame(EndGameEvent event) {
         assert !toUnregister.isEmpty();
-        for (Listener listener : toUnregister) {
+        for (final Listener listener : toUnregister) {
             unregisterEvents(listener);
         }
+        toUnregister.clear();
     }
 }
