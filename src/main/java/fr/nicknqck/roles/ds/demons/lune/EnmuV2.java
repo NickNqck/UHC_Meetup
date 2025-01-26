@@ -103,14 +103,15 @@ public class EnmuV2 extends DemonsRoles {
         private final Map<UUID, Integer> duelMap = new HashMap<>();
 
         protected SommeilUltime(@NonNull RoleBase role) {
-            super("§fSommeil Ultime", new Cooldown(60*15), new ItemBuilder(Material.NETHER_STAR).setName("§fSommeil ultime"), role,
+            super("§fSommeil Ultime", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§fSommeil ultime"), role,
                     "§7En visant un joueur, vous permet de charger sa§b bar de sommeil§7, une fois remplie vous pourrez alors l'affronter dans un§c duel",
                     "§7durant ce duel, aucun joueur ne pourra utiliser de§c pouvoir§7, également, votre adversaire ne possédera aucun effet,",
                     "",
                     "§7Si vous perdez votre§c duel§7 vous réapparaitrez en perdant§c 2❤ permanents§7 ainsi que ce pouvoir",
                     "",
-                    "§7Si vous gagnez votre§c duel§7 vous obtiendrez §c1/2❤ permanent§7, ainsi qu'une utilisation de ce pouvoir",
-                    "§7Si la personne que vous aviez tué était un§a pilier§7 ou un rôle§e solitaire§7 vous gagnerez §c1/2❤ permanent§7 en§c plus§7.");
+                    "§7Si vous gagnez votre§c duel§7 vous obtiendrez §c1/2❤ permanent§7, ainsi qu'une utilisation de ce pouvoir.",
+                    "§7Si la personne que vous aviez tué était un§a pilier§7 ou un rôle§e solitaire§7 vous gagnerez §c1/2❤ permanent§7 en§c plus§7.",
+                    "§7Si la personne que vous avez vaincu possédait §cun§7 ou§c des effet§7(§cs§7)§c permanent§7(§cs§7) ou durant le§c cycle§7 de sa mort, vous obtiendrez§c +10%§7 de ces/cette§c effet§7(§cs§7)");
             this.arena = getWorld();
             clearArena();
             setMaxUse(1);
@@ -241,7 +242,7 @@ public class EnmuV2 extends DemonsRoles {
             private DuelManager(SommeilUltime sommeilUltime) {
                 this.sommeilUltime = sommeilUltime;
                 this.gameState = sommeilUltime.getRole().getGameState();
-                EventUtils.registerRoleEvent(this);
+                EventUtils.registerEvents(this);
                 final Player owner = Bukkit.getPlayer(sommeilUltime.getRole().getPlayer());
                 if (owner != null) {
                     this.enmuItems = owner.getInventory().getContents();
@@ -277,6 +278,32 @@ public class EnmuV2 extends DemonsRoles {
                             this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);
                             event.getPlayerKiller().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                         }
+                        final Map<PotionEffect, EffectWhen> potionEffects = victim.getRole().getEffects();
+                        if (potionEffects.isEmpty())return;
+                        for (final PotionEffect potionEffect : potionEffects.keySet()) {
+                            if (!isGoodEffect(potionEffect.getType()))continue;
+                            if (gameState.isNightTime()) {
+                                if (potionEffects.get(potionEffect).equals(EffectWhen.NIGHT) || potionEffects.get(potionEffect).equals(EffectWhen.PERMANENT)) {
+                                    if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+                                        this.sommeilUltime.getRole().addBonusforce(10.0);
+                                    } else if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                                        this.sommeilUltime.getRole().addSpeedAtInt(event.getPlayerKiller(), 10f);
+                                    } else if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
+                                        this.sommeilUltime.getRole().addBonusResi(10.0);
+                                    }
+                                }
+                            } else {//Donc s'il fait jour
+                                if (potionEffects.get(potionEffect).equals(EffectWhen.DAY) || potionEffects.get(potionEffect).equals(EffectWhen.PERMANENT)) {
+                                    if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+                                        this.sommeilUltime.getRole().addBonusforce(10.0);
+                                    } else if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                                        this.sommeilUltime.getRole().addSpeedAtInt(event.getPlayerKiller(), 10f);
+                                    } else if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
+                                        this.sommeilUltime.getRole().addBonusResi(10.0);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 //Si le perdant c'est Enmu
@@ -286,6 +313,8 @@ public class EnmuV2 extends DemonsRoles {
                     victim.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()-4.0);
                     event.getVictim().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     victim.sendMessage("§7Vous avez perdu votre§c duel§7, pourtant il était à votre avantage... Tant pis vous allez ressusciter dans§c 10 secondes§7 en perdant§c 2❤ permanents");
+                    this.enmuItems = event.getVictim().getInventory().getContents();
+                    this.enmuArmors = event.getVictim().getInventory().getArmorContents();
                     for (final ItemStack itemStack : this.enmuItems) {
                         if (itemStack == null)continue;
                         if (itemStack.getType().equals(Material.AIR))continue;
@@ -294,10 +323,11 @@ public class EnmuV2 extends DemonsRoles {
                     //Et la je tp les deux joueurs avec chacun sont propres runnable
                     new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     new ReturnBackRunnable(this, victim, true).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
-                    this.enmuItems = event.getVictim().getInventory().getContents();
-                    this.enmuArmors = event.getVictim().getInventory().getArmorContents();
                     event.setCancel(true);
                 }
+            }
+            private boolean isGoodEffect(PotionEffectType type) {
+                return type.equals(PotionEffectType.SPEED) || type.equals(PotionEffectType.INCREASE_DAMAGE) || type.equals(PotionEffectType.DAMAGE_RESISTANCE);
             }
             @EventHandler
             private void PowerActiveEvent(@NonNull final PowerActivateEvent event) {
@@ -316,6 +346,7 @@ public class EnmuV2 extends DemonsRoles {
             @EventHandler
             private void onEndGame(final EndGameEvent event) {
                 Main.getInstance().deleteWorld("enmuv2_duel");
+                EventUtils.unregisterEvents(this);
             }
 
             private static class ReturnBackRunnable extends BukkitRunnable {
@@ -420,7 +451,7 @@ public class EnmuV2 extends DemonsRoles {
                     "",
                     "§8 • §fClique droit:§7 En §cvisant§7 un joueur, vous permet de l'§cendormir§7 pendant§c 8 secondes§7 (1x/10m)",
                     "",
-                    "§8 • §fClique gauche:§7 Vous permet d'endormir tout joueurs présent autours de vous dans un rayon de§c 30 blocs§7 pendant§c 3 secondes§7 (1x/15m)",
+                    "§8 • §fClique gauche:§7 Vous permet d'endormir tout joueurs présent autours de vous dans un rayon de§c 30 blocs§7 pendant§c 3 secondes§7 (1x/10m)",
                     "",
                     "§7Un joueur§c endormie§7 ne peut pas bouger mais il peut être§c frappé§7,",
                     "§7Les§c démons§7 étant§c endormie§7 seront toucher§c 2x§7 moins longtemps (dont§a Nezuko§7)");
@@ -492,7 +523,7 @@ public class EnmuV2 extends DemonsRoles {
         private static class CliqueGauche extends Power {
 
             public CliqueGauche(@NonNull RoleBase role) {
-                super("§cEndormissement§7 (§fClique gauche§7)", new Cooldown(60*15), role);
+                super("§cEndormissement§7 (§fClique gauche§7)", new Cooldown(60*10), role);
                 setShowInDesc(false);
             }
 
