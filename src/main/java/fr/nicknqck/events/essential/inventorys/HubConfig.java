@@ -227,7 +227,7 @@ public class HubConfig implements Listener {
                     Main.getInstance().getInventories().updateCutCleanInventory(player);
                     event.setCancelled(true);
                     break;
-                case "Configuration de la partie":
+                case "§fConfiguration de la partie":
                     if (item.getType() != Material.AIR) {
                         String name = item.getItemMeta().getDisplayName();
                         if (item.getType().equals(Material.WATER_BUCKET)) {
