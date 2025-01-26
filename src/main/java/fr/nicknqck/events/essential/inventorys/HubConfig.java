@@ -316,6 +316,9 @@ public class HubConfig implements Listener {
                         if (item.getType().equals(Material.TNT)) {
                             gameState.setTNTGrief(!gameState.isTNTGrief());
                         }
+                        if (name.equals("§fLame")) {
+                            Main.getInstance().getGameConfig().setGiveLame(!Main.getInstance().getGameConfig().isGiveLame());
+                        }
                         Border.setMaxBorderSize(Math.max(50, Math.min(Border.getMaxBorderSize(), 2400)));
                         Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
                         gameState.pvpTimer = Math.max(0, Math.min(gameState.pvpTimer, 40*60));

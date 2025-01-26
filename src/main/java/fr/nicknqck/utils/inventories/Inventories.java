@@ -4,7 +4,6 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.chat.Chat;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -416,6 +415,7 @@ public class Inventories {
                             "§fTemp actuelle:§b "+StringUtils.secondsTowardsBeautiful(GameState.getInstance().timewaitingbeinfected)
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(gameState.isTNTGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
+                    inv.addItem(new ItemBuilder(Material.INK_SACK).setName("§fLame").setLore("§7Si activé, donne une§a lame§7 à l'annonce des rôles à tout les joueurs de la partie","",Main.getInstance().getGameConfig().isGiveLame() ? "§aActivé" : "§cDésactivé").toItemStack());
                     inv.setItem(26, GUIItems.getSelectBackMenu());
                 }
             }
