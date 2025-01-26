@@ -57,7 +57,8 @@ public class DeathManager implements Listener {
     }
     public void KillHandler(@Nonnull Player killedPlayer, @Nonnull Entity entityKiller) {
         final GameState gameState = GameState.getInstance();
-        UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(killedPlayer, entityKiller, gameState);
+        @NonNull
+        final UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(killedPlayer, entityKiller, gameState);
         Bukkit.getPluginManager().callEvent(playerKillEvent);
         UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole());
         Bukkit.getPluginManager().callEvent(uhcDeathEvent);
@@ -72,15 +73,13 @@ public class DeathManager implements Listener {
             gameState.getDeadRoles().add(gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole().getRoles());
         }
         for (ItemStack item : killedPlayer.getInventory().getContents()){
-            if (item != null){
-                if (item.getType() != Material.AIR){
-                    if (item.getAmount() <= 64){
-                        if (item.getAmount() > 0) {
-                            dropItem(killedPlayer.getLocation().clone(), item.clone());
-                        } else {
-                            dropItem(killedPlayer.getLocation().clone(), new ItemBuilder(item).setAmount(1).toItemStack());
-                        }
-                    }
+            if (item == null)continue;
+            if (item.getType().equals(Material.AIR))continue;
+            if (item.getAmount() <= 64) {
+                if (item.getAmount() > 0) {
+                    dropItem(killedPlayer.getLocation().clone(), item.clone());
+                } else {
+                    dropItem(killedPlayer.getLocation().clone(), new ItemBuilder(item).setAmount(1).toItemStack());
                 }
             }
         }
