@@ -21,6 +21,8 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.particles.MathUtil;
+import fr.nicknqck.utils.powers.CommandPower;
+import fr.nicknqck.utils.powers.Cooldown;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -67,6 +69,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         EventUtils.registerRoleEvent(this);
         new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         setCanuseblade(true);
+        addPower(new DsAssassinCommand(this));
         Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
@@ -118,8 +121,8 @@ public class Tanjiro extends SlayerRoles implements Listener {
         TextComponent assassin = new TextComponent("§c/ds assassin <joueur>");
         assassin.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
                 "§7Vous permet de savoir si un joueur est l'§4Assassin§7 ou non, " +
-                "\n§7S'il l'est vous obtiendrez un §ctraqueur§7 vers lui pendant§c 5 minutes§7, " +
-                "\n§7Sinon, vous perdrez§c 2"+AllDesc.coeur+"§7 permanent. (1x/partie)")}));
+                        "\n§7S'il l'est vous obtiendrez un §ctraqueur§7 vers lui pendant§c 5 minutes§7, " +
+                        "\n§7Sinon, vous perdrez§c 2"+AllDesc.coeur+"§7 permanent. (1x/partie)")}));
         assassin.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds assassin "));
         return assassin;
     }
@@ -180,48 +183,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
     @Override
     public void onDSCommandSend(String[] args, GameState gameState) {
-        if (args[0].equalsIgnoreCase("assassin")) {
-            if (args.length == 2) {
-                Player owner = Bukkit.getPlayer(getPlayer());
-                if (useAssassin){
-                    owner.sendMessage("§cVous avez atteint le nombre maximum d'utilisation de ce pouvoir.");
-                    return;
-                }
-                if (this.gameAssassin != null) {
-                    Player target = Bukkit.getPlayer(args[1]);
-                    if (target != null) {
-                        boolean assa = target.getUniqueId().equals(this.gameAssassin.getUuid());
-                        owner.sendMessage("§c"+target.getName()+"§f "+(assa ? "§7est l'§4Assassin" : "§7n'est§c pas§7 l'§4Assassin"));
-                        useAssassin = true;
-                        if (!assa) {
-                            setMaxHealth(getMaxHealth()-4);
-                        } else {
-                            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, false, false), EffectWhen.NOW);
-                            giveItem(owner, true, new ItemBuilder(Material.COMPASS).setName("§4§lTraqueur").toItemStack());
-                            new BukkitRunnable() {
-                                private int timeRemaining = 60*5;
-                                private final UUID targetUUID = target.getUniqueId();
-                                private final UUID ownerUUID = owner.getUniqueId();
-                                @Override
-                                public void run() {
-                                    Player target = Bukkit.getPlayer(targetUUID);
-                                    Player owner = Bukkit.getPlayer(ownerUUID);
-                                    if (target !=null && owner != null) {
-                                        owner.setCompassTarget(target.getLocation());
-                                        timeRemaining--;
-                                    }
-                                    if (timeRemaining == 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
-                                        cancel();
-                                    }
-                                }
-                            }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-                        }
-                    }
-                } else {
-                    owner.sendMessage("§cL'§4Assassin§c n'a pas encore été désigner ou n'est pas présent dans la partie.");
-                }
-            }
-        }
         if (args[0].equalsIgnoreCase("sentir")) {
             Player owner = Bukkit.getPlayer(getPlayer());
             if (args.length == 2) {
@@ -325,6 +286,70 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     if (tanjiro.cdDanse == 60*11) {
                         owner.sendMessage("§7Vous ne mettrez plus les joueurs en§c feu§7.");
                     }
+                }
+            }
+        }
+    }
+    private static class DsAssassinCommand extends CommandPower {
+
+        private final Tanjiro tanjiro;
+
+        public DsAssassinCommand(@NonNull Tanjiro role) {
+            super("/ds assassin <joueur>", "assassin", new Cooldown(-500), role, CommandType.DS,
+                    "§7Vous permet de savoir si un joueur est l'§4Assassin§7 ou non, ",
+                            "§7S'il l'est vous obtiendrez un §ctraqueur§7 vers lui pendant§c 5 minutes§7, ",
+                            "§7Sinon, vous perdrez§c 2❤§7 permanent.");
+            setMaxUse(1);
+            this.tanjiro = role;
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            final String[] args = (String[]) map.get("args");
+            if (args.length != 2) {
+                player.sendMessage("§cLa commande est§6 /ds assassin <joueur>");
+                return false;
+            }
+            if (this.tanjiro.gameAssassin != null) {
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    boolean assa = target.getUniqueId().equals(this.tanjiro.gameAssassin.getUuid());
+                    player.sendMessage("§c"+target.getName()+"§f "+(assa ? "§7est l'§4Assassin" : "§7n'est§c pas§7 l'§4Assassin"));
+                    if (!assa) {
+                        this.tanjiro.setMaxHealth(this.tanjiro.getMaxHealth()-4);
+                    } else {
+                        this.tanjiro.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, false, false), EffectWhen.NOW);
+                        this.tanjiro.giveItem(player, true, new ItemBuilder(Material.COMPASS).setName("§4§lTraqueur").toItemStack());
+                        new CompassRunnable(target.getUniqueId(), player.getUniqueId());
+                    }
+                    return true;
+                }
+            }
+            player.sendMessage("§cL'assassin n'a pas été désigné");
+            return false;
+        }
+        private static class CompassRunnable extends BukkitRunnable {
+
+            private int timeRemaining = 60*5;
+            private final UUID targetUUID;
+            private final UUID ownerUUID;
+
+            private CompassRunnable(UUID targetUUID, UUID ownerUUID) {
+                this.targetUUID = targetUUID;
+                this.ownerUUID = ownerUUID;
+                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+
+            @Override
+            public void run() {
+                Player target = Bukkit.getPlayer(targetUUID);
+                Player owner = Bukkit.getPlayer(ownerUUID);
+                if (target !=null && owner != null) {
+                    owner.setCompassTarget(target.getLocation());
+                    this.timeRemaining--;
+                }
+                if (this.timeRemaining == 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
                 }
             }
         }
