@@ -48,7 +48,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
 
     private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdDanse, cdSentir;
-    private boolean sentirUse, useAssassin;
+    private boolean sentirUse;
     private TextComponent automaticDesc;
     private GamePlayer gameAssassin;
 
