@@ -67,7 +67,7 @@ public class DSmtpCommands implements CommandExecutor {
                             message.add(ChatColor.DARK_PURPLE+"("+ChatColor.RED+nmb+ChatColor.DARK_PURPLE+") : "+ChatColor.GOLD+r.name()+ChatColor.DARK_PURPLE+",");
                         }
                     }
-                    player.sendMessage(message.toArray(new String[message.size()]));
+                    player.sendMessage(message.toArray(new String[0]));
                     return true;
                 } else if (args[0].equalsIgnoreCase("roles")) {
                     //ArrayList<String> message = new ArrayList<String>();
@@ -76,31 +76,31 @@ public class DSmtpCommands implements CommandExecutor {
 
                 } else if (args[0].equalsIgnoreCase("doc")){
                     Player player = (Player) sender;
-                    ArrayList<String> message = new ArrayList<String>();
+                    ArrayList<String> message = new ArrayList<>();
                     message.add(ChatColor.BOLD+"Aucun document disponible, (pour l'instant)");
-                    player.sendMessage(message.toArray(new String[message.size()]));
+                    player.sendMessage(message.toArray(new String[0]));
                     return true;
                 } else if (args[0].equalsIgnoreCase("lame")){
                     Player player = (Player) sender;
                     ArrayList<String> message = getStrings();
-                    player.sendMessage(message.toArray(new String[message.size()]));
+                    player.sendMessage(message.toArray(new String[0]));
                     return true;
                 } else if (args[0].equalsIgnoreCase("effect")) {
 						ArrayList<String> message = new ArrayList<>();
 						if (gameState.hasRoleNull(((Player) sender).getUniqueId())) return false;
                         final RoleBase role = gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole();
                         final String speed = Bukkit.getPlayer(role.getPlayer()) != null ? ""+Bukkit.getPlayer(role.getPlayer()).getWalkSpeed() : "?";
-						message.add("§bEffect: "+ChatColor.DARK_GRAY+"§o§m-----------------------------------");
+						message.add("§bEffets: "+ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 						message.add("");
-						message.add("§aRésistance: "+ role.getResi()+"% + " +role.getBonusResi()+"%");
+						message.add("§aRésistance: " +role.getBonusResi()+"%");
 						message.add("");
-						message.add("§cForce: 20% + "+role.getBonusForce()+"%");
+						message.add("§cForce: "+role.getBonusForce()+"%");
 						message.add("");
 						message.add("§bSpeed: "+speed);
 						message.add("");
 						message.add(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-						message.add("§cDisclaimer: §ril faut avoir l'effet de potion (sauf pour le % de speed) concerné pour que le % sois appliqué");
-						sender.sendMessage(message.toArray(new String[message.size()]));
+						message.add("§cDisclaimer: §fHors effet de potions");
+						sender.sendMessage(message.toArray(new String[0]));
 						return true;
 					}
 				if (gameState.getServerState() == ServerStates.InGame) {
@@ -112,7 +112,7 @@ public class DSmtpCommands implements CommandExecutor {
 			}else if (args.length == 2) { //else du args.length == 1
 				if (args[0].equalsIgnoreCase("dimtp")) {
                     Player player = (Player) sender;
-                    int x = 0;
+                    int x;
                     x = Integer.parseInt(args[1]);
                     player.teleport(new Location(Bukkit.getWorlds().get(x), 0, 152, 0));
                     return true;
@@ -194,7 +194,7 @@ public class DSmtpCommands implements CommandExecutor {
 	}
 
 	private static ArrayList<String> getStrings() {
-		ArrayList<String> message = new ArrayList<String>();
+		ArrayList<String> message = new ArrayList<>();
 		message.add(ChatColor.GOLD+"List des lames possibles : ");
 		message.add(ChatColor.GOLD + "Lame Coeur :" + ChatColor.LIGHT_PURPLE + " Donne 2 coeurs en plus permanent jusqu'a la fin de la partit.");
 		message.add(ChatColor.GOLD+"Lame de Résistance :"+ChatColor.GRAY+" Donne + 10% de résistance jusqu'a la fin de la partit.");
