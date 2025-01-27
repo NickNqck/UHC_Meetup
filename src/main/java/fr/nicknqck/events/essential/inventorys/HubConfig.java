@@ -304,13 +304,9 @@ public class HubConfig implements Listener {
                         }
                         if (item.getType() == Material.REDSTONE) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                if (gameState.TimingAssassin < 60*5) {
-                                    gameState.TimingAssassin+=10;
-                                }
+                                Main.getInstance().getGameConfig().setTimingAssassin(Math.min(60*5, Main.getInstance().getGameConfig().getTimingAssassin()+10));
                             } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                if (gameState.TimingAssassin > 10) {
-                                    gameState.TimingAssassin-=10;
-                                }
+                                Main.getInstance().getGameConfig().setTimingAssassin(Math.max(10, Main.getInstance().getGameConfig().getTimingAssassin()-10));
                             }
                         }
                         if (item.getType().equals(Material.TNT)) {

@@ -2,9 +2,10 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.assassin.ProcAssassinEvent;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -16,6 +17,7 @@ import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -30,7 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -42,10 +43,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class Tanjiro extends SlayerRoles implements Listener {
+
     private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdDanse, cdSentir;
     private boolean sentirUse, useAssassin;
     private TextComponent automaticDesc;
+    private GamePlayer gameAssassin;
+
     public Tanjiro(UUID player) {
         super(player);
 
@@ -60,7 +64,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     @Override
     public void RoleGiven(GameState gameState) {
         getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-        Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
+        EventUtils.registerRoleEvent(this);
         new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
@@ -134,7 +138,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 "§7Aléatoirement, un membre du camp des§c démons§7 est choisis pour devenir l'§4Assassin§7,\n§7Si vous parvenez à le tuer vous obtiendrez l'effet§c§l Force I§7 permanent")}));
         return texte;
     }
-
     @Override
     public ItemStack[] getItems() {
         return new ItemStack[]{
@@ -175,10 +178,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
             }
         }
     }
-    @EventHandler
-    private void onEndGame(EndGameEvent event) {
-        HandlerList.unregisterAll(this);
-    }
     @Override
     public void onDSCommandSend(String[] args, GameState gameState) {
         if (args[0].equalsIgnoreCase("assassin")) {
@@ -188,16 +187,16 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     owner.sendMessage("§cVous avez atteint le nombre maximum d'utilisation de ce pouvoir.");
                     return;
                 }
-                if (gameState.Assassin != null) {
+                if (this.gameAssassin != null) {
                     Player target = Bukkit.getPlayer(args[1]);
                     if (target != null) {
-                        boolean assa = target.getUniqueId().equals(gameState.Assassin.getUniqueId());
+                        boolean assa = target.getUniqueId().equals(this.gameAssassin.getUuid());
                         owner.sendMessage("§c"+target.getName()+"§f "+(assa ? "§7est l'§4Assassin" : "§7n'est§c pas§7 l'§4Assassin"));
                         useAssassin = true;
                         if (!assa) {
                             setMaxHealth(getMaxHealth()-4);
                         } else {
-                            givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*60*5,1, true);
+                            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, false, false), EffectWhen.NOW);
                             giveItem(owner, true, new ItemBuilder(Material.COMPASS).setName("§4§lTraqueur").toItemStack());
                             new BukkitRunnable() {
                                 private int timeRemaining = 60*5;
@@ -262,7 +261,10 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
         super.onDSCommandSend(args, gameState);
     }
-
+    @EventHandler
+    private void onAssassinProc(final ProcAssassinEvent event) {
+        this.gameAssassin = event.getAssassin();
+    }
     @Override
     public Soufle getSoufle() {
         return Soufle.EAU;
@@ -272,8 +274,8 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private void onUHCPlayerKill(UHCPlayerKillEvent event){
         if (event.getPlayerKiller() != null) {
             if (event.getPlayerKiller().getUniqueId().equals(getPlayer())) {
-                if (gameState.Assassin != null) {
-                    if (gameState.Assassin.getUniqueId().equals(event.getVictim().getUniqueId())) {
+                if (this.gameAssassin != null) {
+                    if (this.gameAssassin.getUuid().equals(event.getVictim().getUniqueId())) {
                         getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
                         event.getPlayerKiller().sendMessage("§7Vous avez venger votre famille, vous recevez l'effet§c Force I§7 de manière§c permanente");
                     }
