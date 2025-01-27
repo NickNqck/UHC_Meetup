@@ -86,8 +86,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private int maxTimeSpawnBiju = 160;
-	@Getter
-	public int TimingAssassin = 10;
 	public boolean morteclair = true;
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 	public enum ServerStates {
@@ -811,19 +809,6 @@ public class GameState{
 			getInSpecPlayers().remove(player);
 			System.out.println(role.getOriginTeam().name()+" for role "+role.getRoles().name());
 			addInPlayerRoles(player, role);
-			if (getGamePlayer().size() == getInGamePlayers().size()) {
-				if (role.getOriginTeam() == TeamList.Demon && !role.getRoles().equals(Roles.Kyogai)) {
-					canBeAssassin.add(player);
-					System.out.println(player.getName()+" added to canBeAssassinList, size: "+canBeAssassin.size());
-				}
-				System.out.println("Giving Role Ended");
-			} else {
-				System.out.println("Giving Role: "+getGamePlayer().size()+"/"+getInGamePlayers().size());
-				if (role.getOriginTeam() == TeamList.Demon) {
-					canBeAssassin.add(player);
-					System.out.println(player.getName()+" added to canBeAssassinList "+canBeAssassin.size());
-				}
-			}
 			gamePlayer.setDeathLocation(player.getLocation());
 		}
 		if (!FFA.getFFA()) {
@@ -839,8 +824,6 @@ public class GameState{
 	}
 	@Getter
 	public List<Roles> attributedRole = new ArrayList<>();
-	public ArrayList<Player> canBeAssassin = new ArrayList<>();
-	public Player Assassin = null;
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());

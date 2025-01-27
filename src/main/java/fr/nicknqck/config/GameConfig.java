@@ -9,9 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Setter
 @Getter
+@Setter
 public class GameConfig {
     @Getter
     private static GameConfig instance;
@@ -27,6 +26,7 @@ public class GameConfig {
     private int maxTimeDay = 60*5;
     private int critPercent = 20;
     private boolean giveLame = false;
+    private int timingAssassin = 30;
 
     public GameConfig() {
         instance = this;

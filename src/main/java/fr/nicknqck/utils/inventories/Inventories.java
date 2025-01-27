@@ -391,7 +391,7 @@ public class Inventories {
                     inv.addItem(GUIItems.getTabRoleInfo(gameState));
                     inv.addItem(Items.geteclairmort());
                     inv.addItem(new ItemBuilder(Material.REDSTONE).setName("§r§fTemp avant l'§cAssassin").setLore(
-                            "§r§f[10 secondes < "+StringUtils.secondsTowardsBeautiful(gameState.getTimingAssassin())+" > 5 minutes",
+                            "§r§f[10 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getTimingAssassin())+" > 5 minutes",
                             "§r§fClique gauche: §a+10 secondes",
                             "§r§fClique droit: §c-10 secondes"
                     ).toItemStack());

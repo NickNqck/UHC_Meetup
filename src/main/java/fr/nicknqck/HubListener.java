@@ -45,9 +45,7 @@ public class HubListener implements Listener {
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
 		gameState.infected = null;
 		gameState.infecteur = null;
-		gameState.Assassin = null;
 		Main.getInstance().getEventsManager().getEventsList().forEach(event -> event.setEnable(false));
-		gameState.canBeAssassin.clear();
 		ItemsManager.instance.clearJspList();
 		gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 		gameState.getPlayerRoles().clear();
