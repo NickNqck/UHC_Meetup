@@ -23,6 +23,7 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -47,8 +48,7 @@ import java.util.*;
 public class Tanjiro extends SlayerRoles implements Listener {
 
     private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
-    private int cdDanse, cdSentir;
-    private boolean sentirUse;
+    private int cdDanse;
     private TextComponent automaticDesc;
     private GamePlayer gameAssassin;
 
@@ -70,6 +70,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         setCanuseblade(true);
         addPower(new DsAssassinCommand(this));
+        addPower(new DsSentirCommand(this));
         Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
@@ -92,7 +93,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     @Override
     public void resetCooldown(){
         cdDanse = 0;
-        cdSentir = 0;
     }
 
     @Override
@@ -181,47 +181,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
             }
         }
     }
-    @Override
-    public void onDSCommandSend(String[] args, GameState gameState) {
-        if (args[0].equalsIgnoreCase("sentir")) {
-            Player owner = Bukkit.getPlayer(getPlayer());
-            if (args.length == 2) {
-                if (sentirUse) {
-                    owner.sendMessage("§cVous avez atteint le nombre maximum d'utilisation de ce pouvoir.");
-                    return;
-                }
-                Player target = Bukkit.getPlayer(args[1]);
-                if (target != null) {
-                    if (!gameState.hasRoleNull(target.getUniqueId())) {
-                        final RoleBase role = gameState.getGamePlayer().get(target.getUniqueId()).getRole();
-                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
-                        owner.sendMessage("§c"+target.getName()+(demon ? "§7 est un§c démon" : "§7 n'est pas un§c démon"));
-                        sentirUse = true;
-                    }
-                } else {
-                    owner.sendMessage("§c"+args[1]+" n'est pas connectée !");
-                }
-            } else {
-                if (cdSentir > 0) {
-                    sendCooldown(owner, cdSentir);
-                    return;
-                }
-                int amountDemon = 0;
-                for (Player player : Loc.getNearbyPlayersExcept(owner, 30)) {
-                    if (!gameState.hasRoleNull(player.getUniqueId())) {
-                        final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
-                        if (demon) {
-                            amountDemon++;
-                        }
-                    }
-                }
-                owner.sendMessage("§7Il y a§c "+amountDemon+" démon§7(§cs§7) autours de vous");
-                cdSentir = 60*5;
-            }
-        }
-        super.onDSCommandSend(args, gameState);
-    }
+
     @EventHandler
     private void onAssassinProc(final ProcAssassinEvent event) {
         this.gameAssassin = event.getAssassin();
@@ -261,13 +221,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
             if (tanjiro.cdDanse >= 0) {
                 tanjiro.cdDanse--;
             }
-            if (tanjiro.cdSentir >= 0){
-                tanjiro.cdSentir--;
-            }
             if (owner != null) {
-                if (tanjiro.cdSentir == 0) {
-                    owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§c /ds sentir");
-                }
                 if (tanjiro.cdDanse == 0) {
                     owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§6 Danse du dieu du feu§7.");
                 }
@@ -351,6 +305,76 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 if (this.timeRemaining == 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                     cancel();
                 }
+            }
+        }
+    }
+    private static class DsSentirCommand extends CommandPower {
+
+        private final SentirSimplePower sentirPower;
+        private final SentirJoueurPower sentirJoueurPower;
+
+        public DsSentirCommand(@NonNull Tanjiro role) {
+            super("/ds sentir", "sentir", null, role, CommandType.DS);
+            this.sentirPower = new SentirSimplePower(role);
+            role.addPower(this.sentirPower);
+            this.sentirJoueurPower = new SentirJoueurPower(role);
+            role.addPower(this.sentirJoueurPower);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            final String[] args = (String[]) map.get("args");
+            if (args.length == 1) {
+                return this.sentirPower.checkUse(player, map);
+            } else if (args.length == 2){
+                return this.sentirJoueurPower.checkUse(player, map);
+            }
+            return false;
+        }
+        private static class SentirSimplePower extends Power {
+
+            public SentirSimplePower(@NonNull Tanjiro role) {
+                super("/ds sentir", new Cooldown(60*5), role);
+            }
+
+            @Override
+            public boolean onUse(Player player, Map<String, Object> map) {
+                int amountDemon = 0;
+                for (Player around : Loc.getNearbyPlayersExcept(player, 30)) {
+                    if (!getRole().getGameState().hasRoleNull(around.getUniqueId())) {
+                        final RoleBase role = getRole().getGameState().getGamePlayer().get(around.getUniqueId()).getRole();
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
+                        if (demon) {
+                            amountDemon++;
+                        }
+                    }
+                }
+                player.sendMessage("§7Il y a§c "+amountDemon+" démon§7(§cs§7) autours de vous");
+                return true;
+            }
+        }
+        private static class SentirJoueurPower extends Power {
+
+            public SentirJoueurPower(@NonNull Tanjiro role) {
+                super("/ds sentir <joueur>", null, role);
+                setMaxUse(1);
+            }
+
+            @Override
+            public boolean onUse(Player player, Map<String, Object> map) {
+                final String[] args = (String[]) map.get("args");
+                final Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    if (!getRole().getGameState().hasRoleNull(target.getUniqueId())) {
+                        final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
+                        boolean demon = role.getTeam().equals(TeamList.Demon) || role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon);
+                        player.sendMessage("§c"+target.getName()+(demon ? "§7 est un§c démon" : "§7 n'est pas un§c démon"));
+                        return true;
+                    }
+                } else {
+                    player.sendMessage("§c"+args[1]+" n'est pas connectée !");
+                }
+                return false;
             }
         }
     }
