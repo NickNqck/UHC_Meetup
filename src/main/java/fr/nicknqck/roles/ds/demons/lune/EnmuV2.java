@@ -14,6 +14,8 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
@@ -376,6 +378,13 @@ public class EnmuV2 extends DemonsRoles {
                             final Player owner = Bukkit.getPlayer(winer.getUuid());
                             if (owner != null) {
                                 owner.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
+                                if (this.winer.getRole() instanceof DemonsSlayersRoles) {
+                                    if (((DemonsSlayersRoles) this.winer.getRole()).getLames() != null) {
+                                        if (((DemonsSlayersRoles) this.winer.getRole()).getLames().equals(Lames.FireResistance) && ((DemonsSlayersRoles) this.winer.getRole()).getLames().getUsers().get(this.winer.getUuid()) > 0) {
+                                            owner.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, false, false));
+                                        }
+                                    }
+                                }
                                 if (this.enmuLOOSE) {
                                     owner.getInventory().setArmorContents(this.duelManager.enmuArmors);
                                     owner.getInventory().setContents(this.duelManager.enmuItems);
