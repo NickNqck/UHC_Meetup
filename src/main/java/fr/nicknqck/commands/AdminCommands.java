@@ -377,9 +377,6 @@ public class AdminCommands implements CommandExecutor{
 									}
 								}
 							}
-						} else {
-							sender.sendMessage(args[1]+"§c n'est pas connecté !");
-							return true;
 						}
 					}
 				}
