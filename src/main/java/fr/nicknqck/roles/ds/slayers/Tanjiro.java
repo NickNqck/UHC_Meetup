@@ -19,10 +19,10 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -43,12 +43,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Tanjiro extends SlayerRoles implements Listener {
 
-    private final ItemStack danseItem = new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du Feu").setUnbreakable(true).setDroppable(false).toItemStack();
-    private int cdDanse;
     private TextComponent automaticDesc;
     private GamePlayer gameAssassin;
 
@@ -67,10 +66,10 @@ public class Tanjiro extends SlayerRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         getEffects().put(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
         EventUtils.registerRoleEvent(this);
-        new TanjiroRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         setCanuseblade(true);
         addPower(new DsAssassinCommand(this));
         addPower(new DsSentirCommand(this));
+        addPower(new DanseItemPower(this), true);
         Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
@@ -91,9 +90,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
 
     @Override
-    public void resetCooldown(){
-        cdDanse = 0;
-    }
+    public void resetCooldown(){}
 
     @Override
     public String[] Desc() {
@@ -143,43 +140,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
     @Override
     public ItemStack[] getItems() {
-        return new ItemStack[]{
-                danseItem
-        };
-    }
-    @EventHandler
-    private void onUse(PlayerInteractEvent event) {
-        if (event.getItem() == null)return;
-        if (event.getItem().isSimilar(danseItem)) {
-            if (event.getPlayer().getUniqueId().equals(getPlayer())) {
-                if (cdDanse <= 0) {
-                    event.getPlayer().sendMessage("§7Vous utilisez votre§6 Danse du dieu du Feu");
-                    cdDanse = 60*12;
-                    event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
-                    event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60*5, 0, false, false), true);
-                    List<Player> liste = getListPlayerFromRole(NezukoV2.class);
-                    if (!liste.isEmpty()) {
-                        Location loc = event.getPlayer().getLocation();
-                        for (Player p : liste) {
-                            p.sendMessage("§aTanjiro§7 a utiliser sa§6 danse du dieu du feu§7 en§c x: "+loc.getBlockX()+", y: "+loc.getBlockY()+", z: "+loc.getBlockZ());
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*5, 1, false, false), true);
-                        }
-                    }
-                    event.setCancelled(true);
-                } else {
-                    sendCooldown(event.getPlayer(), cdDanse);
-                    event.setCancelled(true);
-                }
-            }
-        }
-    }
-    @EventHandler
-    private void onBattle(EntityDamageByEntityEvent event) {
-        if (event.getDamager().getUniqueId().equals(getPlayer())) {
-            if (cdDanse >= 60*11) {
-                event.getEntity().setFireTicks(20*15);
-            }
-        }
+        return new ItemStack[0];
     }
 
     @EventHandler
@@ -205,45 +166,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
     }
 
-    private static class TanjiroRunnable extends BukkitRunnable {
-
-        private final Tanjiro tanjiro;
-        private TanjiroRunnable(Tanjiro tanjiro){
-            this.tanjiro = tanjiro;
-        }
-        @Override
-        public void run() {
-            if (tanjiro.getGameState().getServerState() != GameState.ServerStates.InGame || !tanjiro.getGamePlayer().isAlive()) {
-                cancel();
-                return;
-            }
-            Player owner = Bukkit.getPlayer(tanjiro.getPlayer());
-            if (tanjiro.cdDanse >= 0) {
-                tanjiro.cdDanse--;
-            }
-            if (owner != null) {
-                if (tanjiro.cdDanse == 0) {
-                    owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§6 Danse du dieu du feu§7.");
-                }
-                if (owner.getItemInHand() != null) {
-                    if (owner.getItemInHand().isSimilar(tanjiro.danseItem)) {
-                        NMSPacket.sendActionBar(owner, (tanjiro.cdDanse <= 0 ? "§e«§f Pouvoir utilisable§e »" : "§bCooldown: "+ StringUtils.secondsTowardsBeautiful(tanjiro.cdDanse)));
-                    }
-                }
-                if (tanjiro.cdDanse >= 60*7) {
-                    NMSPacket.sendActionBar(owner, "§bTemp restant: "+StringUtils.secondsTowardsBeautiful(tanjiro.cdDanse-60*7));
-                    MathUtil.sendCircleParticle(EnumParticle.FLAME, owner.getLocation(), 1, 15);
-                    if (tanjiro.cdDanse == 60*7) {
-                        owner.sendMessage("§7Vous devez arrêter de danser suite à votre fatigue...");
-                        tanjiro.setMaxHealth(tanjiro.getMaxHealth()-4);
-                    }
-                    if (tanjiro.cdDanse == 60*11) {
-                        owner.sendMessage("§7Vous ne mettrez plus les joueurs en§c feu§7.");
-                    }
-                }
-            }
-        }
-    }
     private static class DsAssassinCommand extends CommandPower {
 
         private final Tanjiro tanjiro;
@@ -375,6 +297,85 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     player.sendMessage("§c"+args[1]+" n'est pas connectée !");
                 }
                 return false;
+            }
+        }
+    }
+    private static class DanseItemPower extends ItemPower implements Listener{
+
+        protected DanseItemPower(@NonNull Tanjiro role) {
+            super("§6Danse du dieu du feu", new Cooldown(60*12), new ItemBuilder(Material.BLAZE_ROD).setName("§6Danse du dieu du feu"), role);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
+                player.sendMessage("§7Vous utilisez votre§6 Danse du dieu du Feu");
+                getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), EffectWhen.NOW);
+                getRole().givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60*5, 0, false, false), EffectWhen.NOW);
+                List<Player> liste = getRole().getListPlayerFromRole(NezukoV2.class);
+                if (!liste.isEmpty()) {
+                    final Location loc = event.getPlayer().getLocation();
+                    final DecimalFormat df = new DecimalFormat("0");
+                    for (final Player p : liste) {
+                        p.sendMessage("§aTanjiro§7 a utiliser sa§6 danse du dieu du feu§7 en§c x: "+
+                                df.format(loc.getBlockX())+", y: "+
+                                df.format(loc.getBlockY())+", z: "+
+                                df.format(loc.getBlockZ()));
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*5, 1, false, false), true);
+                    }
+                }
+                EventUtils.registerRoleEvent(this);
+                event.setCancelled(true);
+                new DanseRunnable(this, this.getRole().getGameState());
+                return true;
+            }
+            return false;
+        }
+        @EventHandler
+        private void onBattle(final EntityDamageByEntityEvent event) {
+            if (event.getDamager().getWorld().getName().equals("enmuv2_duel"))return;
+            if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
+                event.getEntity().setFireTicks(event.getEntity().getFireTicks()+150);
+            }
+        }
+        private static class DanseRunnable extends BukkitRunnable {
+
+            private final DanseItemPower power;
+            private int timeRemaining = 60*5;
+            private final GameState gameState;
+
+            private DanseRunnable(DanseItemPower power, GameState gameState) {
+                this.power = power;
+                this.gameState = gameState;
+                power.getRole().getGamePlayer().getActionBarManager().addToActionBar("tanjiro.danse", "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                if (!this.power.getRole().getGamePlayer().isAlive()) {
+                    EventUtils.unregisterEvents(this.power);
+                    cancel();
+                    return;
+                }
+                timeRemaining--;
+                this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("tanjiro.danse", "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                final Player player = Bukkit.getPlayer(this.power.getRole().getPlayer());
+                if (player != null) {
+                    MathUtil.sendCircleParticle(EnumParticle.FLAME, player.getLocation(), 1, 15);
+                }
+                if (this.timeRemaining == 60*4) {
+                    EventUtils.unregisterEvents(this.power);
+                    this.power.getRole().getGamePlayer().sendMessage("§7Vous ne mettrez plus les joueurs en§c feu§7.");
+                }
+                if (this.timeRemaining <= 0) {
+                    this.power.getRole().getGamePlayer().sendMessage("§7Vous devez arrêter de danser suite à votre fatigue...");
+                    this.power.getRole().setMaxHealth(this.power.getRole().getMaxHealth()-4);
+                }
             }
         }
     }
