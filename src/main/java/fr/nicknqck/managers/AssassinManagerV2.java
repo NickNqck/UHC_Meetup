@@ -31,12 +31,13 @@ public class AssassinManagerV2 implements Listener {
     @Getter
     @Setter
     private int timeBeforeProc = 0;
+    private final String prefix = "[Assassin-Manager] ";
 
     public AssassinManagerV2(GameState gameState) {
         this.gameState = gameState;
         this.canBeAssassin = new ArrayList<>();
         updateTime();
-        EventUtils.registerEvents(this);
+        System.out.println(this.prefix+"has just started");
     }
 
     @EventHandler
@@ -46,10 +47,15 @@ public class AssassinManagerV2 implements Listener {
         if (prepareAssassinEvent.isCancelled()) return;
         if (event.getRole() instanceof DemonsRoles && !(event.getRole() instanceof NezukoV2)) {
             this.canBeAssassin.add(event.getGamePlayer());
+            System.out.println(this.prefix+"GamePlayer: "+event.getGamePlayer()+", has been added to canBeAssassin List !");
         }
         updateTime();
         if (event.isEndGive()) {
-            if (this.canBeAssassin.isEmpty())return;
+            if (this.canBeAssassin.isEmpty()) {
+                EventUtils.unregisterEvents(this);
+                System.out.println(this.prefix+"has been cancelled, cause: no players can be the Assassin");
+                return;
+            }
             final PrepareAssassinEvent endPrepareAssassinEvent = new PrepareAssassinEvent(this.gameState, this.canBeAssassin, true);
             Bukkit.getPluginManager().callEvent(endPrepareAssassinEvent);
         }
@@ -75,7 +81,9 @@ public class AssassinManagerV2 implements Listener {
         EventUtils.unregisterEvents(this);
     }
     private void updateTime() {
+        int oldTime = this.timeBeforeProc;
         this.timeBeforeProc = Main.getInstance().getGameConfig().getTimingAssassin();
+        System.out.println(this.prefix+"updated time from "+oldTime+" to "+this.timeBeforeProc);
     }
     private static class SetAssassinRunnable extends BukkitRunnable {
 

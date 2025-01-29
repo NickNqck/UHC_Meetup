@@ -507,7 +507,7 @@ public class GameState{
 			role = new KanaeV2(player);
 			break;
 		case Rui:
-			role = new Rui(player);
+			role = new RuiV2(player);
 			break;
 		case Enmu:
 			role = new EnmuV2(player);
