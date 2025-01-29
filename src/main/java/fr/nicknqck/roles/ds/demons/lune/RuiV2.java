@@ -15,12 +15,14 @@ import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -84,12 +86,15 @@ public class RuiV2 extends DemonsRoles {
         private final Map<Integer, Power> powerMap;
 
         protected FilPower(@NonNull RuiV2 role) {
-            super("Fils de Rui", new Cooldown(60), new ItemBuilder(Material.NETHER_STAR).setName("§cFils de Rui"), role);
+            super("Fils de Rui", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cFils de Rui"), role);
             this.powerMap = new LinkedHashMap<>();
             final LongAttackFilPower longAttackFilPower = new LongAttackFilPower(role);
             this.equipedPower = longAttackFilPower;
+            final GrabPower grabPower = new GrabPower(role);
+            role.addPower(grabPower);
             role.addPower(longAttackFilPower);
             this.powerMap.put(0, longAttackFilPower);
+            this.powerMap.put(1, grabPower);
             setShowCdInHand(false);
         }
 
@@ -97,24 +102,26 @@ public class RuiV2 extends DemonsRoles {
         public boolean onUse(Player player, Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
-                if (event.getAction().name().contains("LEFT")) {
+                if (event.getAction().name().contains("LEFT")) {//Pour changer de pouvoir
                     int power = getIntFromEquipedPower();
-                    final Power actualEquipedPower = this.equipedPower;
-                    getRole().getGamePlayer().getActionBarManager().removeInActionBar("ruiv2."+actualEquipedPower.getName());
+                    getShowCdRunnable().setCustomTexte("");
                     power++;
                     if (!this.powerMap.containsKey(power)) {
                         power = 0;
                     }
                     final Power futurePower = this.powerMap.get(power);
-                    getRole().getGamePlayer().getActionBarManager().addToActionBar("ruiv2."+futurePower.getName(),
+                    getShowCdRunnable().setCustomTexte(futurePower.getName()+" "+
                             (futurePower.getCooldown().isInCooldown() ?
                                     "§c"+futurePower.getName()+" est§6 utilisable" :
-                                    "§c"+futurePower.getName()+" est en cooldown (§b"+ StringUtils.secondsTowardsBeautiful(futurePower.getCooldown().getCooldownRemaining())+"§c)")
-                    );
+                                    "§c"+futurePower.getName()+" est en cooldown (§b"+StringUtils.secondsTowardsBeautiful(futurePower.getCooldown().getCooldownRemaining())+"§c)"));
                     this.equipedPower = futurePower;
                 } else if (event.getAction().name().contains("RIGHT")){
                     if (this.equipedPower == null) {
                         player.sendMessage("§cAucun pouvoir n'a été équiper.");
+                        return false;
+                    }
+                    if (this.equipedPower.getCooldown().isInCooldown()) {
+                        player.sendMessage("§c"+this.equipedPower.getName()+" est en cooldown:§b "+StringUtils.secondsTowardsBeautiful(this.equipedPower.getCooldown().getCooldownRemaining()));
                         return false;
                     }
                     return this.equipedPower.checkUse(player, map);
@@ -137,6 +144,7 @@ public class RuiV2 extends DemonsRoles {
 
             public LongAttackFilPower(@NonNull RuiV2 role) {
                 super("Attaque longue porté", new Cooldown(60*7), role);
+                setShowInDesc(false);
             }
 
             @Override
@@ -161,6 +169,34 @@ public class RuiV2 extends DemonsRoles {
                 target.sendMessage("§cRui§7 (§6V2§7)§c a utilisé son "+getName()+" sur vous");
                 return true;
             }
+        }
+        private static final class GrabPower extends Power {
+
+            public GrabPower(@NonNull RuiV2 role) {
+                super("Fil attractif", new Cooldown(60*5), role);
+                setShowInDesc(false);
+            }
+
+            @Override
+            public boolean onUse(Player player, Map<String, Object> map) {
+                final Player target = RayTrace.getTargetPlayer(player, 25, null);
+                if (target == null) {
+                    player.sendMessage("§cIl faut viser un joueur !");
+                    return false;
+                }
+                pullPlayerTowards(player, target);
+                return false;
+            }
+            private void pullPlayerTowards(final @NonNull Player owner,final @NonNull Player target) {
+                final Location locOwner = owner.getLocation();
+                final Location locTarget = target.getLocation();
+
+                final Vector direction = locOwner.toVector().subtract(locTarget.toVector()).normalize();
+                direction.multiply(8.0);
+
+                target.setVelocity(direction);
+            }
+
         }
     }
 }
