@@ -129,6 +129,15 @@ public class RuiV2 extends DemonsRoles {
             }
             return false;
         }
+
+        @Override
+        public void tryUpdateActionBar() {
+            getShowCdRunnable().setCustomTexte(this.equipedPower.getName()+" "+
+                    (this.equipedPower.getCooldown().isInCooldown() ?
+                            "§c"+this.equipedPower.getName()+" est§6 utilisable" :
+                            "§c"+this.equipedPower.getName()+" est en cooldown (§b"+StringUtils.secondsTowardsBeautiful(this.equipedPower.getCooldown().getCooldownRemaining())+"§c)"));
+        }
+
         private Integer getIntFromEquipedPower() {
             if (this.equipedPower == null) {
                 return 0;
