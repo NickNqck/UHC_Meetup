@@ -9,6 +9,7 @@ import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.ns.Hokage;
@@ -125,6 +126,7 @@ public class HubListener implements Listener {
 				gameState.getHokage().run();
 			}
 		}, 220);
+		new AssassinManagerV2(gameState);
 		System.out.println("Ended StartGame");
 	}
 
