@@ -86,7 +86,12 @@ public class RuiV2 extends DemonsRoles {
         private final Map<Integer, Power> powerMap;
 
         protected FilPower(@NonNull RuiV2 role) {
-            super("Fils de Rui", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cFils de Rui"), role);
+            super("Fils de Rui", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cFils de Rui"), role,
+                    "§7Vous permet d'utiliser vos fils, pour les changées il vous faudra effectuer un§n clique gauche§r§7:",
+                    "",
+                    "Attaque longue porté§7: En visant un §cjoueur§7, vous permet de lui infliger §c 2,5❤§7 ainsi que§c 15%§7 de chance de lui donner en plus§c 15 secondes§7 de§2 poison 1§7.",
+                    "",
+                    "Fil attractif§7: En visant un§c joueur§7, vous permet de l'attirer très fortement vers vous");
             this.powerMap = new LinkedHashMap<>();
             final LongAttackFilPower longAttackFilPower = new LongAttackFilPower(role);
             this.equipedPower = longAttackFilPower;
