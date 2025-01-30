@@ -150,7 +150,7 @@ public class EventsManager implements Listener {
             actualTime++;
             if (this.actualTime >= event.getMinTimeProc()) {
                 if (this.event.canProc(this.gameState)) {
-                    if (Main.RANDOM.nextInt(100) <= 5) {
+                    if (Main.RANDOM.nextInt(100) <= 8) {
                         this.event.onProc(gameState);
                         cancel();
                         return;
@@ -158,7 +158,7 @@ public class EventsManager implements Listener {
                 }
             }
             if (this.actualTime == event.getMaxTimeProc()) {
-                if (Main.RANDOM.nextInt(100) <= this.event.getPercent()){
+                if (this.event.getPercent() >= 100 || Main.RANDOM.nextInt(100) <= this.event.getPercent()){
                     if (this.event.canProc(gameState)){
                         this.event.onProc(gameState);
                     }
