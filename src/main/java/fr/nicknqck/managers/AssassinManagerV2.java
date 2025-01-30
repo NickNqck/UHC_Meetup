@@ -36,8 +36,9 @@ public class AssassinManagerV2 implements Listener {
     public AssassinManagerV2(GameState gameState) {
         this.gameState = gameState;
         this.canBeAssassin = new ArrayList<>();
-        updateTime();
+        EventUtils.registerEvents(this);
         System.out.println(this.prefix+"has just started");
+        updateTime();
     }
 
     @EventHandler
