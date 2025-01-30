@@ -81,7 +81,10 @@ public class AllianceV2 extends Event implements Listener {
     }
 
     private boolean containsRoles(final GameState gameState) {
-        return gameState.attributedRole.contains(GameState.Roles.Kyojuro) && !gameState.DeadRole.contains(GameState.Roles.Kyojuro) && gameState.attributedRole.contains(GameState.Roles.Shinjuro) && !gameState.DeadRole.contains(GameState.Roles.Shinjuro);
+        return gameState.attributedRole.contains(GameState.Roles.Kyojuro) &&
+                !gameState.DeadRole.contains(GameState.Roles.Kyojuro) &&
+                gameState.attributedRole.contains(GameState.Roles.Shinjuro) &&
+                !gameState.DeadRole.contains(GameState.Roles.Shinjuro);
     }
 
     @Override
