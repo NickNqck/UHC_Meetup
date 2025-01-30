@@ -13,6 +13,7 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -52,7 +53,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Gyomei;
     }
 
@@ -124,7 +125,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
                 CraftPlayer craftPlayer = (CraftPlayer) player;
                 craftPlayer.getHandle().setAbsorptionHearts(craftPlayer.getHandle().getAbsorptionHearts()+demonsKills);
-                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
                     if (end)return;
                     getRole().setMaxHealth(getRole().getMaxHealth()-6.0);
                     Player owner = Bukkit.getPlayer(getRole().getPlayer());
