@@ -96,6 +96,7 @@ public class RuiV2 extends DemonsRoles {
             this.powerMap.put(0, longAttackFilPower);
             this.powerMap.put(1, grabPower);
             setShowCdInHand(false);
+            getShowCdRunnable().setCustomText(true);
         }
 
         @Override
@@ -110,8 +111,7 @@ public class RuiV2 extends DemonsRoles {
                         power = 0;
                     }
                     final Power futurePower = this.powerMap.get(power);
-                    getShowCdRunnable().setCustomTexte(futurePower.getName()+" "+
-                            (futurePower.getCooldown().isInCooldown() ?
+                    getShowCdRunnable().setCustomTexte((!futurePower.getCooldown().isInCooldown() ?
                                     "§c"+futurePower.getName()+" est§6 utilisable" :
                                     "§c"+futurePower.getName()+" est en cooldown (§b"+StringUtils.secondsTowardsBeautiful(futurePower.getCooldown().getCooldownRemaining())+"§c)"));
                     this.equipedPower = futurePower;
@@ -132,8 +132,7 @@ public class RuiV2 extends DemonsRoles {
 
         @Override
         public void tryUpdateActionBar() {
-            getShowCdRunnable().setCustomTexte(this.equipedPower.getName()+" "+
-                    (this.equipedPower.getCooldown().isInCooldown() ?
+            getShowCdRunnable().setCustomTexte((!this.equipedPower.getCooldown().isInCooldown() ?
                             "§c"+this.equipedPower.getName()+" est§6 utilisable" :
                             "§c"+this.equipedPower.getName()+" est en cooldown (§b"+StringUtils.secondsTowardsBeautiful(this.equipedPower.getCooldown().getCooldownRemaining())+"§c)"));
         }
