@@ -136,7 +136,12 @@ public abstract class ItemPower extends Power{
                 return;
             }
             if (!this.gamePlayer.isAlive())return;
-            Player player = Bukkit.getPlayer(user);
+            if (!this.itemPower.isShowCdInHand())  {
+                System.out.println("Cancelled "+this+" for "+user+" because ce n'etait pas cense start de base");
+                cancel();
+                return;
+            }
+            final Player player = Bukkit.getPlayer(user);
             if (player != null) {
                 if (player.getItemInHand().isSimilar(item)) {
                     if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
