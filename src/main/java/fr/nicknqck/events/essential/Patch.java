@@ -5,8 +5,10 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.PatchCritical;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,10 +17,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class Patch implements Listener{
+
 	private final GameState gameState;
+
 	public Patch(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -37,39 +42,26 @@ public class Patch implements Listener{
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
 		}
 		if (!(event.getEntity() instanceof Player)) return;
-        for (UUID u : gameState.getInGamePlayers()) {
-			Player a = Bukkit.getPlayer(u);
-			if (a == null)continue;
-        	if (!gameState.hasRoleNull(a.getUniqueId())) {
-        		gameState.getGamePlayer().get(a.getUniqueId()).getRole().onALLPlayerDamageByEntity(event, (Player) event.getEntity(), event.getDamager());
-        	}
-        }
+		callRoleDamage(event);
         if (!(event.getDamager() instanceof Player)) return;
-        Player damager = (Player) event.getDamager();
-        Player victim = (Player) event.getEntity();
+        final Player damager = (Player) event.getDamager();
+        final Player victim = (Player) event.getEntity();
      	if (damager.getItemInHand() == null) return;
-
-      	for (final Titans titans : Titans.values()) {
-			  titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event);
-		  }
-      	if (gameState.hasRoleNull(damager.getUniqueId())) {
-		  damager.sendMessage("§cPvP§r interdit avant les rôles !");
-		  event.setCancelled(true);
-		  return;
-	  	}
-		if (gameState.hasRoleNull(victim.getUniqueId())) {
-			damager.sendMessage("§cPvP§r interdit avant les rôles !");
+        Arrays.stream(Titans.values()).forEach(titans -> titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event));
+		if (checkNull(damager, victim)) {
 			event.setCancelled(true);
 			return;
 		}
-		 UHCPlayerBattleEvent battleEvent = new UHCPlayerBattleEvent(gameState.getGamePlayer().get(victim.getUniqueId()), gameState.getGamePlayer().get(damager.getUniqueId()), event, false);
+		final GamePlayer gameVictim = gameState.getGamePlayer().get(victim.getUniqueId());
+		final GamePlayer gameDamager = gameState.getGamePlayer().get(damager.getUniqueId());
+		 UHCPlayerBattleEvent battleEvent = new UHCPlayerBattleEvent(gameVictim, gameDamager, event, false);
 		 battleEvent.setDamage(event.getDamage());
 		 Bukkit.getPluginManager().callEvent(battleEvent);
 		 event.setDamage(battleEvent.getDamage());
         if (damager.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
             ApplyForce(event, 20, true);
         }
-		ApplyForce(event, gameState.getGamePlayer().get(damager.getUniqueId()).getRole().getBonusForce(), false);
+		ApplyForce(event, gameDamager.getRole().getBonusForce(), false);
         if (Titans.Machoire.getTitan().getOwner() != null && Titans.Machoire.getTitan().getOwner() == damager.getUniqueId() && Titans.Machoire.getTitan().isTransformedinTitan()) {
 			if (Main.isDebug()){
 				System.out.println(victim.getName()+" has been resi cancelled by Titan Machoire");
@@ -77,7 +69,7 @@ public class Patch implements Listener{
 			event.setDamage(event.getDamage()*1.2);
             return;
          }
-		double allResi = gameState.getGamePlayer().get(victim.getUniqueId()).getRole().getBonusResi() + gameState.getGamePlayer().get(victim.getUniqueId()).getRole().getResi();
+		final double allResi = gameVictim.getRole().getBonusResi() + gameVictim.getRole().getResi();
         if (allResi >= 100) {
             event.setCancelled(true);
         }
@@ -86,20 +78,45 @@ public class Patch implements Listener{
 		} else {
 			ApplyResi(event, gameState.getGamePlayer().get(victim.getUniqueId()).getRole().getBonusResi(), false);
 		}
-		UHCPlayerBattleEvent battleEvent2 = new UHCPlayerBattleEvent(gameState.getGamePlayer().get(victim.getUniqueId()), gameState.getGamePlayer().get(damager.getUniqueId()), event, true);
+		final UHCPlayerBattleEvent battleEvent2 = new UHCPlayerBattleEvent(gameVictim, gameDamager, event, true);
 		battleEvent2.setDamage(event.getDamage());
 		Bukkit.getPluginManager().callEvent(battleEvent2);
 		event.setDamage(battleEvent2.getDamage());
-        for (UUID u : gameState.getInGamePlayers()) {
+		callAfterRoleDamage(event);
+
+    }
+
+	private void callAfterRoleDamage(@NonNull final EntityDamageByEntityEvent event) {
+		for (@NonNull final UUID u : gameState.getInGamePlayers()) {
 			Player a = Bukkit.getPlayer(u);
 			if (a == null)continue;
-        	if (!gameState.hasRoleNull(a.getUniqueId())) {
-        		if (!event.isCancelled()) {
-        			gameState.getGamePlayer().get(a.getUniqueId()).getRole().onALLPlayerDamageByEntityAfterPatch(event, victim, damager);
-        		}
-        	}
-        }
-    }
+			if (!gameState.hasRoleNull(a.getUniqueId())) {
+				if (!event.isCancelled()) {
+					gameState.getGamePlayer().get(a.getUniqueId()).getRole().onALLPlayerDamageByEntityAfterPatch(event, (Player)event.getEntity(), (Player)event.getDamager());
+				}
+			}
+		}
+	}
+	private boolean checkNull(@NonNull final Player victim,@NonNull final Player damager) {
+		if (gameState.hasRoleNull(damager.getUniqueId())) {
+			damager.sendMessage("§cPvP§r interdit avant les rôles !");
+			return true;
+		}
+		if (gameState.hasRoleNull(victim.getUniqueId())) {
+			damager.sendMessage("§cPvP§r interdit avant les rôles !");
+			return true;
+		}
+		return false;
+	}
+	private void callRoleDamage(@NonNull final EntityDamageByEntityEvent event) {
+		for (final UUID u : gameState.getInGamePlayers()) {
+			Player a = Bukkit.getPlayer(u);
+			if (a == null)continue;
+			if (!gameState.hasRoleNull(a.getUniqueId())) {
+				gameState.getGamePlayer().get(a.getUniqueId()).getRole().onALLPlayerDamageByEntity(event, (Player) event.getEntity(), event.getDamager());
+			}
+		}
+	}
 	private void ApplyForce(EntityDamageByEntityEvent event, double fPercent, boolean effect) {
 		if (effect) {
 			event.setDamage((event.getDamage() / 2.3f) *(1 + 20 / 100.0f));
