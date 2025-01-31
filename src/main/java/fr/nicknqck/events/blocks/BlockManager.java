@@ -5,11 +5,7 @@ import java.util.Arrays;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ExperienceOrb;
@@ -137,11 +133,11 @@ public class BlockManager implements Listener{
             if (CutClean.isCutClean()) {
                 CutClean(type, loc, world, block, gameState);
             }
-            if (type == Material.STONE) {
+            if (type == Material.STONE && !player.getGameMode().equals(GameMode.CREATIVE)) {
                 block.setType(Material.AIR);
                 GameListener.dropItem(loc, new ItemStack(Material.COBBLESTONE));
             }
-            if (type == Material.DIAMOND_ORE) {
+            if (type == Material.DIAMOND_ORE && !player.getGameMode().equals(GameMode.CREATIVE)) {
                 ExperienceOrb expOrb = (ExperienceOrb) world.spawnEntity(loc, EntityType.EXPERIENCE_ORB);
                 expOrb.setExperience(xpdiams+gameState.xpdiams);
                 block.setType(Material.AIR);
