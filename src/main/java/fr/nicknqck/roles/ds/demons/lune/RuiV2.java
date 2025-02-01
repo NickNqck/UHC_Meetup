@@ -213,7 +213,9 @@ public class RuiV2 extends DemonsRoles {
                     return false;
                 }
                 pullPlayerTowards(player, target);
-                return false;
+                player.sendMessage("§7Vous avez attirer§c "+target.getDisplayName());
+                target.sendMessage("§cRui§7 (§6V2§7) vous à attirer dans sa direction");
+                return true;
             }
             private void pullPlayerTowards(final @NonNull Player owner,final @NonNull Player target) {
                 final Location locOwner = owner.getLocation();
