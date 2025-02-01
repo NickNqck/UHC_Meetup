@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -311,6 +312,7 @@ public boolean killtanjiro;
 						gameState.getGamePlayer().get(u).getRole().onNight(gameState);
 					}
 				}
+				Bukkit.getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
 			} else {
 				sendCooldown(owner, itemcooldown);
 			}
