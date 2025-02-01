@@ -166,6 +166,7 @@ public abstract class ItemPower extends Power{
         }
         private void createActionBar() {
             if (this.isCustomText()) {
+                this.itemPower.tryUpdateActionBar();
                 this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.customTexte);
             } else {
                 this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?

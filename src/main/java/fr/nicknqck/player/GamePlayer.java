@@ -197,6 +197,9 @@ public class GamePlayer {
 
 		public void updateActionBar(final String key, final String value) {
 			if (actionBars.containsKey(key)) {
+				if (Main.isDebug()) {
+					System.out.println("updated key: "+key+" with value: "+value);
+				}
 				this.actionBars.replace(key, value);
 			}
 		}
@@ -218,11 +221,17 @@ public class GamePlayer {
                 this.actionBarManager = actionBarManager;
 				this.gameState = GameState.getInstance();
 				runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+				if (Main.isDebug()){
+					System.out.println("Created "+this+" for user: "+actionBarManager.getGamePlayer()+", with: "+actionBarManager);
+				}
             }
 
             @Override
 			public void run() {
 				if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+					if (Main.isDebug()){
+						System.out.println("Cancelled "+this+" for user: "+actionBarManager.getGamePlayer()+", with: "+actionBarManager);
+					}
 					cancel();
 					return;
 				}
