@@ -49,7 +49,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
 
     @Override
     public String getName() {
-        return "Yoriichi";
+        return "Yoriichi§7 (§6V2§7)";
     }
 
     @Override
