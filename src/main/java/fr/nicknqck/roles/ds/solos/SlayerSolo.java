@@ -18,6 +18,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -33,6 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -136,7 +138,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.SlayerSolo;
     }
 
@@ -146,9 +148,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
     }
 
     @Override
-    public void resetCooldown() {
-
-    }
+    public void resetCooldown() {}
 
     @Override
     public ItemStack[] getItems() {
@@ -300,12 +300,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 player.sendMessage("§7Activation du§c Soufle du Feu");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*180, 0, false, false));
                 EventUtils.registerEvents(this);
-                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                        player.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
-                    }
-                    EventUtils.unregisterEvents(this);
-                }, 20*180);
+                new FeuRunnable(getRole().getGameState(), this);
                 return true;
             }
             return false;
@@ -315,6 +310,36 @@ public class SlayerSolo extends DemonsSlayersRoles {
             if (event.getDamager().getUuid().equals(getRole().getPlayer())) {
                 if (Main.RANDOM.nextInt(100) <= 20) {
                     event.getOriginEvent().getEntity().setFireTicks(20*20);
+                }
+            }
+        }
+        private static final class FeuRunnable extends BukkitRunnable {
+
+            private int timeRemaining;
+            private final GameState gameState;
+            private final FeuPower feuPower;
+
+            private FeuRunnable(GameState gameState, FeuPower feuPower) {
+                this.gameState = gameState;
+                this.feuPower = feuPower;
+                this.timeRemaining = 180;
+                runTaskTimerAsynchronously(feuPower.getPlugin(), 0, 20);
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                timeRemaining--;
+                if (timeRemaining <= 0) {
+                    final Player owner = Bukkit.getPlayer(feuPower.getRole().getPlayer());
+                    if (owner != null) {
+                        owner.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
+                    }
+                    cancel();
+                    EventUtils.unregisterEvents(this.feuPower);
                 }
             }
         }
