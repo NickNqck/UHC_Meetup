@@ -130,18 +130,22 @@ public class YoriichiV2 extends DemonsSlayersRoles {
             if (role instanceof DemonsRoles) {
                 if (this.demonKills == 0) {
                     this.yoriichiV2.giveItem(event.getPlayerKiller(), false, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bÉpée de§e Yoriichi").addEnchant(Enchantment.DAMAGE_ALL, 4).toItemStack());
+                    event.getKiller().sendMessage("§7Vous avez obtenue votre§c épée en diamant");
                 }
                 this.demonKills++;
             } else if (role instanceof SlayerRoles) {
                 if (this.slayerKills == 0) {
                     this.yoriichiV2.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.DAY);
+                event.getKiller().sendMessage("§7Vous avez obtenue l'effet§c résistance 1§7 le§e jour");
                 }
                 this.slayerKills++;
             } else if (role.getOriginTeam().equals(TeamList.Solo) || role.getOriginTeam().equals(TeamList.Jubi) || role.getOriginTeam().equals(TeamList.Zabuza_et_Haku)) {
                 this.yoriichiV2.addSpeedAtInt(event.getPlayerKiller(), 5.0f);
+                event.getKiller().sendMessage("§7Vous avez obtenue§c 5% de speed");
             }
             if (this.demonKills == 3 && this.slayerKills == 3) {
                 this.yoriichiV2.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NIGHT);
+                event.getKiller().sendMessage("§7Vous avez maintenant§c résistance 1 permanent");
             }
         }
         @EventHandler
