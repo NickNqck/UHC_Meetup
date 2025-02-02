@@ -134,7 +134,7 @@ public class RoleManager {
         registerRole(KyogaiV2.class);
         registerRole(Shinjuro.class);
         registerRole(ShinjuroV2.class);
-        registerRole(Yoriichi.class);
+        registerRole(YoriichiV2.class);
         registerRole(SlayerSolo.class);
     }
     private void registerAot() throws Exception{
