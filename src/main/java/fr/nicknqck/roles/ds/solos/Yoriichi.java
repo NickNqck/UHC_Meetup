@@ -14,6 +14,7 @@ import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -53,7 +54,7 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Yoriichi;
 	}
 
