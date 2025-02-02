@@ -35,6 +35,8 @@ public class YoriichiV2 extends DemonsSlayersRoles {
 
     public YoriichiV2(UUID player) {
         super(player);
+        setCanuseblade(true);
+        setLameincassable(true);
     }
 
     @Override
@@ -136,7 +138,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
                 }
                 this.slayerKills++;
             } else if (role.getOriginTeam().equals(TeamList.Solo) || role.getOriginTeam().equals(TeamList.Jubi) || role.getOriginTeam().equals(TeamList.Zabuza_et_Haku)) {
-                this.yoriichiV2.addSpeedAtInt(event.getPlayerKiller(), 5);
+                this.yoriichiV2.addSpeedAtInt(event.getPlayerKiller(), 5.0f);
             }
             if (this.demonKills == 3 && this.slayerKills == 3) {
                 this.yoriichiV2.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NIGHT);
