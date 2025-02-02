@@ -108,7 +108,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
                     "",
                     "§eRole Solitaire§7: A chaque§c kill§7 vous obtiendrez§c 5%§7 de§c speed§7 supplémentaire",
                     "",
-                    "§cTips: Si vous arrivez à tué 3§a Slayers§7 et§c 3 Démons§7 vous obtiendrez l'effet§c résistance I§7 la §cnuit"
+                    "§cTips:§7 Si vous arrivez à tué 3§a Slayers§7 et§c 3 Démons§7 vous obtiendrez l'effet§c résistance I§7 la §cnuit"
             );
             EventUtils.registerRoleEvent(this);
             this.yoriichiV2 = role;
