@@ -470,7 +470,7 @@ public class GameState{
 			role = new ObanaiV2(player);
 			break;
 		case Yoriichi:
-			role = new Yoriichi(player);
+			role = new YoriichiV2(player);
 			break;
 		case Slayer:
 			role = new PourfendeurV2(player);
