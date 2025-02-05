@@ -95,7 +95,7 @@ public abstract class Power {
     public void onEndCooldown(final Cooldown cooldown) {
         if (this.cooldown == null)return;
         if (cooldown.getUniqueId().equals(this.getCooldown().getUniqueId())) {//donc si c'est EXACTEMENT le même "Cooldown"
-            getRole().owner.sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
+            getRole().getGamePlayer().sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
         }
     }
 }
