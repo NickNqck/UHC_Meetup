@@ -93,7 +93,7 @@ public class RuiV2 extends DemonsRoles {
             super("Fils de Rui", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cFils de Rui"), role,
                     "§7Vous permet d'utiliser vos fils, pour les changées il vous faudra effectuer un§n clique gauche§r§7:",
                     "",
-                    "§fAttaque longue porté§7: En visant un §cjoueur§7, vous permet de lui infliger §c 2,5❤§7 ainsi que§c 15%§7 de chance de lui donner en plus§c 15 secondes§7 de§2 poison 1§7.",
+                    "§fAttaque longue porté§7: En visant un §cjoueur§7, vous permet de lui infliger §c 2,5❤§7 ainsi que§c 15%§7 de chance de lui donner en plus§c 15 secondes§7 de§2 poison 1§7. (1x/7m)",
                     "",
                     "§fFil attractif§7: En visant un§c joueur§7, vous permet de l'attirer très fortement vers vous",
                     "",
