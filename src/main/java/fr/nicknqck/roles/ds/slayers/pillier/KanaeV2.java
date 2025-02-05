@@ -47,7 +47,7 @@ public class KanaeV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Kanae;
     }
 
