@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -66,7 +67,7 @@ public class KyojuroV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Kyojuro;
     }
 
@@ -103,6 +104,9 @@ public class KyojuroV2 extends PilierRoles {
 
         @Override
         public boolean onUse(Player player, Map<String, Object> map) {
+            if (getCooldown().isInCooldown() && getCooldown().getCooldownRemaining() >= 60*7) {
+                return true;
+            }
             end = false;
             EventUtils.registerEvents(this);
             player.sendMessage("§7Vous activez votre§c Soufle de la Flamme");
@@ -117,6 +121,7 @@ public class KyojuroV2 extends PilierRoles {
         private void onDamage(EntityDamageByEntityEvent event) {
             if (event.getDamager() instanceof Player) {
                 if (event.getDamager().getUniqueId().equals(getRole().getPlayer())){
+                    if (!checkUse((Player) event.getDamager(), new HashMap<>()))return;
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
                     if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
                         ((Player) event.getDamager()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
@@ -126,6 +131,7 @@ public class KyojuroV2 extends PilierRoles {
                 Projectile projectile = (Projectile) event.getDamager();
                 if (projectile.getShooter() instanceof Player && ((Player) projectile.getShooter()).getUniqueId().equals(getRole().getPlayer())) {
                     Player shooter = (Player) projectile.getShooter();
+                    if (!checkUse(shooter, new HashMap<>()))return;
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
                     if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
                         shooter.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
