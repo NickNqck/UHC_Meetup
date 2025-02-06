@@ -147,12 +147,12 @@ public class BijuListener implements Listener{
         			}
         			if (!GameState.getInstance().hasRoleNull(event.getPlayer().getUniqueId())) {
         				RoleBase role = GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
-        				role.givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*300, 1, true);
-        				role.givePotionEffet(PotionEffectType.SPEED, 20*300, 2, true);
-        				role.givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*300, 1, true);
-        				role.givePotionEffet(PotionEffectType.JUMP, 20*300, 4, true);
-        				role.givePotionEffet(PotionEffectType.FIRE_RESISTANCE, 20*300, 1, true);
-        				role.givePotionEffet(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1, false);
+        				role.OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*300, 1, true);
+        				role.OLDgivePotionEffet(PotionEffectType.SPEED, 20*300, 2, true);
+        				role.OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*300, 1, true);
+        				role.OLDgivePotionEffet(PotionEffectType.JUMP, 20*300, 4, true);
+        				role.OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, 20*300, 1, true);
+        				role.OLDgivePotionEffet(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1, false);
         				role.giveHealedHeartatInt(5.0);
         				setIsobuDamage(role.owner.getUniqueId());
         				setKokuoUser(role.owner.getUniqueId());

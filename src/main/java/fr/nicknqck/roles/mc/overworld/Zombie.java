@@ -101,10 +101,10 @@ public class Zombie extends OverWorldRoles {
                                         if (gameState.nightTime){
                                             addBonusResi(10);
                                         } else {
-                                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 2*20, 1, true);
+                                            OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 2*20, 1, true);
                                         }
                                     } else {
-                                        givePotionEffet(PotionEffectType.SLOW, 2*20, 1, true);
+                                        OLDgivePotionEffet(PotionEffectType.SLOW, 2*20, 1, true);
                                     }
                                 } else {
                                     owner.sendMessage("Vous perdez votre "+AllDesc.slow+" §41 §ret vous pouvez manger encore §c"+nmbCerveau+" Cerveau");
@@ -154,11 +154,11 @@ public class Zombie extends OverWorldRoles {
             }
         }
         if (gameState.nightTime){
-            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 3*20 , 1 ,false);
+            OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 3*20 , 1 ,false);
         } else {
             if (owner.getEquipment().getHelmet().getType().equals(Material.DIAMOND_HELMET)) {
                 if (!CerveauActive) {
-                    givePotionEffet(PotionEffectType.WEAKNESS, 3 * 20, 1, false);
+                    OLDgivePotionEffet(PotionEffectType.WEAKNESS, 3 * 20, 1, false);
                 }
             }
         }

@@ -228,7 +228,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 			if (owner != null && damager != null) {//Les deux joueurs sont encore connecter
 				if (Loc.getPlayerFacing(owner).equals(Loc.getPlayerFacing(damager))) {//si ils regardent la même direction
 					if (RandomUtils.getRandomProbability(20)) {//donc 20% de chance de donner speed 1 a kyogai
-						givePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
 						owner.sendMessage("§7Vous avez gagné l'effet "+AllDesc.Speed+"§b 1§7 suite à là douleurs");
 					}
 				}

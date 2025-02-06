@@ -90,7 +90,7 @@ public class Kimimaro extends OrochimaruRoles {
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(MarqueMauditeItem())) {
 			if (Marquecd <= 0){
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, false);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, false);
 			setResi(20);
 			new BukkitRunnable() {
 				int l = 0;
@@ -107,7 +107,7 @@ public class Kimimaro extends OrochimaruRoles {
 					}
 					if (l == 60*3) {
 						owner.sendMessage("Vous perdez votre force et oobtenez faiblesse 1 pendant 2 minutes");
-						givePotionEffet(PotionEffectType.WEAKNESS, 20*60*2, 1, true);
+						OLDgivePotionEffet(PotionEffectType.WEAKNESS, 20*60*2, 1, true);
 						owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 						owner.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
 						Marquecd = 60*10;
@@ -166,7 +166,7 @@ public class Kimimaro extends OrochimaruRoles {
 			}
 		}
 		if (!owner.hasPotionEffect(PotionEffectType.WEAKNESS)) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		}
 	}
 

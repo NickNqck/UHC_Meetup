@@ -68,7 +68,7 @@ public class Yahaba extends DemonInferieurRole {
 			 }
 		 }
 		}else {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
 		}
 	}
 	@Override

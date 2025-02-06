@@ -126,7 +126,7 @@ public class Konohamaru extends ShinobiRoles {
 				owner.sendMessage("§aNuées Ardentes!");
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 					if (owner.canSee(p)) {
-						givePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
+						OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
 						cdNueesArdentes = 60*3;
 						p.sendMessage("Vous venez d'être touche par la §8Nuées Ardentes §fde §aKonohamaru");
 						owner.sendMessage("§7§l"+p.getName()+"§7 à été touchée");

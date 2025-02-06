@@ -267,7 +267,7 @@ public class Eren extends AotRoles {
 							p.setFireTicks(60);
 						}
 					}
-					givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 60, 2, true);
+					OLDgivePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 60, 2, true);
 				}else {
 					if (cdbertolt == 60) {
 						owner.sendMessage("Désactivation du§c§l Cercle de Feu");
@@ -279,12 +279,12 @@ public class Eren extends AotRoles {
 			cdbertolt--;
 		}
 		if (isTransformedinTitan) {
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			if (killPieck) {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 2, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 2, true);
 			} else {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 			}
 		}
 		super.Update(gameState);

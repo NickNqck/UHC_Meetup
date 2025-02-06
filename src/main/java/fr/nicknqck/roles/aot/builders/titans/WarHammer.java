@@ -49,7 +49,7 @@ public class WarHammer extends Titan{
 			MathUtil.sendParticleLine(TransfoLocation, CoconLocation, EnumParticle.PORTAL, (int) CoconLocation.distance(TransfoLocation));
 			MathUtil.sendParticleLine(TransfoLocation, p.getLocation(), EnumParticle.CLOUD, (int) TransfoLocation.distance(p.getLocation()));
 		}
-		getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+		getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 	}
 
 	@Override

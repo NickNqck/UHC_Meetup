@@ -46,7 +46,7 @@ public class Madara extends JubiRoles {
 
 	public Madara(UUID player) {
 		super(player);
-		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+		OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 		setChakraType(Chakras.KATON);
 	}
 
@@ -139,8 +139,8 @@ public class Madara extends JubiRoles {
 		if (item.isSimilar(MadaraItem())) {
 			if (!MadaraUse) {
 				owner.sendMessage("§7Vous obtenez votre puissance d'entant");
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
-				givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true);
 				MadaraUse = true;
             } else {
 				owner.sendMessage("§7Vous perdez votre puissance...");
@@ -182,7 +182,7 @@ public class Madara extends JubiRoles {
 							return;
 						}
 						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
-						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+						OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
 			}else {
@@ -214,10 +214,10 @@ public class Madara extends JubiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 		if (MadaraUse) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-			givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false);
 		}
 		if (BenshoCD > 0)BenshoCD--;
 		if (BenshoCD == 0) {

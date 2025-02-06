@@ -68,7 +68,7 @@ public class PetitTitan extends TitansRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (isTransformedinTitan) {
-			givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		}		
 	}
 	@Override

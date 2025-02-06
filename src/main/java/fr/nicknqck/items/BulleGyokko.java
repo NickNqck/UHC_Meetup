@@ -82,7 +82,7 @@ public class BulleGyokko implements Listener{
 						Location loc = gyokko.owner.getLocation();
 						HashMap<Block, Material> iron = new HashMap<>();
 						HashMap<Block, Material> water = new HashMap<>();
-						gyokko.givePotionEffet(gyokko.owner, PotionEffectType.WATER_BREATHING, 20*65, 1, true);
+						gyokko.OLDgivePotionEffet(gyokko.owner, PotionEffectType.WATER_BREATHING, 20*65, 1, true);
 						for (Block block : getBlocks(loc, 5, true, true)) {//true = bulle vide, true = sphere ? oui non
 							iron.put(block, block.getType());
 							block.setType(Material.IRON_BLOCK);

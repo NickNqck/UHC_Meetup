@@ -168,31 +168,31 @@ public class Kokushibo extends DemonsRoles {
 			if (!solo) {
 				if (getOriginTeam().equals(TeamList.Demon)) {
 					if (!gameState.nightTime) {
-						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 						} else {
-						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					}
 				}else if (getOriginTeam().equals(TeamList.Slayer)) {
 					if (gameState.nightTime) {
-						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 100, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 100, 1, true);
 					}else {
-						givePotionEffet(owner, PotionEffectType.SPEED, 100, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 100, 1, true);
 					}
 				}
 			}else {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 				if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() != 0) {
 					setResi(0);
 				}
 			}
 		}else {
 			if (!gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 				} else {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			}
 		}
 		if (itemcooldown >= 1) {
@@ -274,7 +274,7 @@ public boolean killtanjiro;
 					}
 				}else {
 					owner.sendMessage("Vous venez de tuez:§l "+victim.getName()+"§r vous gagnez donc "+AllDesc.Resi+" 1 pendant 3minutes");
-					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
 					if (gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof Tanjiro) {
 						owner.sendMessage("§7Vous avez réussis à vaincre cette imposteur de§a Tanjiro§7, vous avez maintenant un choix qui s'offre à vous... (§l/ds role§7)");

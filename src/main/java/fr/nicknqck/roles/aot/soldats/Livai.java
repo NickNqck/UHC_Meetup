@@ -74,19 +74,19 @@ public class Livai extends SoldatsRoles {
 			if(item.isSimilar(Items.getsugar())) {
 				if (cdsugar <= 0) {
 					if (nbsugar <= 0) {
-						givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*4), 2, true);
-						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*4), 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*4), 2, true);
+						OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*4), 1, true);
 							cdsugar = 60*3;
 							nbsugar += 1;
 					} else {
 						if (nbsugar == 1) {
-							givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
-							givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
+							OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
+							OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
 							cdsugar = 60*3;
 							nbsugar+= 1;
 						} else {
 							if (nbsugar >= 2) {
-								givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*2), 1, true);
+								OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*2), 1, true);
 								cdsugar = 60*3;
 							}
 						}

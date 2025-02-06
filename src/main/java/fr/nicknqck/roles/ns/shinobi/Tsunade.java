@@ -88,7 +88,7 @@ public class Tsunade extends ShinobiRoles {
 	private boolean Receve = false;
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 	}
 	@Override
 	public void onNsCommand(String[] args) {

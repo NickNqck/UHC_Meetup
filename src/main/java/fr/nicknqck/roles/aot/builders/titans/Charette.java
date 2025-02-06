@@ -34,24 +34,24 @@ public class Charette extends Titan {
 			Inventory inv = player.getInventory();
 			getPlayerRole(getOwner()).isTransformedinTitan = isTransformedinTitan();
 			if (countOccupiedSlots(inv) <= 9 ){
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				getPlayerRole(getOwner()).setResi(20);
 				setTransformedinTitan(true);
 			}
 			if (countOccupiedSlots(inv) > 9 && countOccupiedSlots(inv) <= 18) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				getPlayerRole(getOwner()).setResi(20);
 				setTransformedinTitan(true);
 			}
 			if (countOccupiedSlots(inv) > 18 && countOccupiedSlots(inv) <= 27) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 				getPlayerRole(getOwner()).setResi(0);
 				setTransformedinTitan(true);
 			}
 			if (countOccupiedSlots(inv) > 27 && countOccupiedSlots(inv) <= 36) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.WEAKNESS, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.WEAKNESS, 60, 1, true);
 				setTransformedinTitan(false);
 				getPlayerRole(getOwner()).setResi(0);
 			}

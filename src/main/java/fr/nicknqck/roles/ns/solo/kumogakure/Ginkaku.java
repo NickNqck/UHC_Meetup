@@ -49,7 +49,7 @@ public class Ginkaku extends NSRoles {
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			if (!gameState.getAttributedRole().contains(Roles.Kinkaku)){
-				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 			}
 		}, 100);
 	}
@@ -133,8 +133,8 @@ public class Ginkaku extends NSRoles {
 									p.teleport(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch()));
 									p.sendMessage("§7Vous avez été téléporter au lieu de scellement de§6 Ginkaku§7.");
 									owner.sendMessage("§c"+p.getDisplayName()+"§7 à été téléporter");
-									givePotionEffet(p, PotionEffectType.POISON, 20*10, 1, true);
-									givePotionEffet(p, PotionEffectType.WITHER, 20*10, 1, true);
+									OLDgivePotionEffet(p, PotionEffectType.POISON, 20*10, 1, true);
+									OLDgivePotionEffet(p, PotionEffectType.WITHER, 20*10, 1, true);
 								}
 								initLoc.getWorld().getBlockAt(initLoc).setType(Material.AIR, true);
 								cancel();
@@ -175,15 +175,15 @@ public class Ginkaku extends NSRoles {
 							return;
 						}
 						if (state == 3) {
-							givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
-							givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+							OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 						}
 						if (state == 2) {
-							givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-							givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 						}
 						if (state == 1) {
-							givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 						}
 						if (time == 0) {
 							state--;
@@ -222,7 +222,7 @@ public class Ginkaku extends NSRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (gameState.nightTime && cdKyubi < 60*12) {
-			givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 		}
 		if (cdKyubi >= 0) {
 			cdKyubi--;
@@ -249,9 +249,9 @@ public class Ginkaku extends NSRoles {
 			}
 		}
 		if (gameState.getDeadRoles().contains(Roles.Kinkaku)){
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 		} else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(Roles.Kinkaku))){
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 		}
 	}
 	@Override

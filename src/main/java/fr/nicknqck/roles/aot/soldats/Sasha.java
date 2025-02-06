@@ -109,11 +109,11 @@ public class Sasha extends SoldatsRoles {
 			                    double heightDifference = arrowLocation.getY() - targetLocation.getY();
 			                    if (heightDifference > 1.5) {
 			                        shooter.sendMessage("§7Tu as touché la tête de§a " + victim.getName());
-			                        givePotionEffet(victim, PotionEffectType.BLINDNESS, 20*7, 1, true);
+			                        OLDgivePotionEffet(victim, PotionEffectType.BLINDNESS, 20*7, 1, true);
 			                        victim.sendMessage("§aSasha§7 vous à infliger§l 7secondes§7 de "+AllDesc.blind);
 			                    } else if (heightDifference < 0.9) {
 			                        shooter.sendMessage("§7Tu as touché les jambes de§a " + victim.getName());
-			                        givePotionEffet(victim, PotionEffectType.SLOW, 20*7, 1, true);
+			                        OLDgivePotionEffet(victim, PotionEffectType.SLOW, 20*7, 1, true);
 			                        victim.sendMessage("§aSasha§7 vous à infliger§l 7secondes§7 de "+AllDesc.slow);
 			                    } else {
 			                        shooter.sendMessage("§7Tu as touché le torse de§a " + victim.getName());

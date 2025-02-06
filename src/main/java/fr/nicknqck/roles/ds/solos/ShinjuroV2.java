@@ -159,7 +159,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
             }
             Player owner = Bukkit.getPlayer(shinjuro.getPlayer());
             if (owner != null){
-                shinjuro.givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+                shinjuro.OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
                 if (shinjuro.flamme) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), true));
                 }

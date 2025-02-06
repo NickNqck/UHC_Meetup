@@ -138,11 +138,11 @@ public class Jugo extends OrochimaruRoles {
 				marqueCD = 60*8;
 				if (RandomUtils.getOwnRandomProbability(70)) {
 					owner.sendMessage("§7Vous obtenez l'effet§e Speed 1");
-					givePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
+					OLDgivePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
                 } else {
 					owner.sendMessage("§7Vous obtenez l'effet§e Speed 1§7 et l'effet§9 Résistance 1");
-					givePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
-					givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
+					OLDgivePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
+					OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
 					TeamList oldTeam = getOriginTeam();
 					setTeam(TeamList.Solo);

@@ -516,7 +516,7 @@ public class Sasuke extends UchiwaRoles {
 							return;
 						}
 						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
-						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+						OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
 				return true;
@@ -529,10 +529,10 @@ public class Sasuke extends UchiwaRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (mortOrochimaru) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		}
 		if (cdTsukuyomi >= 0) {
 			cdTsukuyomi -= 1;

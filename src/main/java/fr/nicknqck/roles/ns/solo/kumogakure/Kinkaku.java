@@ -41,7 +41,7 @@ public class Kinkaku extends NSRoles {
         super.setChakraType(super.getRandomChakras());
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(GameState.Roles.Ginkaku)){
-                givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+                OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
             }
         }, 100);
     }
@@ -118,7 +118,7 @@ public class Kinkaku extends NSRoles {
     public void Update(GameState gameState) {
         super.Update(gameState);
         if (!gameState.nightTime && cdKyubi <= 12*60){
-            super.givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+            super.OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
         }
         if (cdKyubi >= 0) {
             cdKyubi--;
@@ -127,9 +127,9 @@ public class Kinkaku extends NSRoles {
             }
         }
         if (gameState.getDeadRoles().contains(GameState.Roles.Ginkaku)){
-            givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+            OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
         } else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(GameState.Roles.Ginkaku))){
-            givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+            OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
         }
     }
 
@@ -186,15 +186,15 @@ public class Kinkaku extends NSRoles {
                             return;
                         }
                         if (state == 3) {
-                            givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
-                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+                            OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
                         }
                         if (state == 2) {
-                            givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
                         }
                         if (state == 1) {
-                            givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
                         }
                         if (time == 0) {
                             state--;

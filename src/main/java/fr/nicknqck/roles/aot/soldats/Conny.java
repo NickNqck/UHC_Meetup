@@ -197,10 +197,10 @@ public class Conny extends SoldatsRoles {
 		this.protegerRole = null;
 	}
 	private void giveJeanEffect(Player owner) {
-		givePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 1, true);
-		givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60*3*20, 1, true);
+		OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 1, true);
+		OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60*3*20, 1, true);
 	}
 	private void giveSashaEffect(Player owner) {
-		givePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 2, true);
+		OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 2, true);
 	}
 }

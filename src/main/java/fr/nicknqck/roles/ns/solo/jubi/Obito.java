@@ -270,8 +270,8 @@ public class Obito extends JubiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (cdSusano >=0) {
 			cdSusano--;
 			if (cdSusano == 0) {
@@ -547,7 +547,7 @@ public class Obito extends JubiRoles {
 								@Override
 								public void run() {
 									i++;
-									givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+									OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 									if (i == 60*5) {
 										owner.sendMessage("§7Désactivation du§c Susano");
 										setResi(0);

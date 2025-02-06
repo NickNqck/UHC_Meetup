@@ -117,10 +117,10 @@ public class Kumo extends DemonInferieurRole {
 		if (cdprison >= 1) {cdprison--;}
 		if (cdtoile >=1)cdtoile--;
 		if (gameState.nightTime) {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 		}else {
 			if (!prison) {
-				givePotionEffet(owner, PotionEffectType.WEAKNESS, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.WEAKNESS, 60, 1, true);
 			}
 		}
 		if (owner.getItemInHand().isSimilar(Items.getKumoEmprisonnement())) {

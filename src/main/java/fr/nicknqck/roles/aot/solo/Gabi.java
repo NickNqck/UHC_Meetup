@@ -161,7 +161,7 @@ public class Gabi extends AotRoles {
 					if (p != null) {
 						if (gameState.getInSpecPlayers().contains(p))inList.remove(u);
 						if (Loc.getNearbyPlayersExcept(p, 20).contains(owner)) {
-							givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+							OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 						}
 					}
 				}

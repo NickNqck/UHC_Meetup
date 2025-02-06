@@ -249,7 +249,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 						if (kOwner == null)return;
 						if (owner.getLocation().distance(kOwner.getLocation()) <= 50) {
 							owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), true);
-							kaigaku.givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+							kaigaku.OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 						}
 					}
 				}

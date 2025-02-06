@@ -57,7 +57,7 @@ public class GrandTitan extends TitansRoles {
 					if (isTransformedinTitan)return false;
 					isTransformedinTitan = true;
 					setResi(20);
-					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 800, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 800, 1, true);
 					owner.sendMessage("§7Transformation en Titan");
 					TransfoEclairxMessage(owner);
 					owner.getInventory().remove(owner.getItemInHand());
@@ -68,7 +68,7 @@ public class GrandTitan extends TitansRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (isTransformedinTitan) {
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 		}
 	}
 	@Override

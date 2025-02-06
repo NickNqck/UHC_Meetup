@@ -71,14 +71,14 @@ public class TitanUltime extends TitansRoles {
 				BetterItem.of(new ItemBuilder(Material.FEATHER).setName("§6§lTransformation").setLore("§fTransformation en Titan (§cAttention cette transformation est§l PERMANENTE§f)","§7 "+StringID).addEnchant(Enchantment.ARROW_DAMAGE,1).hideAllAttributes().toItemStack(),event  -> {
 					int rint = RandomUtils.getRandomInt(0, 1);
 					if (rint == 0) {
-						givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 						isTransformedinTitan = true;
 						setResi(20);
 						owner.getInventory().remove(owner.getItemInHand());
 						TransfoEclairxMessage(owner);
 					} else {
 						if (rint == 1) {
-							givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
+							OLDgivePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
 							isTransformedinTitan = true;
 							owner.getInventory().remove(owner.getItemInHand());
 							TransfoEclairxMessage(owner);
@@ -92,8 +92,8 @@ public class TitanUltime extends TitansRoles {
 				return new ItemStack[] {
 				BetterItem.of(new ItemBuilder(Material.NETHER_STAR).setName("Transformation Ultime").setLore("Vous transforme en titan ultime","§7 "+StringID).toItemStack(), event ->{
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-					givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 3, true);
-					givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 3, true);
+					OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 					giveHealedHeartatInt(owner, 3);
 					owner.getInventory().remove(owner.getItemInHand());
 					GameListener.SendToEveryone("");
@@ -150,7 +150,7 @@ public class TitanUltime extends TitansRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (!killtitan) {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 		}
 		super.Update(gameState);
 	}

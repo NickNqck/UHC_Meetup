@@ -62,20 +62,20 @@ public class Muzan extends DemonsRoles {
 	public void Update(GameState gameState) {
 		if (killnez) {
 			if (gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 2, true);
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 2, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 			}else {
-				givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			}
 		}else {
 			if (gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 			}else {
-				givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 			}
 		}
 		if ((owner.getHealth() != owner.getMaxHealth())) {

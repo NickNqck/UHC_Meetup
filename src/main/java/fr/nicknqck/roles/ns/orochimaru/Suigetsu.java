@@ -118,7 +118,7 @@ public class Suigetsu extends OrochimaruRoles {
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Orochimaru) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 			boolean KarinAlive = !getListPlayerFromRole(Roles.Karin).isEmpty();
             onOrochimaruDeath(true);
 			owner.sendMessage("§5Orochimaru§7 vient de mourir vous obtenez donc "+AllDesc.Force+"§c 1§7 ainsi que le nom du joueur possédant le rôle §5Karin§7 qui est "+(KarinAlive ? "§5"+getPlayerFromRole(Roles.Karin).getDisplayName() : "§cMort"));
@@ -128,14 +128,14 @@ public class Suigetsu extends OrochimaruRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (orochimaruDeath) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		}
 		if (owner.getLocation().getBlock().getType().name().contains("WATER")) {
-			givePotionEffet(PotionEffectType.WATER_BREATHING, 60, 1, true);
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.WATER_BREATHING, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 			setResi(20);
 			if (gameState.isApoil(owner)) {
-				givePotionEffet(PotionEffectType.INVISIBILITY, 60, 1, true);
+				OLDgivePotionEffet(PotionEffectType.INVISIBILITY, 60, 1, true);
 				Invisible = true;
 			}
 		} else {

@@ -151,7 +151,7 @@ public class HantenguV2 extends DemonsRoles {
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
 			}
 			if (urogi) {
-				givePotionEffet(owner, PotionEffectType.JUMP, 20, 4, true);
+				OLDgivePotionEffet(owner, PotionEffectType.JUMP, 20, 4, true);
 			}
 			if (!isHasNoFall()) {
 				setNoFall(true);

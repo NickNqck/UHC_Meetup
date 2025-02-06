@@ -98,8 +98,8 @@ public class Haku extends NSRoles {
 
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (bulleHakuCD >= 0) {
 			bulleHakuCD--;
 			if (bulleHakuCD == 0) {
@@ -221,7 +221,7 @@ public class Haku extends NSRoles {
 						cancel();
 						return;
 					}
-					givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+					OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					
 					if (bulleHakuCD <= maxCDHaku) {
 						owner.sendMessage("§7Votre bulle disparait");
