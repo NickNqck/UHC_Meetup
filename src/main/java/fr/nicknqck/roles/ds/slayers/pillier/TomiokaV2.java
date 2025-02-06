@@ -2,13 +2,18 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.roles.ds.slayers.Makomo;
+import fr.nicknqck.roles.ds.slayers.Sabito;
+import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
@@ -17,18 +22,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class TomiokaV2 extends PilierRoles {
-
-    private TextComponent desc;
 
     public TomiokaV2(UUID player) {
         super(player);
@@ -55,9 +61,7 @@ public class TomiokaV2 extends PilierRoles {
     }
 
     @Override
-    public void resetCooldown() {
-
-    }
+    public void resetCooldown() {}
 
     @Override
     public ItemStack[] getItems() {
@@ -66,7 +70,11 @@ public class TomiokaV2 extends PilierRoles {
 
     @Override
     public TextComponent getComponent() {
-        return desc;
+        return new AutomaticDesc(this)
+                .addEffects(getEffects())
+                .addCustomLine("§7Vous possédez un livre enchanter§b Depth Strider III")
+                .setPowers(getPowers())
+                .getText();
     }
 
     @Override
@@ -78,11 +86,7 @@ public class TomiokaV2 extends PilierRoles {
         Book.setItemMeta(BookMeta);
         giveItem(owner, false, Book);
         addPower(new FindOthersPower(this));
-        AutomaticDesc automaticDesc = new AutomaticDesc(this)
-                .addEffects(getEffects())
-                .addCustomLine("§7Vous possédez un livre enchanter§b Depth Strider III")
-                .setPowers(getPowers());
-        this.desc = automaticDesc.getText();
+        addPower(new DeathPassifPower(this));
         if (!Main.getInstance().getGameConfig().isMinage()) {
             owner.setLevel(owner.getLevel()+6);
         }
@@ -92,13 +96,13 @@ public class TomiokaV2 extends PilierRoles {
 
         public FindOthersPower(@NonNull RoleBase role) {
             super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", new Cooldown(0), role,
-                    "§7Permet de savoir toute les "+(Main.getInstance().getGameConfig().isMinage() ? "§c5 minutes" : "§c2 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
+                    "§7Permet de savoir toute les "+(Main.getInstance().getGameConfig().isMinage() ? "§c5 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
             new FinderRunnable(role.getGameState(), this);
         }
 
         @Override
         public boolean onUse(Player player, Map<String, Object> args) {
-            return false;
+            return true;
         }
         private static class FinderRunnable extends BukkitRunnable {
 
@@ -114,7 +118,7 @@ public class TomiokaV2 extends PilierRoles {
                 if (Main.getInstance().getGameConfig().isMinage()) {
                     maxTime = 60*5;
                 } else {
-                    maxTime = 60*2;
+                    maxTime = 60*3;
                 }
                 this.actualTime = maxTime;
             }
@@ -153,8 +157,84 @@ public class TomiokaV2 extends PilierRoles {
                     }
                     actualTime = maxTime;
                 }
+                final Player owner = Bukkit.getPlayer(this.power.getRole().getPlayer());
+                if (owner != null) {
+                    if (this.power.checkUse(owner, new HashMap<>()))return;
+                }
                 actualTime--;
             }
+        }
+    }
+    private static class DeathPassifPower extends Power implements Listener {
+
+        private boolean firstKill = false;
+
+        public DeathPassifPower(@NonNull TomiokaV2 role) {
+            super("Pilier de l'eau", null, role,
+                    "§7Lors de la §cmort§7 de l'un de vos confrère élève d'§aUrokodaki§7 vous obtiendrez un bonus en fonction du §crôle§7 du§c joueur§7: ",
+                    "",
+                    "§7     →§aTanjiro§7:§c Force I§7 de§e jour",
+                    "",
+                    "§7     →§aSabito§7:§9 Résistance I§7 le§e jour",
+                    "",
+                    "§7     →§aMakomo§7:§e Speed II§7 durant le§e jour",
+                    "",
+                    "§4!§c Vous obtiendrez les bonus ci-dessus que s'il s'agit du premier mort, sinon vous obtiendrez§a +§c1❤ permanent§4!");
+            EventUtils.registerRoleEvent(this);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            return true;
+        }
+        @EventHandler
+        private void UHCDeathEvent(final UHCDeathEvent event) {
+            if (event.getRole() == null)return;
+            final RoleBase roleBase = event.getRole();
+            if (firstKill) {//J'ajoute 1❤ perma a Tomioka
+                if (!isGoodRole(roleBase))return;
+                getRole().setMaxHealth(getRole().getMaxHealth()+2.0);
+                final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                if (owner != null) {
+                    owner.setMaxHealth(getRole().getMaxHealth());
+                }
+                return;//J'empêche Tomioka d'obtenir d'autre bonus que le ❤ perma s'il en a déjà eu 1
+            }
+            if (roleBase instanceof Tanjiro) {
+                getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.DAY);
+                this.firstKill = true;
+                getRole().getGamePlayer().sendMessage("§aTanjiro§7 est§c mort§7, vous devez lui faire hônneur en étant aussi fort qu'il l'était, vous obtenez §cl'effet Force I§7 le§e jour");
+            } else if (roleBase instanceof Sabito) {
+                getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
+                this.firstKill = true;
+                getRole().getGamePlayer().sendMessage("§aSabito§7, est§c mort§7, vous devez lui montrer qu'il à bien fait de vous sauver la vie, vous obtenez§c l'effet§9 Résistance I§7 le§e jour");
+            } else if (roleBase instanceof Makomo) {
+                this.firstKill = true;
+                final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                if (owner != null) {
+                    owner.removePotionEffect(PotionEffectType.SPEED);
+                }
+                if (!getRole().getEffects().isEmpty()) {
+                    for (final PotionEffect potionEffect : getRole().getEffects().keySet()) {
+                        if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                            getRole().getEffects().remove(potionEffect);
+                            break;
+                        }
+                    }
+                }
+                getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), EffectWhen.DAY);
+                getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.NIGHT);
+                getRole().getGamePlayer().sendMessage("§7La petite§a Makomo§7 est§c morte§7, en homage à son stylé très fluide vous obtenez§c l'effet§b Speed II§7 le§e jour");
+            }
+        }
+        private boolean isGoodRole(@NonNull final RoleBase roleBase) {
+            if (roleBase instanceof Tanjiro) {
+                return true;
+            }
+            if (roleBase instanceof Makomo) {
+                return true;
+            }
+            return roleBase instanceof Sabito;
         }
     }
 }
