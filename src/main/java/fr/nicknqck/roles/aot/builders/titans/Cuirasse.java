@@ -77,11 +77,11 @@ public class Cuirasse extends Titan{
 			if (isTransformedinTitan() && p != null) {
 				if (getListener().getCuirasseCooldown() >= 60*4) {
 					if (form == Form.Entiere) {
-						getState().getPlayerRoles().get(p).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-						getState().getPlayerRoles().get(p).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);	
+						getState().getPlayerRoles().get(p).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+						getState().getPlayerRoles().get(p).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					} else if (form ==Form.Partielle) {
-						getPlayerRole(getListener().getCuirasse()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-						getPlayerRole(getListener().getCuirasse()).givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+						getPlayerRole(getListener().getCuirasse()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						getPlayerRole(getListener().getCuirasse()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
 					}
 					int cooldown = getListener().getCuirasseCooldown();
 					int newcd = cooldown-(60*4);

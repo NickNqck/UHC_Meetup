@@ -73,7 +73,7 @@ public class Sakura extends ShinobiRoles {
 	private boolean Receve = false;
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 	}
 
 	public void onTick() {

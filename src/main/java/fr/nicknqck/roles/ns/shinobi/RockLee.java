@@ -165,7 +165,7 @@ public class RockLee extends ShinobiRoles {
 		if(item.isSimilar(TroisPortesItem())) {
 			if (cdTroisPortes <= 0) {
 				owner.sendMessage("Vous venez d'ouvrir la §aTroisième Porte");
-				givePotionEffet(PotionEffectType.SPEED, 20*90, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*90, 1, true);
 				owner.damage(1.0, owner);
 				cdTroisPortes = 60*3;
             } else {
@@ -176,8 +176,8 @@ public class RockLee extends ShinobiRoles {
 		if (item.isSimilar(SixPortesItem())) {
 			if (cdSixPortes <= 0) {
 				owner.sendMessage("Vous venez d'ouvrir la §aSixième Porte");
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, true);
-				givePotionEffet(PotionEffectType.SPEED, 20*120, 1, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*120, 1, true);
 				setMaxHealth(getMaxHealth()-2.0);
 				owner.setMaxHealth(getMaxHealth());
 				cdSixPortes = 60*6;
@@ -207,10 +207,10 @@ public class RockLee extends ShinobiRoles {
             return true;
         }
 		if (item.isSimilar(HuitPortesItem())) {
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, true);
-				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, true);
-				givePotionEffet(PotionEffectType.SPEED, 20*180, 2, true);
-				givePotionEffet(PotionEffectType.FIRE_RESISTANCE, 20*180, 1, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, true);
+				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*180, 2, true);
+				OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, 20*180, 1, true);
 				giveHealedHeartatInt(5);
 				owner.sendMessage("§cVous venez d'ouvrir la Huitième Porte");
 				owner.getInventory().removeItem(getItems());
@@ -226,7 +226,7 @@ public class RockLee extends ShinobiRoles {
 							cancel();
 						}
 						if (i == 185) {
-							givePotionEffet(PotionEffectType.WEAKNESS, 20*(60*15), 1, true);
+							OLDgivePotionEffet(PotionEffectType.WEAKNESS, 20*(60*15), 1, true);
 							setMaxHealth(10.0);
 							owner.setMaxHealth(getMaxHealth());
 							cancel();
@@ -240,8 +240,8 @@ public class RockLee extends ShinobiRoles {
 		}
 		if (item.isSimilar(DrunkenFistItem())) {
 			if (cdDrunkenFist <= 0) {
-				givePotionEffet(PotionEffectType.CONFUSION, 20*60, 1, true);
-				givePotionEffet(PotionEffectType.SPEED, 20*60, 1, true);
+				OLDgivePotionEffet(PotionEffectType.CONFUSION, 20*60, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*60, 1, true);
 				DrunkenFist = true;
 				cdDrunkenFist = 60*4;
 				

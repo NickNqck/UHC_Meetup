@@ -42,7 +42,7 @@ public class TitanSouriant extends TitansRoles {
 					if (isTransformedinTitan)return false;
 					isTransformedinTitan = true;
 					setBonusResi(10);
-					givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 					owner.sendMessage("§7Transformation en Titan");
 					TransfoEclairxMessage(owner);
 					owner.getInventory().remove(owner.getItemInHand());

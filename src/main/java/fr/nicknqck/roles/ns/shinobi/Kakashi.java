@@ -327,7 +327,7 @@ public class Kakashi extends ShinobiRoles {
 				setResi(0);
 				if (Copied.containsKey(target)) {
 					for (PotionEffectType po : Copied.get(target)) {
-						givePotionEffet(po, Integer.MAX_VALUE, 1, true);
+						OLDgivePotionEffet(po, Integer.MAX_VALUE, 1, true);
 					}
 					new BukkitRunnable() {
 						

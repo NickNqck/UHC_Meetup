@@ -120,7 +120,7 @@ public class Gai extends ShinobiRoles {
 		if(item.isSimilar(TroisPortesItem())) {
 			if (cdTroisPortes <= 0) {
 				owner.sendMessage("Vous venez d'ouvrir la §aTroisième Porte");
-				givePotionEffet(PotionEffectType.SPEED, 20*90, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*90, 1, true);
 				owner.damage(1.0, owner);
 				cdTroisPortes = 60*3;
             } else {
@@ -131,8 +131,8 @@ public class Gai extends ShinobiRoles {
 		if (item.isSimilar(SixPortesItem())) {
 			if (cdSixPortes <= 0) {
 				owner.sendMessage("Vous venez d'ouvrir la §aSixième Porte");
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, true);
-				givePotionEffet(PotionEffectType.SPEED, 20*120, 1, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*120, 1, true);
 				setMaxHealth(getMaxHealth()-2);
 				cdSixPortes = 60*6;
 				new BukkitRunnable() {
@@ -162,10 +162,10 @@ public class Gai extends ShinobiRoles {
             return true;
         }
 		if (item.isSimilar(HuitPortesItem())) {
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, true);
-				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, true);
-				givePotionEffet(PotionEffectType.SPEED, 20*180, 2, true);
-				givePotionEffet(PotionEffectType.FIRE_RESISTANCE, 20*180, 1, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, true);
+				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*180, 2, true);
+				OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, 20*180, 1, true);
 				giveHealedHeartatInt(5);
 				owner.sendMessage("§cVous venez d'ouvrir la Huitième Porte");
 				owner.getInventory().removeItem(getItems());
@@ -182,7 +182,7 @@ public class Gai extends ShinobiRoles {
 						}
 						if (i == 185) {
 							
-							givePotionEffet(PotionEffectType.WEAKNESS, 20*(60*15), 1, true);
+							OLDgivePotionEffet(PotionEffectType.WEAKNESS, 20*(60*15), 1, true);
 							setMaxHealth(10.0);
 							owner.setMaxHealth(getMaxHealth());
 							cancel();
@@ -199,8 +199,8 @@ public class Gai extends ShinobiRoles {
 			if (owner.hasPotionEffect(PotionEffectType.WEAKNESS)) {
 				owner.removePotionEffect(PotionEffectType.WEAKNESS);
 			}
-				givePotionEffet(PotionEffectType.SPEED, 20*10, 3, true);
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*10, 3, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*10, 3, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*10, 3, true);
 				owner.sendMessage("§8Vous utilisez le meilleur de vous même");
 				new BukkitRunnable() {
 					int in = 0;

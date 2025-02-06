@@ -190,8 +190,8 @@ public class Jiraya extends ShinobiRoles {
 			if (cdSenjutsu <= 0) {
 				owner.sendMessage("§a§lFukasaku et Shima§r§a vous donne de leur énergie naturelle");
 				giveHealedHeartatInt(2);
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
-				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, false);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
+				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, false);
 				setResi(20);
 				cdSenjutsu = 480;
             } else {

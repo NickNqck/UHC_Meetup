@@ -73,8 +73,8 @@ public class ZetsuNoir extends AkatsukiRoles {
 			}
 		}
 		if (gameState.isApoil(owner)) {
-			givePotionEffet(PotionEffectType.INVISIBILITY, 20*2, 1, true);
-			givePotionEffet(PotionEffectType.SPEED, 20*2, 2, true);
+			OLDgivePotionEffet(PotionEffectType.INVISIBILITY, 20*2, 1, true);
+			OLDgivePotionEffet(PotionEffectType.SPEED, 20*2, 2, true);
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 				if (gameState.hasRoleNull(p.getUniqueId())) {
 					return;
@@ -110,7 +110,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 						owner.sendMessage("Vous venez de tuer un joueur possédant l'effet "+AllDesc.Speed+" Vous gagez donc 10% de cette effet");
 					}
 					if (hasPermanentEffect(victim, PotionEffectType.FIRE_RESISTANCE)) {
-						givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+						OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 						owner.sendMessage("Vous venez de tuer un joueur possédant l'effet "+AllDesc.fireResi+" Vous gagez donc cette effet");
 					}
 			}

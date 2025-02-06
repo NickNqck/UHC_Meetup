@@ -155,7 +155,7 @@ public class Kakuzu extends AkatsukiRoles {
 				owner.sendMessage("§7Vous pouvez à nouveau changer de nature de Chakras");
 			}
 		}
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 	}
 	@Override
 	public void onNsCommand(String[] args) {

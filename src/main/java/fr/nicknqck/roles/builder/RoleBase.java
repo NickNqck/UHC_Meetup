@@ -158,13 +158,13 @@ public abstract class RoleBase implements IRole {
 	public String getTeamColor() {
 		return getTeam().getColor();
 	}
-	public void givePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
+	public void OLDgivePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
 		if (player == null)return;
 		Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(type, time, level-1, false, false), force));
 	}
-	public void givePotionEffet(PotionEffectType type, int time, int level, boolean force) {
+	public void OLDgivePotionEffet(PotionEffectType type, int time, int level, boolean force) {
 		if (owner == null)return;
-		givePotionEffet(owner, type, time, level, force);
+		OLDgivePotionEffet(owner, type, time, level, force);
 	}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
@@ -577,7 +577,7 @@ public abstract class RoleBase implements IRole {
 			}
 			return;
 		}
-		if (when.equals(EffectWhen.DAY) || when.equals(EffectWhen.PERMANENT)) {
+		if (when.equals(EffectWhen.DAY)) {
 			final Player owner = Bukkit.getPlayer(getPlayer());
 			if (owner != null) {
 				if (!gameState.isNightTime()) {
@@ -590,7 +590,7 @@ public abstract class RoleBase implements IRole {
 				}
 			}
 		}
-		if (when.equals(EffectWhen.NIGHT) || when.equals(EffectWhen.PERMANENT)) {
+		if (when.equals(EffectWhen.NIGHT)) {
 			final Player owner = Bukkit.getPlayer(getPlayer());
 			if (owner != null) {
 				if (gameState.isNightTime()) {
@@ -600,6 +600,17 @@ public abstract class RoleBase implements IRole {
 					if (!effectGiveEvent.isCancelled()) {
 						owner.addPotionEffect(potionEffect, true);
 					}
+				}
+			}
+		}
+		if (when.equals(EffectWhen.PERMANENT)) {
+			final Player owner = Bukkit.getPlayer(getPlayer());
+			if (owner != null) {
+				final PotionEffect potionEffect =  new PotionEffect(effect.getType(), Integer.MAX_VALUE, effect.getAmplifier(), false, false);
+				final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(owner, this, potionEffect, when);
+				Bukkit.getPluginManager().callEvent(effectGiveEvent);
+				if (!effectGiveEvent.isCancelled()) {
+					owner.addPotionEffect(potionEffect, true);
 				}
 			}
 		}

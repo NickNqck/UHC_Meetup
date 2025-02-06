@@ -44,7 +44,7 @@ public class TitanDeviant extends TitansRoles {
 				List<Player> isTitanAroundDeviant = new ArrayList<>();
 				isTitanAroundDeviant.add(p);
                 isTransformedinTitan = true;
-                givePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
+                OLDgivePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
 
             }
 		}

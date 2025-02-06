@@ -44,7 +44,7 @@ public class Magath extends MahrRoles {
 			if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).isTransformedinTitan && toSearch.getWorld().equals(owner.getWorld())) {
 				if (owner.getLocation().distance(toSearch.getLocation()) <= 15){
 					setResi(20);
-					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				}else {
 					setResi(0);
 				}

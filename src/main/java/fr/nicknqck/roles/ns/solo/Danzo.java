@@ -120,7 +120,7 @@ public class Danzo extends NSRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (killUchiwa) {
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 		}
 		if (futonCD >= 0) {
 			futonCD--;
@@ -225,7 +225,7 @@ public class Danzo extends NSRoles {
 					victim.sendMessage("§7Vous subissez les effets d'un sceau inconnu...");
 					if (inSceau.get(victim) == SceauAction.Wither) {
 						SceauActived = true;
-						givePotionEffet(victim, PotionEffectType.WITHER, 20*12, 2, false);
+						OLDgivePotionEffet(victim, PotionEffectType.WITHER, 20*12, 2, false);
 						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 							owner.sendMessage("§7Votre sceau ne fais plus effet sur "+victim.getDisplayName());
 							victim.sendMessage("§7Les effets du sceau se dissipent");

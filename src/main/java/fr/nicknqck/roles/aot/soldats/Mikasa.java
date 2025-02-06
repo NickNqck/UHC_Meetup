@@ -58,9 +58,9 @@ public class Mikasa extends SoldatsRoles {
 		return new ItemStack[] {
 		BetterItem.of(new ItemBuilder(Material.SUGAR).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("Sucre").toItemStack(), event ->{
 			if (cd <= 0) {
-			givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
 
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
 			cd = 180;
 			} else {
 				sendCooldown(owner, cd);

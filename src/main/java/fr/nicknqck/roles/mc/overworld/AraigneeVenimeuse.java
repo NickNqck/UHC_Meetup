@@ -98,7 +98,7 @@ public class AraigneeVenimeuse extends UHCMcRoles {
         if (entity.getUniqueId() == owner.getUniqueId()){
             if(owner.getItemInHand().getType().equals(Material.DIAMOND_SWORD)){
                 if (poison){
-                    givePotionEffet(victim, PotionEffectType.POISON, 20*2,1,true);
+                    OLDgivePotionEffet(victim, PotionEffectType.POISON, 20*2,1,true);
                 }
             }
         }

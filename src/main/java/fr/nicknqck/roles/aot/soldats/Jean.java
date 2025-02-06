@@ -93,7 +93,7 @@ public class Jean extends SoldatsRoles {
 					if (!mechant.isEmpty()) {
 						createFirework(owner, Color.RED);
 						setResi(20);
-						givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60*5), 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60*5), 1, true);
 						owner.sendMessage("§7Vous avez gagnez l'effet "+AllDesc.Resi+" pendant§6 5minutes");
 					}else {
 						createFirework(owner, Color.GREEN);

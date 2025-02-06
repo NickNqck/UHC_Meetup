@@ -125,7 +125,7 @@ public class GameListener implements Listener {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
 						if (!gameState.hasRoleNull(p.getUniqueId())){
-							gameState.getGamePlayer().get(p.getUniqueId()).getRole().givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().OLDgivePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
 						}
 						if (!infectedgiveforce) {
 							infectedgiveforce = true;

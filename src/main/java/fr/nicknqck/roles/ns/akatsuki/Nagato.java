@@ -174,7 +174,7 @@ public class Nagato extends AkatsukiRoles {
     @Override
     public void Update(GameState gameState) {
         super.Update(gameState);
-        givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+        OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
         if (cdShikushodo >= 0){
             cdShikushodo--;
             if (cdShikushodo == 0){

@@ -103,18 +103,18 @@ public class Jigoro extends DemonsSlayersRoles {
 		if (owner.getItemInHand().isSimilar(Items.getJoueurZoneDeFoudre())) {
 			sendActionBarCooldown(owner, cooldownzone);
 		}
-		givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 80, 1, true);
+		OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 80, 1, true);
 		if (!owner.hasPotionEffect(PotionEffectType.SPEED)) {
-			givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
 		}
 		if (killzen && !killtwo) {
 			if (!gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 80, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 80, 1, true);
 			}
 		}
 		if (killkai && !killtwo) {
 			if (gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 80, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 80, 1, true);
 			}
 		}
 		if (killzen && killkai && !killtwo) {

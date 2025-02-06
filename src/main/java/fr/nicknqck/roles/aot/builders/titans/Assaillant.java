@@ -67,9 +67,9 @@ public class Assaillant extends Titan {
 			}
 			if (isTransformedinTitan()) {
 				if (getPlayerRole(getOwner()).getRoles() != Roles.Eren) {
-					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+					getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+					getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+					getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				}
 				int cd = getListener().getAssaillantCooldown()-(60*4);
 				getPlayerRole(getOwner()).sendCustomActionBar(player,"§bTemp restant de transformation: "+StringUtils.secondsTowardsBeautiful(cd));

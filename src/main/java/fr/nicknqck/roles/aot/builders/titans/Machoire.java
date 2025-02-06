@@ -62,8 +62,8 @@ public class Machoire extends Titan{
 				JumpCooldown-=5;
 			}
 			if (isTransformedinTitan()) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, isTransformedinTitan());
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, isTransformedinTitan());
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, isTransformedinTitan());
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, isTransformedinTitan());
 			}
 		}
 	}

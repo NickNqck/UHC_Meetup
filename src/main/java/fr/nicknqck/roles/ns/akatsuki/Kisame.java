@@ -103,8 +103,8 @@ public class Kisame extends AkatsukiRoles {
 	private final HashMap<UUID, Integer> nmbCoup = new HashMap<>();
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (SuibunCD >= 0) {
 			SuibunCD--;
 			if (SuibunCD == 0) {

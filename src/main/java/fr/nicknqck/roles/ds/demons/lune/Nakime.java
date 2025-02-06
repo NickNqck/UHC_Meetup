@@ -146,8 +146,8 @@ public class Nakime extends DemonsRoles {
 	public void Update(GameState gameState) {
 		actualworld = owner.getWorld();
 		if (actualworld.getName().equalsIgnoreCase("nakime")) {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (p.getLocation().getY() <= 122) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
@@ -160,7 +160,7 @@ public class Nakime extends DemonsRoles {
 				}
 			}
 		}else if (actualworld.getName().equalsIgnoreCase("world")) {
-			givePotionEffet(owner, PotionEffectType.WEAKNESS, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.WEAKNESS, 60, 1, true);
 		}
 		if (cooldown == 0) {
 			cooldown-=1;

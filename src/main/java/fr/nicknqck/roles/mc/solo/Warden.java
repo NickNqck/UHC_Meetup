@@ -115,8 +115,8 @@ public class Warden extends UHCMcRoles {
 
     @Override
     public void Update(GameState gameState) {
-        givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-        givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+        OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+        OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
         if (cdLaser >= 0){
             cdLaser--;
             if (cdLaser == 0){
@@ -156,7 +156,7 @@ public class Warden extends UHCMcRoles {
             if (cdDarkness <= 0){
                 owner.sendMessage("§7Activation de votre pouvoir§9 Darkness");
                 for (Player p : Loc.getNearbyPlayersExcept(owner, 25)){
-                    givePotionEffet(p, PotionEffectType.BLINDNESS, 20*18, 1, true);
+                    OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*18, 1, true);
                     owner.sendMessage("§c"+p.getDisplayName()+"§7 à été toucher par votre pouvoir§9 Darkness");
                     p.sendMessage("§7Vous avez été toucher par la§9 Darkness§7 du§9 Warden");
                 }
@@ -227,7 +227,7 @@ public class Warden extends UHCMcRoles {
             if (cancel){
                 cancel();
             }
-            warden.givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+            warden.OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
             warden.sendCustomActionBar(warden.owner, Loc.getDirectionMate(warden.owner, Bukkit.getPlayer(target), true)+"§bTemp de traque restant:§c "+ StringUtils.secondTowardsConventional(timeRemaining));
             timeRemaining--;
         }

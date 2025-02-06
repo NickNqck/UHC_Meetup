@@ -97,7 +97,7 @@ public class KillerBee extends ShinobiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		if (cdGyuki >= 0) {
 			cdGyuki--;
 			if (cdGyuki == 0) {
@@ -130,7 +130,7 @@ public class KillerBee extends ShinobiRoles {
 				return true;
 			}
 			owner.sendMessage("§7Vous êtes maintenant sous l'effet de§d Gyûki§7.");
-			givePotionEffet(PotionEffectType.SPEED, 20*300, 1, true);//5 minutes
+			OLDgivePotionEffet(PotionEffectType.SPEED, 20*300, 1, true);//5 minutes
 			giveHealedHeartatInt(2.0);
 			cdGyuki = 60*15;
 			new BukkitRunnable() {

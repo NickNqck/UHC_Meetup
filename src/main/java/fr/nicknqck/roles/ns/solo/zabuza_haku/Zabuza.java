@@ -148,8 +148,8 @@ public class Zabuza extends NSRoles implements Listener {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
@@ -162,7 +162,7 @@ public class Zabuza extends NSRoles implements Listener {
 		if (msg) {
 			owner.sendMessage("§bHaku§7 est mort, pour vous vengez vous obtenez§c 10 minutes§f de§e Speed 2");
 		}
-		givePotionEffet(PotionEffectType.SPEED, 20*60*10, 2, true);
+		OLDgivePotionEffet(PotionEffectType.SPEED, 20*60*10, 2, true);
 	}
 
 	@Override

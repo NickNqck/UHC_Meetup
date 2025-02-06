@@ -77,7 +77,7 @@ public class Colossal extends Titan{
 				if (getListener().getColossal() == null)return;
 				setTransformedinTitan(true);
 				getPlayerRole(getListener().getColossal()).isTransformedinTitan = true;
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 90, 2, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 90, 2, true);
 				getPlayerRole(getListener().getColossal()).setResi(40);
 				getListener().setColossalCooldown(60*8);
 				TransfoMessage(getListener().getColossal(), true);
@@ -126,11 +126,11 @@ public class Colossal extends Titan{
 					}
 				}
 				if (getPlayerRole(getListener().getColossal()).getResi() >= 40) {
-					getPlayerRole(getListener().getColossal()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 2, true);
+					getPlayerRole(getListener().getColossal()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 2, true);
 				}else if (getPlayerRole(getListener().getColossal()).getResi() == 20) {
-					getPlayerRole(getListener().getColossal()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+					getPlayerRole(getListener().getColossal()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				}
-				getPlayerRole(getListener().getColossal()).givePotionEffet(PotionEffectType.FIRE_RESISTANCE, 60, 1, true);
+				getPlayerRole(getListener().getColossal()).OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, 60, 1, true);
 				int cooldown = getListener().getColossalCooldown();
 				int newcd = cooldown-(60*5);
 				ItemStack item = player.getItemInHand();

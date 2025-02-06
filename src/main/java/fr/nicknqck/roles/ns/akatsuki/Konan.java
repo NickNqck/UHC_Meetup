@@ -193,7 +193,7 @@ public class Konan extends AkatsukiRoles {
 				return true;
 			}
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 25)) {
-				givePotionEffet(p, PotionEffectType.BLINDNESS, 20*10, 1, true);
+				OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*10, 1, true);
 			}
 			owner.teleport(toTP);
 			diversionCD = 60*5;

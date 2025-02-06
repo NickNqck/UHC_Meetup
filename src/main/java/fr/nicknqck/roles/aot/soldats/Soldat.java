@@ -115,15 +115,15 @@ public boolean ItemUse(ItemStack item, GameState gameState) {
 	owner.sendMessage("Vous venez d'utiliser votre bouteille d'alcool");
 	int rint = RandomUtils.getRandomInt(0, 2);
 	if (rint == 0) {
-		givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60), 0, true);
+		OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60), 0, true);
 		cdalcool = 60*3;
 	} else {
 		if (rint == 1) {
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60), 0, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60), 0, true);
 			cdalcool = 60*3;
 		} else {
 			if (rint == 2) {
-				givePotionEffet(owner, PotionEffectType.CONFUSION, 20*(20), 3, true);
+				OLDgivePotionEffet(owner, PotionEffectType.CONFUSION, 20*(20), 3, true);
 				cdalcool = 60*3;
 				
 			}

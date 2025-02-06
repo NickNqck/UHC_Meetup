@@ -79,7 +79,7 @@ public class Asuma extends ShinobiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		if (cdNuees >= 0) {
 			cdNuees--;
 			if (cdNuees == 0) {
@@ -110,7 +110,7 @@ public class Asuma extends ShinobiRoles {
 				owner.sendMessage("§cNuées Ardentes !");
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 25)) {
 					if (owner.canSee(p)) {
-						givePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
+						OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
 						cdNuees = 60*3+30;
 						p.setFireTicks(150);
 						p.sendMessage("Vous venez d'être touche par la §8Nuées Ardentes§f de§a Asuma");

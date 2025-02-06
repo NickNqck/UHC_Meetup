@@ -110,7 +110,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 			if (gameState.getOwner(Roles.Kyojuro) != null) {
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 					if (p.equals(gameState.getOwner(Roles.Kyojuro))) {
-						givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					}
 				}
 			}

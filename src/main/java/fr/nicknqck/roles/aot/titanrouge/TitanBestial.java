@@ -75,15 +75,15 @@ public class TitanBestial extends TitansRoles {
 						Soldat soldat = (Soldat) gamePlayer.getRole();
 						if (soldat.form == Soldat.kit.Brigade || soldat.form.equals(Soldat.kit.Garnison)) {
 							p.sendMessage("§7Vous sentez l'alcool vous montez à la tête...");
-							givePotionEffet(p, PotionEffectType.CONFUSION, 20*15, 2, true);
+							OLDgivePotionEffet(p, PotionEffectType.CONFUSION, 20*15, 2, true);
 							Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 								int r = RandomUtils.getRandomInt(0, 1);
 								if (r < 1) {
-									givePotionEffet(p, PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+									OLDgivePotionEffet(p, PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 									soldat.setResi(20);
 									TransfoEclairxMessage(p);
 								}else {
-									givePotionEffet(p, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
+									OLDgivePotionEffet(p, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
 									TransfoEclairxMessage(p);
 								}							
 								soldat.setTeam(TeamList.Titan);
@@ -157,7 +157,7 @@ public class TitanBestial extends TitansRoles {
 					AotRoles role = (AotRoles) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 					if (role.isTransformedinTitan) {
 						if (role instanceof PetitTitan || role instanceof GrandTitan) {
-								role.givePotionEffet(role.owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+								role.OLDgivePotionEffet(role.owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 							}
 						}
 					}

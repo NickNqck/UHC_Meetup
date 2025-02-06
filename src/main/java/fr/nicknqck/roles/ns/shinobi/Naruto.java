@@ -159,8 +159,8 @@ public class Naruto extends ShinobiRoles {
 				villager.damage(999.0, owner);
 				villager = null;
 				this.cdClone = 60*5;
-				givePotionEffet(PotionEffectType.SPEED, 20*timeVillager, 1, true);
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*timeVillager, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, 20*timeVillager, 1, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*timeVillager, 1, true);
 				timeVillager = 0;
 				owner.sendMessage("§7Vous avez sacrifié votre§a clone§7, vous obtenez donc l'énergie qu'il avait accumulé jusqu'ici");
             }
@@ -182,7 +182,7 @@ public class Naruto extends ShinobiRoles {
 				if (owner != null) {
 					owner.sendMessage("§7Votre§a clone§7 a été tué, il avait cependant eu le temp d'obtenir des informations, voici la liste des§c roles§7 proche du lui de sa mort:");
 					owner.sendMessage(sb.toString());
-					givePotionEffet(owner, PotionEffectType.SPEED, 20*timeVillager, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*timeVillager, 1, true);
 				}
 				villager = null;
 				timeVillager = 0;
@@ -196,7 +196,7 @@ public class Naruto extends ShinobiRoles {
 		if (item.isSimilar(kyubiItem)) {
 			if (cdKyubi <= 0) {
 				if (AmitieKyubi <= 25) {
-					givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
+					OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
 					cdKyubi = 60*8;
 					new BukkitRunnable() {
 						int i = 0;
@@ -215,8 +215,8 @@ public class Naruto extends ShinobiRoles {
 					}.runTaskTimer(Main.getInstance(), 0, 20);
 				} else {
 					if (AmitieKyubi <= 50) {
-						givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, false);
-						givePotionEffet(PotionEffectType.SPEED, 20*120, 1, false);
+						OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, false);
+						OLDgivePotionEffet(PotionEffectType.SPEED, 20*120, 1, false);
 						cdKyubi = 60*7;
 						new BukkitRunnable() {
 							int i = 0;
@@ -236,8 +236,8 @@ public class Naruto extends ShinobiRoles {
 						}.runTaskTimer(Main.getInstance(), 0, 20);
 					} else {
 						if (AmitieKyubi <= 80) {
-							givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, false);
-							givePotionEffet(PotionEffectType.SPEED, 20*120, 1, false);
+							OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, false);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 20*120, 1, false);
 							addSpeedAtInt(owner, 10);
 							setMaxHealth(getMaxHealth()+4.0);
 							cdKyubi = 60*6;
@@ -261,8 +261,8 @@ public class Naruto extends ShinobiRoles {
 							}.runTaskTimer(Main.getInstance(), 0, 20);
 						} else {
 							cdKyubi = 60*5;
-							givePotionEffet(PotionEffectType.SPEED, 20*120, 2, false);
-							givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, false);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 20*120, 2, false);
+							OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*120, 1, false);
 							setMaxHealth(getMaxHealth()+10.0);
 							useSmell = false;
 							new BukkitRunnable() {

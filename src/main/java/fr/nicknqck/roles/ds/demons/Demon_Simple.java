@@ -55,9 +55,9 @@ public class Demon_Simple extends DemonInferieurRole implements Listener {
 	@Override
 	public void Update(GameState gameState) {
 		if (gameState.nightTime) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 		} else {
-			givePotionEffet(PotionEffectType.WEAKNESS, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.WEAKNESS, 60, 1, true);
 		}
 	}
 	@Override
