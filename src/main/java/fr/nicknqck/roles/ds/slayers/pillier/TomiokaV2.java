@@ -176,10 +176,65 @@ public class TomiokaV2 extends PilierRoles {
                     "",
                     "§7     →§aSabito§7:§9 Résistance I§7 le§e jour",
                     "",
-                    "§7     →§aMakomo§7:§e Speed II§7 durant le§e jour",
+                    "§7     →§aMakomo§7:§b Speed II§7 durant le§e jour",
                     "",
                     "§4!§c Vous obtiendrez les bonus ci-dessus que s'il s'agit du premier mort, sinon vous obtiendrez§a +§c1❤ permanent§4!");
             EventUtils.registerRoleEvent(this);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                boolean ig = false;
+                for (final GamePlayer gamePlayer : getRole().getGameState().getGamePlayer().values()) {
+                    if (gamePlayer.getRole() == null)continue;
+                    if (isGoodRole(gamePlayer.getRole())) {
+                        ig = true;
+                        break;
+                    }
+                }
+                if (!ig) {
+                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
+                        EventUtils.unregisterEvents(this);
+                        int random = Main.RANDOM.nextInt(101);
+                        getRole().getGamePlayer().sendMessage("§7C'est étrange, on dirait que n'y§a Sabito§7, n'y§a Makomo§7, n'y§a Tanjiro§7 ne sont présant dans la partie");
+                        String roleName = "";
+                        String effectName = "";
+                        if (random <= 33) {
+                            getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
+                            roleName = "§aSabito";
+                            effectName = "§9Résistance I";
+                        } else if (random <= 66) {//donc n'est pas inférieur ou égale à 33
+                            getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.DAY);
+                            roleName = "§aTanjiro";
+                            effectName = "§cForce I";
+                        } else if (random <= 99) {
+                            final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                            if (owner != null) {
+                                owner.removePotionEffect(PotionEffectType.SPEED);
+                            }
+                            if (!getRole().getEffects().isEmpty()) {
+                                for (final PotionEffect potionEffect : getRole().getEffects().keySet()) {
+                                    if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
+                                        getRole().getEffects().remove(potionEffect);
+                                        break;
+                                    }
+                                }
+                            }
+                            getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), EffectWhen.DAY);
+                            getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.NIGHT);
+                            roleName = "§aMakomo";
+                            effectName = "§bSpeed II";
+                        } else {//donc random est égale à 100
+                            getRole().getGamePlayer().sendMessage("§7L'absence de§a Tanjiro§7,§a Makomo§7 et§a Sabito§7 sont trop lourd sur vos épaule, pour vous aider à ne pas faillir vous n'allez gagner aucun des effets que vous auriez dû avoir, mais plutôt§a +§c3❤ permanents");
+                            getRole().setMaxHealth(getRole().getMaxHealth()+6.0);
+                            final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                            if (owner != null) {
+                                owner.setMaxHealth(getRole().getMaxHealth());
+                            }
+                        }
+                        if (!roleName.isEmpty()) {
+                            getRole().getGamePlayer().sendMessage("§7Vous allez donc devoir endosser les résponsabilités de la mort de "+roleName+"§7, vous avez maintenant§c l'effet "+effectName+"§7 le§e jour");
+                        }
+                    });
+                }
+            }, 20*10);
         }
 
         @Override
