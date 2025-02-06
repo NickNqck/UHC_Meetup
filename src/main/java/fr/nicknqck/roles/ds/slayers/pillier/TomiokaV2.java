@@ -14,7 +14,6 @@ import fr.nicknqck.roles.ds.slayers.Sabito;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
-import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -95,7 +94,7 @@ public class TomiokaV2 extends PilierRoles {
     private static class FindOthersPower extends Power {
 
         public FindOthersPower(@NonNull RoleBase role) {
-            super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", new Cooldown(0), role,
+            super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", null, role,
                     "§7Permet de savoir toute les "+(Main.getInstance().getGameConfig().isMinage() ? "§c5 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
             new FinderRunnable(role.getGameState(), this);
         }
