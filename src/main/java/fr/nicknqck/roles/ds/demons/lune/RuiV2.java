@@ -95,7 +95,7 @@ public class RuiV2 extends DemonsRoles {
                     "",
                     "§fAttaque longue porté§7: En visant un §cjoueur§7, vous permet de lui infliger §c 2,5❤§7 ainsi que§c 15%§7 de chance de lui donner en plus§c 15 secondes§7 de§2 poison 1§7. (1x/7m)",
                     "",
-                    "§fFil attractif§7: En visant un§c joueur§7, vous permet de l'attirer très fortement vers vous",
+                    "§fFil attractif§7: En visant un§c joueur§7, vous permet de l'attirer très fortement vers vous§7 (1x/5m)",
                     "",
                     "§fEmprisonnement dans la toile§7: En visant un §cjoueur§7, vous permet de l'enfermer à l'intérieur de plusieurs§c toiles d'araignées",
                     "",
