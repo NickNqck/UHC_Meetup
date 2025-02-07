@@ -204,11 +204,13 @@ public class TomiokaV2 extends PilierRoles {
                             getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
                             roleName = "§aSabito";
                             effectName = "§9Résistance I";
-                        } else if (random <= 66) {//donc n'est pas inférieur ou égale à 33
+                        }
+                        if (random > 33 && random <= 66) {
                             getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.DAY);
                             roleName = "§aTanjiro";
                             effectName = "§cForce I";
-                        } else if (random <= 99) {
+                        }
+                        if (random > 66 && random <= 99) {
                             final Player owner = Bukkit.getPlayer(getRole().getPlayer());
                             if (owner != null) {
                                 owner.removePotionEffect(PotionEffectType.SPEED);
@@ -225,7 +227,8 @@ public class TomiokaV2 extends PilierRoles {
                             getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.NIGHT);
                             roleName = "§aMakomo";
                             effectName = "§bSpeed II";
-                        } else {//donc random est égale à 100
+                        }
+                        if (random == 100){
                             getRole().getGamePlayer().sendMessage("§7L'absence de§a Tanjiro§7,§a Makomo§7 et§a Sabito§7 sont trop lourd sur vos épaule, pour vous aider à ne pas faillir vous n'allez gagner aucun des effets que vous auriez dû avoir, mais plutôt§a +§c3❤ permanents");
                             getRole().setMaxHealth(getRole().getMaxHealth()+6.0);
                             final Player owner = Bukkit.getPlayer(getRole().getPlayer());
