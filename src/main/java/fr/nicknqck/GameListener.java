@@ -11,6 +11,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.Susamaru;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -256,7 +257,11 @@ public class GameListener implements Listener {
                         role.GiveItems();
                         lastRoleGive = role;
 						if (Main.getInstance().getGameConfig().isGiveLame()) {
-							role.giveItem(p, false, Items.getLamedenichirin());
+							if (role instanceof DemonsSlayersRoles){
+								if (((DemonsSlayersRoles) role).isCanuseblade()){
+									role.giveItem(p, false, Items.getLamedenichirin());
+								}
+							}
 						}
                         Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, role, role.getRoles(), role.getGamePlayer(), false));
                     }
