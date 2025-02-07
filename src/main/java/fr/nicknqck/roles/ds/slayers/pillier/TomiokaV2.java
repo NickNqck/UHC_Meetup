@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -14,10 +15,14 @@ import fr.nicknqck.roles.ds.slayers.Sabito;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -29,9 +34,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TomiokaV2 extends PilierRoles {
 
@@ -86,6 +89,7 @@ public class TomiokaV2 extends PilierRoles {
         giveItem(owner, false, Book);
         addPower(new FindOthersPower(this));
         addPower(new DeathPassifPower(this));
+        addPower(new AccalmiePower(this), true);
         if (!Main.getInstance().getGameConfig().isMinage()) {
             owner.setLevel(owner.getLevel()+6);
         }
@@ -95,7 +99,7 @@ public class TomiokaV2 extends PilierRoles {
 
         public FindOthersPower(@NonNull RoleBase role) {
             super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", null, role,
-                    "§7Permet de savoir toute les "+(Main.getInstance().getGameConfig().isMinage() ? "§c5 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
+                    "§7Permet de savoir toute les "+(Main.getInstance().getGameConfig().isMinage() ? "§c10 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autours de vous ou non");
             new FinderRunnable(role.getGameState(), this);
         }
 
@@ -115,7 +119,7 @@ public class TomiokaV2 extends PilierRoles {
                 this.gameState = gameState;
                 this.power = power;
                 if (Main.getInstance().getGameConfig().isMinage()) {
-                    maxTime = 60*5;
+                    maxTime = 60*10;
                 } else {
                     maxTime = 60*3;
                 }
@@ -289,6 +293,47 @@ public class TomiokaV2 extends PilierRoles {
                 return true;
             }
             return roleBase instanceof Sabito;
+        }
+    }
+    private static class AccalmiePower extends ItemPower implements Listener{
+
+        private final Map<UUID, Long> aroundMap;
+
+        protected AccalmiePower(@NonNull TomiokaV2 role) {
+            super("Accalmie", new Cooldown(Main.getInstance().getGameConfig().isMinage() ? 60*15 : 60*5), new ItemBuilder(Material.NETHER_STAR).setName("§aAccalmie"), role,
+                    "§7Lors de l'activation vous poserez des§c sources d'eau§7 sous les pieds des personnes",
+                    "§7qui vont ont frappé pendant les§c 10§7 dernières§c secondes§7, également, vous leurs infligerez un effet de§c Slowness I§7 pendant§c 10 secondes");
+            this.aroundMap = new HashMap<>();
+            EventUtils.registerRoleEvent(this);
+        }
+
+        @Override
+        public boolean onUse(Player player, Map<String, Object> map) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                long now = System.currentTimeMillis();
+                this.aroundMap.entrySet().removeIf(time -> now - time.getValue() > 10000);
+                if (this.aroundMap.isEmpty()) {
+                    player.sendMessage("§7Vous n'avez personne à calmer avec votre accalmie");
+                    return false;
+                }
+                for (@NonNull final UUID uuid : this.aroundMap.keySet()) {
+                    final Player target = Bukkit.getPlayer(uuid);
+                    if (target == null)continue;
+                    final Location location = target.getLocation();
+                    location.getBlock().setType(Material.WATER);
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*10, 0, false, false), true);
+                }
+                return true;
+            }
+            return false;
+        }
+        @EventHandler
+        private void onBattle(@NonNull final UHCPlayerBattleEvent event) {
+            if (!event.getVictim().getUuid().equals(this.getRole().getPlayer()))return;
+            if (this.aroundMap.containsKey(event.getDamager().getUuid())) {
+                this.aroundMap.remove(event.getDamager().getUuid(), this.aroundMap.get(event.getDamager().getUuid()));
+            }
+            this.aroundMap.put(event.getDamager().getUuid(), System.currentTimeMillis());
         }
     }
 }
