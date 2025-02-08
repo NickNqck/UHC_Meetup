@@ -97,7 +97,7 @@ public class RuiV2 extends DemonsRoles {
                     "",
                     "§fFil attractif§7: En visant un§c joueur§7, vous permet de l'attirer très fortement vers vous§7 (1x/5m)",
                     "",
-                    "§fEmprisonnement dans la toile§7: En visant un §cjoueur§7, vous permet de l'enfermer à l'intérieur de plusieurs§c toiles d'araignées",
+                    "§fEmprisonnement dans la toile§7: En visant un §cjoueur§7, vous permet de l'enfermer à l'intérieur de plusieurs§c toiles d'araignées§7 (1x7m)",
                     "",
                     "§fAllègement des toiles§7: Si§c maximum 1§7 de vos§c pouvoirs§7 est en cooldown, vous obtiendrez§c 5 minutes§7 de l'effet§b Speed I§7,",
                     "§7Également vous donnerez l'effet§c résistance I§7 à§c Kumo§7 si elle est dans un§c rayon§7 de§c 30 blocs"
