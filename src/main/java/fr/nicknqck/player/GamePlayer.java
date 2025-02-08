@@ -1,6 +1,5 @@
 package fr.nicknqck.player;
 
-import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -32,7 +31,6 @@ public class GamePlayer {
 	private boolean isAlive;
 	@Setter
 	private boolean canRevive = false;
-	@org.bukkit.craftbukkit.libs.jline.internal.Nullable
 	@Setter
 	private RoleBase role;
 	@Setter
@@ -42,10 +40,9 @@ public class GamePlayer {
 	private final String playerName;
 	@Nullable
 	private DiscRunnable discRunnable;
-	@NotNull
+	@NonNull
 	@Setter
 	private Location lastLocation;
-	@NotNull
 	@NonNull
 	@Setter
 	private ItemStack[] lastInventoryContent;
