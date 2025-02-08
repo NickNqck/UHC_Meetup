@@ -170,14 +170,8 @@ public class SlayerSolo extends DemonsSlayersRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 this.using = true;
                 player.sendMessage("§7Votre§e Foudre§7 est prête, vous avez maintenant§c 60 secondes§7 pour l'utiliser sur un§c joueur§7.");
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-                    this.using = false;
-                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                        player.sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
-                    }
-                    EventUtils.unregisterEvents(this);
-                }, 20*60);
                 EventUtils.registerEvents(this);
+                new EndFoudreRunnable(getRole().getGameState(), this);
                 return true;
             }
             return false;
@@ -198,6 +192,33 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 victim.sendMessage("§7Vous subissez une§e foudre§c très puissante§7.");
                 this.taped.add(event.getVictim().getUuid());
                 getRole().getGameState().spawnLightningBolt(victim.getWorld(), victim.getLocation());
+            }
+        }
+        private static class EndFoudreRunnable extends BukkitRunnable {
+
+            private final GameState gameState;
+            private final FoudrePower power;
+            private int timeLeft = 60;
+
+            private EndFoudreRunnable(GameState gameState, FoudrePower power) {
+                this.gameState = gameState;
+                this.power = power;
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    EventUtils.unregisterEvents(power);
+                    cancel();
+                    return;
+                }
+                if (timeLeft == 0) {
+                    power.getRole().getGamePlayer().sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
+                    EventUtils.unregisterEvents(power);
+                    cancel();
+                    return;
+                }
+                timeLeft--;
             }
         }
     }
@@ -299,7 +320,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Activation du§c Soufle du Feu");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*180, 0, false, false));
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 new FeuRunnable(getRole().getGameState(), this);
                 return true;
             }
