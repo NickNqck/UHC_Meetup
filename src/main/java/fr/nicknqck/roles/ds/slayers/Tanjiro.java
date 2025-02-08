@@ -194,7 +194,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     if (!assa) {
                         this.tanjiro.setMaxHealth(this.tanjiro.getMaxHealth()-4);
                     } else {
-                        this.tanjiro.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, false, false), EffectWhen.NOW);
+                        this.tanjiro.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 0, false, false), EffectWhen.NOW);
                         this.tanjiro.giveItem(player, true, new ItemBuilder(Material.COMPASS).setName("§4§lTraqueur").toItemStack());
                         new CompassRunnable(target.getUniqueId(), player.getUniqueId());
                     }
