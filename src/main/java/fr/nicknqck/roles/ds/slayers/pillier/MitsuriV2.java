@@ -57,7 +57,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Mitsuri;
     }
 
