@@ -56,7 +56,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Obanai;
     }
 
@@ -194,28 +194,28 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         private void onUHCDie(UHCPlayerKillEvent event) {
             if (event.getGamePlayerKiller() == null)return;
             if (event.getGamePlayerKiller().getRole() == null)return;
-                final Map<UUID, GamePlayer> map = new HashMap<>(event.getGameState().getGamePlayer());
-                map.remove(event.getGamePlayerKiller().getUuid(), event.getGamePlayerKiller());
-                map.remove(event.getVictim().getUniqueId());
-                final List<GamePlayer> list = new ArrayList<>(map.values());
-                Collections.shuffle(list, Main.RANDOM);
-                RoleBase zero = list.get(0).getRole();
-                if (zero == null) {
-                    zero = event.getGamePlayerKiller().getRole();
-                }
-                RoleBase un = list.get(1).getRole();
-                if (un == null) {
-                    un = event.getGamePlayerKiller().getRole();
-                }
-                RoleBase deux = list.get(1).getRole();
-                if (deux == null) {
-                    deux = event.getGamePlayerKiller().getRole();
-                }
-                roleBaseMap.put(event.getVictim().getName(), new RoleBase[]{
-                        zero,
-                        un,
-                        deux
-                });
+            final Map<UUID, GamePlayer> map = new HashMap<>(event.getGameState().getGamePlayer());
+            map.remove(event.getGamePlayerKiller().getUuid(), event.getGamePlayerKiller());
+            map.remove(event.getVictim().getUniqueId());
+            final List<GamePlayer> list = new ArrayList<>(map.values());
+            Collections.shuffle(list, Main.RANDOM);
+            RoleBase zero = list.get(0).getRole();
+            if (zero == null) {
+                zero = event.getGamePlayerKiller().getRole();
+            }
+            RoleBase un = list.get(1).getRole();
+            if (un == null) {
+                un = event.getGamePlayerKiller().getRole();
+            }
+            RoleBase deux = list.get(1).getRole();
+            if (deux == null) {
+                deux = event.getGamePlayerKiller().getRole();
+            }
+            roleBaseMap.put(event.getVictim().getName(), new RoleBase[]{
+                    zero,
+                    un,
+                    deux
+            });
         }
     }
 }
