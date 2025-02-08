@@ -89,7 +89,9 @@ public class DSmtpCommands implements CommandExecutor {
 						ArrayList<String> message = new ArrayList<>();
 						if (gameState.hasRoleNull(((Player) sender).getUniqueId())) return false;
                         final RoleBase role = gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole();
-                        final String speed = Bukkit.getPlayer(role.getPlayer()) != null ? ""+Bukkit.getPlayer(role.getPlayer()).getWalkSpeed() : "?";
+                        float fSpeed = ((Player) sender).getWalkSpeed();
+                        final float rSpeed = fSpeed-0.2f;
+                        final String speed = rSpeed*500+"%";
 						message.add("§bEffets: "+ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 						message.add("");
 						message.add("§aRésistance: " +role.getBonusResi()+"%");
