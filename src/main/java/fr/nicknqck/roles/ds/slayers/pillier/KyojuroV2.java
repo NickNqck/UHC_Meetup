@@ -160,14 +160,10 @@ public class KyojuroV2 extends PilierRoles {
                 runnable.time = 0;
                 player.setAllowFlight(true);
                 runnable.runTaskTimerAsynchronously(getPlugin(), 0, 1);
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 return true;
             }
             return false;
-        }
-        @EventHandler
-        private void onEndGame(EndGameEvent event) {
-            EventUtils.unregisterEvents(this);
         }
         @EventHandler
         private void onToggleFly(PlayerToggleFlightEvent event) {
