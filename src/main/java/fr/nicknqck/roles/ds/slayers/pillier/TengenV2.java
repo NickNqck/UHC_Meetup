@@ -6,6 +6,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -19,11 +20,13 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -114,12 +117,8 @@ public class TengenV2 extends PilierRoles {
                     player.getInventory().setBoots(null);
                 }
                 invisible = true;
-                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                    if (invisible) {
-                        removeInvisibility();
-                    }
-                }, 20*60);
                 getCooldown().addSeconds(60);
+                new AttaqueFurtiveRunnable(this);
                 return true;
             }
             return false;
@@ -142,12 +141,13 @@ public class TengenV2 extends PilierRoles {
                 owner.getInventory().setBoots(armorContents.get(4));
             }
             invisible = false;
+            this.getRole().getGamePlayer().getActionBarManager().removeInActionBar("tengenv2.attaquefurtive");
             Bukkit.getScheduler().runTask(getPlugin(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), true));
         }
         @EventHandler
         private void onSprint(PlayerToggleSprintEvent event) {
             if (event.getPlayer().getUniqueId().equals(getRole().getPlayer())) {
-                if (getCooldown().getCooldownRemaining() >= 60*5) {
+                if (invisible) {
                     event.setCancelled(true);
                 }
             }
@@ -156,13 +156,51 @@ public class TengenV2 extends PilierRoles {
         private void onDamageByEntity(EntityDamageByEntityEvent event) {
             if (!(event.getEntity() instanceof Player))return;
             if (!(event.getDamager() instanceof Player))return;
-            if (getCooldown().getCooldownRemaining() < 60*5)return;
+            if (!invisible)return;
             if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
                 removeInvisibility();
                 event.setDamage(event.getDamage()*1.5);
             }
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
                 event.setCancelled(true);
+            }
+        }
+        @EventHandler
+        private void onDamage(final EntityDamageEvent event) {
+            if (!event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!invisible)return;
+            event.setDamage(0);
+            event.setCancelled(true);
+        }
+        private static class AttaqueFurtiveRunnable extends BukkitRunnable {
+
+            private final AttaqueFurtive attaqueFurtive;
+            private final GameState gameState;
+            private int timeRemaining;
+
+            private AttaqueFurtiveRunnable(AttaqueFurtive attaqueFurtive) {
+                this.attaqueFurtive = attaqueFurtive;
+                this.gameState = attaqueFurtive.getRole().getGameState();
+                this.timeRemaining = 60;
+                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                attaqueFurtive.getRole().getGamePlayer().getActionBarManager().addToActionBar("tengenv2.attaquefurtive", "§bTemp d'invisibilité restant:§c "+ StringUtils.secondsTowardsBeautiful(timeRemaining));
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                if (timeRemaining == 0) {
+                    if (this.attaqueFurtive.invisible) {
+                        this.attaqueFurtive.removeInvisibility();
+                    }
+                    cancel();
+                    return;
+                }
+                this.attaqueFurtive.getRole().getGamePlayer().getActionBarManager().updateActionBar("tengenv2.attaquefurtive", "§bTemp d'invisibilité restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                timeRemaining--;
             }
         }
     }
