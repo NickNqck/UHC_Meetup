@@ -71,6 +71,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         addPower(new DsSentirCommand(this));
         addPower(new DanseItemPower(this), true);
         Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
+        getCantHave().add(Lames.FireResistance);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false), EffectWhen.DAY)
                 .setItems(new TripleMap<>(getDanseText().getHoverEvent(), getDanseText().getText(), 60*12))
@@ -349,6 +350,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 this.power = power;
                 this.gameState = gameState;
                 power.getRole().getGamePlayer().getActionBarManager().addToActionBar("tanjiro.danse", "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
 
             @Override
