@@ -446,6 +446,9 @@ public abstract class RoleBase implements IRole {
 				}
 			}
 		}
+		if (toReturn.isEmpty()) {
+			return null;
+		}
         return toReturn.get(0);
 	}
 	public List<Player> getListPlayerFromRole(Roles roles){
