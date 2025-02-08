@@ -117,7 +117,6 @@ public class TengenV2 extends PilierRoles {
                     player.getInventory().setBoots(null);
                 }
                 invisible = true;
-                getCooldown().addSeconds(60);
                 new AttaqueFurtiveRunnable(this);
                 return true;
             }
