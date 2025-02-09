@@ -19,10 +19,10 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,7 +40,6 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 
 	private boolean killzen = false;
 	private boolean killkai = false;
-	private int cooldownquatriememouvement = 0;
 
     @Override
 	public String getName() {
@@ -83,7 +82,6 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 
 	@Override
 	public void resetCooldown() {
-		cooldownquatriememouvement = 0;
 	}
 
 	@Override
@@ -93,50 +91,6 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[0];
-	}
-
-    @Override
-	public void Update(GameState gameState) {
-		if (cooldownquatriememouvement >= 1) {
-			cooldownquatriememouvement--;
-		}
-		if (owner.getItemInHand().isSimilar(Items.getSoufleFoudre4iememouvement())) {
-			sendActionBarCooldown(owner, cooldownquatriememouvement);
-		}
-	}
-	@Override
-	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (item.isSimilar(Items.getSoufleFoudre4iememouvement())) {
-			if (!isPowerEnabled()) {
-				owner.sendMessage(ChatColor.RED+"Votre pouvoir est désactivé.");
-				return false;
-			}
-			if (cooldownquatriememouvement <= 0) {				
-				Player target = getRightClicked(30, 1);
-				if (target == null) {
-					owner.sendMessage("§cVeuiller viser un joueur");
-				} else {
-					Location loc = target.getLocation();
-					System.out.println(target.getEyeLocation());
-					loc.setX(loc.getX()+Math.cos(Math.toRadians(-target.getEyeLocation().getYaw()+90)));
-					loc.setZ(loc.getZ()+Math.sin(Math.toRadians(target.getEyeLocation().getYaw()-90)));
-					loc.setPitch(0);
-					System.out.println(loc);
-					owner.teleport(loc);
-					gameState.spawnLightningBolt(target.getWorld(), loc);
-					if (target.getHealth() > 4.0) {
-						target.setHealth(target.getHealth() - 4.0);
-					} else {
-						target.setHealth(0.5);
-					}
-					owner.sendMessage("Exécution du "+owner.getItemInHand().getItemMeta().getDisplayName());
-					cooldownquatriememouvement = 60*3;
-				}
-				} else {
-					sendCooldown(owner, cooldownquatriememouvement);
-				}
-		}
-		return super.ItemUse(item, gameState);
 	}
 	@EventHandler
 	private void onKill(UHCPlayerKillEvent event) {
@@ -156,6 +110,7 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 				giveItem(event.getPlayerKiller(), false, Items.getSoufleFoudre4iememouvement());
 				event.getGamePlayerKiller().sendMessage("§7Vous venez de tuez§c Kaigaku§7 vous obtenez donc§c force 1 §7la §cnuit§7, ainsi que l'accès au:§6 Quatrième Mouvement du Soufle de la Foudre§7 qui vous téléportera à la personne la plus proche que vous pouvez voir dans un rayon maximum de§c 30 blocs");
 				givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 80, 0, false, false), EffectWhen.NIGHT);
+				addPower(new TPPower(this), true);
 			}
 			if (killkai && killzen) {
 				getEffects().remove(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 80, 0, false, false), EffectWhen.NIGHT);
@@ -163,6 +118,51 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 				givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 80, 0, false, false), EffectWhen.PERMANENT);
 				getGamePlayer().sendMessage("§7Vous avez tué vos§c deux disciple§7 vos§c force§7 est maintenant§c permanente§7...");
 			}
+		}
+	}
+
+	private static class TPPower extends ItemPower {
+
+		protected TPPower(@NonNull Jigoro role) {
+			super("Soufle de la Foudre: Quatrième Mouvement", new Cooldown(60*3), new ItemBuilder(Material.NETHER_STAR).setName("§eSoufle de la Foudre: Quatrième Mouvement"), role);
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> map) {
+			if (getInteractType().equals(InteractType.INTERACT)) {
+				final Player target = RayTrace.getTargetPlayer(player, 30, null);
+				if (target == null) {
+					player.sendMessage("§cIl faut viser un joueur");
+					return false;
+				}
+				if (player.canSee(target)) {
+					final Location loc = target.getLocation();
+					if (Main.isDebug()){
+						System.out.println(target.getEyeLocation());
+					}
+					loc.setX(loc.getX()+Math.cos(Math.toRadians(-target.getEyeLocation().getYaw()+90)));
+					loc.setZ(loc.getZ()+Math.sin(Math.toRadians(target.getEyeLocation().getYaw()-90)));
+					loc.setPitch(0);
+					if (Main.isDebug()) {
+						System.out.println(loc);
+					}
+					target.getWorld().strikeLightning(target.getLocation());
+					if (target.getHealth() > 4.0) {
+						target.setHealth(target.getHealth() - 4.0);
+					} else {
+						target.setHealth(0.5);
+					}
+					player.sendMessage("§aExécution du§6 Quatrième mouvement du soufle de la foudre");
+					target.sendMessage("§fVous avez été touché par un soufle de la foudre");
+					player.teleport(loc);
+					if (((Jigoro) getRole()).killzen) {
+						Bukkit.getScheduler().runTaskLater(getPlugin(), () -> getCooldown().addSeconds(-60), 5);
+					}
+					return true;
+				}
+				return true;
+			}
+			return false;
 		}
 	}
 	private static class SpeedTroisPower extends ItemPower {
