@@ -82,6 +82,8 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
                 cancel();
                 return;
             }
+            if (!jigoro.getGamePlayer().isAlive())return;
+            if (!kaigaku.getGamePlayer().isAlive())return;
             final Player owner = Bukkit.getPlayer(jigoro.getPlayer());
             final Player mate = Bukkit.getPlayer(kaigaku.getPlayer());
             if (owner == null)return;
