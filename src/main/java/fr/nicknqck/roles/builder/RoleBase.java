@@ -619,4 +619,10 @@ public abstract class RoleBase implements IRole {
 		}
 		getEffects().put(effect, when);
 	}
+	public void addKnowedRole(final Class<? extends RoleBase> role) {
+		if (Main.isDebug()) {
+			System.out.println(this+" added "+role+" to his knowedRole");
+		}
+		getKnowedRoles().add(role);
+	}
 }
