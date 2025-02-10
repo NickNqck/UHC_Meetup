@@ -13,7 +13,6 @@ import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
-import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
@@ -21,7 +20,6 @@ import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -30,7 +28,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Map;
 import java.util.UUID;
 
-public class JigoroV2 extends DemonsSlayersRoles implements Listener {
+public class JigoroV2 extends DemonsSlayersRoles {
 
 	@NotNull
 	private JigoroV2ChoosePacteEvent.Pacte pacte;
@@ -53,7 +51,6 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		addKnowedRole(Kaigaku.class);
 		setLameIncassable(owner, true);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-		EventUtils.registerRoleEvent(this);
 		addPower(new SpeedTroisPower(this), true);
 	}
 
