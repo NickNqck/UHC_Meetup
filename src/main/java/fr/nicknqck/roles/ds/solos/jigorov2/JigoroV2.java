@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.events.custom.roles.ds.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -13,10 +12,8 @@ import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
-import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
@@ -35,7 +32,6 @@ import java.util.UUID;
 
 public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 
-	private int speedCD = 0;
 	private boolean killzen = false;
 	private boolean killkai = false;
 	private boolean killtwo = false;
@@ -55,8 +51,8 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		super.RoleGiven(gameState);
 		pacte = JigoroV2ChoosePacteEvent.Pacte.NON_CHOISIS;
 		setCanuseblade(true);
-		getKnowedRoles().add(ZenItsuV2.class);
-		getKnowedRoles().add(Kaigaku.class);
+		addKnowedRole(ZenItsuV2.class);
+		addKnowedRole(Kaigaku.class);
 		setLameIncassable(owner, true);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		EventUtils.registerRoleEvent(this);
@@ -189,20 +185,6 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		if (pacte == JigoroV2ChoosePacteEvent.Pacte.ZENITSU) {
-			if (speedCD <90*9) {
-				if (!killkai) {
-					owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
-				} else {
-					if (owner.getHealth() <= 10.0) {
-						owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*3, 1, false, false));	
-					} else {
-						owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
-					}
-				}
-			}
-			if (speedCD >= 1)speedCD--;
-		}
 		if (pacte == JigoroV2ChoosePacteEvent.Pacte.SOLO) {
 			if (killzen && !killtwo) {
 				if (!gameState.nightTime) {
@@ -221,19 +203,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 			if (killtwo) {
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999, 0, false, false));
 			}
-			if (speedCD >= 1)speedCD--;
-			if (owner.getItemInHand().isSimilar(Items.getVitesse())) {
-				if (speedCD > 0) {
-					NMSPacket.sendActionBar(owner, "Cooldown:§6 "+StringUtils.secondsTowardsBeautiful(speedCD));
-				} else {
-					NMSPacket.sendActionBar(owner, owner.getItemInHand().getItemMeta().getDisplayName()+"§r Utilisable");
-				}
-			}
-			if (speedCD <90*9) {
-				owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
-			}
 		}
-		super.Update(gameState);
 	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
