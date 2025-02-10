@@ -33,6 +33,7 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
         setCanuseblade(true);
         setLameincassable(true);
         setGamePlayer(gamePlayer);
+        addKnowedRole(Kaigaku.class);
         gamePlayer.setRole(this);
         new ResistanceRunnable(kaigaku, this, getGameState());
         EventUtils.registerRoleEvent(this);
