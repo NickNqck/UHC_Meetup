@@ -305,7 +305,7 @@ public class TomiokaV2 extends PilierRoles {
         protected AccalmiePower(@NonNull TomiokaV2 role) {
             super("Accalmie", new Cooldown(Main.getInstance().getGameConfig().isMinage() ? 60*15 : 60*5), new ItemBuilder(Material.NETHER_STAR).setName("§aAccalmie"), role,
                     "§7Lors de l'activation vous poserez des§c sources d'eau§7 sous les pieds des personnes",
-                    "§7qui vont ont frappé pendant les§c 10§7 dernières§c secondes§7, également, vous leurs infligerez un effet de§c Slowness I§7 pendant§c 10 secondes");
+                    "§7qui vous ont frappé pendant les§c 10§7 dernières§c secondes§7, également, vous leurs infligerez un effet de§c Slowness I§7 pendant§c 10 secondes");
             this.aroundMap = new HashMap<>();
             EventUtils.registerRoleEvent(this);
         }
