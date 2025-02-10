@@ -13,7 +13,6 @@ import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
-import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -31,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,7 +39,6 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 	private boolean killzen = false;
 	private boolean killkai = false;
 	private boolean killtwo = false;
-    private ZenItsuV2 zen;
 
 	public JigoroV2(UUID player) {
 		super(player);
@@ -78,9 +75,6 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 	public String[] Desc() {
 		if (pacte == JigoroV2ChoosePacteEvent.Pacte.SOLO) {
 			return AllDesc.JigoroV2Pacte1;
-		}
-		if (pacte == JigoroV2ChoosePacteEvent.Pacte.ZENITSU) {
-			return AllDesc.JigoroV2Pacte3;
 		}
 		return AllDesc.JigoroV2;
 	}
@@ -151,7 +145,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 									kaigaku.getGamePlayer().sendMessage("§7Le joueur§6 "+jigoro.getGamePlayer().getPlayerName()+"§7 est§6 "+jigoro.getName());
 									kaigaku.getKnowedRoles().add(jigoro.getClass());
 									kaigaku.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-									kaigaku.getGamePlayer().sendMessage("Vous avez rejoint la team ");
+									kaigaku.getGamePlayer().sendMessage("Vous avez rejoint la team§6 Jigoro ");
 									kaigaku.getGamePlayer().sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
 									gameState.JigoroV2Pacte2 = true;
 									jigoro.getGamePlayer().sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
@@ -161,23 +155,25 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 						}
 						break;
 					case ZENITSU:
-						owner.sendMessage("§7Vous avez choisis le pacte§6 3");
+						getGamePlayer().sendMessage("§7Vous avez choisis le pacte§6 3");
 						gameState.JigoroV2Pacte3 = true;
-						owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-						for (UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
-							Player p = Bukkit.getPlayer(u);
+						givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+						for (final UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
+							final Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
 							if (!gameState.hasRoleNull(u)) {//vérifie que p a un role
-								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof ZenItsuV2) {//si p est ZenItsu
-									owner.sendMessage(p.getName()+" est§a ZenItsu");
-									zen = (ZenItsuV2) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
-									gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(TeamList.Jigoro);
-									setTeam(TeamList.Jigoro);
-									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
-									p.sendMessage("Vous avez rejoint la team "+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam().getName());
-
-									p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-									owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+								if (gameState.getGamePlayer().get(u).getRole() instanceof ZenItsuV2) {//si p est ZenItsu
+									final ZenItsuV2 zenItsu = (ZenItsuV2) gameState.getGamePlayer().get(u).getRole();
+									final JigoroV2PZenItsu jigoro = new JigoroV2PZenItsu(getPlayer(), zenItsu, getGamePlayer());
+									jigoro.getEffects().putAll(getEffects());
+									jigoro.getPowers().addAll(getPowers());
+									jigoro.getGamePlayer().sendMessage("§a"+p.getName()+"§f est§a ZenItsu");
+									zenItsu.setTeam(TeamList.Jigoro);
+									jigoro.setTeam(TeamList.Jigoro);
+									zenItsu.getGamePlayer().sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
+									zenItsu.getGamePlayer().sendMessage("Vous avez rejoint la team§6 Jigoro ");
+									zenItsu.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+									getGamePlayer().sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 								}
 							}
 						}
@@ -194,17 +190,6 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 	@Override
 	public void Update(GameState gameState) {
 		if (pacte == JigoroV2ChoosePacteEvent.Pacte.ZENITSU) {
-			if (zen != null) {
-				if (owner.getLocation().distance(zen.owner.getLocation()) <= 20.0 && gameState.getInGamePlayers().contains(getPlayer()) && zen.getGamePlayer().isAlive()) {
-					owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
-					zen.owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false));
-				}
-                if (zen.getGamePlayer().isAlive()) {
-					DecimalFormat df = new DecimalFormat("0");
-					NMSPacket.sendActionBar(owner, "§aZenItsu§r: "+df.format(owner.getLocation().distance(zen.owner.getLocation()))+ArrowTargetUtils.calculateArrow(owner, zen.owner.getLocation()));
-					NMSPacket.sendActionBar(zen.owner, "§6Jigoro§r: "+df.format(zen.owner.getLocation().distance(owner.getLocation()))+ArrowTargetUtils.calculateArrow(zen.owner, owner.getLocation()));
-				}
-			}
 			if (speedCD <90*9) {
 				if (!killkai) {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
@@ -276,16 +261,6 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 					}
 				}
 			}	
-		}
-		if (pacte == JigoroV2ChoosePacteEvent.Pacte.ZENITSU) {
-			if (killer.getUniqueId() == getPlayer() || killer.getUniqueId() == zen.getPlayer()) {
-				if (!killkai) {
-					if (gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof Kaigaku) {
-						owner.sendMessage(ChatColor.GOLD+killer.getName()+"§r à tué§c Kaigaku§r ce qui vous permet d'avoir§6 Speed 2 en dessous de 5§c❤§r");
-						killkai = true;
-					}
-				}
-			}
 		}
 		super.PlayerKilled(killer, victim, gameState);
 	}
