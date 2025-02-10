@@ -13,7 +13,6 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
-import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.CommandPower;
@@ -119,7 +118,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     }
     @EventHandler
     private void onJigoroPacte(JigoroV2ChoosePacteEvent event) {
-        if (event.getPacte().equals(JigoroV2.Pacte.PacteZenItsu)) {
+        if (event.getPacte().equals(JigoroV2ChoosePacteEvent.Pacte.ZENITSU)) {
             this.winWithJigoro = true;
         }
     }
