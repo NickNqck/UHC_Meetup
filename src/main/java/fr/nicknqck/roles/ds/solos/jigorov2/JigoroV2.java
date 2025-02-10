@@ -98,13 +98,7 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 		return new ItemStack[0];
 	}
 	@Override
-	public void resetCooldown() {
-		speedCD = 0;
-	}
-	@Override
-	public void GiveItems() {
-		owner.getInventory().addItem(Items.getVitesse());
-	}
+	public void resetCooldown() {}
 	@Override
 	public void OpenFormInventory(GameState gameState) {
 		if (pacte == JigoroV2ChoosePacteEvent.Pacte.NON_CHOISIS) {
@@ -142,22 +136,25 @@ public class JigoroV2 extends DemonsSlayersRoles implements Listener {
 						break;
 					case KAIGAKU:
 						owner.sendMessage("§7Vous avez choisis le pacte§c 2");
-						for (UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
-							Player p = Bukkit.getPlayer(u);
+						for (final UUID u : gameState.getInGamePlayers()) {//p = les gens en jeux
+							final Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
-							if (!gameState.hasRoleNull(u)) {//vérifie que p a un role
+							if (!gameState.hasRoleNull(u)) { //vérifie que p a un role
 								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Kaigaku) {//si p est kaigaku
-									owner.sendMessage(p.getName()+" est§c Kaigaku");
-                                    Kaigaku kaigaku = (Kaigaku) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
-									gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(TeamList.Jigoro);
-									setTeam(TeamList.Jigoro);
-									p.sendMessage("Le joueur§6 "+owner.getName()+"§r est§6 Jigoro");
-									kaigaku.getKnowedRoles().add(this.getClass());
-									kaigaku.getEffects().put(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-									p.sendMessage("Vous avez rejoint la team "+gameState.getGamePlayer().get(getPlayer()).getRole().getTeam().getName());
-									kaigaku.owner.sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
+									final Kaigaku kaigaku = (Kaigaku) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+									final JigoroV2PKaigaku jigoro = new JigoroV2PKaigaku(getPlayer(), kaigaku, getGamePlayer());
+									jigoro.getEffects().putAll(getEffects());
+									jigoro.getPowers().addAll(getPowers());
+									jigoro.getGamePlayer().sendMessage(p.getName()+" est§c Kaigaku");
+									kaigaku.setTeam(TeamList.Jigoro);
+									jigoro.setTeam(TeamList.Jigoro);
+									kaigaku.getGamePlayer().sendMessage("§7Le joueur§6 "+jigoro.getGamePlayer().getPlayerName()+"§7 est§6 "+jigoro.getName());
+									kaigaku.getKnowedRoles().add(jigoro.getClass());
+									kaigaku.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+									kaigaku.getGamePlayer().sendMessage("Vous avez rejoint la team ");
+									kaigaku.getGamePlayer().sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
 									gameState.JigoroV2Pacte2 = true;
-									owner.sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
+									jigoro.getGamePlayer().sendMessage("La commande§6 /ds me§r à été mis-à-jour !");
 									break;
 								}
 							}
