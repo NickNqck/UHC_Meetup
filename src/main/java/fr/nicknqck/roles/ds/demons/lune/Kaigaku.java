@@ -35,10 +35,6 @@ public class Kaigaku extends DemonsRoles {
 	private int cooldowntroisiememouvement = 0;
 	public Kaigaku(UUID player) {
 		super(player);
-		this.setCanuseblade(true);
-		getKnowedRoles().add(ZenItsuV2.class);
-		getKnowedRoles().add(Muzan.class);
-		setLameIncassable(owner, true);
 	}
 
 	@Override
@@ -102,6 +98,10 @@ public class Kaigaku extends DemonsRoles {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
+		this.setCanuseblade(true);
+		getKnowedRoles().add(ZenItsuV2.class);
+		getKnowedRoles().add(Muzan.class);
+		setLameIncassable(owner, true);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
 	}
 
