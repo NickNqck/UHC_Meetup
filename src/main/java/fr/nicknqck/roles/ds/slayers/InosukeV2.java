@@ -52,7 +52,7 @@ public class InosukeV2 extends SlayerRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Inosuke;
     }
 
