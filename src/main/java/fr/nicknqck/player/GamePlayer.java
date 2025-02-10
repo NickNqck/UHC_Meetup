@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;
 import org.bukkit.entity.Player;
@@ -275,10 +276,10 @@ public class GamePlayer {
 					if (!gameState.hasRoleNull(uuid)) {
 						final RoleBase role = gameState.getGamePlayer().get(uuid).getRole();
 						if (!toTalk.contains(role.getClass()))continue;
-						role.getGamePlayer().sendMessage(starter+"§7"+ event.getMessage().substring(constructor.length()));
+						role.getGamePlayer().sendMessage(starter+" §f"+ ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(constructor.length())));
 					}
 				}
-				me.sendMessage(starter+"§7"+ event.getMessage().substring(constructor.length()));
+				me.sendMessage(starter+" §f"+ ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(constructor.length())));
 			}
 		}
 
