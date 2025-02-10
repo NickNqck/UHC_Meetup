@@ -191,17 +191,6 @@ public abstract class Items {
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
-	  public static ItemStack getJoueurZoneDeFoudre() {
-		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"Zone de Foudre");
-		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-		  meta.spigot().setUnbreakable(true);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
 	  public static ItemStack getVitesse() {
 		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 		  ItemMeta meta = stack.getItemMeta();
