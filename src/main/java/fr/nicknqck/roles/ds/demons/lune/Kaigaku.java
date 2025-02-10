@@ -78,7 +78,6 @@ public class Kaigaku extends DemonsRoles {
 	public void GiveItems() {
 		owner.getInventory().addItem(Items.getSoufleFoudre3iememouvement());
 		owner.getInventory().addItem(Items.getSoufleFoudre4iememouvement());
-		owner.getInventory().addItem(Items.getLamedenichirin());
 		super.GiveItems();
 	}
 	@Override
