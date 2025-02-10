@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.solos.jigorov2;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -26,9 +27,13 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
 
     private final Kaigaku kaigaku;
 
-    public JigoroV2PKaigaku(UUID player, final Kaigaku kaigaku) {
+    public JigoroV2PKaigaku(UUID player, final Kaigaku kaigaku, GamePlayer gamePlayer) {
         super(player);
         this.kaigaku = kaigaku;
+        setCanuseblade(true);
+        setLameincassable(true);
+        setGamePlayer(gamePlayer);
+        gamePlayer.setRole(this);
         new ResistanceRunnable(kaigaku, this, getGameState());
         EventUtils.registerRoleEvent(this);
         getGamePlayer().startChatWith("§6Jigoro:§7", "!", Kaigaku.class);
