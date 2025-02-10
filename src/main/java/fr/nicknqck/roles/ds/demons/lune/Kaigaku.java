@@ -9,7 +9,7 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
-import fr.nicknqck.roles.ds.solos.JigoroV2;
+import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.utils.Loc;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
