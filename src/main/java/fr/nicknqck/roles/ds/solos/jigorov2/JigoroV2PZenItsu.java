@@ -37,6 +37,9 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
         setCanuseblade(true);
         setLameincassable(true);
         setGamePlayer(gamePlayer);
+        addKnowedRole(ZenItsuV2.class);
+        addKnowedRole(Kaigaku.class);
+        zenItsu.addKnowedRole(Kaigaku.class);
         gamePlayer.setRole(this);
         new ZenItsuRunnable(zenItsu, this, getGameState());
         EventUtils.registerRoleEvent(this);
