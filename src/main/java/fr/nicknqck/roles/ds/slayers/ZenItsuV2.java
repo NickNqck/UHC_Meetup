@@ -99,11 +99,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     @EventHandler
     private void onNight(NightEvent event) {
         final int middleOfTheNight = event.getTimeNight()/2;
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!canHaveSpeed)return;
-            givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), EffectWhen.NOW);
-            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), EffectWhen.NOW);
-        }, 20L *middleOfTheNight);
+        new NightEffectRunnable(middleOfTheNight, gameState, this);
     }
     @EventHandler
     private void onKill(UHCPlayerKillEvent event) {
@@ -260,6 +256,40 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
                 }
                 timeRemaining--;
             }
+        }
+    }
+    private static final class NightEffectRunnable extends BukkitRunnable {
+
+        private final int middleOfTheNight;
+        private final GameState gameState;
+        private final ZenItsuV2 zenItsu;
+        private int timeLeft;
+
+        private NightEffectRunnable(final int middleOfTheNight, final GameState gameState, final ZenItsuV2 zenItsu) {
+            this.middleOfTheNight = middleOfTheNight;
+            this.gameState = gameState;
+            this.zenItsu = zenItsu;
+            this.timeLeft = 0;
+            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        }
+
+        @Override
+        public void run() {
+            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            if (this.timeLeft >= middleOfTheNight) {
+                if (zenItsu.canHaveSpeed) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                        zenItsu.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), EffectWhen.NOW);
+                        zenItsu.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), EffectWhen.NOW);
+                    });
+                }
+                cancel();
+                return;
+            }
+            timeLeft++;
         }
     }
 }
