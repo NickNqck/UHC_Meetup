@@ -84,6 +84,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new TambourPower(this), true);
         EventUtils.registerRoleEvent(this);
+        addKnowedRole(Muzan.class);
     }
 
     @Override
