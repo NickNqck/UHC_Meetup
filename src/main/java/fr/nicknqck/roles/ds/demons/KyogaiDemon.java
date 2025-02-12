@@ -139,7 +139,9 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     private static class TambourPower extends ItemPower {
 
         protected TambourPower(@NonNull KyogaiDemon role) {
-            super("Tambour", new Cooldown(30), new ItemBuilder(Material.STICK).setName("§cTambour"), role);
+            super("Tambour", new Cooldown(30), new ItemBuilder(Material.STICK).setName("§cTambour"), role,
+                    "§7Vous permet de retourner la personne visée"+(role.solo ? ", de plus vous avez§c 50%§7 de§c chance§7 de retourner également toute les personnes autours de vous dans un§c rayon§" +
+                            "7 de§c 30 blocs" : ""));
         }
 
         @Override
