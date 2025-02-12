@@ -85,6 +85,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         addPower(new TambourPower(this), true);
         EventUtils.registerRoleEvent(this);
         addKnowedRole(Muzan.class);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), this::procSolo, 20*10);
     }
 
     @Override
@@ -122,26 +123,28 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     @EventHandler
     private void UHCDeathEvent(final UHCDeathEvent event) {
         if (event.getRole() instanceof Muzan) {
-            this.solo = true;
-            getGamePlayer().sendMessage("§7Vous êtes enfin libéré de l'emprise de§c Muzan§7 vous obtenez l'effet§9 Résistance I§c permanent§7 ainsi que§c 3❤ permanents§7",
-                    "§7Votre§c Tambour§7 à maintenant§c 50%§7 de§c chance§7 de retourner tout les joueurs autours de vous (§c30 blocs§7)");
-            givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.PERMANENT);
-            setMaxHealth(getMaxHealth()+6.0);
-            final Player owner = Bukkit.getPlayer(getPlayer());
-            if (owner != null) {
-                owner.setMaxHealth(getMaxHealth());
-                owner.setHealth(owner.getHealth()+6.0);
-            }
-            setTeam(TeamList.Solo);
+            procSolo();
         }
+    }
+    private void procSolo() {
+        this.solo = true;
+        getGamePlayer().sendMessage("§7Vous êtes enfin libéré de l'emprise de§c Muzan§7 vous obtenez l'effet§9 Résistance I§c permanent§7 ainsi que§c 3❤ permanents§7",
+                "§7Votre§c Tambour§7 à maintenant§c 50%§7 de§c chance§7 de retourner tout les joueurs autours de vous (§c30 blocs§7)");
+        Bukkit.getScheduler().runTask(Main.getInstance(), () -> givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.PERMANENT));
+        setMaxHealth(getMaxHealth()+6.0);
+        final Player owner = Bukkit.getPlayer(getPlayer());
+        if (owner != null) {
+            owner.setMaxHealth(getMaxHealth());
+            owner.setHealth(owner.getHealth()+6.0);
+        }
+        setTeam(TeamList.Solo);
     }
 
     private static class TambourPower extends ItemPower {
 
         protected TambourPower(@NonNull KyogaiDemon role) {
             super("Tambour", new Cooldown(30), new ItemBuilder(Material.STICK).setName("§cTambour"), role,
-                    "§7Vous permet de retourner la personne visée"+(role.solo ? ", de plus vous avez§c 50%§7 de§c chance§7 de retourner également toute les personnes autours de vous dans un§c rayon§" +
-                            "7 de§c 30 blocs" : ""));
+                    "§7Vous permet de retourner la personne visée");
         }
 
         @Override
