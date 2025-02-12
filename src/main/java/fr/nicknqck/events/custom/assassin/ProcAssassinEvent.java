@@ -2,6 +2,7 @@ package fr.nicknqck.events.custom.assassin;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import lombok.Getter;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -13,10 +14,12 @@ public class ProcAssassinEvent extends Event {
 
     private final GameState gameState;
     private final GamePlayer assassin;
+    private final DemonsRoles role;
 
-    public ProcAssassinEvent(GameState gameState, GamePlayer assassin) {
+    public ProcAssassinEvent(GameState gameState, GamePlayer assassin, DemonsRoles role) {
         this.gameState = gameState;
         this.assassin = assassin;
+        this.role = role;
     }
 
     public static HandlerList getHandlerList() {
