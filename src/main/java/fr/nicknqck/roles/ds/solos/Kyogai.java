@@ -153,7 +153,7 @@ public class Kyogai extends DemonsRoles {
 	}
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (camp == Camp.Démon) {	
+		if (camp == Camp.Démon) {
 				if (item.isSimilar(Items.getTambour())) {
 					if (cooldowntambour <= 0) {
 							Player t = getRightClicked(30, 1);
