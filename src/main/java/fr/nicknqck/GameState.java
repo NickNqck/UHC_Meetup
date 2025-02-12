@@ -502,7 +502,7 @@ public class GameState{
 			role = new Shinjuro(player);
 			break;			
 		case Kyogai:
-			role = new Kyogai(player);
+			role = new KyogaiDemon(player);
 			break;
 		case Kanae:
 			role = new KanaeV2(player);

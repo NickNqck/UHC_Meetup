@@ -19,6 +19,8 @@ import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -81,7 +83,17 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
 
     @Override
     public TextComponent getComponent() {
-        return new AutomaticDesc(this).addEffects(getEffects()).setPowers(getPowers()).getText();
+        return new AutomaticDesc(this)
+                .addEffects(getEffects())
+                .setPowers(getPowers())
+                .addParticularites(
+                        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                                new TextComponent("§7Si vous arrivez à tué§a Tanjiro§7,§a Inosuke§7 ou§a Zen'Itsu§7 vous obtiendrez l'item§6 Percussion Rapide\n\n" +
+                                        "§7Il vous permettra d'activer un§c passif§7 pour une durée de§c 10 secondes\n" +
+                                        "§7Ce qui vous permettra de retourner n'importe quel joueur que vous§c frapperez\n\n" +
+                                        "§7(1x/10m)")
+                        })
+                ).getText();
     }
     @EventHandler
     private void UHCKillEvent(final UHCPlayerKillEvent event) {

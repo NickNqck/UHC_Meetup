@@ -131,7 +131,7 @@ public class RoleManager {
         //Register Solo
         registerRole(Jigoro.class);
         registerRole(JigoroV2.class);
-        registerRole(Kyogai.class);
+        registerRole(KyogaiDemon.class);
         registerRole(KyogaiV2.class);
         registerRole(Shinjuro.class);
         registerRole(ShinjuroV2.class);
