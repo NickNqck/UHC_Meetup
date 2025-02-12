@@ -27,7 +27,6 @@ public class EventUtils implements Listener{
 
     public static void unregisterEvents(Listener listener) {
         HandlerList.unregisterAll(listener);
-        toUnregister.remove(listener);
         System.out.println("Unregister event "+listener.getClass().getName().toLowerCase());
     }
     public static void registerRoleEvent(Listener listener) {
