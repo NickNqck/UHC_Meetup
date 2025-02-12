@@ -75,6 +75,7 @@ public class AssassinManagerV2 implements Listener {
     }
     @EventHandler
     private void ProcAssassinEvent(@NonNull final ProcAssassinEvent event) {
+        event.getRole().setSuffixString(event.getRole().getSuffixString()+"§7 (§cAssassin§7)§r");
         EventUtils.unregisterEvents(this);
     }
     @EventHandler
@@ -120,7 +121,7 @@ public class AssassinManagerV2 implements Listener {
                     owner.sendTitle("§c§lVous êtes l'§4§lAssassin", "§cVous obtenez donc 2❤ supplémentaires !");
                 }
                 this.futureAssassin.sendMessage("Vous êtes l'assassin vous possédez désormais§c 2❤ supplémentaire de manière permanente, faite attention au rôle de§a Tanjiro§f qui obtiendra un bonus s'il vous tue.");
-                Bukkit.getPluginManager().callEvent(new ProcAssassinEvent(this.gameState, this.futureAssassin));
+                Bukkit.getPluginManager().callEvent(new ProcAssassinEvent(this.gameState, this.futureAssassin, role));
                 cancel();
                 return;
             }
