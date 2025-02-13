@@ -216,7 +216,7 @@ public class Muzan extends DemonsRoles {
                 this.gameState = gameState;
                 this.roleInfecteur = roleInfecteur;
                 this.roleTarget = roleTarget;
-				this.timeRemaining = 60;
+				this.timeRemaining = Main.getInstance().getGameConfig().getInfectionTime();
             }
 
             @Override
