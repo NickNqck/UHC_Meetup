@@ -199,6 +199,8 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
                 if (event.isPatch())return;
                 final Player player = Bukkit.getPlayer(event.getVictim().getUuid());
                 if (player != null) {
+                    final int random = Main.RANDOM.nextInt(101);
+                    if (random > 25)return;
                     Loc.inverserDirectionJoueur(player);
                     event.getDamager().sendMessage("§7Vous avez retourné§c "+player.getDisplayName());
                     player.sendMessage("§cKyogai§7 vous a retourné");
