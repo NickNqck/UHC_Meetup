@@ -32,7 +32,8 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n§7Role: "+role.getTeam().getColor()+role.getName()));
     }
     private void addObjectif() {
-        text.addExtra(new TextComponent("\n§7Votre objectif est de gagner avec le camp: "+role.getTeam().getColor()+role.getTeam().name()));
+        final TeamList team = role.getTeam();
+        text.addExtra(new TextComponent("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
     }
     public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+getWhenString(when)));
