@@ -1,14 +1,20 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import java.util.UUID;
+import java.util.*;
 
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.demons.Muzan;
 import fr.nicknqck.roles.ds.slayers.pillier.MuichiroV2;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -16,7 +22,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.Main;
 import fr.nicknqck.items.BulleGyokko;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -32,7 +37,7 @@ public class Gyokko extends DemonsRoles {
 		this.setResi(20);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Gyokko;
 	}
 
@@ -43,7 +48,6 @@ public class Gyokko extends DemonsRoles {
 
 	@Override
 	public String[] Desc() {
-		KnowRole(owner, Roles.Muzan, 1);
 		return AllDesc.Gyokko;
 	}
 	@Override
@@ -53,8 +57,7 @@ public class Gyokko extends DemonsRoles {
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				Items.getPouvoirSanginaire(),
-				Items.getFormeDémoniaque(),
+				Items.getFormeDemoniaque(),
 				BulleGyokko.getBulleGyokko()
 		};
 	}
@@ -64,7 +67,6 @@ public class Gyokko extends DemonsRoles {
 		return "Gyokko";
 	}
 
-	private int pouvoircooldown = 0;
 	private int formecooldown = 0;
 	private boolean formedemoniaque = false;
 	private boolean killmuichiro = false;
@@ -72,22 +74,16 @@ public class Gyokko extends DemonsRoles {
 	@Override
 	public void resetCooldown() {
 		bullecooldown = 0;
-		pouvoircooldown = 0;
 	}
 	@Override
 	public void Update(GameState gameState) {
-		if (owner.getItemInHand().isSimilar(Items.getPouvoirSanginaire())) {
-			sendActionBarCooldown(owner, pouvoircooldown);
-		}
-		if (owner.getItemInHand().isSimilar(Items.getFormeDémoniaque())) {
+		if (owner.getItemInHand().isSimilar(Items.getFormeDemoniaque())) {
 			sendCustomActionBar(owner, "Temp avant perte de "+AllDesc.coeur+": "+StringUtils.secondsTowardsBeautiful(formecooldown));
 		}
 		if (owner.getItemInHand().isSimilar(BulleGyokko.getBulleGyokko())) {
 			sendActionBarCooldown(owner, bullecooldown);
 		}
 		if (bullecooldown > 0)bullecooldown-=1;
-		if (gameState.nightTime) {owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);}
-		if (pouvoircooldown >= 1) {pouvoircooldown--;}
 		if (formedemoniaque) {
 			if (formecooldown == 0) {
 				formecooldown = 60;
@@ -117,7 +113,7 @@ public class Gyokko extends DemonsRoles {
 
 	@Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (item.isSimilar(Items.getFormeDémoniaque())) {
+		if (item.isSimilar(Items.getFormeDemoniaque())) {
 			if (!formedemoniaque) {
 				if (formecooldown == 0) {
 					formecooldown = 60;
@@ -132,19 +128,6 @@ public class Gyokko extends DemonsRoles {
 				owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 				owner.getInventory().setChestplate(Items.getdiamondchestplate());
 			}				
-		}
-		if (item.isSimilar(Items.getPouvoirSanginaire())) {
-			if (pouvoircooldown <= 0) {
-				setInvincible(true);
-				Location ploc = owner.getLocation();
-				Location pot = new Location(Main.getInstance().getWorldManager().getGameWorld(), ploc.getX() + RANDOM.nextInt(15), ploc.getY(), ploc.getZ() + RANDOM.nextInt(15));
-				System.out.println(pot);
-				owner.teleport(pot);
-				setInvincible(false);
-				pouvoircooldown = 120;
-			}  else {
-				sendCooldown(owner, pouvoircooldown);
-			}
 		}
 		return super.ItemUse(item, gameState);
 	}
@@ -170,5 +153,63 @@ public class Gyokko extends DemonsRoles {
 		}
 		
 		super.PlayerKilled(killer, victim, gameState);
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.NIGHT);
+		addPower(new PotItemPower(this), true);
+		addKnowedRole(Muzan.class);
+	}
+
+	private static class PotItemPower extends ItemPower {
+
+		private final List<Location> locations;
+
+		protected PotItemPower(@NonNull RoleBase role) {
+			super("Pot de téléportation", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cPot de téléportation"), role,
+					"§7Vous permet de poser jusqu'à§c 3 pots§7 (§cShift§7 +§c Clique§7) et vous permet de vous y téléportez à l'un d'entre eux de manière§c aléatoire");
+			this.locations = new ArrayList<>();
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> map) {
+			if (!getInteractType().equals(InteractType.INTERACT))return false;
+			if (!player.getWorld().getName().equals("arena")) {
+				player.sendMessage("§cImpossible d'utiliser votre téléportation, vous n'êtes pas dans le bon monde");
+				return false;
+			}
+			if (player.isSneaking()) {
+				if (locations.size() == 3) {
+					teleportRandomLocations(player);
+					return true;
+				} else {
+					if (locations.isEmpty()) {
+						locations.add(player.getLocation());
+					} else if (locations.size() == 1) {
+						locations.add(player.getLocation());
+					} else if (locations.size() == 2) {
+						locations.add(player.getLocation());
+					}
+					player.sendMessage("§cVous avez bien enregistré cette position pour plus tard");
+                }
+			} else {
+				if (locations.isEmpty()) {
+					player.sendMessage("§cIl faut d'abord poser un pot");
+					return false;
+				} else {
+					teleportRandomLocations(player);
+					return true;
+				}
+			}
+			return false;
+		}
+		private void teleportRandomLocations(final Player player) {
+			final List<Location> locs = new LinkedList<>(this.locations);
+			Collections.shuffle(locs, RANDOM);
+			final Location finalLoc = locs.get(0);
+			player.teleport(finalLoc);
+			player.sendMessage("§cVous vous êtes téléporter avec succès.");
+		}
 	}
 }

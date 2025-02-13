@@ -213,7 +213,7 @@ public abstract class Items {
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
-	  public static ItemStack getFormeDémoniaque() {
+	  public static ItemStack getFormeDemoniaque() {
 		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 		  ItemMeta meta = stack.getItemMeta();
 		  meta.setDisplayName(ChatColor.GOLD+"Forme Démoniaque");
