@@ -412,7 +412,7 @@ public class Inventories {
                             "§fTemp avant infection: ",
                             "§a+5s§f (Clique gauche)",
                             "§c-5s§f (Clique droit)",
-                            "§fTemp actuelle:§b "+StringUtils.secondsTowardsBeautiful(GameState.getInstance().timewaitingbeinfected)
+                            "§fTemp actuelle:§b "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getInfectionTime())
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(gameState.isTNTGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
                     inv.addItem(new ItemBuilder(Material.INK_SACK).setName("§fLame").setLore("§7Si activé, donne une§a lame§7 à l'annonce des rôles à tout les joueurs de la partie","",Main.getInstance().getGameConfig().isGiveLame() ? "§aActivé" : "§cDésactivé").toItemStack());

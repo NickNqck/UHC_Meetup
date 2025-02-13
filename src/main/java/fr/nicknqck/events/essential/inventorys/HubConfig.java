@@ -370,13 +370,9 @@ public class HubConfig implements Listener {
                         }
                         if (item.getItemMeta().getDisplayName().equals("§cInfection")) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                if (gameState.timewaitingbeinfected < 60*20) {
-                                    gameState.timewaitingbeinfected+=5;
-                                }
+                                Main.getInstance().getGameConfig().setInfectionTime(Math.min(60*20, Main.getInstance().getGameConfig().getInfectionTime()+10));
                             }else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                if (gameState.timewaitingbeinfected > 5) {
-                                    gameState.timewaitingbeinfected-=5;
-                                }
+                                Main.getInstance().getGameConfig().setInfectionTime(Math.max(10, Main.getInstance().getGameConfig().getInfectionTime()-10));
                             }
                         }
                     }

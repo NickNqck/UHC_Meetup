@@ -27,6 +27,7 @@ public class GameConfig {
     private int critPercent = 20;
     private boolean giveLame = false;
     private int timingAssassin = 30;
+    private int infectionTime = 60;
 
     public GameConfig() {
         instance = this;
