@@ -336,7 +336,6 @@ public class GameState{
 	public int xpcharbon = 0;
 	public int xpdiams =0;
 	public Player infected = null;
-	public int timewaitingbeinfected = 60;
 	public Player infecteur = null;
 	public boolean roletab = false;
 	@Getter

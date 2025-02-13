@@ -4,7 +4,6 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.bijus.BijuListener;
 import fr.nicknqck.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
-import fr.nicknqck.items.InfectItem;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
@@ -70,7 +69,6 @@ public class GameListener implements Listener {
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().onSecond(gameState);
 			}
-			InfectItem.getInstance().onSecond();
 			BijuListener.getInstance().runnableTask(gameState);
 			TitanListener.getInstance().onSecond();
 
