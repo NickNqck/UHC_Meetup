@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import java.util.*;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -12,11 +13,14 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -26,7 +30,7 @@ import fr.nicknqck.items.BulleGyokko;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.utils.StringUtils;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import static fr.nicknqck.Main.RANDOM;
 
@@ -57,7 +61,6 @@ public class Gyokko extends DemonsRoles {
 	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				Items.getFormeDemoniaque(),
 				BulleGyokko.getBulleGyokko()
 		};
 	}
@@ -67,8 +70,6 @@ public class Gyokko extends DemonsRoles {
 		return "Gyokko";
 	}
 
-	private int formecooldown = 0;
-	private boolean formedemoniaque = false;
 	private boolean killmuichiro = false;
 	public int bullecooldown = 0;
 	@Override
@@ -77,33 +78,15 @@ public class Gyokko extends DemonsRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		if (owner.getItemInHand().isSimilar(Items.getFormeDemoniaque())) {
-			sendCustomActionBar(owner, "Temp avant perte de "+AllDesc.coeur+": "+StringUtils.secondsTowardsBeautiful(formecooldown));
-		}
 		if (owner.getItemInHand().isSimilar(BulleGyokko.getBulleGyokko())) {
 			sendActionBarCooldown(owner, bullecooldown);
 		}
 		if (bullecooldown > 0)bullecooldown-=1;
-		if (formedemoniaque) {
-			if (formecooldown == 0) {
-				formecooldown = 60;
-				setMaxHealth(getMaxHealth() - 2.0);
-				owner.sendMessage("Vous venez de perdre 1"+AllDesc.coeur+" permanent suite à votre Forme Démoniaque, ce qui vous fait donc tomber à: "+ChatColor.GOLD+ (getMaxHealth() / 2) +" Coeur");
-			}
-			if (formecooldown >= 1) {
-				formecooldown--;
-			}
-		}
 		if (killmuichiro) {
 			if (!gameState.nightTime) {
 				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
 			}
 		}
-	if (owner.getMaxHealth() == 2.0 && formedemoniaque) {
-		owner.sendMessage("Désactivation de votre Forme Démoniaque suite à votre faible santé");
-		formedemoniaque = false;
-	}
-		
 		super.Update(gameState);
 	}
 	@Override
@@ -111,26 +94,6 @@ public class Gyokko extends DemonsRoles {
 		giveItem(owner, false, getItems());
 	}
 
-	@Override
-	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (item.isSimilar(Items.getFormeDemoniaque())) {
-			if (!formedemoniaque) {
-				if (formecooldown == 0) {
-					formecooldown = 60;
-				}
-				formedemoniaque = true;
-				owner.sendMessage("Vous venez d'activer votre Forme Démoniaque");
-				owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
-				owner.getInventory().setChestplate(Items.getGyokkoPlastron());
-			} else {
-				formedemoniaque = false;
-				owner.sendMessage(ChatColor.WHITE+"Vous venez de désactivé votre Forme Démoniaque");
-				owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-				owner.getInventory().setChestplate(Items.getdiamondchestplate());
-			}				
-		}
-		return super.ItemUse(item, gameState);
-	}
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim == owner) {
@@ -159,6 +122,7 @@ public class Gyokko extends DemonsRoles {
 	public void RoleGiven(GameState gameState) {
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.NIGHT);
 		addPower(new PotItemPower(this), true);
+		addPower(new FormeDemoniaquePower(this), true);
 		addKnowedRole(Muzan.class);
 	}
 
@@ -168,7 +132,8 @@ public class Gyokko extends DemonsRoles {
 
 		protected PotItemPower(@NonNull RoleBase role) {
 			super("Pot de téléportation", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cPot de téléportation"), role,
-					"§7Vous permet de poser jusqu'à§c 3 pots§7 (§cShift§7 +§c Clique§7) et vous permet de vous y téléportez à l'un d'entre eux de manière§c aléatoire");
+					"§7Vous permet de poser jusqu'à§c 3 pots§7 (§cShift§7 +§c Clique§7)",
+					"§7Vous pouvez vous y téléportez à l'un d'entre eux de manière§c aléatoire§7 via un§c Clique droit");
 			this.locations = new ArrayList<>();
 		}
 
@@ -220,6 +185,88 @@ public class Gyokko extends DemonsRoles {
 			final Location finalLoc = locs.get(0);
 			player.teleport(finalLoc);
 			player.sendMessage("§cVous vous êtes téléporter avec succès.");
+		}
+	}
+	private static class FormeDemoniaquePower extends ItemPower {
+
+		private boolean activated = false;
+		private int timeLeft = 60;
+
+		protected FormeDemoniaquePower(@NonNull RoleBase role) {
+			super("Forme Démoniaque", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cForme Démoniaque"), role);
+			new FormeRunnable(this, getRole());
+			setShowCdInDesc(false);
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> map) {
+			if (this.activated) {
+				getRole().getGamePlayer().getActionBarManager().removeInActionBar("gyokko.forme");
+				this.activated = false;
+				player.sendMessage("Désactivation de votre§c Forme Démoniaque");
+				if (player.getInventory().getChestplate() != null) {
+					final ItemStack item = player.getInventory().getChestplate();
+					final ItemMeta meta = item.getItemMeta();
+					if (meta.hasEnchant(Enchantment.THORNS)) {
+						meta.removeEnchant(Enchantment.THORNS);
+					}
+					item.setItemMeta(meta);
+				}
+				
+			} else {
+				if (player.getMaxHealth() <= 8.0) {
+					player.sendMessage("§cVous n'avez pas asser de vie pour utiliser ce pouvoir");
+					return false;
+				}
+				getRole().getGamePlayer().getActionBarManager().addToActionBar("gyokko.forme", "§bTemp avant perte de§c coeur§b: §c"+timeLeft+"s");
+				this.activated = true;
+				player.sendMessage("Activation de votre§c Forme Démoniaque");
+				if (player.getInventory().getChestplate() != null) {
+					final ItemStack item = player.getInventory().getChestplate();
+					final ItemMeta meta = item.getItemMeta();
+					meta.addEnchant(Enchantment.THORNS, 3, true);
+					item.setItemMeta(meta);
+				}
+			}
+			return true;
+		}
+		private static class FormeRunnable extends BukkitRunnable {
+
+			private final FormeDemoniaquePower power;
+			private final RoleBase role;
+
+            private FormeRunnable(final FormeDemoniaquePower power, final RoleBase role) {
+				this.power = power;
+                this.role = role;
+				runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+
+            @Override
+			public void run() {
+				if (!role.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				if (this.power.timeLeft <= 0) {
+					this.role.setMaxHealth(this.role.getMaxHealth()-2.0);
+					final Player owner = Bukkit.getPlayer(role.getPlayer());
+					if (owner != null) {
+						owner.setMaxHealth(this.role.getMaxHealth());
+					}
+					this.power.timeLeft = 60;
+				}
+				if (this.role.getMaxHealth() <= 8.0) {
+					cancel();
+					role.getGamePlayer().getActionBarManager().removeInActionBar("gyokko.forme");
+					role.getGamePlayer().sendMessage("§cVous n'avez plus asser de vie pour utiliser votre forme démoniaque...");
+					return;
+				}
+				if (this.power.activated) {
+					this.power.timeLeft--;
+					Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.role.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.NOW));
+				}
+				role.getGamePlayer().getActionBarManager().updateActionBar("gyokko.forme", "§bTemp avant perte de§c coeur§b: §c"+this.power.timeLeft+"s");
+			}
 		}
 	}
 }
