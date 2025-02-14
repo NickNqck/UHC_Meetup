@@ -184,14 +184,14 @@ public class Gyokko extends DemonsRoles {
 					teleportRandomLocations(player);
 					return true;
 				} else {
-					if (locations.isEmpty()) {
-						locations.add(player.getLocation());
-					} else if (locations.size() == 1) {
-						locations.add(player.getLocation());
-					} else if (locations.size() == 2) {
-						locations.add(player.getLocation());
+					if (locations.size() < 3) {
+						if (!registerLocation(player.getLocation())) {
+							player.sendMessage("§cVous n'avez pas pus poser de pot ici, peut-être que l'un de vos pots est trop proche ?");
+							return false;
+						}
 					}
-					player.sendMessage("§cVous avez bien enregistré cette position pour plus tard");
+					player.sendMessage("§cVous avez bien enregistré cette position pour plus tard§7 (§b"+this.locations.size()+"/3§7)");
+					return false;
                 }
 			} else {
 				if (locations.isEmpty()) {
@@ -202,8 +202,18 @@ public class Gyokko extends DemonsRoles {
 					return true;
 				}
 			}
-			return false;
-		}
+        }
+		private boolean registerLocation(final Location location) {
+            if (!this.locations.isEmpty()) {
+                for (final Location loc : this.locations) {
+                    if (loc.distance(location) <= 10) {
+                        return false;
+                    }
+                }
+            }
+            this.locations.add(location);
+            return true;
+        }
 		private void teleportRandomLocations(final Player player) {
 			final List<Location> locs = new LinkedList<>(this.locations);
 			Collections.shuffle(locs, RANDOM);
