@@ -163,7 +163,6 @@ public class BlockManager implements Listener{
 				}
 			}
         }
-		System.out.println(e.isCancelled());
 	}
 	@EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
