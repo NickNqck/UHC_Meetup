@@ -238,7 +238,8 @@ public class GamePlayer {
 				if (player == null)return;
 				final StringBuilder string = new StringBuilder();
 				int i = 0;
-				for (final String value : this.actionBarManager.actionBars.values()) {
+				final List<String> strings = new LinkedList<>(this.actionBarManager.actionBars.values());
+				for (final String value : strings) {
 					i++;
 					if (value.isEmpty())continue;
 					string.append(value);
