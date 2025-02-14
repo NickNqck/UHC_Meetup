@@ -126,7 +126,7 @@ public abstract class ItemPower extends Power{
             this.gameState = GameState.getInstance();
             this.item = itemPower.getItem();
             this.itemPower = itemPower;
-            System.out.println("Started "+this+" for "+user);
+            System.out.println("Started "+this+" ("+itemPower.getName()+") for "+user);
         }
 
         @Override
