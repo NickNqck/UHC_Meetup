@@ -191,7 +191,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
             player.sendMessage("§7Vous avez activé vos§6 Percussion Rapide");
             EventUtils.registerRoleEvent(this);
             new PercussionRunnable(this, getRole().getGameState());
-            return false;
+            return true;
         }
         @EventHandler
         private void PlayerBattleEvent(final UHCPlayerBattleEvent event) {
