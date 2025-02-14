@@ -12,11 +12,12 @@ import fr.nicknqck.roles.ds.slayers.pillier.MuichiroV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +27,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.items.BulleGyokko;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -60,9 +60,7 @@ public class Gyokko extends DemonsRoles {
 	}
 	@Override
 	public ItemStack[] getItems() {
-		return new ItemStack[] {
-				BulleGyokko.getBulleGyokko()
-		};
+		return new ItemStack[0];
 	}
 
 	@Override
@@ -70,45 +68,24 @@ public class Gyokko extends DemonsRoles {
 		return "Gyokko";
 	}
 
-	private boolean killmuichiro = false;
-	public int bullecooldown = 0;
-	@Override
-	public void resetCooldown() {
-		bullecooldown = 0;
-	}
-	@Override
-	public void Update(GameState gameState) {
-		if (owner.getItemInHand().isSimilar(BulleGyokko.getBulleGyokko())) {
-			sendActionBarCooldown(owner, bullecooldown);
-		}
-		if (bullecooldown > 0)bullecooldown-=1;
-		if (killmuichiro) {
-			if (!gameState.nightTime) {
-				owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
-			}
-		}
-		super.Update(gameState);
-	}
-	@Override
-	public void GiveItems() {
-		giveItem(owner, false, getItems());
-	}
+    @Override
+	public void resetCooldown() {}
 
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (victim == owner) {
+		if (victim.getUniqueId() == getPlayer()) {
 			owner.getInventory().remove(Items.getGyokkoPlastron());
 			owner.getInventory().remove(Items.getGyokkoBoots());
 		}
-		if (killer == owner) {
-			if (victim != owner){
+		if (killer.getUniqueId() == getPlayer()) {
+			if (victim.getUniqueId() != killer.getUniqueId()){
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (!gameState.hasRoleNull(victim.getUniqueId())) {
 						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role instanceof MuichiroV2) {
-							killmuichiro = true;
-							giveItem(owner, false, Items.getGyokkoBoots());
-							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+"vous obtenez donc "+ChatColor.RED+"force 1 le jour"+ChatColor.GRAY+", ainsi que des bottes en diamant enchantée avec: "+ChatColor.GOLD+"Depht Strider 2");
+                            giveItem(killer, false, Items.getGyokkoBoots());
+							givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.DAY);
+							killer.sendMessage("§7Vous venez de tuez§6 "+role.getRoles() +"§7vous obtenez donc§c force 1 le§e jour§7, ainsi que des bottes en diamant enchantée avec:§6 Depht Strider 2");
 						}
 					}
 				}
@@ -123,6 +100,7 @@ public class Gyokko extends DemonsRoles {
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.NIGHT);
 		addPower(new PotItemPower(this), true);
 		addPower(new FormeDemoniaquePower(this), true);
+		addPower(new BulleItemPower(this), true);
 		addKnowedRole(Muzan.class);
 	}
 
@@ -266,6 +244,109 @@ public class Gyokko extends DemonsRoles {
 					Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.role.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.NOW));
 				}
 				role.getGamePlayer().getActionBarManager().updateActionBar("gyokko.forme", "§bTemp avant perte de§c coeur§b: §c"+this.power.timeLeft+"s");
+			}
+		}
+	}
+	private static class BulleItemPower extends ItemPower {
+
+		protected BulleItemPower(@NonNull RoleBase role) {
+			super("Bulle d'eau", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bBulle d'eau"), role);
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> map) {
+			if (getInteractType().equals(InteractType.INTERACT)) {
+				final Player target = RayTrace.getTargetPlayer(player, 20.0, null);
+				if (target == null) {
+					player.sendMessage("§cIl faut viser un joueur !");
+					return false;
+				}
+				final Location loc = player.getLocation();
+				final Map<Block, Material> iron = new HashMap<>();
+				final Map<Block, Material> water = new HashMap<>();
+				getRole().givePotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 20*65, 1, false, false), EffectWhen.NOW);
+				for (final Block block : getBlocks(loc, 5, true)) {
+					iron.put(block, block.getType());
+					block.setType(Material.IRON_BLOCK);
+				}
+				for (final Block waters : getBlocks(loc, 4, false)) {
+					water.put(waters, waters.getType());
+					waters.setType(Material.WATER);
+				}
+				loc.add(2.0, 0, 0);
+				target.teleport(loc);
+				loc.add(-4.0, 0, 0);
+				player.teleport(loc);
+				new setOldBlocksRunnable(getRole().getGameState(), 60, iron);
+				new setOldBlocksRunnable(getRole().getGameState(), 59, water);
+				return true;
+			}
+			return false;
+		}
+		private List<Block> getBlocks(Location center, int radius, boolean hollow) {
+			List<Location> locs = circle(center, radius, hollow);
+			List<Block> blocks = new ArrayList<>();
+
+			for (Location loc : locs) {
+				blocks.add(loc.getBlock());
+			}
+
+			return blocks;
+		}
+		private List<Location> circle(final Location loc,final int radius,final boolean hollow) {
+			List<Location> circleblocks = new ArrayList<>();
+			int cx = loc.getBlockX();
+			int cy = loc.getBlockY();
+			int cz = loc.getBlockZ();
+
+			for (int x = cx - radius; x <= cx + radius; x++) {
+				for (int z = cz - radius; z <= cz + radius; z++) {
+					for (int y = (cy - radius); y < (cy
+							+ radius); y++) {
+						double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z)
+								+ ((cy - y) * (cy - y));
+
+						if (dist < radius * radius
+								&& !(hollow && dist < (radius - 1) * (radius - 1))) {
+							Location l = new Location(loc.getWorld(), x, y,
+									z);
+							circleblocks.add(l);
+						}
+					}
+				}
+			}
+
+			return circleblocks;
+		}
+		private static class setOldBlocksRunnable extends BukkitRunnable {
+
+			private final GameState gameState;
+			private final Map<Block, Material> toRemove;
+			private int timeRemaining;
+
+            private setOldBlocksRunnable(@NonNull final GameState gameState, final int timeToGo, @NonNull final Map<Block, Material> toRemove) {
+                this.gameState = gameState;
+				this.toRemove = toRemove;
+				this.timeRemaining = timeToGo;
+				runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+
+            @Override
+			public void run() {
+				if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+					remakeTerrain();
+					cancel();
+					return;
+				}
+				if (timeRemaining <= 0) {
+					remakeTerrain();
+					cancel();
+					return;
+				}
+				timeRemaining--;
+			}
+			private void remakeTerrain() {
+				Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.toRemove.keySet().forEach(block -> block.setType(this.toRemove.get(block))));
 			}
 		}
 	}
