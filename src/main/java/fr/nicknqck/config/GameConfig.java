@@ -28,6 +28,7 @@ public class GameConfig {
     private boolean giveLame = false;
     private int timingAssassin = 30;
     private int infectionTime = 60;
+    private int groupe = 5;
 
     public GameConfig() {
         instance = this;
