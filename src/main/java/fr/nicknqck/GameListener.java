@@ -119,22 +119,6 @@ public class GameListener implements Listener {
 					if (p == null)continue;
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
 				}
-				if (gameState.infected != null && gameState.infected.getUniqueId() == u) {
-					if (gameState.nightTime) {
-						Player p = Bukkit.getPlayer(u);
-						if (p == null)continue;
-						if (!gameState.hasRoleNull(p.getUniqueId())){
-							gameState.getGamePlayer().get(p.getUniqueId()).getRole().OLDgivePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
-						}
-						if (!infectedgiveforce) {
-							infectedgiveforce = true;
-						}
-					} else {
-						if (infectedgiveforce) {
-							infectedgiveforce = false;
-						}
-					}
-				}
 			}
 			AntiLopsa.startWorldBorderChecker();
 			if (Hastey_Boys.isHasteyBoys()) {

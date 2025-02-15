@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -149,17 +150,14 @@ public class Muzan extends DemonsRoles {
 						return;
 					}
 					if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player.getUniqueId())) {
-						if (gameState.infected == null && gameState.infecteur == null) {
-							final GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
-							if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() == TeamList.Demon || gamePlayer.getRole() instanceof NezukoV2) {
-								getGamePlayer().sendMessage("Vous avez donné le Pouvoir de l'infection à§c "+player.getName());
-								player.sendMessage("Le grand§c Muzan§r vous à donné le pouvoir de l'infection, faite s'en bonne usage...");
-								gamePlayer.getRole().addPower(new InfectPower((DemonsRoles) gamePlayer.getRole()));
-							} else {
-								owner.sendMessage("§c"+args[1]+"§7 ne peut pas recevoir l'§cinfection");
-							}
+						final GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
+						if (gamePlayer.getRole() instanceof DemonsSlayersRoles && gamePlayer.getRole().getOriginTeam() == TeamList.Demon
+								|| gamePlayer.getRole() instanceof NezukoV2) {
+							getGamePlayer().sendMessage("Vous avez donné le Pouvoir de l'infection à§c "+player.getName());
+							player.sendMessage("Le grand§c Muzan§r vous à donné le pouvoir de l'infection, faite s'en bonne usage...");
+							gamePlayer.getRole().addPower(new InfectPower((DemonsRoles) gamePlayer.getRole()));
 						} else {
-							owner.sendMessage("Il y à déjà quelqu'un qui possède le pouvoir de l'§cinfection§r...");
+							owner.sendMessage("§c"+args[1]+"§7 ne peut pas recevoir l'§cinfection");
 						}
 					} else {
 						owner.sendMessage("La personne visée n'a pas de rôle ou n'est pas en jeu");
@@ -258,8 +256,9 @@ public class Muzan extends DemonsRoles {
 					gameState.getGamePlayer().get(target.getUniqueId()).getRole().setTeam(TeamList.Demon);
 				}
 				target.resetTitle();
-				target.sendMessage("Voici l'identité de votre§c infecteur§f:§c§l "+gameState.infecteur.getName());
+				target.sendMessage("Voici l'identité de votre§c infecteur§f:§c§l "+this.roleInfecteur.getGamePlayer().getPlayerName());
 				target.sendTitle("§cVous avez été infecté", "Vous gagnez maintenant avec les Démons");
+				this.roleTarget.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
 			}
 		}
 	}
