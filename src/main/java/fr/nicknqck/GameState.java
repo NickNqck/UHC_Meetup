@@ -335,8 +335,6 @@ public class GameState{
 	public int xpor = 0;
 	public int xpcharbon = 0;
 	public int xpdiams =0;
-	public Player infected = null;
-	public Player infecteur = null;
 	public boolean roletab = false;
 	@Getter
 	private static GameState instance;
