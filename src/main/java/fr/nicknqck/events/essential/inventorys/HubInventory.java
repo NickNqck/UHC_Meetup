@@ -420,11 +420,9 @@ public class HubInventory implements Listener {
                         String name = item.getItemMeta().getDisplayName();
                         if (name.equals("§rCooldown Equipement Tridimentionnel")) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                gameState.TridiCooldown+=1;
+                                Main.getInstance().getGameConfig().setTridiCooldown(Main.getInstance().getGameConfig().getTridiCooldown()-1);
                             }else {
-                                if (gameState.TridiCooldown > 0) {
-                                    gameState.TridiCooldown-=1;
-                                }
+                                Main.getInstance().getGameConfig().setTridiCooldown(Math.max(1, Main.getInstance().getGameConfig().getTridiCooldown()+1));
                             }
                         }
                         if (name.equals("§rEquipement Tridimentionnel")){

@@ -66,7 +66,7 @@ public class Arctridi implements Listener{
                         noFall.add(player);
             			Location initLoc = player.getLocation();
                         player.teleport(arrow.getLocation().add(0, 1, 0).setDirection(finalVelocity));
-                        role.setActualTridiCooldown(gameState.TridiCooldown);
+                        role.setActualTridiCooldown(Main.getInstance().getGameConfig().getTridiCooldown());
                         Location endLoc = player.getLocation();//Like initLoc but after TP
                         double distance = initLoc.distance(endLoc);
                         double gazToRemove = distance/8;
