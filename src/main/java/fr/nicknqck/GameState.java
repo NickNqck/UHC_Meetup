@@ -78,9 +78,6 @@ public class GameState{
 	private boolean roleAttributed = false;
 	@Getter
 	private final Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
-	@Setter
-	@Getter
-	private int groupe = 5;
 	@Getter
 	@Setter
 	private int minTimeSpawnBiju = 90;
@@ -288,7 +285,6 @@ public class GameState{
 			return itemC;
 		}
 	}
-	@NonNull
 	@Getter
 	@Setter
 	private MDJ mdj = MDJ.Aucun;

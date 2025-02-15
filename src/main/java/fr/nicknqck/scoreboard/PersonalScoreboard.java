@@ -85,7 +85,7 @@ public class PersonalScoreboard {
     			}
     		}
     		objectiveSign.setLine(2, premsg+"§fJoueurs:§c "+this.gameState.getInGamePlayers().size());
-    		objectiveSign.setLine(3, premsg+"§fGroupe:§6 "+this.gameState.getGroupe());
+    		objectiveSign.setLine(3, premsg+"§fGroupe:§6 "+Main.getInstance().getGameConfig().getGroupe());
     		objectiveSign.setLine(4, "§a");
     		objectiveSign.setLine(5, premsg+"§fDurée: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getInGameTime()));
     		if (Main.getInstance().getGameConfig().isPvpEnable()) {

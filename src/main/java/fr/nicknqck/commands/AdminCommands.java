@@ -303,7 +303,7 @@ public class AdminCommands implements CommandExecutor{
 										try {
 											int grp = Integer.parseInt(args[1]);
 											if (grp > 0) {
-												gameState.setGroupe(grp);
+												Main.getInstance().getGameConfig().setGroupe(grp);
 												for (UUID u : gameState.getInGamePlayers()) {
 													Player p = Bukkit.getPlayer(u);
 													if (p == null)continue;
