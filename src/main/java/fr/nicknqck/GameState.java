@@ -69,7 +69,6 @@ public class GameState{
 	private int timeProcHokage = 90;
 	@Getter
 	private final List<Roles> deadRoles = new ArrayList<>();
-	public int TridiCooldown = 16;
 	public boolean hasPregen = false;
 	public boolean pregenNakime = false;
 	public boolean gameCanLaunch = false;

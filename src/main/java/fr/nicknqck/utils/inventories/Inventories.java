@@ -447,7 +447,7 @@ public class Inventories {
 
                     inv.setItem(4, GUIItems.getSelectBackMenu());
 
-                    inv.setItem(10, new ItemBuilder(Material.BOW).setName("§rCooldown Equipement Tridimentionnel").setLore("§fCooldownActuel: "+gameState.TridiCooldown).toItemStack());
+                    inv.setItem(10, new ItemBuilder(Material.BOW).setName("§rCooldown Equipement Tridimentionnel").setLore("§fCooldownActuel: "+Main.getInstance().getGameConfig().getTridiCooldown()).toItemStack());
                     if (gameState.rod) {
                         inv.setItem(11, new ItemBuilder(Material.FISHING_ROD).setName("§rEquipement Tridimentionnel").setLore("§fEquipement actuel:§l Rod Tridimentionnelle").toItemStack());
                     }else {

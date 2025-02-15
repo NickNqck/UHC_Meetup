@@ -29,6 +29,7 @@ public class GameConfig {
     private int timingAssassin = 30;
     private int infectionTime = 60;
     private int groupe = 5;
+    private int tridiCooldown = 16;
 
     public GameConfig() {
         instance = this;
