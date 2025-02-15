@@ -344,16 +344,19 @@ public class Ginkaku extends NSRoles {
 
 	private class TargetFallChecker implements Listener {
 		private UUID gTarget;
+		private boolean stun = false;
 		TargetFallChecker(){
 			Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 		}
 		public void starter(UUID uuid){
 			gTarget = uuid;
 			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+				if (stun)return;
 				if (gTarget != null){
 					if (Bukkit.getPlayer(gTarget) != null){
 						if (!gameState.hasRoleNull(gTarget)){
 							gameState.getGamePlayer().get(gTarget).stun(5*20);
+							stun = true;
 						}
 					}
 					gTarget = null;
@@ -365,29 +368,9 @@ public class Ginkaku extends NSRoles {
 			if (gTarget != null && event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && event.getEntity().getUniqueId().equals(gTarget)){
 				event.setDamage(0.0);
 				event.getEntity().setFallDistance(0f);
-				new BukkitRunnable() {
-					private final Location initLoc = event.getEntity().getLocation();
-					private final UUID gT = event.getEntity().getUniqueId();
-					private int time = 100;
-					@Override
-					public void run() {
-						Player p = Bukkit.getPlayer(gT);
-						if (p != null){
-							p.setAllowFlight(true);
-							p.setFlying(true);
-							p.teleport(initLoc);
-							time--;
-							if (time == 0){
-								cancel();
-								owner.sendMessage("§c"+p.getDisplayName()+"§7 peut à nouveau bouger.");
-								p.setFlying(false);
-								p.setAllowFlight(false);
-								p.setFallDistance(0f);
-								gTarget = null;
-							}
-						}
-					}
-				}.runTaskTimer(Main.getInstance(), 0, 1);
+				if (gameState.getGamePlayer().containsKey(event.getEntity().getUniqueId())) {
+					gameState.getGamePlayer().get(gTarget).stun(5*20, true);
+				}
 			}
 		}
 	}
