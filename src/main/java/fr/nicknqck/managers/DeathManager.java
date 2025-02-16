@@ -10,7 +10,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
@@ -102,7 +102,7 @@ public class DeathManager implements Listener {
             }
             if (!gameState.hasRoleNull(killer.getUniqueId())) {
                 RoleBase role = gameState.getGamePlayer().get(killer.getUniqueId()).getRole();
-                if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof NezukoV2) {
+                if (role.getTeam() == TeamList.Demon || role instanceof KaigakuV2 || role instanceof NezukoV2) {
                     onDemonKill(killer.getName());
                 }
             }
@@ -136,7 +136,7 @@ public class DeathManager implements Listener {
                     }
                     if (!gameState.hasRoleNull(((Player) arr.getShooter()).getUniqueId())) {
                         RoleBase role = gameState.getGamePlayer().get(((Player) arr.getShooter()).getUniqueId()).getRole();
-                        if (role.getTeam() == TeamList.Demon || role instanceof Kaigaku || role instanceof NezukoV2) {
+                        if (role.getTeam() == TeamList.Demon || role instanceof KaigakuV2 || role instanceof NezukoV2) {
                             onDemonKill(killer.getName());
                         }
                     }
@@ -235,7 +235,7 @@ public class DeathManager implements Listener {
             if (p == null)continue;
             if (!gameState.hasRoleNull(p.getUniqueId())) {
                 RoleBase role2 = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
-                if (role2.getOriginTeam() == TeamList.Demon || role2 instanceof Kaigaku) {
+                if (role2.getOriginTeam() == TeamList.Demon || role2 instanceof KaigakuV2) {
                     demons.add(u);
                     p.sendMessage("§cLe joueur§4 "+killerName+"§c à tué quelqu'un....");
                 }
