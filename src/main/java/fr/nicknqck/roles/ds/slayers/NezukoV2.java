@@ -95,7 +95,8 @@ public class NezukoV2 extends DemonsRoles {
     private static class SangPower extends ItemPower implements Listener {
 
         protected SangPower(@NonNull RoleBase role) {
-            super("§cSang Démoniaque", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§cSang Démoniaque"), role);
+            super("§cSang Démoniaque", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§cSang Démoniaque"), role,
+                    "§7Vous permet de mettre en §6feu§7 toute les personnes que vous§c taperez§7 dans les §c30§7 prochaines§c secondes");
         }
 
         @Override
@@ -133,18 +134,7 @@ public class NezukoV2 extends DemonsRoles {
         public boolean onUse(Player player, Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*5, 0, false, false));
-                getPlugin().getServer().getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                    getCooldown().addSeconds(60*5);
-                    nezukoV2.pauseForce = true;
-                    nezukoV2.getEffects().remove(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, Main.getInstance().getGameConfig().isMinage() ? 20*60*5 : 20*60*3, 0, false, false));
-                        Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                            nezukoV2.pauseForce = false;
-                            nezukoV2.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-                        }, Main.getInstance().getGameConfig().isMinage() ? 20*60*10 : 20*60*5);
-                    });
-                }, 20*60*5);
+                new EffectRunnable(getRole().getGameState(), nezukoV2, this);
                 return true;
             }
             return false;
@@ -175,6 +165,45 @@ public class NezukoV2 extends DemonsRoles {
                     event.getPlayer().sendMessage("§7Vous avez perdu§c 5%§7 de§9 Résistance");
                    getRole().addBonusResi(-5.0);
                 }, 100);
+            }
+        }
+        private static class EffectRunnable extends BukkitRunnable {
+
+            private int timeLeft = 60*5;
+            private final GameState gameState;
+            private final NezukoV2 nezuko;
+            private boolean firstProc = false;
+            private final FormePower power;
+
+            private EffectRunnable(GameState gameState, NezukoV2 nezuko, FormePower power) {
+                this.gameState = gameState;
+                this.nezuko = nezuko;
+                this.power = power;
+                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                if (timeLeft == 0) {
+                    if (!firstProc) {
+                        power.getCooldown().addSeconds(60*5);
+                        nezuko.pauseForce = true;
+                        nezuko.getEffects().remove(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
+                        Bukkit.getScheduler().runTask(power.getPlugin(), () -> nezuko.givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, Main.getInstance().getGameConfig().isMinage() ? 20*60*5 : 20*60*3, 0, false, false), EffectWhen.NOW));
+                        firstProc = true;
+                        this.timeLeft = Main.getInstance().getGameConfig().isMinage() ? 60*10 : 60*5;
+                    } else {
+                        nezuko.pauseForce = false;
+                        Bukkit.getScheduler().runTask(power.getPlugin(), () -> nezuko.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT));
+                        cancel();
+                    }
+                    return;
+                }
+                timeLeft--;
             }
         }
     }
