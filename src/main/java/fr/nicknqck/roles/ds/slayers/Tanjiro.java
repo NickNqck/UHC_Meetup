@@ -377,6 +377,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 if (this.timeRemaining <= 0) {
                     this.power.getRole().getGamePlayer().sendMessage("§7Vous devez arrêter de danser suite à votre fatigue...");
                     this.power.getRole().setMaxHealth(this.power.getRole().getMaxHealth()-4);
+                    cancel();
                 }
             }
         }
