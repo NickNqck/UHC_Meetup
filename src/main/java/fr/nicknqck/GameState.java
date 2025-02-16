@@ -346,7 +346,6 @@ public class GameState{
 	public ArrayList<Player> SleepingPlayer = new ArrayList<>();
 	public ArrayList<Player> getInSleepingPlayers() {return SleepingPlayer;}
 	public void setInSleepingPlayers(ArrayList<Player> SleepingPlayers) {SleepingPlayer = SleepingPlayers;}
-	public void addInSleepingPlayers(Player player) {SleepingPlayer.add(player);}
 	public void delInSleepingPlayers(Player player) {SleepingPlayer.remove(player);}
 
 	public GameState() {
