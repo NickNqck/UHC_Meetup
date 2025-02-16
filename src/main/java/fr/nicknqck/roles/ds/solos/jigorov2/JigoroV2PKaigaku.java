@@ -7,7 +7,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
@@ -25,19 +26,19 @@ import java.util.UUID;
 
 public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
 
-    private final Kaigaku kaigaku;
+    private final KaigakuV2 kaigaku;
 
-    public JigoroV2PKaigaku(UUID player, final Kaigaku kaigaku, GamePlayer gamePlayer) {
+    public JigoroV2PKaigaku(UUID player, final KaigakuV2 kaigaku, GamePlayer gamePlayer) {
         super(player);
         this.kaigaku = kaigaku;
         setCanuseblade(true);
         setLameincassable(true);
         setGamePlayer(gamePlayer);
-        addKnowedRole(Kaigaku.class);
+        addKnowedRole(KaigakuV2.class);
         gamePlayer.setRole(this);
         new ResistanceRunnable(kaigaku, this, getGameState());
         EventUtils.registerRoleEvent(this);
-        getGamePlayer().startChatWith("§6Jigoro:§7", "!", Kaigaku.class);
+        getGamePlayer().startChatWith("§6Jigoro:§7", "!", KaigakuV2.class);
         kaigaku.getGamePlayer().startChatWith("§cKaigaku:§7", "!", JigoroV2PKaigaku.class);
     }
 
@@ -66,11 +67,11 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
     }
     private static final class ResistanceRunnable extends BukkitRunnable {
 
-        private final Kaigaku kaigaku;
+        private final KaigakuV2 kaigaku;
         private final JigoroV2PKaigaku jigoro;
         private final GameState gameState;
 
-        private ResistanceRunnable(Kaigaku kaigaku, JigoroV2PKaigaku jigoro, GameState gameState) {
+        private ResistanceRunnable(KaigakuV2 kaigaku, JigoroV2PKaigaku jigoro, GameState gameState) {
             this.kaigaku = kaigaku;
             this.jigoro = jigoro;
             this.gameState = gameState;

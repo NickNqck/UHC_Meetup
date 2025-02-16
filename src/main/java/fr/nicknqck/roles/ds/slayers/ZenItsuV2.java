@@ -12,7 +12,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.CommandPower;
@@ -107,7 +107,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
             GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId());
             if (gamePlayer == null)return;
             if (gamePlayer.getRole() == null)return;
-            if (gamePlayer.getRole() instanceof Kaigaku) {
+            if (gamePlayer.getRole() instanceof KaigakuV2) {
                 this.killKaigaku = true;
             }
         }

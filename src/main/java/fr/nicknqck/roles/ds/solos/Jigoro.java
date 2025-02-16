@@ -11,7 +11,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
@@ -56,7 +56,7 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 		this.setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
 			getKnowedRoles().add(ZenItsuV2.class);
-			getKnowedRoles().add(Kaigaku.class);
+			getKnowedRoles().add(KaigakuV2.class);
 		}, 20);
 		setLameIncassable(owner, true);
 		addPower(new ZoneFoudrePower(this), true);
@@ -105,7 +105,7 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 				killzen = true;
 				givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 80, 0, false, false), EffectWhen.DAY);
 			}
-			if (role instanceof Kaigaku && !killkai) {
+			if (role instanceof KaigakuV2 && !killkai) {
 				killkai = true;
 				giveItem(event.getPlayerKiller(), false, Items.getSoufleFoudre4iememouvement());
 				event.getGamePlayerKiller().sendMessage("§7Vous venez de tuez§c Kaigaku§7 vous obtenez donc§c force 1 §7la §cnuit§7, ainsi que l'accès au:§6 Quatrième Mouvement du Soufle de la Foudre§7 qui vous téléportera à la personne la plus proche que vous pouvez voir dans un rayon maximum de§c 30 blocs");

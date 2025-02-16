@@ -11,7 +11,8 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -48,7 +49,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		pacte = JigoroV2ChoosePacteEvent.Pacte.NON_CHOISIS;
 		setCanuseblade(true);
 		addKnowedRole(ZenItsuV2.class);
-		addKnowedRole(Kaigaku.class);
+		addKnowedRole(KaigakuV2.class);
 		setLameIncassable(owner, true);
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		addPower(new SpeedTroisPower(this), true);
@@ -121,8 +122,8 @@ public class JigoroV2 extends DemonsSlayersRoles {
 							final Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
 							if (!gameState.hasRoleNull(u)) { //vérifie que p a un role
-								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Kaigaku) {//si p est kaigaku
-									final Kaigaku kaigaku = (Kaigaku) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+								if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof KaigakuV2) {//si p est kaigaku
+									final KaigakuV2 kaigaku = (KaigakuV2) gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 									final JigoroV2PKaigaku jigorok = new JigoroV2PKaigaku(getPlayer(), kaigaku, getGamePlayer());
 									jigorok.getEffects().putAll(getEffects());
 									jigorok.getPowers().addAll(getPowers());

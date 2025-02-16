@@ -7,7 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
@@ -38,8 +38,8 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
         setLameincassable(true);
         setGamePlayer(gamePlayer);
         addKnowedRole(ZenItsuV2.class);
-        addKnowedRole(Kaigaku.class);
-        zenItsu.addKnowedRole(Kaigaku.class);
+        addKnowedRole(KaigakuV2.class);
+        zenItsu.addKnowedRole(KaigakuV2.class);
         gamePlayer.setRole(this);
         new ZenItsuRunnable(zenItsu, this, getGameState());
         EventUtils.registerRoleEvent(this);
@@ -56,7 +56,7 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
         if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
         if (event.getGamePlayerKiller().getUuid().equals(this.zenItsu.getPlayer()) || event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
             final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
-            if (role instanceof Kaigaku) {
+            if (role instanceof KaigakuV2) {
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), EffectWhen.MID_LIFE);
                 getGamePlayer().sendMessage("§6"+event.getGamePlayerKiller().getRole().getName()+"§f à tué§c Kaigaku§f ce qui vous permet d'avoir§b Speed II§f en dessous de §c5❤");
                 this.killKaigaku = true;

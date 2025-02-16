@@ -5,7 +5,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.event.EventUtils;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,7 @@ public class JigoroV2PSolo extends JigoroV2 implements Listener {
         gamePlayer.setRole(this);
         setGamePlayer(gamePlayer);
         addKnowedRole(ZenItsuV2.class);
-        addKnowedRole(Kaigaku.class);
+        addKnowedRole(KaigakuV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.PERMANENT);
         EventUtils.registerRoleEvent(this);
     }
@@ -48,7 +48,7 @@ public class JigoroV2PSolo extends JigoroV2 implements Listener {
             givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 0, false, false), EffectWhen.DAY);
             event.getKiller().sendMessage("Vous venez de tuez§a Zen'Itsu§f vous obtenez donc§9 résistance 1§f le§e jour§f, ainsi que§c 10%§f de §bSpeed");
         }
-        if (role instanceof Kaigaku) {
+        if (role instanceof KaigakuV2) {
             if (killKai)return;
             killKai = true;
             addSpeedAtInt(event.getPlayerKiller(), 10);

@@ -6,7 +6,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
@@ -125,7 +125,7 @@ public class DSmtpCommands implements CommandExecutor {
                 if (!gameState.hasRoleNull(((Player) sender).getUniqueId())) {
                     if (!gameState.getInGamePlayers().contains(((Player) sender).getUniqueId())) return false;
 //Debut chat JigoroV2 Kaigaku
-                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof JigoroV2 || gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof Kaigaku) {//vérifie si le rôle du sender
+                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof JigoroV2 || gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof KaigakuV2) {//vérifie si le rôle du sender
                         StringBuilder sb = new StringBuilder();
                         for (int i = 1; i < args.length; i++) {
                             sb.append(" ");
@@ -139,13 +139,13 @@ public class DSmtpCommands implements CommandExecutor {
                                 if (p == null)continue;
                                 if (!gameState.hasRoleNull(u)) {
                                     if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof JigoroV2) {
-                                        if (gameState.getGamePlayer().get(u).getRole() instanceof Kaigaku) {
+                                        if (gameState.getGamePlayer().get(u).getRole() instanceof KaigakuV2) {
                                             p.sendMessage(owo);
                                             sender.sendMessage(owo);
                                             return true;
                                         }
                                     }
-                                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof Kaigaku) {
+                                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof KaigakuV2) {
                                         if (gameState.getGamePlayer().get(u).getRole() instanceof JigoroV2) {
                                             p.sendMessage(owo);
                                             sender.sendMessage(owo);
