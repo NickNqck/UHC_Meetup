@@ -1,8 +1,10 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -16,6 +18,8 @@ import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -78,13 +82,20 @@ public class KaigakuV2 extends DemonsRoles {
         addPower(new ElectroKinesiePower(this), true);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
     }
+
+    @Override
+    public TextComponent getComponent() {
+        return new AutomaticDesc(this).addEffects(getEffects()).setPowers(getPowers()).getText();
+    }
+
     private static class ElectroKinesiePower extends ItemPower implements Listener {
 
         private int charge = 0;
         private double deplacement = 0.0;
         private final TPPower tpPower;
         private final FoudreZonePower foudrePower;
-        private double speedToAdd = 0.0;
+        private float speedToAdd = 0f;
+        private float speedAdded = 0f;
 
         protected ElectroKinesiePower(@NonNull RoleBase role) {
             super("Électrokinésie", new Cooldown(1), new ItemBuilder(Material.BLAZE_ROD).setName("§eÉlectrokinésie"), role,
@@ -127,12 +138,26 @@ public class KaigakuV2 extends DemonsRoles {
         private void addCharge(int add) {
             this.charge = Math.min(100, this.charge+add);
             if (this.charge >= 40) {
-                this.speedToAdd = 0.1;
+                this.speedToAdd = 10;
                 if (this.charge >= 80) {
-                    this.speedToAdd = 0.2;
+                    this.speedToAdd = 20;
+                }
+                if (getRole().getGameState().isNightTime()) {
+                    final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                    if (owner != null) {
+                        final float toAdd = this.speedToAdd-this.speedAdded;
+                        if (toAdd > 0f){
+                            Bukkit.getScheduler().runTask(this.getPlugin(), () -> getRole().addSpeedAtInt(owner, (toAdd)));
+                            this.speedAdded += toAdd;
+                        }
+                    }
                 }
             } else {
-                this.speedToAdd = 0.0;
+                final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                if (owner != null) {
+                    Bukkit.getScheduler().runTask(this.getPlugin(), () -> getRole().addSpeedAtInt(owner, -this.speedAdded));
+                }
+                this.speedToAdd = 0f;
             }
             getRole().getGamePlayer().getActionBarManager().updateActionBar("kaigaku.electro", "§bCharge actuel: "+charge+"%");
         }
@@ -172,10 +197,14 @@ public class KaigakuV2 extends DemonsRoles {
                     this.deplacement = 0.0;
                     return;
                 }
-                if (getRole().getGameState().isNightTime()) {
-                    event.getPlayer().setVelocity(event.getPlayer().getVelocity().multiply(1.0+this.speedToAdd));
-                }
                 this.deplacement = Math.min(150.0, this.deplacement+event.getFrom().distance(event.getTo()));
+            }
+        }
+        @EventHandler
+        private void DayEvent(final DayEvent dayEvent) {
+            final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+            if (owner != null) {
+                getRole().addSpeedAtInt(owner, -this.speedToAdd);
             }
         }
         private static class LifeRunnable extends BukkitRunnable {
