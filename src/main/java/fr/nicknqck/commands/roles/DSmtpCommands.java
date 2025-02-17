@@ -91,14 +91,13 @@ public class DSmtpCommands implements CommandExecutor {
                         final RoleBase role = gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole();
                         float fSpeed = ((Player) sender).getWalkSpeed();
                         final float rSpeed = fSpeed-0.2f;
-                        final String speed = rSpeed*500+"%";
 						message.add("§bEffets: "+ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 						message.add("");
 						message.add("§aRésistance: " +role.getBonusResi()+"%");
 						message.add("");
 						message.add("§cForce: "+role.getBonusForce()+"%");
 						message.add("");
-						message.add("§bSpeed: "+speed);
+						message.add("§bSpeed: "+Math.round(rSpeed*500)+"%");
 						message.add("");
 						message.add(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
 						message.add("§cDisclaimer: §fHors effet de potions");
