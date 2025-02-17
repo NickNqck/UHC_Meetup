@@ -11,6 +11,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -110,6 +111,8 @@ public class KaigakuV2 extends DemonsRoles {
             setShowCdInDesc(false);
             setSendCooldown(false);
             setWorkWhenInCooldown(true);
+            getShowCdRunnable().setCustomText(true);
+            getShowCdRunnable().setCustomTexte("");
         }
 
         @Override
@@ -192,7 +195,7 @@ public class KaigakuV2 extends DemonsRoles {
         @EventHandler
         private void PlayerMooveEvent(final PlayerMoveEvent event) {
             if (event.getPlayer().getUniqueId().equals(getRole().getPlayer())) {
-                if (this.deplacement >= 150.0) {
+                if (this.deplacement >= 50.0) {
                     addCharge(5);
                     this.deplacement = 0.0;
                     return;
@@ -207,6 +210,19 @@ public class KaigakuV2 extends DemonsRoles {
                 getRole().addSpeedAtInt(owner, -this.speedToAdd);
             }
         }
+
+        @Override
+        public void tryUpdateActionBar() {
+            getShowCdRunnable().setCustomTexte(this.charge >= 20 ? "§fClique gauche est "+
+                    (this.tpPower.getCooldown().isInCooldown() ?
+                            "en cooldown (§c"+ StringUtils.secondsTowardsBeautiful(this.tpPower.getCooldown().getCooldownRemaining())+"§f)" :
+                            "§cutilisable")+ (this.charge >= 60 ? "§7 |§f Clique droit est "+
+                    (this.foudrePower.getCooldown().isInCooldown() ?
+                            "en cooldown (§c"+StringUtils.secondsTowardsBeautiful(this.foudrePower.getCooldown().getCooldownRemaining())+"§f)" :
+                            "§cutilisable") : "")
+                    : "§cAucun Pouvoir n'est utilisable actuellement ");
+        }
+
         private static class LifeRunnable extends BukkitRunnable {
 
             private final GamePlayer gamePlayer;
