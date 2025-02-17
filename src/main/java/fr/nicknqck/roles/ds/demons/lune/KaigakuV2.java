@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.DayEvent;
+import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -95,12 +96,21 @@ public class KaigakuV2 extends DemonsRoles {
         private double deplacement = 0.0;
         private final TPPower tpPower;
         private final FoudreZonePower foudrePower;
-        private float speedToAdd = 0f;
-        private float speedAdded = 0f;
+        private boolean firstGive = false;
+        private boolean secondGive = false;
 
         protected ElectroKinesiePower(@NonNull RoleBase role) {
             super("Électrokinésie", new Cooldown(1), new ItemBuilder(Material.BLAZE_ROD).setName("§eÉlectrokinésie"), role,
-                    "Quoi coums beh");
+                    "§7Vous permet d'utiliser un§c pourcentage§7 de§c charge§7, vous aurez plusieurs bonus en fonction de votre§c chargement§7 actuel",
+                    "§7pour la remplir voir votre§c particularité 1§7:",
+                    "",
+                    "§7 -§c 0%§7: Aucun bonus",
+                    "§7 -§c 20%§7: Via un clique gauche, vous permettra de vous téléportez derrière le joueur viser",
+                    "§7 -§6 40%§7: Vous irez§c 10%§7 plus§c vite§7 pendant la§c nuit",
+                    "§7 -§6 60%§7: Via un clique droit, vous§c infligerez 2❤§7 de§c dégats§7 à tout les joueurs proche (§c25 blocs§7)",
+                    "§7 -§a 80%§7: Vous irez§c 20%§7 plus§c vite§7 pendant la§c nuit",
+                    "§7 -§a 100%§7: Votre clique droit (en plus du bonus précédent) infligera l'effet§c Slowness I§7 et§6 enflammera§7 les§c joueurs§7 touchés pendant§c 10 secondes"
+            );
             this.tpPower = new TPPower(role);
             this.foudrePower = new FoudreZonePower(this);
             role.addPower(tpPower);
@@ -141,26 +151,26 @@ public class KaigakuV2 extends DemonsRoles {
         private void addCharge(int add) {
             this.charge = Math.min(100, this.charge+add);
             if (this.charge >= 40) {
-                this.speedToAdd = 10;
-                if (this.charge >= 80) {
-                    this.speedToAdd = 20;
-                }
                 if (getRole().getGameState().isNightTime()) {
-                    final Player owner = Bukkit.getPlayer(getRole().getPlayer());
-                    if (owner != null) {
-                        final float toAdd = this.speedToAdd-this.speedAdded;
-                        if (toAdd > 0f){
-                            Bukkit.getScheduler().runTask(this.getPlugin(), () -> getRole().addSpeedAtInt(owner, (toAdd)));
-                            this.speedAdded += toAdd;
+                    if (!firstGive) {
+                        final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                        if (owner != null) {
+                            getRole().addSpeedAtInt(owner, 10);
+                            firstGive = true;
+                        }
+                    }
+                    if (!secondGive) {
+                        if (this.charge >= 80) {
+                            final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+                            if (owner != null) {
+                                getRole().addSpeedAtInt(owner, 10);
+                                secondGive = true;
+                            }
                         }
                     }
                 }
             } else {
-                final Player owner = Bukkit.getPlayer(getRole().getPlayer());
-                if (owner != null) {
-                    Bukkit.getScheduler().runTask(this.getPlugin(), () -> getRole().addSpeedAtInt(owner, -this.speedAdded));
-                }
-                this.speedToAdd = 0f;
+                removeSpeed();
             }
             getRole().getGamePlayer().getActionBarManager().updateActionBar("kaigaku.electro", "§bCharge actuel: "+charge+"%");
         }
@@ -204,13 +214,25 @@ public class KaigakuV2 extends DemonsRoles {
             }
         }
         @EventHandler
-        private void DayEvent(final DayEvent dayEvent) {
+        private void DayEvent(final DayEvent event) {
+            removeSpeed();
+        }
+        @EventHandler
+        private void NightEvent(final NightEvent event) {
+            if (this.charge < 40)return;
             final Player owner = Bukkit.getPlayer(getRole().getPlayer());
             if (owner != null) {
-                getRole().addSpeedAtInt(owner, -this.speedToAdd);
+                if (!firstGive) {
+                    getRole().addSpeedAtInt(owner, 10);
+                    firstGive = true;
+                }
+                if (this.charge < 80)return;
+                if (!secondGive) {
+                    getRole().addSpeedAtInt(owner, 10);
+                    secondGive = true;
+                }
             }
         }
-
         @Override
         public void tryUpdateActionBar() {
             getShowCdRunnable().setCustomTexte(this.charge >= 20 ? "§fClique gauche est "+
@@ -221,6 +243,19 @@ public class KaigakuV2 extends DemonsRoles {
                             "en cooldown (§c"+StringUtils.secondsTowardsBeautiful(this.foudrePower.getCooldown().getCooldownRemaining())+"§f)" :
                             "§cutilisable") : "")
                     : "§cAucun Pouvoir n'est utilisable actuellement ");
+        }
+        private void removeSpeed() {
+            final Player owner = Bukkit.getPlayer(getRole().getPlayer());
+            if (owner != null) {
+                if (firstGive) {
+                    getRole().addSpeedAtInt(owner, -10);
+                    firstGive = false;
+                }
+                if (secondGive) {
+                    getRole().addSpeedAtInt(owner, -10);
+                    secondGive = false;
+                }
+            }
         }
 
         private static class LifeRunnable extends BukkitRunnable {
