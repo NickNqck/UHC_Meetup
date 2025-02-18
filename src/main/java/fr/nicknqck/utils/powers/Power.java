@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -75,7 +76,7 @@ public abstract class Power {
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
             if (isWorkWhenInCooldown())return this.onUse(player, args);
             if (isSendCooldown()) {
-                role.sendCooldown(player, getCooldown().getCooldownRemaining());
+                player.sendMessage("§cVous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(getCooldown().getCooldownRemaining()));
             }
             return false;
         }
@@ -95,6 +96,7 @@ public abstract class Power {
     public void onEndCooldown(final Cooldown cooldown) {
         if (this.cooldown == null)return;
         if (cooldown.getUniqueId().equals(this.getCooldown().getUniqueId())) {//donc si c'est EXACTEMENT le même "Cooldown"
+            if (!this.isSendCooldown())return;
             getRole().getGamePlayer().sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
         }
     }
