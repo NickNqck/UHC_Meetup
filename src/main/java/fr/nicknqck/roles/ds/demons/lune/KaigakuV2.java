@@ -304,6 +304,7 @@ public class KaigakuV2 extends DemonsRoles {
                     event.getKiller().sendMessage("Vous avez§c tué§a Zen'Itsu§f vous obtenez donc une amélioration de votre§c "+getName()+"§7 (voir description)");
                     this.killZenItsu = true;
                     getRole().addPower(this.lignePower);
+                    setDescriptions(getNewDescription());
                 }
             }
         }
