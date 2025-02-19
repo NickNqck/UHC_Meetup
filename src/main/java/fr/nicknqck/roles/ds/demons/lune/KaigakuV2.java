@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -119,29 +120,21 @@ public class KaigakuV2 extends DemonsRoles {
         private final LigneEclairPower lignePower;
         private boolean firstGive = false;
         private boolean secondGive = false;
+        private boolean killZenItsu = false;
 
         protected ElectroKinesiePower(@NonNull RoleBase role) {
-            super("Électrokinésie", new Cooldown(30), new ItemBuilder(Material.BLAZE_ROD).setName("§eÉlectrokinésie"), role,
-                    "§7Vous permet d'utiliser un§c pourcentage§7 de§c charge§7, vous aurez plusieurs bonus en fonction de votre§c chargement§7 actuel",
-                    "§7pour la remplir voir votre§c particularité 1§7:",
-                    "",
-                    "§7 -§c 0%§7: Aucun bonus",
-                    "§7 -§c 20%§7: (§fClique gauche§7) Vous permettra de vous téléportez derrière le joueur viser en lui infligeant§c 1❤§7 de dégat",
-                    "§7 -§6 40%§7: Vous irez§c 10%§7 plus§c vite§7 pendant la§c nuit",
-                    "§7 -§6 60%§7: (§fClique droit§7) Vous§c infligerez 2❤§7 de§c dégats§7 à tout les joueurs proche (§c25 blocs§7)",
-                    "§7 -§a 80%§7: Vous irez§c 20%§7 plus§c vite§7 pendant la§c nuit",
-                    "§7 -§a 100%§7: Votre clique droit (en plus du bonus précédent) infligera l'effet§c Slowness I§7 et§6 enflammera§7 les§c joueurs§7 touchés pendant§c 10 secondes"
-            );
+            super("Électrokinésie", new Cooldown(30), new ItemBuilder(Material.BLAZE_ROD).setName("§eÉlectrokinésie"), role);
             this.tpPower = new TPPower(role);
             this.foudrePower = new FoudreZonePower(this);
             this.lignePower = new LigneEclairPower(role);
-            role.addPower(lignePower);
+            role.addPower(tpPower);
             role.addPower(foudrePower);
             EventUtils.registerRoleEvent(this);
             getRole().getGamePlayer().getActionBarManager().addToActionBar("kaigaku.electro", "§bCharge actuel: "+charge+"%");
             new LifeRunnable(role.getGamePlayer(), this, role.getGameState());
             getShowCdRunnable().setCustomText(true);
             getShowCdRunnable().setCustomTexte("");
+            setDescriptions(getNewDescription());
         }
 
         @Override
@@ -153,7 +146,7 @@ public class KaigakuV2 extends DemonsRoles {
                         player.sendMessage("§cVous n'avez pas asser d'§eélectrécité§c dans votre corp pour cette technique...");
                         return false;
                     }
-                    if (this.lignePower.checkUse(player, map)) {
+                    if (this.tpPower.checkUse(player, map)) {
                         addCharge(-20);
                         return true;
                     }
@@ -163,6 +156,15 @@ public class KaigakuV2 extends DemonsRoles {
                         return false;
                     }
                     return this.foudrePower.checkUse(player, map);
+                }
+            } else if (getInteractType().equals(InteractType.DROP_ITEM)) {
+                if (this.killZenItsu) {
+                    if (this.charge >= 100) {
+                        if (this.lignePower.checkUse(player, map)) {
+                            addCharge(-100);
+                            return true;
+                        }
+                    }
                 }
             }
             return false;
@@ -276,7 +278,35 @@ public class KaigakuV2 extends DemonsRoles {
                 }
             }
         }
-
+        private String[] getNewDescription() {
+            return new String[] {
+                    "§7Vous permet d'utiliser un§c pourcentage§7 de§c charge§7, vous aurez plusieurs bonus en fonction de votre§c chargement§7 actuel",
+                    "§7pour la remplir voir votre§c particularité 1§7:",
+                    "",
+                    "§7 -§c 0%§7: Aucun bonus",
+                    "§7 -§c 20%§7: (§fClique gauche§7) Vous permettra de vous téléportez derrière le joueur viser en lui infligeant§c 1❤§7 de dégat",
+                    "§7 -§6 40%§7: Vous irez§c 10%§7 plus§c vite§7 pendant la§c nuit",
+                    "§7 -§6 60%§7: (§fClique droit§7) Vous§c infligerez 2❤§7 de§c dégats§7 "+(killZenItsu ? "ainsi que l'effet§c Slowness I§7 et§6 enflammera§7" : "à tout")+" les joueurs proche (§c25 blocs§7)",
+                    "§7 -§a 80%§7: Vous irez§c 20%§7 plus§c vite§7 pendant la§c nuit",
+                    "§7 -§a 100%§7: "+(killZenItsu ?
+                            "(§fDrop§7) Vous permet de lancé une§c ligne§7 d'§eéclair§7 infligeant§c 2❤§7 de§c dégats§7 au joueurs touché" :
+                            "Votre clique droit (en plus du bonus précédent) infligera l'effet§c Slowness I§7 et§6 enflammera§7 les§c joueurs§7 touchés pendant§c 10 secondes")
+            };
+        }
+        @EventHandler
+        private void onUHCKill(final UHCPlayerKillEvent event) {
+            if (event.getGamePlayerKiller() == null)return;
+            if (!event.getKiller().getUniqueId().equals(getRole().getPlayer()))return;
+            if (this.killZenItsu)return;
+            if (!event.getGameState().hasRoleNull(event.getVictim().getUniqueId())) {
+                final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+                if (role instanceof ZenItsuV2) {
+                    event.getKiller().sendMessage("Vous avez§c tué§a Zen'Itsu§f vous obtenez donc une amélioration de votre§c "+getName()+"§7 (voir description)");
+                    this.killZenItsu = true;
+                    getRole().addPower(this.lignePower);
+                }
+            }
+        }
         private static class LifeRunnable extends BukkitRunnable {
 
             private final GamePlayer gamePlayer;
@@ -383,7 +413,6 @@ public class KaigakuV2 extends DemonsRoles {
 
             @Override
             public boolean onUse(Player player, Map<String, Object> map) {
-                player.sendMessage("CACOUCACOU "+isSendCooldown());
                 new LigneRunnable(getRole().getGameState(), player);
                 return true;
             }
@@ -400,7 +429,7 @@ public class KaigakuV2 extends DemonsRoles {
                     this.gameState = gameState;
                     this.location = player.getEyeLocation();
                     this.user = player.getUniqueId();
-                    this.foudreLeft = 30;
+                    this.foudreLeft = 10;
                     this.damaged = new ArrayList<>();
                     this.initDirection = this.location.getDirection().normalize().multiply(2);
                     runTaskTimer(Main.getInstance(), 0, 15);
