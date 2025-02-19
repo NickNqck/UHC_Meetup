@@ -7,6 +7,7 @@ import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,7 +73,12 @@ public class Lame implements Listener{
 	private void giveLame(DemonsSlayersRoles role, Lames lames){
 		lames.getUsers().put(role.getPlayer(), 40);
 		role.setLames(lames);
-		role.owner.sendMessage("§7Vous avez obtenue la lame de "+lames.getName());
-		role.owner.setHealth(role.owner.getMaxHealth());
+		role.getGamePlayer().sendMessage("§7Vous avez obtenue la lame de "+lames.getName());
+		if (lames.equals(Lames.Coeur)) {
+			final Player owner = Bukkit.getPlayer(role.getPlayer());
+			if (owner != null){
+				owner.setHealth(Math.min(owner.getHealth()+4.0, owner.getMaxHealth()));
+			}
+		}
 	}
 }
