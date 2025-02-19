@@ -24,7 +24,7 @@ public abstract class Power {
     private int use;
     private boolean cooldownResetSended = true;
     private final RoleBase role;
-    private final String[] descriptions;
+    private String[] descriptions;
     private boolean sendCooldown = true;
     private boolean workWhenInCooldown = false;
     private boolean showInDesc = true;
