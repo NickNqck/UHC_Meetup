@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
-import fr.nicknqck.events.custom.roles.ds.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -116,13 +115,6 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                                 "§7     → Vous obtiendrez§9 Résistance I§7 à moins de§c 30 blocs§7 de§e Jigoro")
                 })
         ).getText();
-    }
-    @EventHandler
-    private void JigoroPacteEvent(final JigoroV2ChoosePacteEvent event) {
-        if (event.isCancelled())return;
-        if (event.getPacte().equals(JigoroV2ChoosePacteEvent.Pacte.KAIGAKU)) {
-            givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.PERMANENT);
-        }
     }
 
     private static class ElectroKinesiePower extends ItemPower implements Listener {
