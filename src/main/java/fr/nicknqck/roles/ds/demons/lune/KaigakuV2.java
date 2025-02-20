@@ -14,7 +14,6 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
-import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2PKaigaku;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
