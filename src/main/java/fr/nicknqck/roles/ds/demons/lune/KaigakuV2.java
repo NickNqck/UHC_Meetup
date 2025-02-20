@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.roles.ds.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -13,6 +14,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
+import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2PKaigaku;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -46,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class KaigakuV2 extends DemonsRoles {
+public class KaigakuV2 extends DemonsRoles implements Listener{
     public KaigakuV2(UUID player) {
         super(player);
     }
@@ -107,8 +109,21 @@ public class KaigakuV2 extends DemonsRoles {
                                 "§7 - Votre§c clique droit§7 fera§c toujours§7 les mêmes effet que s'il est à pleine charge\n" +
                                 "§7 - Le dernier palier de charge aura un autre pouvoir qui s'activera en essayant de§c drop§7 votre§c item§7:\n\n" +
                                 "§7     → Créera une ligne d'§eéclair§7 qui infligera§c 2❤§7 à tout les joueurs qui seront touché")
+                }),
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                        new TextComponent("§7Si vous êtes§c pacté§7 par§e Jigoro§7 des§c bonus§7:\n\n" +
+                                "§7     → Vous obtiendrez l'effet§b Speed I§c permanent\n" +
+                                "§7     → Lorsque vous ou lui tué un joueur vous gagnerez§a +§c1/2❤ permanent\n" +
+                                "§7     → Vous obtiendrez§9 Résistance I§7 à moins de§c 30 blocs§7 de§e Jigoro")
                 })
         ).getText();
+    }
+    @EventHandler
+    private void JigoroPacteEvent(final JigoroV2ChoosePacteEvent event) {
+        if (event.isCancelled())return;
+        if (event.getPacte().equals(JigoroV2ChoosePacteEvent.Pacte.KAIGAKU)) {
+            givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.PERMANENT);
+        }
     }
 
     private static class ElectroKinesiePower extends ItemPower implements Listener {
