@@ -53,7 +53,9 @@ public class AdminCommands implements CommandExecutor{
 					try {
 						double damage = Double.parseDouble(args[2]);
 						if (target != null) {
-							target.setHealth(target.getHealth() - damage);
+							damage = Math.min(0.1, target.getHealth() - damage);
+							target.setHealth(damage);
+							sender.sendMessage("§c"+target.getName()+"§b à subit§c "+damage);
 						} else {
 							System.out.println("Player not found: " + args[1]);
 						}
@@ -393,7 +395,7 @@ public class AdminCommands implements CommandExecutor{
 										p.addAttachment(Main.getInstance(), "Host", true);
 										ChatRank.Host.add(p.getUniqueId());
 										sender.sendMessage("Vous avez ajouter "+p.getName()+" à la list(e) des hosts");
-										Bukkit.broadcastMessage(p.getName()+" est maintenant host");
+										Bukkit.broadcastMessage("§c"+p.getName()+"§f est maintenant§c Host");
                                     }
                                 }
                             } else {
