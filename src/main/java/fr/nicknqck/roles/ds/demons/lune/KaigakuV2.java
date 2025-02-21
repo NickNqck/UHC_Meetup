@@ -232,7 +232,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
         @EventHandler
         private void PlayerMooveEvent(final PlayerMoveEvent event) {
             if (event.getPlayer().getUniqueId().equals(getRole().getPlayer())) {
-                if (this.deplacement >= 50.0) {
+                if (this.deplacement >= 150.0) {
                     addCharge(5);
                     this.deplacement = 0.0;
                     return;
