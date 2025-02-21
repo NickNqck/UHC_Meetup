@@ -54,10 +54,8 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 	public void RoleGiven(GameState gameState) {
 		this.setCanuseblade(true);
 		this.setResi(20);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			getKnowedRoles().add(ZenItsuV2.class);
-			getKnowedRoles().add(KaigakuV2.class);
-		}, 20);
+		addKnowedRole(ZenItsuV2.class);
+		addKnowedRole(KaigakuV2.class);
 		setLameIncassable(owner, true);
 		addPower(new ZoneFoudrePower(this), true);
 		givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 0, false, false), EffectWhen.PERMANENT);
