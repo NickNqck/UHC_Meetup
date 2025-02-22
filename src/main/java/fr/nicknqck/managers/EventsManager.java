@@ -2,6 +2,8 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.events.ds.AkazaVSKyojuroV2;
 import fr.nicknqck.events.ds.AllianceV2;
@@ -12,6 +14,8 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,7 +33,9 @@ import java.util.List;
 @Getter
 public class EventsManager implements Listener {
 
+    private static final Logger log = LogManager.getLogger(EventsManager.class);
     private final List<Event> eventsList = new ArrayList<>();
+    private boolean tryed = false;
 
     public EventsManager() {
         eventsList.add(new AllianceV2());
@@ -38,18 +44,24 @@ public class EventsManager implements Listener {
     }
 
     @EventHandler
-    private void onStartGame(StartGameEvent event) {
+    private void onGiveRole(final RoleGiveEvent event) {
+        if (tryed)return;
         for (final Event events : eventsList) {
             if (events.isEnable()){
-                if (events.getPercent() <= 0)return;
+                if (events.getPercent() <= 0)continue;
                 int random = Main.RANDOM.nextInt(101);
-                if (random <= events.getPercent()){
+                if (events.getPercent() >= 100 || random <= events.getPercent()){
                     new EventsRunnables(events, event.getGameState()).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 } else {
                     System.out.println("the Event ("+events.getName()+") don't gonna proc with Percent: \""+events.getPercent()+"\" and random: \""+random+"\"");
                 }
             }
         }
+        tryed = true;
+    }
+    @EventHandler
+    private void onEndGame(final EndGameEvent event) {
+        this.tryed = false;
     }
     @EventHandler
     private void onInventoryClick(InventoryClickEvent event) {
@@ -164,10 +176,12 @@ public class EventsManager implements Listener {
             }
             actualTime++;
             if (this.actualTime >= this.timeGonnaProc) {
-                if (this.event.canProc(this.gameState)) {
-                    this.event.onProc(gameState);
-                    cancel();
-                }
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                    if (this.event.canProc(this.gameState)) {
+                        this.event.onProc(gameState);
+                        cancel();
+                    }
+                });
             }
         }
     }
