@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.custom.LeComte;
 import fr.nicknqck.roles.custom.LeJuge;
+import fr.nicknqck.roles.custom.SwaperBoy;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
@@ -226,6 +227,7 @@ public class RoleManager {
         //Register Custom Roles
         registerRole(LeComte.class);
         registerRole(LeJuge.class);
+        registerRole(SwaperBoy.class);
     }
     public RoleBase getRandomRole(final UUID uuid) {
         //Si le mec est déjà un GamePlayer, je renvoie null

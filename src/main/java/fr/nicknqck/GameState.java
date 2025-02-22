@@ -15,6 +15,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.custom.LeComte;
 import fr.nicknqck.roles.custom.LeJuge;
+import fr.nicknqck.roles.custom.SwaperBoy;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -111,7 +112,7 @@ public class GameState{
 		Gyokko(TeamList.Demon, "ds", 5, new ItemBuilder(Material.FLOWER_POT_ITEM).setName("§cGyokko").toItemStack(), "§bNickNqck"),
 		Daki(TeamList.Demon, "ds", 6, new ItemBuilder(Material.IRON_FENCE).setName("§cDaki").toItemStack(), "§bNickNqck"),
 		Gyutaro(TeamList.Demon, "ds", 7, new ItemBuilder(Material.DIAMOND_HOE).setName("§cGyutaro").toItemStack(), "§bNickNqck"),
-		Kaigaku(TeamList.Demon, "ds", 8, new ItemBuilder(Material.YELLOW_FLOWER).setName("§cKaigaku").toItemStack(), "§bNickNqck"),
+		Kaigaku(TeamList.Demon, "ds", 8, new ItemBuilder(Material.YELLOW_FLOWER).setName("§cKaigaku").toItemStack(), "§bByC3RV0L3NT"),
 		Enmu(TeamList.Demon, "ds", 19, new ItemBuilder(Material.EYE_OF_ENDER).setName("§cEnmu").toItemStack(), "§bNickNqck"),
 		Rui(TeamList.Demon, "ds", 16, new ItemBuilder(Material.STRING).setName("§cRui").toItemStack(), "§bNickNqck"),
 		Kyogai(TeamList.Demon, "ds", 3, new ItemBuilder(Material.DISPENSER).setName("§cKyogai").toItemStack(), "§bNickNqck"),
@@ -242,7 +243,8 @@ public class GameState{
 		Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck"),
 		//Custom roles
 		LeComte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck"),
-		LeJuge(TeamList.Solo, "custom", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eLe Juge").toItemStack(), "§bNickNqck")
+		LeJuge(TeamList.Solo, "custom", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eLe Juge").toItemStack(), "§bNickNqck"),
+		TheSwapper(TeamList.Solo, "custom", 2, new ItemBuilder(Material.ENDER_PEARL).setName("§eLe téléporteur").toItemStack(), "§bNickNqck§7 &§b Mega02600")
 		;
 		private final TeamList team;
 		private final String mdj;
@@ -788,6 +790,9 @@ public class GameState{
 				break;
 			case Neon:
 				role = new Neon(player);
+				break;
+			case TheSwapper:
+				role = new SwaperBoy(player);
 				break;
 		}
 		if (role == null) return null;
