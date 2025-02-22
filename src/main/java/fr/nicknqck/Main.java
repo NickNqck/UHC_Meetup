@@ -217,9 +217,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(worldConfig, this);
 		this.worldConfig = worldConfig;
 		this.deathManager = manager;
-		EventsManager eventsManager1 = new EventsManager();
-		getServer().getPluginManager().registerEvents(eventsManager1, this);
-		this.eventsManager = eventsManager1;
+		final EventsManager manager2 = new EventsManager();
+		EventUtils.registerEvents(manager2);
+		this.eventsManager = manager2;
 		System.out.println("Ending registering events");
 	}
 	private void registerEvents2(GameState gameState) {

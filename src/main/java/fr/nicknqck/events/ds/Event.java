@@ -10,7 +10,7 @@ import lombok.Setter;
 public abstract class Event implements IEvent {
 
     private int percent = 0;
-    private boolean enable = false;
+    private boolean enable = true;
     private int minTimeProc = 60;
     private int maxTimeProc = 60*5;
 

@@ -119,9 +119,9 @@ public class KyojuroV2 extends PilierRoles {
         }
         @EventHandler
         private void onDamage(EntityDamageByEntityEvent event) {
+            if (event.getDamager().getWorld().getName().equals("enmuv2_duel"))return;
             if (event.getDamager() instanceof Player) {
                 if (event.getDamager().getUniqueId().equals(getRole().getPlayer())){
-                    if (!checkUse((Player) event.getDamager(), new HashMap<>()))return;
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
                     if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
                         ((Player) event.getDamager()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
@@ -131,7 +131,6 @@ public class KyojuroV2 extends PilierRoles {
                 Projectile projectile = (Projectile) event.getDamager();
                 if (projectile.getShooter() instanceof Player && ((Player) projectile.getShooter()).getUniqueId().equals(getRole().getPlayer())) {
                     Player shooter = (Player) projectile.getShooter();
-                    if (!checkUse(shooter, new HashMap<>()))return;
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
                     if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
                         shooter.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
