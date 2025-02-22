@@ -8,6 +8,7 @@ import fr.nicknqck.events.ds.AllianceV2;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.events.ds.dkt.DemonKingEvent;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
@@ -40,7 +41,13 @@ public class EventsManager implements Listener {
     private void onStartGame(StartGameEvent event) {
         for (final Event events : eventsList) {
             if (events.isEnable()){
-                new EventsRunnables(events, event.getGameState()).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                if (events.getPercent() <= 0)return;
+                int random = Main.RANDOM.nextInt(101);
+                if (random <= events.getPercent()){
+                    new EventsRunnables(events, event.getGameState()).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                } else {
+                    System.out.println("the Event ("+events.getName()+") don't gonna proc with Percent: \""+events.getPercent()+"\" and random: \""+random+"\"");
+                }
             }
         }
     }
@@ -63,7 +70,7 @@ public class EventsManager implements Listener {
                     if (action.equals(InventoryAction.PICKUP_ALL)) {
                         gameEvent.setPercent(Math.min(100, gameEvent.getPercent() + 1));
                     } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                        gameEvent.setPercent(Math.max(0, gameEvent.getPercent()) - 1);
+                        gameEvent.setPercent(Math.max(1, gameEvent.getPercent()) - 1);
                     } else if (action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
                         openInv(player, gameEvent.getName(), gameEvent.getMinTimeProc(), gameEvent.getMaxTimeProc());
                     }
@@ -134,11 +141,19 @@ public class EventsManager implements Listener {
         private final GameState gameState;
         private final Event event;
         private int actualTime;
+        private final int timeGonnaProc;
 
         public EventsRunnables(Event events, GameState gameState) {
+            int timeGonnaProc1;
             this.gameState = gameState;
             this.event = events;
             this.actualTime = 0;
+            timeGonnaProc1 = 0;
+            while (timeGonnaProc1 == 0 || timeGonnaProc1 > events.getMaxTimeProc() || timeGonnaProc1 < events.getMinTimeProc()) {
+                timeGonnaProc1 = RandomUtils.getRandomDeviationValue(Main.RANDOM.nextInt(), events.getMinTimeProc(), events.getMaxTimeProc());
+            }
+            this.timeGonnaProc = timeGonnaProc1;
+            System.out.println(events.getName()+" gonna proc at "+timeGonnaProc1+" ("+StringUtils.secondsTowardsBeautiful(timeGonnaProc1)+")");
         }
 
         @Override
@@ -148,22 +163,11 @@ public class EventsManager implements Listener {
                 return;
             }
             actualTime++;
-            if (this.actualTime >= event.getMinTimeProc()) {
+            if (this.actualTime >= this.timeGonnaProc) {
                 if (this.event.canProc(this.gameState)) {
-                    if (Main.RANDOM.nextInt(100) <= 8) {
-                        this.event.onProc(gameState);
-                        cancel();
-                        return;
-                    }
+                    this.event.onProc(gameState);
+                    cancel();
                 }
-            }
-            if (this.actualTime == event.getMaxTimeProc()) {
-                if (this.event.getPercent() >= 100 || Main.RANDOM.nextInt(100) <= this.event.getPercent()){
-                    if (this.event.canProc(gameState)){
-                        this.event.onProc(gameState);
-                    }
-                }
-                cancel();
             }
         }
     }
