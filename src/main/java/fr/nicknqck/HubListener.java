@@ -44,7 +44,6 @@ public class HubListener implements Listener {
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
 		gameState.getInLobbyPlayers().clear();
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
-		Main.getInstance().getEventsManager().getEventsList().forEach(event -> event.setEnable(true));
 		ItemsManager.instance.clearJspList();
 		gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 		gameState.getPlayerRoles().clear();

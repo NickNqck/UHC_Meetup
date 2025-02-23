@@ -83,7 +83,7 @@ public class EventsManager implements Listener {
                     } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                         gameEvent.setPercent(Math.max(1, gameEvent.getPercent()) - 1);
                     } else if (action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-                        openInv(player, gameEvent.getName(), gameEvent.getMinTimeProc(), gameEvent.getMaxTimeProc());
+                        openInv(player, gameEvent.getName(), gameEvent);
                     }
                     Main.getInstance().getInventories().updateEventInventory(player);
                 }
@@ -98,29 +98,37 @@ public class EventsManager implements Listener {
                         event.setCancelled(true);
                         return;
                     }
-                    if (item.getItemMeta().getDisplayName().equals("§bTemp minimum")) {
+                    final String name = item.getItemMeta().getDisplayName();
+                    if (name.equals("§bTemp minimum")) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                             gameEvent.setMinTimeProc(Math.min(gameEvent.getMaxTimeProc(), gameEvent.getMinTimeProc()+60));
                         } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                             gameEvent.setMinTimeProc(Math.max(120, gameEvent.getMinTimeProc())-60);
                         }
-                    } else if (item.getItemMeta().getDisplayName().equals("§bTemp maximum")) {
+                    }
+                    if (name.equals("§bTemp maximum")) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                             gameEvent.setMaxTimeProc(gameEvent.getMaxTimeProc()+60);
                         } else if (action.equals(InventoryAction.PICKUP_HALF)){
                             gameEvent.setMaxTimeProc(Math.max(gameEvent.getMinTimeProc()+60, gameEvent.getMaxTimeProc()-60));
                         }
                     }
-                    openInv(player, gameEvent.getName(), gameEvent.getMinTimeProc(), gameEvent.getMaxTimeProc());
+                    if (item.getType().equals(Material.STAINED_CLAY)) {
+                        gameEvent.setEnable(!gameEvent.isEnable());
+                    }
+                    openInv(player, gameEvent.getName(), gameEvent);
                     event.setCancelled(true);
                     break;
                 }
             }
         }
     }
-    private void openInv(final Player player, final String name, final int minTime, final int maxTime) {
+    private void openInv(final Player player, final String name, final Event event) {
         final Inventory gameInv = Bukkit.createInventory(player, 27, "§f"+name);
-        gameInv.setItem(12, new ItemBuilder(Material.WATCH).setName("§bTemp minimum").setLore(
+        final int minTime = event.getMinTimeProc();
+        final int maxTime = event.getMaxTimeProc();
+        final boolean enable = event.isEnable();
+        gameInv.setItem(11, new ItemBuilder(Material.WATCH).setName("§bTemp minimum").setLore(
                 "",
                 "§fClique gauche: §a+1 minute",
                 "",
@@ -128,7 +136,11 @@ public class EventsManager implements Listener {
                 "",
                 "§bTemp minimum actuel: §c"+ StringUtils.secondsTowardsBeautiful(minTime)
         ).toItemStack());
-        gameInv.setItem(14, new ItemBuilder(Material.WATCH).setName("§bTemp maximum").setLore(
+        gameInv.setItem(13, new ItemBuilder(Material.STAINED_CLAY)
+                .setDurability((enable ? 5 : 14))
+                .setName((enable ? "§aActivé" : "§cDésactivé"))
+                .toItemStack());
+        gameInv.setItem(15, new ItemBuilder(Material.WATCH).setName("§bTemp maximum").setLore(
                 "",
                 "§fClique gauche: §a+1 minute",
                 "",
