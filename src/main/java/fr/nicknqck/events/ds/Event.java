@@ -10,7 +10,7 @@ import lombok.Setter;
 public abstract class Event implements IEvent {
 
     private int percent = 0;
-    private boolean enable = true;
+    private boolean enable = false;
     private int minTimeProc = 60;
     private int maxTimeProc = 60*5;
 
@@ -23,7 +23,8 @@ public abstract class Event implements IEvent {
                 "",
                 "§fTemp minimal de déclanchement: §c"+ StringUtils.secondsTowardsBeautiful(minTimeProc),
                 "§fTemp maximal de déclanchement: §c"+ StringUtils.secondsTowardsBeautiful(maxTimeProc),
-                ""
+                "",
+                (isEnable() ? "§aActivé" : "§cDésactivé")
         };
     }
 
