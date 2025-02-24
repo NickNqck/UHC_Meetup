@@ -14,6 +14,7 @@ import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.rank.ChatRank;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -26,6 +27,98 @@ public class Inventories {
     public Inventories(GameState gameState) {
         this.gameState = gameState;
     }
+    public void updateSlayerInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("DemonSlayer ->§a Slayers")) {
+                    this.setRoleInventory(inv, GUIItems.getGreenStainedGlassPane());
+                    inv.setItem(3, GUIItems.getSelectDemonButton());//haut milleu
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    inv.setItem(5, GUIItems.getSelectSoloButton());
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Slayer) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    clearRoleInventory(inv);
+                }
+            }
+
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+    public void updateDemonInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("DemonSlayer -> §cDémons")) {
+                    this.setRoleInventory(inv, GUIItems.getRedStainedGlassPane());
+
+                    inv.setItem(3, GUIItems.getSelectSlayersButton());//haut milleu
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    inv.setItem(5, GUIItems.getSelectSoloButton());
+
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Demon) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    this.clearRoleInventory(inv);
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+    public void updateDSSoloInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("DemonSlayer -> §eSolo")) {
+                    this.setRoleInventory(inv, GUIItems.getOrangeStainedGlassPane());
+
+                    inv.setItem(3, GUIItems.getSelectDemonButton());//haut milleu
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    inv.setItem(5, GUIItems.getSelectSlayersButton());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ds")) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    clearRoleInventory(inv);
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+
     public void menuUpdater(Player p){
         updateAdminInventory(p);
         updateScenarioInventory(p);
@@ -34,7 +127,7 @@ public class Inventories {
         updateDSSoloInventory(p);
         updateDemonInventory(p);
         updateMahrInventory(p);
-        updateSecretTitansInventory(p);
+        updateTitansInventory(p);
         updateSoldatInventory(p);
         updateEventInventory(p);
         updateAOTConfiguration(p);
@@ -53,60 +146,14 @@ public class Inventories {
         updateMCInventory(p);
         updateOverworldInventory(p);
     }
-    public void updateSecretTitansInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equalsIgnoreCase("§fAOT§7 ->§c Titans")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(1, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(9, GUIItems.getRedStainedGlassPane());//haut gauche
 
-                    inv.setItem(2, GUIItems.getSelectSoloButton());
-                    inv.setItem(3, GUIItems.getSelectMahrButton());//haut milleu
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    inv.setItem(5, GUIItems.getSelectSoldatButton());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-                    inv.setItem(49, GUIItems.getSelectConfigAotButton());
-                    inv.setItem(7, GUIItems.getRedStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(17, GUIItems.getRedStainedGlassPane());
-
-                    inv.setItem(45, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(46, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(36, GUIItems.getRedStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(52, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(53, GUIItems.getRedStainedGlassPane());//bas droite
-                    for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Titan) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                }
-            }
-        }
-    }
     public void updateSoldatInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
                 if (inv.getTitle().equals("§fAOT§7 ->§a Soldats")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(1, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(9, GUIItems.getGreenStainedGlassPane());//haut gauche
+                    this.setRoleInventory(inv, GUIItems.getGreenStainedGlassPane());
 
                     inv.setItem(2, GUIItems.getSelectSoloButton());
                     inv.setItem(3, GUIItems.getSelectTitanButton());//haut milleu
@@ -115,20 +162,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
                     inv.setItem(49, GUIItems.getSelectConfigAotButton());
-                    inv.setItem(7, GUIItems.getGreenStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(17, GUIItems.getGreenStainedGlassPane());
 
-                    inv.setItem(45, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(46, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(36, GUIItems.getGreenStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(52, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(53, GUIItems.getGreenStainedGlassPane());//bas droite
-
-
-                    inv.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
                     for (GameState.Roles roles : GameState.Roles.values()) {
                         if (roles.getTeam() == TeamList.Soldat) {
                             String l1;
@@ -140,46 +174,31 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
-                    inv.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateNSAkatsukiInventory(Player player) {
+    public void updateTitansInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§aNaruto§7 ->§c Akatsuki")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(1, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(9, GUIItems.getRedStainedGlassPane());//haut gauche
+                if (inv.getTitle().equalsIgnoreCase("§fAOT§7 ->§c Titans")) {
+                    this.setRoleInventory(inv, GUIItems.getRedStainedGlassPane());
 
+                    inv.setItem(2, GUIItems.getSelectSoloButton());
+                    inv.setItem(3, GUIItems.getSelectMahrButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
+                    inv.setItem(5, GUIItems.getSelectSoldatButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+                    inv.setItem(49, GUIItems.getSelectConfigAotButton());
 
-                    inv.setItem(7, GUIItems.getRedStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(17, GUIItems.getRedStainedGlassPane());
-
-                    inv.setItem(45, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(46, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(36, GUIItems.getRedStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(52, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(53, GUIItems.getRedStainedGlassPane());//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Akatsuki) {
+                        if (roles.getTeam() == TeamList.Titan) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -189,48 +208,30 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
+                    this.clearRoleInventory(inv);
                 }
             }
         }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
     }
-    public void updateNSOrochimaruInventory(Player player) {
+    public void updateMahrInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§aNaruto§7 ->§5 Orochimaru")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getPurpleStainedGlassPane());
-                    inv.setItem(1, GUIItems.getPurpleStainedGlassPane());
-                    inv.setItem(9, GUIItems.getPurpleStainedGlassPane());//haut gauche
+                if (inv.getTitle().equalsIgnoreCase("§fAOT§7 ->§9 Mahr")) {
+                    this.setRoleInventory(inv, GUIItems.getSBluetainedGlassPane());
 
+                    inv.setItem(2, GUIItems.getSelectSoloButton());
+                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
+                    inv.setItem(5, GUIItems.getSelectSoldatButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(7, GUIItems.getPurpleStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getPurpleStainedGlassPane());
-                    inv.setItem(17, GUIItems.getPurpleStainedGlassPane());
+                    inv.setItem(49, GUIItems.getSelectConfigAotButton());
 
-                    inv.setItem(45, GUIItems.getPurpleStainedGlassPane());
-                    inv.setItem(46, GUIItems.getPurpleStainedGlassPane());
-                    inv.setItem(36, GUIItems.getPurpleStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getPurpleStainedGlassPane());
-                    inv.setItem(52, GUIItems.getPurpleStainedGlassPane());
-                    inv.setItem(53, GUIItems.getPurpleStainedGlassPane());//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Orochimaru) {
+                        if (roles.getTeam() == TeamList.Mahr) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -240,47 +241,30 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateNSSoloInventory(Player player) {
+    public void updateAOTSoloInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§aNaruto§7 ->§e Solo")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(1, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(9, GUIItems.getOrangeStainedGlassPane());//haut gauche
+                if (inv.getTitle().equals("§fAOT§7 -> §eSolo")) {
+                    this.setRoleInventory(inv, GUIItems.getOrangeStainedGlassPane());
 
-                    inv.setItem(2, GUIItems.getSelectJubiButton());
-                    inv.setItem(3, GUIItems.getSelectBrumeButton());
+                    inv.setItem(2, GUIItems.getSelectMahrButton());
+                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-                    inv.setItem(5, GUIItems.getSelectKumogakureButton());
+                    inv.setItem(5, GUIItems.getSelectSoldatButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(7, GUIItems.getOrangeStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(17, GUIItems.getOrangeStainedGlassPane());
-
-                    inv.setItem(45, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(46, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(36, GUIItems.getOrangeStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(52, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(53, GUIItems.getOrangeStainedGlassPane());//bas droite
-
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ns")) {
+                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("aot")) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -290,63 +274,38 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateNSJubiInventory(Player player) {
+    public void updateAOTConfiguration(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§eSolo§7 ->§d Jubi")) {
-                    inv.clear();
-                    ItemStack glass = GUIItems.getPinkStainedGlassPane();
-                    inv.setItem(0, glass);
-                    inv.setItem(1, glass);
-                    inv.setItem(9, glass);//haut gauche
+                if (inv.getTitle().equalsIgnoreCase("Configuration -> AOT")) {
+                    this.setRoleInventory(inv, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
 
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(7, glass);//haut droite
-                    inv.setItem(8, glass);
-                    inv.setItem(17, glass);
-
-                    inv.setItem(45, glass);
-                    inv.setItem(46, glass);
-                    inv.setItem(36, glass);//bas gauche
-
-                    inv.setItem(44, glass);
-                    inv.setItem(52, glass);
-                    inv.setItem(53, glass);//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
-                    for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Jubi) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
+                    inv.setItem(10, new ItemBuilder(Material.BOW).setName("§rCooldown Equipement Tridimentionnel").setLore("§fCooldownActuel: "+Main.getInstance().getGameConfig().getTridiCooldown()).toItemStack());
+                    if (gameState.rod) {
+                        inv.setItem(11, new ItemBuilder(Material.FISHING_ROD).setName("§rEquipement Tridimentionnel").setLore("§fEquipement actuel:§l Rod Tridimentionnelle").toItemStack());
+                    }else {
+                        inv.setItem(11, new ItemBuilder(Material.BOW).setName("§rEquipement Tridimentionnel").setLore("§fÉquipement actuel:§l Arc Tridimentionnelle").toItemStack());
                     }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
+                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(Main.getInstance().getGameConfig().isLaveTitans() ? "§aActivé" : "§cDésactivé").toItemStack());
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
+
     public void updateConfigInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
@@ -422,78 +381,22 @@ public class Inventories {
         }
         player.updateInventory();
     }
-    public void updateAOTConfiguration(Player player) {
+
+    public void updateNSShinobiInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equalsIgnoreCase("Configuration -> AOT")) {
-                    inv.clear();
-                    inv.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(1, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(9, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-
-                    inv.setItem(7, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(8, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(17, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-
-                    inv.setItem(36, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(45, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(46, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-
-                    inv.setItem(44, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(52, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
-                    inv.setItem(53, new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").toItemStack());
+                if (inv.getTitle().equals("§aNaruto§7 ->§a Shinobi")) {
+                    ItemStack glass = GUIItems.getGreenStainedGlassPane();
+                    setRoleInventory(inv, glass);
 
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-
-                    inv.setItem(10, new ItemBuilder(Material.BOW).setName("§rCooldown Equipement Tridimentionnel").setLore("§fCooldownActuel: "+Main.getInstance().getGameConfig().getTridiCooldown()).toItemStack());
-                    if (gameState.rod) {
-                        inv.setItem(11, new ItemBuilder(Material.FISHING_ROD).setName("§rEquipement Tridimentionnel").setLore("§fEquipement actuel:§l Rod Tridimentionnelle").toItemStack());
-                    }else {
-                        inv.setItem(11, new ItemBuilder(Material.BOW).setName("§rEquipement Tridimentionnel").setLore("§fÉquipement actuel:§l Arc Tridimentionnelle").toItemStack());
-                    }
-                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(Main.getInstance().getGameConfig().isLaveTitans() ? "§aActivé" : "§cDésactivé").toItemStack());
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-    public void updateMahrInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equalsIgnoreCase("§fAOT§7 ->§9 Mahr")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getSBluetainedGlassPane());
-                    inv.setItem(1, GUIItems.getSBluetainedGlassPane());
-                    inv.setItem(9, GUIItems.getSBluetainedGlassPane());//haut gauche
-
-                    inv.setItem(2, GUIItems.getSelectSoloButton());
-                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milleu
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    inv.setItem(5, GUIItems.getSelectSoldatButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(7, GUIItems.getSBluetainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getSBluetainedGlassPane());
-                    inv.setItem(17, GUIItems.getSBluetainedGlassPane());
-
-                    inv.setItem(45, GUIItems.getSBluetainedGlassPane());
-                    inv.setItem(46, GUIItems.getSBluetainedGlassPane());
-                    inv.setItem(36, GUIItems.getSBluetainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getSBluetainedGlassPane());
-                    inv.setItem(52, GUIItems.getSBluetainedGlassPane());
-                    inv.setItem(53, GUIItems.getSBluetainedGlassPane());//bas droite
-
-                    inv.setItem(49, GUIItems.getSelectConfigAotButton());
-
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Mahr) {
+                        if (roles.getTeam() == TeamList.Shinobi) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -503,48 +406,27 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateDemonInventory(Player player) {
+    public void updateNSAkatsukiInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("DemonSlayer -> §cDémons")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(1, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(9, GUIItems.getRedStainedGlassPane());//haut gauche
+                if (inv.getTitle().equals("§aNaruto§7 ->§c Akatsuki")) {
+                    this.setRoleInventory(inv, GUIItems.getRedStainedGlassPane());
 
-                    //	inv.setItem(2, GUIItems.getx());
-                    inv.setItem(3, GUIItems.getSelectSlayersButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-                    inv.setItem(5, GUIItems.getSelectSoloButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-                    inv.setItem(7, GUIItems.getRedStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(17, GUIItems.getRedStainedGlassPane());
 
-                    inv.setItem(45, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(46, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(36, GUIItems.getRedStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(52, GUIItems.getRedStainedGlassPane());
-                    inv.setItem(53, GUIItems.getRedStainedGlassPane());//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(26, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(35, new ItemBuilder(Material.ANVIL).toItemStack());
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Demon) {
+                        if (roles.getTeam() == TeamList.Akatsuki) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -554,48 +436,27 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(26, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateAOTSoloInventory(Player player) {
+    public void updateNSOrochimaruInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§fAOT§7 -> §eSolo")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(1, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(9, GUIItems.getOrangeStainedGlassPane());//haut gauche
+                if (inv.getTitle().equals("§aNaruto§7 ->§5 Orochimaru")) {
+                    this.setRoleInventory(inv, GUIItems.getPurpleStainedGlassPane());
 
-                    inv.setItem(2, GUIItems.getSelectMahrButton());
-                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-                    inv.setItem(5, GUIItems.getSelectSoldatButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(7, GUIItems.getOrangeStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(17, GUIItems.getOrangeStainedGlassPane());
-
-                    inv.setItem(45, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(46, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(36, GUIItems.getOrangeStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(52, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(53, GUIItems.getOrangeStainedGlassPane());//bas droite
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("aot")) {
+                        if (roles.getTeam() == TeamList.Orochimaru) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -605,44 +466,30 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateDSSoloInventory(Player player) {
+    public void updateNSSoloInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("DemonSlayer -> §eSolo")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(1, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(9, GUIItems.getOrangeStainedGlassPane());//haut gauche
+                if (inv.getTitle().equals("§aNaruto§7 ->§e Solo")) {
+                    this.setRoleInventory(inv, GUIItems.getOrangeStainedGlassPane());
 
-                    inv.setItem(3, GUIItems.getSelectDemonButton());//haut milleu
+                    inv.setItem(2, GUIItems.getSelectJubiButton());
+                    inv.setItem(3, GUIItems.getSelectBrumeButton());
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-                    inv.setItem(5, GUIItems.getSelectSlayersButton());
+                    inv.setItem(5, GUIItems.getSelectKumogakureButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(7, GUIItems.getOrangeStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(17, GUIItems.getOrangeStainedGlassPane());
-
-                    inv.setItem(45, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(46, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(36, GUIItems.getOrangeStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(52, GUIItems.getOrangeStainedGlassPane());
-                    inv.setItem(53, GUIItems.getOrangeStainedGlassPane());//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ds")) {
+                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ns")) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -652,50 +499,28 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
+                    this.clearRoleInventory(inv);
                 }
             }
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateSlayerInventory(Player player) {
+    public void updateNSJubiInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("DemonSlayer ->§a Slayers")) {
-                    inv.clear();
-                    inv.setItem(0, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(1, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(9, GUIItems.getGreenStainedGlassPane());//haut gauche
+                if (inv.getTitle().equals("§eSolo§7 ->§d Jubi")) {
+                    ItemStack glass = GUIItems.getPinkStainedGlassPane();
+                    this.setRoleInventory(inv, glass);
 
-                    //	inv.setItem(2, GUIItems.getx());
-                    inv.setItem(3, GUIItems.getSelectDemonButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-                    inv.setItem(5, GUIItems.getSelectSoloButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(7, GUIItems.getGreenStainedGlassPane());//haut droite
-                    inv.setItem(8, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(17, GUIItems.getGreenStainedGlassPane());
-
-                    inv.setItem(45, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(46, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(36, GUIItems.getGreenStainedGlassPane());//bas gauche
-
-                    inv.setItem(44, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(52, GUIItems.getGreenStainedGlassPane());
-                    inv.setItem(53, GUIItems.getGreenStainedGlassPane());//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(26, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(35, new ItemBuilder(Material.ANVIL).toItemStack());
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Slayer) {
+                        if (roles.getTeam() == TeamList.Jubi) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
@@ -705,18 +530,139 @@ public class Inventories {
                             inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
                         }
                     }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(26, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
+                    this.clearRoleInventory(inv);
                 }
             }
-
         }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
+    public void updateNSBrumeInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§eSolo§7 ->§b Zabuza et Haku")) {
+                    ItemStack glass = GUIItems.getPinkStainedGlassPane();
+                    this.setRoleInventory(inv, glass);
+
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Zabuza_et_Haku) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    this.clearRoleInventory(inv);
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+    public void updateNSKumogakure(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§eSolo§7 ->§6 Kumogakure")) {
+                    ItemStack glass = GUIItems.getOrangeStainedGlassPane();
+                    this.setRoleInventory(inv, glass);
+
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Kumogakure) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    this.clearRoleInventory(inv);
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+
+    public void updateOverworldInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§aMinecraft§7 ->§a Overworld")) {
+                    final ItemStack glass = GUIItems.getGreenStainedGlassPane();
+                    this.setRoleInventory(inv, glass);
+
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.OverWorld) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    this.clearRoleInventory(inv);
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+    public void updateNetherInventory(Player player) {
+        InventoryView invView = player.getOpenInventory();
+        if (invView != null) {
+            Inventory inv = invView.getTopInventory();
+            if (inv != null) {
+                if (inv.getTitle().equals("§aMinecraft§7 ->§c Nether")) {
+                    final ItemStack glass = GUIItems.getRedStainedGlassPane();
+                    this.setRoleInventory(inv, glass);
+
+                    inv.setItem(4, GUIItems.getSelectBackMenu());
+                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
+                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+
+                    for (GameState.Roles roles : GameState.Roles.values()) {
+                        if (roles.getTeam() == TeamList.Nether) {
+                            String l1;
+                            if (gameState.getAvailableRoles().get(roles) > 0) {
+                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                            } else {
+                                l1 = "§c(0)";
+                            }
+                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        }
+                    }
+                    this.clearRoleInventory(inv);
+                }
+            }
+        }
+        player.updateInventory();
+        gameState.updateGameCanLaunch();
+    }
+
     public void updateAdminInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
@@ -992,167 +938,6 @@ public class Inventories {
         }
         player.updateInventory();
     }
-    public void updateNSKumogakure(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§eSolo§7 ->§6 Kumogakure")) {
-                    inv.clear();
-                    ItemStack glass = GUIItems.getOrangeStainedGlassPane();
-                    inv.setItem(0, glass);
-                    inv.setItem(1, glass);
-                    inv.setItem(9, glass);//haut gauche
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    inv.setItem(7, glass);//haut droite
-                    inv.setItem(8, glass);
-                    inv.setItem(17, glass);
-
-                    inv.setItem(45, glass);
-                    inv.setItem(46, glass);
-                    inv.setItem(36, glass);//bas gauche
-
-                    inv.setItem(44, glass);
-                    inv.setItem(52, glass);
-                    inv.setItem(53, glass);//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
-                    for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Kumogakure) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-    public void updateNSShinobiInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§aNaruto§7 ->§a Shinobi")) {
-                    inv.clear();
-                    ItemStack glass = GUIItems.getGreenStainedGlassPane();
-                    inv.setItem(0, glass);
-                    inv.setItem(1, glass);
-                    inv.setItem(9, glass);//haut gauche
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    inv.setItem(7, glass);//haut droite
-                    inv.setItem(8, glass);
-                    inv.setItem(17, glass);
-
-                    inv.setItem(45, glass);
-                    inv.setItem(46, glass);
-                    inv.setItem(36, glass);//bas gauche
-
-                    inv.setItem(44, glass);
-                    inv.setItem(52, glass);
-                    inv.setItem(53, glass);//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(26, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(35, new ItemBuilder(Material.ANVIL).toItemStack());
-                    for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Shinobi) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(26, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-    public void updateNSBrumeInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§eSolo§7 ->§b Zabuza et Haku")) {
-                    inv.clear();
-                    ItemStack glass = GUIItems.getPinkStainedGlassPane();
-                    inv.setItem(0, glass);
-                    inv.setItem(1, glass);
-                    inv.setItem(9, glass);//haut gauche
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    inv.setItem(7, glass);//haut droite
-                    inv.setItem(8, glass);
-                    inv.setItem(17, glass);
-
-                    inv.setItem(45, glass);
-                    inv.setItem(46, glass);
-                    inv.setItem(36, glass);//bas gauche
-
-                    inv.setItem(44, glass);
-                    inv.setItem(52, glass);
-                    inv.setItem(53, glass);//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
-                    for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Zabuza_et_Haku) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
     public void openConfigBijusInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
@@ -1231,106 +1016,40 @@ public class Inventories {
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }
-    public void updateOverworldInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§aMinecraft§7 ->§a Overworld")) {
-                    inv.clear();
-                    ItemStack glass = GUIItems.getGreenStainedGlassPane();
-                    inv.setItem(0, glass);
-                    inv.setItem(1, glass);
-                    inv.setItem(9, glass);//haut gauche
 
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
+    private void setRoleInventory(@NonNull final Inventory inventaire, @NonNull final ItemStack glass) {
+        inventaire.clear();
+        inventaire.setItem(0, glass);
+        inventaire.setItem(1, glass);
+        inventaire.setItem(9, glass);//haut gauche
 
-                    inv.setItem(7, glass);//haut droite
-                    inv.setItem(8, glass);
-                    inv.setItem(17, glass);
+        //	inv.setItem(2, GUIItems.getx());
+        if (gameState.gameCanLaunch) inventaire.setItem(6, GUIItems.getStartGameButton());
+        if (!gameState.gameCanLaunch) inventaire.setItem(6, GUIItems.getCantStartGameButton());
 
-                    inv.setItem(45, glass);
-                    inv.setItem(46, glass);
-                    inv.setItem(36, glass);//bas gauche
+        inventaire.setItem(7, glass);//haut droite
+        inventaire.setItem(8, glass);
+        inventaire.setItem(17, glass);
 
-                    inv.setItem(44, glass);
-                    inv.setItem(52, glass);
-                    inv.setItem(53, glass);//bas droite
+        inventaire.setItem(45, glass);
+        inventaire.setItem(46, glass);
+        inventaire.setItem(36, glass);//bas gauche
 
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
-                    for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.OverWorld) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
+        inventaire.setItem(44, glass);
+        inventaire.setItem(52, glass);
+        inventaire.setItem(53, glass);//bas droite
+
+        inventaire.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
+        inventaire.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
+        inventaire.setItem(27, new ItemBuilder(Material.ANVIL).toItemStack());
+        inventaire.setItem(26, new ItemBuilder(Material.ANVIL).toItemStack());
+        inventaire.setItem(35, new ItemBuilder(Material.ANVIL).toItemStack());
     }
-    public void updateNetherInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§aMinecraft§7 ->§c Nether")) {
-                    inv.clear();
-                    ItemStack glass = GUIItems.getRedStainedGlassPane();
-                    inv.setItem(0, glass);
-                    inv.setItem(1, glass);
-                    inv.setItem(9, glass);//haut gauche
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    inv.setItem(7, glass);//haut droite
-                    inv.setItem(8, glass);
-                    inv.setItem(17, glass);
-
-                    inv.setItem(45, glass);
-                    inv.setItem(46, glass);
-                    inv.setItem(36, glass);//bas gauche
-
-                    inv.setItem(44, glass);
-                    inv.setItem(52, glass);
-                    inv.setItem(53, glass);//bas droite
-
-                    inv.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.ANVIL).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.ANVIL).toItemStack());
-                    for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Nether) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(3, new ItemBuilder(Material.AIR).toItemStack());
-                    inv.setItem(5, new ItemBuilder(Material.AIR).toItemStack());
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
+    private void clearRoleInventory (@NonNull final Inventory inventory) {
+        inventory.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
+        inventory.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
+        inventory.setItem(27, new ItemBuilder(Material.AIR).toItemStack());
+        inventory.setItem(26, new ItemBuilder(Material.AIR).toItemStack());
+        inventory.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
     }
 }

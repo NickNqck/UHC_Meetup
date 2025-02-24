@@ -245,7 +245,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (soldat) {
                             player.openInventory(GUIItems.getSecretSoldatGui());
@@ -292,7 +292,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (solo) {
                             player.openInventory(GUIItems.getAOTSoloSelectGUI());
@@ -347,7 +347,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (solo) {
                             player.openInventory(GUIItems.getAOTSoloSelectGUI());
@@ -397,7 +397,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (solo) {
                             player.openInventory(GUIItems.getAOTSoloSelectGUI());
@@ -513,7 +513,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (soldat) {
                             player.openInventory(GUIItems.getSecretSoldatGui());
@@ -534,7 +534,7 @@ public class HubInventory implements Listener {
                                 }
                                 if (titans) {
                                     player.openInventory(GUIItems.getSecretTitansGui());
-                                    Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                                    Main.getInstance().getInventories().updateTitansInventory(player);
                                 }
                                 if (soldat) {
                                     player.openInventory(GUIItems.getSecretSoldatGui());
