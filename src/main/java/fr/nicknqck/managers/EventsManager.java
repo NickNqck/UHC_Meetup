@@ -13,8 +13,6 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,7 +30,6 @@ import java.util.List;
 @Getter
 public class EventsManager implements Listener {
 
-    private static final Logger log = LogManager.getLogger(EventsManager.class);
     private final List<Event> eventsList = new ArrayList<>();
     private boolean tryed = false;
 
@@ -153,7 +150,7 @@ public class EventsManager implements Listener {
     }
     private Event getEvent(final String name) {
         for (final Event event : eventsList) {
-            if (name.equals(event.getName())) {
+            if (name.equals(event.getName()) || name.equals(event.getMenuItem().getItemMeta().getDisplayName())) {
                 return event;
             }
         }
