@@ -75,6 +75,11 @@ public class GamePlayer {
 	public void onJoin(Player player) {
 		if (this.discRunnable != null) {
 			player.sendMessage(this.discRunnable.toSend);
+			if (!this.discRunnable.toRemove.isEmpty()) {
+				for (final ItemStack item : this.discRunnable.toRemove) {
+					player.getInventory().remove(item);
+				}
+			}
 			this.discRunnable.online = true;
 			this.discRunnable.cancel();
 			this.discRunnable = null;
@@ -132,6 +137,18 @@ public class GamePlayer {
 			this.discRunnable.setMessagesToSend(messages);
 		}
 	}
+	public void removeItem(final ItemStack... items) {
+		final Player owner = Bukkit.getPlayer(getUuid());
+		if (owner != null) {
+			for (final ItemStack item : items) {
+				owner.getInventory().remove(item);
+			}
+		} else {
+			for (final ItemStack item : items) {
+				this.discRunnable.addItemToRemove(item);
+			}
+		}
+	}
 	@SafeVarargs
     public final void startChatWith(final String begin, final String constructor, final Class<? extends RoleBase>... roleToTalks) {
 		this.chatWithManager.add(new ChatWithManager(begin, constructor, this, roleToTalks));
@@ -143,14 +160,19 @@ public class GamePlayer {
 		private String[] toSend = new String[0];
 		@Getter
 		private boolean online = true;
+		private final List<ItemStack> toRemove;
 
 		private DiscRunnable(GamePlayer gamePlayer) {
 			this.gamePlayer = gamePlayer;
 			this.gameState = GameState.getInstance();
+			this.toRemove = new ArrayList<>();
 		}
 
 		private void setMessagesToSend(final String[] messages) {
 			this.toSend = messages;
+		}
+		private void addItemToRemove(final ItemStack item) {
+			toRemove.add(item);
 		}
 
 		@Override
