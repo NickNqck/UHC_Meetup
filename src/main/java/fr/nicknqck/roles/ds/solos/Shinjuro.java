@@ -105,8 +105,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 	}
 	@Override
 	public ItemStack[] getItems() {
-		return new ItemStack[] {
-		};
+		return new ItemStack[0];
 	}
 	@Override
  	public void Update(GameState gameState) {
