@@ -157,29 +157,6 @@ public abstract class Items {
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
-
-	  public static ItemStack getJoueurZenItsuSpeed() {
-		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"Premier Mouvement du Soufle de la Foudre");
-		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	  
-	  public static ItemStack getSoufleFoudre3iememouvement() {
-		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"3ième mouvement du Soufle de la Foudre");
-		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-		  meta.spigot().setUnbreakable(true);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
 	  public static ItemStack getSoufleFoudre4iememouvement() {
 		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 		  ItemMeta meta = stack.getItemMeta();
@@ -191,32 +168,10 @@ public abstract class Items {
 		  stack.setItemMeta(meta);
 		  return stack;
 	  }
-	  public static ItemStack getVitesse() {
-		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"Vitesse");
-		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-		  meta.spigot().setUnbreakable(true);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.RESET+"."));
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
 	  public static ItemStack getPouvoirSanginaire() {
 		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
 		  ItemMeta meta = stack.getItemMeta();
 		  meta.setDisplayName(ChatColor.GOLD+"Pouvoir Sanginaire");
-		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
-		  meta.spigot().setUnbreakable(true);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
-	  public static ItemStack getFormeDemoniaque() {
-		  ItemStack stack = new ItemStack(Material.NETHER_STAR);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.GOLD+"Forme Démoniaque");
 		  meta.addEnchant(Enchantment.ARROW_INFINITE, 3, true);
 		  meta.spigot().setUnbreakable(true);
 		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -241,16 +196,6 @@ public abstract class Items {
 			meta.spigot().setUnbreakable(true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			meta.setLore(Arrays.asList("§rUtilisation: "+ChatColor.GOLD+"Click Droit"+ChatColor.DARK_PURPLE+"."));
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getUrokodakiBoots() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_BOOTS, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2, true);
-			meta.addEnchant(Enchantment.DEPTH_STRIDER, 2, true);
-			meta.setDisplayName(ChatColor.GOLD+"Botte d'ancien Pillier de l'Eau");
-			meta.spigot().setUnbreakable(true);
 			stack.setItemMeta(meta);
 			return stack;
 		}
