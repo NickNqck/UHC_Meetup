@@ -39,7 +39,7 @@ public abstract class Power {
     }
 
     public boolean checkUse(Player player, Map<String, Object> args) {
-        GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(player.getUniqueId());
+        final GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(player.getUniqueId());
 
         if (gamePlayer.getRole() == null) {
             player.sendMessage("§cVous n'avez pas de rôle.");
@@ -61,16 +61,7 @@ public abstract class Power {
             return false;
         }
 
-        PowerActivateEvent powerActivateEvent = new PowerActivateEvent(this.plugin, player, this);
-        this.plugin.getServer().getPluginManager().callEvent(powerActivateEvent);
-        if (powerActivateEvent.isCancel()) {
-            if (powerActivateEvent.getCancelMessage() != null) {
-                player.sendMessage(powerActivateEvent.getCancelMessage());
-            } else {
-                player.sendMessage("§cDésolé, pouvoir inutilisable.");
-            }
-            return false;
-        }
+        checkIfPowerEnable(player);
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
@@ -92,6 +83,19 @@ public abstract class Power {
         return canUse;
     }
     public abstract boolean onUse(Player player, Map<String, Object> map);
+    public boolean checkIfPowerEnable(final Player player) {
+        final PowerActivateEvent powerActivateEvent = new PowerActivateEvent(this.plugin, player, this);
+        this.plugin.getServer().getPluginManager().callEvent(powerActivateEvent);
+        if (powerActivateEvent.isCancel()) {
+            if (powerActivateEvent.getCancelMessage() != null) {
+                player.sendMessage(powerActivateEvent.getCancelMessage());
+            } else {
+                player.sendMessage("§cCe pouvoir n'est pas utilisable pour le moment, réessayer plus tard !.");
+            }
+            return false;
+        }
+        return true;
+    }
 
     public void onEndCooldown(final Cooldown cooldown) {
         if (this.cooldown == null)return;
