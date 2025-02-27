@@ -47,12 +47,10 @@ public class AllianceV2 extends Event implements Listener {
                 }
                 if (gamePlayer.getRole() instanceof Shinjuro) {
                     Shinjuro s = (Shinjuro) gamePlayer.getRole();
-                    s.owner.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Kyojuro).getName());
-                    s.owner.sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
-                    s.owner.getInventory().removeItem(Items.getSake());
-                    s.setSakeCooldown(-1);
+                    s.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Kyojuro).getName());
+                    s.getGamePlayer().sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
                     this.shinjuro = s;
-                    this.shinjuro.alliance = true;
+                    s.procAlliance();
                 }
             }
         }
