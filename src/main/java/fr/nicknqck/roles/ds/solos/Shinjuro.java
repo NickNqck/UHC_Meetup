@@ -3,7 +3,6 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -15,6 +14,12 @@ import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.TripleMap;
+import fr.nicknqck.utils.event.EventUtils;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,22 +28,22 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class Shinjuro extends DemonsSlayersRoles {
 
 	public boolean alliance = false;
-	private boolean usesoufle = false;
-	private int cooldownsake = 0;
-	private int souflecooldown = 0;
 	private boolean killkyojuro = false;
 	private int regencooldown = 10;
-	private TextComponent desc;
 	public Shinjuro(UUID player) {
 		super(player);
 	}
@@ -55,18 +60,13 @@ public class Shinjuro extends DemonsSlayersRoles {
 		setMaxHealth(24.0);
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		setLameIncassable(owner, true);
-		AutomaticDesc desc = new AutomaticDesc(this);
-		desc.addEffects(getEffects());
-		desc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous offre l'effet§b Speed I§7 pendant§c 1m30s§7\n\n§7Si vous avez tuer§a Kyojuro§7 vous aurez l'effet§b Speed II§7 à la place")}), "§6Sake", 60*5),
-				new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'§aactiver§7/§cdésactiver§7 votre effet de§6 Fire Résistance I")}), "§6Soufle du feu", 5))
-				.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Quand vous êtes sous l'effet de votre§6 Soufle du feu§7 vos coups mette en§c feu§7.")}),
-						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous vous§d régénérez§7 de§c 1/2"+AllDesc.coeur+"§7 toute les§c 10 secondes")}));
-		this.desc = desc.getText();
+		addPower(new SakePower(this), true);
+		addPower(new SouflePower(this), true);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Shinjuro;
 	}
 
@@ -76,8 +76,27 @@ public class Shinjuro extends DemonsSlayersRoles {
 	}
 
 	@Override
+	public void resetCooldown() {}
+
+	@Override
 	public TextComponent getComponent() {
-		return desc;
+		return new AutomaticDesc(this)
+				.addEffects(getEffects())
+				.setItems(
+						new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+								new TextComponent("§7Vous offre l'effet§b Speed I§7 pendant§c 1m30s§7\n\n§7Si vous avez tuer§a Kyojuro§7 vous aurez l'effet§b Speed II§7 à la place")
+						}), "§6Sake", 60*5),
+						new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+								new TextComponent("§7Vous permet d'§aactiver§7/§cdésactiver§7 votre effet de§6 Fire Résistance I")
+						}), "§6Soufle du feu", 5))
+				.addParticularites(
+						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+								new TextComponent("§7Quand vous êtes sous l'effet de votre§6 Soufle du feu§7 vos coups mette en§c feu§7.")
+						}),
+						new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+								new TextComponent("§7Vous vous§d régénérez§7 de§c 1/2"+AllDesc.coeur+"§7 toute les§c 10 secondes")
+						}))
+				.getText();
 	}
 
 	@Override
@@ -85,24 +104,9 @@ public class Shinjuro extends DemonsSlayersRoles {
 		return new String[0];
 	}
 	@Override
-	public void GiveItems() {
-		giveItem(owner, false, getItems());
-		giveItem(owner, false, Items.getLamedenichirin());
-	}
-	@Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
-				Items.getSake(),
-				Items.getSoufleDuFeu()
 		};
-	}
-	public void setSakeCooldown(int i) {
-		cooldownsake = i;
-	}
-	@Override
-	public void resetCooldown() {
-		cooldownsake = 0;
-		souflecooldown = 0;
 	}
 	@Override
  	public void Update(GameState gameState) {
@@ -115,58 +119,12 @@ public class Shinjuro extends DemonsSlayersRoles {
 				}
 			}
 		}
-		if (owner.getItemInHand().isSimilar(Items.getSake())) {
-			sendActionBarCooldown(owner, cooldownsake);
-		}
-		if (owner.getItemInHand().isSimilar(Items.getSoufleDuFeu())) {
-			sendActionBarCooldown(owner, souflecooldown);
-		}
-		if (cooldownsake >= 1) cooldownsake--;
-		if (souflecooldown >= 1) souflecooldown--;
 		if (regencooldown >= 1) {
 			   regencooldown--;
 		}
-		if (usesoufle) {
-			owner.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 0, false, false));
-			if (killkyojuro) owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 0, false, false));
-		} else {
-			owner.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-			if (killkyojuro && owner.hasPotionEffect(PotionEffectType.SPEED)) owner.removePotionEffect(PotionEffectType.SPEED);
-		}
 		super.Update(gameState);
 	}
-	@Override
-	public boolean ItemUse(ItemStack item, GameState gameState) {
-		if (item != null) {
-			if (item.isSimilar(Items.getSake())) {
-				if (cooldownsake <= 0) {
-						owner.sendMessage("§7Vous venez de boire de l'alcool");
-						owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*((60 + 30)), 0, false, false));
-						if (killkyojuro) {
-							owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*((60 + 30)), 1, false, false), true);
-						}
-						cooldownsake = 60*5;
-				}else {
-					sendCooldown(owner, cooldownsake);
-				}
-			}
-			if (item.isSimilar(Items.getSoufleDuFeu())) {
-				if (souflecooldown <= 0) {
-					if (!usesoufle) {
-						owner.sendMessage("Vous venez d'activer le Soufle du Feu");
-						usesoufle = true;
-                    } else {
-						owner.sendMessage("Vous venez de désactiver le Soufle du Feu");
-						usesoufle = false;
-                    }
-                    souflecooldown = 3;
-                } else {
-					sendCooldown(owner, souflecooldown);
-				}
-			}
-		}
-		return super.ItemUse(item, gameState);
-	}
+
 	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (killer == owner) {
@@ -184,20 +142,27 @@ public class Shinjuro extends DemonsSlayersRoles {
 		}
 		super.PlayerKilled(killer, victim, gameState);
 	}
-	@Override
-	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {
-		if (victim == null) return;
-		if (item == null) return;
-		if (victim == owner) return;
-		if (!usesoufle) return;
-		int x = 10 * 20;
-        victim.setFireTicks(x);
-        super.ItemUseAgainst(item, victim, gameState);
-	}
+
 	@Override
 	public String getName() {
 		return "Shinjuro";
 	}
+
+	public void procAlliance() {
+		this.alliance = true;
+		Power power = null;
+		for (final Power p : this.getPowers()) {
+			if (p instanceof SakePower) {
+				power = p;
+				break;
+			}
+		}
+		if (power == null)return;
+		power.setSendCooldown(false);
+		((SakePower) power).setShowCdInHand(false);
+		getPowers().remove(power);
+	}
+
 	private static class onTick extends BukkitRunnable {
 		private final Shinjuro shinjuro;
 		private onTick(Shinjuro shinjuro) {
@@ -239,6 +204,78 @@ public class Shinjuro extends DemonsSlayersRoles {
 					if (shinjuro.regencooldown != 10) shinjuro.regencooldown = 10;
 				}
 			});
+		}
+	}
+	private static class SakePower extends ItemPower {
+
+		private final Shinjuro shinjuro;
+
+		protected SakePower(@NonNull Shinjuro role) {
+			super("§6Sake", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§6Sake"), role);
+			this.shinjuro = role;
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> map) {
+			if (getInteractType().equals(InteractType.INTERACT)) {
+				player.sendMessage("Vous venez de boire de l'alcool");
+				if (!this.shinjuro.killkyojuro){
+					this.shinjuro.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*90, 0, false, false), EffectWhen.NOW);
+				} else {
+					this.shinjuro.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*90, 1, false, false), EffectWhen.NOW);
+				}
+				return true;
+			}
+			return false;
+		}
+	}
+	private static class SouflePower extends ItemPower implements Listener {
+
+		private boolean use = false;
+		private final PotionEffect fireResistance;
+		private final PotionEffect speed;
+		private final Shinjuro shinjuro;
+
+		protected SouflePower(@NonNull Shinjuro role) {
+			super("§6Soufle du Feu", new Cooldown(3), new ItemBuilder(Material.NETHER_STAR).setName("§6Soufle du Feu"), role);
+			this.shinjuro = role;
+			this.fireResistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false);
+			this.speed = new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false);
+			EventUtils.registerRoleEvent(this);
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> map) {
+			if (getInteractType().equals(InteractType.INTERACT)) {
+				if (this.use) {
+					player.sendMessage("Vous avez§c désactivé§f votre "+getName());
+					getRole().getEffects().remove(this.fireResistance, EffectWhen.PERMANENT);
+					player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+					if (this.shinjuro.killkyojuro) {
+						getRole().getEffects().remove(speed, EffectWhen.PERMANENT);
+						player.removePotionEffect(PotionEffectType.SPEED);
+					}
+					this.use = false;
+				} else {
+					player.sendMessage("Vous avez§a activé§f votre "+getName());
+					getRole().givePotionEffect(this.fireResistance, EffectWhen.PERMANENT);
+					if (this.shinjuro.killkyojuro) {
+						getRole().givePotionEffect(this.speed, EffectWhen.PERMANENT);
+					}
+					this.use = true;
+				}
+				return true;
+			}
+			return false;
+		}
+		@EventHandler
+		private void UHCPlayerBattleEvent(final EntityDamageByEntityEvent event) {
+			if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
+			if (!(event.getEntity() instanceof Player))return;
+			if (!(event.getDamager() instanceof Player))return;
+			if (!checkIfPowerEnable((Player) event.getDamager()))return;
+			if (!this.use)return;
+			event.getEntity().setFireTicks(event.getEntity().getFireTicks()+150);
 		}
 	}
 }
