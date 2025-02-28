@@ -82,7 +82,7 @@ public class Sasuke extends UchiwaRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Sasuke;
 	}
 

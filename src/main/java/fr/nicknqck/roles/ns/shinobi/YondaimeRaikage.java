@@ -35,7 +35,7 @@ public class YondaimeRaikage extends ShinobiRoles {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Raikage;
 	}
 	@Override

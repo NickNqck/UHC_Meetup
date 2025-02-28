@@ -16,6 +16,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -119,7 +120,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         return "Pourfendeur Simple§7 (§eV2§7)§r";
     }
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Slayer;
     }
     @Override

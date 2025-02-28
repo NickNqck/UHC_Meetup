@@ -6,6 +6,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.mc.builders.NetherRoles;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -59,7 +60,7 @@ public class Brute extends NetherRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Brute;
     }
 

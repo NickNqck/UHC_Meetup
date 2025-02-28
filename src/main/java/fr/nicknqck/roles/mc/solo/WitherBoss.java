@@ -8,6 +8,7 @@ import fr.nicknqck.roles.mc.builders.UHCMcRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class WitherBoss extends UHCMcRoles {
         super(player);
     }
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Wither;
     }
 

@@ -44,7 +44,7 @@ public class Jiraya extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public GameState.@NonNull Roles getRoles() {
 		return Roles.Jiraya;
 	}
 	@Override

@@ -9,6 +9,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.NetherRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -54,7 +55,7 @@ public class MagmaCube extends NetherRoles implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.MagmaCube;
     }
 

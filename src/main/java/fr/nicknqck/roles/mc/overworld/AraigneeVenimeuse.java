@@ -6,6 +6,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -78,7 +79,7 @@ public class AraigneeVenimeuse extends UHCMcRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.AraigneeVenimeuse;
     }
 

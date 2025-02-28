@@ -10,6 +10,7 @@ import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
 import fr.nicknqck.roles.builder.TeamList;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -38,7 +39,7 @@ public class Eren extends AotRoles {
 		Titans.Assaillant.getTitan().getListener().setAssaillant(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Eren;
 	}
 

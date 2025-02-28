@@ -55,7 +55,7 @@ public class ShinobuV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Shinobu;
     }
 

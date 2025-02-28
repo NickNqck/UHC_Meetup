@@ -66,7 +66,7 @@ public class Zabuza extends NSRoles implements Listener {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public GameState.@NonNull Roles getRoles() {
 		return Roles.Zabuza;
 	}
 	@Override

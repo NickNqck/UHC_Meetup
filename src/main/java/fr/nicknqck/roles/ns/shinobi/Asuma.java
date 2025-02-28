@@ -31,7 +31,7 @@ public class Asuma extends ShinobiRoles {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public GameState.Roles getRoles() {
+	public GameState.@NonNull Roles getRoles() {
 		return Roles.Asuma;
 	}
 	@Override

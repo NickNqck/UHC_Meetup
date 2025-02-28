@@ -43,7 +43,7 @@ public class Minato extends ShinobiRoles {
 
 	private Location Kunai = null;
 	@Override
-	public GameState.Roles getRoles() {
+	public GameState.@NonNull Roles getRoles() {
 		return Roles.Minato;
 	}
 	@Override

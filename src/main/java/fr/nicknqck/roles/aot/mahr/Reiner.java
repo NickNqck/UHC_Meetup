@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class Reiner extends MahrRoles {
 		Titans.Cuirasse.getTitan().getListener().setCuirasse(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Reiner;
 	}
 	@Override

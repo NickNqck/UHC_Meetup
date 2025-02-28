@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,7 +20,7 @@ public class Pieck extends MahrRoles {
 		Titans.Charette.getTitan().getListener().setCharette(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Pieck;
 	}
 	@Override

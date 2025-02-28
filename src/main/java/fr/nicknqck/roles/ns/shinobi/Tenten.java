@@ -39,7 +39,7 @@ public class Tenten extends ShinobiRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.TenTen;
 	}
 	@Override

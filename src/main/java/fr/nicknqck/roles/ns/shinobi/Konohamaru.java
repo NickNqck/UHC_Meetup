@@ -37,7 +37,7 @@ public class Konohamaru extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public GameState.@NonNull Roles getRoles() {
 		return Roles.Konohamaru;
 	}
 	@Override

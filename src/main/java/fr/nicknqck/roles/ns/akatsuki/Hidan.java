@@ -30,7 +30,7 @@ public class Hidan extends AkatsukiRoles {
 		setChakraType(getRandomChakras());
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Hidan;
 	}
 	@Override
