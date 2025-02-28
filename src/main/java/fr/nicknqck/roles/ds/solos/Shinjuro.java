@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -43,7 +44,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 
 	public boolean alliance = false;
 	private boolean killkyojuro = false;
-	private int regencooldown = 10;
 	public Shinjuro(UUID player) {
 		super(player);
 	}
@@ -62,7 +62,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 		setLameIncassable(owner, true);
 		addPower(new SakePower(this), true);
 		addPower(new SouflePower(this), true);
-		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+		addPower(new RegenerationPower(this));
 	}
 
 	@Override
@@ -118,10 +118,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 				}
 			}
 		}
-		if (regencooldown >= 1) {
-			   regencooldown--;
-		}
-		super.Update(gameState);
 	}
 
 	@Override
@@ -162,49 +158,6 @@ public class Shinjuro extends DemonsSlayersRoles {
 		getPowers().remove(power);
 	}
 
-	private static class onTick extends BukkitRunnable {
-		private final Shinjuro shinjuro;
-		private onTick(Shinjuro shinjuro) {
-			this.shinjuro = shinjuro;
-		}
-		@Override
-		public void run() {
-			if (!shinjuro.getGameState().getServerState().equals(GameState.ServerStates.InGame) || !shinjuro.getGamePlayer().isAlive()) {
-				cancel();
-				return;
-			}
-			if (shinjuro.alliance) {
-				if (shinjuro.gameState.getOwner(Roles.Kyojuro) != null) {
-					shinjuro.sendCustomActionBar(shinjuro.owner, Loc.getDirectionMate(shinjuro.owner, shinjuro.gameState.getOwner(Roles.Kyojuro), true));
-				}
-			}
-			Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-				Material m = shinjuro.owner.getPlayer().getLocation().getBlock().getType();
-				Location y1 = new Location(shinjuro.owner.getWorld(), shinjuro.owner.getLocation().getX(), shinjuro.owner.getLocation().getY()+1, shinjuro.owner.getLocation().getZ());
-				Material a = y1.getBlock().getType();
-				if (m == Material.LAVA || m == Material.STATIONARY_LAVA || a == Material.LAVA || a == Material.STATIONARY_LAVA) {
-					if (shinjuro.owner.getHealth() != shinjuro.getMaxHealth()) {
-						if (shinjuro.regencooldown == 0) {
-							double max = shinjuro.getMaxHealth();
-							double ahealth = shinjuro.owner.getHealth();
-							double dif = max-ahealth;
-							if (!(dif <= 1.0)) {
-								shinjuro.Heal(shinjuro.owner, 1);
-								shinjuro.owner.sendMessage("§7Vous venez de gagné§c 1/2"+AllDesc.coeur+"§7 suite à votre temp passé au chaud");
-							} else {
-								shinjuro.owner.setHealth(max);
-							}
-							shinjuro.regencooldown = 10;
-						}else {
-							shinjuro.sendCustomActionBar(shinjuro.owner, "§7Temp avant§d régénération§7:§l "+shinjuro.regencooldown+"s");
-						}
-					}
-				} else {
-					if (shinjuro.regencooldown != 10) shinjuro.regencooldown = 10;
-				}
-			});
-		}
-	}
 	private static class SakePower extends ItemPower {
 
 		private final Shinjuro shinjuro;
@@ -275,6 +228,61 @@ public class Shinjuro extends DemonsSlayersRoles {
 			if (!checkIfPowerEnable((Player) event.getDamager()))return;
 			if (!this.use)return;
 			event.getEntity().setFireTicks(event.getEntity().getFireTicks()+150);
+		}
+	}
+	private static class RegenerationPower extends Power {
+
+		public RegenerationPower(@NonNull RoleBase role) {
+			super("Régénération", null, role);
+			new RegenRunnable(role.getGameState(), role.getGamePlayer());
+		}
+
+		@Override
+		public boolean onUse(Player player, Map<String, Object> map) {
+			return true;
+		}
+		private static class RegenRunnable extends BukkitRunnable {
+
+			private final GameState gameState;
+			private final GamePlayer gamePlayer;
+			private int regenTimeLeft;
+
+            private RegenRunnable(GameState gameState, GamePlayer gamePlayer) {
+                this.gameState = gameState;
+                this.gamePlayer = gamePlayer;
+				this.regenTimeLeft = 10;
+				runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+
+            @Override
+			public void run() {
+				if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+					cancel();
+					return;
+				}
+				final Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
+				if (owner == null) {
+					this.regenTimeLeft = 10;
+					return;
+				}
+				final Location location = owner.getLocation();
+				final Location eye = owner.getEyeLocation();
+				if (location.getBlock().getType().name().contains("LAVA") || location.getBlock().getType().name().contains("FIRE")
+				|| eye.getBlock().getType().name().contains("LAVA") || eye.getBlock().getType().name().contains("FIRE")) {
+					this.regenTimeLeft--;
+					if (!this.gamePlayer.getActionBarManager().containsKey("shinjuro.healtime")) {
+						gamePlayer.getActionBarManager().addToActionBar("shinjuro.healtime", "§bTemp avant§d régénération§b:§c "+this.regenTimeLeft+"s");
+					} else {
+						this.gamePlayer.getActionBarManager().updateActionBar("shinjuro.healtime", "§bTemp avant§d régénération§b:§c "+this.regenTimeLeft+"s");
+					}
+				} else {
+					this.gamePlayer.getActionBarManager().removeInActionBar("shinjuro.healtime");
+				}
+				if (this.regenTimeLeft <= 0) {
+					Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.setHealth(Math.min(owner.getMaxHealth(), owner.getHealth()+1.0)));
+					this.regenTimeLeft = 10;
+				}
+			}
 		}
 	}
 }
