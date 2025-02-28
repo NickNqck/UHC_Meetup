@@ -15,7 +15,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.custom.LeComte;
 import fr.nicknqck.roles.custom.LeJuge;
-import fr.nicknqck.roles.custom.SwaperBoy;
+import fr.nicknqck.roles.custom.Heldige;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -244,7 +244,7 @@ public class GameState{
 		//Custom roles
 		LeComte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck"),
 		LeJuge(TeamList.Solo, "custom", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eLe Juge").toItemStack(), "§bNickNqck"),
-		TheSwapper(TeamList.Solo, "custom", 2, new ItemBuilder(Material.ENDER_PEARL).setName("§eLe téléporteur").toItemStack(), "§bNickNqck§7 &§b Mega02600")
+		Heldige(TeamList.Solo, "custom", 2, new ItemBuilder(Material.ENDER_PEARL).setName("§eHeldige").toItemStack(), "§bNickNqck§7 &§b Mega02600")
 		;
 		private final TeamList team;
 		private final String mdj;
@@ -792,8 +792,8 @@ public class GameState{
 			case Neon:
 				role = new Neon(player);
 				break;
-			case TheSwapper:
-				role = new SwaperBoy(player);
+			case Heldige:
+				role = new Heldige(player);
 				break;
 		}
 		if (role == null) return null;
