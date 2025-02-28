@@ -71,6 +71,9 @@ public class HubInventory implements Listener {
                                     player.openInventory(GUIItems.getSelectNSInventory());
                                     Main.getInstance().getInventories().updateNSInventory(player);
                                 }
+                                if (item.isSimilar(GameState.MDJ.KRYSTAL.getItem())) {
+                                    Main.getInstance().getInventories().openKrystalInventory(player);
+                                }
                                 if (item.isSimilar(GUIItems.getSelectMCButton())) {
                                     player.openInventory(GUIItems.getSelectMCInventory());
                                     Main.getInstance().getInventories().updateMCInventory(player);
@@ -796,6 +799,32 @@ public class HubInventory implements Listener {
                             if (p == null)return;
                             Main.getInstance().getInventories().updateNetherInventory(p);
                         }
+                        event.setCancelled(true);
+                        break;
+                    case "§dKrystal UHC":
+                        if (item.isSimilar(GUIItems.getSelectSoloButton())) {
+                            Main.getInstance().getInventories().openKrystalSoloInventory(player);
+                        }
+                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+                            player.openInventory(GUIItems.getRoleSelectGUI());
+                            Main.getInstance().getInventories().updateRoleInventory(player);
+                        }
+                        event.setCancelled(true);
+                        break;
+                    case "§dKrystal UHC§7 ->§e Solo":
+                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+                            Main.getInstance().getInventories().openKrystalInventory(player);
+                            event.setCancelled(true);
+                            return;
+                        }
+                        if (!item.getType().equals(Material.STAINED_GLASS_PANE)) {
+                            if (action.equals(InventoryAction.PICKUP_ALL)) {
+                                EasyRoleAdder.addRoles(item.getItemMeta().getDisplayName());
+                            } else if (action.equals(InventoryAction.PICKUP_HALF)){
+                                EasyRoleAdder.removeRoles(item.getItemMeta().getDisplayName());
+                            }
+                        }
+                        Main.getInstance().getInventories().openKrystalSoloInventory(player);
                         event.setCancelled(true);
                         break;
                     default:

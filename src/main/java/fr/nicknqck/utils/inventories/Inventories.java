@@ -15,6 +15,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -838,6 +839,9 @@ public class Inventories {
                             case NS:
                                 inv.setItem(13, GUIItems.getSelectNSButton());
                                 break;
+                            case KRYSTAL:
+                                inv.setItem(13, GameState.MDJ.KRYSTAL.getItem());
+                                break;
                         }
                     }
                     if (ChatRank.isHost(player)) {
@@ -1051,5 +1055,30 @@ public class Inventories {
         inventory.setItem(27, new ItemBuilder(Material.AIR).toItemStack());
         inventory.setItem(26, new ItemBuilder(Material.AIR).toItemStack());
         inventory.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
+    }
+
+    public void openKrystalInventory(@NonNull final Player player) {
+        final Inventory inv = Bukkit.createInventory(player, 27, "§dKrystal UHC");
+        inv.setItem(13, GUIItems.getSelectSoloButton());
+        inv.setItem(26, GUIItems.getSelectBackMenu());
+        player.openInventory(inv);
+    }
+
+    public void openKrystalSoloInventory(@NonNull final Player player) {
+        final Inventory inv = Bukkit.createInventory(player, 54, "§dKrystal UHC§7 ->§e Solo");
+        setRoleInventory(inv, GUIItems.getPurpleStainedGlassPane());
+
+        inv.setItem(3, GUIItems.getSelectBackMenu());//haut milleu
+        inv.setItem(4, GUIItems.getSelectBackMenu());
+        inv.setItem(5, GUIItems.getSelectBackMenu());
+
+        for (final GameState.Roles roles : GameState.Roles.values()) {
+            if (!roles.getTeam().equals(TeamList.Solo))continue;
+            if (roles.getMdj().equals("custom") || roles.getMdj().equals("krystal")) {
+                inv.addItem(roles.getItem());
+            }
+        }
+        clearRoleInventory(inv);
+        player.openInventory(inv);
     }
 }
