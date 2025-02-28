@@ -57,7 +57,7 @@ public class Vache extends OverWorldRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Vache;
     }
 

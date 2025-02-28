@@ -65,7 +65,7 @@ public class Gaara extends NSRoles {
         shukakuCooldown = 0;
     }
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return Roles.Gaara;
     }
 

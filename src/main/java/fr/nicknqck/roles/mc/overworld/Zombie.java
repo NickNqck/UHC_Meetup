@@ -6,6 +6,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -34,7 +35,7 @@ public class Zombie extends OverWorldRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Zombie;
     }
     @Override

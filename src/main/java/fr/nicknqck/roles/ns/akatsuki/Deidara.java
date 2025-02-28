@@ -45,7 +45,7 @@ public class Deidara extends AkatsukiRoles {
 		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON));
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Deidara;
 	}
 	@Override

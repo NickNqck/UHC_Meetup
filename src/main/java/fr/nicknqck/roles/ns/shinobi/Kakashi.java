@@ -54,7 +54,7 @@ public class Kakashi extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public GameState.@NonNull Roles getRoles() {
 		return Roles.Kakashi;
 	}
 	@Override

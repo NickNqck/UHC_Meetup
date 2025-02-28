@@ -10,6 +10,7 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class SanemiV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Sanemi;
     }
 

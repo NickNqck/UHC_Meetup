@@ -36,7 +36,7 @@ public class Furuto extends DemonInferieurRole {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Furuto;
 	}
 	@Override

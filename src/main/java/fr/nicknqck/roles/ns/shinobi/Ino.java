@@ -33,7 +33,7 @@ public class Ino extends ShinobiRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Ino;
     }
     @Override

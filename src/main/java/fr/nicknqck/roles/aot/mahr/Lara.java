@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class Lara extends MahrRoles {
 		Titans.WarHammer.getTitan().getListener().setWarHammer(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Lara;
 	}
 	@Override

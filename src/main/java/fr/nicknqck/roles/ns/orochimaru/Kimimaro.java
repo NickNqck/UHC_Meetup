@@ -38,7 +38,7 @@ public class Kimimaro extends OrochimaruRoles {
 		return Intelligence.MOYENNE;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kimimaro;
 	}
 

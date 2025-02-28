@@ -23,7 +23,7 @@ public class Susamaru extends DemonInferieurRole {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Susamaru;
 	}
 	@Override

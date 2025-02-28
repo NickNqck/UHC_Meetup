@@ -43,7 +43,7 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Tanjiro;
     }
 

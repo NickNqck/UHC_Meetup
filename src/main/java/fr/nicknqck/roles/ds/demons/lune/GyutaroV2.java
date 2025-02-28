@@ -47,7 +47,7 @@ public class GyutaroV2 extends DemonsRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Gyutaro;
     }
 

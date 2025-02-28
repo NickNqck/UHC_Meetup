@@ -41,7 +41,7 @@ public class Hantengu extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Hantengu;
 	}
 	private enum Form{

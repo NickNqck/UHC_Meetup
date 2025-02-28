@@ -7,6 +7,7 @@ import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.betteritem.BetterItemEvent;
+import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -20,7 +21,7 @@ public class Livai extends SoldatsRoles {
 		setAckerMan(true);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Livai;
 	}
 	@Override

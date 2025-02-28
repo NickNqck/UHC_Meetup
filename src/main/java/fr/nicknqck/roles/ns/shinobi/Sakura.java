@@ -28,7 +28,7 @@ public class Sakura extends ShinobiRoles {
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Sakura;
 	}
 	@Override

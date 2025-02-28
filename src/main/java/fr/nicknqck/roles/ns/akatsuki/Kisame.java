@@ -33,7 +33,7 @@ public class Kisame extends AkatsukiRoles {
 		setChakraType(Chakras.SUITON);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kisame;
 	}
 	@Override

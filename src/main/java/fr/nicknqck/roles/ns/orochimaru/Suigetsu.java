@@ -47,7 +47,7 @@ public class Suigetsu extends OrochimaruRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Suigetsu;
 	}
 

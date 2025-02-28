@@ -7,6 +7,7 @@ import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -19,7 +20,7 @@ public class Bertolt extends MahrRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Bertolt;
 	}
 

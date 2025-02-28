@@ -117,7 +117,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		}, 20*10);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kabuto;
 	}
 	@Override

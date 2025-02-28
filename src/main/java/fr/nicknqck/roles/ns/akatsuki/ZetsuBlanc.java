@@ -36,7 +36,7 @@ public class ZetsuBlanc extends AkatsukiRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.ZetsuBlanc;
 	}
 

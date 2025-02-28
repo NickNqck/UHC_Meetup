@@ -38,7 +38,7 @@ public class Kumo extends DemonInferieurRole {
 		return TeamList.Demon;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kumo;
 	}
 	@Override

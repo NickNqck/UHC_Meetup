@@ -43,7 +43,7 @@ public class Kurenai extends ShinobiRoles {
         super.giveItem(owner, false, getItems());
     }
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Kurenai;
     }
     @Override

@@ -43,7 +43,7 @@ public class HantenguV2 extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.HantenguV2;
 	}
 	enum Clone {

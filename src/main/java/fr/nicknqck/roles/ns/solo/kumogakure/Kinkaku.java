@@ -52,7 +52,7 @@ public class Kinkaku extends NSRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
+    public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Kinkaku;
     }
     @Override

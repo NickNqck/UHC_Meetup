@@ -55,7 +55,7 @@ public class Itachi extends UchiwaRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Itachi;
 	}
 

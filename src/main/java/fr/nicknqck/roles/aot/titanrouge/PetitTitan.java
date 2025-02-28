@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +24,7 @@ public class PetitTitan extends TitansRoles {
 		gameState.TitansRouge.add(owner);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.PetitTitan;
 	}
 	@Override

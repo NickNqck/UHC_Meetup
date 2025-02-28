@@ -34,7 +34,7 @@ public class KillerBee extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public GameState.@NonNull Roles getRoles() {
 		return Roles.KillerBee;
 	}
 	@Override
