@@ -772,10 +772,10 @@ public class Inventories {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
                 if (inv.getTitle().equals("§fConfiguration§7 ->§6 Inventaire")) {
-                    inv.setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, gameState.getNmbGap()).setName("§r§fNombre de pomme d'§eor").setLore(
+                    inv.setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()).setName("§r§fNombre de pomme d'§eor").setLore(
                                     "§a+1§f (Clique gauche)",
                                     "§c-1§f (Clique droit)",
-                                    "§r§fNombre actuelle:§e "+gameState.getNmbGap())
+                                    "§r§fNombre actuelle:§e "+Main.getInstance().getGameConfig().getStuffConfig().getNmbGap())
                             .toItemStack());
                     inv.setItem(0, new ItemBuilder(Material.DIAMOND_HELMET).setLore(
                                     "§a+1§f (Clique gauche)",

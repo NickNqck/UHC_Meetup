@@ -842,9 +842,7 @@ public class GameState{
 		}*/
 		return nmbrole;
 	}
-	@Getter
-	@Setter
-	private int nmbGap = 12;
+
 	public static int sharpness = 3;
 	public static int nmbblock = 1;
 	public static int power = 2;
