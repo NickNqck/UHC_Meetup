@@ -619,7 +619,7 @@ public class AllDesc{
             "",
             ChatColor.BOLD + " Commande: ",
             "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD + ChatColor.BOLD + "/ds role:§r Permet de choisir un pacte parmi 3",
+            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD + ChatColor.BOLD + "/ds pacte:§r Permet de choisir un pacte parmi 3",
             "",
             ChatColor.GOLD+"Pacte 1§r: Vous devrez gagner seul en tant que rôle entièrement§6 solitaire§r pour ce faire vous obtiendrez "+Force+" 1 permanent§r, de plus vous obtiendrez "+Resi+" 1 le jour si vous tuez§a ZenItsu§r ainsi que "+Resi+" 1 la "+nuit+" si vous tuez§c Kaigaku§r, pour chaque kill de vos disciples vous récupérerez 10% de "+Speed,
             "",
