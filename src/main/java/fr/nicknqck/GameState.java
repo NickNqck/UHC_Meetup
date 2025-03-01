@@ -843,7 +843,7 @@ public class GameState{
 		return nmbrole;
 	}
 
-	public static int eau = 1;
+
 	public static int lave = 0;
 
 	public void changeTabPseudo(final String name,final Player player) {

@@ -196,7 +196,7 @@ public abstract class GUIItems{
 			return stack;
 		}
 	  public static ItemStack geteau() {
-			ItemStack stack = new ItemStack(Material.WATER_BUCKET, GameState.eau);
+			ItemStack stack = new ItemStack(Material.WATER_BUCKET, Main.getInstance().getGameConfig().getStuffConfig().getEau());
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"1 Sceau d'Eau",
