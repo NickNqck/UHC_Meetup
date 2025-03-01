@@ -188,7 +188,7 @@ public abstract class GUIItems{
 	  public static ItemStack getbow() {
 			ItemStack stack = new ItemStack(Material.BOW, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, GameState.power, true);
+			meta.addEnchant(Enchantment.ARROW_DAMAGE, Main.getInstance().getGameConfig().getStuffConfig().getPower(), true);
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"Power 1",
 					"§r"+"Maximum: "+ChatColor.GOLD+"Power 5"));
