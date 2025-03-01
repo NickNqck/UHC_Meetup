@@ -95,14 +95,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getblock())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.nmbblock != 4) {
-                        GameState.nmbblock++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() != 4) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setNmbblock(Main.getInstance().getGameConfig().getStuffConfig().getNmbblock()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de block");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.nmbblock != 1) {
-                        GameState.nmbblock--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setNmbblock(Main.getInstance().getGameConfig().getStuffConfig().getNmbblock()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de block");
                     }
