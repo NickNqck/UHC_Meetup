@@ -70,7 +70,7 @@ public class InventoryConfig implements Listener {
                             player.sendMessage("Vous avez déjà atteint le nombre maximum de Pomme en Or ("+ ChatColor.GOLD+"64"+ChatColor.RESET+")");
                         }
                     } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                        if (gameState.getNmbGap() != gameState.minnmbGap) {
+                        if (gameState.getNmbGap() != Main.getInstance().getGameConfig().getStuffConfig().getMinGap()) {
                             gameState.setNmbGap(gameState.getNmbGap()-1);
                         } else {
                             player.sendMessage("Vous avez déjà atteint le nombre minimum de Pomme en Or ("+ChatColor.GOLD+"12"+ChatColor.RESET+")");
