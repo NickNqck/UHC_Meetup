@@ -19,7 +19,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 public abstract class GUIItems{
 	
 	public static ItemStack getEnderPearl() {
-		ItemStack stack = new ItemStack(Material.ENDER_PEARL, GameState.pearl);
+		ItemStack stack = new ItemStack(Material.ENDER_PEARL, Main.getInstance().getGameConfig().getStuffConfig().getPearl());
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Nombre d'Ender Pearl");
 		meta.setLore(Arrays.asList("§r"+"Click To Change",

@@ -50,6 +50,7 @@ public class GameConfig {
         private int sharpness = 3;
         private int nmbblock = 1;
         private int power = 2;
+        private int pearl = 1;
 
         private int nmbGap = 12;
         private int minGap = 12;

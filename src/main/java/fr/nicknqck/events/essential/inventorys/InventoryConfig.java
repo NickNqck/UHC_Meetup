@@ -126,14 +126,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getEnderPearl())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.pearl == 0) {
-                        GameState.pearl++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 0) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPearl(Main.getInstance().getGameConfig().getStuffConfig().getPearl()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite maximum d'ender pearl");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.pearl == 1) {
-                        GameState.pearl--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPearl(Main.getInstance().getGameConfig().getStuffConfig().getPearl()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite minimum d'ender pearl");
                     }
