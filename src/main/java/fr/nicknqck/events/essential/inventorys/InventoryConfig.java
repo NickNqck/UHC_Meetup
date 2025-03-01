@@ -110,14 +110,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getbow())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.power != 5) {
-                        GameState.power++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPower() != 5) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPower(Main.getInstance().getGameConfig().getStuffConfig().getPower()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de power");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.power != 1) {
-                        GameState.power--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPower() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPower(Main.getInstance().getGameConfig().getStuffConfig().getPower()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite minimal de power");
                     }

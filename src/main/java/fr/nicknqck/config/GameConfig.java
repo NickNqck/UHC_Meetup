@@ -49,6 +49,7 @@ public class GameConfig {
         private int nmbArrow = 24;
         private int sharpness = 3;
         private int nmbblock = 1;
+        private int power = 2;
 
         private int nmbGap = 12;
         private int minGap = 12;
