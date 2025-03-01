@@ -205,7 +205,7 @@ public abstract class GUIItems{
 			return stack;
 		}
 	  public static ItemStack getlave() {
-			ItemStack stack = new ItemStack(Material.LAVA_BUCKET, GameState.lave);
+			ItemStack stack = new ItemStack(Material.LAVA_BUCKET, Main.getInstance().getGameConfig().getStuffConfig().getLave());
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"0 Sceau de lave",

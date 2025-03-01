@@ -170,16 +170,16 @@ public class HubListener implements Listener {
 			p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
 		}
-		if (GameState.lave == 1) {
+		if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 1) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (GameState.lave == 2) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 2) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (GameState.lave == 3) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 3) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (GameState.lave == 4) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 4) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(15, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));

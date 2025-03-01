@@ -52,6 +52,7 @@ public class GameConfig {
         private int power = 2;
         private int pearl = 1;
         private int eau = 1;
+        private int lave = 0;
 
         private int nmbGap = 12;
         private int minGap = 12;
