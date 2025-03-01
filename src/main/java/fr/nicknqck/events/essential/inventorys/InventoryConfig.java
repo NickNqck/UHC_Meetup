@@ -157,14 +157,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getlave())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.lave != 4) {
-                        GameState.lave++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getLave() != 4) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setLave(Main.getInstance().getGameConfig().getStuffConfig().getLave()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de sceau de lave");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.lave != 1) {
-                        GameState.lave--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getLave() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setLave(Main.getInstance().getGameConfig().getStuffConfig().getLave()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite minimal de sceau de lave");
                     }
