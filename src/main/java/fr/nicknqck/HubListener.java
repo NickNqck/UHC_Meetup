@@ -130,26 +130,26 @@ public class HubListener implements Listener {
 	public void giveStartInventory(Player p) {
 		Main.getInstance().getScoreboardManager().update(p);
 		ItemsManager.ClearInventory(p);
-			p.getInventory().setItem(0, Items.getdiamondsword());
-			p.getInventory().setItem(2, Items.getbow());
-			if (GameState.pearl == 1) {
-				p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, GameState.pearl));
-			}
-			p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
-			p.getInventory().setItem(9, new ItemStack(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()));
-			p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
-			p.getInventory().setItem(11, Items.getironshovel());
-			p.getInventory().setItem(12, Items.getironpickaxe());
-		if (GameState.nmbblock == 1) {
+		p.getInventory().setItem(0, Items.getdiamondsword());
+		p.getInventory().setItem(2, Items.getbow());
+		if (GameState.pearl == 1) {
+			p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, GameState.pearl));
+		}
+		p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
+		p.getInventory().setItem(9, new ItemStack(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()));
+		p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
+		p.getInventory().setItem(11, Items.getironshovel());
+		p.getInventory().setItem(12, Items.getironpickaxe());
+		if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 1) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
-		} else if (GameState.nmbblock == 2) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 2) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
-		} else if (GameState.nmbblock == 3) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 3) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
-		} else if (GameState.nmbblock == 4) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 4) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));

@@ -843,7 +843,6 @@ public class GameState{
 		return nmbrole;
 	}
 
-	public static int nmbblock = 1;
 	public static int power = 2;
 	public static int pearl = 1;
 	public static int eau = 1;

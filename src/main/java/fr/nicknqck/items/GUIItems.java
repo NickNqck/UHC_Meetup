@@ -177,7 +177,7 @@ public abstract class GUIItems{
 			return stack;
 		}
 	  public static ItemStack getblock() {
-			ItemStack stack = new ItemStack(Material.BRICK, 1*(GameState.nmbblock));
+			ItemStack stack = new ItemStack(Material.BRICK, 1*(Main.getInstance().getGameConfig().getStuffConfig().getNmbblock()));
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"1 Stack",
