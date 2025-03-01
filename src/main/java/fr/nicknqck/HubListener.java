@@ -155,16 +155,16 @@ public class HubListener implements Listener {
 			p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(10, new ItemStack(Material.BRICK, 64));
 		}
-		if (GameState.eau == 1) {
+		if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 1) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (GameState.eau == 2) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 2) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (GameState.eau == 3) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 3) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (GameState.eau == 4) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 4) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(16, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));

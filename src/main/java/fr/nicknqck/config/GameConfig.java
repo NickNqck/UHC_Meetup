@@ -51,6 +51,7 @@ public class GameConfig {
         private int nmbblock = 1;
         private int power = 2;
         private int pearl = 1;
+        private int eau = 1;
 
         private int nmbGap = 12;
         private int minGap = 12;
