@@ -843,7 +843,6 @@ public class GameState{
 		return nmbrole;
 	}
 
-	public static int sharpness = 3;
 	public static int nmbblock = 1;
 	public static int power = 2;
 	public static int pearl = 1;
