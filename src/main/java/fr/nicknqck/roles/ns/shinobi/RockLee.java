@@ -35,7 +35,7 @@ public class RockLee extends ShinobiRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () ->{
-			if (!gameState.attributedRole.contains(Roles.Gai)) {
+			if (!gameState.getAttributedRole().contains(Roles.Gai)) {
 				giveItem(owner, false, HuitPortesItem());
 			}
 		}, cdDrunkenFist);

@@ -93,11 +93,11 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		this.desc = automaticDesc.getText();
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(Roles.Karin)) {
+			if (!gameState.getAttributedRole().contains(Roles.Karin)) {
 				onKarinDeath(false);
 				owner.sendMessage("§5Karin§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
 			}
-			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
+			if (!gameState.getAttributedRole().contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);
 				owner.sendMessage("§5Kimimaro§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
 			}
@@ -109,7 +109,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 				owner.sendMessage("§5Jugo§7 n'étend pas dans la partie, vous recevez donc les bonus dû à sa mort");
 				onJugoDeath(false);
 			}
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+			if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la partie vous avez tout de même reçus les bonus dû à sa mort !");
 			}

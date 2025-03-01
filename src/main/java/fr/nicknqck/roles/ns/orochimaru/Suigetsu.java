@@ -39,7 +39,7 @@ public class Suigetsu extends OrochimaruRoles {
 	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+			if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie, vous avez quand même obtenue les bonus dû à sa mort");
 			}

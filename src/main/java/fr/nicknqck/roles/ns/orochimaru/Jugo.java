@@ -42,11 +42,11 @@ public class Jugo extends OrochimaruRoles {
 		super.RoleGiven(gameState);
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
+			if (!gameState.getAttributedRole().contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);
 				owner.sendMessage("§5Kimimaro§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort (/§6ns me§7)");
 			}
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+			if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort (/§6ns me§7)");
 			}

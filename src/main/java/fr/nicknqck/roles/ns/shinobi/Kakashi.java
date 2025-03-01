@@ -41,7 +41,7 @@ public class Kakashi extends ShinobiRoles {
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);
 		setChakraType(Chakras.RAITON);
-		if (!gameState.attributedRole.contains(Roles.Obito)) {
+		if (!gameState.getAttributedRole().contains(Roles.Obito)) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}
