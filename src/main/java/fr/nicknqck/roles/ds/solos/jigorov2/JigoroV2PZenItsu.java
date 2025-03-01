@@ -6,6 +6,7 @@ import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
@@ -43,11 +44,17 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
         gamePlayer.setRole(this);
         new ZenItsuRunnable(zenItsu, this, getGameState());
         EventUtils.registerRoleEvent(this);
+        setTeam(TeamList.Jigoro);
     }
 
     @Override
     public String[] Desc() {
         return AllDesc.JigoroV2Pacte3;
+    }
+
+    @Override
+    public TeamList getOriginTeam() {
+        return TeamList.Jigoro;
     }
 
     @EventHandler
