@@ -189,7 +189,7 @@ public class HubListener implements Listener {
 		p.getInventory().setChestplate(Items.getdiamondchestplate());
 		p.getInventory().setLeggings(Items.getironleggings());
 		p.getInventory().setBoots(Items.getdiamondboots());
-		p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, gameState.getNmbGap()));
+		p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()));
 		p.updateInventory();
 		p.setWalkSpeed(0.2f);
 		((CraftPlayer) p).getHandle().setAbsorptionHearts(0);

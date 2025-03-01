@@ -64,14 +64,14 @@ public class InventoryConfig implements Listener {
             if (item.getItemMeta().hasDisplayName()) {
                 if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fNombre de pomme d'§eor")) {
                     if (action.equals(InventoryAction.PICKUP_ALL)) {
-                        if (gameState.getNmbGap() != 64) {
-                            gameState.setNmbGap(gameState.getNmbGap()+1);
+                        if (Main.getInstance().getGameConfig().getStuffConfig().getNmbGap() != 64) {
+                            Main.getInstance().getGameConfig().getStuffConfig().setNmbGap(Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()+1);
                         } else {
                             player.sendMessage("Vous avez déjà atteint le nombre maximum de Pomme en Or ("+ ChatColor.GOLD+"64"+ChatColor.RESET+")");
                         }
                     } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                        if (gameState.getNmbGap() != Main.getInstance().getGameConfig().getStuffConfig().getMinGap()) {
-                            gameState.setNmbGap(gameState.getNmbGap()-1);
+                        if (Main.getInstance().getGameConfig().getStuffConfig().getNmbGap() != Main.getInstance().getGameConfig().getStuffConfig().getMinGap()) {
+                            Main.getInstance().getGameConfig().getStuffConfig().setNmbGap(Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()-1);
                         } else {
                             player.sendMessage("Vous avez déjà atteint le nombre minimum de Pomme en Or ("+ChatColor.GOLD+"12"+ChatColor.RESET+")");
                         }
