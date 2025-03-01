@@ -216,7 +216,9 @@ public class Heldige extends CustomRolesBase{
 
         public CustomiseSwapPower(@NonNull Heldige role) {
             super("/c config", "config", null, role, CommandType.CUSTOM,
-                    "§7Vous permet d'§aActivé§7/§cDésactivé§7 vos pouvoir \"Swap\"");
+                    "§7Vous permet d'§aActivé§7/§cDésactivé§7 vos pouvoir \"Swap\"",
+                    "",
+                    "§7(par défaut les pouvoirs sont§a activé§7)");
             this.heldige = role;
         }
 
