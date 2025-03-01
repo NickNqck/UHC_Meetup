@@ -80,14 +80,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getdiamondsword())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.sharpness != 5) {
-                        GameState.sharpness++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getSharpness() != 5) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setSharpness(Main.getInstance().getGameConfig().getStuffConfig().getSharpness()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de sharpness maximal");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.sharpness != 1) {
-                        GameState.sharpness--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getSharpness() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setSharpness(Main.getInstance().getGameConfig().getStuffConfig().getSharpness()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de sharpness minimal");
                     }

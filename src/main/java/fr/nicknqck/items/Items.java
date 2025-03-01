@@ -761,7 +761,7 @@ public abstract class Items {
 	public static ItemStack getdiamondsword() {
 		ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
 		ItemMeta meta = stack.getItemMeta();
-		meta.addEnchant(Enchantment.DAMAGE_ALL, GameState.sharpness, true);
+		meta.addEnchant(Enchantment.DAMAGE_ALL, Main.getInstance().getGameConfig().getStuffConfig().getSharpness(), true);
 		meta.spigot().setUnbreakable(Main.getInstance().getGameConfig().isStuffUnbreak());
 		stack.setItemMeta(meta);
 		return stack;

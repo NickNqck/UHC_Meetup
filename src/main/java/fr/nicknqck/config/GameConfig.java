@@ -47,6 +47,7 @@ public class GameConfig {
         private int protectionChestplate = 2;
         private int protectionHelmet = 2;
         private int nmbArrow = 24;
+        private int sharpness = 3;
 
         private int nmbGap = 12;
         private int minGap = 12;

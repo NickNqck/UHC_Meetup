@@ -169,7 +169,7 @@ public abstract class GUIItems{
 	  public static ItemStack getdiamondsword() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.DAMAGE_ALL, GameState.sharpness, true);
+			meta.addEnchant(Enchantment.DAMAGE_ALL, Main.getInstance().getGameConfig().getStuffConfig().getSharpness(), true);
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"Sharpness 1",
 					"§r"+"Maximal: "+ChatColor.GOLD+"Sharpness 5"));
