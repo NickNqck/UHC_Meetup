@@ -50,7 +50,7 @@ public class Zabuza extends NSRoles implements Listener {
 	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(Roles.Haku)) {
+			if (!gameState.getAttributedRole().contains(Roles.Haku)) {
 				onHakuDeath(false);
 				owner.sendMessage("§bHaku§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
 			}

@@ -821,7 +821,7 @@ public class GameState{
 		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
 	}
 	@Getter
-	public List<Roles> attributedRole = new ArrayList<>();
+	private List<Roles> attributedRole = new ArrayList<>();
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());

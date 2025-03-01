@@ -48,7 +48,7 @@ public class Obito extends JubiRoles {
 		super.RoleGiven(gameState);
 		System.out.println("Called RoleGiven in "+this);
 		setChakraType(Chakras.KATON);
-		if (!gameState.attributedRole.contains(Roles.Kakashi)) {
+		if (!gameState.getAttributedRole().contains(Roles.Kakashi)) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}

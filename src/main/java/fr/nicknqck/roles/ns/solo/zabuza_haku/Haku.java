@@ -36,7 +36,7 @@ public class Haku extends NSRoles {
 		setChakraType(Chakras.SUITON);
 		setResi(20);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(Roles.Zabuza)) {
+			if (!gameState.getAttributedRole().contains(Roles.Zabuza)) {
 				onZabuzaDeath(false);
 				owner.sendMessage("§bZabuza§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
 			}

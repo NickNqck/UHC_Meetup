@@ -102,7 +102,10 @@ public class DemonKingEvent extends Event {
 
     @Override
     public boolean canProc(final GameState gameState) {
-        return gameState.attributedRole.contains(GameState.Roles.Tanjiro) && gameState.attributedRole.contains(GameState.Roles.Muzan) && gameState.DeadRole.contains(GameState.Roles.Muzan) && !gameState.DeadRole.contains(GameState.Roles.Tanjiro);
+        return gameState.getAttributedRole().contains(GameState.Roles.Tanjiro) &&
+                gameState.getAttributedRole().contains(GameState.Roles.Muzan) &&
+                gameState.DeadRole.contains(GameState.Roles.Muzan) &&
+                !gameState.DeadRole.contains(GameState.Roles.Tanjiro);
     }
 
     @Override

@@ -322,7 +322,7 @@ public class GameListener implements Listener {
 			}
 			BijuListener.getInstance().resetCooldown();
 			gameState.DeadRole.clear();
-			gameState.attributedRole.clear();
+			gameState.getAttributedRole().clear();
 			KamuiUtils.resetUtils();
 			gameState.setHokage(null);
 			for (UUID u : gameState.getInGamePlayers()) {

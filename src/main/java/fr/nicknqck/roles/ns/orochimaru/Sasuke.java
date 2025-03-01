@@ -67,13 +67,13 @@ public class Sasuke extends UchiwaRoles {
 		super.RoleGiven(gameState);
 		setChakraType(Chakras.KATON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+			if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort");
 			}
 		}, 20*10);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (!gameState.attributedRole.contains(Roles.Itachi)) {
+			if (!gameState.getAttributedRole().contains(Roles.Itachi)) {
 				onItachiKill(false);
 				owner.sendMessage("§cItachi§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à son kill");
 			}
@@ -360,7 +360,7 @@ public class Sasuke extends UchiwaRoles {
 		}
 		owner.setHealth(owner.getHealth()+6.0);
 		setTeam(TeamList.Sasuke);
-		if (gameState.attributedRole.contains(Roles.Itachi) && !killItachi) {
+		if (gameState.getAttributedRole().contains(Roles.Itachi) && !killItachi) {
 			new BukkitRunnable() {
 				int i = 0;
 				final Player itachi = getPlayerFromRole(Roles.Itachi);
@@ -393,7 +393,7 @@ public class Sasuke extends UchiwaRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (gameState.attributedRole.contains(Roles.Orochimaru)) {
+		if (gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 			if (getListPlayerFromRole(Roles.Orochimaru).contains(player) && !mortOrochimaru) {
 				onOrochimaruDeath(true);
 			}
