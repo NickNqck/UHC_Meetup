@@ -821,7 +821,7 @@ public class GameState{
 		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
 	}
 	@Getter
-	private List<Roles> attributedRole = new ArrayList<>();
+	private final List<Roles> attributedRole = new ArrayList<>();
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
@@ -845,7 +845,6 @@ public class GameState{
 	@Getter
 	@Setter
 	private int nmbGap = 12;
-	public int minnmbGap = 12;
 	public static int sharpness = 3;
 	public static int nmbblock = 1;
 	public static int power = 2;
