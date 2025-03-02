@@ -1,13 +1,9 @@
 package fr.nicknqck.commands.roles;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
-import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
@@ -19,7 +15,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class DSmtpCommands implements CommandExecutor {
 
@@ -40,35 +35,6 @@ public class DSmtpCommands implements CommandExecutor {
                         gameState.getGamePlayer().get(player.getUniqueId()).getRole().OpenFormInventory(gameState);
                         return true;
                     }
-                } else if (args[0].equalsIgnoreCase("list")) {
-                    Player player = (Player) sender;
-                    ArrayList<String> message = new ArrayList<>();
-                    message.add(ChatColor.GOLD+"Liste des rôles potentiellement en jeu (composition de la partie non actuallisé):");
-                    if (gameState.getServerState() == ServerStates.InLobby) {
-                        int roleNmb = 0;
-                        for (Roles r : gameState.getAvailableRoles().keySet()) {
-                            System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
-                            roleNmb += gameState.getAvailableRoles().get(r);
-                            player.sendMessage("§crole§r:§6 "+r+"§r,§c nmb§r:§6 "+gameState.getAvailableRoles().get(r));
-                            System.out.println(roleNmb);
-                        }
-                        return true;
-                    }
-                    for (final Roles r : gameState.getAvailableRoles().keySet()) {
-                        int nmb = 0;
-                        for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
-                            if (gamePlayer.getRole() == null)continue;
-                            final RoleBase role = gamePlayer.getRole();
-                            if (role.getOldRole() == r || role.getRoles() == r) {
-                                nmb += 1;
-                            }
-                        }
-                        if (nmb > 0) {
-                            message.add(ChatColor.DARK_PURPLE+"("+ChatColor.RED+nmb+ChatColor.DARK_PURPLE+") : "+ChatColor.GOLD+r.name()+ChatColor.DARK_PURPLE+",");
-                        }
-                    }
-                    player.sendMessage(message.toArray(new String[0]));
-                    return true;
                 } else if (args[0].equalsIgnoreCase("roles")) {
                     //ArrayList<String> message = new ArrayList<String>();
                     sender.sendMessage(gameState.getRolesList());
