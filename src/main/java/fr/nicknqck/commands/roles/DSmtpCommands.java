@@ -110,7 +110,7 @@ public class DSmtpCommands implements CommandExecutor {
                         return true;
                     }
 				}//vérification du serverstates.ingame
-			}else if (args.length == 2) { //else du args.length == 1
+			} else if (args.length == 2) { //else du args.length == 1
 				if (args[0].equalsIgnoreCase("dimtp")) {
                     Player player = (Player) sender;
                     int x;
@@ -118,47 +118,7 @@ public class DSmtpCommands implements CommandExecutor {
                     player.teleport(new Location(Bukkit.getWorlds().get(x), 0, 152, 0));
                     return true;
                 }
-					}//} du args.length
-			
-			if (args[0].equalsIgnoreCase("chat")) {
-                if (!gameState.hasRoleNull(((Player) sender).getUniqueId())) {
-                    if (!gameState.getInGamePlayers().contains(((Player) sender).getUniqueId())) return false;
-//Debut chat JigoroV2 Kaigaku
-                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof JigoroV2 || gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof KaigakuV2) {//vérifie si le rôle du sender
-                        StringBuilder sb = new StringBuilder();
-                        for (int i = 1; i < args.length; i++) {
-                            sb.append(" ");
-                            sb.append(args[i]);
-                        }
-                        String name2 = sb.toString();
-                        String owo = "(§6" + gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole().getRoles().name() + "§r)§6§l " + sender.getName() + "§r : " + name2;
-                        if (gameState.JigoroV2Pacte2) {
-                            for (UUID u : gameState.getInGamePlayers()) {
-                                Player p = Bukkit.getPlayer(u);
-                                if (p == null)continue;
-                                if (!gameState.hasRoleNull(u)) {
-                                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof JigoroV2) {
-                                        if (gameState.getGamePlayer().get(u).getRole() instanceof KaigakuV2) {
-                                            p.sendMessage(owo);
-                                            sender.sendMessage(owo);
-                                            return true;
-                                        }
-                                    }
-                                    if (gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof KaigakuV2) {
-                                        if (gameState.getGamePlayer().get(u).getRole() instanceof JigoroV2) {
-                                            p.sendMessage(owo);
-                                            sender.sendMessage(owo);
-                                            return true;
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
+            }//} du args.length
 			if (gameState.getServerState() == ServerStates.InGame) {
 				if (!gameState.hasRoleNull(((Player) sender).getUniqueId()) && gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole() instanceof DemonsSlayersRoles) {
 					DemonsSlayersRoles role = (DemonsSlayersRoles) gameState.getGamePlayer().get(((Player) sender).getUniqueId()).getRole();
