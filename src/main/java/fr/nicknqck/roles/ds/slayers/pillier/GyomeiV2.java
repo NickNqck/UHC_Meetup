@@ -20,6 +20,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -152,7 +153,14 @@ public class GyomeiV2 extends PilierRoles implements Listener {
         private final SuperGrabPower superGrabPower;
 
         protected SouffleDeLaRochePower(@NonNull RoleBase role) {
-            super("Souffle de la roche", new Cooldown(30), new ItemBuilder(Material.STONE_AXE).setName("§7Souffle de la Roche"), role);
+            super("Souffle de la roche", new Cooldown(30), new ItemBuilder(Material.STONE_AXE).setName("§aSouffle de la Roche").addEnchant(Enchantment.DAMAGE_ALL, 4).hideEnchantAttributes(), role,
+                    "§7Vous permet (en visant un joueur) d'activer un pouvoir différant en fonction de votre§c clique§7:",
+                    "",
+                    "§aFracas§7 (§cClique gauche§7): Vous permet de§c repousser§7 le joueur viser puis de lui infliger§c 2❤§7 de dégats§c 5 secondes§7 plus tard (1x/5m)",
+                    "",
+                    "§aGrab§7 (§cClique droit§7): Vous permet d'attirer le joueur devant vous et de lui donner§c 15 secondes§7 de§8 Slowness II§7 (1x/5m)",
+                    "",
+                    "§cVous ne pouvez utiliser qu'un pouvoir toute les§4 30 secondes");
             final FracasPower fracasPower = new FracasPower(getRole());
             final SuperGrabPower superGrabPower1 = new SuperGrabPower(role);
             getRole().addPower(fracasPower);
@@ -275,6 +283,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                 target.teleport(location);
                 target.sendMessage("§aGyomei§7 vous à attirer à sa position");
                 player.sendMessage("§cVous avez récupérer§b "+target.getDisplayName());
+                target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 1, false, false), true);
                 return true;
             }
         }
