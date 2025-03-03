@@ -2,6 +2,8 @@ package fr.nicknqck.utils.powers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.events.custom.power.CreateActionBarEvent;
+import fr.nicknqck.events.custom.power.UpdateActionBarEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.StringUtils;
@@ -157,21 +159,37 @@ public abstract class ItemPower extends Power{
         private void updateActionBar() {
             if (this.isCustomText()) {
                 this.itemPower.tryUpdateActionBar();
-                this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), this.customTexte);
+                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(this.cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
+                Bukkit.getPluginManager().callEvent(updateActionBarEvent);
+                if (!updateActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
+                }
             } else {
-                this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
                         "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
-                        item.getItemMeta().getDisplayName()+" est§c utilisable");
+                        item.getItemMeta().getDisplayName()+" est§c utilisable", this.itemPower, false);
+                Bukkit.getPluginManager().callEvent(updateActionBarEvent);
+                if (!updateActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
+                }
             }
         }
         private void createActionBar() {
             if (this.isCustomText()) {
                 this.itemPower.tryUpdateActionBar();
-                this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.customTexte);
+                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(this.cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
+                Bukkit.getPluginManager().callEvent(createActionBarEvent);
+                if (!createActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
+                }
             } else {
-                this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
                         "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
-                        item.getItemMeta().getDisplayName()+" est§c utilisable");
+                        item.getItemMeta().getDisplayName()+" est§c utilisable", this.itemPower, true);
+                Bukkit.getPluginManager().callEvent(createActionBarEvent);
+                if (!createActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
+                }
             }
         }
     }
