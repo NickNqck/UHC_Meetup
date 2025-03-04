@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.custom;
+package fr.nicknqck.roles.krystal;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
@@ -7,6 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.custom.CustomRolesBase;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -33,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Heldige extends CustomRolesBase{
+public class Heldige extends KrystalBase {
 
     private BattleSwapPower battleSwapPower;
     private BowSwapPower bowSwapPower;

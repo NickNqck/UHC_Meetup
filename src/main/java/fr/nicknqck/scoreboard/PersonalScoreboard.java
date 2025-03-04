@@ -4,12 +4,14 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.scoreboard.ScoreBoardUpdateEvent;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.rank.ChatRank;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -35,7 +37,9 @@ import java.util.UUID;
  * You should have received a copy of the GNU General Public License
  * along with SamaGamesAPI.  If not, see <http://www.gnu.org/licenses/>.
  */
+@Getter
 public class PersonalScoreboard {
+
     private final Player player;
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
@@ -129,6 +133,8 @@ public class PersonalScoreboard {
     			}
     		}
     	}
+		final ScoreBoardUpdateEvent event = new ScoreBoardUpdateEvent(this.objectiveSign.lines, this.objectiveSign.scores, this);
+		Bukkit.getPluginManager().callEvent(event);
         objectiveSign.updateLines();
     }
     public void onLogout(){
