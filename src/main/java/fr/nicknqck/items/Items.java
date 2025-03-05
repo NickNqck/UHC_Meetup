@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 
 public abstract class Items {

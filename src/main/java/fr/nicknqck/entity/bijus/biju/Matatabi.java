@@ -1,4 +1,4 @@
-package fr.nicknqck.bijus.biju;
+package fr.nicknqck.entity.bijus.biju;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,9 +31,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Biju;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.Biju;
+import fr.nicknqck.entity.bijus.BijuListener;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;

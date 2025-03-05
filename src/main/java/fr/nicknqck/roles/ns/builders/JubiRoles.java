@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.builders;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.bijus.Biju;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.Biju;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;

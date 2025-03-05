@@ -1,8 +1,8 @@
 package fr.nicknqck;
 
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.BijuListener;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;

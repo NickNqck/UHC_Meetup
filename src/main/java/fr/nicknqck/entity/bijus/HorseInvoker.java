@@ -1,4 +1,4 @@
-package fr.nicknqck.bijus;
+package fr.nicknqck.entity.bijus;
 
 import java.lang.reflect.Field;
 

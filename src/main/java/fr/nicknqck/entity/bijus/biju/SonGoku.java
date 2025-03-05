@@ -1,17 +1,18 @@
-package fr.nicknqck.bijus.biju;
+package fr.nicknqck.entity.bijus.biju;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Biju;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.bijus.HorseInvoker;
+import fr.nicknqck.entity.bijus.Biju;
+import fr.nicknqck.entity.bijus.BijuListener;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
+import net.minecraft.server.v1_8_R3.EntityLiving;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -29,17 +30,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 import java.util.UUID;
 
-public class Kokuo extends Biju {
+public class SonGoku extends Biju {
 
-    private Horse horse;
+    private MagmaCube magma_cube;
     private Location spawn;
 
     @Override
     public LivingEntity getLivingEntity() {
-        return horse;
+        return magma_cube;
     }
     private UUID Hote = null;
-    private GameState gameState;
     @Override
     public UUID getHote() {
     	return Hote;
@@ -54,93 +54,104 @@ public class Kokuo extends Biju {
     		player.sendMessage("§7Vous n'êtes pas l'hôte de "+getName());
     		return;
     	}
-    	if (player.getUniqueId().equals(getHote())) {
-    		if (BijuListener.getInstance().getKokuoCooldown() > 0) {
-                sendCooldown(player, BijuListener.getInstance().getKokuoCooldown());
+    	if (getHote().equals(player.getUniqueId())) {
+    		if (BijuListener.getInstance().getSonGokuCooldown() > 0) {
+                sendCooldown(player, BijuListener.getInstance().getSonGokuCooldown());
                 return;
             }
-            player.sendMessage("§7Vous venez d'activé: "+getName());
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5 * 20 * 60, 1, false, false), true);
-            BijuListener.getInstance().setKokuoUser(player.getUniqueId());
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> BijuListener.getInstance().setKokuoUser(null), 5*20*60);
-            BijuListener.getInstance().setKokuoCooldown(20 * 60);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5 * 20 * 60, 0, false, false), true);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 5 * 20 * 60, 0, false, false), true);
+            BijuListener.getInstance().setSonGokuUser(player.getUniqueId());
+            BijuListener.getInstance().setSonGokuCooldown(60*20);
     	}
     }
-
+    private GameState gameState;
     @Override
     public void setupBiju(GameState gameState) {
-    	this.spawn=getRandomSpawn();
-    	this.gameState = gameState;
-        World world = Main.getInstance().getWorldManager().getGameWorld();
-        new KokuoRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
-        System.out.println("Kokuo will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
+        this.spawn = getRandomSpawn();
+        this.gameState = gameState;
+        new SonGokuRunnable().runTaskTimer(Main.getInstance(), 0L, 20L);
+        World world = spawn.getWorld();
+        System.out.println("Son Goku will be spawn in world: "+world.getName()+" at x: "+spawn.getBlockX()+", y: "+spawn.getBlockY()+", z: "+spawn.getBlockZ());
     }
-
     @Override
     public String getName() {
-        return "§bKokuô";
-    }
-
-    @Override
-    public void spawnBiju() {
-    	this.horse = HorseInvoker.invokeKokuo(horse, this.spawn, getName());
-    	new BukkitRunnable() {
-			@Override
-			public void run() {
-				if (horse != null) {
-					if (spawn == null) return;
-					if (isOutsideOfBorder(getLivingEntity().getLocation())) {
-    					spawn = moveToOrigin(spawn);
-    					getLivingEntity().teleport(spawn);
-    				}
-			        if (horse.getLocation().distance(spawn) >= 30) {
-			        	horse.teleport(spawn);
-			        }
-				}
-			}
-		}.runTaskTimer(Main.getInstance(), 0, 20);
+        return "§cSon Gokû";
     }
     @Override
     public Location getSpawn() {
         return spawn;
     }
+    @Override
+    public void spawnBiju() {
+        this.magma_cube = (MagmaCube) this.spawn.getWorld().spawnEntity(this.spawn, EntityType.MAGMA_CUBE);
+        magma_cube.setCustomName(this.getName());
+        magma_cube.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
+        magma_cube.setMaxHealth(2);
+        magma_cube.setHealth(magma_cube.getMaxHealth());
+        magma_cube.setCustomNameVisible(true);
+        magma_cube.setSize(8);
+        EntityLiving nmsEntity = ((CraftLivingEntity) magma_cube).getHandle();
+        ((CraftLivingEntity) nmsEntity.getBukkitEntity()).setRemoveWhenFarAway(false);
+        new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				if (magma_cube != null) {
+					if (spawn == null) return;
+					if (isOutsideOfBorder(getLivingEntity().getLocation())) {
+    					spawn = moveToOrigin(spawn);
+    					getLivingEntity().teleport(spawn);
+    				}
+			        if (magma_cube.getLocation().distance(spawn) >= 30) {
+			        	magma_cube.teleport(spawn);
+			        }
+				}
+			}
+		}.runTaskTimer(Main.getInstance(), 0, 20);
+    }
 
     @Override
     public ItemStack getItem() {
-        return Items.Kokuo();
+        return Items.SonGoku();
     }
+
     private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
     @Override
     public int getTimeSpawn() {
     	return TimeSpawn;
     }
-    public class KokuoRunnable extends BukkitRunnable {
+    public class SonGokuRunnable extends BukkitRunnable {
 
-		int timer = 0;
-		int spawn = getTimeSpawn();
-        public KokuoRunnable() {
-        	System.out.println("Spawn Kokuo at "+StringUtils.secondsTowardsBeautiful(spawn+getTimeSpawn()));
+        int timer = 0;
+        int spawn = getTimeSpawn();
+
+        public SonGokuRunnable() {
+        	System.out.println("Spawn Son Goku at "+StringUtils.secondsTowardsBeautiful(spawn+TimeSpawn));
 		}
+        
         @Override
         public void run() {
-        	timer++;
-        	if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !isEnable()) {
+            timer++;
+            if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !isEnable()) {
             	cancel();
             	return;
             }
-            if (this.timer == spawn - 30) {
+            if (this.timer == (spawn) - 30) {
                 Bukkit.broadcastMessage((getName() + " §fva apparaître dans §a30 §fsecondes."));
             }
-            if (this.timer == spawn) {
+
+            if (this.timer == (spawn)) {
                 spawnBiju();
                 Bukkit.broadcastMessage((getName() + " §fvient d'apparaître."));
                 cancel();
             }
         }
     }
+
 	@Override
 	public void onDeath(LivingEntity entity, List<ItemStack> drops) {
-		if(this.horse != null && entity.getUniqueId().equals(this.horse.getUniqueId())) {
+		if(this.magma_cube != null && entity.getUniqueId().equals(this.magma_cube.getUniqueId())) {
 			Player k = null;
         	if (entity.getKiller() instanceof Arrow) {
         		Arrow arrow = (Arrow) entity.getKiller();
@@ -166,10 +177,13 @@ public class Kokuo extends Biju {
 					return;
 				}
         	} else {
+        		magma_cube.setSize(0);
+        		drops.clear();
         		spawnBiju();
         		return;
         	}
-            this.horse = null;
+        	magma_cube.setSize(0);
+            this.magma_cube = null;
             drops.clear();
             new BukkitRunnable() {
 				int i = 0;
@@ -195,8 +209,15 @@ public class Kokuo extends Biju {
 			}.runTaskTimer(Main.getInstance(), 0, 20);
         }
 	}
+
 	@Override
-	public void onBijuDamage(EntityDamageEvent event) {}
+	public void onBijuDamage(EntityDamageEvent event) {
+		if (this.magma_cube == null)return;
+		if (event.getEntity().getUniqueId().equals(magma_cube.getUniqueId())) {
+			event.setDamage(event.getDamage()*10);
+		}
+	}
+
 	@Override
 	public void onItemRecup(PlayerPickupItemEvent e, Player player) {
 		if (e.getItem().getItemStack().isSimilar(getItem())) {
@@ -213,28 +234,17 @@ public class Kokuo extends Biju {
 			}
 		}
 	}
+
 	@Override
 	public void onSecond(GameState gameState) {
-		if (BijuListener.getInstance().getKokuoCooldown() == 60*15) {
-			for (UUID u : GameState.getInstance().getInGamePlayers()) {
-				Player p = Bukkit.getPlayer(u);
-				if (p == null)continue;
-				for (Bijus value : Bijus.values()) {
-					if (value.getBiju().getName().equals(getName())) {//je vérifie si le nom du bijus trouvé dans le for est celui de Isobu
-						if (value.getBiju().getMaster().equals(p.getUniqueId())) {
-							p.sendMessage("Vous n'êtes plus sous l'effet de "+getName());
-							GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().setMaxHealth(GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().getMaxHealth()-4);
-						}
-					}
-				}
-			}
-		}
-		if (BijuListener.getInstance().getKokuoCooldown() ==0 && getHote() != null) {
-			Bukkit.getPlayer(getHote()).sendMessage(getName()+"§7 est à nouveau utilisable");
-		}
+		if (BijuListener.getInstance().getSonGokuCooldown() <= 60*15) {
+			BijuListener.getInstance().setSonGokuUser(null);
+		}		
 	}
+
 	@Override
 	public void onTap(EntityDamageByEntityEvent event, Player attacker, Player defender) {}
+
 	@Override
 	public void onAPlayerDie(Player player, GameState gameState, Entity killer) {
 		if (getHote() != null) {
@@ -264,22 +274,31 @@ public class Kokuo extends Biju {
 			}
 		}
 	}
+
 	@Override
-	public void onBucketEmpty(PlayerBucketEmptyEvent event, Player player) {}
+	public void onBucketEmpty(PlayerBucketEmptyEvent event, Player player) {
+		 if(this.magma_cube != null && !this.magma_cube.isDead() && this.magma_cube.getLocation().distance(event.getPlayer().getLocation()) <= 30) {
+	       event.setCancelled(true);
+	       event.getPlayer().sendMessage(("§cVous ne pouvez pas utiliser votre lave ou votre seau d'eau à côté de Son Gokû."));
+	     }		
+	}
+
 	@Override
 	public void onProjectileHit(ProjectileHitEvent e, Bijus bijus, Projectile projectile) {}
+
 	@Override
 	public ItemStack getItemInMenu() {
-		return new ItemBuilder(Material.INK_SACK).setName(getName()).setDyeColor(DyeColor.GRAY).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore(isEnable() ? "§r§aActivé" : "§r§cDésactivé").toItemStack();
+		return new ItemBuilder(Material.INK_SACK).setDyeColor(DyeColor.ORANGE).setName(getName()).setLore(isEnable() ? "§r§aActivé" : "§r§cDésactivé").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
+
 	@Override
 	public Bijus getBijus() {
-		return Bijus.Kokuo;
+		return Bijus.SonGoku;
 	}
 	@Override
 	public void resetCooldown() {
-		BijuListener.getInstance().setKokuoCooldown(0);
-		BijuListener.getInstance().setKokuoUser(null);
+		BijuListener.getInstance().setSonGokuCooldown(0);
+		BijuListener.getInstance().setSonGokuUser(null);
 	}
 	@Override
 	public boolean onDrop(PlayerDropItemEvent event, Player player, ItemStack item) {
@@ -293,5 +312,6 @@ public class Kokuo extends Biju {
 	}
 	@Override
 	public void onJubiInvoc(Player invoquer) {
+		
 	}
 }
