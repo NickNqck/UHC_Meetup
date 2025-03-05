@@ -1,6 +1,6 @@
 package fr.nicknqck;
 
-import fr.nicknqck.bijus.BijuListener;
+import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.Color;
 import fr.nicknqck.commands.roles.*;

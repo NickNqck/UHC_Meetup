@@ -4,7 +4,7 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.pregen.PregenerationTask;

@@ -26,8 +26,8 @@ import org.bukkit.inventory.ItemStack;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.BijuListener;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.roles.builder.TeamList;
 
 public class NsCommands implements CommandExecutor {

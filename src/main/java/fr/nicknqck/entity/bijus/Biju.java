@@ -1,4 +1,4 @@
-package fr.nicknqck.bijus;
+package fr.nicknqck.entity.bijus;
 
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;

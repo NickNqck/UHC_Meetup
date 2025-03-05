@@ -1,16 +1,16 @@
-package fr.nicknqck.bijus;
+package fr.nicknqck.entity.bijus;
 
 import fr.nicknqck.Main;
 import lombok.Getter;
 import org.bukkit.Material;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.bijus.biju.Chomei;
-import fr.nicknqck.bijus.biju.Isobu;
-import fr.nicknqck.bijus.biju.Kokuo;
-import fr.nicknqck.bijus.biju.Matatabi;
-import fr.nicknqck.bijus.biju.Saiken;
-import fr.nicknqck.bijus.biju.SonGoku;
+import fr.nicknqck.entity.bijus.biju.Chomei;
+import fr.nicknqck.entity.bijus.biju.Isobu;
+import fr.nicknqck.entity.bijus.biju.Kokuo;
+import fr.nicknqck.entity.bijus.biju.Matatabi;
+import fr.nicknqck.entity.bijus.biju.Saiken;
+import fr.nicknqck.entity.bijus.biju.SonGoku;
 
 public enum Bijus {
 	

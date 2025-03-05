@@ -23,7 +23,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.impl.AntiDrop;
