@@ -15,10 +15,7 @@ import fr.nicknqck.events.essential.*;
 import fr.nicknqck.events.essential.inventorys.HubInventory;
 import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
-import fr.nicknqck.managers.DeathManager;
-import fr.nicknqck.managers.EventsManager;
-import fr.nicknqck.managers.RoleManager;
-import fr.nicknqck.managers.WorldsManager;
+import fr.nicknqck.managers.*;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
@@ -61,43 +58,36 @@ Ideas and Game Design: NickNack, Mega02600, Egaly inspirated by goldenuhc.eu and
 Programming: NickNack, Mega02600
 Roles: NickNack, Mega02600
 */
-
+@Getter
 public class Main extends JavaPlugin {
 
 	public final String PLUGIN_NAME = "UHC-Meetup";
-	@Getter
 	private ScoreboardManager scoreboardManager;
-    @Getter
 	private ScheduledExecutorService executorMonoThread;
-    @Getter
 	private ScheduledExecutorService scheduledExecutorService;
 	@Getter
     private static WorldFillTask worldfilltask;
-	@Getter
 	private GetterList getterList;
 	@Getter
 	private static Main Instance;
 	public static Random RANDOM;
-	@Getter
 	private Inventories inventories;
-	@Getter
 	private RoleManager roleManager;
-	@Getter
 	private WorldsManager worldManager;
-	@Getter
 	private GameConfig gameConfig;
-	@Getter
+
 	private DeathManager deathManager;
-	@Getter
 	private FileConfiguration webhookConfig;
-	@Getter
+
 	private WorldConfig worldConfig;
-	@Getter
+
 	private WorldListener worldListener;
-	@Getter
+
 	private boolean goodServer;
-	@Getter
+
 	private EventsManager eventsManager;
+
+	private KrystalBeastManager krystalBeastManager;
 
     @Override
 	public void onEnable() {
@@ -109,6 +99,7 @@ public class Main extends JavaPlugin {
 		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
 		this.gameConfig = new GameConfig();
+		this.krystalBeastManager = new KrystalBeastManager();
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
 		registerEvents(gameState);
