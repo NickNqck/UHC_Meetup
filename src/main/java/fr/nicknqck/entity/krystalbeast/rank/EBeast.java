@@ -9,4 +9,5 @@ public abstract class EBeast extends BeastCreator {
         return BeastRank.E;
     }
 
+
 }

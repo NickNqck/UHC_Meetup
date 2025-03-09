@@ -315,6 +315,11 @@ public class HubConfig implements Listener {
                         if (name.equals("§fLame")) {
                             Main.getInstance().getGameConfig().setGiveLame(!Main.getInstance().getGameConfig().isGiveLame());
                         }
+                        if (item.getType().equals(Material.EMERALD)) {
+                            if (action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                                Main.getInstance().getKrystalBeastManager().openConfigBeastInventory(player);
+                            }
+                        }
                         Border.setMaxBorderSize(Math.max(50, Math.min(Border.getMaxBorderSize(), 2400)));
                         Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
                         gameState.pvpTimer = Math.max(0, Math.min(gameState.pvpTimer, 40*60));

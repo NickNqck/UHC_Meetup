@@ -367,7 +367,9 @@ public class Inventories {
                             "§r§fClique droit: §c-1 seconde",
                             "§r§f(0 secondes =§c désactiver"
                     ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getGameConfig().isBijusEnable() ? "§aActivé" : "§cDésactivé","§r§fShift + Clique: Permet de configurer les bijus").toItemStack());
+                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getGameConfig().isBijusEnable() ?
+                            "§aActivé" : "§cDésactivé",
+                            "§r§fShift + Clique: Permet de configurer les bijus§7 (§aNaruto UHC§7)").toItemStack());
                     inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
                             "§fTemp avant infection: ",
                             "§a+5s§f (Clique gauche)",
@@ -376,6 +378,11 @@ public class Inventories {
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(gameState.isTNTGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
                     inv.addItem(new ItemBuilder(Material.INK_SACK).setName("§fLame").setLore("§7Si activé, donne une§a lame§7 à l'annonce des rôles à tout les joueurs de la partie","",Main.getInstance().getGameConfig().isGiveLame() ? "§aActivé" : "§cDésactivé").toItemStack());
+                    inv.addItem(new ItemBuilder(Material.EMERALD).setName("§dKrystakBeast").setLore(
+                            "§4// NOUVEAUTÉ \\",
+                            "",
+                            "§a Shift§f + Clique pour configurer les§d bêtes de krystal§7 (§dKrystal UHC§7)"
+                    ).toItemStack());
                     inv.setItem(26, GUIItems.getSelectBackMenu());
                 }
             }
