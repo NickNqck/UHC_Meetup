@@ -99,7 +99,6 @@ public class Main extends JavaPlugin {
 		this.inventories = new Inventories(gameState);
 		this.getterList = new GetterList(gameState);
 		this.gameConfig = new GameConfig();
-		this.krystalBeastManager = new KrystalBeastManager();
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
 		registerEvents(gameState);
@@ -133,6 +132,7 @@ public class Main extends JavaPlugin {
 		saveDefaultWebhookConfig();
 		this.roleManager = new RoleManager();
 		BiomeChanger.init();
+		this.krystalBeastManager = new KrystalBeastManager();
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {

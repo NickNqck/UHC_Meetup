@@ -9,6 +9,7 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -50,17 +51,32 @@ public class Lijen extends EBeast {
         list.add(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
         list.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
         list.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
+        list.add(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false));
         return list;
     }
 
     @Override
+    public List<ItemStack> getLoots() {
+        final List<ItemStack> list = new ArrayList<>();
+        list.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
+        list.add(new ItemBuilder(Material.DIAMOND).toItemStack());
+        return list;
+    }
+
+    @Override
+    public int getMaxKrystalDrop() {
+        return 5;
+    }
+
+    @Override
     public boolean spawn() {
+        getOriginSpawn().getChunk().load();
         this.zombie = (Zombie) getOriginSpawn().getWorld().spawnEntity(getOriginSpawn(), EntityType.ZOMBIE);
         zombie.setBaby(false);
         zombie.setVillager(false);
         zombie.setCustomName(getName());
         zombie.setCustomNameVisible(true);
-        zombie.setMaxHealth(200.0);
+        zombie.setMaxHealth(25.0);
         zombie.setHealth(zombie.getMaxHealth());
         for (final PotionEffect potionEffect : getPotionEffects()) {
             zombie.addPotionEffect(potionEffect);
