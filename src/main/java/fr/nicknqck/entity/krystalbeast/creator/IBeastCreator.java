@@ -1,6 +1,7 @@
 package fr.nicknqck.entity.krystalbeast.creator;
 
 import org.bukkit.Location;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
@@ -12,5 +13,6 @@ public interface IBeastCreator {
     Location getRandomLocation();
     List<ItemStack> getLoots();
     int getMaxKrystalDrop();
+    List<EntityDamageEvent.DamageCause> getImmunisedDamageCause();
 
 }

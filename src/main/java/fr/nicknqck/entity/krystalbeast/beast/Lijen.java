@@ -9,11 +9,13 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Lijen extends EBeast {
@@ -66,6 +68,13 @@ public class Lijen extends EBeast {
     @Override
     public int getMaxKrystalDrop() {
         return 5;
+    }
+
+    @Override
+    public List<EntityDamageEvent.DamageCause> getImmunisedDamageCause() {
+        final List<EntityDamageEvent.DamageCause> list = new ArrayList<>();
+        list.add(EntityDamageEvent.DamageCause.FALL);
+        return list;
     }
 
     @Override
