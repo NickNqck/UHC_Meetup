@@ -230,6 +230,15 @@ public class KrystalBeastManager implements Listener {
         }
     }
     @EventHandler
+    private void BeastDamageEvent(BeastDamageEvent event) {
+        if (!(event.getBeast() instanceof IBeastCreator)) return;
+        if (((IBeastCreator) event.getBeast()).getImmunisedDamageCause().isEmpty())return;
+        if (((IBeastCreator) event.getBeast()).getImmunisedDamageCause().contains(event.getDamageCause())) {
+            event.setDamage(0.0);
+            event.setCancelled(true);
+        }
+    }
+    @EventHandler
     private void BeastDeathEvent(BeastDeathEvent event) {
         Bukkit.broadcastMessage(event.getBeast().getName()+"§f est§c mort§f.");
         if (event.getBeast() instanceof IBeastCreator) {
