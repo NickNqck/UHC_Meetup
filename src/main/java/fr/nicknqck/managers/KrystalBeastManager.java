@@ -8,6 +8,7 @@ import fr.nicknqck.entity.krystalbeast.configurable.IConfigurable;
 import fr.nicknqck.entity.krystalbeast.creator.BeastCreator;
 import fr.nicknqck.entity.krystalbeast.creator.IBeastCreator;
 import fr.nicknqck.events.custom.RoleGiveEvent;
+import fr.nicknqck.events.custom.beast.BeastDamageEvent;
 import fr.nicknqck.events.custom.beast.BeastDeathEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -22,6 +23,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -214,7 +216,19 @@ public class KrystalBeastManager implements Listener {
             }
         }
     }
-
+    @EventHandler
+    private void EntityDamageEvent(EntityDamageEvent event) {
+        for (@NonNull final Beast beast : this.inGameBeast) {
+            if (beast.getBeast() == null)continue;
+            if (event.getEntity().getUniqueId().equals(beast.getBeast().getUniqueId())) {
+                final BeastDamageEvent beastDamageEvent = new BeastDamageEvent(beast, event.getDamage(), event.getFinalDamage(), event.getCause());
+                Bukkit.getPluginManager().callEvent(beastDamageEvent);
+                event.setDamage(beastDamageEvent.getDamage());
+                event.setCancelled(beastDamageEvent.isCancelled());
+                break;
+            }
+        }
+    }
     @EventHandler
     private void BeastDeathEvent(BeastDeathEvent event) {
         Bukkit.broadcastMessage(event.getBeast().getName()+"§f est§c mort§f.");
