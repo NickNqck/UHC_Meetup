@@ -14,9 +14,7 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.krystal.KrystalBase;
 import fr.nicknqck.utils.event.EventUtils;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.HumanEntity;
@@ -38,9 +36,6 @@ public class KrystalBeastManager implements Listener {
     private final Map<Class<? extends Beast>, Integer> beastMap;
     private final Map<Class<? extends Beast>, Beast> originBeast;
     private final List<Beast> inGameBeast;
-    @Setter
-    @Getter
-    private boolean enable = false;
 
     public KrystalBeastManager() {
         this.beastMap = new HashMap<>();
