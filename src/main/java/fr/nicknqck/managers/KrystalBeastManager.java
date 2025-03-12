@@ -237,8 +237,10 @@ public class KrystalBeastManager implements Listener {
     private void BeastDeathEvent(BeastDeathEvent event) {
         Bukkit.broadcastMessage(event.getBeast().getName()+"§f est§c mort§f.");
         if (event.getBeast() instanceof IBeastCreator) {
-
-            event.getDrops().add(getRandomItemFromList(((IBeastCreator) event.getBeast()).getLoots()));
+            final ItemStack itemStack = getRandomItemFromList(((IBeastCreator) event.getBeast()).getLoots());
+            if (itemStack != null){
+                event.getDrops().add(itemStack);
+            }
             if (event.getKiller() != null) {
                 if (GameState.getInstance().hasRoleNull(event.getKiller().getUniqueId()))return;
                 final RoleBase role = GameState.getInstance().getGamePlayer().get(event.getKiller().getUniqueId()).getRole();
@@ -291,8 +293,9 @@ public class KrystalBeastManager implements Listener {
                         Bukkit.broadcastMessage("§7[§dKrystalBeast UHC§7]§f La bête "+this.beast.getName()+"§f est apparu en ce bas monde, elle ce situe à "+this.getDistanceScale(this.beast.getOriginSpawn()));
                         Bukkit.broadcastMessage("");
                         this.beast.setUuid(beast.getBeast().getUniqueId());
-                        cancel();
                         this.beast.getAntiMooveRunnable().start();
+                        this.beast.setHasSpawn(true);
+                        cancel();
                     }
                 });
                 return;
