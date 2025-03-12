@@ -42,7 +42,7 @@ public abstract class BeastCreator extends Beast implements IBeastCreator, IConf
                 location = null;
             }
         }
-        if (location == null) {
+        if (location == null) {//location par défaut x:100 z:100
             location = new Location(Main.getInstance().getWorldManager().getGameWorld(),
                     100,
                     0,
