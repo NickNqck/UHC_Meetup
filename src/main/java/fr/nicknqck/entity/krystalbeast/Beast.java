@@ -1,10 +1,12 @@
 package fr.nicknqck.entity.krystalbeast;
 
+import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,6 +24,7 @@ public abstract class Beast implements IBeast{
     private int timingProc = 90;//90 En valeur par défaut
     @Getter
     private final AntiMooveRunnable antiMooveRunnable;
+    private boolean hasSpawn = false;
 
     protected Beast() {
         this.uuid = UUID.randomUUID();
@@ -95,6 +98,17 @@ public abstract class Beast implements IBeast{
             this.timingProc = Main.RANDOM.nextInt((getMaxTiming() - getMinTiming() +1)+getMinTiming());
         } while (this.timingProc == 90 || this.timingProc <= this.getMinTiming() || this.timingProc >= this.getMaxTiming());
     }
+
+    @Override
+    public boolean hasSpawn() {
+        return this.hasSpawn;
+    }
+
+    @Override
+    public void setHasSpawn(boolean b) {
+        this.hasSpawn = b;
+    }
+
     public static class AntiMooveRunnable extends BukkitRunnable {
 
         private final GameState gameState;
@@ -116,7 +130,21 @@ public abstract class Beast implements IBeast{
                 return;
             }
             if (this.beast.getBeast() == null)return;
+            if (!this.beast.hasSpawn())return;
             final Entity entity = this.beast.getBeast();
+            final Location loc = entity.getLocation();
+            if (loc.getX()+10 == Border.getActualBorderSize()) {
+                this.beast.getOriginSpawn().add(-1, 0, 0);
+            }
+            if (loc.getX()-10 == -Border.getActualBorderSize()) {
+                this.beast.getOriginSpawn().add(1, 0, 0);
+            }
+            if (loc.getZ()+10 == Border.getActualBorderSize()) {
+                this.beast.getOriginSpawn().add(0, 0, -1);
+            }
+            if (loc.getZ()-10 == -Border.getActualBorderSize()) {
+                this.beast.getOriginSpawn().add(0, 0, 1);
+            }
             if (entity.getLocation().distance(this.beast.getOriginSpawn()) > this.maxDistance) {
                 entity.teleport(this.beast.getOriginSpawn());
             }
