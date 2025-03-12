@@ -18,5 +18,7 @@ public interface IBeast {
     boolean checkCanSpawn();
     String getName();
     UUID getUniqueId();
+    boolean hasSpawn();
+    void setHasSpawn(boolean b);
 
 }
