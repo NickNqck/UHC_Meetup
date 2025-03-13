@@ -121,7 +121,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
 
         public DSBoostPower(@NonNull RoleBase role) {
             super("/ds boost <joueur>", "boost", null, role, CommandType.DS,
-                    "§7Vous permet de donner§c +10%§7 de§c force");
+                    "§7Vous permet de donner§c +10%§7 de§c force§7 au joueur viser");
             setMaxUse(1);
         }
 
@@ -277,7 +277,8 @@ public class MuzanV2 extends DemonsRoles implements Listener {
     private static class RegenPower extends Power {
 
         public RegenPower(@NonNull RoleBase role) {
-            super("Pouvoir régénérant", null, role);
+            super("Pouvoir régénérant", null, role,
+                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toute les§c 10 secondes");
             new RegenerationRunnable(role.getGameState(), role.getPlayer(), this);
         }
 
