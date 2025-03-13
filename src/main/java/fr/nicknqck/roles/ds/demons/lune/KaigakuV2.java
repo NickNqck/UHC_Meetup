@@ -72,7 +72,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
     }
 

@@ -63,7 +63,7 @@ public class NezukoV2 extends DemonsRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Slayer;
     }
 

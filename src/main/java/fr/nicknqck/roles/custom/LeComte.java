@@ -69,7 +69,7 @@ public class LeComte extends CustomRolesBase implements Listener {
         return GameState.Roles.LeComte;
     }
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
     @Override

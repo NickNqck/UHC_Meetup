@@ -11,7 +11,7 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -49,15 +49,15 @@ public class Kokushibo extends DemonsRoles {
 		super.RoleGiven(gameState);
 		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Muzan.class), 20);
+		addKnowedRole(MuzanV2.class);
 		setLameIncassable(owner, true);
 		solo = false;
 		killtanjiro = false;
-		getGamePlayer().startChatWith("§cKokushibo: ", "!", Muzan.class);
+		getGamePlayer().startChatWith("§cKokushibo: ", "!", MuzanV2.class);
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

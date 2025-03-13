@@ -9,7 +9,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.NonNull;
@@ -34,7 +34,7 @@ public class HantenguV2 extends DemonsRoles {
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);
 		owner.getInventory().addItem(Items.getMaterialisationEmotion());
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Muzan.class), 20);
+		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> getKnowedRoles().add(MuzanV2.class), 20);
 	}
 
 	@Override
@@ -665,7 +665,7 @@ public class HantenguV2 extends DemonsRoles {
 		super.PlayerKilled(killer, victim, gameState);
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 }

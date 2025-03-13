@@ -72,7 +72,7 @@ public class Danzo extends NSRoles {
 		givePotionEffect(new PotionEffect(PotionEffectType.SPEED,1 , 0), EffectWhen.PERMANENT);
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 	@Override

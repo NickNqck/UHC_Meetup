@@ -46,7 +46,7 @@ public class Warden extends UHCMcRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
 

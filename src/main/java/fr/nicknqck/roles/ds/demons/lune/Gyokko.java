@@ -7,7 +7,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.MuichiroV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -55,7 +55,7 @@ public class Gyokko extends DemonsRoles {
 		return AllDesc.Gyokko;
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
@@ -101,7 +101,7 @@ public class Gyokko extends DemonsRoles {
 		addPower(new PotItemPower(this), true);
 		addPower(new FormeDemoniaquePower(this), true);
 		addPower(new BulleItemPower(this), true);
-		addKnowedRole(Muzan.class);
+		addKnowedRole(MuzanV2.class);
 	}
 
 	private static class PotItemPower extends ItemPower {

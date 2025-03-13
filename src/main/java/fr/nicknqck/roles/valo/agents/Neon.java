@@ -59,7 +59,7 @@ public class Neon extends RoleBase {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
 

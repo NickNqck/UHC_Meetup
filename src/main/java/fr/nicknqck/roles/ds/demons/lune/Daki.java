@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +33,7 @@ public class Daki extends DemonsRoles {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Muzan) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof MuzanV2) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof GyutaroV2) {
@@ -43,7 +43,7 @@ public class Daki extends DemonsRoles {
 		}, 20);
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

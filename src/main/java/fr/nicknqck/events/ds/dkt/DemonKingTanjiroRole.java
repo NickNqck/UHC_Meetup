@@ -48,7 +48,7 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
     }
 

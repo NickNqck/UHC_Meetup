@@ -16,7 +16,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -70,7 +70,7 @@ public class EnmuV2 extends DemonsRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
     }
 
@@ -95,7 +95,7 @@ public class EnmuV2 extends DemonsRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-        getKnowedRoles().add(Muzan.class);
+        getKnowedRoles().add(MuzanV2.class);
         addPower(new EndormissementPower(this), true);
         addPower(new SommeilUltime(this), true);
     }

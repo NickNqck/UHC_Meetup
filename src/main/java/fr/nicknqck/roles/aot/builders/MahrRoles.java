@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.aot.builders;
 
 import fr.nicknqck.roles.builder.TeamList;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -10,7 +11,7 @@ public abstract class MahrRoles extends AotRoles{
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Mahr;
     }
 }

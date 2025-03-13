@@ -47,7 +47,7 @@ public class Kinkaku extends NSRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Kumogakure;
     }
 

@@ -14,7 +14,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -51,7 +51,7 @@ public class Akaza extends DemonsRoles implements Listener {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
-		getKnowedRoles().add(Muzan.class);
+		getKnowedRoles().add(MuzanV2.class);
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez une§c régénération§7 naturel à hauteur de§c 1/2"+ AllDesc.coeur+"§7 toute les§c 20 secondes§7.")}),
@@ -83,7 +83,7 @@ public class Akaza extends DemonsRoles implements Listener {
 		return DemonType.SUPERIEUR;
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

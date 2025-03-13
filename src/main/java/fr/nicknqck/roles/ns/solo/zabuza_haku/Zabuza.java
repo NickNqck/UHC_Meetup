@@ -99,7 +99,7 @@ public class Zabuza extends NSRoles implements Listener {
         };
     }
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Zabuza_et_Haku;
 	}
 	@SuppressWarnings("deprecation")

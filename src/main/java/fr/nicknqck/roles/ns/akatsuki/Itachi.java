@@ -60,7 +60,7 @@ public class Itachi extends UchiwaRoles {
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Akatsuki;
 	}
 

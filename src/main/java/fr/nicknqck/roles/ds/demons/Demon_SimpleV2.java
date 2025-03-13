@@ -23,7 +23,7 @@ public class Demon_SimpleV2 extends DemonInferieurRole {
 		super(player);
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

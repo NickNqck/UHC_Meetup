@@ -87,7 +87,7 @@ public class Sasuke extends UchiwaRoles {
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Orochimaru;
 	}
 

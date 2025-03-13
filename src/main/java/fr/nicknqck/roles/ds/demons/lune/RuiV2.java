@@ -59,7 +59,7 @@ public class RuiV2 extends DemonsRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
     }
 

@@ -48,6 +48,7 @@ public class AutomaticDesc {
             EffectWhen when = map.get(effect);
             text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
             text.addExtra("§c"+getPotionEffectNameWithRomanLevel(effect)+"§7 ");
+            text.addExtra(when.equals(EffectWhen.AT_KILL) ? "§7pendant§c "+StringUtils.secondsTowardsBeautiful(effect.getDuration()/20)+"§7 " : "");
             text.addExtra("§7"+getWhenString(when));
         }
         return this;
@@ -180,7 +181,13 @@ public class AutomaticDesc {
         return text;
     }
     private String getWhenString(EffectWhen when) {
-        return (when.equals(EffectWhen.PERMANENT) ? "de manière§c permanente" : when.equals(EffectWhen.DAY) ? "le§c jour" : when.equals(EffectWhen.NIGHT) ? "la§c nuit" : " en ayant moins de §c5"+AllDesc.coeur);
+        return (when.equals(EffectWhen.PERMANENT) ?
+                "de manière§c permanente" :
+                when.equals(EffectWhen.DAY) ? "le§c jour" :
+                        when.equals(EffectWhen.NIGHT) ? "la§c nuit" :
+                                when.equals(EffectWhen.MID_LIFE) ? "en ayant moins de §c5"+AllDesc.coeur :
+                                        when.equals(EffectWhen.AT_KILL) ? "en tuant un §cjoueur§7" :
+                                                "(EffectWhen hasn't been found)");
     }
     private String getPotionEffectNameWithRomanLevel(PotionEffect potionEffect) {
         if (potionEffect == null || potionEffect.getType() == null) {

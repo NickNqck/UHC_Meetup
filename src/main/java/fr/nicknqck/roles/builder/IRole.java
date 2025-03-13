@@ -14,7 +14,7 @@ public interface IRole {
     UUID getPlayer();
     String getName();
     @NonNull GameState.Roles getRoles();
-    TeamList getOriginTeam();
+    @NonNull TeamList getOriginTeam();
     TeamList getTeam();
     Map<PotionEffect, EffectWhen> getEffects();
     void resetCooldown();
