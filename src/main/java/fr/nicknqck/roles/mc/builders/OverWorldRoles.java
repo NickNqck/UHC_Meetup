@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.mc.builders;
 
 import fr.nicknqck.roles.builder.TeamList;
+import lombok.NonNull;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -11,7 +12,7 @@ public abstract class OverWorldRoles extends UHCMcRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.OverWorld;
     }
 }

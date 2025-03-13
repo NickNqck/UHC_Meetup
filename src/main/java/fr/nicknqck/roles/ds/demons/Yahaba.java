@@ -31,7 +31,7 @@ public class Yahaba extends DemonInferieurRole {
 		super(player);
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 

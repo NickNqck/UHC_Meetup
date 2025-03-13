@@ -67,7 +67,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
     }
 
@@ -84,7 +84,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new TambourPower(this), true);
         EventUtils.registerRoleEvent(this);
-        addKnowedRole(Muzan.class);
+        addKnowedRole(MuzanV2.class);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(GameState.Roles.Muzan) || gameState.getDeadRoles().contains(GameState.Roles.Muzan)){
                 procSolo();
@@ -126,7 +126,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     }
     @EventHandler
     private void UHCDeathEvent(final UHCDeathEvent event) {
-        if (event.getRole() instanceof Muzan) {
+        if (event.getRole() instanceof MuzanV2) {
             procSolo();
         }
     }

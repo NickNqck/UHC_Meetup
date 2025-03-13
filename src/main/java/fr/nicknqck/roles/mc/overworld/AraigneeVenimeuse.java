@@ -84,7 +84,7 @@ public class AraigneeVenimeuse extends UHCMcRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.OverWorld;
     }
 

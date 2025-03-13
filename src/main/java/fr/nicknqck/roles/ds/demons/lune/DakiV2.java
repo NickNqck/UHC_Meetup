@@ -35,7 +35,7 @@ public class DakiV2 extends DemonsRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return null;
     }
 

@@ -402,7 +402,7 @@ public class GameState{
 		if (!getGamePlayer().containsKey(player))return null;
 		switch(roleType) {
 		case Muzan:
-			role = new Muzan(player);
+			role = new MuzanV2(player);
 			break;
 		case Nezuko:
 			role = new NezukoV2(player);

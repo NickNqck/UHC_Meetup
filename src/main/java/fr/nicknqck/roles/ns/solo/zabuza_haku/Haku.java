@@ -82,7 +82,7 @@ public class Haku extends NSRoles {
     }
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Zabuza_et_Haku;
 	}
 

@@ -35,7 +35,7 @@ public class Demon_Simple extends DemonInferieurRole implements Listener {
 		return DemonType.DEMON;
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

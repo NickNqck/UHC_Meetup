@@ -70,7 +70,7 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	private TeamList team;
 	@Getter
-	private final Map<PotionEffect, EffectWhen> effects = new HashMap<>();
+	private final Map<PotionEffect, EffectWhen> effects = new LinkedHashMap<>();
 	@Getter
 	@Setter
 	private String suffixString = "";
@@ -305,9 +305,10 @@ public abstract class RoleBase implements IRole {
 				if (gameState.getInSpecPlayers().contains(p))return;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					if (getListPlayerFromRole(toknow).contains(p)) {
-						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p.getUniqueId()) && gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() != null) {
-							knower.sendMessage("Le joueur possédant le rôle de "+toknow.getTeam().getColor()+toknow.name()+"§f est "+p.getName());
-						}
+						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p.getUniqueId())) {
+                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam();
+                            knower.sendMessage("Le joueur possédant le rôle de " + toknow.getTeam().getColor() + toknow.name() + "§f est " + p.getName());
+                        }
 					}
 				}
 			}

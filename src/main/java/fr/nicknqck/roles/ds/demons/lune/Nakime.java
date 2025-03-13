@@ -202,7 +202,7 @@ public class Nakime extends DemonsRoles {
 		cooldown = 60*8;
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

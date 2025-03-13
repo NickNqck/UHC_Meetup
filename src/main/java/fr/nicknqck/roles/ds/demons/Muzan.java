@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Muzan extends DemonsRoles {
+
 	private boolean killnez = false;
 	private int regencooldown;
 	public Muzan(UUID player) {
@@ -40,7 +41,7 @@ public class Muzan extends DemonsRoles {
 		return DemonType.DEMON;
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

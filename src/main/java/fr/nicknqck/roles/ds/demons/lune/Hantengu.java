@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +32,7 @@ public class Hantengu extends DemonsRoles {
 	private int killforce = 0;
 	public Hantengu(UUID player) {
 		super(player);
-		getKnowedRoles().add(Muzan.class);
+		getKnowedRoles().add(MuzanV2.class);
 	}
 
 	@Override
@@ -52,12 +52,12 @@ public class Hantengu extends DemonsRoles {
 		Hantengu
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
 		public String[] Desc() {
-		getKnowedRoles().add(Muzan.class);
+		getKnowedRoles().add(MuzanV2.class);
 			return AllDesc.Hantengu;
 		}
 	

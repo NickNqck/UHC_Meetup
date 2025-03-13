@@ -59,7 +59,7 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 

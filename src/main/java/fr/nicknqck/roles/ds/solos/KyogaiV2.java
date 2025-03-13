@@ -55,7 +55,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 	@Override

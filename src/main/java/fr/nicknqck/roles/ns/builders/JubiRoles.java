@@ -32,7 +32,7 @@ public abstract class JubiRoles extends UchiwaRoles {
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Jubi;
     }
 

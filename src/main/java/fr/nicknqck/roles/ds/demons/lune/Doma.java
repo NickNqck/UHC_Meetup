@@ -7,7 +7,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -24,10 +24,10 @@ public class Doma extends DemonsRoles {
 	public Doma(UUID player) {
 		super(player);
 		this.setResi(20);
-		getKnowedRoles().add(Muzan.class);
+		getKnowedRoles().add(MuzanV2.class);
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
