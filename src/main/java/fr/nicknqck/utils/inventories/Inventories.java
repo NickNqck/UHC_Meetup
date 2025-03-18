@@ -1082,7 +1082,13 @@ public class Inventories {
         for (final GameState.Roles roles : GameState.Roles.values()) {
             if (!roles.getTeam().equals(TeamList.Solo))continue;
             if (roles.getMdj().equals("custom") || roles.getMdj().equals("krystal")) {
-                inv.addItem(roles.getItem());
+                String l1;
+                if (gameState.getAvailableRoles().get(roles) > 0) {
+                    l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                } else {
+                    l1 = "§c(0)";
+                }
+                inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
             }
         }
         clearRoleInventory(inv);
