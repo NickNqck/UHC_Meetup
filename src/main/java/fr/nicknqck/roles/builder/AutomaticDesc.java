@@ -189,7 +189,7 @@ public class AutomaticDesc {
                                         when.equals(EffectWhen.AT_KILL) ? "en tuant un §cjoueur§7" :
                                                 "(EffectWhen hasn't been found)");
     }
-    private String getPotionEffectNameWithRomanLevel(PotionEffect potionEffect) {
+    public static String getPotionEffectNameWithRomanLevel(PotionEffect potionEffect) {
         if (potionEffect == null || potionEffect.getType() == null) {
             return "";
         }
@@ -206,13 +206,13 @@ public class AutomaticDesc {
         }
         return effectName + " " + romanLevel;
     }
-    private String capitalizeFirstLetter(String input) {
+    private static String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
             return input;
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
-    private String getRomanNumeral(int number) {
+    private static String getRomanNumeral(int number) {
         if (number <= 0 || number > ROMAN_NUMERALS.length) {
             return String.valueOf(number);
         }
