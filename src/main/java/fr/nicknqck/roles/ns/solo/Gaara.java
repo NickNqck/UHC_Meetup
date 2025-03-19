@@ -8,6 +8,7 @@ import java.util.UUID;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -98,15 +99,6 @@ public class Gaara extends NSRoles {
         if (remove > 64) {
             player.getInventory().getItem(player.getInventory().first(material)).setAmount(player.getInventory().getItem(player.getInventory().first(material)).getAmount() - (remove - 64));
         }
-    }
-    public int getItemAmount(Player player, Material material) {
-        int toReturn = 0;
-        for (ItemStack content : player.getInventory().getContents()) {
-            if (content != null && content.getType() == material) {
-                toReturn += content.getAmount();
-            }
-        }
-        return toReturn;
     }
     @Override
     public String[] Desc() {
@@ -260,8 +252,8 @@ public class Gaara extends NSRoles {
     @Override
     public void onNsCommand(String[] args) {
     	if (args[0].equalsIgnoreCase("convert")) {
-    		sablenmb += getItemAmount(owner, Material.SAND);
-    		owner.sendMessage("Vous venez de gagner§e "+getItemAmount(owner, Material.SAND)+" sable");
+    		sablenmb += GlobalUtils.getItemAmount(owner, Material.SAND);
+    		owner.sendMessage("Vous venez de gagner§e "+GlobalUtils.getItemAmount(owner, Material.SAND)+" sable");
     		owner.getInventory().remove(Material.SAND);
     	}
     	super.onNsCommand(args);
