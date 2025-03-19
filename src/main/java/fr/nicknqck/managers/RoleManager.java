@@ -10,7 +10,7 @@ import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.custom.LeComte;
+import fr.nicknqck.roles.custom.LeComteV2;
 import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.krystal.Heldige;
 import fr.nicknqck.roles.ds.demons.*;
@@ -225,7 +225,7 @@ public class RoleManager {
     }
     private void registerCustomRoles() throws Exception {
         //Register Custom Roles
-        registerRole(LeComte.class);
+        registerRole(LeComteV2.class);
         registerRole(LeJuge.class);
         registerRole(Heldige.class);
     }
