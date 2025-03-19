@@ -58,6 +58,13 @@ public class KrystalBeastManager implements Listener {
             throw new RuntimeException(e);
         }
     }
+    public void addCustomBeast(@NonNull final Class<? extends Beast> beastClass) {
+        try {
+            this.originBeast.put(beastClass, beastClass.newInstance());
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void addPlayableBeast(@NonNull final Class<? extends Beast> beastClass) {
         if (isAlreadyPlayable(beastClass)) {
