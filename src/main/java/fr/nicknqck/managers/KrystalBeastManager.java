@@ -50,12 +50,8 @@ public class KrystalBeastManager implements Listener {
         initOriginBeastMap();
     }
     private void initOriginBeastMap() {
-        try {
-            for (final Class<? extends Beast> beastClass : this.beastMap.keySet()) {
-                this.originBeast.put(beastClass, beastClass.newInstance());
-            }
-        } catch (IllegalAccessException | InstantiationException e) {
-            throw new RuntimeException(e);
+        for (final Class<? extends Beast> beastClass : this.beastMap.keySet()) {
+            addCustomBeast(beastClass);
         }
     }
     public void addCustomBeast(@NonNull final Class<? extends Beast> beastClass) {
