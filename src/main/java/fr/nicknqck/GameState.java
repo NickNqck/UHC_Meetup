@@ -13,7 +13,7 @@ import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.custom.LeComte;
+import fr.nicknqck.roles.custom.LeComteV2;
 import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.krystal.Heldige;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -757,7 +757,7 @@ public class GameState{
 			role = new Squelette(player);
 			break;
 		case LeComte:
-			role = new LeComte(player);
+			role = new LeComteV2(player);
 			break;
 		case LeJuge:
 			role = new LeJuge(player);
