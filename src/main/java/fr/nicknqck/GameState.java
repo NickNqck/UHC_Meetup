@@ -13,7 +13,7 @@ import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.custom.LeComteV2;
+import fr.nicknqck.roles.krystal.LeComteV2;
 import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.krystal.Heldige;
 import fr.nicknqck.roles.desc.AllDesc;

@@ -10,16 +10,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 public abstract class BonusKrystalBase extends KrystalBase implements IKrystalRoleBooster {
 
     private final KrystalBonusManager krystalBonusManager;
+    private final List<String> customBonusString;
 
     public BonusKrystalBase(UUID player) {
         super(player);
         this.krystalBonusManager = new KrystalBonusManager(this);
+        this.customBonusString = new ArrayList<>();
     }
 
     @Override
@@ -32,6 +36,10 @@ public abstract class BonusKrystalBase extends KrystalBase implements IKrystalRo
                         .append("§7 en ayant au§c minimum§d ")
                         .append(getBonus().get(potionEffect))
                         .append(" krystaux");
+            }
+            assert !this.customBonusString.isEmpty();
+            for (final String string : this.customBonusString) {
+                sb.append(string);
             }
         }
         return sb.toString();
