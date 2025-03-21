@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.custom;
+package fr.nicknqck.roles.krystal;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
@@ -25,11 +25,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class LeComteV2 extends CustomRolesBase implements Listener{
+public class LeComteV2 extends BonusKrystalBase implements Listener{
 
     private final Map<UUID, Integer> forcePercentMap = new HashMap<>();
     private final List<UUID> enqueteds = new ArrayList<>();
@@ -71,7 +73,8 @@ public class LeComteV2 extends CustomRolesBase implements Listener{
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Si vous§c tuez§7 un joueur que vous aviez enquêter vous §7gagnerez§c 1❤ permanent")
+                .addCustomLine("§7Si vous§c tuez§7 un joueur que vous aviez enquêter vous §7gagnerez§c 1❤ permanent§7 ainsi que§c 5 krystaux")
+                .addCustomLine("§7Chaque fois que vous gagnerez de la force grâce à votre §aenquête§7 vous perdrez§c 1 krystal")
                 .getText();
     }
 
@@ -79,6 +82,7 @@ public class LeComteV2 extends CustomRolesBase implements Listener{
     public void RoleGiven(GameState gameState) {
         addPower(new EnqueteCommandPower(this));
         addPower(new LameDuMaitre(this), true);
+        setKrystalAmount(50);
     }
     @EventHandler
     private void onKill(final UHCPlayerKillEvent event) {
@@ -87,8 +91,16 @@ public class LeComteV2 extends CustomRolesBase implements Listener{
         if (event.isCancel())return;
         if (this.enqueteds.contains(event.getVictim().getUniqueId())) {
             setMaxHealth(getMaxHealth()+2);
+            setKrystalAmount(getKrystalAmount()+5);
             event.getPlayerKiller().setMaxHealth(getMaxHealth());
         }
+    }
+
+    @Override
+    public @NonNull Map<PotionEffect, Integer> getBonus() {
+        final Map<PotionEffect, Integer> map = new HashMap<>();
+        map.put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), 55);
+        return map;
     }
 
 
@@ -150,6 +162,7 @@ public class LeComteV2 extends CustomRolesBase implements Listener{
                     if (!getRole().getGameState().hasRoleNull(target.getUniqueId())){
                         if (in) {
                             player.sendMessage("§cUne enquête est déjà en cours");
+                            return false;
                         }
                         new EnqueteRunnable(getRole().getGameState().getGamePlayer().get(target.getUniqueId()), this);
                         this.in = true;
@@ -199,6 +212,7 @@ public class LeComteV2 extends CustomRolesBase implements Listener{
                 if (this.gameTarget.getDiscRunnable() != null && !this.gameTarget.getDiscRunnable().isOnline()) {
                     return;
                 }
+                if (this.enqueteCommandPower.leComteV2.getKrystalAmount() <= 0)return;
                 final List<Player> aroundPlayers = Loc.getNearbyPlayers(this.gameTarget.getLastLocation(), 20);
                 for (final Player p : aroundPlayers) {
                     this.point++;
@@ -218,6 +232,7 @@ public class LeComteV2 extends CustomRolesBase implements Listener{
                         int force = this.enqueteCommandPower.leComteV2.forcePercentMap.getOrDefault(this.gameTarget.getUuid(), 0);
                         this.enqueteCommandPower.leComteV2.forcePercentMap.replace(this.gameTarget.getUuid(), force, force+5);
                         force+=5;
+                        this.enqueteCommandPower.leComteV2.setKrystalAmount(this.enqueteCommandPower.leComteV2.getKrystalAmount()-1);
                         owner.sendMessage(new String[] {
                                 "§7Voici toute les informations que vous avez pus obtenir sur§c "+this.gameTarget.getPlayerName()+"§7:",
                                 "",
