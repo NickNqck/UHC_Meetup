@@ -57,10 +57,7 @@ public class Lijen extends EBeast {
 
     @Override
     public List<ItemStack> getLoots() {
-        final List<ItemStack> list = new ArrayList<>();
-        list.add(new ItemBuilder(Material.GOLD_INGOT).setAmount(2).toItemStack());
-        list.add(new ItemBuilder(Material.GOLD_NUGGET).setAmount(4).toItemStack());
-        return list;
+        return this.getDefaultLoot();
     }
 
     @Override
