@@ -70,6 +70,7 @@ public abstract class Beast implements IBeast{
 
     protected String[] getLore() {
         return new String[] {
+                "§fRang:§c "+getBeastRank().name(),
                 "",
                 "§fTemp minimal d'apparition:§c "+StringUtils.secondsTowardsBeautiful(getMinTiming()),
                 "§fTemp maximal d'apparition:§c "+StringUtils.secondsTowardsBeautiful(getMaxTiming()),
