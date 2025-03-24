@@ -85,6 +85,7 @@ public class Neon extends RoleBase {
         addPower(new SpeedItemPower(this), true);
         addPower(new EclairRelaisPower(this), true);
         addPower(new VoieRapidePower(this), true);
+        fr.nicknqck.Main.getInstance().getTitanManager().addTitan(getPlayer(), new fr.nicknqck.titans.Assassin(getGamePlayer()));
     }
     private static class VoieRapidePower extends ItemPower {
 

@@ -23,6 +23,7 @@ import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
+import fr.nicknqck.titans.TitanManager;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.biome.BiomeChanger;
@@ -88,6 +89,7 @@ public class Main extends JavaPlugin {
 	private EventsManager eventsManager;
 
 	private KrystalBeastManager krystalBeastManager;
+	private TitanManager titanManager;
 
     @Override
 	public void onEnable() {
@@ -133,6 +135,7 @@ public class Main extends JavaPlugin {
 		this.roleManager = new RoleManager();
 		BiomeChanger.init();
 		this.krystalBeastManager = new KrystalBeastManager();
+		this.titanManager = new TitanManager();
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
