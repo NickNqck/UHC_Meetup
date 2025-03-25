@@ -37,7 +37,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -105,7 +104,7 @@ public class KyojuroV2 extends PilierRoles {
         @Override
         public boolean onUse(Player player, Map<String, Object> map) {
             if (getCooldown().isInCooldown() && getCooldown().getCooldownRemaining() >= 60*7) {
-                return true;
+                return false;
             }
             end = false;
             EventUtils.registerEvents(this);
