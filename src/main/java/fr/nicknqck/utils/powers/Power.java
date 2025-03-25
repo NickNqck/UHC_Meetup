@@ -61,7 +61,9 @@ public abstract class Power {
             return false;
         }
 
-        checkIfPowerEnable(player);
+        if (!checkIfPowerEnable(player)) {
+            return false;
+        }
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
