@@ -17,6 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -31,13 +33,13 @@ public class Patch implements Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
     private void onPatchPotion(EntityDamageByEntityEvent event) {
         if (gameState.getServerState() != ServerStates.InGame)return;
-		if (Main.isDebug()){
-			System.out.println("Original Damage: "+event.getDamage());
-		}
+//		if (Main.isDebug()){
+		System.out.println("Original Damage: "+event.getDamage());
+//		}
 		new PatchCritical(event, Main.getInstance().getGameConfig().getCritPercent());
-		if (Main.isDebug()){
+	//	if (Main.isDebug()){
 			System.out.println("Original Damage (After Critical Nerf): "+event.getDamage());
-		}
+	//	}
 		for (final Chakras ch : Chakras.values()) {
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
 		}
@@ -59,7 +61,7 @@ public class Patch implements Listener{
 		 Bukkit.getPluginManager().callEvent(battleEvent);
 		 event.setDamage(battleEvent.getDamage());
         if (damager.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
-            ApplyForce(event, 20, true);
+            ApplyForce(event, 30, true);
         }
 		ApplyForce(event, gameDamager.getRole().getBonusForce(), false);
         if (Titans.Machoire.getTitan().getOwner() != null && Titans.Machoire.getTitan().getOwner() == damager.getUniqueId() && Titans.Machoire.getTitan().isTransformedinTitan()) {
@@ -83,7 +85,6 @@ public class Patch implements Listener{
 		Bukkit.getPluginManager().callEvent(battleEvent2);
 		event.setDamage(battleEvent2.getDamage());
 		callAfterRoleDamage(event);
-
     }
 
 	private void callAfterRoleDamage(@NonNull final EntityDamageByEntityEvent event) {
@@ -119,33 +120,44 @@ public class Patch implements Listener{
 	}
 	private void ApplyForce(EntityDamageByEntityEvent event, double fPercent, boolean effect) {
 		if (effect) {
-			event.setDamage((event.getDamage() / 2.3f) *(1 + 20 / 100.0f));
-			if (Main.isDebug()){
+			event.setDamage(event.getDamage()*0.5304740497679363);//Pour retirer la force
+			double force = fPercent/100;
+			force = force+1.0;
+            BigDecimal bd = new BigDecimal(event.getDamage());
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			event.setDamage(bd.doubleValue());
+			event.setDamage(event.getDamage()*force);
+		//	event.setDamage((event.getDamage() / 2.3f) *(1 + 20 / 100.0f));
+		//	if (Main.isDebug()){
 				System.out.println("Force Damage to "+event.getDamage());
-			}
+		//	}
 		} else {
 			if (fPercent > 0){
 				double rValue = (fPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
-				if (Main.isDebug()){
+		//		if (Main.isDebug()){
 					System.out.println("Force Damage to "+event.getDamage());
-				}
+		//		}
 			}
 		}
 	}
 	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, boolean effect) {
 		if (effect) {
+			double resi = reiPercent/100;
+			resi = 1-resi;
+			System.out.println("RESI "+resi);
+			event.setDamage(event.getDamage()*resi);
 		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch la l'effet de rési car il est de base dans les valeurs que je veux
-			if (Main.isDebug()){
+		//	if (Main.isDebug()){
 				System.out.println("Resi Damage to "+event.getDamage());
-			}
+		//	}
 		} else {
 			if (reiPercent > 0){
 				double reductionFactor = 1 - (reiPercent / 100);
 				event.setDamage(event.getDamage() * reductionFactor);
-				if (Main.isDebug()){
+			//	if (Main.isDebug()){
 					System.out.println("Bonus Resi Damage to "+event.getDamage());
-				}
+			//	}
 			}
 		}
 	}
