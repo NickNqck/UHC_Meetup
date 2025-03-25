@@ -35,7 +35,6 @@ import java.util.UUID;
 
 public class NezukoV2 extends DemonsRoles {
 
-    private TextComponent textComponent;
     private boolean pauseForce = false;
 
     public NezukoV2(UUID player) {
@@ -79,18 +78,19 @@ public class NezukoV2 extends DemonsRoles {
 
     @Override
     public TextComponent getComponent() {
-        return this.textComponent;
+        return new AutomaticDesc(this)
+                .addEffects(getEffects())
+                .setPowers(getPowers())
+                .getText();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
-        getKnowedRoles().add(Tanjiro.class);
+        addKnowedRole(Tanjiro.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new FormePower(this),true);
         addPower(new SangPower(this), true);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> new TanjiroRunnable(getListGamePlayerFromRole(Tanjiro.class), this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20), 20);
-        AutomaticDesc desc = new AutomaticDesc(this).setPowers(getPowers()).addEffects(getEffects());
-        this.textComponent = desc.getText();
     }
     private static class SangPower extends ItemPower implements Listener {
 
