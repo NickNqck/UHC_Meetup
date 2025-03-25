@@ -52,7 +52,7 @@ public abstract class TitanBase implements ITitan {
         return this.gamePlayer;
     }
 
-    private static class TransformationPower extends ItemPower {
+    public static class TransformationPower extends ItemPower {
 
         private final TitanBase titanBase;
 
