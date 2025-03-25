@@ -117,7 +117,7 @@ public class EntityDamageEvents implements Listener{
 			if (e.getDamager() instanceof Player){
 				Player damager = (Player)e.getDamager();
 				if (damager.getLocation().getY() <= 124){
-					if (damager.getWorld().equals(Bukkit.getWorld("nakime")) && damager.getWorld().equals(e.getEntity().getWorld())){
+					if (damager.getWorld().getName().equals("nakime") && damager.getWorld().equals(e.getEntity().getWorld())){
 						e.setDamage(0.0);
 						e.setCancelled(true);
 					}
@@ -130,7 +130,7 @@ public class EntityDamageEvents implements Listener{
 		if (e.getEntity() instanceof Player){
 			Player p = (Player)e.getEntity();
 			if (p.getLocation().getY() <= 124){
-				if (p.getWorld().equals(Bukkit.getWorld("nakime"))){
+				if (p.getWorld().getName().equals("nakime")){
 					e.setDamage(0.0);
 					e.setCancelled(true);
 				}
