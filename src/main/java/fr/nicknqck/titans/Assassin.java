@@ -16,9 +16,9 @@ public class Assassin extends TitanBase {
     public Assassin(GamePlayer gamePlayer) {
         super(gamePlayer);
         this.effects = new ArrayList<>();
-        this.effects.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*5, 0, false, false));
-        this.effects.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false));
-        this.effects.add(new PotionEffect(PotionEffectType.SPEED, 20*60*5, 0, false, false));
+        this.effects.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*2, 0, false, false));
+        this.effects.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false));
+        this.effects.add(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false));
     }
 
     @Override
