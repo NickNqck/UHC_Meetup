@@ -18,5 +18,6 @@ public interface ITitan {
     @NonNull GamePlayer getGamePlayer();
     @NonNull List<PotionEffect> getEffects();
     int getTransfoDuration();
+    @NonNull String[] getDescription();
 
 }

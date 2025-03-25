@@ -52,6 +52,11 @@ public abstract class TitanBase implements ITitan {
         return this.gamePlayer;
     }
 
+    @Override
+    public @NonNull String[] getDescription() {
+        return new String[0];
+    }
+
     public static class TransformationPower extends ItemPower {
 
         private final TitanBase titanBase;
