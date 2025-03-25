@@ -57,7 +57,7 @@ public abstract class TitanBase implements ITitan {
         private final TitanBase titanBase;
 
         protected TransformationPower(@NonNull TitanBase titan) {
-            super("Transformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).setName("§fTransformation"), titan.getGamePlayer().getRole());
+            super("§fTransformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).setName("§fTransformation"), titan.getGamePlayer().getRole());
             this.titanBase = titan;
             setWorkWhenInCooldown(true);
         }
@@ -73,6 +73,7 @@ public abstract class TitanBase implements ITitan {
                 }
                 if (!this.titanBase.isTransformed()) {
                     this.startTransformation();
+                    player.getWorld().strikeLightningEffect(player.getLocation());
                     return true;
                 } else {
                     if (this.getCooldown().isInCooldown()) {
