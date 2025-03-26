@@ -1,17 +1,15 @@
 package fr.nicknqck.events.custom.roles.aot;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 
 import java.util.List;
 
-public class PrepareTitanStealEvent extends Event implements Cancellable {
+public class PrepareTitanStealEvent extends GameEvent implements Cancellable {
 
-    private static final HandlerList handlerList = new HandlerList();
     @Getter
     private final TitanForm titanForm;
     @Getter
@@ -39,16 +37,8 @@ public class PrepareTitanStealEvent extends Event implements Cancellable {
         this.cancelled = b;
     }
 
-
     public enum TitanForm {
-        ASSAILLANT
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlerList;
-    }
-    public static HandlerList getHandlerList() {
-        return handlerList;
+        ASSAILLANT,
+        CUIRASSE
     }
 }
