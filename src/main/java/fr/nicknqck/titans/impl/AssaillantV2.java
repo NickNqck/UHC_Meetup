@@ -1,8 +1,9 @@
-package fr.nicknqck.titans;
+package fr.nicknqck.titans.impl;
 
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.titans.TitanBase;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -18,11 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Assassin extends TitanBase {
+public class AssaillantV2 extends TitanBase {
 
     private final List<PotionEffect> effects;
 
-    public Assassin(GamePlayer gamePlayer) {
+    public AssaillantV2(GamePlayer gamePlayer) {
         super(gamePlayer);
         this.effects = new ArrayList<>();
         this.effects.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*2, 0, false, false));
