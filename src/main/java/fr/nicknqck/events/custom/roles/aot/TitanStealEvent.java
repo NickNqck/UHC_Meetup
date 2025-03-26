@@ -1,17 +1,14 @@
 package fr.nicknqck.events.custom.roles.aot;
 
+import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 
 @Getter
-public class TitanStealEvent extends Event implements Cancellable {
-
-    private static final HandlerList handlerList = new HandlerList();
+public class TitanStealEvent extends GameEvent implements Cancellable {
 
     private final AotRoles role;
     private final GamePlayer gamePlayer;
@@ -22,14 +19,6 @@ public class TitanStealEvent extends Event implements Cancellable {
         this.role = role;
         this.gamePlayer = gamePlayer;
         this.player = player;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlerList;
-    }
-    public static HandlerList getHandlerList() {
-        return handlerList;
     }
 
     @Override
