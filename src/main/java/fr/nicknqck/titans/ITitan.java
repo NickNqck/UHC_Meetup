@@ -1,16 +1,16 @@
 package fr.nicknqck.titans;
 
+import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.player.GamePlayer;
 import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ITitan {
 
-    @NonNull List<UUID> getStealers();
+    @NonNull List<GamePlayer> getStealers();
     @NonNull String getName();
     boolean isTransformed();
     void setTransformed(boolean transformed);
@@ -19,5 +19,6 @@ public interface ITitan {
     @NonNull List<PotionEffect> getEffects();
     int getTransfoDuration();
     @NonNull String[] getDescription();
+    @NonNull PrepareTitanStealEvent.TitanForm getTitanForm();
 
 }

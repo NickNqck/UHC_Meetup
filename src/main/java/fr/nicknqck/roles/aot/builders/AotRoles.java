@@ -24,6 +24,9 @@ public abstract class AotRoles extends RoleBase {
     @Getter
     @Setter
     private boolean canVoleTitan = false;
+    @Getter
+    @Setter
+    private int stealPriority = 0;
     public AotRoles(UUID player) {
         super(player);
         gazAmount= 100.0;

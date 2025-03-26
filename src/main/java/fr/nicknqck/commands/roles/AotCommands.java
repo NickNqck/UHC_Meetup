@@ -1,5 +1,6 @@
 package fr.nicknqck.commands.roles;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
@@ -29,6 +30,11 @@ public class AotCommands implements CommandExecutor {
 					if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
 						gameState.sendDescription(player);
                     } else {
+						if (args[0].equalsIgnoreCase("info")) {
+							if (Main.getInstance().getTitanManager().hasTitan(player.getUniqueId())) {
+								player.sendMessage(Main.getInstance().getTitanManager().getDescriptions(player.getUniqueId()));
+							}
+						}
 						if (args[0].equalsIgnoreCase("steal")) {
 							for (Titans value : Titans.values()) {
 								value.getTitan().onSteal(player, args);

@@ -1,28 +1,29 @@
 package fr.nicknqck.titans;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public abstract class TitanBase implements ITitan {
 
-    private final List<UUID> stealers;
+    private final List<GamePlayer> stealers;
     private boolean transformed = false;
-    private final GamePlayer gamePlayer;
+    private GamePlayer gamePlayer;
+    @Getter
     private final TransformationPower transformationPower;
 
     protected TitanBase(final GamePlayer gamePlayer) {
@@ -33,7 +34,7 @@ public abstract class TitanBase implements ITitan {
     }
 
     @Override
-    public @NonNull List<UUID> getStealers() {
+    public @NonNull List<GamePlayer> getStealers() {
         return this.stealers;
     }
 
@@ -54,7 +55,22 @@ public abstract class TitanBase implements ITitan {
 
     @Override
     public @NonNull String[] getDescription() {
-        return new String[0];
+        return new String[] {
+                "§8§o§m-----------------------------------",
+                "§7Vous possédez le titan§c "+getName(),
+                "",
+                "§8 • §7Particularités:",
+                "",
+                getParticularites(),
+                "",
+                "§8§o§m-----------------------------------"
+        };
+    }
+    public abstract @NonNull String getParticularites();
+
+    public void setNewOwner(@NonNull GamePlayer gamePlayer) {
+        Main.getInstance().getTitanManager().replaceOwner(this.getGamePlayer().getUuid(), gamePlayer, this);
+        this.gamePlayer = gamePlayer;
     }
 
     public static class TransformationPower extends ItemPower {
@@ -62,7 +78,8 @@ public abstract class TitanBase implements ITitan {
         private final TitanBase titanBase;
 
         protected TransformationPower(@NonNull TitanBase titan) {
-            super("§fTransformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).setName("§fTransformation"), titan.getGamePlayer().getRole());
+            super("§fTransformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§fTransformation"), titan.getGamePlayer().getRole(),
+                    "§7Cette objet vous permet de vous transformez en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot info");
             this.titanBase = titan;
             setWorkWhenInCooldown(true);
         }
