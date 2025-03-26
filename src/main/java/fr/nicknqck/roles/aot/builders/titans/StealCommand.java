@@ -15,6 +15,8 @@ public class StealCommand extends CommandPower {
 
     public StealCommand(@NonNull RoleBase role) {
         super("/aot steal", "steal", null, role, CommandType.AOT);
+        setShowInDesc(false);
+        setMaxUse(1);
     }
 
     @Override
