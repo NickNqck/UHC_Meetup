@@ -39,6 +39,7 @@ public class PrepareTitanStealEvent extends GameEvent implements Cancellable {
 
     public enum TitanForm {
         ASSAILLANT,
-        CUIRASSE
+        CUIRASSE,
+        CHARETTE
     }
 }

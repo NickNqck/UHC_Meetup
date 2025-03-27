@@ -95,13 +95,13 @@ public abstract class TitanBase implements ITitan {
                     }
                 }
                 if (!this.titanBase.isTransformed()) {
-                    this.startTransformation();
+                    this.startTransformation(player);
                     player.getWorld().strikeLightningEffect(player.getLocation());
                     return true;
                 } else {
                     if (this.getCooldown().isInCooldown()) {
                         if (this.getCooldown().getCooldownRemaining() <= this.getCooldown().getOriginalCooldown()-5) {
-                            this.stopTransformation();
+                            this.stopTransformation(player);
                             return false;
                         }
                     }
@@ -109,20 +109,20 @@ public abstract class TitanBase implements ITitan {
             }
             return false;
         }
-        private synchronized void startTransformation() {
+        private synchronized void startTransformation(@NonNull final Player player) {
             this.titanBase.setTransformed(true);
-            @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, true);
+            @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, true, player);
             Bukkit.getPluginManager().callEvent(event);
-            Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(new String[]{
+            Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(new String[]{
                     "",
                     "§6Un humain c'est transformé en titan !",
                     ""
             }));
             new TransformationRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
         }
-        private synchronized void stopTransformation() {
+        private synchronized void stopTransformation(@NonNull final Player p) {
             this.titanBase.setTransformed(false);
-            @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, false);
+            @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, false, p);
             Bukkit.getPluginManager().callEvent(event);
             Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(new String[]{
                     "",
@@ -151,7 +151,7 @@ public abstract class TitanBase implements ITitan {
                     return;
                 }
                 if (!this.power.titanBase.getGamePlayer().isAlive()) {
-                    this.power.stopTransformation();
+                    this.power.stopTransformation(Bukkit.getPlayer(this.power.titanBase.getGamePlayer().getUuid()));
                     cancel();
                     return;
                 }
@@ -176,7 +176,7 @@ public abstract class TitanBase implements ITitan {
                 }
                 if (this.power.getCooldown().getCooldownRemaining() <= this.power.titanBase.getTransfoDuration()) {
                     power.titanBase.getGamePlayer().getActionBarManager().removeInActionBar("titanbase."+power.titanBase.getName());
-                    this.power.stopTransformation();
+                    this.power.stopTransformation(Bukkit.getPlayer(this.power.titanBase.getGamePlayer().getUuid()));
                     cancel();
                 }
             }
