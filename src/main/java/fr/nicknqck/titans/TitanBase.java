@@ -2,6 +2,7 @@ package fr.nicknqck.titans;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.utils.StringUtils;
@@ -110,6 +111,8 @@ public abstract class TitanBase implements ITitan {
         }
         private synchronized void startTransformation() {
             this.titanBase.setTransformed(true);
+            @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, true);
+            Bukkit.getPluginManager().callEvent(event);
             Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(new String[]{
                     "",
                     "§6Un humain c'est transformé en titan !",
@@ -119,6 +122,8 @@ public abstract class TitanBase implements ITitan {
         }
         private synchronized void stopTransformation() {
             this.titanBase.setTransformed(false);
+            @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, false);
+            Bukkit.getPluginManager().callEvent(event);
             Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(new String[]{
                     "",
                     "§6Un titan est redevenu humain !",
