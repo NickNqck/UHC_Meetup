@@ -43,7 +43,9 @@ public class CuirasseV2 extends TitanBase implements Listener {
 
     @Override
     public @NonNull String getParticularites() {
-        return "§8 -§7 Lorsque vous êtes transformé en titan vous avez l'effet§c Force I§7 ainsi que l'effet§c Résistance I§7 ou l'effet§c Speed I§7 en fonction de votre§c cuirasse§7.\n"+
+        return "§8 -§7 Votre transformation a une durée de§c 3 minutes\n"+
+                " \n"+
+                "§8 -§7 Lorsque vous êtes transformé en titan vous avez l'effet§c Force I§7 ainsi que l'effet§c Résistance I§7 ou l'effet§c Speed I§7 en fonction de votre§c cuirasse§7.\n"+
                 " \n"+
                 "§8 -§7 Vous pouvez utiliser votre objet \"§f§lChangement de Cuirasse§r§7\" pour retirer ou équiper votre cuirasse, lorsque vous l'avez vous avez l'effet§c Résistance I§7, sans, vous avez l'effet§c Speed I§7.\n"+
                 " \n"+
