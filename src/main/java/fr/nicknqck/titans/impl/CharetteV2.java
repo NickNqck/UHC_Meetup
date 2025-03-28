@@ -37,7 +37,15 @@ public class CharetteV2 extends TitanBase implements Listener {
 
     @Override
     public @NonNull String getParticularites() {
-        return "§8 -§7 Votre transformation dur§c 3m30§7, elle vous offre lors de la trans";
+        return "§8 -§7 Votre transformation dur§c 3m30\n"+
+                " \n"+
+                "§8 -§7 Lorsque vous vous transformez en titan vous avez l'effet Speed I ainsi que§c 15❤ permanents§7.\n"+
+                " \n"+
+                "§8 -§7 Lorsque vous êtes transformés vous pouvez utiliser votre \"§fÉquipement du Charette§7\" qui fera une action différente en fonction de votre clique:\n"+
+                " \n"+
+                "§7     →§f Clique gauche§7: Vous permet de sacrifier§c 2,5❤ permanents§7 ainsi que§c 15%§7 de§c force§7 pour gagner un niveau de§e speed§7.\n"+
+                " \n"+
+                "§7     →§f Clique droit§7: Vous permet de regagner§c 2,5❤ permanents§7 ainsi que§c 15%§7 de§c force§7 en échange d'un niveau de§e speed§7.";
     }
 
     @Override
@@ -76,7 +84,7 @@ public class CharetteV2 extends TitanBase implements Listener {
             this.strengthLoosed = 0;
         } else {
             this.strengthLoosed = 0;
-            for (int i = this.speed; i > 1; i--) {
+            for (int i = this.speed; i >= 1; i--) {
                 event.getTitan().getGamePlayer().getRole().setMaxHealth(event.getTitan().getGamePlayer().getRole().getMaxHealth()+4.0);
                 event.getPlayer().setMaxHealth(event.getTitan().getGamePlayer().getRole().getMaxHealth());
             }
@@ -120,7 +128,7 @@ public class CharetteV2 extends TitanBase implements Listener {
                         player.setMaxHealth(getRole().getMaxHealth());
                         this.charette.speed++;
                         this.charette.strengthLoosed+=15;
-                        player.sendMessage("§bVous avez augmenté votre§c vitesse§b de§c 1§b, elle est maintenant à§c "+this.charette.speed+"§b, vous avez maintenant§c "+this.charette.strengthLoosed+"§b en moins");
+                        player.sendMessage("§bVous avez augmenté votre§c vitesse§b de§c 1§b, elle est maintenant à§c "+this.charette.speed+"§b, vous avez maintenant§c "+this.charette.strengthLoosed+"%§b de§c force§b en moins");
                         return true;
                     }
                 } else {
@@ -129,7 +137,7 @@ public class CharetteV2 extends TitanBase implements Listener {
                         player.setMaxHealth(getRole().getMaxHealth());
                         this.charette.speed--;
                         this.charette.strengthLoosed-=15;
-                        player.sendMessage("§bVous avez baissé votre§c vitesse§b de§c 1§b, elle est maintenant à§c "+this.charette.speed+"§b, vous avez maintenant §c"+this.charette.strengthLoosed+"§b en moins");
+                        player.sendMessage("§bVous avez baissé votre§c vitesse§b de§c 1§b, elle est maintenant à§c "+this.charette.speed+"§b, vous avez maintenant §c"+this.charette.strengthLoosed+"%§b de§c force§b en moins");
                         return true;
                     }
                 }
