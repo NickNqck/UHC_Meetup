@@ -127,6 +127,7 @@ public class Color implements CommandExecutor, Listener {
                 team.unregister();
             }
         }
+        Main.getInstance().getScoreboardManager().getColorScoreboard().clear();
     }
     private static class ColorSetter implements Listener {
 
@@ -167,11 +168,13 @@ public class Color implements CommandExecutor, Listener {
                                 Main.getInstance().getScoreboardManager().getScoreboards().get(uuid)
                                         .changeDisplayName(clicker, target, this.colors.get(event.getCurrentItem()));
                             }
+                            event.setCancelled(true);
                             clicker.closeInventory();
                         }
                     } else {
                         if (event.getCurrentItem().isSimilar(GUIItems.getSelectBackMenu())) {
                             event.getWhoClicked().sendMessage("§7Vous avez§c annulé§7 la coloration d'un ou plusieurs joueur(s)");
+                            event.setCancelled(true);
                             event.getWhoClicked().closeInventory();
                         }
                     }
