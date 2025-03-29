@@ -388,7 +388,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			}
 		}
 		if (amountDeath == amountIG-1) {//donc si tout les orochimarus sont mort (sauf kabuto)
-			onLastAlive();
+			Bukkit.getScheduler().runTask(Main.getInstance(), this::onLastAlive);
 		}
 	}
 	private void onKarinDeath(boolean msg) {
