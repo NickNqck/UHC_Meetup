@@ -6,6 +6,7 @@ import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareStealCommandEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
+import fr.nicknqck.events.custom.roles.aot.TitanOwnerChangeEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.titans.StealCommand;
@@ -33,6 +34,8 @@ public class TitanManager implements Listener {
         this.titansMap.put(uuid, titan);
     }
     public void replaceOwner(@NonNull final UUID oldUUID, @NonNull final GamePlayer gamePlayer, @NonNull final TitanBase titan) {
+        @NonNull final TitanOwnerChangeEvent event = new TitanOwnerChangeEvent(oldUUID, gamePlayer, titan);
+        if (event.isCancelled()) return;
         this.titansMap.remove(oldUUID, titan);
         this.addTitan(gamePlayer.getUuid(), titan);
     }
