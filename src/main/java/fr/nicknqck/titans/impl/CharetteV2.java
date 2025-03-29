@@ -79,7 +79,7 @@ public class CharetteV2 extends TitanBase implements Listener {
         if (!event.getTitan().getGamePlayer().getUuid().equals(getGamePlayer().getUuid()))return;
         if (event.isTransforming()) {
             getGamePlayer().getRole().setMaxHealth(getGamePlayer().getRole().getMaxHealth()+10.0);
-            event.getPlayer().setMaxHealth(event.getPlayer().getMaxHealth()+10.0);
+            event.getPlayer().setMaxHealth(getGamePlayer().getRole().getMaxHealth());
             event.getPlayer().setHealth(event.getPlayer().getHealth()+10.0);
             this.strengthLoosed = 0;
         } else {
