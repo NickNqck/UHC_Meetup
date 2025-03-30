@@ -48,6 +48,12 @@ public class TitanManager implements Listener {
         }
         return new String[0];
     }
+    public TitanBase getTitan(@NonNull final UUID uuid) {
+        if (!hasTitan(uuid)) {
+            return null;
+        }
+        return this.titansMap.get(uuid);
+    }
     @EventHandler(priority = EventPriority.LOWEST)
     private void onDeath(@NonNull final UHCDeathEvent event) {
         if (event.isCancelled())return;
