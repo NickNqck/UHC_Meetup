@@ -85,7 +85,7 @@ public class HotaruV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             String[] strings = (String[]) args.get("args");
             if (strings.length == 2) {
                 Player player1 = Bukkit.getPlayer(strings[1]);
@@ -113,7 +113,7 @@ public class HotaruV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             String[] strings = (String[]) args.get("args");
             if (strings.length == 2) {
                 Player player1 = Bukkit.getPlayer(strings[1]);
@@ -149,7 +149,7 @@ public class HotaruV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             String[] strings = (String[]) args.get("args");
             if (strings.length == 2) {
                 Player player1 = Bukkit.getPlayer(strings[1]);
@@ -183,7 +183,7 @@ public class HotaruV2 extends SlayerRoles {
 
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             Inventory inv = Bukkit.createInventory(player, 27, "§fChoix de la lame");
             inv.setItem(9, Items.getLamedenichirincoeur());
             inv.setItem(4, Items.getLamedenichirinfireresi());

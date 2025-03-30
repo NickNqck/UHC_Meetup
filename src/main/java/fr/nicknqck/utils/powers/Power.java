@@ -84,7 +84,7 @@ public abstract class Power {
         }
         return canUse;
     }
-    public abstract boolean onUse(Player player, Map<String, Object> map);
+    public abstract boolean onUse(@NonNull Player player,@NonNull Map<String, Object> map);
     public boolean checkIfPowerEnable(final Player player) {
         final PowerActivateEvent powerActivateEvent = new PowerActivateEvent(this.plugin, player, this);
         this.plugin.getServer().getPluginManager().callEvent(powerActivateEvent);

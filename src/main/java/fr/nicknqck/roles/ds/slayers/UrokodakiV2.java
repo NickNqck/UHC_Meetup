@@ -85,7 +85,7 @@ public class UrokodakiV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             player.sendMessage("§7Vous venez d'utiliser votre §bsouffle de l'eau §7vous obtenez donc "+AllDesc.Speed+" §71 pendnant 2 minutes");
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*120, 0, false), true);
             return true;

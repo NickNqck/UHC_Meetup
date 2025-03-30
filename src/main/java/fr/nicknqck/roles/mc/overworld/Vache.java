@@ -106,7 +106,7 @@ public class Vache extends OverWorldRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             this.runnable.start((Player) args.get("target"));
             return true;
         }

@@ -168,7 +168,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				player.sendMessage("Vous venez de boire de l'alcool");
 				if (!this.shinjuro.killkyojuro){
@@ -197,7 +197,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				if (this.use) {
 					player.sendMessage("Vous avez§c désactivé§f votre "+getName());
@@ -238,7 +238,7 @@ public class Shinjuro extends DemonsSlayersRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			return true;
 		}
 		private static class RegenRunnable extends BukkitRunnable {

@@ -93,7 +93,7 @@ public class KanaeV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
                 EntityDamageByEntityEvent event = ((UHCPlayerBattleEvent) args.get("event")).getOriginEvent();
                 if (!(event.getDamager() instanceof Player))return false;

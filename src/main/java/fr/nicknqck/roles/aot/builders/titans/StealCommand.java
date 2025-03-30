@@ -20,7 +20,7 @@ public class StealCommand extends CommandPower {
     }
 
     @Override
-    public boolean onUse(Player player, Map<String, Object> map) {
+    public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
         final GameState gameState = GameState.getInstance();
         if (gameState == null)return false;
         if (!gameState.hasRoleNull(player.getUniqueId())) {

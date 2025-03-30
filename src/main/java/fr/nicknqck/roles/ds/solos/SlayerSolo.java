@@ -166,7 +166,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 this.using = true;
                 player.sendMessage("§7Votre§e Foudre§7 est prête, vous avez maintenant§c 60 secondes§7 pour l'utiliser sur un§c joueur§7.");
@@ -229,7 +229,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*120, 1, false, false), true);
                 player.sendMessage("§7Vous activez votre §aSoufle du Vent");
@@ -261,7 +261,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Vous activez le§b Soufle de l'Eau");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*180, 0, false, false));
@@ -316,7 +316,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Activation du§c Soufle du Feu");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*180, 0, false, false));
@@ -372,7 +372,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 Player target = getRole().getTargetPlayer(player, 25);
                 if (target != null) {

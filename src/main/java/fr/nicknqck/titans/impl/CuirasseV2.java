@@ -115,7 +115,7 @@ public class CuirasseV2 extends TitanBase implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (this.cuirasse.hasCuirasse) {
                     this.cuirasse.hasCuirasse = false;

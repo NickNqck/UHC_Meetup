@@ -104,7 +104,7 @@ public class TomiokaV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             return true;
         }
         private static class FinderRunnable extends BukkitRunnable {
@@ -245,7 +245,7 @@ public class TomiokaV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             return true;
         }
         @EventHandler
@@ -311,7 +311,7 @@ public class TomiokaV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 long now = System.currentTimeMillis();
                 this.aroundMap.entrySet().removeIf(time -> now - time.getValue() > 10000);

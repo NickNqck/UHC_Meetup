@@ -181,7 +181,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final String[] args = (String[]) map.get("args");
             if (args.length != 2) {
                 player.sendMessage("§cLa commande est§6 /ds assassin <joueur>");
@@ -245,7 +245,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final String[] args = (String[]) map.get("args");
             if (args.length == 1) {
                 return this.sentirPower.checkUse(player, map);
@@ -261,7 +261,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 int amountDemon = 0;
                 for (Player around : Loc.getNearbyPlayersExcept(player, 30)) {
                     if (!getRole().getGameState().hasRoleNull(around.getUniqueId())) {
@@ -284,7 +284,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final String[] args = (String[]) map.get("args");
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
@@ -308,7 +308,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 player.sendMessage("§7Vous utilisez votre§6 Danse du dieu du Feu");

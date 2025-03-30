@@ -94,7 +94,7 @@ public class TengenV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Activation du "+getName());
                 player.setSprinting(false);
@@ -212,7 +212,7 @@ public class TengenV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             return false;
         }
         @EventHandler

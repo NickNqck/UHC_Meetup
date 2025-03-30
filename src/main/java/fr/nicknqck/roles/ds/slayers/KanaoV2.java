@@ -79,7 +79,7 @@ public class KanaoV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             String[] args = (String[]) map.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);
@@ -120,7 +120,7 @@ public class KanaoV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             String[] args = (String[]) map.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);

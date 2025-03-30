@@ -126,7 +126,7 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				final Player target = RayTrace.getTargetPlayer(player, 30, null);
 				if (target == null) {
@@ -171,7 +171,7 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				player.sendMessage("§7Vous venez d'utiliser votre §eSpeed III");
 				getRole().getGameState().spawnLightningBolt(player.getWorld(), player.getLocation());
@@ -217,7 +217,7 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				new ZoneRunnable(this);
 				player.sendMessage("§7Activation de votre§6 Zone de Foudre");

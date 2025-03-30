@@ -199,7 +199,7 @@ public class Zabuza extends NSRoles implements Listener {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> args) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				if (cooldown.isInCooldown()) {
 					zabuza.sendCooldown(player, cooldown.getCooldownRemaining());

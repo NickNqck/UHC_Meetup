@@ -120,7 +120,7 @@ public class RuiV2 extends DemonsRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("LEFT")) {//Pour changer de pouvoir
@@ -176,7 +176,7 @@ public class RuiV2 extends DemonsRoles {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final Player target = RayTrace.getTargetPlayer(player, 25, null);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
@@ -206,7 +206,7 @@ public class RuiV2 extends DemonsRoles {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final Player target = RayTrace.getTargetPlayer(player, 25, null);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
@@ -236,7 +236,7 @@ public class RuiV2 extends DemonsRoles {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final Player target = RayTrace.getTargetPlayer(player, 50, null);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
@@ -275,7 +275,7 @@ public class RuiV2 extends DemonsRoles {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 int amountInCd = 0;
                 for (final Power power : this.filPower.powerMap.values()) {
                     if (power.getCooldown().isInCooldown()) {

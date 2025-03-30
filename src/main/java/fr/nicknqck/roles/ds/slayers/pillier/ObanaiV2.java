@@ -145,7 +145,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
                 UHCPlayerBattleEvent event = (UHCPlayerBattleEvent) args.get("event");
                 ((Player)event.getOriginEvent().getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 2, false, false));
@@ -168,7 +168,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             player.sendMessage("§7Vous avez lancer votre§2 Serpent");
             EventUtils.registerEvents(this);
             Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {

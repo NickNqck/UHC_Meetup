@@ -75,7 +75,7 @@ public class AssaillantV2 extends TitanBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 @NonNull final List<GamePlayer> aroundGamePlayers = Loc.getNearbyGamePlayers(player.getLocation(), 50);
                 aroundGamePlayers.remove(this.getRole().getGamePlayer());
