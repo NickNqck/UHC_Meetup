@@ -152,7 +152,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final Player target = RayTrace.getTargetPlayer(player, 30.0, null);
             if (target == null) {
                 player.sendMessage("§cIl faut viser un joueur !");
@@ -187,7 +187,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             player.sendMessage("§7Vous avez activé vos§6 Percussion Rapide");
             EventUtils.registerRoleEvent(this);
             new PercussionRunnable(this, getRole().getGameState());

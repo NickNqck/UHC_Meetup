@@ -78,7 +78,7 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
@@ -105,7 +105,7 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
@@ -136,7 +136,7 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);

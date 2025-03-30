@@ -130,7 +130,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (mitsuriV2.obanai == null) {
                 player.sendMessage("§aObanai§7 n'est pas dans la partie...");
                 return false;

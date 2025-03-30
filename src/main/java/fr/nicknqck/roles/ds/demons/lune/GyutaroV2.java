@@ -76,7 +76,7 @@ public class GyutaroV2 extends DemonsRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (gyutaroV2.daki == null) {
                 player.sendMessage("§cDaki§7 n'est pas dans la partie...");
                 return false;
@@ -106,7 +106,7 @@ public class GyutaroV2 extends DemonsRoles {
             super("/ds faux", "faux", new Cooldown(0), role, CommandType.DS, "§7Vous permez d'activer/désactiver votre passif. (Desactiver par défauts)");
         }
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (!Passif) {
                 Passif = true;
                 player.sendMessage("§7Vous venez d'activer votre passif.");

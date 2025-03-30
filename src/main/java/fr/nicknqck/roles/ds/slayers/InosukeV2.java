@@ -90,7 +90,7 @@ public class InosukeV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> strings) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> strings) {
             String[] args = (String[]) strings.get("args");
             if (args.length == 1) {
                 TextComponent component = new TextComponent("§7Voici la liste de tout les§c joueurs§7 autours de vous:\n\n");
@@ -181,7 +181,7 @@ public class InosukeV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> stringObjectMap) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> stringObjectMap) {
             String[] args = (String[]) stringObjectMap.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);

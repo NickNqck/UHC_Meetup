@@ -114,7 +114,7 @@ public class CharetteV2 extends TitanBase implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (!this.charette.isTransformed()) {
                     player.sendMessage("§7Il faut être transformé pour utiliser ce pouvoir");

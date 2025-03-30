@@ -177,7 +177,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 EventUtils.registerEvents(this);
                 player.sendMessage("§7Maintenant vous§c enflammez§7 les joueurs qui vous frappe pendant§b 10s");
@@ -211,7 +211,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             player.sendMessage("§7Activation du§c compa");
             this.use = true;
             getPlugin().getServer().getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> this.use = false, 20*120);

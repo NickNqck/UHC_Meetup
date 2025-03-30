@@ -59,7 +59,7 @@ public class AssaillantManager {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (!transformer) {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*4, 0, false, false), EffectWhen.NOW);
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60*4, 0, false, false), EffectWhen.NOW);

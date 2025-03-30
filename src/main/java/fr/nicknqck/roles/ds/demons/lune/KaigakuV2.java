@@ -144,7 +144,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("LEFT")) {
@@ -353,7 +353,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final Player target = RayTrace.getTargetPlayer(player, 30.0, null);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur");
@@ -387,7 +387,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final List<Player> aroundPlayers = Loc.getNearbyPlayersExcept(player, 25);
                 if (aroundPlayers.isEmpty()) {
                     player.sendMessage("§cIl n'y a pas assez de joueurs autours de vous pour cette technique !");
@@ -419,7 +419,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 new LigneRunnable(getRole().getGameState(), player);
                 return true;
             }

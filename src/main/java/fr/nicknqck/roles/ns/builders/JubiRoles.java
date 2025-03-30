@@ -57,7 +57,7 @@ public abstract class JubiRoles extends UchiwaRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 if (this.roles == null)return false;

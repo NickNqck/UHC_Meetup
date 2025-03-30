@@ -117,7 +117,7 @@ public class LeComteV2 extends BonusKrystalBase implements Listener{
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)){
                 final UHCPlayerBattleEvent event = (UHCPlayerBattleEvent) map.get("event");
                 if (event.isPatch())return false;
@@ -154,7 +154,7 @@ public class LeComteV2 extends BonusKrystalBase implements Listener{
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final String[] args = (String[]) map.get("args");
             if (args.length == 2) {
                 final Player target = Bukkit.getPlayer(args[1]);

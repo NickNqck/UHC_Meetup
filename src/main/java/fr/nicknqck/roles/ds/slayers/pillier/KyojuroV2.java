@@ -102,7 +102,7 @@ public class KyojuroV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getCooldown().isInCooldown() && getCooldown().getCooldownRemaining() >= 60*7) {
                 return false;
             }
@@ -153,7 +153,7 @@ public class KyojuroV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 runnable.time = 0;
                 player.setAllowFlight(true);

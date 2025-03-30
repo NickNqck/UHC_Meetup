@@ -171,7 +171,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().equals(Action.PHYSICAL))return false;
@@ -207,7 +207,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final Player target = RayTrace.getTargetPlayer(player, 15, null);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur à moins de§b 15 blocs");
@@ -272,7 +272,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final Player target = RayTrace.getTargetPlayer(player, 50, null);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur à moins de§b 50 blocs");

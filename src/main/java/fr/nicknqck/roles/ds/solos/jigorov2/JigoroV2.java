@@ -91,7 +91,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60, 2, false, false), EffectWhen.NOW);
 				return true;
@@ -111,7 +111,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			final Inventory inv = Bukkit.createInventory(player, 27, "§fChoix de pacte§e Jigoro§7 (§6V2§7)");
 			inv.setItem(11, GUIItems.getJigoroPacte1());
 			inv.setItem(13, GUIItems.getJigoroPacte2());

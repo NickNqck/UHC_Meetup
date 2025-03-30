@@ -97,7 +97,7 @@ public class ShinobuV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> stringObjectMap) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> stringObjectMap) {
             if (getRole().getGamePlayer().isAlive()) {
                 openMenu(player);
                 return true;
@@ -175,7 +175,7 @@ public class ShinobuV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             Player toHeal = Bukkit.getPlayer(lastPlayerlow);
             if (toHeal != null && toHeal.getUniqueId() != getRole().getPlayer()) {
                 toHeal.setHealth(toHeal.getMaxHealth());

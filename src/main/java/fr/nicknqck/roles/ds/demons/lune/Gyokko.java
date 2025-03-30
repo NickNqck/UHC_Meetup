@@ -116,7 +116,7 @@ public class Gyokko extends DemonsRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (!getInteractType().equals(InteractType.INTERACT))return false;
 			if (!player.getWorld().getName().equals("arena")) {
 				player.sendMessage("§cImpossible d'utiliser votre téléportation, vous n'êtes pas dans le bon monde");
@@ -177,7 +177,7 @@ public class Gyokko extends DemonsRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (this.activated) {
 				getRole().getGamePlayer().getActionBarManager().removeInActionBar("gyokko.forme");
 				this.activated = false;
@@ -254,7 +254,7 @@ public class Gyokko extends DemonsRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> map) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
 				final Player target = RayTrace.getTargetPlayer(player, 20.0, null);
 				if (target == null) {

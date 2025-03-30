@@ -86,7 +86,7 @@ public abstract class TitanBase implements ITitan {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (this.getCooldown().isInCooldown()) {
                     if (this.getCooldown().getCooldownRemaining() <= this.titanBase.getTransfoDuration()) {

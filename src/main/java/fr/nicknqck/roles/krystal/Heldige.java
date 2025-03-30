@@ -112,7 +112,7 @@ public class Heldige extends BonusKrystalBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             return true;
         }
         @EventHandler
@@ -147,7 +147,7 @@ public class Heldige extends BonusKrystalBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             return true;
         }
         @EventHandler
@@ -192,7 +192,7 @@ public class Heldige extends BonusKrystalBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             return true;
         }
         @EventHandler
@@ -219,7 +219,7 @@ public class Heldige extends BonusKrystalBase {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final String[] args = (String[]) map.get("args");
                 if (args.length == 2) {
                     final Player target = Bukkit.getPlayer(args[1]);
@@ -325,7 +325,7 @@ public class Heldige extends BonusKrystalBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final String[] args = (String[]) map.get("args");
             if (args.length == 1) {
                 final Inventory inv = Bukkit.createInventory(player, 27, "§fConfiguration de pouvoir");

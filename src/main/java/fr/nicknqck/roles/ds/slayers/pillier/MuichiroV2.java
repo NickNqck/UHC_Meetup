@@ -82,7 +82,7 @@ public class MuichiroV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
                 final UHCPlayerBattleEvent event = (UHCPlayerBattleEvent) args.get("event");
                 final RoleBase role = event.getVictim().getRole();
@@ -103,7 +103,7 @@ public class MuichiroV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)){
                 final List<Location> locs = new ArrayList<>(MathUtil.getCircle(player.getLocation(), 10));
                 locs.removeIf(loc -> !loc.getBlock().getType().equals(Material.AIR));

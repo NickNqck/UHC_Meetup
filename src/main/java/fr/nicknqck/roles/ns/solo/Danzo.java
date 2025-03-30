@@ -337,7 +337,7 @@ public class Danzo extends NSRoles {
 		}
 
 		@Override
-		public boolean onUse(Player player, Map<String, Object> args) {
+		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
 			return false;
 		}
 		@Getter

@@ -130,7 +130,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> strings) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> strings) {
             String[] args = (String[]) strings.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);
@@ -201,7 +201,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60+(zenItsuV2.killKaigaku ? 20*30 : 0), 2, false, false), true);
                 zenItsuV2.getEffects().remove(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);

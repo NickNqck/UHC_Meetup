@@ -94,7 +94,7 @@ public class Neon extends RoleBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final List<Block> centre = getBlocksInFront(player);
                 for (final Block block : centre) {
@@ -135,7 +135,7 @@ public class Neon extends RoleBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final Player target = getRole().getTargetPlayer(player, 25.0);
                 if (target != null) {
@@ -180,7 +180,7 @@ public class Neon extends RoleBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("RIGHT")) {
@@ -203,7 +203,7 @@ public class Neon extends RoleBase {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (this.runnable.start) {
                     this.runnable.start = false;
                     player.sendMessage("§7Vous avez désactiver votre§e Speed 2");
@@ -288,7 +288,7 @@ public class Neon extends RoleBase {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (this.speedItemPower.coursePower.runnable.speedBar <= 5) {
                     player.sendMessage("§7Vous n'avez pas asser d'énergie pour dash");
                     return false;

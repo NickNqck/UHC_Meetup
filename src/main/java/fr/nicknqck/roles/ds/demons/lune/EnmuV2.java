@@ -193,7 +193,7 @@ public class EnmuV2 extends DemonsRoles {
             }
         }
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final Player target = RayTrace.getTargetPlayer(player, 30, Objects::nonNull);
                 if (target == null) {
@@ -476,7 +476,7 @@ public class EnmuV2 extends DemonsRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("RIGHT")) {
@@ -505,7 +505,7 @@ public class EnmuV2 extends DemonsRoles {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final Player target = RayTrace.getTargetPlayer(player, 20, null);
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
@@ -537,7 +537,7 @@ public class EnmuV2 extends DemonsRoles {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final GameState gameState = GameState.getInstance();
                 final List<Player> aroundPlayers = Loc.getNearbyPlayersExcept(player, 30);
                 if (aroundPlayers.isEmpty()) {

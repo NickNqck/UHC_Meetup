@@ -117,7 +117,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             return true;
         }
         @EventHandler
