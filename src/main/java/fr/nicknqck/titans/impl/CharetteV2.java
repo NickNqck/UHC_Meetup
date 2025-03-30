@@ -84,12 +84,12 @@ public class CharetteV2 extends TitanBase implements Listener {
             this.strengthLoosed = 0;
         } else {
             this.strengthLoosed = 0;
-            for (int i = this.speed; i >= 1; i--) {
-                event.getTitan().getGamePlayer().getRole().setMaxHealth(event.getTitan().getGamePlayer().getRole().getMaxHealth()+4.0);
+            for (int i = this.speed; i > 1; i--) {
+                event.getTitan().getGamePlayer().getRole().setMaxHealth(event.getTitan().getGamePlayer().getRole().getMaxHealth()+5.0);
                 event.getPlayer().setMaxHealth(event.getTitan().getGamePlayer().getRole().getMaxHealth());
             }
             getGamePlayer().getRole().setMaxHealth(getGamePlayer().getRole().getMaxHealth()-10.0);
-            event.getPlayer().setMaxHealth(event.getPlayer().getMaxHealth()-10.0);
+            event.getPlayer().setMaxHealth(getGamePlayer().getRole().getMaxHealth());
         }
         this.speed = 1;
     }
@@ -109,7 +109,7 @@ public class CharetteV2 extends TitanBase implements Listener {
         protected StackPower(@NonNull final CharetteV2 charetteV2) {
             super("Équipement du Charette", null,
                     new ItemBuilder(Material.MINECART).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§fÉquipement du Charette")
-                    , charetteV2.getGamePlayer().getRole());
+                    , charetteV2.getGamePlayer().getRole(), "§7Description disponible dans le§6 /aot info");
             this.charette = charetteV2;
         }
 
