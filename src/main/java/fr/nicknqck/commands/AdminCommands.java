@@ -20,6 +20,7 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.rank.ChatRank;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -141,6 +142,15 @@ public class AdminCommands implements CommandExecutor{
 						for (Titans titans : Titans.values()) {
 							if (titans.getTitan().getOwner() != null&&titans.getTitan().getOwner() == player.getUniqueId()) {
 								titans.getTitan().resetCooldown();
+							}
+						}
+						if (!gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers().isEmpty()) {
+							for (@NonNull final Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+								if (power.getCooldown() != null) {
+									if (power.getCooldown().isInCooldown()) {
+										power.getCooldown().setActualCooldown(0);
+									}
+								}
 							}
 						}
 						return true;
