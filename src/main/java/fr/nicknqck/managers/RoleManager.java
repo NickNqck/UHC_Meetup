@@ -156,14 +156,14 @@ public class RoleManager {
         registerRole(GrandTitan.class);
         registerRole(Jelena.class);
         registerRole(PetitTitan.class);
-        registerRole(TitanBestial.class);
+        registerRole(Sieg.class);
         registerRole(TitanDeviant.class);
         registerRole(TitanSouriant.class);
         //Register Mahr
         registerRole(Bertolt.class);
         registerRole(Lara.class);
         registerRole(Magath.class);
-        registerRole(Pieck.class);
+        registerRole(PieckV2.class);
         registerRole(Porco.class);
         registerRole(Reiner.class);
         //Register Solo
