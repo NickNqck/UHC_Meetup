@@ -81,9 +81,10 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	@NonNull
 	private final List<Power> powers = new ArrayList<>();
+	@Getter
+	private final Map<TeamList, Class<? extends RoleBase>[]> knowedTeamWithTraitors = new HashMap<>();
 
 	public abstract String[] Desc();
-
 	public int roleID = 0;
 	public String StringID = "";
 	private UUID uuidOwner;
@@ -207,17 +208,12 @@ public abstract class RoleBase implements IRole {
 	public void FormChoosen(ItemStack item, GameState gameState) {}
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
 	public void setNoFall(boolean hasNoFall) {this.hasNoFall = hasNoFall;}
-
 	public void setMaxHealth(Double maxHealth) {this.maxHealth = maxHealth; owner.setMaxHealth(maxHealth);}
-
 	public void setPower(boolean powerEnabled) {this.powerEnabled = powerEnabled;}
-
 	public void neoAttackedByPlayer(Player attacker, GameState gameState) {}
-
 	public void onDay(GameState gameState) {}
 	public void onNight(GameState gameState) {}
 	public void addSpeedAtInt(Player player, float speedpercent) {player.setWalkSpeed(player.getWalkSpeed()+(speedpercent/500));}
-
 	public void neoItemUseAgainst(ItemStack itemInHand, Player player, GameState gameState, Player damager) {
 		ItemUseAgainst(itemInHand, player, gameState);
 	}
@@ -625,5 +621,12 @@ public abstract class RoleBase implements IRole {
 			System.out.println(this+" added "+role+" to his knowedRole");
 		}
 		getKnowedRoles().add(role);
+	}
+	@SafeVarargs
+    public final void addKnowedPlayerInTeamWithTraitors(@NonNull final TeamList team, Class<? extends RoleBase>... classRoles) {
+		if (Main.isDebug()) {
+			System.out.println("[RoleBaseLogger] added "+team.getName()+" to knowed team wither traitors: "+ Arrays.toString(classRoles));
+		}
+		this.knowedTeamWithTraitors.put(team, classRoles);
 	}
 }
