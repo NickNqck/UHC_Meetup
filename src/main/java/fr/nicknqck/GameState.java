@@ -541,7 +541,7 @@ public class GameState{
 			role = new Reiner(player);
 			break;
 		case Pieck:
-			role = new Pieck(player);
+			role = new PieckV2(player);
 			break;
 		case Bertolt:
 			role = new Bertolt(player);
@@ -568,7 +568,7 @@ public class GameState{
 			role = new Livai(player);
 			break;
 		case TitanBestial:
-			role = new TitanBestial(player);
+			role = new Sieg(player);
 			break;
 		case Soldat:
 			role = new Soldat(player);
@@ -944,6 +944,29 @@ public class GameState{
 							}
 						}
 					}
+				}
+			}
+			if (!role.getKnowedTeamWithTraitors().isEmpty()) {
+				for (@NonNull TeamList team : role.getKnowedTeamWithTraitors().keySet()) {
+					StringBuilder traitres = new StringBuilder("§cAttention, il y a un ou des traitres dans votre équipe il/ils auront l'un de/des rôle(s) suivant: ");
+					StringBuilder toReturn = new StringBuilder("\n");
+                    role.getKnowedTeamWithTraitors().get(team);
+                    for (@NonNull final Class<? extends RoleBase> clazz : role.getKnowedTeamWithTraitors().get(team)) {
+                        if (Main.getInstance().getRoleManager().getRolesRegistery().containsKey(clazz)) {
+                            traitres.append(Main.getInstance().getRoleManager().getRolesRegistery().get(clazz).getOriginTeam().getColor());
+                            traitres.append(Main.getInstance().getRoleManager().getRolesRegistery().get(clazz).getName());
+                        } else {
+                            traitres.append("§b");
+                            traitres.append(clazz.getName().toLowerCase());
+                        }
+                        traitres.append("§c, ");
+                    }
+                    for (@NonNull GamePlayer gamePlayer : getGamePlayer().values()) {
+						if (gamePlayer.getRole() == null)continue;
+						toReturn.append("§8 - ").append(gamePlayer.isAlive() ? "" : "§m").append(team.getColor()).append(gamePlayer.getPlayerName()).append("§r\n\n");
+					}
+					traitres = new StringBuilder(traitres.substring(0, traitres.length() - 2));
+					player.sendMessage("§7Voici la liste de vos aliés, ("+traitres+"§7):"+toReturn);
 				}
 			}
 			if (!role.getMessageOnDescription().isEmpty()) {
