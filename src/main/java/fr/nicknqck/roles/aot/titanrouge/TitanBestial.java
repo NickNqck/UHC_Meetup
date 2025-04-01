@@ -35,7 +35,6 @@ public class TitanBestial extends TitansRoles {
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);
 		canShift = true;
-		gameState.GiveRodTridi(owner);
 		TitanListener.getInstance().setBestial(getPlayer());
 		giveItem(owner, true, Titans.Bestial.getTitan().Items());
 	}

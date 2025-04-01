@@ -37,10 +37,6 @@ public class Gabi extends AotRoles {
 	}
 
 	@Override
-	public void GiveItems() {
-		gameState.GiveRodTridi(owner);
-	}
-	@Override
 	public String[] Desc() {
 			if (!killshifter) {
 				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {

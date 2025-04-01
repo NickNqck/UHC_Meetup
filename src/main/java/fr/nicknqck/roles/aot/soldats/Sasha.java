@@ -67,7 +67,6 @@ public class Sasha extends SoldatsRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 		owner.getInventory().addItem(new ItemStack(Material.ARROW, 32));//give 32 flèches
-		gameState.GiveRodTridi(owner);
 	}
 	private int cooldown = 0;
 	@Override
