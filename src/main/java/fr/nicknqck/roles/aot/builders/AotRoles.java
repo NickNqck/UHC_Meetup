@@ -43,11 +43,6 @@ public abstract class AotRoles extends RoleBase {
         }
     }
 
-    @Override
-    public void RoleGiven(GameState gameState) {
-        gameState.GiveRodTridi(owner);
-    }
-
     private static class RodCooldownRunnable extends BukkitRunnable {
         private final AotRoles role;
         public RodCooldownRunnable(AotRoles role) {

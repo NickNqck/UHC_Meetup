@@ -893,14 +893,6 @@ public class GameState{
         }
         return emptySlots;
     }
-	public void GiveRodTridi(Player player) {
-		if (countEmptySlots(player) >=1) {
-				player.getInventory().addItem(EquipementTridi());			
-		}else {
-			player.sendMessage("§7Votre inventaire étant remplis votre§l Équipement Tridimmentionnel§7 à été drop par terre");
-			GameListener.dropItem(player.getLocation().clone(), EquipementTridi());
-		}
-	}
 	public boolean rod = false;
 	public ItemStack EquipementTridi() {
 		if (this.rod) {
