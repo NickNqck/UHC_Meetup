@@ -333,6 +333,9 @@ public abstract class RoleBase implements IRole {
 	}
 	public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {}
 
+	@Override
+	public void resetCooldown() {}
+
 	public void onEndGame() {
 		toClaim.clear();
 		customName.clear();
@@ -561,10 +564,12 @@ public abstract class RoleBase implements IRole {
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		return false;
 	}
+
 	@Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}
+
 	public void givePotionEffect(PotionEffect effect, EffectWhen when) {
 		if (when.equals(EffectWhen.NOW)) {
 			final Player owner = Bukkit.getPlayer(getPlayer());
