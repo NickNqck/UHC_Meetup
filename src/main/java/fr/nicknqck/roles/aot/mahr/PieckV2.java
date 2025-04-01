@@ -36,9 +36,6 @@ public class PieckV2 extends MahrRoles {
     }
 
     @Override
-    public void resetCooldown() {}
-
-    @Override
     public ItemStack[] getItems() {
         return new ItemStack[0];
     }
