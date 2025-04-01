@@ -33,13 +33,13 @@ public class Patch implements Listener{
 	@EventHandler(priority = EventPriority.HIGHEST)
     private void onPatchPotion(EntityDamageByEntityEvent event) {
         if (gameState.getServerState() != ServerStates.InGame)return;
-//		if (Main.isDebug()){
+		if (Main.isDebug()){
 		System.out.println("Original Damage: "+event.getDamage());
-//		}
+		}
 		new PatchCritical(event, Main.getInstance().getGameConfig().getCritPercent());
-	//	if (Main.isDebug()){
+		if (Main.isDebug()){
 			System.out.println("Original Damage (After Critical Nerf): "+event.getDamage());
-	//	}
+		}
 		for (final Chakras ch : Chakras.values()) {
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
 		}
