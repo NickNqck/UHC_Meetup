@@ -955,6 +955,7 @@ public class GameState{
                     }
                     for (@NonNull GamePlayer gamePlayer : getGamePlayer().values()) {
 						if (gamePlayer.getRole() == null)continue;
+						if (!gamePlayer.getRole().getOriginTeam().equals(team))continue;
 						toReturn.append("§8 - ").append(gamePlayer.isAlive() ? "" : "§m").append(team.getColor()).append(gamePlayer.getPlayerName()).append("§r\n\n");
 					}
 					traitres = new StringBuilder(traitres.substring(0, traitres.length() - 2));
