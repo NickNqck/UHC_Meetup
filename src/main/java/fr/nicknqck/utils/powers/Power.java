@@ -103,6 +103,8 @@ public abstract class Power {
         if (this.cooldown == null)return;
         if (cooldown.getUniqueId().equals(this.getCooldown().getUniqueId())) {//donc si c'est EXACTEMENT le même "Cooldown"
             if (!this.isSendCooldown())return;
+            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))return;
+            if (!GameState.getInstance().getInGamePlayers().contains(this.getRole().getPlayer()))return;
             getRole().getGamePlayer().sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
         }
     }
