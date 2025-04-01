@@ -128,9 +128,9 @@ public class Patch implements Listener{
 			event.setDamage(bd.doubleValue());
 			event.setDamage(event.getDamage()*force);
 		//	event.setDamage((event.getDamage() / 2.3f) *(1 + 20 / 100.0f));
-		//	if (Main.isDebug()){
+			if (Main.isDebug()){
 				System.out.println("Force Damage to "+event.getDamage());
-		//	}
+			}
 		} else {
 			if (fPercent > 0){
 				double rValue = (fPercent/100) +1;
@@ -148,16 +148,16 @@ public class Patch implements Listener{
 			System.out.println("RESI "+resi);
 			event.setDamage(event.getDamage()*resi);
 		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch la l'effet de rési car il est de base dans les valeurs que je veux
-		//	if (Main.isDebug()){
+			if (Main.isDebug()){
 				System.out.println("Resi Damage to "+event.getDamage());
-		//	}
+			}
 		} else {
 			if (reiPercent > 0){
 				double reductionFactor = 1 - (reiPercent / 100);
 				event.setDamage(event.getDamage() * reductionFactor);
-			//	if (Main.isDebug()){
+				if (Main.isDebug()){
 					System.out.println("Bonus Resi Damage to "+event.getDamage());
-			//	}
+				}
 			}
 		}
 	}
