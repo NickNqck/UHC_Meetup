@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.titanrouge;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -44,9 +45,6 @@ public class Sieg extends TitansRoles {
     public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.TitanBestial;
     }
-
-    @Override
-    public void resetCooldown() {}
 
     @Override
     public ItemStack[] getItems() {
@@ -179,6 +177,10 @@ public class Sieg extends TitansRoles {
                     final Player player = Bukkit.getPlayer(gamePlayer.getUuid());
                     if (player == null)continue;
                     if (player.getUniqueId().equals(this.gamePlayer.getUuid()))continue;
+                    if (gamePlayer.getRole() == null)continue;
+                    if (!(gamePlayer.getRole() instanceof AotRoles))continue;
+                    if (!((AotRoles) gamePlayer.getRole()).isTransformedinTitan)continue;
+                    if (!gamePlayer.getRole().getOriginTeam().equals(TeamList.Titan))continue;
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false)));
                 }
             }
