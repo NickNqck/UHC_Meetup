@@ -30,7 +30,7 @@ public class CuirasseV2 extends TitanBase implements Listener {
     private final PotionEffect speed;
     private int prepaDash = 0;
 
-    protected CuirasseV2(GamePlayer gamePlayer) {
+    public CuirasseV2(GamePlayer gamePlayer) {
         super(gamePlayer);
         this.potionEffects = new ArrayList<>();
         this.potionEffects.add(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false));
