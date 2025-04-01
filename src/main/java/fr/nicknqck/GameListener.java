@@ -7,6 +7,7 @@ import fr.nicknqck.events.custom.*;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -74,7 +75,6 @@ public class GameListener implements Listener {
 
 		}, 20, 20);
 	}
-	private boolean infectedgiveforce = false;
 	private void UpdateGame() {
 		switch(gameState.getServerState()) {
 		case InLobby:
@@ -244,6 +244,9 @@ public class GameListener implements Listener {
 									role.giveItem(p, false, Items.getLamedenichirin());
 								}
 							}
+						}
+						if (role instanceof AotRoles) {
+							role.giveItem(p, false, gameState.EquipementTridi());
 						}
                         Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, role, role.getRoles(), role.getGamePlayer(), false));
                     }
