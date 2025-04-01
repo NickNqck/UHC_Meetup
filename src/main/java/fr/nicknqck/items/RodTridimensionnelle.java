@@ -61,11 +61,23 @@ public class RodTridimensionnelle implements Listener {
         		if (role.gazAmount > 0) {
             		if (role.getActualTridiCooldown() <= 0) {
             			if (!role.isTransformedinTitan) {
-            				FishHook fishHook = (FishHook) event.getEntity();
-                	        Location eyeLocation = player.getEyeLocation().clone();
-                	        fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
-                	        (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
-            			}else {
+                            if (Main.getInstance().getTitanManager().hasTitan(player.getUniqueId())) {
+                                if (!Main.getInstance().getTitanManager().getTitan(player.getUniqueId()).isTransformed()) {
+                                    FishHook fishHook = (FishHook) event.getEntity();
+                                    Location eyeLocation = player.getEyeLocation().clone();
+                                    fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
+                                    (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
+                                } else {
+                                    player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petit pour votre corp de titan, vous ne pouvez pas l'utiliser");
+                                    event.setCancelled(true);
+                                }
+                            } else {
+                                FishHook fishHook = (FishHook) event.getEntity();
+                                Location eyeLocation = player.getEyeLocation().clone();
+                                fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
+                                (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
+                            }
+            			} else {
             				player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petit pour votre corp de titan, vous ne pouvez pas l'utiliser");
             				event.setCancelled(true);
             			}

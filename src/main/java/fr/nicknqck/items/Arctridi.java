@@ -58,33 +58,40 @@ public class Arctridi implements Listener{
                     gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof AotRoles) {
                 Arrow arrow = (Arrow) event.getEntity();
                 AotRoles role = (AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-                if (role.getActualTridiCooldown() <= 0 && !role.isTransformedinTitan) {
-                	if (role.gazAmount >0) {
-                		Vector arrowVelocity = arrow.getVelocity();
+                if (role.getActualTridiCooldown() <= 0) {
+                    if (role.isTransformedinTitan) {
+                        player.sendMessage(gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 n'a pas supporté votre poid de Titan");
+                        return;
+                    }
+                    if (Main.getInstance().getTitanManager().hasTitan(role.getPlayer())) {
+                        if (Main.getInstance().getTitanManager().getTitan(role.getPlayer()).isTransformed()) {
+                            player.sendMessage(gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 n'a pas supporté votre poid de Titan");
+                            return;
+                        }
+                    }
+                    if (role.gazAmount >0) {
+                        Vector arrowVelocity = arrow.getVelocity();
                         Vector playerVelocity = player.getLocation().getDirection().setY(0).normalize().multiply(1.5); // Adjust the teleport distance
                         Vector finalVelocity = arrowVelocity.add(playerVelocity);
                         noFall.add(player);
-            			Location initLoc = player.getLocation();
+                        Location initLoc = player.getLocation();
                         player.teleport(arrow.getLocation().add(0, 1, 0).setDirection(finalVelocity));
                         role.setActualTridiCooldown(Main.getInstance().getGameConfig().getTridiCooldown());
                         Location endLoc = player.getLocation();//Like initLoc but after TP
                         double distance = initLoc.distance(endLoc);
                         double gazToRemove = distance/8;
                         if (distance > 0 ){
-                        	role.gazAmount-=gazToRemove;
-                        	DecimalFormat df = new DecimalFormat("0.0");
-                        	player.sendMessage("§7Vous avez perdu§c "+df.format(gazToRemove)+"%§7 de gaz, il ne vous reste que §c"+df.format(role.gazAmount)+"%");
-                        	event.getEntity().removeMetadata("teleportArrow "+gameState.getGamePlayer().get(((Player) event.getEntity().getShooter()).getUniqueId()).getRole().roleID, Main.getInstance());
+                            role.gazAmount-=gazToRemove;
+                            DecimalFormat df = new DecimalFormat("0.0");
+                            player.sendMessage("§7Vous avez perdu§c "+df.format(gazToRemove)+"%§7 de gaz, il ne vous reste que §c"+df.format(role.gazAmount)+"%");
+                            event.getEntity().removeMetadata("teleportArrow "+gameState.getGamePlayer().get(((Player) event.getEntity().getShooter()).getUniqueId()).getRole().roleID, Main.getInstance());
                         }
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> noFall.remove(player), 20*5);
-                	}
+                    }
                 } else {
-                	if (((AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getActualTridiCooldown() > 0) {
+                    if (((AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getActualTridiCooldown() > 0) {
                         gameState.getGamePlayer().get(player.getUniqueId()).getRole().sendCooldown(player, ((AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole()).getActualTridiCooldown());
-                	}
-                	if (role.isTransformedinTitan) {
-                		player.sendMessage(gameState.EquipementTridi().getItemMeta().getDisplayName()+"§7 n'a pas supporté votre poid de Titan");
-                	}
+                    }
                 }
             }	
     	}
