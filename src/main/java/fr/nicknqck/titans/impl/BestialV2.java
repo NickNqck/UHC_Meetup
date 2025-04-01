@@ -291,7 +291,7 @@ public class BestialV2 extends TitanBase implements Listener {
         private final BestialV2 bestialV2;
 
         protected LanguePower(@NonNull BestialV2 bestialV2) {
-            super("Langue", new Cooldown(30*3), new ItemBuilder(Material.NETHER_WARTS).setName("§fLangue"), bestialV2.getTransformationPower().getRole());
+            super("Langue", new Cooldown(30*3), new ItemBuilder(Material.NAME_TAG).setName("§fLangue"), bestialV2.getTransformationPower().getRole());
             this.bestialV2 = bestialV2;
         }
 
