@@ -305,13 +305,6 @@ public boolean killtanjiro;
 				GameListener.SendToEveryone("§6Kokushibo §rà mis la §9nuit");
 				owner.getInventory().addItem(Items.getkokushibosword());
 				itemcooldown = Main.getInstance().getGameConfig().getMaxTimeDay()*2;
-				for (UUID u : gameState.getInGamePlayers()) {
-					Player p = Bukkit.getPlayer(u);
-					if (p == null)continue;
-					if (!gameState.hasRoleNull(u)) {
-						gameState.getGamePlayer().get(u).getRole().onNight(gameState);
-					}
-				}
 				Bukkit.getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
 			} else {
 				sendCooldown(owner, itemcooldown);

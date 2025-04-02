@@ -214,7 +214,6 @@ public abstract class RoleBase implements IRole {
 	public void setPower(boolean powerEnabled) {this.powerEnabled = powerEnabled;}
 	public void neoAttackedByPlayer(Player attacker, GameState gameState) {}
 	public void onDay(GameState gameState) {}
-	public void onNight(GameState gameState) {}
 	public void addSpeedAtInt(Player player, float speedpercent) {player.setWalkSpeed(player.getWalkSpeed()+(speedpercent/500));}
 	public void neoItemUseAgainst(ItemStack itemInHand, Player player, GameState gameState, Player damager) {
 		ItemUseAgainst(itemInHand, player, gameState);
