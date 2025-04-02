@@ -226,7 +226,7 @@ public class Eren extends AotRoles {
 					killBestial = true;
 					owner.sendMessage("Vous venez de tuez le titan Bestial vous obtnez donc la liste des Titans");
 				}
-				if (gamePlayer.getRole() instanceof Pieck) {
+				if (gamePlayer.getRole() instanceof PieckV2) {
 					killPieck = true;
 					owner.sendMessage("Vous de tuez le joueur possédant le rôle Pieck vous obtiendrez donc "+AllDesc.Speed+" 2 durant votre transformation");
 				}
@@ -240,7 +240,7 @@ public class Eren extends AotRoles {
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Porco§f vous obtenez donc son§l Saut");
 					cdPorco = 0;
 				}
-				if (gamePlayer.getRole() instanceof Reiner) {
+				if (gamePlayer.getRole() instanceof ReinerV2) {
 					giveHealedHeartatInt(owner, 2);
 					owner.sendMessage("Vous venez de tuez le joueur possédant le§9 Titan Cuirasse§f vous obtenez donc 2"+AllDesc.coeur+" supplémentaire");
 				}
