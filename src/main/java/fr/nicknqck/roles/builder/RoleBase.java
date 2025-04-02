@@ -83,6 +83,8 @@ public abstract class RoleBase implements IRole {
 	private final List<Power> powers = new ArrayList<>();
 	@Getter
 	private final Map<TeamList, Class<? extends RoleBase>[]> knowedTeamWithTraitors = new HashMap<>();
+	@Getter
+	private final Map<String, List<GamePlayer>> knowedPlayer = new HashMap<>();
 
 	public abstract String[] Desc();
 	public int roleID = 0;
@@ -633,5 +635,30 @@ public abstract class RoleBase implements IRole {
 			System.out.println("[RoleBaseLogger] added "+team.getName()+" to knowed team wither traitors: "+ Arrays.toString(classRoles));
 		}
 		this.knowedTeamWithTraitors.put(team, classRoles);
+	}
+
+	public final void addKnowedPlayersFromTeam(@NonNull final TeamList team) {
+		@NonNull final List<GamePlayer> gamePlayers = new ArrayList<>();
+		if (!this.knowedPlayer.containsKey(team.getName())) {
+			for (@NonNull final GamePlayer gamePlayer : this.getGameState().getGamePlayer().values()) {
+				if (this.gameState.hasRoleNull(gamePlayer.getUuid())) continue;
+				final RoleBase role = gameState.getGamePlayer().get(gamePlayer.getUuid()).getRole();
+				if (role.getOriginTeam().equals(team) || role.getTeam().equals(team)) {
+					gamePlayers.add(gamePlayer);
+				}
+			}
+			this.knowedPlayer.put(team.getName(), gamePlayers);
+		} else {
+			gamePlayers.addAll(this.knowedPlayer.get(team.getName()));
+			this.knowedPlayer.remove(team.getName());
+			for (@NonNull final GamePlayer gamePlayer : this.getGameState().getGamePlayer().values()) {
+				if (this.gameState.hasRoleNull(gamePlayer.getUuid())) continue;
+				final RoleBase role = gameState.getGamePlayer().get(gamePlayer.getUuid()).getRole();
+				if (role.getOriginTeam().equals(team) || role.getTeam().equals(team)) {
+					gamePlayers.add(gamePlayer);
+				}
+			}
+			this.knowedPlayer.put(team.getName(), gamePlayers);
+		}
 	}
 }
