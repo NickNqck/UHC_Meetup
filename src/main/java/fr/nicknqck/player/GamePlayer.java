@@ -263,6 +263,7 @@ public class GamePlayer {
 				final List<String> strings = new LinkedList<>(this.actionBarManager.actionBars.values());
 				for (final String value : strings) {
 					i++;
+					if (value == null)continue;
 					if (value.isEmpty())continue;
 					string.append(value);
 					if (i == this.actionBarManager.actionBars.size())continue;
