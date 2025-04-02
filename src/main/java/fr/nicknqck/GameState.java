@@ -154,7 +154,7 @@ public class GameState{
 		Magath(TeamList.Mahr, "aot", 4, new ItemBuilder(Material.COMPASS).setName("§9Magath").toItemStack(), "§bNickNqck"),
 		Lara(TeamList.Mahr, "aot", 5, new ItemBuilder(Material.IRON_BLOCK).setName("§9Lara").toItemStack(), "§bNickNqck"),
 		//Titans aot
-		TitanBestial(TeamList.Titan, "aot", 2, new ItemBuilder(Material.MOB_SPAWNER).setName("§cTitan Bestial").toItemStack(), "§bNickNqck"),
+		Sieg(TeamList.Titan, "aot", 2, new ItemBuilder(Material.MOB_SPAWNER).setName("§cTitan Bestial").toItemStack(), "§bNickNqck"),
 		PetitTitan(TeamList.Titan, "aot", 0, new ItemBuilder(Material.FEATHER).setName("§cPetit Titan").toItemStack(), "§bNickNqck"),
 		GrandTitan(TeamList.Titan, "aot", 1, new ItemBuilder(Material.STICK).setName("§cGrand Titan").toItemStack(), "§bNickNqck"),
 		TitanDeviant(TeamList.Titan, "aot", 4, new ItemBuilder(Material.SNOW_BALL).setName("§cTitan Deviant").toItemStack(), "§bNickNqck"),
@@ -569,7 +569,7 @@ public class GameState{
 		case Livai:
 			role = new Livai(player);
 			break;
-		case TitanBestial:
+		case Sieg:
 			role = new Sieg(player);
 			break;
 		case Soldat:

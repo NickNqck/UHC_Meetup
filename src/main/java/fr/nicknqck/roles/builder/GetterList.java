@@ -5,11 +5,9 @@ import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
-import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
+import fr.nicknqck.roles.aot.titanrouge.Sieg;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
-import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -69,7 +67,7 @@ public class GetterList {
                 final RoleBase role = gamePlayer.getRole();
                 if (role instanceof TitansRoles) {
                     TitansRoles Titans = (TitansRoles ) role;
-                    if (!(role instanceof TitanBestial)){
+                    if (!(role instanceof Sieg)){
                         Player list = Bukkit.getPlayer(Titans.getPlayer());
                         if (list != null){
                             text.addExtra("\n§7 - §c"+list.getName());

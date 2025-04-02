@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 
 public class Jelena extends TitansRoles {
+	private int invuse = 2;
 
 	public Jelena(UUID player) {
 		super(player);
@@ -24,10 +25,10 @@ public class Jelena extends TitansRoles {
 	public @NonNull Roles getRoles() {
 		return Roles.Jelena;
 	}
+
 	@Override
 	public String[] Desc() {
 		Main.getInstance().getGetterList().getTitanRougeList(owner);
-		KnowRole(owner, Roles.TitanBestial, 20);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"Jelena",
@@ -46,8 +47,6 @@ public class Jelena extends TitansRoles {
 	public String getName() {
 		return "Jelena";
 	}
-
-	private int invuse = 2;
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
 		if (args.length == 2) {
@@ -106,12 +105,14 @@ public class Jelena extends TitansRoles {
 			owner.sendMessage("Veuiller indiquer le pseudo d'un joueur");	
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void resetCooldown() {
 		invuse = 2;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		addKnowedRole(Sieg.class);
 	}
 }

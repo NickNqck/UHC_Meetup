@@ -6,6 +6,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
+import fr.nicknqck.roles.aot.titanrouge.Sieg;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -26,8 +27,6 @@ public class TitanUltime extends TitansRoles {
 
 	public TitanUltime(UUID player) {
 		super(player);
-		gameState.TitansRouge.add(owner);
-		addBonusforce(10.0);
 	}
 	@Override
 	public @NonNull Roles getRoles() {
@@ -41,7 +40,6 @@ public class TitanUltime extends TitansRoles {
 
 	@Override
 	public String[] Desc() {
-		KnowRole(owner, Roles.TitanBestial, 2);
 		Main.getInstance().getGetterList().getTitanRougeList(owner);
 		return new String[] {
 				AllDesc.bar,
@@ -155,7 +153,11 @@ public class TitanUltime extends TitansRoles {
 		}
 		super.Update(gameState);
 	}
+
 	@Override
-	public void resetCooldown() {
+	public void RoleGiven(GameState gameState) {
+		addKnowedRole(Sieg.class);
+		gameState.TitansRouge.add(owner);
+		addBonusforce(10.0);
 	}
 }
