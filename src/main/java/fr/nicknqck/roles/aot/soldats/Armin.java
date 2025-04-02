@@ -56,6 +56,10 @@ public class Armin extends SoldatsRoles {
 		if (args.length == 2) {
 			if (args[1] != null) {
 				Player target = Bukkit.getPlayer(args[1]);
+				if (target == null) {
+					getGamePlayer().sendMessage("§b"+args[1]+"§c n'existe pas !");
+					return;
+				}
 				if (!gameState.hasRoleNull(target.getUniqueId())) {
 					if (invuse > 0) {
 				        Inventory doubleChest = Bukkit.createInventory(owner, 54, "Inventaire de " + target.getName());
