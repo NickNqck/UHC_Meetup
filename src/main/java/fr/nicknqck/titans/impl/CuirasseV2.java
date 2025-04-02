@@ -110,7 +110,7 @@ public class CuirasseV2 extends TitanBase implements Listener {
 
         protected ChangementDeCuirassePower(@NonNull CuirasseV2 cuirasseV2) {
             super("Changement de Cuirasse", new Cooldown(5), new ItemBuilder(Material.QUARTZ).setName("§f§lChangement de Cuirasse").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes(), cuirasseV2.getGamePlayer().getRole(),
-                    "§7Vous permet de retirer ou de vous rééquipez de votre cuirasse");
+                    "§7Vous permet de retirer ou de vous rééquipez de votre cuirasse, plus de détail dans le§6 /aot info");
             this.cuirasse = cuirasseV2;
         }
 
