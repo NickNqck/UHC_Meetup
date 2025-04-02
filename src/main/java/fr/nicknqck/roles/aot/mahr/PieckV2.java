@@ -45,7 +45,7 @@ public class PieckV2 extends MahrRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Vous possédez une régénération naturel à hauteurs de§c 1/2❤§7 toute les§c 30 secondes§7.")
+                .addCustomLine("§7Vous possédez une régénération naturel à hauteurs de§c 1/2❤ §7toute les§c 30 secondes§7, si vous êtes transformer en titan le §ccooldown§7 de votre§d régénération§7 sera§c divisé§7 par§c deux.")
                 .getText();
     }
 
@@ -82,6 +82,11 @@ public class PieckV2 extends MahrRoles {
                 }
                 this.timeLeft = 30;
                 return;
+            }
+            if (Main.getInstance().getTitanManager().hasTitan(role.getPlayer())) {
+                if (Main.getInstance().getTitanManager().getTitan(role.getPlayer()).isTransformed()) {
+                    this.timeLeft--;
+                }
             }
             this.timeLeft--;
         }
