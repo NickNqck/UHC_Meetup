@@ -8,7 +8,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
-import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
+import fr.nicknqck.roles.aot.titanrouge.Sieg;
 import fr.nicknqck.roles.builder.TeamList;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -222,7 +222,7 @@ public class Eren extends AotRoles {
 					owner.sendMessage("§7Vous venez de tuez le joueur possédant le§9 Titan Colossal§7, vous obtenez donc l'item "+Cercle().getItemMeta().getDisplayName());
 					cdbertolt = 0;
 				}
-				if (gamePlayer.getRole() instanceof TitanBestial) {
+				if (gamePlayer.getRole() instanceof Sieg) {
 					killBestial = true;
 					owner.sendMessage("Vous venez de tuez le titan Bestial vous obtnez donc la liste des Titans");
 				}

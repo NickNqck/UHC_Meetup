@@ -32,23 +32,13 @@ public class Sieg extends TitansRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Sieg";
     }
 
     @Override
     public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.TitanBestial;
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+        return GameState.Roles.Sieg;
     }
 
     @Override
