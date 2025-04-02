@@ -213,11 +213,6 @@ public class GameListener implements Listener {
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant nuit\n");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-						for (UUID u : gameState.getInGamePlayers()) {
-							if (!gameState.hasRoleNull(u)) {
-								gameState.getGamePlayer().get(u).getRole().onNight(gameState);
-							}
-						}
 						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
 					}
 				}
