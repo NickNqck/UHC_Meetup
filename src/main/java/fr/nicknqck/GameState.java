@@ -347,8 +347,11 @@ public class GameState{
 	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
 	public ArrayList<Player> SleepingPlayer = new ArrayList<>();
+	@Getter
+	private final List<Roles> attributedRole = new ArrayList<>();
 	public ArrayList<Player> getInSleepingPlayers() {return SleepingPlayer;}
 	public void setInSleepingPlayers(ArrayList<Player> SleepingPlayers) {SleepingPlayer = SleepingPlayers;}
+
 	public void delInSleepingPlayers(Player player) {SleepingPlayer.remove(player);}
 
 	public GameState() {
@@ -366,8 +369,8 @@ public class GameState{
 	public void addInSpecPlayers(Player player) {inSpecPlayers.add(player);}
 
 	public void delInSpecPlayers(Player player) {inSpecPlayers.remove(player);}
-
 	public void addInPlayerRoles(Player player, RoleBase role) {playerRoles.put(player, role);}
+
 	public void delInPlayerRoles(Player player) {playerRoles.remove(player);}
 
 	public final boolean hasRoleNull(final UUID uuid) {
@@ -379,7 +382,6 @@ public class GameState{
 	}
 
 	public void addInAvailableRoles(Roles role, Integer nmb) {availableRoles.put(role, nmb);}
-
 	public void addPlayerKills(Player player) {playerKills.put(player.getUniqueId(), new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
@@ -538,7 +540,7 @@ public class GameState{
 			role = new Kumo(player);
 		break;
 		case Reiner:
-			role = new Reiner(player);
+			role = new ReinerV2(player);
 			break;
 		case Pieck:
 			role = new PieckV2(player);
@@ -820,8 +822,6 @@ public class GameState{
 		attributedRole.add(role.getRoles());
 		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
 	}
-	@Getter
-	private final List<Roles> attributedRole = new ArrayList<>();
 
 	public void updateGameCanLaunch() {
 		gameCanLaunch = (getInLobbyPlayers().size() == this.getroleNMB());
@@ -961,6 +961,18 @@ public class GameState{
 					traitres = new StringBuilder(traitres.substring(0, traitres.length() - 2));
 					player.sendMessage("§7Voici la liste de vos aliés, ("+traitres+"§7):"+toReturn);
 				}
+			}
+			if (!role.getKnowedPlayer().isEmpty()) {
+				@NonNull final StringBuilder sb = new StringBuilder("§7Voici la liste de tout vos aliés ");
+				for (@NonNull final String string : role.getKnowedPlayer().keySet()) {
+					sb.append(string).append("§7:\n");
+					for (@NonNull final GamePlayer gamePlayer : role.getKnowedPlayer().get(string)) {
+						sb.append("§8 - ")
+								.append(string, 0, 2)
+								.append(gamePlayer.isAlive() ? gamePlayer.getPlayerName() : "§m" + gamePlayer.getPlayerName());
+					}
+				}
+				player.sendMessage(sb.toString());
 			}
 			if (!role.getMessageOnDescription().isEmpty()) {
 				for (String string : role.getMessageOnDescription()) {
