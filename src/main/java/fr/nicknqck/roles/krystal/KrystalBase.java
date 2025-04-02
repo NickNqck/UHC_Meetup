@@ -30,13 +30,16 @@ public abstract class KrystalBase extends RoleBase {
         this.scoreBoardEditManager = new ScoreBoardEditManager(this);
         this.krystalManager = new KrystalManager(this);
     }
+
     private static class ScoreBoardEditManager implements Listener {
 
         private final KrystalBase role;
 
         private ScoreBoardEditManager(KrystalBase role) {
             this.role = role;
-            EventUtils.registerRoleEvent(this);
+            if (role.getGameState().getServerState().equals(GameState.ServerStates.InGame)){
+                EventUtils.registerRoleEvent(this);
+            }
         }
         @EventHandler
         private void ScoreboardUpdateEvent(ScoreBoardUpdateEvent event) {
@@ -52,7 +55,9 @@ public abstract class KrystalBase extends RoleBase {
 
         public KrystalManager(KrystalBase krystalBase) {
             this.role = krystalBase;
-            EventUtils.registerRoleEvent(this);
+            if (this.role.getGameState().getServerState().equals(GameState.ServerStates.InGame)){
+                EventUtils.registerRoleEvent(this);
+            }
         }
         @EventHandler
         private void onKill(final UHCPlayerKillEvent event) {
