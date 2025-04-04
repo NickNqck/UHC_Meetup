@@ -7,7 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
-import fr.nicknqck.roles.aot.solo.Eren;
+import fr.nicknqck.roles.aot.solo.ErenV2;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
@@ -588,7 +588,7 @@ public class GameState{
 			role = new Armin(player);
 			break;
 		case Eren:
-			role = new Eren(player);
+			role = new ErenV2(player);
 			break;
 		case Eclaireur:
 			role = new Eclaireur(player);
