@@ -41,6 +41,7 @@ public class PrepareTitanStealEvent extends GameEvent implements Cancellable {
         ASSAILLANT,
         CUIRASSE,
         CHARETTE,
-        BESTIAL
+        BESTIAL,
+        COLOSSAL
     }
 }
