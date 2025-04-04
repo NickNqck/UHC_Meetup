@@ -4,12 +4,12 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.titans.impl.CharetteV2;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -21,11 +21,6 @@ public class PieckV2 extends MahrRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Pieck§7 (§6V2§7)";
     }
@@ -33,11 +28,6 @@ public class PieckV2 extends MahrRoles {
     @Override
     public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Pieck;
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
@@ -55,6 +45,7 @@ public class PieckV2 extends MahrRoles {
         setTitan(charette);
         Main.getInstance().getTitanManager().addTitan(getPlayer(), charette);
         new RegenerationRunnable(this, getGameState());
+        addKnowedPlayersFromTeam(TeamList.Mahr);
     }
     private static class RegenerationRunnable extends BukkitRunnable {
 
