@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
-import fr.nicknqck.roles.aot.solo.Eren;
+import fr.nicknqck.roles.aot.solo.ErenV2;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
@@ -167,7 +167,7 @@ public class RoleManager {
         registerRole(Porco.class);
         registerRole(ReinerV2.class);
         //Register Solo
-        registerRole(Eren.class);
+        registerRole(ErenV2.class);
         registerRole(Gabi.class);
         registerRole(TitanUltime.class);
     }
