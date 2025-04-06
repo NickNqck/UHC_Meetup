@@ -4,6 +4,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
+import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
@@ -66,6 +67,8 @@ public class GameListener implements Listener {
 		border = Main.getInstance().getWorldManager().getGameWorld().getWorldBorder();
 		border.setSize(Border.getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
+			@NonNull final OnSecond onSecond = new OnSecond(this.gameState);
+			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().onSecond(gameState);
