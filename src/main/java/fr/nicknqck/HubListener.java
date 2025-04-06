@@ -6,6 +6,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.StartGameEvent;
+import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
@@ -15,6 +16,7 @@ import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -26,6 +28,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.NameTagVisibility;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.*;
 
@@ -33,7 +39,11 @@ public class HubListener implements Listener {
 	private final GameState gameState;
 	@Getter
 	private static HubListener instance;
+	@Setter
+	@Getter
+	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
 	public HubListener(GameState gameState) {this.gameState = gameState; instance = this;}
+
 	public final void StartGame() {
 		gameState.updateGameCanLaunch();
 		if (!gameState.gameCanLaunch) {
@@ -72,7 +82,7 @@ public class HubListener implements Listener {
 			}
 		}
 		System.out.println("lobby: "+gameState.getInLobbyPlayers().size()+", roles: "+roleNmb+", equal: "+(gameState.getInLobbyPlayers().size() == roleNmb));
-		
+
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null) {
@@ -126,7 +136,6 @@ public class HubListener implements Listener {
 		new AssassinManagerV2(gameState);
 		System.out.println("Ended StartGame");
 	}
-
 	public void giveStartInventory(Player p) {
 		Main.getInstance().getScoreboardManager().update(p);
 		ItemsManager.ClearInventory(p);
@@ -203,6 +212,7 @@ public class HubListener implements Listener {
 		}
 	}
 	// Gerer l'interaction avec un item
+
 	@EventHandler
 	public void OnItemInteract(PlayerInteractEvent event) {
 		if (gameState.getServerState() != ServerStates.InLobby) return; // Uniquement dans le lobby
@@ -222,11 +232,7 @@ public class HubListener implements Listener {
 				}
 			}
 		}
-	}	
-
-	@Setter
-	@Getter
-	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
+	}
 
 	public final void StartGame(final Player player) {
 		gameState.updateGameCanLaunch();
@@ -235,6 +241,29 @@ public class HubListener implements Listener {
 			player.closeInventory();
 		} else {
 			player.closeInventory();
+		}
+	}
+
+	@EventHandler
+	@SuppressWarnings("deprecation")
+	private void onSecond(@NonNull final OnSecond event) {
+		if (event.isInGame()) {
+			for (@NonNull final Scoreboard scoreboard : Main.getInstance().getScoreboardManager().getColorScoreboard().values()) {
+				if (scoreboard.getTeams().isEmpty())continue;
+				for (@NonNull final Team team : scoreboard.getTeams()) {
+					if (team.getEntries().isEmpty())continue;
+					if (team.getPlayers().isEmpty())continue;
+					for (@NonNull final OfflinePlayer offlinePlayer : team.getPlayers()) {
+						if (offlinePlayer.getPlayer() == null)continue;
+						@NonNull final Player player = offlinePlayer.getPlayer();
+						if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+							team.setNameTagVisibility(NameTagVisibility.NEVER);
+						} else {
+							team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+						}
+					}
+				}
+			}
 		}
 	}
 }
