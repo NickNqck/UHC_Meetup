@@ -1050,18 +1050,24 @@ public class Inventories {
         inventaire.setItem(52, glass);
         inventaire.setItem(53, glass);//bas droite
 
-        inventaire.setItem(2, new ItemBuilder(Material.ANVIL).toItemStack());
-        inventaire.setItem(18, new ItemBuilder(Material.ANVIL).toItemStack());
-        inventaire.setItem(27, new ItemBuilder(Material.ANVIL).toItemStack());
-        inventaire.setItem(26, new ItemBuilder(Material.ANVIL).toItemStack());
-        inventaire.setItem(35, new ItemBuilder(Material.ANVIL).toItemStack());
+        inventaire.setItem(2, new ItemBuilder(Material.BRICK_STAIRS).toItemStack());
+        inventaire.setItem(3, new ItemBuilder(Material.BRICK_STAIRS).toItemStack());
+        inventaire.setItem(5, new ItemBuilder(Material.BRICK_STAIRS).toItemStack());
+        inventaire.setItem(18, new ItemBuilder(Material.BRICK_STAIRS).toItemStack());
+        inventaire.setItem(27, new ItemBuilder(Material.BRICK_STAIRS).toItemStack());
+        inventaire.setItem(26, new ItemBuilder(Material.BRICK_STAIRS).toItemStack());
+        inventaire.setItem(35, new ItemBuilder(Material.BRICK_STAIRS).toItemStack());
     }
     private void clearRoleInventory (@NonNull final Inventory inventory) {
-        inventory.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
-        inventory.setItem(18, new ItemBuilder(Material.AIR).toItemStack());
-        inventory.setItem(27, new ItemBuilder(Material.AIR).toItemStack());
-        inventory.setItem(26, new ItemBuilder(Material.AIR).toItemStack());
-        inventory.setItem(35, new ItemBuilder(Material.AIR).toItemStack());
+        for (int slot = inventory.getSize()-1; slot > 0; slot--) {
+            final ItemStack item = inventory.getItem(slot);
+            if (item == null)continue;
+            if (item.getType() == null)continue;
+            if (item.getType().equals(Material.AIR))continue;
+            if (item.getType().equals(Material.BRICK_STAIRS)) {
+                inventory.setItem(slot, new ItemStack(Material.AIR));
+            }
+        }
     }
 
     public void openKrystalInventory(@NonNull final Player player) {
