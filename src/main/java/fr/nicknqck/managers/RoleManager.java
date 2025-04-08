@@ -160,7 +160,7 @@ public class RoleManager {
         registerRole(TitanDeviant.class);
         registerRole(TitanSouriant.class);
         //Register Mahr
-        registerRole(Bertolt.class);
+        registerRole(BertoltV2.class);
         registerRole(Lara.class);
         registerRole(Magath.class);
         registerRole(PieckV2.class);
