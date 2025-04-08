@@ -216,7 +216,7 @@ public class Eren extends AotRoles {
 		if (killer == owner) {
 			if (victim != null) {
 				GamePlayer gamePlayer = gameState.getGamePlayer().get(victim.getUniqueId());
-				if (gamePlayer.getRole() instanceof Bertolt) {
+				if (gamePlayer.getRole() instanceof BertoltV2) {
 					killBertolt = true;
 					giveItem(owner, false, Cercle());
 					owner.sendMessage("§7Vous venez de tuez le joueur possédant le§9 Titan Colossal§7, vous obtenez donc l'item "+Cercle().getItemMeta().getDisplayName());
