@@ -12,7 +12,8 @@ import java.util.Map;
 public class YameruPower extends CommandPower {
 
     public YameruPower(@NonNull RoleBase role) {
-        super("/ns yameru <joueur>", "yameru", null, role, CommandType.NS);
+        super("/ns yameru <joueur>", "yameru", null, role, CommandType.NS,
+                "§7Vous permet d'éjecter une personne du§d Kamui");
     }
 
     @Override
