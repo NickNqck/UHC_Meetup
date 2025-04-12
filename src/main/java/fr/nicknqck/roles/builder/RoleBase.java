@@ -660,4 +660,22 @@ public abstract class RoleBase implements IRole {
 			this.knowedPlayer.put(team.getName(), gamePlayers);
 		}
 	}
+	public final void addKnowedPlayers(@NonNull String reason, @NonNull final List<GamePlayer> listOfPlayers) {
+		@NonNull final List<GamePlayer> gamePlayers = new ArrayList<>();
+		if (!this.knowedPlayer.containsKey(reason)) {
+			for (@NonNull final GamePlayer gamePlayer : listOfPlayers) {
+				if (this.gameState.hasRoleNull(gamePlayer.getUuid())) continue;
+				gamePlayers.add(gamePlayer);
+			}
+			this.knowedPlayer.put(reason, gamePlayers);
+		} else {
+			gamePlayers.addAll(this.knowedPlayer.get(reason));
+			this.knowedPlayer.remove(reason);
+			for (@NonNull final GamePlayer gamePlayer : listOfPlayers) {
+				if (this.gameState.hasRoleNull(gamePlayer.getUuid())) continue;
+				gamePlayers.add(gamePlayer);
+			}
+			this.knowedPlayer.put(reason, gamePlayers);
+		}
+	}
 }
