@@ -182,9 +182,9 @@ public class AutomaticDesc {
     }
     private String getWhenString(EffectWhen when) {
         return (when.equals(EffectWhen.PERMANENT) ?
-                "de manière§c permanente" :
-                when.equals(EffectWhen.DAY) ? "le§c jour" :
-                        when.equals(EffectWhen.NIGHT) ? "la§c nuit" :
+                "de manière §cpermanente" :
+                when.equals(EffectWhen.DAY) ? "le §cjour" :
+                        when.equals(EffectWhen.NIGHT) ? "la §cnuit" :
                                 when.equals(EffectWhen.MID_LIFE) ? "en ayant moins de §c5"+AllDesc.coeur :
                                         when.equals(EffectWhen.AT_KILL) ? "en tuant un §cjoueur§7" :
                                                 "(EffectWhen hasn't been found)");
