@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -30,9 +31,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class MuzanV2 extends DemonsRoles implements Listener {
 
@@ -68,9 +67,6 @@ public class MuzanV2 extends DemonsRoles implements Listener {
     }
 
     @Override
-    public void resetCooldown() {}
-
-    @Override
     public ItemStack[] getItems() {
         return new ItemStack[0];
     }
@@ -86,6 +82,20 @@ public class MuzanV2 extends DemonsRoles implements Listener {
         addPower(new DSGivePower(this));
         addPower(new DSBoostPower(this));
         EventUtils.registerRoleEvent(this);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            @NonNull final List<GamePlayer> gamePlayerList = new ArrayList<>();
+            for (@NonNull final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+                if (gamePlayer.getRole() == null)continue;
+                if (!gamePlayer.isAlive())continue;
+                if (gamePlayer.getRole() instanceof DemonsRoles) {
+                    DemonsRoles role = (DemonsRoles) gamePlayer.getRole();
+                    if (role.getRank().equals(DemonType.SUPERIEUR) || role.getRank().equals(DemonType.INFERIEUR) || role instanceof MuzanV2 ||role.getRank().equals(DemonType.NEZUKO)) {
+                        gamePlayerList.add(gamePlayer);
+                    }
+                }
+            }
+            addKnowedPlayers("§cLune Supérieures", gamePlayerList);
+        }, 20);
     }
 
     @Override
@@ -226,19 +236,23 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                     this.roleInfecteur = roleInfecteur;
                     this.roleTarget = roleTarget;
                     this.timeRemaining = Main.getInstance().getGameConfig().getInfectionTime();
+                    roleInfecteur.getGamePlayer().getActionBarManager().addToActionBar("infection.timer", "§bTemp avant§c infection§b: "+ this.timeRemaining);
+                    runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }
 
                 @Override
                 public void run() {
-                    if (gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
                         cancel();
                         return;
                     }
+                    this.roleInfecteur.getGamePlayer().getActionBarManager().updateActionBar("infection.timer", "§bTemp avant§c infection§b: "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                     if (timeRemaining <= 0) {
                         final Player target = Bukkit.getPlayer(roleTarget.getPlayer());
                         if (target == null)return;
                         if (!target.isOnline())return;
-                        procInfection(target);
+                        this.roleInfecteur.getGamePlayer().getActionBarManager().removeInActionBar("infection.timer");
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> procInfection(target));
                         cancel();
                         return;
                     }
