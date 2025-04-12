@@ -48,7 +48,7 @@ public class AutomaticDesc {
             EffectWhen when = map.get(effect);
             text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
             text.addExtra("§c"+getPotionEffectNameWithRomanLevel(effect)+"§7 ");
-            text.addExtra(when.equals(EffectWhen.AT_KILL) ? "§7pendant§c "+StringUtils.secondsTowardsBeautiful(effect.getDuration()/20)+"§7 " : "");
+            text.addExtra(when.equals(EffectWhen.AT_KILL) ? "§7pendant §c"+StringUtils.secondsTowardsBeautiful(effect.getDuration()/20)+" §7" : "");
             text.addExtra("§7"+getWhenString(when));
         }
         return this;
