@@ -145,7 +145,6 @@ public class Patch implements Listener{
 		if (effect) {
 			double resi = reiPercent/100;
 			resi = 1-resi;
-			System.out.println("RESI "+resi);
 			event.setDamage(event.getDamage()*resi);
 		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch la l'effet de rési car il est de base dans les valeurs que je veux
 			if (Main.isDebug()){
