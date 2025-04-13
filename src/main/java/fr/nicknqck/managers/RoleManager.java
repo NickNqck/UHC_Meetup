@@ -29,7 +29,7 @@ import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
-import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
@@ -212,7 +212,7 @@ public class RoleManager {
         registerRole(ZetsuNoir.class);
         //Register Jubi
         registerRole(Madara.class);
-        registerRole(Obito.class);
+        registerRole(ObitoV2.class);
         //Register Kumogakure
         registerRole(Ginkaku.class);
         registerRole(Kinkaku.class);

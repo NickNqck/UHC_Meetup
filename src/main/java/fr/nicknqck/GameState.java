@@ -41,7 +41,6 @@ import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
-import fr.nicknqck.roles.ns.solo.jubi.Obito;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;

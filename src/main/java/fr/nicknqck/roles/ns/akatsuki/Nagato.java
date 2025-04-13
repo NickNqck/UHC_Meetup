@@ -7,7 +7,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
-import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
@@ -62,7 +62,7 @@ public class Nagato extends AkatsukiRoles {
             if (p == null)continue;
             if (!gameState.hasRoleNull(p.getUniqueId())) {
                 if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
-                    if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
+                    if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof ObitoV2) {
                         mates.add(p);
                     }
                 }
