@@ -6,6 +6,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -28,6 +29,16 @@ public abstract class NSRoles extends RoleBase {
         }
         chakras.getChakra().getList().add(getPlayer());
         this.chakras = chakras;
+    }
+
+    @Override
+    public ItemStack[] getItems() {
+        return new ItemStack[0];
+    }
+
+    @Override
+    public String[] Desc() {
+        return new String[0];
     }
 
     public boolean hasChakras() {
