@@ -75,6 +75,9 @@ public class GamePlayer {
 	public void onJoin(Player player) {
 		if (this.discRunnable != null) {
 			player.sendMessage(this.discRunnable.toSend);
+			if (this.discRunnable.toTeleport != null) {
+				player.teleport(this.discRunnable.toTeleport);
+			}
 			if (!this.discRunnable.toRemove.isEmpty()) {
 				for (final ItemStack item : this.discRunnable.toRemove) {
 					player.getInventory().remove(item);
@@ -149,6 +152,16 @@ public class GamePlayer {
 			}
 		}
 	}
+	public void teleport(@NonNull final Location location) {
+		final Player player = Bukkit.getPlayer(getUuid());
+		if (player != null) {
+			player.teleport(location);
+			this.lastLocation = location;
+		} else {
+			assert this.getDiscRunnable() != null;
+			this.getDiscRunnable().setTeleportLocation(location);
+		}
+	}
 	@SafeVarargs
     public final void startChatWith(final String begin, final String constructor, final Class<? extends RoleBase>... roleToTalks) {
 		this.chatWithManager.add(new ChatWithManager(begin, constructor, this, roleToTalks));
@@ -161,11 +174,13 @@ public class GamePlayer {
 		@Getter
 		private boolean online = true;
 		private final List<ItemStack> toRemove;
+		private Location toTeleport;
 
 		private DiscRunnable(GamePlayer gamePlayer) {
 			this.gamePlayer = gamePlayer;
 			this.gameState = GameState.getInstance();
 			this.toRemove = new ArrayList<>();
+			this.toTeleport = gamePlayer.getLastLocation();
 		}
 
 		private void setMessagesToSend(final String[] messages) {
@@ -173,6 +188,9 @@ public class GamePlayer {
 		}
 		private void addItemToRemove(final ItemStack item) {
 			toRemove.add(item);
+		}
+		private void setTeleportLocation(final Location location) {
+			this.toTeleport = location;
 		}
 
 		@Override
