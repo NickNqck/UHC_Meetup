@@ -42,6 +42,7 @@ import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
@@ -630,7 +631,7 @@ public class GameState{
 			role = new Madara(player);
 			break;
 		case Obito:
-			role = new Obito(player);
+			role = new ObitoV2(player);
 			break;
 		case Danzo:
 			role = new Danzo(player);
@@ -967,9 +968,12 @@ public class GameState{
 				for (@NonNull final String string : role.getKnowedPlayer().keySet()) {
 					sb.append(string).append("§7:\n");
 					for (@NonNull final GamePlayer gamePlayer : role.getKnowedPlayer().get(string)) {
-						sb.append("§8 - ")
+						sb.append("\n")
+								.append("§8 - ")
 								.append(string, 0, 2)
-								.append(gamePlayer.isAlive() ? gamePlayer.getPlayerName() : "§m" + gamePlayer.getPlayerName());
+								.append(gamePlayer.isAlive() ? gamePlayer.getPlayerName() : "§m" + gamePlayer.getPlayerName())
+								.append(" \n")
+								.append("\n");
 					}
 				}
 				player.sendMessage(sb.toString());
