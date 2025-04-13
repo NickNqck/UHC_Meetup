@@ -20,7 +20,7 @@ import fr.nicknqck.roles.ns.orochimaru.Karin;
 import fr.nicknqck.roles.ns.orochimaru.Kimimaro;
 import fr.nicknqck.roles.ns.orochimaru.Sasuke;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
-import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -434,7 +434,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		Player owner = Bukkit.getPlayer(getPlayer());
 		if (owner != null) {
-			boolean obitoAlive = !getListPlayerFromRole(Obito.class).isEmpty();
+			boolean obitoAlive = !getListPlayerFromRole(ObitoV2.class).isEmpty();
 			boolean madaraAlive = !getListPlayerFromRole(Madara.class).isEmpty();
 			lastAlive = true;
 			if (!madaraAlive) {
@@ -480,7 +480,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		owner.sendMessage("§7Cette saleté d'§dObito§7 a refuser de s'allier à vous, vous avez intérêt à lui faire regretter");
 		onKabutoDeny(owner);
 	}
-	private void onObitoAccept(@NonNull Player owner, @NonNull Obito obito) {
+	private void onObitoAccept(@NonNull Player owner, @NonNull ObitoV2 obito) {
 		owner.sendMessage("§dObito§7 a accepter de vous rejoindre, ses éxigences vous force à ne plus utiliser votre§5 Edo Tensei§7, vous avez gagner un allier de taille");
 		setTeam(obito.getTeam());
 		this.obitoTeam = true;
@@ -490,7 +490,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		this.edo.setCanEdoTensei(false);
 
 	}
-	public void onObitoCommand(String[] args, Obito role) {
+	public void onObitoCommand(String[] args, ObitoV2 role) {
 		if (!lastAlive)return;
 		if (args.length == 2) {
 			if (args[0].equalsIgnoreCase("obito")) {

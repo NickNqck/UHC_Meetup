@@ -8,7 +8,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
-import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
@@ -52,7 +52,7 @@ public class Konan extends AkatsukiRoles {
 			if (p == null)continue;
 			if (!gameState.hasRoleNull(p.getUniqueId())) {
 				if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
-					if (getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
+					if (getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof ObitoV2) {
 						mates.add(p);
 					}
 				}
