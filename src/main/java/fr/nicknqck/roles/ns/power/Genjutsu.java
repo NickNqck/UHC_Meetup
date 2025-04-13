@@ -35,7 +35,15 @@ public class Genjutsu extends ItemPower implements Listener {
 
     public Genjutsu(@NonNull RoleBase role) {
         super("Genjutsu", null, new ItemBuilder(Material.NETHER_STAR)
-                .setName("§cGenjutsu"), role);
+                .setName("§cGenjutsu"), role,
+                "§7Vous permet d'ouvrir un menu vous permettant d'accéder à§c trois pouvoirs§7:",
+                "",
+                "§8 -§c Tsukuyomi§7: Vous permet de stun pendant§c 8 secondes§7 tout les joueurs autours de vous (§c30 blocs§7). (1x/10m)",
+                "",
+                "§8 -§c Attaque§7: Vous permet d'ouvrir un menu vous permettant de sélectionner un joueur, celà vous téléportera derrière ce joueur. (1x/5m)",
+                "",
+                "§8 - "+role.getTeamColor()+"Izanami§7: Vous permet d'ouvrir un menu vous permettant de sélectionner un joueur,",
+                "§7Celà vous donnera des missions à faire pour que la cible rejoigne votre camp. (1x/partie)");
         this.tsukuyomi = new TsukuyomiPower(role);
         this.attaque = new AttaquePower(role);
         this.izanami = new IzanamiPower(role);
