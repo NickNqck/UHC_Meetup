@@ -69,8 +69,9 @@ public class PropulserUtils implements Listener {
         }
 	}
 	public void applyPropulsion(Player onlyTarget) {
-		Vector direction = onlyTarget.getLocation().toVector().subtract(p.getLocation().toVector()).normalize().multiply(10);
-        direction.add(new Vector(0, .8, .8));
+		Loc.inverserDirectionJoueur(onlyTarget);
+		Vector direction = onlyTarget.getLocation().getDirection().multiply(10);
+        direction.setY(1.8);
         onlyTarget.setVelocity(direction);
 		if (NF){
 			inNF.add(onlyTarget.getUniqueId());
