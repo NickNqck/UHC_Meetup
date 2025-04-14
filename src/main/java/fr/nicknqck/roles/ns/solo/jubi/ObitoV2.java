@@ -9,9 +9,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
-import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
 import fr.nicknqck.roles.ns.power.YameruPower;
 import fr.nicknqck.utils.GlobalUtils;
@@ -46,16 +45,6 @@ public class ObitoV2 extends JubiRoles {
     }
 
     @Override
-    public Intelligence getIntelligence() {
-        return Intelligence.GENIE;
-    }
-
-    @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Obito";
     }
@@ -63,11 +52,6 @@ public class ObitoV2 extends JubiRoles {
     @Override
     public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Obito;
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
@@ -140,7 +124,7 @@ public class ObitoV2 extends JubiRoles {
             if (event.getPlayer().getUniqueId().equals(getRole().getPlayer()))return;
             if (!event.getPlayer().getWorld().getName().equals("arena"))return;
             if (!this.getRole().getPowers().contains(this))return;
-            if (event.getRole() instanceof UchiwaRoles) {
+            if (event.getRole() instanceof IUchiwa) {
                 getRole().getGamePlayer().sendMessage("§cUn§4 Uchiwa§c est mort ! C'est sûrement l'occasion pour vous de récupérez un§4 Sharingan§c, avec un peux de chance vous pourriez obtenir un Susanô...",
                         " ",
                         "§cx: "+event.getPlayer().getLocation().getBlockX(),
