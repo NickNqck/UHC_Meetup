@@ -77,11 +77,15 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
         private final ZenItsuV2 zenItsu;
         private final JigoroV2PZenItsu jigoro;
         private final GameState gameState;
+        private int tick = 0;
 
         private ZenItsuRunnable(ZenItsuV2 zenItsu, JigoroV2PZenItsu jigoro, GameState gameState) {
             this.zenItsu = zenItsu;
             this.jigoro = jigoro;
             this.gameState = gameState;
+            jigoro.getGamePlayer().getActionBarManager().addToActionBar("jigoro.traquezen", "§aZenItsu§r: ?");
+            zenItsu.getGamePlayer().getActionBarManager().addToActionBar("jigoro.traquezen", "§6Jigoro§r: ?");
+            runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
         }
 
         @Override
@@ -92,9 +96,11 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
             }
             if (!jigoro.getGamePlayer().isAlive()) {
                 jigoro.getGamePlayer().getActionBarManager().removeInActionBar("jigoro.traquezen");
+                zenItsu.getGamePlayer().getActionBarManager().removeInActionBar("jigoro.traquezen");
                 return;
             }
             if (!zenItsu.getGamePlayer().isAlive()) {
+                jigoro.getGamePlayer().getActionBarManager().removeInActionBar("jigoro.traquezen");
                 zenItsu.getGamePlayer().getActionBarManager().removeInActionBar("jigoro.traquezen");
                 return;
             }
@@ -119,10 +125,13 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
 
             final List<Player> locs = new ArrayList<>(Loc.getNearbyPlayersExcept(owner, 15));
             if (locs.isEmpty())return;
+            this.tick++;
+            if (tick < 20)return;
+            this.tick = 0;
             if (locs.contains(mate)) {
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                    mate.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
-                    owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
+                    mate.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), true);
+                    owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), true);
                 });
             }
         }
