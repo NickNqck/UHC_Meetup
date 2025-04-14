@@ -188,7 +188,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                 if (role instanceof DemonsSlayersRoles) {
                     if (role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon)) {
                         player.sendMessage("§cVous avez donné le pouvoir de l'infection à§b "+target.getDisplayName());
-                        target.sendMessage("§4Muzan§c vous à donnez le pouvoir de l'infection, ne le gâchez pas...");
+                        target.sendMessage("§4Muzan§c vous à donnez le pouvoir de l'infection, ne le gâchez pas... (§6/ds infection <joueur>§7)");
                         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> role.addPower(new InfectPower((DemonsRoles) role)));
                         return true;
                     }
