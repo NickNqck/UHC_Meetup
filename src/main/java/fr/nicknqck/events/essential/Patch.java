@@ -135,9 +135,9 @@ public class Patch implements Listener{
 			if (fPercent > 0){
 				double rValue = (fPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
-		//		if (Main.isDebug()){
+				if (Main.isDebug()){
 					System.out.println("Force Damage to "+event.getDamage());
-		//		}
+				}
 			}
 		}
 	}
