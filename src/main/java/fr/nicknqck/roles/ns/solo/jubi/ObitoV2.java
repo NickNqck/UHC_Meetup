@@ -76,7 +76,7 @@ public class ObitoV2 extends JubiRoles {
                 .setPowers(getPowers())
                 .getText();
     }
-    private static class ObtainSusanoPower extends CommandPower implements Listener{
+    private static class ObtainSusanoPower extends CommandPower implements Listener {
 
         private final Map<String, Location> deathLocations;
 
@@ -180,7 +180,6 @@ public class ObitoV2 extends JubiRoles {
             }
         }
     }
-
     private static class KamuiPower extends ItemPower implements Listener {
 
         private final Arimasu arimasu;
