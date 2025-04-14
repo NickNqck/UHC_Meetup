@@ -34,7 +34,7 @@ public abstract class KumogakureRole extends NSRoles {
     }
 
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
     public static class KyubiPower extends ItemPower {

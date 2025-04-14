@@ -82,7 +82,7 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
     }
 
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.INTELLIGENT;
     }
 
