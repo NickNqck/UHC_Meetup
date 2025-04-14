@@ -48,7 +48,7 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
     }
 
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.GENIE;
     }
 

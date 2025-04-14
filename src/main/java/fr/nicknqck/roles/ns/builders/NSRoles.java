@@ -5,6 +5,7 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
@@ -21,7 +22,7 @@ public abstract class NSRoles extends RoleBase {
         super(player);
     }
 
-    public abstract Intelligence getIntelligence();
+    public abstract @NonNull Intelligence getIntelligence();
     public void setChakraType(@Nullable Chakras chakras) {
         if (chakras == null) {
             this.chakras = null;
