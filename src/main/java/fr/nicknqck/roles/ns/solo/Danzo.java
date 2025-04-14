@@ -5,12 +5,12 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.UchiwaRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -191,7 +191,7 @@ public class Danzo extends NSRoles {
 	}
 	private boolean isUchiwa(Player p){
 		if (!gameState.hasRoleNull(p.getUniqueId())) {
-            return gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof UchiwaRoles;
+            return gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof IUchiwa;
 		}
 		return false;
 	}
@@ -376,9 +376,9 @@ public class Danzo extends NSRoles {
 					GamePlayer gm = danzo.getGameState().getGamePlayer().get(player.getUniqueId());
 					if (!gm.isAlive())continue;
 					if (gm.getRole() == null)continue;
-					if (gm.getRole() instanceof UchiwaRoles) {
+					if (gm.getRole() instanceof IUchiwa) {
 						nmbUchiwa++;
-						owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autours de vous, son aura vous fait donné l'impression qu'il est§c "+((UchiwaRoles) gm.getRole()).getUchiwaType().getName());
+						owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autours de vous, son aura vous fait donné l'impression qu'il est§c "+((IUchiwa)gm.getRole()).getUchiwaType().getName());
 						break;
 					}
 				}

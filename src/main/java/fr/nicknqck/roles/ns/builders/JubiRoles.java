@@ -6,6 +6,7 @@ import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -25,7 +26,7 @@ import org.bukkit.inventory.Inventory;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class JubiRoles extends UchiwaRoles {
+public abstract class JubiRoles extends NSRoles implements IUchiwa{
 
     public JubiRoles(UUID player) {
         super(player);
@@ -42,8 +43,13 @@ public abstract class JubiRoles extends UchiwaRoles {
     }
 
     @Override
-    public UchiwaType getUchiwaType() {
-        return UchiwaType.LEGENDAIRE;
+    public @NonNull EUchiwaType getUchiwaType() {
+        return EUchiwaType.LEGENDAIRE;
+    }
+
+    @Override
+    public Intelligence getIntelligence() {
+        return Intelligence.GENIE;
     }
 
     static class TraqueurPower extends ItemPower implements Listener {

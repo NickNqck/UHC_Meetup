@@ -5,11 +5,10 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.UchiwaRoles;
+import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -32,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Itachi extends UchiwaRoles {
+public class Itachi extends AkatsukiRoles {
 
 	private Izanami izanami;
 	private int SusanoCD = 0;
@@ -50,21 +49,11 @@ public class Itachi extends UchiwaRoles {
 	}
 
 	@Override
-	public UchiwaType getUchiwaType() {
-		return UchiwaType.IMPORTANT;
-	}
-
-	@Override
 	public @NonNull Roles getRoles() {
 		return Roles.Itachi;
 	}
 
-	@Override
-	public @NonNull TeamList getOriginTeam() {
-		return TeamList.Akatsuki;
-	}
-
-	@Override
+    @Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Kisame, 1);
 		return new String[] {

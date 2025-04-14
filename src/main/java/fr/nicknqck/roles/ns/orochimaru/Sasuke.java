@@ -9,7 +9,9 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.UchiwaRoles;
+import fr.nicknqck.roles.ns.builders.EUchiwaType;
+import fr.nicknqck.roles.ns.builders.IUchiwa;
+import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Sasuke extends UchiwaRoles {
+public class Sasuke extends OrochimaruRoles implements IUchiwa {
 
 	private Izanami izanami;
 	@Getter
@@ -58,8 +60,8 @@ public class Sasuke extends UchiwaRoles {
 	}
 
 	@Override
-	public UchiwaType getUchiwaType() {
-		return UchiwaType.IMPORTANT;
+	public @NonNull EUchiwaType getUchiwaType() {
+		return EUchiwaType.IMPORTANT;
 	}
 
 	@Override
@@ -86,12 +88,7 @@ public class Sasuke extends UchiwaRoles {
 		return Roles.Sasuke;
 	}
 
-	@Override
-	public @NonNull TeamList getOriginTeam() {
-		return TeamList.Orochimaru;
-	}
-
-	@Override
+    @Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Orochimaru, 1);
 		return new String[] {

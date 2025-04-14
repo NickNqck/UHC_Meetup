@@ -8,11 +8,12 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.UchiwaRoles;
+import fr.nicknqck.roles.ns.builders.EUchiwaType;
+import fr.nicknqck.roles.ns.builders.IUchiwa;
+import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -43,15 +44,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class Fugaku extends UchiwaRoles implements Listener {
+public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
 
     private TextComponent desc;
-
-    @Override
-    public UchiwaType getUchiwaType() {
-        return UchiwaType.INUTILE;
-    }
-
     private final ItemStack oeilItem = new ItemBuilder(Material.EYE_OF_ENDER).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setUnbreakable(true).setName("§cOeil Maléfique").setDroppable(false).toItemStack();
     private int cdAffaiblissement;
     private int cdAttaque;
@@ -59,6 +54,11 @@ public class Fugaku extends UchiwaRoles implements Listener {
     public Fugaku(UUID player) {
         super(player);
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 2, 0), EffectWhen.PERMANENT);
+    }
+
+    @Override
+    public @NonNull EUchiwaType getUchiwaType() {
+        return EUchiwaType.INUTILE;
     }
 
     @Override
@@ -87,11 +87,6 @@ public class Fugaku extends UchiwaRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public ItemStack[] getItems() {
         return new ItemStack[] {
                 oeilItem
@@ -106,11 +101,6 @@ public class Fugaku extends UchiwaRoles implements Listener {
     @Override
     public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Fugaku;
-    }
-
-    @Override
-    public @NonNull TeamList getOriginTeam() {
-        return TeamList.Shinobi;
     }
 
     @Override
@@ -370,7 +360,7 @@ public class Fugaku extends UchiwaRoles implements Listener {
                         if (fugaku.getGameState().hasRoleNull(p.getUniqueId()))continue;
                         RoleBase role = fugaku.getGameState().getGamePlayer().get(p.getUniqueId()).getRole();
                         if (!role.getGamePlayer().isAlive())continue;
-                        if (role instanceof UchiwaRoles || role instanceof Danzo ||role instanceof Kakashi) {
+                        if (role instanceof IUchiwa || role instanceof Danzo ||role instanceof Kakashi) {
                             this.croised = true;
                         }
                     }
