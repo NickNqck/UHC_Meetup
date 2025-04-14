@@ -2,10 +2,9 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -30,7 +29,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class Kinkaku extends NSRoles {
+public class Kinkaku extends KumogakureRole {
+
     private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
     private int cdKyubi = 0;
     private final ItemStack EventailItem = new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aEventail de bananier").setLore("§7Vous permet de cumulé la nature de chakra des joueurs tués avec la votre").toItemStack();
@@ -47,17 +47,8 @@ public class Kinkaku extends NSRoles {
     }
 
     @Override
-    public @NonNull TeamList getOriginTeam() {
-        return TeamList.Kumogakure;
-    }
-
-    @Override
     public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.Kinkaku;
-    }
-    @Override
-    public @NonNull Intelligence getIntelligence() {
-        return Intelligence.PEUINTELLIGENT;
     }
 
     @Override
