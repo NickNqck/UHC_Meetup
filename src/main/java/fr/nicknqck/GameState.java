@@ -42,7 +42,7 @@ import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
-import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
+import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
@@ -723,7 +723,7 @@ public class GameState{
 			role = new YondaimeRaikage(player);
 			break;
 		case Ginkaku:
-			role = new Ginkaku(player);
+			role = new GinkakuV2(player);
 			break;
 		case Warden:
 			role = new Warden(player);
