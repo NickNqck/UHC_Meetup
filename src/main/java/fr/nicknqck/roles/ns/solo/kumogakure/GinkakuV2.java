@@ -202,12 +202,13 @@ public class GinkakuV2 extends KumogakureRole {
                 if (event.getVictim().getPlayerName().equalsIgnoreCase(this.targetName)) {
                     this.amountCoups+=1;
                 } else {
-                    this.amountCoups = 0;
+                    this.amountCoups = 1;
                     this.targetName = event.getVictim().getPlayerName();
                 }
                 if (this.amountCoups >= 15) {
                     this.amountCoups = 0;
                     new SaignementRunnable(getRole().getGameState(), event.getVictim());
+                    player.sendMessage("§c"+event.getVictim().getPlayerName());
                     return true;
                 }
                 this.getRole().getGamePlayer().getActionBarManager().updateActionBar("sabre.coups", "§7Coup avant d'infliger le§c saignement§7 (§b"+this.targetName+"§7):§c "+this.amountCoups+"§7/§615");
