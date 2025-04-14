@@ -370,6 +370,7 @@ public class Ginkaku extends NSRoles {
 				event.getEntity().setFallDistance(0f);
 				if (gameState.getGamePlayer().containsKey(event.getEntity().getUniqueId())) {
 					gameState.getGamePlayer().get(gTarget).stun(5*20, true);
+					this.stun = true;
 				}
 			}
 		}

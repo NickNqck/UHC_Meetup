@@ -30,7 +30,7 @@ import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
-import fr.nicknqck.roles.ns.solo.kumogakure.Ginkaku;
+import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
@@ -214,7 +214,7 @@ public class RoleManager {
         registerRole(Madara.class);
         registerRole(ObitoV2.class);
         //Register Kumogakure
-        registerRole(Ginkaku.class);
+        registerRole(GinkakuV2.class);
         registerRole(Kinkaku.class);
         //Register Zabuza et Haku
         registerRole(Zabuza.class);
