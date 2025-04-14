@@ -54,6 +54,7 @@ public class AutomaticDesc {
         return this;
     }
     public AutomaticDesc addCustomLine(String line) {
+        if (line.isEmpty())return this;
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+line));
         return this;
     }
