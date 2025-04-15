@@ -176,7 +176,7 @@ public class Genjutsu extends ItemPower implements Listener {
     }
     private static class IzanamiPower extends Power implements Listener{
 
-        private Izanami izanami;
+        private IzanamiV2 izanami;
 
         public IzanamiPower(@NonNull RoleBase role) {
             super("Izanami", null, role);
@@ -222,8 +222,13 @@ public class Genjutsu extends ItemPower implements Listener {
                     if (getRole().getGameState().hasRoleNull(target.getUniqueId())) {
                         return;
                     }
+                    final GamePlayer gamePlayer = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
+                    if (!gamePlayer.isAlive()) {
+                        event.getWhoClicked().sendMessage("§cImpossible, ce joueur est MORT.");
+                        return;
+                    }
                     if (checkUse((Player) event.getWhoClicked(), map)) {
-                        @NonNull final Izanami izanami = new Izanami(event.getWhoClicked().getUniqueId(), target.getUniqueId());
+                        @NonNull final IzanamiV2 izanami = new IzanamiV2(getRole().getGamePlayer(), gamePlayer);
                         izanami.start(getRole().getTeamColor());
                         this.izanami = izanami;
                         event.getWhoClicked().sendMessage(this.izanami.getStringsMission());
