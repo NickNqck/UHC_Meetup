@@ -30,6 +30,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -71,6 +72,8 @@ public class ObitoV2 extends JubiRoles {
         addPower(new ObtainSusanoPower(this));
         addPower(new Izanagi(this));
         setChakraType(Chakras.KATON);
+        addKnowedRole(Madara.class);
+        getGamePlayer().startChatWith("§dObito:", "!", Madara.class);
     }
 
     @Override
@@ -88,6 +91,7 @@ public class ObitoV2 extends JubiRoles {
         public ObtainSusanoPower(@NonNull RoleBase role) {
             super("/ns obtain", "obtain", null, role, CommandType.NS, "§7Lorsqu'un§4 Uchiwa§7 meurt vous obtiendrez ses coordonnées, une fois que vous y serez, en faisant cette commande vous obtiendrez le§c§l Susanô§7 ");
             this.deathLocations = new HashMap<>();
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
@@ -98,11 +102,14 @@ public class ObitoV2 extends JubiRoles {
                 return false;
             }
             if (args.length < 2) {
-                for (@NonNull final Location location : this.deathLocations.values()) {
+                for (@NonNull final String string : this.deathLocations.keySet()) {
+                    final Location location = this.deathLocations.get(string);
                     if (player.getLocation().distance(location) <= 5) {
                         this.getRole().addPower(new SusanoPower(this.getRole()), true);
-                        this.getRole().getPowers().remove(this);
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.getRole().getPowers().remove(this));
                         return true;
+                    } else {
+                        player.sendMessage("§7Vous êtes trop loin de la mort de §c"+string+"§7 pour récupérer ses yeux");
                     }
                 }
             } else {
@@ -305,7 +312,7 @@ public class ObitoV2 extends JubiRoles {
                         inv.setItem(i, GUIItems.getPurpleStainedGlassPane());
                     }
                     inv.setItem(4, GUIItems.getSelectBackMenu());
-                    @NonNull final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayers(player, 30));
+                    @NonNull final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayersExcept(player, 30));
                     for (@NonNull Player p : playerList) {
                         @NonNull final ItemStack item = GlobalUtils.getPlayerHead(p.getName());
                         inv.addItem(new ItemBuilder(item)
@@ -341,7 +348,7 @@ public class ObitoV2 extends JubiRoles {
                             @NonNull final Player target = Bukkit.getPlayer(name);
                             if (target != null) {
                                 event.getWhoClicked().closeInventory();
-                                KamuiUtils.start(target.getLocation(), KamuiUtils.Users.cibleObito, ((Player)event.getWhoClicked()), true);
+                                KamuiUtils.start(target.getLocation(), KamuiUtils.Users.cibleObito, (target), true);
                             }
                         }
                     }
@@ -357,7 +364,7 @@ public class ObitoV2 extends JubiRoles {
             }
         }
     }
-    private static class NinjutsuSpatioTemporel extends ItemPower {
+    private static class NinjutsuSpatioTemporel extends ItemPower implements Listener{
 
         @NotNull
         private final NinjutsuRunnable ninjutsuRunnable;
@@ -369,6 +376,7 @@ public class ObitoV2 extends JubiRoles {
                     "§7(Vous pouvez retirer votre invisibilité en réapuyant sur cette item)");
             this.ninjutsuRunnable = new NinjutsuRunnable(role.getGameState(), this);
             setWorkWhenInCooldown(true);
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
@@ -391,6 +399,16 @@ public class ObitoV2 extends JubiRoles {
                 }
             }
             return false;
+        }
+        @EventHandler
+        private void EntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
+            if (event.isCancelled())return;
+            if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
+            if (getCooldown().isInCooldown()) {
+                if (getCooldown().getCooldownRemaining() >= 60*9) {
+                    event.setCancelled(true);
+                }
+            }
         }
         private static class NinjutsuRunnable extends BukkitRunnable {
 
@@ -415,7 +433,7 @@ public class ObitoV2 extends JubiRoles {
                 if (this.timeLeft <= 0) {
                     final Player player = Bukkit.getPlayer(this.ninjutsu.getRole().getPlayer());
                     if (player != null) {
-                        this.stop(player);
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.stop(player));
                     }
                 }
             }
