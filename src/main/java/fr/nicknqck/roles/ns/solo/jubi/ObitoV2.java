@@ -9,9 +9,11 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
+import fr.nicknqck.roles.ns.power.Izanagi;
 import fr.nicknqck.roles.ns.power.YameruPower;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.Loc;
@@ -67,6 +69,8 @@ public class ObitoV2 extends JubiRoles {
         addPower(new Genjutsu(this), true);
         addPower(new YameruPower(this));
         addPower(new ObtainSusanoPower(this));
+        addPower(new Izanagi(this));
+        setChakraType(Chakras.KATON);
     }
 
     @Override
