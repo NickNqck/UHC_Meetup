@@ -7,12 +7,14 @@ import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +46,51 @@ public class AutomaticDesc {
         return this;
     }
     public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
-        for (PotionEffect effect : map.keySet()) {
+        @NonNull final StringBuilder permaEffects = new StringBuilder();
+        @NonNull final StringBuilder dayEffects = new StringBuilder();
+        @NonNull final StringBuilder nightEffects = new StringBuilder();
+        @NonNull final List<PotionEffect> permaEffectList = new ArrayList<>();
+        @NonNull final List<PotionEffect> dayEffectList = new ArrayList<>();
+        @NonNull final List<PotionEffect> nightEffectList = new ArrayList<>();
+        for (@NonNull final PotionEffect potionEffect : map.keySet()) {
+            if (map.get(potionEffect).equals(EffectWhen.PERMANENT)) {
+                permaEffectList.add(potionEffect);
+            } else if (map.get(potionEffect).equals(EffectWhen.DAY)) {
+                dayEffectList.add(potionEffect);
+            } else if (map.get(potionEffect).equals(EffectWhen.NIGHT)) {
+                nightEffectList.add(potionEffect);
+            }
+        }
+        if (!permaEffectList.isEmpty()) {
+            for (@NonNull final PotionEffect potionEffect : permaEffectList) {
+                permaEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
+                permaEffects.append((permaEffectList.get(permaEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+            }
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+permaEffects+" §7de §7manière §cpermanente"));
+        }
+        if (!dayEffectList.isEmpty()) {
+            for (@NonNull final PotionEffect potionEffect : dayEffectList) {
+                dayEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
+                if (dayEffectList.size() > 1){
+                    dayEffects.append((dayEffectList.get(dayEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                }
+            }
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+dayEffects+" §7le §cjour"));
+        }
+        if (!nightEffectList.isEmpty()) {
+            for (@NonNull final PotionEffect potionEffect : nightEffectList) {
+                nightEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
+                if (dayEffectList.size() > 1){
+                    nightEffects.append((nightEffectList.get(nightEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                }
+            }
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+nightEffects+" §7la §cnuit"));
+        }
+        for (@NonNull final PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
+            if (when.equals(EffectWhen.PERMANENT))continue;
+            if (when.equals(EffectWhen.DAY))continue;
+            if (when.equals(EffectWhen.NIGHT))continue;
             text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
             text.addExtra("§c"+getPotionEffectNameWithRomanLevel(effect)+"§7 ");
             text.addExtra(when.equals(EffectWhen.AT_KILL) ? "§7pendant §c"+StringUtils.secondsTowardsBeautiful(effect.getDuration()/20)+" §7" : "");
