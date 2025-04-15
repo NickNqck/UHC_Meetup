@@ -10,7 +10,6 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.Sasuke;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.NonNull;
@@ -49,6 +48,7 @@ public class Orochimaru extends OrochimaruRoles {
 		setResi(20);
 		givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		this.edo = new EdoTenseiUser(this);
+		addKnowedPlayersFromTeam(TeamList.Orochimaru);
 	}
 	@Override
 	public String[] Desc() {
@@ -61,23 +61,6 @@ public class Orochimaru extends OrochimaruRoles {
 			}else {
 				sb.append(chakras.getShowedName()).append("§f.");
 			}
-		}
-		List<Player> mates = new ArrayList<>();
-		for (UUID u : gameState.getInGamePlayers()) {
-			Player p = Bukkit.getPlayer(u);
-			if (p == null)continue;
-			if (!gameState.hasRoleNull(p.getUniqueId())) {
-				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() != null && p.getUniqueId() != getPlayer()) {
-					if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam() == TeamList.Orochimaru || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Sasuke) {
-						mates.add(p);
-					}
-				}
-			}
-		}
-		if (!mates.isEmpty()) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				owner.sendMessage("Voici la liste de vos coéquipier: ");
-				mates.forEach(p -> owner.sendMessage("§7 - §5"+p.getName()));}, 1);
 		}
 		return new String[] {
 				AllDesc.bar,
