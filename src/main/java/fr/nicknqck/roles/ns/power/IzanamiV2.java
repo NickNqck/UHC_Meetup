@@ -66,8 +66,8 @@ public class IzanamiV2 implements Listener {
     }
     @Getter
     private enum MissionTarget {
-        Tuer(0, "\"Tuer un joueur\""),//FAIT
-        Gap(1, "\"Manger 5§e pommes d'or\""),//FAIT
+        Tuer(0, "\"Tuer un joueur\""),
+        Gap(1, "\"Manger 5§e pommes d'or\""),
         Distance(2, "\"Rester loin de vous (§c30 blocs§f) pendant 1 minutes\"s");
         private final String mission;
         private final int nmb;
@@ -277,8 +277,9 @@ public class IzanamiV2 implements Listener {
         if (isGoodMission(MissionUser.Taper)) {
             if (e.getDamager().getUniqueId().equals(this.gamePlayer.getUuid()) && e.getEntity().getUniqueId().equals(this.gameTarget.getUuid())) {
                 taperCoupRemaining--;
-                this.gamePlayer.getActionBarManager().addToActionBar("izanami.taper."+this.taperCoupRemaining, "§7Coup restant >>§c "+this.taperCoupRemaining);
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> this.gamePlayer.getActionBarManager().removeInActionBar("izanami.taper."+this.taperCoupRemaining), 20);
+                int coup = this.taperCoupRemaining;
+                this.gamePlayer.getActionBarManager().addToActionBar("izanami.taper."+coup, "§7Coup restant >>§c "+coup);
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> this.gamePlayer.getActionBarManager().removeInActionBar("izanami.taper."+coup), 20);
                 if (taperCoupRemaining == 0) {
                     setTrueMissions(MissionUser.Taper);
                 }
@@ -289,8 +290,9 @@ public class IzanamiV2 implements Listener {
                 Player damager = (Player) e.getDamager();
                 if (damager != null) {
                     FraperCoupRemaining--;
-                    this.gamePlayer.getActionBarManager().addToActionBar("izanami.fraper."+this.FraperCoupRemaining, "§7Coup restant >> §c"+FraperCoupRemaining);
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> this.gamePlayer.getActionBarManager().removeInActionBar("izanami.fraper."+this.FraperCoupRemaining), 20);
+                    int coup = this.FraperCoupRemaining;
+                    this.gamePlayer.getActionBarManager().addToActionBar("izanami.fraper."+coup, "§7Coup restant >> §c"+coup);
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> this.gamePlayer.getActionBarManager().removeInActionBar("izanami.fraper."+coup), 20);
                     if (FraperCoupRemaining == 0) {
                         setTrueMissions(MissionUser.Fraper);
                     }
@@ -378,6 +380,7 @@ public class IzanamiV2 implements Listener {
             this.gameState = gameState;
             this.izanami = izanami;
             this.izanami.gamePlayer.getActionBarManager().addToActionBar("izanami.distance", "§bTemp restant loin de §c"+this.izanami.gameTarget.getPlayerName()+"§b: §c"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
 
         @Override
