@@ -136,7 +136,8 @@ public class ObitoV2 extends JubiRoles {
         private static class SusanoPower extends ItemPower {
 
             protected SusanoPower(@NonNull RoleBase role) {
-                super("Susano (Obito)", new Cooldown(60*20), new ItemBuilder(Material.NETHER_STAR).setName("§c§lSusanô"), role);
+                super("Susano (Obito)", new Cooldown(60*20), new ItemBuilder(Material.NETHER_STAR).setName("§c§lSusanô"), role,
+                        "§7Vous permet d'obtenir l'effet§c Résistance I§7 pendant§c 5 minutes§7. (1x/20m)");
             }
 
             @Override
