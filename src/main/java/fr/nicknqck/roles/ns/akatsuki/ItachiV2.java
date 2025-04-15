@@ -6,12 +6,14 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.power.Amaterasu;
 import fr.nicknqck.roles.ns.power.Genjutsu;
+import fr.nicknqck.roles.ns.power.Izanagi;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -66,6 +68,8 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
         addPower(new SusanoPower(this), true);
         addPower(new Genjutsu(this), true);
         addPower(new Amaterasu(this), true);
+        addPower(new Izanagi(this));
+        setChakraType(Chakras.KATON);
     }
 
     @Override
