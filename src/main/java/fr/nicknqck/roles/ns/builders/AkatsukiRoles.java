@@ -6,7 +6,6 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.akatsuki.Konan;
 import fr.nicknqck.roles.ns.akatsuki.Nagato;
 import lombok.NonNull;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
