@@ -639,7 +639,7 @@ public class GameState{
 			role = new Orochimaru(player);
 			break;
 		case Sasuke:
-			role = new Sasuke(player);
+			role = new SasukeV2(player);
 			break;
 		case Kabuto:
 			role = new Kabuto(player);

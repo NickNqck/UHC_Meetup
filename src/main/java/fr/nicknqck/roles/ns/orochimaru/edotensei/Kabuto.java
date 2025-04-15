@@ -15,10 +15,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.Jugo;
-import fr.nicknqck.roles.ns.orochimaru.Karin;
-import fr.nicknqck.roles.ns.orochimaru.Kimimaro;
-import fr.nicknqck.roles.ns.orochimaru.Sasuke;
+import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.Loc;
@@ -80,7 +77,6 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 				"§7     → Clique droit: En visant un joueur, celà permet de le§d soigner§7 de§c 2"+AllDesc.coeur+"\n\n" +
 				"§7     → Clique gauche: Vous§d soigne§7 de§c 2"+AllDesc.coeur)}), "§aNinjutsu Médical", 60*3));
 		automaticDesc.addParticularites(
-				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra: "+getChakras().getShowedName())}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort d'§5Orochimaru§7 vous obtenez son item d'§5Edo Tensei§7.")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de §5Karin§7 votre§a Ninjutsu Médical§d soignera§7 de§c 5"+AllDesc.coeur)}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de§5 Jugo§7 vous obtiendrez un§a dash§7 qui vous propulsera§c 10blocs§7 en avant et infligera§c 2"+AllDesc.coeur+"§7 aux joueurs proche.")}),
@@ -139,11 +135,8 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 		}
 		return toReturn.toArray(new ItemStack[0]);
 	}
-	@Override
-	public String[] Desc() {
-		return new String[0];
-	}
-	@Override
+
+    @Override
 	public TextComponent getComponent() {
 		return desc;
 	}
@@ -215,9 +208,8 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 			if (event.getRole() instanceof Kimimaro && !this.kimimaroDeath) {
 				onKimimaroDeath(true);
 			}
-			if (event.getRole() instanceof Sasuke) {
-				Sasuke role = (Sasuke) event.getRole();
-				if (!role.isMortOrochimaru()) {
+			if (event.getRole() instanceof SasukeV2) {
+				if (event.getGameState().getDeadRoles().contains(Roles.Orochimaru)) {
 					onSasukeDeath(true);
 				}
 			}
