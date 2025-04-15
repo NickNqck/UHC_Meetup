@@ -160,7 +160,6 @@ public class KisameV2 extends AkatsukiRoles {
             Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                 for (@NonNull final Block block : this.blockList) {
                     block.setType(Material.AIR);
-                    System.out.println(block);
                 }
                 this.blockList.clear();
             });
