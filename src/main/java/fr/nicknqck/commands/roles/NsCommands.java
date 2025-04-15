@@ -267,6 +267,7 @@ public class NsCommands implements CommandExecutor {
 						role.onNsCommand(args);
 						if (!role.getPowers().isEmpty()) {
 							for (Power power : role.getPowers()) {
+								if (power == null)continue;
 								if (power instanceof CommandPower) {
 									((CommandPower) power).call(args, CommandPower.CommandType.NS, sender);
 								}
