@@ -8,6 +8,7 @@ import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class Izanagi extends CommandPower {
         for (final Power power : getRole().getPowers()) {
             if (!(power instanceof ItemPower))continue;
             if (power.getName().contains("Susano")) {
+                player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                 getRole().getPowers().remove(power);
                 player.getInventory().remove(((ItemPower) power).getItem());
                 break;
