@@ -65,7 +65,9 @@ public class AutomaticDesc {
         if (!permaEffectList.isEmpty()) {
             for (@NonNull final PotionEffect potionEffect : permaEffectList) {
                 permaEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
-                permaEffects.append((permaEffectList.get(permaEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                if (permaEffectList.size() > 1) {
+                    permaEffects.append((permaEffectList.get(permaEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                }
             }
             text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+permaEffects+" §7de §7manière §cpermanente"));
         }
