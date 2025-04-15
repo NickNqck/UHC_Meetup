@@ -77,13 +77,13 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-        addPower(new Genjutsu(this), true);
         addPower(new Amaterasu(this), true);
         addPower(new SusanoPower(this), true);
         addPower(new Izanagi(this));
         addKnowedRole(Orochimaru.class);
         EventUtils.registerRoleEvent(this);
         setChakraType(Chakras.KATON);
+        setCanBeHokage(true);
     }
 
     @EventHandler
@@ -207,11 +207,13 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
                 if (this.timeLeft <= 0) {
                     this.gamePlayer.getActionBarManager().removeInActionBar("sasuke.susano");
                     this.gamePlayer.sendMessage("§cVotre§l Susanô§c s'arrête");
-                    this.gamePlayer.getRole().getPowers().remove(this.flamesPower);
-                    final Player player = Bukkit.getPlayer(this.gamePlayer.getUuid());
-                    if (player != null) {
-                        player.getInventory().remove(this.flamesPower.bow);
-                    }
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                        this.gamePlayer.getRole().getPowers().remove(this.flamesPower);
+                        final Player player = Bukkit.getPlayer(this.gamePlayer.getUuid());
+                        if (player != null) {
+                            player.getInventory().remove(this.flamesPower.bow);
+                        }
+                    });
                     cancel();
                     return;
                 }
@@ -225,7 +227,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
 
             public ArcDesFlamesPower(@NonNull RoleBase role) {
                 super("Honõ no ko", new Cooldown(10), role);
-                this.bow = new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 7).setDroppable(false).toItemStack();
+                this.bow = new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 7).setName("§cHonõ no ko").setUnbreakable(true).setDroppable(false).toItemStack();
                 EventUtils.registerRoleEvent(this);
                 setShowInDesc(false);
             }
