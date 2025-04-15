@@ -155,6 +155,20 @@ public class Loc {
         }
         return d1;
     }
+    public static double getDirectionTo(final GamePlayer paramPlayer, final Location paramLocation) {
+        final Location localLocation = paramPlayer.getLastLocation().clone();
+        localLocation.setY(0.0);
+        paramLocation.setY(0.0);
+        final Vector localVector1 = localLocation.getDirection();
+        final Vector localVector2 = paramLocation.subtract(localLocation).toVector().normalize();
+        double d1 = Math.toDegrees(Math.atan2(localVector1.getX(), localVector1.getZ()));
+        d1 -= Math.toDegrees(Math.atan2(localVector2.getX(), localVector2.getZ()));
+        d1 = (int) (d1 + 22.5) % 360;
+        if (d1 < 0.0) {
+            d1 += 360.0;
+        }
+        return d1;
+    }
     public static Player getNearestPlayerforNakime(Player referencePlayer, double radius, GameState gameState) {
         Player nearestPlayer = null;
         double nearestDistanceSquared = Double.MAX_VALUE;
@@ -272,6 +286,53 @@ public class Loc {
                 return " §f? ";
             }
     	}
+    }
+    public static String getDirectionMate(GamePlayer player, GamePlayer mate, boolean afficherMatePseudo) {
+        if (afficherMatePseudo) {
+            if (player.getLastLocation().getWorld().equals(mate.getLastLocation().getWorld())) {
+                if (getDirectionTo(player, mate.getLastLocation().clone()) <= 45.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 90.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 135.0) {
+                    return "§6" + mate.getPlayerName() + "§f"+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 180.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 225.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 270.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 315.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                }
+            } else {
+                return "§6" + mate.getPlayerName() + " §f? ";
+            }
+        }else {
+            if (player.getLastLocation().getWorld().equals(mate.getLastLocation().getWorld())) {
+                if (getDirectionTo(player, mate.getLastLocation().clone()) <= 45.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 90.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 135.0) {
+                    return "§f"+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 180.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 225.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 270.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 315.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                }
+            } else {
+                return " §f? ";
+            }
+        }
     }
 
 }
