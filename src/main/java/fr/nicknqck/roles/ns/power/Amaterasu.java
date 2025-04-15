@@ -20,7 +20,8 @@ import java.util.Map;
 public class Amaterasu extends ItemPower {
 
     public Amaterasu(@NonNull RoleBase role) {
-        super("Amaterasu", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§cAmaterasu"), role);
+        super("Amaterasu", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§cAmaterasu"), role,
+                "§7En visant un joueur, vous permet de lui infliger des dégâts et de§c l'enflammer§7 pendant§c 10 secondes§7. (1x/10m)");
     }
 
     @Override
