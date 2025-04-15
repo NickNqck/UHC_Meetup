@@ -386,7 +386,7 @@ public class GameState{
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
 	public RoleBase GiveRole(Player aziz) {
-		if (getPlayerRoles().containsKey(aziz)) return null;
+		if (!hasRoleNull(aziz.getUniqueId())) return null;
 		//Roles roleType = getAvailableRoles().get(new Random().nextInt(getAvailableRoles().size()));
 		ArrayList<Roles> roles = new ArrayList<>();
 		for (Roles role : getAvailableRoles().keySet()) {
