@@ -246,11 +246,15 @@ public class AutomaticDesc {
         String effectName = capitalizeFirstLetter(type.getName().toLowerCase().replace('_', ' '));
         String romanLevel = getRomanNumeral(amplifier + 1);
         if (type.equals(PotionEffectType.INCREASE_DAMAGE)) {
-            effectName = "Force";
+            effectName = "§cForce";
         } else if (type.equals(PotionEffectType.DAMAGE_RESISTANCE)) {
-            effectName = "Resistance";
+            effectName = "§9Resistance";
         } else if (type.equals(PotionEffectType.FAST_DIGGING)) {
-            effectName = "Haste";
+            effectName = "§6Haste";
+        } else if (type.equals(PotionEffectType.SPEED)) {
+            effectName = "§eSpeed";
+        } else if (type.equals(PotionEffectType.FIRE_RESISTANCE)) {
+            effectName = "§6Fire Résistance";
         }
         return effectName + " " + romanLevel;
     }
