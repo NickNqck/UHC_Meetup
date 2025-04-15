@@ -106,6 +106,10 @@ public class AssassinManagerV2 implements Listener {
                 cancel();
                 return;
             }
+            if (this.futureAssassin == null) {
+                cancel();
+                return;
+            }
             if (!this.futureAssassin.isAlive()) {
                 cancel();
                 return;
