@@ -41,11 +41,6 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
