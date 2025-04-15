@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.powers.CommandPower;
@@ -223,6 +224,7 @@ public class AutomaticDesc {
         return this;
     }
     public TextComponent getText(){
+        text.addExtra(new TextComponent(this.role instanceof NSRoles ? "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ? "§cInexistante" : ((NSRoles) this.role).getChakras().getShowedName()) : ""));
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
         return text;
     }
