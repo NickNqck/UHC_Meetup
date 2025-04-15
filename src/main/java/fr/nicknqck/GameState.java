@@ -621,7 +621,7 @@ public class GameState{
 			role = new KyogaiV2(player);
 			break;
 		case Itachi:
-			role = new Itachi(player);
+			role = new ItachiV2(player);
 			break;
 		case ShinjuroV2:
 			role = new ShinjuroV2(player);
