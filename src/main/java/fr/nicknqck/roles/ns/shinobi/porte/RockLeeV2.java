@@ -2,7 +2,6 @@ package fr.nicknqck.roles.ns.shinobi.porte;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -21,7 +20,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -30,7 +28,6 @@ import java.util.UUID;
 
 public class RockLeeV2 extends PortesRoles implements Listener {
 
-    private TextComponent desc;
 
     public RockLeeV2(UUID player) {
         super(player);
@@ -41,28 +38,19 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         addPower(new TroisPortePower(this), true);
         addPower(new SixPortesPower(this), true);
         addPower(new SakePower(this), true);
-        AutomaticDesc desc = new AutomaticDesc(this);
-        desc.setItems(troisPorteMap(), sixPorteMap(), huitPorteMap(),
+        EventUtils.registerRoleEvent(this);
+    }
+
+    @Override
+    public TextComponent getComponent() {
+        return new AutomaticDesc(this).setItems(troisPorteMap(), sixPorteMap(), huitPorteMap(),
                 new TripleMap<>(
                         new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'obtenir l'effet§b Speed I§7 pendant§c 1 minute§7, puis, vous obtiendrez§c 15 secondes§7 de§2 nausé§7. (1x/3m)")}),
                         "§aAlcoolique no Jutsu",
                         60*3
                 )).addParticularites(
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Votre nature de chakra est §caléatoire§7, cette partie vous possédez la nature de chakra: "+getChakras().getShowedName())}),
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de §aGai Maito§7 vous obtiendrez l'item "+huitPorteMap().getSecond())})
-        );
-        this.desc = desc.getText();
-        EventUtils.registerEvents(this);
-    }
-
-    @Override
-    public TextComponent getComponent() {
-        return desc;
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+        ).getText();
     }
 
     @Override
@@ -70,10 +58,6 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         return "Rock Lee";
     }
 
-    @EventHandler
-    private void onEnd(EndGameEvent event) {
-        EventUtils.unregisterEvents(this);
-    }
     @EventHandler
     private void onDie(UHCDeathEvent event) {
         if (event.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
