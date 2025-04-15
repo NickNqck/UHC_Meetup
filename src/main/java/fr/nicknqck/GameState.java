@@ -645,7 +645,7 @@ public class GameState{
 			role = new Kabuto(player);
 			break;
 		case Kisame:
-			role = new Kisame(player);
+			role = new KisameV2(player);
 			break;
 		case Karin:
 			role = new Karin(player);
