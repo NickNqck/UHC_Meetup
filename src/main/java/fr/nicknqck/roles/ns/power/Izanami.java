@@ -258,19 +258,11 @@ public class Izanami implements Listener{
 	private String findUserLore(@NonNull final MissionUser mu) {
 		return "§eVotre mission §f"+mu.getMission()+"§e est "+(Missions.get(mu) ? "§aTerminé" : "§cInachevé "+getOtherStrings(mu));
 	}
-	public List<String> findListUserLore() {
-		@NonNull final List<String> list = new ArrayList<>();
-		for (@NonNull final MissionUser mu : Missions.keySet()) {
-			list.add(findUserLore(mu));
-			list.add(" ");
-		}
-		return list;
-	}
 	public String findVictimLore() {
 		return "§eSa mission§f "+getMission().getMission()+"§e est "+(TargetMissions.get(getMission()) ? "§aTerminé" : "§cInachevé"+(getMission() == MissionTarget.Gap ? "§7 (§ePomme d'or§7 restante§c§l "+gapEatingRemaining : ""));
 	}
 	private String getOtherStrings(MissionUser mu) {
-		return (mu == MissionUser.Taper ? "§7Coup restant à infligé:§c§l "+taperCoupRemaining : mu == MissionUser.Fraper ? "§7Coup restant à subir:§c§l "+FraperCoupRemaining : "");//Code compliquer a expliquer à l'écrit mp moi si tu comprend pas
+		return (mu == MissionUser.Taper ? "§7Coup restant à infligé:§c§l "+taperCoupRemaining : mu == MissionUser.Fraper ? "§7Coup restant à subir:§c§l "+FraperCoupRemaining : "");
 	}
 	@EventHandler
 	private void onEat(PlayerItemConsumeEvent e) {
