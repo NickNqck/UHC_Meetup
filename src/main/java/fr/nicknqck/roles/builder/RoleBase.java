@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.builder;
 
+import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
@@ -79,7 +80,7 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	private final List<String> messageOnDescription = new ArrayList<>();
 	@Getter
-	@NonNull
+	@NotNull
 	private final List<Power> powers = new ArrayList<>();
 	@Getter
 	private final Map<TeamList, Class<? extends RoleBase>[]> knowedTeamWithTraitors = new HashMap<>();
