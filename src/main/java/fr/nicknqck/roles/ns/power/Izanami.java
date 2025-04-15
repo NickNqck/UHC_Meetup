@@ -187,6 +187,12 @@ public class Izanami implements Listener{
 						cancel();
 						return;
 					}
+					if (!GameState.getInstance().getGamePlayer().containsKey(user)) {
+						return;
+					}
+					if (!GameState.getInstance().getGamePlayer().get(user).isAlive()) {
+						return;
+					}
 					Player user1 = Bukkit.getPlayer(user);
 					Player target1 = Bukkit.getPlayer(target);
 					if (user1 != null && target1 != null) {
