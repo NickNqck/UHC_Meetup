@@ -70,6 +70,7 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
         addPower(new Amaterasu(this), true);
         addPower(new Izanagi(this));
         setChakraType(Chakras.KATON);
+        addKnowedRole(KisameV2.class);
     }
 
     @Override
