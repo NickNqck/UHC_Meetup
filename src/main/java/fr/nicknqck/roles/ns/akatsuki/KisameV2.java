@@ -73,6 +73,7 @@ public class KisameV2 extends AkatsukiRoles {
             owner.setLevel(owner.getLevel()+6);
         }
         addKnowedRole(ItachiV2.class);
+        super.RoleGiven(gameState);
     }
 
     @Override
@@ -201,6 +202,10 @@ public class KisameV2 extends AkatsukiRoles {
                         this.suibun.stop(this);
                     }
                     this.timeLeft--;
+                } else {
+                    Player player = Bukkit.getPlayer(this.gamePlayer.getUuid());
+                    if (player == null)return;
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 100, 0, false, false), true));
                 }
             }
         }
