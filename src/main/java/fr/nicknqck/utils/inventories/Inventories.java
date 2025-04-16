@@ -383,6 +383,12 @@ public class Inventories {
                             "",
                             "§a Shift§f + Clique pour configurer les§d bêtes de krystal§7 (§dKrystal UHC§7)"
                     ).toItemStack());
+                    inv.addItem(new ItemBuilder(Material.DIAMOND_SWORD).setName("§fPourcentage de force").setLore(
+                            "§c"+Main.getInstance().getGameConfig().getForcePercent()+"%",
+                            "",
+                            "§fVanilla: §c130%",
+                            "§aMinimum:§c 10%"
+                    ).toItemStack());
                     inv.setItem(26, GUIItems.getSelectBackMenu());
                 }
             }
