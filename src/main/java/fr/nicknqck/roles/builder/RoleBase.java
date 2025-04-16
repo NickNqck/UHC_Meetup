@@ -86,6 +86,8 @@ public abstract class RoleBase implements IRole {
 	private final Map<TeamList, Class<? extends RoleBase>[]> knowedTeamWithTraitors = new HashMap<>();
 	@Getter
 	private final Map<String, List<GamePlayer>> knowedPlayer = new HashMap<>();
+	@Getter
+	private final Map<String, List<Class<? extends RoleBase>>> knowedPlayersByRole = new HashMap<>();
 
 	public abstract String[] Desc();
 	public int roleID = 0;
@@ -678,5 +680,10 @@ public abstract class RoleBase implements IRole {
 			}
 			this.knowedPlayer.put(reason, gamePlayers);
 		}
+	}
+	@SafeVarargs
+	public final void addKnowedPlayersWithRoles(@NonNull final String message, @NonNull final Class<? extends RoleBase>... classRoles) {
+		final List<Class<? extends RoleBase>> list = new ArrayList<>(Arrays.asList(classRoles));
+		this.knowedPlayersByRole.put(message, list);
 	}
 }
