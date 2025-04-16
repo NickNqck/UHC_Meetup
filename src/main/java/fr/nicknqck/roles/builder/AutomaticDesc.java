@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.builder;
 
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.StringUtils;
@@ -226,6 +227,13 @@ public class AutomaticDesc {
         return this;
     }
     public TextComponent getText(){
+        if (this.role instanceof RoleBase) {
+            if (!((RoleBase) this.role).getGamePlayer().getChatWithManager().isEmpty()) {
+                for (@NonNull final GamePlayer.ChatWithManager chatWithManager : ((RoleBase) this.role).getGamePlayer().getChatWithManager()) {
+                    this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
+                }
+            }
+        }
         text.addExtra(new TextComponent(this.role instanceof NSRoles ? "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ? "§cInexistante" : ((NSRoles) this.role).getChakras().getShowedName()) : ""));
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
         return text;

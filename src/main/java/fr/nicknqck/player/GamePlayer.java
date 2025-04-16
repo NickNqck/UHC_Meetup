@@ -88,6 +88,7 @@ public class GamePlayer {
 			this.discRunnable = null;
 			if (getRole() != null) {
 				getRole().owner = player;
+				player.updateInventory();
 			}
 		}
 	}
@@ -292,12 +293,13 @@ public class GamePlayer {
 		}
 
     }
+	@Getter
 	public static class ChatWithManager implements Listener {
 
-		final String constructor;
-		final String starter;
-		final List<Class<? extends RoleBase>> toTalk;
-		final GamePlayer me;
+		private final String constructor;
+		private final String starter;
+		private final List<Class<? extends RoleBase>> toTalk;
+		private final GamePlayer me;
 
 		@SafeVarargs
         public ChatWithManager(@NonNull final String starter, @NonNull String constructor, @NonNull GamePlayer me, Class<? extends RoleBase>... toTalk) {
@@ -306,6 +308,22 @@ public class GamePlayer {
             this.me = me;
 			this.starter = starter;
             EventUtils.registerRoleEvent(this);
+		}
+
+		public String findGoodNameRoles() {
+			@NonNull final StringBuilder string = new StringBuilder();
+			int i = 0;
+			for (@NonNull final Class<? extends RoleBase> clazz : this.toTalk) {
+				i++;
+				if (Main.getInstance().getRoleManager().getRolesRegistery().containsKey(clazz)) {
+					string.append(Main.getInstance().getRoleManager().getRolesRegistery().get(clazz).getOriginTeam().getColor())
+							.append(Main.getInstance().getRoleManager().getRolesRegistery().get(clazz).getName());
+				} else {
+					string.append(clazz.toGenericString().toLowerCase());
+				}
+				string.append(i+1 == this.toTalk.size() ? " §7et " : "§7, ");
+			}
+			return string.substring(0, string.length()-4);
 		}
 
 		@EventHandler
