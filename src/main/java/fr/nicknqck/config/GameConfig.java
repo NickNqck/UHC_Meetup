@@ -30,6 +30,7 @@ public class GameConfig {
     private int infectionTime = 60;
     private int groupe = 5;
     private int tridiCooldown = 16;
+    private int forcePercent = 30;
 
     public GameConfig() {
         instance = this;

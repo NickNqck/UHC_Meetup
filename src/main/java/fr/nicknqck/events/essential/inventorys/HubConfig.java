@@ -380,6 +380,13 @@ public class HubConfig implements Listener {
                                 Main.getInstance().getGameConfig().setInfectionTime(Math.max(10, Main.getInstance().getGameConfig().getInfectionTime()-10));
                             }
                         }
+                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§fPourcentage de Force")) {
+                            if (event.isLeftClick()) {
+                                Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()+5));
+                            } else {
+                                Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()-5));
+                            }
+                        }
                     }
                     for (UUID u : gameState.getInLobbyPlayers()) {
                         Player p = Bukkit.getPlayer(u);

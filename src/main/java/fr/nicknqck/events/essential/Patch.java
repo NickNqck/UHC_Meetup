@@ -61,7 +61,7 @@ public class Patch implements Listener{
 		 Bukkit.getPluginManager().callEvent(battleEvent);
 		 event.setDamage(battleEvent.getDamage());
         if (damager.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
-            ApplyForce(event, 30, true);
+            ApplyForce(event, Main.getInstance().getGameConfig().getForcePercent(), true);
         }
 		ApplyForce(event, gameDamager.getRole().getBonusForce(), false);
         if (Titans.Machoire.getTitan().getOwner() != null && Titans.Machoire.getTitan().getOwner() == damager.getUniqueId() && Titans.Machoire.getTitan().isTransformedinTitan()) {
