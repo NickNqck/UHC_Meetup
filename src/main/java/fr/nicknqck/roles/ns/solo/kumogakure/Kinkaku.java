@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -44,6 +45,11 @@ public class Kinkaku extends KumogakureRole {
                 OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
             }
         }, 100);
+    }
+
+    @Override
+    public void onEndKyubi() {
+        givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.DAY);
     }
 
     @Override

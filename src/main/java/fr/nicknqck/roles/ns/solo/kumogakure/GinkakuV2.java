@@ -25,6 +25,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -39,6 +40,11 @@ public class GinkakuV2 extends KumogakureRole {
 
     public GinkakuV2(UUID player) {
         super(player);
+    }
+
+    @Override
+    public void onEndKyubi() {
+        givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.NIGHT);
     }
 
     @Override
@@ -109,13 +115,14 @@ public class GinkakuV2 extends KumogakureRole {
             }
         }
     }
-    private static class GourdePower extends ItemPower {
+    private static class GourdePower extends ItemPower implements Listener{
 
         protected GourdePower(@NonNull RoleBase role) {
             super("Gourde", new Cooldown(60*7+10), new ItemBuilder(Material.HOPPER).setName("§6Gourde"), role,
                     "§7Après avoir infligé §c1 joueurs §7vous pourrez poser un §chopper §7à votre position",
                     "§c10 secondes§7 plus tard, si le §chopper §7 n'a pas été cassé celà téléportera le joueur sur le §chopper",
                     "§7Il obtiendra les effets:§2 Poison I§7 et§8 Wither I§7 pendant§c 10s§7.§7 (1x/7m)");
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
@@ -132,6 +139,12 @@ public class GinkakuV2 extends KumogakureRole {
                 return true;
             }
             return false;
+        }
+        @EventHandler
+        private void BlockPoseEvent(@NonNull final BlockPlaceEvent event) {
+            if (event.getBlock().getType().equals(Material.HOPPER)) {
+                event.setCancelled(true);
+            }
         }
         private static class GourdeRunnable extends BukkitRunnable {
 

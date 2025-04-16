@@ -37,6 +37,7 @@ public abstract class KumogakureRole extends NSRoles {
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
+    public abstract void onEndKyubi();
     public static class KyubiPower extends ItemPower {
 
         public KyubiPower(@NonNull RoleBase role) {
@@ -51,6 +52,7 @@ public abstract class KumogakureRole extends NSRoles {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 new KyubiRunnable(getRole().getGameState(), getRole().getGamePlayer()).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                this.getRole().getEffects().remove(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false));
                 return true;
             }
             return false;
@@ -81,6 +83,7 @@ public abstract class KumogakureRole extends NSRoles {
                 if (this.timeRemaining <= 0) {
                     this.gamePlayer.getActionBarManager().removeInActionBar("kyubi.runnable");
                     this.gamePlayer.sendMessage("§6Kyubi§7 s'est arrêter");
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> ((KumogakureRole) this.gamePlayer.getRole()).onEndKyubi());
                     cancel();
                     return;
                 }
