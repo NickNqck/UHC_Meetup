@@ -982,6 +982,31 @@ public class GameState{
 					player.sendMessage(string);
 				}
 			}
+			if (!role.getKnowedPlayersByRole().isEmpty()) {
+				@NonNull final StringBuilder finalSB = new StringBuilder();
+				for (@NonNull final String string : role.getKnowedPlayersByRole().keySet()) {
+					@NonNull final StringBuilder sb = new StringBuilder();
+					sb.append(string).append("\n\n");
+					boolean add = false;
+					for (@NonNull final GamePlayer gamePlayer : this.getGamePlayer().values()) {
+						if (gamePlayer.getRole() == null)continue;
+						if (!gamePlayer.isAlive())continue;
+						if (role.getKnowedPlayersByRole().get(string).contains(gamePlayer.getRole().getClass())) {
+							final Player target = Bukkit.getPlayer(gamePlayer.getUuid());
+							sb.append("§8 - §c")
+									.append(target == null ? gamePlayer.getPlayerName() + "§7 (§cDéconnecté§7)" : target.getName())
+									.append("\n\n");
+							add = true;
+						}
+					}
+					if (add) {
+						finalSB.append(sb);
+					}
+				}
+				if (!finalSB.toString().isEmpty()) {
+					player.sendMessage(finalSB.toString());
+				}
+			}
 		}
 	}
 	public Player getOwner(Roles role) {
