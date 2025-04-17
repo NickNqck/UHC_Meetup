@@ -8,6 +8,7 @@ import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.titans.impl.MachoireV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -70,7 +71,17 @@ public class Patch implements Listener{
 			}
 			event.setDamage(event.getDamage()*1.2);
             return;
-         }
+		}
+		if (Main.getInstance().getTitanManager().hasTitan(event.getDamager().getUniqueId())) {
+			if (Main.getInstance().getTitanManager().getTitan(event.getDamager().getUniqueId()) instanceof MachoireV2) {
+				if (Main.getInstance().getTitanManager().getTitan(event.getDamager().getUniqueId()).isTransformed()) {
+					if (victim.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
+						event.setDamage(event.getDamage()*1.2);
+					}
+					return;
+				}
+			}
+		}
 		final double allResi = gameVictim.getRole().getBonusResi() + gameVictim.getRole().getResi();
         if (allResi >= 100) {
             event.setCancelled(true);
