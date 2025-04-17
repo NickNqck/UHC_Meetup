@@ -10,6 +10,8 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.akatsuki.*;
+import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
@@ -74,6 +76,11 @@ public class ObitoV2 extends JubiRoles {
         setChakraType(Chakras.KATON);
         addKnowedRole(Madara.class);
         getGamePlayer().startChatWith("§dObito:", "!", Madara.class);
+        addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7:",
+                Deidara.class, Hidan.class, ItachiV2.class,
+                Kakuzu.class, KisameV2.class, Konan.class,
+                Nagato.class, NagatoV2.class, ZetsuBlanc.class,
+                ZetsuNoir.class, ZetsuBlancV2.class);
     }
 
     @Override
@@ -86,7 +93,6 @@ public class ObitoV2 extends JubiRoles {
     private static class ObtainSusanoPower extends CommandPower implements Listener {
 
         private final Map<String, Location> deathLocations;
-
 
         public ObtainSusanoPower(@NonNull RoleBase role) {
             super("/ns obtain", "obtain", null, role, CommandType.NS, "§7Lorsqu'un§4 Uchiwa§7 meurt vous obtiendrez ses coordonnées, une fois que vous y serez, en faisant cette commande vous obtiendrez le§c§l Susanô§7 ");
@@ -105,8 +111,13 @@ public class ObitoV2 extends JubiRoles {
                 for (@NonNull final String string : this.deathLocations.keySet()) {
                     final Location location = this.deathLocations.get(string);
                     if (player.getLocation().distance(location) <= 5) {
-                        this.getRole().addPower(new SusanoPower(this.getRole()), true);
-                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.getRole().getPowers().remove(this));
+                        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+                            this.getRole().addPower(new SusanoPower(this.getRole()), true);
+                            this.getRole().getPowers().remove(this);
+                            this.getRole().getGamePlayer().sendMessage("§7Vous avez reçus le§c§l Susanô");
+                            this.deathLocations.clear();
+                        }, 20);
+                        EventUtils.unregisterEvents(this);
                         return true;
                     } else {
                         player.sendMessage("§7Vous êtes trop loin de la mort de §c"+string+"§7 pour récupérer ses yeux");
