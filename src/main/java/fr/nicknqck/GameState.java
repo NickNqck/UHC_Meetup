@@ -732,7 +732,7 @@ public class GameState{
 			role = new Kinkaku(player);
 			break;
 		case Nagato:
-			role = new Nagato(player);
+			role = new NagatoV2(player);
 			break;
 		case Wither:
 			role = new WitherBoss(player);
