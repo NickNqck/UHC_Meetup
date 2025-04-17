@@ -549,7 +549,7 @@ public class GameState{
 			role = new BertoltV2(player);
 			break;
 		case Porco:
-			role = new Porco(player);
+			role = new PorcoV2(player);
 			break;
 		case Magath:
 			role = new Magath(player);

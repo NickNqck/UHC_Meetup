@@ -10,8 +10,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.titans.TitanBase;
-import fr.nicknqck.titans.impl.AssaillantV2;
-import fr.nicknqck.titans.impl.CharetteV2;
+import fr.nicknqck.titans.impl.*;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -81,7 +80,6 @@ public class ErenV2 extends AotRoles {
             if (!event.getKiller().getUniqueId().equals(this.getRole().getPlayer()))return;
             if (event.isCancel())return;
             if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
-            if (!checkUse(event.getPlayerKiller(), new HashMap<>()))return;
             @NonNull final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
             if (!(role instanceof AotRoles))return;
             if (role instanceof Sieg) {
@@ -94,6 +92,18 @@ public class ErenV2 extends AotRoles {
             if (titan instanceof CharetteV2) {
                 this.getRole().addSpeedAtInt(event.getPlayerKiller(), 10);
                 event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Charette§7 vous avez obtenue§c 10%§7 de§c vitesse supplémentaire");
+            }
+            if (titan instanceof MachoireV2) {
+                this.getRole().addBonusforce(5.0);
+                event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Machoire§7 vous avez obtenue§c 5%§7 de§c force supplémentaire");
+            }
+            if (titan instanceof CuirasseV2) {
+                this.getRole().addBonusResi(5.0);
+                event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Cuirasse§7 vous avez obtenue§c 5%§7 de§c résistance supplémentaire");
+            }
+            if (titan instanceof ColossalV2) {
+                this.getRole().addBonusResi(10.0);
+                event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Colossal§7 vous avez obtenue§c 10%§7 de§c résistance supplémentaire");
             }
         }
     }
