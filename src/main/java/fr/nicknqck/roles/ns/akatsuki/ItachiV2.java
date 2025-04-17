@@ -71,6 +71,7 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
         addPower(new Izanagi(this));
         setChakraType(Chakras.KATON);
         addKnowedRole(KisameV2.class);
+        super.RoleGiven(gameState);
     }
 
     @Override
