@@ -48,7 +48,7 @@ public class PorcoV2 extends MahrRoles implements Listener {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Lorsque vous tapez un joueur vous ferez§c 10%§7 de§c dégâts supplémentaires§7.")
+                .addCustomLine("§7Lorsque vous tapez un joueur vous ferez§c 10%§7 de§c dégâts §7supplémentaires§7.")
                 .getText();
     }
 }
