@@ -79,7 +79,7 @@ public class ObitoV2 extends JubiRoles {
         addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7:",
                 Deidara.class, Hidan.class, ItachiV2.class,
                 Kakuzu.class, KisameV2.class, Konan.class,
-                Nagato.class, NagatoV2.class, ZetsuBlanc.class,
+                NagatoV2.class, ZetsuBlanc.class,
                 ZetsuNoir.class, ZetsuBlancV2.class);
     }
 

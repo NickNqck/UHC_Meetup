@@ -207,7 +207,7 @@ public class RoleManager {
         registerRole(Kakuzu.class);
         registerRole(KisameV2.class);
         registerRole(Konan.class);
-        registerRole(Nagato.class);
+        registerRole(NagatoV2.class);
         registerRole(ZetsuBlanc.class);
         registerRole(ZetsuNoir.class);
         //Register Jubi
