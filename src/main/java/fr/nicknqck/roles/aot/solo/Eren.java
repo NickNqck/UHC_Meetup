@@ -234,7 +234,7 @@ public class Eren extends AotRoles {
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Lara§f vous obtenez donc 2"+AllDesc.coeur+" supplémentaire");
 					giveHealedHeartatInt(owner, 2);
 				}
-				if (gamePlayer.getRole() instanceof Porco) {
+				if (gamePlayer.getRole() instanceof PorcoV2) {
 					killPorco = true;
 					giveItem(owner, false, Saut());
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Porco§f vous obtenez donc son§l Saut");

@@ -164,7 +164,7 @@ public class RoleManager {
         registerRole(Lara.class);
         registerRole(Magath.class);
         registerRole(PieckV2.class);
-        registerRole(Porco.class);
+        registerRole(PorcoV2.class);
         registerRole(ReinerV2.class);
         //Register Solo
         registerRole(ErenV2.class);
