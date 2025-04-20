@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
@@ -33,6 +34,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -83,7 +85,8 @@ public class NagatoV2 extends AkatsukiRoles implements Listener {
                 , Deidara.class, Hidan.class, ItachiV2.class,
                 Kakuzu.class, KisameV2.class, Konan.class,
                 NagatoV2.class, ZetsuBlanc.class,
-                ZetsuNoir.class, ZetsuBlancV2.class);
+                ZetsuNoir.class, ZetsuBlancV2.class , ObitoV2.class);
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999, 0, false, false), EffectWhen.PERMANENT);
         setChakraType(Chakras.SUITON);
         addPower(new ShikushodoPower(this), true);
         addPower(new BenshoTeninPower(this), true);
