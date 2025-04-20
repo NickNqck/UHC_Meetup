@@ -43,6 +43,7 @@ public class PrepareTitanStealEvent extends GameEvent implements Cancellable {
         CHARETTE,
         BESTIAL,
         COLOSSAL,
-        MACHOIRE
+        MACHOIRE,
+        WARHAMMER
     }
 }
