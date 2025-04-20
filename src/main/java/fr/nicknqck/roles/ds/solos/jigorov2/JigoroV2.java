@@ -81,10 +81,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 		return new ItemStack[0];
 	}
 
-	@Override
-	public void resetCooldown() {}
-
-	private static class SpeedTroisPower extends ItemPower {
+    private static class SpeedTroisPower extends ItemPower {
 
 		protected SpeedTroisPower(@NonNull RoleBase role) {
 			super("Vitesse", new Cooldown(60 * 10), new ItemBuilder(Material.NETHER_STAR).setName("§6Vitesse"), role);
@@ -143,6 +140,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			if (event.getInventory().getTitle() == null) return;
 			if (event.getInventory().getTitle().isEmpty()) return;
 			if (event.getInventory().getTitle().equals("§fChoix de pacte§e Jigoro§7 (§6V2§7)")) {
+				event.setCancelled(true);
 				final ItemStack item = event.getCurrentItem();
 				final JigoroV2ChoosePacteEvent choosePacteEvent = new JigoroV2ChoosePacteEvent(JigoroV2ChoosePacteEvent.Pacte.NON_CHOISIS, (Player) event.getWhoClicked());
 				if (item.isSimilar(GUIItems.getJigoroPacte1())) {
