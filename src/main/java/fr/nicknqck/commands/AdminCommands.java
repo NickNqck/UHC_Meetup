@@ -54,9 +54,9 @@ public class AdminCommands implements CommandExecutor{
 					try {
 						double damage = Double.parseDouble(args[2]);
 						if (target != null) {
-							damage = Math.min(0.1, target.getHealth() - damage);
+							damage = Math.max(0.1, target.getHealth() - damage);
 							target.setHealth(damage);
-							sender.sendMessage("§c"+target.getName()+"§b à subit§c "+damage);
+							sender.sendMessage("§c"+target.getName()+"§b est maintenant a§c "+damage);
 						} else {
 							System.out.println("Player not found: " + args[1]);
 						}
