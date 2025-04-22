@@ -22,17 +22,23 @@ public class EventUtils implements Listener{
 
     public static void registerEvents(Listener listener) {
         Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
-        System.out.println("Registered event " + listener.getClass().getName().toLowerCase() +" with plugin "+Main.getInstance().getName().toLowerCase());
+        if (Main.isDebug()) {
+            System.out.println("Registered event " + listener.getClass().getName().toLowerCase() +" with plugin "+Main.getInstance().getName().toLowerCase());
+        }
     }
 
     public static void unregisterEvents(Listener listener) {
         HandlerList.unregisterAll(listener);
-        System.out.println("Unregister event "+listener.getClass().getName().toLowerCase());
+        if (Main.isDebug()) {
+            System.out.println("Unregister event "+listener.getClass().getName().toLowerCase());
+        }
     }
     public static void registerRoleEvent(Listener listener) {
         Bukkit.getPluginManager().registerEvents(listener, Main.getInstance());
         toUnregister.add(listener);
-        System.out.println("Registered event " + listener.getClass().getName().toLowerCase() +" (role)");
+        if (Main.isDebug()) {
+            System.out.println("Registered event " + listener.getClass().getName().toLowerCase() +" (role)");
+        }
     }
     @EventHandler
     private void onEndGame(EndGameEvent event) {
