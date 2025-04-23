@@ -242,6 +242,7 @@ public class Main extends JavaPlugin {
 		getCommand("mc").setExecutor(new McCommands(gameState));
 		getCommand("discord").setExecutor(new Discord());
 		getCommand("color").setExecutor(new Color(gameState));
+		getCommand("pack").setExecutor(new PackCommand());
 		System.out.println("Ending registering commands");
 	}
 	private void clearMap(World world) {
