@@ -90,6 +90,7 @@ public class Main extends JavaPlugin {
 
 	private KrystalBeastManager krystalBeastManager;
 	private TitanManager titanManager;
+	private BijuManager bijuManager;
 
     @Override
 	public void onEnable() {
@@ -136,6 +137,7 @@ public class Main extends JavaPlugin {
 		BiomeChanger.init();
 		this.krystalBeastManager = new KrystalBeastManager();
 		this.titanManager = new TitanManager();
+		this.bijuManager = new BijuManager();
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {

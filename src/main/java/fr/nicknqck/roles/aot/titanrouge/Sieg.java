@@ -116,6 +116,7 @@ public class Sieg extends TitansRoles {
                             continue;
                         }
                         player.sendMessage("");
+                        player.playSound(player.getLocation(), "goldenuhc.bestialcri", 1, 8);
                     }
                     cancel();
                     return;
