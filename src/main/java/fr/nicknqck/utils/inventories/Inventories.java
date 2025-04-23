@@ -3,7 +3,7 @@ package fr.nicknqck.utils.inventories;
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -991,11 +991,26 @@ public class Inventories {
                             .setName("§r§fCoordonnée maximal de spawn des bijus")
                             .toItemStack());
                     int i = 19;
-                    for (Bijus bijus : Bijus.values()) {
+                 /*   for (Bijus bijus : Bijus.values()) {
                         ItemStack item = bijus.getBiju().getItemInMenu();
                         item.setAmount(bijus.getBiju().isEnable() ? 1 : 0);
                         inv.setItem(i, item);
                         i++;
+                    }*/
+                    if (!Main.getInstance().getBijuManager().getClassBijuMap().isEmpty()) {
+                        for (@NonNull final Class<? extends BijuBase> clazz : Main.getInstance().getBijuManager().getClassBijuMap().keySet()) {
+                            @NonNull final BijuBase bijuBase = Main.getInstance().getBijuManager().getClassBijuMap().get(clazz);
+                            @NonNull final ItemBuilder item = new ItemBuilder(bijuBase.getItemInMenu());
+                            if (Main.getInstance().getBijuManager().getBijuEnables().get(clazz)) {
+                                item.setAmount(1);
+                                item.setLore("§a§lActivé");
+                            } else {
+                                item.setAmount(0);
+                                item.setLore("§c§lDésactivé");
+                            }
+                            inv.setItem(i, item.toItemStack());
+                            i++;
+                        }
                     }
                     inv.setItem(31, GUIItems.getSelectBackMenu());
                 }
