@@ -100,7 +100,7 @@ public class TitanUltime extends TitansRoles {
 					GameListener.SendToEveryone("");
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 					for (Player p : Bukkit.getOnlinePlayers()) {
-						p.playSound(p.getLocation(), Sound.GHAST_DEATH, 10, 20);
+						p.playSound(p.getLocation(), "aotmtp.ultimetransfo", 10, 20);
 					}
 					return true;
 				}).setDespawnable(false).setDroppable(false).getItemStack(),
