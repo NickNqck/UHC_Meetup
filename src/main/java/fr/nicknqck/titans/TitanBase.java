@@ -113,11 +113,14 @@ public abstract class TitanBase implements ITitan {
             this.titanBase.setTransformed(true);
             @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, true, player);
             Bukkit.getPluginManager().callEvent(event);
-            Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage(new String[]{
-                    "",
-                    "§6Un humain c'est transformé en titan !",
-                    ""
-            }));
+            for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                onlinePlayer.sendMessage(new String[]{
+                        "",
+                        "§6Un humain c'est transformé en titan !",
+                        ""
+                });
+                onlinePlayer.playSound(onlinePlayer.getLocation(), "aotmtp.transfo", 8, 1);
+            }
             new TransformationRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
         }
         private synchronized void stopTransformation(@NonNull final Player p) {
