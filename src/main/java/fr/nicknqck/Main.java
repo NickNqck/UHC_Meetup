@@ -243,6 +243,10 @@ public class Main extends JavaPlugin {
 		getCommand("discord").setExecutor(new Discord());
 		getCommand("color").setExecutor(new Color(gameState));
 		getCommand("pack").setExecutor(new PackCommand());
+		SettingsCommand settingsCommand = new SettingsCommand();
+		getCommand("setting").setExecutor(settingsCommand);
+		getCommand("settings").setExecutor(settingsCommand);
+		Bukkit.getPluginManager().registerEvents(settingsCommand, this);
 		System.out.println("Ending registering commands");
 	}
 	private void clearMap(World world) {

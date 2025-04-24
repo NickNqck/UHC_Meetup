@@ -106,6 +106,9 @@ public class RayTrace
         for (Vector vector : positions) {
             final Location position = vector.toLocation(player.getWorld());
             final Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
+            if (fr.nicknqck.commands.SettingsCommand.getRoleParticleViewers().contains(player.getUniqueId())) {
+                fr.nicknqck.utils.particles.MathUtil.sendParticleTo(player, net.minecraft.server.v1_8_R3.EnumParticle.CLOUD, position);
+            }
             for (Entity entity : entities) {
                 if (entity instanceof Player && entity != player && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.2D)) {
                     final Player target = (Player) entity;
