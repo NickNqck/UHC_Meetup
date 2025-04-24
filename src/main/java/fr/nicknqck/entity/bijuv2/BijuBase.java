@@ -66,10 +66,10 @@ public abstract class BijuBase implements IBiju {
                     Main.RANDOM.nextInt(Border.getMaxBorderSize()),
                     60,
                     Main.RANDOM.nextInt(Border.getMaxBorderSize()));
-            if (Main.RANDOM.nextInt(101) <= 50) {
+            if (Main.RANDOM.nextInt(100) <= 50) {
                 location.setX(-location.getBlockX());
             }
-            if (Main.RANDOM.nextInt(101) <= 50) {
+            if (Main.RANDOM.nextInt(100) <= 50) {
                 location.setZ(-location.getBlockZ());
             }
             if (location.getBlockX() >= (Border.getMaxBorderSize()-10)) {
