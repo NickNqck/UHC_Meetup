@@ -16,7 +16,6 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.BoundingBox;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;
 import lombok.NonNull;
@@ -402,22 +401,7 @@ public abstract class RoleBase implements IRole {
 	public void onProjectileLaunch(ProjectileLaunchEvent event, Player shooter) {}
 	public void onProjectileHit(ProjectileHitEvent event, Player shooter) {}
 	public Player getTargetPlayer(Player player, double distanceMax) {
-        RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
-        List<Vector> positions = rayTrace.traverse(distanceMax, 0.1D);
-        for (Vector vector : positions) {
-            Location position = vector.toLocation(player.getWorld());
-            Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
-            for (Entity entity : entities) {
-                if (entity instanceof Player && entity.getUniqueId() != player.getUniqueId()) {
-                	if (((Player)entity).getGameMode() != GameMode.SPECTATOR) {
-                		if (player.canSee((Player)entity) && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.1D)) {
-                			return (Player) entity;
-                		}
-                	}
-                }
-            }
-        }
-        return null;
+        return RayTrace.getTargetPlayer(player, distanceMax, null);
     }
 	public static Location getTargetLocation(Player player, int maxDistance) {
         BlockIterator blockIterator = new BlockIterator(player, maxDistance);
