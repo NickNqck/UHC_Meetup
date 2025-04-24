@@ -49,3 +49,9 @@ commands:
   pack:
     description: Permet d'obtenir le pack de texture de l'uhc
     usage: /pack
+  setting:
+    description: Permet de paramétrer certaine chose compatible
+    usage: /setting ou /settings
+  settings:
+    description: Permet de paramétrer certaine chose compatible
+    usage: /setting ou /settings
