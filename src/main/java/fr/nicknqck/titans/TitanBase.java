@@ -78,7 +78,7 @@ public abstract class TitanBase implements ITitan {
 
         private final TitanBase titanBase;
 
-        protected TransformationPower(@NonNull TitanBase titan) {
+        public TransformationPower(@NonNull TitanBase titan) {
             super("§fTransformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§fTransformation"), titan.getGamePlayer().getRole(),
                     "§7Cette objet vous permet de vous transformez en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot info");
             this.titanBase = titan;
@@ -109,7 +109,7 @@ public abstract class TitanBase implements ITitan {
             }
             return false;
         }
-        private synchronized void startTransformation(@NonNull final Player player) {
+        public synchronized void startTransformation(@NonNull final Player player) {
             this.titanBase.setTransformed(true);
             @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, true, player);
             Bukkit.getPluginManager().callEvent(event);
@@ -123,7 +123,7 @@ public abstract class TitanBase implements ITitan {
             }
             new TransformationRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
         }
-        private synchronized void stopTransformation(@NonNull final Player p) {
+        public synchronized void stopTransformation(@NonNull final Player p) {
             this.titanBase.setTransformed(false);
             @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, false, p);
             Bukkit.getPluginManager().callEvent(event);
