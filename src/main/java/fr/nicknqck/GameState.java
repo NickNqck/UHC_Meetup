@@ -555,7 +555,7 @@ public class GameState{
 			role = new Magath(player);
 			break;
 		case Lara:
-			role = new Lara(player);
+			role = new LaraV2(player);
 			break;
 		case PetitTitan:
 			role = new PetitTitan(player);
