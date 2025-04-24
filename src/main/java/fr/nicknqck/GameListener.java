@@ -256,14 +256,17 @@ public class GameListener implements Listener {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
-					gameState.getGamePlayer().get(p.getUniqueId()).getRole().Update(gameState);
+					GamePlayer gamePlayer = gameState.getGamePlayer().get(u);
+					gamePlayer.getRole().Update(gameState);
+					if (!gamePlayer.isAlive())continue;
 					List<ItemStack> items = new ArrayList<>();
 					for (ItemStack item : p.getInventory().getContents()) {
 						if (item == null)continue;
 						if (item.getType().equals(Material.AIR))continue;
 						items.add(item);
 					}
-					gameState.getGamePlayer().get(p.getUniqueId()).setLastInventoryContent(items.toArray(new ItemStack[0]));
+					gamePlayer.setLastInventoryContent(items.toArray(new ItemStack[0]));
+					gamePlayer.setLastArmorContent(p.getInventory().getArmorContents());
 				}
 			}
 			if (gameState.getActualPvPTimer() == 0){

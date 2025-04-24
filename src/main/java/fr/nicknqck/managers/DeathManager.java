@@ -57,6 +57,10 @@ public class DeathManager implements Listener {
     }
     public void KillHandler(@Nonnull Player killedPlayer, @Nonnull Entity entityKiller) {
         final GameState gameState = GameState.getInstance();
+        if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
+            final GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
+            gamePlayer.setLastInventoryContent(killedPlayer.getInventory().getContents());
+        }
         @NonNull
         final UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(killedPlayer, entityKiller, gameState);
         Bukkit.getPluginManager().callEvent(playerKillEvent);

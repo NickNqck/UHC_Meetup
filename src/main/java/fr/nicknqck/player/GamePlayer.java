@@ -41,12 +41,12 @@ public class GamePlayer {
 	private final String playerName;
 	@Nullable
 	private DiscRunnable discRunnable;
-	@NonNull
 	@Setter
 	private Location lastLocation;
-	@NonNull
 	@Setter
 	private ItemStack[] lastInventoryContent;
+	@Setter
+	private ItemStack[] lastArmorContent;
 	private final PersonalScoreboard scoreboard;
 	@Setter
 	@Nullable
