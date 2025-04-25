@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -34,6 +35,8 @@ public class WarhammerV2 extends TitanBase implements Listener {
     private final List<PotionEffect> potionEffects;
     private Location location;
     private Location blocDeathLocation;
+    private Player lastDamager;
+    private boolean canRes = true;
 
     public WarhammerV2(GamePlayer gamePlayer) {
         super(gamePlayer);
@@ -77,19 +80,21 @@ public class WarhammerV2 extends TitanBase implements Listener {
     @EventHandler
     private void onTransformation(@NonNull final TitanTransformEvent event) {
         if (event.getTitan().getGamePlayer().getUuid().equals(this.getGamePlayer().getUuid())) {
-            if (event.isTransforming()) {
-                this.getGamePlayer().getRole().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth()+6.0);
-                event.getPlayer().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth());
-                event.getPlayer().setHealth(Math.min(event.getPlayer().getMaxHealth(), event.getPlayer().getHealth()+6.0));
-                @NonNull final Location location = event.getPlayer().getLocation();
-                location.setY(location.getBlockY()-10);
-                location.getBlock().setType(Material.IRON_BLOCK);
-                this.location = location;
-            } else {
-                this.getGamePlayer().getRole().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth()-6.0);
-                event.getPlayer().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth());
-                this.location.getBlock().setType(Material.DIRT);
-            }
+            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                if (event.isTransforming()) {
+                    this.getGamePlayer().getRole().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth()+6.0);
+                    event.getPlayer().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth());
+                    event.getPlayer().setHealth(Math.min(event.getPlayer().getMaxHealth(), event.getPlayer().getHealth()+6.0));
+                    @NonNull final Location location = event.getPlayer().getLocation();
+                    location.setY(location.getBlockY()-10);
+                    location.getBlock().setType(Material.IRON_BLOCK);
+                    this.location = location;
+                } else {
+                    this.getGamePlayer().getRole().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth()-6.0);
+                    event.getPlayer().setMaxHealth(this.getGamePlayer().getRole().getMaxHealth());
+                    this.location.getBlock().setType(Material.DIRT);
+                }
+            });
         }
     }
     @EventHandler
@@ -100,8 +105,10 @@ public class WarhammerV2 extends TitanBase implements Listener {
         if (!(role instanceof LaraV2)){
             if (!isTransformed())return;
         }
+        if (!this.canRes)return;
         if (role.getMaxHealth() <= 10.0)return;
         @NonNull final Location location = event.getPlayer().getLocation();
+        this.getGamePlayer().setDeathLocation(location);
         location.setY(location.getBlockY()-10);
         location.getBlock().setType(Material.IRON_BLOCK);
         event.setCancelled(true);
@@ -113,9 +120,16 @@ public class WarhammerV2 extends TitanBase implements Listener {
         final Player owner = Bukkit.getPlayer(this.getGamePlayer().getUuid());
         owner.teleport(tp);
         owner.setGameMode(GameMode.ADVENTURE);
-        this.blocDeathLocation = location;
         this.getGamePlayer().setAlive(false);
-        new DeathRunnable(GameState.getInstance(), this, location).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        this.blocDeathLocation = location;
+        System.out.println("Location location : "+location);
+        new DeathRunnable(GameState.getInstance(), this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+    }
+    @EventHandler
+    private void EntityDamageByEntityEvent(@NonNull final EntityDamageByEntityEvent event) {
+        if (!event.getEntity().getUniqueId().equals(this.getGamePlayer().getUuid()))return;
+        if (!(event.getDamager() instanceof Player))return;
+        this.lastDamager = (Player) event.getDamager();
     }
     private void poseCocon(@NonNull final World world) {
         world.getBlockAt(0, 1, 0).setType(Material.IRON_BLOCK);
@@ -192,8 +206,8 @@ public class WarhammerV2 extends TitanBase implements Listener {
     private void onBlockBreak(@NonNull final BlockBreakEvent event) {
         if (event.getBlock() == null)return;
         if (event.getBlock().getType() != Material.IRON_BLOCK)return;
-        if (!isTransformed())return;
         if (this.location != null) {
+            if (!isTransformed())return;
             if (event.getBlock().getLocation().distance(this.location) <= 1.0) {
                 this.getTransformationPower().stopTransformation(Bukkit.getPlayer(this.getGamePlayer().getUuid()));
                 this.getGamePlayer().sendMessage("§b"+event.getPlayer().getDisplayName()+"§c a cassé votre bloc de transformation");
@@ -202,7 +216,8 @@ public class WarhammerV2 extends TitanBase implements Listener {
             }
         }
         if (this.blocDeathLocation != null) {
-            if (event.getBlock().getLocation().distance(this.blocDeathLocation) <= 1.0) {
+            if (!this.blocDeathLocation.getWorld().equals(event.getBlock().getWorld()))return;
+            if (event.getBlock().getLocation().distance(this.blocDeathLocation) <= 2.0) {
                 this.blocDeathLocation = null;
             }
         }
@@ -214,10 +229,10 @@ public class WarhammerV2 extends TitanBase implements Listener {
         private final Location deathLocation;
         private int timeRemaining;
 
-        private DeathRunnable(GameState gameState, WarhammerV2 warhammer, Location deathLocation) {
+        private DeathRunnable(GameState gameState, WarhammerV2 warhammer) {
             this.gameState = gameState;
             this.warhammer = warhammer;
-            this.deathLocation = deathLocation;
+            this.deathLocation = this.warhammer.blocDeathLocation;
             this.timeRemaining = 30;
             this.warhammer.getGamePlayer().getActionBarManager().addToActionBar("warhammerv2.timedeath", "§bTemp avant réapparition: §c30 secondes");
         }
@@ -232,6 +247,20 @@ public class WarhammerV2 extends TitanBase implements Listener {
             if (this.warhammer.blocDeathLocation == null) {
                 this.warhammer.getGamePlayer().sendMessage("§7Quelqu'un a détruit votre point de réaparition, vous allez donc mourir...");
                 this.warhammer.getGamePlayer().getActionBarManager().removeInActionBar("warhammerv2.timedeath");
+                Player warhammer = Bukkit.getPlayer(this.warhammer.getGamePlayer().getUuid());
+                if (warhammer != null) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                        warhammer.teleport(this.warhammer.getGamePlayer().getDeathLocation());
+                        for (ItemStack item : this.warhammer.getGamePlayer().getLastInventoryContent()) {
+                            if (item == null)continue;
+                            if (item.getType().equals(Material.AIR))continue;
+                            warhammer.getInventory().addItem(item);
+                        }
+                        warhammer.getInventory().setArmorContents(this.warhammer.getGamePlayer().getLastArmorContent());
+                        warhammer.damage(9999, this.warhammer.lastDamager);
+                    });
+                }
+                this.warhammer.canRes = false;
                 cancel();
                 return;
             }
@@ -257,7 +286,13 @@ public class WarhammerV2 extends TitanBase implements Listener {
                 }
             }
             this.warhammer.getGamePlayer().getActionBarManager().updateActionBar("warhammerv2.timedeath", "§bTemp avant réapparition: §c"+this.timeRemaining+" secondes");
-            MathUtil.sendParticleLine(this.deathLocation, this.warhammer.blocDeathLocation, EnumParticle.PORTAL, (int) this.deathLocation.distance(this.warhammer.blocDeathLocation));
+            Location loc = new Location(
+                    this.deathLocation.getWorld(),
+                    this.deathLocation.getBlockX(),
+                    this.deathLocation.getY()+15,
+                    this.deathLocation.getBlockZ()
+            );
+            MathUtil.sendParticleLine(loc, this.warhammer.blocDeathLocation, EnumParticle.PORTAL, (int) this.deathLocation.distance(this.warhammer.blocDeathLocation));
             this.timeRemaining--;
         }
         private Location getRandomLocation() {
