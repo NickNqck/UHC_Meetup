@@ -5,6 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.entity.bijuv2.impl.Saiken;
+import fr.nicknqck.entity.bijuv2.impl.SonGoku;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.events.custom.biju.*;
@@ -25,6 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -55,6 +57,7 @@ public class BijuManager implements Listener {
         this.bijuEnables = new HashMap<>();
         this.ownerMap = new HashMap<>();
         addBijuInRegistery(Saiken.class);
+        addBijuInRegistery(SonGoku.class);
     }
 
     @EventHandler
@@ -224,6 +227,12 @@ public class BijuManager implements Listener {
                 }
                 Main.getInstance().getInventories().openConfigBijusInventory((Player) event.getWhoClicked());
             }
+        }
+    }
+    @EventHandler
+    private void onDamage(@NonNull final EntityDamageEvent event) {
+        if (event.getEntity() instanceof MagmaCube) {
+            event.setDamage(event.getDamage()*8);
         }
     }
     private static class BijuUpdateSpawnLocationRunnable extends BukkitRunnable {
