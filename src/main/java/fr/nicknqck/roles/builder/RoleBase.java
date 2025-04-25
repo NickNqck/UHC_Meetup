@@ -82,8 +82,6 @@ public abstract class RoleBase implements IRole {
 	@NotNull
 	private final List<Power> powers = new ArrayList<>();
 	@Getter
-	private final Map<TeamList, Class<? extends RoleBase>[]> knowedTeamWithTraitors = new HashMap<>();
-	@Getter
 	private final Map<String, List<GamePlayer>> knowedPlayer = new HashMap<>();
 	@Getter
 	private final Map<String, List<Class<? extends RoleBase>>> knowedPlayersByRole = new HashMap<>();
@@ -614,13 +612,6 @@ public abstract class RoleBase implements IRole {
 			System.out.println(this+" added "+role+" to his knowedRole");
 		}
 		getKnowedRoles().add(role);
-	}
-	@SafeVarargs
-    public final void addKnowedPlayerInTeamWithTraitors(@NonNull final TeamList team, Class<? extends RoleBase>... classRoles) {
-		if (Main.isDebug()) {
-			System.out.println("[RoleBaseLogger] added "+team.getName()+" to knowed team wither traitors: "+ Arrays.toString(classRoles));
-		}
-		this.knowedTeamWithTraitors.put(team, classRoles);
 	}
 
 	public final void addKnowedPlayersFromTeam(@NonNull final TeamList team) {

@@ -54,7 +54,9 @@ public class Sieg extends TitansRoles {
         Main.getInstance().getTitanManager().addTitan(getPlayer(), new BestialV2(getGamePlayer()));
         addPower(new CriPower(this));
         addPower(new GiveStrengthPower(this));
-        addKnowedPlayerInTeamWithTraitors(TeamList.Titan, TitanUltime.class);
+        addKnowedPlayersWithRoles("§7Voici la liste des§c Titans Rouge§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§e Titan Ultime§7):",
+                GrandTitan.class, PetitTitan.class, TitanDeviant.class,
+                TitanUltime.class, TitanSouriant.class, Jelena.class);
     }
     private static class CriPower extends CommandPower {
 
