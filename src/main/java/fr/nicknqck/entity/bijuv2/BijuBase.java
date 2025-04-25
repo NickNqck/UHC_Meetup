@@ -152,7 +152,7 @@ public abstract class BijuBase implements IBiju {
                         }
                     }
                 }
-                this.biju.onUse(player, getRole());
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.biju.onUse(player, getRole()));
                 new BijuRunnable(getRole().getGameState(), getRole().getGamePlayer(), this);
                 return true;
             }
