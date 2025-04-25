@@ -119,7 +119,7 @@ public class GinkakuV2 extends KumogakureRole {
 
         protected GourdePower(@NonNull RoleBase role) {
             super("Gourde", new Cooldown(60*7+10), new ItemBuilder(Material.HOPPER).setName("§6Gourde"), role,
-                    "§7Après avoir infligé §c1 joueurs §7vous pourrez poser un §chopper §7à votre position",
+                    "§7En frappant un joueur, pose un §chopper §7à sa position",
                     "§c10 secondes§7 plus tard, si le §chopper §7 n'a pas été cassé celà téléportera le joueur sur le §chopper",
                     "§7Il obtiendra les effets:§2 Poison I§7 et§8 Wither I§7 pendant§c 10s§7.§7 (1x/7m)");
             EventUtils.registerRoleEvent(this);
