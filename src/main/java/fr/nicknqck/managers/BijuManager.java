@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
+import fr.nicknqck.entity.bijuv2.impl.Matatabi;
 import fr.nicknqck.entity.bijuv2.impl.Saiken;
 import fr.nicknqck.entity.bijuv2.impl.SonGoku;
 import fr.nicknqck.events.custom.EndGameEvent;
@@ -21,15 +22,15 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldBorder;
-import org.bukkit.entity.MagmaCube;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -58,6 +59,7 @@ public class BijuManager implements Listener {
         this.ownerMap = new HashMap<>();
         addBijuInRegistery(Saiken.class);
         addBijuInRegistery(SonGoku.class);
+        addBijuInRegistery(Matatabi.class);
     }
 
     @EventHandler
@@ -234,6 +236,18 @@ public class BijuManager implements Listener {
         if (event.getEntity() instanceof MagmaCube) {
             event.setDamage(event.getDamage()*8);
         }
+        if (event.getEntity() instanceof Blaze) {
+            if (event.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)) {//Pour pas que les blazes meures par de l'eau
+                event.setDamage(0.0);
+            }
+        }
+    }
+    @EventHandler
+    private void onEntityDamage(@NonNull final EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Player))return;
+        if (!((Player) event.getDamager()).hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))return;
+        if (event.getEntity() instanceof HumanEntity)return;
+        event.setDamage(event.getDamage()*0.5304740497679363);//NERF DE LA FORCE
     }
     private static class BijuUpdateSpawnLocationRunnable extends BukkitRunnable {
 
