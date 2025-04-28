@@ -503,7 +503,8 @@ public class Inventories {
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
                     for (GameState.Roles roles : GameState.Roles.values()) {
-                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ns")) {
+                        if (!roles.getTeam().equals(TeamList.Solo) && !roles.getTeam().equals(TeamList.Shisui))continue;
+                        if (roles.getMdj().equals("ns")) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";

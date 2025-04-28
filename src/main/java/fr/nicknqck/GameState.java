@@ -40,6 +40,7 @@ import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
+import fr.nicknqck.roles.ns.solo.ShisuiSolo;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
@@ -180,6 +181,7 @@ public class GameState{
 		//Solo ns
 		Gaara(TeamList.Solo, "ns", 0, new ItemBuilder(Material.SAND).setName("§eGaara").toItemStack(), "§bNickNqck"),
 		Danzo(TeamList.Solo, "ns", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eDanzo").toItemStack(), "§bNickNqck"),
+		Shisui(TeamList.Solo, "ns", 2, new ItemBuilder(Material.EYE_OF_ENDER).setName("§eShisui").toItemStack(), "§bNickNqck"),
 		//Orochimaru ns
 		Orochimaru(TeamList.Orochimaru, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§5Orochimaru").toItemStack(), "§bNickNqck"),
 		Kabuto(TeamList.Orochimaru, "ns", 1, new ItemBuilder(Material.WATER_LILY).setName("§5Kabuto").toItemStack(), "§bNickNqck"),
@@ -796,6 +798,9 @@ public class GameState{
 				break;
 			case Heldige:
 				role = new Heldige(player);
+				break;
+			case Shisui:
+				role = new ShisuiSolo(player);
 				break;
 		}
 		if (role == null) return null;
