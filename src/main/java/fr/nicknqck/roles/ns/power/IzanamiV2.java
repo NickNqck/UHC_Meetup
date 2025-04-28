@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
+import fr.nicknqck.events.custom.roles.ns.IzanamiStartEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -12,7 +13,6 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -25,13 +25,13 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IzanamiV2 implements Listener {
 
@@ -51,7 +51,7 @@ public class IzanamiV2 implements Listener {
         EventUtils.registerRoleEvent(this);
     }
     @Getter
-    private enum MissionUser {
+    public enum MissionUser {
         Taper(0, "\"Tapée la cible 15x\""),
         Lave(1, "\"Mettre de la§6 lave§f sous la cible\""),
         Fraper(2, "\"être frappé par l'épée de la cible 15x\""),
@@ -66,7 +66,7 @@ public class IzanamiV2 implements Listener {
         }
     }
     @Getter
-    private enum MissionTarget {
+    public enum MissionTarget {
         Tuer(0, "\"Tuer un joueur\""),
         Gap(1, "\"Manger 5§e pommes d'or\""),
         Distance(2, "\"Rester loin de vous (§c30 blocs§f) pendant 1 minutes\"s");
@@ -152,23 +152,35 @@ public class IzanamiV2 implements Listener {
         this.color = izanamiColor;
         int rdm1 = RandomUtils.getRandomInt(0, 4);
         int rdm2 = rdm1;
+        final List<MissionUser> missionUserList = new ArrayList<>();
+        final List<MissionTarget> missionTargetList = new ArrayList<>();
         while (rdm2 == rdm1 || rdm2 > 4) {
             rdm2 = RandomUtils.getRandomInt(0, 5);
         }
         int rdm3 = RandomUtils.getRandomInt(0, 3);
         for (MissionUser mo : MissionUser.values()) {
             if (mo.getNmb() == rdm1) {
-                Missions.put(mo, false);
+                missionUserList.add(mo);
             }
             if (mo.getNmb() == rdm2) {
-                Missions.put(mo, false);
+                missionUserList.add(mo);
             }
         }
         for (MissionTarget mt : MissionTarget.values()) {
             if (mt.getNmb() == rdm3) {
-                TargetMissions.put(mt, false);
+                missionTargetList.add(mt);
                 break;
             }
+        }
+        final IzanamiStartEvent izanamiStartEvent = new IzanamiStartEvent(missionUserList, missionTargetList);
+        Bukkit.getPluginManager().callEvent(izanamiStartEvent);
+        this.Missions.clear();
+        this.TargetMissions.clear();
+        for (final MissionUser mu : izanamiStartEvent.getMissionUserList()) {
+            this.Missions.put(mu, false);
+        }
+        for (final MissionTarget mt : izanamiStartEvent.getMissionTargetList()) {
+            this.TargetMissions.put(mt, false);
         }
         if (isGoodMission(MissionUser.Rester)) {
             new ResterRunnable(GameState.getInstance(), this);
@@ -181,19 +193,6 @@ public class IzanamiV2 implements Listener {
                 run.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);//Le Async est censé permettre d'être plus opti
             }
         }
-    }
-    public ItemStack getResultVictimMission() {
-        ItemBuilder ib = new ItemBuilder(Material.NETHER_STAR).setName("§eMission de la victim");
-        ib.setLore(findVictimLore());
-        return ib.toItemStack();
-    }
-    public ItemStack getResultUserMission() {
-        ItemBuilder ib = new ItemBuilder(Material.NETHER_STAR).setName("Vos missions:");
-        ib.addLoreLine("");
-        for (MissionUser mu : Missions.keySet()) {
-            ib.addLoreLine(findUserLore(mu));
-        }
-        return ib.toItemStack();
     }
     private String findUserLore(@NonNull final MissionUser mu) {
         return "§eVotre mission §f"+mu.getMission()+"§e est "+(Missions.get(mu) ? "§aTerminé" : "§cInachevé "+getOtherStrings(mu));
@@ -329,6 +328,7 @@ public class IzanamiV2 implements Listener {
             toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+this.color+infecteur.getName()+": "+(infecteur.getPlayerFromRole(infecteur.getRoles()) != null ? infecteur.getPlayerFromRole(infecteur.getRoles()).getName() : "§cMort"));
             gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.color+"Izanami§7)");
             final IzanamiFinishEvent izanamiFinishEvent = new IzanamiFinishEvent(infecteur, infecter, this.color, owner, toIzanami);
+            Bukkit.getPluginManager().callEvent(izanamiFinishEvent);
             return true;
         }
         return false;
