@@ -2,9 +2,11 @@ package fr.nicknqck.utils.powers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.power.CooldownFinishEvent;
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -59,11 +61,18 @@ public final class Cooldown {
             if (this.cooldown.actualCooldown > 0) {
                 this.cooldown.actualCooldown--;
             } else {
+                boolean call = false;
                 for (GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
                     if (gamePlayer.getRole() == null)continue;
                     for (Power power : gamePlayer.getRole().getPowers()) {
-                        power.onEndCooldown(cooldown);
+                        if (power.onEndCooldown(cooldown)) {
+                            call = true;
+                        }
                     }
+                }
+                if (!call) {
+                    final CooldownFinishEvent cooldownFinishEvent = new CooldownFinishEvent(this.cooldown);
+                    Bukkit.getPluginManager().callEvent(cooldownFinishEvent);
                 }
                 cancel();
             }
