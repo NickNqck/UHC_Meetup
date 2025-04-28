@@ -34,7 +34,7 @@ public enum Bijus {
 	}
 
     public static void initBiju(GameState state) {
-		if (Main.getInstance().getGameConfig().isBijusEnable()) {
+		if (Main.getInstance().getBijuManager().isBijuEnable()) {
 			for (Bijus value : values()) {
 				if (value.getBiju().isEnable()) {
 					value.getBiju().setupBiju(state);

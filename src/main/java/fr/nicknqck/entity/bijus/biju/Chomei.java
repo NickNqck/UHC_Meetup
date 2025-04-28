@@ -161,7 +161,7 @@ public class Chomei extends Biju {
         @Override
         public void run() {
             timer++;
-            if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !getBijus().getBiju().isEnable()) {
+            if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getBijuManager().isBijuEnable() || !getBijus().getBiju().isEnable()) {
             	cancel();
             	return;
             }

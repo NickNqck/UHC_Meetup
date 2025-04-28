@@ -367,7 +367,7 @@ public class Inventories {
                             "§r§fClique droit: §c-1 seconde",
                             "§r§f(0 secondes =§c désactiver"
                     ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getGameConfig().isBijusEnable() ?
+                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getBijuManager().isBijuEnable() ?
                             "§aActivé" : "§cDésactivé",
                             "§r§fShift + Clique: Permet de configurer les bijus§7 (§aNaruto UHC§7)").toItemStack());
                     inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
@@ -991,12 +991,6 @@ public class Inventories {
                             .setName("§r§fCoordonnée maximal de spawn des bijus")
                             .toItemStack());
                     int i = 19;
-                 /*   for (Bijus bijus : Bijus.values()) {
-                        ItemStack item = bijus.getBiju().getItemInMenu();
-                        item.setAmount(bijus.getBiju().isEnable() ? 1 : 0);
-                        inv.setItem(i, item);
-                        i++;
-                    }*/
                     if (!Main.getInstance().getBijuManager().getClassBijuMap().isEmpty()) {
                         for (@NonNull final Class<? extends BijuBase> clazz : Main.getInstance().getBijuManager().getClassBijuMap().keySet()) {
                             @NonNull final BijuBase bijuBase = Main.getInstance().getBijuManager().getClassBijuMap().get(clazz);

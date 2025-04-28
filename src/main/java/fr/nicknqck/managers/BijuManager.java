@@ -86,8 +86,11 @@ public class BijuManager implements Listener {
     }
     @EventHandler
     private void bijuInstantiateEvent(final BijuInstantiateEvent event) {
-     //   this.runnableList.add(new BijuSpawnRunnable(event.getBiju(), event.getSpawnTime()));
-        this.runnableList.add(new BijuSpawnRunnable(event.getBiju(), 60));
+        this.runnableList.add(new BijuSpawnRunnable(event.getBiju(), event.getSpawnTime()));
+        if (!this.getBijuSpawnMap().containsKey(event.getBiju())) {
+            System.out.println(a+" Fixed Error, the BijuSpawnMap have now finally added "+event.getBiju().getName());
+            this.getBijuSpawnMap().put(event.getBiju(), event.getSpawnTime());
+        }
     }
     @EventHandler
     private void onEndGame(final EndGameEvent event) {

@@ -163,7 +163,7 @@ public class Matatabi extends Biju{
 		@Override
 		public void run() {
 			timer++;
-			if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getGameConfig().isBijusEnable() || !isEnable()) {
+			if (gameState.getServerState() != ServerStates.InGame || !Main.getInstance().getBijuManager().isBijuEnable() || !isEnable()) {
 				cancel();
 				return;
 			}

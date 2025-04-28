@@ -13,6 +13,5 @@ public class BijuEvent extends GameEvent {
 
     public BijuEvent(BijuBase biju) {
         this.biju = biju;
-        System.out.println("called "+this);
     }
 }

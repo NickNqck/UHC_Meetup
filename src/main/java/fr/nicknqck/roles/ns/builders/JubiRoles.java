@@ -1,9 +1,10 @@
 package fr.nicknqck.roles.ns.builders;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.entity.bijus.Biju;
-import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.Main;
+import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.managers.BijuManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -52,11 +53,11 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
         return Intelligence.GENIE;
     }
 
-    static class TraqueurPower extends ItemPower implements Listener {
+    public static class TraqueurPower extends ItemPower implements Listener {
 
         private final JubiRoles roles;
-        private Biju traqued = null;
-        protected TraqueurPower(@NonNull JubiRoles role) {
+        private BijuBase traqued = null;
+        public TraqueurPower(@NonNull JubiRoles role) {
             super("§dTraqueur de biju", null, new ItemBuilder(Material.COMPASS).setName("! §dTraqueur"), role);
             this.roles = role;
             EventUtils.registerEvents(this);
@@ -67,7 +68,7 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 if (this.roles == null)return false;
-                if (!this.getPlugin().getGameConfig().isBijusEnable()) {
+                if (!this.getPlugin().getBijuManager().isBijuEnable()) {
                     this.roles.getPowers().remove(this);
                     player.sendMessage("§7Les bijus sont désactiver pendant cette partie.");
                     player.setItemInHand(null);
@@ -76,9 +77,9 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
                 Action action = event.getAction();
                 if (action.name().contains("RIGHT")) {
                     Inventory inv = Bukkit.createInventory(player, 9, "§7Traqueur de§d Biju");
-                    for (Bijus b : Bijus.values()) {
-                        if (b.getBiju().isEnable()) {
-                            inv.addItem(b.getBiju().getItem());
+                    for (@NonNull final Class<? extends BijuBase> clazz : Main.getInstance().getBijuManager().getClassBijuMap().keySet()) {
+                        if (Main.getInstance().getBijuManager().getBijuEnables().get(clazz)) {
+                            inv.addItem(Main.getInstance().getBijuManager().getClassBijuMap().get(clazz).getItemInMenu());
                         }
                     }
                     player.openInventory(inv);
@@ -103,15 +104,11 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
             if (event.getCurrentItem() == null)return;
             if (!event.getCurrentItem().hasItemMeta())return;
             if (!event.getCurrentItem().getItemMeta().hasDisplayName())return;
-            for (Bijus bijus : Bijus.values()) {
-                if (bijus.getBiju().getItemInMenu().getItemMeta().getDisplayName().equals(event.getCurrentItem().getItemMeta().getDisplayName()) || event.getCurrentItem().getItemMeta().getDisplayName().contains(bijus.name())) {
-                    if (bijus.getBiju().isEnable()) {
-                        this.traqued = bijus.getBiju();
-                        event.getWhoClicked().sendMessage("§7Vous§c traquez§7 maintenant "+bijus.getBiju().getName());
-                        printTraqueMessage((Player) event.getWhoClicked());
-                    } else {
-                        event.getWhoClicked().sendMessage("§7Ce§d Biju§7 a été désactiver.");
-                    }
+            for (@NonNull final BijuBase bijuBase : Main.getInstance().getBijuManager().getBijuSpawnMap().keySet()) {
+                if (bijuBase.getItemInMenu().getItemMeta().getDisplayName().equalsIgnoreCase(event.getCurrentItem().getItemMeta().getDisplayName())) {
+                    this.traqued = bijuBase;
+                    event.getWhoClicked().sendMessage("§7Vous§c traquez§7 maintenant " + bijuBase.getName());
+                    printTraqueMessage((Player) event.getWhoClicked());
                     break;
                 }
             }
@@ -120,25 +117,33 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
         }
         private void printTraqueMessage(Player player) {
             if (this.traqued == null) {
-                player.sendMessage("§cVous ne traquezcaucun§d biju§c actuellement§c !");
+                player.sendMessage("§cVous ne traquez§c aucun§d biju§c actuellement§c !");
                 return;
             }
             player.sendMessage("§7Voici tout les informations disponnible sur "+this.traqued.getName());
             player.sendMessage("");
             if (this.traqued.getHote() == null) {
-                if (this.traqued.getLivingEntity() == null) {
-                    player.sendMessage("§7Il apparaitra en "+getGoodCoord(this.traqued.getSpawn()));
-                    player.setCompassTarget(this.traqued.getSpawn());
-                    player.sendMessage("§7Il apparaitra dans§c "+
-                            StringUtils.secondsTowardsBeautiful(this.traqued.getTimeSpawn()-this.roles.getGameState().getInGameTime())+
-                            "§7 c'est à dire à §c"+
-                            StringUtils.secondsTowardsBeautiful(this.traqued.getTimeSpawn())+"§7.");
+                if (this.traqued.getEntity() == null) {
+                    player.sendMessage("§7Il apparaitra en "+getGoodCoord(this.traqued.getOriginSpawn()));
+                    player.setCompassTarget(this.traqued.getOriginSpawn());
+                    final BijuManager bijuManager = Main.getInstance().getBijuManager();
+                    for (@NonNull final BijuBase bijuBase : bijuManager.getBijuSpawnMap().keySet()) {
+                        if (bijuBase.getClass().equals(this.traqued.getClass())) {
+                            player.sendMessage("§7Il apparaitra dans§c "+
+                                    StringUtils.secondsTowardsBeautiful(
+                                            Main.getInstance().getBijuManager().getBijuSpawnMap().get(bijuBase)-this.roles.getGameState().getInGameTime()
+                                    )+
+                                    "§7 c'est à dire à §c"+
+                                    StringUtils.secondsTowardsBeautiful(Main.getInstance().getBijuManager().getBijuSpawnMap().get(bijuBase))+"§7.");
+                            break;
+                        }
+                    }
                 } else {
-                    player.sendMessage("§7Il est actuellement en "+getGoodCoord(this.traqued.getLivingEntity().getLocation()));
-                    player.setCompassTarget(this.traqued.getLivingEntity().getLocation());
+                    player.sendMessage("§7Il est actuellement en "+getGoodCoord(this.traqued.getEntity().getLocation()));
+                    player.setCompassTarget(this.traqued.getEntity().getLocation());
                 }
             } else {
-                GamePlayer gamePlayer = this.roles.getGameState().getGamePlayer().get(this.traqued.getHote());
+                GamePlayer gamePlayer = (this.traqued.getHote());
                 player.sendMessage("§c"+gamePlayer.getPlayerName()+"§7 est en "+getGoodCoord(gamePlayer.getLastLocation()));
             }
         }

@@ -121,7 +121,7 @@ public class HubListener implements Listener {
 		}
 		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
 		BijuListener.getInstance().resetCooldown();
-		Bijus.initBiju(gameState);
+	//	Bijus.initBiju(gameState);
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState, rolesList));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
