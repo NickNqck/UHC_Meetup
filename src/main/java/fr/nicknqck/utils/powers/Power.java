@@ -99,13 +99,15 @@ public abstract class Power {
         return true;
     }
 
-    public void onEndCooldown(final Cooldown cooldown) {
-        if (this.cooldown == null)return;
+    public boolean onEndCooldown(final Cooldown cooldown) {
+        if (this.cooldown == null) return false;
         if (cooldown.getUniqueId().equals(this.getCooldown().getUniqueId())) {//donc si c'est EXACTEMENT le même "Cooldown"
-            if (!this.isSendCooldown())return;
-            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))return;
-            if (!GameState.getInstance().getInGamePlayers().contains(this.getRole().getPlayer()))return;
+            if (!this.isSendCooldown()) return false;
+            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) return false;
+            if (!GameState.getInstance().getInGamePlayers().contains(this.getRole().getPlayer())) return false;
             getRole().getGamePlayer().sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
+            return true;
         }
+        return false;
     }
 }
