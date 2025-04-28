@@ -28,6 +28,7 @@ import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.Danzo;
 import fr.nicknqck.roles.ns.solo.Gaara;
+import fr.nicknqck.roles.ns.solo.ShisuiSolo;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
@@ -222,6 +223,7 @@ public class RoleManager {
         //Register Solo
         registerRole(Danzo.class);
         registerRole(Gaara.class);
+        registerRole(ShisuiSolo.class);
     }
     private void registerCustomRoles() throws Exception {
         //Register Custom Roles

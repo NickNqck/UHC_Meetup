@@ -532,7 +532,7 @@ public class GameListener implements Listener {
 		
 		boolean Mahr = false, Titans = false, Soldat = false;
 		
-		boolean Jubi = false, Orochimaru = false, Akatsuki = false, Sasuke = false, Brume = false, Shinobi = false, Kumogakure = false, Kabuto = false;
+		boolean Jubi = false, Orochimaru = false, Akatsuki = false, Sasuke = false, Brume = false, Shinobi = false, Kumogakure = false, Kabuto = false, Shisui = false;
 
 		boolean OverWorld = false, Nether = false;
 
@@ -596,13 +596,16 @@ public class GameListener implements Listener {
 					case Nether:
 						Nether = true;
 						break;
+					case Shisui:
+						Shisui = true;
+						break;
 				}
 			}
 		}
 		int i = trueCount(Slayer, Demon, Solo, Jigoro, Alliance,
 				Mahr, Titans, Soldat,
 				Jubi, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto,
-				OverWorld, Nether);
+				OverWorld, Nether, Shisui);
 		if (gameDone) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
@@ -674,6 +677,10 @@ public class GameListener implements Listener {
 			}
 			if (Sasuke) {
 				winer = TeamList.Sasuke;
+				gameDone = true;
+			}
+			if (Shisui) {
+				winer = TeamList.Shisui;
 				gameDone = true;
 			}
 			if (Brume) {
