@@ -63,29 +63,50 @@ public abstract class BijuBase implements IBiju {
         while (location == null && essaie <= 1000) {
             essaie++;
             location = new Location(Main.getInstance().getWorldManager().getGameWorld(),
-                    Main.RANDOM.nextInt(Border.getMaxBorderSize()),
+                    Main.RANDOM.nextInt(Border.getMaxBijuSpawn()),
                     60,
-                    Main.RANDOM.nextInt(Border.getMaxBorderSize()));
+                    Main.RANDOM.nextInt(Border.getMaxBijuSpawn()));
             if (Main.RANDOM.nextInt(100) <= 50) {
                 location.setX(-location.getBlockX());
             }
             if (Main.RANDOM.nextInt(100) <= 50) {
                 location.setZ(-location.getBlockZ());
             }
-            if (location.getBlockX() >= (Border.getMaxBorderSize()-10)) {
-                location = null;
-                continue;
+            if (location.getBlockZ() > 0) {
+                if (location.getBlockZ() <= Border.getMinBijuSpawn()) {
+                    location = null;
+                    continue;
+                }
+                if (location.getBlockZ() >= Border.getMaxBijuSpawn()) {
+                    location = null;
+                    continue;
+                }
+            } else {
+                if (location.getBlockZ() >= -Border.getMinBijuSpawn()) {
+                    location = null;
+                    continue;
+                }
+                if (location.getBlockZ() <= -Border.getMaxBijuSpawn()) {
+                    location = null;
+                    continue;
+                }
             }
-            if (location.getBlockX() <= (-Border.getMaxBorderSize()+10)) {
-                location = null;
-                continue;
-            }
-            if (location.getBlockZ() >= (Border.getMaxBorderSize()-10)) {
-                location = null;
-                continue;
-            }
-            if (location.getBlockZ() <= (-Border.getMinBorderSize()+10)) {
-                location = null;
+            if (location.getBlockX() > 0) {
+                if (location.getBlockX() <= Border.getMinBijuSpawn()) {
+                    location = null;
+                    continue;
+                }
+                if (location.getBlockX() >= Border.getMaxBijuSpawn()) {
+                    location = null;
+                }
+            } else {
+                if (location.getBlockX() >= -Border.getMinBijuSpawn()) {
+                    location = null;
+                    continue;
+                }
+                if (location.getBlockX() <= -Border.getMaxBijuSpawn()) {
+                    location = null;
+                }
             }
         }
         if (location == null) {//location par défaut x:100 z:100

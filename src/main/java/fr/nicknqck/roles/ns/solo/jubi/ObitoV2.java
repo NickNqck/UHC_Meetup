@@ -81,6 +81,7 @@ public class ObitoV2 extends JubiRoles {
                 Kakuzu.class, KisameV2.class, Konan.class,
                 NagatoV2.class, ZetsuBlanc.class,
                 ZetsuNoir.class, ZetsuBlancV2.class);
+        super.RoleGiven(gameState);
     }
 
     @Override

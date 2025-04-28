@@ -6,7 +6,7 @@ import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
@@ -110,10 +110,13 @@ public class AdminCommands implements CommandExecutor{
 							power.getCooldown().resetCooldown();
 						}
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
-						if (Main.getInstance().getGameConfig().isBijusEnable()) {
-							for (Bijus bijus : Bijus.values()) {
-								if (bijus.getBiju().getHote() != null &&bijus.getBiju().getHote() == player.getUniqueId()) {
-									bijus.getBiju().resetCooldown();
+						if (Main.getInstance().getBijuManager().isBijuEnable()) {
+							for (BijuBase bijuBase : Main.getInstance().getBijuManager().getClassBijuMap().values()) {
+								if (bijuBase.getBijuPower() != null) {
+									if (bijuBase.getBijuPower().getRole().getPlayer().equals(player.getUniqueId())) {
+										if (!bijuBase.getBijuPower().getCooldown().isInCooldown())continue;
+										bijuBase.getBijuPower().getCooldown().setActualCooldown(0);
+									}
 								}
 							}
 						}
@@ -130,11 +133,12 @@ public class AdminCommands implements CommandExecutor{
 					if (!gameState.hasRoleNull(player.getUniqueId())) {
 						gameState.getGamePlayer().get(player.getUniqueId()).getRole().resetCooldown();
 						player.sendMessage("§fVos cooldown on été réinitialisé !");
-						if (Main.getInstance().getGameConfig().isBijusEnable()) {
-							for (Bijus bijus : Bijus.values()) {
-								if (bijus.getBiju().getHote() != null){
-									if (bijus.getBiju().getHote().equals(player.getUniqueId())){
-										bijus.getBiju().resetCooldown();
+						if (Main.getInstance().getBijuManager().isBijuEnable()) {
+							for (BijuBase bijuBase : Main.getInstance().getBijuManager().getClassBijuMap().values()) {
+								if (bijuBase.getBijuPower() != null) {
+									if (bijuBase.getBijuPower().getRole().getPlayer().equals(player.getUniqueId())) {
+										if (!bijuBase.getBijuPower().getCooldown().isInCooldown())continue;
+										bijuBase.getBijuPower().getCooldown().setActualCooldown(0);
 									}
 								}
 							}
