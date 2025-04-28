@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
+import fr.nicknqck.entity.bijuv2.impl.Isobu;
 import fr.nicknqck.entity.bijuv2.impl.Matatabi;
 import fr.nicknqck.entity.bijuv2.impl.Saiken;
 import fr.nicknqck.entity.bijuv2.impl.SonGoku;
@@ -25,6 +26,7 @@ import org.bukkit.WorldBorder;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -60,6 +62,7 @@ public class BijuManager implements Listener {
         addBijuInRegistery(Saiken.class);
         addBijuInRegistery(SonGoku.class);
         addBijuInRegistery(Matatabi.class);
+        addBijuInRegistery(Isobu.class);
     }
 
     @EventHandler
@@ -153,6 +156,13 @@ public class BijuManager implements Listener {
                 System.out.println(a+" "+event.getBiju().getName()+" has been drop");
             }
         }
+        if (event.getBiju() instanceof Isobu) {
+            for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
+                if (onlinePlayers.hasPotionEffect(PotionEffectType.SLOW_DIGGING)) {
+                    onlinePlayers.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+                }
+            }
+        }
         System.out.println(a+" "+event.getBiju().getName()+" is dead");
     }
     @EventHandler
@@ -237,7 +247,7 @@ public class BijuManager implements Listener {
             event.setDamage(event.getDamage()*8);
         }
         if (event.getEntity() instanceof Blaze) {
-            if (event.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)) {//Pour pas que les blazes meures par de l'eau
+            if (event.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)) {//Pour pas que les blazes meurent par de l'eau
                 event.setDamage(0.0);
             }
         }
@@ -249,6 +259,13 @@ public class BijuManager implements Listener {
         if (event.getEntity() instanceof HumanEntity)return;
         event.setDamage(event.getDamage()*0.5304740497679363);//NERF DE LA FORCE
     }
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if (event.getEntityType() == EntityType.GUARDIAN && event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+            event.setCancelled(true);
+        }
+    }
+
     private static class BijuUpdateSpawnLocationRunnable extends BukkitRunnable {
 
         private final BijuBase biju;
