@@ -12,7 +12,6 @@ import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
-import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,11 +46,6 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
     @Override
     public String[] Desc() {
         return AllDesc.JigoroV2Pacte2;
-    }
-
-    @Override
-    public @NonNull TeamList getOriginTeam() {
-        return TeamList.Jigoro;
     }
 
     @EventHandler
