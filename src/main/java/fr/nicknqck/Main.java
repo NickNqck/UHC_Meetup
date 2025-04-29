@@ -30,6 +30,7 @@ import fr.nicknqck.utils.biome.BiomeChanger;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
+import fr.nicknqck.utils.packets.TabManager;
 import fr.nicknqck.worlds.WorldListener;
 import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import lombok.Getter;
@@ -91,6 +92,7 @@ public class Main extends JavaPlugin {
 	private KrystalBeastManager krystalBeastManager;
 	private TitanManager titanManager;
 	private BijuManager bijuManager;
+	private TabManager tabManager;
 
     @Override
 	public void onEnable() {
@@ -138,6 +140,7 @@ public class Main extends JavaPlugin {
 		this.krystalBeastManager = new KrystalBeastManager();
 		this.titanManager = new TitanManager();
 		this.bijuManager = new BijuManager();
+		this.tabManager = new TabManager();
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -247,6 +250,10 @@ public class Main extends JavaPlugin {
 		getCommand("setting").setExecutor(settingsCommand);
 		getCommand("settings").setExecutor(settingsCommand);
 		Bukkit.getPluginManager().registerEvents(settingsCommand, this);
+	/*	getCommand("role").setExecutor(new RoleCommand());
+		getCommand("role").setTabCompleter(new RoleTabComplete());
+		getCommand("team").setExecutor(new TeamCommand());
+		getCommand("team").setTabCompleter(new TeamTabComplete());*/
 		System.out.println("Ending registering commands");
 	}
 	private void clearMap(World world) {
