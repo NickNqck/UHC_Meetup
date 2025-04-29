@@ -1,4 +1,4 @@
-package fr.nicknqck.utils.packets;
+package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
