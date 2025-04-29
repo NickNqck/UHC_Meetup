@@ -77,10 +77,18 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
                 Action action = event.getAction();
                 if (action.name().contains("RIGHT")) {
                     Inventory inv = Bukkit.createInventory(player, 9, "§7Traqueur de§d Biju");
+                    boolean empty = true;
                     for (@NonNull final Class<? extends BijuBase> clazz : Main.getInstance().getBijuManager().getClassBijuMap().keySet()) {
                         if (Main.getInstance().getBijuManager().getBijuEnables().get(clazz)) {
                             inv.addItem(Main.getInstance().getBijuManager().getClassBijuMap().get(clazz).getItemInMenu());
+                            empty = false;
                         }
+                    }
+                    if (!empty) {
+                        this.roles.getPowers().remove(this);
+                        player.sendMessage("§7Les bijus sont désactiver pendant cette partie.");
+                        player.setItemInHand(null);
+                        return true;
                     }
                     player.openInventory(inv);
                 } else {
