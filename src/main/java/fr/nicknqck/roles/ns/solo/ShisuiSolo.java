@@ -29,7 +29,6 @@ import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -243,6 +242,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                     return;
                 } else
                 {
+                    if (!this.power.shisuiSolo.getGamePlayer().isAlive())return;
                     final Location loc = this.power.getRole().getGamePlayer().getLastLocation();
                     final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayers(loc, 40));
                     if (playerList.isEmpty())return;
@@ -263,6 +263,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                     }
                 }
                 if (this.power.shisuiSolo.infected != null) {
+                    if (!this.power.shisuiSolo.infected.getGamePlayer().isAlive())return;
                     final Location loc = this.power.shisuiSolo.infected.getGamePlayer().getLastLocation();
                     final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayers(loc, 20));
                     if (playerList.isEmpty())return;
