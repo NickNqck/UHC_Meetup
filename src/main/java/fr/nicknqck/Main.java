@@ -30,7 +30,7 @@ import fr.nicknqck.utils.biome.BiomeChanger;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
-import fr.nicknqck.utils.packets.TabManager;
+import fr.nicknqck.managers.TabManager;
 import fr.nicknqck.worlds.WorldListener;
 import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import lombok.Getter;
