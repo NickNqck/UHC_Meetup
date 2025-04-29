@@ -3,6 +3,7 @@ package fr.nicknqck.player;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -319,6 +320,11 @@ public class GamePlayer {
 					string.append(Main.getInstance().getRoleManager().getRolesRegistery().get(clazz).getOriginTeam().getColor())
 							.append(Main.getInstance().getRoleManager().getRolesRegistery().get(clazz).getName());
 				} else {
+					if (clazz.toGenericString().toLowerCase().contains("jigorov2")) {
+						string.append(string.append(Main.getInstance().getRoleManager().getRolesRegistery().get(JigoroV2.class).getOriginTeam().getColor()))
+								.append(Main.getInstance().getRoleManager().getRolesRegistery().get(JigoroV2.class).getName());
+						continue;
+					}
 					string.append(clazz.toGenericString().toLowerCase());
 				}
 				string.append(i+1 == this.toTalk.size() ? " §7et " : "§7, ");
