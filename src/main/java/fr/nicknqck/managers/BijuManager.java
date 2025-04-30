@@ -61,6 +61,7 @@ public class BijuManager implements Listener {
         addBijuInRegistery(Matatabi.class);
         addBijuInRegistery(Isobu.class);
         addBijuInRegistery(Chomei.class);
+        addBijuInRegistery(Kokuo.class);
     }
 
     @EventHandler
