@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.power.CooldownFinishEvent;
+import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiStartEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -36,6 +37,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -84,6 +86,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                 .addCustomLine(this.infected == null ?
                         "§7Votre§e Izanami§7 ne peut pas avoir les missions: \"§fRester loin de vous (§c30 blocs§f) pendant§c 1 minutes§7\"§7 et \"§fRester proche de la cible (§c20 blocs§f) pendant§c 5 minutes§7\""
                         : "")
+                .addCustomLine("§7Vous êtes immunisé à TOUT ce qui vous ferait changer de camp")
                 .getText();
     }
 
@@ -152,6 +155,15 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
     @Override
     public @NonNull EUchiwaType getUchiwaType() {
         return EUchiwaType.INUTILE;
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    private void onChangeTeam(@NonNull final TeamChangeEvent event) {
+        if (event.getRole() instanceof ShisuiSolo) {
+            if (event.getRole().getPlayer().equals(this.getPlayer())) {
+                event.setCancelled(true);
+            }
+        }
     }
 
     private static class KotoAmatsukamiPower extends ItemPower implements Listener {
