@@ -683,7 +683,7 @@ public class GameState{
 			role = new Kakashi(player);
 			break;
 		case Naruto:
-			role = new Naruto(player);
+			role = new NarutoV2(player);
 			break;
 		case Sakura:
 			role = new Sakura(player);

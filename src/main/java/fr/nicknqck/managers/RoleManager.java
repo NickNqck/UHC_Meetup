@@ -184,7 +184,7 @@ public class RoleManager {
         registerRole(Konohamaru.class);
         registerRole(Kurenai.class);
         registerRole(Minato.class);
-        registerRole(Naruto.class);
+        registerRole(NarutoV2.class);
         registerRole(RockLee.class);
         registerRole(Sakura.class);
         registerRole(Shikamaru.class);
