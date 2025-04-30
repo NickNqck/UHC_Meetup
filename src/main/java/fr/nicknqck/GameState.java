@@ -46,7 +46,7 @@ import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
-import fr.nicknqck.roles.ns.solo.zabuza_haku.Zabuza;
+import fr.nicknqck.roles.ns.solo.zabuza_haku.ZabuzaV2;
 import fr.nicknqck.roles.valo.agents.Iso;
 import fr.nicknqck.roles.valo.agents.Neon;
 import fr.nicknqck.scenarios.impl.FFA;
@@ -674,7 +674,7 @@ public class GameState{
 			role = new Haku(player);
 			break;
 			case Zabuza:
-			role = new Zabuza(player);
+			role = new ZabuzaV2(player);
 			break;
 		case Jugo:
 			role = new Jugo(player);
