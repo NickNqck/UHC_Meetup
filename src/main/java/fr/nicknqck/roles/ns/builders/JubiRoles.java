@@ -58,7 +58,8 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
         private final JubiRoles roles;
         private BijuBase traqued = null;
         public TraqueurPower(@NonNull JubiRoles role) {
-            super("§dTraqueur de biju", null, new ItemBuilder(Material.COMPASS).setName("! §dTraqueur"), role);
+            super("§dTraqueur de biju", null, new ItemBuilder(Material.COMPASS).setName("§dTraqueur"), role,
+                    "§7Vous permet de traquer les§d bijus§7 qui sont activé dans la partie");
             this.roles = role;
             EventUtils.registerEvents(this);
         }
@@ -84,7 +85,7 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
                             empty = false;
                         }
                     }
-                    if (!empty) {
+                    if (empty) {
                         this.roles.getPowers().remove(this);
                         player.sendMessage("§7Les bijus sont désactiver pendant cette partie.");
                         player.setItemInHand(null);

@@ -62,6 +62,7 @@ public class ObitoV2 extends JubiRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
+        super.RoleGiven(gameState);
         if (!gameState.getAttributedRole().contains(GameState.Roles.Kakashi)) {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
@@ -82,7 +83,6 @@ public class ObitoV2 extends JubiRoles {
                 Kakuzu.class, KisameV2.class, Konan.class,
                 NagatoV2.class, ZetsuBlanc.class,
                 ZetsuNoir.class, ZetsuBlancV2.class);
-        super.RoleGiven(gameState);
     }
 
     @Override
