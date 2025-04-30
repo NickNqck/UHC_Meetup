@@ -39,7 +39,7 @@ public class Kokuo extends BijuBase {
 
     @Override
     public @NonNull String getName() {
-        return "Kokuo";
+        return "§bKokuô";
     }
 
     @Override
