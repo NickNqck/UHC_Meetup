@@ -4,10 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
-import fr.nicknqck.entity.bijuv2.impl.Isobu;
-import fr.nicknqck.entity.bijuv2.impl.Matatabi;
-import fr.nicknqck.entity.bijuv2.impl.Saiken;
-import fr.nicknqck.entity.bijuv2.impl.SonGoku;
+import fr.nicknqck.entity.bijuv2.impl.*;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.events.custom.biju.*;
@@ -63,6 +60,7 @@ public class BijuManager implements Listener {
         addBijuInRegistery(SonGoku.class);
         addBijuInRegistery(Matatabi.class);
         addBijuInRegistery(Isobu.class);
+        addBijuInRegistery(Chomei.class);
     }
 
     @EventHandler
