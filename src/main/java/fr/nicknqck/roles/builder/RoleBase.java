@@ -8,6 +8,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.EffectGiveEvent;
+import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
@@ -171,7 +172,12 @@ public abstract class RoleBase implements IRole {
 	}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
-	public void setTeam(TeamList team) {
+	public void setTeam(@NonNull final TeamList team) {
+		final TeamChangeEvent event = new TeamChangeEvent(this, this.team, team);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) {
+			return;
+		}
 		if (this.team != null) {
 			this.team.getList().remove(this.owner);
 		}
