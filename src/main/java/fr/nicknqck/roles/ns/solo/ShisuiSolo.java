@@ -241,6 +241,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                 power.getRole().getGamePlayer().getActionBarManager().addToActionBar("shisui.kotoamatsukami", "§bNombre de points: §c"+this.points+"§b/§62500");
             }
 
+            @SuppressWarnings("deprecation")
             @Override
             public void run() {
                 if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
@@ -370,7 +371,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                 if (event.getDamager().hasMetadata("shisui.stunarrow")) {
                     if (getRole().getGameState().getGamePlayer().containsKey(event.getEntity().getUniqueId())) {
                         getRole().getGameState().getGamePlayer().get(event.getEntity().getUniqueId()).stun(10, false, false);
-                        ((Player) event.getEntity()).setHealth(Math.max(1.0, ((Player) event.getEntity()).getMaxHealth()-1.0));
+                        ((Player) event.getEntity()).setHealth(Math.max(1.0, ((Player) event.getEntity()).getHealth()-1.0));
                         event.getDamager().removeMetadata("shisui.stunarrow", Main.getInstance());
                         ((Player) ((Arrow) event.getDamager()).getShooter()).sendMessage("§7Votre§c Shuriken§7 a§a stun§c "+((Player) event.getEntity()).getDisplayName());
                     }
