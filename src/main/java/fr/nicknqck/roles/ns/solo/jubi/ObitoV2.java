@@ -33,6 +33,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -416,9 +417,22 @@ public class ObitoV2 extends JubiRoles {
         private void EntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
             if (event.isCancelled())return;
             if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
-            if (getCooldown().isInCooldown()) {
-                if (getCooldown().getCooldownRemaining() >= 60*9) {
+            if (this.ninjutsuRunnable != null) {
+                if (this.ninjutsuRunnable.running) {
                     event.setCancelled(true);
+                }
+            }
+        }
+        @EventHandler
+        private void onShootBow(@NonNull final EntityShootBowEvent event) {
+            if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
+                if (this.ninjutsuRunnable != null) {
+                    if (this.ninjutsuRunnable.running) {
+                        event.setCancelled(true);
+                        if (event.getEntity() instanceof Player) {
+                            ((Player) event.getEntity()).updateInventory();
+                        }
+                    }
                 }
             }
         }
@@ -427,6 +441,7 @@ public class ObitoV2 extends JubiRoles {
             private final GameState gameState;
             private final NinjutsuSpatioTemporel ninjutsu;
             private int timeLeft;
+            private boolean running = false;
 
             private NinjutsuRunnable(GameState gameState, NinjutsuSpatioTemporel ninjutsu) {
                 this.gameState = gameState;
@@ -438,6 +453,7 @@ public class ObitoV2 extends JubiRoles {
             public void run() {
                 if (!this.gameState.getServerState().equals(GameState.ServerStates.InGame)) {
                     cancel();
+                    this.running = false;
                     return;
                 }
                 this.timeLeft--;
@@ -461,6 +477,7 @@ public class ObitoV2 extends JubiRoles {
                     target.hidePlayer(player);
                 }
                 this.timeLeft = 60;
+                this.running = true;
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
             public void stop(@NonNull final Player player) {
@@ -472,6 +489,7 @@ public class ObitoV2 extends JubiRoles {
                 }
                 this.ninjutsu.getRole().getGamePlayer().getActionBarManager().removeInActionBar("ninjutsu.runnable");
                 cancel();
+                this.running = false;
             }
         }
     }
