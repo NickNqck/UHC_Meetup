@@ -22,6 +22,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -122,7 +123,6 @@ public class WarhammerV2 extends TitanBase implements Listener {
         owner.setGameMode(GameMode.ADVENTURE);
         this.getGamePlayer().setAlive(false);
         this.blocDeathLocation = location;
-        System.out.println("Location location : "+location);
         new DeathRunnable(GameState.getInstance(), this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
     @EventHandler
@@ -207,18 +207,28 @@ public class WarhammerV2 extends TitanBase implements Listener {
         if (event.getBlock() == null)return;
         if (event.getBlock().getType() != Material.IRON_BLOCK)return;
         if (this.location != null) {
-            if (!isTransformed())return;
-            if (event.getBlock().getLocation().distance(this.location) <= 1.0) {
-                this.getTransformationPower().stopTransformation(Bukkit.getPlayer(this.getGamePlayer().getUuid()));
-                this.getGamePlayer().sendMessage("§b"+event.getPlayer().getDisplayName()+"§c a cassé votre bloc de transformation");
-                this.getGamePlayer().getRole().setMaxHealth(Math.max(2.0, this.getGamePlayer().getRole().getMaxHealth()-2.0));
-                Bukkit.getPluginManager().callEvent(new WarHammerBlockBreakEvent(event.getBlock(), event.getPlayer(), this));
+            if (isTransformed()) {
+                if (event.getBlock().getLocation().distance(this.location) <= 1.0) {
+                    this.getTransformationPower().stopTransformation(Bukkit.getPlayer(this.getGamePlayer().getUuid()));
+                    this.getGamePlayer().sendMessage("§b"+event.getPlayer().getDisplayName()+"§c a cassé votre bloc de transformation");
+                    this.getGamePlayer().getRole().setMaxHealth(Math.max(2.0, this.getGamePlayer().getRole().getMaxHealth()-2.0));
+                    Bukkit.getPluginManager().callEvent(new WarHammerBlockBreakEvent(event.getBlock(), event.getPlayer(), this));
+                }
             }
         }
         if (this.blocDeathLocation != null) {
             if (!this.blocDeathLocation.getWorld().equals(event.getBlock().getWorld()))return;
             if (event.getBlock().getLocation().distance(this.blocDeathLocation) <= 2.0) {
                 this.blocDeathLocation = null;
+            }
+        }
+    }
+    @EventHandler
+    private void onDamage(final EntityDamageEvent event) {
+        if (event.isCancelled())return;
+        if (event.getEntity().getUniqueId().equals(getGamePlayer().getUuid())) {
+            if (!event.getEntity().getWorld().getName().equalsIgnoreCase("arena")) {
+                event.setDamage(0.0);
             }
         }
     }
