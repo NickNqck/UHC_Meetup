@@ -250,6 +250,12 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                 if (this.points >= 2500) {
                     this.power.getRole().getGamePlayer().sendMessage("§7Votre§c Kotoamatsukami§7 à réussis,§c "+this.gameTarget.getPlayerName()+"§7 rejoint votre équipe.");
                     this.power.getRole().getGamePlayer().getActionBarManager().removeInActionBar("shisui.kotoamatsukami");
+                    gameTarget.getRole().setTeam(TeamList.Shisui);
+                    gameTarget.sendMessage("§7Vous avez rejoint le camp de§e Shisui§7, vous gagnez maintenant avec lui");
+                    final Player player = Bukkit.getPlayer(gameTarget.getUuid());
+                    if (player != null) {
+                        player.sendTitle("§7Vous avez rejoint le camp§e Shisui", "§7Vous gagnez maintenant avec§e "+this.power.getRole().getGamePlayer().getPlayerName());
+                    }
                     cancel();
                     return;
                 } else
