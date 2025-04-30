@@ -33,7 +33,7 @@ public abstract class ItemPower extends Power{
     private boolean showCdInHand = true;
     private final ShowCdRunnable showCdRunnable;
 
-    protected ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
+    public ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
         super(name, cooldown, role, description);
         if (description != null && description.length > 0) {
             item.setLore(description);
