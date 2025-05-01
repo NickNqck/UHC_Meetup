@@ -773,7 +773,7 @@ public class GameListener implements Listener {
 		if (event.hasItem()) {
 			ItemStack itemstack = event.getItem();
 			if (!gameState.hasRoleNull(player.getUniqueId())) {
-				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+				for (Power power : new ArrayList<>(gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers())) {
 					if (power == null)continue;
 					if (power instanceof ItemPower) {
 						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
