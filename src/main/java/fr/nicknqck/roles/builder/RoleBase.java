@@ -667,4 +667,15 @@ public abstract class RoleBase implements IRole {
 		final List<Class<? extends RoleBase>> list = new ArrayList<>(Arrays.asList(classRoles));
 		this.knowedPlayersByRole.put(message, list);
 	}
+	public void removePower(final Power power) {
+        this.getPowers().remove(power);
+	}
+	public void removePower(final Class<? extends Power> classPower) {
+		for (final Power power : new ArrayList<>(this.getPowers())) {
+			if (power.getClass().equals(classPower)) {
+				this.getPowers().remove(power);
+				break;
+			}
+		}
+	}
 }
