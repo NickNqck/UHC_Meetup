@@ -93,6 +93,7 @@ public class Main extends JavaPlugin {
 	private TitanManager titanManager;
 	private BijuManager bijuManager;
 	private TabManager tabManager;
+	private HokageManager hokageManager;
 
     @Override
 	public void onEnable() {
@@ -219,6 +220,7 @@ public class Main extends JavaPlugin {
 		final EventsManager manager2 = new EventsManager();
 		EventUtils.registerEvents(manager2);
 		this.eventsManager = manager2;
+		this.hokageManager = new HokageManager(gameState);
 		System.out.println("Ending registering events");
 	}
 	private void registerEvents2(GameState gameState) {
