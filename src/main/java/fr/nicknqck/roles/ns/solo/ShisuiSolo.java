@@ -93,6 +93,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
     @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
         setChakraType(Chakras.KATON);
         addPower(new Genjutsu(this), true);
