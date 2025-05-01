@@ -6,7 +6,6 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.scoreboard.ScoreBoardUpdateEvent;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -20,6 +19,8 @@ import org.bukkit.scoreboard.Team;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
+
+import static fr.nicknqck.roles.builder.TeamList.Jubi;
 
 /*
  * This file is part of SamaGamesAPI.
@@ -125,10 +126,10 @@ public class PersonalScoreboard {
     				}
     			}
     		}
-    		if (gameState.getJubiCrafter() != null) {
-    			if (gameState.getJubiCrafter().getUniqueId().equals(player.getUniqueId())) {
+    		if (fr.nicknqck.items.Jubi.getUuidCrafter() != null) {
+    			if (fr.nicknqck.items.Jubi.getUuidCrafter().equals(player.getUniqueId())) {
     				gameState.changeTabPseudo("§dJubi "+player.getDisplayName(), player);
-    			} else if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getOriginTeam().equals(TeamList.Jubi)) {
+    			} else if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getOriginTeam().equals(Jubi)) {
     				gameState.changeTabPseudo("§d "+player.getDisplayName(), player);
     			}
     		}

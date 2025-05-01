@@ -137,7 +137,7 @@ public class BijuListener implements Listener{
         				event.getPlayer().sendMessage("§7Il vous reste§c "+StringUtils.secondsTowardsBeautiful(JubiCooldown)+"§7 de cooldown sur§d Jûbi");
         				return;
         			}
-        			if (GameState.getInstance().getJubiCrafter() == null) {
+        			if (Jubi.getInstance().getJubiCrafter() == null) {
         				event.getPlayer().sendMessage("§7Vous n'êtes pas§c l'hôte§7 de§d Jûbi");
         				return;
         			}

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.entity.bijuv2.BijuBase;
+import fr.nicknqck.items.Jubi;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -28,7 +30,6 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.entity.bijus.BijuListener;
-import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.roles.builder.TeamList;
 
 public class NsCommands implements CommandExecutor {
@@ -217,10 +218,19 @@ public class NsCommands implements CommandExecutor {
                     }
 					if (args[0].equalsIgnoreCase("jubicraft")) {
 						if (getListPlayerFromRole(Roles.Obito).contains(sender) || getListPlayerFromRole(Roles.Madara).contains(sender)) {
+							final List<ItemStack> toRemove = new ArrayList<>();
 							int countBiju = 0;
-							for (Bijus b : Bijus.values()) {
-								if (sender.getInventory().contains(b.getBiju().getItem())) {
+							for (final BijuBase biju : Main.getInstance().getBijuManager().getBijuSpawnMap().keySet()) {
+								if (biju.getBijuPower() != null) {
+									if (sender.getInventory().contains(biju.getBijuPower().getItem())) {
+										countBiju++;
+										toRemove.add(biju.getBijuPower().getItem());
+										continue;
+									}
+								}
+								if (sender.getInventory().contains(biju.getItemInMenu())) {
 									countBiju++;
+									toRemove.add(biju.getItemInMenu());
 								}
 							}
 							for (ItemStack item : sender.getInventory().getContents()) {
@@ -228,7 +238,9 @@ public class NsCommands implements CommandExecutor {
 									if (item.getType() != Material.AIR) {
 										if (item.hasItemMeta()) {
 											if (item.getItemMeta().hasDisplayName()) {
-												if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kyubi") || item.getItemMeta().getDisplayName().equalsIgnoreCase("§dGyûki")) {
+												if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kyubi") ||
+														item.getItemMeta().getDisplayName().equalsIgnoreCase("§dGyûki") ||
+												item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kyûbi")) {
 													countBiju++;
 												}
 											}
@@ -237,15 +249,14 @@ public class NsCommands implements CommandExecutor {
 								}
 							}
 							if (countBiju >= 6) {
-								for (Bijus b : Bijus.values()) {
-									sender.getInventory().removeItem(b.getBiju().getItem());
-									b.getBiju().onJubiInvoc(sender);
-									b.getBiju().setHote(sender.getUniqueId());
+								for (final ItemStack item : toRemove) {
+									sender.getInventory().remove(item);
 								}
-								gameState.setJubiCrafter(sender);
+								sender.setPlayerListName("§dJubi "+sender.getName());
 								GameListener.SendToEveryone("");
 								GameListener.SendToEveryone("§c§lLe Jûbi à été invoquée !");
 								GameListener.SendToEveryone("");
+								new Jubi(sender);
 								for (Player p : Bukkit.getOnlinePlayers()) {
 									if (!gameState.hasRoleNull(p.getUniqueId())){
 										gameState.getGamePlayer().get(sender.getUniqueId()).getRole().playSound(p, "mob.enderdragon.end");
