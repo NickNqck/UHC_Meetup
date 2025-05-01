@@ -182,10 +182,10 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
                             event.setCancelled(true);
                             break;
                         case "Affaiblissement":
+                            event.setCancelled(true);
                             if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                                 event.getWhoClicked().closeInventory();
                                 openFirstInventory((Player) event.getWhoClicked());
-                                event.setCancelled(true);
                                 return;
                             }
                             if (item.hasItemMeta()) {
@@ -196,16 +196,16 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
                                         clicked.sendMessage("§aFugaku§7 vous fait sentir impuissant");
                                         event.getWhoClicked().sendMessage("§7Vous avez donner à §c"+clicked.getName()+"§7 l'effet§8 Weakness I§7 pendant§c 18 secondes");
                                         this.cdAffaiblissement = 120;
+                                        event.getWhoClicked().closeInventory();
                                     }
                                 }
                             }
-                            event.setCancelled(true);
                             break;
                         case "§cAttaque":
+                            event.setCancelled(true);
                             if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                                 event.getWhoClicked().closeInventory();
                                 openFirstInventory((Player) event.getWhoClicked());
-                                event.setCancelled(true);
                                 return;
                             }
                             if (item.hasItemMeta()) {
@@ -217,11 +217,10 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
                                         clicked.sendMessage("§7Vous sentez quelque chose de nouveau autours de vous.");
                                         event.getWhoClicked().sendMessage("§7Vous vous êtes téléportez autours de§c "+clicked.getName());
                                         cdAttaque = 60*5;
-
+                                        event.getWhoClicked().closeInventory();
                                     }
                                 }
                             }
-                            event.setCancelled(true);
                             break;
                         case "§6§lPlace au combat !":
                             if (item.isSimilar(GUIItems.getSelectBackMenu())) {
