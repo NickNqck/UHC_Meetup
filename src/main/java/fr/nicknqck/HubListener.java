@@ -1,6 +1,5 @@
 package fr.nicknqck;
 
-import fr.nicknqck.GameState.MDJ;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.entity.bijus.BijuListener;
@@ -13,7 +12,6 @@ import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
-import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.NonNull;
@@ -125,14 +123,6 @@ public class HubListener implements Listener {
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState, rolesList));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (gameState.getMdj().equals(MDJ.NS)){
-				if (gameState.getHokage() == null){
-					gameState.setHokage(new Hokage(gameState.getTimeProcHokage()-10, gameState));
-				}
-				gameState.getHokage().run();
-			}
-		}, 220);
 		new AssassinManagerV2(gameState);
 		System.out.println("Ended StartGame");
 	}
