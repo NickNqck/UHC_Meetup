@@ -289,7 +289,6 @@ public class GameListener implements Listener {
 	public static void EndGame(final GameState gameState, final TeamList team) {
 		gameState.setServerState(ServerStates.GameEnded);
 		Bukkit.getPluginManager().callEvent(new EndGameEvent(gameState, team));
-		gameState.setJubiCrafter(null);
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
@@ -306,9 +305,6 @@ public class GameListener implements Listener {
 			PotionUtils.getNoFalls().clear();
 			AttackUtils.CantAttack.clear();
 			AttackUtils.CantReceveAttack.clear();
-			if (gameState.getHokage() != null) {
-				gameState.getHokage().stop();
-			}
 			gameState.getDeadRoles().clear();
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().getList().clear();
@@ -328,7 +324,6 @@ public class GameListener implements Listener {
 			gameState.DeadRole.clear();
 			gameState.getAttributedRole().clear();
 			KamuiUtils.resetUtils();
-			gameState.setHokage(null);
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
