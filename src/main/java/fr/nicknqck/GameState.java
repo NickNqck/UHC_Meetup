@@ -1090,9 +1090,6 @@ public class GameState{
 		tr.append("\n").append(AllDesc.bar);
 		return tr.toString();
 	}
-	@Setter
-	@Getter
-	private Player JubiCrafter;
 	@Getter
 	@Setter
 	private boolean TNTGrief = false;
