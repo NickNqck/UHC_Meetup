@@ -78,6 +78,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
                 getGamePlayer().sendMessage("§bHaku§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
             }
         }, 20*10);
+        addKnowedRole(Haku.class);
         super.RoleGiven(gameState);
     }
     @EventHandler
@@ -231,7 +232,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
         private int coup = 0;
 
         private KubikiribochoPower(@NonNull RoleBase role) {
-            super("Kubikirobocho", null, new ItemBuilder(Material.NETHER_STAR).setName("§bKubikiribôchô").addEnchant(Enchantment.DAMAGE_ALL,4 ), role);
+            super("Kubikirobocho", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bKubikiribôchô").addEnchant(Enchantment.DAMAGE_ALL,4 ), role);
             role.getGamePlayer().getActionBarManager().addToActionBar("zabuza.kubikiribocho", "§7Coups: §c"+this.coup+"§7/§625");
         }
 
