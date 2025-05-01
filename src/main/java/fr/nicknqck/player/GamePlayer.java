@@ -73,6 +73,9 @@ public class GamePlayer {
 		this.discRunnable.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
 		this.discRunnable.online = false;
 	}
+	public boolean isOnline() {
+        return this.discRunnable == null;
+	}
 	public void onJoin(Player player) {
 		if (this.discRunnable != null) {
 			player.sendMessage(this.discRunnable.toSend);
