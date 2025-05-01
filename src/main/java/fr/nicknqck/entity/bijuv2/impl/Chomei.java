@@ -125,8 +125,10 @@ public class Chomei extends BijuBase {
                 this.gamePlayer.getActionBarManager().removeInActionBar("chomei.fly");
                 final Player player = Bukkit.getPlayer(this.uuid);
                 if (player != null){
-                    player.setFlying(false);
-                    player.setAllowFlight(false);
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () ->  {
+                        player.setFlying(false);
+                        player.setAllowFlight(false);
+                    });
                     cancel();
                 }
                 return;
