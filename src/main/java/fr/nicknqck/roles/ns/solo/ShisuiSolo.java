@@ -92,7 +92,6 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        addKnowedRole(ItachiV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
         setChakraType(Chakras.KATON);
@@ -101,7 +100,9 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
         addPower(new SusanoPower(this), true);
         addPower(new Izanagi(this));
         addPower(new ShurikenjutsuCommand(this));
+        addKnowedRole(ItachiV2.class);
         EventUtils.registerRoleEvent(this);
+        setCanBeHokage(true);
         super.RoleGiven(gameState);
     }
     @EventHandler
@@ -320,7 +321,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                     "",
                     "§cAttention, par défaut ce pouvoir est§4 désactiver");
             EventUtils.registerRoleEvent(this);
-            this.cooldown = new Cooldown(120);
+            this.cooldown = new Cooldown(30);
         }
 
         @Override
