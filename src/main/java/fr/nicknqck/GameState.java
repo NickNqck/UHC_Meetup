@@ -29,7 +29,6 @@ import fr.nicknqck.roles.mc.nether.MagmaCube;
 import fr.nicknqck.roles.mc.overworld.*;
 import fr.nicknqck.roles.mc.solo.Warden;
 import fr.nicknqck.roles.mc.solo.WitherBoss;
-import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
@@ -1093,7 +1092,4 @@ public class GameState{
 	@Getter
 	@Setter
 	private boolean TNTGrief = false;
-	@Getter
-	@Setter
-	private Hokage hokage;
 }
