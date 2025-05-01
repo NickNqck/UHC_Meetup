@@ -21,7 +21,7 @@ public enum TeamList {
 	Shinobi("§a", "§aShinobi"),
 	Kabuto("§6§l", "§6§lKabuto"),
 	Kumogakure("§6", "§6Kumogakure"),
-	Shisui("§e", "§eShisui"),
+	Shisui("§e§l", "§e§lShisui"),
 	OverWorld("§a", "§aOverworld"),
 	Nether("§c","§cNether");
 
