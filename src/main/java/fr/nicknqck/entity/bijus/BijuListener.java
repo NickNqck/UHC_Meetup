@@ -137,14 +137,6 @@ public class BijuListener implements Listener{
         				event.getPlayer().sendMessage("§7Il vous reste§c "+StringUtils.secondsTowardsBeautiful(JubiCooldown)+"§7 de cooldown sur§d Jûbi");
         				return;
         			}
-        			if (Jubi.getInstance().getJubiCrafter() == null) {
-        				event.getPlayer().sendMessage("§7Vous n'êtes pas§c l'hôte§7 de§d Jûbi");
-        				return;
-        			}
-        			if (GameState.getInstance().getJubiCrafter().getUniqueId() != event.getPlayer().getUniqueId()) {
-        				event.getPlayer().sendMessage("§7Vous n'êtes pas§c l'hôte§7 de§d Jûbi");
-        				return;
-        			}
         			if (!GameState.getInstance().hasRoleNull(event.getPlayer().getUniqueId())) {
         				RoleBase role = GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
         				role.OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*300, 1, true);
@@ -163,20 +155,6 @@ public class BijuListener implements Listener{
         				GameListener.SendToEveryone("");
         				GameListener.SendToEveryone("§c§lLe récéptacle de§d§l Jûbi§c§l invoque sa puissance !");
         				GameListener.SendToEveryone("");
-        				new BukkitRunnable() {
-							int i = 300;
-							@Override
-							public void run() {
-								i--;
-								if (i == 0 || GameState.getInstance().getServerState() != ServerStates.InGame || !GameState.getInstance().getInGamePlayers().contains(event.getPlayer().getUniqueId())) {
-									if (GameState.getInstance().getJubiCrafter() != null) {
-										GameState.getInstance().getJubiCrafter().sendMessage("§7Vous n'êtes plus sous l'effet du§d Jûbi");
-										GameState.getInstance().getJubiCrafter().removePotionEffect(PotionEffectType.REGENERATION);
-									}
-									cancel();
-								}
-							}
-						}.runTaskTimer(Main.getInstance(), 0, 20);
                     }
         		} else {
         			Bijus bijus = null;
