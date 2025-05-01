@@ -136,7 +136,9 @@ public class HokageManager implements Listener {
             while (essai < 3 && toReturn == null) {
                 essai++;
                 final List<GamePlayer> gamePlayerList = new ArrayList<>();
-                for (final GamePlayer gamePlayer : this.gameState.getGamePlayer().values()) {
+                final List<GamePlayer> toDrop = new ArrayList<>(this.gameState.getGamePlayer().values());
+                Collections.shuffle(toDrop, Main.RANDOM);
+                for (final GamePlayer gamePlayer : toDrop) {
                     if (!gamePlayer.isAlive())continue;
                     if (gamePlayer.getRole() == null)continue;
                     if (!gamePlayer.isOnline())continue;
