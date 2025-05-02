@@ -241,6 +241,26 @@ public class HokageManager implements Listener {
                 }
                 essai++;
             }
+            if (shinobi != null && mechant != null && random != null && random2 != null) {
+                final List<GamePlayer> gamePlayers = new ArrayList<>();
+                gamePlayers.add(shinobi);
+                gamePlayers.add(mechant);
+                gamePlayers.add(random2);
+                gamePlayers.add(random);
+                Collections.shuffle(gamePlayers, Main.RANDOM);
+                player.sendMessage(new String[]{
+                        "§7Voici les informations que vos informateurs on pu trouver: ",
+                        "",
+                        "§8 -§c "+gamePlayers.get(0).getPlayerName(),
+                        "§8 -§c "+gamePlayers.get(1).getPlayerName(),
+                        "§8 -§c "+gamePlayers.get(2).getPlayerName(),
+                        "§8 -§c "+gamePlayers.get(3).getPlayerName(),
+                        "",
+                        "§7Dans la liste de joueurs ci-dessus il y a (pas dans cette ordre là) un§a Shinobi§7, une personne n'étant pas un§a Shinobi§7 ainsi que§c 2 joueurs§7 ayant un camp§c aléatoire§7."
+                });
+            } else {
+                player.sendMessage("§cVsos informateurs n'ont rien pus trouver de concluant sur les joueurs encore en vie");
+            }
             return true;
         }
     }
