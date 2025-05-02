@@ -52,6 +52,7 @@ import java.util.*;
 
 public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
 
+    private final List<UUID> cantChangeTeam = new ArrayList<>();
     private RoleBase infected = null;
 
     public ShisuiSolo(UUID player) {
@@ -87,13 +88,14 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                         "§7Votre§e Izanami§7 ne peut pas avoir les missions: \"§fRester loin de vous (§c30 blocs§f) pendant§c 1 minutes§7\"§7 et \"§fRester proche de la cible (§c20 blocs§f) pendant§c 5 minutes§7\""
                         : "")
                 .addCustomLine("§7Vous êtes immunisé à TOUT ce qui vous ferait changer de camp")
+                .addCustomLine("§7Une fois que vous avez infecté un joueur, il ne pourra plus changer de camp")
+                .addCustomLine("§7Tant que votre§a Shuriken Jutsu§7 est en cooldown, vous ferez§c 20%§7 de§c dégâts supplémentaire")
                 .getText();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
-        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
         setChakraType(Chakras.KATON);
         addPower(new Genjutsu(this), true);
@@ -104,6 +106,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
         addKnowedRole(ItachiV2.class);
         EventUtils.registerRoleEvent(this);
         setCanBeHokage(true);
+        this.cantChangeTeam.add(getPlayer());
         super.RoleGiven(gameState);
     }
     @EventHandler
@@ -114,6 +117,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
             event.getTarget().sendMessage("§7Vous possédez maintenant un chat commun avec§e Shisui§7, il suffira de commencer votre message par un§c !");
             getGamePlayer().startChatWith("§e"+getName(), "!", event.getInfected().getClass());
             event.getOwner().sendMessage("§7Vous possédez maintenant un chat commmun avec §c"+event.getTarget().getName()+"§7, il suffira de commencer votre message par un§c !");
+            this.cantChangeTeam.add(event.getInfected().getPlayer());
         }
     }
     @EventHandler
@@ -161,10 +165,8 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onChangeTeam(@NonNull final TeamChangeEvent event) {
-        if (event.getRole() instanceof ShisuiSolo) {
-            if (event.getRole().getPlayer().equals(this.getPlayer())) {
-                event.setCancelled(true);
-            }
+        if (this.cantChangeTeam.contains(event.getRole().getPlayer())) {
+            event.setCancelled(true);
         }
     }
 
@@ -259,6 +261,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                     if (player != null) {
                         player.sendTitle("§7Vous avez rejoint le camp§e Shisui", "§7Vous gagnez maintenant avec§e "+this.power.getRole().getGamePlayer().getPlayerName());
                     }
+                    this.power.shisuiSolo.cantChangeTeam.add(gameTarget.getUuid());
                     cancel();
                     return;
                 } else
@@ -378,6 +381,10 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                         ((Player) ((Arrow) event.getDamager()).getShooter()).sendMessage("§7Votre§c Shuriken§7 a§a stun§c "+((Player) event.getEntity()).getDisplayName());
                     }
                 }
+            }
+            if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
+            if (getCooldown().isInCooldown()) {
+                event.setDamage(event.getDamage()*1.20);//+20% de dégat
             }
         }
     }
