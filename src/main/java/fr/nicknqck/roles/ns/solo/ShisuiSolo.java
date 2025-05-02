@@ -383,7 +383,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                 }
             }
             if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
-            if (getCooldown().isInCooldown()) {
+            if (this.cooldown.isInCooldown()) {
                 event.setDamage(event.getDamage()*1.20);//+20% de dégat
             }
         }
