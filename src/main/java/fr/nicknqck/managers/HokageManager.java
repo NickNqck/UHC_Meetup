@@ -7,10 +7,10 @@ import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.solo.Danzo;
-import fr.nicknqck.roles.ns.solo.ShisuiSolo;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.powers.CommandPower;
 import lombok.Getter;
@@ -64,6 +64,7 @@ public class HokageManager implements Listener {
         this.hokage.getRole().addBonusResi(-10);
         this.hokage.getRole().addBonusforce(-10);
         this.hokage.getRole().removePower(NSBoost.class);
+        this.hokage.getRole().removePower(NSInfo.class);
         this.hokage = null;
         new HokageRunnable(event.getGameState(), this, event.getGameState().getTimeProcHokage())
                 .runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
@@ -104,8 +105,10 @@ public class HokageManager implements Listener {
                     gamePlayer.getRole().addBonusforce(10.0);
                     gamePlayer.getRole().addBonusResi(10.0);
                     gamePlayer.getRole().addPower(new NSBoost(gamePlayer.getRole()));
+                    gamePlayer.getRole().addPower(new NSInfo(gamePlayer.getRole()));
                     GameListener.SendToEveryone(AllDesc.bar);
-                    gamePlayer.sendMessage("§7Vous êtes devenue le nouvel§e Hokake§7, vous avez maintenant accès à la commande§e /ns boost <joueur>§7 qui donnera au joueurs visé§c +5§7 de§c Force§7 et de§9 Résistance");
+                    gamePlayer.sendMessage("§7Vous êtes devenue le nouvel§e Hokake§7, vous avez maintenant accès à la commande§e /ns boost <joueur>§7 qui donnera au joueurs visé§c +5§7 de§c Force§7 et de§9 Résistance",
+                            "§7Vous avez maintenant également accès à la commande§6 /ns infos§7, ces deux commandes sont utilisable §c1x/partie");
                 } else {
                     GameListener.SendToEveryone("§bLe conseil n'a trouver personne pour devenir le nouveau§e Hokage§b, le village est attristé par cette nouvelle.");
                     GameListener.SendToEveryone(AllDesc.bar);
@@ -172,7 +175,7 @@ public class HokageManager implements Listener {
                 if (target != null) {
                     if (!getRole().getGameState().hasRoleNull(target.getUniqueId())) {
                         final GamePlayer gamePlayer = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
-                        double boost = getRole() instanceof ShisuiSolo ? 10.0 : 5.0;
+                        double boost = 5.0;
                         gamePlayer.getRole().addBonusforce(boost);
                         gamePlayer.getRole().addBonusResi(boost);
                         target.sendMessage("§7Vous avez reçus le boost de l'§eHokage");
@@ -190,6 +193,55 @@ public class HokageManager implements Listener {
                 player.sendMessage("§cLa commande est§e /ns boost <joueur>");
                 return false;
             }
+        }
+    }
+    private static class NSInfo extends CommandPower {
+
+        public NSInfo(@NonNull RoleBase role) {
+            super("/ns infos", "infos", null, role, CommandType.NS);
+            setShowInDesc(false);
+            setMaxUse(1);
+        }
+
+        @Override
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            final List<GamePlayer> gamePlayerList = new ArrayList<>();
+            getRole().getGameState().getGamePlayer().values().stream()
+                    .filter(GamePlayer::isAlive)
+                    .filter(gamePlayer -> gamePlayer.getRole() != null)
+                    .filter(gamePlayer -> !player.getUniqueId().equals(gamePlayer.getUuid()))
+                    .forEach(gamePlayerList::add);
+            if (gamePlayerList.size() < 4) {
+                player.sendMessage("§cImpossible d'obtenir des informations, pas assez de personne sont en vie");
+                return false;
+            }
+            GamePlayer shinobi = null;
+            GamePlayer mechant = null;
+            GamePlayer random = null;
+            GamePlayer random2 = null;
+            int essai = 0;
+            while (shinobi == null && mechant == null && random == null && random2 == null && essai < 10) {
+                Collections.shuffle(gamePlayerList, Main.RANDOM);
+                for (final GamePlayer gamePlayer : gamePlayerList) {
+                    if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Shinobi) && shinobi == null) {
+                        shinobi = gamePlayer;
+                        continue;
+                    }
+                    if (!gamePlayer.getRole().getOriginTeam().equals(TeamList.Shinobi) && mechant == null) {
+                        mechant = gamePlayer;
+                        continue;
+                    }
+                    if (random2 == null) {
+                        random2 = gamePlayer;
+                        continue;
+                    }
+                    if (random == null) {
+                        random = gamePlayer;
+                    }
+                }
+                essai++;
+            }
+            return true;
         }
     }
 }
