@@ -65,7 +65,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        getGamePlayer().startChatWith("§bZabuza:", "!", Haku.class);
+        getGamePlayer().startChatWith("§bZabuza:", "!", HakuV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
         EventUtils.registerRoleEvent(this);
@@ -78,7 +78,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
                 getGamePlayer().sendMessage("§bHaku§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
             }
         }, 20*10);
-        addKnowedRole(Haku.class);
+        addKnowedRole(HakuV2.class);
         super.RoleGiven(gameState);
     }
     @EventHandler
@@ -93,7 +93,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
     }
     @EventHandler
     private void uhcDeathEvent(@NonNull final UHCDeathEvent event) {
-        if (event.getRole() instanceof Haku) {
+        if (event.getRole() instanceof HakuV2) {
             onHakuDeath(true);
         }
     }
