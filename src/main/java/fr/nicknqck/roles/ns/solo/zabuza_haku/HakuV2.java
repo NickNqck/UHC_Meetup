@@ -85,6 +85,7 @@ public class HakuV2 extends NSRoles {
 
         private final List<Block> blockList = new ArrayList<>();
         private Cooldown cooldown;
+        private boolean zabuzaDEAD = false;
 
         public HyotonPower(@NonNull RoleBase role) {
             super("Hyoton", null, role);
@@ -108,6 +109,18 @@ public class HakuV2 extends NSRoles {
                 setWorkWhenInCooldown(true);
                 EventUtils.registerRoleEvent(this);
                 this.power = power;
+                Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+                    if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))return;
+                    if (GameState.getInstance().getAttributedRole().contains(GameState.Roles.Zabuza))return;
+                    final Cooldown old = this.power.cooldown;
+                    final Cooldown nouveau = new Cooldown(60*5);
+                    if (old.isInCooldown()) {
+                        nouveau.setActualCooldown(old.getCooldownRemaining());
+                    }
+                    this.power.cooldown = nouveau;
+                    this.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
+                    this.power.zabuzaDEAD = true;
+                }, 20*10);
             }
 
             @Override
@@ -156,7 +169,7 @@ public class HakuV2 extends NSRoles {
             }
             @EventHandler
             private void onDeath(@NonNull final UHCDeathEvent event) {
-                if (event.getRole() instanceof ZabuzaV2) {
+                if (event.getRole() instanceof ZabuzaV2 && !this.power.zabuzaDEAD) {
                     final Cooldown old = this.power.cooldown;
                     final Cooldown nouveau = new Cooldown(60*5);
                     if (old.isInCooldown()) {
@@ -164,6 +177,7 @@ public class HakuV2 extends NSRoles {
                     }
                     this.power.cooldown = nouveau;
                     this.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
+                    this.power.zabuzaDEAD = true;
                 }
             }
             @EventHandler
