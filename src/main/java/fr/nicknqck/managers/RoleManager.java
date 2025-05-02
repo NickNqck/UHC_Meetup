@@ -31,10 +31,8 @@ import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.ShisuiSolo;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
-import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
-import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
-import fr.nicknqck.roles.ns.solo.zabuza_haku.Haku;
-import fr.nicknqck.roles.ns.solo.zabuza_haku.ZabuzaV2;
+import fr.nicknqck.roles.ns.solo.kumogakure.*;
+import fr.nicknqck.roles.ns.solo.zabuza_haku.*;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -219,7 +217,7 @@ public class RoleManager {
         registerRole(Kinkaku.class);
         //Register Zabuza et Haku
         registerRole(ZabuzaV2.class);
-        registerRole(Haku.class);
+        registerRole(HakuV2.class);
         //Register Solo
         registerRole(Danzo.class);
         registerRole(Gaara.class);
