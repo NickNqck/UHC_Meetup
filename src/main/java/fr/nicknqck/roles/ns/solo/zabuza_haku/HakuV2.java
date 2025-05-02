@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -102,6 +103,7 @@ public class HakuV2 extends NSRoles {
         private static class HyotonItem extends ItemPower implements Listener {
 
             private final HyotonPower power;
+            private final Cooldown tpCD = new Cooldown(2);
 
             public HyotonItem(@NonNull final HyotonPower power) {
                 super("Hyôton", power.cooldown, new ItemBuilder(Material.NETHER_STAR).setName("§bHyôton"), power.getRole(),
@@ -140,6 +142,9 @@ public class HakuV2 extends NSRoles {
                         return true;
                     } else {
                         if (!this.power.blockList.isEmpty()) {
+                            if (this.tpCD.isInCooldown()) {
+                                return false;
+                            }
                             final RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
                             final List<Vector> positions = rayTrace.traverse(30, 0.2D);
                             Block prevBlock = null;
@@ -151,6 +156,7 @@ public class HakuV2 extends NSRoles {
                                 }
                                 prevBlock.getLocation().setPitch(player.getEyeLocation().getPitch());
                                 prevBlock.getLocation().setYaw(player.getEyeLocation().getYaw());
+                                this.tpCD.use();
                                 player.teleport(prevBlock.getLocation());
                                 break;
                             }
@@ -184,6 +190,15 @@ public class HakuV2 extends NSRoles {
             private void onFall(EntityDamageEvent event) {
                 if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && event.getEntity().getUniqueId().equals(getRole().getPlayer()) && !this.power.blockList.isEmpty()) {
                     event.setCancelled(true);
+                }
+            }
+            @EventHandler
+            private void onEndGame(@NonNull final EndGameEvent event) {
+                if (!this.power.blockList.isEmpty()) {
+                    for (final Block block : this.power.blockList) {
+                        block.setType(Material.AIR);
+                    }
+                    this.power.blockList.clear();
                 }
             }
             private Set<Location> sphere(Location location){
