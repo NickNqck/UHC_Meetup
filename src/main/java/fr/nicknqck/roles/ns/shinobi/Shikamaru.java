@@ -14,6 +14,7 @@ import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.powers.Cooldown;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -269,6 +270,7 @@ public class Shikamaru extends ShinobiRoles {
     private static class StunExecutable implements Listener {
 
         private Shikamaru shikamaru;
+        private final Cooldown stunCD = new Cooldown(60*5);
 
         private StunExecutable(Shikamaru shikamaru){
             this.shikamaru = shikamaru;
@@ -300,6 +302,11 @@ public class Shikamaru extends ShinobiRoles {
                             if (Main.isDebug()){
                                 System.out.println(item.getItemMeta().getDisplayName());
                             }
+                            if (this.stunCD.isInCooldown()) {
+                                e.getWhoClicked().closeInventory();
+                                e.getWhoClicked().sendMessage("§bVous êtes en cooldown:§c "+this.stunCD.getCooldownRemaining()+"s");
+                                return;
+                            }
                             final Player player = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                             if (player != null){
                                 if (!GameState.getInstance().getGamePlayer().containsKey(player.getUniqueId()))return;
@@ -312,6 +319,7 @@ public class Shikamaru extends ShinobiRoles {
                                     shikamaru.poisonUse++;
                                 }
                                 player.closeInventory();
+                                this.stunCD.use();
                                 Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                                     e.getWhoClicked().sendMessage("§c"+player.getDisplayName()+"§7 peut à nouveau bouger");
                                     player.sendMessage("§7Vous pouvez à nouveau bouger");
