@@ -218,6 +218,7 @@ public class GameState{
 		Shikamaru(TeamList.Shinobi, "ns", 14, new ItemBuilder(Material.SPIDER_EYE).setName("§aShikamaru").toItemStack(), "§bNickNqck"),
 		Ino(TeamList.Shinobi, "ns", 15, new ItemBuilder(Material.ARMOR_STAND).setName("§aIno").toItemStack(), "§bNickNqck"),
 		Fugaku(TeamList.Shinobi, "ns", 16, new ItemBuilder(Material.MAGMA_CREAM).setName("§aFugaku").toItemStack(), "§bNickNqck"),
+		Hinata(TeamList.Shinobi, "ns", 17, new ItemBuilder(Material.SNOW_BALL).setName("§aHinata").toItemStack(), "§bNickNqck"),
 		//Haku et Zabuza
 		Zabuza(TeamList.Zabuza_et_Haku, "ns", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bZabuza").toItemStack(), "§aYukan"),
 		Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan"),
@@ -800,6 +801,9 @@ public class GameState{
 				break;
 			case Shisui:
 				role = new ShisuiSolo(player);
+				break;
+			case Hinata:
+				role = new Hinata(player);
 				break;
 		}
 		if (role == null) return null;
