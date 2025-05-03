@@ -64,6 +64,7 @@ public class Hinata extends ShinobiRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
+                .addCustomLine("§7Vous possédez l'effet§8 Weakness I§7 proche de§a Naruto")
                 .getText();
     }
 
