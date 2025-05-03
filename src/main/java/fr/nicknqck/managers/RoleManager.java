@@ -191,6 +191,7 @@ public class RoleManager {
         registerRole(YondaimeRaikage.class);
         registerRole(RockLeeV2.class);
         registerRole(GaiV2.class);
+        registerRole(Hinata.class);
         //Register Orochimaru
         registerRole(Jugo.class);
         registerRole(Kabuto.class);
