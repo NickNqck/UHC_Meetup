@@ -4,15 +4,18 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
+import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.ds.AkazaVSKyojuroV2;
 import fr.nicknqck.events.ds.AllianceV2;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.events.ds.dkt.DemonKingEvent;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -155,6 +158,16 @@ public class EventsManager implements Listener {
             }
         }
         return eventsList.get(0);
+    }
+    @EventHandler
+    private void onChangeTeam(@NonNull final TeamChangeEvent event) {
+        if (event.getNewTeam().equals(TeamList.Shisui))return;
+        if (event.getOldTeam().equals(TeamList.Jubi) ||
+                event.getOldTeam().equals(TeamList.Jigoro) ||
+                event.getOldTeam().equals(TeamList.Shisui) ||
+                event.getOldTeam().equals(TeamList.Sasuke)) {
+            event.setCancelled(true);
+        }
     }
     private static class EventsRunnables extends BukkitRunnable {
 
