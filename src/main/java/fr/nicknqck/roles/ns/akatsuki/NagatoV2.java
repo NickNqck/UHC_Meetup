@@ -260,7 +260,7 @@ public class NagatoV2 extends AkatsukiRoles implements Listener {
                         "",
                         "§7Il/Elle possède §c"+gamePlayer.getRole().getPowers().size()+" pouvoir(s)",
                         "",
-                        "§7Il/Elle possède §c"+(new DecimalFormat("0").format(player.getMaxHealth()/2)+"❤ permanents")
+                        "§7Il/Elle possède §c"+(new DecimalFormat("0").format(target.getMaxHealth()/2)+"❤ permanents")
                 });
                 player.setHealth(Math.max(1.0, player.getHealth()-2.0));
                 return true;
@@ -324,12 +324,12 @@ public class NagatoV2 extends AkatsukiRoles implements Listener {
                         "",
                         "§7Il/Elle possède le/les effet(s) "+ sb +"§7 de manière§c permanente",
                         "",
-                        "§7Il/Elle possède §e"+ GlobalUtils.getItemAmount(player, Material.GOLDEN_APPLE) +" pomme§7(§e§7)§e d'or",
+                        "§7Il/Elle possède §e"+ GlobalUtils.getItemAmount(target, Material.GOLDEN_APPLE) +" pomme§7(§e§7)§e d'or",
                         "",
                         "§7Il/Elle possède §c"+
-                                (new DecimalFormat("0").format(player.getHealth()/2))+
+                                (new DecimalFormat("0").format(target.getHealth()/2))+
                                 "❤§7/§c"+
-                                (new DecimalFormat("0").format(player.getMaxHealth()/2)+" permanents")
+                                (new DecimalFormat("0").format(target.getMaxHealth()/2)+" permanents")
                 });
                 player.setHealth(Math.max(1.0, player.getHealth()-4.0));
                 return true;
