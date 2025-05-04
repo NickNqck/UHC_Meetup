@@ -12,6 +12,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -77,9 +78,6 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
     }
 
     @Override
-    public void resetCooldown() {}
-
-    @Override
     public ItemStack[] getItems() {
         return new ItemStack[0];
     }
@@ -88,6 +86,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
     public void RoleGiven(GameState gameState) {
         setCanuseblade(true);
         addPower(new ElectroKinesiePower(this), true);
+        addKnowedRole(MuzanV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
     }
 
