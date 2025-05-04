@@ -42,6 +42,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class ObitoV2 extends JubiRoles {
@@ -122,7 +123,7 @@ public class ObitoV2 extends JubiRoles {
                         EventUtils.unregisterEvents(this);
                         return true;
                     } else {
-                        player.sendMessage("§7Vous êtes trop loin de la mort de §c"+string+"§7 pour récupérer ses yeux");
+                        player.sendMessage("§7Vous êtes trop loin de la mort de §c"+string+"§7 pour récupérer ses yeux"+(location.getWorld().equals(player.getWorld()) ? " §7(§c"+new DecimalFormat("0").format(player.getLocation().distance(location)) : ""));
                     }
                 }
             } else {
