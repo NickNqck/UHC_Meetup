@@ -98,7 +98,10 @@ public class ObitoV2 extends JubiRoles {
         private final Map<String, Location> deathLocations;
 
         public ObtainSusanoPower(@NonNull RoleBase role) {
-            super("/ns obtain", "obtain", null, role, CommandType.NS, "§7Lorsqu'un§4 Uchiwa§7 meurt vous obtiendrez ses coordonnées, une fois que vous y serez, en faisant cette commande vous obtiendrez le§c§l Susanô§7 ");
+            super("/ns obtain", "obtain", null, role, CommandType.NS,
+                    "§7Lorsqu'un§4 Uchiwa§7 meurt vous obtiendrez ses coordonnées, une fois que vous y serez, en faisant cette commande vous obtiendrez le§c§l Susanô§7.",
+                    "",
+                    "§cEn faisant /ns obtain list vous obtiendrez les coordonnées de la ou sont mort les§4 Uchiwa§c.");
             this.deathLocations = new HashMap<>();
             EventUtils.registerRoleEvent(this);
         }
