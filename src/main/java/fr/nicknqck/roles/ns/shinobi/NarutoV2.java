@@ -13,11 +13,13 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -31,6 +33,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.Map;
 import java.util.UUID;
@@ -129,6 +132,10 @@ public class NarutoV2 extends ShinobiRoles {
                 @NonNull final EntityDamageByEntityEvent event = uhcEvent.getOriginEvent();
                 if (!(event.getEntity() instanceof Player))return false;
                 ((Player) event.getEntity()).setHealth(Math.max(1.0, ((Player) event.getEntity()).getHealth()-4.0));
+                MathUtil.sendParticle(EnumParticle.EXPLOSION_LARGE, event.getEntity().getLocation());
+                event.getEntity().setVelocity(new Vector(0, 1.8, 0));
+                player.sendMessage("§aRASENGAN !");
+                event.getEntity().sendMessage("§7Vous avez été toucher par un§a Rasengan");
                 event.setCancelled(true);
                 return true;
             }
