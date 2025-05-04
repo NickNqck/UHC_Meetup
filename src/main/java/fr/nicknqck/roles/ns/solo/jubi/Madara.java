@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.roles.ns.builders.JubiRoles;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.utils.PotionUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -290,12 +290,7 @@ public class Madara extends JubiRoles {
 		NF.clear();
 	}
 
-	@Override
-	public @NonNull Intelligence getIntelligence() {
-		return Intelligence.GENIE;
-	}
-
-	@Override
+    @Override
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 		if (inv.getTitle().equalsIgnoreCase("§cChibaku Tensei")) {
 			if (event.getSlot() == 0) {
@@ -345,6 +340,7 @@ public class Madara extends JubiRoles {
 								}
 							}
 							if (s == 10) {
+								PotionUtils.addTempNoFall(getPlayer(), 2);
 								Location Center = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
 								for(Location loc : new MathUtil().sphere(Center, 30, false)) {
 									loc.getBlock().setType(Material.AIR);
