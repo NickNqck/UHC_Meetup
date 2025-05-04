@@ -125,7 +125,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles {
                                             clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
                                             owner.sendMessage("§5Edo Tensei !");
                                             role.setTeam(this.role.getTeam());
-                                            role.giveItem(clicked, false, role.getGamePlayer().getLastInventoryContent());
+                                            clicked.getInventory().setContents(role.getGamePlayer().getLastInventoryContent());
                                             clicked.getInventory().setArmorContents(role.getGamePlayer().getLastArmorContent());
                                             gameState.RevivePlayer(clicked);
                                             this.role.setMaxHealth(this.role.getMaxHealth()-Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove());
