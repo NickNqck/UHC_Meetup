@@ -8,7 +8,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -100,7 +100,7 @@ public class Jugo extends OrochimaruRoles {
 		if (msg) {
 			owner.sendMessage("§5Kimimaro§7 est mort, vous obtenez donc l'identité de son maitre§5 Orochimaru§7, (§6/ns me§7)");
 		}
-		getKnowedRoles().add(Orochimaru.class);
+		addKnowedRole(OrochimaruV2.class);
 	}
 	private void onOrochimaruDeath(boolean msg) {
 		orochimaruDeath = true;

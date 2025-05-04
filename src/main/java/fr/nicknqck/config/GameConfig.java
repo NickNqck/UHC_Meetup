@@ -19,6 +19,7 @@ public class GameConfig {
     private boolean minage = false;
     private final List<ItemStack> itemOnKill;
     private final StuffConfig stuffConfig;
+    private final NarutoConfig narutoConfig;
     private boolean laveTitans = true;
     private boolean stuffUnbreak = true;
     private boolean pvpEnable = false;
@@ -36,6 +37,7 @@ public class GameConfig {
         this.itemOnKill = new ArrayList<>();
         itemOnKill.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
         this.stuffConfig = new StuffConfig();
+        this.narutoConfig = new NarutoConfig();
     }
 
     @Getter
@@ -56,6 +58,13 @@ public class GameConfig {
 
         private int nmbGap = 12;
         private int minGap = 12;
+
+    }
+    @Getter
+    @Setter
+    public final static class NarutoConfig {
+
+        private double edoHealthRemove = 4.0;
 
     }
 }

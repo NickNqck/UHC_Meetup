@@ -33,7 +33,7 @@ import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
@@ -638,7 +638,7 @@ public class GameState{
 			role = new Danzo(player);
 			break;
 		case Orochimaru:
-			role = new Orochimaru(player);
+			role = new OrochimaruV2(player);
 			break;
 		case Sasuke:
 			role = new SasukeV2(player);

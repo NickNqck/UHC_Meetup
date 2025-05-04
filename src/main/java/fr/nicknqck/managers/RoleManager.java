@@ -22,7 +22,7 @@ import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
@@ -197,7 +197,7 @@ public class RoleManager {
         registerRole(Kabuto.class);
         registerRole(Karin.class);
         registerRole(Kimimaro.class);
-        registerRole(Orochimaru.class);
+        registerRole(OrochimaruV2.class);
         registerRole(SasukeV2.class);
         registerRole(Suigetsu.class);
         //Register Akatsuki
