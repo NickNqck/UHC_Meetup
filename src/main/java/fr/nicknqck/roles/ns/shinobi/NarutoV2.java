@@ -74,6 +74,7 @@ public class NarutoV2 extends ShinobiRoles {
         addPower(new NSClone(this));
         setChakraType(Chakras.FUTON);
         setMaxHealth(getMaxHealth()+4.0);
+        setCanBeHokage(true);
         if (owner != null) {
             owner.setHealth(owner.getHealth()+4.0);
         }
@@ -133,7 +134,7 @@ public class NarutoV2 extends ShinobiRoles {
                 if (!(event.getEntity() instanceof Player))return false;
                 ((Player) event.getEntity()).setHealth(Math.max(1.0, ((Player) event.getEntity()).getHealth()-4.0));
                 MathUtil.sendParticle(EnumParticle.EXPLOSION_LARGE, event.getEntity().getLocation());
-                event.getEntity().setVelocity(new Vector(0, 1.8, 0));
+                event.getEntity().setVelocity(new Vector(0, .8, 0));
                 player.sendMessage("§aRASENGAN !");
                 event.getEntity().sendMessage("§7Vous avez été toucher par un§a Rasengan");
                 event.setCancelled(true);
