@@ -63,9 +63,6 @@ public class KagayaV2 extends SlayerRoles {
     }
 
     @Override
-    public void resetCooldown() {}
-
-    @Override
     public ItemStack[] getItems() {
         return new ItemStack[0];
     }
@@ -91,7 +88,14 @@ public class KagayaV2 extends SlayerRoles {
         private final Map<UUID, String> predictings;
 
         public PredictionCommand(@NonNull KagayaV2 role) {
-            super("/ds prediction <joueur> <role>", "prediction", new Cooldown(5), role, CommandType.DS);
+            super("/ds prediction <joueur> <role>", "prediction", new Cooldown(5), role, CommandType.DS,
+                    "§7Vous permet d'essayer de savoir si un joueur est un rôle ou pas",
+                    "",
+                    "§7A sa mort, s'il était réellement le rôle que vous pensiez vous pourrez choisir un bonus ci-dessous:",
+                    "",
+                    "§8 -§a Gagner§c 1/2❤ permanent§7.",
+                    "",
+                    "§8 -§a Réinitialiser le timer de votre§c perte de coeur");
             this.kagaya = role;
             this.predictings = new HashMap<>();
             EventUtils.registerRoleEvent(this);
@@ -102,27 +106,17 @@ public class KagayaV2 extends SlayerRoles {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             String[] args = (String[]) map.get("args");
             if (args.length == 3) {
-                if (this.predictings.containsKey(UUID.fromString(args[1]))) {
-                    if (args[2].equals("coeur")) {
-                        getRole().setMaxHealth(getRole().getMaxHealth()+1);
-                        player.setMaxHealth(getRole().getMaxHealth());
-                        player.sendMessage("§7Vous avez récupérer un petit peut d'§aénergie vitale§7.");
-                        this.predictings.remove(UUID.fromString(args[1]));
-                        return true;
-                    } else if (args[2].equals("time")) {
-                        this.predictings.remove(UUID.fromString(args[1]));
-                        this.kagaya.maladieRunnable.actualTime = 0;
-                        player.sendMessage("§7Le temp avant l'expension de votre maladie à été réduit.");
-                        return true;
-                    }
-                }
-                if (getCooldown().isInCooldown()) {
-                    getRole().sendCooldown(player, getCooldown().getCooldownRemaining());
-                    return false;
-                }
-                Player target = Bukkit.getPlayer(args[1]);
+                final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    List<String> test = new ArrayList<>();
+                    if (getCooldown().isInCooldown()) {
+                        getRole().sendCooldown(player, getCooldown().getCooldownRemaining());
+                        return false;
+                    }
+                    if (this.predictings.containsKey(target.getUniqueId())) {
+                        player.sendMessage("§7Vous essayez déjà de savoir si cette personne est:§c "+this.predictings.get(target.getUniqueId()));
+                        return false;
+                    }
+                    final List<String> test = new ArrayList<>();
                     for (IRole iRole : getPlugin().getRoleManager().getRolesRegistery().values()) {
                         test.add(iRole.getName());
                     }
@@ -135,6 +129,24 @@ public class KagayaV2 extends SlayerRoles {
                     }
                     return true;
                 } else {
+                    if (args[1].length() == UUID.randomUUID().toString().length()) {
+                        final UUID uuid = UUID.fromString(args[1]);
+                        if (this.predictings.containsKey(uuid)) {
+                            if (args[2].equals("coeur")) {
+                                getRole().setMaxHealth(getRole().getMaxHealth()+1);
+                                player.setMaxHealth(getRole().getMaxHealth());
+                                player.sendMessage("§7Vous avez récupérer un petit peut d'§aénergie vitale§7.");
+                                this.predictings.remove(UUID.fromString(args[1]));
+                                return true;
+                            } else if (args[2].equals("time")) {
+                                this.predictings.remove(UUID.fromString(args[1]));
+                                this.kagaya.maladieRunnable.actualTime = 0;
+                                player.sendMessage("§7Le temp avant l'expension de votre maladie à été réduit.");
+                                return true;
+                            }
+                        }
+
+                    }
                     player.sendMessage("§b"+args[1]+"§c n'est pas connecté(e) !");
                     return false;
                 }
@@ -198,8 +210,7 @@ public class KagayaV2 extends SlayerRoles {
         private MaladieRunnable(KagayaV2 kagaya) {
             this.kagaya = kagaya;
             this.gameState = kagaya.getGameState();
-            //this.maxTime = gameState.isMinage() ? 60*10 : 60*5;
-            this.maxTime = 10;
+            this.maxTime = Main.getInstance().getGameConfig().isMinage() ? 60*10 : 60*5;
             runTaskTimerAsynchronously(Main.getInstance(), 40, 20);
         }
 
