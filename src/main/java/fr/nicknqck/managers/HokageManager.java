@@ -173,6 +173,10 @@ public class HokageManager implements Listener {
             if (args.length == 2) {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
+                    if (target.getUniqueId().equals(player.getUniqueId())) {
+                        player.sendMessage("§cImpossible de se boost sois même.");
+                        return false;
+                    }
                     if (!getRole().getGameState().hasRoleNull(target.getUniqueId())) {
                         final GamePlayer gamePlayer = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
                         double boost = 5.0;
