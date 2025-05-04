@@ -7,7 +7,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.NonNull;
@@ -117,7 +117,7 @@ public class Suigetsu extends OrochimaruRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Orochimaru) {
+		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof OrochimaruV2) {
 			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 			boolean KarinAlive = !getListPlayerFromRole(Roles.Karin).isEmpty();
             onOrochimaruDeath(true);

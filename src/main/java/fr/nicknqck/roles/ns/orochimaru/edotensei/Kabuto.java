@@ -16,6 +16,7 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.*;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.Loc;
@@ -172,7 +173,7 @@ public class Kabuto extends OrochimaruRoles implements Listener {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Orochimaru) {
+		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof OrochimaruV2) {
 			if (!mortOrochimaru) {
 				onOrochimaruDeath(true);
 			}

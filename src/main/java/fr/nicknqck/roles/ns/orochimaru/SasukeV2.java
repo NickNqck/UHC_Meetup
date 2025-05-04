@@ -15,7 +15,7 @@ import fr.nicknqck.roles.ns.akatsuki.ItachiV2;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.roles.ns.power.Amaterasu;
 import fr.nicknqck.roles.ns.power.Genjutsu;
 import fr.nicknqck.roles.ns.power.Izanagi;
@@ -80,7 +80,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         addPower(new Amaterasu(this), true);
         addPower(new SusanoPower(this), true);
         addPower(new Izanagi(this));
-        addKnowedRole(Orochimaru.class);
+        addKnowedRole(OrochimaruV2.class);
         EventUtils.registerRoleEvent(this);
         setChakraType(Chakras.KATON);
         setCanBeHokage(true);
@@ -89,7 +89,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
     @EventHandler
     private void UHCDeathEvent(@NonNull final UHCDeathEvent event) {
         if (event.isCancelled())return;
-        if (event.getRole() instanceof Orochimaru && getTeam() != TeamList.Sasuke) {
+        if (event.getRole() instanceof OrochimaruV2 && getTeam() != TeamList.Sasuke) {
             setTeam(TeamList.Sasuke);
             getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aidez vous obtenez §c3❤ supplémentaire§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
             setMaxHealth(getMaxHealth()+6.0);
