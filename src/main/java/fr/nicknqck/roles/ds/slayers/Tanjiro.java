@@ -91,9 +91,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
 
     @Override
-    public void resetCooldown(){}
-
-    @Override
     public String[] Desc() {
         return new String[0];
     }
@@ -172,7 +169,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         private final Tanjiro tanjiro;
 
         public DsAssassinCommand(@NonNull Tanjiro role) {
-            super("/ds assassin <joueur>", "assassin", new Cooldown(-500), role, CommandType.DS,
+            super("/ds assassin <joueur>", "assassin", null, role, CommandType.DS,
                     "§7Vous permet de savoir si un joueur est l'§4Assassin§7 ou non, ",
                             "§7S'il l'est vous obtiendrez un §ctraqueur§7 vers lui pendant§c 5 minutes§7, ",
                             "§7Sinon, vous perdrez§c 2❤§7 permanent.");
