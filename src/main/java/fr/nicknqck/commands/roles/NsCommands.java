@@ -185,37 +185,6 @@ public class NsCommands implements CommandExecutor {
 						gameState.sendDescription(sender);
 						return true;
 					}
-					if (args[0].equalsIgnoreCase("see")) {
-						if (args.length == 3) {
-							Player target = Bukkit.getPlayer(args[1]);
-							if (target != null) {
-								String toRegister = "";
-								for (Roles r : Roles.values()) {
-									if (args[2].equalsIgnoreCase(r.name())) {
-										toRegister = r.getTeam().getColor()+r.name()+" ";
-										break;
-									}
-								}
-								if (toRegister.isEmpty()) {
-									for (TeamList t : TeamList.values()) {
-										if (args[2].equalsIgnoreCase(t.name())) {
-											toRegister = t.getColor()+t.name()+" ";
-											break;
-										}
-									}
-								}
-						//		gameState.getPlayerRoles().get(sender).customName.remove(target.getUniqueId(), gameState.getPlayerRoles().get(sender));
-								if (!toRegister.isEmpty()) {
-                                    sender.sendMessage("§7Feature non dev sorry");
-								}
-                            } else {
-								sender.sendMessage("§7Le joueur ciblé n'existe pas.");
-                            }
-                        } else {
-							sender.sendMessage("§7La commande est§6 /ns see <joueur> <role/camp>");
-                        }
-                        return true;
-                    }
 					if (args[0].equalsIgnoreCase("jubicraft")) {
 						if (getListPlayerFromRole(Roles.Obito).contains(sender) || getListPlayerFromRole(Roles.Madara).contains(sender)) {
 							final List<ItemStack> toRemove = new ArrayList<>();
