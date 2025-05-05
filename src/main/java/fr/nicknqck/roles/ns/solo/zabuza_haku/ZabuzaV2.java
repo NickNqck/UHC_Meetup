@@ -102,7 +102,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
             owner.sendMessage("§bHaku§7 est mort, pour vous vengez vous obtenez§c 10 minutes§f de§e Speed 2§7 ainsi que l'effet§9 Résistance 1§7 de manière§c permanente");
         }
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*10, 1, false, false), EffectWhen.NOW);
-        givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, false, false), EffectWhen.PERMANENT);
+        givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
     }
 
     @Override
