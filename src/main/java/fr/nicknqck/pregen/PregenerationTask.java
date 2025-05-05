@@ -22,9 +22,8 @@ public class PregenerationTask extends BukkitRunnable {
 	private final Integer radius;
 	private final World world;
 	private boolean finished;
-	private int loadedChunks;
-	private int chunkAlreadyLoad;
 	private int chunkFinded;
+	private final long oldTimeMilis;
 	public PregenerationTask(World world, Integer r) {
 		r+=150;
 		this.percent = 0.0D;
@@ -37,6 +36,7 @@ public class PregenerationTask extends BukkitRunnable {
 		this.mx = r + world.getSpawnLocation().getBlockX();
 		this.mz = r + world.getSpawnLocation().getBlockZ();
 		this.finished = false;
+		this.oldTimeMilis = System.currentTimeMillis();
 		Bukkit.broadcastMessage("§8[§cPregen§8] §fLancement de la pré-génération de §c"+world.getName());
 		runTaskTimer(Main.getInstance(), 0L, 5L);
 	}
@@ -45,12 +45,7 @@ public class PregenerationTask extends BukkitRunnable {
 	public void run() {
 		for(int i = 0; i < 30 && !this.finished; i++) {
 			Location loc = new Location(this.world, this.cx, 0.0D, this.cz);
-			if (!loc.getChunk().isLoaded()) {
-				loc.getWorld().loadChunk(loc.getChunk().getX(), loc.getChunk().getZ(), true);
-				loadedChunks++;
-			} else {
-				chunkAlreadyLoad++;
-			}
+			loc.getWorld().loadChunk(loc.getChunk().getX(), loc.getChunk().getZ(), true);
 			chunkFinded++;
 			this.cx+=16;
 			this.currentChunkLoad = this.currentChunkLoad + 1.0D;
@@ -68,9 +63,10 @@ public class PregenerationTask extends BukkitRunnable {
 			NMSPacket.sendActionBar(p, "§fPré-génération de §c"+world.getName()+" §8» §c"+this.percent.intValue()+"%");
 		}
 		if(this.finished) {
+			long time = System.currentTimeMillis();
 			Bukkit.broadcastMessage("§8[§cPregen§8] §fLa pré-génération de§c "+world.getName()+"§f est terminée !");
+			Bukkit.broadcastMessage("§c"+chunkFinded+"§7 on essayer d'être généré, §c"+(time-this.oldTimeMilis)+" ticks§7 ont été nécessaire");
 			cancel();
-			Bukkit.broadcastMessage("§c"+chunkFinded+"§7 on essayer d'être généré, §c"+chunkAlreadyLoad+"§7 l'était déjà et §c"+loadedChunks+"§7 on été pregen");
 			//Bukkit.getOnlinePlayers().forEach(players -> NMSMethod.sendActionbar(players, "§fPré-génération §8» [§r"+UHCAPI.get().getGameManager().getProgressBar(this.percent.intValue(), 100, 20, "|", "§c", "§f")+"§8] §c"+this.percent.intValue()+"%"));
 		}
 	}
