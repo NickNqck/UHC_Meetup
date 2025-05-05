@@ -74,6 +74,7 @@ public class Neji extends ShinobiRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
+                .addCustomLine("§7Quand vous êtes proche de§a Hinata§7 vous avez l'effet§c Force I")
                 .getText();
     }
     private static class ForceRunnable extends BukkitRunnable {
