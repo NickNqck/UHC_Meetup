@@ -35,12 +35,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-public class Hinata extends ShinobiRoles {
+public class Neji extends ShinobiRoles {
 
-    public Hinata(UUID player) {
+    public Neji(UUID player) {
         super(player);
     }
 
@@ -51,12 +50,23 @@ public class Hinata extends ShinobiRoles {
 
     @Override
     public String getName() {
-        return "Hinata";
+        return "Neji";
     }
 
     @Override
     public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Hinata;
+        return GameState.Roles.Neji;
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+        addKnowedRole(Hinata.class);
+        addPower(new Byakugan(this), true);
+        addPower(new ByakuganCommand(this));
+        addPower(new ChakraCommand(this));
+        new ForceRunnable(getGameState(), this);
+        setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON, Chakras.KATON));
+        super.RoleGiven(gameState);
     }
 
     @Override
@@ -64,19 +74,43 @@ public class Hinata extends ShinobiRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Vous possédez l'effet§8 Weakness I§7 proche de§a Naruto")
                 .getText();
     }
+    private static class ForceRunnable extends BukkitRunnable {
 
-    @Override
-    public void RoleGiven(GameState gameState) {
-        setChakraType(getRandomChakrasBetween(Chakras.KATON, Chakras.RAITON));
-        addPower(new Byakugan(this), true);
-        addPower(new ByakuganCommand(this));
-        addPower(new TenketsuPower(this));
-        new WeaknessRunnable(this);
-        setCanBeHokage(true);
-        super.RoleGiven(gameState);
+        final GameState gameState;
+        final Neji neji;
+        int amountAbsent = 0;
+
+        private ForceRunnable(GameState gameState, Neji neji) {
+            this.gameState = gameState;
+            this.neji = neji;
+            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        }
+
+        @Override
+        public void run() {
+            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            if (!neji.getGamePlayer().isAlive())return;
+            if (this.amountAbsent > 10) {
+                cancel();
+                return;
+            }
+            final List<Player> players = neji.getListPlayerFromRole(Hinata.class);
+            if (players.isEmpty()) {
+                this.amountAbsent++;
+                return;
+            }
+            for (final Player aroundPlayer : Loc.getNearbyPlayers(this.neji.getGamePlayer().getLastLocation(), 15)) {
+                if (players.contains(aroundPlayer)) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> neji.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NOW));
+                    break;
+                }
+            }
+        }
     }
     private static class Byakugan extends ItemPower implements Listener {
 
@@ -128,7 +162,7 @@ public class Hinata extends ShinobiRoles {
 
         public ByakuganCommand(@NonNull RoleBase role) {
             super("/ns byakugan <joueur>", "byakugan", new Cooldown(60*10), role, CommandType.NS,
-                    "§7Vous permet de traquer un joueur pendant§c 30 secondes§7.");
+                    "§7Vous permet de traquer un joueur pendant§c 60 secondes§7.");
         }
 
         @Override
@@ -142,7 +176,7 @@ public class Hinata extends ShinobiRoles {
                         return false;
                     }
                     player.sendMessage("§7Vous commencez a traquer§a "+target.getName());
-                    new TraqueRunnable(this.getRole().getGameState().getGamePlayer().get(target.getUniqueId()), getRole().getGamePlayer());
+                    new ByakuganCommand.TraqueRunnable(this.getRole().getGameState().getGamePlayer().get(target.getUniqueId()), getRole().getGamePlayer());
                     return true;
                 }
             }
@@ -152,7 +186,7 @@ public class Hinata extends ShinobiRoles {
 
             private final GamePlayer gameTarget;
             private final GamePlayer gamePlayer;
-            private int timeLeft = 30*20;
+            private int timeLeft = 60*20;
 
             private TraqueRunnable(GamePlayer gameTarget, GamePlayer gamePlayer) {
                 this.gameTarget = gameTarget;
@@ -177,68 +211,69 @@ public class Hinata extends ShinobiRoles {
             }
         }
     }
-    private static class TenketsuPower extends CommandPower {
+    private static class ChakraCommand extends CommandPower {
 
-        public TenketsuPower(@NonNull RoleBase role) {
-            super("/ns tenketsu <joueur>", "tenketsu", new Cooldown(60*5), role, CommandType.NS,
-                    "§7Vous permet de savoir quel est la§a nature de chakra§7 du joueur visée");
+        public ChakraCommand(@NonNull RoleBase role) {
+            super("/ns chakra <chakra> <joueur>", "chakra", new Cooldown(60*5), role, CommandType.NS);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final String[] args = (String[]) map.get("args");
-            if (args.length == 2) {
-                final Player target = Bukkit.getPlayer(args[1]);
-                if (target != null) {
-                    if (getRole().getGameState().hasRoleNull(player.getUniqueId())) {
-                        player.sendMessage("§cCette personne n'a pas de rôle, impossible de voir ses§a tenketsus");
-                        return false;
+            if (args.length == 3) {
+                Chakras chakras = null;
+                for (final Chakras chakra : Chakras.values()) {
+                    if (args[1].equalsIgnoreCase(chakra.name())) {
+                        chakras = chakra;
+                        break;
                     }
-                    if (Loc.getNearbyPlayersExcept(player, 10).contains(target)) {
-                        final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
-                        if (role instanceof NSRoles) {
-                            if (((NSRoles) role).getChakras() != null) {
-                                player.sendMessage("§c"+target.getDisplayName()+"§7 possède le chakra: "+((NSRoles) role).getChakras().getShowedName());
+                }
+                if (chakras != null) {
+                    final Player target = Bukkit.getPlayer(args[2]);
+                    if (target != null) {
+                        if (!Loc.getNearbyPlayers(player, 5).contains(target)) {
+                            player.sendMessage("§cLe joueur que vous avez visé est trop loin.");
+                            return false;
+                        }
+                        if (!getRole().getGameState().hasRoleNull(target.getUniqueId())) {
+                            final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
+                            if (role instanceof NSRoles) {
+                                if (((NSRoles) role).getChakras() != null) {
+                                    if (((NSRoles) role).getChakras().equals(chakras)) {
+                                        player.sendMessage("§c"+target.getDisplayName()+"§7 possède§c "+role.getPowers().size()+" pouvoirs");
+                                    } else {
+                                        player.sendMessage("§7Il semblerait que vous vous soyez tromper de§a nature de chakra§7.");
+                                    }
+                                    return true;
+                                } else {
+                                    player.sendMessage("§7Impossible de savoir,§c "+target.getDisplayName()+"§7 ne possède pas de nature de chakra.");
+                                }
                             } else {
-                                player.sendMessage("§cC'est étrange, on dirait que§b "+target.getDisplayName()+"§c ne possède pas de nature de chakra");
+                                player.sendMessage("§7Impossible de savoir,§c "+target.getDisplayName()+"§7 ne possède pas de nature de chakra.");
                             }
                         } else {
-                            player.sendMessage("§cC'est étrange, on dirait que§b "+target.getDisplayName()+"§c n'a pas chakra dans son corp");
+                            player.sendMessage("§7Impossible de savoir,§c "+target.getDisplayName()+"§7 ne possède pas de nature de chakra.");
                         }
-                        return true;
                     } else {
-                        player.sendMessage("§b"+target.getDisplayName()+"§c est trop loin pour que vous puissiez voir ses§a tenketsu");
-                        return false;
+                        player.sendMessage("§b"+args[2]+"§c n'est pas connecté");
                     }
                 } else {
-                    player.sendMessage("§c"+args[1]+" n'est pas connectée");
+                    player.sendMessage(args[1]+"§c n'est pas une nature de chakra");
                 }
             }
             return false;
         }
-    }
-    private static class WeaknessRunnable extends BukkitRunnable {
-
-        private final Hinata hinata;
-
-        private WeaknessRunnable(Hinata hinata) {
-            this.hinata = hinata;
-            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        }
 
         @Override
-        public void run() {
-            final GameState gameState = GameState.getInstance();
-            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                cancel();
-                return;
+        public List<String> getCompletor(String[] args) {
+            final List<String> list = new ArrayList<>();
+            if (args.length > 2) {
+                return super.getCompletor(args);
             }
-            for (final Player player : Loc.getNearbyPlayers(this.hinata.getGamePlayer().getLastLocation(), 15)) {
-                if (this.hinata.getListPlayerFromRole(NarutoV2.class).contains(player)) {
-                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.hinata.givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 40, 0, false, false), EffectWhen.NOW));
-                    break;
-                }
+            for (final Chakras chakras : Chakras.values()) {
+                list.add(chakras.name().toLowerCase());
             }
+            return list;
         }
     }
 }

@@ -1,5 +1,6 @@
 package fr.nicknqck;
 
+import fr.nicknqck.commands.completer.NSCompleter;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.Color;
@@ -236,6 +237,7 @@ public class Main extends JavaPlugin {
 		getCommand("c").setExecutor(new CRolesCommands(gameState));
 		getCommand("aot").setExecutor(new AotCommands(gameState));
 		getCommand("ns").setExecutor(new NsCommands(gameState));
+		getCommand("ns").setTabCompleter(new NSCompleter());
 		getCommand("drop").setExecutor(new DropCommand());
 		getCommand("claim").setExecutor(new ClaimCommand(gameState));
 		getCommand("mumble").setExecutor(new Mumble());
