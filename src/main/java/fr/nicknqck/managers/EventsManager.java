@@ -161,7 +161,11 @@ public class EventsManager implements Listener {
     }
     @EventHandler
     private void onChangeTeam(@NonNull final TeamChangeEvent event) {
+        if (GameState.getInstance() == null)return;
+        if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))return;
+        if (event.getNewTeam() == null)return;
         if (event.getNewTeam().equals(TeamList.Shisui))return;
+        if (event.getOldTeam() == null)return;
         if (event.getOldTeam().equals(TeamList.Jubi) ||
                 event.getOldTeam().equals(TeamList.Jigoro) ||
                 event.getOldTeam().equals(TeamList.Shisui) ||
