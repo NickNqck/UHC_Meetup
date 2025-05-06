@@ -167,6 +167,7 @@ public class DanzoV2 extends NSRoles implements Listener {
                     "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 ne pourra pas avoir d'§eabsorbtion§7 en mangeant une§e pomme d'or");
             this.sceauMap = new HashMap<>();
             this.absoLessList = new ArrayList<>();
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
