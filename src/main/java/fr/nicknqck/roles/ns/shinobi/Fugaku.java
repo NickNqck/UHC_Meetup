@@ -14,7 +14,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
-import fr.nicknqck.roles.ns.solo.Danzo;
+import fr.nicknqck.roles.ns.solo.DanzoV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
@@ -359,7 +359,7 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
                         if (fugaku.getGameState().hasRoleNull(p.getUniqueId()))continue;
                         RoleBase role = fugaku.getGameState().getGamePlayer().get(p.getUniqueId()).getRole();
                         if (!role.getGamePlayer().isAlive())continue;
-                        if (role instanceof IUchiwa || role instanceof Danzo ||role instanceof Kakashi) {
+                        if (role instanceof IUchiwa || role instanceof DanzoV2 ||role instanceof Kakashi) {
                             this.croised = true;
                         }
                     }

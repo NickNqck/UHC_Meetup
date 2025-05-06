@@ -37,7 +37,7 @@ import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
-import fr.nicknqck.roles.ns.solo.Danzo;
+import fr.nicknqck.roles.ns.solo.DanzoV2;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.ShisuiSolo;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
@@ -636,7 +636,7 @@ public class GameState{
 			role = new ObitoV2(player);
 			break;
 		case Danzo:
-			role = new Danzo(player);
+			role = new DanzoV2(player);
 			break;
 		case Orochimaru:
 			role = new OrochimaruV2(player);

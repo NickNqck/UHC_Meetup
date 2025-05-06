@@ -10,7 +10,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.ns.solo.Danzo;
+import fr.nicknqck.roles.ns.solo.DanzoV2;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.powers.CommandPower;
 import lombok.Getter;
@@ -57,8 +57,8 @@ public class HokageManager implements Listener {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getRole() == null)return;
         if (!this.hokage.getUuid().equals(event.getVictim().getUniqueId()))return;
-        if (event.getGamePlayerKiller().getRole() instanceof Danzo) {
-            ((Danzo) event.getGamePlayerKiller().getRole()).setKillHokage(true);
+        if (event.getGamePlayerKiller().getRole() instanceof DanzoV2) {
+            ((DanzoV2) event.getGamePlayerKiller().getRole()).setKillHokage(true);
             event.getPlayerKiller().sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
         }
         this.hokage.getRole().addBonusResi(-10);
@@ -98,7 +98,7 @@ public class HokageManager implements Listener {
                     this.hokageManager.hokage = gamePlayer;
                     for (final GamePlayer danzo : this.gameState.getGamePlayer().values()) {
                         if (danzo.getRole() == null)continue;
-                        if (danzo.getRole() instanceof Danzo) {
+                        if (danzo.getRole() instanceof DanzoV2) {
                             danzo.sendMessage("§7Voici le rôle de l'Hokage: §a"+gamePlayer.getRole().getName()+"§7 (§cAttention vous êtes le seul joueur à avoir cette information§7)");
                         }
                     }
@@ -120,14 +120,14 @@ public class HokageManager implements Listener {
         }
         private GamePlayer searchHokage() {
             GamePlayer toReturn = null;
-            Danzo danzo = null;
+            DanzoV2 danzo = null;
             for (final GamePlayer gamePlayer : this.gameState.getGamePlayer().values()) {
                 if (!gamePlayer.isAlive())continue;
                 if (gamePlayer.getRole() == null)continue;
                 if (!gamePlayer.isOnline())continue;
-                if (gamePlayer.getRole() instanceof Danzo) {
-                    if (((Danzo) gamePlayer.getRole()).isKillHokage()) {
-                        danzo = (Danzo) gamePlayer.getRole();
+                if (gamePlayer.getRole() instanceof DanzoV2) {
+                    if (((DanzoV2) gamePlayer.getRole()).isKillHokage()) {
+                        danzo = (DanzoV2) gamePlayer.getRole();
                         break;
                     }
                 }
