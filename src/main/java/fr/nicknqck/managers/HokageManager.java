@@ -46,6 +46,14 @@ public class HokageManager implements Listener {
     private void onEndGiveRole(@NonNull final RoleGiveEvent event) {
         if (isEnable()) {
             if (!event.isEndGive())return;
+            if (event.getGameState().getMdj() == null) {
+                System.err.println("[HokageManager] Impossible to start Hokage Runnable because MDJ is set has Null");
+                return;
+            }
+            if (!event.getGameState().getMdj().equals(GameState.MDJ.NS)) {
+                System.err.println("[HokageManager] Impossible to start Hokage Runnable because MDJ is not Naruto");
+                return;
+            }
             new HokageRunnable(this.gameState, this, event.getGameState().getTimeProcHokage())
                     .runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
