@@ -26,7 +26,7 @@ import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
-import fr.nicknqck.roles.ns.solo.Danzo;
+import fr.nicknqck.roles.ns.solo.DanzoV2;
 import fr.nicknqck.roles.ns.solo.Gaara;
 import fr.nicknqck.roles.ns.solo.ShisuiSolo;
 import fr.nicknqck.roles.ns.solo.jubi.Madara;
@@ -220,7 +220,7 @@ public class RoleManager {
         registerRole(ZabuzaV2.class);
         registerRole(HakuV2.class);
         //Register Solo
-        registerRole(Danzo.class);
+        registerRole(DanzoV2.class);
         registerRole(Gaara.class);
         registerRole(ShisuiSolo.class);
     }

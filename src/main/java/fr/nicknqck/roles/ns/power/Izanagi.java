@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Izanagi extends CommandPower {
@@ -26,7 +27,7 @@ public class Izanagi extends CommandPower {
         player.setMaxHealth(getRole().getMaxHealth());
         player.setHealth(player.getMaxHealth());
         getRole().giveItem(player, false, new ItemBuilder(Material.GOLDEN_APPLE).setAmount(5).toItemStack());
-        for (final Power power : getRole().getPowers()) {
+        for (final Power power : new ArrayList<>(getRole().getPowers())) {
             if (!(power instanceof ItemPower))continue;
             if (power.getName().contains("Susano")) {
                 player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
