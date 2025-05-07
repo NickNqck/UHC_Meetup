@@ -30,7 +30,6 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.entity.bijus.BijuListener;
-import fr.nicknqck.roles.builder.TeamList;
 
 public class NsCommands implements CommandExecutor {
 	final GameState gameState;
@@ -246,7 +245,7 @@ public class NsCommands implements CommandExecutor {
 						NSRoles role = (NSRoles) gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
 						role.onNsCommand(args);
 						if (!role.getPowers().isEmpty()) {
-							for (Power power : role.getPowers()) {
+							for (Power power : new ArrayList<>(role.getPowers())) {
 								if (power == null)continue;
 								if (power instanceof CommandPower) {
 									((CommandPower) power).call(args, CommandPower.CommandType.NS, sender);
