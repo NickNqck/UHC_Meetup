@@ -86,6 +86,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
         if (event.isCancel())return;
         if (event.getPower().getCooldown() != null) {
             if (event.getPower().isCooldownResetSended())return;
+            if (event.getPower().getCooldown().isInCooldown())return;
         }
         if (event.getPower() instanceof KubikiribochoPower)return;
         String name = event.getPower().getName();
