@@ -22,6 +22,7 @@ import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
+import fr.nicknqck.runnables.PubRunnable;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.titans.TitanManager;
@@ -222,6 +223,7 @@ public class Main extends JavaPlugin {
 		EventUtils.registerEvents(manager2);
 		this.eventsManager = manager2;
 		this.hokageManager = new HokageManager(gameState);
+		new PubRunnable().runTaskTimerAsynchronously(this, 100, 20);
 		System.out.println("Ending registering events");
 	}
 	private void registerEvents2(GameState gameState) {
