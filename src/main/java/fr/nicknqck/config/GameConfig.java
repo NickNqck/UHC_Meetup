@@ -23,7 +23,7 @@ public class GameConfig {
     private boolean laveTitans = true;
     private boolean stuffUnbreak = true;
     private boolean pvpEnable = false;
-    private int maxTimeDay = 60*5;
+    private int maxTimeDay = 60*3;
     private int critPercent = 20;
     private boolean giveLame = false;
     private int timingAssassin = 30;
@@ -48,15 +48,15 @@ public class GameConfig {
         private int protectionLeggings = 3;
         private int protectionChestplate = 2;
         private int protectionHelmet = 2;
-        private int nmbArrow = 24;
+        private int nmbArrow = 16;
         private int sharpness = 3;
         private int nmbblock = 1;
         private int power = 2;
-        private int pearl = 1;
-        private int eau = 1;
-        private int lave = 0;
+        private int pearl = 0;
+        private int eau = 2;
+        private int lave = 2;
 
-        private int nmbGap = 12;
+        private int nmbGap = 20;
         private int minGap = 12;
 
     }
