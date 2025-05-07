@@ -162,7 +162,7 @@ public class DanzoV2 extends NSRoles implements Listener {
             super("Sceau", new Cooldown(60*3), new ItemBuilder(Material.NETHER_STAR).setName("§cSceau"), role,
                     "§7En visant un joueur, vous permet de lui apposer un§c Sceau§7 aléatoirement parmis ceux ci-dessous:",
                     "",
-                    "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 aura l'effet§c Wither III§7.",
+                    "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 aura l'effet§c Wither II§7.",
                     "",
                     "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 ne pourra pas avoir d'§eabsorbtion§7 en mangeant une§e pomme d'or");
             this.sceauMap = new HashMap<>();
@@ -194,11 +194,11 @@ public class DanzoV2 extends NSRoles implements Listener {
             if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
                 if (this.sceauMap.containsKey(event.getEntity().getUniqueId())) {
                     if (((Player) event.getDamager()).getItemInHand() == null)return;
-                    if (((Player) event.getDamager()).getItemInHand().getType().name().toLowerCase().contains("sword")) {
+                    if (((Player) event.getDamager()).getItemInHand().getType().name().contains("SWORD")) {
                         final SceauAction sceauAction = this.sceauMap.get(event.getEntity().getUniqueId());
                         this.sceauMap.remove(event.getEntity().getUniqueId());
                         if (sceauAction.equals(SceauAction.Wither)) {
-                            ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20*12, 2, false, false), true);
+                            ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20*12, 1, false, false), true);
                         } else {
                             this.absoLessList.add(event.getEntity().getUniqueId());
                         }
