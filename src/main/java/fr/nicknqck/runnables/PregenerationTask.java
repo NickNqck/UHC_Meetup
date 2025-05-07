@@ -1,4 +1,4 @@
-package fr.nicknqck.pregen;
+package fr.nicknqck.runnables;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
