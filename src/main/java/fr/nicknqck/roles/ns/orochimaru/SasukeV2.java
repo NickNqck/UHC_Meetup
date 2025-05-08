@@ -49,6 +49,9 @@ import java.util.UUID;
 
 public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
 
+    private boolean orochimaruDEAD = false;
+    private boolean itachiDEAD = false;
+
     public SasukeV2(UUID player) {
         super(player);
     }
@@ -103,6 +106,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
                 new ItachiTraqueur(getGameState(), itachi, this);
                 break;
             }
+            this.orochimaruDEAD = true;
         }, 10*20);
     }
 
@@ -122,6 +126,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
                 new ItachiTraqueur(event.getGameState(), itachi, this);
                 break;
             }
+            this.orochimaruDEAD = true;
         }
     }
     @EventHandler
@@ -141,12 +146,25 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
+                .addCustomLine(
+                        !orochimaruDEAD ?
+                                "§7A la mort de§5 Orochimaru§7 vous deviendrez un rôle§e solitaire§7, pour ce faire vous gagnerez§c 3❤ permanents§7 ainsi que l'effet§c Force I permanent§7, de plus vous obtiendrez pendant§c 5 minutes§7 un traqueur vers§c Itachi§7."
+                                :
+                                ""
+                )
+                .addCustomLine(
+                        !itachiDEAD ?
+                                "§7Si vous tuez§c Itachi§7 vous obtiendrez§c 2❤ permanent§7 ainsi qu'un§c Genjutsu§7."
+                                :
+                                ""
+                )
                 .getText();
     }
     private void onItachiKill(boolean msg) {
         if (msg) {
             getGamePlayer().sendMessage("§7Bravo, vous avez enfin vengé votre clan, était-ce une bonne idée ? Seul l'avenir nous le dira, en attendant vous avez obtenue §c2❤ supplémentaire§7 ainsi que les§c Genjutsus§7 de§c Itachi§7 (§c/ns me pour plus détail§7).");
         }
+        this.itachiDEAD = true;
         addPower(new Genjutsu(this), true);
         giveHealedHeartatInt(2);
     }
