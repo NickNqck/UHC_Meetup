@@ -84,6 +84,26 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         EventUtils.registerRoleEvent(this);
         setChakraType(Chakras.KATON);
         setCanBeHokage(true);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            if (!gameState.getAttributedRole().contains(GameState.Roles.Itachi)) {
+                onItachiKill(false);
+                getGamePlayer().sendMessage("§cItachi§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à son kill");
+            }
+        }, 5*20);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            setTeam(TeamList.Sasuke);
+            getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aidez vous obtenez §c3❤ supplémentaire§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
+            giveHealedHeartatInt(3.0);
+            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.PERMANENT);
+            for (@NonNull final GamePlayer gamePlayer : getGameState().getGamePlayer().values()) {
+                if (!gamePlayer.isAlive())continue;
+                if (gamePlayer.getRole() == null)continue;
+                if (!(gamePlayer.getRole() instanceof ItachiV2))continue;
+                @NonNull final ItachiV2 itachi = (ItachiV2) gamePlayer.getRole();
+                new ItachiTraqueur(getGameState(), itachi, this);
+                break;
+            }
+        }, 10*20);
     }
 
     @EventHandler
@@ -92,7 +112,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         if (event.getRole() instanceof OrochimaruV2 && getTeam() != TeamList.Sasuke) {
             setTeam(TeamList.Sasuke);
             getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aidez vous obtenez §c3❤ supplémentaire§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
-            setMaxHealth(getMaxHealth()+6.0);
+            giveHealedHeartatInt(3.0);
             givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.PERMANENT);
             for (@NonNull final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
                 if (!gamePlayer.isAlive())continue;
@@ -112,9 +132,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
             if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
             @NonNull final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
             if (role instanceof ItachiV2) {
-                setMaxHealth(getMaxHealth()+4.0);
-                addPower(new Genjutsu(this), true);
-                event.getKiller().sendMessage("§7Bravo, vous avez enfin vengé votre clan, était-ce une bonne idée ? Seul l'avenir nous le dira, en attendant vous avez obtenue §c2❤ supplémentaire§7 ainsi que les§c Genjutsus§7 de§c Itachi§7 (§c/ns me pour plus détail§7).");
+                onItachiKill(true);
             }
         }
     }
@@ -124,6 +142,13 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
                 .addEffects(getEffects())
                 .setPowers(getPowers())
                 .getText();
+    }
+    private void onItachiKill(boolean msg) {
+        if (msg) {
+            getGamePlayer().sendMessage("§7Bravo, vous avez enfin vengé votre clan, était-ce une bonne idée ? Seul l'avenir nous le dira, en attendant vous avez obtenue §c2❤ supplémentaire§7 ainsi que les§c Genjutsus§7 de§c Itachi§7 (§c/ns me pour plus détail§7).");
+        }
+        addPower(new Genjutsu(this), true);
+        giveHealedHeartatInt(2);
     }
     private static class ItachiTraqueur extends BukkitRunnable {
 
