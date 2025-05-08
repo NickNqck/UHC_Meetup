@@ -44,7 +44,7 @@ public class LaraV2 extends MahrRoles implements Listener {
         @NonNull final WarhammerV2 warhammerV2 = new WarhammerV2(this.getGamePlayer());
         setTitan(warhammerV2);
         Main.getInstance().getTitanManager().addTitan(getPlayer(), warhammerV2);
-        addKnowedPlayersFromTeam(TeamList.Mahr);
+        addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
         super.RoleGiven(gameState);
     }
     @EventHandler
