@@ -325,7 +325,7 @@ public class ObitoV2 extends JubiRoles {
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (map.isEmpty()) {
                     @NonNull final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§d Sonohaka");
-                    for (int i = 0; i < 8; i++) {
+                    for (int i = 0; i <= 8; i++) {
                         inv.setItem(i, GUIItems.getPurpleStainedGlassPane());
                     }
                     inv.setItem(4, GUIItems.getSelectBackMenu());
@@ -365,7 +365,11 @@ public class ObitoV2 extends JubiRoles {
                             @NonNull final Player target = Bukkit.getPlayer(name);
                             if (target != null) {
                                 event.getWhoClicked().closeInventory();
-                                KamuiUtils.start(target.getLocation(), KamuiUtils.Users.cibleObito, (target), true);
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("((Player)event.getWhoClicked())", event.getClick());
+                                if (checkUse((Player) event.getWhoClicked(), map)){
+                                    KamuiUtils.start(target.getLocation(), KamuiUtils.Users.cibleObito, (target), true);
+                                }
                             }
                         }
                     }
