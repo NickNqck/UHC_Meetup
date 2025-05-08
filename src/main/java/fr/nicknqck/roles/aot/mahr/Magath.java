@@ -28,6 +28,7 @@ public class Magath extends MahrRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(4.0);
+		addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
 	}
 
 	@Override

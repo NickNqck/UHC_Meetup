@@ -24,11 +24,6 @@ public class ReinerV2 extends MahrRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Reiner§7 (§6V2§7)";
     }
@@ -48,15 +43,10 @@ public class ReinerV2 extends MahrRoles implements Listener {
     }
 
     @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
-    }
-
-    @Override
     public void RoleGiven(GameState gameState) {
         Main.getInstance().getTitanManager().addTitan(getPlayer(), new CuirasseV2(getGamePlayer()));
         EventUtils.registerRoleEvent(this);
-        addKnowedPlayersFromTeam(TeamList.Mahr);
+        addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
     }
     @EventHandler
     private void onDamage(@NonNull EntityDamageByEntityEvent event) {

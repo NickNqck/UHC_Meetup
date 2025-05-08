@@ -45,7 +45,7 @@ public class PieckV2 extends MahrRoles {
         setTitan(charette);
         Main.getInstance().getTitanManager().addTitan(getPlayer(), charette);
         new RegenerationRunnable(this, getGameState());
-        addKnowedPlayersFromTeam(TeamList.Mahr);
+        addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
     }
     private static class RegenerationRunnable extends BukkitRunnable {
 
