@@ -29,6 +29,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -141,7 +142,9 @@ public class NarutoV2 extends ShinobiRoles {
                 return true;
             }
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§7Il faut frapper un joueur pour déclencher le§a Rasengan");
+                if (((PlayerInteractEvent) map.get("event")).getAction().name().contains("RIGHT")){
+                    player.sendMessage("§7Il faut frapper un joueur pour déclencher le§a Rasengan");
+                }
                 return false;
             }
             return false;
