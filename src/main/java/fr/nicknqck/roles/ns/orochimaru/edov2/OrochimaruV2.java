@@ -9,6 +9,8 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.orochimaru.*;
+import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -70,6 +72,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
         giveItem(owner, false, getItems());
         this.chakrasVoled.add(getChakras());
         EventUtils.registerRoleEvent(this);
+        addKnowedPlayersWithRoles("§7Voici la liste du camp§5 Orochimaru§7:", Jugo.class, SasukeV2.class, Suigetsu.class, Kabuto.class, Kimimaro.class, Karin.class);
         super.RoleGiven(gameState);
     }
 
