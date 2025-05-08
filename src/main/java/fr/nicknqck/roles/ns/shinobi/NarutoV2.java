@@ -135,7 +135,11 @@ public class NarutoV2 extends ShinobiRoles {
                 if (!(event.getEntity() instanceof Player))return false;
                 ((Player) event.getEntity()).setHealth(Math.max(1.0, ((Player) event.getEntity()).getHealth()-4.0));
                 MathUtil.sendParticle(EnumParticle.EXPLOSION_LARGE, event.getEntity().getLocation());
-                event.getEntity().setVelocity(new Vector(0, .8, 0));
+                Location loc = event.getEntity().getLocation().clone();
+                loc.setX(loc.getX()+Math.cos(Math.toRadians(-(((Player)event.getEntity())).getEyeLocation().getYaw()+90)));
+                loc.setZ(loc.getZ()+Math.sin(Math.toRadians(((Player)event.getEntity()).getEyeLocation().getYaw()-90)));
+                loc.setPitch(0);
+                event.getEntity().setVelocity(loc.getDirection().multiply(3.0));
                 player.sendMessage("§aRASENGAN !");
                 event.getEntity().sendMessage("§7Vous avez été toucher par un§a Rasengan");
                 event.setCancelled(true);
