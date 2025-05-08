@@ -104,6 +104,22 @@ public class ObitoV2 extends JubiRoles {
                     "§cEn faisant /ns obtain list vous obtiendrez les coordonnées de la ou sont mort les§4 Uchiwa§c.");
             this.deathLocations = new HashMap<>();
             EventUtils.registerRoleEvent(this);
+            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+                int amountUchiwa = 0;
+                for (final GamePlayer gamePlayer : getRole().getGameState().getGamePlayer().values()) {
+                    if (gamePlayer.getRole() == null)continue;
+                    if (gamePlayer.getRole() instanceof IUchiwa) {
+                        amountUchiwa++;
+                    }
+                }
+                if (amountUchiwa == 1) {//1 parce que Obito lui même est un Uchiwa (。_。)
+                    getRole().removePower(this);
+                    this.getRole().addPower(new SusanoPower(this.getRole()), true);
+                    this.getRole().getGamePlayer().sendMessage("§7Vous avez reçus le§c§l Susanô");
+                    this.deathLocations.clear();
+                    EventUtils.unregisterEvents(this);
+                }
+            }, 10*20);
         }
 
         @Override
