@@ -699,7 +699,7 @@ public class GameState{
 			role = new Tsunade(player);
 			break;
 		case Konohamaru:
-			role = new Konohamaru(player);
+			role = new KonohamaruV2(player);
 			break;
 		case Deidara:
 			role = new Deidara(player);
