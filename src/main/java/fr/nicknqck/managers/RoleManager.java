@@ -179,7 +179,7 @@ public class RoleManager {
         registerRole(Jiraya.class);
         registerRole(Kakashi.class);
         registerRole(KillerBee.class);
-        registerRole(Konohamaru.class);
+        registerRole(KonohamaruV2.class);
         registerRole(Kurenai.class);
         registerRole(Minato.class);
         registerRole(NarutoV2.class);
