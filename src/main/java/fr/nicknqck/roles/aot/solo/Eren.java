@@ -230,7 +230,7 @@ public class Eren extends AotRoles {
 					killPieck = true;
 					owner.sendMessage("Vous de tuez le joueur possédant le rôle Pieck vous obtiendrez donc "+AllDesc.Speed+" 2 durant votre transformation");
 				}
-				if (gamePlayer.getRole() instanceof Lara) {
+				if (gamePlayer.getRole() instanceof LaraV2) {
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Lara§f vous obtenez donc 2"+AllDesc.coeur+" supplémentaire");
 					giveHealedHeartatInt(owner, 2);
 				}
