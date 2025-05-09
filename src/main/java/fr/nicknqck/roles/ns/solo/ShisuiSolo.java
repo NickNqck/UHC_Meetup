@@ -261,6 +261,7 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
                     if (player != null) {
                         player.sendTitle("§7Vous avez rejoint le camp§e Shisui", "§7Vous gagnez maintenant avec§e "+this.power.getRole().getGamePlayer().getPlayerName());
                     }
+                    this.gameTarget.getRole().setSuffixString(this.gameTarget.getRole().getSuffixString()+" §7(§eKotoamatsukami§7)§r");
                     this.power.shisuiSolo.cantChangeTeam.add(gameTarget.getUuid());
                     cancel();
                     return;
