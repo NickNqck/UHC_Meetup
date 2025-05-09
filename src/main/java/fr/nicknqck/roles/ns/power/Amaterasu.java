@@ -12,7 +12,6 @@ import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
@@ -69,17 +68,9 @@ public class Amaterasu extends ItemPower {
             }
             final Player player = Bukkit.getPlayer(this.gamePlayer.getUuid());
             if (player == null)return;
-            double damage = 1.75;
-            if (this.gamePlayer.getRole() != null) {
-                if (this.gamePlayer.getRole().getBonusResi() > 0) {
-                    double resi = 1 - (this.gamePlayer.getRole().getBonusResi() / 100);
-                    damage = damage*resi;
-                }
-            }
-            if (player.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-                damage = damage*0.8;
-            }
-            player.damage(damage);
+            player.damage(0.0);
+            player.setHealth(Math.max(1.0, player.getHealth()-1.0));
+            player.setFireTicks(180);
             this.timeLeft--;
         }
     }
