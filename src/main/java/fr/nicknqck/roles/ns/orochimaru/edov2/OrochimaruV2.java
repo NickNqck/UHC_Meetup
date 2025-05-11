@@ -123,7 +123,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
                 event.getPlayer().removePotionEffect(PotionEffectType.ABSORPTION);
                 ((CraftPlayer) event.getPlayer()).getHandle().setAbsorptionHearts(0);
-                ((CraftPlayer) event.getPlayer()).getHandle().setAbsorptionHearts(((CraftPlayer) event.getPlayer()).getHandle().getAbsorptionHearts()+6.0f);
+                ((CraftPlayer) event.getPlayer()).getHandle().setAbsorptionHearts(((CraftPlayer) event.getPlayer()).getHandle().getAbsorptionHearts()+5.0f);
             }, 1);
         }
     }
