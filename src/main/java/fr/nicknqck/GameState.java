@@ -32,7 +32,7 @@ import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Kabuto;
+import fr.nicknqck.roles.ns.orochimaru.edov2.KabutoV2;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
@@ -645,7 +645,7 @@ public class GameState{
 			role = new SasukeV2(player);
 			break;
 		case Kabuto:
-			role = new Kabuto(player);
+			role = new KabutoV2(player);
 			break;
 		case Kisame:
 			role = new KisameV2(player);
