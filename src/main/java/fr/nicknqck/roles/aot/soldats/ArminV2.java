@@ -45,6 +45,7 @@ public class ArminV2 extends SoldatsRoles {
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(GameState.Roles.Bertolt)) {
                 Main.getInstance().getTitanManager().addTitan(getPlayer(), new ColossalV2(getGamePlayer()));
+                getGamePlayer().sendMessage("§7Comme§9 Bertolt§7 n'est pas dans la partie vous recevez le§c titan Colossal§7.");
             }
         }, 20);
         super.RoleGiven(gameState);
@@ -86,6 +87,7 @@ public class ArminV2 extends SoldatsRoles {
                             }
                         }
                     }
+                    player.openInventory(inv);
                     EventUtils.registerRoleEvent(this);
                     return true;
                 } else {
