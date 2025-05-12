@@ -588,7 +588,7 @@ public class GameState{
 			role = new Nakime(player);
 			break;
 		case Armin:
-			role = new Armin(player);
+			role = new ArminV2(player);
 			break;
 		case Eren:
 			role = new ErenV2(player);

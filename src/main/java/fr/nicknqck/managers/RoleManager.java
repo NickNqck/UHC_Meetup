@@ -140,7 +140,7 @@ public class RoleManager {
     }
     private void registerAot() throws Exception{
         //Register Soldats
-        registerRole(Armin.class);
+        registerRole(ArminV2.class);
         registerRole(Conny.class);
         registerRole(Eclaireur.class);
         registerRole(Erwin.class);
