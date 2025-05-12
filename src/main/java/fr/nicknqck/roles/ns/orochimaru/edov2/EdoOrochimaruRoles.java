@@ -10,6 +10,7 @@ import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -22,25 +23,45 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-public abstract class EdoOrochimaruRoles extends OrochimaruRoles {
+public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements Listener {
+
+    private final Map<UUID, Location> killLocation;
 
     public EdoOrochimaruRoles(UUID player) {
         super(player);
+        this.killLocation = new LinkedHashMap<>();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
-        addPower(new EdoTenseiPower(this), true);
+        if (getRoles().equals(GameState.Roles.Orochimaru)){
+            addPower(new EdoTenseiPower(this), true);
+        }
         super.RoleGiven(gameState);
+        EventUtils.registerRoleEvent(new EdoRegister(this));
     }
-    private static class EdoTenseiPower extends ItemPower implements Listener {
+
+    private static class EdoRegister implements Listener {
 
         private final EdoOrochimaruRoles role;
-        private final Map<UUID, Location> killLocation;
+
+        public EdoRegister(EdoOrochimaruRoles roles) {
+            this.role = roles;
+        }
+        @EventHandler
+        private void onUHCKill(UHCPlayerKillEvent event){
+            if (event.getPlayerKiller() != null) {
+                if (event.getPlayerKiller().getUniqueId().equals(this.role.getPlayer())) {
+                    this.role.killLocation.put(event.getVictim().getUniqueId(), event.getVictim().getLocation());
+                }
+            }
+        }
+    }
+    public static class EdoTenseiPower extends ItemPower implements Listener {
+
+        private final EdoOrochimaruRoles role;
         private final Map<UUID, RoleBase> edoTenseis;
         @Setter
         private boolean canEdoTensei = true;
@@ -49,7 +70,6 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles {
             super("Edo Tensei", null, new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei"), role);
             this.role = role;
             EventUtils.registerRoleEvent(this);
-            this.killLocation = new LinkedHashMap<>();
             this.edoTenseis = new LinkedHashMap<>();
         }
 
@@ -62,7 +82,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles {
                     event.setCancelled(true);
                     return false;
                 }
-                if (this.killLocation.isEmpty()) {
+                if (this.role.killLocation.isEmpty()) {
                     player.sendMessage("§7Il faut avoir tuer un joueur pour utiliser cette technique.");
                     event.setCancelled(true);
                     return false;
@@ -73,11 +93,11 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles {
                     return false;
                 }
                 Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§5 Edo Tensei");
-                for (UUID uuid : killLocation.keySet()) {
+                for (UUID uuid : this.role.killLocation.keySet()) {
                     final Player target = Bukkit.getPlayer(uuid);
                     if (target != null) {
-                        if (player.getWorld().equals(killLocation.get(uuid).getWorld())) {
-                            if (player.getLocation().distance(killLocation.get(uuid)) <= 50) {
+                        if (player.getWorld().equals(this.role.killLocation.get(uuid).getWorld())) {
+                            if (player.getLocation().distance(this.role.killLocation.get(uuid)) <= 50) {
                                 inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(uuid)).setName(target.getName()).setLore("§7Cliquez ici pour réssusciter ce joueur !\n\n/7Coût: §c"+
                                         (Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)
                                         +"❤ permanent").toItemStack());
@@ -90,14 +110,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles {
             }
             return false;
         }
-        @EventHandler
-        private void onUHCKill(UHCPlayerKillEvent event){
-            if (event.getPlayerKiller() != null) {
-                if (event.getPlayerKiller().getUniqueId().equals(role.getPlayer())) {
-                    killLocation.put(event.getVictim().getUniqueId(), event.getVictim().getLocation());
-                }
-            }
-        }
+
         @EventHandler
         private void onUHCDeath(UHCDeathEvent event) {
             if (edoTenseis.containsKey(event.getPlayer().getUniqueId())) {
@@ -132,9 +145,18 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles {
                                             this.role.setMaxHealth(this.role.getMaxHealth()-Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove());
                                             owner.setMaxHealth(this.role.getMaxHealth());
                                             clicked.teleport(owner);
+                                            final List<Power> copyPower = new ArrayList<>(role.getPowers());
+                                            if (!copyPower.isEmpty()) {
+                                                for (Power power : copyPower) {
+                                                    if (power instanceof ItemPower) {
+                                                        clicked.getInventory().removeItem(((ItemPower) power).getItem());
+                                                    }
+                                                    role.removePower(power);
+                                                }
+                                            }
                                             role.GiveItems();
                                             role.RoleGiven(this.role.gameState);
-                                            killLocation.remove(clicked.getUniqueId());
+                                            this.role.killLocation.remove(clicked.getUniqueId());
                                             clicked.resetTitle();
                                             clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+this.role.getTeam().getName());
                                         }
