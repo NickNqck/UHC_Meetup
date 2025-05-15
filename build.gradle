@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'fr.nicknqck'
-version '10'
+version '9'
 
 repositories {
     mavenLocal()
