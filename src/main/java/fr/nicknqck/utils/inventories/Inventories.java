@@ -876,7 +876,7 @@ public class Inventories {
                 if (inv.getTitle().equalsIgnoreCase("Séléction du mode de jeu")) {
                     inv.clear();
                     for (GameState.MDJ mdj : GameState.MDJ.values()) {
-                        if (mdj != GameState.MDJ.Aucun){
+                        if (mdj != GameState.MDJ.Aucun && mdj != GameState.MDJ.KRYSTAL){
                             inv.addItem(mdj.getItem());
                         }
                     }
