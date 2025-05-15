@@ -67,7 +67,8 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
         private boolean canEdoTensei = true;
 
         public EdoTenseiPower(@NonNull EdoOrochimaruRoles role) {
-            super("Edo Tensei", null, new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei"), role);
+            super("Edo Tensei", null, new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei"), role,
+                    "§7Quand vous tuez un joueur, vous pourrez le ressusciter en échange d");
             this.role = role;
             EventUtils.registerRoleEvent(this);
             this.edoTenseis = new LinkedHashMap<>();
