@@ -4,10 +4,11 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Lames;
-import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
+import fr.nicknqck.roles.ds.demons.lune.KokushiboV2;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -16,6 +17,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class DemonKingEvent extends Event {
 
@@ -65,8 +68,8 @@ public class DemonKingEvent extends Event {
                     if (RandomUtils.getOwnRandomProbability(50)) {
                         for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
                             if (gamePlayer.getRole() != null) {
-                                if (gamePlayer.getRole() instanceof Kokushibo) {
-                                    Kokushibo kokushibo = (Kokushibo) gamePlayer.getRole();
+                                if (gamePlayer.getRole() instanceof KokushiboV2) {
+                                    KokushiboV2 kokushibo = (KokushiboV2) gamePlayer.getRole();
                                     Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous sentez des pulsions montez en vous..."), 20);
                                     Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous devennez de plus en plus aigri..."), 20*5);
                                     Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> {
@@ -79,7 +82,7 @@ public class DemonKingEvent extends Event {
                                             kokushibo.setMaxHealth(30.0);
                                         }
                                         kokushibo.getGamePlayer().sendMessage("Vous posséderez maintenant l'effet "+AllDesc.Resi+" 1 pendant 3 minutes en tuant un joueur");
-                                        kokushibo.solo = true;
+                                        kokushibo.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 0, false, false), EffectWhen.AT_KILL);
                                         Player owner = Bukkit.getPlayer(kokushibo.getPlayer());
                                         if (owner != null) {
                                             owner.setMaxHealth(kokushibo.getMaxHealth());
