@@ -148,9 +148,6 @@ public class SlayerSolo extends DemonsSlayersRoles {
     }
 
     @Override
-    public void resetCooldown() {}
-
-    @Override
     public ItemStack[] getItems() {
         return new ItemStack[] {
                 sword
@@ -181,13 +178,13 @@ public class SlayerSolo extends DemonsSlayersRoles {
             if (!event.getDamager().getUuid().equals(getRole().getPlayer()))return;
             if (this.using) {
                 if (this.taped.contains(event.getVictim().getUuid()))return;
-                Player victim = event.getVictim().getRole().owner;
+                Player victim = (Player) event.getOriginEvent().getEntity();
                 victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false));
                 if (victim.getHealth() - 4.0 <= 0.0) {
                      victim.damage(9999.0, event.getOriginEvent().getDamager());
                 } else {
                     victim.setHealth(victim.getHealth()-4.0);
-                    victim.damage(0.0);
+                    victim.damage(0.0, event.getOriginEvent().getDamager());
                 }
                 victim.sendMessage("§7Vous subissez une§e foudre§c très puissante§7.");
                 this.taped.add(event.getVictim().getUuid());
