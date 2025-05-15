@@ -9,6 +9,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.titans.impl.MachoireV2;
+import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.math.BigDecimal;
@@ -155,6 +157,13 @@ public class Patch implements Listener{
 	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, boolean effect) {
 		if (effect) {
 			double resi = reiPercent/100;
+			final Player entity = (Player) event.getEntity();
+			for (final PotionEffect potionEffect : entity.getActivePotionEffects()) {
+				if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
+					resi = (double) (20 * (potionEffect.getAmplifier() + 1)) /100;
+					break;
+				}
+			}
 			resi = 1-resi;
 			event.setDamage(event.getDamage()*resi);
 		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch la l'effet de rési car il est de base dans les valeurs que je veux
