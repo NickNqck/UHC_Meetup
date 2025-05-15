@@ -11,7 +11,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.demons.lune.Kokushibo;
+import fr.nicknqck.roles.ds.demons.lune.KokushiboV2;
 import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -26,7 +26,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -47,11 +46,6 @@ public class MuzanV2 extends DemonsRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Muzan";
     }
@@ -67,14 +61,9 @@ public class MuzanV2 extends DemonsRoles implements Listener {
     }
 
     @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
-    }
-
-    @Override
     public void RoleGiven(GameState gameState) {
-        addKnowedRole(Kokushibo.class);
-        getGamePlayer().startChatWith("§cMuzan: ", "!", Kokushibo.class);
+        addKnowedRole(KokushiboV2.class);
+        getGamePlayer().startChatWith("§cMuzan: ", "!", KokushiboV2.class);
         addPower(new RegenPower(this));
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.NIGHT);
