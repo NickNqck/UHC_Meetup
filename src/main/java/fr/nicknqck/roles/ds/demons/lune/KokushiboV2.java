@@ -288,7 +288,10 @@ public class KokushiboV2 extends DemonsRoles {
                     direction.normalize();
 
                     // Position 2 blocs devant le joueur dans la direction regardée
-                    Location center = location.clone().add(direction.multiply(2));
+                    Location center = location.clone();
+                    if (this.lastLoc.distance(location) >= 1){
+                        center = location.clone().add(direction.multiply(2));
+                    }
 
                     // Paramètres du croissant
                     double outerRadius = 5.0;
