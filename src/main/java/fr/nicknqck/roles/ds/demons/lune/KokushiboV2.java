@@ -261,10 +261,12 @@ public class KokushiboV2 extends DemonsRoles {
                 private final Player player;
                 private int count = 0;
                 private Location lastLoc;
+                private final List<UUID> alreadyTouched = new ArrayList<>();
 
                 private MoonRunnable(Player player) {
                     this.player = player;
                     this.lastLoc = player.getEyeLocation();
+                    this.alreadyTouched.add(player.getUniqueId());
                 }
 
                 @Override
@@ -321,9 +323,10 @@ public class KokushiboV2 extends DemonsRoles {
                             Bukkit.getScheduler().runTask(Main.getInstance(), () -> block.setType(Material.AIR));
                         }
                         for (Entity entity : world.getNearbyEntities(loc, 0.5, 0.5, 0.5)) {
-                            if (entity instanceof LivingEntity && entity.getUniqueId() != player.getUniqueId()) {
+                            if (entity instanceof LivingEntity && !this.alreadyTouched.contains(entity.getUniqueId())) {
                                 LivingEntity target = (LivingEntity) entity;
-
+                                this.alreadyTouched.add(target.getUniqueId());
+                                this.player.sendMessage("§c"+target.getName()+"§7 à subit votre§c Frappe Horizontal§7.");
                                 // Inflige les dégâts
                                 target.damage(0.0, player);
                                 target.setHealth(Math.max(1.0, target.getHealth()-4.0));
