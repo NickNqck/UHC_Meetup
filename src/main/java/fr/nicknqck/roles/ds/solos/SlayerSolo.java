@@ -128,11 +128,6 @@ public class SlayerSolo extends DemonsSlayersRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Pourfendeur Solitaire";
     }
@@ -180,15 +175,15 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 if (this.taped.contains(event.getVictim().getUuid()))return;
                 Player victim = (Player) event.getOriginEvent().getEntity();
                 victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false));
+                victim.sendMessage("§7Vous subissez une§e foudre§c très puissante§7.");
+                this.taped.add(event.getVictim().getUuid());
+                getRole().getGameState().spawnLightningBolt(victim.getWorld(), victim.getLocation());
                 if (victim.getHealth() - 4.0 <= 0.0) {
-                     victim.damage(9999.0, event.getOriginEvent().getDamager());
+                    victim.damage(9999.0, event.getOriginEvent().getDamager());
                 } else {
                     victim.setHealth(victim.getHealth()-4.0);
                     victim.damage(0.0, event.getOriginEvent().getDamager());
                 }
-                victim.sendMessage("§7Vous subissez une§e foudre§c très puissante§7.");
-                this.taped.add(event.getVictim().getUuid());
-                getRole().getGameState().spawnLightningBolt(victim.getWorld(), victim.getLocation());
             }
         }
         private static class EndFoudreRunnable extends BukkitRunnable {
