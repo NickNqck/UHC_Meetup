@@ -8,6 +8,7 @@ import fr.nicknqck.roles.ns.Chakra;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -20,21 +21,24 @@ import net.minecraft.server.v1_8_R3.DamageSource;
 
 public class Raiton implements Chakra {
 
+	private final List<UUID> Raiton = new ArrayList<>();
+
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity victim) {
 			if (Raiton.contains(event.getDamager().getUniqueId())) {
 				if (RandomUtils.getOwnRandomProbability(2)) {
 					GameState.getInstance().spawnLightningBolt(victim.getWorld(), victim.getLocation());
 					((CraftEntity) victim).getHandle().damageEntity(DamageSource.MAGIC, 1);
+					if (victim instanceof LivingEntity) {
+						((LivingEntity) victim).setHealth(Math.max(1.0, ((LivingEntity) victim).getHealth()-1.0));
+					}
 				}
 			}
 	}
-
 	@Override
 	public Chakras getChakres() {
 		return Chakras.RAITON;
 	}
-	private List<UUID> Raiton = new ArrayList<>();
 	@Override
 	public List<UUID> getList() {
 		return Raiton;
