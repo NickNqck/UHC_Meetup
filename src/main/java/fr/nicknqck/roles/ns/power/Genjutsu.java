@@ -32,6 +32,7 @@ public class Genjutsu extends ItemPower implements Listener {
     private final TsukuyomiPower tsukuyomi;
     private final AttaquePower attaque;
     private final IzanamiPower izanami;
+    private final boolean haveIzanami;
 
     public Genjutsu(@NonNull RoleBase role) {
         super("Genjutsu", null, new ItemBuilder(Material.NETHER_STAR)
@@ -51,6 +52,28 @@ public class Genjutsu extends ItemPower implements Listener {
         role.addPower(this.tsukuyomi);
         role.addPower(this.attaque);
         role.addPower(this.izanami);
+        this.haveIzanami = true;
+    }
+    public Genjutsu(@NonNull RoleBase role, boolean izanami) {
+        super("Genjutsu", null, new ItemBuilder(Material.NETHER_STAR)
+                        .setName("§cGenjutsu"), role,
+                "§7Vous permet d'ouvrir un menu vous permettant d'accéder à§c deux pouvoirs§7:",
+                "",
+                "§8 -§c Tsukuyomi§7: Vous permet de stun pendant§c 8 secondes§7 tout les joueurs autours de vous (§c30 blocs§7). (1x/10m)",
+                "",
+                "§8 -§c Attaque§7: Vous permet d'ouvrir un menu vous permettant de sélectionner un joueur, celà vous téléportera derrière ce joueur. (1x/5m)");
+        this.haveIzanami = izanami;
+        this.tsukuyomi = new TsukuyomiPower(role);
+        this.attaque = new AttaquePower(role);
+        if (izanami) {
+            this.izanami = new IzanamiPower(role);
+            role.addPower(this.izanami);
+        } else {
+            this.izanami = null;
+        }
+        EventUtils.registerRoleEvent(this);
+        role.addPower(this.tsukuyomi);
+        role.addPower(this.attaque);
     }
 
     @Override
@@ -59,9 +82,11 @@ public class Genjutsu extends ItemPower implements Listener {
             @NonNull final Inventory inv = Bukkit.createInventory(player, 27, "§7(§c!§7)§c Genjutsu");
             inv.setItem(11, new ItemBuilder(Material.ARMOR_STAND).setName("§cTsukuyomi").toItemStack());
             inv.setItem(13, new ItemBuilder(Material.FERMENTED_SPIDER_EYE).setName("§cAttaque").toItemStack());
-            inv.setItem(15, new ItemBuilder(Material.NETHER_STAR)
-                    .setName(getRole().getTeamColor()+"Izanami")
-                    .setLore(findListIzami()).toItemStack());
+            if (this.haveIzanami) {
+                inv.setItem(15, new ItemBuilder(Material.NETHER_STAR)
+                        .setName(getRole().getTeamColor()+"Izanami")
+                        .setLore(findListIzami()).toItemStack());
+            }
             player.openInventory(inv);
             return true;
         }
