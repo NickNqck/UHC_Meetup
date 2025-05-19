@@ -2,6 +2,8 @@ package fr.nicknqck.roles.ns.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -9,6 +11,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.akatsuki.ItachiV2;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -39,7 +42,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class SasukeSolo extends NSRoles implements IUchiwa {
+public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
+
+    private boolean itachiKill = false;
 
     public SasukeSolo(UUID player) {
         super(player);
@@ -83,6 +88,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa {
         addPower(new SusanoPower(this), true);
         addPower(new Rinnegan(this), true);
         setChakraType(Chakras.KATON);
+        EventUtils.registerRoleEvent(this);
     }
 
     @Override
@@ -90,7 +96,35 @@ public class SasukeSolo extends NSRoles implements IUchiwa {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
+                .addCustomLine(!itachiKill ? "§7En tuant§c Itachi§7 tout vos cooldown seront§c divisé§7 par§c deux§7." : "")
                 .getText();
+    }
+
+    @EventHandler
+    private void onUHCDeath(final UHCPlayerKillEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
+        if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;
+        if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
+        final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+        if (role instanceof ItachiV2 && ! this.itachiKill) {
+            this.itachiKill = true;
+            event.getGamePlayerKiller().sendMessage("§7Vous avez tué§c Itachi§7 vous obtenez donc un§c Caléidoscope hypnotique du sharingan Éternel");
+        }
+    }
+    @EventHandler
+    private void onPowerUse(final PowerActivateEvent event) {
+        if (event.getPlayer().getUniqueId().equals(getPlayer()) && this.itachiKill) {
+            if (event.getPower().getCooldown() == null)return;
+            //Vérification de si on est déjà en CD ou pas
+            if (!event.getPower().getCooldown().isInCooldown()) {
+                Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+                    //On vérifie que 15ticks après le pouvoir est en cd et que donc le pouvoir a bien été utilisé
+                    if (event.getPower().getCooldown().isInCooldown()) {
+                        event.getPower().getCooldown().setActualCooldown(event.getPower().getCooldown().getCooldownRemaining()/2);
+                    }
+                }, 15);
+            }
+        }
     }
 
     private static class KatanaRaiton extends ItemPower implements Listener{
@@ -126,7 +160,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa {
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            return player.getItemInHand() != null && player.getItemInHand().isSimilar(getItem());
+            return player.getItemInHand() != null && player.getItemInHand().isSimilar(getItem()) && getInteractType().equals(InteractType.ATTACK_ENTITY);
         }
         @EventHandler
         private void onBattle(final EntityDamageByEntityEvent event) {
