@@ -30,6 +30,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -130,7 +131,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
     private static class KatanaRaiton extends ItemPower implements Listener{
 
         public KatanaRaiton(@NonNull RoleBase role) {
-            super("Katana Raiton", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§5Katana Raiton"), role,
+            super("Katana Raiton", null, new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§5Katana Raiton"), role,
                     "§7Vous offre§c 5%§7 de chance d'infliger§e Raiton§7 en frappant un joueur");
             EventUtils.registerRoleEvent(this);
         }
