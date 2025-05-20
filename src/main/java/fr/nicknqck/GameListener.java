@@ -13,7 +13,7 @@ import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.demons.Susamaru;
+import fr.nicknqck.roles.ds.demons.SusamaruV2;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
@@ -39,7 +39,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -222,7 +221,7 @@ public class GameListener implements Listener {
 			}
 			if (gameState.inGameTime == gameState.roleTimer) {
 				gameState.setRoleAttributed(true);
-				RoleBase lastRoleGive = (RoleBase) Main.getInstance().getRoleManager().getRolesRegistery().get(Susamaru.class);
+				RoleBase lastRoleGive = (RoleBase) Main.getInstance().getRoleManager().getRolesRegistery().get(SusamaruV2.class);//Role par défaut
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null) {
@@ -797,32 +796,6 @@ public class GameListener implements Listener {
 					gameState.getGamePlayer().get(player.getUniqueId()).getRole().onLeftClick(event, gameState);
 				}
 			}
-				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-						if (!gameState.hasRoleNull(player.getUniqueId())) {
-							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
-			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
-			        				RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-									if (!(role instanceof Susamaru))return;
-		                			Susamaru sam = (Susamaru) role;
-		                			if (player != sam.owner)return;
-		                			if (sam.Niveau1 && !sam.Niveau2 && sam.changecd <= 0) {
-		                				sam.Niveau1 = false;
-		                				sam.Niveau2 = true;
-		                				sam.owner.sendMessage("Vous êtes passé au §6niveau 2");
-		                				sam.changecd = 1;
-		                			}
-		                			if (sam.Niveau2 && !sam.Niveau1 && sam.changecd <= 0) {
-		                				sam.Niveau1 = true;
-		                				sam.Niveau2 = false;
-		                				sam.changecd = 1;
-		                				sam.owner.sendMessage("Vous êtes passé au §6niveau 1");
-		                			}
-			        			}
-			        		}
-						}
-					}
-				}
 		}		
 	}	
 	@EventHandler
