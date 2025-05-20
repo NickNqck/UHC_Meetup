@@ -52,11 +52,11 @@ public class Loc {
 	    return new Location(world, newX, newY, newZ); // Création et retour de la nouvelle location
 	}
 
-    private static Vector getRightHeadDirection(Player player) {
+    public static Vector getRightHeadDirection(Player player) {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(-direction.getZ(), 0.0, direction.getX()).normalize();
     }
-    private static Vector getLeftHeadDirection(Player player) {
+    public static Vector getLeftHeadDirection(Player player) {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(direction.getZ(), 0.0, -direction.getX()).normalize();
     }
