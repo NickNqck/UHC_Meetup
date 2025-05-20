@@ -521,7 +521,7 @@ public class GameState{
 			role = new KagayaV2(player);
 			break;
 		case Susamaru:
-			role = new Susamaru(player);
+			role = new SusamaruV2(player);
 			break;
 		case Furuto:
 			role = new Furuto(player);
