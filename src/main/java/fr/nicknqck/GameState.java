@@ -533,7 +533,7 @@ public class GameState{
 			role = new Demon_SimpleV2(player);
 			break;
 		case Yahaba:
-			role = new Yahaba(player);
+			role = new YahabaV2(player);
 			break;
 		case Hotaru:
 			role = new HotaruV2(player);
