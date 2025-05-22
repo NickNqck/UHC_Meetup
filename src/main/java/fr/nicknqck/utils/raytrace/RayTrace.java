@@ -111,7 +111,7 @@ public class RayTrace
                 fr.nicknqck.utils.particles.MathUtil.sendParticleTo(player, EnumParticle.VILLAGER_HAPPY, position);
             }
             for (Entity entity : entities) {
-                if (entity instanceof Player && entity != player && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.2D)) {
+                if (entity instanceof Player && entity != player && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.01D)) {
                     final Player target = (Player) entity;
                     if (playerPredicate != null && !playerPredicate.test(target)) {
                         continue;
