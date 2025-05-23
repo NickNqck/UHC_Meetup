@@ -539,7 +539,7 @@ public class GameState{
 			role = new HotaruV2(player);
 			break;
 		case Kumo:
-			role = new Kumo(player);
+			role = new KumoV2(player);
 		break;
 		case Reiner:
 			role = new ReinerV2(player);

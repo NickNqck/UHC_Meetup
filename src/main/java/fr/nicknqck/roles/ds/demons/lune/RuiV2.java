@@ -8,7 +8,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Kumo;
+import fr.nicknqck.roles.ds.demons.KumoV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -336,7 +336,7 @@ public class RuiV2 extends DemonsRoles {
                     final List<GamePlayer> aroundPlayers = Loc.getNearbyGamePlayers(owner.getLocation(), 30);
                     for (final GamePlayer gamePlayer : aroundPlayers) {
                         if (gamePlayer.getRole() == null)continue;
-                        if (gamePlayer.getRole() instanceof Kumo) {
+                        if (gamePlayer.getRole() instanceof KumoV2) {
                             gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NOW);
                         }
                     }

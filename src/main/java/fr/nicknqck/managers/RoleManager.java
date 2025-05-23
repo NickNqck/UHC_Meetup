@@ -124,7 +124,7 @@ public class RoleManager {
         registerRole(Demon_SimpleV2.class);
         registerRole(DemonMain.class);
         registerRole(Furuto.class);
-        registerRole(Kumo.class);
+        registerRole(KumoV2.class);
         registerRole(MuzanV2.class);
         registerRole(SusamaruV2.class);
         registerRole(YahabaV2.class);
