@@ -8,6 +8,8 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.event.EventUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +21,11 @@ import java.util.List;
 import java.util.UUID;
 
 public abstract class DemonInferieurRole extends DemonsRoles implements Listener {
+
+    @Setter
+    @Getter
     private DemonsRoles lune;
+
     public DemonInferieurRole(UUID player) {
         super(player);
     }
