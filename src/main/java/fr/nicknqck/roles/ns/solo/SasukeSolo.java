@@ -145,8 +145,10 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
             if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && event.getDamager() instanceof Player && event.getEntity() instanceof LivingEntity) {
                 if (checkUse((Player) event.getDamager(), new HashMap<>())) {
                     LivingEntity victim = (LivingEntity) event.getEntity();
-                    victim.damage(1);
+                    victim.damage(0);
                     victim.setHealth(Math.max(1.0, victim.getHealth()-1.0));
+                    victim.getEyeLocation().getWorld().strikeLightningEffect(victim.getEyeLocation());
+                    event.getDamager().sendMessage("§7Votre§e Katana Raiton§7 à fait effet sur §c"+victim.getName());
                 }
             }
         }
@@ -155,7 +157,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
 
         public MilleOiseaux(@NonNull RoleBase role) {
             super("Mille Oiseaux", new Cooldown(150), new ItemBuilder(Material.NETHER_STAR).setName("§cMille Oiseaux"), role,
-                    "§7En frappant un joueur, vous permet de lui infliger§c 1❤§7 de§c dégâts§7 à travers l'§eabsorption§7 et la§9 Résistance§7 via un§e éclair");
+                    "§7En frappant un joueur, vous permet de lui infliger§c 1❤§7 de§c dégâts§7 via un§e éclair");
             EventUtils.registerRoleEvent(this);
         }
 
@@ -173,6 +175,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
                     victim.damage(0, player);
                     victim.setHealth(Math.max(1.0, victim.getHealth()-2.0));
                     victim.getWorld().strikeLightningEffect(victim.getEyeLocation());
+                    event.getDamager().sendMessage("§7Votre technique des§c Mille Oiseaux§7 à été utiliser contre§c "+victim.getName());
                 }
             }
         }
@@ -181,11 +184,11 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
 
         public Kirin(@NonNull RoleBase role) {
             super("Kirin", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cKirin"), role,
-                    "§7Pendant§c 10 secondes§7 toute les personnes autours de vous subissent§c -1❤§7 de§c dégâts§7 via un§e éclair§7 toute les§c secondes§7.",
+                    "§7Pendant§c 10 secondes§7 toute les personnes autours de vous subissent§c -1/2❤§7 de§c dégâts§7 via un§e éclair§7 toute les§c secondes§7.",
                     "",
                     "§7Au bout de§c 10 secondes§7, toute les personnes qui ont été touchés par le§c Kirin§7 recevront:",
                     "",
-                    "§8 -§c -2,5❤§7 de§c dégâts§7.",
+                    "§8 -§c -2❤§7 de§c dégâts§7.",
                     "§8 -§c Blindness 3§7 pendant§c 2 secondes§7.",
                     "§8 -§c Slowness 1§7 pendant§c 8 secondes");
         }
@@ -223,7 +226,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
                     for (final UUID uuid : this.uuidList) {
                         final Player player = Bukkit.getPlayer(uuid);
                         if (player == null)continue;
-                        player.setHealth(Math.max(1.0, player.getHealth()-5));
+                        player.setHealth(Math.max(1.0, player.getHealth()-4));
                         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 2, false ,false), true);
                         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*8, 0, false, false), true);
                         player.sendMessage("§eSasuke§7 vous inflige des effets complet de son§c Kirin§7.");
@@ -245,7 +248,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
                 for (final Player target : Loc.getNearbyPlayers(loc, 15)) {
                     if (target.getUniqueId().equals(this.role.getPlayer()))continue;
                     locationList.add(target.getLocation());
-                    target.setHealth(Math.max(1.0, target.getHealth()-2.0));
+                    target.setHealth(Math.max(1.0, target.getHealth()-1.0));
                     target.sendMessage("§eSasuke§7 vous inflige des effets partiel de son§c Kirin§7.");
                     this.uuidList.add(target.getUniqueId());
                 }
