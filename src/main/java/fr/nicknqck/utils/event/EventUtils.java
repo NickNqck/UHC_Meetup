@@ -2,6 +2,7 @@ package fr.nicknqck.utils.event;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -9,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,8 @@ import java.util.List;
 public class EventUtils implements Listener{
 
     private static final List<Listener> toUnregister = new ArrayList<>();
+    @Getter
+    private static final List<ItemStack> cantBeDrop = new ArrayList<>();
 
     public EventUtils() {
         registerEvents(this);
@@ -52,6 +57,12 @@ public class EventUtils implements Listener{
         for (Entity entity : Bukkit.getWorld("arena").getEntities()) {
             if (entity instanceof Player) {return;}
             entity.remove();
+        }
+    }
+    @EventHandler
+    private void onDie(final PlayerPickupItemEvent event) {
+        if (cantBeDrop.contains(event.getItem().getItemStack())) {
+            event.setCancelled(true);
         }
     }
 }

@@ -7,6 +7,7 @@ import fr.nicknqck.events.custom.power.UpdateActionBarEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @Getter
-public abstract class ItemPower extends Power{
+public abstract class ItemPower extends Power {
 
     private final ItemStack item;
     private InteractType interactType;
@@ -45,6 +46,7 @@ public abstract class ItemPower extends Power{
         } else {
             this.showCdRunnable = null;
         }
+        EventUtils.getCantBeDrop().add(this.item);
     }
     public void call(Object event) {
         if (event instanceof PlayerInteractEvent) {
