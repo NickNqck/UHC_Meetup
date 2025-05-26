@@ -46,7 +46,7 @@ public abstract class ItemPower extends Power {
         } else {
             this.showCdRunnable = null;
         }
-        EventUtils.getCantBeDrop().add(this.item);
+        EventUtils.getPowerCantBeDropMap().put(this.item, this);
     }
     public void call(Object event) {
         if (event instanceof PlayerInteractEvent) {
