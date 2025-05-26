@@ -33,7 +33,7 @@ public class Demon_SimpleV2 extends DemonInferieurRole {
 
 	@Override
 	public @NonNull Roles getRoles() {
-		return Roles.DemonSimpleV2;
+		return Roles.Demon;
 	}
 	@Override
 	public String[] Desc() {

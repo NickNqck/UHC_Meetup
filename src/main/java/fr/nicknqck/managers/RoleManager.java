@@ -120,8 +120,7 @@ public class RoleManager {
         registerRole(KokushiboV2.class);
         registerRole(Nakime.class);
         registerRole(RuiV2.class);
-        registerRole(Demon_Simple.class);
-        registerRole(Demon_SimpleV2.class);
+        registerRole(DemonSimple.class);
         registerRole(DemonMain.class);
         registerRole(Furuto.class);
         registerRole(KumoV2.class);
