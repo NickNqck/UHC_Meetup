@@ -520,7 +520,7 @@ public class GameState{
 			role = new SusamaruV2(player);
 			break;
 		case Furuto:
-			role = new Furuto(player);
+			role = new FurutoV2(player);
 			break;
 		case JigoroV2:
 			role = new JigoroV2(player);
