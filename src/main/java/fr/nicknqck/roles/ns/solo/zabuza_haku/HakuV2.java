@@ -14,6 +14,7 @@ import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
@@ -21,6 +22,7 @@ import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -105,6 +107,7 @@ public class HakuV2 extends NSRoles {
 
             private final HyotonPower power;
             private final Cooldown tpCD = new Cooldown(2);
+            private Location centerLocation;
 
             public HyotonItem(@NonNull final HyotonPower power) {
                 super("Hyôton", power.cooldown, new ItemBuilder(Material.NETHER_STAR).setName("§bHyôton"), power.getRole(),
@@ -121,8 +124,10 @@ public class HakuV2 extends NSRoles {
                         nouveau.setActualCooldown(old.getCooldownRemaining());
                     }
                     this.power.cooldown = nouveau;
+                    setCooldown(nouveau);
                     this.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
                     this.power.zabuzaDEAD = true;
+                    this.power.getRole().getGamePlayer().sendMessage("§bZabuza§c n'étant pas dans la partie, vous avez récupéré le bonus dû à sa mort");
                 }, 20*10);
             }
 
@@ -132,34 +137,46 @@ public class HakuV2 extends NSRoles {
                     if (!getCooldown().isInCooldown()) {
                         for (@NonNull final Location location : sphere(player.getLocation())) {
                             if (location.getBlock() == null)continue;
-                            final Material type = location.getBlock().getType();
-                            if (type.equals(Material.AIR) || type.equals(Material.YELLOW_FLOWER) ||type.equals(Material.RED_ROSE) || type.equals(Material.LONG_GRASS)) {
-                                location.getBlock().setType(Material.PACKED_ICE);
-                                this.power.blockList.add(location.getBlock());
-                            }
+                            location.getBlock().setType(Material.PACKED_ICE);
+                            this.power.blockList.add(location.getBlock());
                         }
                         player.sendMessage("§7Activation du§b Hyôton§7.");
                         new HyotonRunnable(getRole().getGameState(), this);
+                        this.centerLocation = player.getLocation();
                         return true;
                     } else {
                         if (!this.power.blockList.isEmpty()) {
-                            if (this.tpCD.isInCooldown()) {
+                            if (this.tpCD.isInCooldown() || this.centerLocation == null) {
                                 return false;
                             }
-                            final RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
+                            final RayTrace rayTrace = new RayTrace(player.getLocation().toVector(), player.getEyeLocation().getDirection());
                             final List<Vector> positions = rayTrace.traverse(30, 0.2D);
-                            Block prevBlock = null;
-                            for (Vector vector : positions) {
-                                final Location position = vector.toLocation(player.getWorld());
-                                if (position.getBlock().getType().equals(Material.AIR) || prevBlock == null) {
-                                    prevBlock = position.getBlock();
+                            Block one = null;
+                            Block two = null;
+                            Block ice = null;
+                            Block three = null;
+                            for (final Vector vector : positions) {
+                                final Location location = vector.toLocation(player.getWorld());
+                                final Block block = location.getBlock();
+                                if (one != null && two != null && ice != null && three != null) {
                                     continue;
                                 }
-                                prevBlock.getLocation().setPitch(player.getEyeLocation().getPitch());
-                                prevBlock.getLocation().setYaw(player.getEyeLocation().getYaw());
+                                if (!block.getType().equals(Material.AIR)) {
+                                    ice = block;
+                                } else {
+                                    if (ice == null) {
+                                        one = block;
+                                    } else if (two == null){
+                                        two = block;
+                                    } else if (one != null) {
+                                        three = block;
+                                    }
+                                }
+                                MathUtil.sendParticle(EnumParticle.FLAME, block.getLocation());
+                            }
+                            if (one != null && ice != null && three != null) {
+                                player.teleport(one.getLocation());
                                 this.tpCD.use();
-                                player.teleport(prevBlock.getLocation());
-                                break;
                             }
                         } else {
                             player.sendMessage("§bVous êtes en cooldown: §c"+ StringUtils.secondsTowardsBeautiful(this.getCooldown().getCooldownRemaining()));
@@ -189,8 +206,10 @@ public class HakuV2 extends NSRoles {
             }
             @EventHandler
             private void onFall(EntityDamageEvent event) {
-                if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && event.getEntity().getUniqueId().equals(getRole().getPlayer()) && !this.power.blockList.isEmpty()) {
-                    event.setCancelled(true);
+                if (event.getEntity().getUniqueId().equals(getRole().getPlayer()) && !this.power.blockList.isEmpty()) {
+                    if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL) || event.getCause().equals(EntityDamageEvent.DamageCause.SUFFOCATION)) {
+                        event.setCancelled(true);
+                    }
                 }
             }
             @EventHandler
