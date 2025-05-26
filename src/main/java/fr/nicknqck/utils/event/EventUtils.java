@@ -3,6 +3,8 @@ package fr.nicknqck.utils.event;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.power.PowerItemRecupEvent;
+import fr.nicknqck.utils.powers.ItemPower;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -14,14 +16,16 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 public class EventUtils implements Listener{
 
     private static final List<Listener> toUnregister = new ArrayList<>();
     @Getter
-    private static final List<ItemStack> cantBeDrop = new ArrayList<>();
+    private static final Map<ItemStack, ItemPower> powerCantBeDropMap = new HashMap<>();
 
     public EventUtils() {
         registerEvents(this);
@@ -61,8 +65,12 @@ public class EventUtils implements Listener{
     }
     @EventHandler
     private void onDie(final PlayerPickupItemEvent event) {
-        if (cantBeDrop.contains(event.getItem().getItemStack())) {
-            event.setCancelled(true);
+        if (powerCantBeDropMap.containsKey(event.getItem().getItemStack())) {
+            final PowerItemRecupEvent powerItemRecupEvent = new PowerItemRecupEvent(event.getItem(), event.getItem().getItemStack(), powerCantBeDropMap.get(event.getItem().getItemStack()));
+            Bukkit.getPluginManager().callEvent(powerItemRecupEvent);
+            if (!powerItemRecupEvent.isCancelled()){
+                event.setCancelled(true);
+            }
         }
     }
 }
