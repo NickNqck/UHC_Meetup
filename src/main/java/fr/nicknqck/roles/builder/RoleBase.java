@@ -131,7 +131,6 @@ public abstract class RoleBase implements IRole {
 					}
 				}
 			}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
-			setTeam(getOriginTeam());
 		}
 	}
 	@Override

@@ -96,6 +96,7 @@ public class Main extends JavaPlugin {
 	private BijuManager bijuManager;
 	private TabManager tabManager;
 	private HokageManager hokageManager;
+	private InfoManager infoManager;
 
     @Override
 	public void onEnable() {
@@ -109,6 +110,7 @@ public class Main extends JavaPlugin {
 		this.gameConfig = new GameConfig();
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
+		saveDefaultConfig();
 		registerEvents(gameState);
 		World arena = Bukkit.getWorld("arena");
 		if (arena == null) {
@@ -144,6 +146,7 @@ public class Main extends JavaPlugin {
 		this.titanManager = new TitanManager();
 		this.bijuManager = new BijuManager();
 		this.tabManager = new TabManager();
+		this.infoManager = new InfoManager(getDataFolder());
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -230,6 +233,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
 		WorldListener worldListener = new WorldListener();
 		getServer().getPluginManager().registerEvents(worldListener, this);
+		getServer().getPluginManager().registerEvents(new InfoListener(), this);
 		this.worldListener = worldListener;
 	}
 	private void registerCommands(GameState gameState) {
@@ -256,6 +260,7 @@ public class Main extends JavaPlugin {
 		getCommand("setting").setExecutor(settingsCommand);
 		getCommand("settings").setExecutor(settingsCommand);
 		Bukkit.getPluginManager().registerEvents(settingsCommand, this);
+		getCommand("info").setExecutor(new InfoCommand());
 	/*	getCommand("role").setExecutor(new RoleCommand());
 		getCommand("role").setTabCompleter(new RoleTabComplete());
 		getCommand("team").setExecutor(new TeamCommand());

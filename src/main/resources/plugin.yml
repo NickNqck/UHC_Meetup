@@ -61,3 +61,6 @@ commands:
   team:
     description: Permet d'afficher dans votre tab une team devant le nom d'un joueur
     usage: /team <Nom d'une équipe> <joueur1> <joueur2> ect
+  info:
+    description: Permet d'obtenir vos propres informations
+    usage: /info
