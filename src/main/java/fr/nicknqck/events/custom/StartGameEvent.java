@@ -15,12 +15,13 @@ public class StartGameEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final GameState gameState;
-    private final List<UUID> inGamePlayers = new ArrayList<>();
+    private final List<UUID> inGamePlayers;
     private final List<GameState.Roles> igRoles;
 
     public StartGameEvent(GameState gameState, List<GameState.Roles> rolesList) {
         this.gameState = gameState;
         this.igRoles = rolesList;
+        this.inGamePlayers = new ArrayList<>(gameState.getInGamePlayers());
     }
 
     @Override
