@@ -69,7 +69,7 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
     @EventHandler
     private void onDamage(EntityDamageEvent event) {
         if (event.getEntity().getUniqueId().equals(getPlayer()) && resistance) {
-            event.setDamage(event.getDamage()*0.85);
+            event.setDamage(event.getDamage()*0.95);
         }
     }
 
@@ -80,8 +80,8 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
                 .setPowers(getPowers())
                 .addCustomLine("§7En tuant un joueur, vous recevrez§c 3%§7 de§c force§7.")
                 .addCustomLine("§7Lorsque vous êtes proche de votre§c Lune Supérieur§7,\n" +
-                        "§7Si c'est le§e jour§7 vous ne recevrez pas votre effet§8 Weakness§7 mais l'effet§c Force§7,\n" +
-                        "§7Si c'est la§c nuit§7 vous recevrez§c 15%§7 de§c dégâts§7 en moins.")
+                        "§7Si c'est le§e jour§7 vous ne recevrez pas votre effet§8 Weakness§7,\n" +
+                        "§7Si c'est la§c nuit§7 vous recevrez§c 5%§7 de§c dégâts§7 en moins.")
                 .getText();
     }
 
@@ -107,7 +107,6 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                     if (!this.gameState.isNightTime()) {
                         player.removePotionEffect(PotionEffectType.WEAKNESS);
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), true);
                     } else {
                         this.demonSimple.resistance = true;
                     }
