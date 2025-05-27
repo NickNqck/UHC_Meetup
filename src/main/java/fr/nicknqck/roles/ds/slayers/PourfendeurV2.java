@@ -67,7 +67,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             List<Soufles> allSoufles = new ArrayList<>(Arrays.asList(Soufles.values()));
             allSoufles.remove(Soufles.RIEN);
             Collections.shuffle(allSoufles, Main.RANDOM);
@@ -214,7 +214,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                     allSoufles.removeAll(this.souflesList);
                     Collections.shuffle(allSoufles, Main.RANDOM);
                     Soufles soufle = allSoufles.get(0);
-                    giveSoufle(soufle);
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> giveSoufle(soufle));
                 }
             }
         }
