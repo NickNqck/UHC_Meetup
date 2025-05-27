@@ -7,6 +7,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -17,10 +18,8 @@ import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_8_R3.EntityWolf;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftWolf;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -28,7 +27,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -104,7 +102,7 @@ public class FurutoV2 extends DemonInferieurRole {
                     if (gamePlayer.getRole() == null)continue;
                     final Player p = Bukkit.getPlayer(gamePlayer.getUuid());
                     final Bonus bonus;
-                    if (gamePlayer.getRole().getTeam().equals(TeamList.Demon) || gamePlayer.getRole() instanceof NezukoV2) {
+                    if (gamePlayer.getRole().getTeam().equals(TeamList.Demon) || gamePlayer.getRole() instanceof NezukoV2 || gamePlayer.getRole() instanceof DemonsRoles) {
                         bonus = getBonus(RandomUtils.getRandomInt(0, 2));
                     } else {
                         bonus = getBonus(RandomUtils.getRandomInt(3, 4));
@@ -112,6 +110,7 @@ public class FurutoV2 extends DemonInferieurRole {
                     bonus.consumer.accept(p);
                     new BonusRunnable(getRole().getGameState(), bonus, gamePlayer, p, this);
                     player.sendMessage("§7Vous avez toucher§c "+p.getName()+"§7 avec votre§c Flûte§7.");
+                    p.sendMessage("§7Vous avez entendu la§c Flûte§7 de§c Furuto");
                 }
                 return true;
             }
@@ -210,7 +209,7 @@ public class FurutoV2 extends DemonInferieurRole {
 
         public ChiensPower(@NonNull RoleBase role) {
             super("/ds chiens", "chiens", new Cooldown(60*7), role, CommandType.DS,
-                    "§7Fait apparaitre§c 3 chiens§7 ayant chacun les effets§c Force I§7 (vanilla) et§e Speed III§7, ils auront également§c 40❤ permanents");
+                    "§7Fait apparaitre§c 3 chiens§7 ayant chacun les effets§c Force I§7 (vanilla) et§e Speed III§7, ils auront également§c 25❤ permanents");
             setMaxUse(2);
         }
 
@@ -227,7 +226,7 @@ public class FurutoV2 extends DemonInferieurRole {
                 wolf.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false));
                 wolf.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false));
                 wolf.setSitting(false);
-                wolf.setMaxHealth(80);
+                wolf.setMaxHealth(50);
                 wolf.setHealth(wolf.getMaxHealth());
                 new WolfRunnable(wolf, player).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
             }
