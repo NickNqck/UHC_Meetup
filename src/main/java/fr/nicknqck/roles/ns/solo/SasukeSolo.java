@@ -63,7 +63,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
 
     @Override
     public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Sasuke;
+        return GameState.Roles.SasukeSOLO;
     }
 
     @Override
