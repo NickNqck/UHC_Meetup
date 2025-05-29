@@ -14,7 +14,7 @@ public enum TeamList {
 	Soldat("§a", "§aSoldat"),
 	Alliance("§6", "§6Kyojuro - Shinjuro"),
 	Jubi("§d", "§dJubi"),
-	Orochimaru("§5", "§6Orochimaru"),
+	Orochimaru("§5", "§5Orochimaru"),
 	Akatsuki("§c", "§cAkatsuki"),
 	Sasuke("§e§l", "§e§lSasuke"),
 	Zabuza_et_Haku("§b", "§bZabuza et Haku"),
