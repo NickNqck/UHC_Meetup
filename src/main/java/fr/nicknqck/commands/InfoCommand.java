@@ -4,7 +4,9 @@ import fr.nicknqck.Main;
 import fr.nicknqck.player.PlayerInfo;
 import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Statistic;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -59,18 +61,7 @@ public class InfoCommand implements CommandExecutor {
     }
 
     private void displayInfo(Player viewer, String name, PlayerInfo info) {
-        StringBuilder obtenedRoles = new StringBuilder();
         StringBuilder obtenedTeams = new StringBuilder();
-        for (Map.Entry<String, Integer> entry : info.getRolesPlayed().entrySet()) {
-            String string = entry.getKey();
-            for (final IRole iRole : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
-                if (iRole.getName().equals(string)) {
-                    string = iRole.getRoles().getItem().getItemMeta().getDisplayName();
-                    break;
-                }
-            }
-            obtenedRoles.append("§7").append(string).append("§7: §a").append(entry.getValue()).append(" fois\n");
-        }
         for (Map.Entry<TeamList, Integer> entry : info.getTeamPlayed().entrySet()) {
             String string = entry.getKey().getName();
             obtenedTeams.append("§7").append(string).append("§7: §a").append(entry.getValue()).append(" fois\n");
@@ -78,20 +69,25 @@ public class InfoCommand implements CommandExecutor {
         viewer.sendMessage(new String[]{
                 "§e--- Statistiques de " + name + " ---",
                 "§7Connexions: §a" + info.getJoinCount(),
-                "§7Déconnexions: §a" + info.getQuitCount(),
-                "§7Entités tuées: §a" + info.getEntitiesKilled(),
+                "§7Temp en jeu: §a" + StringUtils.secondsTowardsBeautiful(info.getTimePlayed()),
                 "§7Flèches tirées: §a" + info.getArrowsShot(),
                 "§7Nombre de changement de camp:§a "+info.getAmountTeamChange(),
+                "§7Nombre de game joué:§a "+info.getGamePlayed(),
+                "§7Nombre de game gagner: §a"+info.getGameWin(),
+                "§7Nombre de game perdu:§a "+info.getGameLoose(),
+                "§7Kills totaux:§a "+info.getTotalKills(),
+                "§7Morts totals:§a "+info.getDeaths(),
+                "§7Ratio K/D: §a"+info.getKDRatio(),
+                "§7Joueur le plus tué: "+info.getMostKilledPlayerName(),
+                "",
                 "",
                 "§7Camps obtenus: ",
                 "",
                 obtenedTeams.toString(),
                 "",
-                "§7Rôles obtenus: ",
-                "",
-                obtenedRoles.toString()
-
+                Main.getInstance().getInfoManager().getMostPlayedRoleInfo(info.getUuid())
         });
+
 
     }
 }

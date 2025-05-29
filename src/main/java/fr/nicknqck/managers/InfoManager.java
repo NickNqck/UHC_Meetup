@@ -2,6 +2,7 @@ package fr.nicknqck.managers;
 
 import com.google.gson.Gson;
 import fr.nicknqck.player.PlayerInfo;
+import org.bukkit.Bukkit;
 
 import java.io.*;
 import java.util.*;
@@ -15,7 +16,11 @@ public class InfoManager {
     public InfoManager(File dataFolder) {
         this.playerDataFolder = new File(dataFolder, "playerdata");
         if (!playerDataFolder.exists()) {
-            playerDataFolder.mkdirs();
+            if (!playerDataFolder.mkdirs()) {
+                Bukkit.getLogger().info("[InfoManager] couldn't create dataFolder");
+            } else {
+                Bukkit.getLogger().info("[InfoManager] Successfully created dataFolder !");
+            }
         }
         loadAll();
     }
@@ -45,7 +50,7 @@ public class InfoManager {
     public void load(UUID uuid) {
         File file = new File(playerDataFolder, uuid.toString() + ".json");
         if (!file.exists()) {
-            data.put(uuid, new PlayerInfo());
+            data.put(uuid, new PlayerInfo(uuid));
             save(uuid);
             return;
         }
@@ -74,5 +79,28 @@ public class InfoManager {
                 System.out.println("Fichier invalide ignoré : " + name);
             }
         }
+    }
+    public String getMostPlayedRoleInfo(final UUID uuid) {
+        final PlayerInfo info = getPlayerInfo(uuid);
+        if (info.getRolesPlayed().isEmpty()) return "Aucun rôle joué pour le moment.";
+
+        String mostPlayedRole = null;
+        int maxCount = 0;
+        int total = 0;
+
+        for (Map.Entry<String, Integer> entry : info.getRolesPlayed().entrySet()) {
+            int count = entry.getValue();
+            total += count;
+
+            if (count > maxCount) {
+                mostPlayedRole = entry.getKey();
+                maxCount = count;
+            }
+        }
+
+        if (mostPlayedRole == null || total == 0) return "Aucun rôle joué pour le moment.";
+
+        double percentage = (maxCount * 100.0) / total;
+        return "§7Rôle le plus joué : §e" + mostPlayedRole + " §7(" + maxCount + " fois, " + String.format("%.2f", percentage) + "%)";
     }
 }
