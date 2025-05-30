@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EffectGiveEvent;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -14,7 +15,6 @@ import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.TapisSableEffect;
-import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
@@ -92,12 +92,21 @@ public class GaaraV2 extends NSRoles implements Listener{
         this.reserve++;
         getGamePlayer().getActionBarManager().updateActionBar("gaara.sablecount", "§eSable(s): "+this.reserve);
     }
+    @EventHandler
+    private void onKill(final UHCPlayerKillEvent event) {
+        if (event.getKiller().getUniqueId().equals(getPlayer())) {
+            event.getKiller().sendMessage("§7Vous avez gagner§e 128 sables§7.");
+            this.reserve+=128;
+        }
+    }
 
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
+                .addCustomLine("§7Vous commencez la partie avec§e 128 sables§7, toute les secondes vous en gagner§c 1§7.")
+                .addCustomLine("§7En tuant un joueur, vous récupérez§e 128 sables§7.")
                 .getText();
     }
     private static class ShukakuPower extends ItemPower implements Listener {
@@ -106,7 +115,8 @@ public class GaaraV2 extends NSRoles implements Listener{
         private int timeLeft = -1;
 
         public ShukakuPower(@NonNull GaaraV2 role) {
-            super("Shukaku", new Cooldown(60*20), new ItemBuilder(Material.INK_SACK).setDurability(11).setName("§eShukaku"), role);
+            super("Shukaku", new Cooldown(60*20), new ItemBuilder(Material.INK_SACK).setDurability(11).setName("§eShukaku"), role,
+                    "§7Pendant§c 5 minutes§7, vous donne l'effet§c Force I§7, également, vos technique utiliseront§c 2x moins§7 de§e sable§7. (1x/20m)");
             this.gaaraV2 = role;
             EventUtils.registerRoleEvent(this);
         }
@@ -246,7 +256,6 @@ public class GaaraV2 extends NSRoles implements Listener{
         private void onDamage(EntityDamageEvent event) {
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
                 this.tookDamage = true;
-                System.out.println("Gaara: tookDamage = true");
             }
         }
         @EventHandler
@@ -616,24 +625,6 @@ public class GaaraV2 extends NSRoles implements Listener{
                                 .toItemStack());
                 return true;
             }
-        }
-    }
-    private static class NSConvertCommand extends CommandPower {
-
-        private final GaaraV2 gaaraV2;
-
-        public NSConvertCommand(@NonNull GaaraV2 role) {
-            super("/ns convert", "convert", null, role, CommandType.NS);
-            this.gaaraV2 = role;
-        }
-
-        @Override
-        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            int amount = GlobalUtils.getItemAmount(player, Material.SAND);
-            player.sendMessage("Vous venez de gagner§e "+amount+" sable");
-            this.gaaraV2.reserve += amount;
-            player.getInventory().remove(Material.SAND);
-            return true;
         }
     }
 }
