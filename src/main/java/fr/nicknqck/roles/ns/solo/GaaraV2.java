@@ -131,6 +131,7 @@ public class GaaraV2 extends NSRoles implements Listener{
             } else if (this.timeLeft == 0) {
                 this.gaaraV2.getGamePlayer().getActionBarManager().removeInActionBar("gaara.shukaku");
                 this.gaaraV2.getGamePlayer().sendMessage("§7Vous n'êtes plus sous l'effet de§e Shukaku§7.");
+                this.timeLeft--;
             }
         }
     }
@@ -245,6 +246,7 @@ public class GaaraV2 extends NSRoles implements Listener{
         private void onDamage(EntityDamageEvent event) {
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
                 this.tookDamage = true;
+                System.out.println("Gaara: tookDamage = true");
             }
         }
         @EventHandler
@@ -292,9 +294,7 @@ public class GaaraV2 extends NSRoles implements Listener{
                 player.setFlying(true);
                 player.setFlySpeed(0.1F);
                 player.sendMessage("§7Vous pouvez désormais voler !");
-                this.defensePower.tookDamage = false;
                 getRole().getGamePlayer().getActionBarManager().addToActionBar("gaara.suspension", "§7Vous pouvez voler pendant encore §c"+ StringUtils.secondsTowardsBeautiful(20));
-                new TapisSableEffect(20*20, EnumParticle.REDSTONE, 255, 183, 0).start(player);
                 new SuspensionRunnable(this, player);
                 return true;
             }
@@ -302,27 +302,29 @@ public class GaaraV2 extends NSRoles implements Listener{
 
                 private final SuspensionPower suspensionPower;
                 private final Player player;
+                private final TapisSableEffect tapisSableEffect;
                 private int timer = 20*20;
 
                 private SuspensionRunnable(SuspensionPower suspensionPower, Player player) {
                     this.suspensionPower = suspensionPower;
                     this.player = player;
+                    this.tapisSableEffect = new TapisSableEffect(20*20, EnumParticle.REDSTONE, 255, 183, 0);
                     runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+                    this.tapisSableEffect.start(player);
                 }
 
                 @Override
                 public void run() {
-                    if(this.suspensionPower.defensePower.tookDamage) {
-                        player.sendMessage("&aVotre pouvoir a été annulé.");
-                        cancel();
-                        return;
-                    }
                     if(player.getGameMode() != GameMode.SPECTATOR) {
                         this.suspensionPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("gaara.suspension", "§7Vous pouvez voler pendant encore §c" + StringUtils.secondsTowardsBeautiful(timer/20));
-
-                        if (timer == 0){
-                            player.setFlying(false);
-                            player.setAllowFlight(false);
+                        if (timer == 0 || this.suspensionPower.defensePower.tookDamage){
+                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                player.setFlying(false);
+                                player.setAllowFlight(false);
+                                this.tapisSableEffect.cancel();
+                            });
+                            this.suspensionPower.getRole().getGamePlayer().getActionBarManager().removeInActionBar("gaara.suspension");
+                            player.sendMessage("§7Vous ne pouvez plus voler");
                             cancel();
                         }
                         timer--;

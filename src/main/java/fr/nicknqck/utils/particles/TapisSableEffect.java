@@ -16,6 +16,7 @@ public class TapisSableEffect extends ParticleEffect {
 	private final EnumParticle particle;
 
 	private final int r, g, b;
+	private boolean cancel = false;
 
 	public TapisSableEffect(int timeInTicks, EnumParticle effect, int r, int g, int b) {
 		super(timeInTicks);
@@ -33,7 +34,7 @@ public class TapisSableEffect extends ParticleEffect {
 			@Override
 			public void run() {
 				
-				if(player.getGameMode() == GameMode.SPECTATOR) cancel();
+				if(player.getGameMode() == GameMode.SPECTATOR || cancel) cancel();
 				
 				if (ticks > getTimeInTicks())
 					cancel();
@@ -49,6 +50,10 @@ public class TapisSableEffect extends ParticleEffect {
 				ticks++;
 			}
 		}.runTaskTimer(Main.getInstance(), 0, 1);
+	}
+
+	public void cancel() {
+		this.cancel = true;
 	}
 
 }
