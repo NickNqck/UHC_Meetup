@@ -2,11 +2,9 @@ package fr.nicknqck.commands;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.player.PlayerInfo;
-import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Statistic;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
