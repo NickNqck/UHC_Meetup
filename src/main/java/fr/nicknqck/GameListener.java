@@ -359,8 +359,8 @@ public class GameListener implements Listener {
 						String win = winer == null ? "§cDéconnecter" : winer.getName();
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
 						assert winer != null;
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
-						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().name();
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
+						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName();
                         SendToEveryone(Vainqueurs);
 					}
 				}
@@ -395,7 +395,7 @@ public class GameListener implements Listener {
 						}
 						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
 					} else {
-						SendToEveryone(role1.getTeamColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeamColor()+role1.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill");
+						SendToEveryone(role1.getTeamColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName()+"§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill");
 					}
 				}
 			}
