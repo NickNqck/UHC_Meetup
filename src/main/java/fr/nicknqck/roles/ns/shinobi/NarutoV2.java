@@ -34,7 +34,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.Map;
 import java.util.UUID;
@@ -86,7 +85,14 @@ public class NarutoV2 extends ShinobiRoles {
         private final Cooldown cooldown;
 
         private KyubiPower(@NonNull RoleBase role) {
-            super("Kyubi", new Cooldown(60*20), new ItemBuilder(Material.INK_SACK).setDurability(14).setName("§6Kyubi"), role);
+            super("Kyubi", new Cooldown(60*20), new ItemBuilder(Material.INK_SACK).setDurability(14).setName("§6Kyubi"), role,
+                    "§7Vous donne les effets§c Force I§7 et§e Speed II§7 pendant§c 5 minutes§7, également, vous permet en infligeant un coup à un joueur vous lui infligerez un \"§fCoup Spécial§7\".",
+                    "",
+                    "§fCoup Spécial:§7 (1x/30s) Vous permet d'infliger un malus au joueur frappé entre: ",
+                    "",
+                    "§8 -§7 Le coup mettra la personne en§c feu§7.",
+                    "",
+                    "§8 -§7 Le coup infligera§c 1/2❤§7 de§c dégâts§7 supplémentaire.");
             this.cooldown = new Cooldown(30);
             EventUtils.registerRoleEvent(this);
         }
@@ -124,7 +130,8 @@ public class NarutoV2 extends ShinobiRoles {
     private static class Rasengan extends ItemPower {
 
         protected Rasengan(@NonNull RoleBase role) {
-            super("Rasengan", new Cooldown(120), new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan"), role);
+            super("Rasengan", new Cooldown(120), new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan"), role,
+                    "§7En frappant un joueur, vous permet§a repousse le joueur§7 en lui infligeant§c 2❤§7 de§c dégâts");
         }
 
         @Override
@@ -159,7 +166,9 @@ public class NarutoV2 extends ShinobiRoles {
         private CloneRunnable cloneRunnable = null;
 
         public NSClone(@NonNull RoleBase role) {
-            super("/ns clone", "clone", new Cooldown(60*10), role, CommandType.NS);
+            super("/ns clone", "clone", new Cooldown(60*10), role, CommandType.NS,
+                    "§7Vous permet de faire apparaitre un§a villageois§7 portant le nom de§a Naruto§7, tant qu'il est en vie il accumule du temp,",
+                    "§7en refaisant la commande, vous obtiendrez les effets§e Speed I§7 et§c Force I§7 pendant le temp accumulé");
             EventUtils.registerRoleEvent(this);
             setWorkWhenInCooldown(true);
         }
