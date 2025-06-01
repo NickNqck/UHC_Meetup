@@ -736,7 +736,7 @@ public class GameState{
 			role = new WitherBoss(player);
 			break;
 		case Kurenai:
-			role = new Kurenai(player);
+			role = new KurenaiV2(player);
 			break;
 		case Shikamaru:
 			role = new Shikamaru(player);
