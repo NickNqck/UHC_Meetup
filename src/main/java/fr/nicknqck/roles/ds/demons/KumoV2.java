@@ -82,11 +82,13 @@ public class KumoV2 extends DemonInferieurRole {
     private static class PrisonPower extends ItemPower implements Listener {
 
         private final Map<Block, Material> blockMaterialMap = new LinkedHashMap<>();
-        private int timeLeft = 60;
+        private int timeLeft = 30;
         private int timeInside = 4;
 
         public PrisonPower(@NonNull RoleBase role) {
-            super("Prison de toile", new Cooldown(60*5), new ItemBuilder(Material.WEB).setName("§cPrison de toile"), role);
+            super("Prison de toile", new Cooldown(60*5), new ItemBuilder(Material.WEB).setName("§cPrison de toile"), role,
+                    "§7Crée un dôme fait en§c cobweb§7 pendant une durée de§c 30 secondes§7.",
+                            "§7Si vous êtes coincé dans vos propre toile d'araignée, le dôme disparaitra au bout de§c 4 secondes§7.");
             EventUtils.registerRoleEvent(this);
         }
 
@@ -151,7 +153,8 @@ public class KumoV2 extends DemonInferieurRole {
     private static class CoconPower extends ItemPower {
 
         public CoconPower(@NonNull RoleBase role) {
-            super("Cocon", new Cooldown(60*5), new ItemBuilder(Material.STRING).setName("§cCocon"), role);
+            super("Cocon", new Cooldown(60*5), new ItemBuilder(Material.STRING).setName("§cCocon"), role,
+                    "§7En visant un joueur, vous permet de lui mettre des§c cobweb§7 la ou il est.");
         }
 
         @Override
