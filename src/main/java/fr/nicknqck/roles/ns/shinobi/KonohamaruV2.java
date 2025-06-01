@@ -65,7 +65,9 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Vous possédez une barre de point invisible augmentant quand vous êtes proche")
+                .addCustomLine("§7Vous possédez une barre de point invisible augmentant quand vous êtes proche de§a Naruto§7, à chaque palier vous obtiendrez quelque chose: \n\n" +
+                        "§8 - §a1000 points§7: Vous obtiendrez l'effet§c Force I§7 proche de§a Naruto§7.\n\n" +
+                        "§8 -§a 2000 points§7: Vous connaitrez le joueur possédant le rôle de§a Naruto§7, à partir de la à sa mort vous obtiendrez le§a Rasengan§7.")
                 .getText();
     }
 
@@ -87,7 +89,8 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     private static class Rasengan extends ItemPower {
 
         private Rasengan(@NonNull RoleBase role) {
-            super("Rasengan", new Cooldown(120), new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan"), role);
+            super("Rasengan", new Cooldown(120), new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan"), role,
+                    "§7En frappant un joueur, vous permet§a repousse le joueur§7 en lui infligeant§c 2❤§7 de§c dégâts");
         }
 
         @Override
