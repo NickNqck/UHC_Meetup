@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -128,7 +129,7 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
         }
     }
 
-    private static class KatanaRaiton extends ItemPower implements Listener{
+    private static class KatanaRaiton extends ItemPower implements Listener {
 
         public KatanaRaiton(@NonNull RoleBase role) {
             super("Katana Raiton", null, new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§5Katana Raiton"), role,
@@ -153,32 +154,50 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
             }
         }
     }
-    private static class MilleOiseaux extends ItemPower implements Listener {
+    private static class MilleOiseaux extends ItemPower {
 
         public MilleOiseaux(@NonNull RoleBase role) {
             super("Mille Oiseaux", new Cooldown(150), new ItemBuilder(Material.NETHER_STAR).setName("§cMille Oiseaux"), role,
                     "§7En frappant un joueur, vous permet de lui infliger§c 1❤§7 de§c dégâts§7 via un§e éclair");
-            EventUtils.registerRoleEvent(this);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            return player.getItemInHand() != null && player.getItemInHand().isSimilar(getItem()) && getInteractType().equals(InteractType.ATTACK_ENTITY);
+            if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
+                @NonNull final UHCPlayerBattleEvent uhcEvent = (UHCPlayerBattleEvent) map.get("event");
+                if (!uhcEvent.isPatch())return false;
+                final Player victim = Bukkit.getPlayer(uhcEvent.getVictim().getUuid());
+                if (victim == null)return false;
+                victim.setHealth(Math.max(1.0, victim.getHealth()-2.0));
+                victim.getWorld().strikeLightningEffect(victim.getEyeLocation());
+                player.sendMessage("§7Votre technique des§c Mille Oiseaux§7 à été utiliser contre§c "+victim.getName());
+                uhcEvent.setDamage(0.0);
+                if (uhcEvent.getOriginEvent() != null) {
+                    uhcEvent.getOriginEvent().setCancelled(true);
+                }
+                victim.damage(0.0, player);
+                return true;
+            }
+            if (getInteractType().name().contains("INTERACT") || getInteractType().name().contains("DROP")) {
+                player.sendMessage("§cIl faut frapper un joueur, pour utiliser ce pouvoir.");
+                return false;
+            }
+            return false;
         }
-        @EventHandler
+    /*    @EventHandler
         private void onBattle(final EntityDamageByEntityEvent event) {
             if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && event.getDamager() instanceof Player && event.getEntity() instanceof LivingEntity) {
                 if (!((Player) event.getDamager()).getItemInHand().isSimilar(getItem()))return;
                 if (checkUse((Player) event.getDamager(), new HashMap<>())) {
-                    LivingEntity victim = (LivingEntity) event.getEntity();
-                    Player player = (Player) event.getDamager();
+                    final LivingEntity victim = (LivingEntity) event.getEntity();
+                    final Player player = (Player) event.getDamager();
                     victim.damage(0, player);
                     victim.setHealth(Math.max(1.0, victim.getHealth()-2.0));
                     victim.getWorld().strikeLightningEffect(victim.getEyeLocation());
                     event.getDamager().sendMessage("§7Votre technique des§c Mille Oiseaux§7 à été utiliser contre§c "+victim.getName());
                 }
             }
-        }
+        }*/
     }
     private static class Kirin extends ItemPower {
 
@@ -226,7 +245,9 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
                     for (final UUID uuid : this.uuidList) {
                         final Player player = Bukkit.getPlayer(uuid);
                         if (player == null)continue;
-                        player.setHealth(Math.max(1.0, player.getHealth()-4));
+                        double max = Math.max(1.0, player.getHealth()-4);
+                        player.setHealth(max);
+                        System.out.println("max: "+max+", health-4: "+(player.getHealth()-4));
                         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 2, false ,false), true);
                         player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*8, 0, false, false), true);
                         player.sendMessage("§eSasuke§7 vous inflige des effets complet de son§c Kirin§7.");
@@ -249,8 +270,10 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
                     if (target.getUniqueId().equals(this.role.getPlayer()))continue;
                     locationList.add(target.getLocation());
                     target.setHealth(Math.max(1.0, target.getHealth()-1.0));
-                    target.sendMessage("§eSasuke§7 vous inflige des effets partiel de son§c Kirin§7.");
-                    this.uuidList.add(target.getUniqueId());
+                    if (!this.uuidList.contains(target.getUniqueId())){
+                        target.sendMessage("§eSasuke§7 vous inflige des effets partiel de son§c Kirin§7.");
+                        this.uuidList.add(target.getUniqueId());
+                    }
                 }
                 for (final Location location : locationList) {
                     location.getWorld().strikeLightningEffect(location);
