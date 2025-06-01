@@ -37,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -165,39 +166,25 @@ public class SasukeSolo extends NSRoles implements IUchiwa, Listener {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
                 @NonNull final UHCPlayerBattleEvent uhcEvent = (UHCPlayerBattleEvent) map.get("event");
-                if (!uhcEvent.isPatch())return false;
-                final Player victim = Bukkit.getPlayer(uhcEvent.getVictim().getUuid());
-                if (victim == null)return false;
+                @NonNull final EntityDamageByEntityEvent event = uhcEvent.getOriginEvent();
+                if (!(event.getEntity() instanceof Player))return false;
+                final Player victim = (Player) event.getEntity();
+                ((Player) event.getEntity()).setHealth(Math.max(1.0, ((Player) event.getEntity()).getHealth()-4.0));
                 victim.setHealth(Math.max(1.0, victim.getHealth()-2.0));
                 victim.getWorld().strikeLightningEffect(victim.getEyeLocation());
                 player.sendMessage("§7Votre technique des§c Mille Oiseaux§7 à été utiliser contre§c "+victim.getName());
-                uhcEvent.setDamage(0.0);
-                if (uhcEvent.getOriginEvent() != null) {
-                    uhcEvent.getOriginEvent().setCancelled(true);
-                }
                 victim.damage(0.0, player);
+                event.setCancelled(true);
                 return true;
             }
-            if (getInteractType().name().contains("INTERACT") || getInteractType().name().contains("DROP")) {
-                player.sendMessage("§cIl faut frapper un joueur, pour utiliser ce pouvoir.");
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                if (((PlayerInteractEvent) map.get("event")).getAction().name().contains("RIGHT")){
+                    player.sendMessage("§7Il faut frapper un joueur pour déclencher les§c Mille Oiseaux");
+                }
                 return false;
             }
             return false;
         }
-    /*    @EventHandler
-        private void onBattle(final EntityDamageByEntityEvent event) {
-            if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && event.getDamager() instanceof Player && event.getEntity() instanceof LivingEntity) {
-                if (!((Player) event.getDamager()).getItemInHand().isSimilar(getItem()))return;
-                if (checkUse((Player) event.getDamager(), new HashMap<>())) {
-                    final LivingEntity victim = (LivingEntity) event.getEntity();
-                    final Player player = (Player) event.getDamager();
-                    victim.damage(0, player);
-                    victim.setHealth(Math.max(1.0, victim.getHealth()-2.0));
-                    victim.getWorld().strikeLightningEffect(victim.getEyeLocation());
-                    event.getDamager().sendMessage("§7Votre technique des§c Mille Oiseaux§7 à été utiliser contre§c "+victim.getName());
-                }
-            }
-        }*/
     }
     private static class Kirin extends ItemPower {
 
