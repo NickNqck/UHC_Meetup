@@ -171,6 +171,18 @@ public class GamePlayer {
     public final void startChatWith(final String begin, final String constructor, final Class<? extends RoleBase>... roleToTalks) {
 		this.chatWithManager.add(new ChatWithManager(begin, constructor, this, roleToTalks));
 	}
+	@SafeVarargs
+	public final void startChatWith(final String begin, final String constructor, boolean showInDesc, final Class<? extends RoleBase>... roleToTalks) {
+		this.chatWithManager.add(new ChatWithManager(begin, constructor, this, showInDesc, roleToTalks));
+	}
+	public final void removeChatWith(final String begin, final String constructor) {
+		for (@NonNull final ChatWithManager chatWithManager : new ArrayList<>(this.getChatWithManager())) {//comme new ArrayList normalement c'est safe
+			if (chatWithManager.getStarter().equalsIgnoreCase(begin) && chatWithManager.getConstructor().equalsIgnoreCase(constructor)) {
+				this.getChatWithManager().remove(chatWithManager);
+				break;
+			}
+		}
+	}
     public static class DiscRunnable extends BukkitRunnable {
 
 		private final GamePlayer gamePlayer;
@@ -304,6 +316,7 @@ public class GamePlayer {
 		private final String starter;
 		private final List<Class<? extends RoleBase>> toTalk;
 		private final GamePlayer me;
+		private final boolean showInDesc;
 
 		@SafeVarargs
         public ChatWithManager(@NonNull final String starter, @NonNull String constructor, @NonNull GamePlayer me, Class<? extends RoleBase>... toTalk) {
@@ -311,7 +324,16 @@ public class GamePlayer {
             this.toTalk = new ArrayList<>(Arrays.asList(toTalk));
             this.me = me;
 			this.starter = starter;
+			this.showInDesc = true;
             EventUtils.registerRoleEvent(this);
+		}
+		@SafeVarargs
+		public ChatWithManager(@NonNull final String starter, @NonNull String constructor, @NonNull GamePlayer me, boolean showInDesc, Class<? extends RoleBase>... toTalk) {
+			this.starter = starter;
+			this.constructor = constructor;
+			this.me = me;
+			this.showInDesc = showInDesc;
+			this.toTalk = new ArrayList<>(Arrays.asList(toTalk));
 		}
 
 		public String findGoodNameRoles() {
