@@ -231,7 +231,9 @@ public class AutomaticDesc {
         if (this.role instanceof RoleBase) {
             if (!((RoleBase) this.role).getGamePlayer().getChatWithManager().isEmpty()) {
                 for (@NonNull final GamePlayer.ChatWithManager chatWithManager : ((RoleBase) this.role).getGamePlayer().getChatWithManager()) {
-                    this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
+                    if (chatWithManager.isShowInDesc()){
+                        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
+                    }
                 }
             }
         }
