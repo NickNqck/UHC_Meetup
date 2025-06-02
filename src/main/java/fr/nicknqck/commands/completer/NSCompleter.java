@@ -38,6 +38,15 @@ public class NSCompleter implements TabCompleter {
                     }
                 }
             }
+            if (strings[0] != null) {
+                final List<String> list = new ArrayList<>();
+                for (final String string : stringList) {
+                    if (string.contains(strings[0])) {
+                        list.add(string);
+                    }
+                }
+                return list;
+            }
             return stringList;
         }
         if (commandSender instanceof Player) {
@@ -62,7 +71,9 @@ public class NSCompleter implements TabCompleter {
         }
         final List<String> stringList = new ArrayList<>();
         for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            stringList.add(onlinePlayer.getName());
+            if (onlinePlayer.getName().contains(strings[strings.length-1])){
+                stringList.add(onlinePlayer.getName());
+            }
         }
         return stringList;
     }
