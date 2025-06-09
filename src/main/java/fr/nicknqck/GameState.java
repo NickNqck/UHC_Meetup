@@ -745,7 +745,7 @@ public class GameState{
              role = new Poulet(player);
              break;
 		case Ino:
-			role = new Ino(player);
+			role = new InoV2(player);
 			break;
 		case Zombie:
 			role = new Zombie(player);
