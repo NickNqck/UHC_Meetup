@@ -166,6 +166,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 					final JigoroV2PSolo jigoro = new JigoroV2PSolo(getRole().getPlayer(), getRole().getGamePlayer());
 					jigoro.getEffects().putAll(getRole().getEffects());
 					jigoro.getPowers().addAll(getRole().getPowers());
+					jigoro.setTeam(this.getRole().getTeam());
 					break;
 				case KAIGAKU:
 					final KaigakuV2 kaigaku = findKaigaku(gameState);
