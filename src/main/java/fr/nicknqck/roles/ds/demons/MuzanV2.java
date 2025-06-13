@@ -206,6 +206,10 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                         player.sendMessage("§cLe joueur viser n'a pas de rôle, impossible de l'infecter");
                         return false;
                     }
+                    if (target.getUniqueId().equals(player.getUniqueId())) {
+                        player.sendMessage("§cImpossible de s'infecter sois même");
+                        return false;
+                    }
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                     final GameState gameState = role.getGameState();
                     new InfectionRunnable(gameState, (DemonsRoles) getRole(), role);
