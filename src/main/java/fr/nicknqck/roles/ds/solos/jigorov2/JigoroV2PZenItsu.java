@@ -113,7 +113,7 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
 
             if (jigoro.killKaigaku) {
                 if (owner.getHealth() <= (owner.getMaxHealth()/2)) {
-                    owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), true);
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), true));
                 }
             }
 
