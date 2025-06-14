@@ -49,7 +49,7 @@ public class Asuma extends ShinobiRoles {
 				"",
 				AllDesc.point+"§aLame de chakra§f: Épée en fer§l Tranchant IV",
 				"",
-				AllDesc.point+"§cNuées Ardentes§f: Vous permet d'infliger§1 Blindness 1§f au joueur à moins de§c 25 blocs§f de vous, également,§6 brûle§f les joueurs touchées (sauf§c vous§f)§7 (1x/3m30)",
+				AllDesc.point+"§cNuées Ardentes§f: Vous permet d'infliger§1 Blindness 1§f aux joueurs à moins de§c 25 blocs§f de vous, également,§6 brûle§f les joueurs touchées (sauf§c vous§f)§7 (1x/3m30)",
 				"",
 				AllDesc.particularite,
 				"",
