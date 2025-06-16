@@ -203,7 +203,7 @@ public class RoleManager {
         registerRole(Deidara.class);
         registerRole(Hidan.class);
         registerRole(ItachiV2.class);
-        registerRole(Kakuzu.class);
+        registerRole(KakuzuV2.class);
         registerRole(KisameV2.class);
         registerRole(Konan.class);
         registerRole(NagatoV2.class);
