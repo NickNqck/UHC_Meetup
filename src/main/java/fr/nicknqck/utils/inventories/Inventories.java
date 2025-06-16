@@ -3,6 +3,7 @@ package fr.nicknqck.utils.inventories;
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
@@ -388,6 +389,17 @@ public class Inventories {
                             "",
                             "§fVanilla: §c130%",
                             "§aMinimum:§c 10%"
+                    ).toItemStack());
+                    inv.addItem(new ItemBuilder(Material.TRIPWIRE_HOOK).setName("§fTypes de stun").setLore(
+                            "",
+                            (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.TELEPORT) ?
+                                    "§8 -§r "+ GameConfig.StunType.TELEPORT.getColor()+"§l"+ GameConfig.StunType.TELEPORT.getName()
+                                    :
+                                    "§8 -§r "+ GameConfig.StunType.TELEPORT.getColor() + GameConfig.StunType.TELEPORT.getName()),
+                            (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.STUCK) ?
+                                    "§8 -§r"+ GameConfig.StunType.STUCK.getColor()+" §l"+ GameConfig.StunType.STUCK.getName()
+                                    :
+                                    "§8 -§r "+ GameConfig.StunType.STUCK.getColor() + GameConfig.StunType.STUCK.getName())
                     ).toItemStack());
                     inv.setItem(26, GUIItems.getSelectBackMenu());
                 }

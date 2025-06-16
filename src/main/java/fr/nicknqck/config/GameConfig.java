@@ -31,6 +31,7 @@ public class GameConfig {
     private int groupe = 5;
     private int tridiCooldown = 16;
     private int forcePercent = 30;
+    private StunType stunType = StunType.TELEPORT;
 
     public GameConfig() {
         instance = this;
@@ -66,5 +67,19 @@ public class GameConfig {
 
         private double edoHealthRemove = 4.0;
 
+    }
+    public enum StunType {
+        TELEPORT("Téléportation", "§a"),
+        STUCK("Anti-Déplacement", "§c");
+
+        @Getter
+        private final String name;
+        @Getter
+        private final String color;
+
+        StunType(String name, String color) {
+            this.name = name;
+            this.color = color;
+        }
     }
 }
