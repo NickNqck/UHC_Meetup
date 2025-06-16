@@ -2,6 +2,7 @@ package fr.nicknqck.player;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.managers.StunManager;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
@@ -102,11 +103,11 @@ public class GamePlayer {
 	public void stun(final int tick, final boolean blind) {
 		stun(tick, blind, true);
 	}
-	@SuppressWarnings("deprecation")
 	public void stun(final int tick, final boolean blind, final boolean text) {
 		Player player = Bukkit.getPlayer(getUuid());
 		if (player == null)return;
-		new BukkitRunnable() {
+		StunManager.stun(this, tick, blind, text, player.getLocation());
+		/*new BukkitRunnable() {
 			private int ticks = tick;
 			private final Location stunLocation = player.getLocation();
 			@Override
@@ -131,11 +132,9 @@ public class GamePlayer {
 				ticks--;
 
 			}
-		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);*/
 	}
-	private boolean isGoodNumber(int number) {
-		return number % 20 == 0;
-	}
+
 
 	public void sendMessage(final String... messages) {
 		Player owner = Bukkit.getPlayer(getUuid());

@@ -4,6 +4,7 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
+import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -364,7 +365,7 @@ public class HubConfig implements Listener {
                                 }
                             }
                         }
-                        if (item.getItemMeta().getDisplayName().equals("§fBijus")) {
+                        if (name.equals("§fBijus")) {
                             if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
                                 player.closeInventory();
                                 player.openInventory(Bukkit.createInventory(player, 9*4, "Configuration ->§6 Bijus"));
@@ -373,18 +374,25 @@ public class HubConfig implements Listener {
                                 Main.getInstance().getBijuManager().setBijuEnable(!Main.getInstance().getBijuManager().isBijuEnable());
                             }
                         }
-                        if (item.getItemMeta().getDisplayName().equals("§cInfection")) {
+                        if (name.equals("§cInfection")) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
                                 Main.getInstance().getGameConfig().setInfectionTime(Math.min(60*20, Main.getInstance().getGameConfig().getInfectionTime()+10));
                             }else if (action.equals(InventoryAction.PICKUP_HALF)) {
                                 Main.getInstance().getGameConfig().setInfectionTime(Math.max(10, Main.getInstance().getGameConfig().getInfectionTime()-10));
                             }
                         }
-                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§fPourcentage de Force")) {
+                        if (name.equalsIgnoreCase("§fPourcentage de Force")) {
                             if (event.isLeftClick()) {
                                 Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()+5));
                             } else {
                                 Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()-5));
+                            }
+                        }
+                        if (name.equals("§fTypes de stun")) {
+                            if (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.TELEPORT)) {
+                                Main.getInstance().getGameConfig().setStunType(GameConfig.StunType.STUCK);
+                            } else {
+                                Main.getInstance().getGameConfig().setStunType(GameConfig.StunType.TELEPORT);
                             }
                         }
                     }
