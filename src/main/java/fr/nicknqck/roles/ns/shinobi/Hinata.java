@@ -8,6 +8,8 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.EByakuganUserType;
+import fr.nicknqck.roles.ns.builders.IByakuganUser;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.ArrowTargetUtils;
@@ -38,7 +40,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public class Hinata extends ShinobiRoles {
+public class Hinata extends ShinobiRoles implements IByakuganUser {
 
     public Hinata(UUID player) {
         super(player);
@@ -78,6 +80,12 @@ public class Hinata extends ShinobiRoles {
         setCanBeHokage(true);
         super.RoleGiven(gameState);
     }
+
+    @Override
+    public @NonNull EByakuganUserType getUserType() {
+        return EByakuganUserType.HINATA;
+    }
+
     private static class Byakugan extends ItemPower implements Listener {
 
         public Byakugan(@NonNull RoleBase role) {
