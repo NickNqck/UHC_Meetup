@@ -172,16 +172,19 @@ public abstract class RoleBase implements IRole {
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 	public void setTeam(@NonNull final TeamList team) {
+		setTeam(team, false);
+	}
+	public void setTeam(@NonNull final TeamList team, boolean force) {
 		final TeamChangeEvent event = new TeamChangeEvent(this, this.team, team);
 		Bukkit.getPluginManager().callEvent(event);
-		if (event.isCancelled()) {
+		if (event.isCancelled() && !force) {
 			return;
 		}
 		if (this.team != null) {
 			this.team.getList().remove(this.owner);
 		}
-        this.team = team;
-		this.team.addPlayer(this.owner);	
+		this.team = team;
+		this.team.addPlayer(this.owner);
 	}
 	public double getBonusForce() {return Bonusforce;}
 	public void setBonusForce(double Bonusforce) {this.Bonusforce = Bonusforce;}
