@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.PatchCritical;
+import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
@@ -88,10 +89,9 @@ public class Patch implements Listener{
             event.setCancelled(true);
         }
         if (victim.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
-			ApplyResi(event, allResi, true);
-		} else {
-			ApplyResi(event, gameState.getGamePlayer().get(victim.getUniqueId()).getRole().getBonusResi(), false);
+			ApplyResi(event, (Main.getInstance().getGameConfig().getResiPercent()*victim.getActivePotionEffects().parallelStream().filter(potionEffect -> potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)).findFirst().get().getAmplifier()+1), true);
 		}
+		ApplyResi(event, gameState.getGamePlayer().get(victim.getUniqueId()).getRole().getBonusResi(), false);
 		final UHCPlayerBattleEvent battleEvent2 = new UHCPlayerBattleEvent(gameVictim, gameDamager, event, true);
 		battleEvent2.setDamage(event.getDamage());
 		Bukkit.getPluginManager().callEvent(battleEvent2);
@@ -153,9 +153,33 @@ public class Patch implements Listener{
 			}
 		}
 	}
-	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, boolean effect) {
-		if (effect) {
-			double resi = reiPercent/100;
+	private void ApplyResi(EntityDamageByEntityEvent event, double reiPercent, boolean isEffect) {
+		final ResistancePatchEvent resistancePatchEvent = new ResistancePatchEvent(reiPercent, isEffect, (Player) event.getEntity(), (Player) event.getDamager(), false);
+		Bukkit.getPluginManager().callEvent(resistancePatchEvent);
+		if (resistancePatchEvent.isCancelled())return;
+		if (isEffect) {
+			//Patch de l'effet de résistance
+			for (PotionEffect effect : ((Player)event.getEntity()).getActivePotionEffects()) {
+				if (effect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
+					int level = effect.getAmplifier(); // Résistance I -> 0
+					double reduction = (level + 1) * 0.2; // 20% par niveau
+					System.out.println("Reduction: "+reduction+", level: "+level);
+					// Le moteur de jeu a déjà réduit les dégâts via la potion
+					// On les compense ici :
+					double reducedDamage = event.getDamage();
+					double newDamage = reducedDamage / (1.0 - reduction);
+					// Applique les dégâts corrigés
+					event.setDamage(newDamage);
+					break;
+				}
+			}
+			final ResistancePatchEvent patchEvent = new ResistancePatchEvent(reiPercent, true, (Player) event.getEntity(), (Player) event.getDamager(), true);
+			Bukkit.getPluginManager().callEvent(patchEvent);
+			if (patchEvent.isCancelled())return;
+			//Application du pourcentage de résistance
+			double goodPercent = 1.0-(reiPercent/100);//Si reiPercent est égal à 20 alors cela donne 1 - 0.2 donc 0.8
+			event.setDamage(event.getDamage()*goodPercent);
+			/*double resi = reiPercent/100;
 			final Player entity = (Player) event.getEntity();
 			for (final PotionEffect potionEffect : entity.getActivePotionEffects()) {
 				if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
@@ -165,7 +189,8 @@ public class Patch implements Listener{
 			}
 			resi = 1-resi;
 			event.setDamage(event.getDamage()*resi);
-		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch la l'effet de rési car il est de base dans les valeurs que je veux
+		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch l'effet de rési car il est de base dans les valeurs que je veux
+			*/
 			if (Main.isDebug()){
 				System.out.println("Resi Damage to "+event.getDamage());
 			}
