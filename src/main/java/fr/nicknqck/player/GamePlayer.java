@@ -88,6 +88,11 @@ public class GamePlayer {
 					player.getInventory().remove(item);
 				}
 			}
+			if (!this.discRunnable.toAdd.isEmpty()) {
+				for (final ItemStack item : this.discRunnable.toAdd) {
+					player.getInventory().addItem(item);
+				}
+			}
 			this.discRunnable.online = true;
 			this.discRunnable.cancel();
 			this.discRunnable = null;
@@ -135,7 +140,6 @@ public class GamePlayer {
 		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);*/
 	}
 
-
 	public void sendMessage(final String... messages) {
 		Player owner = Bukkit.getPlayer(getUuid());
 		if (owner != null) {
@@ -153,6 +157,16 @@ public class GamePlayer {
 		} else {
 			for (final ItemStack item : items) {
 				this.discRunnable.addItemToRemove(item);
+			}
+		}
+	}
+	public void addItems(final ItemStack... items) {
+		final Player owner = Bukkit.getPlayer(getUuid());
+		if (owner != null) {
+			owner.getInventory().addItem(items);
+		} else {
+			for (final ItemStack item : items) {
+				this.discRunnable.addItemToAdd(item);
 			}
 		}
 	}
@@ -190,6 +204,7 @@ public class GamePlayer {
 		@Getter
 		private boolean online = true;
 		private final List<ItemStack> toRemove;
+		private final List<ItemStack> toAdd;
 		private Location toTeleport;
 
 		private DiscRunnable(GamePlayer gamePlayer) {
@@ -197,6 +212,7 @@ public class GamePlayer {
 			this.gameState = GameState.getInstance();
 			this.toRemove = new ArrayList<>();
 			this.toTeleport = gamePlayer.getLastLocation();
+			this.toAdd = new ArrayList<>();
 		}
 
 		private void setMessagesToSend(final String[] messages) {
@@ -204,6 +220,9 @@ public class GamePlayer {
 		}
 		private void addItemToRemove(final ItemStack item) {
 			toRemove.add(item);
+		}
+		private void addItemToAdd(final ItemStack item) {
+			this.toAdd.add(item);
 		}
 		private void setTeleportLocation(final Location location) {
 			this.toTeleport = location;
