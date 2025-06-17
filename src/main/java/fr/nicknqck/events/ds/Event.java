@@ -1,5 +1,6 @@
 package fr.nicknqck.events.ds;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.events.IEvent;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
@@ -26,6 +27,9 @@ public abstract class Event implements IEvent {
                 "",
                 (isEnable() ? "§aActivé" : "§cDésactivé")
         };
+    }
+    public boolean onGameStart(final GameState gameState) {
+        return false;
     }
 
 }
