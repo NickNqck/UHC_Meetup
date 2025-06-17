@@ -9,6 +9,7 @@ import fr.nicknqck.events.ds.AkazaVSKyojuroV2;
 import fr.nicknqck.events.ds.AllianceV2;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.events.ds.dkt.DemonKingEvent;
+import fr.nicknqck.events.ns.EveilTenseiGan;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.utils.RandomUtils;
@@ -40,6 +41,7 @@ public class EventsManager implements Listener {
         eventsList.add(new AllianceV2());
         eventsList.add(new AkazaVSKyojuroV2());
         eventsList.add(new DemonKingEvent());
+        eventsList.add(new EveilTenseiGan());
     }
 
     @EventHandler
@@ -191,6 +193,9 @@ public class EventsManager implements Listener {
             }
             this.timeGonnaProc = timeGonnaProc1;
             System.out.println(events.getName()+" gonna proc at "+timeGonnaProc1+" ("+StringUtils.secondsTowardsBeautiful(timeGonnaProc1)+")");
+            if (events.onGameStart(gameState)) {
+                System.out.println("Method onGameStart has been successfully return true");
+            }
         }
 
         @Override
