@@ -8,6 +8,8 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.builders.EByakuganUserType;
+import fr.nicknqck.roles.ns.builders.IByakuganUser;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.ArrowTargetUtils;
@@ -37,7 +39,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class Neji extends ShinobiRoles {
+public class Neji extends ShinobiRoles implements IByakuganUser {
 
     public Neji(UUID player) {
         super(player);
@@ -77,6 +79,12 @@ public class Neji extends ShinobiRoles {
                 .addCustomLine("§7Quand vous êtes proche de§a Hinata§7 vous avez l'effet§c Force I")
                 .getText();
     }
+
+    @Override
+    public @NonNull EByakuganUserType getUserType() {
+        return EByakuganUserType.NEJI;
+    }
+
     private static class ForceRunnable extends BukkitRunnable {
 
         final GameState gameState;
