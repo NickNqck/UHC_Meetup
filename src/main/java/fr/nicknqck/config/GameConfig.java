@@ -31,6 +31,7 @@ public class GameConfig {
     private int groupe = 5;
     private int tridiCooldown = 16;
     private int forcePercent = 30;
+    private int resiPercent = 20;
     private StunType stunType = StunType.TELEPORT;
 
     public GameConfig() {
