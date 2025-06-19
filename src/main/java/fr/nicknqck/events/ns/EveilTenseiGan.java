@@ -2,16 +2,20 @@ package fr.nicknqck.events.ns;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.builders.IByakuganUser;
+import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -21,7 +25,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -118,7 +126,9 @@ public class EveilTenseiGan extends Event implements Listener {
         }
         gamePlayer.addItems(this.sword);
         gamePlayer.sendMessage("§7Vous avez obtenue le§b Tenseigan§7, vous devenez maintenant inéluctable!");
-        role.addPower(new ModeChakraPower(role));
+        role.addPower(new ModeChakraPower(role), true);
+        role.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+        role.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
     }
     @EventHandler(priority = EventPriority.LOWEST)
     private void onBattle(final ResistancePatchEvent event) {
@@ -142,20 +152,21 @@ public class EveilTenseiGan extends Event implements Listener {
             }
         }
     }
-    private static class ModeChakraPower extends ItemPower {
+    private static class ModeChakraPower extends ItemPower implements Listener{
 
         private int timeLeft;
         private final ChakraRunnable chakraRunnable;
+        private final SphereVeritePower sphereVeritePower;
 
 
         public ModeChakraPower(@NonNull RoleBase role) {
-            super("Mode Chakra", null, new ItemBuilder(Material.NETHER_STAR).setName("§bMode Chakra"), role,
-                    "§7Vous permet d'obtenir les effets§e Speed I§7 et§9 Résistance I§7 tant que vous avez du temp disponible",
-                    "",
-                    "§cAu début de la partie vous avez§4 5 minutes§c de temps, pour en gagner vous pouvez tué un joueur ce qui vous donnera§4 1 minute§c."
+            super("Mode Chakra", null, new ItemBuilder(Material.NETHER_STAR).setName("§bMode Chakra"), role
             );
             this.timeLeft = 60*5;
             this.chakraRunnable = new ChakraRunnable(this);
+            EventUtils.registerRoleEvent(this);
+            this.sphereVeritePower = new SphereVeritePower(this);
+            role.addPower(this.sphereVeritePower, true);
         }
 
         @Override
@@ -174,6 +185,24 @@ public class EveilTenseiGan extends Event implements Listener {
             }
             return false;
         }
+        @EventHandler
+        private void onEffectGive(EffectGiveEvent event) {
+            if (event.isCancelled())return;
+            if (!this.chakraRunnable.running)return;
+            if (!event.getPlayer().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!event.getEffectWhen().equals(EffectWhen.PERMANENT))return;
+            if (!event.getPotionEffect().getType().equals(PotionEffectType.SPEED))return;
+            event.setCancelled(true);
+        }
+        @EventHandler
+        private void onAttack(EntityDamageByEntityEvent event) {
+            if (!(event.getDamager() instanceof Player))return;
+            if (!(event.getEntity() instanceof Player))return;
+            if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!this.chakraRunnable.running)return;
+            if (!RandomUtils.getOwnRandomProbability(5.0))return;
+            event.getEntity().setFireTicks(20*5);
+        }
         private final static class ChakraRunnable extends BukkitRunnable {
 
             private final ModeChakraPower modeChakraPower;
@@ -187,18 +216,25 @@ public class EveilTenseiGan extends Event implements Listener {
 
             @Override
             public void run() {
-                if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame) || this.modeChakraPower.timeLeft <= 0) {
+                if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                     stop();
                     return;
                 }
-                if (!running)return;
+                if (!running || this.modeChakraPower.timeLeft <= 0)return;
                 this.modeChakraPower.timeLeft--;
-                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
+                if (this.modeChakraPower.sphereVeritePower.fly) {
+                    this.modeChakraPower.timeLeft--;
+                }
+                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.modeChakraPower.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1, false, false), EffectWhen.NOW));
             }
             public void stop() {
                 this.running = false;
                 this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().removeInActionBar("tenseigan.chakramode");
-                cancel();
+                final Player player = Bukkit.getPlayer(this.modeChakraPower.getRole().getPlayer());
+                if (player != null) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), true));
+                }
             }
             public void start() {
                 if (this.modeChakraPower.timeLeft <= 0) {
@@ -207,6 +243,74 @@ public class EveilTenseiGan extends Event implements Listener {
                 this.running = true;
                 this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
             }
+        }
+        private static class SphereVeritePower extends ItemPower implements Listener {
+
+            private final ModeChakraPower modeChakraPower;
+            private boolean fly = false;
+
+            public SphereVeritePower(@NonNull ModeChakraPower chakraPower) {
+                super("Sphere de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphere de vérité"), chakraPower.getRole());
+                this.modeChakraPower = chakraPower;
+                EventUtils.registerRoleEvent(this);
+            }
+
+            @Override
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+                if (getInteractType().equals(InteractType.INTERACT)) {
+                    if (!this.modeChakraPower.chakraRunnable.running) {
+                        player.sendMessage("§cImpossible sans le§b Mode Chakra§c.");
+                        return false;
+                    }
+                    if (!fly) {
+                        player.setAllowFlight(true);
+                        player.setFlying(true);
+                        this.fly = true;
+                        player.sendMessage("§7Vous commencez à volé...");
+                        return true;
+                    } else {
+                        player.setFlying(false);
+                        player.setAllowFlight(false);
+                        this.fly = false;
+                        player.sendMessage("§7Vous arrêtez de volé...");
+                        return true;
+                    }
+                }
+                return false;
+            }
+            @EventHandler
+            private void onDamage(EntityDamageEvent event) {
+                if (event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
+                if (!fly)return;
+                ((Player) event.getEntity()).setFlying(false);
+                ((Player) event.getEntity()).setAllowFlight(false);
+                event.getEntity().sendMessage("§7Quelqu'un a stoppé votre envole.");
+                event.setDamage(event.getDamage()*0.55);
+            }
+            @EventHandler(priority = EventPriority.LOW)
+            private void onDamage2(EntityDamageByEntityEvent event) {
+                if (!(event.getDamager() instanceof Player))return;
+                if (!(event.getEntity() instanceof Player))return;
+                if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
+                if (!this.modeChakraPower.chakraRunnable.running)return;
+                if (!fly)return;
+                if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
+                    ((Player) event.getEntity()).setFlying(false);
+                    ((Player) event.getEntity()).setAllowFlight(false);
+                    event.getEntity().sendMessage("§7Quelqu'un a stoppé votre envole.");
+                    event.setDamage(event.getDamage()*0.55);
+                    this.fly = false;
+                    return;
+                }
+                if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
+                    event.getDamager().sendMessage("§7Votre vole s'arrête");
+                    event.setDamage(event.getDamage()*1.45);
+                    ((Player) event.getDamager()).setFlying(false);
+                    ((Player) event.getDamager()).setAllowFlight(false);
+                    this.fly = false;
+                }
+            }
+
         }
     }
 }
