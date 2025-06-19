@@ -225,7 +225,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 if (this.modeChakraPower.sphereVeritePower.fly) {
                     this.modeChakraPower.timeLeft--;
                 }
-                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
+                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.modeChakraPower.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1, false, false), EffectWhen.NOW));
             }
             public void stop() {
@@ -267,14 +267,13 @@ public class EveilTenseiGan extends Event implements Listener {
                         player.setFlying(true);
                         this.fly = true;
                         player.sendMessage("§7Vous commencez à volé...");
-                        return true;
                     } else {
                         player.setFlying(false);
                         player.setAllowFlight(false);
                         this.fly = false;
                         player.sendMessage("§7Vous arrêtez de volé...");
-                        return true;
                     }
+                    return true;
                 }
                 return false;
             }
