@@ -152,7 +152,7 @@ public class EveilTenseiGan extends Event implements Listener {
             }
         }
     }
-    private static class ModeChakraPower extends ItemPower implements Listener{
+    private static class ModeChakraPower extends ItemPower implements Listener {
 
         private int timeLeft;
         private final ChakraRunnable chakraRunnable;
@@ -160,7 +160,10 @@ public class EveilTenseiGan extends Event implements Listener {
 
 
         public ModeChakraPower(@NonNull RoleBase role) {
-            super("Mode Chakra", null, new ItemBuilder(Material.NETHER_STAR).setName("§bMode Chakra"), role
+            super("Mode Chakra", null, new ItemBuilder(Material.NETHER_STAR).setName("§bMode Chakra"), role,
+                    "§7Vous possédez une banque de temps§a activable§7/§cdésactivable§7 de§c 5 minutes§7 qui augmente de§c 1 minute§7 par§c kill§7,",
+                    "",
+                    "§7Quand votre§b Mode Chakra§7 est§a activé§7, vous possédez l'effet§e Speed II§7 ainsi que§c 5%§7 de§c chance§7 de mettre en§c feu§7 les joueurs que vous attaquez§7."
             );
             this.timeLeft = 60*5;
             this.chakraRunnable = new ChakraRunnable(this);
@@ -173,6 +176,10 @@ public class EveilTenseiGan extends Event implements Listener {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (this.chakraRunnable.running) {
+                    if (sphereVeritePower.fly) {
+                        player.sendMessage("§cImpossible d'enlever votre§b Mode Chakra§c, vos§a Spheres de vérités§c sont trop puissante pour que vous puissiez le supporter sans lui.");
+                        return false;
+                    }
                     this.chakraRunnable.stop();
                 } else {
                     if (this.timeLeft <= 0) {
@@ -250,7 +257,14 @@ public class EveilTenseiGan extends Event implements Listener {
             private boolean fly = false;
 
             public SphereVeritePower(@NonNull ModeChakraPower chakraPower) {
-                super("Sphere de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphere de vérité"), chakraPower.getRole());
+                super("Sphere de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphere de vérité"), chakraPower.getRole(),
+                        "§7Via un clique droit§a active§7/§cdésactive§7 votre§a fly§7,",
+                        "",
+                        "§7Le premier coup que vous infligez en volant fera§c 55%§7 de§c dégâts supplémentaire§7, mais arrêtera votre§a fly§7,",
+                        "",
+                        "§7Le premier coup que vous recevrez en volant fera§c 45%§7 de§c dégâts en moins§7, mais vous arrêtera votre§a fly§7.",
+                        "",
+                        "§c!ATTENTION! Quand votre§a fly§7 est§a activé§7 le temp dépensé dans votre§c banque de temps§7 sera§c doublé§7.");
                 this.modeChakraPower = chakraPower;
                 EventUtils.registerRoleEvent(this);
             }
