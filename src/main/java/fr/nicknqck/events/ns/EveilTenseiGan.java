@@ -19,6 +19,7 @@ import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -75,11 +76,29 @@ public class EveilTenseiGan extends Event implements Listener {
         final GamePlayer gamePlayer = buyakuganUserList.get(0);
         System.out.println(print+gamePlayer.getPlayerName()+" has been chose, size of the list: "+buyakuganUserList.size());
         final RoleBase role = gamePlayer.getRole();
-        gamePlayer.sendMessage("§7Qu'est-ce qui se passe ? Vous sentez qu'un étrange§a chakra§7 se déverse dans vos yeux, après vérification on dirait qu'il s'agit la d'un§a chakra§e Ôtsutsuki§7, vous devriez essayer de récupérer des§a byakugans§7 pour éveiller de nouveau pouvoirs.");
+        gamePlayer.sendMessage("§7Qu'est-ce qui se passe ? Vous sentez qu'un étrange§a chakra§7 se déverse dans vos yeux, après vérification on dirait qu'il s'agit la d'un§a chakra§e Otsutsuki§7, vous devriez essayer de récupérer d'autres§a byakugans§7 pour éveiller de nouveau pouvoirs.");
         role.setTeam(TeamList.Solo, true);
         this.gamePlayer = gamePlayer;
         if (buyakuganUserList.size() == 1) {//donc si mon joueur est le seul porteur du byakugan
             giveTenseiGan();
+        } else {
+            for (final GamePlayer g : buyakuganUserList) {
+                if (g.getUuid().equals(this.gamePlayer.getUuid()))continue;//donc si ce n'est pas le même joueur
+                if (!g.isAlive()) {
+                    new CadavreRunnable(this.gamePlayer, g, this);
+                    this.gamePlayer.sendMessage("§7Vous ressentez le§a chakra§7 d'un autre§a Byakugan§7, il est en§c x§7:§c "+
+                            g.getDeathLocation().getBlockX()+"§7,§c y§7:§c "+g.getDeathLocation().getBlockY()+"§7,§c z§7:§c "+g.getDeathLocation().getBlockZ(),
+                            "§e",
+                            "§7Si vous y allez peut-être que vous pourriez récupérer ses§a Byakugan§7.");
+                } else {
+                    this.gamePlayer.sendMessage("§a"+g.getPlayerName()+"§7 possède le§a Byakugan§7, actuellement il est en§c x§7: §c"+
+                            g.getLastLocation().getBlockX()+
+                            "§7,§c y§7:§c "+
+                            g.getLastLocation().getBlockY()+
+                            "§7,§c z§7:§c "+
+                            g.getLastLocation().getBlockZ());
+                }
+            }
         }
         this.activate = true;
     }
@@ -324,6 +343,48 @@ public class EveilTenseiGan extends Event implements Listener {
                 }
             }
 
+        }
+    }
+    private static class CadavreRunnable extends BukkitRunnable {
+
+        private final GamePlayer user;
+        private final GamePlayer cadavre;
+        private final EveilTenseiGan eveilTenseiGan;
+        private int timeStayClose = 0;
+
+        private CadavreRunnable(GamePlayer user, GamePlayer cadavre, EveilTenseiGan eveilTenseiGan) {
+            this.user = user;
+            this.cadavre = cadavre;
+            this.eveilTenseiGan = eveilTenseiGan;
+            runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
+        }
+
+        @Override
+        public void run() {
+            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            if (this.timeStayClose >= 5) {
+                this.user.getActionBarManager().removeInActionBar("eveil.cadavre");
+                Bukkit.getScheduler().runTask(Main.getInstance(), this.eveilTenseiGan::giveTenseiGan);
+                cancel();
+                return;
+            }
+            final Location loc = cadavre.getDeathLocation();
+            if (!loc.getWorld().getName().equalsIgnoreCase(Main.getInstance().getWorldManager().getGameWorld().getName())) {
+                loc.setWorld(Main.getInstance().getWorldManager().getGameWorld());
+            }
+            if (user.getLastLocation().getWorld().equals(loc.getWorld())) {
+                if (user.getLastLocation().distance(this.cadavre.getDeathLocation()) <= 5.0) {
+                    this.timeStayClose++;
+                    this.user.getActionBarManager().addToActionBar("eveil.cadavre", "§bTemp rester proche du cadavre:§c "+this.timeStayClose+"s");
+                } else {
+                    if (this.user.getActionBarManager().containsKey("eveil.cadavre")) {
+                        this.user.getActionBarManager().removeInActionBar("eveil.cadavre");
+                    }
+                }
+            }
         }
     }
 }
