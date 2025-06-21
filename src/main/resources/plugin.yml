@@ -55,12 +55,6 @@ commands:
   settings:
     description: Permet de paramétrer certaine chose compatible
     usage: /setting ou /settings
-  role:
-    description: Permet d'afficher dans votre tab un rôle devant le nom d'un joueur
-    usage: /role <Nom du rôle> <joueur>
-  team:
-    description: Permet d'afficher dans votre tab une team devant le nom d'un joueur
-    usage: /team <Nom d'une équipe> <joueur1> <joueur2> ect
   info:
     description: Permet d'obtenir vos propres informations
     usage: /info
