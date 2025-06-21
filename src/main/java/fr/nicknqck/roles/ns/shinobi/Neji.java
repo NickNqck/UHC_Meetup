@@ -223,7 +223,8 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
     private static class ChakraCommand extends CommandPower {
 
         public ChakraCommand(@NonNull RoleBase role) {
-            super("/ns chakra <chakra> <joueur>", "chakra", new Cooldown(60*5), role, CommandType.NS);
+            super("/ns chakra <chakra> <joueur>", "chakra", new Cooldown(60*5), role, CommandType.NS,
+                    "§7Vous permet de savoir combien de pouvoirs possède une personne.");
         }
 
         @Override
