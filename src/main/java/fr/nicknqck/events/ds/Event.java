@@ -25,11 +25,18 @@ public abstract class Event implements IEvent {
                 "§fTemp minimal de déclanchement: §c"+ StringUtils.secondsTowardsBeautiful(minTimeProc),
                 "§fTemp maximal de déclanchement: §c"+ StringUtils.secondsTowardsBeautiful(maxTimeProc),
                 "",
-                (isEnable() ? "§aActivé" : "§cDésactivé")
+                (isEnable() ? "§aActivé" : "§cDésactivé"),
+                ""
         };
     }
     public boolean onGameStart(final GameState gameState) {
         return false;
     }
 
+    @Override
+    public String[] getExplications() {
+        return new String[] {
+                "§cAucune description trouver"
+        };
+    }
 }

@@ -169,6 +169,25 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         return this.activated;
     }
 
+    @Override
+    public String[] getExplications() {
+        return new String[] {
+                "§7Crée un duel entre§a Kyojuro§7 et§c Akaza§7 sur une map personnalisé",
+                "§7le combat a une durée§c maximum§7 de§c 5 minutes§7",
+                "§7il se terminera si l'un des deux combattants tue l'autre ou si le temp atteint 0",
+                "",
+                "§7Si§a Kyojuro§7 gagne le combat:",
+                "§7il obtiendra l'item \"§6Vague Flamboyante§7\"",
+                "§7a l'activation permet pendant§c 10 secondes§7 de faire qu'a chaque coup reçus il y est",
+                "§c 10%§7 de chance que l'attaquant sois§6 enflammer",
+                "",
+                "§7Si§c Akaza§7 gagne le combat:",
+                "§7il obtiendra la commande \"§c/ds compa§7\"",
+                "§7a l'activation pendant§c 2 minutes§7 fait qu'à chaque coup reçus il y est",
+                "§c10%§7 de chance que l'attaque sois esquivé"
+        };
+    }
+
     private static class VagueItemPower extends ItemPower implements Listener {
 
         protected VagueItemPower(@NonNull KyojuroV2 role) {
