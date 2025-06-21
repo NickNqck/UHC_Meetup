@@ -122,6 +122,22 @@ public class EveilTenseiGan extends Event implements Listener {
     }
 
     @Override
+    public String[] getExplications() {
+        return new String[] {
+                "§7Un joueur possédant le§a Byakugan§7 est choisis aléatoirement pour devenir un§e rôle solitaire§7,",
+                "§7ce joueur recevra les effets§b Speed I§7 et§9 Résistance I§7, s'il parvient a rester§c 5 secondes",
+                "§7sur le cadavre d'un autre porteur du§a Byakugan§7 (ou s'il n'y en a pas d'autre dans la partie),",
+                "§7il recevra les items§b Mode Chakra§7 et§a Sphère de Vérité§7.","",
+                "§8 -§b Mode Chakra§7: Possède une banque de temps de§c 5 minutes§7,",
+                "§7quand le pouvoir est activé l'utilisateur possède§b Speed II§7 et",
+                "§7à§c 5%§7 de§c chance§7 d'§6enflammer§7 le joueur attaquer.",
+                "",
+                "§8 -§b Sphere de vérité§7: Permet d'activer le fait de pouvoir§a voler§7,",
+                "§7ce pouvoir n'est utilisable que quand le§b Mode Chakra§7 est actif et coûte§c 2x plus de temps"
+        };
+    }
+
+    @Override
     public boolean onGameStart(GameState gameState) {
         EventUtils.registerRoleEvent(this);
         return true;
