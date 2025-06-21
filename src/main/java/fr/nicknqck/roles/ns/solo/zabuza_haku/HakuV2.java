@@ -149,7 +149,7 @@ public class HakuV2 extends NSRoles {
                             if (this.tpCD.isInCooldown() || this.centerLocation == null) {
                                 return false;
                             }
-                            final RayTrace rayTrace = new RayTrace(player.getLocation().toVector(), player.getEyeLocation().getDirection());
+                            final RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
                             final List<Vector> positions = rayTrace.traverse(30, 0.2D);
                             Block one = null;
                             Block two = null;
