@@ -395,6 +395,13 @@ public class HubConfig implements Listener {
                                 Main.getInstance().getGameConfig().setStunType(GameConfig.StunType.TELEPORT);
                             }
                         }
+                        if (name.equalsIgnoreCase("§fPourcentage de Résistance")) {
+                            if (event.isLeftClick()) {
+                                Main.getInstance().getGameConfig().setResiPercent(Math.max(10, Main.getInstance().getGameConfig().getResiPercent()+5));
+                            } else {
+                                Main.getInstance().getGameConfig().setResiPercent(Math.max(10, Main.getInstance().getGameConfig().getResiPercent()-5));
+                            }
+                        }
                     }
                     for (UUID u : gameState.getInLobbyPlayers()) {
                         Player p = Bukkit.getPlayer(u);
