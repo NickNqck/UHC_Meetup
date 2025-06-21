@@ -2,7 +2,6 @@ package fr.nicknqck.events.ds;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
@@ -88,5 +87,19 @@ public class AllianceV2 extends Event implements Listener {
     @Override
     public boolean isActivated() {
         return this.activated;
+    }
+
+    @Override
+    public String[] getExplications() {
+        return new String[] {
+                "§7Fait en sorte que§a Kyojuro§7 et§e Shinjuro§7 (§6V1§7) sois en alliance et gagne ensemble,",
+                "§7pour les aidées ils gagnent l'effet§c Force I§7 proche l'un de l'autre",
+                "§1",
+                "§8 -§e Shinjuro§7: Il perdra son§c Sake§7 mais gagnera un traqueur permanent vers§a Kyojuro§7.",
+                "",
+                "§8 -§a Kyojuro§7: Il gagnera§b Speed I§c permanent§7 et§c 2❤ supplémentaires ",
+                "",
+                "§cSi l'un des deux meurt l'autre recevra l'effet§c Force I permanent."
+        };
     }
 }

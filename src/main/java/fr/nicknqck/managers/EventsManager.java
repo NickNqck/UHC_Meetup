@@ -118,6 +118,20 @@ public class EventsManager implements Listener {
                     if (item.getType().equals(Material.STAINED_CLAY)) {
                         gameEvent.setEnable(!gameEvent.isEnable());
                     }
+                    if (name.equals("§bPourcentage (§cdiminution§b)")) {
+                        if (action.equals(InventoryAction.PICKUP_ALL)) {//Clique gauche
+                            gameEvent.setPercent(Math.max(0, gameEvent.getPercent()-5));
+                        } else if (action.equals(InventoryAction.PICKUP_HALF)){
+                            gameEvent.setPercent(Math.max(0, gameEvent.getPercent()-1));
+                        }
+                    }
+                    if (name.equals("§bPourcentage (§aaugmentation§b)")) {
+                        if (action.equals(InventoryAction.PICKUP_ALL)) {
+                            gameEvent.setPercent(Math.min(100, gameEvent.getPercent()+5));
+                        } else if (action.equals(InventoryAction.PICKUP_HALF)) {
+                            gameEvent.setPercent(Math.min(100, gameEvent.getPercent()+1));
+                        }
+                    }
                     openInv(player, gameEvent.getName(), gameEvent);
                     event.setCancelled(true);
                     break;
@@ -130,7 +144,7 @@ public class EventsManager implements Listener {
         final int minTime = event.getMinTimeProc();
         final int maxTime = event.getMaxTimeProc();
         final boolean enable = event.isEnable();
-        gameInv.setItem(11, new ItemBuilder(Material.WATCH).setName("§bTemp minimum").setLore(
+        gameInv.setItem(9, new ItemBuilder(Material.WATCH).setName("§bTemp minimum").setLore(
                 "",
                 "§fClique gauche: §a+1 minute",
                 "",
@@ -138,11 +152,11 @@ public class EventsManager implements Listener {
                 "",
                 "§bTemp minimum actuel: §c"+ StringUtils.secondsTowardsBeautiful(minTime)
         ).toItemStack());
-        gameInv.setItem(13, new ItemBuilder(Material.STAINED_CLAY)
+        gameInv.setItem(5, new ItemBuilder(Material.STAINED_CLAY)
                 .setDurability((enable ? 5 : 14))
                 .setName((enable ? "§aActivé" : "§cDésactivé"))
                 .toItemStack());
-        gameInv.setItem(15, new ItemBuilder(Material.WATCH).setName("§bTemp maximum").setLore(
+        gameInv.setItem(11, new ItemBuilder(Material.WATCH).setName("§bTemp maximum").setLore(
                 "",
                 "§fClique gauche: §a+1 minute",
                 "",
@@ -150,7 +164,19 @@ public class EventsManager implements Listener {
                 "",
                 "§bTemp maximum actuel: §c"+ StringUtils.secondsTowardsBeautiful(maxTime)
         ).toItemStack());
-        gameInv.setItem(gameInv.getSize()-1, GUIItems.getSelectBackMenu());
+        gameInv.setItem(3, new ItemBuilder(Material.SIGN).setName("§fDescriptions de l'Event").setLore(event.getExplications()).toItemStack());
+        gameInv.setItem(15, new ItemBuilder(Material.WATCH).setName("§bPourcentage (§cdiminution§b)").setLore(
+                "§fPourcentage actuel: §c"+event.getPercent()+"%",
+                "",
+                "§fClique gauche:§c -5%",
+                "§fClique droit:§c -1%").toItemStack());
+        gameInv.setItem(17, new ItemBuilder(Material.WATCH).setName("§bPourcentage (§aaugmentation§b)").setLore(
+                "§fPourcentage actuel: §a"+event.getPercent()+"%",
+                "",
+                "§fClique gauche:§a +5%",
+                "§fClique droit:§a +1%"
+        ).toItemStack());
+        gameInv.setItem(4, GUIItems.getSelectBackMenu());
         player.openInventory(gameInv);
     }
     private Event getEvent(final String name) {
