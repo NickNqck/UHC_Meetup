@@ -390,6 +390,13 @@ public class Inventories {
                             "§fVanilla: §c130%",
                             "§aMinimum:§c 10%"
                     ).toItemStack());
+                    inv.addItem(new ItemBuilder(Material.IRON_CHESTPLATE).setName("§fPourcentage de Résistance").setLore(
+                            "§9Résistance I§f: "+Main.getInstance().getGameConfig().getResiPercent()+"%",
+                            "§9Résistance II§f: "+(Main.getInstance().getGameConfig().getResiPercent()*2)+"%",
+                            "",
+                            "§fVanilla: §c20%",
+                            "§aMinimum:§c 10%"
+                    ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.TRIPWIRE_HOOK).setName("§fTypes de stun").setLore(
                             "",
                             (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.TELEPORT) ?
