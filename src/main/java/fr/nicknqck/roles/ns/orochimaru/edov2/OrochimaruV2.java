@@ -98,7 +98,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
     private void onUHCKill(@NonNull final UHCPlayerKillEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            ((CraftPlayer) event.getPlayerKiller()).getHandle().setAbsorptionHearts(((CraftPlayer) event.getPlayerKiller()).getHandle().getAbsorptionHearts()+4.0f);
+            ((CraftPlayer) event.getPlayerKiller()).getHandle().setAbsorptionHearts(((CraftPlayer) event.getPlayerKiller()).getHandle().getAbsorptionHearts()+8.0f);
             if (!event.getGameState().hasRoleNull(event.getVictim().getUniqueId())) {
                 final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
                 if (role instanceof NSRoles) {
@@ -122,7 +122,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
                 event.getPlayer().removePotionEffect(PotionEffectType.ABSORPTION);
                 ((CraftPlayer) event.getPlayer()).getHandle().setAbsorptionHearts(0);
-                ((CraftPlayer) event.getPlayer()).getHandle().setAbsorptionHearts(((CraftPlayer) event.getPlayer()).getHandle().getAbsorptionHearts()+5.0f);
+                ((CraftPlayer) event.getPlayer()).getHandle().setAbsorptionHearts(((CraftPlayer) event.getPlayer()).getHandle().getAbsorptionHearts()+6.0f);
             }, 1);
         }
     }
