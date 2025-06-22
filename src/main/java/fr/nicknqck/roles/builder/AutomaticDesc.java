@@ -290,4 +290,7 @@ public class AutomaticDesc {
         }
         return ROMAN_NUMERALS[number - 1];
     }
+    public static TextComponent createFullAutomaticDesc(final IRole iRole) {
+        return new AutomaticDesc(iRole).addEffects(iRole.getEffects()).setPowers(iRole.getPowers()).getText();
+    }
 }
