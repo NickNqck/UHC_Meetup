@@ -294,10 +294,8 @@ public class EveilTenseiGan extends Event implements Listener {
             public SphereVeritePower(@NonNull ModeChakraPower chakraPower) {
                 super("Sphere de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphere de vérité"), chakraPower.getRole(),
                         "§7Via un clique droit§a active§7/§cdésactive§7 votre§a fly§7,",
-                        "",
-                        "§7Le premier coup que vous infligez en volant fera§c 55%§7 de§c dégâts supplémentaire§7, mais arrêtera votre§a fly§7,",
-                        "",
-                        "§7Le premier coup que vous recevrez en volant fera§c 45%§7 de§c dégâts en moins§7, mais vous arrêtera votre§a fly§7.",
+                        "§7Si un joueur vous frappe ou que vous attaquez un autre joueur votre§a vole§7 s'arrêtera.",
+                        "§7A l'activation vous perdrez§c 15 secondes directement§7.",
                         "",
                         "§c!ATTENTION! Quand votre§a fly§7 est§a activé§7 le temp dépensé dans votre§c banque de temps§7 sera§c doublé§7.");
                 this.modeChakraPower = chakraPower;
@@ -316,6 +314,7 @@ public class EveilTenseiGan extends Event implements Listener {
                         player.setFlying(true);
                         this.fly = true;
                         player.sendMessage("§7Vous commencez à volé...");
+                        this.modeChakraPower.timeLeft-=15;
                     } else {
                         player.setFlying(false);
                         player.setAllowFlight(false);
@@ -328,7 +327,7 @@ public class EveilTenseiGan extends Event implements Listener {
             }
             @EventHandler
             private void onDamage(EntityDamageEvent event) {
-                if (event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
+                if (!event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
                 if (!fly)return;
                 ((Player) event.getEntity()).setFlying(false);
                 ((Player) event.getEntity()).setAllowFlight(false);
@@ -339,20 +338,17 @@ public class EveilTenseiGan extends Event implements Listener {
             private void onDamage2(EntityDamageByEntityEvent event) {
                 if (!(event.getDamager() instanceof Player))return;
                 if (!(event.getEntity() instanceof Player))return;
-                if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
                 if (!this.modeChakraPower.chakraRunnable.running)return;
                 if (!fly)return;
                 if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
                     ((Player) event.getEntity()).setFlying(false);
                     ((Player) event.getEntity()).setAllowFlight(false);
                     event.getEntity().sendMessage("§7Quelqu'un a stoppé votre envole.");
-                    event.setDamage(event.getDamage()*0.55);
                     this.fly = false;
                     return;
                 }
                 if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
                     event.getDamager().sendMessage("§7Votre vole s'arrête");
-                    event.setDamage(event.getDamage()*1.45);
                     ((Player) event.getDamager()).setFlying(false);
                     ((Player) event.getDamager()).setAllowFlight(false);
                     this.fly = false;
