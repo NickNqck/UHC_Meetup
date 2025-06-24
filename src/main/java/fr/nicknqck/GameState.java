@@ -187,6 +187,7 @@ public class GameState{
 		Suigetsu(TeamList.Orochimaru, "ns", 4, new ItemBuilder(Material.WATER_BUCKET).setName("§5Suigetsu").toItemStack(), "§bNickNqck"),
 		Sasuke(TeamList.Orochimaru, "ns", 5, new ItemBuilder(Material.EYE_OF_ENDER).setName("§5Sasuke").toItemStack(), "§aYukan"),
 		Jugo(TeamList.Orochimaru, "ns", 6, new ItemBuilder(Material.ROTTEN_FLESH).setName("§5Jugo").toItemStack(), "§bNickNqck"),
+		Tayuya(TeamList.Orochimaru, "ns", 7, new ItemBuilder(Material.STICK).setName("§5Tayuya").toItemStack(), "§bNickNqck"),
 		//Akatsuki
 		Nagato(TeamList.Akatsuki, "ns", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cNagato").toItemStack(), "§bNickNqck"),
 		Konan(TeamList.Akatsuki, "ns", 1, new ItemBuilder(Material.PAPER).setName("§cKonan").toItemStack(), "§bNickNqck"),
@@ -738,46 +739,46 @@ public class GameState{
 		case Kurenai:
 			role = new KurenaiV2(player);
 			break;
-		case Shikamaru:
+			case Shikamaru:
 			role = new Shikamaru(player);
 			break;
-        case Poulet:
-             role = new Poulet(player);
-             break;
-		case Ino:
+			case Poulet:
+			role = new Poulet(player);
+			break;
+			case Ino:
 			role = new InoV2(player);
 			break;
-		case Zombie:
+			case Zombie:
 			role = new Zombie(player);
 			break;
-		case Iso:
+			case Iso:
 			role = new Iso(player);
 			break;
-		case Squelette:
+			case Squelette:
 			role = new Squelette(player);
 			break;
-		case LeComte:
+			case LeComte:
 			role = new LeComteV2(player);
 			break;
-		case LeJuge:
+			case LeJuge:
 			role = new LeJuge(player);
 			break;
-		case AraigneeVenimeuse:
+			case AraigneeVenimeuse:
 			role = new AraigneeVenimeuse(player);
 			break;
-		case Fugaku:
+			case Fugaku:
 			role = new Fugaku(player);
 			break;
-		case Blaze:
+			case Blaze:
 			role = new Blaze(player);
 			break;
-		case GolemDeFer:
+			case GolemDeFer:
 			role = new GolemDeFer(player);
 			break;
-		case Brute:
+			case Brute:
 			role = new Brute(player);
 			break;
-		case MagmaCube:
+			case MagmaCube:
 			role = new MagmaCube(player);
 			break;
 			case SlayerSolo:
@@ -806,6 +807,9 @@ public class GameState{
 				break;
 			case SasukeSOLO:
 				role = new SasukeSolo(player);
+				break;
+			case Tayuya:
+				role = new Tayuya(player);
 				break;
 		}
 		if (role == null) return null;

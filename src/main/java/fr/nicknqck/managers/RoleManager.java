@@ -199,6 +199,7 @@ public class RoleManager {
         registerRole(OrochimaruV2.class);
         registerRole(SasukeV2.class);
         registerRole(Suigetsu.class);
+        registerRole(Tayuya.class);
         //Register Akatsuki
         registerRole(Deidara.class);
         registerRole(Hidan.class);
