@@ -16,6 +16,7 @@ import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -118,13 +119,14 @@ public class Tayuya extends OrochimaruRoles {
                     ironGolem.setPlayerCreated(true);
                     ironGolem.setCustomName("§5Golem de Tayuya "+i);
                     ironGolem.setCustomNameVisible(true);
-                    ironGolem.setMaxHealth(100);
+                    ironGolem.setMaxHealth(80);
                     ironGolem.setHealth(ironGolem.getMaxHealth());
                     ironGolem.setRemoveWhenFarAway(false);
                     ironGolem.setTarget(target);
                     ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 1, false, false));
                     ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false, false));
-                    ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false));
+                    ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false));
+                    ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 0, false, false));
                     new GolemRunnable(this, ironGolem, target);
                 }
                 player.sendMessage("§7Vos§c 3 golems§7 sont apparue, ils vont essayer d'aller se battre contre§c "+target.getDisplayName());
@@ -150,12 +152,14 @@ public class Tayuya extends OrochimaruRoles {
 
             private final FluteDemoniaque fluteDemoniaque;
             private final IronGolem ironGolem;
-            private final Player target;
+            private Player target;
+            private final UUID uuid;
 
             private GolemRunnable(FluteDemoniaque fluteDemoniaque, IronGolem ironGolem, Player target) {
                 this.fluteDemoniaque = fluteDemoniaque;
                 this.ironGolem = ironGolem;
                 this.target = target;
+                this.uuid = this.target.getUniqueId();
                 runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
             }
 
@@ -169,7 +173,11 @@ public class Tayuya extends OrochimaruRoles {
                     cancel();
                     return;
                 }
-                if (target == null)return;
+                if (target == null) {
+                    final Player player = Bukkit.getPlayer(this.uuid);
+                    if (player == null)return;
+                    this.target = player;
+                }
                 if (!ironGolem.getType().isAlive()) {
                     cancel();
                     return;
