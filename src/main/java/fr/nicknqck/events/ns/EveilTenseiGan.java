@@ -245,6 +245,13 @@ public class EveilTenseiGan extends Event implements Listener {
             if (!RandomUtils.getOwnRandomProbability(5.0))return;
             event.getEntity().setFireTicks(20*5);
         }
+        @EventHandler
+        private void onFall(EntityDamageEvent event) {
+            if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL))return;
+            if (!event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!this.chakraRunnable.running)return;
+            event.setCancelled(true);
+        }
         private final static class ChakraRunnable extends BukkitRunnable {
 
             private final ModeChakraPower modeChakraPower;
