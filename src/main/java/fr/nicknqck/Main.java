@@ -97,6 +97,7 @@ public class Main extends JavaPlugin {
 	private TabManager tabManager;
 	private HokageManager hokageManager;
 	private InfoManager infoManager;
+	private PlayersNameManager playersNameManager;
 
     @Override
 	public void onEnable() {
@@ -147,6 +148,7 @@ public class Main extends JavaPlugin {
 		this.bijuManager = new BijuManager();
 		this.tabManager = new TabManager();
 		this.infoManager = new InfoManager(getDataFolder());
+		this.playersNameManager = new PlayersNameManager(getDataFolder());
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {

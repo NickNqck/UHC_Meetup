@@ -1,5 +1,6 @@
 package fr.nicknqck.player;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -65,7 +66,11 @@ public class PlayerInfo {
                 .max(Map.Entry.comparingByValue())
                 .map(entry -> {
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(entry.getKey());
-                    String name = (offlinePlayer != null && offlinePlayer.getName() != null) ? offlinePlayer.getName() : "Inconnu";
+                    //String name = (offlinePlayer != null && offlinePlayer.getName() != null) ? offlinePlayer.getName() : "Inconnu";
+                    String name = Main.getInstance().getPlayersNameManager().getPlayerName(entry.getKey());
+                    if (name.equals("Inconnu")) {
+                        name = (offlinePlayer != null && offlinePlayer.getName() != null) ? offlinePlayer.getName() : "Inconnu";
+                    }
                     int count = entry.getValue();
                     double percentage = (totalKills == 0) ? 0 : (count * 100.0 / totalKills);
                     return name + " (" + String.format("%.1f", percentage) + "%)";
