@@ -133,7 +133,10 @@ public class EveilTenseiGan extends Event implements Listener {
                 "§7à§c 5%§7 de§c chance§7 d'§6enflammer§7 le joueur attaquer.",
                 "",
                 "§8 -§b Sphere de vérité§7: Permet d'activer le fait de pouvoir§a voler§7,",
-                "§7ce pouvoir n'est utilisable que quand le§b Mode Chakra§7 est actif et coûte§c 2x plus de temps"
+                "§7ce pouvoir n'est utilisable que quand le§b Mode Chakra§7 est actif et coûte§c 2x plus de temps",
+                "",
+                "§8 -§c Épée du§b Tenseigan§7: Permet de passer à travers la résistance des joueurs frappés,",
+                "§7elle est également enchantée tranchant III"
         };
     }
 
