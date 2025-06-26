@@ -33,6 +33,8 @@ public class JoinEvents implements Listener{
 		GameState gameState = GameState.getInstance();
 		Main.getInstance().getScoreboardManager().onLogin(player);
 
+		Main.getInstance().getPlayersNameManager().savePlayer(player);
+
 		// Join Message
 		String joinMessage = "";
 		switch(gameState.getServerState()) {
