@@ -80,7 +80,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         this.chakrasVoled.addAll(chakrasList);
         EventUtils.registerRoleEvent(this);
         addPower(new NSChangeCommand(this));
-        addKnowedRole(Hidan.class);
+        addKnowedRole(HidanV2.class);
         super.RoleGiven(gameState);
     }
 

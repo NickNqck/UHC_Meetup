@@ -191,7 +191,7 @@ public class Konan extends AkatsukiRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
-				, Deidara.class, Hidan.class, ItachiV2.class,
+				, Deidara.class, HidanV2.class, ItachiV2.class,
 				KakuzuV2.class, KisameV2.class, Konan.class,
 				NagatoV2.class, ZetsuBlanc.class,
 				ZetsuNoir.class, ZetsuBlancV2.class , ObitoV2.class);

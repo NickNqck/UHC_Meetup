@@ -80,7 +80,7 @@ public class ObitoV2 extends JubiRoles {
         addKnowedRole(Madara.class);
         getGamePlayer().startChatWith("§dObito:", "!", Madara.class);
         addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7:",
-                Deidara.class, Hidan.class, ItachiV2.class,
+                Deidara.class, HidanV2.class, ItachiV2.class,
                 KakuzuV2.class, KisameV2.class, Konan.class,
                 NagatoV2.class, ZetsuBlanc.class,
                 ZetsuNoir.class, ZetsuBlancV2.class);

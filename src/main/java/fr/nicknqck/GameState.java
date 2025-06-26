@@ -707,7 +707,7 @@ public class GameState{
 			role = new RockLeeV2(player);
 			break;
 		case Hidan:
-			role = new Hidan(player);
+			role = new HidanV2(player);
 			break;
 		case Asuma:
 			role = new Asuma(player);
