@@ -71,7 +71,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
         giveItem(owner, false, getItems());
         this.chakrasVoled.add(getChakras());
         EventUtils.registerRoleEvent(this);
-        addKnowedPlayersWithRoles("§7Voici la liste du camp§5 Orochimaru§7:", Jugo.class, SasukeV2.class, Suigetsu.class, KabutoV2.class, Kimimaro.class, Karin.class);
+        addKnowedPlayersWithRoles("§7Voici la liste du camp§5 Orochimaru§7:", Jugo.class, SasukeV2.class, SuigetsuV2.class, KabutoV2.class, Kimimaro.class, Karin.class, Tayuya.class);
         super.RoleGiven(gameState);
     }
 

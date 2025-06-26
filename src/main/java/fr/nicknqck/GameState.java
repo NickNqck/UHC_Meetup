@@ -665,7 +665,7 @@ public class GameState{
 			role = new KakuzuV2(player);
 			break;
 		case Suigetsu:
-			role = new Suigetsu(player);
+			role = new SuigetsuV2(player);
 			break;
 		case Haku:
 			role = new HakuV2(player);
