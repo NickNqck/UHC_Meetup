@@ -175,7 +175,7 @@ public class GameListener implements Listener {
 			if (gameState.inGameTime == Border.getTempReduction()) {
 				gameState.shrinking = true;
 				long speed = Border.getBorderSpeed()*20;
-				border.setSize(Border.getMinBorderSize()*2, speed*360);
+				border.setSize(Border.getMinBorderSize()*2, speed*20);
 				SendToEveryone("§7La bordure commence à bouger !");
 			}
 			if (gameState.inGameTime == 0) {
