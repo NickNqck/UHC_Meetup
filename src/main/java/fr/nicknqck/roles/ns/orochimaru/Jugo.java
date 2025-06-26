@@ -108,7 +108,7 @@ public class Jugo extends OrochimaruRoles {
 			owner.sendMessage("§7Maitre§5 Orochimaru§7 est mort, vous obtenez donc l'identité de vos nouveau amis,§5 Karin§f et§5 Suigetsu§7, (§6/ns me§7)");
 		}
 		getKnowedRoles().add(Karin.class);
-		getKnowedRoles().add(Suigetsu.class);
+		getKnowedRoles().add(SuigetsuV2.class);
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
