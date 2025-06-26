@@ -255,6 +255,14 @@ public class EveilTenseiGan extends Event implements Listener {
             if (!this.chakraRunnable.running)return;
             event.setCancelled(true);
         }
+        @EventHandler
+        private void onKill(UHCPlayerKillEvent event) {
+            if (event.getGamePlayerKiller() == null)return;
+            if (event.getKiller().getUniqueId().equals(getRole().getPlayer())) {
+                this.timeLeft+=60;
+                event.getKiller().sendMessage("§7Vous avez gagner§c 60 secondes§7 dans votre§c banque de temp§7.");
+            }
+        }
         private final static class ChakraRunnable extends BukkitRunnable {
 
             private final ModeChakraPower modeChakraPower;
