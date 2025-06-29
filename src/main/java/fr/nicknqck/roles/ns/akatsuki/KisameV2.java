@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.akatsuki;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.events.custom.roles.ns.SamehadaUseEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -108,6 +109,11 @@ public class KisameV2 extends AkatsukiRoles {
                     a++;
                     this.map.put(victim.getDisplayName(), a);
                     if (a == 25) {
+                        final SamehadaUseEvent samehadaUseEvent = new SamehadaUseEvent(player, victim, (KisameV2) getRole());
+                        Bukkit.getServer().getPluginManager().callEvent(samehadaUseEvent);
+                        if (samehadaUseEvent.isCancelled()) {
+                            return false;
+                        }
                         victim.setHealth(Math.max(victim.getHealth()-4.0, 1.0));
                         this.map.remove(victim.getDisplayName(), a);
                         a = 0;
