@@ -293,4 +293,7 @@ public class AutomaticDesc {
     public static TextComponent createFullAutomaticDesc(final IRole iRole) {
         return new AutomaticDesc(iRole).addEffects(iRole.getEffects()).setPowers(iRole.getPowers()).getText();
     }
+    public static AutomaticDesc createAutomaticDesc(final IRole iRole) {
+        return new AutomaticDesc(iRole).addEffects(iRole.getEffects()).setPowers(iRole.getPowers());
+    }
 }
