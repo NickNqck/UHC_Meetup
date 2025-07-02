@@ -5,11 +5,13 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.IByakuganUser;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -43,7 +45,7 @@ public class EveilTenseiGan extends Event implements Listener {
     private boolean activate = false;
     private final String print = "[EveilTenseiganEvent] ";
     private GamePlayer gamePlayer;
-    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§cÉpée du§b Tenseigan").setLore("§7Vous permet de passer à travers la résistance des personnes frappés").toItemStack();
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).setName("§cÉpée du§b Tenseigan").setLore("§7Vous permet de passer à travers la résistance des personnes frappés").toItemStack();
 
     @Override
     public boolean isActivated() {
@@ -136,7 +138,13 @@ public class EveilTenseiGan extends Event implements Listener {
                 "§7ce pouvoir n'est utilisable que quand le§b Mode Chakra§7 est actif et coûte§c 2x plus de temps",
                 "",
                 "§8 -§c Épée du§b Tenseigan§7: Permet de passer à travers la résistance des joueurs frappés,",
-                "§7elle est également enchantée tranchant III"
+                "§7elle est également enchantée tranchant III",
+                "",
+                "§cLa personne ayant été toucher par l'event restera§e Solitaire§7 jusqu'a la fin de la partie",
+                "§7(§cCela outrepasse aussi l'infection de§e§l Shisui§r§7)",
+                "",
+                "§fL'annonce de l'évènement ce fera après que l'utilisateur ai utiliser pendant§c 1 minute",
+                "§fson§b Mode Chakra"
         };
     }
 
@@ -190,11 +198,22 @@ public class EveilTenseiGan extends Event implements Listener {
             }
         }
     }
+    @EventHandler
+    private void teamChangeEvent(final TeamChangeEvent event) {
+        if (this.gamePlayer == null)return;
+        if (this.gamePlayer.getUuid().equals(event.getRole().getPlayer())) {
+            if (!event.getNewTeam().equals(TeamList.Solo)) {
+                this.gamePlayer.sendMessage("§7Quelqu'un a essayer de vous faire changer de camp mais on dirait que sa n'a pas fonctionner.");
+                event.setCancelled(true);
+            }
+        }
+    }
     private static class ModeChakraPower extends ItemPower implements Listener {
 
         private int timeLeft;
         private final ChakraRunnable chakraRunnable;
         private final SphereVeritePower sphereVeritePower;
+        private int timeBeforeMSG = 60;
 
 
         public ModeChakraPower(@NonNull RoleBase role) {
@@ -203,7 +222,7 @@ public class EveilTenseiGan extends Event implements Listener {
                     "",
                     "§7Quand votre§b Mode Chakra§7 est§a activé§7, vous possédez l'effet§e Speed II§7 ainsi que§c 5%§7 de§c chance§7 de mettre en§c feu§7 les joueurs que vous attaquez§7."
             );
-            this.timeLeft = 60*5;
+            this.timeLeft = 90;
             this.chakraRunnable = new ChakraRunnable(this);
             EventUtils.registerRoleEvent(this);
             this.sphereVeritePower = new SphereVeritePower(this);
@@ -280,13 +299,28 @@ public class EveilTenseiGan extends Event implements Listener {
                     stop();
                     return;
                 }
-                if (!running || this.modeChakraPower.timeLeft <= 0)return;
+                if (!running || this.modeChakraPower.timeLeft <= 0) return;
                 this.modeChakraPower.timeLeft--;
                 if (this.modeChakraPower.sphereVeritePower.fly) {
                     this.modeChakraPower.timeLeft--;
                 }
+                if (this.modeChakraPower.timeLeft <= 0) {
+                    final Player player = Bukkit.getPlayer(this.modeChakraPower.getRole().getPlayer());
+                    if (player != null) {
+                        this.modeChakraPower.sphereVeritePower.stop(player);
+                        stop();
+                    }
+                    return;
+                }
                 this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.modeChakraPower.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1, false, false), EffectWhen.NOW));
+                this.modeChakraPower.timeBeforeMSG--;
+                if (this.modeChakraPower.timeBeforeMSG == 0) {
+                    Bukkit.broadcastMessage(AllDesc.bar);
+                    Bukkit.broadcastMessage("§fL'évènement aléatoire §7\"§bÉveil du Tenseigan§7\"§f a eu lieu, un possésseur aléatoire du§a Byakugan§f est devenue un rôle§e Solitaire§7 (Peut importe son camp d'origine et s'il a changer de camp ou pas).");
+                    Bukkit.broadcastMessage(AllDesc.bar);
+
+                }
             }
             public void stop() {
                 this.running = false;
@@ -328,16 +362,9 @@ public class EveilTenseiGan extends Event implements Listener {
                         return false;
                     }
                     if (!fly) {
-                        player.setAllowFlight(true);
-                        player.setFlying(true);
-                        this.fly = true;
-                        player.sendMessage("§7Vous commencez à volé...");
-                        this.modeChakraPower.timeLeft-=15;
+                        start(player);
                     } else {
-                        player.setFlying(false);
-                        player.setAllowFlight(false);
-                        this.fly = false;
-                        player.sendMessage("§7Vous arrêtez de volé...");
+                        stop(player);
                     }
                     return true;
                 }
@@ -372,7 +399,19 @@ public class EveilTenseiGan extends Event implements Listener {
                     this.fly = false;
                 }
             }
-
+            private void stop(final Player player) {
+                player.setFlying(false);
+                player.setAllowFlight(false);
+                this.fly = false;
+                player.sendMessage("§7Vous arrêtez de volé...");
+            }
+            private void start(final Player player) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+                this.fly = true;
+                player.sendMessage("§7Vous commencez à volé...");
+                this.modeChakraPower.timeLeft-=15;
+            }
         }
     }
     private static class CadavreRunnable extends BukkitRunnable {
