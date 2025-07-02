@@ -307,7 +307,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 if (this.modeChakraPower.timeLeft <= 0) {
                     final Player player = Bukkit.getPlayer(this.modeChakraPower.getRole().getPlayer());
                     if (player != null) {
-                        this.modeChakraPower.sphereVeritePower.stop(player);
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.modeChakraPower.sphereVeritePower.stop(player));
                         stop();
                     }
                     return;
