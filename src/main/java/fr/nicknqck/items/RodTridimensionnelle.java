@@ -14,7 +14,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -30,7 +33,15 @@ public class RodTridimensionnelle implements Listener {
     public RodTridimensionnelle(GameState gameState) {
     	this.gameState = gameState;
 	}
-    
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onDamage(final EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof FishHook) {
+            event.setDamage(0.0);
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onProjectile(ProjectileLaunchEvent event) {
         if (event.getEntity() == null || !(event.getEntity() instanceof FishHook) || event
