@@ -159,6 +159,9 @@ public abstract class RoleBase implements IRole {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.sendMessage(message), 20L *seconde);
 	}
 	public String getTeamColor() {
+		if (getTeam() == null) {
+			setTeam(getOriginTeam(), true);
+		}
 		return getTeam().getColor();
 	}
 	public void OLDgivePotionEffet(Player player, PotionEffectType type, int time, int level, boolean force) {
