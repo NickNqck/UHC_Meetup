@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.ds.Event;
@@ -46,6 +47,7 @@ public class EveilTenseiGan extends Event implements Listener {
     private final String print = "[EveilTenseiganEvent] ";
     private GamePlayer gamePlayer;
     private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).setName("§cÉpée du§b Tenseigan").setLore("§7Vous permet de passer à travers la résistance des personnes frappés").toItemStack();
+    private boolean getTenseigan = false;
 
     @Override
     public boolean isActivated() {
@@ -175,6 +177,7 @@ public class EveilTenseiGan extends Event implements Listener {
         role.addPower(new ModeChakraPower(role), true);
         role.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         role.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+        this.getTenseigan = true;
     }
     @EventHandler(priority = EventPriority.LOWEST)
     private void onBattle(final ResistancePatchEvent event) {
@@ -208,6 +211,18 @@ public class EveilTenseiGan extends Event implements Listener {
             }
         }
     }
+    @EventHandler
+    private void onDeath(final UHCDeathEvent event) {
+        if (!this.getTenseigan)return;
+        if (event.getRole() instanceof IByakuganUser) {
+            final GamePlayer g = event.getRole().getGamePlayer();
+            new CadavreRunnable(this.gamePlayer, g, this);
+            this.gamePlayer.sendMessage("§7Vous ressentez le cadavre§7 d'un autre utilisateur du§a Byakugan§7, il est en§c x§7:§c "+
+                            g.getDeathLocation().getBlockX()+"§7,§c y§7:§c "+g.getDeathLocation().getBlockY()+"§7,§c z§7:§c "+g.getDeathLocation().getBlockZ(),
+                    "§e",
+                    "§7Si vous y allez peut-être que vous pourriez récupérer ses§a Byakugan§7 et donc de nouveaux pouvoirs.");
+        }
+    }
     private static class ModeChakraPower extends ItemPower implements Listener {
 
         private int timeLeft;
@@ -222,7 +237,7 @@ public class EveilTenseiGan extends Event implements Listener {
                     "",
                     "§7Quand votre§b Mode Chakra§7 est§a activé§7, vous possédez l'effet§e Speed II§7 ainsi que§c 5%§7 de§c chance§7 de mettre en§c feu§7 les joueurs que vous attaquez§7."
             );
-            this.timeLeft = 90;
+            this.timeLeft = 60*5;
             this.chakraRunnable = new ChakraRunnable(this);
             EventUtils.registerRoleEvent(this);
             this.sphereVeritePower = new SphereVeritePower(this);
@@ -299,7 +314,7 @@ public class EveilTenseiGan extends Event implements Listener {
                     stop();
                     return;
                 }
-                if (!running || this.modeChakraPower.timeLeft <= 0) return;
+                if (!running || this.modeChakraPower.timeLeft <= 0 || !this.modeChakraPower.getRole().getGamePlayer().isAlive()) return;
                 this.modeChakraPower.timeLeft--;
                 if (this.modeChakraPower.sphereVeritePower.fly) {
                     this.modeChakraPower.timeLeft--;
