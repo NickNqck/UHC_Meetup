@@ -10,6 +10,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -23,7 +24,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -47,11 +47,6 @@ public class NezukoV2 extends DemonsRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Nezuko";
     }
@@ -64,16 +59,6 @@ public class NezukoV2 extends DemonsRoles {
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Slayer;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
@@ -124,7 +109,16 @@ public class NezukoV2 extends DemonsRoles {
         private final NezukoV2 nezukoV2;
 
         protected FormePower(@NonNull NezukoV2 role) {
-            super("§cForme Démoniaque", new Cooldown(60*20), new ItemBuilder(Material.NETHER_STAR).setName("§cForme Démoniaque"), role);
+            super("§cForme Démoniaque", new Cooldown(60*20), new ItemBuilder(Material.NETHER_STAR).setName("§cForme Démoniaque"), role,
+                    "§7Tant que vous êtes sous l'effet de votre§c Forme Démoniaque§7 vous aurez:",
+                    "",
+                    "§7Vous aurez l'effet§e Speed I§7.",
+                    "§7En mangeant une§e pomme d'or§7 vous obtiendrez§c 5%§7 de§c résistance§7 pendant§c 5 secondes§7.",
+                    "§7En vous faisant frappé par un joueur regardant la même direction que vous, vous gagnerez§c 10%§7 de§c speed§7 pendant§c 3 secondes§7.",
+                    "",
+                    "§7La durée de votre§c Forme Démoniaque§7 est de§c 5 minutes§7,",
+                    "§7après ce temps impartit vous perdrez votre effet de§c Force I§7 la§c nuit§7"+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().isMinage() ? 60*10 : 60*5)+"§7 et obtiendrez l'effet§c Faiblesse I§7."
+            );
             setMaxUse(2);
             EventUtils.registerRoleEvent(this);
             this.nezukoV2 = role;
@@ -144,7 +138,7 @@ public class NezukoV2 extends DemonsRoles {
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer()) && event.getDamager()instanceof Player && event.getEntity() instanceof Player) {
                 if (Loc.getPlayerFacing((Player) event.getDamager()).equals(Loc.getPlayerFacing((Player) event.getEntity()))) {
                     if (!getCooldown().isInCooldown())return;
-                    if (getCooldown().getCooldownRemaining() <= 60*20)return;
+                    if (getCooldown().getCooldownRemaining() <= 60*15)return;
                     event.getEntity().sendMessage("§7Vous avez gagner§c 10%§7 de§e Speed");
                     getRole().addSpeedAtInt((Player) event.getEntity(), 10);
                     Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
@@ -158,7 +152,7 @@ public class NezukoV2 extends DemonsRoles {
         private void onEat(PlayerItemConsumeEvent event) {
             if (event.getItem().getType().equals(Material.GOLDEN_APPLE) && event.getPlayer().getUniqueId().equals(getRole().getPlayer())) {
                 if (!getCooldown().isInCooldown())return;
-                if (getCooldown().getCooldownRemaining() <= 60*20)return;
+                if (getCooldown().getCooldownRemaining() <= 60*15)return;
                 event.getPlayer().sendMessage("§7Vous avez gagner§c 5%§7 de§9 Résistance");
                 getRole().addBonusResi(5.0);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
@@ -167,6 +161,7 @@ public class NezukoV2 extends DemonsRoles {
                 }, 100);
             }
         }
+
         private static class EffectRunnable extends BukkitRunnable {
 
             private int timeLeft = 60*5;
