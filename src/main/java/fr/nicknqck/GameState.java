@@ -719,7 +719,7 @@ public class GameState{
 			role = new Tenten(player);
 			break;
 		case Raikage:
-			role = new YondaimeRaikage(player);
+			role = new RaikageV2(player);
 			break;
 		case Ginkaku:
 			role = new GinkakuV2(player);

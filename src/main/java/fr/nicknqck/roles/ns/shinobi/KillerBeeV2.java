@@ -61,7 +61,7 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
         addKnowedRole(KillerBee.class);
-        addKnowedRole(YondaimeRaikage.class);
+        addKnowedRole(RaikageV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         setChakraType(Chakras.RAITON);
         EventUtils.registerRoleEvent(this);
