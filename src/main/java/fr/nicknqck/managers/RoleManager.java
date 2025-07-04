@@ -187,7 +187,7 @@ public class RoleManager {
         registerRole(Shikamaru.class);
         registerRole(Tenten.class);
         registerRole(Tsunade.class);
-        registerRole(YondaimeRaikage.class);
+        registerRole(RaikageV2.class);
         registerRole(RockLeeV2.class);
         registerRole(GaiV2.class);
         registerRole(Hinata.class);
