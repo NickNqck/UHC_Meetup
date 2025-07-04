@@ -117,7 +117,7 @@ public class NezukoV2 extends DemonsRoles {
                     "§7En vous faisant frappé par un joueur regardant la même direction que vous, vous gagnerez§c 10%§7 de§c speed§7 pendant§c 3 secondes§7.",
                     "",
                     "§7La durée de votre§c Forme Démoniaque§7 est de§c 5 minutes§7,",
-                    "§7après ce temps impartit vous perdrez votre effet de§c Force I§7 la§c nuit§7"+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().isMinage() ? 60*10 : 60*5)+"§7 et obtiendrez l'effet§c Faiblesse I§7."
+                    "§7après ce temps impartit vous perdrez votre effet de§c Force I§7 la§c nuit§7 et obtiendrez l'effet§c Faiblesse I§7 pendant§c "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().isMinage() ? 60*10 : 60*5)+"§7."
             );
             setMaxUse(2);
             EventUtils.registerRoleEvent(this);
