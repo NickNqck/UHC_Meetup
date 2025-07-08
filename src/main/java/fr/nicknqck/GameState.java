@@ -38,8 +38,7 @@ import fr.nicknqck.roles.ns.shinobi.*;
 import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.*;
-import fr.nicknqck.roles.ns.solo.jubi.Madara;
-import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
+import fr.nicknqck.roles.ns.solo.jubi.*;
 import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.HakuV2;
@@ -626,7 +625,7 @@ public class GameState{
 			role = new ShinjuroV2(player);
 			break;
 		case Madara:
-			role = new Madara(player);
+			role = new MadaraV2(player);
 			break;
 		case Obito:
 			role = new ObitoV2(player);

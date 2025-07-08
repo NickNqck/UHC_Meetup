@@ -77,8 +77,8 @@ public class ObitoV2 extends JubiRoles {
         addPower(new ObtainSusanoPower(this));
         addPower(new Izanagi(this));
         setChakraType(Chakras.KATON);
-        addKnowedRole(Madara.class);
-        getGamePlayer().startChatWith("§dObito:", "!", Madara.class);
+        addKnowedRole(MadaraV2.class);
+        getGamePlayer().startChatWith("§dObito:", "!", MadaraV2.class);
         addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7:",
                 Deidara.class, HidanV2.class, ItachiV2.class,
                 KakuzuV2.class, KisameV2.class, Konan.class,
