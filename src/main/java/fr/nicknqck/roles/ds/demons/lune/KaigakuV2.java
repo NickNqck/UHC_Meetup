@@ -58,11 +58,6 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Kaigaku§7 (§6V2§7)§r";
     }
@@ -75,11 +70,6 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
@@ -181,7 +171,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                     if (!firstGive) {
                         final Player owner = Bukkit.getPlayer(getRole().getPlayer());
                         if (owner != null) {
-                            getRole().addSpeedAtInt(owner, 10);
+                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> getRole().addSpeedAtInt(owner, 10));
                             firstGive = true;
                         }
                     }
@@ -189,7 +179,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                         if (this.charge >= 80) {
                             final Player owner = Bukkit.getPlayer(getRole().getPlayer());
                             if (owner != null) {
-                                getRole().addSpeedAtInt(owner, 10);
+                                Bukkit.getScheduler().runTask(Main.getInstance(), () -> getRole().addSpeedAtInt(owner, 10));
                                 secondGive = true;
                             }
                         }
