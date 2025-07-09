@@ -162,7 +162,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 this.using = true;
                 player.sendMessage("§7Votre§e Foudre§7 est prête, vous avez maintenant§c 60 secondes§7 pour l'utiliser sur un§c joueur§7.");
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 new EndFoudreRunnable(getRole().getGameState(), this);
                 return true;
             }
@@ -225,7 +225,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*120, 1, false, false), true);
                 player.sendMessage("§7Vous activez votre §aSoufle du Vent");
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     assert player.isOnline();
                     if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
