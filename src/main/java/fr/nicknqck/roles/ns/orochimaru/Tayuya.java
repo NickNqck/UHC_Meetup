@@ -7,6 +7,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -60,6 +61,7 @@ public class Tayuya extends OrochimaruRoles {
         addPower(new MarqueMaudite(this), true);
         addPower(new FluteDemoniaque(this), true);
         setChakraType(getRandomChakras());
+        addKnowedRole(OrochimaruV2.class);
         super.RoleGiven(gameState);
     }
 
