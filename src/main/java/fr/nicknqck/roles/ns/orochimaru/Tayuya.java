@@ -185,13 +185,13 @@ public class Tayuya extends OrochimaruRoles {
                     return;
                 }
                 if (!target.getWorld().equals(ironGolem.getWorld())) {
-                    ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 10));
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 10)));
                 } else {
                     if (ironGolem.getLocation().distance(target.getLocation()) > 35.0 || ironGolem.getLocation().getBlock().getType().name().contains("WATER")) {
-                        ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 10));
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 10)));
                     }
                 }
-                this.ironGolem.setTarget(this.target);
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.ironGolem.setTarget(this.target));
             }
         }
     }
