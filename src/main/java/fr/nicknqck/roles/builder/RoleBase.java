@@ -68,7 +68,6 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	@Setter
 	private GamePlayer gamePlayer;
-	@Getter
 	private TeamList team;
 	@Getter
 	private final Map<PotionEffect, EffectWhen> effects = new LinkedHashMap<>();
@@ -174,6 +173,13 @@ public abstract class RoleBase implements IRole {
 	}
 	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
+
+	@Override
+	public TeamList getTeam() {
+		if (this.team == null) this.team = getOriginTeam();
+		return team;
+	}
+
 	public void setTeam(@NonNull final TeamList team) {
 		setTeam(team, false);
 	}
