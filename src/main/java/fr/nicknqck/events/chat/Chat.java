@@ -40,7 +40,7 @@ public class Chat implements Listener {
 			}
 		}
 		if (gameState.getServerState() == ServerStates.InLobby) {
-			e.setFormat(ChatColor.translateAlternateColorCodes('&', debut+rank.getFullPrefix()+p.getName()+":§r "+msg));
+			e.setFormat(ChatColor.translateAlternateColorCodes('&', debut+rank.getFullPrefix()+(p.getName().toLowerCase().contains("boulot") ? "(§f§lGoat§r"+rank.getColor()+") " : (p.getUniqueId().equals(UUID.fromString("a674c7e4-8cff-4eb5-bb54-5a9397eea4e3")) ? "(§f§lGoat§r"+rank.getColor()+") " : ""))+p.getName()+":§r "+msg));
 		}else {
 			if (gameState.getInSpecPlayers().contains(p)) {
 				for (Player spec : gameState.getInSpecPlayers()) {
