@@ -262,7 +262,7 @@ public class NagatoV2 extends AkatsukiRoles implements Listener {
                         "",
                         "§7Il/Elle possède §c"+(new DecimalFormat("0").format(target.getMaxHealth()/2)+"❤ permanents")
                 });
-                player.setHealth(Math.max(1.0, player.getHealth()-2.0));
+                target.setHealth(Math.max(1.0, player.getHealth()-2.0));
                 return true;
             }
             return false;
@@ -331,7 +331,7 @@ public class NagatoV2 extends AkatsukiRoles implements Listener {
                                 "❤§7/§c"+
                                 (new DecimalFormat("0").format(target.getMaxHealth()/2)+" permanents")
                 });
-                player.setHealth(Math.max(1.0, player.getHealth()-4.0));
+                target.setHealth(Math.max(1.0, player.getHealth()-4.0));
                 return true;
             }
             return false;
