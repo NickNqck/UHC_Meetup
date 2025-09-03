@@ -863,9 +863,9 @@ public class Inventories {
                             case DS:
                                 inv.setItem(13, GUIItems.getSelectDSButton());
                                 break;
-                            case MC:
+                      /*      case MC:
                                 inv.setItem(13, GUIItems.getSelectMCButton());
-                                break;
+                                break;*/
                             case AOT:
                                 inv.setItem(13, GUIItems.getSelectAOTButton());
                                 break;

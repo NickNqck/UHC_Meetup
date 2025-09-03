@@ -266,7 +266,7 @@ public class GameState{
 		DS(new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
 		AOT(new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
 		NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack()),
-		MC(new ItemBuilder(Material.GRASS).setName("§aMinecraft").toItemStack()),
+	//	MC(new ItemBuilder(Material.GRASS).setName("§aMinecraft").toItemStack()),
 		KRYSTAL(new ItemBuilder(Material.EMERALD_ORE).setName("§dKrystal UHC").toItemStack());
 
 		private final ItemStack item;
