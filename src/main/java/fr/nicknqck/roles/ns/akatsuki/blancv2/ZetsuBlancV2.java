@@ -31,11 +31,6 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
@@ -63,16 +58,6 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
     @Override
     public GameState.@NonNull Roles getRoles() {
         return GameState.Roles.ZetsuBlancV2;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
