@@ -25,6 +25,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -67,6 +68,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
         new ForceRunnable(this);
         EventUtils.registerRoleEvent(this);
         addPower(new RituelPower(this), true);
+        setChakraType(getRandomChakras());
     }
 
     @EventHandler
@@ -104,7 +106,14 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
         private Location location = null;
 
         public RituelPower(@NonNull RoleBase role) {
-            super("Rituel de Jashin", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cRituel de Jashin"), role);
+            super("Rituel de Jashin", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cRituel de Jashin"), role,
+                    "§7Lorsque vous frappez un§b joueur§7 avec votre§c Faux§7, vous pouvez activer votre pouvoir afin de renvoyer",
+                    "§7les§c dégâts§7 que vous subissez dans votre§c zone§7 d'activation à§b celui-ci§7.",
+                    "",
+                    "§7Si jamais votre§c cible§7 n'est plus dans la même§c dimension§7 que vous ou qu'elle se situe à plus de§c 100 blocs§7",
+                    "§7alors, elle ne subira pas les dégâts (uniquement si elle à moins de§c 1❤§7)",
+                    "",
+                    "§7Si elle se situe à plus de§c 50 blocs");
             this.sword = new ItemBuilder(Material.DIAMOND_SWORD).setName("§cFaux§7 (§cRituel de Jashin§7)").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true)
                     .setLore("§7Vous permet de déclencher le§c Rituel de Jashin§7.").toItemStack();
             role.getGamePlayer().addItems(this.sword);
@@ -128,7 +137,8 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
                         player.sendMessage("§c"+target.getDisplayName()+"§7 n'est pas dans la même dimension que vous, impossible de faire le§c rituel§7.");
                         return false;
                     }
-                    new RituelRunnable(this, target, player.getLocation());
+                    new RituelRunnable(this, target, player.getLocation()).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+
                     return true;
                 }
             }
@@ -152,7 +162,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
                 }
             }
         }
-        @EventHandler
+        @EventHandler(priority = EventPriority.HIGHEST)
         private void onDamage(final EntityDamageEvent event) {
             if (!event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
             if (!this.inRituel)return;
@@ -160,8 +170,17 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
             if (this.uuidTarget == null)return;
             final Player target = Bukkit.getPlayer(this.uuidTarget);
             if (target == null)return;
-            final double damage = event.getFinalDamage();
+            if (this.location.distance(event.getEntity().getLocation()) > 2.0) {
+                event.getEntity().sendMessage("§7Trop loin");
+                return;
+            }
+            event.setDamage(0);
+            if (target.getWorld() != event.getEntity().getWorld())return;
+            if (target.getLocation().distance(event.getEntity().getLocation()) > 100)return;
+            if (target.getLocation().distance(event.getEntity().getLocation()) > 50 && target.getHealth() < 2.0)return;
+            final double damage = event.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE);
             target.damage(damage, event.getEntity());
+
         }
         private final static class RituelRunnable extends BukkitRunnable {
 
@@ -178,7 +197,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
                 this.initLocation = initLocation;
                 this.timeLeft = 10;
                 this.rituelPower.inRituel = true;
-                this.rituelPower.location = target.getLocation();
+                this.rituelPower.location = initLocation;
             }
 
             @Override
@@ -203,7 +222,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
                     }
                 }
                 if (owner == null || this.target == null)return;
-                MathUtil.sendCircleParticle(EnumParticle.FLAME, this.initLocation, 5, 25);
+                MathUtil.sendCircleParticle(EnumParticle.FLAME, this.initLocation, 2, 20);
                 this.rituelPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("hidanv2.ritueltime", "§bTemp restant du§c Rituel de Jashin§b:§c "+this.timeLeft+"s");
             }
         }
@@ -214,7 +233,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
 
         private ForceRunnable(HidanV2 hidan) {
             this.hidan = hidan;
-            runTaskTimerAsynchronously(Main.getInstance(), 20, 1);
+            runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
         }
 
         @Override
