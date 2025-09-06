@@ -132,7 +132,8 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
         private final KillerBeeV2 killerBeeV2;
 
         public TentaculesPower(@NonNull KillerBeeV2 role) {
-            super("Tentacules", new Cooldown(15), new ItemBuilder(Material.FISHING_ROD).setName("§aTentacules"), role);
+            super("Tentacules", new Cooldown(15), new ItemBuilder(Material.FISHING_ROD).setName("§aTentacules"), role,
+                    "§7Tant que vous êtes sous l'effet de§a Gyuki§7, vous pouvez utiliser cette objet pour vous propulser");
             this.killerBeeV2 = role;
             EventUtils.registerRoleEvent(this);
         }

@@ -88,9 +88,10 @@ public class Shikamaru extends ShinobiRoles {
                           +"§7L'§cannexe§7 des niveaux d'§aintelligence§7 est disponnible avec la commande§6 /ns intelligences§7."
                   )}),
                   "§6/ns shogi <joueur>",
-                  60)
+                  60*5)
         );
         this.desc = desc.getText();
+        addKnowedRole(InoV2.class);
     }
 
     @Override
@@ -120,36 +121,6 @@ public class Shikamaru extends ShinobiRoles {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§6 /ns shogi <joueur>");
             }
         }
-    }
-    @Override
-    public String[] Desc() {
-        KnowRole(owner, GameState.Roles.Ino, 15);
-        return new String[]{
-                AllDesc.bar,
-                AllDesc.role+"§aShikamaru",
-                AllDesc.objectifteam+"§aShinobi",
-                "",
-                AllDesc.items,
-                "",
-                AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c "+powerDistance+" blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f, de plus si vous lui cliqué dessus avec votre§a clique droit§f vous lui infligerz§c -1/2"+AllDesc.coeur+"§f toute les§c 2 secondes§f.§7 (1x/5min)",
-                "§c(Vous et le joueur viser pourrez prendre des dégats pendant le stun)",
-                "",
-                AllDesc.point+"§aZone d'ombre§f: Immobilise tout les joueurs étant à moins de§c "+(powerDistance-10)+" blocs§f de vous pendant§c 5 secondes§f, les joueurs touchés prendront§c 20%§f de dégat en moins et seront frappable",
-                "",
-                AllDesc.commande,
-                "",
-                AllDesc.point+"§6/ns shogi <joueur>§f: Vous permet d'obtenir le niveau d'intelligence du joueur viser, si le joueur est§a Ino§f ou§a Choji§f vous obtiendrez directement son rôle.§7 (1x/5min)",
-                "Annexe (§ltemporaire§r) du système d'intelligence:§b  https://discord.com/channels/925124675372208189/1239619280664788993",
-                "",
-                AllDesc.particularite,
-                "",
-                "Votre nature de chakra est aléatoire",
-                "Vous connaissez le§c joueur§f possédant le rôle de§a Ino",
-                "",
-                AllDesc.chakra+getChakras().getShowedName(),
-                "",
-                AllDesc.bar
-        };
     }
 
     @Override
