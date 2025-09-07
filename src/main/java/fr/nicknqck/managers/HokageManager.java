@@ -3,6 +3,7 @@ package fr.nicknqck.managers;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -50,7 +51,7 @@ public class HokageManager implements Listener {
                 System.err.println("[HokageManager] Impossible to start Hokage Runnable because MDJ is set has Null");
                 return;
             }
-            if (!event.getGameState().getMdj().equals(GameState.MDJ.NS)) {
+            if (!event.getGameState().getMdj().equals(MDJ.NS)) {
                 System.err.println("[HokageManager] Impossible to start Hokage Runnable because MDJ is not Naruto");
                 return;
             }

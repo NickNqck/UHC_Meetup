@@ -1,5 +1,6 @@
 package fr.nicknqck;
 
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
@@ -258,34 +259,6 @@ public class GameState{
 			this.nmb = nmb;
 			this.item = item;
 			this.gDesign = GDesign;
-		}
-	}
-	@Getter
-	public enum MDJ{
-		Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack()),
-		DS(new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
-		AOT(new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
-		NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack()),
-	//	MC(new ItemBuilder(Material.GRASS).setName("§aMinecraft").toItemStack()),
-		KRYSTAL(new ItemBuilder(Material.EMERALD_ORE).setName("§dKrystal UHC").toItemStack());
-
-		private final ItemStack item;
-		MDJ(ItemStack item) {
-			this.item = item;
-		}
-
-		public ItemStack getItem() {
-			ItemStack itemC = item.clone();
-			ItemMeta iMeta = item.getItemMeta();
-			if (GameState.getInstance().mdj == this){
-				iMeta.addEnchant(Enchantment.ARROW_DAMAGE, 1, false);
-				iMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-				iMeta.setLore(Collections.singletonList("§r§aActivé"));
-			} else {
-				iMeta.setLore(Collections.singletonList("§r§cDésactivé"));
-			}
-			itemC.setItemMeta(iMeta);
-			return itemC;
 		}
 	}
 	@Getter

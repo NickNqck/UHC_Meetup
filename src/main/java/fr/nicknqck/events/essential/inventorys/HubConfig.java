@@ -6,6 +6,7 @@ import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.runnables.PregenerationTask;
@@ -119,13 +120,13 @@ public class HubConfig implements Listener {
                             player.openInventory(GUIItems.getRoleSelectGUI());
                             Main.getInstance().getInventories().updateRoleInventory(player);
                         }
-                        for (GameState.MDJ mdj : GameState.MDJ.values()) {
+                        for (MDJ mdj : MDJ.values()) {
                             if (item.isSimilar(mdj.getItem())) {
                                 if (gameState.getMdj().equals(mdj)) {
-                                    gameState.setMdj(GameState.MDJ.Aucun);
+                                    gameState.setMdj(MDJ.Aucun);
                                     gameState.updateGameCanLaunch();
                                 }else {
-                                    gameState.setMdj(GameState.MDJ.Aucun);
+                                    gameState.setMdj(MDJ.Aucun);
                                     gameState.setMdj(mdj);
                                 }
                             }

@@ -3,6 +3,7 @@ package fr.nicknqck.events.essential.inventorys;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
@@ -71,7 +72,7 @@ public class HubInventory implements Listener {
                                     player.openInventory(GUIItems.getSelectNSInventory());
                                     Main.getInstance().getInventories().updateNSInventory(player);
                                 }
-                                if (item.isSimilar(GameState.MDJ.KRYSTAL.getItem())) {
+                                if (item.isSimilar(MDJ.KRYSTAL.getItem())) {
                                     Main.getInstance().getInventories().openKrystalInventory(player);
                                 }
                                 if (item.isSimilar(GUIItems.getSelectMCButton())) {

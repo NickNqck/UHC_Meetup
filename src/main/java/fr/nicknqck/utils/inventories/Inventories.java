@@ -5,6 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijuv2.BijuBase;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -873,7 +874,7 @@ public class Inventories {
                                 inv.setItem(13, GUIItems.getSelectNSButton());
                                 break;
                             case KRYSTAL:
-                                inv.setItem(13, GameState.MDJ.KRYSTAL.getItem());
+                                inv.setItem(13, MDJ.KRYSTAL.getItem());
                                 break;
                         }
                     }
@@ -894,8 +895,8 @@ public class Inventories {
             if (inv != null) {
                 if (inv.getTitle().equalsIgnoreCase("Séléction du mode de jeu")) {
                     inv.clear();
-                    for (GameState.MDJ mdj : GameState.MDJ.values()) {
-                        if (mdj != GameState.MDJ.Aucun && mdj != GameState.MDJ.KRYSTAL){
+                    for (MDJ mdj : MDJ.values()) {
+                        if (mdj != MDJ.Aucun && mdj != MDJ.KRYSTAL){
                             inv.addItem(mdj.getItem());
                         }
                     }
