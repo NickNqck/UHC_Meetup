@@ -55,11 +55,6 @@ public class EnmuV2 extends DemonsRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Enmu§7 (§6V2§7)§r";
     }
@@ -72,16 +67,6 @@ public class EnmuV2 extends DemonsRoles {
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
@@ -113,7 +98,7 @@ public class EnmuV2 extends DemonsRoles {
                     "",
                     "§7Si vous gagnez votre§c duel§7 vous obtiendrez §c1/2❤ permanent§7, ainsi qu'une utilisation de ce pouvoir.",
                     "§7Si la personne que vous aviez tué était un§a pilier§7 ou un rôle§e solitaire§7 vous gagnerez §c1/2❤ permanent§7 en§c plus§7.",
-                    "§7Si la personne que vous avez vaincu possédait §cun§7 ou§c des effet§7(§cs§7)§c permanent§7(§cs§7) ou durant le§c cycle§7 de sa mort, vous obtiendrez§c +10%§7 de ces/cette§c effet§7(§cs§7)");
+                    "§7Si la personne que vous avez vaincu possédait §cun§7 ou§c des effet§7(§cs§7)§c permanent§7(§cs§7), durant le§c cycle§7 de sa mort vous obtiendrez§c +10%§7 de cette/ces§c effet§7(§cs§7)");
             this.arena = getWorld();
             clearArena();
             setMaxUse(1);
