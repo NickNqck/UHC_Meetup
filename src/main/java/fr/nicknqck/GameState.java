@@ -54,11 +54,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.*;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -310,7 +307,6 @@ public class GameState{
 	public boolean roletab = false;
 	@Getter
 	private static GameState instance;
-	public List<Player> Shifter = new ArrayList<>();
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
 	public List<Player> infectedbyadmin = new ArrayList<>();

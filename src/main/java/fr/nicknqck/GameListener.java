@@ -410,7 +410,6 @@ public class GameListener implements Listener {
 					p.setGameMode(GameMode.ADVENTURE);
 				}
 			}
-			gameState.Shifter.clear();
 			gameState.setInSpecPlayers(new ArrayList<>());
 			gameState.getGamePlayer().clear();
 			gameState.DeadRole = new ArrayList<>();
