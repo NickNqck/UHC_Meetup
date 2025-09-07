@@ -5,7 +5,6 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import lombok.NonNull;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -16,36 +15,22 @@ public class DakiV2 extends DemonsRoles {
 
     @Override
     public @NonNull DemonType getRank() {
-        return null;
-    }
-
-    @Override
-    public String[] Desc() {
-        return new String[0];
+        return DemonType.SUPERIEUR;
     }
 
     @Override
     public String getName() {
-        return "";
+        return "Daki§7 (§6V2§7)";
     }
 
     @Override
     public GameState.@NonNull Roles getRoles() {
-        return null;
+        return GameState.Roles.Daki;
     }
 
     @Override
     public @NonNull TeamList getOriginTeam() {
-        return null;
+        return TeamList.Demon;
     }
 
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
-    }
 }

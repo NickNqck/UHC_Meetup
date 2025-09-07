@@ -488,8 +488,19 @@ public abstract class RoleBase implements IRole {
 		}
 		return toReturn;
 	}
+    public List<GamePlayer> getListGamePlayerFromRoles(final Roles roles) {
+        final List<GamePlayer> toReturn = new ArrayList<>();
+        for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+            if (gamePlayer == null)continue;
+            if (!gamePlayer.isAlive())continue;
+            if (gamePlayer.getRole() == null)continue;
+            if (gamePlayer.getRole().getRoles().equals(roles)) {
+                toReturn.add(gamePlayer);
+            }
+        }
+        return toReturn;
+    }
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {}
-	public void onALLPlayerEat(PlayerItemConsumeEvent e, ItemStack item, Player eater) {}
 	public void damage(Player target, double damage, int delay) {
 		if (target != null && target.isOnline()) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
@@ -550,9 +561,6 @@ public abstract class RoleBase implements IRole {
 
         return permanentEffects;
     }
-	public boolean onPreDie(Entity damager, GameState gameState2) {
-		return false;
-	}
 	public void onInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 	}
 	public void neoFormChoosen(ItemStack item, Inventory inv, int slot, GameState gameState) {}

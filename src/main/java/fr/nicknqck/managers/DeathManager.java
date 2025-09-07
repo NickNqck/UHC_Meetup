@@ -267,8 +267,7 @@ public class DeathManager implements Listener {
     }
     private boolean cantDie(final GameState gameState, final Player killedPlayer, final Entity entityKiller) {
         if (!gameState.hasRoleNull(killedPlayer.getUniqueId())) {
-            return gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole().onPreDie(entityKiller, gameState) ||
-                    gameState.getGamePlayer().get(killedPlayer.getUniqueId()).isCanRevive();
+            return gameState.getGamePlayer().get(killedPlayer.getUniqueId()).isCanRevive();
         }
         return false;
     }

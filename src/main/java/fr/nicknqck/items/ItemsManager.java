@@ -71,13 +71,6 @@ public class ItemsManager implements Listener {
 		if (gameState.hasRoleNull(player.getUniqueId()))return;
 		final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 		role.onEat(item, gameState);
-		for (UUID u : gameState.getInGamePlayers()) {
-			Player ig = Bukkit.getPlayer(u);
-			if (ig == null)continue;
-			if (!gameState.hasRoleNull(ig.getUniqueId())) {
-				gameState.getGamePlayer().get(u).getRole().onALLPlayerEat(event, item, player);
-			}
-		}
 		if (item.getType() == Material.GOLDEN_APPLE) {
             player.updateInventory();
 			if (Anti_Abso.isAntiabsoall()) {
