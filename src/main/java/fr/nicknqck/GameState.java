@@ -424,7 +424,7 @@ public class GameState{
 			role = new TengenV2(player);
 			break;
 		case Doma:
-			role = new Doma(player);
+			role = new DomaV2(player);
 			break;
 		case Shinobu:
 			role = new ShinobuV2(player);

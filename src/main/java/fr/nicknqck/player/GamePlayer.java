@@ -274,7 +274,9 @@ public class GamePlayer {
 					System.out.println("updated key: "+key+" with value: "+value);
 				}
 				this.actionBars.replace(key, value);
-			}
+			} else {
+                addToActionBar(key, value);
+            }
 		}
 		public boolean containsKey(final String key) {
 			return this.actionBars.containsKey(key);
