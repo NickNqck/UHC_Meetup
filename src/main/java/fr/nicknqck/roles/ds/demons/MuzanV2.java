@@ -67,7 +67,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
         addPower(new RegenPower(this));
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.NIGHT);
-        givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), EffectWhen.AT_KILL);
+        givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.NIGHT);
         addPower(new DSGivePower(this));
         addPower(new DSBoostPower(this));
         EventUtils.registerRoleEvent(this);
