@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -214,7 +215,7 @@ public class KokushiboV2 extends DemonsRoles {
                     "",
                     "§fClique droite§7 (Frappe Vertical): En visant un joueur, vous permet de lui infligez§c 2❤§7 de§c dégâts§7 et de le repousser légèrement en arrière. (1x/5m)",
                     "",
-                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à autours de (nombre de joueur autours de vous) toute les§c 4 secondes§7.",
+                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à hauteurs de (nombre de joueur autours de vous) toute les§c 4 secondes§7.",
                     "",
                     "§cChaque pouvoir du§1 Soufle de la lune§c vous coûtera§b 50%§c du \"§bPourcentage Lunaire§c\"");
             this.role = role;
@@ -222,6 +223,7 @@ public class KokushiboV2 extends DemonsRoles {
             this.verticalPower = new VerticalPower(role);
             role.addPower(horizontalPower);
             role.addPower(verticalPower);
+            getShowCdRunnable().setCustomText(true);
         }
 
         @Override
@@ -244,6 +246,26 @@ public class KokushiboV2 extends DemonsRoles {
             }
             return false;
         }
+
+        @Override
+        public void tryUpdateActionBar() {
+            getShowCdRunnable().setCustomTexte(this.role.pourcentageLunaire >= 50 ?
+                    (//Si >=50%
+                            (this.horizontalPower.getCooldown().isInCooldown() ?
+                            "§cFrappe Horizontal:§b "+StringUtils.secondsTowardsBeautiful(this.horizontalPower.getCooldown().getCooldownRemaining())//Si le pouvoir est en cooldown
+                            :
+                            "§cFrappe Horizontal est§a utilisable")//Si le pouvoir est utilisable
+                            +"§7 | "+
+                                    (this.verticalPower.getCooldown().isInCooldown() ?
+                                            "§cFrappe Vertical:§b "+StringUtils.secondsTowardsBeautiful(this.verticalPower.getCooldown().getCooldownRemaining())//Si le pouvoir est en cooldown
+                                            :
+                                            "§cFrappe Vertical est§a utilisable")
+                    )//Si >= 50%
+                    :
+                    "§cAucun pouvoir n'est encore utilisable"//Si < 50%
+            );
+        }
+
         private static class HorizontalPower extends Power {
 
             public HorizontalPower(@NonNull RoleBase role) {
