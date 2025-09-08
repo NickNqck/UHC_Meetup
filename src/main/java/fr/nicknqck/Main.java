@@ -228,7 +228,7 @@ public class Main extends JavaPlugin {
 		EventUtils.registerEvents(manager2);
 		this.eventsManager = manager2;
 		this.hokageManager = new HokageManager(gameState);
-		new PubRunnable().runTaskTimerAsynchronously(this, 100, 20);
+		new PubRunnable().start();
 		System.out.println("Ending registering events");
 	}
 	private void registerEvents2(GameState gameState) {
