@@ -108,6 +108,19 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+line));
         return this;
     }
+    public AutomaticDesc addCustomLines(String[] lines) {
+        if (lines.length < 1)return this;
+        int i = 0;
+        for (final String string : lines) {
+            if (i == 0){
+                text.addExtra(new TextComponent("\n\n"+AllDesc.point));
+            }
+            text.addExtra(new TextComponent(string));
+            text.addExtra(new TextComponent("\n"));
+            i++;
+        }
+        return this;
+    }
     public AutomaticDesc addCustomText(TextComponent text) {
         this.text.addExtra(new TextComponent("\n\n"+AllDesc.point));
         this.text.addExtra(text);
