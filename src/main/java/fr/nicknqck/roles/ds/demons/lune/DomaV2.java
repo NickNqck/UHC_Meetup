@@ -21,6 +21,7 @@ import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -72,6 +73,7 @@ public class DomaV2 extends DemonsRoles {
         addPower(new ZoneDeGlacePower(this), true);
         addKnowedRole(MuzanV2.class);
         addPower(new GeleProgressif(this));
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0,  false, false), EffectWhen.NIGHT);
         super.RoleGiven(gameState);
     }
     private static class ZoneDeGlacePower extends ItemPower {
@@ -80,7 +82,9 @@ public class DomaV2 extends DemonsRoles {
             super("Zone de glace", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bZone de glace§f"), role,
                     "§7A l'activation crée une§c zone§7 autours de vous, les joueurs étant à l'intérieur obtiendront l'effet§c Lenteur I§7",
                     "",
-                    "§7Si une personne reste dans cette§c zone§7 pendant plus de§c 5 secondes§7, auront de la§b glace§7 à leurs pied");
+                    "§7Si une personne reste dans cette§c zone§7 pendant plus de§c 5 secondes§7, auront de la§b glace§7 à leurs pied",
+                    "",
+                    "§7Lorsque la§c zone§7 expire, tout les joueurs ayant eu de la§b glace§7 à leurs§c pied§7 obtiendront§c 30 secondes§7 de§c Lenteur II§7.");
         }
 
         @Override
@@ -116,7 +120,7 @@ public class DomaV2 extends DemonsRoles {
                     if (!gamePlayer.isAlive())continue;
                     if (!gamePlayer.isOnline())continue;
                     if (gamePlayer.getRole() == null)continue;
-              //      if (gamePlayer.getUuid().equals(this.zoneDeGlacePower.getRole().getPlayer()))continue;
+                    if (gamePlayer.getUuid().equals(this.zoneDeGlacePower.getRole().getPlayer()))continue;
                     if (!this.map.containsKey(gamePlayer.getUuid())) {
                         this.map.put(gamePlayer.getUuid(), 0);
                     }
@@ -137,6 +141,23 @@ public class DomaV2 extends DemonsRoles {
                 }
                 if (this.timeLeft <= 0) {
                     this.zoneDeGlacePower.getRole().getGamePlayer().getActionBarManager().removeInActionBar("doma.zone");
+                    Bukkit.getScheduler().runTask(zoneDeGlacePower.getPlugin(), () -> {
+                        for (UUID uuid : this.map.keySet()) {
+                            final Player player = Bukkit.getPlayer(uuid);
+                            if (player == null)continue;
+                            final GamePlayer gamePlayer = this.zoneDeGlacePower.getRole().getGameState().getGamePlayer().get(uuid);
+                            if (gamePlayer == null)continue;
+                            if (!gamePlayer.isOnline())continue;
+                            if (!gamePlayer.isAlive())continue;
+                            player.sendMessage("§7Vous avez touché par la§b décharge de gèle§7 de§c Doma§7.");
+                            if (gamePlayer.getRole() == null) {
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*30, 1, false, false), true);
+                                continue;
+                            }
+                            gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*30, 1, false, false), EffectWhen.NOW);
+                        }
+                    });
+
                     cancel();
                     return;
                 }
@@ -154,7 +175,7 @@ public class DomaV2 extends DemonsRoles {
             super("/ds gel", "gel", null, role, CommandType.DS,
                     "§7Vous permet d'§aactiver§7 et de§c désactiver§7 votre§b gel§7.",
                     "",
-                    "§7Lorsque votre§b gel§7 est§a activé§7, tout les§c 25 coups§7 (unique à chaque joueur§7)",
+                    "§7Lorsque votre§b gel§7 est§a activé§7, tout les§c 15 coups§7 (unique à chaque joueur§7)",
                     "§7la personne que vous avez frapper ne pourra§c pas utiliser ses pouvoirs§7 pendant§c 10 secondes§7.");
             EventUtils.registerRoleEvent(this);
         }
@@ -179,12 +200,12 @@ public class DomaV2 extends DemonsRoles {
             if (!map.containsKey(event.getEntity().getUniqueId()))map.put(event.getEntity().getUniqueId(), 0);
             int coups = map.getOrDefault(event.getEntity().getUniqueId(), 0);
             coups++;
-            getRole().getGamePlayer().getActionBarManager().updateActionBar("doma.gele", "§bCoups (§c"+((Player) event.getEntity()).getDisplayName()+"§b):§c "+coups+"§b/§625");
-            if (coups == 25) {
+            if (coups == 15) {
                 coups = 0;
                 this.muteds.put(event.getEntity().getUniqueId(), System.currentTimeMillis());
                 event.getEntity().sendMessage("§7Vous avez été§b gelé§7 par§c Doma§7.");
             }
+            getRole().getGamePlayer().getActionBarManager().updateActionBar("doma.gele", "§bCoups (§c"+((Player) event.getEntity()).getDisplayName()+"§b):§c "+coups+"§b/§615");
             map.replace(event.getEntity().getUniqueId(), coups);
         }
         @EventHandler
