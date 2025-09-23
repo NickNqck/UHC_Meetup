@@ -282,12 +282,13 @@ public class ShinobuV2 extends PilierRoles {
             if (!gameTarget.isOnline() || !gameTarget.isAlive() || gameTarget.getRole() == null)return;
             gameTarget.getRole().givePotionEffect(this.mapEffect.get(actual), EffectWhen.NOW);
             if (kanaeDead) {
-                int deux = (this.actual+=1);
+                int deux = (this.actual+1);
                 if (deux > 6)deux = 1;
                 gameTarget.getRole().givePotionEffect(this.mapEffect.get(deux), EffectWhen.NOW);
             }
             getCooldown().use();
             event.getDamager().sendMessage("§c"+((Player) event.getEntity()).getDisplayName()+"§7 a subit votre§2 Poison§7.");
+            getRole().getGamePlayer().getActionBarManager().updateActionBar("shinobu.poisons", "§bVous utilisez actuellement le poison:§c "+getActualString());
         }
         @EventHandler
         private void onDeath(final UHCDeathEvent event) {
