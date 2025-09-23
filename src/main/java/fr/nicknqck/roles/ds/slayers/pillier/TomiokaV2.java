@@ -146,7 +146,7 @@ public class TomiokaV2 extends PilierRoles {
                                 if (gm.isAlive()) {
                                     if (gm.getRole() instanceof DemonsSlayersRoles) {
                                         if (((DemonsSlayersRoles) gm.getRole()).getSoufle().equals(Soufle.EAU) || ((DemonsSlayersRoles) gm.getRole()).getSoufle().equals(Soufle.TOUS)) {
-                                            owner.sendMessage("§7Quelque chose vous fait pensez qu'un utilisateur du§b Soufle de l'Eau§7 est proche de vous (§c20 blocs§7)");
+                                            owner.sendMessage("§7Quelque chose vous fait pensez qu'un utilisateur du§b Soufle de l'Eau§7 est proche de vous");
                                             isPresent = true;
                                             break;
                                         }

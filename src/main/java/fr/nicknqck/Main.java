@@ -30,6 +30,7 @@ import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.biome.BiomeChanger;
 import fr.nicknqck.utils.event.EventUtils;
+import fr.nicknqck.utils.fastinv.FastInvManager;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.managers.TabManager;
@@ -229,6 +230,7 @@ public class Main extends JavaPlugin {
 		this.eventsManager = manager2;
 		this.hokageManager = new HokageManager(gameState);
 		new PubRunnable().start();
+        FastInvManager.register(this);
 		System.out.println("Ending registering events");
 	}
 	private void registerEvents2(GameState gameState) {
