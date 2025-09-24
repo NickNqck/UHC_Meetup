@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -19,13 +20,12 @@ import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -71,32 +71,14 @@ public class MuzanV2 extends DemonsRoles implements Listener {
         addPower(new DSGivePower(this));
         addPower(new DSBoostPower(this));
         EventUtils.registerRoleEvent(this);
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            @NonNull final List<GamePlayer> gamePlayerList = new ArrayList<>();
-            for (@NonNull final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
-                if (gamePlayer.getRole() == null)continue;
-                if (!gamePlayer.isAlive())continue;
-                if (gamePlayer.getRole() instanceof DemonsRoles) {
-                    DemonsRoles role = (DemonsRoles) gamePlayer.getRole();
-                    if (role.getRank().equals(DemonType.SUPERIEUR) || role.getRank().equals(DemonType.INFERIEUR) || role instanceof MuzanV2 ||role.getRank().equals(DemonType.NEZUKO)) {
-                        gamePlayerList.add(gamePlayer);
-                    }
-                }
-            }
-            addKnowedPlayers("§cLune Supérieures", gamePlayerList);
-        }, 20);
     }
 
     @Override
     public TextComponent getComponent() {
-        return new AutomaticDesc(this)
-                .addEffects(getEffects())
-                .setPowers(getPowers())
-                .addParticularites(
-                        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
-                                new TextComponent("§7Si vous arrivez à tué§a Nezuko§7 vous obtiendrez l'effet§c Résistance I§7 de manière§c permanente§7, ainsi que l'effet§c Speed I§7 la§c nuit")
-                        })
-                )
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.killNezuko ?
+                "§7Vous êtes§c insensible§7 au§c dégâts§7 provenant du§c feu§7, de la§6 lave§7 ainsi qu'au§c dégâts§7 de§a chute§7."
+                :
+                "§7Si vous parvenez à tuer un joueur ayant le rôle de§a Nezuko§7 vous obtiendrez l'effet§9 Résistance I§7 de manière§c permanente§7, de plus, lorsqu'il fait§c nuit§7, vous ne recevrez plus§c aucun dégâts§7 provenant du§c feu§7 et de vos§a chute§7.")
                 .getText();
     }
 
@@ -106,14 +88,52 @@ public class MuzanV2 extends DemonsRoles implements Listener {
         if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
         if (this.killNezuko)return;
         final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+        if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;
         if (role instanceof NezukoV2) {
-            getEffects().remove(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.NIGHT);
-            getEffects().remove(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), EffectWhen.AT_KILL);
-            givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-            givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.NIGHT);
-            this.killNezuko = true;
-            getGamePlayer().sendMessage("§7Vous avez§c tué§a Nezuko§7, vous avez obtenu l'effet§c Résistance I§7 de manière§c permanente§7 et l'effet§b Speed I§7 de§c nuit");
+            onKillNez();
         }
+    }
+
+    private void onKillNez() {
+        final Map<PotionEffect, EffectWhen> effects = new HashMap<>(getEffects());
+        for (PotionEffect potionEffect : effects.keySet()) {
+            if (!effects.get(potionEffect).equals(EffectWhen.NIGHT))continue;
+            if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
+                getEffects().remove(potionEffect);
+                break;
+            }
+        }
+        givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+        this.killNezuko = true;
+        getGamePlayer().sendMessage("§7Vous avez§c tué§a Nezuko§7, vous avez obtenu l'effet§c Résistance I§7 de manière§c permanente§7 et l'effet§b Speed I§7 de§c nuit");
+    }
+
+    @EventHandler
+    private void onDamage(final EntityDamageEvent event) {
+        if (!event.getEntity().getUniqueId().equals(getPlayer()))return;
+        if (!killNezuko)return;
+        if (!getGameState().isNightTime())return;
+        if (event.getCause().name().contains("FALL") || event.getCause().name().contains("FIRE") || event.getCause().name().contains("LAVA")) {
+            event.setDamage(0.0);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    private void onEndGiveRole(final RoleGiveEvent event) {
+        if (!event.isEndGive())return;
+        @NonNull final List<GamePlayer> gamePlayerList = new ArrayList<>();
+        for (@NonNull final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+            if (gamePlayer.getRole() == null)continue;
+            if (!gamePlayer.isAlive())continue;
+            if (gamePlayer.getRole() instanceof DemonsRoles) {
+                DemonsRoles role = (DemonsRoles) gamePlayer.getRole();
+                if (role.getRank().equals(DemonType.SUPERIEUR) || role.getRank().equals(DemonType.INFERIEUR) || role instanceof MuzanV2 ||role.getRank().equals(DemonType.NEZUKO)) {
+                    gamePlayerList.add(gamePlayer);
+                }
+            }
+        }
+        addKnowedPlayers("§cLune Supérieures", gamePlayerList);
     }
 
     private static class DSBoostPower extends CommandPower {
