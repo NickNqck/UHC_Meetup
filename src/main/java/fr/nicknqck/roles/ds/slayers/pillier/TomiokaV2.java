@@ -11,7 +11,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.slayers.Makomo;
-import fr.nicknqck.roles.ds.slayers.Sabito;
+import fr.nicknqck.roles.ds.slayers.SabitoV2;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
@@ -48,11 +48,6 @@ public class TomiokaV2 extends PilierRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Tomioka";
     }
@@ -60,14 +55,6 @@ public class TomiokaV2 extends PilierRoles {
     @Override
     public @NonNull GameState.Roles getRoles() {
         return GameState.Roles.Tomioka;
-    }
-
-    @Override
-    public void resetCooldown() {}
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
@@ -265,7 +252,7 @@ public class TomiokaV2 extends PilierRoles {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.DAY);
                 this.firstKill = true;
                 getRole().getGamePlayer().sendMessage("§aTanjiro§7 est§c mort§7, vous devez lui faire hônneur en étant aussi fort qu'il l'était, vous obtenez §cl'effet Force I§7 le§e jour");
-            } else if (roleBase instanceof Sabito) {
+            } else if (roleBase instanceof SabitoV2) {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
                 this.firstKill = true;
                 getRole().getGamePlayer().sendMessage("§aSabito§7, est§c mort§7, vous devez lui montrer qu'il à bien fait de vous sauver la vie, vous obtenez§c l'effet§9 Résistance I§7 le§e jour");
@@ -295,7 +282,7 @@ public class TomiokaV2 extends PilierRoles {
             if (roleBase instanceof Makomo) {
                 return true;
             }
-            return roleBase instanceof Sabito;
+            return roleBase instanceof SabitoV2;
         }
     }
     private static class AccalmiePower extends ItemPower implements Listener{

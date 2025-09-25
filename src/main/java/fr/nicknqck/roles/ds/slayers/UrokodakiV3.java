@@ -85,7 +85,7 @@ public class UrokodakiV3 extends SlayerRoles {
                         if (gamePlayer.getRole() != null) {
                             if (gamePlayer.getRole() instanceof Tanjiro ||
                                     gamePlayer.getRole() instanceof TomiokaV2 ||
-                                    gamePlayer.getRole() instanceof Sabito ||
+                                    gamePlayer.getRole() instanceof SabitoV2 ||
                                     gamePlayer.getRole() instanceof Makomo) {
                                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
                                 //Trouver autre chose à ajouter

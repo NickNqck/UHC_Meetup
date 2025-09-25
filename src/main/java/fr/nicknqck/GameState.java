@@ -446,7 +446,7 @@ public class GameState{
 			role = new DemonMain(player);
 			break;
 		case Sabito:
-			role = new Sabito(player);
+			role = new SabitoV2(player);
 			break;
 		case Urokodaki:
 			role = new UrokodakiV2(player);
