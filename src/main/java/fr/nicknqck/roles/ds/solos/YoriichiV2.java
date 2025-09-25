@@ -13,15 +13,18 @@ import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -35,18 +38,11 @@ public class YoriichiV2 extends DemonsSlayersRoles {
 
     public YoriichiV2(UUID player) {
         super(player);
-        setCanuseblade(true);
-        setLameincassable(true);
     }
 
     @Override
     public Soufle getSoufle() {
         return Soufle.SOLEIL;
-    }
-
-    @Override
-    public String[] Desc() {
-        return new String[0];
     }
 
     @Override
@@ -65,18 +61,13 @@ public class YoriichiV2 extends DemonsSlayersRoles {
     }
 
     @Override
-    public void resetCooldown() {}
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
-    }
-
-    @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new KillPower(this));
+        setCanuseblade(true);
+        setLameincassable(true);
+        addPower(new DSSoleil(this));
     }
 
     @Override
@@ -181,6 +172,56 @@ public class YoriichiV2 extends DemonsSlayersRoles {
             } else {
                 if (this.demonKills < 3)return;
                 event.setDamage(event.getDamage()*1.1);//+10%
+            }
+        }
+    }
+    private static class DSSoleil extends CommandPower implements Listener {
+
+        private final Map<UUID, Long> inSoleil = new HashMap<>();
+        private boolean active = false;
+
+        public DSSoleil(@NonNull RoleBase role) {
+            super("/ds souffle", "souffle", null, role, CommandType.DS,
+                    "§7Vous permet d'§aactiver§7/§cdésactiver§7 votre§e souffle du Soleil§7",
+                    "",
+                    "§7Lorsqu'il est§a activer§7, les joueurs que vous frappez se§c régénèreront§7 plus§c lentement§7 et ne recevrons qu'§e1❤ d'absorption§7",
+                    "§7pendant§c 10 secondes§7.");
+            EventUtils.registerRoleEvent(this);
+        }
+
+        @Override
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            if (!active) {
+                active = true;
+                player.sendMessage("§7Vous avez§a activé§7 votre§e souffle du Soleil§7.");
+            } else {
+                active = false;
+                player.sendMessage("§7Vous avez§c désactiver§7 voter§e souffle du Soleil§7.");
+            }
+            return true;
+        }
+        @EventHandler
+        private void onDamage(final EntityDamageByEntityEvent event) {
+            if (!(event.getDamager() instanceof Player))return;
+            if (!(event.getEntity() instanceof Player))return;
+            if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!active)return;
+            final Long currentTime = System.currentTimeMillis();
+            inSoleil.put(event.getEntity().getUniqueId(), currentTime);
+            event.getEntity().sendMessage("§eYoriichi§7 a§c limité§7 votre§c capacité§7 à vous§c régénérer§7 avec des§e pommes d'or§7.");
+            event.getDamager().sendMessage("§7Vous avez§c limité§7 la§c capacité§7 à se§c régénérer§7 avec des§e pommes d'or§7 à§c "+((Player) event.getEntity()).getDisplayName()+"§7.");
+        }
+        @EventHandler
+        private void onEat(final PlayerItemConsumeEvent event) {
+            if (this.inSoleil.containsKey(event.getPlayer().getUniqueId())) {
+                final Long currentTime = System.currentTimeMillis();
+                if (inSoleil.get(event.getPlayer().getUniqueId()) - currentTime <= 10000) {
+                    final Player player = event.getPlayer();
+                    Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*6, 0, false, false), true);
+                        ((CraftPlayer) player).getHandle().setAbsorptionHearts(2f);
+                    }, 1);
+                }
             }
         }
     }
