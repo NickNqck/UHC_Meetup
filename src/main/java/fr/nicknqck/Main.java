@@ -151,6 +151,7 @@ public class Main extends JavaPlugin {
 		this.tabManager = new TabManager();
 		this.infoManager = new InfoManager(getDataFolder());
 		this.playersNameManager = new PlayersNameManager(getDataFolder());
+        new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
