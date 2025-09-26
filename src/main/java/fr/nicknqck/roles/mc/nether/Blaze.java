@@ -2,6 +2,7 @@ package fr.nicknqck.roles.mc.nether;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.mc.builders.NetherRoles;
@@ -83,8 +84,8 @@ public class Blaze extends NetherRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Blaze;
+    public @NonNull Roles getRoles() {
+        return Roles.Blaze;
     }
 
     @Override

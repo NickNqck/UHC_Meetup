@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.TeamList;
@@ -14,7 +14,6 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -110,11 +109,8 @@ public class Jean extends SoldatsRoles {
 			}
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void resetCooldown() {
 		actualuse = 0;
 	}

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
@@ -133,8 +134,8 @@ public class SlayerSolo extends DemonsSlayersRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.SlayerSolo;
+    public @NonNull Roles getRoles() {
+        return Roles.SlayerSolo;
     }
 
     @Override

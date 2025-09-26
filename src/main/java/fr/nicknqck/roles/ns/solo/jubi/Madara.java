@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.utils.PotionUtils;
 import lombok.NonNull;
@@ -24,7 +25,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
@@ -56,7 +56,7 @@ public class Madara extends JubiRoles {
 	}
 
 	@Override
-	public @NonNull GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Madara;
 	}
 	@Override

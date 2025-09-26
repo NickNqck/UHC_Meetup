@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -44,8 +45,8 @@ public class YahabaV2 extends DemonInferieurRole {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Yahaba;
+    public @NonNull Roles getRoles() {
+        return Roles.Yahaba;
     }
 
     @Override

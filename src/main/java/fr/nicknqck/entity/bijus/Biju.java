@@ -2,8 +2,8 @@ package fr.nicknqck.entity.bijus;
 
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;

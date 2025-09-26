@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -40,7 +41,7 @@ public class Inventories {
                     inv.setItem(3, GUIItems.getSelectDemonButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
                     inv.setItem(5, GUIItems.getSelectSoloButton());
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Slayer) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -71,7 +72,7 @@ public class Inventories {
                     inv.setItem(4, GUIItems.getSelectBackMenu());
                     inv.setItem(5, GUIItems.getSelectSoloButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Demon) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -103,7 +104,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ds")) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -166,7 +167,7 @@ public class Inventories {
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
                     inv.setItem(49, GUIItems.getSelectConfigAotButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Soldat) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -200,7 +201,7 @@ public class Inventories {
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
                     inv.setItem(49, GUIItems.getSelectConfigAotButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Titan) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -233,7 +234,7 @@ public class Inventories {
 
                     inv.setItem(49, GUIItems.getSelectConfigAotButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Mahr) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -266,7 +267,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("aot")) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -429,7 +430,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Shinobi) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -459,7 +460,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Akatsuki) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -489,7 +490,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Orochimaru) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -522,7 +523,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (!roles.getTeam().equals(TeamList.Solo) && !roles.getTeam().equals(TeamList.Shisui))continue;
                         if (roles.getMdj().equals("ns")) {
                             String l1;
@@ -554,7 +555,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Jubi) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -585,7 +586,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Zabuza_et_Haku) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -616,7 +617,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Kumogakure) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -648,7 +649,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.OverWorld) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -679,7 +680,7 @@ public class Inventories {
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
-                    for (GameState.Roles roles : GameState.Roles.values()) {
+                    for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Nether) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
@@ -1121,7 +1122,7 @@ public class Inventories {
         inv.setItem(4, GUIItems.getSelectBackMenu());
         inv.setItem(5, GUIItems.getSelectBackMenu());
 
-        for (final GameState.Roles roles : GameState.Roles.values()) {
+        for (final Roles roles : Roles.values()) {
             if (!roles.getTeam().equals(TeamList.Solo))continue;
             if (roles.getMdj().equals("custom") || roles.getMdj().equals("krystal")) {
                 String l1;

@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -31,7 +31,7 @@ public class Asuma extends ShinobiRoles {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public GameState.@NonNull Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Asuma;
 	}
 	@Override

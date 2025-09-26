@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -98,10 +99,6 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-    @Override
     public ItemStack[] getItems() {
         List<ItemStack> toReturn = new ArrayList<>();
         if (this.souflesList.contains(Soufles.VENT)) {
@@ -120,8 +117,8 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         return "Pourfendeur Simple§7 (§eV2§7)§r";
     }
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Slayer;
+    public @NonNull Roles getRoles() {
+        return Roles.Slayer;
     }
     @Override
     public void resetCooldown() {

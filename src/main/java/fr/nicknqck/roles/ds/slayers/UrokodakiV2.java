@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -39,28 +40,13 @@ public class UrokodakiV2 extends SlayerRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Urokodaki";
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Urokodaki;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Urokodaki;
     }
 
     @Override

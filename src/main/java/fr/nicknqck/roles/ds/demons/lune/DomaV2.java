@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -54,8 +55,8 @@ public class DomaV2 extends DemonsRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Doma;
+    public @NonNull Roles getRoles() {
+        return Roles.Doma;
     }
 
     @Override

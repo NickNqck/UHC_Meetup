@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.power.CooldownFinishEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
@@ -70,8 +71,8 @@ public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Shisui;
+    public @NonNull Roles getRoles() {
+        return Roles.Shisui;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
@@ -76,12 +76,8 @@ public class Jugo extends OrochimaruRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
-	@Override
-	public String[] Desc() {
-		return new String[0];
-	}
 
-	@Override
+    @Override
 	public TextComponent getComponent() {
 		return this.desc;
 	}

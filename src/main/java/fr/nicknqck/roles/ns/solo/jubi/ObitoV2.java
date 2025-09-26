@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.solo.jubi;
 import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.player.GamePlayer;
@@ -57,14 +58,14 @@ public class ObitoV2 extends JubiRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Obito;
+    public @NonNull Roles getRoles() {
+        return Roles.Obito;
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
-        if (!gameState.getAttributedRole().contains(GameState.Roles.Kakashi)) {
+        if (!gameState.getAttributedRole().contains(Roles.Kakashi)) {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
         }

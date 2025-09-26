@@ -1,9 +1,9 @@
 package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -54,7 +54,7 @@ public class Ginkaku extends NSRoles {
 		}, 100);
 	}
 	@Override
-	public @NonNull GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Ginkaku;
 	}
 	@Override

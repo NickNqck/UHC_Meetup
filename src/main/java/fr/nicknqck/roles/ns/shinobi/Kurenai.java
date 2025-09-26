@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -43,8 +44,8 @@ public class Kurenai extends ShinobiRoles {
         super.giveItem(owner, false, getItems());
     }
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Kurenai;
+    public @NonNull Roles getRoles() {
+        return Roles.Kurenai;
     }
     @Override
     public void RoleGiven(GameState gameState) {
@@ -52,7 +53,7 @@ public class Kurenai extends ShinobiRoles {
         setChakraType(getRandomChakras());
         setCanBeHokage(true);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-            if (gameState.getAttributedRole().contains(GameState.Roles.Asuma)) {
+            if (gameState.getAttributedRole().contains(Roles.Asuma)) {
                 new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
         }, 20);

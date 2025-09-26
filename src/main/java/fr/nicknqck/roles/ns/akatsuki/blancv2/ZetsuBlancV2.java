@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ns.akatsuki.blancv2;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -56,8 +57,8 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.ZetsuBlancV2;
+    public @NonNull Roles getRoles() {
+        return Roles.ZetsuBlancV2;
     }
 
     @Override

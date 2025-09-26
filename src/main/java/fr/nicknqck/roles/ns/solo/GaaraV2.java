@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.time.OnSecond;
@@ -67,8 +68,8 @@ public class GaaraV2 extends NSRoles implements Listener{
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Gaara;
+    public @NonNull Roles getRoles() {
+        return Roles.Gaara;
     }
 
     @Override

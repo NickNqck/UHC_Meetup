@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.assassin.ProcAssassinEvent;
 import fr.nicknqck.items.Items;
@@ -86,14 +87,10 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Tanjiro;
+    public @NonNull Roles getRoles() {
+        return Roles.Tanjiro;
     }
 
-    @Override
-    public String[] Desc() {
-        return new String[0];
-    }
     @Override
     public TextComponent getComponent() {
         return automaticDesc;
@@ -135,10 +132,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
         texte.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
                 "§7Aléatoirement, un membre du camp des§c démons§7 est choisis pour devenir l'§4Assassin§7,\n§7Si vous parvenez à le tuer vous obtiendrez l'effet§c§l Force I§7 permanent")}));
         return texte;
-    }
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @EventHandler

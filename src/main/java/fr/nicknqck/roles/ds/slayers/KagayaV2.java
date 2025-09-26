@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -53,8 +54,8 @@ public class KagayaV2 extends SlayerRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Kagaya;
+    public @NonNull Roles getRoles() {
+        return Roles.Kagaya;
     }
 
     @Override

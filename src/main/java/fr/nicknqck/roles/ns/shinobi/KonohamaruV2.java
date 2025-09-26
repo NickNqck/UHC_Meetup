@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -56,8 +57,8 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Konohamaru;
+    public @NonNull Roles getRoles() {
+        return Roles.Konohamaru;
     }
 
     @Override

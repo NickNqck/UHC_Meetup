@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -54,8 +55,8 @@ public class ShinobuV2 extends PilierRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Shinobu;
+    public @NonNull Roles getRoles() {
+        return Roles.Shinobu;
     }
 
     @Override

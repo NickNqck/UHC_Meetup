@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -46,27 +47,13 @@ public class TengenV2 extends PilierRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Tengen";
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Tengen;
-    }
-
-    @Override
-    public void resetCooldown() {
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Tengen;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -14,7 +15,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;

@@ -2,8 +2,8 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -44,7 +44,7 @@ public class Jiraya extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.@NonNull Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jiraya;
 	}
 	@Override

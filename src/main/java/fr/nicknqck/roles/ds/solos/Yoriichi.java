@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
@@ -122,10 +122,8 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 		}
 		super.Update(gameState);
 	}
-	@Override
-	public void resetCooldown() {
-	}
-	@Override
+
+    @Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(Items.getSoufleduSoleil())) {
 			if (!activersoufle) {				

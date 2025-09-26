@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -80,11 +80,8 @@ public class Tsunade extends ShinobiRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
-	@Override
-	public void resetCooldown() {
-		
-	}
-	private int SavedHP = 0;
+
+    private int SavedHP = 0;
 	private boolean Receve = false;
 	@Override
 	public void Update(GameState gameState) {

@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
@@ -22,7 +22,7 @@ public class TitanSouriant extends TitansRoles {
 	}
 	@Override
 	public @NonNull Roles getRoles() {
-		return null;
+		return Roles.GrandTitan;
 	}
 	@Override
 	public String[] Desc() {
@@ -51,11 +51,8 @@ public class TitanSouriant extends TitansRoles {
 				}).setDespawnable(false).setDroppable(false).getItemStack()
 		};
 	}
-	@Override
-	public void resetCooldown() {
-	}
 
-	@Override
+    @Override
 	public String getName() {
 		return "Titan Souriant";
 	}

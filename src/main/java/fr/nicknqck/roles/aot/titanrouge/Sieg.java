@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
@@ -36,8 +37,8 @@ public class Sieg extends TitansRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Sieg;
+    public @NonNull Roles getRoles() {
+        return Roles.Sieg;
     }
 
     @Override

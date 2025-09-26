@@ -3,6 +3,7 @@ package fr.nicknqck.events.ds;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -53,8 +54,8 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.dispatchCommand(console, "nakime E4jL5cOzv0sI2XqY7wNpD3Ab");
         if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
-            Player pkyojuro = findOwner(GameState.Roles.Kyojuro);
-            Player pAkaza = findOwner(GameState.Roles.Akaza);
+            Player pkyojuro = findOwner(Roles.Kyojuro);
+            Player pAkaza = findOwner(Roles.Akaza);
             if (pAkaza != null && pkyojuro != null) {
                 Akaza akaza = (Akaza) gameState.getGamePlayer().get(pAkaza.getUniqueId()).getRole();
                 KyojuroV2 kyojuro = (KyojuroV2) gameState.getGamePlayer().get(pkyojuro.getUniqueId()).getRole();
@@ -75,7 +76,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         }
     }
 
-    private Player findOwner(@NonNull final GameState.Roles roles) {
+    private Player findOwner(@NonNull final Roles roles) {
         for (final GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
             if (gamePlayer.isAlive() && gamePlayer.getRole() != null) {
                 if (gamePlayer.getRole().getRoles().equals(roles)) {
@@ -139,10 +140,10 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
     }
 
     private boolean containsRoles(final GameState gameState) {
-        return gameState.getAttributedRole().contains(GameState.Roles.Kyojuro) &&
-                !gameState.DeadRole.contains(GameState.Roles.Kyojuro) &&
-                gameState.getAttributedRole().contains(GameState.Roles.Akaza) &&
-                !gameState.DeadRole.contains(GameState.Roles.Akaza);
+        return gameState.getAttributedRole().contains(Roles.Kyojuro) &&
+                !gameState.DeadRole.contains(Roles.Kyojuro) &&
+                gameState.getAttributedRole().contains(Roles.Akaza) &&
+                !gameState.DeadRole.contains(Roles.Akaza);
     }
 
     @EventHandler

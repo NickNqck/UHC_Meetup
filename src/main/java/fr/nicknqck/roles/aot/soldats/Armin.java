@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import lombok.NonNull;

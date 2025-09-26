@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -49,8 +50,8 @@ public class SabitoV2 extends SlayerRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Sabito;
+    public @NonNull Roles getRoles() {
+        return Roles.Sabito;
     }
 
     @Override

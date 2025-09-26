@@ -2,8 +2,8 @@ package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -35,8 +36,8 @@ public class Zombie extends OverWorldRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Zombie;
+    public @NonNull Roles getRoles() {
+        return Roles.Zombie;
     }
     @Override
     public String[] Desc() {

@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import lombok.NonNull;
@@ -45,12 +45,5 @@ public class Eclaireur extends SoldatsRoles {
 		}else {
 			setNoFall(false);
 		}
-	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
-	public void resetCooldown() {
 	}
 }

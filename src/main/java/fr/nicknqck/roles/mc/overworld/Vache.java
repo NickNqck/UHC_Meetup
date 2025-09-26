@@ -2,6 +2,7 @@ package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
@@ -57,8 +58,8 @@ public class Vache extends OverWorldRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Vache;
+    public @NonNull Roles getRoles() {
+        return Roles.Vache;
     }
 
     @Override

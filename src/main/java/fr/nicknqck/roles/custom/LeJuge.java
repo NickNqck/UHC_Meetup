@@ -2,6 +2,7 @@ package fr.nicknqck.roles.custom;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -61,18 +62,13 @@ public class LeJuge extends CustomRolesBase implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.LeJuge;
+    public @NonNull Roles getRoles() {
+        return Roles.LeJuge;
     }
 
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
-    }
-
-    @Override
-    public void resetCooldown() {
-
     }
 
     @Override

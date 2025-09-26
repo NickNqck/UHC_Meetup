@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -28,7 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -78,19 +77,12 @@ public class Jigoro extends DemonsSlayersRoles implements Listener {
 		return TeamList.Solo;
 	}
 
-	@Override
-	public void resetCooldown() {
-	}
-
-	@Override
+    @Override
 	public String[] Desc() {
 		return AllDesc.Jigoro;
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@EventHandler
+
+    @EventHandler
 	private void onKill(UHCPlayerKillEvent event) {
 		if (event.getGamePlayerKiller() == null)return;
 		if (event.getGamePlayerKiller().getRole() == null)return;

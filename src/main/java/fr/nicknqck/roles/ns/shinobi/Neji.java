@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -56,8 +57,8 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Neji;
+    public @NonNull Roles getRoles() {
+        return Roles.Neji;
     }
 
     @Override

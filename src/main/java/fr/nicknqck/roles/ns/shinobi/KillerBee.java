@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -34,7 +34,7 @@ public class KillerBee extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.@NonNull Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.KillerBee;
 	}
 	@Override
@@ -138,7 +138,7 @@ public class KillerBee extends ShinobiRoles {
 				@Override
 				public void run() {
 					i--;
-					if (i <= 0 || !gameState.getInGamePlayers().contains(owner)) {
+					if (i <= 0 || !gameState.getInGamePlayers().contains(getPlayer())) {
 						setMaxHealth(getMaxHealth()-4.0);
 						owner.sendMessage("§7Vous n'êtes plus sous l'effet de§d Gyûki§7.");
 						cancel();

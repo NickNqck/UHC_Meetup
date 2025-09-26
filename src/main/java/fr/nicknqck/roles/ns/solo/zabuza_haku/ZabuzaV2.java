@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
@@ -54,8 +55,8 @@ public class ZabuzaV2 extends NSRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Zabuza;
+    public @NonNull Roles getRoles() {
+        return Roles.Zabuza;
     }
 
     @Override
@@ -73,7 +74,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
         addPower(new KubikiribochoPower(this), true);
         setChakraType(Chakras.SUITON);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(GameState.Roles.Haku)) {
+            if (!gameState.getAttributedRole().contains(Roles.Haku)) {
                 onHakuDeath(false);
                 getGamePlayer().sendMessage("§bHaku§7 n'est pas dans la partie, vous récupérez donc le bonus dû à sa mort");
             }
@@ -223,7 +224,7 @@ public class ZabuzaV2 extends NSRoles implements Listener {
                 int toshow = timeLeft/20;
                 this.power.zabuza.getGamePlayer().getActionBarManager().updateActionBar("zabuza.invisibilite", "§bTemp d'invisibilité:§c "+(StringUtils.secondsTowardsBeautiful((60*5)-toshow)));
                 for (Player p : zabuza.getGamePlayer().getLastLocation().getWorld().getPlayers()) {
-                    if (zabuza.getListPlayerFromRole(GameState.Roles.Haku).contains(p) || zabuza.getListPlayerFromRole(GameState.Roles.Zabuza).contains(p)) {
+                    if (zabuza.getListPlayerFromRole(Roles.Haku).contains(p) || zabuza.getListPlayerFromRole(Roles.Zabuza).contains(p)) {
                         MathUtil.sendParticleTo(p, EnumParticle.CLOUD, zabuza.owner.getLocation().clone());
                     }
                 }

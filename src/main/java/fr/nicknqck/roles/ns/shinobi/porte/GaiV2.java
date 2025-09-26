@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi.porte;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,8 +29,8 @@ public class GaiV2 extends PortesRoles{
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Gai;
+    public @NonNull Roles getRoles() {
+        return Roles.Gai;
     }
 
     @Override

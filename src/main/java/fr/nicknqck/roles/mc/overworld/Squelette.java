@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -55,8 +56,8 @@ public class Squelette extends OverWorldRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Squelette;
+    public @NonNull Roles getRoles() {
+        return Roles.Squelette;
     }
 
     @Override

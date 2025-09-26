@@ -2,6 +2,7 @@ package fr.nicknqck.roles.valo.agents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -79,8 +80,8 @@ public class Iso extends RoleBase {
 
     @Override
     @NonNull
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Iso;
+    public Roles getRoles() {
+        return Roles.Iso;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ds.solos.jigorov2;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.roles.ds.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.EffectWhen;

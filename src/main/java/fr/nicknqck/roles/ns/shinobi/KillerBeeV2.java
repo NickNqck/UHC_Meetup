@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.roles.ns.SamehadaUseEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -53,8 +54,8 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.KillerBee;
+    public @NonNull Roles getRoles() {
+        return Roles.KillerBee;
     }
 
     @Override

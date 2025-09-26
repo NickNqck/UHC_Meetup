@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import java.util.*;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -26,7 +27,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -58,20 +58,13 @@ public class Gyokko extends DemonsRoles {
 	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
 
-	@Override
+    @Override
 	public String getName() {
 		return "Gyokko";
 	}
 
     @Override
-	public void resetCooldown() {}
-
-	@Override
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 		if (victim.getUniqueId() == getPlayer()) {
 			owner.getInventory().remove(Items.getGyokkoPlastron());

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
@@ -29,8 +30,8 @@ public class WitherBoss extends UHCMcRoles {
         super(player);
     }
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Wither;
+    public @NonNull Roles getRoles() {
+        return Roles.Wither;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -47,8 +48,8 @@ public class KumoV2 extends DemonInferieurRole {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Kumo;
+    public @NonNull Roles getRoles() {
+        return Roles.Kumo;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class KumoV2 extends DemonInferieurRole {
         addPower(new PrisonPower(this), true);
         addPower(new CoconPower(this), true);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-            if (getGameState().getAttributedRole().contains(GameState.Roles.Rui)) {
+            if (getGameState().getAttributedRole().contains(Roles.Rui)) {
                 final GamePlayer rui = getListGamePlayerFromRole(RuiV2.class).stream().findFirst().get();
                 getMessageOnDescription().add("§7Votre§c lune§7 est §c"+rui.getPlayerName());
                 setLune((DemonsRoles) rui.getRole());

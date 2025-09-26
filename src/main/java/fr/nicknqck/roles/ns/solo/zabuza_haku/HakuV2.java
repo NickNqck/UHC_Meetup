@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -57,8 +58,8 @@ public class HakuV2 extends NSRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Haku;
+    public @NonNull Roles getRoles() {
+        return Roles.Haku;
     }
 
     @Override
@@ -117,7 +118,7 @@ public class HakuV2 extends NSRoles {
                 this.power = power;
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                     if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))return;
-                    if (GameState.getInstance().getAttributedRole().contains(GameState.Roles.Zabuza))return;
+                    if (GameState.getInstance().getAttributedRole().contains(Roles.Zabuza))return;
                     final Cooldown old = this.power.cooldown;
                     final Cooldown nouveau = new Cooldown(60*5);
                     if (old.isInCooldown()) {
@@ -158,7 +159,7 @@ public class HakuV2 extends NSRoles {
                             for (final Vector vector : positions) {
                                 final Location location = vector.toLocation(player.getWorld());
                                 final Block block = location.getBlock();
-                                if (one != null && two != null && ice != null && three != null) {
+                                if (one != null && two != null && three != null) {
                                     continue;
                                 }
                                 if (!block.getType().equals(Material.AIR)) {

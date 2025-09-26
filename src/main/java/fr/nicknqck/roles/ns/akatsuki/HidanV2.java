@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -57,8 +58,8 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Hidan;
+    public @NonNull Roles getRoles() {
+        return Roles.Hidan;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
     @EventHandler
     private void onRoleGive(final RoleGiveEvent event) {
         if (!event.isEndGive())return;
-        if (event.getGameState().getDeadRoles().contains(GameState.Roles.Kakuzu)) {
+        if (event.getGameState().getDeadRoles().contains(Roles.Kakuzu)) {
             this.kakuzuDeath = true;
             givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
             getGamePlayer().sendMessage("§cKakuzu§7 n'est pas dans la partie, vous obtenez donc directement l'effet§c Force I permanent§7.");

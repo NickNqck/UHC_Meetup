@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
@@ -78,8 +79,8 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.ShinjuroV2;
+    public @NonNull Roles getRoles() {
+        return Roles.ShinjuroV2;
     }
 
     @Override

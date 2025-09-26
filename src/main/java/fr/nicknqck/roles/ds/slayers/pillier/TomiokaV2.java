@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -53,8 +54,8 @@ public class TomiokaV2 extends PilierRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Tomioka;
+    public @NonNull Roles getRoles() {
+        return Roles.Tomioka;
     }
 
     @Override

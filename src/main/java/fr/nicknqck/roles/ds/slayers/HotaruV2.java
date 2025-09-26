@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -38,28 +39,13 @@ public class HotaruV2 extends SlayerRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Hotaru";
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Hotaru;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Hotaru;
     }
 
     @Override

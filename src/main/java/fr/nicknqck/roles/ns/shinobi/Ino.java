@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
@@ -33,8 +34,8 @@ public class Ino extends ShinobiRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Ino;
+    public @NonNull Roles getRoles() {
+        return Roles.Ino;
     }
     @Override
     public @NonNull Intelligence getIntelligence() {
@@ -43,7 +44,7 @@ public class Ino extends ShinobiRoles {
 
     @Override
     public String[] Desc() {
-        KnowRole(owner, GameState.Roles.Shikamaru, 15);
+        KnowRole(owner, Roles.Shikamaru, 15);
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§aIno",

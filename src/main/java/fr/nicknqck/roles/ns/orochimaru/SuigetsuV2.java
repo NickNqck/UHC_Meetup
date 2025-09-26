@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -56,8 +57,8 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Suigetsu;
+    public @NonNull Roles getRoles() {
+        return Roles.Suigetsu;
     }
 
     @Override
@@ -94,18 +95,18 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
     @EventHandler
     private void onRoleGive(final RoleGiveEvent event) {
         if (!event.isEndGive())return;
-        if (!event.getGameState().getDeadRoles().contains(GameState.Roles.Orochimaru)) {
+        if (!event.getGameState().getDeadRoles().contains(Roles.Orochimaru)) {
             new EffectRunnable(this);
         } else {
             givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
             getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous obtenez l'effet§c Force 1§7 permanent");
             this.orochimaruDead = true;
         }
-        if (event.getGameState().getAttributedRole().contains(GameState.Roles.Karin)){
+        if (event.getGameState().getAttributedRole().contains(Roles.Karin)){
             addKnowedRole(Karin.class);
         } else {
             this.karinDead = true;
-            if (event.getGameState().getAvailableRoles().containsKey(GameState.Roles.Jugo)) {
+            if (event.getGameState().getAvailableRoles().containsKey(Roles.Jugo)) {
                 addKnowedRole(Jugo.class);
             } else {
                 addKnowedRole(SasukeV2.class);

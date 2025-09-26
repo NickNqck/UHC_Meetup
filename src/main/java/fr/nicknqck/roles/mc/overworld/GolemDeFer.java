@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -57,12 +58,8 @@ public class GolemDeFer extends OverWorldRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.GolemDeFer;
+    public @NonNull Roles getRoles() {
+        return Roles.GolemDeFer;
     }
 
-    @Override
-    public void resetCooldown() {
-
-    }
 }

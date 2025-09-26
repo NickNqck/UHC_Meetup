@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;

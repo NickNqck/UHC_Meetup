@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
@@ -646,7 +647,7 @@ public class HubInventory implements Listener {
                                 return;
                             }
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         name = item.getItemMeta().getDisplayName();
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -670,7 +671,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                                             gameState.addInAvailableRoles(roles, Math.min(gameState.getInLobbyPlayers().size(), gameState.getAvailableRoles().get(roles)+1));
@@ -690,7 +691,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         name = item.getItemMeta().getDisplayName();
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -712,7 +713,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                                             gameState.addInAvailableRoles(roles, Math.min(gameState.getInLobbyPlayers().size(), gameState.getAvailableRoles().get(roles)+1));
@@ -731,7 +732,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         name = item.getItemMeta().getDisplayName();
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {

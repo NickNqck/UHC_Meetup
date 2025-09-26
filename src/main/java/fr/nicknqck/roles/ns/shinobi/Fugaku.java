@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.GUIItems;
@@ -99,8 +100,8 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Fugaku;
+    public @NonNull Roles getRoles() {
+        return Roles.Fugaku;
     }
 
     @Override

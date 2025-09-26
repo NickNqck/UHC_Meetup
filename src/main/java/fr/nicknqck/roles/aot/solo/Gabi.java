@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.aot.solo;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.builder.TeamList;
@@ -12,7 +12,6 @@ import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -144,11 +143,8 @@ public class Gabi extends AotRoles {
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(owner, 5);
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void Update(GameState gameState) {//Update s'actualise toute les secondes
 		if (!killshifter) {
 			if (!inList.isEmpty()) {
@@ -173,8 +169,5 @@ public class Gabi extends AotRoles {
 			}
 		}
         inList.remove(player.getUniqueId());
-	}
-	@Override
-	public void resetCooldown() {
 	}
 }

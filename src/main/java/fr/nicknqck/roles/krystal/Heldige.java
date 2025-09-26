@@ -2,6 +2,7 @@ package fr.nicknqck.roles.krystal;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -57,17 +58,14 @@ public class Heldige extends BonusKrystalBase {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Heldige;
+    public @NonNull Roles getRoles() {
+        return Roles.Heldige;
     }
 
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
-
-    @Override
-    public void resetCooldown() {}
 
     @Override
     public ItemStack[] getItems() {

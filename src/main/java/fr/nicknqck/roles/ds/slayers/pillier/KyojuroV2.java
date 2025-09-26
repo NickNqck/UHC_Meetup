@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -56,27 +57,13 @@ public class KyojuroV2 extends PilierRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Kyojuro";
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Kyojuro;
-    }
-
-    @Override
-    public void resetCooldown() {
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Kyojuro;
     }
 
     @Override

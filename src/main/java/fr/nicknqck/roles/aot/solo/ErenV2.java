@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
@@ -39,8 +40,8 @@ public class ErenV2 extends AotRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Eren;
+    public @NonNull Roles getRoles() {
+        return Roles.Eren;
     }
 
     @Override

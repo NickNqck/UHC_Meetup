@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.aot.mahr;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;

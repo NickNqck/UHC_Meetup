@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.orochimaru.edov2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -36,7 +37,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
 
     @Override
     public void RoleGiven(GameState gameState) {
-        if (getRoles().equals(GameState.Roles.Orochimaru)){
+        if (getRoles().equals(Roles.Orochimaru)){
             addPower(new EdoTenseiPower(this), true);
         }
         super.RoleGiven(gameState);

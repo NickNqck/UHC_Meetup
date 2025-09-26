@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -53,11 +53,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 		};
 	}
 
-	@Override
-	public ItemStack[] getItems() {
-	    return new ItemStack[0];
-	}
-	@Override
+    @Override
 	public void resetCooldown() {
 		regencooldown = 0;
 	}

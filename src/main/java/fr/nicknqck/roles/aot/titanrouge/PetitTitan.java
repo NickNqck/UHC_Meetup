@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import lombok.NonNull;
 import org.bukkit.Material;
@@ -9,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -71,9 +71,5 @@ public class PetitTitan extends TitansRoles {
 		if (isTransformedinTitan) {
 			OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		}		
-	}
-	@Override
-	public void resetCooldown() {
-		
 	}
 }

@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -71,9 +71,5 @@ public class GrandTitan extends TitansRoles {
 		if (isTransformedinTitan) {
 			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 		}
-	}
-	@Override
-	public void resetCooldown() {
-		
 	}
 }

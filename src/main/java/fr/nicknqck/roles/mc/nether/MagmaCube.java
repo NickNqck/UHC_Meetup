@@ -2,6 +2,7 @@ package fr.nicknqck.roles.mc.nether;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -55,8 +56,8 @@ public class MagmaCube extends NetherRoles implements Listener {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.MagmaCube;
+    public @NonNull Roles getRoles() {
+        return Roles.MagmaCube;
     }
 
     @Override
@@ -82,9 +83,7 @@ public class MagmaCube extends NetherRoles implements Listener {
                 if (e.getVictim().isDead()) {
                     e.getVictim().spigot().respawn();
                 }
-                if (loc.getWorld() != Main.getInstance().getWorldManager().getGameWorld()) {
-
-                } else {
+                if (loc.getWorld() == Main.getInstance().getWorldManager().getGameWorld()) {
                     e.getVictim().teleport(loc);
                 }
             }

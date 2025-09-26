@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
@@ -79,8 +80,8 @@ public class AraigneeVenimeuse extends UHCMcRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.AraigneeVenimeuse;
+    public @NonNull Roles getRoles() {
+        return Roles.AraigneeVenimeuse;
     }
 
     @Override

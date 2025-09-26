@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.enums.Roles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,7 +17,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

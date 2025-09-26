@@ -2,6 +2,7 @@ package fr.nicknqck.roles.krystal;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -51,17 +52,14 @@ public class LeComteV2 extends BonusKrystalBase implements Listener{
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.LeComte;
+    public @NonNull Roles getRoles() {
+        return Roles.LeComte;
     }
 
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
-
-    @Override
-    public void resetCooldown() {}
 
     @Override
     public ItemStack[] getItems() {

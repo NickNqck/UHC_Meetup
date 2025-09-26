@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
@@ -205,8 +205,4 @@ public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 	}
 	super.PlayerKilled(killer, victim, gameState);
 }
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
 }

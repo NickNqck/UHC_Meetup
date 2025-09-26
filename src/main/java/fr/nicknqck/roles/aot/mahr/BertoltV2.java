@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.mahr;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -31,8 +32,8 @@ public class BertoltV2 extends MahrRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Bertolt;
+    public @NonNull Roles getRoles() {
+        return Roles.Bertolt;
     }
 
     @Override

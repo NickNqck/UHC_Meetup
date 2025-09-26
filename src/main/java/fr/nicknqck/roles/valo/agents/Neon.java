@@ -2,6 +2,7 @@ package fr.nicknqck.roles.valo.agents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -54,18 +55,13 @@ public class Neon extends RoleBase {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Neon;
+    public @NonNull Roles getRoles() {
+        return Roles.Neon;
     }
 
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
-    }
-
-    @Override
-    public void resetCooldown() {
-
     }
 
     @Override

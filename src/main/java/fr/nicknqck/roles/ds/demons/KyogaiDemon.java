@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -29,7 +30,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -52,31 +52,18 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Kyogai";
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Kyogai;
+    public @NonNull Roles getRoles() {
+        return Roles.Kyogai;
     }
 
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
-    }
-
-    @Override
-    public void resetCooldown() {}
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override
@@ -86,7 +73,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         EventUtils.registerRoleEvent(this);
         addKnowedRole(MuzanV2.class);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(GameState.Roles.Muzan) || gameState.getDeadRoles().contains(GameState.Roles.Muzan)){
+            if (!gameState.getAttributedRole().contains(Roles.Muzan) || gameState.getDeadRoles().contains(Roles.Muzan)){
                 procSolo();
             }
         }, 20*10);

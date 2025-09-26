@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -31,7 +32,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -66,7 +66,7 @@ public class Gaara extends NSRoles {
         shukakuCooldown = 0;
     }
     @Override
-    public GameState.@NonNull Roles getRoles() {
+    public @NonNull Roles getRoles() {
         return Roles.Gaara;
     }
 

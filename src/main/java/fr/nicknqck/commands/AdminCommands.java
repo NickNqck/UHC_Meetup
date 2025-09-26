@@ -2,11 +2,11 @@ package fr.nicknqck.commands;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
@@ -613,7 +613,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 				if (args[0].equalsIgnoreCase("deadrole")) {
 					if (args[1].equalsIgnoreCase("add")) {
-						for (Roles roles : GameState.Roles.values()) {
+						for (Roles roles : Roles.values()) {
 							if (roles.name().equalsIgnoreCase(args[2])) {
 								if (!gameState.getAttributedRole().contains(roles)) {
 									gameState.getAttributedRole().add(roles);
@@ -623,7 +623,7 @@ public class AdminCommands implements CommandExecutor{
 							}
 						}
 					} else if (args[1].equalsIgnoreCase("del")) {
-						for (Roles roles : GameState.Roles.values()) {
+						for (Roles roles : Roles.values()) {
 							if (roles.name().equalsIgnoreCase(args[2])) {
 								gameState.getDeadRoles().remove(roles);
 								break;

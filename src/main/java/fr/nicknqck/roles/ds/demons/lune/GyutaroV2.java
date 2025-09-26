@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -59,8 +60,8 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Gyutaro;
+    public @NonNull Roles getRoles() {
+        return Roles.Gyutaro;
     }
 
     @Override
@@ -85,7 +86,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
     @EventHandler
     private void onEndGiveRole(final RoleGiveEvent event) {
         if (!event.isEndGive())return;
-        final List<GamePlayer> dakiPlayers = new ArrayList<>(getListGamePlayerFromRoles(GameState.Roles.Daki));
+        final List<GamePlayer> dakiPlayers = new ArrayList<>(getListGamePlayerFromRoles(Roles.Daki));
         if (!dakiPlayers.isEmpty()) {
             Collections.shuffle(dakiPlayers, Main.RANDOM);
             this.daki = (DakiV2) dakiPlayers.get(0).getRole();

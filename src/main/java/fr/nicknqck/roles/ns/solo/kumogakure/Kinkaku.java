@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -41,7 +42,7 @@ public class Kinkaku extends KumogakureRole {
         super(player);
         super.setChakraType(super.getRandomChakras());
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(GameState.Roles.Ginkaku)){
+            if (!gameState.getAttributedRole().contains(Roles.Ginkaku)){
                 OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
             }
         }, 100);
@@ -53,8 +54,8 @@ public class Kinkaku extends KumogakureRole {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Kinkaku;
+    public @NonNull Roles getRoles() {
+        return Roles.Kinkaku;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class Kinkaku extends KumogakureRole {
 
     @Override
     public String[] Desc() {
-        KnowRole(owner, GameState.Roles.Ginkaku, 16);
+        KnowRole(owner, Roles.Ginkaku, 16);
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§6Kinkaku",
@@ -123,9 +124,9 @@ public class Kinkaku extends KumogakureRole {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser§6§l Kyubi§7.");
             }
         }
-        if (gameState.getDeadRoles().contains(GameState.Roles.Ginkaku)){
+        if (gameState.getDeadRoles().contains(Roles.Ginkaku)){
             OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-        } else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(GameState.Roles.Ginkaku))){
+        } else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(Roles.Ginkaku))){
             OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
         }
     }

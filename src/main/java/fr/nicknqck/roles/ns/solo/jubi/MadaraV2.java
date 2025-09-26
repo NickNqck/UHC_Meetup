@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo.jubi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -51,8 +52,8 @@ public class MadaraV2 extends JubiRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Madara;
+    public @NonNull Roles getRoles() {
+        return Roles.Madara;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package fr.nicknqck.events.essential.inventorys;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 
 public final class EasyRoleAdder {
 
@@ -15,7 +16,7 @@ public final class EasyRoleAdder {
             }
         }*/
         //Ancien système de rôle
-        for (GameState.Roles roles : GameState.Roles.values()) {
+        for (Roles roles : Roles.values()) {
             if (roles.getItem().getItemMeta().getDisplayName().contains(name)) {
                 GameState.getInstance().addInAvailableRoles(roles, Math.min(GameState.getInstance().getInLobbyPlayers().size(), GameState.getInstance().getAvailableRoles().get(roles)+1));
                 GameState.getInstance().updateGameCanLaunch();
@@ -24,7 +25,7 @@ public final class EasyRoleAdder {
         }
     }
     public static void removeRoles(String name) {
-        for (GameState.Roles roles : GameState.Roles.values()) {
+        for (Roles roles : Roles.values()) {
             if (roles.getItem().getItemMeta().getDisplayName().contains(name)) {
                 if (GameState.getInstance().getAvailableRoles().get(roles) > 0) {
                     GameState.getInstance().addInAvailableRoles(roles,

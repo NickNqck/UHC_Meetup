@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -51,8 +52,8 @@ public class YoriichiV2 extends DemonsSlayersRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Yoriichi;
+    public @NonNull Roles getRoles() {
+        return Roles.Yoriichi;
     }
 
     @Override

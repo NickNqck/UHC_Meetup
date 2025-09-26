@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
@@ -62,11 +62,8 @@ public class Sakura extends ShinobiRoles {
 				ByakugoItem()
 		};
 	}
-	@Override
-	public void resetCooldown() {
-		
-	}
-	private ItemStack ByakugoItem() {
+
+    private ItemStack ByakugoItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§dByakugo").setLore("§7Vous permet de stocker des "+AllDesc.coeur).toItemStack();
 	}
 	private int SavedHP = 0;

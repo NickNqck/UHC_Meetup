@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
@@ -19,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -138,13 +138,13 @@ public class Eren extends AotRoles {
 					Cercle(),
 					Saut()
 			};
-		} else if (killBertolt && !killPorco) {
+		} else if (killBertolt) {
 			return new ItemStack[] {
 					one,
 					two,
 					Cercle()
 			};
-		}else if (!killBertolt && killPorco) {
+		}else if (killPorco) {
 			return new ItemStack[] {
 					one,
 					two,
@@ -269,10 +269,6 @@ public class Eren extends AotRoles {
 						}
 					}
 					OLDgivePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 60, 2, true);
-				}else {
-					if (cdbertolt == 60) {
-						owner.sendMessage("Désactivation du§c§l Cercle de Feu");
-					}
 				}
 			}	
 		}else if (cdbertolt ==0) {

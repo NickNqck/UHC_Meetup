@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -38,11 +38,8 @@ public class Conny extends SoldatsRoles {
 	public @NonNull Roles getRoles() {
 		return Roles.Conny;
 	}
-	@Override
-	public String[] Desc() {
-		return new String[0];
-	}
-	@Override
+
+    @Override
 	public String getName() {
 		return "Conny";
 	}

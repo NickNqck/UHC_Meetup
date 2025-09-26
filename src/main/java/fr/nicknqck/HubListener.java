@@ -1,9 +1,9 @@
 package fr.nicknqck;
 
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.items.GUIItems;

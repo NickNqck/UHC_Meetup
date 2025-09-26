@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.roles.ns.SamehadaUseEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -54,8 +55,8 @@ public class KisameV2 extends AkatsukiRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Kisame;
+    public @NonNull Roles getRoles() {
+        return Roles.Kisame;
     }
 
     @Override

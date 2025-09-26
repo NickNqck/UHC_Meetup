@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -86,11 +86,9 @@ public class Livai extends SoldatsRoles {
 							cdsugar = 60*3;
 							nbsugar+= 1;
 						} else {
-							if (nbsugar >= 2) {
-								OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*2), 1, true);
-								cdsugar = 60*3;
-							}
-						}
+                            OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20 * (60 * 2), 1, true);
+                            cdsugar = 60*3;
+                        }
 					}
 				} else {
 					sendCooldown(owner, cdsugar);

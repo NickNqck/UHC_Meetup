@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -53,8 +54,8 @@ public class GinkakuV2 extends KumogakureRole {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Ginkaku;
+    public @NonNull Roles getRoles() {
+        return Roles.Ginkaku;
     }
 
     @Override
@@ -74,8 +75,8 @@ public class GinkakuV2 extends KumogakureRole {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine(getGameState().getDeadRoles().contains(GameState.Roles.Kinkaku) ? "" : "§7Lorsque vous êtes proche de §6Kinkaku§7 vous avez l'effet §cRésistance I")
-                .addCustomLine(getGameState().getDeadRoles().contains(GameState.Roles.Kinkaku) ? "" : "§7Lors de la mort de §6Kinkaku§7 vous obtener l'effet§c Résistance I")
+                .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lorsque vous êtes proche de §6Kinkaku§7 vous avez l'effet §cRésistance I")
+                .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lors de la mort de §6Kinkaku§7 vous obtener l'effet§c Résistance I")
                 .getText();
     }
 
@@ -96,7 +97,7 @@ public class GinkakuV2 extends KumogakureRole {
                 cancel();
                 return;
             }
-            if (this.gameState.getDeadRoles().contains(GameState.Roles.Kinkaku)) {
+            if (this.gameState.getDeadRoles().contains(Roles.Kinkaku)) {
                 this.ginkaku.getGamePlayer().sendMessage("§6Kinkaku§7 est mort, vous obtenez l'effet§c Résistance I§7 de manière§c permanente");
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.ginkaku.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999, 0, false, false), EffectWhen.PERMANENT));
                 cancel();

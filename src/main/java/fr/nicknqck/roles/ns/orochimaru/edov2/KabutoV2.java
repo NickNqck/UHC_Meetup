@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.orochimaru.edov2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -58,8 +59,8 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Kabuto;
+    public @NonNull Roles getRoles() {
+        return Roles.Kabuto;
     }
 
     @Override
@@ -70,16 +71,16 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener {
         this.healPower = new HealPower(this);
         addPower(this.healPower, true);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-            if (!this.karinDEAD && !gameState.getAttributedRole().contains(GameState.Roles.Karin)) {
+            if (!this.karinDEAD && !gameState.getAttributedRole().contains(Roles.Karin)) {
                 onKarinDeath();
             }
-            if (!this.jugoDEAD && !gameState.getAttributedRole().contains(GameState.Roles.Jugo)) {
+            if (!this.jugoDEAD && !gameState.getAttributedRole().contains(Roles.Jugo)) {
                 onJugoDeath();
             }
-            if (!this.kimimaroDEAD && !gameState.getAttributedRole().contains(GameState.Roles.Kimimaro)) {
+            if (!this.kimimaroDEAD && !gameState.getAttributedRole().contains(Roles.Kimimaro)) {
                 onKimimaruDeath();
             }
-            if (!this.orochimaruDEAD && !gameState.getAttributedRole().contains(GameState.Roles.Orochimaru)) {
+            if (!this.orochimaruDEAD && !gameState.getAttributedRole().contains(Roles.Orochimaru)) {
                 onOrochimaruDeath();
             }
             tryProcSolo(gameState);

@@ -1,6 +1,6 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
-import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -24,8 +24,8 @@ public class DakiV2 extends DemonsRoles {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Daki;
+    public @NonNull Roles getRoles() {
+        return Roles.Daki;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fr.nicknqck.events.ds.dkt;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -105,10 +106,10 @@ public class DemonKingEvent extends Event {
 
     @Override
     public boolean canProc(final GameState gameState) {
-        return gameState.getAttributedRole().contains(GameState.Roles.Tanjiro) &&
-                gameState.getAttributedRole().contains(GameState.Roles.Muzan) &&
-                gameState.DeadRole.contains(GameState.Roles.Muzan) &&
-                !gameState.DeadRole.contains(GameState.Roles.Tanjiro);
+        return gameState.getAttributedRole().contains(Roles.Tanjiro) &&
+                gameState.getAttributedRole().contains(Roles.Muzan) &&
+                gameState.DeadRole.contains(Roles.Muzan) &&
+                !gameState.DeadRole.contains(Roles.Tanjiro);
     }
 
     @Override

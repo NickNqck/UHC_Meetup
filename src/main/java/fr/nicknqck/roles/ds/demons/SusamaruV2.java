@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
@@ -50,8 +51,8 @@ public class SusamaruV2 extends DemonsRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Susamaru;
+    public @NonNull Roles getRoles() {
+        return Roles.Susamaru;
     }
 
     @Override

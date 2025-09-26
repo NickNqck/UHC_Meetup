@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -67,8 +68,8 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Sasuke;
+    public @NonNull Roles getRoles() {
+        return Roles.Sasuke;
     }
 
     @Override
@@ -88,13 +89,13 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         setChakraType(Chakras.KATON);
         setCanBeHokage(true);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(GameState.Roles.Itachi)) {
+            if (!gameState.getAttributedRole().contains(Roles.Itachi)) {
                 onItachiKill(false);
                 getGamePlayer().sendMessage("§cItachi§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à son kill");
             }
         }, 5*20);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(GameState.Roles.Orochimaru)) {
+            if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
                 setTeam(TeamList.Sasuke);
                 getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aidez vous obtenez §c3❤ supplémentaire§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
                 giveHealedHeartatInt(3.0);

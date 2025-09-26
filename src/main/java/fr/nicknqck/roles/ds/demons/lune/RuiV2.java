@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -24,7 +25,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -44,31 +44,18 @@ public class RuiV2 extends DemonsRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Rui§7 (§6V2§7)";
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Rui;
+    public @NonNull Roles getRoles() {
+        return Roles.Rui;
     }
 
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Demon;
-    }
-
-    @Override
-    public void resetCooldown() {}
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Override

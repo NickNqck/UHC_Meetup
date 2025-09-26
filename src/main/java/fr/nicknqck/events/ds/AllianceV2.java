@@ -1,6 +1,7 @@
 package fr.nicknqck.events.ds;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -37,7 +38,7 @@ public class AllianceV2 extends Event implements Listener {
                 gamePlayer.getRole().setTeam(TeamList.Alliance);
                 if (gamePlayer.getRole() instanceof KyojuroV2) {
                     KyojuroV2 k = (KyojuroV2) gamePlayer.getRole();
-                    gamePlayer.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Shinjuro).getName());
+                    gamePlayer.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
                     gamePlayer.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
                     k.giveHealedHeartatInt(2);
                     this.kyojuro = k;
@@ -46,7 +47,7 @@ public class AllianceV2 extends Event implements Listener {
                 }
                 if (gamePlayer.getRole() instanceof Shinjuro) {
                     Shinjuro s = (Shinjuro) gamePlayer.getRole();
-                    s.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(GameState.Roles.Kyojuro).getName());
+                    s.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Kyojuro).getName());
                     s.getGamePlayer().sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
                     this.shinjuro = s;
                     s.procAlliance();
@@ -78,10 +79,10 @@ public class AllianceV2 extends Event implements Listener {
     }
 
     private boolean containsRoles(final GameState gameState) {
-        return gameState.getAttributedRole().contains(GameState.Roles.Kyojuro) &&
-                !gameState.DeadRole.contains(GameState.Roles.Kyojuro) &&
-                gameState.getAttributedRole().contains(GameState.Roles.Shinjuro) &&
-                !gameState.DeadRole.contains(GameState.Roles.Shinjuro);
+        return gameState.getAttributedRole().contains(Roles.Kyojuro) &&
+                !gameState.DeadRole.contains(Roles.Kyojuro) &&
+                gameState.getAttributedRole().contains(Roles.Shinjuro) &&
+                !gameState.DeadRole.contains(Roles.Shinjuro);
     }
 
     @Override

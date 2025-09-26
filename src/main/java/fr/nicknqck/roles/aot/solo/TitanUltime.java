@@ -2,8 +2,8 @@ package fr.nicknqck.roles.aot.solo;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.aot.titanrouge.Sieg;

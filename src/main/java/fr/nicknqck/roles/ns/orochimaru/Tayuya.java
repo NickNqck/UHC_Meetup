@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -51,8 +52,8 @@ public class Tayuya extends OrochimaruRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Tayuya;
+    public @NonNull Roles getRoles() {
+        return Roles.Tayuya;
     }
 
     @Override
@@ -85,7 +86,7 @@ public class Tayuya extends OrochimaruRoles {
                     player.sendMessage("§cImpossible, vous êtes trop §nfaible§r§c pour utiliser ce pouvoir");
                     return false;
                 }
-                if (!getRole().getGameState().getDeadRoles().contains(GameState.Roles.Orochimaru)) {
+                if (!getRole().getGameState().getDeadRoles().contains(Roles.Orochimaru)) {
                     getRole().setMaxHealth(getRole().getMaxHealth()-2.0);
                     player.setMaxHealth(getRole().getMaxHealth());
                     player.setHealth(player.getMaxHealth());

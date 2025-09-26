@@ -1,7 +1,7 @@
 package fr.nicknqck.events.ds.dkt;
 
-import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
@@ -43,8 +43,8 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Tanjiro;
+    public @NonNull Roles getRoles() {
+        return Roles.Tanjiro;
     }
 
     @Override

@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -60,8 +61,8 @@ public class EnmuV2 extends DemonsRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Enmu;
+    public @NonNull Roles getRoles() {
+        return Roles.Enmu;
     }
 
     @Override

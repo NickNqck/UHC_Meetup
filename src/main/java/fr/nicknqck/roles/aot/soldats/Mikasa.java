@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -23,8 +23,8 @@ public class Mikasa extends SoldatsRoles {
 		setAckerMan(true);
 	}
 	@Override
-	public @NonNull Roles getRoles() {
-		return null;
+	public @NonNull fr.nicknqck.enums.Roles getRoles() {
+		return Roles.Livai;
 	}
 	@Override
 	public String[] Desc() {

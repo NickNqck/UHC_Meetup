@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
@@ -14,7 +14,6 @@ import fr.nicknqck.roles.desc.AllDesc;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,11 +131,8 @@ public class Hansi extends SoldatsRoles {
 			}
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void resetCooldown() {
 		actualtorture = 0;
 		tortured.clear();

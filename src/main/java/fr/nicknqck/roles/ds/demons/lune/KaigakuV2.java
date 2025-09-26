@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -63,8 +64,8 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Kaigaku;
+    public @NonNull Roles getRoles() {
+        return Roles.Kaigaku;
     }
 
     @Override

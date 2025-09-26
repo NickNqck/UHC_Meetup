@@ -2,6 +2,7 @@ package fr.nicknqck.events.essential;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.StartGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.utils.discord.WebhookBuilder;
@@ -92,7 +93,7 @@ public class WebHookListeners implements Listener {
                     playerNames += player.getName()+", ";
                 }
                 String igRoles = "";
-                for (GameState.Roles roles : event.getIgRoles()) {
+                for (Roles roles : event.getIgRoles()) {
                     igRoles += roles.getItem().getItemMeta().getDisplayName()+", ";
                 }
                 sendWebHook(name,

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.custom;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -65,15 +66,14 @@ public class LeComte extends CustomRolesBase implements Listener {
         return "Le Comte";
     }
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.LeComte;
+    public @NonNull Roles getRoles() {
+        return Roles.LeComte;
     }
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
-    @Override
-    public void resetCooldown() {}
+
     @Override
     public String[] Desc() {
         return new String[0];

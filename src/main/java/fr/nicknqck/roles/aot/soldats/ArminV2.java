@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -35,15 +36,15 @@ public class ArminV2 extends SoldatsRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Armin;
+    public @NonNull Roles getRoles() {
+        return Roles.Armin;
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new AotInvCommand(this));
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(GameState.Roles.Bertolt)) {
+            if (!gameState.getAttributedRole().contains(Roles.Bertolt)) {
                 Main.getInstance().getTitanManager().addTitan(getPlayer(), new ColossalV2(getGamePlayer()));
                 getGamePlayer().sendMessage("§7Comme§9 Bertolt§7 n'est pas dans la partie vous recevez le§c titan Colossal§7.");
             }

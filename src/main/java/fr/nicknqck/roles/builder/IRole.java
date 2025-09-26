@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -15,7 +16,8 @@ public interface IRole {
 
     UUID getPlayer();
     String getName();
-    @NonNull GameState.Roles getRoles();
+    @NonNull
+    Roles getRoles();
     @NonNull TeamList getOriginTeam();
     TeamList getTeam();
     Map<PotionEffect, EffectWhen> getEffects();

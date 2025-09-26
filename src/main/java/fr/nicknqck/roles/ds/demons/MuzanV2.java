@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.demons;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -51,8 +52,8 @@ public class MuzanV2 extends DemonsRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Muzan;
+    public @NonNull Roles getRoles() {
+        return Roles.Muzan;
     }
 
     @Override

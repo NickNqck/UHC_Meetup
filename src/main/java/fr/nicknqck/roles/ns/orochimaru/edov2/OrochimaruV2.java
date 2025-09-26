@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.orochimaru.edov2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -51,8 +52,8 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
     }
 
     @Override
-    public GameState.@NonNull Roles getRoles() {
-        return GameState.Roles.Orochimaru;
+    public @NonNull Roles getRoles() {
+        return Roles.Orochimaru;
     }
 
     @Override

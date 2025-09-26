@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -37,12 +37,8 @@ public class Sasha extends SoldatsRoles {
 	public @NonNull Roles getRoles() {
 		return Roles.Sasha;
 	}
-	@Override
-	public String[] Desc() {
-		return new String[0];
-	}
 
-	@Override
+    @Override
 	public void RoleGiven(GameState gameState) {
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous tirez une flèche sur un§c joueur§7 avec votre§a Arc de Chasseur§7 vous lui infligerez des effets en fonction de la zone toucher:\n\n"

@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Jubi;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.IRole;
@@ -25,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.entity.bijus.BijuListener;
 
 public class NsCommands implements CommandExecutor {

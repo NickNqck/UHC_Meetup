@@ -9,6 +9,7 @@ import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
 import fr.nicknqck.commands.vanilla.Whitelist;
 import fr.nicknqck.config.GameConfig;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.blocks.BlockManager;
 import fr.nicknqck.events.blocks.BrickBlockListener;
 import fr.nicknqck.events.chat.Chat;
@@ -300,7 +301,7 @@ public class Main extends JavaPlugin {
 	}
 	private void initPlugin(GameState gameState) {
 		System.out.println("init Roles");
-		for (GameState.Roles r : GameState.Roles.values()) {
+		for (Roles r : Roles.values()) {
 			gameState.addInAvailableRoles(r, 0);
 		}
 		System.out.println("init Players");

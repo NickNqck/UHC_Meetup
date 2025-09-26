@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -50,8 +51,8 @@ public class KurenaiV2 extends ShinobiRoles {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Kurenai;
+    public @NonNull Roles getRoles() {
+        return Roles.Kurenai;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class KurenaiV2 extends ShinobiRoles {
         addPower(new GenjutsuDesBoisPower(this), true);
         addPower(new GenjutsuTemporel(this), true);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-            if (gameState.getAttributedRole().contains(GameState.Roles.Asuma)) {
+            if (gameState.getAttributedRole().contains(Roles.Asuma)) {
                 new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
             }
         }, 20);

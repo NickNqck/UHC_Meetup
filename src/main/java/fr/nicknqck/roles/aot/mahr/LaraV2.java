@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.mahr;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.TeamList;
@@ -26,8 +27,8 @@ public class LaraV2 extends MahrRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Lara;
+    public @NonNull Roles getRoles() {
+        return Roles.Lara;
     }
     @Override
     public TextComponent getComponent() {

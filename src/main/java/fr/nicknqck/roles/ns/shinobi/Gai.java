@@ -1,9 +1,9 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
@@ -38,7 +38,7 @@ public class Gai extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.@NonNull Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Gai;
 	}
 	@Override

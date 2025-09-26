@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -22,8 +22,8 @@ public class Jelena extends TitansRoles {
 		super(player);
 	}
 	@Override
-	public @NonNull Roles getRoles() {
-		return Roles.Jelena;
+	public @NonNull fr.nicknqck.enums.Roles getRoles() {
+		return fr.nicknqck.enums.Roles.Jelena;
 	}
 
 	@Override
