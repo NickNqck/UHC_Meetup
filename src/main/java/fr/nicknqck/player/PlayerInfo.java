@@ -3,6 +3,7 @@ package fr.nicknqck.player;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -27,6 +28,8 @@ public class PlayerInfo {
     private int totalKills = 0;
     private int deaths = 0;
     private int timePlayed = 0;
+    @Setter
+    private int resetAmount = 0;
 
     public PlayerInfo(UUID uuid) {
         this.uuid = uuid;
