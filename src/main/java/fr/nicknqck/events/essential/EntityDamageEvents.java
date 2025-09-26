@@ -91,7 +91,7 @@ public class EntityDamageEvents implements Listener{
 						return;
 					}
 				}
-				if (gameState.getInSleepingPlayers().contains(player) || gameState.getInObiPlayers().contains(player)) {
+				if (gameState.getInObiPlayers().contains(player)) {
 					event.setCancelled(true);
 				}
 				if ((player.getHealth()-damage) <= 0) {

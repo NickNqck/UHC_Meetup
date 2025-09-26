@@ -108,7 +108,6 @@ public class GameListener implements Listener {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
 				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
-				if (!gameState.getInSleepingPlayers().isEmpty()) gameState.getInSleepingPlayers().clear();
 				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId()))gameState.addInLobbyPlayers(p);
 			}
@@ -296,7 +295,6 @@ public class GameListener implements Listener {
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
 			gameState.setInObiPlayers(new ArrayList<>());
-			gameState.setInSleepingPlayers(new ArrayList<>());
 			gameState.TitansRouge.clear();
 			gameState.infectedbyadmin.clear();
 			TitanListener.getInstance().resetCooldown();
@@ -838,14 +836,6 @@ public class GameListener implements Listener {
         for (Chakras ch : Chakras.values()) {
         	ch.getChakra().onPlayerMoove(e, p, from, to);
         }
-        if (gameState.getInSleepingPlayers().contains(p)) {//si le joueur est endormie par enmu
-        	
-        	if (gameState.getServerState() == ServerStates.InLobby)gameState.delInSleepingPlayers(p);//si on est dans le lobby et qu'on est endormie sa nous réveille
-        	if (gameState.getInSpecPlayers().contains(p))gameState.delInSleepingPlayers(p);//si on est en spec et qu'on est endormie sa nous réveille
-        	
-        	p.teleport(from);//teleporte le joueur à son endroit initial
-        	p.setAllowFlight(true);//au cas ou il est en l'air on autorise le fly
-        }        
         if (gameState.getInObiPlayers().contains(p)) {//si le joueur est touchée par les Obis de Daki
         	if (gameState.getServerState() == ServerStates.InLobby)gameState.delInObiPlayers(p);
         	if (gameState.getInSpecPlayers().contains(p))gameState.delInObiPlayers(p);

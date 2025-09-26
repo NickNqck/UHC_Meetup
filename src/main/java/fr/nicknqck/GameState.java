@@ -49,7 +49,6 @@ import fr.nicknqck.roles.valo.agents.Iso;
 import fr.nicknqck.roles.valo.agents.Neon;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
@@ -146,13 +145,8 @@ public class GameState{
 	public void addInObiPlayers(Player player) {Obi.add(player);}
 	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
-	public ArrayList<Player> SleepingPlayer = new ArrayList<>();
 	@Getter
 	private final List<Roles> attributedRole = new ArrayList<>();
-	public ArrayList<Player> getInSleepingPlayers() {return SleepingPlayer;}
-	public void setInSleepingPlayers(ArrayList<Player> SleepingPlayers) {SleepingPlayer = SleepingPlayers;}
-
-	public void delInSleepingPlayers(Player player) {SleepingPlayer.remove(player);}
 
 	public GameState() {
 		instance = this;
