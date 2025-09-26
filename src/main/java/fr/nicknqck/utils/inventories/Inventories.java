@@ -6,10 +6,12 @@ import fr.nicknqck.Main;
 import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.enums.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.Scenarios;
 import fr.nicknqck.scenarios.impl.AntiPvP;
@@ -36,21 +38,42 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("DemonSlayer ->§a Slayers")) {
+                if (inv.getTitle().equals("§fDemonSlayer§7 ->§a Slayers")) {
                     this.setRoleInventory(inv, GUIItems.getGreenStainedGlassPane());
                     inv.setItem(3, GUIItems.getSelectDemonButton());//haut milleu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
                     inv.setItem(5, GUIItems.getSelectSoloButton());
                     for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.Slayer) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        if (!roles.getTeam().equals(TeamList.Slayer))continue;
+                        IRole iRole = null;
+                        for (final IRole role : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+                            if (!role.getRoles().equals(roles))continue;
+                            iRole = role;
+                            break;
                         }
+                        String l1;
+                        if (gameState.getAvailableRoles().get(roles) > 0) {
+                            l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                        } else {
+                            l1 = "§c(0)";
+                        }
+                        String design = "§fGDesign: "+roles.getGDesign();
+                        inv.addItem(
+                                new ItemBuilder(roles.getItem())
+                                        .setAmount(gameState.getAvailableRoles().get(roles))
+                                        .setLore(iRole == null ? new String[] {
+                                                l1,
+                                                "",
+                                                design
+                                        }
+                                            :
+                                                iRole instanceof RoleCustomLore ? ((RoleCustomLore) iRole).getCustomLore(l1, design) : new String[] {
+                                                        l1,
+                                                        "",
+                                                        design
+                                                })
+                                        .toItemStack()
+                        );
                     }
                     clearRoleInventory(inv);
                 }

@@ -381,7 +381,7 @@ public static ItemStack getSelectConfigButton() {
 	}
 	
 	public static Inventory getSlayersSelectGUI() {
-        return Bukkit.createInventory(null, 54, "DemonSlayer ->§a Slayers");
+        return Bukkit.createInventory(null, 54, "§fDemonSlayer§7 ->§a Slayers");
 	}
 	public static ItemStack getSelectDemonButton() {
 		ItemStack stack = new ItemStack(Material.REDSTONE_BLOCK, 1);

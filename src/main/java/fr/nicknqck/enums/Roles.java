@@ -60,7 +60,7 @@ public enum Roles {
     Makomo(TeamList.Slayer, "ds", 18, new ItemBuilder(Material.BOWL).setName("§aMakomo").toItemStack(), "§bNickNqck"),
     Hotaru(TeamList.Slayer, "ds", 19, new ItemBuilder(Material.ANVIL).setName("§aHotaru").toItemStack(), "§bNickNqck"),
     Slayer(TeamList.Slayer, "ds", 20, new ItemBuilder(Material.IRON_SWORD).setName("§aPourfendeur Simple").toItemStack(), "§bNickNqck"),
-    KaigakuSlayer(TeamList.Slayer, "ds", 21, new ItemBuilder(Material.GLOWSTONE).setName("§aKaigaku").toItemStack(), "§bNickNqck\n\n§7Il n'a pas encore été transformé par§c Kokushibo§7."),
+    KaigakuSlayer(TeamList.Slayer, "ds", 21, new ItemBuilder(Material.YELLOW_FLOWER).setName("§aKaigaku").toItemStack(), "§bNickNqck"),
     //Mahr aot
     Reiner(TeamList.Mahr, "aot", 0, new ItemBuilder(Material.QUARTZ).setName("§9Reiner").toItemStack(), "§bNickNqck"),
     Pieck(TeamList.Mahr, "aot", 1, new ItemBuilder(Material.CHEST).setName("§9Pieck").toItemStack(), "§bNickNqck"),

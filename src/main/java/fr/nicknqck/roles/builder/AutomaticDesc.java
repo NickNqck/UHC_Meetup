@@ -112,11 +112,11 @@ public class AutomaticDesc {
         if (lines.length < 1)return this;
         int i = 0;
         for (final String string : lines) {
+            text.addExtra(new TextComponent("\n"));
             if (i == 0){
-                text.addExtra(new TextComponent("\n\n"+AllDesc.point));
+                text.addExtra(new TextComponent("\n"+AllDesc.point));
             }
             text.addExtra(new TextComponent(string));
-            text.addExtra(new TextComponent("\n"));
             i++;
         }
         return this;
