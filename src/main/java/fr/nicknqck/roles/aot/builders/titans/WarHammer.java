@@ -49,7 +49,7 @@ public class WarHammer extends Titan{
 			MathUtil.sendParticleLine(TransfoLocation, CoconLocation, EnumParticle.PORTAL, (int) CoconLocation.distance(TransfoLocation));
 			MathUtil.sendParticleLine(TransfoLocation, p.getLocation(), EnumParticle.CLOUD, (int) TransfoLocation.distance(p.getLocation()));
 		}
-		getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+		getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 	}
 
 	@Override
@@ -121,11 +121,10 @@ public class WarHammer extends Titan{
 					getPlayerRole(player).setMaxHealth(getPlayerRole(player).getMaxHealth()-2);
 					player.sendMessage("§7Votre mort à conduit à la perte d'1"+AllDesc.coeur+"§7 permanent");
 					getPlayerRole(player).setCanRespawn(false);
-					return;
-				}
+                }
 			} else {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-					if (!getState().hasRoleNull(p)) {
+					if (!getState().hasRoleNull(p.getUniqueId())) {
 						if (getPlayerRole(p).isCanVoleTitan() && canStealTitan(p)) {
 							canSteal.add(p);
 							p.sendMessage("§7Vous pouvez maintenant volé le Titan§9 WarHammer§7 avec la commande§6 /aot steal");
@@ -157,7 +156,7 @@ public class WarHammer extends Titan{
 				TransfoItem()
 		};
 	}
-	private List<Player> canSteal = new ArrayList<>();
+	private final List<Player> canSteal = new ArrayList<>();
 	@Override
 	public void onSteal(Player sender, String[] args) {
 		if (canSteal.contains(sender)) {

@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -105,11 +107,17 @@ public class RayTrace
         for (Vector vector : positions) {
             final Location position = vector.toLocation(player.getWorld());
             final Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
+            if (fr.nicknqck.commands.SettingsCommand.getRoleParticleViewers().contains(player.getUniqueId())) {
+                fr.nicknqck.utils.particles.MathUtil.sendParticleTo(player, EnumParticle.VILLAGER_HAPPY, position);
+            }
             for (Entity entity : entities) {
-                if (entity instanceof Player && entity != player && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.2D)) {
+                if (entity instanceof Player && entity != player && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.01D)) {
                     final Player target = (Player) entity;
                     if (playerPredicate != null && !playerPredicate.test(target)) {
                         continue;
+                    }
+                    if (target.getGameMode().equals(GameMode.SPECTATOR) || target.getGameMode().equals(GameMode.CREATIVE)) {
+                        return null;
                     }
                     return target;
                 }

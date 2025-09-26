@@ -11,7 +11,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.roles.builder.RoleBase;
 
 public class ClaimCommand implements CommandExecutor {
-	private GameState gameState;
+	private final GameState gameState;
 	public ClaimCommand(GameState gameState) {
 		this.gameState = gameState;
 	}
@@ -20,8 +20,8 @@ public class ClaimCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender s, Command arg1, String arg2, String[] args) {
 		if (s instanceof Player) {
 			Player sender = (Player)s;
-			if (!gameState.hasRoleNull(sender)) {
-				RoleBase role = gameState.getPlayerRoles().get(sender);
+			if (!gameState.hasRoleNull(sender.getUniqueId())) {
+				RoleBase role = gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
 				if (!role.toClaim.isEmpty()) {
 					if (role.toClaim.size() <= 9) {
 						org.bukkit.inventory.Inventory inv = Bukkit.createInventory(sender, 9, "§c/claim");

@@ -1,21 +1,21 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
-import fr.nicknqck.roles.ns.solo.jubi.Obito;
+import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.particles.WingsEffect;
 import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,8 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class Konan extends AkatsukiRoles {
@@ -37,7 +35,7 @@ public class Konan extends AkatsukiRoles {
 		setNoFall(true);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Konan;
 	}
 	@Override
@@ -46,23 +44,6 @@ public class Konan extends AkatsukiRoles {
 	}
 	@Override
 	public String[] Desc() {
-		List<Player> mates = new ArrayList<>();
-		for (UUID u : gameState.getInGamePlayers()) {
-			Player p = Bukkit.getPlayer(u);
-			if (p == null)continue;
-			if (!gameState.hasRoleNull(p)) {
-				if (getOriginTeam() != null && p.getUniqueId() != owner.getUniqueId()) {
-					if (getOriginTeam() == TeamList.Akatsuki || gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Obito) {
-						mates.add(p);
-					}
-				}
-			}
-		}
-		if (!mates.isEmpty()) {
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				owner.sendMessage("Voici la liste de vos coéquipier: ");
-				mates.forEach(p -> owner.sendMessage("§7 - §c"+p.getName()));}, 1);
-		}
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"§cKonan",
@@ -193,7 +174,7 @@ public class Konan extends AkatsukiRoles {
 				return true;
 			}
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 25)) {
-				givePotionEffet(p, PotionEffectType.BLINDNESS, 20*10, 1, true);
+				OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*10, 1, true);
 			}
 			owner.teleport(toTP);
 			diversionCD = 60*5;
@@ -205,5 +186,15 @@ public class Konan extends AkatsukiRoles {
 	@Override
 	public String getName() {
 		return "Konan";
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
+				, Deidara.class, HidanV2.class, ItachiV2.class,
+				KakuzuV2.class, KisameV2.class, Konan.class,
+				NagatoV2.class, ZetsuBlanc.class,
+				ZetsuNoir.class, ZetsuBlancV2.class , ObitoV2.class);
+		super.RoleGiven(gameState);
 	}
 }

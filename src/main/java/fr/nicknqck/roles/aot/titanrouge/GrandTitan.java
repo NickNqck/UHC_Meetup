@@ -1,13 +1,14 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +23,7 @@ public class GrandTitan extends TitansRoles {
 		gameState.TitansRouge.add(owner);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.GrandTitan;
 	}
 	@Override
@@ -57,7 +58,7 @@ public class GrandTitan extends TitansRoles {
 					if (isTransformedinTitan)return false;
 					isTransformedinTitan = true;
 					setResi(20);
-					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 800, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 800, 1, true);
 					owner.sendMessage("§7Transformation en Titan");
 					TransfoEclairxMessage(owner);
 					owner.getInventory().remove(owner.getItemInHand());
@@ -68,11 +69,7 @@ public class GrandTitan extends TitansRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (isTransformedinTitan) {
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 		}
-	}
-	@Override
-	public void resetCooldown() {
-		
 	}
 }

@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ns.akatsuki.blancv2;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -8,6 +9,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -30,12 +32,7 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
 
@@ -60,18 +57,8 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.ZetsuBlancV2;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.ZetsuBlancV2;
     }
 
     @Override

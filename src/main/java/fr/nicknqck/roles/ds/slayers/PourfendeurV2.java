@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -16,6 +17,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -66,7 +68,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             List<Soufles> allSoufles = new ArrayList<>(Arrays.asList(Soufles.values()));
             allSoufles.remove(Soufles.RIEN);
             Collections.shuffle(allSoufles, Main.RANDOM);
@@ -97,10 +99,6 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-    @Override
     public ItemStack[] getItems() {
         List<ItemStack> toReturn = new ArrayList<>();
         if (this.souflesList.contains(Soufles.VENT)) {
@@ -119,8 +117,8 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         return "Pourfendeur Simple§7 (§eV2§7)§r";
     }
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Slayer;
+    public @NonNull Roles getRoles() {
+        return Roles.Slayer;
     }
     @Override
     public void resetCooldown() {
@@ -213,7 +211,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                     allSoufles.removeAll(this.souflesList);
                     Collections.shuffle(allSoufles, Main.RANDOM);
                     Soufles soufle = allSoufles.get(0);
-                    giveSoufle(soufle);
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> giveSoufle(soufle));
                 }
             }
         }

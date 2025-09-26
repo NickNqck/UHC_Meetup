@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -43,7 +43,7 @@ public class Minato extends ShinobiRoles {
 
 	private Location Kunai = null;
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Minato;
 	}
 	@Override
@@ -124,7 +124,7 @@ public class Minato extends ShinobiRoles {
         }
 		if (item.isSimilar(KyubiItem())) {
 			if (cdKyubi <= 0) {
-			givePotionEffet(PotionEffectType.SPEED, 20*180, 2, true);
+			OLDgivePotionEffet(PotionEffectType.SPEED, 20*180, 2, true);
 			owner.sendMessage("Vous venez d'utiliser §6Kyûbi");
 			cdKyubi = 60*10;
             } else {
@@ -204,7 +204,7 @@ public class Minato extends ShinobiRoles {
 
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (cdRasengan >= 0) {
 			cdRasengan--;
 			if (cdRasengan == 0) {

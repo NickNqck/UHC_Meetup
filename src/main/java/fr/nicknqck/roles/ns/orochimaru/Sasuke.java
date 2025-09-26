@@ -1,15 +1,17 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.UchiwaRoles;
+import fr.nicknqck.roles.ns.builders.EUchiwaType;
+import fr.nicknqck.roles.ns.builders.IUchiwa;
+import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.power.Izanami;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -37,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Sasuke extends UchiwaRoles {
+public class Sasuke extends OrochimaruRoles implements IUchiwa {
 
 	private Izanami izanami;
 	@Getter
@@ -58,8 +60,8 @@ public class Sasuke extends UchiwaRoles {
 	}
 
 	@Override
-	public UchiwaType getUchiwaType() {
-		return UchiwaType.IMPORTANT;
+	public @NonNull EUchiwaType getUchiwaType() {
+		return EUchiwaType.IMPORTANT;
 	}
 
 	@Override
@@ -67,13 +69,13 @@ public class Sasuke extends UchiwaRoles {
 		super.RoleGiven(gameState);
 		setChakraType(Chakras.KATON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+			if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort");
 			}
 		}, 20*10);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-			if (!gameState.attributedRole.contains(Roles.Itachi)) {
+			if (!gameState.getAttributedRole().contains(Roles.Itachi)) {
 				onItachiKill(false);
 				owner.sendMessage("§cItachi§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à son kill");
 			}
@@ -82,16 +84,11 @@ public class Sasuke extends UchiwaRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Sasuke;
 	}
 
-	@Override
-	public TeamList getOriginTeam() {
-		return TeamList.Orochimaru;
-	}
-
-	@Override
+    @Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.Orochimaru, 1);
 		return new String[] {
@@ -360,7 +357,7 @@ public class Sasuke extends UchiwaRoles {
 		}
 		owner.setHealth(owner.getHealth()+6.0);
 		setTeam(TeamList.Sasuke);
-		if (gameState.attributedRole.contains(Roles.Itachi) && !killItachi) {
+		if (gameState.getAttributedRole().contains(Roles.Itachi) && !killItachi) {
 			new BukkitRunnable() {
 				int i = 0;
 				final Player itachi = getPlayerFromRole(Roles.Itachi);
@@ -393,7 +390,7 @@ public class Sasuke extends UchiwaRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (gameState.attributedRole.contains(Roles.Orochimaru)) {
+		if (gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 			if (getListPlayerFromRole(Roles.Orochimaru).contains(player) && !mortOrochimaru) {
 				onOrochimaruDeath(true);
 			}
@@ -516,7 +513,7 @@ public class Sasuke extends UchiwaRoles {
 							return;
 						}
 						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
-						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+						OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
 				return true;
@@ -529,10 +526,10 @@ public class Sasuke extends UchiwaRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (mortOrochimaru) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		}
 		if (cdTsukuyomi >= 0) {
 			cdTsukuyomi -= 1;

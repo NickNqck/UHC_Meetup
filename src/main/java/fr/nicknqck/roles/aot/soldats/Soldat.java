@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
@@ -9,6 +9,7 @@ import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public class Soldat extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Soldat;
 	}
 	@Override
@@ -115,15 +116,15 @@ public boolean ItemUse(ItemStack item, GameState gameState) {
 	owner.sendMessage("Vous venez d'utiliser votre bouteille d'alcool");
 	int rint = RandomUtils.getRandomInt(0, 2);
 	if (rint == 0) {
-		givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60), 0, true);
+		OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60), 0, true);
 		cdalcool = 60*3;
 	} else {
 		if (rint == 1) {
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60), 0, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60), 0, true);
 			cdalcool = 60*3;
 		} else {
 			if (rint == 2) {
-				givePotionEffet(owner, PotionEffectType.CONFUSION, 20*(20), 3, true);
+				OLDgivePotionEffet(owner, PotionEffectType.CONFUSION, 20*(20), 3, true);
 				cdalcool = 60*3;
 				
 			}
@@ -204,8 +205,4 @@ public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 	}
 	super.PlayerKilled(killer, victim, gameState);
 }
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
 }

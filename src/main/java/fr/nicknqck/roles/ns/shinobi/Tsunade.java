@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -34,7 +34,7 @@ public class Tsunade extends ShinobiRoles {
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Tsunade;
 	}
 	@Override
@@ -80,15 +80,12 @@ public class Tsunade extends ShinobiRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
-	@Override
-	public void resetCooldown() {
-		
-	}
-	private int SavedHP = 0;
+
+    private int SavedHP = 0;
 	private boolean Receve = false;
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 	}
 	@Override
 	public void onNsCommand(String[] args) {
@@ -103,7 +100,7 @@ public class Tsunade extends ShinobiRoles {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(p.getUniqueId())) {
 				if (inKatsuyu.contains(p.getUniqueId())) {
 					inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(p.getUniqueId())).setName("§a"+p.getName()).toItemStack());
 				} else {

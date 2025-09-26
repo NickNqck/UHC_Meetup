@@ -25,12 +25,12 @@ public class McCommands implements CommandExecutor{
 					sender.sendMessage(gameState.getRolesList());
 					return true;
 				}
-				if (!gameState.hasRoleNull(sender)) {
+				if (!gameState.hasRoleNull(sender.getUniqueId())) {
 					if (args[0].equalsIgnoreCase("me")) {
 						gameState.sendDescription(sender);
                     } else {
-						if (!(gameState.getPlayerRoles().get(sender) instanceof UHCMcRoles))return false;
-						UHCMcRoles role = (UHCMcRoles) gameState.getPlayerRoles().get(sender);
+						if (!(gameState.getGamePlayer().get(sender.getUniqueId()).getRole() instanceof UHCMcRoles))return false;
+						UHCMcRoles role = (UHCMcRoles) gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
 						if (role.getGamePlayer().isAlive()) {
 							if (!role.getPowers().isEmpty()) {
 								for (Power power : role.getPowers()) {
@@ -39,7 +39,7 @@ public class McCommands implements CommandExecutor{
 									}
 								}
 							}
-							((UHCMcRoles) gameState.getPlayerRoles().get(sender)).onMcCommand(args);
+							((UHCMcRoles) gameState.getGamePlayer().get(sender.getUniqueId()).getRole()).onMcCommand(args);
 						}
                     }
                     return true;

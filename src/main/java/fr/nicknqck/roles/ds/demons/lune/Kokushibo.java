@@ -2,15 +2,16 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -48,14 +49,15 @@ public class Kokushibo extends DemonsRoles {
 		super.RoleGiven(gameState);
 		this.setCanuseblade(true);
 		orginalMaxHealth = owner.getMaxHealth();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> getKnowedRoles().add(Muzan.class), 20);
+		addKnowedRole(MuzanV2.class);
 		setLameIncassable(owner, true);
 		solo = false;
 		killtanjiro = false;
+		getGamePlayer().startChatWith("§cKokushibo: ", "!", MuzanV2.class);
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
@@ -166,31 +168,31 @@ public class Kokushibo extends DemonsRoles {
 			if (!solo) {
 				if (getOriginTeam().equals(TeamList.Demon)) {
 					if (!gameState.nightTime) {
-						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 						} else {
-						givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					}
 				}else if (getOriginTeam().equals(TeamList.Slayer)) {
 					if (gameState.nightTime) {
-						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 100, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 100, 1, true);
 					}else {
-						givePotionEffet(owner, PotionEffectType.SPEED, 100, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 100, 1, true);
 					}
 				}
 			}else {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 				if (!owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() != 0) {
 					setResi(0);
 				}
 			}
 		}else {
 			if (!gameState.nightTime) {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 				} else {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
-				givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			}
 		}
 		if (itemcooldown >= 1) {
@@ -272,7 +274,7 @@ public boolean killtanjiro;
 					}
 				}else {
 					owner.sendMessage("Vous venez de tuez:§l "+victim.getName()+"§r vous gagnez donc "+AllDesc.Resi+" 1 pendant 3minutes");
-					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
 					if (gameState.getGamePlayer().get(victim.getUniqueId()).getRole() instanceof Tanjiro) {
 						owner.sendMessage("§7Vous avez réussis à vaincre cette imposteur de§a Tanjiro§7, vous avez maintenant un choix qui s'offre à vous... (§l/ds role§7)");
@@ -299,17 +301,11 @@ public boolean killtanjiro;
 			if (itemcooldown <= 0) {
 				owner.sendMessage("Activation de votre:"+ChatColor.BOLD+" Pouvoir Sanginaire");
 				gameState.nightTime = true;
-				gameState.t = gameState.timeday;
+				gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 				GameListener.SendToEveryone("§6Kokushibo §rà mis la §9nuit");
 				owner.getInventory().addItem(Items.getkokushibosword());
-				itemcooldown = gameState.timeday*2;
-				for (UUID u : gameState.getInGamePlayers()) {
-					Player p = Bukkit.getPlayer(u);
-					if (p == null)continue;
-					if (gameState.getPlayerRoles().containsKey(p)) {
-						gameState.getPlayerRoles().get(p).onNight(gameState);
-					}
-				}
+				itemcooldown = Main.getInstance().getGameConfig().getMaxTimeDay()*2;
+				Bukkit.getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
 			} else {
 				sendCooldown(owner, itemcooldown);
 			}

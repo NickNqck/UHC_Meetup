@@ -59,16 +59,16 @@ public class EntityDamageEvents implements Listener{
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
-					if (!gameState.hasRoleNull(p)) {
-						gameState.getPlayerRoles().get(p).onALLPlayerDamage(event, player);
+					if (!gameState.hasRoleNull(p.getUniqueId())) {
+						gameState.getGamePlayer().get(p.getUniqueId()).getRole().onALLPlayerDamage(event, player);
 					}
 				}
 				for (Chakras ch : Chakras.values()) {
 					ch.getChakra().onEntityDamage(event, player);
 				}
 				if (event.getCause() == DamageCause.FALL) {
-					if (gameState.getPlayerRoles().containsKey(player)) {
-						if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
+					if (!gameState.hasRoleNull(player.getUniqueId())) {
+						if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isHasNoFall()) {
 							event.setCancelled(true);
 						} else {
 							if (player.getWorld().getName().equals("nakime")) {
@@ -78,30 +78,30 @@ public class EntityDamageEvents implements Listener{
 					}
 				}
 				if (event.getCause() == DamageCause.LIGHTNING) {
-					if (gameState.getPlayerRoles().containsKey(player)) {
+					if (!gameState.hasRoleNull(player.getUniqueId())) {
 						event.setCancelled(true);
 					}
 				}
 				if (gameState.shutdown.contains(player)) {
 					event.setCancelled(true);
 				}
-				if (gameState.getPlayerRoles().containsKey(player)) {
-					if (gameState.getPlayerRoles().get(player).isInvincible()) {
+				if (!gameState.hasRoleNull(player.getUniqueId())) {
+					if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isInvincible()) {
 						event.setCancelled(true);
 						return;
 					}
 				}
-				if (gameState.getInSleepingPlayers().contains(player) || gameState.getInObiPlayers().contains(player)) {
+				if (gameState.getInObiPlayers().contains(player)) {
 					event.setCancelled(true);
 				}
 				if ((player.getHealth()-damage) <= 0) {
 					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-						if (gameState.getPlayerRoles().containsKey(player)) {
-							if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
-								for (Player p : Bukkit.getOnlinePlayers()) {
+						if (!gameState.hasRoleNull(player.getUniqueId())) {
+							if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isCanRespawn()) {
+								for (final Player p : Bukkit.getOnlinePlayers()) {
 									p.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 								}
-								gameState.getPlayerRoles().get(player).PlayerKilled(killer, player, gameState);
+								gameState.getGamePlayer().get(player.getUniqueId()).getRole().PlayerKilled(killer, player, gameState);
 							}							
 						} else {
 							GameListener.RandomTp(player);
@@ -117,7 +117,7 @@ public class EntityDamageEvents implements Listener{
 			if (e.getDamager() instanceof Player){
 				Player damager = (Player)e.getDamager();
 				if (damager.getLocation().getY() <= 124){
-					if (damager.getWorld().equals(Bukkit.getWorld("nakime")) && damager.getWorld().equals(e.getEntity().getWorld())){
+					if (damager.getWorld().getName().equals("nakime") && damager.getWorld().equals(e.getEntity().getWorld())){
 						e.setDamage(0.0);
 						e.setCancelled(true);
 					}
@@ -130,7 +130,7 @@ public class EntityDamageEvents implements Listener{
 		if (e.getEntity() instanceof Player){
 			Player p = (Player)e.getEntity();
 			if (p.getLocation().getY() <= 124){
-				if (p.getWorld().equals(Bukkit.getWorld("nakime"))){
+				if (p.getWorld().getName().equals("nakime")){
 					e.setDamage(0.0);
 					e.setCancelled(true);
 				}
@@ -146,7 +146,7 @@ public class EntityDamageEvents implements Listener{
 				double damage = event.getFinalDamage();
 				if (damageur instanceof Player) {
 					Player damager = (Player) event.getDamager();
-					if (!gameState.hasRoleNull(damager)) {
+					if (!gameState.hasRoleNull(damager.getUniqueId())) {
 						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().ItemUseAgainst(damager.getItemInHand(), player, gameState);
 						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().neoItemUseAgainst(damager.getItemInHand(), player, gameState, damager);
 						/*
@@ -158,7 +158,7 @@ public class EntityDamageEvents implements Listener{
 							if (gameState.shutdown.contains(attacker)) {
 								event.setCancelled(true);
 							}
-							gameState.getPlayerRoles().get(player).neoAttackedByPlayer(attacker, gameState);
+							gameState.getGamePlayer().get(player.getUniqueId()).getRole().neoAttackedByPlayer(attacker, gameState);
 						}
 					}
 				}
@@ -166,17 +166,17 @@ public class EntityDamageEvents implements Listener{
 				if (player.getHealth()-damage <= 0) {
 					if (event.getCause() != DamageCause.FALL) {
 						if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-							if (!gameState.hasRoleNull(player)) {
-								if (gameState.getPlayerRoles().get(player).isCanRespawn()) {
+							if (!gameState.hasRoleNull(player.getUniqueId())) {
+								if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isCanRespawn()) {
 									assert damageur instanceof Player;
-									gameState.getPlayerRoles().get(player).PlayerKilled((Player)damageur, player, gameState);
+									gameState.getGamePlayer().get(player.getUniqueId()).getRole().PlayerKilled((Player)damageur, player, gameState);
 									event.setCancelled(true);
 								}
 							}
 						}
 					} else {
-						if (gameState.getPlayerRoles().containsKey(player)) {
-							if (gameState.getPlayerRoles().get(player).isHasNoFall()) {
+						if (!gameState.hasRoleNull(player.getUniqueId())) {
+							if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isHasNoFall()) {
 								event.setDamage(0);
 								event.setCancelled(true);
 							}

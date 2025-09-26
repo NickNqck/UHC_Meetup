@@ -1,9 +1,9 @@
 package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -49,12 +49,12 @@ public class Ginkaku extends NSRoles {
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			if (!gameState.getAttributedRole().contains(Roles.Kinkaku)){
-				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 			}
 		}, 100);
 	}
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Ginkaku;
 	}
 	@Override
@@ -68,7 +68,7 @@ public class Ginkaku extends NSRoles {
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Kumogakure;
 	}
 
@@ -133,8 +133,8 @@ public class Ginkaku extends NSRoles {
 									p.teleport(new Location(initLoc.getWorld(), initLoc.getX(), initLoc.getY()+1.5, initLoc.getZ(), p.getEyeLocation().getYaw(), p.getEyeLocation().getPitch()));
 									p.sendMessage("§7Vous avez été téléporter au lieu de scellement de§6 Ginkaku§7.");
 									owner.sendMessage("§c"+p.getDisplayName()+"§7 à été téléporter");
-									givePotionEffet(p, PotionEffectType.POISON, 20*10, 1, true);
-									givePotionEffet(p, PotionEffectType.WITHER, 20*10, 1, true);
+									OLDgivePotionEffet(p, PotionEffectType.POISON, 20*10, 1, true);
+									OLDgivePotionEffet(p, PotionEffectType.WITHER, 20*10, 1, true);
 								}
 								initLoc.getWorld().getBlockAt(initLoc).setType(Material.AIR, true);
 								cancel();
@@ -175,15 +175,15 @@ public class Ginkaku extends NSRoles {
 							return;
 						}
 						if (state == 3) {
-							givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
-							givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+							OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 						}
 						if (state == 2) {
-							givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-							givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 						}
 						if (state == 1) {
-							givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 						}
 						if (time == 0) {
 							state--;
@@ -222,7 +222,7 @@ public class Ginkaku extends NSRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (gameState.nightTime && cdKyubi < 60*12) {
-			givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 		}
 		if (cdKyubi >= 0) {
 			cdKyubi--;
@@ -249,9 +249,9 @@ public class Ginkaku extends NSRoles {
 			}
 		}
 		if (gameState.getDeadRoles().contains(Roles.Kinkaku)){
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 		} else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(Roles.Kinkaku))){
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 		}
 	}
 	@Override
@@ -344,16 +344,19 @@ public class Ginkaku extends NSRoles {
 
 	private class TargetFallChecker implements Listener {
 		private UUID gTarget;
+		private boolean stun = false;
 		TargetFallChecker(){
 			Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 		}
 		public void starter(UUID uuid){
 			gTarget = uuid;
 			Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+				if (stun)return;
 				if (gTarget != null){
 					if (Bukkit.getPlayer(gTarget) != null){
-						if (!gameState.hasRoleNull(Bukkit.getPlayer(gTarget))){
+						if (!gameState.hasRoleNull(gTarget)){
 							gameState.getGamePlayer().get(gTarget).stun(5*20);
+							stun = true;
 						}
 					}
 					gTarget = null;
@@ -365,29 +368,10 @@ public class Ginkaku extends NSRoles {
 			if (gTarget != null && event.getCause().equals(EntityDamageEvent.DamageCause.FALL) && event.getEntity().getUniqueId().equals(gTarget)){
 				event.setDamage(0.0);
 				event.getEntity().setFallDistance(0f);
-				new BukkitRunnable() {
-					private final Location initLoc = event.getEntity().getLocation();
-					private final UUID gT = event.getEntity().getUniqueId();
-					private int time = 100;
-					@Override
-					public void run() {
-						Player p = Bukkit.getPlayer(gT);
-						if (p != null){
-							p.setAllowFlight(true);
-							p.setFlying(true);
-							p.teleport(initLoc);
-							time--;
-							if (time == 0){
-								cancel();
-								owner.sendMessage("§c"+p.getDisplayName()+"§7 peut à nouveau bouger.");
-								p.setFlying(false);
-								p.setAllowFlight(false);
-								p.setFallDistance(0f);
-								gTarget = null;
-							}
-						}
-					}
-				}.runTaskTimer(Main.getInstance(), 0, 1);
+				if (gameState.getGamePlayer().containsKey(event.getEntity().getUniqueId())) {
+					gameState.getGamePlayer().get(gTarget).stun(5*20, true);
+					this.stun = true;
+				}
 			}
 		}
 	}

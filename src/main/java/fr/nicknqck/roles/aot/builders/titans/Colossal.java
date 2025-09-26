@@ -77,7 +77,7 @@ public class Colossal extends Titan{
 				if (getListener().getColossal() == null)return;
 				setTransformedinTitan(true);
 				getPlayerRole(getListener().getColossal()).isTransformedinTitan = true;
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 90, 2, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 90, 2, true);
 				getPlayerRole(getListener().getColossal()).setResi(40);
 				getListener().setColossalCooldown(60*8);
 				TransfoMessage(getListener().getColossal(), true);
@@ -126,11 +126,11 @@ public class Colossal extends Titan{
 					}
 				}
 				if (getPlayerRole(getListener().getColossal()).getResi() >= 40) {
-					getPlayerRole(getListener().getColossal()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 2, true);
+					getPlayerRole(getListener().getColossal()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 2, true);
 				}else if (getPlayerRole(getListener().getColossal()).getResi() == 20) {
-					getPlayerRole(getListener().getColossal()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+					getPlayerRole(getListener().getColossal()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				}
-				getPlayerRole(getListener().getColossal()).givePotionEffet(PotionEffectType.FIRE_RESISTANCE, 60, 1, true);
+				getPlayerRole(getListener().getColossal()).OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, 60, 1, true);
 				int cooldown = getListener().getColossalCooldown();
 				int newcd = cooldown-(60*5);
 				ItemStack item = player.getItemInHand();
@@ -180,7 +180,7 @@ public class Colossal extends Titan{
 		if (getListener().getColossal() != null) {
 			if (getListener().getColossal().equals(player.getUniqueId())) {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-					if (!GameState.getInstance().hasRoleNull(p)) {
+					if (!GameState.getInstance().hasRoleNull(p.getUniqueId())) {
 						if (getPlayerRole(p).isCanVoleTitan() && canStealTitan(p)) {
 							p.sendMessage("§7Vous pouvez maintenant volé le Titan§9 Colossal§7 avec la commande§l /aot steal");
 							canVoleColossal.add(p);
@@ -200,7 +200,7 @@ public class Colossal extends Titan{
 	public void onSteal(Player sender, String[] args) {
 		if (getListener().getColossal() == null) {
 			if (canVoleColossal.contains(sender)) {
-				if (getState().hasRoleNull(sender)) {
+				if (getState().hasRoleNull(sender.getUniqueId())) {
 					canVoleColossal.remove(sender);
 					sender.sendMessage("§7Impossible de volé ce Titan");
 					return;

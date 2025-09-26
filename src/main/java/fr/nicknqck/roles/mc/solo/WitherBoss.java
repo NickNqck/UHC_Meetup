@@ -2,12 +2,14 @@ package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -28,12 +30,12 @@ public class WitherBoss extends UHCMcRoles {
         super(player);
     }
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Wither;
+    public @NonNull Roles getRoles() {
+        return Roles.Wither;
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
 
@@ -53,10 +55,10 @@ public class WitherBoss extends UHCMcRoles {
     public void Update(GameState gameState) {
         super.Update(gameState);
         if (!isFlying){
-            givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-            givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+            OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+            OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
         } else {
-            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+            OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
         }
         if (cdFly >= 0){
             cdFly--;
@@ -174,7 +176,7 @@ public class WitherBoss extends UHCMcRoles {
             UUID damager = getUuid(entity);
             if (damager != null){
                 if (RandomUtils.getOwnRandomProbability(25.0) && passifActive){
-                    givePotionEffet(victim, PotionEffectType.WITHER, 80, 1, true);
+                    OLDgivePotionEffet(victim, PotionEffectType.WITHER, 80, 1, true);
                 }
             }
         }

@@ -152,33 +152,33 @@ public class Bestial extends Titan implements Listener {
 			if (form != null && player != null) {
 				if (isTransformedinTitan()) {
 					if (form == Animal.Crocodile) {
-						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+						getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 						if (getPlayerRole(getOwner()).getResi() < 20) {
 							getPlayerRole(getOwner()).setResi(20);
 						}
 						if (player.getLocation().getBlock().getType().name().contains("WATER")) {
-							getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.WATER_BREATHING, 60, 1, true);
-							getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+							getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.WATER_BREATHING, 60, 1, true);
+							getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
 						}else {
-							getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+							getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 						}
 					}
 					if (form == Animal.Oiseau) {
-						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+						getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 					}
 					if (form == Animal.Singe) {
-						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+						getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 						if (getPlayerRole(getOwner()).getResi() < 20) {
 							getPlayerRole(getOwner()).setResi(20);
 						}
 					}
 					if (form == Animal.Okapi) {
-						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+						getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					}
 					if (form == Animal.Taureau) {
-						getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 					}
 					int cd = getListener().getBestialCooldown()-(60*4);
 					getPlayerRole(player.getUniqueId()).sendCustomActionBar(player, "§bTemp restant de transformation: "+StringUtils.secondsTowardsBeautiful(cd));
@@ -335,7 +335,7 @@ public class Bestial extends Titan implements Listener {
 		if (getOwner() != null) {
 			if (player.getUniqueId() == getOwner()) {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30)) {
-					if (!getState().hasRoleNull(p)) {
+					if (!getState().hasRoleNull(p.getUniqueId())) {
 						if (getPlayerRole(p.getUniqueId()).isCanVoleTitan() && canStealTitan(p)) {
 							canSteal.add(p);
 							p.sendMessage("§7Vous pouvez maintenant volé le Titan "+getName()+"§7 avec la commande§l /aot steal");

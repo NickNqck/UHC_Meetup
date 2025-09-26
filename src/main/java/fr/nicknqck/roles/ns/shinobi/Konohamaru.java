@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -37,7 +37,7 @@ public class Konohamaru extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Konohamaru;
 	}
 	@Override
@@ -126,7 +126,7 @@ public class Konohamaru extends ShinobiRoles {
 				owner.sendMessage("§aNuées Ardentes!");
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
 					if (owner.canSee(p)) {
-						givePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
+						OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
 						cdNueesArdentes = 60*3;
 						p.sendMessage("Vous venez d'être touche par la §8Nuées Ardentes §fde §aKonohamaru");
 						owner.sendMessage("§7§l"+p.getName()+"§7 à été touchée");

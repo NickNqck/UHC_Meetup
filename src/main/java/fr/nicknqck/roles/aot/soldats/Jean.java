@@ -1,19 +1,19 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,7 +28,7 @@ public class Jean extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jean;
 	}
 	@Override
@@ -76,7 +76,7 @@ public class Jean extends SoldatsRoles {
 				List<Player> mechant = new ArrayList<>();
 				List<Player> inZone = new ArrayList<>();
 				for (Player p : Loc.getNearbyPlayers(owner, 25)) {//Pour chaque joueur étant à moins de 25 blocs du l'owner du rôle
-					if (!gameState.hasRoleNull(p)) {//si ce même joueur possède un rôle
+					if (!gameState.hasRoleNull(p.getUniqueId())) {//si ce même joueur possède un rôle
 						GamePlayer gamePlayer = gameState.getGamePlayer().get(p.getUniqueId());
 						if (gamePlayer.getRole().getRoles() != Roles.Gabi && gamePlayer.getRole().getRoles() != Roles.Eren && gamePlayer.getRole().getRoles() != Roles.Jelena) {//S'il n'est pas Gabi ou Eren ou Jelena
 							if (gamePlayer.getRole().getOriginTeam() != TeamList.Soldat) {//S'il n'est pas dans la team Soldat
@@ -92,7 +92,7 @@ public class Jean extends SoldatsRoles {
 					if (!mechant.isEmpty()) {
 						createFirework(owner, Color.RED);
 						setResi(20);
-						givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60*5), 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 20*(60*5), 1, true);
 						owner.sendMessage("§7Vous avez gagnez l'effet "+AllDesc.Resi+" pendant§6 5minutes");
 					}else {
 						createFirework(owner, Color.GREEN);
@@ -109,11 +109,8 @@ public class Jean extends SoldatsRoles {
 			}
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void resetCooldown() {
 		actualuse = 0;
 	}

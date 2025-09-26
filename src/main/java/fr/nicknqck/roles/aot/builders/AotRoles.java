@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
@@ -24,6 +25,9 @@ public abstract class AotRoles extends RoleBase {
     @Getter
     @Setter
     private boolean canVoleTitan = false;
+    @Getter
+    @Setter
+    private int stealPriority = 0;
     public AotRoles(UUID player) {
         super(player);
         gazAmount= 100.0;
@@ -41,8 +45,13 @@ public abstract class AotRoles extends RoleBase {
     }
 
     @Override
-    public void RoleGiven(GameState gameState) {
-        gameState.GiveRodTridi(owner);
+    public String[] Desc() {
+        return new String[0];
+    }
+
+    @Override
+    public ItemStack[] getItems() {
+        return new ItemStack[0];
     }
 
     private static class RodCooldownRunnable extends BukkitRunnable {

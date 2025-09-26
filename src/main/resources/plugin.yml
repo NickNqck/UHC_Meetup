@@ -1,6 +1,6 @@
 name: UHC-Meetup
 main: fr.nicknqck.Main
-version: 1.41
+version: 2.0
 author: NickNqck
 commands:
   ds:
@@ -46,3 +46,15 @@ commands:
     permission: me.say
   color:
     description: Permet de colorier les autres joueurs de la partie
+  pack:
+    description: Permet d'obtenir le pack de texture de l'uhc
+    usage: /pack
+  setting:
+    description: Permet de paramétrer certaine chose compatible
+    usage: /setting ou /settings
+  settings:
+    description: Permet de paramétrer certaine chose compatible
+    usage: /setting ou /settings
+  info:
+    description: Permet d'obtenir vos propres informations
+    usage: /info

@@ -1,8 +1,11 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
@@ -20,13 +23,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
 import java.util.UUID;
 
 public class KanaoV2 extends SlayerRoles {
-
-    private TextComponent textComponent;
 
     public KanaoV2(UUID player) {
         super(player);
@@ -38,48 +42,34 @@ public class KanaoV2 extends SlayerRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Kanao";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Kanao;
-    }
-
-    @Override
-    public void resetCooldown() {}
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Kanao;
     }
 
     @Override
     public TextComponent getComponent() {
-        return this.textComponent;
+        return AutomaticDesc.createFullAutomaticDesc(this);
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new TanjiroCommand(this));
         addPower(new FouilleCommand(this));
-        this.textComponent = new AutomaticDesc(this).addEffects(getEffects()).setPowers(getPowers()).getText();
     }
     private static class TanjiroCommand extends CommandPower {
 
         public TanjiroCommand(@NonNull RoleBase role) {
-            super("§a/ds tanjiro <joueur>", "tanjiro", new Cooldown(-500), role, CommandType.DS);
+            super("§a/ds tanjiro <joueur>", "tanjiro", null, role, CommandType.DS);
             setMaxUse(1);
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             String[] args = (String[]) map.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);
@@ -94,10 +84,11 @@ public class KanaoV2 extends SlayerRoles {
                         return false;
                     }
                     if (gamePlayer.getRole() instanceof Tanjiro) {
-                        player.sendMessage("§a"+args[1]+"§7 est bien§a Tanjiro§7 vous obtenez§c +2❤ permanents§7 ainsi que l'effet§c Force I§7 à moins de§c ");
+                        player.sendMessage("§a"+args[1]+"§7 est bien§a Tanjiro§7 vous obtenez§c +2❤ permanents§7 ainsi que l'effet§c Force I§7 à moins de§c 20 blocs");
                         getRole().setMaxHealth(getRole().getMaxHealth()+4.0);
                         player.setMaxHealth(getRole().getMaxHealth());
                         player.setHealth(player.getHealth()+4.0);
+                        new ForceRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 10);
                     } else {
                         player.sendMessage("§c"+args[1]+"§7 n'est§c pas§a Tanjiro§7, vous perdez§c 1❤ permanent§7.");
                         getRole().setMaxHealth(getRole().getMaxHealth()+4.0);
@@ -112,6 +103,32 @@ public class KanaoV2 extends SlayerRoles {
             }
             return false;
         }
+        private static class ForceRunnable extends BukkitRunnable {
+
+            private final TanjiroCommand tanjiroCommand;
+
+            private ForceRunnable(TanjiroCommand tanjiroCommand) {
+                this.tanjiroCommand = tanjiroCommand;
+            }
+
+            @Override
+            public void run() {
+                if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                final Player owner = Bukkit.getPlayer(tanjiroCommand.getRole().getPlayer());
+                if (owner == null)return;
+                for (final GamePlayer gamePlayer : Loc.getNearbyGamePlayers(owner.getLocation(), 20)) {
+                    if (gamePlayer.getRole() == null)continue;
+                    if (!gamePlayer.isAlive())continue;
+                    if (!gamePlayer.isOnline())continue;
+                    if (!(gamePlayer.getRole() instanceof Tanjiro))continue;
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> this.tanjiroCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NOW));
+                    break;
+                }
+            }
+        }
     }
     private static class FouilleCommand extends CommandPower {
 
@@ -120,7 +137,7 @@ public class KanaoV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             String[] args = (String[]) map.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);

@@ -2,11 +2,12 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.utils.AttackUtils;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -20,11 +21,13 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,27 +47,13 @@ public class TengenV2 extends PilierRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Tengen";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Tengen;
-    }
-
-    @Override
-    public void resetCooldown() {
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Tengen;
     }
 
     @Override
@@ -92,7 +81,7 @@ public class TengenV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Activation du "+getName());
                 player.setSprinting(false);
@@ -114,15 +103,8 @@ public class TengenV2 extends PilierRoles {
                     armorContents.put(4, player.getInventory().getBoots());
                     player.getInventory().setBoots(null);
                 }
-                AttackUtils.CantAttack.add(player.getUniqueId());
-                AttackUtils.CantReceveAttack.add(player.getUniqueId());
                 invisible = true;
-                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                    if (invisible) {
-                        removeInvisibility();
-                    }
-                }, 20*60);
-                getCooldown().addSeconds(60);
+                new AttaqueFurtiveRunnable(this);
                 return true;
             }
             return false;
@@ -130,8 +112,6 @@ public class TengenV2 extends PilierRoles {
         private void removeInvisibility() {
             Player owner = Bukkit.getPlayer(getRole().getPlayer());
             if (owner == null)return;
-            AttackUtils.CantAttack.remove(owner.getUniqueId());
-            AttackUtils.CantReceveAttack.remove(owner.getUniqueId());
             owner.sendMessage("§cVous n'êtes plus invisible.");
             owner.removePotionEffect(PotionEffectType.INVISIBILITY);
             if (armorContents.get(1) != null) {
@@ -147,24 +127,66 @@ public class TengenV2 extends PilierRoles {
                 owner.getInventory().setBoots(armorContents.get(4));
             }
             invisible = false;
-            Bukkit.getScheduler().runTask(getPlugin(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true));
-
+            this.getRole().getGamePlayer().getActionBarManager().removeInActionBar("tengenv2.attaquefurtive");
+            Bukkit.getScheduler().runTask(getPlugin(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), true));
         }
         @EventHandler
         private void onSprint(PlayerToggleSprintEvent event) {
             if (event.getPlayer().getUniqueId().equals(getRole().getPlayer())) {
-                if (getCooldown().getCooldownRemaining() >= 60*5) {
+                if (invisible) {
                     event.setCancelled(true);
                 }
             }
         }
         @EventHandler
         private void onDamageByEntity(EntityDamageByEntityEvent event) {
-            if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-                if (getCooldown().getCooldownRemaining() >= 60*5) {
-                    removeInvisibility();
-                    event.setDamage(event.getDamage()*1.5);
+            if (!(event.getEntity() instanceof Player))return;
+            if (!(event.getDamager() instanceof Player))return;
+            if (!invisible)return;
+            if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
+                removeInvisibility();
+                event.setDamage(event.getDamage()*1.5);
+            }
+            if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
+                event.setCancelled(true);
+            }
+        }
+        @EventHandler
+        private void onDamage(final EntityDamageEvent event) {
+            if (!event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!invisible)return;
+            event.setDamage(0);
+            event.setCancelled(true);
+        }
+        private static class AttaqueFurtiveRunnable extends BukkitRunnable {
+
+            private final AttaqueFurtive attaqueFurtive;
+            private final GameState gameState;
+            private int timeRemaining;
+
+            private AttaqueFurtiveRunnable(AttaqueFurtive attaqueFurtive) {
+                this.attaqueFurtive = attaqueFurtive;
+                this.gameState = attaqueFurtive.getRole().getGameState();
+                this.timeRemaining = 60;
+                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                attaqueFurtive.getRole().getGamePlayer().getActionBarManager().addToActionBar("tengenv2.attaquefurtive", "§bTemp d'invisibilité restant:§c "+ StringUtils.secondsTowardsBeautiful(timeRemaining));
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
                 }
+                if (timeRemaining == 0) {
+                    if (this.attaqueFurtive.invisible) {
+                        this.attaqueFurtive.removeInvisibility();
+                    }
+                    cancel();
+                    return;
+                }
+                this.attaqueFurtive.getRole().getGamePlayer().getActionBarManager().updateActionBar("tengenv2.attaquefurtive", "§bTemp d'invisibilité restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                timeRemaining--;
             }
         }
     }
@@ -177,7 +199,7 @@ public class TengenV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             return false;
         }
         @EventHandler
@@ -190,7 +212,7 @@ public class TengenV2 extends PilierRoles {
                             ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*6, 0, false, false), true);
                             shooter.sendMessage("§c"+event.getEntity().getName()+"§7 à bien reçus §c6 secondes§7 de§2 Poison I");
                         } else {
-                            shooter.sendMessage("§7Le§2 Poison§7 n'a pas atteind §c"+event.getEntity().getName()+"§7.");
+                            shooter.sendMessage("§7Le§2 Poison§7 n'a pas atteint §c"+event.getEntity().getName()+"§7.");
                         }
                     }
                 }

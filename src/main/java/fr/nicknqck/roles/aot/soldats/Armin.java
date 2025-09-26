@@ -1,9 +1,10 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,13 +19,8 @@ public class Armin extends SoldatsRoles {
 		super(player);
 	}
 
-	@Override
-	public void RoleGiven(GameState gameState) {
-		gameState.GiveRodTridi(owner);
-	}
-
-	@Override
-	public Roles getRoles() {
+    @Override
+	public @NonNull Roles getRoles() {
 		return Roles.Armin;
 	}
 	@Override
@@ -60,7 +56,11 @@ public class Armin extends SoldatsRoles {
 		if (args.length == 2) {
 			if (args[1] != null) {
 				Player target = Bukkit.getPlayer(args[1]);
-				if (!gameState.hasRoleNull(target)) {
+				if (target == null) {
+					getGamePlayer().sendMessage("§b"+args[1]+"§c n'existe pas !");
+					return;
+				}
+				if (!gameState.hasRoleNull(target.getUniqueId())) {
 					if (invuse > 0) {
 				        Inventory doubleChest = Bukkit.createInventory(owner, 54, "Inventaire de " + target.getName());
 				        for (int i = 0; i < target.getInventory().getSize(); i++) {

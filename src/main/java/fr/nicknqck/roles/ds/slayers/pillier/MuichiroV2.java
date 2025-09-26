@@ -2,10 +2,12 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -16,10 +18,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -39,28 +37,13 @@ public class MuichiroV2 extends PilierRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Muichiro";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Muichiro;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Muichiro;
     }
 
     @Override
@@ -75,27 +58,24 @@ public class MuichiroV2 extends PilierRoles {
     public TextComponent getComponent() {
         return this.desc;
     }
-    private static class T4ItemPower extends ItemPower implements Listener {
+    private static class T4ItemPower extends ItemPower {
 
         protected T4ItemPower(@NonNull RoleBase role) {
             super("§bLame de Muichiro", new Cooldown(60), new ItemBuilder(Material.DIAMOND_SWORD).setName("§bLame de Muichiro").addEnchant(Enchantment.DAMAGE_ALL, 4), role,
                     "§7Épée enchanter§c Tranchant IV","§7Lorsque vous§c tapez§7 un joueur vous lui infligerez§c 5 secondes§7 de§1 Blindness I");
-            EventUtils.registerRoleEvent(this);
             setSendCooldown(false);
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
-            return false;
-        }
-        @EventHandler
-        private void onBattle(EntityDamageByEntityEvent event) {
-            if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
-                if (!getCooldown().isInCooldown() && ((Player) event.getDamager()).getItemInHand().isSimilar(getItem())) {
-                    ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 0, false, false));
-                    getCooldown().use();
-                }
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
+            if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
+                final UHCPlayerBattleEvent event = (UHCPlayerBattleEvent) args.get("event");
+                final RoleBase role = event.getVictim().getRole();
+                if (role == null)return false;
+                role.givePotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 0, false, false), EffectWhen.NOW);
+                return true;
             }
+            return false;
         }
     }
     private static class FrappeBrumeuse extends ItemPower {
@@ -108,7 +88,7 @@ public class MuichiroV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)){
                 final List<Location> locs = new ArrayList<>(MathUtil.getCircle(player.getLocation(), 10));
                 locs.removeIf(loc -> !loc.getBlock().getType().equals(Material.AIR));

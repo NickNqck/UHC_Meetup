@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -30,7 +32,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -55,7 +56,7 @@ public class Gaara extends NSRoles {
     private boolean tookDamage = false;
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
 
@@ -65,7 +66,7 @@ public class Gaara extends NSRoles {
         shukakuCooldown = 0;
     }
     @Override
-    public GameState.Roles getRoles() {
+    public @NonNull Roles getRoles() {
         return Roles.Gaara;
     }
 
@@ -98,15 +99,6 @@ public class Gaara extends NSRoles {
         if (remove > 64) {
             player.getInventory().getItem(player.getInventory().first(material)).setAmount(player.getInventory().getItem(player.getInventory().first(material)).getAmount() - (remove - 64));
         }
-    }
-    public int getItemAmount(Player player, Material material) {
-        int toReturn = 0;
-        for (ItemStack content : player.getInventory().getContents()) {
-            if (content != null && content.getType() == material) {
-                toReturn += content.getAmount();
-            }
-        }
-        return toReturn;
     }
     @Override
     public String[] Desc() {
@@ -260,8 +252,8 @@ public class Gaara extends NSRoles {
     @Override
     public void onNsCommand(String[] args) {
     	if (args[0].equalsIgnoreCase("convert")) {
-    		sablenmb += getItemAmount(owner, Material.SAND);
-    		owner.sendMessage("Vous venez de gagner§e "+getItemAmount(owner, Material.SAND)+" sable");
+    		sablenmb += GlobalUtils.getItemAmount(owner, Material.SAND);
+    		owner.sendMessage("Vous venez de gagner§e "+GlobalUtils.getItemAmount(owner, Material.SAND)+" sable");
     		owner.getInventory().remove(Material.SAND);
     	}
     	super.onNsCommand(args);
@@ -318,7 +310,7 @@ public class Gaara extends NSRoles {
         }
         owner.sendMessage(("Vous avez utilisé votre §aShukaku§f."));
         usingShukaku = true;
-        givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, true);
+        OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*60*5, 1, true);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> usingShukaku = false, 5*20*60);
         shukakuCooldown = 20*60;
 	}

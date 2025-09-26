@@ -1,6 +1,7 @@
 package fr.nicknqck;
 
-import fr.nicknqck.bijus.BijuListener;
+import fr.nicknqck.commands.completer.NSCompleter;
+import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.Color;
 import fr.nicknqck.commands.roles.*;
@@ -8,6 +9,7 @@ import fr.nicknqck.commands.vanilla.Gamemode;
 import fr.nicknqck.commands.vanilla.Say;
 import fr.nicknqck.commands.vanilla.Whitelist;
 import fr.nicknqck.config.GameConfig;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.blocks.BlockManager;
 import fr.nicknqck.events.blocks.BrickBlockListener;
 import fr.nicknqck.events.chat.Chat;
@@ -15,23 +17,24 @@ import fr.nicknqck.events.essential.*;
 import fr.nicknqck.events.essential.inventorys.HubInventory;
 import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
-import fr.nicknqck.managers.DeathManager;
-import fr.nicknqck.managers.EventsManager;
-import fr.nicknqck.managers.RoleManager;
-import fr.nicknqck.managers.WorldsManager;
+import fr.nicknqck.managers.*;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
+import fr.nicknqck.runnables.PubRunnable;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
+import fr.nicknqck.titans.TitanManager;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.biome.BiomeChanger;
 import fr.nicknqck.utils.event.EventUtils;
+import fr.nicknqck.utils.fastinv.FastInvManager;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
+import fr.nicknqck.managers.TabManager;
 import fr.nicknqck.worlds.WorldListener;
 import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import lombok.Getter;
@@ -61,43 +64,42 @@ Ideas and Game Design: NickNack, Mega02600, Egaly inspirated by goldenuhc.eu and
 Programming: NickNack, Mega02600
 Roles: NickNack, Mega02600
 */
-
+@Getter
 public class Main extends JavaPlugin {
 
 	public final String PLUGIN_NAME = "UHC-Meetup";
-	@Getter
 	private ScoreboardManager scoreboardManager;
-    @Getter
 	private ScheduledExecutorService executorMonoThread;
-    @Getter
 	private ScheduledExecutorService scheduledExecutorService;
 	@Getter
     private static WorldFillTask worldfilltask;
-	@Getter
 	private GetterList getterList;
 	@Getter
 	private static Main Instance;
 	public static Random RANDOM;
-	@Getter
 	private Inventories inventories;
-	@Getter
 	private RoleManager roleManager;
-	@Getter
 	private WorldsManager worldManager;
-	@Getter
 	private GameConfig gameConfig;
-	@Getter
+
 	private DeathManager deathManager;
-	@Getter
 	private FileConfiguration webhookConfig;
-	@Getter
+
 	private WorldConfig worldConfig;
-	@Getter
+
 	private WorldListener worldListener;
-	@Getter
+
 	private boolean goodServer;
-	@Getter
+
 	private EventsManager eventsManager;
+
+	private KrystalBeastManager krystalBeastManager;
+	private TitanManager titanManager;
+	private BijuManager bijuManager;
+	private TabManager tabManager;
+	private HokageManager hokageManager;
+	private InfoManager infoManager;
+	private PlayersNameManager playersNameManager;
 
     @Override
 	public void onEnable() {
@@ -111,6 +113,7 @@ public class Main extends JavaPlugin {
 		this.gameConfig = new GameConfig();
 		getWorldManager().setLobbyWorld(Bukkit.getWorlds().get(0));
 		spawnPlatform(getWorldManager().getLobbyWorld());
+		saveDefaultConfig();
 		registerEvents(gameState);
 		World arena = Bukkit.getWorld("arena");
 		if (arena == null) {
@@ -142,6 +145,13 @@ public class Main extends JavaPlugin {
 		saveDefaultWebhookConfig();
 		this.roleManager = new RoleManager();
 		BiomeChanger.init();
+		this.krystalBeastManager = new KrystalBeastManager();
+		this.titanManager = new TitanManager();
+		this.bijuManager = new BijuManager();
+		this.tabManager = new TabManager();
+		this.infoManager = new InfoManager(getDataFolder());
+		this.playersNameManager = new PlayersNameManager(getDataFolder());
+        new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -198,8 +208,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Chat(gameState), this);
 		getServer().getPluginManager().registerEvents(new BrickBlockListener(), this);
 		getServer().getPluginManager().registerEvents(new BetterItemListener(), this);
-		getServer().getPluginManager().registerEvents(new InfectItem(gameState), this);
-		getServer().getPluginManager().registerEvents(new BulleGyokko(gameState), this);
 		getServer().getPluginManager().registerEvents(new Lame(), this);
 		getServer().getPluginManager().registerEvents(new Arctridi(gameState), this);
 		getServer().getPluginManager().registerEvents(new Whitelist(gameState), this);
@@ -219,15 +227,19 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(worldConfig, this);
 		this.worldConfig = worldConfig;
 		this.deathManager = manager;
-		EventsManager eventsManager1 = new EventsManager();
-		getServer().getPluginManager().registerEvents(eventsManager1, this);
-		this.eventsManager = eventsManager1;
+		final EventsManager manager2 = new EventsManager();
+		EventUtils.registerEvents(manager2);
+		this.eventsManager = manager2;
+		this.hokageManager = new HokageManager(gameState);
+		new PubRunnable().start();
+        FastInvManager.register(this);
 		System.out.println("Ending registering events");
 	}
 	private void registerEvents2(GameState gameState) {
 		getServer().getPluginManager().registerEvents(new GameListener(gameState), this);
 		WorldListener worldListener = new WorldListener();
 		getServer().getPluginManager().registerEvents(worldListener, this);
+		getServer().getPluginManager().registerEvents(new InfoListener(), this);
 		this.worldListener = worldListener;
 	}
 	private void registerCommands(GameState gameState) {
@@ -237,6 +249,7 @@ public class Main extends JavaPlugin {
 		getCommand("c").setExecutor(new CRolesCommands(gameState));
 		getCommand("aot").setExecutor(new AotCommands(gameState));
 		getCommand("ns").setExecutor(new NsCommands(gameState));
+		getCommand("ns").setTabCompleter(new NSCompleter());
 		getCommand("drop").setExecutor(new DropCommand());
 		getCommand("claim").setExecutor(new ClaimCommand(gameState));
 		getCommand("mumble").setExecutor(new Mumble());
@@ -248,6 +261,16 @@ public class Main extends JavaPlugin {
 		getCommand("mc").setExecutor(new McCommands(gameState));
 		getCommand("discord").setExecutor(new Discord());
 		getCommand("color").setExecutor(new Color(gameState));
+		getCommand("pack").setExecutor(new PackCommand());
+		SettingsCommand settingsCommand = new SettingsCommand();
+		getCommand("setting").setExecutor(settingsCommand);
+		getCommand("settings").setExecutor(settingsCommand);
+		Bukkit.getPluginManager().registerEvents(settingsCommand, this);
+		getCommand("info").setExecutor(new InfoCommand());
+	/*	getCommand("role").setExecutor(new RoleCommand());
+		getCommand("role").setTabCompleter(new RoleTabComplete());
+		getCommand("team").setExecutor(new TeamCommand());
+		getCommand("team").setTabCompleter(new TeamTabComplete());*/
 		System.out.println("Ending registering commands");
 	}
 	private void clearMap(World world) {
@@ -279,7 +302,7 @@ public class Main extends JavaPlugin {
 	}
 	private void initPlugin(GameState gameState) {
 		System.out.println("init Roles");
-		for (GameState.Roles r : GameState.Roles.values()) {
+		for (Roles r : Roles.values()) {
 			gameState.addInAvailableRoles(r, 0);
 		}
 		System.out.println("init Players");
@@ -297,7 +320,7 @@ public class Main extends JavaPlugin {
 		System.out.println("Ended GLASS platform");
 	}
 	public boolean initGameWorld() {
-		if (!deleteWorld())return false;
+		if (!deleteWorld("arena"))return false;
 		WorldCreator creator = new WorldCreator("arena");
 		System.out.println("Seed: "+creator.seed());
 		System.out.println("Original Base Settings: "+creator.generatorSettings());
@@ -320,12 +343,12 @@ public class Main extends JavaPlugin {
 		System.out.println("Created world gameWorld");
 		return true;
 	}
-	private boolean deleteWorld() {
+	public boolean deleteWorld(final String worldName) {
 		for (World world : Bukkit.getWorlds()) {
-			if (world.getName().equals("arena")) {
+			if (world.getName().equals(worldName)) {
 				File worldFolder = world.getWorldFolder();
 				if (!world.getPlayers().isEmpty()) {
-					System.out.println("Can't delete world \""+ "arena" +"\" because "+world.getPlayers().size()+" is inside");
+					System.out.println("Can't delete world \""+ worldName +"\" because "+world.getPlayers().size()+" is inside");
 					return false;
 				}
 				Bukkit.unloadWorld(world, false);

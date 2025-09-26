@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.builders;
 
 import fr.nicknqck.roles.builder.TeamList;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ public abstract class SlayerRoles extends DemonsSlayersRoles{
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Slayer;
     }
 }

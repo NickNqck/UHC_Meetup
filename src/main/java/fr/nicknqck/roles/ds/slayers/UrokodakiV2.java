@@ -1,6 +1,8 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -21,7 +23,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 public class UrokodakiV2 extends SlayerRoles {
@@ -39,28 +40,13 @@ public class UrokodakiV2 extends SlayerRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Urokodaki";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Urokodaki;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Urokodaki;
     }
 
     @Override
@@ -85,7 +71,7 @@ public class UrokodakiV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             player.sendMessage("§7Vous venez d'utiliser votre §bsouffle de l'eau §7vous obtenez donc "+AllDesc.Speed+" §71 pendnant 2 minutes");
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*120, 0, false), true);
             return true;
@@ -95,10 +81,9 @@ public class UrokodakiV2 extends SlayerRoles {
     @Override
     public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
         if (gameState.getServerState().equals(GameState.ServerStates.InGame)){
-            RoleBase role = gameState.getPlayerRoles().get(player);
-            if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof Sabito){
-                Random random = new Random();
-                int rint = random.nextInt(2);
+            final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
+            if (role instanceof TomiokaV2 || role instanceof Tanjiro || role instanceof Makomo || role instanceof SabitoV2){
+                int rint = Main.RANDOM.nextInt(2);
                 if (rint == 0){
                     this.addBonusforce(5);
                     owner.sendMessage("§7"+ player.getName()+" il possédait le rôle de: §6"+ role.getRoles() +"§7 vous obtenez donc 5% de "+AllDesc.Force);

@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'fr.nicknqck'
-version '9'
+version '10'
 
 repositories {
     mavenLocal()
@@ -24,7 +24,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.32'
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
-
+    implementation 'com.google.code.gson:gson:2.13.1'
     compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\spigot.jar')
 }
 

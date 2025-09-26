@@ -2,16 +2,18 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.roles.ds.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.demons.lune.Kaigaku;
+import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.CommandPower;
@@ -27,9 +29,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
 import java.util.UUID;
@@ -51,28 +53,13 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Zen'Itsu";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.ZenItsu;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.ZenItsu;
     }
 
     @Override
@@ -98,11 +85,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
     @EventHandler
     private void onNight(NightEvent event) {
         final int middleOfTheNight = event.getTimeNight()/2;
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!canHaveSpeed)return;
-            owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), true);
-            owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), true);
-        }, 20L *middleOfTheNight);
+        new NightEffectRunnable(middleOfTheNight, gameState, this);
     }
     @EventHandler
     private void onKill(UHCPlayerKillEvent event) {
@@ -110,9 +93,15 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
             GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId());
             if (gamePlayer == null)return;
             if (gamePlayer.getRole() == null)return;
-            if (gamePlayer.getRole() instanceof Kaigaku) {
+            if (gamePlayer.getRole() instanceof KaigakuV2) {
                 this.killKaigaku = true;
             }
+        }
+    }
+    @EventHandler
+    private void onJigoroPacte(JigoroV2ChoosePacteEvent event) {
+        if (event.getPacte().equals(JigoroV2ChoosePacteEvent.Pacte.ZENITSU)) {
+            this.winWithJigoro = true;
         }
     }
     private static class EcouterCommande extends CommandPower {
@@ -127,12 +116,13 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> strings) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> strings) {
             String[] args = (String[]) strings.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
                     new EcouterTargeter(this, target);
+                    return true;
                 }
             }
             return false;
@@ -156,7 +146,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
             public EcouterTargeter(EcouterCommande ecouterCommande, Player target) {
                 this.ecouterCommande = ecouterCommande;
                 this.tUUID = target.getUniqueId();
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(ecouterCommande.getPlugin(), () -> {
                     EventUtils.unregisterEvents(this);
                     this.ecouterCommande.getCooldown().addSeconds(60*5);
@@ -197,23 +187,95 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60+(zenItsuV2.killKaigaku ? 20*30 : 0), 2, false, false), true);
-                zenItsuV2.canHaveSpeed = false;
                 zenItsuV2.getEffects().remove(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
-                Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-                    if (zenItsuV2.winWithJigoro)return;
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*60*3, 1, false, false), true);
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*60*3, 0, false, false), true);
-                    Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                        zenItsuV2.canHaveSpeed = true;
-                        zenItsuV2.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
-                    }, 20*60*3);
-                }, 20*60+(zenItsuV2.killKaigaku ? 20*30 : 0));
+                zenItsuV2.canHaveSpeed = false;
+                new EffectRunnable(this.zenItsuV2);
                 return true;
             }
             return false;
+        }
+        private static class EffectRunnable extends BukkitRunnable {
+
+            private final ZenItsuV2 zenItsuV2;
+            private int timeRemaining;
+            private boolean proc1 = false;
+
+            private EffectRunnable(final ZenItsuV2 zenItsuV2) {
+                this.timeRemaining = 60 + (zenItsuV2.killKaigaku ? 30 : 0);
+                this.zenItsuV2 = zenItsuV2;
+                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
+
+
+            @Override
+            public void run() {
+                if (!zenItsuV2.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                if (timeRemaining <= 0) {
+                    final Player player = Bukkit.getPlayer(zenItsuV2.getPlayer());
+                    if (player != null) {
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                            if (!proc1) {
+                                if (!zenItsuV2.winWithJigoro) {
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*60*3, 1, false, false), true);
+                                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*60*3, 0, false, false), true);
+                                } else {
+                                    zenItsuV2.canHaveSpeed = true;
+                                    zenItsuV2.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
+                                    cancel();
+                                    return;
+                                }
+                                this.proc1 = true;
+                                this.timeRemaining+=60*3;
+                            } else {
+                                zenItsuV2.canHaveSpeed = true;
+                                zenItsuV2.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
+                                cancel();
+                            }
+                        });
+                    }
+                }
+                timeRemaining--;
+            }
+        }
+    }
+    private static final class NightEffectRunnable extends BukkitRunnable {
+
+        private final int middleOfTheNight;
+        private final GameState gameState;
+        private final ZenItsuV2 zenItsu;
+        private int timeLeft;
+
+        private NightEffectRunnable(final int middleOfTheNight, final GameState gameState, final ZenItsuV2 zenItsu) {
+            this.middleOfTheNight = middleOfTheNight;
+            this.gameState = gameState;
+            this.zenItsu = zenItsu;
+            this.timeLeft = 0;
+            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        }
+
+        @Override
+        public void run() {
+            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                cancel();
+                return;
+            }
+            if (this.timeLeft >= middleOfTheNight) {
+                if (zenItsu.canHaveSpeed) {
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                        zenItsu.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 1, false, false), EffectWhen.NOW);
+                        zenItsu.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*60, 0, false, false), EffectWhen.NOW);
+                    });
+                }
+                cancel();
+                return;
+            }
+            timeLeft++;
         }
     }
 }

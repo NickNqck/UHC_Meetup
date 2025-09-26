@@ -3,7 +3,9 @@ package fr.nicknqck.events.ds;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.ds.demons.lune.Akaza;
 import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
@@ -52,11 +54,11 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.dispatchCommand(console, "nakime E4jL5cOzv0sI2XqY7wNpD3Ab");
         if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
-            Player pkyojuro = gameState.getOwner(GameState.Roles.Kyojuro);
-            Player pAkaza = gameState.getOwner(GameState.Roles.Akaza);
+            Player pkyojuro = findOwner(Roles.Kyojuro);
+            Player pAkaza = findOwner(Roles.Akaza);
             if (pAkaza != null && pkyojuro != null) {
-                Akaza akaza = (Akaza) gameState.getPlayerRoles().get(pAkaza);
-                KyojuroV2 kyojuro = (KyojuroV2) gameState.getPlayerRoles().get(pkyojuro);
+                Akaza akaza = (Akaza) gameState.getGamePlayer().get(pAkaza.getUniqueId()).getRole();
+                KyojuroV2 kyojuro = (KyojuroV2) gameState.getGamePlayer().get(pkyojuro.getUniqueId()).getRole();
                 this.akaza = akaza;
                 this.kyojuro = kyojuro;
                 this.originalAkazaLocation = pAkaza.getLocation();
@@ -72,6 +74,19 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 this.activated = true;
             }
         }
+    }
+
+    private Player findOwner(@NonNull final Roles roles) {
+        for (final GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
+            if (gamePlayer.isAlive() && gamePlayer.getRole() != null) {
+                if (gamePlayer.getRole().getRoles().equals(roles)) {
+                    Player player = Bukkit.getPlayer(gamePlayer.getUuid());
+                    if (player == null)continue;
+                    return player;
+                }
+            }
+        }
+        return null;
     }
 
     @SuppressWarnings("deprecation")
@@ -125,7 +140,10 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
     }
 
     private boolean containsRoles(final GameState gameState) {
-        return gameState.attributedRole.contains(GameState.Roles.Kyojuro) && !gameState.DeadRole.contains(GameState.Roles.Kyojuro) && gameState.attributedRole.contains(GameState.Roles.Akaza) && !gameState.DeadRole.contains(GameState.Roles.Akaza);
+        return gameState.getAttributedRole().contains(Roles.Kyojuro) &&
+                !gameState.DeadRole.contains(Roles.Kyojuro) &&
+                gameState.getAttributedRole().contains(Roles.Akaza) &&
+                !gameState.DeadRole.contains(Roles.Akaza);
     }
 
     @EventHandler
@@ -152,6 +170,25 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         return this.activated;
     }
 
+    @Override
+    public String[] getExplications() {
+        return new String[] {
+                "§7Crée un duel entre§a Kyojuro§7 et§c Akaza§7 sur une map personnalisé",
+                "§7le combat a une durée§c maximum§7 de§c 5 minutes§7",
+                "§7il se terminera si l'un des deux combattants tue l'autre ou si le temp atteint 0",
+                "",
+                "§7Si§a Kyojuro§7 gagne le combat:",
+                "§7il obtiendra l'item \"§6Vague Flamboyante§7\"",
+                "§7a l'activation permet pendant§c 10 secondes§7 de faire qu'a chaque coup reçus il y est",
+                "§c 10%§7 de chance que l'attaquant sois§6 enflammer",
+                "",
+                "§7Si§c Akaza§7 gagne le combat:",
+                "§7il obtiendra la commande \"§c/ds compa§7\"",
+                "§7a l'activation pendant§c 2 minutes§7 fait qu'à chaque coup reçus il y est",
+                "§c10%§7 de chance que l'attaque sois esquivé"
+        };
+    }
+
     private static class VagueItemPower extends ItemPower implements Listener {
 
         protected VagueItemPower(@NonNull KyojuroV2 role) {
@@ -160,7 +197,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 EventUtils.registerEvents(this);
                 player.sendMessage("§7Maintenant vous§c enflammez§7 les joueurs qui vous frappe pendant§b 10s");
@@ -194,7 +231,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             player.sendMessage("§7Activation du§c compa");
             this.use = true;
             getPlugin().getServer().getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> this.use = false, 20*120);

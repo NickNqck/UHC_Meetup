@@ -1,11 +1,13 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.mc.builders.UHCMcRoles;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -78,12 +80,12 @@ public class AraigneeVenimeuse extends UHCMcRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.AraigneeVenimeuse;
+    public @NonNull Roles getRoles() {
+        return Roles.AraigneeVenimeuse;
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.OverWorld;
     }
 
@@ -98,7 +100,7 @@ public class AraigneeVenimeuse extends UHCMcRoles {
         if (entity.getUniqueId() == owner.getUniqueId()){
             if(owner.getItemInHand().getType().equals(Material.DIAMOND_SWORD)){
                 if (poison){
-                    givePotionEffet(victim, PotionEffectType.POISON, 20*2,1,true);
+                    OLDgivePotionEffet(victim, PotionEffectType.POISON, 20*2,1,true);
                 }
             }
         }

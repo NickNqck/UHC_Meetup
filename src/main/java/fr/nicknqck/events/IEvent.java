@@ -9,4 +9,6 @@ public interface IEvent {
     void onProc(final GameState gameState);
     ItemStack getMenuItem();
     boolean canProc(final GameState gameState);
+    String[] getExplications();
+
 }

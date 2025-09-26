@@ -3,6 +3,8 @@ package fr.nicknqck.events.essential.inventorys;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
@@ -71,6 +73,9 @@ public class HubInventory implements Listener {
                                     player.openInventory(GUIItems.getSelectNSInventory());
                                     Main.getInstance().getInventories().updateNSInventory(player);
                                 }
+                                if (item.isSimilar(MDJ.KRYSTAL.getItem())) {
+                                    Main.getInstance().getInventories().openKrystalInventory(player);
+                                }
                                 if (item.isSimilar(GUIItems.getSelectMCButton())) {
                                     player.openInventory(GUIItems.getSelectMCInventory());
                                     Main.getInstance().getInventories().updateMCInventory(player);
@@ -94,7 +99,7 @@ public class HubInventory implements Listener {
                         }
                         event.setCancelled(true);
                         break;
-                    case "DemonSlayer ->§a Slayers":
+                    case "§fDemonSlayer§7 ->§a Slayers":
                         if (item.getItemMeta() == null)return;
                         if (item.getItemMeta().getDisplayName() == null)return;
                         if (item.getType() == Material.AIR)return;
@@ -245,7 +250,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (soldat) {
                             player.openInventory(GUIItems.getSecretSoldatGui());
@@ -292,7 +297,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (solo) {
                             player.openInventory(GUIItems.getAOTSoloSelectGUI());
@@ -347,7 +352,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (solo) {
                             player.openInventory(GUIItems.getAOTSoloSelectGUI());
@@ -397,7 +402,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (solo) {
                             player.openInventory(GUIItems.getAOTSoloSelectGUI());
@@ -420,11 +425,9 @@ public class HubInventory implements Listener {
                         String name = item.getItemMeta().getDisplayName();
                         if (name.equals("§rCooldown Equipement Tridimentionnel")) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                gameState.TridiCooldown+=1;
+                                Main.getInstance().getGameConfig().setTridiCooldown(Main.getInstance().getGameConfig().getTridiCooldown()-1);
                             }else {
-                                if (gameState.TridiCooldown > 0) {
-                                    gameState.TridiCooldown-=1;
-                                }
+                                Main.getInstance().getGameConfig().setTridiCooldown(Math.max(1, Main.getInstance().getGameConfig().getTridiCooldown()+1));
                             }
                         }
                         if (name.equals("§rEquipement Tridimentionnel")){
@@ -515,7 +518,7 @@ public class HubInventory implements Listener {
                         }
                         if (titans) {
                             player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                            Main.getInstance().getInventories().updateTitansInventory(player);
                         }
                         if (soldat) {
                             player.openInventory(GUIItems.getSecretSoldatGui());
@@ -536,7 +539,7 @@ public class HubInventory implements Listener {
                                 }
                                 if (titans) {
                                     player.openInventory(GUIItems.getSecretTitansGui());
-                                    Main.getInstance().getInventories().updateSecretTitansInventory(player);
+                                    Main.getInstance().getInventories().updateTitansInventory(player);
                                 }
                                 if (soldat) {
                                     player.openInventory(GUIItems.getSecretSoldatGui());
@@ -644,7 +647,7 @@ public class HubInventory implements Listener {
                                 return;
                             }
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         name = item.getItemMeta().getDisplayName();
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -668,7 +671,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                                             gameState.addInAvailableRoles(roles, Math.min(gameState.getInLobbyPlayers().size(), gameState.getAvailableRoles().get(roles)+1));
@@ -688,7 +691,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         name = item.getItemMeta().getDisplayName();
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -710,7 +713,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
                                             gameState.addInAvailableRoles(roles, Math.min(gameState.getInLobbyPlayers().size(), gameState.getAvailableRoles().get(roles)+1));
@@ -729,7 +732,7 @@ public class HubInventory implements Listener {
                             Main.getInstance().getInventories().updateNSSoloInventory(player);
                         } else {
                             if (ChatRank.isHost(player)) {
-                                for (GameState.Roles roles : GameState.Roles.values()) {
+                                for (Roles roles : Roles.values()) {
                                     if (item.getItemMeta().getDisplayName().contains(roles.getItem().getItemMeta().getDisplayName())) {
                                         name = item.getItemMeta().getDisplayName();
                                         if (action.equals(InventoryAction.PICKUP_ALL)) {
@@ -798,6 +801,32 @@ public class HubInventory implements Listener {
                             if (p == null)return;
                             Main.getInstance().getInventories().updateNetherInventory(p);
                         }
+                        event.setCancelled(true);
+                        break;
+                    case "§dKrystal UHC":
+                        if (item.isSimilar(GUIItems.getSelectSoloButton())) {
+                            Main.getInstance().getInventories().openKrystalSoloInventory(player);
+                        }
+                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+                            player.openInventory(GUIItems.getRoleSelectGUI());
+                            Main.getInstance().getInventories().updateRoleInventory(player);
+                        }
+                        event.setCancelled(true);
+                        break;
+                    case "§dKrystal UHC§7 ->§e Solo":
+                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
+                            Main.getInstance().getInventories().openKrystalInventory(player);
+                            event.setCancelled(true);
+                            return;
+                        }
+                        if (!item.getType().equals(Material.STAINED_GLASS_PANE)) {
+                            if (action.equals(InventoryAction.PICKUP_ALL)) {
+                                EasyRoleAdder.addRoles(item.getItemMeta().getDisplayName());
+                            } else if (action.equals(InventoryAction.PICKUP_HALF)){
+                                EasyRoleAdder.removeRoles(item.getItemMeta().getDisplayName());
+                            }
+                        }
+                        Main.getInstance().getInventories().openKrystalSoloInventory(player);
                         event.setCancelled(true);
                         break;
                     default:

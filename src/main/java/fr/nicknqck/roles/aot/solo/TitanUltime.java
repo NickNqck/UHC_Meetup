@@ -2,18 +2,19 @@ package fr.nicknqck.roles.aot.solo;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
+import fr.nicknqck.roles.aot.titanrouge.Sieg;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,22 +26,19 @@ public class TitanUltime extends TitansRoles {
 
 	public TitanUltime(UUID player) {
 		super(player);
-		gameState.TitansRouge.add(owner);
-		addBonusforce(10.0);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.TitanUltime;
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 
 	@Override
 	public String[] Desc() {
-		KnowRole(owner, Roles.TitanBestial, 2);
 		Main.getInstance().getGetterList().getTitanRougeList(owner);
 		return new String[] {
 				AllDesc.bar,
@@ -71,14 +69,14 @@ public class TitanUltime extends TitansRoles {
 				BetterItem.of(new ItemBuilder(Material.FEATHER).setName("§6§lTransformation").setLore("§fTransformation en Titan (§cAttention cette transformation est§l PERMANENTE§f)","§7 "+StringID).addEnchant(Enchantment.ARROW_DAMAGE,1).hideAllAttributes().toItemStack(),event  -> {
 					int rint = RandomUtils.getRandomInt(0, 1);
 					if (rint == 0) {
-						givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 						isTransformedinTitan = true;
 						setResi(20);
 						owner.getInventory().remove(owner.getItemInHand());
 						TransfoEclairxMessage(owner);
 					} else {
 						if (rint == 1) {
-							givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
+							OLDgivePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
 							isTransformedinTitan = true;
 							owner.getInventory().remove(owner.getItemInHand());
 							TransfoEclairxMessage(owner);
@@ -92,8 +90,8 @@ public class TitanUltime extends TitansRoles {
 				return new ItemStack[] {
 				BetterItem.of(new ItemBuilder(Material.NETHER_STAR).setName("Transformation Ultime").setLore("Vous transforme en titan ultime","§7 "+StringID).toItemStack(), event ->{
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-					givePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 3, true);
-					givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.SPEED, Integer.MAX_VALUE, 3, true);
+					OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 					giveHealedHeartatInt(owner, 3);
 					owner.getInventory().remove(owner.getItemInHand());
 					GameListener.SendToEveryone("");
@@ -101,7 +99,7 @@ public class TitanUltime extends TitansRoles {
 					GameListener.SendToEveryone("");
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 					for (Player p : Bukkit.getOnlinePlayers()) {
-						p.playSound(p.getLocation(), Sound.GHAST_DEATH, 10, 20);
+						p.playSound(p.getLocation(), "aotmtp.ultimetransfo", 10, 20);
 					}
 					return true;
 				}).setDespawnable(false).setDroppable(false).getItemStack(),
@@ -150,11 +148,15 @@ public class TitanUltime extends TitansRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (!killtitan) {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 		}
 		super.Update(gameState);
 	}
+
 	@Override
-	public void resetCooldown() {
+	public void RoleGiven(GameState gameState) {
+		addKnowedRole(Sieg.class);
+		gameState.TitansRouge.add(owner);
+		addBonusforce(10.0);
 	}
 }

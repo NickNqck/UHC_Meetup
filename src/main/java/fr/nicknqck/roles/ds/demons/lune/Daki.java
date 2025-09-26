@@ -1,8 +1,10 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.enums.Roles;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,7 +15,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -32,7 +33,7 @@ public class Daki extends DemonsRoles {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Muzan) {
+				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof MuzanV2) {
 					owner.sendMessage("La personne possédant le rôle de§c Muzan§r est:§c "+p.getName());
 				}
 				if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof GyutaroV2) {
@@ -42,7 +43,7 @@ public class Daki extends DemonsRoles {
 		}, 20);
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
@@ -51,7 +52,7 @@ public class Daki extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Daki;
 	}
 	@Override
@@ -115,8 +116,10 @@ public class Daki extends DemonsRoles {
 		if (gameState.nightTime) {
 			owner.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*3, 0, false, false), true);
 		}
-		for (RoleBase r : gameState.getPlayerRoles().values()) {
-			if (!gameState.getInGamePlayers().contains(r.getPlayer()))continue;
+		for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+			if (!gamePlayer.isAlive())continue;
+			if (gameState.hasRoleNull(gamePlayer.getUuid()))continue;
+			final RoleBase r = gamePlayer.getRole();
 			if (r.getRoles() == Roles.Gyutaro && r.owner.getWorld().equals(owner.getWorld())) {
 				if (r.owner.getLocation().distance(owner.getLocation()) <= 30)
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*3, 0, false, false), true);
@@ -155,7 +158,8 @@ public class Daki extends DemonsRoles {
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player pl = Bukkit.getPlayer(u);
 					if (pl == null)continue;
-					RoleBase p = gameState.getPlayerRoles().get(pl);
+					if (gameState.hasRoleNull(u))continue;
+					RoleBase p = gameState.getGamePlayer().get(u).getRole();
 					if (pl != owner) {
 						if (p.getRoles() != Roles.Tanjiro && p.getOriginTeam() != TeamList.Demon && p.getRoles() != Roles.Inosuke && p.getRoles() != Roles.Tengen && p.getRoles() != Roles.ZenItsu && p.getRoles() != Roles.Daki && p.getRoles() != Roles.Gyutaro) {
 							Player player = p.owner;
@@ -205,8 +209,8 @@ public class Daki extends DemonsRoles {
 			}
 		if (victim != owner && killer == owner){
 			if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-				if (gameState.getPlayerRoles().containsKey(victim)) {
-					RoleBase r = gameState.getPlayerRoles().get(victim);
+				if (!gameState.hasRoleNull(victim.getUniqueId())) {
+					RoleBase r = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 					if (r instanceof GyutaroV2) {
 						diegyutaro = true;
 						owner.sendMessage(ChatColor.GOLD+"Gyutaro "+ChatColor.GRAY+"est mort définitivement ce qui viens de vous octroyez l'effet: "+ChatColor.RED+"résistance 1 permanent");

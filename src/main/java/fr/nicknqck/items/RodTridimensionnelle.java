@@ -14,7 +14,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -30,7 +33,15 @@ public class RodTridimensionnelle implements Listener {
     public RodTridimensionnelle(GameState gameState) {
     	this.gameState = gameState;
 	}
-    
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onDamage(final EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof FishHook) {
+            event.setDamage(0.0);
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onProjectile(ProjectileLaunchEvent event) {
         if (event.getEntity() == null || !(event.getEntity() instanceof FishHook) || event
@@ -42,8 +53,8 @@ public class RodTridimensionnelle implements Listener {
         	event.setCancelled(true);
         }
         Player player = (Player) event.getEntity().getShooter();
-        if (!gameState.hasRoleNull(player)) {
-        	RoleBase roleBase = gameState.getPlayerRoles().get(player);
+        if (!gameState.hasRoleNull(player.getUniqueId())) {
+        	RoleBase roleBase = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
         	if (roleBase instanceof KillerBee) {
         		if (((KillerBee) roleBase).isCanTentacule()) {
         			FishHook fishHook = (FishHook) event.getEntity();
@@ -61,11 +72,23 @@ public class RodTridimensionnelle implements Listener {
         		if (role.gazAmount > 0) {
             		if (role.getActualTridiCooldown() <= 0) {
             			if (!role.isTransformedinTitan) {
-            				FishHook fishHook = (FishHook) event.getEntity();
-                	        Location eyeLocation = player.getEyeLocation().clone();
-                	        fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
-                	        (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
-            			}else {
+                            if (Main.getInstance().getTitanManager().hasTitan(player.getUniqueId())) {
+                                if (!Main.getInstance().getTitanManager().getTitan(player.getUniqueId()).isTransformed()) {
+                                    FishHook fishHook = (FishHook) event.getEntity();
+                                    Location eyeLocation = player.getEyeLocation().clone();
+                                    fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
+                                    (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
+                                } else {
+                                    player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petit pour votre corp de titan, vous ne pouvez pas l'utiliser");
+                                    event.setCancelled(true);
+                                }
+                            } else {
+                                FishHook fishHook = (FishHook) event.getEntity();
+                                Location eyeLocation = player.getEyeLocation().clone();
+                                fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
+                                (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
+                            }
+            			} else {
             				player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petit pour votre corp de titan, vous ne pouvez pas l'utiliser");
             				event.setCancelled(true);
             			}
@@ -126,10 +149,11 @@ public class RodTridimensionnelle implements Listener {
                 cancel();
                 return;
             }
-            if (gameState.hasRoleNull(player)) {
+            if (gameState.hasRoleNull(player.getUniqueId())) {
                 cancel();
                 return;
             }
+            final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
             this.fishHook.setVelocity(new Vector(0, 0, 0));
             double vectorX = this.loc.getX() - this.player.getLocation().getX();
             double vectorY = this.loc.getY() - this.player.getLocation().getY();
@@ -137,9 +161,9 @@ public class RodTridimensionnelle implements Listener {
             Vector v = (new Vector(vectorX, vectorY, vectorZ)).add(new Vector(0, 3, 0)).multiply(0.02D);
             if (this.player.getLocation().distance(this.fishHook.getLocation()) > 10.0D) {
                 double speedMultiplier = 0;
-                if (gameState.getPlayerRoles().get(player) instanceof AotRoles){
-                    speedMultiplier = ((AotRoles) gameState.getPlayerRoles().get(player)).RodSpeedMultipliyer;
-                } else if (gameState.getPlayerRoles().get(player) instanceof KillerBee) {
+                if (role instanceof AotRoles){
+                    speedMultiplier = ((AotRoles) role).RodSpeedMultipliyer;
+                } else if (role instanceof KillerBee) {
                     speedMultiplier = 0;
                 }
                 v.multiply(0.85D+speedMultiplier);
@@ -159,19 +183,19 @@ public class RodTridimensionnelle implements Listener {
             cancel();
             double r = loc.distance(initLoc)/2;
             if (bool) {
-                if (!(gameState.getPlayerRoles().get(player) instanceof AotRoles))return;
-                AotRoles role = (AotRoles) gameState.getPlayerRoles().get(player);
-            	if (role.gazAmount - r <= 0) {
-                	role.gazAmount = 0;
-                }else{
-                	role.gazAmount -= r;
+                if (!(role instanceof AotRoles))return;
+                AotRoles aotRoles = (AotRoles) role;
+            	if (aotRoles.gazAmount - r <= 0) {
+                	aotRoles.gazAmount = 0;
+                } else{
+                	aotRoles.gazAmount -= r;
                 }
                 DecimalFormat df = new DecimalFormat("0.0");
-                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(role.gazAmount)+"%");
-                role.setActualTridiCooldown(gameState.TridiCooldown);
+                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(aotRoles.gazAmount)+"%");
+                aotRoles.setActualTridiCooldown(Main.getInstance().getGameConfig().getTridiCooldown());
             } else {
-                if (gameState.getPlayerRoles().get(player) instanceof KillerBee) {
-                    ((KillerBee) gameState.getPlayerRoles().get(player)).onTentaculeEnd(r);
+                if (role instanceof KillerBee) {
+                    ((KillerBee) role).onTentaculeEnd(r);
                 }
             }
         }

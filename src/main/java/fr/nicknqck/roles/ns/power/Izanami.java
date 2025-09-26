@@ -131,11 +131,11 @@ public class Izanami implements Listener{
 	}
 	@Getter
 	private enum MissionUser {
-		Taper(0, "\"Tapée la cible 15x\""),//Fait
-		Lave(1, "\"Mettre de la§6 lave§f sous la cible\""),//Fait
-		Fraper(2, "\"être frappé par l'épée de la cible 15x\""),//FAIT
-		Gap(3, "\"Donner une pomme d'or à la cible\""),//FAIT
-		Rester(4, "\"Rester proche de la cible (§c20 blocs§f) pendant 5m\"");//FAIT
+		Taper(0, "\"Tapée la cible 15x\""),
+		Lave(1, "\"Mettre de la§6 lave§f sous la cible\""),
+		Fraper(2, "\"être frappé par l'épée de la cible 15x\""),
+		Gap(3, "\"Donner une pomme d'or à la cible\""),
+		Rester(4, "\"Rester proche de la cible (§c20 blocs§f) pendant 5m\"");
 		
 		private final String mission;
 		private final int nmb;
@@ -185,6 +185,12 @@ public class Izanami implements Listener{
 				public void run() {
 					if (GameState.getInstance().getServerState() != GameState.ServerStates.InGame){
 						cancel();
+						return;
+					}
+					if (!GameState.getInstance().getGamePlayer().containsKey(user)) {
+						return;
+					}
+					if (!GameState.getInstance().getGamePlayer().get(user).isAlive()) {
 						return;
 					}
 					Player user1 = Bukkit.getPlayer(user);
@@ -238,19 +244,25 @@ public class Izanami implements Listener{
 	}
 	public ItemStack getResultVictimMission() {
 		ItemBuilder ib = new ItemBuilder(Material.NETHER_STAR).setName("§eMission de la victim");
-		ib.setLore("§eSa mission§f "+getMission().getMission()+"§e est "+(TargetMissions.get(getMission()) ? "§aTerminé" : "§cInachevé"+(getMission() == MissionTarget.Gap ? "§7 (§ePomme d'or§7 restante§c§l "+gapEatingRemaining : "")));
+		ib.setLore(findVictimLore());
 		return ib.toItemStack();
 	}
 	public ItemStack getResultUserMission() {
 		ItemBuilder ib = new ItemBuilder(Material.NETHER_STAR).setName("Vos missions:");
 		ib.addLoreLine("");
 		for (MissionUser mu : Missions.keySet()) {
-			ib.addLoreLine("§eVotre mission §f"+mu.getMission()+"§e est "+(Missions.get(mu) ? "§aTerminé" : "§cInachevé "+getOtherStrings(mu)));
+			ib.addLoreLine(findUserLore(mu));
 		}
 		return ib.toItemStack();
 	}
+	private String findUserLore(@NonNull final MissionUser mu) {
+		return "§eVotre mission §f"+mu.getMission()+"§e est "+(Missions.get(mu) ? "§aTerminé" : "§cInachevé "+getOtherStrings(mu));
+	}
+	public String findVictimLore() {
+		return "§eSa mission§f "+getMission().getMission()+"§e est "+(TargetMissions.get(getMission()) ? "§aTerminé" : "§cInachevé"+(getMission() == MissionTarget.Gap ? "§7 (§ePomme d'or§7 restante§c§l "+gapEatingRemaining : ""));
+	}
 	private String getOtherStrings(MissionUser mu) {
-		return (mu == MissionUser.Taper ? "§7Coup restant à infligé:§c§l "+taperCoupRemaining : mu == MissionUser.Fraper ? "§7Coup restant à subir:§c§l "+FraperCoupRemaining : "");//Code compliquer a expliquer à l'écrit mp moi si tu comprend pas
+		return (mu == MissionUser.Taper ? "§7Coup restant à infligé:§c§l "+taperCoupRemaining : mu == MissionUser.Fraper ? "§7Coup restant à subir:§c§l "+FraperCoupRemaining : "");
 	}
 	@EventHandler
 	private void onEat(PlayerItemConsumeEvent e) {

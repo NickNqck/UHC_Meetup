@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.utils.PotionUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,7 +25,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
@@ -46,7 +46,7 @@ public class Madara extends JubiRoles {
 
 	public Madara(UUID player) {
 		super(player);
-		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+		OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 		setChakraType(Chakras.KATON);
 	}
 
@@ -56,7 +56,7 @@ public class Madara extends JubiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Madara;
 	}
 	@Override
@@ -139,8 +139,8 @@ public class Madara extends JubiRoles {
 		if (item.isSimilar(MadaraItem())) {
 			if (!MadaraUse) {
 				owner.sendMessage("§7Vous obtenez votre puissance d'entant");
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
-				givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+				OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true);
 				MadaraUse = true;
             } else {
 				owner.sendMessage("§7Vous perdez votre puissance...");
@@ -182,7 +182,7 @@ public class Madara extends JubiRoles {
 							return;
 						}
 						sendCustomActionBar(owner, "§bTemp restant de§c§l Susano§b:§c§l "+StringUtils.secondsTowardsBeautiful(SusanoCD-(60*10)));
-						givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+						OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					}
 				}.runTaskTimer(Main.getInstance(), 0, 20);
 			}else {
@@ -214,10 +214,10 @@ public class Madara extends JubiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
 		if (MadaraUse) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-			givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false);
 		}
 		if (BenshoCD > 0)BenshoCD--;
 		if (BenshoCD == 0) {
@@ -290,12 +290,7 @@ public class Madara extends JubiRoles {
 		NF.clear();
 	}
 
-	@Override
-	public @NonNull Intelligence getIntelligence() {
-		return Intelligence.GENIE;
-	}
-
-	@Override
+    @Override
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 		if (inv.getTitle().equalsIgnoreCase("§cChibaku Tensei")) {
 			if (event.getSlot() == 0) {
@@ -325,7 +320,7 @@ public class Madara extends JubiRoles {
 					MeteoriteUse++;
 					owner.closeInventory();
 					owner.sendMessage("§7Votre météorite attérira dans 10s");
-					Loc.getNearbyPlayers(owner, 50).stream().filter(p -> gameState.getInGamePlayers().contains(p.getUniqueId())).filter(p -> !gameState.hasRoleNull(p)).forEach(e -> playSound(e, "mob.wither.death"));
+					Loc.getNearbyPlayers(owner, 50).stream().filter(p -> gameState.getInGamePlayers().contains(p.getUniqueId())).filter(p -> !gameState.hasRoleNull(p.getUniqueId())).forEach(e -> playSound(e, "mob.wither.death"));
 					new BukkitRunnable() {
 						private final Location loc = owner.getLocation();
 						private int s = 0;
@@ -345,6 +340,7 @@ public class Madara extends JubiRoles {
 								}
 							}
 							if (s == 10) {
+								PotionUtils.addTempNoFall(getPlayer(), 2);
 								Location Center = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
 								for(Location loc : new MathUtil().sphere(Center, 30, false)) {
 									loc.getBlock().setType(Material.AIR);

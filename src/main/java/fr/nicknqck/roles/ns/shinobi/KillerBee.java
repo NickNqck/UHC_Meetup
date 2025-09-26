@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -34,7 +34,7 @@ public class KillerBee extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.KillerBee;
 	}
 	@Override
@@ -97,7 +97,7 @@ public class KillerBee extends ShinobiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		if (cdGyuki >= 0) {
 			cdGyuki--;
 			if (cdGyuki == 0) {
@@ -130,7 +130,7 @@ public class KillerBee extends ShinobiRoles {
 				return true;
 			}
 			owner.sendMessage("§7Vous êtes maintenant sous l'effet de§d Gyûki§7.");
-			givePotionEffet(PotionEffectType.SPEED, 20*300, 1, true);//5 minutes
+			OLDgivePotionEffet(PotionEffectType.SPEED, 20*300, 1, true);//5 minutes
 			giveHealedHeartatInt(2.0);
 			cdGyuki = 60*15;
 			new BukkitRunnable() {
@@ -138,7 +138,7 @@ public class KillerBee extends ShinobiRoles {
 				@Override
 				public void run() {
 					i--;
-					if (i <= 0 || !gameState.getInGamePlayers().contains(owner)) {
+					if (i <= 0 || !gameState.getInGamePlayers().contains(getPlayer())) {
 						setMaxHealth(getMaxHealth()-4.0);
 						owner.sendMessage("§7Vous n'êtes plus sous l'effet de§d Gyûki§7.");
 						cancel();

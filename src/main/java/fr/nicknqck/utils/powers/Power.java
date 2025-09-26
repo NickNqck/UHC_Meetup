@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -23,10 +24,11 @@ public abstract class Power {
     private int use;
     private boolean cooldownResetSended = true;
     private final RoleBase role;
-    private final String[] descriptions;
+    private String[] descriptions;
     private boolean sendCooldown = true;
     private boolean workWhenInCooldown = false;
     private boolean showInDesc = true;
+    private boolean showCdInDesc = true;
 
     public Power(@NonNull String name, Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
         this.name = name;
@@ -37,7 +39,7 @@ public abstract class Power {
     }
 
     public boolean checkUse(Player player, Map<String, Object> args) {
-        GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(player.getUniqueId());
+        final GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(player.getUniqueId());
 
         if (gamePlayer.getRole() == null) {
             player.sendMessage("§cVous n'avez pas de rôle.");
@@ -59,22 +61,15 @@ public abstract class Power {
             return false;
         }
 
-        PowerActivateEvent powerActivateEvent = new PowerActivateEvent(this.plugin, player, this);
-        this.plugin.getServer().getPluginManager().callEvent(powerActivateEvent);
-        if (powerActivateEvent.isCancel()) {
-            if (powerActivateEvent.getCancelMessage() != null) {
-                player.sendMessage(powerActivateEvent.getCancelMessage());
-            } else {
-                player.sendMessage("§cDésolé, pouvoir inutilisable.");
-                return false;
-            }
+        if (!checkIfPowerEnable(player)) {
+            return false;
         }
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
             if (isWorkWhenInCooldown())return this.onUse(player, args);
             if (isSendCooldown()) {
-                role.sendCooldown(player, getCooldown().getCooldownRemaining());
+                player.sendMessage("§cVous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(getCooldown().getCooldownRemaining()));
             }
             return false;
         }
@@ -89,12 +84,30 @@ public abstract class Power {
         }
         return canUse;
     }
-    public abstract boolean onUse(Player player, Map<String, Object> map);
-
-    public void onEndCooldown(final Cooldown cooldown) {
-        if (this.cooldown == null)return;
-        if (cooldown.getUniqueId().equals(this.getCooldown().getUniqueId())) {//donc si c'est EXACTEMENT le même "Cooldown"
-            getRole().owner.sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
+    public abstract boolean onUse(@NonNull Player player,@NonNull Map<String, Object> map);
+    public boolean checkIfPowerEnable(final Player player) {
+        final PowerActivateEvent powerActivateEvent = new PowerActivateEvent(this.plugin, player, this);
+        this.plugin.getServer().getPluginManager().callEvent(powerActivateEvent);
+        if (powerActivateEvent.isCancel()) {
+            if (powerActivateEvent.getCancelMessage() != null) {
+                player.sendMessage(powerActivateEvent.getCancelMessage());
+            } else {
+                player.sendMessage("§cCe pouvoir n'est pas utilisable pour le moment, réessayer plus tard !.");
+            }
+            return false;
         }
+        return true;
+    }
+
+    public boolean onEndCooldown(final Cooldown cooldown) {
+        if (this.cooldown == null) return false;
+        if (cooldown.getUniqueId().equals(this.getCooldown().getUniqueId())) {//donc si c'est EXACTEMENT le même "Cooldown"
+            if (!this.isSendCooldown()) return false;
+            if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) return false;
+            if (!GameState.getInstance().getInGamePlayers().contains(this.getRole().getPlayer())) return false;
+            getRole().getGamePlayer().sendMessage("§7Vous pouvez à nouveau utiliser le pouvoir \""+this.getName()+"§7\".");
+            return true;
+        }
+        return false;
     }
 }

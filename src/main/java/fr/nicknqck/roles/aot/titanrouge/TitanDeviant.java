@@ -1,13 +1,13 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class TitanDeviant extends TitansRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.TitanDeviant;
 	}
 	@Override
@@ -44,21 +44,13 @@ public class TitanDeviant extends TitansRoles {
 				List<Player> isTitanAroundDeviant = new ArrayList<>();
 				isTitanAroundDeviant.add(p);
                 isTransformedinTitan = true;
-                givePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
+                OLDgivePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
 
             }
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
-	public void resetCooldown() {
-		
-	}
 
-	@Override
+    @Override
 	public String getName() {
 		return "Titan Deviant";
 	}

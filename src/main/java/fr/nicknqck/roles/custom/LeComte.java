@@ -2,6 +2,7 @@ package fr.nicknqck.roles.custom;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -14,6 +15,7 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -64,15 +66,14 @@ public class LeComte extends CustomRolesBase implements Listener {
         return "Le Comte";
     }
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.LeComte;
+    public @NonNull Roles getRoles() {
+        return Roles.LeComte;
     }
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
-    @Override
-    public void resetCooldown() {}
+
     @Override
     public String[] Desc() {
         return new String[0];
@@ -236,8 +237,8 @@ public class LeComte extends CustomRolesBase implements Listener {
                         owner.sendMessage("§c"+target.getName()+"§7 est dans le camp \""+team.getName()+"§7\"");
                     }
                 } else if (time == 60*3) {
-                    if (!leCompte.getGameState().hasRoleNull(target)) {
-                        RoleBase role = leCompte.getGameState().getPlayerRoles().get(target);
+                    if (!leCompte.getGameState().hasRoleNull(target.getUniqueId())) {
+                        RoleBase role = leCompte.getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                         owner.sendMessage("§c"+target.getName()+"§7 est le rôle "+role.getOriginTeam().getColor()+role.getName());
                     }
                     owner.sendMessage("§7Votre inspection prend fin, vous obtiendrez§e 5 pommes d'or§7 en tuant §c"+target.getName());

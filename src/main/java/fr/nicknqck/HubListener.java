@@ -1,19 +1,20 @@
 package fr.nicknqck;
 
-import fr.nicknqck.GameState.MDJ;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.BijuListener;
+import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.StartGameEvent;
+import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
-import fr.nicknqck.roles.ns.Hokage;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -25,40 +26,41 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.NameTagVisibility;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HubListener implements Listener {
 	private final GameState gameState;
 	@Getter
 	private static HubListener instance;
+	@Setter
+	@Getter
+	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
 	public HubListener(GameState gameState) {this.gameState = gameState; instance = this;}
+
 	public final void StartGame() {
 		gameState.updateGameCanLaunch();
 		if (!gameState.gameCanLaunch) {
 			System.out.println("Impossible de start la partie");
 			return;
 		}
-		gameState.setInGamePlayers(gameState.getInLobbyPlayers());
+		gameState.setInGamePlayers(new ArrayList<>(gameState.getInLobbyPlayers()));
 		Collections.shuffle(gameState.getInGamePlayers(), Main.RANDOM);
-		gameState.setInLobbyPlayers(new ArrayList<>());
-		gameState.igPlayers.addAll(gameState.getInGamePlayers().stream().filter(uuid -> Bukkit.getPlayer(uuid) != null).map(Bukkit::getPlayer).collect(Collectors.toList()));
+		gameState.getInLobbyPlayers().clear();
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
-		gameState.infected = null;
-		gameState.infecteur = null;
-		gameState.Assassin = null;
-		Main.getInstance().getEventsManager().getEventsList().forEach(event -> event.setEnable(false));
-		gameState.canBeAssassin.clear();
 		ItemsManager.instance.clearJspList();
-		gameState.t = gameState.timeday;
+		gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 		gameState.getPlayerRoles().clear();
 		gameState.getPlayerKills().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
 		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
-		if (gameState.JigoroV2Pacte2)gameState.JigoroV2Pacte2 = false;
-		if (gameState.JigoroV2Pacte3)gameState.JigoroV2Pacte3 = false;
+		gameState.JigoroV2Pacte2 = false;
+		gameState.JigoroV2Pacte3 = false;
 		for (Entity e : Main.getInstance().getWorldManager().getGameWorld().getEntities()) {
 			if (e instanceof Player) continue;
 			e.remove();
@@ -78,7 +80,7 @@ public class HubListener implements Listener {
 			}
 		}
 		System.out.println("lobby: "+gameState.getInLobbyPlayers().size()+", roles: "+roleNmb+", equal: "+(gameState.getInLobbyPlayers().size() == roleNmb));
-		
+
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null) {
@@ -87,7 +89,6 @@ public class HubListener implements Listener {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					gameState.getInLobbyPlayers().add(player.getUniqueId());
 				}
-				gameState.igPlayers.clear();
 				return;
 			}
 			p.updateInventory();
@@ -108,6 +109,7 @@ public class HubListener implements Listener {
 			giveStartInventory(p);
 			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);
 			gameState.getGamePlayer().put(u, gamePlayer);
+			System.out.println("Player "+p+" a ete ajouter a la partie");
 		}
 		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
@@ -117,74 +119,66 @@ public class HubListener implements Listener {
 		}
 		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
 		BijuListener.getInstance().resetCooldown();
-		Bijus.initBiju(gameState);
+	//	Bijus.initBiju(gameState);
 		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState, rolesList));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
-		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (gameState.getMdj().equals(MDJ.NS)){
-				if (gameState.getHokage() == null){
-					gameState.setHokage(new Hokage(gameState.getTimeProcHokage()-10, gameState));
-				}
-				gameState.getHokage().run();
-			}
-		}, 220);
+		new AssassinManagerV2(gameState);
 		System.out.println("Ended StartGame");
 	}
-
 	public void giveStartInventory(Player p) {
 		Main.getInstance().getScoreboardManager().update(p);
 		ItemsManager.ClearInventory(p);
-			p.getInventory().setItem(0, Items.getdiamondsword());
-			p.getInventory().setItem(2, Items.getbow());
-			if (GameState.pearl == 1) {
-				p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, GameState.pearl));
-			}
-			p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
-			p.getInventory().setItem(9, new ItemStack(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()));
-			p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
-			p.getInventory().setItem(11, Items.getironshovel());
-			p.getInventory().setItem(12, Items.getironpickaxe());
-		if (GameState.nmbblock == 1) {
+		p.getInventory().setItem(0, Items.getdiamondsword());
+		p.getInventory().setItem(2, Items.getbow());
+		if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 1) {
+			p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, Main.getInstance().getGameConfig().getStuffConfig().getPearl()));
+		}
+		p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
+		p.getInventory().setItem(9, new ItemStack(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()));
+		p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
+		p.getInventory().setItem(11, Items.getironshovel());
+		p.getInventory().setItem(12, Items.getironpickaxe());
+		if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 1) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
-		} else if (GameState.nmbblock == 2) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 2) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
-		} else if (GameState.nmbblock == 3) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 3) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
-		} else if (GameState.nmbblock == 4) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 4) {
 			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
 			p.getInventory().setItem(10, new ItemStack(Material.BRICK, 64));
 		}
-		if (GameState.eau == 1) {
+		if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 1) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (GameState.eau == 2) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 2) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (GameState.eau == 3) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 3) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (GameState.eau == 4) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 4) {
 			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(16, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
 			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
 		}
-		if (GameState.lave == 1) {
+		if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 1) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (GameState.lave == 2) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 2) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (GameState.lave == 3) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 3) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (GameState.lave == 4) {
+		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 4) {
 			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(15, new ItemStack(Material.LAVA_BUCKET, 1));
 			p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));
@@ -194,7 +188,7 @@ public class HubListener implements Listener {
 		p.getInventory().setChestplate(Items.getdiamondchestplate());
 		p.getInventory().setLeggings(Items.getironleggings());
 		p.getInventory().setBoots(Items.getdiamondboots());
-		p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, gameState.getNmbGap()));
+		p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()));
 		p.updateInventory();
 		p.setWalkSpeed(0.2f);
 		((CraftPlayer) p).getHandle().setAbsorptionHearts(0);
@@ -208,6 +202,7 @@ public class HubListener implements Listener {
 		}
 	}
 	// Gerer l'interaction avec un item
+
 	@EventHandler
 	public void OnItemInteract(PlayerInteractEvent event) {
 		if (gameState.getServerState() != ServerStates.InLobby) return; // Uniquement dans le lobby
@@ -227,11 +222,7 @@ public class HubListener implements Listener {
 				}
 			}
 		}
-	}	
-
-	@Setter
-	@Getter
-	private HashMap<Roles, Integer> availableRoles = new HashMap<>();
+	}
 
 	public final void StartGame(final Player player) {
 		gameState.updateGameCanLaunch();
@@ -240,6 +231,29 @@ public class HubListener implements Listener {
 			player.closeInventory();
 		} else {
 			player.closeInventory();
+		}
+	}
+
+	@EventHandler
+	@SuppressWarnings("deprecation")
+	private void onSecond(@NonNull final OnSecond event) {
+		if (event.isInGame()) {
+			for (@NonNull final Scoreboard scoreboard : Main.getInstance().getScoreboardManager().getColorScoreboard().values()) {
+				if (scoreboard.getTeams().isEmpty())continue;
+				for (@NonNull final Team team : scoreboard.getTeams()) {
+					if (team.getEntries().isEmpty())continue;
+					if (team.getPlayers().isEmpty())continue;
+					for (@NonNull final OfflinePlayer offlinePlayer : team.getPlayers()) {
+						if (offlinePlayer.getPlayer() == null)continue;
+						@NonNull final Player player = offlinePlayer.getPlayer();
+						if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+							team.setNameTagVisibility(NameTagVisibility.NEVER);
+						} else {
+							team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+						}
+					}
+				}
+			}
 		}
 	}
 }

@@ -1,14 +1,15 @@
 package fr.nicknqck.roles.aot.mahr;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,11 +22,17 @@ public class Magath extends MahrRoles {
 
 	public Magath(UUID player) {
 		super(player);
-		giveHealedHeartatInt(4.0);
 		toSearch = null;
 	}
+
 	@Override
-	public Roles getRoles() {
+	public void RoleGiven(GameState gameState) {
+		giveHealedHeartatInt(4.0);
+		addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
+	}
+
+	@Override
+	public @NonNull Roles getRoles() {
 		return Roles.Magath;
 	}
 	private Player toSearch;
@@ -38,7 +45,7 @@ public class Magath extends MahrRoles {
 			if (gamePlayer.getRole() instanceof AotRoles && ((AotRoles) gamePlayer.getRole()).isTransformedinTitan && toSearch.getWorld().equals(owner.getWorld())) {
 				if (owner.getLocation().distance(toSearch.getLocation()) <= 15){
 					setResi(20);
-					givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				}else {
 					setResi(0);
 				}
@@ -86,7 +93,7 @@ public class Magath extends MahrRoles {
 							target.sendMessage("§cVous ne pouvez pas vous traquer vous même !");
 							return;
 						}
-						if (!gameState.hasRoleNull(target)) {
+						if (!gameState.hasRoleNull(target.getUniqueId())) {
 							RoleBase role = gameState.getGamePlayer().get(target.getUniqueId()).getRole();
 							if (role instanceof MahrRoles) {
 								if (toSearch == null) {

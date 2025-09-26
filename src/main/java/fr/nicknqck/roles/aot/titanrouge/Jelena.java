@@ -1,11 +1,12 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,18 +16,19 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 
 public class Jelena extends TitansRoles {
+	private int invuse = 2;
 
 	public Jelena(UUID player) {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
-		return Roles.Jelena;
+	public @NonNull fr.nicknqck.enums.Roles getRoles() {
+		return fr.nicknqck.enums.Roles.Jelena;
 	}
+
 	@Override
 	public String[] Desc() {
 		Main.getInstance().getGetterList().getTitanRougeList(owner);
-		KnowRole(owner, Roles.TitanBestial, 20);
 		return new String[] {
 				AllDesc.bar,
 				AllDesc.role+"Jelena",
@@ -45,14 +47,12 @@ public class Jelena extends TitansRoles {
 	public String getName() {
 		return "Jelena";
 	}
-
-	private int invuse = 2;
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
 		if (args.length == 2) {
 			if (args[1] != null) {
 				Player target = Bukkit.getPlayer(args[1]);
-				if (!gameState.hasRoleNull(target)) {
+				if (!gameState.hasRoleNull(target.getUniqueId())) {
 					if (invuse > 0) {
 						   // Créer un nouvel inventaire avec la taille d'un double coffre (54 emplacements)
 				        Inventory doubleChest = Bukkit.createInventory(owner, 54, "Inventaire de " + target.getName());
@@ -105,12 +105,14 @@ public class Jelena extends TitansRoles {
 			owner.sendMessage("Veuiller indiquer le pseudo d'un joueur");	
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void resetCooldown() {
 		invuse = 2;
+	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+		addKnowedRole(Sieg.class);
 	}
 }

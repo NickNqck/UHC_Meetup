@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -24,7 +24,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 		setChakraType(Chakras.DOTON);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.ZetsuNoir;
 	}
 	@Override
@@ -53,11 +53,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 		};
 	}
 
-	@Override
-	public ItemStack[] getItems() {
-	    return new ItemStack[0];
-	}
-	@Override
+    @Override
 	public void resetCooldown() {
 		regencooldown = 0;
 	}
@@ -73,10 +69,10 @@ public class ZetsuNoir extends AkatsukiRoles {
 			}
 		}
 		if (gameState.isApoil(owner)) {
-			givePotionEffet(PotionEffectType.INVISIBILITY, 20*2, 1, true);
-			givePotionEffet(PotionEffectType.SPEED, 20*2, 2, true);
+			OLDgivePotionEffet(PotionEffectType.INVISIBILITY, 20*2, 1, true);
+			OLDgivePotionEffet(PotionEffectType.SPEED, 20*2, 2, true);
 			for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-				if (gameState.hasRoleNull(p)) {
+				if (gameState.hasRoleNull(p.getUniqueId())) {
 					return;
 				} 
 			if (timePassedNearby.containsKey(p.getUniqueId())) {
@@ -110,7 +106,7 @@ public class ZetsuNoir extends AkatsukiRoles {
 						owner.sendMessage("Vous venez de tuer un joueur possédant l'effet "+AllDesc.Speed+" Vous gagez donc 10% de cette effet");
 					}
 					if (hasPermanentEffect(victim, PotionEffectType.FIRE_RESISTANCE)) {
-						givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+						OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 						owner.sendMessage("Vous venez de tuer un joueur possédant l'effet "+AllDesc.fireResi+" Vous gagez donc cette effet");
 					}
 			}

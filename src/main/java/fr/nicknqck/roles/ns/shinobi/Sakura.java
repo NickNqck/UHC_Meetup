@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
@@ -28,7 +28,7 @@ public class Sakura extends ShinobiRoles {
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Sakura;
 	}
 	@Override
@@ -62,18 +62,15 @@ public class Sakura extends ShinobiRoles {
 				ByakugoItem()
 		};
 	}
-	@Override
-	public void resetCooldown() {
-		
-	}
-	private ItemStack ByakugoItem() {
+
+    private ItemStack ByakugoItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§dByakugo").setLore("§7Vous permet de stocker des "+AllDesc.coeur).toItemStack();
 	}
 	private int SavedHP = 0;
 	private boolean Receve = false;
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 	}
 
 	public void onTick() {

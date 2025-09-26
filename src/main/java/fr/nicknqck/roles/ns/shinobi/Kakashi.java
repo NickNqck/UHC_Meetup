@@ -1,9 +1,9 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
@@ -41,7 +41,7 @@ public class Kakashi extends ShinobiRoles {
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);
 		setChakraType(Chakras.RAITON);
-		if (!gameState.attributedRole.contains(Roles.Obito)) {
+		if (!gameState.getAttributedRole().contains(Roles.Obito)) {
 			ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 			Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
 		}
@@ -54,7 +54,7 @@ public class Kakashi extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Kakashi;
 	}
 	@Override
@@ -327,7 +327,7 @@ public class Kakashi extends ShinobiRoles {
 				setResi(0);
 				if (Copied.containsKey(target)) {
 					for (PotionEffectType po : Copied.get(target)) {
-						givePotionEffet(po, Integer.MAX_VALUE, 1, true);
+						OLDgivePotionEffet(po, Integer.MAX_VALUE, 1, true);
 					}
 					new BukkitRunnable() {
 						

@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -15,6 +15,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,7 +43,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.KyogaiV2;
 	}
 	@Override
@@ -54,7 +55,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 		Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 	@Override
@@ -228,7 +229,7 @@ public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
 			if (owner != null && damager != null) {//Les deux joueurs sont encore connecter
 				if (Loc.getPlayerFacing(owner).equals(Loc.getPlayerFacing(damager))) {//si ils regardent la même direction
 					if (RandomUtils.getRandomProbability(20)) {//donc 20% de chance de donner speed 1 a kyogai
-						givePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*30, 1, true);
 						owner.sendMessage("§7Vous avez gagné l'effet "+AllDesc.Speed+"§b 1§7 suite à là douleurs");
 					}
 				}

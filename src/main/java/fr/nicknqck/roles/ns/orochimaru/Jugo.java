@@ -1,14 +1,14 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
@@ -42,11 +42,11 @@ public class Jugo extends OrochimaruRoles {
 		super.RoleGiven(gameState);
 		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(Roles.Kimimaro)) {
+			if (!gameState.getAttributedRole().contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);
 				owner.sendMessage("§5Kimimaro§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort (/§6ns me§7)");
 			}
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+			if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à sa mort (/§6ns me§7)");
 			}
@@ -65,7 +65,7 @@ public class Jugo extends OrochimaruRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jugo;
 	}
 	@Override
@@ -76,12 +76,8 @@ public class Jugo extends OrochimaruRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 	}
-	@Override
-	public String[] Desc() {
-		return new String[0];
-	}
 
-	@Override
+    @Override
 	public TextComponent getComponent() {
 		return this.desc;
 	}
@@ -100,7 +96,7 @@ public class Jugo extends OrochimaruRoles {
 		if (msg) {
 			owner.sendMessage("§5Kimimaro§7 est mort, vous obtenez donc l'identité de son maitre§5 Orochimaru§7, (§6/ns me§7)");
 		}
-		getKnowedRoles().add(Orochimaru.class);
+		addKnowedRole(OrochimaruV2.class);
 	}
 	private void onOrochimaruDeath(boolean msg) {
 		orochimaruDeath = true;
@@ -108,11 +104,11 @@ public class Jugo extends OrochimaruRoles {
 			owner.sendMessage("§7Maitre§5 Orochimaru§7 est mort, vous obtenez donc l'identité de vos nouveau amis,§5 Karin§f et§5 Suigetsu§7, (§6/ns me§7)");
 		}
 		getKnowedRoles().add(Karin.class);
-		getKnowedRoles().add(Suigetsu.class);
+		getKnowedRoles().add(SuigetsuV2.class);
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (!gameState.hasRoleNull(player)) {
+		if (!gameState.hasRoleNull(player.getUniqueId())) {
 			if (getListPlayerFromRole(Roles.Kimimaro).contains(player) &&!kimimaroDeath) {
 				onKimimaroDeath(true);
 			}
@@ -138,11 +134,11 @@ public class Jugo extends OrochimaruRoles {
 				marqueCD = 60*8;
 				if (RandomUtils.getOwnRandomProbability(70)) {
 					owner.sendMessage("§7Vous obtenez l'effet§e Speed 1");
-					givePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
+					OLDgivePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
                 } else {
 					owner.sendMessage("§7Vous obtenez l'effet§e Speed 1§7 et l'effet§9 Résistance 1");
-					givePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
-					givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
+					OLDgivePotionEffet(PotionEffectType.SPEED, 20*60*3, 1, true);
+					OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*60*3, 1, true);
 					setResi(20);
 					TeamList oldTeam = getOriginTeam();
 					setTeam(TeamList.Solo);
@@ -156,7 +152,7 @@ public class Jugo extends OrochimaruRoles {
 							if (gameState.getServerState() != GameState.ServerStates.InGame) {
 								cancel();
 							}
-							if (owner != null && !gameState.hasRoleNull(owner) && i >= 60*3) {
+							if (owner != null && !gameState.hasRoleNull(owner.getUniqueId()) && i >= 60*3) {
 								setTeam(oldTeam);
 							}
 						}

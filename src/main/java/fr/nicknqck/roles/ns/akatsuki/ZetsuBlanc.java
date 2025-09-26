@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
@@ -36,7 +36,7 @@ public class ZetsuBlanc extends AkatsukiRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.ZetsuBlanc;
 	}
 
@@ -76,10 +76,8 @@ public class ZetsuBlanc extends AkatsukiRoles {
 	private ItemStack SporeItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§cSpore").setLore("§rVous permez de déposer vos spores sur un joueur").toItemStack();
 	}
-	@Override
-	public void resetCooldown() {
-	}
-	@SuppressWarnings("deprecation")
+
+    @SuppressWarnings("deprecation")
 	@Override
 	public void onAllPlayerChat(org.bukkit.event.player.PlayerChatEvent e, Player p) {
 		if (p.getUniqueId() == owner.getUniqueId()) {
@@ -125,6 +123,11 @@ public class ZetsuBlanc extends AkatsukiRoles {
 					new BukkitRunnable() {
 						@Override
 						public void run() {
+                            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                                cancel();
+                                return;
+                            }
+                            if (!getGamePlayer().isAlive())cancel();
 							if (Spores) {
 								if (owner.getHealth() <= 6.0) {
 									owner.setHealth(owner.getHealth() + 14.0);

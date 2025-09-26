@@ -1,17 +1,19 @@
 package fr.nicknqck;
 
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.bijus.BijuListener;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.BijuListener;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
-import fr.nicknqck.items.InfectItem;
+import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.ds.demons.Susamaru;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
+import fr.nicknqck.roles.ds.demons.SusamaruV2;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
@@ -37,7 +39,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -65,17 +66,17 @@ public class GameListener implements Listener {
 		border = Main.getInstance().getWorldManager().getGameWorld().getWorldBorder();
 		border.setSize(Border.getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
+			@NonNull final OnSecond onSecond = new OnSecond(this.gameState);
+			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().onSecond(gameState);
 			}
-			InfectItem.getInstance().onSecond();
 			BijuListener.getInstance().runnableTask(gameState);
 			TitanListener.getInstance().onSecond();
 
 		}, 20, 20);
 	}
-	private boolean infectedgiveforce = false;
 	private void UpdateGame() {
 		switch(gameState.getServerState()) {
 		case InLobby:
@@ -107,32 +108,17 @@ public class GameListener implements Listener {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
 				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
-				if (!gameState.getInSleepingPlayers().isEmpty()) gameState.getInSleepingPlayers().clear();
 				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId()))gameState.addInLobbyPlayers(p);
 			}
 			break;
 		case InGame:
-			Main.getInstance().getWorldManager().getGameWorld().setPVP(gameState.pvp);
+			Main.getInstance().getWorldManager().getGameWorld().setPVP(Main.getInstance().getGameConfig().isPvpEnable());
 			for (UUID u : gameState.getInGamePlayers()) {
 				if (gameState.inGameTime < 10) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null)continue;
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
-				}
-				if (gameState.infected != null && gameState.infected.getUniqueId() == u) {
-					if (gameState.nightTime) {
-						Player p = Bukkit.getPlayer(u);
-						if (p == null)continue;
-						gameState.getPlayerRoles().get(p).givePotionEffet(gameState.infected, PotionEffectType.INCREASE_DAMAGE, 20*3, 1, true);
-						if (!infectedgiveforce) {
-							infectedgiveforce = true;
-						}
-					} else {
-						if (infectedgiveforce) {
-							infectedgiveforce = false;
-						}
-					}
 				}
 			}
 			AntiLopsa.startWorldBorderChecker();
@@ -188,7 +174,7 @@ public class GameListener implements Listener {
 			if (gameState.inGameTime == Border.getTempReduction()) {
 				gameState.shrinking = true;
 				long speed = Border.getBorderSpeed()*20;
-				border.setSize(Border.getMinBorderSize()*2, speed*360);
+				border.setSize(Border.getMinBorderSize()*2, speed*20);
 				SendToEveryone("§7La bordure commence à bouger !");
 			}
 			if (gameState.inGameTime == 0) {
@@ -198,10 +184,10 @@ public class GameListener implements Listener {
 				SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 				Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 				Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("doDaylightCycle", "false");
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-					for (Player p : Bukkit.getOnlinePlayers()) {
-						if (gameState.getPlayerRoles().containsKey(p)) {
-							gameState.getPlayerRoles().get(p).onDay(gameState);
+				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+					for (final Player p : Bukkit.getOnlinePlayers()) {
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().onDay(gameState);
 						}
 					}
 					Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
@@ -209,72 +195,80 @@ public class GameListener implements Listener {
 			} else {
 				gameState.t--;
 				if (gameState.t <= 0) {
+					gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
 					if (gameState.nightTime) {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 						gameState.nightTime = false;
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant jour");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-						gameState.t = gameState.timeday;
 						for (UUID u : gameState.getInGamePlayers()) {
-							Player p = Bukkit.getPlayer(u);
-							if (p == null)continue;
-							if (gameState.getPlayerRoles().containsKey(p)) {
-								gameState.getPlayerRoles().get(p).onDay(gameState);
+							if (!gameState.hasRoleNull(u)) {
+								gameState.getGamePlayer().get(u).getRole().onDay(gameState);
 							}
 						}
 						Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
-						//detectWin(gameState);
 					} else {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(16500);
 						gameState.nightTime = true;
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant nuit\n");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-						gameState.t = gameState.timeday;
-						for (UUID u : gameState.getInGamePlayers()) {
-							Player p = Bukkit.getPlayer(u);
-							if (p == null)continue;
-							if (gameState.getPlayerRoles().containsKey(p)) {
-								gameState.getPlayerRoles().get(p).onNight(gameState);
-							}
-						}
-						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, gameState.timeday));
+						Bukkit.getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
 					}
 				}
 			}
 			if (gameState.inGameTime == gameState.roleTimer) {
 				gameState.setRoleAttributed(true);
-				RoleBase lastRoleGive = (RoleBase) Main.getInstance().getRoleManager().getRolesRegistery().get(Susamaru.class);
+				RoleBase lastRoleGive = (RoleBase) Main.getInstance().getRoleManager().getRolesRegistery().get(SusamaruV2.class);//Role par défaut
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
-					if (p == null)continue;
-					RoleBase role = gameState.GiveRole(p);
-					if (role != null){
-						role.RoleGiven(gameState);
-						role.GiveItems();
-						lastRoleGive = role;
+					if (p == null) {
+						System.out.println("Player: "+u.toString()+", can't have role because he was offline");
+						continue;
 					}
-					Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage("§cDiscord du mode de jeu: §6https://discord.gg/6dWxCAEsfF"), 20*10);//20ticks* le nombre de seconde voulue
+                    RoleBase role;
+					role = gameState.GiveRole(p);// (Ancien système de rôle)
+					//role = Main.getInstance().getRoleManager().getRandomRole(u);
+                    if (role != null){
+                        role.RoleGiven(gameState);
+                        role.GiveItems();
+                        lastRoleGive = role;
+						if (Main.getInstance().getGameConfig().isGiveLame()) {
+							if (role instanceof DemonsSlayersRoles){
+								if (((DemonsSlayersRoles) role).isCanuseblade()){
+									role.giveItem(p, false, Items.getLamedenichirin());
+								}
+							}
+						}
+						if (role instanceof AotRoles) {
+							role.giveItem(p, false, gameState.EquipementTridi());
+						}
+                        Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, role, role.getRoles(), role.getGamePlayer(), false));
+                    }
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> p.sendMessage("§cDiscord du mode de jeu: §6https://discord.gg/6dWxCAEsfF"), 20*10);//20ticks* le nombre de seconde voulue
 				}
 				Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, lastRoleGive, lastRoleGive.getRoles(), lastRoleGive.getGamePlayer(), true));
 			}
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (!gameState.hasRoleNull(p)) {
-					gameState.getGamePlayer().get(p.getUniqueId()).getRole().Update(gameState);
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
+					GamePlayer gamePlayer = gameState.getGamePlayer().get(u);
+					gamePlayer.getRole().Update(gameState);
+					if (!gamePlayer.isAlive())continue;
 					List<ItemStack> items = new ArrayList<>();
 					for (ItemStack item : p.getInventory().getContents()) {
 						if (item == null)continue;
 						if (item.getType().equals(Material.AIR))continue;
 						items.add(item);
 					}
-					gameState.getGamePlayer().get(p.getUniqueId()).setLastInventoryContent(items.toArray(new ItemStack[0]));
+					gamePlayer.setLastInventoryContent(items.toArray(new ItemStack[0]));
+					gamePlayer.setLastArmorContent(p.getInventory().getArmorContents());
 				}
 			}
 			if (gameState.getActualPvPTimer() == 0){
-				gameState.setPvP(true);
+				Main.getInstance().getGameConfig().setPvpEnable(true);
 				SendToEveryone("(§c!§f) Le§c pvp§f est maintenant activé !");
 				gameState.setActualPvPTimer(-1);
 			} else {
@@ -293,16 +287,14 @@ public class GameListener implements Listener {
 	public static void EndGame(final GameState gameState, final TeamList team) {
 		gameState.setServerState(ServerStates.GameEnded);
 		Bukkit.getPluginManager().callEvent(new EndGameEvent(gameState, team));
-		gameState.setJubiCrafter(null);
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
 			Border.setActualBorderSize(Border.getMaxBorderSize());
-			gameState.setPvP(false);
+			Main.getInstance().getGameConfig().setPvpEnable(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
 			gameState.setInObiPlayers(new ArrayList<>());
-			gameState.setInSleepingPlayers(new ArrayList<>());
 			gameState.TitansRouge.clear();
 			gameState.infectedbyadmin.clear();
 			TitanListener.getInstance().resetCooldown();
@@ -310,9 +302,6 @@ public class GameListener implements Listener {
 			PotionUtils.getNoFalls().clear();
 			AttackUtils.CantAttack.clear();
 			AttackUtils.CantReceveAttack.clear();
-			if (gameState.getHokage() != null) {
-				gameState.getHokage().stop();
-			}
 			gameState.getDeadRoles().clear();
 			for (Chakras ch : Chakras.values()) {
 				ch.getChakra().getList().clear();
@@ -330,15 +319,14 @@ public class GameListener implements Listener {
 			}
 			BijuListener.getInstance().resetCooldown();
 			gameState.DeadRole.clear();
-			gameState.attributedRole.clear();
+			gameState.getAttributedRole().clear();
 			KamuiUtils.resetUtils();
-			gameState.setHokage(null);
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
 				ItemsManager.ClearInventory(p);
-				if (!gameState.hasRoleNull(p)) {
-					RoleBase r = gameState.getPlayerRoles().get(p);
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
+					RoleBase r = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 					r.setBonusForce(0);
 					r.setBonusResi(0);
 					r.setResi(0);
@@ -369,8 +357,8 @@ public class GameListener implements Listener {
 						String win = winer == null ? "§cDéconnecter" : winer.getName();
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
 						assert winer != null;
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
-						title = "Victoire de: "+team.getColor()+gameState.getPlayerRoles().get(winer).getRoles().name();
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
+						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName();
                         SendToEveryone(Vainqueurs);
 					}
 				}
@@ -403,9 +391,9 @@ public class GameListener implements Listener {
 							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name());
 							s.append(i == gameState.getPlayerKills().get(role1.getPlayer()).size() ? "§7)" : "§7)\n");
 						}
-						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().name(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
+						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
 					} else {
-						SendToEveryone(role1.getTeamColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeamColor()+role1.getRoles().name()+"§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill");
+						SendToEveryone(role1.getTeamColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName()+"§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill");
 					}
 				}
 			}
@@ -420,7 +408,6 @@ public class GameListener implements Listener {
 					p.setGameMode(GameMode.ADVENTURE);
 				}
 			}
-			gameState.Shifter.clear();
 			gameState.setInSpecPlayers(new ArrayList<>());
 			gameState.getGamePlayer().clear();
 			gameState.DeadRole = new ArrayList<>();
@@ -467,7 +454,7 @@ public class GameListener implements Listener {
 			GameListener.getInstance().sendHoverMessage(p, prefix, HoverWord, HoverContent, suffix);
 		}
 	}
-	public static Location RandomTp(@NonNull final Entity entity) {
+	public static void RandomTp(@NonNull final Entity entity) {
 		Location loc = null;
 		final World world = Main.getInstance().getWorldManager().getGameWorld();
 		while (loc == null || world.getBlockAt(loc).getType().name().contains("WATER") || world.getBlockAt(loc).getType().name().contains("LAVA")) {
@@ -481,9 +468,8 @@ public class GameListener implements Listener {
 		if (entity instanceof Player) {
 			((Player)entity).playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
-		return loc;
 	}
-	public static Location RandomTp(final Entity entity, final World world) {
+	public static void RandomTp(@NonNull final Entity entity, @NonNull final World world) {
 		Location loc = null;
 		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
 			float x = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
@@ -491,20 +477,25 @@ public class GameListener implements Listener {
 			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize(), 0, z-Border.getActualBorderSize())).getLocation();
 		}
 		loc.setY(loc.getY()+1);
-		if (entity != null) entity.teleport(loc);
+        entity.teleport(loc);
 		if (entity instanceof Player) {
 			((Player)entity).playSound(entity.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
 		}
-		return loc;
 	}
-	public static Location generateRandomLocation(final World world) {
+	public static Location generateRandomLocation(@NonNull final World world) {
 	    Location loc;
 	    do {
-	        float x = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
-	        float z = Border.getActualBorderSize() * Main.RANDOM.nextFloat();
+			float number = Border.getActualBorderSize();
+	        float x = (float) ((Main.RANDOM.nextDouble() * 2 * number) - number);
+			System.out.println("x:  ->  "+x);
+	        float z = (float) ((Main.RANDOM.nextDouble() * 2 * number) - number);
+			System.out.println("z:  ->  "+z);
 	        loc = world.getHighestBlockAt(new Location(world, x - Border.getActualBorderSize() / 2, 0, z - Border.getActualBorderSize() / 2)).getLocation();
 	        loc.setY(loc.getY() + 1);
-	    } while (loc.getX() <= -Border.getMaxBorderSize() || loc.getX() >= Border.getMaxBorderSize() || loc.getZ() <= -Border.getMaxBorderSize() || loc.getZ() >= Border.getMaxBorderSize() || loc.getBlock().getType().equals(Material.STATIONARY_LAVA));
+			System.out.println("Loc:  ->  "+loc);
+	    } while (loc.getX() <= -(Border.getMaxBorderSize()-10) || loc.getX() >= (Border.getMaxBorderSize()-10)
+				|| loc.getZ() <= -(Border.getMaxBorderSize()-10) || loc.getZ() >= (Border.getMaxBorderSize()-10)
+				|| loc.getBlock().getType().name().contains("LAVA") || loc.getBlock().getType().name().contains("WATER"));
 	    return loc;
 	}
 	private static int trueCount(boolean... b) {
@@ -515,7 +506,12 @@ public class GameListener implements Listener {
         return sum;
     }
 	public static void detectWin(GameState gameState) {
-        List<Player> players = new ArrayList<>(gameState.igPlayers);
+        List<Player> players = new ArrayList<>();
+		for (final UUID uuid : gameState.getInGamePlayers()) {
+			Player player = Bukkit.getPlayer(uuid);
+			if (player == null)continue;
+			players.add(player);
+		}
 		players.removeAll(gameState.getInSpecPlayers());
 		boolean gameDone = false;
 		TeamList winer = null;
@@ -527,15 +523,15 @@ public class GameListener implements Listener {
 		
 		boolean Mahr = false, Titans = false, Soldat = false;
 		
-		boolean Jubi = false, Orochimaru = false, Akatsuki = false, Sasuke = false, Brume = false, Shinobi = false, Kumogakure = false, Kabuto = false;
+		boolean Jubi = false, Orochimaru = false, Akatsuki = false, Sasuke = false, Brume = false, Shinobi = false, Kumogakure = false, Kabuto = false, Shisui = false;
 
 		boolean OverWorld = false, Nether = false;
 
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player player2 = Bukkit.getPlayer(u);
 			if (player2 == null)continue;
-			if (gameState.getPlayerRoles().get(player2) != null) {
-				RoleBase role = gameState.getPlayerRoles().get(player2);
+			if (!gameState.hasRoleNull(u)) {
+				RoleBase role = gameState.getGamePlayer().get(u).getRole();
 				switch (role.getTeam()) {
 					case Akatsuki:
 						Akatsuki = true;
@@ -591,17 +587,20 @@ public class GameListener implements Listener {
 					case Nether:
 						Nether = true;
 						break;
+					case Shisui:
+						Shisui = true;
+						break;
 				}
 			}
 		}
 		int i = trueCount(Slayer, Demon, Solo, Jigoro, Alliance,
 				Mahr, Titans, Soldat,
 				Jubi, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto,
-				OverWorld, Nether);
+				OverWorld, Nether, Shisui);
 		if (gameDone) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (!gameState.hasRoleNull(p)) {
-					gameState.getPlayerRoles().get(p).onEndGame();
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().onEndGame();
 				}
 			}
 			System.out.println("game ending");
@@ -671,6 +670,10 @@ public class GameListener implements Listener {
 				winer = TeamList.Sasuke;
 				gameDone = true;
 			}
+			if (Shisui) {
+				winer = TeamList.Shisui;
+				gameDone = true;
+			}
 			if (Brume) {
 				winer = TeamList.Zabuza_et_Haku;
 				gameDone = true;
@@ -707,8 +710,8 @@ public class GameListener implements Listener {
 		if (inv.getTitle().equals("§c/ds claim") || inv.getTitle().equals("§c/claim")) {
 			if (item != null && item.getType() != Material.AIR && item.getType() != Material.STAINED_GLASS_PANE) {
 				Player p = Bukkit.getPlayer(event.getWhoClicked().getName());
-				if (!gameState.hasRoleNull(p)) {
-					gameState.getPlayerRoles().get(p).giveItem(p, true, item);
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
+					gameState.getGamePlayer().get(p.getUniqueId()).getRole().giveItem(p, true, item);
 					p.updateInventory();
 				}
 				p.updateInventory();
@@ -718,13 +721,13 @@ public class GameListener implements Listener {
 		}
 		if (event.getWhoClicked() instanceof Player) {
 			Player clicker = (Player)event.getWhoClicked();
-			if (!gameState.hasRoleNull(clicker)) {
-				gameState.getPlayerRoles().get(clicker).onInventoryClick(event, item, inv, clicker);
+			if (!gameState.hasRoleNull(clicker.getUniqueId())) {
+				gameState.getGamePlayer().get(clicker.getUniqueId()).getRole().onInventoryClick(event, item, inv, clicker);
 			}
 			for (Player p : Bukkit.getOnlinePlayers()){
 				if (gameState.getInGamePlayers().contains(p.getUniqueId())) {
-					if (!gameState.hasRoleNull(p)) {
-						gameState.getPlayerRoles().get(p).onAllPlayerInventoryClick(event, item, inv, clicker);
+					if (!gameState.hasRoleNull(p.getUniqueId())) {
+						gameState.getGamePlayer().get(p.getUniqueId()).getRole().onAllPlayerInventoryClick(event, item, inv, clicker);
 					}
 				}
 			}
@@ -748,8 +751,10 @@ public class GameListener implements Listener {
 					if (item != null && item.getType() != Material.AIR && item.getType() != Material.STAINED_GLASS_PANE) {
 					    Player p = Bukkit.getPlayer(event.getWhoClicked().getName());
 					    p.closeInventory();
-					    gameState.getPlayerRoles().get(p).FormChoosen(item, gameState);
-					    gameState.getPlayerRoles().get(p).neoFormChoosen(item, inv, event.getSlot(), gameState);
+						if (!gameState.hasRoleNull(p.getUniqueId())){
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().FormChoosen(item, gameState);
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().neoFormChoosen(item, inv, event.getSlot(), gameState);
+						}
 					}
 				}
 				break;
@@ -763,8 +768,9 @@ public class GameListener implements Listener {
 		Player player = event.getPlayer();
 		if (event.hasItem()) {
 			ItemStack itemstack = event.getItem();
-			if (!gameState.hasRoleNull(player)) {
-				for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
+			if (!gameState.hasRoleNull(player.getUniqueId())) {
+				for (Power power : new ArrayList<>(gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers())) {
+					if (power == null)continue;
 					if (power instanceof ItemPower) {
 						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
 							event.setCancelled(true);
@@ -776,54 +782,26 @@ public class GameListener implements Listener {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
-				if (!gameState.hasRoleNull(p)) {
+				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					gameState.getGamePlayer().get(p.getUniqueId()).getRole().onALLPlayerInteract(event, player);
 				}
 			}
-			if (!gameState.hasRoleNull(player)) {
+			if (!gameState.hasRoleNull(player.getUniqueId())) {
 				if (event.getAction().name().contains("RIGHT")){
 					event.setCancelled(gameState.getGamePlayer().get(player.getUniqueId()).getRole().ItemUse(itemstack, gameState));
 				} else {
 					gameState.getGamePlayer().get(player.getUniqueId()).getRole().onLeftClick(event, gameState);
 				}
 			}
-				if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-					if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-						if (!gameState.hasRoleNull(player)) {
-							if (player.getItemInHand().isSimilar(Items.getSusamaruBow())) {
-			        			if (itemstack.isSimilar(Items.getSusamaruBow())) {
-			        				RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-									if (!(role instanceof Susamaru))return;
-		                			Susamaru sam = (Susamaru) role;
-		                			if (player != sam.owner)return;
-		                			if (sam.Niveau1 && !sam.Niveau2 && sam.changecd <= 0) {
-		                				sam.Niveau1 = false;
-		                				sam.Niveau2 = true;
-		                				sam.owner.sendMessage("Vous êtes passé au §6niveau 2");
-		                				sam.changecd = 1;
-		                			}
-		                			if (sam.Niveau2 && !sam.Niveau1 && sam.changecd <= 0) {
-		                				sam.Niveau1 = true;
-		                				sam.Niveau2 = false;
-		                				sam.changecd = 1;
-		                				sam.owner.sendMessage("Vous êtes passé au §6niveau 1");
-		                			}
-			        			}
-			        		}
-						}
-					}
-				}
 		}		
 	}	
 	@EventHandler
 	public void OnPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		Player player = event.getPlayer();
 		if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
-			if (!gameState.hasRoleNull(player)) {
-				if (gameState.getPlayerRoles().get(player).getRoles() == null) {
-					event.setCancelled(true);
-				}
-			}
+			if (!gameState.hasRoleNull(player.getUniqueId())) {
+                gameState.getGamePlayer().get(player.getUniqueId()).getRole().getRoles();
+            }
 		}
 	}
 	public static void dropItem(final Location loc, final ItemStack item) {loc.getWorld().dropItem(loc.clone().add(0.5D, 0.3D, 0.5D), item);
@@ -836,7 +814,7 @@ public class GameListener implements Listener {
 		for (UUID u : gameState.getInGamePlayers()) {
 			Player p = Bukkit.getPlayer(u);
 			if (p == null)continue;
-			if (!gameState.hasRoleNull(p)) {
+			if (!gameState.hasRoleNull(u)) {
 				gameState.getGamePlayer().get(p.getUniqueId()).getRole().onAllPlayerMoove(e, e.getPlayer());
 			}
 		}
@@ -858,14 +836,6 @@ public class GameListener implements Listener {
         for (Chakras ch : Chakras.values()) {
         	ch.getChakra().onPlayerMoove(e, p, from, to);
         }
-        if (gameState.getInSleepingPlayers().contains(p)) {//si le joueur est endormie par enmu
-        	
-        	if (gameState.getServerState() == ServerStates.InLobby)gameState.delInSleepingPlayers(p);//si on est dans le lobby et qu'on est endormie sa nous réveille
-        	if (gameState.getInSpecPlayers().contains(p))gameState.delInSleepingPlayers(p);//si on est en spec et qu'on est endormie sa nous réveille
-        	
-        	p.teleport(from);//teleporte le joueur à son endroit initial
-        	p.setAllowFlight(true);//au cas ou il est en l'air on autorise le fly
-        }        
         if (gameState.getInObiPlayers().contains(p)) {//si le joueur est touchée par les Obis de Daki
         	if (gameState.getServerState() == ServerStates.InLobby)gameState.delInObiPlayers(p);
         	if (gameState.getInSpecPlayers().contains(p))gameState.delInObiPlayers(p);

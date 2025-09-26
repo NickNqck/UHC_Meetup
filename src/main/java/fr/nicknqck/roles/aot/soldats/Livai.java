@@ -1,12 +1,13 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.betteritem.BetterItemEvent;
+import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -20,7 +21,7 @@ public class Livai extends SoldatsRoles {
 		setAckerMan(true);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Livai;
 	}
 	@Override
@@ -74,22 +75,20 @@ public class Livai extends SoldatsRoles {
 			if(item.isSimilar(Items.getsugar())) {
 				if (cdsugar <= 0) {
 					if (nbsugar <= 0) {
-						givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*4), 2, true);
-						givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*4), 1, true);
+						OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*4), 2, true);
+						OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*4), 1, true);
 							cdsugar = 60*3;
 							nbsugar += 1;
 					} else {
 						if (nbsugar == 1) {
-							givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
-							givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
+							OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
+							OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
 							cdsugar = 60*3;
 							nbsugar+= 1;
 						} else {
-							if (nbsugar >= 2) {
-								givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*2), 1, true);
-								cdsugar = 60*3;
-							}
-						}
+                            OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20 * (60 * 2), 1, true);
+                            cdsugar = 60*3;
+                        }
 					}
 				} else {
 					sendCooldown(owner, cdsugar);

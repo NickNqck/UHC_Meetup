@@ -2,8 +2,8 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
@@ -52,7 +52,7 @@ public class Nakime extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Nakime;
 	}
 	@Override
@@ -75,7 +75,7 @@ public class Nakime extends DemonsRoles {
 						if (cd <= 0) {
 							for (Player p : Bukkit.getOnlinePlayers()) {
 								if (p.getWorld().getName().equalsIgnoreCase("nakime")) {
-									if (!gameState.hasRoleNull(p)) {
+									if (!gameState.hasRoleNull(p.getUniqueId())) {
 										if (gameState.getGamePlayer().get(p.getUniqueId()).getRole().getRoles() != Roles.Nakime) {
 											LocPlayer loc = new LocPlayer(Main.getInstance().getWorldManager().getNakimeWorld());
 											p.teleport(loc.getRandomPositionRespawn());
@@ -146,8 +146,8 @@ public class Nakime extends DemonsRoles {
 	public void Update(GameState gameState) {
 		actualworld = owner.getWorld();
 		if (actualworld.getName().equalsIgnoreCase("nakime")) {
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (p.getLocation().getY() <= 122) {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
@@ -160,7 +160,7 @@ public class Nakime extends DemonsRoles {
 				}
 			}
 		}else if (actualworld.getName().equalsIgnoreCase("world")) {
-			givePotionEffet(owner, PotionEffectType.WEAKNESS, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.WEAKNESS, 60, 1, true);
 		}
 		if (cooldown == 0) {
 			cooldown-=1;
@@ -202,7 +202,7 @@ public class Nakime extends DemonsRoles {
 		cooldown = 60*8;
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override

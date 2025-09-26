@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.mahr.*;
-import fr.nicknqck.roles.aot.titanrouge.TitanBestial;
+import fr.nicknqck.roles.aot.titanrouge.Sieg;
 import fr.nicknqck.roles.builder.TeamList;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -18,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -38,12 +39,12 @@ public class Eren extends AotRoles {
 		Titans.Assaillant.getTitan().getListener().setAssaillant(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Eren;
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 
@@ -137,13 +138,13 @@ public class Eren extends AotRoles {
 					Cercle(),
 					Saut()
 			};
-		} else if (killBertolt && !killPorco) {
+		} else if (killBertolt) {
 			return new ItemStack[] {
 					one,
 					two,
 					Cercle()
 			};
-		}else if (!killBertolt && killPorco) {
+		}else if (killPorco) {
 			return new ItemStack[] {
 					one,
 					two,
@@ -215,31 +216,31 @@ public class Eren extends AotRoles {
 		if (killer == owner) {
 			if (victim != null) {
 				GamePlayer gamePlayer = gameState.getGamePlayer().get(victim.getUniqueId());
-				if (gamePlayer.getRole() instanceof Bertolt) {
+				if (gamePlayer.getRole() instanceof BertoltV2) {
 					killBertolt = true;
 					giveItem(owner, false, Cercle());
 					owner.sendMessage("§7Vous venez de tuez le joueur possédant le§9 Titan Colossal§7, vous obtenez donc l'item "+Cercle().getItemMeta().getDisplayName());
 					cdbertolt = 0;
 				}
-				if (gamePlayer.getRole() instanceof TitanBestial) {
+				if (gamePlayer.getRole() instanceof Sieg) {
 					killBestial = true;
 					owner.sendMessage("Vous venez de tuez le titan Bestial vous obtnez donc la liste des Titans");
 				}
-				if (gamePlayer.getRole() instanceof Pieck) {
+				if (gamePlayer.getRole() instanceof PieckV2) {
 					killPieck = true;
 					owner.sendMessage("Vous de tuez le joueur possédant le rôle Pieck vous obtiendrez donc "+AllDesc.Speed+" 2 durant votre transformation");
 				}
-				if (gamePlayer.getRole() instanceof Lara) {
+				if (gamePlayer.getRole() instanceof LaraV2) {
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Lara§f vous obtenez donc 2"+AllDesc.coeur+" supplémentaire");
 					giveHealedHeartatInt(owner, 2);
 				}
-				if (gamePlayer.getRole() instanceof Porco) {
+				if (gamePlayer.getRole() instanceof PorcoV2) {
 					killPorco = true;
 					giveItem(owner, false, Saut());
 					owner.sendMessage("Vous venez de tuez le joueur possédant le rôle de§9 Porco§f vous obtenez donc son§l Saut");
 					cdPorco = 0;
 				}
-				if (gamePlayer.getRole() instanceof Reiner) {
+				if (gamePlayer.getRole() instanceof ReinerV2) {
 					giveHealedHeartatInt(owner, 2);
 					owner.sendMessage("Vous venez de tuez le joueur possédant le§9 Titan Cuirasse§f vous obtenez donc 2"+AllDesc.coeur+" supplémentaire");
 				}
@@ -267,11 +268,7 @@ public class Eren extends AotRoles {
 							p.setFireTicks(60);
 						}
 					}
-					givePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 60, 2, true);
-				}else {
-					if (cdbertolt == 60) {
-						owner.sendMessage("Désactivation du§c§l Cercle de Feu");
-					}
+					OLDgivePotionEffet(owner, PotionEffectType.FIRE_RESISTANCE, 60, 2, true);
 				}
 			}	
 		}else if (cdbertolt ==0) {
@@ -279,12 +276,12 @@ public class Eren extends AotRoles {
 			cdbertolt--;
 		}
 		if (isTransformedinTitan) {
-			givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
 			if (killPieck) {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 2, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 2, true);
 			} else {
-				givePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
+				OLDgivePotionEffet(owner, PotionEffectType.SPEED, 60, 1, true);
 			}
 		}
 		super.Update(gameState);

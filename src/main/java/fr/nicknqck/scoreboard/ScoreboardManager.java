@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import org.bukkit.scoreboard.Scoreboard;
 
 /*
  * This file is part of SamaGamesAPI.
@@ -33,6 +34,8 @@ import fr.nicknqck.Main;
 public class ScoreboardManager {
     @Getter
     private final Map<UUID, PersonalScoreboard> scoreboards;
+    @Getter
+    private final Map<UUID, Scoreboard> colorScoreboard;
     @SuppressWarnings({ "unused", "rawtypes" })
 	private final ScheduledFuture glowingTask;
     @SuppressWarnings({ "unused", "rawtypes" })
@@ -43,6 +46,7 @@ public class ScoreboardManager {
     public ScoreboardManager(GameState gameState) {
     	this.gameState = gameState;
         scoreboards = new HashMap<>();
+        this.colorScoreboard = new HashMap<>();
         ipCharIndex = 0;
         cooldown = 0;
 
@@ -71,6 +75,13 @@ public class ScoreboardManager {
     public void onLogin(Player player) {
         if (scoreboards.containsKey(player.getUniqueId())) {
         	onLogout(player);
+        }
+        if (this.colorScoreboard.containsKey(player.getUniqueId())) {
+            player.setScoreboard(this.colorScoreboard.get(player.getUniqueId()));
+        } else {
+            Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+            player.setScoreboard(scoreboard);
+            this.colorScoreboard.put(player.getUniqueId(), scoreboard);
         }
         scoreboards.put(player.getUniqueId(), new PersonalScoreboard(player, gameState));
         System.out.println("put "+player.getName()+" for PersonalScoreboard");

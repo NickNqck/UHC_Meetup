@@ -1,12 +1,13 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.betteritem.BetterItem;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -22,8 +23,8 @@ public class Mikasa extends SoldatsRoles {
 		setAckerMan(true);
 	}
 	@Override
-	public Roles getRoles() {
-		return null;
+	public @NonNull fr.nicknqck.enums.Roles getRoles() {
+		return Roles.Livai;
 	}
 	@Override
 	public String[] Desc() {
@@ -58,9 +59,9 @@ public class Mikasa extends SoldatsRoles {
 		return new ItemStack[] {
 		BetterItem.of(new ItemBuilder(Material.SUGAR).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName("Sucre").toItemStack(), event ->{
 			if (cd <= 0) {
-			givePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*(60*3), 1, true);
 
-			givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
+			OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, 20*(60*3), 1, true);
 			cd = 180;
 			} else {
 				sendCooldown(owner, cd);

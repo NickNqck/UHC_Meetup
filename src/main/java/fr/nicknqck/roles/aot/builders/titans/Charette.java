@@ -34,24 +34,24 @@ public class Charette extends Titan {
 			Inventory inv = player.getInventory();
 			getPlayerRole(getOwner()).isTransformedinTitan = isTransformedinTitan();
 			if (countOccupiedSlots(inv) <= 9 ){
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				getPlayerRole(getOwner()).setResi(20);
 				setTransformedinTitan(true);
 			}
 			if (countOccupiedSlots(inv) > 9 && countOccupiedSlots(inv) <= 18) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				getPlayerRole(getOwner()).setResi(20);
 				setTransformedinTitan(true);
 			}
 			if (countOccupiedSlots(inv) > 18 && countOccupiedSlots(inv) <= 27) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
 				getPlayerRole(getOwner()).setResi(0);
 				setTransformedinTitan(true);
 			}
 			if (countOccupiedSlots(inv) > 27 && countOccupiedSlots(inv) <= 36) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.WEAKNESS, 60, 1, true);
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.WEAKNESS, 60, 1, true);
 				setTransformedinTitan(false);
 				getPlayerRole(getOwner()).setResi(0);
 			}
@@ -77,7 +77,7 @@ public class Charette extends Titan {
 	  if (getListener().getCharette() !=null) {
 		  if (getListener().getCharette().equals(player.getUniqueId())) {
 			  for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-				  if (!getState().hasRoleNull(p)) {
+				  if (!getState().hasRoleNull(p.getUniqueId())) {
 					  if (getPlayerRole(p.getUniqueId()).isCanVoleTitan() && canStealTitan(p)) {
 						  p.sendMessage("§7Vous pouvez mainteant volé le Titan§9 Charette§7 avec la commande§6 /aot steal");
 						  canVoleCharette.add(p);

@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
@@ -11,9 +11,9 @@ import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.aot.titanrouge.Jelena;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Hansi extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Hansi;
 	}
 	@Override
@@ -59,7 +59,7 @@ public class Hansi extends SoldatsRoles {
 				if (args.length == 2) {
 					if (args[1] != null) {
 						Player target = Bukkit.getPlayer(args[1]);
-						if (!gameState.hasRoleNull(target)) {
+						if (!gameState.hasRoleNull(target.getUniqueId())) {
 							if (actualtorture < 3) {
 								if (tortured.contains(target)) {
 									owner.sendMessage("§7Ce joueur à déjà été torturé par vos soins");
@@ -114,7 +114,7 @@ public class Hansi extends SoldatsRoles {
 		if (args[0].equalsIgnoreCase("give")) {
 			if (args.length == 2 && args[1] != null) {
 				Player target = Bukkit.getPlayer(args[1]);
-				if (!gameState.hasRoleNull(target)) {
+				if (!gameState.hasRoleNull(target.getUniqueId())) {
 					if (actualseringue < 3) {
 						GamePlayer gamePlayer = gameState.getGamePlayer().get(target.getUniqueId());
 						if (gamePlayer.getRole() instanceof AotRoles && !Titan.hasTitan(target)){
@@ -131,11 +131,8 @@ public class Hansi extends SoldatsRoles {
 			}
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void resetCooldown() {
 		actualtorture = 0;
 		tortured.clear();

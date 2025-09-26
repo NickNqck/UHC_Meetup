@@ -29,62 +29,10 @@ public class AllDesc{
 	public final static String objectifsolo = "§fVotre objectif est de gagner ";
 	public final static String particularite = ChatColor.BOLD + "Particularité: ";
 	public final static String nausee = "§2Nausée";
-	public final static String amelioration = "§lAmélioration: ";
 	static final String t =  "§fSi vous parvenez à tuez un joueur possédant le rôle de§6 Muzan§r vous obtiendrez "+Force+" 1 permanent, de plus votre§6 Dance du Dieu du Feu§r ne vous coutera plus de "+coeur+" permanent";
 	public static final String chakra = "Vous possédez la nature de Chakra: ";
 	public final static String tab = "§7     →";
-	public static String[] Gyomei = new String[]{
-		    bar,
-		    role+"§r§aGyomei",
-		    "",
-		    effet,
-		    "",
-		    ChatColor.DARK_GRAY + " • "  + ChatColor.WHITE + "2"+coeur+" en plus permanent, "+Resi+" 1 la "+nuit+", "+Force+" 1 le "+jour,
-		    "",
-		    "§lItems: ",
-		    "",
-		    ChatColor.DARK_GRAY + " • " + ChatColor.GOLD + ChatColor.BOLD + "Souffle de la Roche: " + ChatColor.WHITE + "Pendant 3 minutes, si c'est le "+jour+", vous obtiendrez "+Resi+" 1 et si c'est la "+nuit+" "+Force+" 1",
-		    "",
-		    amelioration,
-		    "",
-		    ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + "Si vous parvenez à tuer un joueur possédant le rôle de " + ChatColor.GOLD + "Kokushibo" + ChatColor.WHITE + ", vous obtiendrez la marque des pourfendeurs de démon qui vous donnera "+Speed+" 1 pendant 3 minutes. Vous gagnerez également votre Fléau qui vous permettra de téléporter le joueur visible le plus proche de vous",
-		    "",
-		    bar
-		};
-	public static String[] Akaza = new String[] {
-			bar,
-			role+"§cAkaza",
-			"",
-            "§lCapacité: ",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + " Vous possédez la régénération naturel à hauteur de 1 demi"+coeur+" toute les 20 secondes",
-            "",
-           "§lEffet: ",
-            "",
-            ChatColor.DARK_GRAY + " • " +Force+" 1 permanent",
-            "",
-            commande,
-            "",
-            point+"/ds aura <joueur>: Permet de savoir quel est l'aura guerrière d'un joueur (en fonction de son rôle)",
-            "",
-            "Aura§4 Très Forte§f: §cMuzan§f,§c Kokushibo§f,§a Gyomei§f et§a Kyojuro",
-            "",
-            "Aura§c Forte§f: Les§a piliers§f (dont§a Urokodaki§f et§a Kanae§f) et les§c lunes supérieurs§f (dont§a Nezuko§f)",
-            "",
-            "Aura§2 Moyenne§f:§a Tanjiro§f,§a Inosuke§f,§a ZenItsu§f,§a Sabito§f,§a Kanao§f,§a Makomo§f,§a Sabito§f,§c Demon Main§f,§c Furuto§f,§c Kumo§f,§c Susamaru§f et§c Yahaba",
-            "",
-            "Aura §aFaible§f/§aInoffensive§f:§a Hotaru§f,§a Pourfendeur§f,§c Demon Simple",
-            "",
-            "§cException§f:",
-            "",
-            "§7 -§r Les rôles solitaires ont une aura aléatoire entre§c Forte§f et§4 Très Forte,",
-            "",
-            "§7 -§r Si un§c Démon§f est l'§4§lAssassin§r alors sont Aura augmente d'un rang (maximum§c Forte§f)",
-            "",
-            "§7 -§r Si le joueur visé est l'§cinfecté§f de la partie alors il sera compter comme étant une§c lune supérieur§f, pour finir, si un rôle ayant une Aura plus puissante que§c Forte§f est§c infecté§f alors il garde sont aura actuel.",
-            "",
-            bar
-	};
+
 	public static String[] Kyogai = new String[]{
 			bar,
 			"§lRôle: §r§6Kyogai",
@@ -359,9 +307,9 @@ public class AllDesc{
 			"",
 			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur vous obtiendrez 1 demi"+coeur+" permanent"),
 			"",
-			ChatColor.BOLD + " Commande: ",
+			particularite,
             "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+"/ds chat"+ChatColor.RESET+ " Vous permet de parler avec votre patron§c Muzan",
+            ChatColor.DARK_GRAY + " • Lorsque vous envoyez un message dans le§c chat§f commençant par un \"§c!§f\", vous permet de parler avec§c Muzan",
             "",
 			bar
 	};
@@ -405,9 +353,11 @@ public class AllDesc{
 			"",
 			(ChatColor.BOLD+"Commande: "),
 			"",
-			ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"/ds chat"+ChatColor.RESET+" Vous permet de parler avec votre subordonné de§c Kokushibo",
-			"",
 			ChatColor.DARK_GRAY+" • "+"§6§l/ds give§r Vous permet en spécifiant un joueur de lui donner le pouvoir de l'§cinfection§r, il pourra alors via un item séléctionné un joueur pour le rallier au camp des§c démons§r ("+ChatColor.DARK_RED+"ATTENTION§r: ce pouvoir ne permet d'infecter que les rôles§f Slayers§r)",
+			"",
+			particularite,
+			"",
+			ChatColor.DARK_GRAY + " • Lorsque vous envoyez un message dans le§c chat§f commençant par un \"§c!§f\", vous permet de parler avec§c Kokushibo",
 			"",
 			bar
 	};
@@ -457,20 +407,6 @@ public class AllDesc{
 			"",
 			bar
 	};
-	public static String[] Kyojuro = new String[] {
-			bar,
-			"§lRôle: §r§aKyojuro",
-			"",
-			ChatColor.BOLD+"Effets: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +fireResi+" 1 permanent et "+Force+" 1 pendant 5 secondes en mangeant une pomme en or"),
-			"",
-			ChatColor.BOLD+"Amélioration: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur possédant le rôle de: "+ChatColor.GOLD+"Akaza"+ChatColor.WHITE+" vous obtiendrez l'effet "+Resi+" 1 la "+nuit),
-			"",
-			bar
-	};
 	public static String[] Makomo = new String[] {
 			bar,
 			"§lRôle: §r§aMakomo",
@@ -486,28 +422,6 @@ public class AllDesc{
 			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
 			"",
 			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur possédant le rôle de: "+ChatColor.GOLD+"Démon Main"+ChatColor.WHITE+" vous obtiendrez 10% de "+Speed+" en plus"),
-			"",
-			bar
-	};
-	public static String[] Muichiro = new String[] {
-			bar,
-			"§lRôle: §r§aMuichiro",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Force+" 1 la "+nuit),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Souffle de la Brume: "+ChatColor.WHITE+"Créera une zone de Brume qui donnera au joueur étant à moins de 30 blocs de vous l'effet Slowness 1 et au joueur étant à moins de 10 blocs de vous l'effet Blindness 1"),
-			"",
-			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur possédant le rôle de "+ChatColor.GOLD+"Gyokko"+ChatColor.WHITE+" vous obtiendrez la marque des pourfendeurs de démon qui vous donnera aléatoirement "+Speed+" 1 ou "+Resi+" 1 pendant 3 minutes"),
-			"",
-			ChatColor.BOLD+"Commande: ",
-			"",
-			ChatColor.DARK_GRAY+" •§r §6" +"/ds brume§r <joueur> donne au joueur visée l'effet "+blind+" 5 pendant 30s, vous possédez§6 3 utilisations§r de cette commande§7 (1x/3m)",
 			"",
 			bar
 	};
@@ -529,38 +443,6 @@ public class AllDesc{
 		"",
 		ChatColor.DARK_GRAY+"§o§m-----------------------------------"
 	};
-	public static String[] Obanai = new String[] {
-			bar,
-			"§lRôle: §r§aObanai",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Speed+" 2, Invisibilité 1 et§a NoFall§r quand vous êtes sans armure"),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Souffle du Serpent: "+ChatColor.WHITE+"Pendant 2 minutes quand vous taperez un joueur avec votre épée il sera automatiquement empoisoner"+ChatColor.RED+" (Poison 1 pendant 5 secondes)"),
-			"",
-			bar
-	};
-	public static String[] Pourfendeur = new String[] {
-			bar,
-			"§lRôle: §r§aPourfendeur Simple",
-			"",
-			ChatColor.BOLD+"Capacité: ",
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Vous obtenez un Souffle aléatoire entre le Souffle du feu, de la foudre, de l'eau, de la roche et le Souffle du vent"),
-	        "",
-	        (ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"En tuant un joueur peut importe son rôle vous obtiendrez un nouveau Souffle aléatoire"),
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Une fois les 5 Souffles primaire acquis (Feu, Eau, Vent, Foudre, Roche) vous débloquerez l'accès au Souffle de la Lune et du Soleil"),
-	        "",
-	        (""+ChatColor.DARK_GRAY+ChatColor.BOLD+"NOTE: Sur le scoreboard (la sidebar) il y aura écris: "+ChatColor.RED+"D.S.C: "+ChatColor.GOLD+"Nom du Souffle"+ChatColor.DARK_GRAY+" ce qui voudra dire: Dernier.Souffle.Choisis: Nom du Souffle"),
-	        "",
-	        bar
-	};
 	public static String[] Sabito = new String[] {
 			bar,
 			"§lRôle: §r§aSabito",
@@ -580,51 +462,6 @@ public class AllDesc{
 			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tué un joueur possédant le rôle de: "+ChatColor.GOLD+"Démon Main"+ChatColor.WHITE+" votre Souffle de l'eau vous donnera "+Force+" 1 pendant 3 minutes, votre cooldown réduira également de 30 secondes (cumulable)"),
 			"",
 			bar
-	};
-	public static String[] Sanemi = new String[] {
-			bar,
-			"§lRôle: §r§aSanemi",
-			"",
-			(ChatColor.BOLD+"Effet: "),
-			"",
-			("§8 • " +Speed+" 1 le "+jour+", "+Speed+" 2 la "+nuit),
-			"",
-			commande,
-			"",
-			point+"§6/ds tp <joueur>§f: En précisant un joueur celà le téléportera aléatoirement sur la carte tout-en vous donnant ses nouvelles coordonnées, si à la place d'écrire le nom d'un joueur vous écrivez \"all\" celà téléportera aléatoirement tout les joueurs sur la carte (sauf vous et§c Doma§f)",
-			"",
-			(ChatColor.BOLD+"Amélioration: "),
-			"",
-			("§8 • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur possédant le rôle de: "+ChatColor.GOLD+"Kokushibo"+ChatColor.WHITE+" vous obtiendrez la marque des pourfendeurs ce qui vous donne aléatoirement "+Resi+" 1 pendant 2 minutes OU "+Force+" 1 pendant 2 minutes"),
-			"",
-			bar
-	};
-	public static String[] Shinobu = new String[] {
-			bar,
-			"§lRôle: §r§aShinobu",
-			"",ChatColor.BOLD+"Capacité: ",
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Vous êtes immunisé au à l'effet poison"),
-	        "",
-	        ChatColor.BOLD+"Effet: ",
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +Speed+" 1 la "+nuit),
-	        "",
-	        (ChatColor.BOLD+"Items: "),
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Médicaments: "+ChatColor.WHITE+"Vous healez 2"+coeur),
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Injection: "+ChatColor.WHITE+"En activant cette objet la prochaine personne que vous taperez avec votre épée écopera de l'effet Poison 3 pendant 12 secondes"),
-	        "",
-	        (ChatColor.BOLD+"Amélioration: "),
-	        "",
-	        (ChatColor.DARK_GRAY+" • "+ChatColor.WHITE+"Si vous parvenez à tuer un joueur possédant le rôle de"+ChatColor.GOLD+" Doma"+ChatColor.WHITE+" vous obtiendrez l'effet "+Speed+" 1 le "+jour),
-	        "",
-	        (ChatColor.BOLD+"Spécialité: "),
-	        "",
-	        (ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Lorsque vous mourrez, le joueur qui vous aura tué recevra l'effet poison 1 pendant 15 secondes mais si il s'agit du role de "+ChatColor.GOLD+"Doma "+ChatColor.WHITE+"les effets de votre mort dureront 15 secondes de plus. "),
-	        "",
-	        bar
 	};
 	public static String[] Tanjiro = new String[] {
 			bar,
@@ -646,34 +483,6 @@ public class AllDesc{
             "",
             ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+"/ds sentir"+ChatColor.RESET+ " Permet de savoir combien il y à de démon autours de vous",
             "",
-			bar
-	};
-	public static String[] Tengen = new String[] {
-            bar,
-            "§lRôle: §r§aTengen",
-            "",
-            effet,
-            "",
-            point +Speed+" 1 Permanent",
-            "",
-            items,
-            "",
-            point +"§e§lTonnerre§r: Vous téléporte derrière la personne visée en vous donnant "+Force+" 1 pendant 10 secondes",
-            "",
-            point+ChatColor.GOLD+ChatColor.BOLD+"Le Glas Mortel d'Avici: "+ChatColor.WHITE+" Fait exploser le joueur visée et le propulse légèrement, également lui inflige 2"+coeur,
-            "",
-            point+"§f§lExplosif:§r Crée une explosion infligant 1"+AllDesc.coeur+" de dégat sur chaque joueur étant à moins de 5blocs de la zone d'attérissage",
-            "",
-            bar
-    };
-	public static String[] Tomioka = new String[]{
-			bar,
-			"§lRôle: §r§aTomioka",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Speed+" 1 Permanent"),
-			"",
 			bar
 	};
 	public static String[] Urokodaki = new String[] {
@@ -716,26 +525,6 @@ public class AllDesc{
 			"",
 			bar
 	};
-	public static String[] Shinjuro = new String[] {
-			bar,
-			"§lRôle: §r§6Shinjuro",
-			"",
-			(ChatColor.BOLD+"Capacité: "),
-			"",
-			(ChatColor.DARK_GRAY+" • "+ChatColor.WHITE+"Vous vous régénérez un demi"+coeur+" toute les 10s dans la lave, §612"+coeur+" permanent"),
-			"",
-			(ChatColor.BOLD+"Items: "),
-			"",
-			(ChatColor.DARK_GRAY+" • "+ChatColor.GOLD+" Souffle du feu: "+ChatColor.WHITE+"En faisant clique droit dessus si le Souffle était désactivée vous obtenez "+fireResi+" 1 permanent sinon vous perdez la "+fireResi+", de plus temp que le Souffle du Feu est activé quand vous taperez un joueur il sera§c automatiquement§r mit en feu"),
-			"",
-			(ChatColor.DARK_GRAY+" • "+ChatColor.GOLD+" Sake: "+ChatColor.WHITE+"En faisant clique droit dessus vous obtiendrez "+Force+" 1 pendant 1m30"),
-			"",
-			(ChatColor.BOLD+"Amélioration: "),
-			"",
-			(ChatColor.DARK_GRAY+" • "+ChatColor.WHITE+" Si vous parvenez à tuez un joueur possédant le rôle de: "+ChatColor.GOLD+"Kyojuro"+ChatColor.WHITE+" votre Souffle du feu vous donnera également "+Speed+" 1 permanent"),
-			"",
-			bar
-	};
 	public static String[] Yoriichi = new String[] {
 			bar,
 			"§lRôle: §r§6Yoriichi",
@@ -765,20 +554,6 @@ public class AllDesc{
 			ChatColor.BOLD+"Item: ",
 			"",
 			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Pouvoir Sanginaire:"+ChatColor.WHITE+" Vous permet d'endormir la personne visé pendant"+ChatColor.GOLD+" 10s§r (ne fonctionne pas sur les joueurs dont le rôle est Nezuko ou dont le camp est Demon), le joueur endormie ne pourra pas être tapée pendant ce cours lapse de temp"),
-			"",
-			bar
-	};
-	public static String[] Mitsuri = new String[] {
-			bar,
-			"§lRôle: §r§aMitsuri",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Force+" 1 la "+nuit),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Charme:"+ChatColor.WHITE+" Vous permet de charmer un joueur, la personne visé ne pourra plus vous tapée pendant:"+ChatColor.GOLD+" 10s§r"),
 			"",
 			bar
 	};
@@ -844,7 +619,7 @@ public class AllDesc{
             "",
             ChatColor.BOLD + " Commande: ",
             "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD + ChatColor.BOLD + "/ds role:§r Permet de choisir un pacte parmi 3",
+            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD + ChatColor.BOLD + "/ds pacte:§r Permet de choisir un pacte parmi 3",
             "",
             ChatColor.GOLD+"Pacte 1§r: Vous devrez gagner seul en tant que rôle entièrement§6 solitaire§r pour ce faire vous obtiendrez "+Force+" 1 permanent§r, de plus vous obtiendrez "+Resi+" 1 le jour si vous tuez§a ZenItsu§r ainsi que "+Resi+" 1 la "+nuit+" si vous tuez§c Kaigaku§r, pour chaque kill de vos disciples vous récupérerez 10% de "+Speed,
             "",
@@ -954,22 +729,6 @@ public class AllDesc{
             "", 
             ChatColor.DARK_GRAY + " • " + ChatColor.RED + "6 kill:" + ChatColor.WHITE + " Vous obtenez un item nommé transformation qui à son activation vous octroie l'effet "+Resi+" pendant 3min",
             "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + "Vous possèdez l'identité aléatoire d'une lune suppérieur",
-            "",
-            bar
-    };
-	public static String[] Yahaba = new String[] {
-            bar,
-            role+"§cYahaba",
-            "",
-            effet,
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + "§c12"+coeur+"§r permanent",
-            "", 
-            particularite,
-            "", 
-            ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + "Vous possèdez une cible si vous parvenez à tuer cette dernière vous obtiendrez l'effet "+Force+" 1§r permanent, pour ce faire vous possèdez l'effet "+Force+" 1 à moins de 15 blocs de la cible",
-            "", 
             ChatColor.DARK_GRAY + " • " + ChatColor.WHITE + "Vous possèdez l'identité aléatoire d'une lune suppérieur",
             "",
             bar

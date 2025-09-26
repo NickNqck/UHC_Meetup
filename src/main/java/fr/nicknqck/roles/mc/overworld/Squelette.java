@@ -1,10 +1,12 @@
 package fr.nicknqck.roles.mc.overworld;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.mc.builders.OverWorldRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import lombok.NonNull;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -54,8 +56,8 @@ public class Squelette extends OverWorldRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Squelette;
+    public @NonNull Roles getRoles() {
+        return Roles.Squelette;
     }
 
     @Override

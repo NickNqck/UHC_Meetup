@@ -1,9 +1,10 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,7 +17,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -32,7 +32,7 @@ public class Hantengu extends DemonsRoles {
 	private int killforce = 0;
 	public Hantengu(UUID player) {
 		super(player);
-		getKnowedRoles().add(Muzan.class);
+		getKnowedRoles().add(MuzanV2.class);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class Hantengu extends DemonsRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Hantengu;
 	}
 	private enum Form{
@@ -52,12 +52,12 @@ public class Hantengu extends DemonsRoles {
 		Hantengu
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
 		public String[] Desc() {
-		getKnowedRoles().add(Muzan.class);
+		getKnowedRoles().add(MuzanV2.class);
 			return AllDesc.Hantengu;
 		}
 	
@@ -438,8 +438,8 @@ public class Hantengu extends DemonsRoles {
 		public void PlayerKilled(Player killer, Player victim, GameState gameState) {
 			if (killer == owner && victim != owner && form == Form.Sekido) {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 							this.killforce+=5;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc 5% de Force");
 							addBonusforce(killforce);

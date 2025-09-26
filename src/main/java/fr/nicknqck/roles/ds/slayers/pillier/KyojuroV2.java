@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -56,27 +57,13 @@ public class KyojuroV2 extends PilierRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Kyojuro";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Kyojuro;
-    }
-
-    @Override
-    public void resetCooldown() {
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Kyojuro;
     }
 
     @Override
@@ -102,7 +89,10 @@ public class KyojuroV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            if (getCooldown().isInCooldown() && getCooldown().getCooldownRemaining() >= 60*7) {
+                return false;
+            }
             end = false;
             EventUtils.registerEvents(this);
             player.sendMessage("§7Vous activez votre§c Soufle de la Flamme");
@@ -115,6 +105,7 @@ public class KyojuroV2 extends PilierRoles {
         }
         @EventHandler
         private void onDamage(EntityDamageByEntityEvent event) {
+            if (event.getDamager().getWorld().getName().equals("enmuv2_duel"))return;
             if (event.getDamager() instanceof Player) {
                 if (event.getDamager().getUniqueId().equals(getRole().getPlayer())){
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
@@ -125,9 +116,10 @@ public class KyojuroV2 extends PilierRoles {
             } else if (event.getDamager() instanceof Projectile) {
                 Projectile projectile = (Projectile) event.getDamager();
                 if (projectile.getShooter() instanceof Player && ((Player) projectile.getShooter()).getUniqueId().equals(getRole().getPlayer())) {
+                    Player shooter = (Player) projectile.getShooter();
                     event.getEntity().setFireTicks(event.getEntity().getFireTicks()+160);
                     if (Main.RANDOM.nextInt(100) <= 35 || ((KyojuroV2)getRole()).alliance) {
-                        ((Player) event.getDamager()).addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
+                        shooter.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), true);
                     }
                 }
             }
@@ -148,19 +140,15 @@ public class KyojuroV2 extends PilierRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 runnable.time = 0;
                 player.setAllowFlight(true);
                 runnable.runTaskTimerAsynchronously(getPlugin(), 0, 1);
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 return true;
             }
             return false;
-        }
-        @EventHandler
-        private void onEndGame(EndGameEvent event) {
-            EventUtils.unregisterEvents(this);
         }
         @EventHandler
         private void onToggleFly(PlayerToggleFlightEvent event) {

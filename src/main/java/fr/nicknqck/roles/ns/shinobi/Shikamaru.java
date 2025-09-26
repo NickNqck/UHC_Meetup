@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -14,6 +15,7 @@ import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.powers.Cooldown;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -47,8 +49,8 @@ public class Shikamaru extends ShinobiRoles {
         setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
     }
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Shikamaru;
+    public @NonNull Roles getRoles() {
+        return Roles.Shikamaru;
     }
     @Override
     public @NonNull Intelligence getIntelligence() {
@@ -87,9 +89,10 @@ public class Shikamaru extends ShinobiRoles {
                           +"§7L'§cannexe§7 des niveaux d'§aintelligence§7 est disponnible avec la commande§6 /ns intelligences§7."
                   )}),
                   "§6/ns shogi <joueur>",
-                  60)
+                  60*5)
         );
         this.desc = desc.getText();
+        addKnowedRole(InoV2.class);
     }
 
     @Override
@@ -119,36 +122,6 @@ public class Shikamaru extends ShinobiRoles {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§6 /ns shogi <joueur>");
             }
         }
-    }
-    @Override
-    public String[] Desc() {
-        KnowRole(owner, GameState.Roles.Ino, 15);
-        return new String[]{
-                AllDesc.bar,
-                AllDesc.role+"§aShikamaru",
-                AllDesc.objectifteam+"§aShinobi",
-                "",
-                AllDesc.items,
-                "",
-                AllDesc.point+"§aStun§f: Ouvre un menu affichant tout les joueurs étant à moins de§c "+powerDistance+" blocs§f de vous, en sélectionnant un joueur, vous et le joueur viser ne pourrez plus bouger pendant§c 10 secondes§f, de plus si vous lui cliqué dessus avec votre§a clique droit§f vous lui infligerz§c -1/2"+AllDesc.coeur+"§f toute les§c 2 secondes§f.§7 (1x/5min)",
-                "§c(Vous et le joueur viser pourrez prendre des dégats pendant le stun)",
-                "",
-                AllDesc.point+"§aZone d'ombre§f: Immobilise tout les joueurs étant à moins de§c "+(powerDistance-10)+" blocs§f de vous pendant§c 5 secondes§f, les joueurs touchés prendront§c 20%§f de dégat en moins et seront frappable",
-                "",
-                AllDesc.commande,
-                "",
-                AllDesc.point+"§6/ns shogi <joueur>§f: Vous permet d'obtenir le niveau d'intelligence du joueur viser, si le joueur est§a Ino§f ou§a Choji§f vous obtiendrez directement son rôle.§7 (1x/5min)",
-                "Annexe (§ltemporaire§r) du système d'intelligence:§b  https://discord.com/channels/925124675372208189/1239619280664788993",
-                "",
-                AllDesc.particularite,
-                "",
-                "Votre nature de chakra est aléatoire",
-                "Vous connaissez le§c joueur§f possédant le rôle de§a Ino",
-                "",
-                AllDesc.chakra+getChakras().getShowedName(),
-                "",
-                AllDesc.bar
-        };
     }
 
     @Override
@@ -182,11 +155,11 @@ public class Shikamaru extends ShinobiRoles {
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    if (!gameState.hasRoleNull(target)) {
-                        if (gameState.getPlayerRoles().get(target) instanceof NSRoles){
-                            Intelligence intelligence = ((NSRoles) gameState.getPlayerRoles().get(target)).getIntelligence();
+                    if (!gameState.hasRoleNull(target.getUniqueId())) {
+                        if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof NSRoles){
+                            Intelligence intelligence = ((NSRoles) gameState.getGamePlayer().get(target.getUniqueId()).getRole()).getIntelligence();
                             if (intelligence.equals(Intelligence.CONNUE)) {
-                                owner.sendMessage("§7Le rôle de§c "+target.getDisplayName()+"§7 est "+gameState.getPlayerRoles().get(target).getName());
+                                owner.sendMessage("§7Le rôle de§c "+target.getDisplayName()+"§7 est "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getName());
                             } else {
                                 owner.sendMessage("§c"+target.getDisplayName()+"§7 est§a "+intelligence.getName());
                             }
@@ -269,6 +242,7 @@ public class Shikamaru extends ShinobiRoles {
     private static class StunExecutable implements Listener {
 
         private Shikamaru shikamaru;
+        private final Cooldown stunCD = new Cooldown(60*5);
 
         private StunExecutable(Shikamaru shikamaru){
             this.shikamaru = shikamaru;
@@ -300,6 +274,11 @@ public class Shikamaru extends ShinobiRoles {
                             if (Main.isDebug()){
                                 System.out.println(item.getItemMeta().getDisplayName());
                             }
+                            if (this.stunCD.isInCooldown()) {
+                                e.getWhoClicked().closeInventory();
+                                e.getWhoClicked().sendMessage("§bVous êtes en cooldown:§c "+this.stunCD.getCooldownRemaining()+"s");
+                                return;
+                            }
                             final Player player = Bukkit.getPlayer(item.getItemMeta().getDisplayName());
                             if (player != null){
                                 if (!GameState.getInstance().getGamePlayer().containsKey(player.getUniqueId()))return;
@@ -312,6 +291,7 @@ public class Shikamaru extends ShinobiRoles {
                                     shikamaru.poisonUse++;
                                 }
                                 player.closeInventory();
+                                this.stunCD.use();
                                 Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
                                     e.getWhoClicked().sendMessage("§c"+player.getDisplayName()+"§7 peut à nouveau bouger");
                                     player.sendMessage("§7Vous pouvez à nouveau bouger");

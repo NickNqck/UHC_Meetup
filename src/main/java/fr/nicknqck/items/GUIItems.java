@@ -3,6 +3,7 @@ package fr.nicknqck.items;
 import java.util.Arrays;
 import java.util.Collections;
 
+import fr.nicknqck.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 public abstract class GUIItems{
 	
 	public static ItemStack getEnderPearl() {
-		ItemStack stack = new ItemStack(Material.ENDER_PEARL, GameState.pearl);
+		ItemStack stack = new ItemStack(Material.ENDER_PEARL, Main.getInstance().getGameConfig().getStuffConfig().getPearl());
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Nombre d'Ender Pearl");
 		meta.setLore(Arrays.asList("§r"+"Click To Change",
@@ -168,7 +169,7 @@ public abstract class GUIItems{
 	  public static ItemStack getdiamondsword() {
 			ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.DAMAGE_ALL, GameState.sharpness, true);
+			meta.addEnchant(Enchantment.DAMAGE_ALL, Main.getInstance().getGameConfig().getStuffConfig().getSharpness(), true);
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"Sharpness 1",
 					"§r"+"Maximal: "+ChatColor.GOLD+"Sharpness 5"));
@@ -176,7 +177,7 @@ public abstract class GUIItems{
 			return stack;
 		}
 	  public static ItemStack getblock() {
-			ItemStack stack = new ItemStack(Material.BRICK, 1*(GameState.nmbblock));
+			ItemStack stack = new ItemStack(Material.BRICK, 1*(Main.getInstance().getGameConfig().getStuffConfig().getNmbblock()));
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"1 Stack",
@@ -187,7 +188,7 @@ public abstract class GUIItems{
 	  public static ItemStack getbow() {
 			ItemStack stack = new ItemStack(Material.BOW, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.addEnchant(Enchantment.ARROW_DAMAGE, GameState.power, true);
+			meta.addEnchant(Enchantment.ARROW_DAMAGE, Main.getInstance().getGameConfig().getStuffConfig().getPower(), true);
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"Power 1",
 					"§r"+"Maximum: "+ChatColor.GOLD+"Power 5"));
@@ -195,7 +196,7 @@ public abstract class GUIItems{
 			return stack;
 		}
 	  public static ItemStack geteau() {
-			ItemStack stack = new ItemStack(Material.WATER_BUCKET, GameState.eau);
+			ItemStack stack = new ItemStack(Material.WATER_BUCKET, Main.getInstance().getGameConfig().getStuffConfig().getEau());
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"1 Sceau d'Eau",
@@ -204,7 +205,7 @@ public abstract class GUIItems{
 			return stack;
 		}
 	  public static ItemStack getlave() {
-			ItemStack stack = new ItemStack(Material.LAVA_BUCKET, GameState.lave);
+			ItemStack stack = new ItemStack(Material.LAVA_BUCKET, Main.getInstance().getGameConfig().getStuffConfig().getLave());
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
 					"Minimum: "+ChatColor.GOLD+"0 Sceau de lave",
@@ -258,7 +259,7 @@ public abstract class GUIItems{
 			ItemStack stack = new ItemStack(Material.IRON_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
 			meta.setDisplayName(ChatColor.GOLD+"Pourcentage de nerf des coups critique");
-			meta.setLore(Arrays.asList("§r"+"(50% = non nerf) "+ChatColor.GOLD+ gameState.critP+"%"));
+			meta.setLore(Arrays.asList("§r"+"(50% = non nerf) "+ChatColor.GOLD+ Main.getInstance().getGameConfig().getCritPercent()+"%"));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -380,7 +381,7 @@ public static ItemStack getSelectConfigButton() {
 	}
 	
 	public static Inventory getSlayersSelectGUI() {
-        return Bukkit.createInventory(null, 54, "DemonSlayer ->§a Slayers");
+        return Bukkit.createInventory(null, 54, "§fDemonSlayer§7 ->§a Slayers");
 	}
 	public static ItemStack getSelectDemonButton() {
 		ItemStack stack = new ItemStack(Material.REDSTONE_BLOCK, 1);
@@ -481,7 +482,7 @@ public static ItemStack getSelectConfigButton() {
 	}
 	
 	public static Inventory getConfigSelectGUI() {
-        return Bukkit.createInventory(null, 27, "Configuration de la partie");
+        return Bukkit.createInventory(null, 27, "§fConfiguration de la partie");
 	}
 
 	public static Inventory getRoleSelectGUI() {

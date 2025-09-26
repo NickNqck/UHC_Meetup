@@ -62,8 +62,8 @@ public class Machoire extends Titan{
 				JumpCooldown-=5;
 			}
 			if (isTransformedinTitan()) {
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, isTransformedinTitan());
-				getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, isTransformedinTitan());
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, isTransformedinTitan());
+				getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, isTransformedinTitan());
 			}
 		}
 	}
@@ -105,7 +105,7 @@ public class Machoire extends Titan{
 		if (getOwner() != null) {
 			if (player.getUniqueId() == getOwner()) {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-					if (getState().hasRoleNull(p))return;
+					if (getState().hasRoleNull(p.getUniqueId()))return;
 					if (getPlayerRole(p).isCanVoleTitan()&&canStealTitan(p)) {
 						canSteal.add(p);
 						p.sendMessage("§7Vous pouvez maintenant volé le Titan "+getName()+"§6 /aot steal§7 pour le récupérer");
@@ -135,7 +135,7 @@ public class Machoire extends Titan{
 	private ItemStack getJump() {
 		return new ItemBuilder(Material.SLIME_BALL).setName("§fJump").setLore("§7Permet d'effectuer un Saut en avant").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
-	private List<Player> canSteal = new ArrayList<>();
+	private final List<Player> canSteal = new ArrayList<>();
 	@Override
 	public void onSteal(Player sender, String[] args) {
 		if (canSteal.contains(sender)) {

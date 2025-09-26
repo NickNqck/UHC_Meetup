@@ -41,11 +41,6 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
     }
@@ -78,7 +73,7 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
@@ -105,7 +100,7 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
@@ -136,7 +131,7 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
@@ -157,7 +152,7 @@ public abstract class PortesRoles extends ShinobiRoles implements Listener {
                     if (Bukkit.getPlayer(role.getPlayer()) != null) {
                         Player owner = Bukkit.getPlayer(role.getPlayer());
                         if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
-                            if (!role.gameState.hasRoleNull(owner)) {
+                            if (!role.gameState.hasRoleNull(owner.getUniqueId())) {
                                 if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole().roleID == this.role.roleID) {
                                     if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole().StringID.equals(role.StringID)) {//donc c'est définitivement la même partie que quand il a activer
                                         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {

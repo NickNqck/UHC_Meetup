@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.nicknqck.player.GamePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
 
 public class Loc {
@@ -53,40 +52,13 @@ public class Loc {
 	    return new Location(world, newX, newY, newZ); // Création et retour de la nouvelle location
 	}
 
-    private static Vector getRightHeadDirection(Player player) {
+    public static Vector getRightHeadDirection(Player player) {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(-direction.getZ(), 0.0, direction.getX()).normalize();
     }
-    private static Vector getLeftHeadDirection(Player player) {
+    public static Vector getLeftHeadDirection(Player player) {
         Vector direction = player.getLocation().getDirection().normalize();
         return new Vector(direction.getZ(), 0.0, -direction.getX()).normalize();
-    }
-    public static String getCardinalDirection(Player player) {
-        double rotation = (player.getLocation().getYaw() - 90) % 360;
-        if (rotation < 0) {
-            rotation += 360.0;
-        }
-        if (0 <= rotation && rotation < 22.5) {
-            return "Nord";
-        } else if (22.5 <= rotation && rotation < 67.5) {
-            return "Nord Est";
-        } else if (67.5 <= rotation && rotation < 112.5) {
-            return "Est";
-        } else if (112.5 <= rotation && rotation < 157.5) {
-            return "Sud Est";
-        } else if (157.5 <= rotation && rotation < 202.5) {
-            return "Sud";
-        } else if (202.5 <= rotation && rotation < 247.5) {
-            return "Sud Ouest";
-        } else if (247.5 <= rotation && rotation < 292.5) {
-            return "Ouest";
-        } else if (292.5 <= rotation && rotation < 337.5) {
-            return "Nord Ouest";
-        } else if (337.5 <= rotation && rotation < 360.0) {
-            return "Nord";
-        } else {
-            return "Aucune";
-        }
     }
     public static void teleportBehindPlayer(final Player teleported,final Player target) {
     	Location loc = target.getLocation().clone();
@@ -134,44 +106,18 @@ public class Loc {
                 .forEach(toReturn::add);
         return toReturn;
     }
-    public static void inverseDirection(final Player user, final Player target) {
-        if (!getCardinalDirection(target).equals("Aucune")) {
-            Location tLoc = target.getLocation();
-            if (getCardinalDirection(target).equals("Nord")) {
-                tLoc.setYaw(180);
-            } else if (getCardinalDirection(target).equals("Nord Est")) {
-                tLoc.setYaw(220);
-            } else if (getCardinalDirection(target).equals("Est")) {
-                tLoc.setYaw(270);
-            } else if (getCardinalDirection(target).equals("Sud Est")) {
-                tLoc.setYaw(315);
-            } else if (getCardinalDirection(target).equals("Sud")) {
-                tLoc.setYaw(15);
-            } else if (getCardinalDirection(target).equals("Sud Ouest")) {
-                tLoc.setYaw(45);
-            } else if (getCardinalDirection(target).equals("Ouest")) {
-                tLoc.setYaw(90);
-            } else if (getCardinalDirection(target).equals("Nord Ouest")) {
-                tLoc.setYaw(130);
+    public static List<GamePlayer> getNearbyGamePlayers(Location loc, double distance) {
+        final List<GamePlayer> toReturn = new ArrayList<>();
+        for (final Player player : loc.getWorld().getPlayers()) {
+            if (player.getLocation().distance(loc) <= distance) {
+                if (GameState.getInstance().getGamePlayer().containsKey(player.getUniqueId())) {
+                    final GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(player.getUniqueId());
+                    if (!gamePlayer.isAlive())continue;
+                    toReturn.add(gamePlayer);
+                }
             }
-            target.teleport(tLoc);
-        }else {
-            user.sendMessage("§cVeuiller visée un joueur !");
-            System.out.println(user.getName()+" n'a pas de direction (inverseDirection methode)");
         }
-    }
-    public static void organicFly(final Player user, int maxJump) {
-    	new BukkitRunnable() {
-    		int jump = 0;
-			@Override
-			public void run() {
-				jump+=1;
-				user.teleport(new Location(user.getWorld(), user.getLocation().getX(), user.getLocation().getY()+1, user.getLocation().getZ(), user.getEyeLocation().getYaw(), user.getEyeLocation().getPitch()));
-				if (jump == maxJump) {
-					cancel();
-				}
-			}
-		}.runTaskTimer(Main.getInstance(), 1L, 2L);
+        return toReturn;
     }
     public static void inverserDirectionJoueur(Player joueurCible) {
         // Récupérer l'emplacement actuel du joueur
@@ -209,6 +155,20 @@ public class Loc {
         }
         return d1;
     }
+    public static double getDirectionTo(final GamePlayer paramPlayer, final Location paramLocation) {
+        final Location localLocation = paramPlayer.getLastLocation().clone();
+        localLocation.setY(0.0);
+        paramLocation.setY(0.0);
+        final Vector localVector1 = localLocation.getDirection();
+        final Vector localVector2 = paramLocation.subtract(localLocation).toVector().normalize();
+        double d1 = Math.toDegrees(Math.atan2(localVector1.getX(), localVector1.getZ()));
+        d1 -= Math.toDegrees(Math.atan2(localVector2.getX(), localVector2.getZ()));
+        d1 = (int) (d1 + 22.5) % 360;
+        if (d1 < 0.0) {
+            d1 += 360.0;
+        }
+        return d1;
+    }
     public static Player getNearestPlayerforNakime(Player referencePlayer, double radius, GameState gameState) {
         Player nearestPlayer = null;
         double nearestDistanceSquared = Double.MAX_VALUE;
@@ -218,8 +178,8 @@ public class Loc {
             if (!onlinePlayer.equals(referencePlayer)) {
             	if (referencePlayer.getWorld().getName().equals("nakime")) {
             		if (onlinePlayer.getWorld().equals(referencePlayer.getWorld())) {
-                		if (!gameState.hasRoleNull(onlinePlayer)) {
-                			if (gameState.getPlayerRoles().get(onlinePlayer).getOriginTeam() != TeamList.Demon) {
+                		if (!gameState.hasRoleNull(onlinePlayer.getUniqueId())) {
+                			if (gameState.getGamePlayer().get(onlinePlayer.getUniqueId()).getRole().getOriginTeam() != TeamList.Demon) {
                 				double distanceSquared = referencePlayer.getLocation().distanceSquared(onlinePlayer.getLocation());
 
                                 if (distanceSquared <= radius * radius && distanceSquared < nearestDistanceSquared) {
@@ -326,6 +286,53 @@ public class Loc {
                 return " §f? ";
             }
     	}
+    }
+    public static String getDirectionMate(GamePlayer player, GamePlayer mate, boolean afficherMatePseudo) {
+        if (afficherMatePseudo) {
+            if (player.getLastLocation().getWorld().equals(mate.getLastLocation().getWorld())) {
+                if (getDirectionTo(player, mate.getLastLocation().clone()) <= 45.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 90.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 135.0) {
+                    return "§6" + mate.getPlayerName() + "§f"+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 180.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 225.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 270.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 315.0) {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else {
+                    return "§6" + mate.getPlayerName() + "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                }
+            } else {
+                return "§6" + mate.getPlayerName() + " §f? ";
+            }
+        }else {
+            if (player.getLastLocation().getWorld().equals(mate.getLastLocation().getWorld())) {
+                if (getDirectionTo(player, mate.getLastLocation().clone()) <= 45.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 90.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 135.0) {
+                    return "§f"+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 180.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 225.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 270.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else if (getDirectionTo(player, mate.getLastLocation().clone()) <= 315.0) {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                } else {
+                    return "§f "+ArrowTargetUtils.calculateArrow(player, mate.getLastLocation())+" " + ((int) player.getLastLocation().distance(mate.getLastLocation())) + " ";
+                }
+            } else {
+                return " §f? ";
+            }
+        }
     }
 
 }

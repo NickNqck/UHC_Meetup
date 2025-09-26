@@ -2,8 +2,8 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -44,7 +44,7 @@ public class Jiraya extends ShinobiRoles {
 	}
 
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Jiraya;
 	}
 	@Override
@@ -190,8 +190,8 @@ public class Jiraya extends ShinobiRoles {
 			if (cdSenjutsu <= 0) {
 				owner.sendMessage("§a§lFukasaku et Shima§r§a vous donne de leur énergie naturelle");
 				giveHealedHeartatInt(2);
-				givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
-				givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, false);
+				OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 20*180, 1, false);
+				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 20*180, 1, false);
 				setResi(20);
 				cdSenjutsu = 480;
             } else {

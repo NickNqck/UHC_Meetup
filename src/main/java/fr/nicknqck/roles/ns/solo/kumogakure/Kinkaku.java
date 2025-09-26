@@ -2,10 +2,11 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
+import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -30,7 +31,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class Kinkaku extends NSRoles {
+public class Kinkaku extends KumogakureRole {
+
     private final ItemStack KyubiItem = new ItemBuilder(Material.NETHER_STAR).setName("§6§lKyubi").setLore("§7Vous permet d'obtenir des effets").toItemStack();
     private int cdKyubi = 0;
     private final ItemStack EventailItem = new ItemBuilder(Material.DIAMOND_SWORD).setUnbreakable(true).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aEventail de bananier").setLore("§7Vous permet de cumulé la nature de chakra des joueurs tués avec la votre").toItemStack();
@@ -40,24 +42,20 @@ public class Kinkaku extends NSRoles {
         super(player);
         super.setChakraType(super.getRandomChakras());
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(GameState.Roles.Ginkaku)){
-                givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
+            if (!gameState.getAttributedRole().contains(Roles.Ginkaku)){
+                OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
             }
         }, 100);
     }
 
     @Override
-    public TeamList getOriginTeam() {
-        return TeamList.Kumogakure;
+    public void onEndKyubi() {
+        givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.DAY);
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Kinkaku;
-    }
-    @Override
-    public @NonNull Intelligence getIntelligence() {
-        return Intelligence.PEUINTELLIGENT;
+    public @NonNull Roles getRoles() {
+        return Roles.Kinkaku;
     }
 
     @Override
@@ -68,7 +66,7 @@ public class Kinkaku extends NSRoles {
 
     @Override
     public String[] Desc() {
-        KnowRole(owner, GameState.Roles.Ginkaku, 16);
+        KnowRole(owner, Roles.Ginkaku, 16);
         return new String[]{
                 AllDesc.bar,
                 AllDesc.role+"§6Kinkaku",
@@ -118,7 +116,7 @@ public class Kinkaku extends NSRoles {
     public void Update(GameState gameState) {
         super.Update(gameState);
         if (!gameState.nightTime && cdKyubi <= 12*60){
-            super.givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+            super.OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
         }
         if (cdKyubi >= 0) {
             cdKyubi--;
@@ -126,10 +124,10 @@ public class Kinkaku extends NSRoles {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser§6§l Kyubi§7.");
             }
         }
-        if (gameState.getDeadRoles().contains(GameState.Roles.Ginkaku)){
-            givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
-        } else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(GameState.Roles.Ginkaku))){
-            givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+        if (gameState.getDeadRoles().contains(Roles.Ginkaku)){
+            OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+        } else if (new HashSet<>(Loc.getNearbyPlayersExcept(owner, 20)).containsAll(getListPlayerFromRole(Roles.Ginkaku))){
+            OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
         }
     }
 
@@ -186,15 +184,15 @@ public class Kinkaku extends NSRoles {
                             return;
                         }
                         if (state == 3) {
-                            givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
-                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+                            OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
                         }
                         if (state == 2) {
-                            givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-                            givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
                         }
                         if (state == 1) {
-                            givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+                            OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
                         }
                         if (time == 0) {
                             state--;

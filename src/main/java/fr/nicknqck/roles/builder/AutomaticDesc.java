@@ -1,18 +1,23 @@
 package fr.nicknqck.roles.builder;
 
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +37,8 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n§7Role: "+role.getTeam().getColor()+role.getName()));
     }
     private void addObjectif() {
-        text.addExtra(new TextComponent("\n§7Votre objectif est de gagner avec le camp: "+role.getTeam().getColor()+role.getTeam().name()));
+        final TeamList team = role.getTeam();
+        text.addExtra(new TextComponent("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
     }
     public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+getWhenString(when)));
@@ -43,16 +49,76 @@ public class AutomaticDesc {
         return this;
     }
     public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
-        for (PotionEffect effect : map.keySet()) {
+        @NonNull final StringBuilder permaEffects = new StringBuilder();
+        @NonNull final StringBuilder dayEffects = new StringBuilder();
+        @NonNull final StringBuilder nightEffects = new StringBuilder();
+        @NonNull final List<PotionEffect> permaEffectList = new ArrayList<>();
+        @NonNull final List<PotionEffect> dayEffectList = new ArrayList<>();
+        @NonNull final List<PotionEffect> nightEffectList = new ArrayList<>();
+        for (@NonNull final PotionEffect potionEffect : map.keySet()) {
+            if (map.get(potionEffect).equals(EffectWhen.PERMANENT)) {
+                permaEffectList.add(potionEffect);
+            } else if (map.get(potionEffect).equals(EffectWhen.DAY)) {
+                dayEffectList.add(potionEffect);
+            } else if (map.get(potionEffect).equals(EffectWhen.NIGHT)) {
+                nightEffectList.add(potionEffect);
+            }
+        }
+        if (!permaEffectList.isEmpty()) {
+            for (@NonNull final PotionEffect potionEffect : permaEffectList) {
+                permaEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
+                if (permaEffectList.size() > 1) {
+                    permaEffects.append((permaEffectList.get(permaEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                }
+            }
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+permaEffects+" §7de §7manière §cpermanente"));
+        }
+        if (!dayEffectList.isEmpty()) {
+            for (@NonNull final PotionEffect potionEffect : dayEffectList) {
+                dayEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
+                if (dayEffectList.size() > 1){
+                    dayEffects.append((dayEffectList.get(dayEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                }
+            }
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+dayEffects+" §7le §cjour"));
+        }
+        if (!nightEffectList.isEmpty()) {
+            for (@NonNull final PotionEffect potionEffect : nightEffectList) {
+                nightEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
+                if (dayEffectList.size() > 1){
+                    nightEffects.append((nightEffectList.get(nightEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                }
+            }
+            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+nightEffects+" §7la §cnuit"));
+        }
+        for (@NonNull final PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
+            if (when.equals(EffectWhen.PERMANENT))continue;
+            if (when.equals(EffectWhen.DAY))continue;
+            if (when.equals(EffectWhen.NIGHT))continue;
             text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
             text.addExtra("§c"+getPotionEffectNameWithRomanLevel(effect)+"§7 ");
+            text.addExtra(when.equals(EffectWhen.AT_KILL) ? "§7pendant §c"+StringUtils.secondsTowardsBeautiful(effect.getDuration()/20)+" §7" : "");
             text.addExtra("§7"+getWhenString(when));
         }
         return this;
     }
     public AutomaticDesc addCustomLine(String line) {
+        if (line.isEmpty())return this;
         text.addExtra(new TextComponent("\n\n"+AllDesc.point+line));
+        return this;
+    }
+    public AutomaticDesc addCustomLines(String[] lines) {
+        if (lines.length < 1)return this;
+        int i = 0;
+        for (final String string : lines) {
+            text.addExtra(new TextComponent("\n"));
+            if (i == 0){
+                text.addExtra(new TextComponent("\n"+AllDesc.point));
+            }
+            text.addExtra(new TextComponent(string));
+            i++;
+        }
         return this;
     }
     public AutomaticDesc addCustomText(TextComponent text) {
@@ -89,12 +155,16 @@ public class AutomaticDesc {
         return this;
     }
     public final AutomaticDesc setPowers(List<Power> powers) {
-        for (Power power : powers) {
+        for (final Power power : powers) {
             if (power.getName() == null)continue;
             if (!power.isShowInDesc())continue;
             String name = power.getName();
             if (power instanceof ItemPower) {
-                name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
+                if (((ItemPower) power).getItem().getItemMeta().hasDisplayName()){
+                    name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
+                } else {
+                    name = "§cLe nom n'a pas été définie";
+                }
             }
             String[] description = power.getDescriptions();
             Cooldown cooldown = power.getCooldown();
@@ -107,15 +177,17 @@ public class AutomaticDesc {
                 this.text.addExtra(textComponent);
                 continue;
             }
-            if (cooldown != null) {
-                if (cooldown.getOriginalCooldown() == -500) {
-                    textComponent.addExtra("§7 (1x/partie)");
-                } else {
-                    textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
+            if (power.isShowCdInDesc()) {
+                if (cooldown != null) {
+                    if (cooldown.getOriginalCooldown() == -500) {
+                        textComponent.addExtra("§7 (1x/partie)");
+                    } else {
+                        textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
+                    }
                 }
-            }
-            if (power.getMaxUse() != -1) {
-                textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+                if (power.getMaxUse() != -1) {
+                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+                }
             }
             textComponent.addExtra("§7.");
             this.text.addExtra(textComponent);
@@ -169,13 +241,36 @@ public class AutomaticDesc {
         return this;
     }
     public TextComponent getText(){
+        if (this.role instanceof RoleBase) {
+            if (!((RoleBase) this.role).getGamePlayer().getChatWithManager().isEmpty()) {
+                for (@NonNull final GamePlayer.ChatWithManager chatWithManager : ((RoleBase) this.role).getGamePlayer().getChatWithManager()) {
+                    if (chatWithManager.isShowInDesc()){
+                        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
+                    }
+                }
+            }
+        }
+        text.addExtra(new TextComponent(
+                this.role instanceof NSRoles ?
+                        "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ?
+                                "§cInexistante" :
+                                ((this.role instanceof OrochimaruV2) ?
+                                        ((OrochimaruV2) this.role).getChakraString() :
+                                        ((NSRoles) this.role).getChakras().getShowedName())) :
+                        ""));
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
         return text;
     }
     private String getWhenString(EffectWhen when) {
-        return (when.equals(EffectWhen.PERMANENT) ? "de manière§c permanente" : when.equals(EffectWhen.DAY) ? "le§c jour" : when.equals(EffectWhen.NIGHT) ? "la§c nuit" : " en ayant moins de §c5"+AllDesc.coeur);
+        return (when.equals(EffectWhen.PERMANENT) ?
+                "de manière §cpermanente" :
+                when.equals(EffectWhen.DAY) ? "le §cjour" :
+                        when.equals(EffectWhen.NIGHT) ? "la §cnuit" :
+                                when.equals(EffectWhen.MID_LIFE) ? "en ayant moins de §c5"+AllDesc.coeur :
+                                        when.equals(EffectWhen.AT_KILL) ? "en tuant un §cjoueur§7" :
+                                                "(EffectWhen hasn't been found)");
     }
-    private String getPotionEffectNameWithRomanLevel(PotionEffect potionEffect) {
+    public static String getPotionEffectNameWithRomanLevel(PotionEffect potionEffect) {
         if (potionEffect == null || potionEffect.getType() == null) {
             return "";
         }
@@ -184,24 +279,34 @@ public class AutomaticDesc {
         String effectName = capitalizeFirstLetter(type.getName().toLowerCase().replace('_', ' '));
         String romanLevel = getRomanNumeral(amplifier + 1);
         if (type.equals(PotionEffectType.INCREASE_DAMAGE)) {
-            effectName = "Force";
+            effectName = "§cForce";
         } else if (type.equals(PotionEffectType.DAMAGE_RESISTANCE)) {
-            effectName = "Resistance";
+            effectName = "§9Resistance";
         } else if (type.equals(PotionEffectType.FAST_DIGGING)) {
-            effectName = "Haste";
+            effectName = "§6Haste";
+        } else if (type.equals(PotionEffectType.SPEED)) {
+            effectName = "§eSpeed";
+        } else if (type.equals(PotionEffectType.FIRE_RESISTANCE)) {
+            effectName = "§6Fire Résistance";
         }
         return effectName + " " + romanLevel;
     }
-    private String capitalizeFirstLetter(String input) {
+    private static String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
             return input;
         }
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
-    private String getRomanNumeral(int number) {
+    private static String getRomanNumeral(int number) {
         if (number <= 0 || number > ROMAN_NUMERALS.length) {
             return String.valueOf(number);
         }
         return ROMAN_NUMERALS[number - 1];
+    }
+    public static TextComponent createFullAutomaticDesc(final IRole iRole) {
+        return new AutomaticDesc(iRole).addEffects(iRole.getEffects()).setPowers(iRole.getPowers()).getText();
+    }
+    public static AutomaticDesc createAutomaticDesc(final IRole iRole) {
+        return new AutomaticDesc(iRole).addEffects(iRole.getEffects()).setPowers(iRole.getPowers());
     }
 }

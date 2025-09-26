@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import fr.nicknqck.enums.Roles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -16,7 +17,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -67,9 +67,9 @@ public class Assaillant extends Titan {
 			}
 			if (isTransformedinTitan()) {
 				if (getPlayerRole(getOwner()).getRoles() != Roles.Eren) {
-					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-					getPlayerRole(getOwner()).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+					getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+					getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+					getPlayerRole(getOwner()).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 				}
 				int cd = getListener().getAssaillantCooldown()-(60*4);
 				getPlayerRole(getOwner()).sendCustomActionBar(player,"§bTemp restant de transformation: "+StringUtils.secondsTowardsBeautiful(cd));
@@ -120,7 +120,7 @@ public class Assaillant extends Titan {
 			if (getOwner() != null) {
 				if (player.getUniqueId() == getOwner()) {
 					for (Player p : Loc.getNearbyPlayersExcept(player, 30)) {
-						if (!getState().hasRoleNull(p)) {
+						if (!getState().hasRoleNull(p.getUniqueId())) {
 							if (getPlayerRole(p.getUniqueId()).isCanVoleTitan() && canStealTitan(p)) {
 								canSteal.add(p);
 								p.sendMessage("§7Vous pouvez maintenant volé le Titan§9 "+"§7 avec la commande§l /aot steal");

@@ -1,13 +1,13 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.edotensei.Orochimaru;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.NonNull;
@@ -39,7 +39,7 @@ public class Suigetsu extends OrochimaruRoles {
 	public void RoleGiven(GameState gameState) {
 		setChakraType(Chakras.SUITON);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-			if (!gameState.attributedRole.contains(Roles.Orochimaru)) {
+			if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
 				onOrochimaruDeath(false);
 				owner.sendMessage("§5Orochimaru§7 n'étant pas dans la composition de la partie, vous avez quand même obtenue les bonus dû à sa mort");
 			}
@@ -47,7 +47,7 @@ public class Suigetsu extends OrochimaruRoles {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Suigetsu;
 	}
 
@@ -117,8 +117,8 @@ public class Suigetsu extends OrochimaruRoles {
 	}
 	@Override
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof Orochimaru) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+		if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof OrochimaruV2) {
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 			boolean KarinAlive = !getListPlayerFromRole(Roles.Karin).isEmpty();
             onOrochimaruDeath(true);
 			owner.sendMessage("§5Orochimaru§7 vient de mourir vous obtenez donc "+AllDesc.Force+"§c 1§7 ainsi que le nom du joueur possédant le rôle §5Karin§7 qui est "+(KarinAlive ? "§5"+getPlayerFromRole(Roles.Karin).getDisplayName() : "§cMort"));
@@ -128,14 +128,14 @@ public class Suigetsu extends OrochimaruRoles {
 	@Override
 	public void Update(GameState gameState) {
 		if (orochimaruDeath) {
-			givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+			OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		}
 		if (owner.getLocation().getBlock().getType().name().contains("WATER")) {
-			givePotionEffet(PotionEffectType.WATER_BREATHING, 60, 1, true);
-			givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.WATER_BREATHING, 60, 1, true);
+			OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 			setResi(20);
 			if (gameState.isApoil(owner)) {
-				givePotionEffet(PotionEffectType.INVISIBILITY, 60, 1, true);
+				OLDgivePotionEffet(PotionEffectType.INVISIBILITY, 60, 1, true);
 				Invisible = true;
 			}
 		} else {

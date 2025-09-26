@@ -77,11 +77,11 @@ public class Cuirasse extends Titan{
 			if (isTransformedinTitan() && p != null) {
 				if (getListener().getCuirasseCooldown() >= 60*4) {
 					if (form == Form.Entiere) {
-						getState().getPlayerRoles().get(p).givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
-						getState().getPlayerRoles().get(p).givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);	
+						getState().getPlayerRoles().get(p).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+						getState().getPlayerRoles().get(p).OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 					} else if (form ==Form.Partielle) {
-						getPlayerRole(getListener().getCuirasse()).givePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
-						getPlayerRole(getListener().getCuirasse()).givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+						getPlayerRole(getListener().getCuirasse()).OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, 60, 1, true);
+						getPlayerRole(getListener().getCuirasse()).OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
 					}
 					int cooldown = getListener().getCuirasseCooldown();
 					int newcd = cooldown-(60*4);
@@ -140,7 +140,7 @@ public class Cuirasse extends Titan{
 		if (getOwner() != null) {
 			if (getListener().getCuirasse() == player.getUniqueId()) {
 				for (Player p : Loc.getNearbyPlayersExcept(player, 30, player)) {
-					if (getState().hasRoleNull(p))return;
+					if (getState().hasRoleNull(p.getUniqueId()))return;
 					if (getPlayerRole(p).isCanVoleTitan()&&canStealTitan(p)) {
 						canSteal.add(p);
 						p.sendMessage("§7Vous pouvez maintenant volé le Titan§9 Cuirassé§7 avec la commande§l /aot steal");
@@ -168,7 +168,7 @@ public class Cuirasse extends Titan{
 	public ItemStack CuirasseItem() {
 		return new ItemBuilder(Material.QUARTZ).setName("§f§lCuirasse").setLore("§7Permet de mettre/enlever votre cuirasse").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().toItemStack();
 	}
-	private List<Player> canSteal = new ArrayList<>();
+	private final List<Player> canSteal = new ArrayList<>();
 	@Override
 	public void onSteal(Player sender, String[] args) {
 		if (canSteal.contains(sender)) {

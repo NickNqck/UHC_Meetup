@@ -2,18 +2,20 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.UchiwaRoles;
-import fr.nicknqck.roles.ns.solo.Danzo;
+import fr.nicknqck.roles.ns.builders.EUchiwaType;
+import fr.nicknqck.roles.ns.builders.IUchiwa;
+import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.roles.ns.solo.DanzoV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
@@ -43,15 +45,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class Fugaku extends UchiwaRoles implements Listener {
+public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
 
     private TextComponent desc;
-
-    @Override
-    public UchiwaType getUchiwaType() {
-        return UchiwaType.INUTILE;
-    }
-
     private final ItemStack oeilItem = new ItemBuilder(Material.EYE_OF_ENDER).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setUnbreakable(true).setName("§cOeil Maléfique").setDroppable(false).toItemStack();
     private int cdAffaiblissement;
     private int cdAttaque;
@@ -59,6 +55,11 @@ public class Fugaku extends UchiwaRoles implements Listener {
     public Fugaku(UUID player) {
         super(player);
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 2, 0), EffectWhen.PERMANENT);
+    }
+
+    @Override
+    public @NonNull EUchiwaType getUchiwaType() {
+        return EUchiwaType.INUTILE;
     }
 
     @Override
@@ -82,13 +83,8 @@ public class Fugaku extends UchiwaRoles implements Listener {
     }
 
     @Override
-    public Intelligence getIntelligence() {
+    public @NonNull Intelligence getIntelligence() {
         return Intelligence.INTELLIGENT;
-    }
-
-    @Override
-    public String[] Desc() {
-        return new String[0];
     }
 
     @Override
@@ -104,13 +100,8 @@ public class Fugaku extends UchiwaRoles implements Listener {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Fugaku;
-    }
-
-    @Override
-    public @NonNull TeamList getOriginTeam() {
-        return TeamList.Shinobi;
+    public @NonNull Roles getRoles() {
+        return Roles.Fugaku;
     }
 
     @Override
@@ -192,10 +183,10 @@ public class Fugaku extends UchiwaRoles implements Listener {
                             event.setCancelled(true);
                             break;
                         case "Affaiblissement":
+                            event.setCancelled(true);
                             if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                                 event.getWhoClicked().closeInventory();
                                 openFirstInventory((Player) event.getWhoClicked());
-                                event.setCancelled(true);
                                 return;
                             }
                             if (item.hasItemMeta()) {
@@ -206,16 +197,16 @@ public class Fugaku extends UchiwaRoles implements Listener {
                                         clicked.sendMessage("§aFugaku§7 vous fait sentir impuissant");
                                         event.getWhoClicked().sendMessage("§7Vous avez donner à §c"+clicked.getName()+"§7 l'effet§8 Weakness I§7 pendant§c 18 secondes");
                                         this.cdAffaiblissement = 120;
+                                        event.getWhoClicked().closeInventory();
                                     }
                                 }
                             }
-                            event.setCancelled(true);
                             break;
                         case "§cAttaque":
+                            event.setCancelled(true);
                             if (item.isSimilar(GUIItems.getSelectBackMenu())) {
                                 event.getWhoClicked().closeInventory();
                                 openFirstInventory((Player) event.getWhoClicked());
-                                event.setCancelled(true);
                                 return;
                             }
                             if (item.hasItemMeta()) {
@@ -227,11 +218,10 @@ public class Fugaku extends UchiwaRoles implements Listener {
                                         clicked.sendMessage("§7Vous sentez quelque chose de nouveau autours de vous.");
                                         event.getWhoClicked().sendMessage("§7Vous vous êtes téléportez autours de§c "+clicked.getName());
                                         cdAttaque = 60*5;
-
+                                        event.getWhoClicked().closeInventory();
                                     }
                                 }
                             }
-                            event.setCancelled(true);
                             break;
                         case "§6§lPlace au combat !":
                             if (item.isSimilar(GUIItems.getSelectBackMenu())) {
@@ -367,10 +357,10 @@ public class Fugaku extends UchiwaRoles implements Listener {
                 timeRemaining--;
                 if (!croised) {//donc je fais le code juste en dessous que s'il n'a croiser personne
                     for (Player p : Loc.getNearbyPlayersExcept(owner, 10)) {
-                        if (fugaku.getGameState().hasRoleNull(p))continue;
-                        RoleBase role = fugaku.getGameState().getPlayerRoles().get(p);
+                        if (fugaku.getGameState().hasRoleNull(p.getUniqueId()))continue;
+                        RoleBase role = fugaku.getGameState().getGamePlayer().get(p.getUniqueId()).getRole();
                         if (!role.getGamePlayer().isAlive())continue;
-                        if (role instanceof UchiwaRoles || role instanceof Danzo ||role instanceof Kakashi) {
+                        if (role instanceof IUchiwa || role instanceof DanzoV2 ||role instanceof Kakashi) {
                             this.croised = true;
                         }
                     }

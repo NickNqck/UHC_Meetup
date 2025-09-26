@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -31,7 +31,7 @@ public class Asuma extends ShinobiRoles {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public GameState.Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Asuma;
 	}
 	@Override
@@ -49,7 +49,7 @@ public class Asuma extends ShinobiRoles {
 				"",
 				AllDesc.point+"§aLame de chakra§f: Épée en fer§l Tranchant IV",
 				"",
-				AllDesc.point+"§cNuées Ardentes§f: Vous permet d'infliger§1 Blindness 1§f au joueur à moins de§c 25 blocs§f de vous, également,§6 brûle§f les joueurs touchées (sauf§c vous§f)§7 (1x/3m30)",
+				AllDesc.point+"§cNuées Ardentes§f: Vous permet d'infliger§1 Blindness 1§f aux joueurs à moins de§c 25 blocs§f de vous, également,§6 brûle§f les joueurs touchées (sauf§c vous§f)§7 (1x/3m30)",
 				"",
 				AllDesc.particularite,
 				"",
@@ -79,7 +79,7 @@ public class Asuma extends ShinobiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
 		if (cdNuees >= 0) {
 			cdNuees--;
 			if (cdNuees == 0) {
@@ -110,7 +110,7 @@ public class Asuma extends ShinobiRoles {
 				owner.sendMessage("§cNuées Ardentes !");
 				for (Player p : Loc.getNearbyPlayersExcept(owner, 25)) {
 					if (owner.canSee(p)) {
-						givePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
+						OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*20, 1, true);
 						cdNuees = 60*3+30;
 						p.setFireTicks(150);
 						p.sendMessage("Vous venez d'être touche par la §8Nuées Ardentes§f de§a Asuma");

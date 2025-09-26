@@ -2,9 +2,12 @@ package fr.nicknqck.utils.powers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.events.custom.power.CreateActionBarEvent;
+import fr.nicknqck.events.custom.power.UpdateActionBarEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -23,22 +26,27 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @Getter
-public abstract class ItemPower extends Power{
+public abstract class ItemPower extends Power {
 
     private final ItemStack item;
     private InteractType interactType;
     @Setter
     private boolean showCdInHand = true;
+    private final ShowCdRunnable showCdRunnable;
 
-    protected ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
+    public ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
         super(name, cooldown, role, description);
         if (description != null && description.length > 0) {
             item.setLore(description);
         }
         this.item = item.setUnbreakable(true).setDroppable(false).toItemStack();
         if (showCdInHand && cooldown != null && cooldown.getOriginalCooldown() > 0) {
-            new ShowCdRunnable(role, cooldown, this.item).runTaskTimerAsynchronously(getPlugin(), 0, 1);
+            this.showCdRunnable = new ShowCdRunnable(this);
+            this.showCdRunnable.runTaskTimerAsynchronously(getPlugin(), 0, 1);
+        } else {
+            this.showCdRunnable = null;
         }
+        EventUtils.getPowerCantBeDropMap().put(this.item, this);
     }
     public void call(Object event) {
         if (event instanceof PlayerInteractEvent) {
@@ -89,7 +97,7 @@ public abstract class ItemPower extends Power{
             this.checkUse(((BlockBreakEvent) event).getPlayer(), args);
         }
     }
-
+    public void tryUpdateActionBar() {}
 
     public enum InteractType {
         INTERACT,
@@ -100,21 +108,29 @@ public abstract class ItemPower extends Power{
         DROP_ITEM
     }
 
-    private static class ShowCdRunnable extends BukkitRunnable {
+    public static class ShowCdRunnable extends BukkitRunnable {
 
         private final UUID user;
         private final Cooldown cooldown;
         private final GameState gameState;
         private final ItemStack item;
         private final GamePlayer gamePlayer;
+        @Getter
+        @Setter
+        private boolean isCustomText = false;
+        @Getter
+        @Setter
+        private String customTexte = "";
+        private final ItemPower itemPower;
 
-        private ShowCdRunnable(RoleBase role, Cooldown cooldown, ItemStack item) {
-            this.user = role.getPlayer();
-            this.gamePlayer = role.getGamePlayer();
-            this.cooldown = cooldown;
+        public ShowCdRunnable(final ItemPower itemPower) {
+            this.user = itemPower.getRole().getPlayer();
+            this.gamePlayer = itemPower.getRole().getGamePlayer();
+            this.cooldown = itemPower.getCooldown();
             this.gameState = GameState.getInstance();
-            this.item = item;
-            System.out.println("Started "+this+" for "+user);
+            this.item = itemPower.getItem();
+            this.itemPower = itemPower;
+            System.out.println("Started "+this+" ("+itemPower.getName()+") for "+user);
         }
 
         @Override
@@ -124,20 +140,57 @@ public abstract class ItemPower extends Power{
                 return;
             }
             if (!this.gamePlayer.isAlive())return;
-            Player player = Bukkit.getPlayer(user);
+            if (!this.itemPower.isShowCdInHand())  {
+                System.out.println("Cancelled "+this+" for "+user+" because ce n'etait pas cense start de base");
+                cancel();
+                return;
+            }
+            final Player player = Bukkit.getPlayer(user);
             if (player != null) {
                 if (player.getItemInHand().isSimilar(item)) {
                     if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
-                        this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
-                                "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
-                                item.getItemMeta().getDisplayName()+" est§c utilisable");
+                        updateActionBar();
                     } else {
-                        this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
-                                "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
-                                item.getItemMeta().getDisplayName()+" est§c utilisable");
+                        createActionBar();
                     }
                 } else if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
                     this.gamePlayer.getActionBarManager().removeInActionBar(this.cooldown.getUniqueId().toString());
+                }
+            }
+        }
+        private void updateActionBar() {
+            if (this.isCustomText()) {
+                this.itemPower.tryUpdateActionBar();
+                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(this.cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
+                Bukkit.getPluginManager().callEvent(updateActionBarEvent);
+                if (!updateActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
+                }
+            } else {
+                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                        "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
+                        item.getItemMeta().getDisplayName()+" est§c utilisable", this.itemPower, false);
+                Bukkit.getPluginManager().callEvent(updateActionBarEvent);
+                if (!updateActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
+                }
+            }
+        }
+        private void createActionBar() {
+            if (this.isCustomText()) {
+                this.itemPower.tryUpdateActionBar();
+                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(this.cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
+                Bukkit.getPluginManager().callEvent(createActionBarEvent);
+                if (!createActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
+                }
+            } else {
+                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                        "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
+                        item.getItemMeta().getDisplayName()+" est§c utilisable", this.itemPower, true);
+                Bukkit.getPluginManager().callEvent(createActionBarEvent);
+                if (!createActionBarEvent.isCancelled()){
+                    this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
                 }
             }
         }

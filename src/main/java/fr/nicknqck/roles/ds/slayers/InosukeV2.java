@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
@@ -18,7 +19,6 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -42,26 +42,13 @@ public class InosukeV2 extends SlayerRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Inosuke";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Inosuke;
-    }
-
-    @Override
-    public void resetCooldown() {}
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Inosuke;
     }
 
     @Override
@@ -90,7 +77,7 @@ public class InosukeV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> strings) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> strings) {
             String[] args = (String[]) strings.get("args");
             if (args.length == 1) {
                 TextComponent component = new TextComponent("§7Voici la liste de tout les§c joueurs§7 autours de vous:\n\n");
@@ -181,7 +168,7 @@ public class InosukeV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> stringObjectMap) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> stringObjectMap) {
             String[] args = (String[]) stringObjectMap.get("args");
             if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[1]);

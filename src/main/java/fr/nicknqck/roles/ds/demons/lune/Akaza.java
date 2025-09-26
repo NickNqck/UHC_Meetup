@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
@@ -14,7 +14,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
-import fr.nicknqck.roles.ds.demons.Muzan;
+import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -51,7 +51,7 @@ public class Akaza extends DemonsRoles implements Listener {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
-		getKnowedRoles().add(Muzan.class);
+		getKnowedRoles().add(MuzanV2.class);
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez une§c régénération§7 naturel à hauteur de§c 1/2"+ AllDesc.coeur+"§7 toute les§c 20 secondes§7.")}),
@@ -83,11 +83,11 @@ public class Akaza extends DemonsRoles implements Listener {
 		return DemonType.SUPERIEUR;
 	}
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Akaza;
 	}
 	@Override
@@ -143,9 +143,9 @@ public class Akaza extends DemonsRoles implements Listener {
 	@EventHandler
 	private void onUHCDeath(UHCDeathEvent event) {
 		if (!event.isCancelled()) {
-			if (!event.getGameState().hasRoleNull(event.getPlayer())) {
-				if (event.getGameState().getPlayerRoles().get(event.getPlayer()) instanceof DemonsRoles) {
-					DemonsRoles role = (DemonsRoles) event.getGameState().getPlayerRoles().get(event.getPlayer());
+			if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId())) {
+				if (event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole() instanceof DemonsRoles) {
+					DemonsRoles role = (DemonsRoles) event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
 					if (role.getRank().equals(DemonType.SUPERIEUR)) {
 						this.coupToInflig-=5;
 					}
@@ -180,8 +180,8 @@ public class Akaza extends DemonsRoles implements Listener {
 				}
 			}
 			for (Player around : Loc.getNearbyPlayersExcept(owner, 10)) {
-				if (!akaza.getGameState().hasRoleNull(around)) {
-					RoleBase role = akaza.getGameState().getPlayerRoles().get(around);
+				if (!akaza.getGameState().hasRoleNull(around.getUniqueId())) {
+					RoleBase role = akaza.getGameState().getGamePlayer().get(around.getUniqueId()).getRole();
 					if (role instanceof PilierRoles) {
 						PilierRoles pillierRoles = (PilierRoles) role;
 						if (pillierRoles.getGamePlayer().isAlive()) {

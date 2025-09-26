@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -23,7 +24,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,28 +46,13 @@ public class ObanaiV2 extends PilierRoles implements Listener{
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Obanai";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Obanai;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Obanai;
     }
 
     @Override
@@ -145,7 +130,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
                 UHCPlayerBattleEvent event = (UHCPlayerBattleEvent) args.get("event");
                 ((Player)event.getOriginEvent().getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 2, false, false));
@@ -168,7 +153,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             player.sendMessage("§7Vous avez lancer votre§2 Serpent");
             EventUtils.registerEvents(this);
             Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
@@ -194,28 +179,28 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         private void onUHCDie(UHCPlayerKillEvent event) {
             if (event.getGamePlayerKiller() == null)return;
             if (event.getGamePlayerKiller().getRole() == null)return;
-                final Map<UUID, GamePlayer> map = new HashMap<>(event.getGameState().getGamePlayer());
-                map.remove(event.getGamePlayerKiller().getUuid(), event.getGamePlayerKiller());
-                map.remove(event.getVictim().getUniqueId());
-                final List<GamePlayer> list = new ArrayList<>(map.values());
-                Collections.shuffle(list, Main.RANDOM);
-                RoleBase zero = list.get(0).getRole();
-                if (zero == null) {
-                    zero = event.getGamePlayerKiller().getRole();
-                }
-                RoleBase un = list.get(1).getRole();
-                if (un == null) {
-                    un = event.getGamePlayerKiller().getRole();
-                }
-                RoleBase deux = list.get(1).getRole();
-                if (deux == null) {
-                    deux = event.getGamePlayerKiller().getRole();
-                }
-                roleBaseMap.put(event.getVictim().getName(), new RoleBase[]{
-                        zero,
-                        un,
-                        deux
-                });
+            final Map<UUID, GamePlayer> map = new HashMap<>(event.getGameState().getGamePlayer());
+            map.remove(event.getGamePlayerKiller().getUuid(), event.getGamePlayerKiller());
+            map.remove(event.getVictim().getUniqueId());
+            final List<GamePlayer> list = new ArrayList<>(map.values());
+            Collections.shuffle(list, Main.RANDOM);
+            RoleBase zero = list.get(0).getRole();
+            if (zero == null) {
+                zero = event.getGamePlayerKiller().getRole();
+            }
+            RoleBase un = list.get(1).getRole();
+            if (un == null) {
+                un = event.getGamePlayerKiller().getRole();
+            }
+            RoleBase deux = list.get(1).getRole();
+            if (deux == null) {
+                deux = event.getGamePlayerKiller().getRole();
+            }
+            roleBaseMap.put(event.getVictim().getName(), new RoleBase[]{
+                    zero,
+                    un,
+                    deux
+            });
         }
     }
 }

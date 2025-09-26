@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.GameState.ServerStates;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -29,7 +29,7 @@ public class Karin extends OrochimaruRoles {
 		timePassedNearby.clear();
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Karin;
 	}
 	@Override
@@ -139,7 +139,7 @@ public class Karin extends OrochimaruRoles {
 			}
 		}
 		for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-			if (gameState.hasRoleNull(p)) {
+			if (gameState.hasRoleNull(p.getUniqueId())) {
 				return;
 			}
 			if (timePassedNearby.containsKey(p.getUniqueId())) {

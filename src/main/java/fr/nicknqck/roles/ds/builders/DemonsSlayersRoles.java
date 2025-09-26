@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     public void setLameIncassable(Player target, boolean a) {
         if (target == null)return;
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-            if (!gameState.hasRoleNull(target)) {
+            if (!gameState.hasRoleNull(target.getUniqueId())) {
                 GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());
                 if (GP.getRole() instanceof DemonsSlayersRoles) {
                     DemonsSlayersRoles role = (DemonsSlayersRoles) GP.getRole();
@@ -79,4 +80,14 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     }
     public void onDSCommandSend(String[] args, GameState gameState) {}
     public abstract Soufle getSoufle();
+
+    @Override
+    public String[] Desc() {
+        return new String[0];
+    }
+
+    @Override
+    public ItemStack[] getItems() {
+        return new ItemStack[0];
+    }
 }

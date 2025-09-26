@@ -1,15 +1,15 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.solo.Eren;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class Erwin extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Erwin;
 	}
 	@Override
@@ -52,33 +52,30 @@ public class Erwin extends SoldatsRoles {
 						owner.sendMessage("Il faut indiqué un pseudo correcte");
 					}else {
 						if (cmdUse < maxcmdUse) {
-							if (gameState.hasRoleNull(target)) {
+							if (gameState.hasRoleNull(target.getUniqueId())) {
 								owner.sendMessage("La personne visée ne possède pas de rôle veuiller visée quelqu'un d'autre");
 							}else {
-								if (gameState.getPlayerRoles().get(target).getOriginTeam() != null) {
-									if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof Eren) {
-										owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+target.getName()+"§r appartient au camp des§a "+TeamList.Soldat.name());
-										cmdUse+=1;
-										int r = RandomUtils.getRandomInt(0, 2);
-										if (r < 1) {
-											target.sendMessage(AllDesc.bar);
-											target.sendMessage("§7Vous avez été éspionné par§a Erwin");
-											target.sendMessage(AllDesc.bar);
-										}
-									}else {
-										owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+target.getName()+"§r appartient au camp des "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor()+gameState.getPlayerRoles().get(target).getOriginTeam().name());
-										cmdUse+=1;
-										int r = RandomUtils.getRandomInt(0, 2);
-										if (r < 1) {
-											target.sendMessage(AllDesc.bar);
-											target.sendMessage("§7Vous avez été éspionné par§a Erwin");
-											target.sendMessage(AllDesc.bar);
-										}
-									}									
-								}else {
-									owner.sendMessage("Le joueur visée ne possède pas de team est n'est donc pas ciblable par votre commande");
-								}
-							}
+                                gameState.getGamePlayer().get(target.getUniqueId()).getRole().getOriginTeam();
+                                if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof Eren) {
+                                    owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor() + target.getName() + "§r appartient au camp des§a " + TeamList.Soldat.name());
+                                    cmdUse += 1;
+                                    int r = RandomUtils.getRandomInt(0, 2);
+                                    if (r < 1) {
+                                        target.sendMessage(AllDesc.bar);
+                                        target.sendMessage("§7Vous avez été éspionné par§a Erwin");
+                                        target.sendMessage(AllDesc.bar);
+                                    }
+                                } else {
+                                    owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor() + target.getName() + "§r appartient au camp des " + gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor() + gameState.getGamePlayer().get(target.getUniqueId()).getRole().getOriginTeam().name());
+                                    cmdUse += 1;
+                                    int r = RandomUtils.getRandomInt(0, 2);
+                                    if (r < 1) {
+                                        target.sendMessage(AllDesc.bar);
+                                        target.sendMessage("§7Vous avez été éspionné par§a Erwin");
+                                        target.sendMessage(AllDesc.bar);
+                                    }
+                                }
+                            }
 						}else {
 							owner.sendMessage("Vous avez atteind le nombre maximum d'utilisation de cette commande");
 						}
@@ -91,11 +88,8 @@ public class Erwin extends SoldatsRoles {
 			}
 		}
 	}
-	@Override
-	public ItemStack[] getItems() {
-		return new ItemStack[0];
-	}
-	@Override
+
+    @Override
 	public void resetCooldown() {
 		cmdUse = 0;
 		maxcmdUse = 2;

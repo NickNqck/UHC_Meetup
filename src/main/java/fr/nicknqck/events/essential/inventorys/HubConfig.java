@@ -4,11 +4,12 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
-import fr.nicknqck.events.chat.Chat;
+import fr.nicknqck.config.GameConfig;
+import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.pregen.PregenerationTask;
+import fr.nicknqck.runnables.PregenerationTask;
 import fr.nicknqck.scenarios.Scenarios;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
@@ -74,51 +75,13 @@ public class HubConfig implements Listener {
                         }
                     }  else if (item.isSimilar(GUIItems.getCrit(gameState))  && ChatRank.isHost(player)) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {
-                            if (gameState.critP < 50) {
-                                gameState.critP+=1;
+                            if (Main.getInstance().getGameConfig().getCritPercent() < 50) {
+                                Main.getInstance().getGameConfig().setCritPercent(Main.getInstance().getGameConfig().getCritPercent()+1);
                             }
                         } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                            if (gameState.getCritP() > 0) {
-                                gameState.critP-=1;
+                            if (Main.getInstance().getGameConfig().getCritPercent() > 0) {
+                                Main.getInstance().getGameConfig().setCritPercent(Main.getInstance().getGameConfig().getCritPercent()-1);
                             }
-                        }
-                    } else if (item.isSimilar(Chat.getColoritem())) {
-                        if (action.equals(InventoryAction.PICKUP_ALL)) {
-                            ChatColor c = Chat.getopColor();
-                            if (c == ChatColor.RED) Chat.setopColor(ChatColor.GOLD);
-                            if (c == ChatColor.GOLD) Chat.setopColor(ChatColor.YELLOW);
-                            if (c == ChatColor.YELLOW) Chat.setopColor(ChatColor.DARK_GREEN);
-                            if (c == ChatColor.DARK_GREEN) Chat.setopColor(ChatColor.GREEN);
-                            if (c == ChatColor.GREEN) Chat.setopColor(ChatColor.AQUA);
-                            if (c == ChatColor.AQUA) Chat.setopColor(ChatColor.DARK_AQUA);
-                            if (c == ChatColor.DARK_AQUA) Chat.setopColor(ChatColor.DARK_BLUE);
-                            if (c == ChatColor.DARK_BLUE) Chat.setopColor(ChatColor.BLUE);
-                            if (c == ChatColor.BLUE) Chat.setopColor(ChatColor.LIGHT_PURPLE);
-                            if (c == ChatColor.LIGHT_PURPLE) Chat.setopColor(ChatColor.DARK_PURPLE);
-                            if (c == ChatColor.DARK_PURPLE) Chat.setopColor(ChatColor.WHITE);
-                            if (c == ChatColor.WHITE) Chat.setopColor(ChatColor.GRAY);
-                            if (c == ChatColor.GRAY) Chat.setopColor(ChatColor.DARK_GRAY);
-                            if (c == ChatColor.DARK_GRAY) Chat.setopColor(ChatColor.BLACK);
-                            if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_RED);
-                            if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.RED);
-                        } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                            ChatColor c = Chat.getopColor();
-                            if (c == ChatColor.RED) Chat.setopColor(ChatColor.DARK_RED);
-                            if (c == ChatColor.DARK_RED) Chat.setopColor(ChatColor.BLACK);
-                            if (c == ChatColor.BLACK) Chat.setopColor(ChatColor.DARK_GRAY);
-                            if (c == ChatColor.DARK_GRAY) Chat.setopColor(ChatColor.GRAY);
-                            if (c == ChatColor.GRAY) Chat.setopColor(ChatColor.WHITE);
-                            if (c == ChatColor.WHITE)Chat.setopColor(ChatColor.DARK_PURPLE);
-                            if (c == ChatColor.DARK_PURPLE) Chat.setopColor(ChatColor.LIGHT_PURPLE);
-                            if (c == ChatColor.LIGHT_PURPLE) Chat.setopColor(ChatColor.BLUE);
-                            if (c == ChatColor.BLUE) Chat.setopColor(ChatColor.DARK_BLUE);
-                            if (c == ChatColor.DARK_BLUE) Chat.setopColor(ChatColor.DARK_AQUA);
-                            if (c == ChatColor.DARK_AQUA) Chat.setopColor(ChatColor.AQUA);
-                            if (c == ChatColor.AQUA) Chat.setopColor(ChatColor.GREEN);
-                            if (c == ChatColor.GREEN) Chat.setopColor(ChatColor.DARK_GREEN);
-                            if (c == ChatColor.DARK_GREEN) Chat.setopColor(ChatColor.YELLOW);
-                            if (c == ChatColor.YELLOW) Chat.setopColor(ChatColor.GOLD);
-                            if (c == ChatColor.GOLD) Chat.setopColor(ChatColor.RED);
                         }
                     } else if (item.isSimilar(GUIItems.getPregen(gameState))) {
                         if (!gameState.hasPregen){
@@ -157,13 +120,13 @@ public class HubConfig implements Listener {
                             player.openInventory(GUIItems.getRoleSelectGUI());
                             Main.getInstance().getInventories().updateRoleInventory(player);
                         }
-                        for (GameState.MDJ mdj : GameState.MDJ.values()) {
+                        for (MDJ mdj : MDJ.values()) {
                             if (item.isSimilar(mdj.getItem())) {
                                 if (gameState.getMdj().equals(mdj)) {
-                                    gameState.setMdj(GameState.MDJ.Aucun);
+                                    gameState.setMdj(MDJ.Aucun);
                                     gameState.updateGameCanLaunch();
                                 }else {
-                                    gameState.setMdj(GameState.MDJ.Aucun);
+                                    gameState.setMdj(MDJ.Aucun);
                                     gameState.setMdj(mdj);
                                 }
                             }
@@ -266,7 +229,7 @@ public class HubConfig implements Listener {
                     Main.getInstance().getInventories().updateCutCleanInventory(player);
                     event.setCancelled(true);
                     break;
-                case "Configuration de la partie":
+                case "§fConfiguration de la partie":
                     if (item.getType() != Material.AIR) {
                         String name = item.getItemMeta().getDisplayName();
                         if (item.getType().equals(Material.WATER_BUCKET)) {
@@ -343,17 +306,21 @@ public class HubConfig implements Listener {
                         }
                         if (item.getType() == Material.REDSTONE) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                if (gameState.TimingAssassin < 60*5) {
-                                    gameState.TimingAssassin+=10;
-                                }
+                                Main.getInstance().getGameConfig().setTimingAssassin(Math.min(60*5, Main.getInstance().getGameConfig().getTimingAssassin()+10));
                             } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                if (gameState.TimingAssassin > 10) {
-                                    gameState.TimingAssassin-=10;
-                                }
+                                Main.getInstance().getGameConfig().setTimingAssassin(Math.max(10, Main.getInstance().getGameConfig().getTimingAssassin()-10));
                             }
                         }
                         if (item.getType().equals(Material.TNT)) {
                             gameState.setTNTGrief(!gameState.isTNTGrief());
+                        }
+                        if (name.equals("§fLame")) {
+                            Main.getInstance().getGameConfig().setGiveLame(!Main.getInstance().getGameConfig().isGiveLame());
+                        }
+                        if (item.getType().equals(Material.EMERALD)) {
+                            if (action.equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                                Main.getInstance().getKrystalBeastManager().openConfigBeastInventory(player);
+                            }
                         }
                         Border.setMaxBorderSize(Math.max(50, Math.min(Border.getMaxBorderSize(), 2400)));
                         Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
@@ -362,12 +329,12 @@ public class HubConfig implements Listener {
                         if (name.contains("Durée du jour (et de la nuit)")) {
                             if (ChatRank.isHost(player)) {
                                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    gameState.timeday+=10;
+                                    Main.getInstance().getGameConfig().setMaxTimeDay(Main.getInstance().getGameConfig().getMaxTimeDay()+10);
                                     player.updateInventory();
                                     Main.getInstance().getInventories().updateConfigInventory(player);
                                 } else {
                                     if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                        gameState.timeday-=10;
+                                        Main.getInstance().getGameConfig().setMaxTimeDay(Main.getInstance().getGameConfig().getMaxTimeDay()-10);
                                         player.updateInventory();
                                         Main.getInstance().getInventories().updateConfigInventory(player);
                                     }
@@ -399,24 +366,41 @@ public class HubConfig implements Listener {
                                 }
                             }
                         }
-                        if (item.getItemMeta().getDisplayName().equals("§fBijus")) {
+                        if (name.equals("§fBijus")) {
                             if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
                                 player.closeInventory();
                                 player.openInventory(Bukkit.createInventory(player, 9*4, "Configuration ->§6 Bijus"));
                                 Main.getInstance().getInventories().openConfigBijusInventory(player);
                             } else {
-                                Main.getInstance().getGameConfig().setBijusEnable(!Main.getInstance().getGameConfig().isBijusEnable());
+                                Main.getInstance().getBijuManager().setBijuEnable(!Main.getInstance().getBijuManager().isBijuEnable());
                             }
                         }
-                        if (item.getItemMeta().getDisplayName().equals("§cInfection")) {
+                        if (name.equals("§cInfection")) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                if (gameState.timewaitingbeinfected < 60*20) {
-                                    gameState.timewaitingbeinfected+=5;
-                                }
+                                Main.getInstance().getGameConfig().setInfectionTime(Math.min(60*20, Main.getInstance().getGameConfig().getInfectionTime()+10));
                             }else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                if (gameState.timewaitingbeinfected > 5) {
-                                    gameState.timewaitingbeinfected-=5;
-                                }
+                                Main.getInstance().getGameConfig().setInfectionTime(Math.max(10, Main.getInstance().getGameConfig().getInfectionTime()-10));
+                            }
+                        }
+                        if (name.equalsIgnoreCase("§fPourcentage de Force")) {
+                            if (event.isLeftClick()) {
+                                Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()+5));
+                            } else {
+                                Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()-5));
+                            }
+                        }
+                        if (name.equals("§fTypes de stun")) {
+                            if (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.TELEPORT)) {
+                                Main.getInstance().getGameConfig().setStunType(GameConfig.StunType.STUCK);
+                            } else {
+                                Main.getInstance().getGameConfig().setStunType(GameConfig.StunType.TELEPORT);
+                            }
+                        }
+                        if (name.equalsIgnoreCase("§fPourcentage de Résistance")) {
+                            if (event.isLeftClick()) {
+                                Main.getInstance().getGameConfig().setResiPercent(Math.max(10, Main.getInstance().getGameConfig().getResiPercent()+5));
+                            } else {
+                                Main.getInstance().getGameConfig().setResiPercent(Math.max(10, Main.getInstance().getGameConfig().getResiPercent()-5));
                             }
                         }
                     }

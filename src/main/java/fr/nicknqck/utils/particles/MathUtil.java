@@ -63,6 +63,15 @@ public class MathUtil {
             sendParticle(particle, x, center.getY() + 0.5, z, center.getWorld());
         }
     }
+    public static void spawnRGBCircleParticle(float red, float green, float blue, Location center, int radius, int amount) {
+        final double increment = 6.283185307179586 / amount;
+        for (int i = 0; i < amount; ++i) {
+            final double angle = i * increment;
+            final double x = center.getX() + radius * cos(angle);
+            final double z = center.getZ() + radius * sin(angle);
+            spawnParticle(new Location(center.getWorld(), x, center.getY()+0.5, z), red, green, blue);
+        }
+    }
     public static List<Location> getCircle(final Location center, final double radius){
     	List<Location> e = new ArrayList<>();
     	double amount = radius*15;

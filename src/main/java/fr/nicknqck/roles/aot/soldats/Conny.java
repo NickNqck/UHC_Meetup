@@ -1,14 +1,15 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -34,14 +35,11 @@ public class Conny extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Conny;
 	}
-	@Override
-	public String[] Desc() {
-		return new String[0];
-	}
-	@Override
+
+    @Override
 	public String getName() {
 		return "Conny";
 	}
@@ -197,10 +195,10 @@ public class Conny extends SoldatsRoles {
 		this.protegerRole = null;
 	}
 	private void giveJeanEffect(Player owner) {
-		givePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 1, true);
-		givePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60*3*20, 1, true);
+		OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 1, true);
+		OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 60*3*20, 1, true);
 	}
 	private void giveSashaEffect(Player owner) {
-		givePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 2, true);
+		OLDgivePotionEffet(owner, PotionEffectType.SPEED, 20*60*3, 2, true);
 	}
 }

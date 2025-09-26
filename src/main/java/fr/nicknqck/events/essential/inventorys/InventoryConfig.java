@@ -42,9 +42,9 @@ public class InventoryConfig implements Listener {
             }
             if (item.getType() == Material.DIAMOND_CHESTPLATE) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.max(4, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()+1));
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.min(4, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()+1));
                 }else {
-                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.min(1, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()-1));
+                    Main.getInstance().getGameConfig().getStuffConfig().setProtectionChestplate(Math.max(1, Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()-1));
                 }
             }
             if (item.getType() == Material.IRON_LEGGINGS) {
@@ -64,14 +64,14 @@ public class InventoryConfig implements Listener {
             if (item.getItemMeta().hasDisplayName()) {
                 if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fNombre de pomme d'§eor")) {
                     if (action.equals(InventoryAction.PICKUP_ALL)) {
-                        if (gameState.getNmbGap() != 64) {
-                            gameState.setNmbGap(gameState.getNmbGap()+1);
+                        if (Main.getInstance().getGameConfig().getStuffConfig().getNmbGap() != 64) {
+                            Main.getInstance().getGameConfig().getStuffConfig().setNmbGap(Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()+1);
                         } else {
                             player.sendMessage("Vous avez déjà atteint le nombre maximum de Pomme en Or ("+ ChatColor.GOLD+"64"+ChatColor.RESET+")");
                         }
                     } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                        if (gameState.getNmbGap() != gameState.minnmbGap) {
-                            gameState.setNmbGap(gameState.getNmbGap()-1);
+                        if (Main.getInstance().getGameConfig().getStuffConfig().getNmbGap() != Main.getInstance().getGameConfig().getStuffConfig().getMinGap()) {
+                            Main.getInstance().getGameConfig().getStuffConfig().setNmbGap(Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()-1);
                         } else {
                             player.sendMessage("Vous avez déjà atteint le nombre minimum de Pomme en Or ("+ChatColor.GOLD+"12"+ChatColor.RESET+")");
                         }
@@ -80,14 +80,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getdiamondsword())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.sharpness != 5) {
-                        GameState.sharpness++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getSharpness() != 5) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setSharpness(Main.getInstance().getGameConfig().getStuffConfig().getSharpness()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de sharpness maximal");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.sharpness != 1) {
-                        GameState.sharpness--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getSharpness() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setSharpness(Main.getInstance().getGameConfig().getStuffConfig().getSharpness()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de sharpness minimal");
                     }
@@ -95,14 +95,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getblock())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.nmbblock != 4) {
-                        GameState.nmbblock++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() != 4) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setNmbblock(Main.getInstance().getGameConfig().getStuffConfig().getNmbblock()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de block");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.nmbblock != 1) {
-                        GameState.nmbblock--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setNmbblock(Main.getInstance().getGameConfig().getStuffConfig().getNmbblock()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de block");
                     }
@@ -110,14 +110,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getbow())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.power != 5) {
-                        GameState.power++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPower() != 5) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPower(Main.getInstance().getGameConfig().getStuffConfig().getPower()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de power");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.power != 1) {
-                        GameState.power--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPower() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPower(Main.getInstance().getGameConfig().getStuffConfig().getPower()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite minimal de power");
                     }
@@ -126,14 +126,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getEnderPearl())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.pearl == 0) {
-                        GameState.pearl++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 0) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPearl(1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite maximum d'ender pearl");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.pearl == 1) {
-                        GameState.pearl--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setPearl(0);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite minimum d'ender pearl");
                     }
@@ -141,14 +141,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.geteau())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.eau != 4) {
-                        GameState.eau++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getEau() != 4) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setEau(Main.getInstance().getGameConfig().getStuffConfig().getEau()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de sceau d'eau");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.eau != 1) {
-                        GameState.eau--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getEau() != 1) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setEau(Main.getInstance().getGameConfig().getStuffConfig().getEau()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite minimal de sceau d'eau");
                     }
@@ -157,14 +157,14 @@ public class InventoryConfig implements Listener {
             }
             if (item.isSimilar(GUIItems.getlave())) {
                 if (action.equals(InventoryAction.PICKUP_ALL)) {
-                    if (GameState.lave != 4) {
-                        GameState.lave++;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getLave() != 4) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setLave(Main.getInstance().getGameConfig().getStuffConfig().getLave()+1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite de sceau de lave");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                    if (GameState.lave != 1) {
-                        GameState.lave--;
+                    if (Main.getInstance().getGameConfig().getStuffConfig().getLave() != 0) {
+                        Main.getInstance().getGameConfig().getStuffConfig().setLave(Main.getInstance().getGameConfig().getStuffConfig().getLave()-1);
                     } else {
                         player.sendMessage("Vous avez déjà atteint la limite minimal de sceau de lave");
                     }

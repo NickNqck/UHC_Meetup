@@ -1,13 +1,14 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -33,15 +34,11 @@ public class Sasha extends SoldatsRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Sasha;
 	}
-	@Override
-	public String[] Desc() {
-		return new String[0];
-	}
 
-	@Override
+    @Override
 	public void RoleGiven(GameState gameState) {
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous tirez une flèche sur un§c joueur§7 avec votre§a Arc de Chasseur§7 vous lui infligerez des effets en fonction de la zone toucher:\n\n"
@@ -66,7 +63,6 @@ public class Sasha extends SoldatsRoles {
 	public void GiveItems() {
 		giveItem(owner, false, getItems());
 		owner.getInventory().addItem(new ItemStack(Material.ARROW, 32));//give 32 flèches
-		gameState.GiveRodTridi(owner);
 	}
 	private int cooldown = 0;
 	@Override
@@ -109,11 +105,11 @@ public class Sasha extends SoldatsRoles {
 			                    double heightDifference = arrowLocation.getY() - targetLocation.getY();
 			                    if (heightDifference > 1.5) {
 			                        shooter.sendMessage("§7Tu as touché la tête de§a " + victim.getName());
-			                        givePotionEffet(victim, PotionEffectType.BLINDNESS, 20*7, 1, true);
+			                        OLDgivePotionEffet(victim, PotionEffectType.BLINDNESS, 20*7, 1, true);
 			                        victim.sendMessage("§aSasha§7 vous à infliger§l 7secondes§7 de "+AllDesc.blind);
 			                    } else if (heightDifference < 0.9) {
 			                        shooter.sendMessage("§7Tu as touché les jambes de§a " + victim.getName());
-			                        givePotionEffet(victim, PotionEffectType.SLOW, 20*7, 1, true);
+			                        OLDgivePotionEffet(victim, PotionEffectType.SLOW, 20*7, 1, true);
 			                        victim.sendMessage("§aSasha§7 vous à infliger§l 7secondes§7 de "+AllDesc.slow);
 			                    } else {
 			                        shooter.sendMessage("§7Tu as touché le torse de§a " + victim.getName());

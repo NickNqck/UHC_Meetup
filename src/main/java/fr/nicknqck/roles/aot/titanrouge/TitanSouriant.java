@@ -1,12 +1,13 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -20,8 +21,8 @@ public class TitanSouriant extends TitansRoles {
 		super(player);
 	}
 	@Override
-	public Roles getRoles() {
-		return null;
+	public @NonNull Roles getRoles() {
+		return Roles.GrandTitan;
 	}
 	@Override
 	public String[] Desc() {
@@ -42,7 +43,7 @@ public class TitanSouriant extends TitansRoles {
 					if (isTransformedinTitan)return false;
 					isTransformedinTitan = true;
 					setBonusResi(10);
-					givePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
+					OLDgivePotionEffet(owner, PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, true);
 					owner.sendMessage("§7Transformation en Titan");
 					TransfoEclairxMessage(owner);
 					owner.getInventory().remove(owner.getItemInHand());
@@ -50,11 +51,8 @@ public class TitanSouriant extends TitansRoles {
 				}).setDespawnable(false).setDroppable(false).getItemStack()
 		};
 	}
-	@Override
-	public void resetCooldown() {
-	}
 
-	@Override
+    @Override
 	public String getName() {
 		return "Titan Souriant";
 	}

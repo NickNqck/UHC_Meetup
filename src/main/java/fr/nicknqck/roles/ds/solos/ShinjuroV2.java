@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
@@ -12,6 +13,7 @@ import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -77,12 +79,12 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.ShinjuroV2;
+    public @NonNull Roles getRoles() {
+        return Roles.ShinjuroV2;
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
 
@@ -159,7 +161,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
             }
             Player owner = Bukkit.getPlayer(shinjuro.getPlayer());
             if (owner != null){
-                shinjuro.givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+                shinjuro.OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
                 if (shinjuro.flamme) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), true));
                 }

@@ -2,6 +2,7 @@ package fr.nicknqck.roles.valo.agents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -54,18 +55,13 @@ public class Neon extends RoleBase {
     }
 
     @Override
-    public @NonNull GameState.Roles getRoles() {
-        return GameState.Roles.Neon;
+    public @NonNull Roles getRoles() {
+        return Roles.Neon;
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
-    }
-
-    @Override
-    public void resetCooldown() {
-
     }
 
     @Override
@@ -94,14 +90,15 @@ public class Neon extends RoleBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final List<Block> centre = getBlocksInFront(player);
                 for (final Block block : centre) {
                     MathUtil.sendParticle(EnumParticle.EXPLOSION_NORMAL, block.getLocation());
                     block.setType(Material.FIRE);
                 }
-                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*60, 0, false, false), true);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 200, 0, false, false), true);
+                return true;
             }
             return false;
         }
@@ -134,7 +131,7 @@ public class Neon extends RoleBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final Player target = getRole().getTargetPlayer(player, 25.0);
                 if (target != null) {
@@ -179,7 +176,7 @@ public class Neon extends RoleBase {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> map) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("RIGHT")) {
@@ -202,7 +199,7 @@ public class Neon extends RoleBase {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (this.runnable.start) {
                     this.runnable.start = false;
                     player.sendMessage("§7Vous avez désactiver votre§e Speed 2");
@@ -287,7 +284,7 @@ public class Neon extends RoleBase {
             }
 
             @Override
-            public boolean onUse(Player player, Map<String, Object> map) {
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (this.speedItemPower.coursePower.runnable.speedBar <= 5) {
                     player.sendMessage("§7Vous n'avez pas asser d'énergie pour dash");
                     return false;

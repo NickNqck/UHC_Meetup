@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
@@ -18,6 +19,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -33,6 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -126,28 +129,18 @@ public class SlayerSolo extends DemonsSlayersRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Pourfendeur Solitaire";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.SlayerSolo;
+    public @NonNull Roles getRoles() {
+        return Roles.SlayerSolo;
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
-    }
-
-    @Override
-    public void resetCooldown() {
-
     }
 
     @Override
@@ -166,18 +159,12 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 this.using = true;
                 player.sendMessage("§7Votre§e Foudre§7 est prête, vous avez maintenant§c 60 secondes§7 pour l'utiliser sur un§c joueur§7.");
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-                    this.using = false;
-                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                        player.sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
-                    }
-                    EventUtils.unregisterEvents(this);
-                }, 20*60);
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
+                new EndFoudreRunnable(getRole().getGameState(), this);
                 return true;
             }
             return false;
@@ -187,17 +174,44 @@ public class SlayerSolo extends DemonsSlayersRoles {
             if (!event.getDamager().getUuid().equals(getRole().getPlayer()))return;
             if (this.using) {
                 if (this.taped.contains(event.getVictim().getUuid()))return;
-                Player victim = event.getVictim().getRole().owner;
+                Player victim = (Player) event.getOriginEvent().getEntity();
                 victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false));
-                if (victim.getHealth() - 4.0 <= 0.0) {
-                     victim.damage(9999.0, event.getOriginEvent().getDamager());
-                } else {
-                    victim.setHealth(victim.getHealth()-4.0);
-                    victim.damage(0.0);
-                }
                 victim.sendMessage("§7Vous subissez une§e foudre§c très puissante§7.");
                 this.taped.add(event.getVictim().getUuid());
                 getRole().getGameState().spawnLightningBolt(victim.getWorld(), victim.getLocation());
+                if (victim.getHealth() - 4.0 <= 0.0) {
+                    victim.damage(9999.0, event.getOriginEvent().getDamager());
+                } else {
+                    victim.setHealth(victim.getHealth()-4.0);
+                    victim.damage(0.0, event.getOriginEvent().getDamager());
+                }
+            }
+        }
+        private static class EndFoudreRunnable extends BukkitRunnable {
+
+            private final GameState gameState;
+            private final FoudrePower power;
+            private int timeLeft = 60;
+
+            private EndFoudreRunnable(GameState gameState, FoudrePower power) {
+                this.gameState = gameState;
+                this.power = power;
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    EventUtils.unregisterEvents(power);
+                    cancel();
+                    return;
+                }
+                if (timeLeft == 0) {
+                    power.getRole().getGamePlayer().sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
+                    EventUtils.unregisterEvents(power);
+                    cancel();
+                    return;
+                }
+                timeLeft--;
             }
         }
     }
@@ -208,11 +222,11 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*120, 1, false, false), true);
                 player.sendMessage("§7Vous activez votre §aSoufle du Vent");
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     assert player.isOnline();
                     if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
@@ -240,7 +254,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Vous activez le§b Soufle de l'Eau");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*180, 0, false, false));
@@ -295,17 +309,12 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Activation du§c Soufle du Feu");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*180, 0, false, false));
-                EventUtils.registerEvents(this);
-                Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
-                    if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                        player.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
-                    }
-                    EventUtils.unregisterEvents(this);
-                }, 20*180);
+                EventUtils.registerRoleEvent(this);
+                new FeuRunnable(getRole().getGameState(), this);
                 return true;
             }
             return false;
@@ -318,6 +327,36 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 }
             }
         }
+        private static final class FeuRunnable extends BukkitRunnable {
+
+            private int timeRemaining;
+            private final GameState gameState;
+            private final FeuPower feuPower;
+
+            private FeuRunnable(GameState gameState, FeuPower feuPower) {
+                this.gameState = gameState;
+                this.feuPower = feuPower;
+                this.timeRemaining = 180;
+                runTaskTimerAsynchronously(feuPower.getPlugin(), 0, 20);
+            }
+
+            @Override
+            public void run() {
+                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
+                    return;
+                }
+                timeRemaining--;
+                if (timeRemaining <= 0) {
+                    final Player owner = Bukkit.getPlayer(feuPower.getRole().getPlayer());
+                    if (owner != null) {
+                        owner.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
+                    }
+                    cancel();
+                    EventUtils.unregisterEvents(this.feuPower);
+                }
+            }
+        }
     }
     private static class RochePower extends ItemPower {
 
@@ -326,7 +365,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 Player target = getRole().getTargetPlayer(player, 25);
                 if (target != null) {

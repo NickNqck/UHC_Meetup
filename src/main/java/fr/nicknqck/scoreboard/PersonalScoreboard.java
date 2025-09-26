@@ -4,8 +4,8 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.scoreboard.ScoreBoardUpdateEvent;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -18,9 +18,9 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
+
+import static fr.nicknqck.roles.builder.TeamList.Jubi;
 
 /*
  * This file is part of SamaGamesAPI.
@@ -38,19 +38,18 @@ import java.util.UUID;
  * You should have received a copy of the GNU General Public License
  * along with SamaGamesAPI.  If not, see <http://www.gnu.org/licenses/>.
  */
+@Getter
 public class PersonalScoreboard {
+
     private final Player player;
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
     private final GameState gameState;
-	@Getter
-	private final Map<UUID, String> colors;
 
     PersonalScoreboard(Player player, GameState gameState){
         this.player = player;
         this.gameState = gameState;
         uuid = player.getUniqueId();
-		this.colors = new HashMap<>();
         objectiveSign = new ObjectiveSign("sidebar", Main.getInstance().PLUGIN_NAME);
         
         reloadData();
@@ -77,24 +76,27 @@ public class PersonalScoreboard {
     		objectiveSign.setDisplayName(this.gameState.msgBoard);
     		
     		objectiveSign.setLine(0, "§c");
-    		if (!this.gameState.hasRoleNull(player)) {
-    			RoleBase role = this.gameState.getPlayerRoles().get(player);
+    		if (!this.gameState.hasRoleNull(player.getUniqueId())) {
+    			RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 				String roleName = role.getName();
 				String iRole = "§fRôle: ";
 				if (premsg.length()+iRole.length()+ roleName.length() + role.getTeam().getColor().length() >= 40) {
+					roleName = role.getRoles().getItem().getItemMeta().getDisplayName();
+				}
+				if (premsg.length()+iRole.length()+role.getRoles().getItem().getItemMeta().getDisplayName().length() >= 40) {
 					roleName = role.getRoles().name();
 				}
-    			if (this.gameState.getPlayerRoles().get(player).getTeam() != null) {
+    			if (role.getTeam() != null) {
     				objectiveSign.setLine(1, premsg+iRole+role.getTeam().getColor()+roleName);
     			}else {
     				objectiveSign.setLine(1, premsg+iRole+roleName);
     			}
     		}
     		objectiveSign.setLine(2, premsg+"§fJoueurs:§c "+this.gameState.getInGamePlayers().size());
-    		objectiveSign.setLine(3, premsg+"§fGroupe:§6 "+this.gameState.getGroupe());
+    		objectiveSign.setLine(3, premsg+"§fGroupe:§6 "+Main.getInstance().getGameConfig().getGroupe());
     		objectiveSign.setLine(4, "§a");
     		objectiveSign.setLine(5, premsg+"§fDurée: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getInGameTime()));
-    		if (this.gameState.getPvP()) {
+    		if (Main.getInstance().getGameConfig().isPvpEnable()) {
     			objectiveSign.setLine(6, premsg+"§fPvP:§c Activée");
     		} else {
 				objectiveSign.setLine(6, premsg+"§fPvP:§c "+ StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getActualPvPTimer()));
@@ -111,29 +113,32 @@ public class PersonalScoreboard {
 				objectiveSign.setLine(8, premsg+"§eJour§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.t));
 			}
     		objectiveSign.setLine(9, "§0");
-    		if (!this.gameState.hasRoleNull(player)) {
+    		if (!this.gameState.hasRoleNull(player.getUniqueId())) {
     			objectiveSign.setLine(10, premsg+"Kills:§6 "+this.gameState.getPlayerKills().get(player.getUniqueId()).size());
     		}
     		objectiveSign.setLine(11, premsg+"§fCentre: §6"+ArrowTargetUtils.calculateArrow(player, new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))+new DecimalFormat("0").format(player.getLocation().distance(new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))));
     		if (this.gameState.roletab) {
     			if (this.gameState.roleTimer < this.gameState.getInGameTime()) {
-    				if (!this.gameState.hasRoleNull(player)) {
-    					if (this.gameState.getPlayerRoles().get(player).getOriginTeam() != null) {
-    						this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).getOriginTeam().getColor()+this.gameState.getPlayerRoles().get(player).getRoles().name()+" "+player.getDisplayName(), player);
+    				if (!this.gameState.hasRoleNull(player.getUniqueId())) {
+						final RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
+    					if (role.getOriginTeam() != null) {
+    						this.gameState.changeTabPseudo(role.getOriginTeam().getColor()+role.getRoles().name()+" "+player.getDisplayName(), player);
 						}else {
-							this.gameState.changeTabPseudo(this.gameState.getPlayerRoles().get(player).getRoles().name()+" "+player.getDisplayName(), player);
+							this.gameState.changeTabPseudo(role.getRoles().name()+" "+player.getDisplayName(), player);
 						}
     				}
     			}
     		}
-    		if (gameState.getJubiCrafter() != null) {
-    			if (gameState.getJubiCrafter().getUniqueId().equals(player.getUniqueId())) {
+    		if (fr.nicknqck.items.Jubi.getUuidCrafter() != null) {
+    			if (fr.nicknqck.items.Jubi.getUuidCrafter().equals(player.getUniqueId())) {
     				gameState.changeTabPseudo("§dJubi "+player.getDisplayName(), player);
-    			} else if (gameState.getPlayerRoles().get(player).getOriginTeam().equals(TeamList.Jubi)) {
+    			} else if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getOriginTeam().equals(Jubi)) {
     				gameState.changeTabPseudo("§d "+player.getDisplayName(), player);
     			}
     		}
     	}
+		final ScoreBoardUpdateEvent event = new ScoreBoardUpdateEvent(this.objectiveSign.lines, this.objectiveSign.scores, this);
+		Bukkit.getPluginManager().callEvent(event);
         objectiveSign.updateLines();
     }
     public void onLogout(){
@@ -141,8 +146,6 @@ public class PersonalScoreboard {
         System.out.println("removing "+Bukkit.getPlayer(uuid).getName()+" from PersonalScoreboard");
     }
 	public void changeDisplayName(final Player sender, final Player target, final String color) {
-        this.getColors().remove(target.getUniqueId());
-		this.getColors().put(target.getUniqueId(), color);
 		setCustomName(sender, target, color);
 	}
 	/*@param
@@ -159,5 +162,11 @@ public class PersonalScoreboard {
 		team.setPrefix(customName);
 		team.setCanSeeFriendlyInvisibles(false);
 		team.addEntry(target.getName());
+		if (Main.getInstance().getScoreboardManager().getColorScoreboard().containsKey(player.getUniqueId())) {
+			Main.getInstance().getScoreboardManager().getColorScoreboard().remove(player.getUniqueId());
+			Main.getInstance().getScoreboardManager().getColorScoreboard().put(player.getUniqueId(), scoreboard);
+		} else {
+			Main.getInstance().getScoreboardManager().getColorScoreboard().put(player.getUniqueId(), scoreboard);
+		}
 	}
 }

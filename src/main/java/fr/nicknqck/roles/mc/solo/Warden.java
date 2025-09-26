@@ -2,6 +2,7 @@ package fr.nicknqck.roles.mc.solo;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -10,6 +11,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.particles.MathUtil;
+import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -40,12 +42,12 @@ public class Warden extends UHCMcRoles {
         addBonusResi(10.0);
     }
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Warden;
+    public @NonNull Roles getRoles() {
+        return Roles.Warden;
     }
 
     @Override
-    public TeamList getOriginTeam() {
+    public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
     }
 
@@ -115,8 +117,8 @@ public class Warden extends UHCMcRoles {
 
     @Override
     public void Update(GameState gameState) {
-        givePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-        givePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
+        OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
+        OLDgivePotionEffet(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 1, false);
         if (cdLaser >= 0){
             cdLaser--;
             if (cdLaser == 0){
@@ -156,7 +158,7 @@ public class Warden extends UHCMcRoles {
             if (cdDarkness <= 0){
                 owner.sendMessage("§7Activation de votre pouvoir§9 Darkness");
                 for (Player p : Loc.getNearbyPlayersExcept(owner, 25)){
-                    givePotionEffet(p, PotionEffectType.BLINDNESS, 20*18, 1, true);
+                    OLDgivePotionEffet(p, PotionEffectType.BLINDNESS, 20*18, 1, true);
                     owner.sendMessage("§c"+p.getDisplayName()+"§7 à été toucher par votre pouvoir§9 Darkness");
                     p.sendMessage("§7Vous avez été toucher par la§9 Darkness§7 du§9 Warden");
                 }
@@ -227,7 +229,7 @@ public class Warden extends UHCMcRoles {
             if (cancel){
                 cancel();
             }
-            warden.givePotionEffet(PotionEffectType.SPEED, 60, 1, true);
+            warden.OLDgivePotionEffet(PotionEffectType.SPEED, 60, 1, true);
             warden.sendCustomActionBar(warden.owner, Loc.getDirectionMate(warden.owner, Bukkit.getPlayer(target), true)+"§bTemp de traque restant:§c "+ StringUtils.secondTowardsConventional(timeRemaining));
             timeRemaining--;
         }
@@ -235,7 +237,7 @@ public class Warden extends UHCMcRoles {
         private void onKill(UHCPlayerKillEvent e){
                 if (e.getPlayerKiller() != null && e.getGamePlayerKiller() != null){
                     if (e.getGameState().getGamePlayer().containsKey(e.getKiller().getUniqueId())){
-                        if (e.getGameState().getPlayerRoles().get(e.getPlayerKiller()) instanceof Warden){
+                        if (e.getGameState().getGamePlayer().get(e.getPlayerKiller().getUniqueId()).getRole() instanceof Warden ){
                             if (e.getVictim().getUniqueId().equals(target) && timeRemaining > 0){
                                 if (warden.getBonusResi() < 30.0 && !cancel){
                                     warden.addBonusResi(5.0);

@@ -23,7 +23,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.bijus.Bijus;
+import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.scenarios.impl.AntiDrop;
@@ -68,27 +68,19 @@ public class ItemsManager implements Listener {
 	public void OnItemConsumed(PlayerItemConsumeEvent event) {
 		ItemStack item = event.getItem();
 		Player player = event.getPlayer();
-		if (!gameState.getPlayerRoles().containsKey(player))return;
-		gameState.getPlayerRoles().get(player).onEat(item, gameState);
-		for (UUID u : gameState.getInGamePlayers()) {
-			Player ig = Bukkit.getPlayer(u);
-			if (ig == null)continue;
-			if (!gameState.hasRoleNull(ig)) {
-				gameState.getPlayerRoles().get(ig).onALLPlayerEat(event, item, player);
-			}
-		}
+		if (gameState.hasRoleNull(player.getUniqueId()))return;
+		final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
+		role.onEat(item, gameState);
 		if (item.getType() == Material.GOLDEN_APPLE) {
-			RoleBase role = gameState.getPlayerRoles().get(player);
-			if (role == null)return;
-			player.updateInventory();
+            player.updateInventory();
 			if (Anti_Abso.isAntiabsoall()) {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {	
+				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20*60*2, 0, false, false), true);
 					player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*4, 1, false, false), true);
 	        }, 1);	
 			} else if (Anti_Abso.isAntiabsoinvi()) {
 				if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 						player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20*60*2, 0, false, false), true);
 						player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*4, 1, false, false), true);
 					}, 1);
@@ -99,8 +91,8 @@ public class ItemsManager implements Listener {
 	@EventHandler
 	public void PlayerRecupItemEvent(PlayerPickupItemEvent e) {
 		ItemStack s = e.getItem().getItemStack();
-		if (gameState.getPlayerRoles().containsKey(e.getPlayer())) {
-			e.setCancelled(gameState.getPlayerRoles().get(e.getPlayer()).onPickupItem(e.getItem()));
+		if (!gameState.hasRoleNull(e.getPlayer().getUniqueId())) {
+			e.setCancelled(gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).getRole().onPickupItem(e.getItem()));
 		}
 		if (s.hasItemMeta()) {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
@@ -108,8 +100,8 @@ public class ItemsManager implements Listener {
 					if (s.getItemMeta().hasDisplayName()) {
 						String name = s.getItemMeta().getDisplayName();
 						if (name.equalsIgnoreCase("§dGyûki") || name.equalsIgnoreCase("§6Kyubi") || name.equalsIgnoreCase("§6Kyûbi")) {
-							if (!gameState.hasRoleNull(e.getPlayer())) {
-								if (gameState.getPlayerRoles().get(e.getPlayer()).getOriginTeam().equals(TeamList.Jubi)) {
+							if (!gameState.hasRoleNull(e.getPlayer().getUniqueId())) {
+								if (gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).getRole().getOriginTeam().equals(TeamList.Jubi)) {
 									return;
 								}
 							}
@@ -141,7 +133,7 @@ public class ItemsManager implements Listener {
 				}
 			}
 		}
-		if (!gameState.hasRoleNull(player)) {
+		if (!gameState.hasRoleNull(player.getUniqueId())) {
 			for (Power power : gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers()) {
 				if (power instanceof ItemPower) {
 					if (event.getItemDrop().getItemStack().isSimilar(((ItemPower) power).getItem())) {

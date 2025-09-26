@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -38,28 +39,13 @@ public class HotaruV2 extends SlayerRoles {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Hotaru";
     }
 
     @Override
-    public GameState.Roles getRoles() {
-        return GameState.Roles.Hotaru;
-    }
-
-    @Override
-    public void resetCooldown() {
-
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
+    public @NonNull Roles getRoles() {
+        return Roles.Hotaru;
     }
 
     @Override
@@ -85,7 +71,7 @@ public class HotaruV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             String[] strings = (String[]) args.get("args");
             if (strings.length == 2) {
                 Player player1 = Bukkit.getPlayer(strings[1]);
@@ -113,7 +99,7 @@ public class HotaruV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             String[] strings = (String[]) args.get("args");
             if (strings.length == 2) {
                 Player player1 = Bukkit.getPlayer(strings[1]);
@@ -149,7 +135,7 @@ public class HotaruV2 extends SlayerRoles {
         }
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             String[] strings = (String[]) args.get("args");
             if (strings.length == 2) {
                 Player player1 = Bukkit.getPlayer(strings[1]);
@@ -183,7 +169,7 @@ public class HotaruV2 extends SlayerRoles {
 
 
         @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             Inventory inv = Bukkit.createInventory(player, 27, "§fChoix de la lame");
             inv.setItem(9, Items.getLamedenichirincoeur());
             inv.setItem(4, Items.getLamedenichirinfireresi());

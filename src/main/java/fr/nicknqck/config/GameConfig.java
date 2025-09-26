@@ -9,34 +9,37 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Setter
 @Getter
+@Setter
 public class GameConfig {
     @Getter
     private static GameConfig instance;
-    @Getter
     private int WaterEmptyTiming = 30;
-    @Getter
     private int LavaEmptyTiming = 30;
-    @Getter
-    @Setter
     private boolean minage = false;
-    @Getter
     private final List<ItemStack> itemOnKill;
-    @Getter
     private final StuffConfig stuffConfig;
-    @Getter
+    private final NarutoConfig narutoConfig;
     private boolean laveTitans = true;
-    @Getter
-    private boolean BijusEnable = false;
     private boolean stuffUnbreak = true;
+    private boolean pvpEnable = false;
+    private int maxTimeDay = 60*3;
+    private int critPercent = 20;
+    private boolean giveLame = false;
+    private int timingAssassin = 30;
+    private int infectionTime = 60;
+    private int groupe = 5;
+    private int tridiCooldown = 16;
+    private int forcePercent = 30;
+    private int resiPercent = 20;
+    private StunType stunType = StunType.TELEPORT;
 
     public GameConfig() {
         instance = this;
         this.itemOnKill = new ArrayList<>();
         itemOnKill.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
         this.stuffConfig = new StuffConfig();
+        this.narutoConfig = new NarutoConfig();
     }
 
     @Getter
@@ -47,7 +50,37 @@ public class GameConfig {
         private int protectionLeggings = 3;
         private int protectionChestplate = 2;
         private int protectionHelmet = 2;
-        private int nmbArrow = 24;
+        private int nmbArrow = 16;
+        private int sharpness = 3;
+        private int nmbblock = 1;
+        private int power = 2;
+        private int pearl = 0;
+        private int eau = 2;
+        private int lave = 2;
 
+        private int nmbGap = 20;
+        private int minGap = 12;
+
+    }
+    @Getter
+    @Setter
+    public final static class NarutoConfig {
+
+        private double edoHealthRemove = 4.0;
+
+    }
+    public enum StunType {
+        TELEPORT("Téléportation", "§a"),
+        STUCK("Anti-Déplacement", "§c");
+
+        @Getter
+        private final String name;
+        @Getter
+        private final String color;
+
+        StunType(String name, String color) {
+            this.name = name;
+            this.color = color;
+        }
     }
 }

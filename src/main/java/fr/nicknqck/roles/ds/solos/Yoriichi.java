@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EndGameEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
@@ -14,6 +14,7 @@ import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -53,12 +54,12 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	}
 
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Yoriichi;
 	}
 
 	@Override
-	public TeamList getOriginTeam() {
+	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Solo;
 	}
 
@@ -121,10 +122,8 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 		}
 		super.Update(gameState);
 	}
-	@Override
-	public void resetCooldown() {
-	}
-	@Override
+
+    @Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(Items.getSoufleduSoleil())) {
 			if (!activersoufle) {				
@@ -142,8 +141,8 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 		if (killer == owner) {
 			if (victim != owner) {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (gameState.getPlayerRoles().containsKey(victim)) {
-						RoleBase role = gameState.getPlayerRoles().get(victim);
+					if (!gameState.hasRoleNull(victim.getUniqueId())) {
+						RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
 						if (role.getRoles() == Roles.Kokushibo && !killkoku) {
 							killkoku = true;
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuée: "+ victim.getName()+" il possédait le rôle de: "+ChatColor.GOLD+role.getRoles()+ChatColor.GRAY+" maintenant la nuit vous posséderez l'effet: "+AllDesc.Resi+" 1");

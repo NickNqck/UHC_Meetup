@@ -1,8 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.Roles;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -35,7 +35,7 @@ public class YondaimeRaikage extends ShinobiRoles {
 		giveItem(owner, false, getItems());
 	}
 	@Override
-	public Roles getRoles() {
+	public @NonNull Roles getRoles() {
 		return Roles.Raikage;
 	}
 	@Override
@@ -74,7 +74,7 @@ public class YondaimeRaikage extends ShinobiRoles {
 	}
 	@Override
 	public void Update(GameState gameState) {
-		givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
+		OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false);
 		if (owner.getItemInHand().isSimilar(ArmureItem())) {
 			sendCustomActionBar(owner, "§eArmure Raiton:§c "+StringUtils.secondsTowardsBeautifulinScoreboard(timeLeft));
 		}
@@ -105,7 +105,7 @@ public class YondaimeRaikage extends ShinobiRoles {
 								if (timeLeft <= 0) {
 									owner.sendMessage("§7Désactivation de votre§e Armure Raiton");
 									owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-									givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
+									OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
 								}
 								armureActived = false;
 								cancel();
@@ -113,15 +113,15 @@ public class YondaimeRaikage extends ShinobiRoles {
 							}
 							timeLeft--;
 							sendCustomActionBar(owner, "§eArmure Raiton:§c "+StringUtils.secondsTowardsBeautifulinScoreboard(timeLeft));
-							givePotionEffet(PotionEffectType.SPEED, 60, 2, true);
-							givePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
+							OLDgivePotionEffet(PotionEffectType.SPEED, 60, 2, true);
+							OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, true);
 						}
 					}.runTaskTimer(Main.getInstance(), 0, 20);
                 } else {
 					armureActived = false;
 					owner.sendMessage("§7Désactivation de votre§e Armure Raiton");
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-					givePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
+					OLDgivePotionEffet(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true);
                 }
             } else {
 				owner.sendMessage("§7Vous n'avez pas asser de chakra pour utiliser cette technique.");
