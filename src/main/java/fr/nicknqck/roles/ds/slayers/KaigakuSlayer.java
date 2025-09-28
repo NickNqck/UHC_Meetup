@@ -373,7 +373,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
 
                         caster.sendMessage("§eVous avez frappé " + target.getName() + " §eavec l'Orage Brûlant !");
                         target.sendMessage("§cVous avez été touché par l'Orage Brûlant de " + caster.getName());
-
+                        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, false, false), true);
                         cancel();
                         return;
                     }
