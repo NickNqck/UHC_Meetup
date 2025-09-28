@@ -206,7 +206,7 @@ public class Hantengu extends DemonsRoles {
 				setNoFall(true);
 			} else {
 				if (form != Form.Hantengu) {
-					if (isHasNoFall()) setNoFall(false);
+					if (isNoFall()) setNoFall(false);
 				}
 			}
 			if (form == Form.Hantengu) {

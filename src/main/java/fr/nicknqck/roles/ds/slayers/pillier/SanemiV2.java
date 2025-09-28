@@ -24,8 +24,6 @@ import java.util.UUID;
 
 public class SanemiV2 extends PilierRoles {
 
-    private TextComponent textComponent;
-
     public SanemiV2(UUID player) {
         super(player);
     }
@@ -50,32 +48,27 @@ public class SanemiV2 extends PilierRoles {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
         setNoFall(true);
         addPower(new VentPower(this), true);
-        AutomaticDesc desc = new AutomaticDesc(this)
-                .addEffects(getEffects())
-                .addCustomLine("§7Vous possédez§a No Fall§7 de manière§c permanente")
-                .setPowers(getPowers());
-        this.textComponent = desc.getText();
         setCanuseblade(true);
         getCantHave().add(Lames.NoFall);
     }
 
     @Override
     public TextComponent getComponent() {
-        return this.textComponent;
+        return AutomaticDesc.createFullAutomaticDesc(this);
     }
 
     private static class VentPower extends ItemPower {
 
         protected VentPower(RoleBase role) {
-            super("§aSoufle du Vent", new Cooldown(60*7+150), new ItemBuilder(Material.FEATHER).setName("§aSoufle du Vent"), role, "§7Effectue un§c dash§7 dans la direction ou vous regardez, également, vous donne l'effet§b Speed II§7 pendant§c "+ StringUtils.secondsTowardsBeautiful(150)+"§7.");
+            super("§aSouffle du Vent", new Cooldown(60*7+150), new ItemBuilder(Material.FEATHER).setName("§aSouffle du Vent"), role, "§7Effectue un§c dash§7 dans la direction ou vous regardez, également, vous donne l'effet§b Speed II§7 pendant§c "+ StringUtils.secondsTowardsBeautiful(150)+"§7.");
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                Vector direction = player.getLocation().getDirection();
-                direction.setY(0.5);
-                player.setVelocity(direction.multiply(1.8));
+                final Vector vector = player.getEyeLocation().getDirection();
+                vector.multiply(3);
+                player.setVelocity(vector);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*150, 1, false, false), true);
                 return true;
             }

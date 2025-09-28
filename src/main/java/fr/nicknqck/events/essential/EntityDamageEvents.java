@@ -68,7 +68,7 @@ public class EntityDamageEvents implements Listener{
 				}
 				if (event.getCause() == DamageCause.FALL) {
 					if (!gameState.hasRoleNull(player.getUniqueId())) {
-						if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isHasNoFall()) {
+						if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isNoFall()) {
 							event.setCancelled(true);
 						} else {
 							if (player.getWorld().getName().equals("nakime")) {
@@ -176,7 +176,7 @@ public class EntityDamageEvents implements Listener{
 						}
 					} else {
 						if (!gameState.hasRoleNull(player.getUniqueId())) {
-							if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isHasNoFall()) {
+							if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isNoFall()) {
 								event.setDamage(0);
 								event.setCancelled(true);
 							}

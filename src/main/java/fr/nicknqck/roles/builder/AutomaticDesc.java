@@ -249,6 +249,9 @@ public class AutomaticDesc {
                     }
                 }
             }
+            if (((RoleBase)role).isNoFall()) {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez§a No Fall§7 de manière§c permanente"));
+            }
         }
         text.addExtra(new TextComponent(
                 this.role instanceof NSRoles ?
