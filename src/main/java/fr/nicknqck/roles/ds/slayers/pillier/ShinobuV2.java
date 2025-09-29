@@ -74,14 +74,11 @@ public class ShinobuV2 extends PilierRoles {
     }
     private static class PapillonsCommand extends CommandPower implements Listener {
 
-        private final Map<UUID, ItemStack> heads;
         private final List<UUID> affected;
 
         public PapillonsCommand(@NonNull RoleBase role) {
             super("§a/ds papillons", "papillons", null, role, CommandType.DS,
                     "§7Vous permet de choisir qu'elles§c joueurs§7 seront affecter par votre §aSoins");
-            this.heads = new HashMap<>();
-            initMap();
             this.affected = new ArrayList<>();
             EventUtils.registerRoleEvent(this);
         }
@@ -94,7 +91,8 @@ public class ShinobuV2 extends PilierRoles {
             }
             return false;
         }
-        private void initMap() {
+        private void openMenu(final Player p) {
+            Inventory inv = Bukkit.createInventory(p, 54, "§a/ds papillons");
             for (final GamePlayer gamePlayer : getRole().getGameState().getGamePlayer().values()) {
                 if (gamePlayer.getUuid().equals(getRole().getPlayer()))continue;
                 if (gamePlayer.isAlive() && gamePlayer.getRole() != null) {
@@ -102,18 +100,12 @@ public class ShinobuV2 extends PilierRoles {
                     if (player != null) {
                         ItemStack head = new ItemBuilder(GlobalUtils.getPlayerHead(player.getUniqueId())).setSkullOwner(player.getName()).setName("§c"+player.getName()).toItemStack();
                         if (head != null) {
-                            heads.put(gamePlayer.getUuid(), head);
+                            inv.addItem(head);
                         }
                     }
                 }
             }
-        }
-        private void openMenu(final Player player) {
-            Inventory inv = Bukkit.createInventory(player, 54, "§a/ds papillons");
-            for (final ItemStack item : heads.values()) {
-                inv.addItem(item);
-            }
-            player.openInventory(inv);
+            p.openInventory(inv);
         }
         @EventHandler
         private void onInventoryClick(InventoryClickEvent event) {
@@ -129,7 +121,6 @@ public class ShinobuV2 extends PilierRoles {
                 if (item.getType().equals(Material.SKULL_ITEM)) {
                     Player player = Bukkit.getPlayer(item.getItemMeta().getDisplayName().substring(2));
                     if (player != null) {
-                        heads.remove(player.getUniqueId(), item);
                         if (this.affected.contains(player.getUniqueId())) {
                             this.affected.remove(player.getUniqueId());
                         } else {
@@ -138,8 +129,7 @@ public class ShinobuV2 extends PilierRoles {
                         ItemMeta itemMeta = item.getItemMeta();
                         itemMeta.setDisplayName((affected.contains(player.getUniqueId()) ? "§a" : "§c")+player.getName());
                         item.setItemMeta(itemMeta);
-                        heads.put(player.getUniqueId(), item);
-                        openMenu((Player) event.getWhoClicked());
+                        player.closeInventory();
                     }
                 } else {
                     event.getWhoClicked().closeInventory();
