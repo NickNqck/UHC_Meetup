@@ -110,7 +110,7 @@ public class RoleManager {
         registerRole(KaigakuSlayer.class);
         //Register Demons
         registerRole(Akaza.class);
-        registerRole(Daki.class);
+        registerRole(DakiV2.class);
         registerRole(DomaV2.class);
         registerRole(EnmuV2.class);
         registerRole(Gyokko.class);
