@@ -20,6 +20,7 @@ import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.roles.ns.akatsuki.*;
+import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edov2.KabutoV2;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
@@ -115,7 +116,6 @@ public class RoleManager {
         registerRole(EnmuV2.class);
         registerRole(Gyokko.class);
         registerRole(GyutaroV2.class);
-        registerRole(Hantengu.class);
         registerRole(HantenguV2.class);
         registerRole(KaigakuV2.class);
         registerRole(KokushiboV2.class);
@@ -192,6 +192,7 @@ public class RoleManager {
         registerRole(RockLeeV2.class);
         registerRole(GaiV2.class);
         registerRole(Hinata.class);
+        registerRole(Neji.class);
         //Register Orochimaru
         registerRole(Jugo.class);
         registerRole(KabutoV2.class);
@@ -211,6 +212,7 @@ public class RoleManager {
         registerRole(NagatoV2.class);
         registerRole(ZetsuBlanc.class);
         registerRole(ZetsuNoir.class);
+        registerRole(ZetsuBlancV2.class);
         //Register Jubi
         registerRole(MadaraV2.class);
         registerRole(ObitoV2.class);

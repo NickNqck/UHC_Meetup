@@ -145,7 +145,7 @@ public class HubInventory implements Listener {
                         }
                         event.setCancelled(true);
                         break;
-                    case "DemonSlayer -> §cDémons":
+                    case "§fDemonSlayer§7 -> §cDémons":
                         if (item.getItemMeta() == null)return;
                         if (item.getItemMeta().getDisplayName() == null)return;
                         if (item.getType() == Material.AIR)return;

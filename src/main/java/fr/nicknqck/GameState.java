@@ -279,9 +279,6 @@ public class GameState{
 		case Makomo:
 			role = new Makomo(player);
 			break;
-		case Hantengu:
-			role = new Hantengu(player);
-			break;
 		case Demon:
 			role = new DemonSimple(player);
 			break;

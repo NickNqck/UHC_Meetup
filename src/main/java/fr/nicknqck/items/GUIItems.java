@@ -453,7 +453,7 @@ public static ItemStack getSelectConfigButton() {
 		return stack;
 	}
 	public static Inventory getDemonSelectGUI() {
-        return Bukkit.createInventory(null, 54, "DemonSlayer -> §cDémons");
+        return Bukkit.createInventory(null, 54, "§fDemonSlayer§7 -> §cDémons");
 	}
 	public static ItemStack getSelectSoloButton() {
 		ItemStack stack = new ItemStack(Material.INK_SACK, 1, (byte) 14);
