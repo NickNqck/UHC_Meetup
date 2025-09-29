@@ -66,6 +66,7 @@ public class DakiV2 extends DemonsRoles {
         addPower(new ObisItems(this), true);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.NIGHT);
         addPower(new TroisiemeOeil(this), true);
+        addKnowedRole(GyutaroV2.class);
         super.RoleGiven(gameState);
     }
 
