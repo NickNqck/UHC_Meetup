@@ -8,6 +8,8 @@ import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.StringUtils;
@@ -31,18 +33,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class KyogaiV2 extends DemonsSlayersRoles implements Listener {
+public class KyogaiV2 extends DemonsRoles implements Listener {
 
 	public KyogaiV2(UUID player) {
 		super(player);
 	}
 
-	@Override
-	public Soufle getSoufle() {
-		return Soufle.AUCUN;
-	}
+    @Override
+    public @NonNull DemonType getRank() {
+        return DemonType.DEMON;
+    }
 
-	@Override
+    @Override
 	public @NonNull Roles getRoles() {
 		return Roles.KyogaiV2;
 	}

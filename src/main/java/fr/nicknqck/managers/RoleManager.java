@@ -116,7 +116,7 @@ public class RoleManager {
         registerRole(EnmuV2.class);
         registerRole(Gyokko.class);
         registerRole(GyutaroV2.class);
-        registerRole(HantenguV2.class);
+        registerRole(HantenguV3.class);
         registerRole(KaigakuV2.class);
         registerRole(KokushiboV2.class);
         registerRole(Nakime.class);

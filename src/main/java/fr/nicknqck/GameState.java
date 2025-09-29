@@ -316,7 +316,7 @@ public class GameState{
 			role = new JigoroV2(player);
 			break;
 		case HantenguV2:
-			role = new HantenguV2(player);
+			role = new HantenguV3(player);
 			break;
 		case Yahaba:
 			role = new YahabaV2(player);
