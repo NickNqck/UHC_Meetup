@@ -388,7 +388,7 @@ public class GameListener implements Listener {
 						for (Player k : gameState.getPlayerKills().get(role1.getPlayer()).keySet()) {
 							i++;
 							RoleBase role = gameState.getPlayerKills().get(role1.getPlayer()).get(k);
-							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name());
+							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getName());
 							s.append(i == gameState.getPlayerKills().get(role1.getPlayer()).size() ? "§7)" : "§7)\n");
 						}
 						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
