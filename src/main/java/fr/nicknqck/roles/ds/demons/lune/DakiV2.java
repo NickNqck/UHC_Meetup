@@ -86,6 +86,12 @@ public class DakiV2 extends DemonsRoles {
                     "",
                     "§4!§c Si§4 Gyutaro§c est§4 mort§c alors vous aurez d'office§e Speed I§c pendant les§4 3 minutes§4 !");
             EventUtils.registerRoleEvent(this);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                if (!GameState.getInstance().getAttributedRole().contains(Roles.Gyutaro)) {
+                    getRole().getGamePlayer().sendMessage("§cGyutaro§7 n'est pas dans la partie, il sera considéré comme étant mort.");
+                    this.gyutaroDead = true;
+                }
+                }, 20*5);
         }
 
         @Override
@@ -160,7 +166,8 @@ public class DakiV2 extends DemonsRoles {
             super("Obis", new Cooldown(60*8), new ItemBuilder(Material.NETHER_STAR).setName("§cObis"), role,
                     "§7Pendant§c 5 secondes§7 et tant que vous avez vos§c Obis§7 dans les mains,",
                     "§7vous pouvez viser des§c joueurs§7 avec votre§c crosshair§7,",
-                    "§7une fois les§c 5 secondes§7 passés, tout les joueurs qui auront été viser seront§c stun§7 pendant§c 6 secondes§7.");
+                    "§7une fois les§c 5 secondes§7 passés (ou si vous n'avez plus vos§c Obis§7 en§c mains§7),",
+                    "§7 tout les joueurs qui auront été viser seront§c stun§7 pendant§c 6 secondes§7.");
         }
 
         @Override
