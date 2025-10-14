@@ -210,7 +210,7 @@ public class GameState{
 			role = new KokushiboV2(player);
 			break;
 		case Jigoro:
-			role = new Jigoro(player);
+			role = new JigoroV1V2(player);
 			break;
 		case ZenItsu:
 			role = new ZenItsuV2(player);

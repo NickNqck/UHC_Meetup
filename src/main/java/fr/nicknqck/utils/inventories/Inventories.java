@@ -149,15 +149,37 @@ public class Inventories {
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
                     for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ds")) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        if (!roles.getTeam().equals(TeamList.Solo))continue;
+                        if (!roles.getMdj().equalsIgnoreCase("ds"))continue;
+                        IRole iRole = null;
+                        for (final IRole role : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+                            if (!role.getRoles().equals(roles))continue;
+                            iRole = role;
+                            break;
                         }
+                        String l1;
+                        if (gameState.getAvailableRoles().get(roles) > 0) {
+                            l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                        } else {
+                            l1 = "§c(0)";
+                        }
+                        String design = "§fGDesign: "+roles.getGDesign();
+                        inv.addItem(
+                                new ItemBuilder(roles.getItem())
+                                        .setAmount(gameState.getAvailableRoles().get(roles))
+                                        .setLore(iRole == null ? new String[] {
+                                                l1,
+                                                "",
+                                                design
+                                        }
+                                                :
+                                                iRole instanceof RoleCustomLore ? ((RoleCustomLore) iRole).getCustomLore(l1, design) : new String[] {
+                                                        l1,
+                                                        "",
+                                                        design
+                                                })
+                                        .toItemStack()
+                        );
                     }
                     clearRoleInventory(inv);
                 }
