@@ -196,6 +196,9 @@ public class GamePlayer {
 			}
 		}
 	}
+    public static GamePlayer of(final UUID uuid) {
+        return GameState.getInstance().getGamePlayer().get(uuid);
+    }
     public static class DiscRunnable extends BukkitRunnable {
 
 		private final GamePlayer gamePlayer;

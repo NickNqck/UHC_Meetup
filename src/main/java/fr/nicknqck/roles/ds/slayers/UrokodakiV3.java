@@ -10,29 +10,30 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.roles.ds.slayers.pillier.TomiokaV2;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -49,7 +50,7 @@ public class UrokodakiV3 extends SlayerRoles {
 
     @Override
     public String getName() {
-        return "Urokodaki§7 (§6V2§7)";
+        return "Urokodaki";
     }
 
     @Override
@@ -67,92 +68,137 @@ public class UrokodakiV3 extends SlayerRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         new ForceWaterRunnable(this);
-        ItemStack Book = new ItemStack(Material.ENCHANTED_BOOK);
-        EnchantmentStorageMeta BookMeta = (EnchantmentStorageMeta) Book.getItemMeta();
-        BookMeta.addStoredEnchant(Enchantment.DEPTH_STRIDER, 2, false);
-        Book.setItemMeta(BookMeta);giveItem(owner, false, Book);
+        ItemStack Book = new ItemBuilder(Material.ENCHANTED_BOOK).addStoredEnchantment(Enchantment.DEPTH_STRIDER, 2).toItemStack();
+        giveItem(owner, false, Book);
         if (!Main.getInstance().getGameConfig().isMinage()) {
-            owner.setLevel(owner.getLevel()+6);
+            owner.setLevel(owner.getLevel()+4);
         }
         addPower(new ImpacteItem(this), true);
         addPower(new DSWATER(this));
         super.RoleGiven(gameState);
     }
-    private static class ImpacteItem extends ItemPower {
+    private static class ImpacteItem extends ItemPower implements Listener {
+
+        private boolean using = false;
 
         public ImpacteItem(@NonNull RoleBase role) {
-            super("Impacte de la Cascade", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bImpacte de la cascade"), role);
+            super("Impacte de la Cascade", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bImpacte de la cascade"), role,
+                    "§7En visant un joueur, vous propulse dans sa direction puis, lui fait perdre§c 2❤ non permanents§7 et",
+                    "§7lui donne pendant§c 10 secondes§7 l'effet§c Slowness II§7.");
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
-                onPlayerInteract(event);
+                final Player target = RayTrace.getTargetPlayer(player, 20, null);
+                if (target == null) {
+                    player.sendMessage("§cIl faut viser un joueur");
+                    return false;
+                }
+                this.using = true;
+                propelPlayerTo(player, target);
+                return true;
             }
             return false;
         }
-        private void onPlayerInteract(PlayerInteractEvent event) {
-            Player player = event.getPlayer();
+        public void propelPlayerTo(final Player from, final Player to) {
+            if (from == null || to == null) return;
 
-            if (!event.getAction().toString().contains("RIGHT")) return;
-
-            // Récupère la cible
-            Player target = RayTrace.getTargetPlayer(player, 30, null);
-            if (target == null) return;
-
-            // Super jump
-            player.setVelocity(new Vector(0, 2, 0));
-
-            // Crée une ligne de blocs d’eau figés entre le joueur et la cible
-            Location start = player.getLocation().clone();
-            Location end = target.getLocation().clone();
-            Vector direction = end.toVector().subtract(start.toVector()).normalize();
-
-            int distance = (int) start.distance(end);
-            List<Location> waterBlocks = new ArrayList<>();
-
-            for (int i = 1; i <= distance; i++) {
-                Location loc = start.clone().add(direction.clone().multiply(i));
-                loc.setY(start.getY()); // garde la même hauteur que le joueur
-                Block block = loc.getBlock();
-
-                if (block.getType() == Material.AIR) {
-                    block.setType(Material.WATER);
-                    waterBlocks.add(block.getLocation());
-                }
+            // Si différent monde, téléport instantané final
+            if (!from.getWorld().equals(to.getWorld())) {
+                from.teleport(to.getLocation());
+                from.setVelocity(new Vector(0, 0, 0));
+                return;
             }
 
-            // Supprime les blocs d’eau après 5 secondes
+            // Impulsion verticale initiale immédiate
+            from.setVelocity(new Vector(0, 1.35, 0));
+            from.setNoDamageTicks(120);
+
+            // Démarre la boucle de propulsion au tick suivant pour laisser l'impulsion initiale agir
             new BukkitRunnable() {
+                final int maxTicks = 100; // sécurité (~10s)
+                final double stopDistance = 2.5;
+                final double baseSpeed = 1.6;
+                final double verticalAggression = 0.8;
+                int tick = 0;
+
                 @Override
                 public void run() {
-                    for (Location loc : waterBlocks) {
-                        if (loc.getBlock().getType() == Material.WATER) {
-                            loc.getBlock().setType(Material.AIR);
-                        }
+                    if (!from.isOnline() || !to.isOnline()) {
+                        cleanupAndCancel();
+                        return;
                     }
-                }
-            }.runTaskLater(plugin, 20 * 5);
-
-            // Détection de l’atterrissage
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (player.isOnGround()) {
-                        // Inflige 2 cœurs sans tuer
-                        double newHealth = Math.max(1.0, player.getHealth() - 4.0);
-                        player.setHealth(newHealth);
-
-                        // Applique Slowness I pendant 15s
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 15 * 20, 0));
-
+                    if (!from.getWorld().equals(to.getWorld())) {
+                        finalizeTeleport();
                         cancel();
+                        return;
                     }
-                }
-            }.runTaskTimer(plugin, 0L, 2L);
-        }
 
+                    Location locFrom = from.getLocation();
+                    Location locTo = to.getLocation().clone();
+                    Vector diff = locTo.toVector().subtract(locFrom.toVector());
+                    double distance = diff.length();
+
+                    if (distance <= stopDistance || tick >= maxTicks) {
+                        finalizeTeleport();
+                        cancel();
+                        return;
+                    }
+
+                    Vector dir = diff.normalize();
+                    Vector horiz = new Vector(dir.getX(), 0, dir.getZ());
+                    if (horiz.length() != 0) horiz = horiz.normalize().multiply(baseSpeed);
+
+                    double yDiff = diff.getY();
+                    double vy = yDiff * verticalAggression;
+                    if (vy > 1.5) vy = 1.5;
+                    if (vy < -1.5) vy = -1.5;
+
+                    Vector finalVel = new Vector(horiz.getX(), vy, horiz.getZ());
+                    from.setVelocity(finalVel);
+                    MathUtil.sendCircleParticle(EnumParticle.WATER_SPLASH, from.getLocation(), 1, 18);
+                    tick++;
+                }
+
+                private void finalizeTeleport() {
+                    from.setNoDamageTicks(Math.min(from.getNoDamageTicks(), 15));
+                    from.setVelocity(new Vector(0, 0, 0));
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> using = false, 20);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> {
+                        to.setHealth(Math.max(to.getHealth()-4, 1));
+                        final GamePlayer gamePlayer = GamePlayer.of(to.getUniqueId());
+                        boolean give = false;
+                        if (gamePlayer != null) {
+                            if (gamePlayer.getRole() != null) {
+                                give = true;
+                                gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*200, 1, false, false), EffectWhen.NOW);
+                            }
+                        }
+                        if (!give){
+                            to.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*200, 1, false, false), true);
+                        }
+                        getRole().getGamePlayer().sendMessage("§c"+to.getDisplayName()+"§7 à subit votre§b Impacte de la cascade§7.");
+                        to.sendMessage("§7Vous avez été toucher par l'§bImpacte de la cascade§7.");
+                    }, 20);
+                }
+
+                private void cleanupAndCancel() {
+                    from.setVelocity(new Vector(0, 0, 0));
+                    cancel();
+                }
+            }.runTaskTimer(plugin, 5L, 1L); // commence au tick suivant
+
+        }
+        @EventHandler
+        private void onDamage(final EntityDamageEvent event) {
+            if (!event.getCause().equals(EntityDamageEvent.DamageCause.FALL))return;
+            if (!event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!using)return;
+            event.setDamage(0.0);
+            event.setCancelled(true);
+        }
     }
     private static class DSWATER extends CommandPower {
 
@@ -161,7 +207,7 @@ public class UrokodakiV3 extends SlayerRoles {
                     "§7Si la personne visée est l'un de vos élève, vous obtiendrez l'effet§e Speed I§7 de manière§c permanente§7 et",
                     "§9Résistance I§7 proche de la§c cible§7.",
                     "",
-                    "§7Vos élèves sont:§a Tanjiro§7,§a Tomioka§7,§a Sabito§7,§a Makomo§7.");
+                    "§7Vos élèves sont:§a Tanjiro§7,§a Tomioka§7,§a Sabito§7 et§a Makomo§7.");
             setMaxUse(1);
         }
 

@@ -106,7 +106,7 @@ public class RoleManager {
         registerRole(PourfendeurV2.class);
         registerRole(SabitoV2.class);
         registerRole(Tanjiro.class);
-        registerRole(UrokodakiV2.class);
+        registerRole(UrokodakiV3.class);
         registerRole(ZenItsuV2.class);
         registerRole(KaigakuSlayer.class);
         //Register Demons

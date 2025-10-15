@@ -109,7 +109,7 @@ public class DemonMain extends DemonInferieurRole {
 				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
 					if (!gameState.hasRoleNull(victim.getUniqueId())) {
 						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
-						if (role instanceof UrokodakiV2) {
+						if (role instanceof UrokodakiV3) {
 							killurokodaki = true;						
 							owner.sendMessage(ChatColor.GRAY+"Vous venez de tuez "+ChatColor.GOLD+ role.getRoles() +ChatColor.GRAY+" vous obtenez donc "+ChatColor.GOLD+"force 1 le jour");
 						}
