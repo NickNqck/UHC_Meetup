@@ -177,7 +177,7 @@ public class UrokodakiV3 extends SlayerRoles {
                             }
                         }
                         if (!give){
-                            to.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*200, 1, false, false), true);
+                            to.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1, false, false), true);
                         }
                         getRole().getGamePlayer().sendMessage("§c"+to.getDisplayName()+"§7 à subit votre§b Impacte de la cascade§7.");
                         to.sendMessage("§7Vous avez été toucher par l'§bImpacte de la cascade§7.");
