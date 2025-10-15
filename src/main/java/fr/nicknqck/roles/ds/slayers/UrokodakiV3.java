@@ -173,7 +173,7 @@ public class UrokodakiV3 extends SlayerRoles {
                         if (gamePlayer != null) {
                             if (gamePlayer.getRole() != null) {
                                 give = true;
-                                gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*200, 1, false, false), EffectWhen.NOW);
+                                gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1, false, false), EffectWhen.NOW);
                             }
                         }
                         if (!give){
