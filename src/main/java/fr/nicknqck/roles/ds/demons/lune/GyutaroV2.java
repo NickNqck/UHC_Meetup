@@ -2,7 +2,9 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.UpdatablePowerLore;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.GamePlayerEatGappleEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -13,6 +15,7 @@ import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.CommandPower;
@@ -24,6 +27,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,13 +40,7 @@ import java.util.*;
 
 public class GyutaroV2 extends DemonsRoles implements Listener {
 
-    private boolean passif = false;
     private DakiV2 daki;
-    private final ItemStack FauxItem = new ItemBuilder(Material.DIAMOND_SWORD).setName("§cFaux Démoniaques")
-            .addEnchant(Enchantment.DAMAGE_ALL, 3)
-            .setUnbreakable(true)
-            .setDroppable(false)
-            .toItemStack();
     private PassifCommandPower passifCommandPower;
 
     public GyutaroV2(UUID player) {
@@ -76,7 +74,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
         addPower(passifCommandPower);
         this.passifCommandPower = passifCommandPower;
         EventUtils.registerRoleEvent(this);
-        getGamePlayer().addItems(this.FauxItem);
+        getGamePlayer().addItems(passifCommandPower.FauxItem);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.NIGHT);
         addKnowedRole(DakiV2.class);
         addKnowedRole(MuzanV2.class);
@@ -90,15 +88,8 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             Collections.shuffle(dakiPlayers, Main.RANDOM);
             this.daki = (DakiV2) dakiPlayers.get(0).getRole();
         }
-    }
-    @EventHandler
-    private void onBaston(final EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player))return;
-        if (this.passifCommandPower == null)return;
-        if (event.getDamager().getUniqueId().equals(getPlayer())) {
-            final HashMap<String, Object> map = new HashMap<>();
-            map.put("passif", this);
-            this.passifCommandPower.checkUse((Player) event.getDamager(), map);
+        if (this.daki == null && this.passifCommandPower != null) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> this.passifCommandPower.onDakiDeath(), 20);
         }
     }
 
@@ -142,28 +133,124 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             return true;
         }
     }
-    private static class PassifCommandPower extends CommandPower {
+    private static class PassifCommandPower extends CommandPower implements Listener, UpdatablePowerLore {
+
+        private boolean activate = false;
+        private int pourcentage = 5;
+        private ItemStack FauxItem = new ItemBuilder(Material.DIAMOND_SWORD).setName("§cFaux Démoniaques")
+                .addEnchant(Enchantment.DAMAGE_ALL, 3)
+                .setUnbreakable(true)
+                .setLore("§7Le§c pourcentage§7 de votre§c passif§7 est actuellement de§c "+pourcentage+"%")
+                .setDroppable(false)
+                .toItemStack();
+        private int amountEateds = 0;
 
         public PassifCommandPower(@NonNull RoleBase role) {
             super("/ds faux", "faux", null, role, CommandType.DS,
                     "§7Vous permet d'§aactiver§7/§cdésactiver§7 votre§c passif§7 (§cDésactiver par défauts§7)",
                     "§7Il vous permettra d'avoir§c 5%§7 de§c chance§7 d'infliger l'effet§c Wither I§7 à la personne que vous",
-                    "§7frappez avec votre épée \"§cFaux Démoniaques§7\", l'effet aura une durée de§c 5 secondes§7.");
+                    "§7frappez avec votre épée \"§cFaux Démoniaques§7\", l'effet aura une durée de§c 5 secondes§7.",
+                    "",
+                    "§7Pour chaque§c 10§e pommes d'or§c mangé§7, le§c pourcentage§7 de chance d'infliger l'effet§c Wither I§7 sera augmenter de§c 1%§7 (§cmaximum 15%§7)");
+            EventUtils.registerRoleEvent(this);
         }
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
-            if (!(getRole() instanceof GyutaroV2))return false;
-            if (!args.containsKey("passif"))return false;
-            if (!(args.get("passif") instanceof GyutaroV2))return false;
-            if (!(Main.RANDOM.nextInt(101) <= 5))return false;
-            if (!((GyutaroV2) getRole()).passif) {
-                ((GyutaroV2) getRole()).passif = true;
+            if (!activate) {
+                activate = true;
                 player.sendMessage("§7Vous venez d'§aactiver§7 votre§c passif§7.");
             } else {
-                ((GyutaroV2) getRole()).passif = false;
+                if (args.containsKey("passif")) {
+                    if (args.get("passif") instanceof RoleBase) {
+                        //5% de chance
+                        return RandomUtils.getOwnRandomProbability(this.pourcentage);
+                    }
+                }
+                activate = false;
                 player.sendMessage("§7Vous venez de§c désactiver§7 votre§c passif§7.");
             }
-            return false;
+            return true;
+        }
+        @EventHandler
+        private void onBaston(final EntityDamageByEntityEvent event) {
+            if (!(event.getDamager() instanceof Player))return;
+            if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
+                final Player owner = (Player) event.getDamager();
+                if (owner.getItemInHand() == null)return;
+                if (owner.getItemInHand().getType().equals(Material.AIR))return;
+                if (!owner.getItemInHand().isSimilar(this.FauxItem))return;
+                final HashMap<String, Object> map = new HashMap<>();
+                map.put("passif", getRole());
+                if (checkUse((Player) event.getDamager(), map)) {
+                    final GamePlayer gamePlayer = GamePlayer.of(event.getEntity().getUniqueId());
+                    boolean give = false;
+                    if (gamePlayer != null) {
+                        if (gamePlayer.getRole() != null) {
+                            gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.WITHER, 20*5, 0, false, false), EffectWhen.NOW);
+                            give = true;
+                        }
+                    }
+                    if (!give && event.getEntity() instanceof LivingEntity) {
+                        ((LivingEntity) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20*5, 0, false, false), true);
+                    }
+                    event.getEntity().sendMessage("§7Vous avez été§c empoisonné§7 par§c Gyutaro§7.");
+                    event.getDamager().sendMessage("§7Vous avez§c empoisonné§7 le joueur§c "+event.getEntity().getName());
+                }
+            }
+        }
+        @EventHandler
+        private void onEat(final GamePlayerEatGappleEvent event) {
+            if (!event.getGamePlayer().getUuid().equals(getRole().getPlayer())) return;
+            this.amountEateds++;
+            if (this.amountEateds >= 10) {
+                this.amountEateds = 0;
+                if (this.pourcentage < 15) {
+                    event.getPlayer().sendMessage("§7Vous sentez que votre§c passif§7 c'est§c renforcé§7.");
+                    this.pourcentage++;
+                    reCreateFaux(event.getPlayer());
+                }
+            }
+        }
+        private void reCreateFaux(final Player player) {
+            int slot = -1;
+            ItemStack[] contents = player.getInventory().getContents();
+
+            for (int i = 0; i < contents.length; i++) {
+                ItemStack item = contents[i];
+                if (item == null || item.getType() == Material.AIR) continue;
+                if (item.isSimilar(this.FauxItem)) {
+                    slot = i;
+                    break;
+                }
+            }
+
+            if (slot == -1) return; // Aucun item trouvé, on ne fait rien
+
+            this.FauxItem = new ItemBuilder(Material.DIAMOND_SWORD)
+                    .setName("§cFaux Démoniaques")
+                    .addEnchant(Enchantment.DAMAGE_ALL, 3)
+                    .setUnbreakable(true)
+                    .setLore("§7Le§c pourcentage§7 de votre§c passif§7 est actuellement de§c "+pourcentage+"%")
+                    .setDroppable(false)
+                    .toItemStack();
+
+            player.getInventory().setItem(slot, this.FauxItem);
+        }
+        private void onDakiDeath() {
+            getRole().getGamePlayer().sendMessage("§cDaki§7 est§c morte§7, malgré cette perte, vous vous sentez plus§c fort§7, votre§c passif§7 c'est§c renforcé§7.");
+            this.pourcentage+=5;
+            reCreateFaux(Bukkit.getPlayer(getRole().getPlayer()));
+        }
+
+        @Override
+        public String[] getCustomPowerLore() {
+            return new String[] {
+                    "§7Vous permet d'§aactiver§7/§cdésactiver§7 votre§c passif§7 (§cDésactiver par défauts§7)",
+                    "§7Il vous permettra d'avoir§c "+this.pourcentage+"%§7 de§c chance§7 d'infliger l'effet§c Wither I§7 à la personne que vous",
+                    "§7frappez avec votre épée \"§cFaux Démoniaques§7\", l'effet aura une durée de§c 5 secondes§7.",
+                    "",
+                    "§7Pour chaque§c 10§e pommes d'or§c mangé§7, le§c pourcentage§7 de chance d'infliger l'effet§c Wither I§7 sera augmenter de§c 1%§7 (§cmaximum 15%§7)"
+            };
         }
     }
 }
