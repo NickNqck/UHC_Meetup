@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.builder;
 
+import fr.nicknqck.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -167,6 +168,9 @@ public class AutomaticDesc {
                 }
             }
             String[] description = power.getDescriptions();
+            if (power instanceof UpdatablePowerLore) {
+                description = ((UpdatablePowerLore) power).getCustomPowerLore();
+            }
             Cooldown cooldown = power.getCooldown();
             TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
             TextComponent powerName = getPowerName(name, description);
