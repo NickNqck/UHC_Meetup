@@ -50,6 +50,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
 
     public JigoroV1V2(UUID player) {
         super(player);
+        setCanuseblade(true);
     }
 
     @Override
