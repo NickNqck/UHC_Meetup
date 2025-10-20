@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.UpdatablePowerLore;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.FinalDeathEvent;
 import fr.nicknqck.events.custom.GamePlayerEatGappleEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -75,7 +76,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
         this.passifCommandPower = passifCommandPower;
         EventUtils.registerRoleEvent(this);
         getGamePlayer().addItems(passifCommandPower.FauxItem);
-        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.NIGHT);
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addKnowedRole(DakiV2.class);
         addKnowedRole(MuzanV2.class);
         super.RoleGiven(gameState);
@@ -90,6 +91,15 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
         }
         if (this.daki == null && this.passifCommandPower != null) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> this.passifCommandPower.onDakiDeath(), 20);
+        }
+    }
+    @EventHandler
+    private void onDeath(final FinalDeathEvent event) {
+        if (event.getRole() == null)return;
+        if (event.getRole() instanceof DakiV2) {
+            if (this.daki == null && this.passifCommandPower != null) {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> this.passifCommandPower.onDakiDeath(), 20);
+            }
         }
     }
 
@@ -162,7 +172,6 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             } else {
                 if (args.containsKey("passif")) {
                     if (args.get("passif") instanceof RoleBase) {
-                        //5% de chance
                         return RandomUtils.getOwnRandomProbability(this.pourcentage);
                     }
                 }
@@ -179,6 +188,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
                 if (owner.getItemInHand() == null)return;
                 if (owner.getItemInHand().getType().equals(Material.AIR))return;
                 if (!owner.getItemInHand().isSimilar(this.FauxItem))return;
+                if (!activate)return;
                 final HashMap<String, Object> map = new HashMap<>();
                 map.put("passif", getRole());
                 if (checkUse((Player) event.getDamager(), map)) {
