@@ -132,7 +132,7 @@ public class RoleManager {
         registerRole(JigoroV1V2.class);
         registerRole(JigoroV2.class);
         registerRole(KyogaiDemon.class);
-        registerRole(KyogaiV2.class);
+        registerRole(KyogaiV3.class);
         registerRole(Shinjuro.class);
         registerRole(ShinjuroV2.class);
         registerRole(YoriichiV2.class);

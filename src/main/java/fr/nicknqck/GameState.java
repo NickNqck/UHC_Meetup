@@ -406,7 +406,7 @@ public class GameState{
 			role = new Conny(player);
 			break;
 		case KyogaiV2:
-			role = new KyogaiV2(player);
+			role = new KyogaiV3(player);
 			break;
 		case Itachi:
 			role = new ItachiV2(player);
