@@ -101,7 +101,7 @@ public class RoleManager {
         registerRole(InosukeV2.class);
         registerRole(HotaruV2.class);
         registerRole(KanaoV2.class);
-        registerRole(Makomo.class);
+        registerRole(MakomoV2.class);
         registerRole(NezukoV2.class);
         registerRole(PourfendeurV2.class);
         registerRole(SabitoV2.class);
@@ -122,7 +122,6 @@ public class RoleManager {
         registerRole(Nakime.class);
         registerRole(RuiV2.class);
         registerRole(DemonSimple.class);
-        registerRole(DemonMain.class);
         registerRole(FurutoV2.class);
         registerRole(KumoV2.class);
         registerRole(MuzanV2.class);

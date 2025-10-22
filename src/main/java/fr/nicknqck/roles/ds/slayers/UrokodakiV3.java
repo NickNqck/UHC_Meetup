@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.ds.UrokodakiDsWaterEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -223,9 +224,10 @@ public class UrokodakiV3 extends SlayerRoles {
                             if (gamePlayer.getRole() instanceof Tanjiro ||
                                     gamePlayer.getRole() instanceof TomiokaV2 ||
                                     gamePlayer.getRole() instanceof SabitoV2 ||
-                                    gamePlayer.getRole() instanceof Makomo) {
+                                    gamePlayer.getRole() instanceof MakomoV2) {
                                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
                                 new ResistanceRunnable(this, gamePlayer).runTaskTimerAsynchronously(getPlugin(), 20, 20);
+                                Bukkit.getPluginManager().callEvent(new UrokodakiDsWaterEvent(player, getRole(), gamePlayer));
                                 return true;
                             }
                         }

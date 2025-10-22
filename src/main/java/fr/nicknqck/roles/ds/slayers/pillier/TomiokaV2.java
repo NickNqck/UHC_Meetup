@@ -11,7 +11,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
-import fr.nicknqck.roles.ds.slayers.Makomo;
+import fr.nicknqck.roles.ds.slayers.MakomoV2;
 import fr.nicknqck.roles.ds.slayers.SabitoV2;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.Loc;
@@ -257,7 +257,7 @@ public class TomiokaV2 extends PilierRoles {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
                 this.firstKill = true;
                 getRole().getGamePlayer().sendMessage("§aSabito§7, est§c mort§7, vous devez lui montrer qu'il à bien fait de vous sauver la vie, vous obtenez§c l'effet§9 Résistance I§7 le§e jour");
-            } else if (roleBase instanceof Makomo) {
+            } else if (roleBase instanceof MakomoV2) {
                 this.firstKill = true;
                 final Player owner = Bukkit.getPlayer(getRole().getPlayer());
                 if (owner != null) {
@@ -280,7 +280,7 @@ public class TomiokaV2 extends PilierRoles {
             if (roleBase instanceof Tanjiro) {
                 return true;
             }
-            if (roleBase instanceof Makomo) {
+            if (roleBase instanceof MakomoV2) {
                 return true;
             }
             return roleBase instanceof SabitoV2;

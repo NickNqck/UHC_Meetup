@@ -267,9 +267,6 @@ public class GameState{
 			role = new PourfendeurV2(player);
 			role.setTeam(TeamList.Slayer);
 			break;
-		case DemonMain:
-			role = new DemonMain(player);
-			break;
 		case Sabito:
 			role = new SabitoV2(player);
 			break;
@@ -277,7 +274,7 @@ public class GameState{
 			role = new UrokodakiV3(player);
 			break;
 		case Makomo:
-			role = new Makomo(player);
+			role = new MakomoV2(player);
 			break;
 		case Demon:
 			role = new DemonSimple(player);
