@@ -17,11 +17,13 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
+import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -36,6 +38,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -105,7 +108,8 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
 
     @Override
     public TextComponent getComponent() {
-        return AutomaticDesc.createFullAutomaticDesc(this);
+        return AutomaticDesc.createAutomaticDesc(this)
+                .getText();
     }
 
     private static class RappelPower extends ItemPower {
@@ -114,7 +118,9 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
 
         protected RappelPower(@NonNull GyutaroV2 role) {
             super("Rappel", new Cooldown(60 * 10), new ItemBuilder(Material.NETHER_STAR).setName("§cRappel"), role,
-                    "§7Vous permez de vous téléporter à §cDaki §7si elle est présente dans un rayon de §c50 blocs§7 autour de vous et qu'elle possède moins de§c 7❤§7.");
+                    "§7Vous permez de vous téléporter à §cDaki §7si elle est présente dans un rayon de §c50 blocs§7 autour de vous et qu'elle possède moins de§c 7❤§7.",
+                    "",
+                    "§7A la mort de§c Daki§7, le§c Rappel§7 deviendra le§c Troisième Oeil§7 (donne§e Speed I§7 pendant§c 3 minutes§7).");
             this.gyutaroV2 = role;
         }
 
@@ -250,6 +256,14 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             getRole().getGamePlayer().sendMessage("§cDaki§7 est§c morte§7, malgré cette perte, vous vous sentez plus§c fort§7, votre§c passif§7 c'est§c renforcé§7.");
             this.pourcentage+=5;
             reCreateFaux(Bukkit.getPlayer(getRole().getPlayer()));
+            final List<Power> powerList = new ArrayList<>(this.getRole().getPowers());
+            for (Power power : powerList) {
+                if (!(power instanceof RappelPower))continue;
+                this.getRole().getPowers().remove(power);
+                getRole().getGamePlayer().removeItem(((RappelPower) power).getItem());
+                break;
+            }
+            getRole().addPower(new TroisiemeOeil(this.getRole()), true);
         }
 
         @Override
@@ -261,6 +275,52 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
                     "",
                     "§7Pour chaque§c 10§e pommes d'or§c mangé§7, le§c pourcentage§7 de chance d'infliger l'effet§c Wither I§7 sera augmenter de§c 1%§7 (§cmaximum 15%§7)"
             };
+        }
+        private static class TroisiemeOeil extends ItemPower {
+
+            public TroisiemeOeil(@NonNull RoleBase role) {
+                super("Troisième Oeil", new Cooldown(60*8), new ItemBuilder(Material.NETHER_STAR).setName("§aTroisième Oeil"), role,
+                        "§7A l'activation, durant§c 3 minutes§7 vous obtenez l'effet§e Speed I§7.");
+            }
+
+            @Override
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+                if (getInteractType().equals(InteractType.INTERACT)) {
+                    player.sendMessage("§7Votre§a Troisième Oeil§7 s'éveille...");
+                    new TroisiemeOeil.SpeedRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+                    return true;
+                }
+                return false;
+            }
+
+            private static class SpeedRunnable extends BukkitRunnable {
+
+                private final TroisiemeOeil troisiemeOeil;
+                private int timeLeft = 60*3;
+
+                private SpeedRunnable(TroisiemeOeil troisiemeOeil) {
+                    this.troisiemeOeil = troisiemeOeil;
+                }
+
+                @Override
+                public void run() {
+                    if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                        cancel();
+                        return;
+                    }
+                    if (this.timeLeft <= 0) {
+                        this.troisiemeOeil.getRole().getGamePlayer().getActionBarManager().removeInActionBar("dakiv2.oeil");
+                        this.troisiemeOeil.getRole().getGamePlayer().sendMessage("§7Les effets de votre§a Troisième Oeil§7 s'estompent...");
+                        cancel();
+                        return;
+                    }
+                    this.troisiemeOeil.getRole().getGamePlayer().getActionBarManager().updateActionBar("dakiv2.oeil", "§bTemps restant (§aTroisième Oeil§b):§c "+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                    this.timeLeft--;
+                    final Player owner = Bukkit.getPlayer(this.troisiemeOeil.getRole().getPlayer());
+                    if (owner == null)return;
+                    Bukkit.getScheduler().runTask(this.troisiemeOeil.getPlugin(), () -> this.troisiemeOeil.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.NOW));
+                }
+            }
         }
     }
 }
