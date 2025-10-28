@@ -21,9 +21,7 @@ public enum TeamList {
 	Shinobi("§a", "§aShinobi"),
 	Kabuto("§6§l", "§6§lKabuto"),
 	Kumogakure("§6", "§6Kumogakure"),
-	Shisui("§e§l", "§e§lShisui"),
-	OverWorld("§a", "§aOverworld"),
-	Nether("§c","§cNether");
+	Shisui("§e§l", "§e§lShisui");
 
 	private final java.util.List<Player> list;
 	private final String Color;

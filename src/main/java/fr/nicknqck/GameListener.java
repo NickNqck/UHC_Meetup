@@ -581,12 +581,6 @@ public class GameListener implements Listener {
 					case Kabuto:
 						Kabuto = true;
 						break;
-					case OverWorld:
-						OverWorld = true;
-						break;
-					case Nether:
-						Nether = true;
-						break;
 					case Shisui:
 						Shisui = true;
 						break;
@@ -684,14 +678,6 @@ public class GameListener implements Listener {
 			}
 			if (Kabuto) {
 				winer = TeamList.Kabuto;
-				gameDone = true;
-			}
-			if (OverWorld) {
-				winer = TeamList.OverWorld;
-				gameDone = true;
-			}
-			if (Nether) {
-				winer = TeamList.Nether;
 				gameDone = true;
 			}
 		}

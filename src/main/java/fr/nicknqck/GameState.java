@@ -25,12 +25,6 @@ import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
-import fr.nicknqck.roles.mc.nether.Blaze;
-import fr.nicknqck.roles.mc.nether.Brute;
-import fr.nicknqck.roles.mc.nether.MagmaCube;
-import fr.nicknqck.roles.mc.overworld.*;
-import fr.nicknqck.roles.mc.solo.Warden;
-import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
@@ -510,17 +504,11 @@ public class GameState{
 		case Ginkaku:
 			role = new GinkakuV2(player);
 			break;
-		case Warden:
-			role = new Warden(player);
-			break;
 		case Kinkaku:
 			role = new Kinkaku(player);
 			break;
 		case Nagato:
 			role = new NagatoV2(player);
-			break;
-		case Wither:
-			role = new WitherBoss(player);
 			break;
 		case Kurenai:
 			role = new KurenaiV2(player);
@@ -528,20 +516,11 @@ public class GameState{
 			case Shikamaru:
 			role = new Shikamaru(player);
 			break;
-			case Poulet:
-			role = new Poulet(player);
-			break;
 			case Ino:
 			role = new InoV2(player);
 			break;
-			case Zombie:
-			role = new Zombie(player);
-			break;
 			case Iso:
 			role = new Iso(player);
-			break;
-			case Squelette:
-			role = new Squelette(player);
 			break;
 			case LeComte:
 			role = new LeComteV2(player);
@@ -549,32 +528,14 @@ public class GameState{
 			case LeJuge:
 			role = new LeJuge(player);
 			break;
-			case AraigneeVenimeuse:
-			role = new AraigneeVenimeuse(player);
-			break;
 			case Fugaku:
 			role = new Fugaku(player);
-			break;
-			case Blaze:
-			role = new Blaze(player);
-			break;
-			case GolemDeFer:
-			role = new GolemDeFer(player);
-			break;
-			case Brute:
-			role = new Brute(player);
-			break;
-			case MagmaCube:
-			role = new MagmaCube(player);
 			break;
 			case SlayerSolo:
 				role = new SlayerSolo(player);
 				break;
 			case ZetsuBlancV2:
 				role = new ZetsuBlancV2(player);
-				break;
-			case Vache:
-				role = new Vache(player);
 				break;
 			case Neon:
 				role = new Neon(player);

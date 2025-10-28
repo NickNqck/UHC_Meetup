@@ -214,7 +214,6 @@ public class Inventories {
         updateNSShinobiInventory(p);
         updateNSKumogakure(p);
         updateMCInventory(p);
-        updateOverworldInventory(p);
     }
 
     public void updateSoldatInventory(Player player) {
@@ -685,69 +684,6 @@ public class Inventories {
 
                     for (Roles roles : Roles.values()) {
                         if (roles.getTeam() == TeamList.Kumogakure) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    this.clearRoleInventory(inv);
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-
-    public void updateOverworldInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§aMinecraft§7 ->§a Overworld")) {
-                    final ItemStack glass = GUIItems.getGreenStainedGlassPane();
-                    this.setRoleInventory(inv, glass);
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.OverWorld) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    this.clearRoleInventory(inv);
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-    public void updateNetherInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§aMinecraft§7 ->§c Nether")) {
-                    final ItemStack glass = GUIItems.getRedStainedGlassPane();
-                    this.setRoleInventory(inv, glass);
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.Nether) {
                             String l1;
                             if (gameState.getAvailableRoles().get(roles) > 0) {
                                 l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";

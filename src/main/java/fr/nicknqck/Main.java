@@ -258,7 +258,6 @@ public class Main extends JavaPlugin {
 		getCommand("gm").setExecutor(new Gamemode());
 		getCommand("wl").setExecutor(new Whitelist(gameState));
 		getCommand("whitelist").setExecutor(new Whitelist(gameState));
-		getCommand("mc").setExecutor(new McCommands(gameState));
 		getCommand("discord").setExecutor(new Discord());
 		getCommand("color").setExecutor(new Color(gameState));
 		getCommand("pack").setExecutor(new PackCommand());

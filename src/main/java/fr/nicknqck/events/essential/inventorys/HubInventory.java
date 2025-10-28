@@ -748,61 +748,6 @@ public class HubInventory implements Listener {
                         }
                         event.setCancelled(true);
                         break;
-                    case "§fRoles§7 ->§a Minecraft":
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getRoleSelectGUI());
-                            Main.getInstance().getInventories().updateRoleInventory(player);
-                        } else {
-                            if (item.isSimilar(GUIItems.getSelectOverworldButton())) {
-                                player.openInventory(Bukkit.createInventory(player, 54, "§aMinecraft§7 ->§a Overworld"));
-                                Main.getInstance().getInventories().updateOverworldInventory(player);
-                            } else if (item.isSimilar(GUIItems.getSelectNetherButton())) {
-                                player.openInventory(Bukkit.createInventory(player, 54, "§aMinecraft§7 ->§c Nether"));
-                                Main.getInstance().getInventories().updateNetherInventory(player);
-                            }
-                        }
-                        event.setCancelled(true);
-                        break;
-                    case "§aMinecraft§7 ->§a Overworld":
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getSelectMCInventory());
-                            Main.getInstance().getInventories().updateMCInventory(player);
-                        } else {
-                            if (!item.getType().equals(Material.STAINED_GLASS_PANE)) {
-                                if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    EasyRoleAdder.addRoles(item.getItemMeta().getDisplayName());
-                                } else if (action.equals(InventoryAction.PICKUP_HALF)){
-                                    EasyRoleAdder.removeRoles(item.getItemMeta().getDisplayName());
-                                }
-                            }
-                        }
-                        for (UUID u : gameState.getInLobbyPlayers()) {
-                            Player p = Bukkit.getPlayer(u);
-                            if (p == null)return;
-                            Main.getInstance().getInventories().updateOverworldInventory(p);
-                        }
-                        event.setCancelled(true);
-                        break;
-                    case "§aMinecraft§7 ->§c Nether":
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getSelectMCInventory());
-                            Main.getInstance().getInventories().updateMCInventory(player);
-                        } else {
-                            if (!item.getType().equals(Material.STAINED_GLASS_PANE)) {
-                                if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    EasyRoleAdder.addRoles(item.getItemMeta().getDisplayName());
-                                } else if (action.equals(InventoryAction.PICKUP_HALF)){
-                                    EasyRoleAdder.removeRoles(item.getItemMeta().getDisplayName());
-                                }
-                            }
-                        }
-                        for (UUID u : gameState.getInLobbyPlayers()) {
-                            Player p = Bukkit.getPlayer(u);
-                            if (p == null)return;
-                            Main.getInstance().getInventories().updateNetherInventory(p);
-                        }
-                        event.setCancelled(true);
-                        break;
                     case "§dKrystal UHC":
                         if (item.isSimilar(GUIItems.getSelectSoloButton())) {
                             Main.getInstance().getInventories().openKrystalSoloInventory(player);

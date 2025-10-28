@@ -141,21 +141,6 @@ public enum Roles {
     //KumoGakure
     Ginkaku(TeamList.Kumogakure, "ns", 0, new ItemBuilder(Material.LADDER).setName("§6Ginkaku").toItemStack(), "§bByC3RV0L3NT"),
     Kinkaku(TeamList.Kumogakure, "ns", 1, new ItemBuilder(Material.NETHER_STAR).setName("§6Kinkaku").toItemStack(), "§bByC3RV0L3NT"),
-    //OverWorld
-    Poulet(TeamList.OverWorld, "mc", 0, new ItemBuilder(Material.FEATHER).setName("§aPoulet").toItemStack(), "§bMega02600"),
-    Zombie(TeamList.OverWorld, "mc", 1, new ItemBuilder(Material.ROTTEN_FLESH).setName("§aZombie").toItemStack(), "§bMega02600"),
-    Squelette(TeamList.OverWorld, "mc", 2, new ItemBuilder(Material.BONE).setName("§aSquelette").toItemStack(), "§bMega02600"),
-    AraigneeVenimeuse(TeamList.OverWorld, "mc", 3, new ItemBuilder(Material.SPIDER_EYE).setName("§aAraignée Venimeuse").toItemStack(), "§bMega02600"),
-    GolemDeFer(TeamList.OverWorld, "mc", 4, new ItemBuilder(Material.IRON_BLOCK).setName("§aGolem De Fer").toItemStack(), "§bMega02600"),
-    Vache(TeamList.OverWorld, "mc", 5, new ItemBuilder(Material.MILK_BUCKET).setName("§aVache").toItemStack(), "§bRémi"),
-    //Nether
-    Blaze(TeamList.Nether, "mc", 0, new ItemBuilder(Material.BLAZE_ROD).setName("§cBlaze").toItemStack(), "§bMega02600"),
-    Brute(TeamList.Nether, "mc", 1, new ItemBuilder(Material.GOLD_AXE).setName("§cBrute").toItemStack(), "§bMega02600"),
-    MagmaCube(TeamList.Nether, "mc", 2, new ItemBuilder(Material.MAGMA_CREAM).setName("§cMagma Cube").toItemStack(), "§bMega02600"),
-
-    //Solo mc
-    Warden(TeamList.Solo, "mc", 0, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWarden").toItemStack(), "§bNickNqck"),
-    Wither(TeamList.Solo, "mc", 1, new ItemBuilder(Material.NOTE_BLOCK).setName("§eWither").toItemStack(), "§bNickNqck"),
     //Agent valorant (il n'y aura que Iso)
     Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck"),
     Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck"),
