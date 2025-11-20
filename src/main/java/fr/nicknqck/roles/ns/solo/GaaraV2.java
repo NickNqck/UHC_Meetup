@@ -11,7 +11,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -48,7 +48,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class GaaraV2 extends NSRoles implements Listener{
+public class GaaraV2 extends NSSoloRoles implements Listener{
 
     private int reserve = 128;
     private int divisor = 1;

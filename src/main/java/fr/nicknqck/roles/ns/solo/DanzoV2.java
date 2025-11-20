@@ -12,7 +12,7 @@ import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.roles.ns.power.Izanagi;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
@@ -43,7 +43,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class DanzoV2 extends NSRoles implements Listener {
+public class DanzoV2 extends NSSoloRoles implements Listener {
 
     private final PotionEffect resistance;
     private boolean killUchiwa = false;

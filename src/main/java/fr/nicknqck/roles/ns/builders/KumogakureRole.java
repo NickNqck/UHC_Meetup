@@ -26,7 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class KumogakureRole extends NSRoles {
+public abstract class KumogakureRole extends NSSoloRoles {
 
     public KumogakureRole(UUID player) {
         super(player);

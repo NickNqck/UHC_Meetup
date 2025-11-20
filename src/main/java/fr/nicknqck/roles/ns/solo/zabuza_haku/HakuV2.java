@@ -11,7 +11,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -41,7 +41,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class HakuV2 extends NSRoles {
+public class HakuV2 extends NSSoloRoles {
 
     public HakuV2(UUID player) {
         super(player);

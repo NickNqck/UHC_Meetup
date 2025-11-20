@@ -17,7 +17,7 @@ import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.akatsuki.ItachiV2;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
 import fr.nicknqck.roles.ns.power.Izanagi;
 import fr.nicknqck.roles.ns.power.IzanamiV2;
@@ -51,7 +51,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class ShisuiSolo extends NSRoles implements Listener, IUchiwa {
+public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
 
     private final List<UUID> cantChangeTeam = new ArrayList<>();
     private RoleBase infected = null;

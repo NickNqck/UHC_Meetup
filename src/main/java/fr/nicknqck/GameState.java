@@ -558,6 +558,9 @@ public class GameState{
             case KaigakuSlayer:
                 role = new KaigakuSlayer(player);
                 break;
+            case Sasori:
+                role = new Sasori(player);
+                break;
 		}
 		if (role == null) return null;
 		print(player, role);

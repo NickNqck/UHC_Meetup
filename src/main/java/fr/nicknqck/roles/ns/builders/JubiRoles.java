@@ -27,7 +27,7 @@ import org.bukkit.inventory.Inventory;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class JubiRoles extends NSRoles implements IUchiwa{
+public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
 
     public JubiRoles(UUID player) {
         super(player);
