@@ -209,6 +209,7 @@ public class RoleManager {
         registerRole(KisameV2.class);
         registerRole(Konan.class);
         registerRole(NagatoV2.class);
+        registerRole(Sasori.class);
         registerRole(ZetsuBlanc.class);
         registerRole(ZetsuNoir.class);
         registerRole(ZetsuBlancV2.class);

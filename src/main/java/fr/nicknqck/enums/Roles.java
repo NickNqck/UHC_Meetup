@@ -114,7 +114,7 @@ public enum Roles {
     ZetsuNoir(TeamList.Akatsuki, "ns", 9, new ItemBuilder(Material.INK_SACK).setName("§cZetsu Noir").toItemStack(), "§bMega02600"),
     ZetsuBlanc(TeamList.Akatsuki, "ns", 10, new ItemBuilder(Material.BONE).setName("§cZetsu Blanc").toItemStack(), "§bMega02600"),
     ZetsuBlancV2(TeamList.Akatsuki, "ns", 11, new ItemBuilder(Material.ENDER_CHEST).setName("§cZetsu Blanc§7 (§6V2§7)").toItemStack(), "§bByC3RV0L3NT"),
-    Sasori(TeamList.Akatsuki, "ns", 12, new ItemBuilder(Material.COBBLESTONE).setName("§cSasori").toItemStack(), "§bNickNqck"),
+    Sasori(TeamList.Akatsuki, "ns", 12, new ItemBuilder(Material.ARMOR_STAND).setName("§cSasori").toItemStack(), "§bNickNqck"),
     //Shinobi
     Naruto(TeamList.Shinobi, "ns", 0, new ItemBuilder(Material.INK_SACK).setDurability(14).setName("§aNaruto").toItemStack(), "§bNickNqck"),
     Sakura(TeamList.Shinobi, "ns", 1, new ItemBuilder(Material.POTION).setDurability(8229).setName("§aSakura").toItemStack(), "§bNickNqck"),
