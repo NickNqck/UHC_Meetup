@@ -219,6 +219,7 @@ public class ItemBuilder {
      * @param line The lore line to add.
      */
     public ItemBuilder addLoreLine(String line){
+        if (line == null)return this;
         ItemMeta im = is.getItemMeta();
         List<String> lore = new ArrayList<>();
         if(im.hasLore())lore = new ArrayList<>(im.getLore());
