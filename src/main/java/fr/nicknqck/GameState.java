@@ -439,7 +439,7 @@ public class GameState{
 			role = new ZetsuBlanc(player);
 			break;
 		case Konan:
-			role = new Konan(player);
+			role = new KonanV2(player);
 			break;
 		case Kakuzu:
 			role = new KakuzuV2(player);

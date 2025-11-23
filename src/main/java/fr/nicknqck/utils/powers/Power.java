@@ -67,11 +67,12 @@ public abstract class Power {
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
-            if (isWorkWhenInCooldown())return this.onUse(player, args);
-            if (isSendCooldown()) {
-                player.sendMessage("§cVous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(getCooldown().getCooldownRemaining()));
+            if (!isWorkWhenInCooldown()) {
+                if (isSendCooldown()) {
+                    sendCooldown(player);
+                }
+                return false;
             }
-            return false;
         }
 
         boolean canUse = this.onUse(player, args);
@@ -109,5 +110,8 @@ public abstract class Power {
             return true;
         }
         return false;
+    }
+    public void sendCooldown(@NonNull final Player player) {
+        player.sendMessage("§cVous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(getCooldown().getCooldownRemaining()));
     }
 }
