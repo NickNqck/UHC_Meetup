@@ -227,6 +227,18 @@ public class Sasori extends AkatsukiRoles {
             );
             marionnetteMap.put(new Hiruko(role), false);
             marionnetteMap.put(new Kazegake(role), false);
+            Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+                if (!Main.getInstance().getGameConfig().isMinage()) {
+                    for (BasicMarionnette basicMarionnette : this.marionnetteMap.keySet()) {
+                        final List<ItemStack> list = new ArrayList<>(basicMarionnette.neededToCraft());
+                        for (ItemStack itemStack : list) {
+                            itemStack.setItemMeta(null);
+                        }
+                        getRole().getGamePlayer().addItems(list.toArray(new ItemStack[0]));
+                        getRole().getGamePlayer().sendMessage("§7Vous avez obtenue le nécéssaire pour crafter "+basicMarionnette.getName());
+                    }
+                }
+            }, 20);
         }
 
         @Override
@@ -253,7 +265,7 @@ public class Sasori extends AkatsukiRoles {
                 fastInv.setItem(marionnette.getWhereInMenu(),
                         new ItemBuilder(marionnette.getMaterialForMenu())
                                 .setName(marionnette.getName())
-                                .setLore(marionnette.getWhatIsNeededToCraft(player))
+                                .setLore(this.marionnetteMap.get(marionnette) ? new ArrayList<>() : marionnette.getWhatIsNeededToCraft(player))
                                 .addLoreLine("")
                                 .addLoreLine("§fEffet: Lance une§c flèche§f la ou vous regardez,")
                                 .addLoreLine(marionnette.onTouch())
@@ -298,6 +310,7 @@ public class Sasori extends AkatsukiRoles {
             public abstract List<ItemStack> neededToCraft();
             public List<String> getWhatIsNeededToCraft(@NonNull final Player player) {
                 @NonNull final List<String> list = new ArrayList<>();
+
                 for (int i = 0; i <= neededToCraft().size()-1; i++) {
                     list.add("§8 -§7 ("+
                             (GlobalUtils.getItemAmount(
@@ -415,20 +428,19 @@ public class Sasori extends AkatsukiRoles {
                 return "§fLe joueur touché obtiendra§c 8 secondes§f de§c Poison I§f.";
             }
 
-            @EventHandler
+            @EventHandler(priority = EventPriority.LOW)
             private void onDamage(EntityDamageByEntityEvent event) {
                 if (!(event.getEntity() instanceof Player)) return;
                 if (!(event.getDamager() instanceof Player)) return;
-
                 Player victim = (Player) event.getEntity();
                 Player attacker = (Player) event.getDamager();
-
+                if (!victim.getUniqueId().equals(getRole().getPlayer()))return;
                 Vector victimBack = victim.getLocation().getDirection().normalize();
                 Vector attackerDirection = attacker.getLocation().toVector().subtract(victim.getLocation().toVector()).normalize();
 
                 double dot = victimBack.dot(attackerDirection);
 
-                if (dot > 0.5) {
+                if (dot < -0.5) {
                     double newDamage = event.getDamage() * 0.8;
                     event.setDamage(newDamage);
                     victim.sendMessage("§7Vous avez subit§c 20%§7 de§c dégâts§7 en§c moins§7.");
@@ -454,6 +466,7 @@ public class Sasori extends AkatsukiRoles {
                             }
                         }
                     }
+                    victim.sendMessage("§7Vous avez été toucher par§c Hiruko§7.");
                 }
             }
         }
@@ -496,7 +509,7 @@ public class Sasori extends AkatsukiRoles {
 
             @Override
             public String onTouch() {
-                return "§fLe joueur touché subira directement§c 1,5❤§f de§c dégâts§f et aura§c 30% de chance§f d'obtenir§c 8 secondes§f de§c Wither II§f.";
+                return "§fLe joueur touché subira directement§c 1,5❤§f de§c dégâts§f,\n§fil aura§c 30% de chance§f d'obtenir§c 8 secondes§f de§c Wither II§f.";
             }
 
             @Override

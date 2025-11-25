@@ -1,5 +1,6 @@
 package fr.nicknqck.utils.particles;
 
+import fr.nicknqck.GameState;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class WingsEffect extends ParticleEffect {
 
             @Override
             public void run() {
-
+                if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame))cancel();
                 if (player.getGameMode() == GameMode.SPECTATOR) cancel();
 
                 if (ticks > getTimeInTicks())

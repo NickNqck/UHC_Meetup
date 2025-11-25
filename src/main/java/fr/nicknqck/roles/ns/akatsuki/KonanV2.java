@@ -1,17 +1,19 @@
 package fr.nicknqck.roles.ns.akatsuki;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
+import fr.nicknqck.roles.ns.builders.ChiefAkatsukiRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
+import fr.nicknqck.utils.particles.WingsEffect;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
@@ -29,7 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class KonanV2 extends AkatsukiRoles {
+public class KonanV2 extends ChiefAkatsukiRoles {
 
     public KonanV2(UUID player) {
         super(player);
@@ -54,6 +56,7 @@ public class KonanV2 extends AkatsukiRoles {
     public void RoleGiven(GameState gameState) {
         setNoFall(true);
         setChakraType(Chakras.SUITON);
+        addPower(new VolDeCombat(this), true);
         addPower(new DanceDuShikigami(this), true);
         super.RoleGiven(gameState);
     }
@@ -233,6 +236,7 @@ public class KonanV2 extends AkatsukiRoles {
                         this.lancePower.getRole().getGamePlayer().getActionBarManager().removeInActionBar("konan.lance");
                         lancePower.active = false;
                         this.lancePower.getRole().getGamePlayer().sendMessage("§7Vous n'êtes plus sous l'effet de la§c Lance§7.");
+                        cancel();
                         return;
                     }
                     this.lancePower.getRole().getGamePlayer().getActionBarManager().updateActionBar("konan.lance", "§bTemps restant (§cLance§b):§c "+ StringUtils.secondsTowardsBeautiful(timeLeft));
@@ -307,6 +311,37 @@ public class KonanV2 extends AkatsukiRoles {
                 }
                 return true;
             }
+        }
+    }
+    private static class VolDeCombat extends ItemPower {
+
+        public VolDeCombat(@NonNull RoleBase role) {
+            super("§aVol de combat§r", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§aVol de combat"), role,
+                    "§7Active un§a fly§7 d'une durée de§c 8 secondes§7.");
+
+        }
+
+        @Override
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                player.setAllowFlight(true);
+                player.setFlying(true);
+                new WingsEffect(20*8, EnumParticle.FLAME).start(player);
+                new BukkitRunnable() {
+                    int i = 0;
+                    @Override
+                    public void run() {
+                        i++;
+                        if (i == 8) {
+                            player.setFlying(false);
+                            player.setAllowFlight(false);
+                            cancel();
+                        }
+                    }
+                }.runTaskTimer(Main.getInstance(), 0, 20);
+                return true;
+            }
+            return false;
         }
     }
 }

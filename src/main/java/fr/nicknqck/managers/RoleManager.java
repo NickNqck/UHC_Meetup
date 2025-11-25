@@ -2,6 +2,8 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.RoleGiveEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.ErenV2;
@@ -21,6 +23,8 @@ import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
+import fr.nicknqck.roles.ns.builders.IAkatsukiChief;
+import fr.nicknqck.roles.ns.builders.ISAkatsukiChief;
 import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edov2.KabutoV2;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
@@ -34,13 +38,18 @@ import fr.nicknqck.roles.ns.solo.jubi.MadaraV2;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.*;
+import fr.nicknqck.utils.event.EventUtils;
 import lombok.Getter;
+import lombok.NonNull;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 @Getter
-public class RoleManager {
+public class RoleManager implements Listener {
 
     private final Map<Class<? extends RoleBase>, IRole> rolesRegistery;
     private final Map<Class<? extends RoleBase>, Integer> rolesEnable;
@@ -52,6 +61,7 @@ public class RoleManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        EventUtils.registerEvents(this);
     }
     public void addRole(Class<? extends RoleBase> role) {
         if (rolesEnable.containsKey(role)) {
@@ -262,5 +272,22 @@ public class RoleManager {
             }
         }
         return role;
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onEndGiveRole(@NonNull final RoleGiveEvent event) {
+        if (!event.isEndGive()) return;
+        for (@NonNull final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
+            if (gamePlayer.getRole() == null)continue;
+            if (gamePlayer.getRole() instanceof IAkatsukiChief) {
+                gamePlayer.getRole().addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
+                        , Deidara.class, HidanV2.class, ItachiV2.class,
+                        KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
+                        NagatoV2.class, ZetsuBlanc.class,
+                        ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
+            }
+            if (gamePlayer.getRole() instanceof ISAkatsukiChief) {
+                gamePlayer.getRole().addKnowedPlayersWithRoles("§7Voici l'identité de§c Nagato§7 et de§c Konan§7: ", KonanV2.class, Konan.class, NagatoV2.class);
+            }
+        }
     }
 }

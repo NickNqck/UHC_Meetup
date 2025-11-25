@@ -12,7 +12,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.akatsuki.*;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
+import fr.nicknqck.roles.ns.builders.ISAkatsukiChief;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
@@ -46,7 +46,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class ObitoV2 extends JubiRoles {
+public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
 
     public ObitoV2(UUID player) {
         super(player);
@@ -80,11 +80,6 @@ public class ObitoV2 extends JubiRoles {
         setChakraType(Chakras.KATON);
         addKnowedRole(MadaraV2.class);
         getGamePlayer().startChatWith("§dObito:", "!", MadaraV2.class);
-        addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7:",
-                Deidara.class, HidanV2.class, ItachiV2.class,
-                KakuzuV2.class, KisameV2.class, KonanV2.class,
-                NagatoV2.class, ZetsuBlanc.class,
-                ZetsuNoir.class, ZetsuBlancV2.class);
     }
 
     @Override
