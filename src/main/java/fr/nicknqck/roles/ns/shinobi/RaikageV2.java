@@ -54,7 +54,6 @@ public class RaikageV2 extends ShinobiRoles {
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
         addKnowedRole(KillerBeeV2.class);
-        addKnowedRole(KillerBee.class);
         addKnowedRole(YondaimeRaikage.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new ArmureRaiton(this), true);
