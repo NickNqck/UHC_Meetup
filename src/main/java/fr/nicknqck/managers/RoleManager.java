@@ -190,7 +190,7 @@ public class RoleManager implements Listener {
         registerRole(KillerBeeV2.class);
         registerRole(KonohamaruV2.class);
         registerRole(KurenaiV2.class);
-        registerRole(Minato.class);
+        registerRole(MinatoV2.class);
         registerRole(NarutoV2.class);
         registerRole(RockLee.class);
         registerRole(Sakura.class);

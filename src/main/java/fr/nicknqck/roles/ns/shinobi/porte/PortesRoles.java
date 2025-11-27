@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.DoubleCircleEffect;
@@ -26,7 +26,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class PortesRoles extends ShinobiRoles implements Listener {
+public abstract class PortesRoles extends HShinobiRoles implements Listener {
 
     private boolean huitUsed = false;
 

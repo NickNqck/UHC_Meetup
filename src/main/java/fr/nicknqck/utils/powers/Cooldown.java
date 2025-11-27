@@ -3,6 +3,7 @@ package fr.nicknqck.utils.powers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.power.CooldownFinishEvent;
+import fr.nicknqck.events.custom.power.CooldownUpdateEvent;
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,6 +61,7 @@ public final class Cooldown {
             }
             if (this.cooldown.actualCooldown > 0) {
                 this.cooldown.actualCooldown--;
+                Bukkit.getPluginManager().callEvent(new CooldownUpdateEvent(this.cooldown));
             } else {
                 boolean call = false;
                 for (GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
