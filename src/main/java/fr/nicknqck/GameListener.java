@@ -286,7 +286,7 @@ public class GameListener implements Listener {
 	@SuppressWarnings("deprecation")
 	public static void EndGame(final GameState gameState, final TeamList team) {
 		gameState.setServerState(ServerStates.GameEnded);
-		Bukkit.getPluginManager().callEvent(new EndGameEvent(gameState, team));
+		Bukkit.getPluginManager().callEvent(new GameEndEvent(gameState, team));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;

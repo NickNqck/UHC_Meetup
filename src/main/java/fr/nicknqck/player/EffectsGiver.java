@@ -147,7 +147,7 @@ public class EffectsGiver implements Listener {
         }
     }
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         killGiver.clear();
     }
     public static void addCustomOnKill(final GamePlayer gamePlayer, final Class<? extends RoleBase> roleToKill, PotionEffect potionEffect) {

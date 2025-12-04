@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -68,16 +70,14 @@ public class Sakura extends ShinobiRoles {
 	}
 	private int SavedHP = 0;
 	private boolean Receve = false;
-	@Override
-	public void Update(GameState gameState) {
-		OLDgivePotionEffet(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false);
-	}
 
-	public void onTick() {
+    @Override
+    public void RoleGiven(GameState gameState) {
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 0, false, false), EffectWhen.PERMANENT);
+        super.RoleGiven(gameState);
+    }
 
-	}
-	
-	@Override
+    @Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(ByakugoItem())) {
 			if (!Receve) {
@@ -97,7 +97,7 @@ public class Sakura extends ShinobiRoles {
 	}
 	@Override
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
-		if (player.getUniqueId() == owner.getUniqueId()) {
+		if (player.getUniqueId() == getPlayer()) {
 			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 				if (event.getItem().isSimilar(ByakugoItem())) {
 					if (Receve) {

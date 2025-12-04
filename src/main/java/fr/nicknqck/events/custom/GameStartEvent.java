@@ -12,14 +12,14 @@ import java.util.UUID;
 
 
 @Getter
-public class StartGameEvent extends Event {
+public class GameStartEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private final GameState gameState;
     private final List<UUID> inGamePlayers;
     private final List<Roles> igRoles;
 
-    public StartGameEvent(GameState gameState, List<Roles> rolesList) {
+    public GameStartEvent(GameState gameState, List<Roles> rolesList) {
         this.gameState = gameState;
         this.igRoles = rolesList;
         this.inGamePlayers = new ArrayList<>(gameState.getInGamePlayers());

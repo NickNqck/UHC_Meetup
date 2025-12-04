@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import lombok.Getter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -54,7 +54,7 @@ public class AttackUtils implements Listener{
 		cantAttackNobody.put(cantAttack.getUniqueId(), cantBeAttacked);
 	}
 	@EventHandler
-	private void onEndGame(EndGameEvent event){
+	private void onEndGame(GameEndEvent event){
 		CantAttack.clear();
 		CantReceveAttack.clear();
 		cantAttackNobody.clear();

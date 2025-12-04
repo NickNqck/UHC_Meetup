@@ -23,6 +23,7 @@ import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
+import fr.nicknqck.roles.ns.power.KatsuyuManager;
 import fr.nicknqck.runnables.PubRunnable;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
@@ -100,6 +101,7 @@ public class Main extends JavaPlugin {
 	private HokageManager hokageManager;
 	private InfoManager infoManager;
 	private PlayersNameManager playersNameManager;
+    private KatsuyuManager katsuyuManager;
 
     @Override
 	public void onEnable() {
@@ -151,6 +153,7 @@ public class Main extends JavaPlugin {
 		this.tabManager = new TabManager();
 		this.infoManager = new InfoManager(getDataFolder());
 		this.playersNameManager = new PlayersNameManager(getDataFolder());
+        this.katsuyuManager = new KatsuyuManager();
         new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		System.out.println("ENDING ONENABLE");
     }

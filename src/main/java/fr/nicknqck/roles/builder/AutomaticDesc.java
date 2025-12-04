@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.builder;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -156,6 +157,13 @@ public class AutomaticDesc {
         return this;
     }
     public final AutomaticDesc setPowers(List<Power> powers) {
+        if (Main.getInstance().getKatsuyuManager().containsUser(role.getPlayer())) {
+            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
+            TextComponent name = getPowerName("§dKatsuyu", Main.getInstance().getKatsuyuManager().getPowerDescription());
+            textComponent.addExtra(name);
+            textComponent.addExtra("§7.");
+            this.text.addExtra(textComponent);
+        }
         for (final Power power : powers) {
             if (power.getName() == null)continue;
             if (!power.isShowInDesc())continue;

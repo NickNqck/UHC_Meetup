@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -143,7 +143,7 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
     }
 
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         EventUtils.unregisterEvents(this);
     }
     @EventHandler

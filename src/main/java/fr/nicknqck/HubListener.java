@@ -4,7 +4,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.StartGameEvent;
+import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -120,7 +120,7 @@ public class HubListener implements Listener {
 		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
 		BijuListener.getInstance().resetCooldown();
 	//	Bijus.initBiju(gameState);
-		Bukkit.getPluginManager().callEvent(new StartGameEvent(gameState, rolesList));
+		Bukkit.getPluginManager().callEvent(new GameStartEvent(gameState, rolesList));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
 		new AssassinManagerV2(gameState);

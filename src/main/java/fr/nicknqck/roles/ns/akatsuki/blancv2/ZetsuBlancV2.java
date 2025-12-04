@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ns.akatsuki.blancv2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.ns.Intelligence;
@@ -18,7 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -67,7 +66,7 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
     }
 
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         EventUtils.unregisterEvents(this);
     }
     @EventHandler

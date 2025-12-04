@@ -3,7 +3,7 @@ package fr.nicknqck.events.essential;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.StartGameEvent;
+import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.utils.discord.WebhookBuilder;
 import org.bukkit.Bukkit;
@@ -73,7 +73,7 @@ public class WebHookListeners implements Listener {
         }
     }
     @EventHandler
-    private void onStartGame(StartGameEvent event) {
+    private void onStartGame(GameStartEvent event) {
         if (goReturn() || !isStart()) {
             return;
         }

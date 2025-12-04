@@ -3,7 +3,7 @@ package fr.nicknqck.managers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.config.GameConfig;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.event.EventUtils;
 import org.bukkit.Bukkit;
@@ -85,7 +85,7 @@ public class StunManager {
             new StuckStunRunnable(this);
         }
         @EventHandler
-        private void onEndGame(final EndGameEvent event) {
+        private void onEndGame(final GameEndEvent event) {
             EventUtils.unregisterEvents(this);
         }
         @EventHandler

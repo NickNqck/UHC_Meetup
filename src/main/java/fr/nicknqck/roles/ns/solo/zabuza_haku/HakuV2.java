@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -214,7 +214,7 @@ public class HakuV2 extends NSSoloRoles {
                 }
             }
             @EventHandler
-            private void onEndGame(@NonNull final EndGameEvent event) {
+            private void onEndGame(@NonNull final GameEndEvent event) {
                 if (!this.power.blockList.isEmpty()) {
                     for (final Block block : this.power.blockList) {
                         block.setType(Material.AIR);

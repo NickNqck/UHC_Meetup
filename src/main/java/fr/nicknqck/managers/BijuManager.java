@@ -5,8 +5,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.entity.bijuv2.impl.*;
-import fr.nicknqck.events.custom.EndGameEvent;
-import fr.nicknqck.events.custom.StartGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
+import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.events.custom.biju.*;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -65,7 +65,7 @@ public class BijuManager implements Listener {
     }
 
     @EventHandler
-    private void onStartGame(final StartGameEvent event) {
+    private void onStartGame(final GameStartEvent event) {
         if (this.isBijuEnable()) {
             for (final Class<? extends BijuBase> clazz : this.bijuEnables.keySet()) {
                 if (this.bijuEnables.get(clazz)) {
@@ -92,7 +92,7 @@ public class BijuManager implements Listener {
         }
     }
     @EventHandler
-    private void onEndGame(final EndGameEvent event) {
+    private void onEndGame(final GameEndEvent event) {
         for (final BukkitRunnable runnable : this.runnableList) {
             runnable.cancel();
         }

@@ -5,7 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -332,7 +332,7 @@ public class EnmuV2 extends DemonsRoles {
                 }
             }
             @EventHandler
-            private void onEndGame(final EndGameEvent event) {
+            private void onEndGame(final GameEndEvent event) {
                 Main.getInstance().deleteWorld("enmuv2_duel");
                 EventUtils.unregisterEvents(this);
             }

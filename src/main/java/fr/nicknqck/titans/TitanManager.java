@@ -2,7 +2,7 @@ package fr.nicknqck.titans;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareStealCommandEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
@@ -90,7 +90,7 @@ public class TitanManager implements Listener {
         }
     }
     @EventHandler
-    private void onEndGame(@NonNull final EndGameEvent event) {
+    private void onEndGame(@NonNull final GameEndEvent event) {
         this.titansMap.clear();
     }
     private static class TitanStealManager implements Listener {

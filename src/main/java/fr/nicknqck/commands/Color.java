@@ -2,7 +2,7 @@ package fr.nicknqck.commands;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
 import fr.nicknqck.utils.event.EventUtils;
@@ -119,7 +119,7 @@ public class Color implements CommandExecutor, Listener {
         return false;
     }
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         if (manager != null) {
             Scoreboard mainScoreboard = manager.getMainScoreboard();

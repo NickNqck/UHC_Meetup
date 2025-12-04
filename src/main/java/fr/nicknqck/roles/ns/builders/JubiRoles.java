@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.builders;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.managers.BijuManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
@@ -100,7 +100,7 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
             return false;
         }
         @EventHandler
-        private void onEndGame(EndGameEvent event) {
+        private void onEndGame(GameEndEvent event) {
             EventUtils.unregisterEvents(this);
         }
         @EventHandler

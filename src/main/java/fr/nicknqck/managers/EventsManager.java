@@ -2,7 +2,7 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.ds.AkazaVSKyojuroV2;
@@ -61,7 +61,7 @@ public class EventsManager implements Listener {
         tryed = true;
     }
     @EventHandler
-    private void onEndGame(final EndGameEvent event) {
+    private void onEndGame(final GameEndEvent event) {
         this.tryed = false;
     }
     @EventHandler

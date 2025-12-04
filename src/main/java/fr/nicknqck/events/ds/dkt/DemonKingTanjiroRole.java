@@ -2,7 +2,7 @@ package fr.nicknqck.events.ds.dkt;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
@@ -77,7 +77,7 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
         return DemonType.SUPERIEUR;
     }
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         HandlerList.unregisterAll(this);
     }
     @EventHandler

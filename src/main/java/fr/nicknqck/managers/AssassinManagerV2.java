@@ -2,7 +2,7 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.assassin.ChooseAssassinEvent;
 import fr.nicknqck.events.custom.assassin.PrepareAssassinEvent;
@@ -79,7 +79,7 @@ public class AssassinManagerV2 implements Listener {
         EventUtils.unregisterEvents(this);
     }
     @EventHandler
-    private void onEndGame(@NonNull final EndGameEvent event) {
+    private void onEndGame(@NonNull final GameEndEvent event) {
         EventUtils.unregisterEvents(this);
     }
     private void updateTime() {
