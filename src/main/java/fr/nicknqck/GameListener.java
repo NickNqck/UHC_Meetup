@@ -269,7 +269,7 @@ public class GameListener implements Listener {
 			}
 			if (gameState.getActualPvPTimer() == 0){
 				Main.getInstance().getGameConfig().setPvpEnable(true);
-				SendToEveryone("(§c!§f) Le§c pvp§f est maintenant activé !");
+				SendToEveryone("§f[§6UHC-Meetup§f] Le§c pvp§f est maintenant activé !");
 				gameState.setActualPvPTimer(-1);
 			} else {
 				gameState.setActualPvPTimer(gameState.getActualPvPTimer()-1);
