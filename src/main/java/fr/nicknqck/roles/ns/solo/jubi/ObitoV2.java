@@ -230,7 +230,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
             super("Kamui", null, new ItemBuilder(Material.NETHER_STAR).setName("§dKamui"), role,
                     "§7Vous ouvre un menu vous permettant d'accéder à§c deux pouvoirs§7:",
                     "",
-                    "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximal de§c 5 minutes§7. (1x/10m)",
+                    "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximal de§c 5 minutes§7. (1x/5m)",
                     "",
                     "§dSonohaka§7: Vous permet d'ouvrir un autre menu vous permettant de cibler un joueur,",
                     "§7La personne cibler ce verra téléporter dans la§c dimension Kamui§7 pendant§c 5 minutes§7. (1x/10m)");
@@ -279,7 +279,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
         private static class Arimasu extends Power {
 
             public Arimasu(@NonNull RoleBase role) {
-                super("Kamui§7 (§dArimasu§7)", new Cooldown(60*15), role);
+                super("Kamui§7 (§dArimasu§7)", new Cooldown(60*5), role);
                 setShowInDesc(false);
             }
 
@@ -328,7 +328,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
             private final KamuiPower kamuiPower;
 
             public Sonohaka(@NonNull RoleBase role, KamuiPower kamuiPower) {
-                super("Kamui§7 (§dSonohaka§7)§r", new Cooldown(60*15), role);
+                super("Kamui§7 (§dSonohaka§7)§r", new Cooldown(60*10), role);
                 this.kamuiPower = kamuiPower;
                 setShowInDesc(false);
             }

@@ -186,7 +186,7 @@ public class RoleManager implements Listener {
         registerRole(Gai.class);
         registerRole(InoV2.class);
         registerRole(Jiraya.class);
-        registerRole(Kakashi.class);
+        registerRole(KakashiV2.class);
         registerRole(KillerBeeV2.class);
         registerRole(KonohamaruV2.class);
         registerRole(KurenaiV2.class);

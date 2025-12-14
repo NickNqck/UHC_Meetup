@@ -360,7 +360,7 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
                         if (fugaku.getGameState().hasRoleNull(p.getUniqueId()))continue;
                         RoleBase role = fugaku.getGameState().getGamePlayer().get(p.getUniqueId()).getRole();
                         if (!role.getGamePlayer().isAlive())continue;
-                        if (role instanceof IUchiwa || role instanceof DanzoV2 ||role instanceof Kakashi) {
+                        if (role instanceof IUchiwa || role instanceof DanzoV2 ||role instanceof KakashiV2) {
                             this.croised = true;
                         }
                     }
