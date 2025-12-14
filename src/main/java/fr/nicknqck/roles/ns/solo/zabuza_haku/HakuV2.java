@@ -151,7 +151,7 @@ public class HakuV2 extends NSSoloRoles {
                                 return false;
                             }
                             final RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
-                            final List<Vector> positions = rayTrace.traverse(30, 0.2D);
+                            final List<Vector> positions = rayTrace.traverse(40, 0.2D);
                             Block one = null;
                             Block two = null;
                             Block ice = null;
@@ -163,7 +163,9 @@ public class HakuV2 extends NSSoloRoles {
                                     continue;
                                 }
                                 if (!block.getType().equals(Material.AIR)) {
-                                    ice = block;
+                                    if (block.getType().name().contains("ICE")){
+                                        ice = block;
+                                    }
                                 } else {
                                     if (ice == null) {
                                         one = block;
@@ -173,10 +175,13 @@ public class HakuV2 extends NSSoloRoles {
                                         three = block;
                                     }
                                 }
-                                MathUtil.sendParticle(EnumParticle.FLAME, block.getLocation());
+                                MathUtil.sendParticleTo(player, EnumParticle.FLAME, block.getLocation());
                             }
                             if (one != null && ice != null && three != null) {
-                                player.teleport(one.getLocation());
+                                @NonNull final Location loc = one.getLocation();
+                                loc.setPitch(player.getEyeLocation().getPitch());
+                                loc.setYaw(player.getEyeLocation().getYaw());
+                                player.teleport(loc);
                                 this.tpCD.use();
                             }
                         } else {
@@ -286,6 +291,10 @@ public class HakuV2 extends NSSoloRoles {
                     }
                     this.timeLeft--;
                     this.hyoton.getRole().getGamePlayer().getActionBarManager().updateActionBar("haku.hyoton", "§bHyôton:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                    double distance = this.hyoton.getRole().getGamePlayer().getLastLocation().distance(this.hyoton.centerLocation);
+                    if (distance > 20) {
+                        this.hyoton.getRole().getGamePlayer().teleport(this.hyoton.centerLocation);
+                    }
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                         this.hyoton.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NOW);
                         if (this.timeLeft <= 0) {
