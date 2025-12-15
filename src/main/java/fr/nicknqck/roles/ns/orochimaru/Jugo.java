@@ -103,7 +103,7 @@ public class Jugo extends OrochimaruRoles {
 		if (msg) {
 			owner.sendMessage("§7Maitre§5 Orochimaru§7 est mort, vous obtenez donc l'identité de vos nouveau amis,§5 Karin§f et§5 Suigetsu§7, (§6/ns me§7)");
 		}
-		getKnowedRoles().add(Karin.class);
+		getKnowedRoles().add(KarinV2.class);
 		getKnowedRoles().add(SuigetsuV2.class);
 	}
 	@Override

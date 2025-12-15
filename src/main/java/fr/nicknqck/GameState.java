@@ -427,7 +427,7 @@ public class GameState{
 			role = new KisameV2(player);
 			break;
 		case Karin:
-			role = new Karin(player);
+			role = new KarinV2(player);
 			break;
 		case Kimimaro:
 			role = new KimimaroV2(player);
@@ -852,4 +852,7 @@ public class GameState{
 	@Getter
 	@Setter
 	private boolean TNTGrief = false;
+    public static boolean inGame() {
+        return GameState.getInstance().getServerState().equals(ServerStates.InGame);
+    }
 }
