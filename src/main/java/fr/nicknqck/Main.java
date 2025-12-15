@@ -329,6 +329,7 @@ public class Main extends JavaPlugin {
 		System.out.println("Original Base : "+creator.generator());
 		creator.generatorSettings(getBase());
 		System.out.println("After Config Base Settings: "+creator.generatorSettings());
+        Bukkit.broadcastMessage("§f[§6UHC-Meetup§f]§a Génération en cours d'une nouvelle§c arène§a.");
 		World gameWorld = creator.createWorld();
 		gameWorld.setTime(6000);
 		gameWorld.setGameRuleValue("doMobSpawning", "false");
