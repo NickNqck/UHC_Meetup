@@ -454,15 +454,12 @@ public class Sasori extends AkatsukiRoles {
                 final Arrow arrow = (Arrow) event.getDamager();
                 if (arrow.hasMetadata("hiruko.arrow")) {
                     event.setDamage(0.0);
-                    victim.setHealth(Math.max(1.0, victim.getHealth()-3.0));
-                    if (Main.RANDOM.nextInt(101) <= 30) {
-                        final GamePlayer gamePlayer = GamePlayer.of(victim.getUniqueId());
-                        if (gamePlayer != null) {
-                            if (gamePlayer.getRole() != null) {
-                                gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.POISON, 20*8, 0, false, false), EffectWhen.NOW);
-                                if (arrow.getShooter() instanceof Player) {
-                                    ((Player) arrow.getShooter()).sendMessage("§7Votre§c Senbon§7 a infliger§c 8 secondes§7 de§c Poison I§7 a§c "+victim.getDisplayName());
-                                }
+                    final GamePlayer gamePlayer = GamePlayer.of(victim.getUniqueId());
+                    if (gamePlayer != null) {
+                        if (gamePlayer.getRole() != null) {
+                            gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.POISON, 20*8, 0, false, false), EffectWhen.NOW);
+                            if (arrow.getShooter() instanceof Player) {
+                                ((Player) arrow.getShooter()).sendMessage("§7Votre§c Senbon§7 a infliger§c 8 secondes§7 de§c Poison I§7 a§c "+victim.getDisplayName());
                             }
                         }
                     }
@@ -509,7 +506,7 @@ public class Sasori extends AkatsukiRoles {
 
             @Override
             public String onTouch() {
-                return "§fLe joueur touché subira directement§c 1,5❤§f de§c dégâts§f,\n§fil aura§c 30% de chance§f d'obtenir§c 8 secondes§f de§c Wither II§f.";
+                return "§fLe joueur touché subira directement§c 1,5❤§f de§c dégâts§f,\n§fil aura§c 50% de chance§f d'obtenir§c 8 secondes§f de§c Wither II§f.";
             }
 
             @Override
