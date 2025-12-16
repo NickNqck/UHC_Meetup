@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CRolesCommands implements CommandExecutor {
+public class KrystalCommands implements CommandExecutor {
 
     private final GameState gameState;
 
-    public CRolesCommands(GameState gameState) {
+    public KrystalCommands(GameState gameState) {
         this.gameState = gameState;
     }
 

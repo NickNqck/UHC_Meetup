@@ -11,8 +11,8 @@ commands:
     description: All Admin Commands about DemonSlayer-UHC-Meetup Plugin
     usage: /a [nuit/jour]
     aliases: [a]
-  c:
-    description: Commands about customs roles
+  kr:
+    description: Pour les commandes du Krystal UHC
   discord:
     description: Donne le discord
   aot:

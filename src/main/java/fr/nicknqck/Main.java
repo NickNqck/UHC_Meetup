@@ -249,7 +249,7 @@ public class Main extends JavaPlugin {
 		System.out.println("Starting registering commands");
 		getCommand("ds").setExecutor(new DSmtpCommands(gameState));
 		getCommand("a").setExecutor(new AdminCommands(gameState));
-		getCommand("c").setExecutor(new CRolesCommands(gameState));
+		getCommand("kr").setExecutor(new KrystalCommands(gameState));
 		getCommand("aot").setExecutor(new AotCommands(gameState));
 		getCommand("ns").setExecutor(new NsCommands(gameState));
 		getCommand("ns").setTabCompleter(new NSCompleter());
