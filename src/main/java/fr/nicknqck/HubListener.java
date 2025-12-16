@@ -59,8 +59,6 @@ public class HubListener implements Listener {
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
 		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
-		gameState.JigoroV2Pacte2 = false;
-		gameState.JigoroV2Pacte3 = false;
 		for (Entity e : Main.getInstance().getWorldManager().getGameWorld().getEntities()) {
 			if (e instanceof Player) continue;
 			e.remove();

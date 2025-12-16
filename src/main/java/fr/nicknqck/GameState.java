@@ -93,8 +93,6 @@ public class GameState{
 	public int getPvPTimer() {
 		return pvpTimer;
 	}
-	public boolean JigoroV2Pacte2 = false;
-	public boolean JigoroV2Pacte3 = false;
 	@Setter
 	@Getter
 	private ServerStates serverState = ServerStates.InLobby;

@@ -187,12 +187,10 @@ public class JigoroV2 extends DemonsSlayersRoles {
 					kaigaku.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 					kaigaku.getGamePlayer().sendMessage("Vous avez rejoint la team§6 Jigoro ");
 					kaigaku.getGamePlayer().sendMessage("Votre pacte avec votre Sensei Jigoro vous à offert l'effet Speed 1 permanent");
-					gameState.JigoroV2Pacte2 = true;
 					jigorok.setMaxHealth(getRole().getMaxHealth());
 					break;
 				case ZENITSU:
 					getRole().getGamePlayer().sendMessage("§7Vous avez choisis le pacte§6 3");
-					gameState.JigoroV2Pacte3 = true;
 					getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 					final ZenItsuV2 zenItsu = findZenItsu(gameState);
 					if (zenItsu == null) {
