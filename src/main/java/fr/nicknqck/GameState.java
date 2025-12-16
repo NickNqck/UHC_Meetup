@@ -73,7 +73,7 @@ public class GameState{
 	@Getter
 	@Setter
 	private int maxTimeSpawnBiju = 160;
-	public boolean morteclair = true;
+
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 	public enum ServerStates {
 		InLobby,

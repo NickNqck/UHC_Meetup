@@ -357,12 +357,12 @@ public class HubConfig implements Listener {
                         }
                         if (item.isSimilar(Items.geteclairmort())) {
                             if (ChatRank.isHost(player)) {
-                                if (!gameState.morteclair) {
+                                if (!Main.getInstance().getGameConfig().isMortEclair()) {
                                     player.sendMessage("Éclair à la mort est désormais§6 activé");
-                                    gameState.morteclair = true;
+                                    Main.getInstance().getGameConfig().setMortEclair(true);
                                 } else {
                                     player.sendMessage("Éclair à la mort est désormais§6 désactivé");
-                                    gameState.morteclair = false;
+                                    Main.getInstance().getGameConfig().setMortEclair(false);
                                 }
                             }
                         }

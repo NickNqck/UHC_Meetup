@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -636,7 +635,7 @@ public abstract class Items {
 		 		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, true);
 		 		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		 		meta.setDisplayName("§r§fÉclair à la mort: ");
-		 		meta.setLore(Collections.singletonList("§r§fÉclair à la mort: "+(GameState.getInstance().morteclair ? "§aActiver" : "§cDésactiver")));
+		 		meta.setLore(Collections.singletonList("§r§fÉclair à la mort: "+(Main.getInstance().getGameConfig().isMortEclair() ? "§aActiver" : "§cDésactiver")));
 		 		stack.setItemMeta(meta);
 		 		return stack;
 		 	}

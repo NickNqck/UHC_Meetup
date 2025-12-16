@@ -173,7 +173,7 @@ public class DeathManager implements Listener {
         }
         gameState.delInGamePlayers(killedPlayer);
         gameState.addInSpecPlayers(killedPlayer);
-        if (gameState.morteclair) {
+        if (Main.getInstance().getGameConfig().isMortEclair()) {
             killedPlayer.getWorld().strikeLightningEffect(killedPlayer.getLocation());
         }
         if (gameState.getInGamePlayers().size()-1 <= 0) {

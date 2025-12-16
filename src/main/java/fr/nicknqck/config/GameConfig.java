@@ -33,6 +33,7 @@ public class GameConfig {
     private int forcePercent = 30;
     private int resiPercent = 20;
     private StunType stunType = StunType.TELEPORT;
+    private boolean mortEclair = true;
 
     public GameConfig() {
         instance = this;
