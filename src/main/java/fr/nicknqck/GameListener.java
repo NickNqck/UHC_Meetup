@@ -108,7 +108,6 @@ public class GameListener implements Listener {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
 				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
-				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId()))gameState.addInLobbyPlayers(p);
 			}
 			break;
@@ -294,7 +293,6 @@ public class GameListener implements Listener {
 			Main.getInstance().getGameConfig().setPvpEnable(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
-			gameState.setInObiPlayers(new ArrayList<>());
 			gameState.TitansRouge.clear();
 			gameState.infectedbyadmin.clear();
 			TitanListener.getInstance().resetCooldown();
@@ -821,12 +819,6 @@ public class GameListener implements Listener {
         if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ce passe rien
         for (Chakras ch : Chakras.values()) {
         	ch.getChakra().onPlayerMoove(e, p, from, to);
-        }
-        if (gameState.getInObiPlayers().contains(p)) {//si le joueur est touchée par les Obis de Daki
-        	if (gameState.getServerState() == ServerStates.InLobby)gameState.delInObiPlayers(p);
-        	if (gameState.getInSpecPlayers().contains(p))gameState.delInObiPlayers(p);
-        	p.teleport(from);
-        	p.setAllowFlight(true);
         }
     	if (gameState.shutdown.contains(e.getPlayer())) {
     		p.teleport(from);

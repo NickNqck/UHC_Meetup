@@ -133,11 +133,6 @@ public class GameState{
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
 	public List<Player> infectedbyadmin = new ArrayList<>();
-	public ArrayList<Player> Obi = new ArrayList<>();
-	public ArrayList<Player> getInObiPlayers() {return Obi;}
-	public void setInObiPlayers(ArrayList<Player> SleepingPlayers) {Obi = SleepingPlayers;}
-	public void addInObiPlayers(Player player) {Obi.add(player);}
-	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
 	@Getter
 	private final List<Roles> attributedRole = new ArrayList<>();
