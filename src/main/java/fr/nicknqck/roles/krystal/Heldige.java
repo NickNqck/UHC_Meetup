@@ -90,14 +90,15 @@ public class Heldige extends BonusKrystalBase {
         addPower(this.bowSwapPower);
         addPower(new CustomiseSwapPower(this));
         setKrystalAmount(50);
+        addBonus(new ForcePermaBonus(50, this));
     }
-
+/*
     @Override
     public @NonNull Map<PotionEffect, Integer> getBonus() {
         final Map<PotionEffect, Integer> map = new HashMap<>();
         map.put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), 50);
         return map;
-    }
+    }*/
 
     private static class BattleSwapPower extends Power implements Listener {
 

@@ -26,8 +26,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -81,6 +79,7 @@ public class LeComteV2 extends BonusKrystalBase implements Listener{
         addPower(new EnqueteCommandPower(this));
         addPower(new LameDuMaitre(this), true);
         setKrystalAmount(50);
+        addBonus(new ForcePermaBonus(55, this));
     }
     @EventHandler
     private void onKill(final UHCPlayerKillEvent event) {
@@ -93,14 +92,14 @@ public class LeComteV2 extends BonusKrystalBase implements Listener{
             event.getPlayerKiller().setMaxHealth(getMaxHealth());
         }
     }
-
+/*
     @Override
     public @NonNull Map<PotionEffect, Integer> getBonus() {
         final Map<PotionEffect, Integer> map = new HashMap<>();
         map.put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), 55);
         return map;
     }
-
+*/
 
     private static class LameDuMaitre extends ItemPower {
 
