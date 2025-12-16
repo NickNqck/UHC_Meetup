@@ -136,7 +136,7 @@ public class LeComteV2 extends BonusKrystalBase implements Listener{
         private final LeComteV2 leComteV2;
 
         public EnqueteCommandPower(@NonNull LeComteV2 role) {
-            super("/c enquete <joueur>", "enquete", new Cooldown(60*5), role, CommandType.CUSTOM,
+            super("/c enquete <joueur>", "enquete", new Cooldown(60*5), role, CommandType.KRYSTAL,
                     "§7Vous permet d'enquêter sur un§c joueur§7, toute les§c secondes§7 pour chaque joueur autours de lui l'enquête augmentera de§c 1 points",
                     "§7tout les§c 100 points§7 vous obtiendrez les informations suivante: ",
                     "",

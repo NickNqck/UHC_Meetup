@@ -34,7 +34,7 @@ public class KrystalCommands implements CommandExecutor {
                     if (!role.getPowers().isEmpty()) {
                         for (final Power power : role.getPowers()) {
                             if (power instanceof CommandPower) {
-                                ((CommandPower) power).call(strings, CommandPower.CommandType.CUSTOM, sender);
+                                ((CommandPower) power).call(strings, CommandPower.CommandType.KRYSTAL, sender);
                             }
                         }
                     }

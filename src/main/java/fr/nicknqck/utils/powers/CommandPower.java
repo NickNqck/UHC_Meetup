@@ -37,6 +37,6 @@ public abstract class CommandPower extends Power{
         AOT,
         NS,
         MC,
-        CUSTOM
+        KRYSTAL
     }
 }

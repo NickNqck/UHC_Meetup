@@ -208,7 +208,7 @@ public class Heldige extends BonusKrystalBase {
             private final List<UUID> alreadyTeleported;
 
             public TeleportCommandPower(@NonNull RoleBase role) {
-                super("Swap interdimensionel", "enderswap", new Cooldown(60*5), role, CommandType.CUSTOM);
+                super("Swap interdimensionel", "enderswap", new Cooldown(60*5), role, CommandType.KRYSTAL);
                 setShowInDesc(false);
                 this.alreadyTeleported = new ArrayList<>();
                 this.targetMap = new HashMap<>();
@@ -314,7 +314,7 @@ public class Heldige extends BonusKrystalBase {
         private final Heldige heldige;
 
         public CustomiseSwapPower(@NonNull Heldige role) {
-            super("/c config", "config", null, role, CommandType.CUSTOM,
+            super("/c config", "config", null, role, CommandType.KRYSTAL,
                     "§7Vous permet d'§aActivé§7/§cDésactivé§7 vos pouvoir \"Swap\"",
                     "",
                     "§7(par défaut les pouvoirs sont§a activé§7)");

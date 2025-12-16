@@ -1,5 +1,6 @@
 package fr.nicknqck;
 
+import fr.nicknqck.commands.completer.KrystalTabCompletor;
 import fr.nicknqck.commands.completer.NSCompleter;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.commands.*;
@@ -250,6 +251,7 @@ public class Main extends JavaPlugin {
 		getCommand("ds").setExecutor(new DSmtpCommands(gameState));
 		getCommand("a").setExecutor(new AdminCommands(gameState));
 		getCommand("kr").setExecutor(new KrystalCommands(gameState));
+        getCommand("kr").setTabCompleter(new KrystalTabCompletor());
 		getCommand("aot").setExecutor(new AotCommands(gameState));
 		getCommand("ns").setExecutor(new NsCommands(gameState));
 		getCommand("ns").setTabCompleter(new NSCompleter());
