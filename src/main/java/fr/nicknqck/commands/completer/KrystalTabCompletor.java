@@ -15,9 +15,9 @@ public class KrystalTabCompletor implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
-        final List<String> list = new ArrayList<>();
+        final List<String> stringList = new ArrayList<>();
         if (strings.length < 2) {
-            list.add("bonusinfo");
+            stringList.add("bonusinfo");
         }
         if (commandSender instanceof Player) {
             if (GameState.inGame()) {
@@ -39,6 +39,15 @@ public class KrystalTabCompletor implements TabCompleter {
                 }
             }
         }
-        return list;
+        if (strings[0] != null) {
+            final List<String> list = new ArrayList<>();
+            for (final String string : stringList) {
+                if (string.contains(strings[0])) {
+                    list.add(string);
+                }
+            }
+            return list;
+        }
+        return stringList;
     }
 }
