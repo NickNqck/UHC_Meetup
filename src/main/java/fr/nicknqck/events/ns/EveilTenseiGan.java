@@ -2,6 +2,7 @@ package fr.nicknqck.events.ns;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
@@ -148,6 +149,11 @@ public class EveilTenseiGan extends Event implements Listener {
                 "§fL'annonce de l'évènement ce fera après que l'utilisateur ai utiliser pendant§c 1 minute",
                 "§fson§b Mode Chakra"
         };
+    }
+
+    @Override
+    public @NonNull MDJ getMDJ() {
+        return MDJ.NS;
     }
 
     @Override

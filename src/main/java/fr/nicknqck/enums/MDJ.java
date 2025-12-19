@@ -17,7 +17,7 @@ public enum MDJ {
     Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack()),
     DS(new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack()),
     AOT(new ItemBuilder(Material.FEATHER).setName("§6AOT").toItemStack()),
-    NS(new ItemBuilder(Material.NETHER_STAR).setName("§6Naruto").toItemStack()),
+    NS(new ItemBuilder(Material.NETHER_STAR).setName("§aNaruto").toItemStack()),
     //	MC(new ItemBuilder(Material.GRASS).setName("§aMinecraft").toItemStack()),
     KRYSTAL(new ItemBuilder(Material.EMERALD_ORE).setName("§dKrystal UHC").toItemStack());
 

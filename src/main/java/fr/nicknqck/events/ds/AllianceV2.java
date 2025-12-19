@@ -1,6 +1,7 @@
 package fr.nicknqck.events.ds;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -11,6 +12,7 @@ import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
 import fr.nicknqck.roles.ds.solos.Shinjuro;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -102,5 +104,10 @@ public class AllianceV2 extends Event implements Listener {
                 "",
                 "§cSi l'un des deux meurt l'autre recevra l'effet§c Force I permanent."
         };
+    }
+
+    @Override
+    public @NonNull MDJ getMDJ() {
+        return MDJ.DS;
     }
 }
