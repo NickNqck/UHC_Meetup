@@ -38,9 +38,11 @@ import fr.nicknqck.utils.fastinv.FastInvManager;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.managers.TabManager;
+import fr.nicknqck.utils.rank.ChatRank;
 import fr.nicknqck.worlds.WorldListener;
 import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import lombok.Getter;
+import lombok.NonNull;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -63,9 +65,9 @@ import java.util.concurrent.ScheduledExecutorService;
 
 /*
 [UHC-MTP UHC Plugin Credits]
-Ideas and Game Design: NickNack, Mega02600, Egaly inspirated by goldenuhc.eu and yukanmc
-Programming: NickNack, Mega02600
-Roles: NickNack, Mega02600
+Ideas and Game Design: NickNqck, Mega02600, Egaly inspirated by goldenuhc.eu and yukanmc
+Programming: NickNqck, Mega02600
+Roles: NickNqck
 */
 @Getter
 public class Main extends JavaPlugin {
@@ -469,6 +471,12 @@ public class Main extends JavaPlugin {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Ip Introuvable";
+		}
+	}
+	public void sendMessageToHosts(@NonNull final String message) {
+		for (@NonNull final Player onlinePlayer : getServer().getOnlinePlayers()) {
+			if (!ChatRank.isHost(onlinePlayer))continue;
+			onlinePlayer.sendMessage(message);
 		}
 	}
 }

@@ -842,9 +842,6 @@ public class GameState{
 		tr.append("\n").append(AllDesc.bar);
 		return tr.toString();
 	}
-	@Getter
-	@Setter
-	private boolean TNTGrief = false;
     public static boolean inGame() {
         return GameState.getInstance().getServerState().equals(ServerStates.InGame);
     }

@@ -312,7 +312,13 @@ public class HubConfig implements Listener {
                             }
                         }
                         if (item.getType().equals(Material.TNT)) {
-                            gameState.setTNTGrief(!gameState.isTNTGrief());
+                            if (Main.getInstance().getGameConfig().isTntGrief()) {
+                                Main.getInstance().getGameConfig().setTntGrief(false);
+                                Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a définie la règle \"§cGrief par les tnt§7\" sur§c désactiver§7.");
+                            } else {
+                                Main.getInstance().getGameConfig().setTntGrief(true);
+                                Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a définie la règle \"§cGrief par les tnt§7\" sur§a activer§7.");
+                            }
                         }
                         if (name.equals("§fLame")) {
                             Main.getInstance().getGameConfig().setGiveLame(!Main.getInstance().getGameConfig().isGiveLame());
