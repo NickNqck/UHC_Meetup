@@ -186,7 +186,6 @@ public class RoleManager implements Listener {
         //Register Shinobi
         registerRole(Asuma.class);
         registerRole(Fugaku.class);
-        registerRole(Gai.class);
         registerRole(InoV2.class);
         registerRole(Jiraya.class);
         registerRole(KakashiV2.class);
@@ -195,7 +194,6 @@ public class RoleManager implements Listener {
         registerRole(KurenaiV2.class);
         registerRole(MinatoV2.class);
         registerRole(NarutoV2.class);
-        registerRole(RockLee.class);
         registerRole(Sakura.class);
         registerRole(Shikamaru.class);
         registerRole(TenTenV2.class);
@@ -223,7 +221,7 @@ public class RoleManager implements Listener {
         registerRole(KonanV2.class);
         registerRole(NagatoV2.class);
         registerRole(Sasori.class);
-        registerRole(ZetsuBlanc.class);
+        registerRole(ZetsuBlancV3.class);
         registerRole(ZetsuNoir.class);
         registerRole(ZetsuBlancV2.class);
         //Register Jubi

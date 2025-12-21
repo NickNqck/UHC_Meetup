@@ -20,8 +20,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -391,6 +389,11 @@ public class GamePlayer {
 						final RoleBase role = gameState.getGamePlayer().get(uuid).getRole();
 						if (!toTalk.contains(role.getClass()))continue;
 						role.getGamePlayer().sendMessage(starter+" §f"+ ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(constructor.length())));
+					}
+				}
+				if (me.getRole() != null) {
+					if (toTalk.contains(me.getRole().getClass())) {
+						return;
 					}
 				}
 				me.sendMessage(starter+" §f"+ ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(constructor.length())));

@@ -112,7 +112,7 @@ public enum Roles {
     Hidan(TeamList.Akatsuki, "ns", 7, new ItemBuilder(Material.DIAMOND_HOE).setName("§cHidan").toItemStack(), "§bNickNqck"),
     Kakuzu(TeamList.Akatsuki, "ns", 8, new ItemBuilder(Material.ROTTEN_FLESH).setName("§cKakuzu").toItemStack(), "§bNickNqck"),
     ZetsuNoir(TeamList.Akatsuki, "ns", 9, new ItemBuilder(Material.INK_SACK).setName("§cZetsu Noir").toItemStack(), "§bMega02600"),
-    ZetsuBlanc(TeamList.Akatsuki, "ns", 10, new ItemBuilder(Material.BONE).setName("§cZetsu Blanc").toItemStack(), "§bMega02600"),
+    ZetsuBlanc(TeamList.Akatsuki, "ns", 10, new ItemBuilder(Material.BONE).setName("§cZetsu Blanc").toItemStack(), "§bNickNqck"),
     ZetsuBlancV2(TeamList.Akatsuki, "ns", 11, new ItemBuilder(Material.ENDER_CHEST).setName("§cZetsu Blanc§7 (§6V2§7)").toItemStack(), "§bByC3RV0L3NT"),
     Sasori(TeamList.Akatsuki, "ns", 12, new ItemBuilder(Material.ARMOR_STAND).setName("§cSasori").toItemStack(), "§bNickNqck"),
     //Shinobi
