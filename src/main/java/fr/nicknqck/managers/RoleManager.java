@@ -288,7 +288,7 @@ public class RoleManager implements Listener {
                         ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
             }
             if (role instanceof ISAkatsukiChief) {
-                role.addKnowedPlayersWithRoles("§7Voici l'identité de§c Nagato§7 et de§c Konan§7: ", KonanV2.class, Konan.class, NagatoV2.class);
+                role.addKnowedPlayersWithRoles("§7Voici l'identité de§c Nagato§7 et de§c Konan§7: ", KonanV2.class, NagatoV2.class);
             }
             if (!event.getGameState().getAttributedRole().contains(Roles.Orochimaru)) {
                 if (role instanceof OrochimaruRoles) {
