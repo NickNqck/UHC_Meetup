@@ -61,7 +61,8 @@ public class SashaV2 extends SoldatsRoles {
 
         public ArcDuChasseurItem(@NonNull RoleBase role) {
             super("§aArc du Chasseur§r", new Cooldown(60), new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 3).setName("§aArc du chasseur"), role,
-                    "§7Lorsque vous tirez une flèche  et qu'elle atteint un joueur, cela lui inflige un malus différent en fonction de l'endroit toucher",
+                    "§7Lorsque vous tirez une flèche et qu'elle atteint un joueur,",
+                    "§7cela lui inflige un malus différent en fonction de l'endroit toucher",
                     "",
                     "Tête: Elle obtiendra 7 secondes de Blindness",
                     "Torse: Elle perdra 1 coeur supplémentaire (en plus des dégâts de la flèche)",
