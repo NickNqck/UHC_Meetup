@@ -24,6 +24,8 @@ import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
+import fr.nicknqck.roles.krystal.KrystalManager;
+import fr.nicknqck.roles.krystal.MDJConfig;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.roles.ns.power.KatsuyuManager;
 import fr.nicknqck.runnables.PubRunnable;
@@ -44,6 +46,7 @@ import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.Validate;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -52,16 +55,19 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /*
 [UHC-MTP UHC Plugin Credits]
@@ -106,6 +112,7 @@ public class Main extends JavaPlugin {
 	private InfoManager infoManager;
 	private PlayersNameManager playersNameManager;
     private KatsuyuManager katsuyuManager;
+	private KrystalManager krystalManager;
 
     @Override
 	public void onEnable() {
@@ -159,6 +166,7 @@ public class Main extends JavaPlugin {
 		this.playersNameManager = new PlayersNameManager(getDataFolder());
         this.katsuyuManager = new KatsuyuManager();
         new UpdateChecker(this, "NickNqck/UHC_Meetup");
+		this.krystalManager = new KrystalManager();
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -478,5 +486,53 @@ public class Main extends JavaPlugin {
 			if (!ChatRank.isHost(onlinePlayer))continue;
 			onlinePlayer.sendMessage(message);
 		}
+	}
+	private void initRoles() {
+		Collection<Class<?>> classesOf = getClassesOf(Main.getInstance());
+		for (Class<?> aClass : classesOf) {
+			if(!aClass.isAnnotationPresent(MDJConfig.class)) continue;
+
+		}
+	}
+	private Collection<Class<?>> getClassesOf(Plugin plugin) {
+		try {
+			Objects.requireNonNull(plugin, "Plugin is null!");
+			Validate.isTrue(JavaPlugin.class.isAssignableFrom(plugin.getClass()), "Plugin must be a JavaPlugin");
+
+			final Method m = JavaPlugin.class.getDeclaredMethod("getFile");
+			m.setAccessible(true);
+
+			final File pluginFile = (File) m.invoke(plugin);
+			final Collection<Class<?>> classes = new ArrayList<>();
+
+			try (JarFile jarFile = new JarFile(pluginFile)) {
+				Enumeration<JarEntry> entries = jarFile.entries();
+
+				while (entries.hasMoreElements()) {
+					String name = entries.nextElement().getName();
+
+					if (name.endsWith(".class")) {
+						name = name.replace("/", ".").replaceFirst(".class", "");
+
+						Class<?> clazz;
+
+						try {
+							clazz = Class.forName(name);
+                            if (!clazz.getPackage().getName().contains("role")) {
+                                clazz = null;
+                            }
+						} catch (NoClassDefFoundError ex) {
+							continue;
+						}
+						if (clazz == null)continue;
+						classes.add(clazz);
+					}
+				}
+			}
+			return classes;
+		} catch (ReflectiveOperationException | IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
 	}
 }
