@@ -43,6 +43,7 @@ import fr.nicknqck.managers.TabManager;
 import fr.nicknqck.utils.rank.ChatRank;
 import fr.nicknqck.worlds.WorldListener;
 import fr.nicknqck.worlds.worldloader.WorldFillTask;
+import hm.zelha.particlesfx.util.ParticleSFX;
 import lombok.Getter;
 import lombok.NonNull;
 import org.apache.commons.io.FileUtils;
@@ -167,6 +168,7 @@ public class Main extends JavaPlugin {
         this.katsuyuManager = new KatsuyuManager();
         new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		this.krystalManager = new KrystalManager();
+		ParticleSFX.setPlugin(this);
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {

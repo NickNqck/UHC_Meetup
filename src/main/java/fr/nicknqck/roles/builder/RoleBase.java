@@ -412,8 +412,6 @@ public abstract class RoleBase implements IRole {
 			}
 		}
 	}
-	public void onALLPlayerDamage(EntityDamageEvent e, Player victim) {}
-	public void onProjectileHit(ProjectileHitEvent event, Player shooter) {}
 	public Player getTargetPlayer(Player player, double distanceMax) {
         return RayTrace.getTargetPlayer(player, distanceMax, null);
     }

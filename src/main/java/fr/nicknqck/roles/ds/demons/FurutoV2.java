@@ -127,7 +127,10 @@ public class FurutoV2 extends DemonInferieurRole {
         }
         private enum Bonus {
             FORCE(0, "§cForce", player -> bonusForceList.add(player.getUniqueId())),
-            SPEED(1, "§eSpeed", player -> player.setWalkSpeed(player.getWalkSpeed()+0.02f)),
+            SPEED(1, "§eSpeed", player -> {
+                player.setWalkSpeed(player.getWalkSpeed()+0.02f);
+                bonusSpeedList.add(player.getUniqueId());
+            }),
             RESISTANCE(2, "§9Résistance", player -> bonusResistanceList.add(player.getUniqueId())),
             WEAKNESS(3, "§8Weakness", player -> bonusWeaknessList.add(player.getUniqueId())),
             SLOWNESS(4, "§8Slowness", player -> player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false), true));

@@ -56,13 +56,6 @@ public class EntityDamageEvents implements Listener{
 				Player player = (Player) event.getEntity();
 				Player killer = player.getKiller();
 				double damage = event.getFinalDamage();
-				for (UUID u : gameState.getInGamePlayers()) {
-					Player p = Bukkit.getPlayer(u);
-					if (p == null)continue;
-					if (!gameState.hasRoleNull(p.getUniqueId())) {
-						gameState.getGamePlayer().get(p.getUniqueId()).getRole().onALLPlayerDamage(event, player);
-					}
-				}
 				for (Chakras ch : Chakras.values()) {
 					ch.getChakra().onEntityDamage(event, player);
 				}
