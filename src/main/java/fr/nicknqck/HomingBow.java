@@ -31,12 +31,6 @@ public class HomingBow implements Listener {
     }
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent event) {
-		if (event.getEntity().getShooter() instanceof Player) {
-			Player shooter = (Player) event.getEntity().getShooter();
-			if (!gameState.hasRoleNull(shooter.getUniqueId())) {
-				gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileHit(event, shooter);
-			}
-		}
 	    if (event.getEntity() instanceof Arrow) {
 	        Arrow arrow = (Arrow) event.getEntity();
 	        if (arrow.getShooter() instanceof Player) {

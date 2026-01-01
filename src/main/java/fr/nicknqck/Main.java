@@ -169,6 +169,7 @@ public class Main extends JavaPlugin {
         new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		this.krystalManager = new KrystalManager();
 		ParticleSFX.setPlugin(this);
+		saveResource("wing.png", false);
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
