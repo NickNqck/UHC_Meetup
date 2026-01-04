@@ -9,8 +9,10 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Izanagi;
+import fr.nicknqck.roles.ns.power.SuperSusanoPower;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.PropulserUtils;
@@ -36,14 +38,17 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class MadaraV2 extends JubiRoles {
 
     public MadaraV2(UUID player) {
         super(player);
+    }
+
+    @Override
+    public @NonNull Intelligence getIntelligence() {
+        return Intelligence.GENIE;
     }
 
     @Override
@@ -62,7 +67,8 @@ public class MadaraV2 extends JubiRoles {
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new MadaraItem(this), true);
         addPower(new ChibakuTensei(this), true);
-        addPower(new SusanoPower(this), true);
+        addPower(new SuperSusanoPower(this, null,
+                "§7Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7."), true);
         addPower(new Izanagi(this));
         addKnowedRole(ObitoV2.class);
         getGamePlayer().startChatWith("!", "§dMadara: ", ObitoV2.class);
@@ -78,14 +84,13 @@ public class MadaraV2 extends JubiRoles {
 
         private final PotionEffect speed;
         private final PotionEffect force;
-        private boolean have;
+        private boolean have = false;
 
         public MadaraItem(@NonNull RoleBase role) {
             super("Madara", null, new ItemBuilder(Material.NETHER_STAR).setName("§dMadara"), role,
                     "§aActive§7/§cDésactive§7 vos effets de§e Speed II§7 et§c Force I permanents.");
             this.speed = new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false);
             this.force = new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false);
-            this.have = false;
         }
 
         @Override
@@ -346,53 +351,6 @@ public class MadaraV2 extends JubiRoles {
                     this.meteorite.getRole().getGamePlayer().getActionBarManager().addToActionBar("madara.meteorite", "§bTemp avant déclanchement de la§c Météorite§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                     this.timeLeft--;
                 }
-            }
-        }
-    }
-    private static class SusanoPower extends ItemPower {
-
-        protected SusanoPower(@NonNull RoleBase role) {
-            super("Susano (Madara)", new Cooldown(60*20), new ItemBuilder(Material.NETHER_STAR).setName("§c§lSusanô"), role,
-                    "§7Vous permet d'obtenir l'effet§c Résistance I§7 pendant§c 5 minutes§7. (1x/20m)");
-        }
-
-        @Override
-        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                new SusanoPower.SusanoRunnable(this.getRole().getGameState(), this.getRole().getGamePlayer());
-                getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), EffectWhen.NOW);
-                player.sendMessage("§cActivation du§l Susanô§c.");
-                return true;
-            }
-            return false;
-        }
-        private static class SusanoRunnable extends BukkitRunnable {
-
-            private final GameState gameState;
-            private final GamePlayer gamePlayer;
-            private int timeLeft = 60*5;
-
-            private SusanoRunnable(GameState gameState, GamePlayer gamePlayer) {
-                this.gameState = gameState;
-                this.gamePlayer = gamePlayer;
-                this.gamePlayer.getActionBarManager().addToActionBar("madara.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-            }
-
-            @Override
-            public void run() {
-                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                    cancel();
-                    return;
-                }
-                if (this.timeLeft <= 0) {
-                    this.gamePlayer.getActionBarManager().removeInActionBar("madara.susano");
-                    this.gamePlayer.sendMessage("§cVotre§l Susanô§c s'arrête");
-                    cancel();
-                    return;
-                }
-                this.timeLeft--;
-                this.gamePlayer.getActionBarManager().updateActionBar("madara.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
             }
         }
     }

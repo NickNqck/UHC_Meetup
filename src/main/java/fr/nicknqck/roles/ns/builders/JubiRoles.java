@@ -48,11 +48,6 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
         return EUchiwaType.LEGENDAIRE;
     }
 
-    @Override
-    public @NonNull Intelligence getIntelligence() {
-        return Intelligence.GENIE;
-    }
-
     public static class TraqueurPower extends ItemPower implements Listener {
 
         private final JubiRoles roles;

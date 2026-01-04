@@ -11,6 +11,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.builders.ISAkatsukiChief;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
@@ -80,6 +81,11 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
         setChakraType(Chakras.KATON);
         addKnowedRole(MadaraV2.class);
         getGamePlayer().startChatWith("§dObito:", "!", MadaraV2.class);
+    }
+
+    @Override
+    public @NonNull Intelligence getIntelligence() {
+        return Intelligence.INTELLIGENT;
     }
 
     @Override

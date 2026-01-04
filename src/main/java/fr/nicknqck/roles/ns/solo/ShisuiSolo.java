@@ -21,6 +21,7 @@ import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
 import fr.nicknqck.roles.ns.power.Izanagi;
 import fr.nicknqck.roles.ns.power.IzanamiV2;
+import fr.nicknqck.roles.ns.power.SuperSusanoPower;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -101,7 +102,8 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
         setChakraType(Chakras.KATON);
         addPower(new Genjutsu(this), true);
         addPower(new KotoAmatsukamiPower(this), true);
-        addPower(new SusanoPower(this), true);
+        addPower(new SuperSusanoPower(this, null,
+                "§7Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7."), true);
         addPower(new Izanagi(this));
         addPower(new ShurikenjutsuCommand(this));
         addKnowedRole(ItachiV2.class);
@@ -387,53 +389,6 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
             if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
             if (this.cooldown.isInCooldown()) {
                 event.setDamage(event.getDamage()*1.20);//+20% de dégat
-            }
-        }
-    }
-    private static class SusanoPower extends ItemPower {
-
-        protected SusanoPower(@NonNull RoleBase role) {
-            super("Susano (Obito)", new Cooldown(60*20), new ItemBuilder(Material.NETHER_STAR).setName("§c§lSusanô"), role,
-                    "§7Vous permet d'obtenir l'effet§c Résistance I§7 pendant§c 5 minutes§7. (1x/20m)");
-        }
-
-        @Override
-        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                new SusanoRunnable(this.getRole().getGameState(), this.getRole().getGamePlayer());
-                getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), EffectWhen.NOW);
-                player.sendMessage("§cActivation du§l Susanô§c.");
-                return true;
-            }
-            return false;
-        }
-        private static class SusanoRunnable extends BukkitRunnable {
-
-            private final GameState gameState;
-            private final GamePlayer gamePlayer;
-            private int timeLeft = 60*5;
-
-            private SusanoRunnable(GameState gameState, GamePlayer gamePlayer) {
-                this.gameState = gameState;
-                this.gamePlayer = gamePlayer;
-                this.gamePlayer.getActionBarManager().addToActionBar("shisui.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-            }
-
-            @Override
-            public void run() {
-                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                    cancel();
-                    return;
-                }
-                if (this.timeLeft <= 0) {
-                    this.gamePlayer.getActionBarManager().removeInActionBar("shisui.susano");
-                    this.gamePlayer.sendMessage("§cVotre§l Susanô§c s'arrête");
-                    cancel();
-                    return;
-                }
-                this.timeLeft--;
-                this.gamePlayer.getActionBarManager().updateActionBar("shisui.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
             }
         }
     }
