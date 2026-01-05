@@ -178,6 +178,13 @@ public class GamePlayer {
 			this.getDiscRunnable().setTeleportLocation(location);
 		}
 	}
+
+	/***
+	 *
+	 * @param begin = Ce avec quoi le joueur doit commencer pour parler avec son/ses mates
+	 * @param constructor = Le début du message qui sera affiché dans le chat des joueurs étant dans la conversation
+	 * @param roleToTalks = Tout simplement le/les rôles qui vont parler (en plus de celui dans lequel il est créé)
+	 */
 	@SafeVarargs
     public final void startChatWith(final String begin, final String constructor, final Class<? extends RoleBase>... roleToTalks) {
 		this.chatWithManager.add(new ChatWithManager(begin, constructor, this, roleToTalks));
