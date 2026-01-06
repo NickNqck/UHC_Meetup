@@ -9,6 +9,7 @@ import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.invs.Configuration_RolesInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.IRole;
@@ -18,7 +19,6 @@ import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
-import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -418,11 +418,6 @@ public class Inventories {
                     ).toItemStack());
                     inv.addItem(GUIItems.getTabRoleInfo(gameState));
                     inv.addItem(Items.geteclairmort());
-                    inv.addItem(new ItemBuilder(Material.REDSTONE).setName("§r§fTemp avant l'§cAssassin").setLore(
-                            "§r§f[10 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getTimingAssassin())+" > 5 minutes",
-                            "§r§fClique gauche: §a+10 secondes",
-                            "§r§fClique droit: §c-10 secondes"
-                    ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
                             "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
                             "§r§fClique gauche: §a+1 secondes",
@@ -438,19 +433,7 @@ public class Inventories {
                     inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getBijuManager().isBijuEnable() ?
                             "§aActivé" : "§cDésactivé",
                             "§r§fShift + Clique: Permet de configurer les bijus§7 (§aNaruto UHC§7)").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
-                            "§fTemp avant infection: ",
-                            "§a+5s§f (Clique gauche)",
-                            "§c-5s§f (Clique droit)",
-                            "§fTemp actuelle:§b "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getInfectionTime())
-                    ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(Main.getInstance().getGameConfig().isTntGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.INK_SACK).setName("§fLame").setLore("§7Si activé, donne une§a lame§7 à l'annonce des rôles à tout les joueurs de la partie","",Main.getInstance().getGameConfig().isGiveLame() ? "§aActivé" : "§cDésactivé").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.EMERALD).setName("§dKrystalBeast").setLore(
-                            "§4// NOUVEAUTÉ \\",
-                            "",
-                            "§a Shift§f + Clique pour configurer les§d bêtes de krystal§7 (§dKrystal UHC§7)"
-                    ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.DIAMOND_SWORD).setName("§fPourcentage de force").setLore(
                             "§c"+Main.getInstance().getGameConfig().getForcePercent()+"%",
                             "",
@@ -854,40 +837,7 @@ public class Inventories {
         player.updateInventory();
     }
     public void updateRoleInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§fConfiguration§7 ->§6 Roles")) {
-                    inv.clear();
-                    if (gameState.isAllMdjNull()) {
-                        inv.setItem(13, new ItemBuilder(Material.SIGN).setName("§7Aucun mode de jeux activé !").toItemStack());
-                    } else {
-                        switch (gameState.getMdj()) {
-                            case DS:
-                                inv.setItem(13, GUIItems.getSelectDSButton());
-                                break;
-                      /*      case MC:
-                                inv.setItem(13, GUIItems.getSelectMCButton());
-                                break;*/
-                            case AOT:
-                                inv.setItem(13, GUIItems.getSelectAOTButton());
-                                break;
-                            case NS:
-                                inv.setItem(13, GUIItems.getSelectNSButton());
-                                break;
-                            case KRYSTAL:
-                                inv.setItem(13, MDJ.KRYSTAL.getItem());
-                                break;
-                        }
-                    }
-                    if (ChatRank.isHost(player)) {
-                        inv.setItem(25, new ItemBuilder(Material.BOOKSHELF).setName("Configuration du mode de jeu").toItemStack());
-                    }
-                    inv.setItem(26, GUIItems.getSelectBackMenu());
-                }
-            }
-        }
+        new Configuration_RolesInventory(player).open(player);
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }

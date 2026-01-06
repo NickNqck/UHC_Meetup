@@ -37,79 +37,6 @@ public abstract class GUIItems{
 		return stack;
 	}
 
-	public static ItemStack getFilForce() {	
-		ItemStack stack = new ItemStack(Material.STRING, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Fil de Force");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez: ",
-				ChatColor.GOLD+"Force 1: "+"pendant 1m"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getFilSpeed() {
-		ItemStack stack = new ItemStack(Material.STRING, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Fil de Speed");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez: ",
-				ChatColor.GOLD+"Speed 1: "+"pendant 1m"));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getFilResi() {
-		ItemStack stack = new ItemStack(Material.STRING, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Fil de Resistance");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez: ",
-				ChatColor.GOLD+"Resistance 1: "+"pendant 1m"/*,
-				ChatColor.GOLD+"Cooldown: "+ChatColor.AQUA+Rui.getcdresi()+"s"*/));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getFilRegen() {
-		ItemStack stack = new ItemStack(Material.STRING, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"Fil de Regeneration");
-		meta.setLore(Arrays.asList("§r"+"Vous obtiendrez: ",
-				ChatColor.GOLD+"Regeneration 1: "+"pendant 1m"/*,
-				ChatColor.GOLD+"Cooldown: "+ChatColor.AQUA+Rui.getcdfilregen()+"s"*/));
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getPacte1() {
-		ItemStack stack = new ItemStack(Material.APPLE, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"1");
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getPacte2() {
-		ItemStack stack = new ItemStack(Material.GOLDEN_APPLE, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"2");
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
-	public static ItemStack getPacte3() {
-		ItemStack stack = new ItemStack(Material.ARMOR_STAND, 1);
-		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"3");
-		meta.addEnchant(Enchantment.ARROW_DAMAGE, 0, false);
-		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		stack.setItemMeta(meta);
-		return stack;
-	}
 	public static ItemStack getJigoroPacte1() {
 		ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
 		ItemMeta meta = stack.getItemMeta();
@@ -213,25 +140,11 @@ public abstract class GUIItems{
 			stack.setItemMeta(meta);
 			return stack;
 		}
-	public static ItemStack getKyogaiSolo() {
-			ItemStack stack = new ItemStack(Material.DIAMOND_SWORD, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Choix: Solo");
-			stack.setItemMeta(meta);
-			return stack;
-		}
-		public static ItemStack getKyogaiDémon() {
-			ItemStack stack = new ItemStack(Material.REDSTONE, 1);
-			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Choix: Démon");
-			stack.setItemMeta(meta);
-			return stack;
-		}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		public static ItemStack getTabRoleInfo(GameState gameState) {
 			ItemStack stack = new ItemStack(Material.SIGN, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName("§r§fRoles dans le TAB");
+			meta.setDisplayName("§fRoles dans le TAB");
 			meta.setLore(Collections.singletonList(ChatColor.RESET+a(gameState)));
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -239,7 +152,7 @@ public abstract class GUIItems{
 			return stack;
 		}
 		private static String a(final GameState gameState) {
-			return gameState.roletab ? "Activer" : "Désactiver"; 
+			return gameState.roletab ? "§aActiver" : "§cDésactiver";
 		}
 		private static String b(final GameState gameState) {
 			return gameState.hasPregen ? "Faite" : "Pas faite";

@@ -1,13 +1,15 @@
 package fr.nicknqck.config;
 
+import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.invs.MDJ_DS_Config;
+import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -35,6 +37,7 @@ public class GameConfig {
     private StunType stunType = StunType.TELEPORT;
     private boolean mortEclair = true;
     private boolean tntGrief = false;
+    private final Map<MDJ, Class<? extends FastInv>> configurablesMdj;
 
     public GameConfig() {
         instance = this;
@@ -42,6 +45,8 @@ public class GameConfig {
         itemOnKill.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
         this.stuffConfig = new StuffConfig();
         this.narutoConfig = new NarutoConfig();
+        this.configurablesMdj = new HashMap<>();
+        configurablesMdj.put(MDJ.DS, MDJ_DS_Config.class);
     }
 
     @Getter
