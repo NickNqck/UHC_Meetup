@@ -1,5 +1,6 @@
 package fr.nicknqck.invs;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.StringUtils;
@@ -49,6 +50,12 @@ public class MDJ_DS_Config extends FastInv {
             Main.getInstance().getGameConfig().setGiveLame(!Main.getInstance().getGameConfig().isGiveLame());
             new MDJ_DS_Config().open((Player) event.getWhoClicked());
         });
-        setItem(26, GUIItems.getSelectBackMenu(), event -> new MDJConfigInventory().open((Player) event.getWhoClicked()));
+        setItem(26, GUIItems.getSelectBackMenu(), event -> {
+            if (GameState.getInstance().isAllMdjNull()) {
+                new MDJConfigInventory().open((Player) event.getWhoClicked());
+            } else {
+                Main.getInstance().getInventories().updateRoleInventory((Player) event.getWhoClicked());
+            }
+        });
     }
 }

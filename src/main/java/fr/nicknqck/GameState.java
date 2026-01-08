@@ -67,12 +67,6 @@ public class GameState{
 	private boolean roleAttributed = false;
 	@Getter
 	private final Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
-	@Getter
-	@Setter
-	private int minTimeSpawnBiju = 90;
-	@Getter
-	@Setter
-	private int maxTimeSpawnBiju = 160;
 
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 	public enum ServerStates {

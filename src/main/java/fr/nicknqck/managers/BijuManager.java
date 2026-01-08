@@ -40,7 +40,7 @@ public class BijuManager implements Listener {
 
     @Getter
     @Setter
-    private boolean bijuEnable = true;
+    private boolean bijuEnable = false;
     @Getter
     private final Map<BijuBase, Integer> bijuSpawnMap;
     @Getter
@@ -225,7 +225,7 @@ public class BijuManager implements Listener {
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
-            this.bijuEnables.put(clazz, false);
+            this.bijuEnables.put(clazz, true);
         }
     }
     @EventHandler

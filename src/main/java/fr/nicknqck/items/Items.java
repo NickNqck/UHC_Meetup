@@ -15,7 +15,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 
-public abstract class Items {
+public final class Items {
 	
 	public static ItemStack getAdminWatch() {
 		ItemStack stack = new ItemStack(Material.WATCH, 1);

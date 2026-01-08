@@ -1,7 +1,9 @@
 package fr.nicknqck.config;
 
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.invs.MDJ_AOT_Config;
 import fr.nicknqck.invs.MDJ_DS_Config;
+import fr.nicknqck.invs.MDJ_NS_Config;
 import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
@@ -37,7 +39,8 @@ public class GameConfig {
     private StunType stunType = StunType.TELEPORT;
     private boolean mortEclair = true;
     private boolean tntGrief = false;
-    private final Map<MDJ, Class<? extends FastInv>> configurablesMdj;
+    private final LinkedHashMap<MDJ, Class<? extends FastInv>> configurablesMdj;
+    private boolean rodTridimenssionel = false;
 
     public GameConfig() {
         instance = this;
@@ -45,8 +48,10 @@ public class GameConfig {
         itemOnKill.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
         this.stuffConfig = new StuffConfig();
         this.narutoConfig = new NarutoConfig();
-        this.configurablesMdj = new HashMap<>();
+        this.configurablesMdj = new LinkedHashMap<>();
         configurablesMdj.put(MDJ.DS, MDJ_DS_Config.class);
+        configurablesMdj.put(MDJ.AOT, MDJ_AOT_Config.class);
+        configurablesMdj.put(MDJ.NS, MDJ_NS_Config.class);
     }
 
     @Getter
@@ -74,6 +79,8 @@ public class GameConfig {
     public final static class NarutoConfig {
 
         private double edoHealthRemove = 4.0;
+        private int minTimeSpawnBiju = 90;
+        private int maxTimeSpawnBiju = 160;
 
     }
     public enum StunType {

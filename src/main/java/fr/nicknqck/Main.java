@@ -80,6 +80,7 @@ Roles: NickNqck
 public class Main extends JavaPlugin {
 
 	public final String PLUGIN_NAME = "UHC-Meetup";
+	private final String NAME = "§7[§6UHC-Meetup§7]";
 	private ScoreboardManager scoreboardManager;
 	private ScheduledExecutorService executorMonoThread;
 	private ScheduledExecutorService scheduledExecutorService;

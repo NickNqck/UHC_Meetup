@@ -310,7 +310,8 @@ public class Isobu extends Biju{
 		BijuListener.getInstance().setIsobuCooldown(0);
 		BijuListener.getInstance().setIsobuDamage(null);
 	}
-	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
+	private final int TimeSpawn = RandomUtils.getRandomInt(Main.getInstance().getGameConfig().getNarutoConfig().getMinTimeSpawnBiju(),
+			Main.getInstance().getGameConfig().getNarutoConfig().getMaxTimeSpawnBiju())+60;
 	@Override
 	public int getTimeSpawn() {
 		return TimeSpawn;

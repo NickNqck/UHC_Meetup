@@ -23,11 +23,11 @@ public class Configuration_RolesInventory extends FastInv {
         } else {
             for (@NonNull final MDJ mdj : MDJ.values()) {
                 if (!mdj.equals(GameState.getInstance().getMdj()))continue;
-                setItem(13, mdj.getItem(), inventoryClickEvent -> {
+                setItem(13, mdj.getItem(), event -> {
                     if (mdj.getConsumer() != null){
                         mdj.getConsumer().accept(player);
                     } else {
-                        inventoryClickEvent.getWhoClicked().sendMessage("§cAucun action n'a été définie.");
+                        event.getWhoClicked().sendMessage("§cAucun action n'a été définie.");
                     }
                 });
                 break;
@@ -40,14 +40,12 @@ public class Configuration_RolesInventory extends FastInv {
                 Main.getInstance().getInventories().updateSelectMDJ(player);
             });
             if (GameState.getInstance().isAllMdjNull()) {
-                setItem(18, new ItemBuilder(Material.CAULDRON_ITEM).setName("§fAppuyer pour configurer d'autres modes de jeux").toItemStack(), inventoryClickEvent -> {
-                    new MDJConfigInventory().open(player);
-                });
+                setItem(18, new ItemBuilder(Material.CAULDRON_ITEM).setName("§fAppuyer pour configurer d'autres modes de jeux").toItemStack(), inventoryClickEvent -> new MDJConfigInventory().open(player));
             } else {
                 final MDJ mdj = GameState.getInstance().getMdj();
                 if (mdj != null) {
                     if (Main.getInstance().getGameConfig().getConfigurablesMdj().containsKey(mdj)) {
-                        setItem(18, new ItemBuilder(mdj.getItem()).setLore().toItemStack(), event -> {
+                        setItem(18, new ItemBuilder(mdj.getItem()).setName("§fAppuyer pour configurer le mode "+mdj.getItem().getItemMeta().getDisplayName()).setLore().toItemStack(), event -> {
                             try {
                                 final FastInv inv = Main.getInstance().getGameConfig().getConfigurablesMdj().get(mdj).newInstance();
                                 inv.open((Player) event.getWhoClicked());
