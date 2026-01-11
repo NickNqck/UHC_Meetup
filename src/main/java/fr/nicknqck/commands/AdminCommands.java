@@ -104,6 +104,25 @@ public class AdminCommands implements CommandExecutor{
 						player.getInventory().setHeldItemSlot(4);
 						return true;
 					}
+					if (args[1].equalsIgnoreCase("quit")) {
+						final Player player = Bukkit.getPlayer(Main.getInstance().getGameConfig().getStuffConfig().getStarterInvConfigurator());
+						if (player == null) {
+							sender.sendMessage("§cVous n'éditez aucun inventaire actuellement !");
+							return true;
+						}
+						if (!player.getUniqueId().equals(((Player) sender).getUniqueId())) {
+							sender.sendMessage("§cVous n'éditez aucun inventaire actuellement !");
+							return true;
+						}
+						Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(null);
+						Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 a éditer l'inventaire de départ");
+						player.setGameMode(GameMode.ADVENTURE);
+						player.updateInventory();
+						player.getInventory().clear();
+						player.getInventory().setItem(4, Items.getAdminWatch());
+						player.getInventory().setHeldItemSlot(4);
+						return true;
+					}
 				}
 			}
 			if (args[0].equalsIgnoreCase("vie")) {
