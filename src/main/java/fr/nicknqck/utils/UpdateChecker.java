@@ -75,7 +75,7 @@ public class UpdateChecker implements Listener {
                     plugin.getLogger().warning("§cUne mise à jour est disponible ! Version actuelle : "
                             + currentVersion + " | Dernière version : " + latestVersion);
                 } else {
-                    plugin.getLogger().info("Le plugin est à jour. Version : " + currentVersion);
+                    plugin.getLogger().info("Le plugin est à jour. Version : " + currentVersion +" (Version du repo: "+latestVersion+")");
                 }
             } else {
                 plugin.getLogger().warning("Impossible de trouver la version dans le plugin.yml distant.");
