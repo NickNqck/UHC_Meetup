@@ -108,7 +108,6 @@ public class GameListener implements Listener {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (!gameState.getInGamePlayers().isEmpty()) gameState.getInGamePlayers().clear();
 				if (!gameState.getInSpecPlayers().isEmpty())gameState.getInSpecPlayers().clear(); //ils seront ajouté au lobby plus loin dans le code
-				if (!gameState.getInObiPlayers().isEmpty())gameState.getInObiPlayers().clear();
 				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId()))gameState.addInLobbyPlayers(p);
 			}
 			break;
@@ -269,7 +268,7 @@ public class GameListener implements Listener {
 			}
 			if (gameState.getActualPvPTimer() == 0){
 				Main.getInstance().getGameConfig().setPvpEnable(true);
-				SendToEveryone("(§c!§f) Le§c pvp§f est maintenant activé !");
+				SendToEveryone("§f[§6UHC-Meetup§f] Le§c pvp§f est maintenant activé !");
 				gameState.setActualPvPTimer(-1);
 			} else {
 				gameState.setActualPvPTimer(gameState.getActualPvPTimer()-1);
@@ -286,7 +285,7 @@ public class GameListener implements Listener {
 	@SuppressWarnings("deprecation")
 	public static void EndGame(final GameState gameState, final TeamList team) {
 		gameState.setServerState(ServerStates.GameEnded);
-		Bukkit.getPluginManager().callEvent(new EndGameEvent(gameState, team));
+		Bukkit.getPluginManager().callEvent(new GameEndEvent(gameState, team));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			gameState.inGameTime = 0;
@@ -294,7 +293,6 @@ public class GameListener implements Listener {
 			Main.getInstance().getGameConfig().setPvpEnable(false);
 			gameState.getInLobbyPlayers().clear();
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
-			gameState.setInObiPlayers(new ArrayList<>());
 			gameState.TitansRouge.clear();
 			gameState.infectedbyadmin.clear();
 			TitanListener.getInstance().resetCooldown();
@@ -388,7 +386,7 @@ public class GameListener implements Listener {
 						for (Player k : gameState.getPlayerKills().get(role1.getPlayer()).keySet()) {
 							i++;
 							RoleBase role = gameState.getPlayerKills().get(role1.getPlayer()).get(k);
-							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getRoles().name());
+							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getName());
 							s.append(i == gameState.getPlayerKills().get(role1.getPlayer()).size() ? "§7)" : "§7)\n");
 						}
 						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
@@ -581,12 +579,6 @@ public class GameListener implements Listener {
 					case Kabuto:
 						Kabuto = true;
 						break;
-					case OverWorld:
-						OverWorld = true;
-						break;
-					case Nether:
-						Nether = true;
-						break;
 					case Shisui:
 						Shisui = true;
 						break;
@@ -684,14 +676,6 @@ public class GameListener implements Listener {
 			}
 			if (Kabuto) {
 				winer = TeamList.Kabuto;
-				gameDone = true;
-			}
-			if (OverWorld) {
-				winer = TeamList.OverWorld;
-				gameDone = true;
-			}
-			if (Nether) {
-				winer = TeamList.Nether;
 				gameDone = true;
 			}
 		}
@@ -835,12 +819,6 @@ public class GameListener implements Listener {
         if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ce passe rien
         for (Chakras ch : Chakras.values()) {
         	ch.getChakra().onPlayerMoove(e, p, from, to);
-        }
-        if (gameState.getInObiPlayers().contains(p)) {//si le joueur est touchée par les Obis de Daki
-        	if (gameState.getServerState() == ServerStates.InLobby)gameState.delInObiPlayers(p);
-        	if (gameState.getInSpecPlayers().contains(p))gameState.delInObiPlayers(p);
-        	p.teleport(from);
-        	p.setAllowFlight(true);
         }
     	if (gameState.shutdown.contains(e.getPlayer())) {
     		p.teleport(from);

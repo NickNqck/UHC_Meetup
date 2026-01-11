@@ -30,9 +30,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class AdminCommands implements CommandExecutor{
@@ -48,6 +50,81 @@ public class AdminCommands implements CommandExecutor{
 			this.gameState = GameState.getInstance();
 		}
 		if (args.length >= 1) {
+			if (args[0].equalsIgnoreCase("invconfig")) {
+				if (args.length == 2 && sender instanceof Player && ChatRank.isHost(((Player) sender).getUniqueId())) {
+					if (args[1].equalsIgnoreCase("start")) {
+						if (Main.getInstance().getGameConfig().getStuffConfig().getStarterInvConfigurator() == null) {
+							Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(((Player) sender).getUniqueId());
+							Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 commence a éditer l'inventaire.");
+							sender.sendMessage("§7Vous commencez a éditer l'inventaire de départ, pour sauvegarder, vous devrez faire la commande§6 /a invconfig save§7, si vous voulez quitter l'édition sans sauvegarder, il faudra faire§6 /a invconfig quit§7.");
+							((Player) sender).getInventory().clear();
+							((Player) sender).setGameMode(GameMode.CREATIVE);
+							for (int slot = 0; slot <= 53; slot++) {
+								ItemStack item = Main.getInstance().getGameConfig().getStuffConfig().getStartInventoryMap().get(slot);
+								if (item == null)continue;
+								((Player)sender).getInventory().setItem(slot, item);
+							}
+                        } else {
+							final Player player = Bukkit.getPlayer(Main.getInstance().getGameConfig().getStuffConfig().getStarterInvConfigurator());
+							if (player == null) {
+								Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(((Player) sender).getUniqueId());
+								((Player) sender).performCommand("a invconfig start");
+								return true;
+							}
+							sender.sendMessage("§b"+player.getName()+"§c édite déjà l'inventaire de départ !");
+                        }
+                        return true;
+                    }
+					if (args[1].equalsIgnoreCase("save")) {
+						final Player player = Bukkit.getPlayer(Main.getInstance().getGameConfig().getStuffConfig().getStarterInvConfigurator());
+						if (player == null) {
+							sender.sendMessage("§cVous n'éditez aucun inventaire actuellement !");
+							return true;
+						}
+						if (!player.getUniqueId().equals(((Player) sender).getUniqueId())) {
+							sender.sendMessage("§cVous n'éditez aucun inventaire actuellement !");
+							return true;
+						}
+						Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(null);
+						Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 a éditer l'inventaire de départ");
+						player.setGameMode(GameMode.ADVENTURE);
+						Main.getInstance().getGameConfig().getStuffConfig().getStartInventoryMap().clear();
+
+						final Map<Integer, ItemStack> map = new HashMap<>();
+						int p = -1;
+						player.updateInventory();
+						for (final ItemStack item : player.getInventory().getContents().clone()) {
+							p++;
+							//    System.out.println("place: "+p+", item: "+item);
+							map.put(p, item == null ? new ItemStack(Material.AIR) : item);
+						}
+						Main.getInstance().getGameConfig().getStuffConfig().getStartInventoryMap().putAll(map);
+						player.getInventory().clear();
+						player.getInventory().setItem(4, Items.getAdminWatch());
+						player.getInventory().setHeldItemSlot(4);
+						return true;
+					}
+					if (args[1].equalsIgnoreCase("quit")) {
+						final Player player = Bukkit.getPlayer(Main.getInstance().getGameConfig().getStuffConfig().getStarterInvConfigurator());
+						if (player == null) {
+							sender.sendMessage("§cVous n'éditez aucun inventaire actuellement !");
+							return true;
+						}
+						if (!player.getUniqueId().equals(((Player) sender).getUniqueId())) {
+							sender.sendMessage("§cVous n'éditez aucun inventaire actuellement !");
+							return true;
+						}
+						Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(null);
+						Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 a éditer l'inventaire de départ");
+						player.setGameMode(GameMode.ADVENTURE);
+						player.updateInventory();
+						player.getInventory().clear();
+						player.getInventory().setItem(4, Items.getAdminWatch());
+						player.getInventory().setHeldItemSlot(4);
+						return true;
+					}
+				}
+			}
 			if (args[0].equalsIgnoreCase("vie")) {
 				if (args.length == 3) {
 					Player target = Bukkit.getPlayer(args[1]);

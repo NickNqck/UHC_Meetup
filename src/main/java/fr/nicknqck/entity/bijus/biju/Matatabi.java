@@ -45,7 +45,8 @@ public class Matatabi extends Biju{
 	private Blaze blaze;
 	private Location spawn;
 	private GameState gameState;
-	private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
+	private final int TimeSpawn = RandomUtils.getRandomInt(Main.getInstance().getGameConfig().getNarutoConfig().getMinTimeSpawnBiju(),
+			Main.getInstance().getGameConfig().getNarutoConfig().getMaxTimeSpawnBiju())+60;
 
 	@Override
 	public LivingEntity getLivingEntity() {

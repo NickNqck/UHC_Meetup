@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -143,7 +143,7 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
     }
 
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         EventUtils.unregisterEvents(this);
     }
     @EventHandler
@@ -360,7 +360,7 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
                         if (fugaku.getGameState().hasRoleNull(p.getUniqueId()))continue;
                         RoleBase role = fugaku.getGameState().getGamePlayer().get(p.getUniqueId()).getRole();
                         if (!role.getGamePlayer().isAlive())continue;
-                        if (role instanceof IUchiwa || role instanceof DanzoV2 ||role instanceof Kakashi) {
+                        if (role instanceof IUchiwa || role instanceof DanzoV2 ||role instanceof KakashiV2) {
                             this.croised = true;
                         }
                     }

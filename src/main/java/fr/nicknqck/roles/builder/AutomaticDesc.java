@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.builder;
 
+import fr.nicknqck.Main;
+import fr.nicknqck.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -155,6 +157,13 @@ public class AutomaticDesc {
         return this;
     }
     public final AutomaticDesc setPowers(List<Power> powers) {
+        if (Main.getInstance().getKatsuyuManager().containsUser(role.getPlayer())) {
+            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
+            TextComponent name = getPowerName("§dKatsuyu", Main.getInstance().getKatsuyuManager().getPowerDescription());
+            textComponent.addExtra(name);
+            textComponent.addExtra("§7.");
+            this.text.addExtra(textComponent);
+        }
         for (final Power power : powers) {
             if (power.getName() == null)continue;
             if (!power.isShowInDesc())continue;
@@ -167,6 +176,9 @@ public class AutomaticDesc {
                 }
             }
             String[] description = power.getDescriptions();
+            if (power instanceof UpdatablePowerLore) {
+                description = ((UpdatablePowerLore) power).getCustomPowerLore();
+            }
             Cooldown cooldown = power.getCooldown();
             TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
             TextComponent powerName = getPowerName(name, description);
@@ -245,9 +257,12 @@ public class AutomaticDesc {
             if (!((RoleBase) this.role).getGamePlayer().getChatWithManager().isEmpty()) {
                 for (@NonNull final GamePlayer.ChatWithManager chatWithManager : ((RoleBase) this.role).getGamePlayer().getChatWithManager()) {
                     if (chatWithManager.isShowInDesc()){
-                        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
+                        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getStarter()+"§7\"."));
                     }
                 }
+            }
+            if (((RoleBase)role).isNoFall()) {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez§a No Fall§7 de manière§c permanente"));
             }
         }
         text.addExtra(new TextComponent(

@@ -48,7 +48,7 @@ public class HubConfig implements Listener {
             ItemStack item = event.getCurrentItem();
             if (!item.hasItemMeta())return;
             switch (inv.getTitle()) {
-                case "§fConfiguration":
+                case "§7(§c!§7)§f Configuration":
                     if (item.isSimilar(GUIItems.getStartGameButton()) && ChatRank.isHost(player)) {
                         HubListener.getInstance().StartGame(player);
                     } else if (item.isSimilar(GUIItems.getSelectRoleButton())  &&ChatRank.isHost(player)) {
@@ -312,7 +312,13 @@ public class HubConfig implements Listener {
                             }
                         }
                         if (item.getType().equals(Material.TNT)) {
-                            gameState.setTNTGrief(!gameState.isTNTGrief());
+                            if (Main.getInstance().getGameConfig().isTntGrief()) {
+                                Main.getInstance().getGameConfig().setTntGrief(false);
+                                Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a définie la règle \"§cGrief par les tnt§7\" sur§c désactiver§7.");
+                            } else {
+                                Main.getInstance().getGameConfig().setTntGrief(true);
+                                Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a définie la règle \"§cGrief par les tnt§7\" sur§a activer§7.");
+                            }
                         }
                         if (name.equals("§fLame")) {
                             Main.getInstance().getGameConfig().setGiveLame(!Main.getInstance().getGameConfig().isGiveLame());
@@ -357,12 +363,12 @@ public class HubConfig implements Listener {
                         }
                         if (item.isSimilar(Items.geteclairmort())) {
                             if (ChatRank.isHost(player)) {
-                                if (!gameState.morteclair) {
+                                if (!Main.getInstance().getGameConfig().isMortEclair()) {
                                     player.sendMessage("Éclair à la mort est désormais§6 activé");
-                                    gameState.morteclair = true;
+                                    Main.getInstance().getGameConfig().setMortEclair(true);
                                 } else {
                                     player.sendMessage("Éclair à la mort est désormais§6 désactivé");
-                                    gameState.morteclair = false;
+                                    Main.getInstance().getGameConfig().setMortEclair(false);
                                 }
                             }
                         }

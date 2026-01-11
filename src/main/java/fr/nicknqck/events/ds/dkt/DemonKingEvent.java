@@ -2,6 +2,7 @@ package fr.nicknqck.events.ds.dkt;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
@@ -14,6 +15,7 @@ import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -130,5 +132,10 @@ public class DemonKingEvent extends Event {
                 "§7l'event c'est déclencher encore§c 10 secondes§7 plus tard§c Kokushibo§7 deviendra un rôle§e Solitaire§7,",
                 "§7pour l'aider il aura§c 15❤ permanents§7 ainsi que§9 Résistance I§7 pendant§c 3 minutes§7 en tuant un joueur"
         };
+    }
+
+    @Override
+    public @NonNull MDJ getMDJ() {
+        return MDJ.DS;
     }
 }

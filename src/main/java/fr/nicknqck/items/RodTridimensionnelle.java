@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.shinobi.KillerBee;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -17,7 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -55,17 +53,6 @@ public class RodTridimensionnelle implements Listener {
         Player player = (Player) event.getEntity().getShooter();
         if (!gameState.hasRoleNull(player.getUniqueId())) {
         	RoleBase roleBase = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-        	if (roleBase instanceof KillerBee) {
-        		if (((KillerBee) roleBase).isCanTentacule()) {
-        			FishHook fishHook = (FishHook) event.getEntity();
-        	        Location eyeLocation = player.getEyeLocation().clone();
-        	        fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
-        	        (new LaunchFishHook(fishHook, player, false)).runTaskTimer(Main.getInstance(), 1L, 1L);
-                } else {
-					event.setCancelled(true);
-                }
-                return;
-            }
         	if (player.getItemInHand().isSimilar(getItem())) {
                 if (!(roleBase instanceof AotRoles))return;
                 AotRoles role = (AotRoles) roleBase;
@@ -163,8 +150,6 @@ public class RodTridimensionnelle implements Listener {
                 double speedMultiplier = 0;
                 if (role instanceof AotRoles){
                     speedMultiplier = ((AotRoles) role).RodSpeedMultipliyer;
-                } else if (role instanceof KillerBee) {
-                    speedMultiplier = 0;
                 }
                 v.multiply(0.85D+speedMultiplier);
             }
@@ -193,10 +178,6 @@ public class RodTridimensionnelle implements Listener {
                 DecimalFormat df = new DecimalFormat("0.0");
                 this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(aotRoles.gazAmount)+"%");
                 aotRoles.setActualTridiCooldown(Main.getInstance().getGameConfig().getTridiCooldown());
-            } else {
-                if (role instanceof KillerBee) {
-                    ((KillerBee) role).onTentaculeEnd(r);
-                }
             }
         }
     }

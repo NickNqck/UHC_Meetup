@@ -290,7 +290,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
 
                         for (Player target : strikeLoc.getWorld().getPlayers()) {
                             if (target.equals(player)) continue;
-                            if (target.getLocation().distanceSquared(strikeLoc) <= 1.0) {
+                            if (target.getLocation().distanceSquared(strikeLoc) <= 2.0) {
                                 double newHealth = Math.max(1.0, target.getHealth() - 3.0); // 1.5 cœur
                                 target.setHealth(newHealth);
                                 target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 30, 0)); // 30s Slowness I
@@ -304,6 +304,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
             }.runTaskTimerAsynchronously(getPlugin(), 0L, 10L); // async, toutes les 0.5s (10 ticks)
         }
     }
+    /*OLD
     private static class OrageBrulantItem extends ItemPower implements Listener {
 
         public OrageBrulantItem(@NonNull RoleBase role) {
@@ -373,7 +374,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
 
                         caster.sendMessage("§eVous avez frappé " + target.getName() + " §eavec l'Orage Brûlant !");
                         target.sendMessage("§cVous avez été touché par l'Orage Brûlant de " + caster.getName());
-
+                        Bukkit.getScheduler().runTask(getPlugin(), () -> target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, false, false), true));
                         cancel();
                         return;
                     }
@@ -422,14 +423,14 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
             }.runTaskTimerAsynchronously(getPlugin(), 0L, 5L); // toutes les 5 ticks (~0.25s)
         }
     }
-
-    /*OLD
+    */
     private static class OrageBrulantItem extends ItemPower implements Listener {
 
         public OrageBrulantItem(@NonNull RoleBase role) {
             super("Orage Brûlant", new Cooldown(60 * 8),
                     new ItemBuilder(Material.NETHER_STAR).setName("§eOrage Brûlant"), role,
-                    "§7Faites jaillir un arc d’éclairs jusqu’à votre cible !");
+                    "§7Faites jaillir un arc d’éclairs convergeant vers votre§c cible§7, une fois atteint,",
+                    "§7vous vous§c téléporterez§7 derrière elle et elle obtiendra§c 10 secondes§7 de§c Slowness I§7.");
             EventUtils.registerRoleEvent(this);
         }
 
@@ -489,7 +490,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
 
                         caster.sendMessage("§eVous avez frappé " + target.getName() + " §eavec l'Orage Brûlant !");
                         target.sendMessage("§cVous avez été touché par l'Orage Brûlant de " + caster.getName());
-
+                        Bukkit.getScheduler().runTask(getPlugin(), () -> target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, false, false), true));
                         cancel();
                         return;
                     }
@@ -532,6 +533,6 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
             }.runTaskTimerAsynchronously(getPlugin(), 0L, 5L); // toutes les 5 ticks (~0.25s)
         }
     }
-*/
+
 
 }

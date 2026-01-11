@@ -144,7 +144,7 @@ public class Chomei extends Biju {
     public Location getSpawn() {
         return spawn;
     }
-    private final int TimeSpawn = RandomUtils.getRandomInt(GameState.getInstance().getMinTimeSpawnBiju(), GameState.getInstance().getMaxTimeSpawnBiju())+60;
+    private final int TimeSpawn = RandomUtils.getRandomInt(Main.getInstance().getGameConfig().getNarutoConfig().getMinTimeSpawnBiju(), Main.getInstance().getGameConfig().getNarutoConfig().getMaxTimeSpawnBiju())+60;
     @Override
     public int getTimeSpawn() {
     	return TimeSpawn;

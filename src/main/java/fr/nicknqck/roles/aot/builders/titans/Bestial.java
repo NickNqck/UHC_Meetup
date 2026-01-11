@@ -2,7 +2,7 @@ package fr.nicknqck.roles.aot.builders.titans;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.roles.aot.solo.Gabi;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.*;
@@ -528,7 +528,7 @@ public class Bestial extends Titan implements Listener {
 		}
 	}
 	@EventHandler
-	private void onEndGame(EndGameEvent event) {
+	private void onEndGame(GameEndEvent event) {
 		HandlerList.unregisterAll(this);
 	}
 }

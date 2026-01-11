@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.solos;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -224,7 +224,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
             Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
         }
         @EventHandler
-        private void onEndGame(EndGameEvent event){
+        private void onEndGame(GameEndEvent event){
             this.gameEnded = true;
             this.shinjuro.flamme = false;
             HandlerList.unregisterAll(this);

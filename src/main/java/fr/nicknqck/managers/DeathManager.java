@@ -3,6 +3,7 @@ package fr.nicknqck.managers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.DemonKillEvent;
+import fr.nicknqck.events.custom.FinalDeathEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.ItemsManager;
@@ -69,7 +70,8 @@ public class DeathManager implements Listener {
         if (this.cantDie(gameState, killedPlayer, entityKiller) || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
             return;
         }
-
+        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller);
+        Bukkit.getPluginManager().callEvent(finalDeathEvent);
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setAlive(false);
@@ -171,7 +173,7 @@ public class DeathManager implements Listener {
         }
         gameState.delInGamePlayers(killedPlayer);
         gameState.addInSpecPlayers(killedPlayer);
-        if (gameState.morteclair) {
+        if (Main.getInstance().getGameConfig().isMortEclair()) {
             killedPlayer.getWorld().strikeLightningEffect(killedPlayer.getLocation());
         }
         if (gameState.getInGamePlayers().size()-1 <= 0) {

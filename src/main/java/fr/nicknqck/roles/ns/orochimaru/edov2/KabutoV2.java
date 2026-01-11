@@ -13,8 +13,8 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.Jugo;
-import fr.nicknqck.roles.ns.orochimaru.Karin;
-import fr.nicknqck.roles.ns.orochimaru.Kimimaro;
+import fr.nicknqck.roles.ns.orochimaru.KarinV2;
+import fr.nicknqck.roles.ns.orochimaru.KimimaroV2;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -119,13 +119,13 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onDie(final UHCDeathEvent event) {
         if (event.isCancelled())return;
-        if (event.getRole() instanceof Karin && !this.karinDEAD) {
+        if (event.getRole() instanceof KarinV2 && !this.karinDEAD) {
             onKarinDeath();
         }
         if (event.getRole() instanceof Jugo && !this.jugoDEAD) {
             onJugoDeath();
         }
-        if (event.getRole() instanceof Kimimaro && !kimimaroDEAD) {
+        if (event.getRole() instanceof KimimaroV2 && !kimimaroDEAD) {
             onKimimaruDeath();
         }
         if (event.getRole() instanceof OrochimaruV2 && !orochimaruDEAD) {

@@ -9,6 +9,9 @@ import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.invs.Configuration_Inventory;
+import fr.nicknqck.invs.Configuration_RolesInventory;
+import fr.nicknqck.invs.FirstConfigurationInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.IRole;
@@ -18,7 +21,6 @@ import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
-import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -88,7 +90,7 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("DemonSlayer -> §cDémons")) {
+                if (inv.getTitle().equals("§fDemonSlayer§7 -> §cDémons")) {
                     this.setRoleInventory(inv, GUIItems.getRedStainedGlassPane());
 
                     inv.setItem(3, GUIItems.getSelectSlayersButton());//haut milleu
@@ -96,15 +98,36 @@ public class Inventories {
                     inv.setItem(5, GUIItems.getSelectSoloButton());
 
                     for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.Demon) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        if (!roles.getTeam().equals(TeamList.Demon))continue;
+                        IRole iRole = null;
+                        for (final IRole role : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+                            if (!role.getRoles().equals(roles))continue;
+                            iRole = role;
+                            break;
                         }
+                        String l1;
+                        if (gameState.getAvailableRoles().get(roles) > 0) {
+                            l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                        } else {
+                            l1 = "§c(0)";
+                        }
+                        String design = "§fGDesign: "+roles.getGDesign();
+                        inv.addItem(
+                                new ItemBuilder(roles.getItem())
+                                        .setAmount(gameState.getAvailableRoles().get(roles))
+                                        .setLore(iRole == null ? new String[] {
+                                                l1,
+                                                "",
+                                                design
+                                        }
+                                                :
+                                                iRole instanceof RoleCustomLore ? ((RoleCustomLore) iRole).getCustomLore(l1, design) : new String[] {
+                                                        l1,
+                                                        "",
+                                                        design
+                                                })
+                                        .toItemStack()
+                        );
                     }
                     this.clearRoleInventory(inv);
                 }
@@ -128,15 +151,37 @@ public class Inventories {
                     if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
 
                     for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.Solo && roles.getMdj().equals("ds")) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
+                        if (!roles.getTeam().equals(TeamList.Solo))continue;
+                        if (!roles.getMdj().equalsIgnoreCase("ds"))continue;
+                        IRole iRole = null;
+                        for (final IRole role : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+                            if (!role.getRoles().equals(roles))continue;
+                            iRole = role;
+                            break;
                         }
+                        String l1;
+                        if (gameState.getAvailableRoles().get(roles) > 0) {
+                            l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
+                        } else {
+                            l1 = "§c(0)";
+                        }
+                        String design = "§fGDesign: "+roles.getGDesign();
+                        inv.addItem(
+                                new ItemBuilder(roles.getItem())
+                                        .setAmount(gameState.getAvailableRoles().get(roles))
+                                        .setLore(iRole == null ? new String[] {
+                                                l1,
+                                                "",
+                                                design
+                                        }
+                                                :
+                                                iRole instanceof RoleCustomLore ? ((RoleCustomLore) iRole).getCustomLore(l1, design) : new String[] {
+                                                        l1,
+                                                        "",
+                                                        design
+                                                })
+                                        .toItemStack()
+                        );
                     }
                     clearRoleInventory(inv);
                 }
@@ -171,7 +216,6 @@ public class Inventories {
         updateNSShinobiInventory(p);
         updateNSKumogakure(p);
         updateMCInventory(p);
-        updateOverworldInventory(p);
     }
 
     public void updateSoldatInventory(Player player) {
@@ -376,11 +420,6 @@ public class Inventories {
                     ).toItemStack());
                     inv.addItem(GUIItems.getTabRoleInfo(gameState));
                     inv.addItem(Items.geteclairmort());
-                    inv.addItem(new ItemBuilder(Material.REDSTONE).setName("§r§fTemp avant l'§cAssassin").setLore(
-                            "§r§f[10 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getTimingAssassin())+" > 5 minutes",
-                            "§r§fClique gauche: §a+10 secondes",
-                            "§r§fClique droit: §c-10 secondes"
-                    ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
                             "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
                             "§r§fClique gauche: §a+1 secondes",
@@ -396,19 +435,7 @@ public class Inventories {
                     inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getBijuManager().isBijuEnable() ?
                             "§aActivé" : "§cDésactivé",
                             "§r§fShift + Clique: Permet de configurer les bijus§7 (§aNaruto UHC§7)").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.GHAST_TEAR).setName("§cInfection").setLore(
-                            "§fTemp avant infection: ",
-                            "§a+5s§f (Clique gauche)",
-                            "§c-5s§f (Clique droit)",
-                            "§fTemp actuelle:§b "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getInfectionTime())
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(gameState.isTNTGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.INK_SACK).setName("§fLame").setLore("§7Si activé, donne une§a lame§7 à l'annonce des rôles à tout les joueurs de la partie","",Main.getInstance().getGameConfig().isGiveLame() ? "§aActivé" : "§cDésactivé").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.EMERALD).setName("§dKrystalBeast").setLore(
-                            "§4// NOUVEAUTÉ \\",
-                            "",
-                            "§a Shift§f + Clique pour configurer les§d bêtes de krystal§7 (§dKrystal UHC§7)"
-                    ).toItemStack());
+                    inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(Main.getInstance().getGameConfig().isTntGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
                     inv.addItem(new ItemBuilder(Material.DIAMOND_SWORD).setName("§fPourcentage de force").setLore(
                             "§c"+Main.getInstance().getGameConfig().getForcePercent()+"%",
                             "",
@@ -659,75 +686,13 @@ public class Inventories {
         gameState.updateGameCanLaunch();
     }
 
-    public void updateOverworldInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§aMinecraft§7 ->§a Overworld")) {
-                    final ItemStack glass = GUIItems.getGreenStainedGlassPane();
-                    this.setRoleInventory(inv, glass);
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.OverWorld) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    this.clearRoleInventory(inv);
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-    public void updateNetherInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§aMinecraft§7 ->§c Nether")) {
-                    final ItemStack glass = GUIItems.getRedStainedGlassPane();
-                    this.setRoleInventory(inv, glass);
-
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
-                    if (!gameState.gameCanLaunch)inv.setItem(6, GUIItems.getCantStartGameButton());
-
-                    for (Roles roles : Roles.values()) {
-                        if (roles.getTeam() == TeamList.Nether) {
-                            String l1;
-                            if (gameState.getAvailableRoles().get(roles) > 0) {
-                                l1 = "§c("+gameState.getAvailableRoles().get(roles)+")";
-                            } else {
-                                l1 = "§c(0)";
-                            }
-                            inv.addItem(new ItemBuilder(roles.getItem()).setAmount(gameState.getAvailableRoles().get(roles)).setLore(l1, "", "§fGDesign: "+roles.getGDesign()).toItemStack());
-                        }
-                    }
-                    this.clearRoleInventory(inv);
-                }
-            }
-        }
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-
     public void updateAdminInventory(Player player) {
         InventoryView invView = player.getOpenInventory();
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§fConfiguration")) {
+                if (inv.getTitle().equalsIgnoreCase("§7(§c!§7)§f Configuration")) {
+
                     if (gameState.gameCanLaunch) {
                         inv.setItem(0, GUIItems.getGreenStainedGlassPane());
                         inv.setItem(1, GUIItems.getGreenStainedGlassPane());
@@ -802,8 +767,11 @@ public class Inventories {
                         inv.setItem(40, AntiPvP.getnotlobbypvp());
                     }
                     inv.setItem(43, GUIItems.getCrit(gameState));
+
+     //               new FirstConfigurationInventory().open(player);
                 }
-            }
+
+               }
         }
         player.updateInventory();
     }
@@ -829,86 +797,16 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§fConfiguration§7 ->§6 Inventaire")) {
-                    inv.setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()).setName("§r§fNombre de pomme d'§eor").setLore(
-                                    "§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNombre actuelle:§e "+Main.getInstance().getGameConfig().getStuffConfig().getNmbGap())
-                            .toItemStack());
-                    inv.setItem(0, new ItemBuilder(Material.DIAMOND_HELMET).setLore(
-                                    "§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet()
-                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
-
-                            .toItemStack());
-                    inv.setItem(9, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setLore(
-                                    "§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()
-                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
-                            .toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.IRON_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
-                            .setLore("§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionLeggings())
-                            .toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.DIAMOND_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
-                            .setLore("§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost())
-                            .toItemStack());
-                    inv.setItem(45, GUIItems.getdiamondsword());
-                    inv.setItem(46, GUIItems.getblock());
-                    inv.setItem(47, GUIItems.getbow());
-                    inv.setItem(49, GUIItems.getEnderPearl());
-                    inv.setItem(50, GUIItems.getGoldenCarrot());
-                    inv.setItem(51, GUIItems.getlave());
-                    inv.setItem(52, GUIItems.geteau());
-                    inv.setItem(38, new ItemBuilder(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).setName("§fFlèches").setLore("","§7Max:§c 64","§7Minimum:§c 1","§7Actuelle:§c "+Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).toItemStack());
-                    //inv.setItem(9, GUIItems.getx());
-
-                    inv.setItem(8, GUIItems.getSelectBackMenu());
+                final Configuration_Inventory config = new Configuration_Inventory();
+                if (inv.getTitle().equals(config.getInventory().getTitle())) {
+                    config.open(player);
                 }
             }
         }
         player.updateInventory();
     }
     public void updateRoleInventory(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equals("§fConfiguration§7 ->§6 Roles")) {
-                    inv.clear();
-                    if (gameState.isAllMdjNull()) {
-                        inv.setItem(13, new ItemBuilder(Material.SIGN).setName("§7Aucun mode de jeux activé !").toItemStack());
-                    } else {
-                        switch (gameState.getMdj()) {
-                            case DS:
-                                inv.setItem(13, GUIItems.getSelectDSButton());
-                                break;
-                      /*      case MC:
-                                inv.setItem(13, GUIItems.getSelectMCButton());
-                                break;*/
-                            case AOT:
-                                inv.setItem(13, GUIItems.getSelectAOTButton());
-                                break;
-                            case NS:
-                                inv.setItem(13, GUIItems.getSelectNSButton());
-                                break;
-                            case KRYSTAL:
-                                inv.setItem(13, MDJ.KRYSTAL.getItem());
-                                break;
-                        }
-                    }
-                    if (ChatRank.isHost(player)) {
-                        inv.setItem(25, new ItemBuilder(Material.BOOKSHELF).setName("Configuration du mode de jeu").toItemStack());
-                    }
-                    inv.setItem(26, GUIItems.getSelectBackMenu());
-                }
-            }
-        }
+        new Configuration_RolesInventory(player).open(player);
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }

@@ -3,7 +3,7 @@ package fr.nicknqck.roles.custom;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -142,7 +142,7 @@ public class LeComte extends CustomRolesBase implements Listener {
         }
     }
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         HandlerList.unregisterAll(this);
     }
     @EventHandler

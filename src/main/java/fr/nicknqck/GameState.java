@@ -25,12 +25,6 @@ import fr.nicknqck.roles.ds.slayers.*;
 import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
-import fr.nicknqck.roles.mc.nether.Blaze;
-import fr.nicknqck.roles.mc.nether.Brute;
-import fr.nicknqck.roles.mc.nether.MagmaCube;
-import fr.nicknqck.roles.mc.overworld.*;
-import fr.nicknqck.roles.mc.solo.Warden;
-import fr.nicknqck.roles.mc.solo.WitherBoss;
 import fr.nicknqck.roles.ns.akatsuki.*;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
@@ -73,13 +67,7 @@ public class GameState{
 	private boolean roleAttributed = false;
 	@Getter
 	private final Map<UUID, GamePlayer> GamePlayer = new LinkedHashMap<>();
-	@Getter
-	@Setter
-	private int minTimeSpawnBiju = 90;
-	@Getter
-	@Setter
-	private int maxTimeSpawnBiju = 160;
-	public boolean morteclair = true;
+
 	public String msgBoard = ChatColor.GOLD+"UHC-Meetup "+ChatColor.RED+"V1";
 	public enum ServerStates {
 		InLobby,
@@ -99,8 +87,6 @@ public class GameState{
 	public int getPvPTimer() {
 		return pvpTimer;
 	}
-	public boolean JigoroV2Pacte2 = false;
-	public boolean JigoroV2Pacte3 = false;
 	@Setter
 	@Getter
 	private ServerStates serverState = ServerStates.InLobby;
@@ -139,11 +125,6 @@ public class GameState{
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
 	public List<Player> infectedbyadmin = new ArrayList<>();
-	public ArrayList<Player> Obi = new ArrayList<>();
-	public ArrayList<Player> getInObiPlayers() {return Obi;}
-	public void setInObiPlayers(ArrayList<Player> SleepingPlayers) {Obi = SleepingPlayers;}
-	public void addInObiPlayers(Player player) {Obi.add(player);}
-	public void delInObiPlayers(Player player) {Obi.remove(player);}
 	public List<Roles> DeadRole = new ArrayList<>();
 	@Getter
 	private final List<Roles> attributedRole = new ArrayList<>();
@@ -210,7 +191,7 @@ public class GameState{
 			role = new KokushiboV2(player);
 			break;
 		case Jigoro:
-			role = new Jigoro(player);
+			role = new JigoroV1V2(player);
 			break;
 		case ZenItsu:
 			role = new ZenItsuV2(player);
@@ -237,7 +218,7 @@ public class GameState{
 			role = new GyomeiV2(player);
 			break;
 		case Daki:
-			role = new Daki(player);
+			role = new DakiV2(player);
 			break;
 		case Gyutaro:
 			role = new GyutaroV2(player);
@@ -267,20 +248,14 @@ public class GameState{
 			role = new PourfendeurV2(player);
 			role.setTeam(TeamList.Slayer);
 			break;
-		case DemonMain:
-			role = new DemonMain(player);
-			break;
 		case Sabito:
 			role = new SabitoV2(player);
 			break;
 		case Urokodaki:
-			role = new UrokodakiV2(player);
+			role = new UrokodakiV3(player);
 			break;
 		case Makomo:
-			role = new Makomo(player);
-			break;
-		case Hantengu:
-			role = new Hantengu(player);
+			role = new MakomoV2(player);
 			break;
 		case Demon:
 			role = new DemonSimple(player);
@@ -319,7 +294,7 @@ public class GameState{
 			role = new JigoroV2(player);
 			break;
 		case HantenguV2:
-			role = new HantenguV2(player);
+			role = new HantenguV3(player);
 			break;
 		case Yahaba:
 			role = new YahabaV2(player);
@@ -409,7 +384,7 @@ public class GameState{
 			role = new Conny(player);
 			break;
 		case KyogaiV2:
-			role = new KyogaiV2(player);
+			role = new KyogaiV3(player);
 			break;
 		case Itachi:
 			role = new ItachiV2(player);
@@ -439,19 +414,19 @@ public class GameState{
 			role = new KisameV2(player);
 			break;
 		case Karin:
-			role = new Karin(player);
+			role = new KarinV2(player);
 			break;
 		case Kimimaro:
-			role = new Kimimaro(player);
+			role = new KimimaroV2(player);
 			break;
 		case ZetsuNoir:
 			role = new ZetsuNoir(player);
 			break;
 		case ZetsuBlanc:
-			role = new ZetsuBlanc(player);
+			role = new ZetsuBlancV3(player);
 			break;
 		case Konan:
-			role = new Konan(player);
+			role = new KonanV2(player);
 			break;
 		case Kakuzu:
 			role = new KakuzuV2(player);
@@ -469,7 +444,7 @@ public class GameState{
 			role = new Jugo(player);
 			break;
 		case Kakashi:
-			role = new Kakashi(player);
+			role = new KakashiV2(player);
 			break;
 		case Naruto:
 			role = new NarutoV2(player);
@@ -481,7 +456,7 @@ public class GameState{
 			role = new Jiraya(player);
 			break;
 		case Minato:
-			role = new Minato(player);
+			role = new MinatoV2(player);
 			break;
 		case Tsunade:
 			role = new Tsunade(player);
@@ -508,7 +483,7 @@ public class GameState{
 			role = new KillerBeeV2(player);
 			break;
 		case TenTen:
-			role = new Tenten(player);
+			role = new TenTenV2(player);
 			break;
 		case Raikage:
 			role = new RaikageV2(player);
@@ -516,17 +491,11 @@ public class GameState{
 		case Ginkaku:
 			role = new GinkakuV2(player);
 			break;
-		case Warden:
-			role = new Warden(player);
-			break;
 		case Kinkaku:
 			role = new Kinkaku(player);
 			break;
 		case Nagato:
 			role = new NagatoV2(player);
-			break;
-		case Wither:
-			role = new WitherBoss(player);
 			break;
 		case Kurenai:
 			role = new KurenaiV2(player);
@@ -534,20 +503,11 @@ public class GameState{
 			case Shikamaru:
 			role = new Shikamaru(player);
 			break;
-			case Poulet:
-			role = new Poulet(player);
-			break;
 			case Ino:
 			role = new InoV2(player);
 			break;
-			case Zombie:
-			role = new Zombie(player);
-			break;
 			case Iso:
 			role = new Iso(player);
-			break;
-			case Squelette:
-			role = new Squelette(player);
 			break;
 			case LeComte:
 			role = new LeComteV2(player);
@@ -555,32 +515,14 @@ public class GameState{
 			case LeJuge:
 			role = new LeJuge(player);
 			break;
-			case AraigneeVenimeuse:
-			role = new AraigneeVenimeuse(player);
-			break;
 			case Fugaku:
 			role = new Fugaku(player);
-			break;
-			case Blaze:
-			role = new Blaze(player);
-			break;
-			case GolemDeFer:
-			role = new GolemDeFer(player);
-			break;
-			case Brute:
-			role = new Brute(player);
-			break;
-			case MagmaCube:
-			role = new MagmaCube(player);
 			break;
 			case SlayerSolo:
 				role = new SlayerSolo(player);
 				break;
 			case ZetsuBlancV2:
 				role = new ZetsuBlancV2(player);
-				break;
-			case Vache:
-				role = new Vache(player);
 				break;
 			case Neon:
 				role = new Neon(player);
@@ -602,6 +544,9 @@ public class GameState{
 				break;
             case KaigakuSlayer:
                 role = new KaigakuSlayer(player);
+                break;
+            case Sasori:
+                role = new Sasori(player);
                 break;
 		}
 		if (role == null) return null;
@@ -891,7 +836,7 @@ public class GameState{
 		tr.append("\n").append(AllDesc.bar);
 		return tr.toString();
 	}
-	@Getter
-	@Setter
-	private boolean TNTGrief = false;
+    public static boolean inGame() {
+        return GameState.getInstance().getServerState().equals(ServerStates.InGame);
+    }
 }

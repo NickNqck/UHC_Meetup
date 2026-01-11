@@ -17,34 +17,23 @@ import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
-import fr.nicknqck.roles.ns.power.Amaterasu;
-import fr.nicknqck.roles.ns.power.Genjutsu;
-import fr.nicknqck.roles.ns.power.Izanagi;
+import fr.nicknqck.roles.ns.power.*;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
-import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
-import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -82,7 +71,10 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new Amaterasu(this), true);
-        addPower(new SusanoPower(this), true);
+        addPower(new SuperSusanoPower(this, new SusanoSub(this),
+                "§fClique droit§7: Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7.",
+                "",
+                "§fClique gauche§7: Pendant§c 2 minutes§7, vos§c flèches§7 infligeront§c 50%§7 de§c dégâts supplémentaires§7."), true);
         addPower(new Izanagi(this));
         addKnowedRole(OrochimaruV2.class);
         EventUtils.registerRoleEvent(this);
@@ -209,108 +201,52 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
             this.timeRemaining--;
         }
     }
-    private static class SusanoPower extends ItemPower {
+    private static class SusanoSub extends SubSusanoPower implements Listener{
 
-        protected SusanoPower(@NonNull RoleBase role) {
-            super("Susano (Sasuke)", new Cooldown(60*20), new ItemBuilder(Material.NETHER_STAR).setName("§c§lSusanô"), role,
-                    "§7Vous permet d'obtenir l'effet§c Résistance I§7 pendant§c 5 minutes§7. (1x/20m)");
+        private boolean activate = false;
+
+        public SusanoSub(@NonNull RoleBase role) {
+            super("§cSusanô (Arc Divin)", new Cooldown(120), role);
+            EventUtils.registerRoleEvent(this);
+        }
+
+        @Override
+        public void onSusanoEnd() {
+            this.activate = false;
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§cActivation du§l Susanô§c.");
-                final ArcDesFlamesPower flamesPower = new ArcDesFlamesPower(this.getRole());
-                getRole().giveItem(player, true, flamesPower.bow);
-                this.getRole().addPower(flamesPower);
-                new SusanoPower.SusanoRunnable(this.getRole().getGameState(), this.getRole().getGamePlayer(), flamesPower);
-                getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), EffectWhen.NOW);
-                return true;
-            }
-            return false;
+            this.activate = true;
+            new BukkitRunnable() {
+                private int timeLeft = 120;
+                @Override
+                public void run() {
+                    if (!GameState.inGame()) {
+                        cancel();
+                        return;
+                    }
+                    getRole().getGamePlayer().getActionBarManager().updateActionBar("sasuke.sub", "§bTemps restant (§cArc Divin§b):§c "+ StringUtils.secondsTowardsBeautiful(timeLeft));
+                    if (this.timeLeft <= 0 || !activate) {
+                        activate = false;
+                        getRole().getGamePlayer().getActionBarManager().removeInActionBar("sasuke.sub");
+                        getRole().getGamePlayer().sendMessage("§7Les§c bonus§7 de l'§cArc Divin§7 ont été perdu.");
+                        cancel();
+                        return;
+                    }
+                    this.timeLeft--;
+                }
+            }.runTaskTimerAsynchronously(this.getPlugin(), 0, 20);
+            return true;
         }
-        private static class SusanoRunnable extends BukkitRunnable {
-
-            private final GameState gameState;
-            private final GamePlayer gamePlayer;
-            private final ArcDesFlamesPower flamesPower;
-            private int timeLeft = 60*5;
-
-            private SusanoRunnable(GameState gameState, GamePlayer gamePlayer, ArcDesFlamesPower flamesPower) {
-                this.gameState = gameState;
-                this.gamePlayer = gamePlayer;
-                this.flamesPower = flamesPower;
-                this.gamePlayer.getActionBarManager().addToActionBar("sasuke.susano", "§bTemp restant du§c§l Susanô§b: "+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-            }
-
-            @Override
-            public void run() {
-                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                    cancel();
-                    return;
-                }
-                if (this.timeLeft <= 0) {
-                    this.gamePlayer.getActionBarManager().removeInActionBar("sasuke.susano");
-                    this.gamePlayer.sendMessage("§cVotre§l Susanô§c s'arrête");
-                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                        this.gamePlayer.getRole().getPowers().remove(this.flamesPower);
-                        final Player player = Bukkit.getPlayer(this.gamePlayer.getUuid());
-                        if (player != null) {
-                            player.getInventory().remove(this.flamesPower.bow);
-                        }
-                    });
-                    cancel();
-                    return;
-                }
-                this.timeLeft--;
-                this.gamePlayer.getActionBarManager().updateActionBar("sasuke.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
-            }
-        }
-        private static class ArcDesFlamesPower extends Power implements Listener {
-
-            private final ItemStack bow;
-
-            public ArcDesFlamesPower(@NonNull RoleBase role) {
-                super("Honõ no ko", new Cooldown(10), role);
-                this.bow = new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 7).setName("§cHonõ no ko").setUnbreakable(true).setDroppable(false).toItemStack();
-                EventUtils.registerRoleEvent(this);
-                setShowInDesc(false);
-            }
-
-            @Override
-            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                return true;
-            }
-            @EventHandler
-            private void ProjectileLaunch(@NonNull final ProjectileLaunchEvent event) {
-                if (event.isCancelled())return;
-                if (!(event.getEntity() instanceof Arrow))return;
-                if (event.getEntity().getShooter() == null)return;
-                if (!(event.getEntity().getShooter() instanceof Player))return;
-                @NonNull final Player shooter = (Player) event.getEntity().getShooter();
-                if (!shooter.getUniqueId().equals(getRole().getPlayer()))return;
-                if (!shooter.getItemInHand().isSimilar(this.bow))return;
-                if (getCooldown().isInCooldown()) {
-                    shooter.sendMessage("§cVous êtes en cooldown: §b"+this.getCooldown().getCooldownRemaining()+"s");
-                    event.setCancelled(true);
-                    return;
-                }
-                if (!checkUse(shooter, new HashMap<>()))return;
-                @NonNull final Arrow arrow = (Arrow) event.getEntity();
-                arrow.setFireTicks(800);
-                arrow.setMetadata("sasuke.susano.hononoko", new FixedMetadataValue(Main.getInstance(), shooter));
-            }
-            @EventHandler
-            private void EntityDamageByEntityEvent(@NonNull final EntityDamageByEntityEvent event) {
-                if (!(event.getDamager() instanceof Arrow))return;
-                if (!(event.getEntity() instanceof Player))return;
-                @NonNull final Arrow arrow = (Arrow) event.getDamager();
-                if (!(arrow.getShooter() instanceof Player))return;
-                if (!((Player) arrow.getShooter()).getUniqueId().equals(getRole().getPlayer()))return;
-                if (arrow.hasMetadata("sasuke.susano.hononoko")) {
-                    event.getEntity().setFireTicks(800);
-                    getRole().getGamePlayer().sendMessage("§7Une flèche de§c Honõ no ko§7 a toucher§c "+((Player) event.getEntity()).getDisplayName());
+        @EventHandler
+        private void onDamage(@NonNull final EntityDamageByEntityEvent event) {
+            if (event.getDamager() instanceof Arrow) {
+                if (((Arrow) event.getDamager()).getShooter() instanceof Player) {
+                    final Player shooter = (Player) ((Arrow) event.getDamager()).getShooter();
+                    if (shooter.getUniqueId().equals(getRole().getPlayer()) && this.activate) {
+                        event.setDamage(event.getDamage()*1.5);
+                    }
                 }
             }
         }

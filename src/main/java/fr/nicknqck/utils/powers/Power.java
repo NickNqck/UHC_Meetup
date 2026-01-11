@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public abstract class Power {
+public abstract class Power implements Cloneable{
 
     protected final Main plugin = Main.getInstance();
     private final String name;
@@ -40,7 +40,6 @@ public abstract class Power {
 
     public boolean checkUse(Player player, Map<String, Object> args) {
         final GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(player.getUniqueId());
-
         if (gamePlayer.getRole() == null) {
             player.sendMessage("§cVous n'avez pas de rôle.");
             return false;
@@ -67,11 +66,12 @@ public abstract class Power {
 
         Cooldown powerCooldown = this.getCooldown();
         if (powerCooldown != null && powerCooldown.isInCooldown()) {
-            if (isWorkWhenInCooldown())return this.onUse(player, args);
-            if (isSendCooldown()) {
-                player.sendMessage("§cVous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(getCooldown().getCooldownRemaining()));
+            if (!isWorkWhenInCooldown()) {
+                if (isSendCooldown()) {
+                    sendCooldown(player);
+                }
+                return false;
             }
-            return false;
         }
 
         boolean canUse = this.onUse(player, args);
@@ -109,5 +109,32 @@ public abstract class Power {
             return true;
         }
         return false;
+    }
+    public void sendCooldown(@NonNull final Player player) {
+        player.sendMessage("§cVous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(getCooldown().getCooldownRemaining()));
+    }
+
+    @Override
+    public Power clone() {
+        try {
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return (Power) super.clone();
+        } catch (CloneNotSupportedException e) {
+            getPlugin().getLogger().info("Impossible de cloner "+this);
+        }
+        return null;
+    }
+    public void updateDescription() {
+        final Power clone = this.clone();
+        if (clone != null && clone.getDescriptions() != null) {
+            setDescriptions(clone.getDescriptions());
+            if (Main.isDebug()) {
+                getPlugin().getLogger().info("La mise à jour de la description de \""+getName()+"\" a bien réussi");
+            }
+        } else {
+            if (Main.isDebug()) {
+                getPlugin().getLogger().info("La mise à jour de la description de \""+getName()+"\" a échouer");
+            }
+        }
     }
 }

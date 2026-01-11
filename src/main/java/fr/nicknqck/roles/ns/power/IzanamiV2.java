@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ns.power;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiStartEvent;
@@ -31,7 +31,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class IzanamiV2 implements Listener {
 
@@ -230,7 +229,7 @@ public class IzanamiV2 implements Listener {
         }
     }
     @EventHandler
-    private void onEndGame(EndGameEvent e) {
+    private void onEndGame(GameEndEvent e) {
         for (BukkitRunnable runnable : runnables){
             runnable.cancel();
         }

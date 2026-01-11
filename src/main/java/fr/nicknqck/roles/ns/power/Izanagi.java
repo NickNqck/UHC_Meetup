@@ -29,11 +29,13 @@ public class Izanagi extends CommandPower {
         getRole().giveItem(player, false, new ItemBuilder(Material.GOLDEN_APPLE).setAmount(5).toItemStack());
         for (final Power power : new ArrayList<>(getRole().getPowers())) {
             if (!(power instanceof ItemPower))continue;
-            if (power.getName().contains("Susano")) {
-                player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-                getRole().getPowers().remove(power);
-                player.getInventory().remove(((ItemPower) power).getItem());
-                break;
+            if (power instanceof SuperSusanoPower){
+                if (((SuperSusanoPower) power).getSubSusanoPower() != null) {
+                    getRole().removePower(power);
+                    getRole().removePower(((SuperSusanoPower) power).getSubSusanoPower());
+                    player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                    break;
+                }
             }
         }
         return true;

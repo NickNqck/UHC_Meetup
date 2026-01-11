@@ -3,11 +3,10 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
@@ -305,7 +304,7 @@ public class Shikamaru extends ShinobiRoles {
             }
         }
         @EventHandler
-        private void onEndGame(EndGameEvent e){
+        private void onEndGame(GameEndEvent e){
             shikamaru = null;
             EventUtils.unregisterEvents(this);
         }

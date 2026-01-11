@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -81,7 +81,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
     }
 
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
    /*     this.marquePower.end = true;
         this.marquePower = null;*/
         EventUtils.unregisterEvents(this);

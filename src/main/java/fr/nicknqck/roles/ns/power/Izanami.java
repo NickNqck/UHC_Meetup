@@ -27,7 +27,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -280,7 +280,7 @@ public class Izanami implements Listener{
 		}
 	}
 	@EventHandler
-	private void onEndGame(EndGameEvent e) {
+	private void onEndGame(GameEndEvent e) {
 		for (BukkitRunnable runnable : runnables){
 			runnable.cancel();
 		}

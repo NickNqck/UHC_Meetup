@@ -48,7 +48,7 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
 
     @Override
     public @NonNull Intelligence getIntelligence() {
-        return Intelligence.MOYENNE;
+        return Intelligence.GENIE;
     }
 
     @Override

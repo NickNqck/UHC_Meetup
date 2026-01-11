@@ -3,7 +3,6 @@ package fr.nicknqck.events.essential.inventorys;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.rank.ChatRank;
@@ -48,9 +47,6 @@ public class HubInventory implements Listener {
                 final boolean titans = item.isSimilar(GUIItems.getSelectTitanButton());
                 final boolean soldat = item.isSimilar(GUIItems.getSelectSoldatButton());
                 final boolean aotconfig = item.isSimilar(GUIItems.getSelectConfigAotButton());
-                final boolean demon = item.isSimilar(GUIItems.getSelectDSButton());
-                final boolean aot = item.isSimilar(GUIItems.getSelectAOTButton());
-                final boolean ns = item.isSimilar(GUIItems.getSelectNSButton());
                 final boolean akatsuki = item.isSimilar(GUIItems.getSelectAkatsukiButton());
                 final boolean orochimaru = item.isSimilar(GUIItems.getSelectOrochimaruButton());
                 final boolean brume = item.isSimilar(GUIItems.getSelectBrumeButton());
@@ -58,47 +54,6 @@ public class HubInventory implements Listener {
                 final boolean kumo = item.isSimilar(GUIItems.getSelectKumogakureButton());
                 if (!item.hasItemMeta())return;
                 switch(inv.getTitle()) {
-                    case "§fConfiguration§7 ->§6 Roles":
-                        if (item.getType() != Material.AIR) {
-                            if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
-                                if (demon) {
-                                    player.openInventory(GUIItems.getDemonSlayerInventory());
-                                    Main.getInstance().getInventories().updateDSInventory(player);
-                                }
-                                if (aot) {
-                                    player.openInventory(GUIItems.getSelectAOTInventory());
-                                    Main.getInstance().getInventories().updateAOTInventory(player);
-                                }
-                                if (ns) {
-                                    player.openInventory(GUIItems.getSelectNSInventory());
-                                    Main.getInstance().getInventories().updateNSInventory(player);
-                                }
-                                if (item.isSimilar(MDJ.KRYSTAL.getItem())) {
-                                    Main.getInstance().getInventories().openKrystalInventory(player);
-                                }
-                                if (item.isSimilar(GUIItems.getSelectMCButton())) {
-                                    player.openInventory(GUIItems.getSelectMCInventory());
-                                    Main.getInstance().getInventories().updateMCInventory(player);
-                                }
-                                if (item.getType() == Material.BOOKSHELF) {
-                                    Inventory inventaire = Bukkit.createInventory(player, 9, "Séléction du mode de jeu");
-                                    player.openInventory(inventaire);
-                                    Main.getInstance().getInventories().updateSelectMDJ(player);
-                                }
-                            } else {
-                                if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                                    if (ChatRank.isHost(player))player.openInventory(GUIItems.getAdminWatchGUI());
-                                    if (!player.isOp() && player.getOpenInventory() != null && player.getInventory() != null) player.closeInventory();
-                                }
-                            }
-                        }
-                        for (UUID u : gameState.getInLobbyPlayers()) {
-                            Player p = Bukkit.getPlayer(u);
-                            if (p == null)return;
-                            Main.getInstance().getInventories().updateRoleInventory(p);
-                        }
-                        event.setCancelled(true);
-                        break;
                     case "§fDemonSlayer§7 ->§a Slayers":
                         if (item.getItemMeta() == null)return;
                         if (item.getItemMeta().getDisplayName() == null)return;
@@ -145,7 +100,7 @@ public class HubInventory implements Listener {
                         }
                         event.setCancelled(true);
                         break;
-                    case "DemonSlayer -> §cDémons":
+                    case "§fDemonSlayer§7 -> §cDémons":
                         if (item.getItemMeta() == null)return;
                         if (item.getItemMeta().getDisplayName() == null)return;
                         if (item.getType() == Material.AIR)return;
@@ -745,61 +700,6 @@ public class HubInventory implements Listener {
                                     }
                                 }
                             }
-                        }
-                        event.setCancelled(true);
-                        break;
-                    case "§fRoles§7 ->§a Minecraft":
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getRoleSelectGUI());
-                            Main.getInstance().getInventories().updateRoleInventory(player);
-                        } else {
-                            if (item.isSimilar(GUIItems.getSelectOverworldButton())) {
-                                player.openInventory(Bukkit.createInventory(player, 54, "§aMinecraft§7 ->§a Overworld"));
-                                Main.getInstance().getInventories().updateOverworldInventory(player);
-                            } else if (item.isSimilar(GUIItems.getSelectNetherButton())) {
-                                player.openInventory(Bukkit.createInventory(player, 54, "§aMinecraft§7 ->§c Nether"));
-                                Main.getInstance().getInventories().updateNetherInventory(player);
-                            }
-                        }
-                        event.setCancelled(true);
-                        break;
-                    case "§aMinecraft§7 ->§a Overworld":
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getSelectMCInventory());
-                            Main.getInstance().getInventories().updateMCInventory(player);
-                        } else {
-                            if (!item.getType().equals(Material.STAINED_GLASS_PANE)) {
-                                if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    EasyRoleAdder.addRoles(item.getItemMeta().getDisplayName());
-                                } else if (action.equals(InventoryAction.PICKUP_HALF)){
-                                    EasyRoleAdder.removeRoles(item.getItemMeta().getDisplayName());
-                                }
-                            }
-                        }
-                        for (UUID u : gameState.getInLobbyPlayers()) {
-                            Player p = Bukkit.getPlayer(u);
-                            if (p == null)return;
-                            Main.getInstance().getInventories().updateOverworldInventory(p);
-                        }
-                        event.setCancelled(true);
-                        break;
-                    case "§aMinecraft§7 ->§c Nether":
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getSelectMCInventory());
-                            Main.getInstance().getInventories().updateMCInventory(player);
-                        } else {
-                            if (!item.getType().equals(Material.STAINED_GLASS_PANE)) {
-                                if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    EasyRoleAdder.addRoles(item.getItemMeta().getDisplayName());
-                                } else if (action.equals(InventoryAction.PICKUP_HALF)){
-                                    EasyRoleAdder.removeRoles(item.getItemMeta().getDisplayName());
-                                }
-                            }
-                        }
-                        for (UUID u : gameState.getInLobbyPlayers()) {
-                            Player p = Bukkit.getPlayer(u);
-                            if (p == null)return;
-                            Main.getInstance().getInventories().updateNetherInventory(p);
                         }
                         event.setCancelled(true);
                         break;

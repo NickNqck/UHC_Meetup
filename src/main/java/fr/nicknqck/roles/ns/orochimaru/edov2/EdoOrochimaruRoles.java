@@ -119,7 +119,6 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
                 edoTenseis.remove(event.getPlayer().getUniqueId(), event.getRole());
             }
         }
-        @SuppressWarnings("deprecation")
         @EventHandler
         private void onInventoryClick(InventoryClickEvent event) {
             if (event.getInventory().getTitle().isEmpty())return;
@@ -133,34 +132,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
                                     if (clicked != null) {
                                         GameState gameState = GameState.getInstance();
                                         if (!gameState.hasRoleNull(clicked.getUniqueId())) {
-                                            RoleBase role = gameState.getGamePlayer().get(clicked.getUniqueId()).getRole();
-                                            Player owner = (Player) event.getWhoClicked();
-                                            edoTenseis.put(clicked.getUniqueId(), role);
-                                            owner.closeInventory();
-                                            clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
-                                            owner.sendMessage("§5Edo Tensei !");
-                                            role.setTeam(this.role.getTeam());
-                                            role.setMaxHealth(20.0);
-                                            clicked.getInventory().setContents(role.getGamePlayer().getLastInventoryContent());
-                                            clicked.getInventory().setArmorContents(role.getGamePlayer().getLastArmorContent());
-                                            gameState.RevivePlayer(clicked);
-                                            this.role.setMaxHealth(this.role.getMaxHealth()-Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove());
-                                            owner.setMaxHealth(this.role.getMaxHealth());
-                                            clicked.teleport(owner);
-                                            final List<Power> copyPower = new ArrayList<>(role.getPowers());
-                                            if (!copyPower.isEmpty()) {
-                                                for (Power power : copyPower) {
-                                                    if (power instanceof ItemPower) {
-                                                        clicked.getInventory().removeItem(((ItemPower) power).getItem());
-                                                    }
-                                                    role.removePower(power);
-                                                }
-                                            }
-                                            role.GiveItems();
-                                            role.RoleGiven(this.role.gameState);
-                                            this.role.killLocation.remove(clicked.getUniqueId());
-                                            clicked.resetTitle();
-                                            clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+this.role.getTeam().getName());
+                                            revive(gameState, clicked, (Player) event.getWhoClicked());
                                         }
                                     }
                                 }
@@ -170,6 +142,36 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
                 }
                 event.setCancelled(true);
             }
+        }
+
+        private void revive(final GameState gameState, final Player clicked, final Player owner) {
+            RoleBase role = gameState.getGamePlayer().get(clicked.getUniqueId()).getRole();
+            edoTenseis.put(clicked.getUniqueId(), role);
+            owner.closeInventory();
+            clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
+            owner.sendMessage("§5Edo Tensei !");
+            role.setTeam(this.role.getTeam());
+            role.setMaxHealth(20.0);
+            clicked.getInventory().setContents(role.getGamePlayer().getLastInventoryContent());
+            clicked.getInventory().setArmorContents(role.getGamePlayer().getLastArmorContent());
+            gameState.RevivePlayer(clicked);
+            this.role.setMaxHealth(this.role.getMaxHealth()-Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove());
+            owner.setMaxHealth(this.role.getMaxHealth());
+            clicked.teleport(owner);
+            final List<Power> copyPower = new ArrayList<>(role.getPowers());
+            if (!copyPower.isEmpty()) {
+                for (Power power : copyPower) {
+                    if (power instanceof ItemPower) {
+                        clicked.getInventory().removeItem(((ItemPower) power).getItem());
+                    }
+                    role.removePower(power);
+                }
+            }
+            role.GiveItems();
+            role.RoleGiven(this.role.gameState);
+            this.role.killLocation.remove(clicked.getUniqueId());
+            clicked.resetTitle();
+            clicked.sendTitle("§5Edo Tensei !", "Vous êtes maintenant dans le camp "+this.role.getTeam().getName());
         }
     }
 }

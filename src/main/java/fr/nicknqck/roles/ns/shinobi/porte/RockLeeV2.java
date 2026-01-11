@@ -6,7 +6,6 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.shinobi.Gai;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -63,7 +62,7 @@ public class RockLeeV2 extends PortesRoles implements Listener {
     private void onDie(UHCDeathEvent event) {
         if (event.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
             if (event.getRole() == null)return;
-            if (event.getRole() instanceof Gai || event.getRole() instanceof GaiV2) {
+            if (event.getRole() instanceof GaiV2) {
                 if (!getGamePlayer().isAlive()){
                     addPower(new HuitPortesPower(this));
                     return;

@@ -79,7 +79,7 @@ public class InfoListener implements Listener {
         Main.getInstance().getInfoManager().save(event.getRole().getPlayer());
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    private void onGameEnd(final EndGameEvent event) {
+    private void onGameEnd(final GameEndEvent event) {
         if (event.getTeam() == null)return;
         for (final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
             if (gamePlayer.getRole() == null)return;
@@ -93,7 +93,7 @@ public class InfoListener implements Listener {
         }
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    private void onGameStart(final StartGameEvent event) {
+    private void onGameStart(final GameStartEvent event) {
         System.out.println(0);
         for (final UUID uuid : event.getInGamePlayers()) {
             System.out.println(1);

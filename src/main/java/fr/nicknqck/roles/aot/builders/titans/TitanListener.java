@@ -14,7 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 
 @Setter
 @Getter
@@ -65,7 +65,7 @@ public class TitanListener implements Listener{
 		instance = this;
 	}
 	@EventHandler
-	private void onEndGame(EndGameEvent e) {
+	private void onEndGame(GameEndEvent e) {
 		for (Titans t : Titans.values()) {
 			t.getTitan().resetCooldown();
 		}

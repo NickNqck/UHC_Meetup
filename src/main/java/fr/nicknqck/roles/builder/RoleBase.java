@@ -48,7 +48,7 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	private boolean canRespawn = false;
 	@Getter
-	private boolean hasNoFall = false;
+	private boolean noFall = false;
 	@Setter
 	@Getter
 	private Roles oldRole = null;
@@ -226,7 +226,7 @@ public abstract class RoleBase implements IRole {
 	public void OpenFormInventory(GameState gameState) {}
 	public void FormChoosen(ItemStack item, GameState gameState) {}
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
-	public void setNoFall(boolean hasNoFall) {this.hasNoFall = hasNoFall;}
+	public void setNoFall(boolean hasNoFall) {this.noFall = hasNoFall;}
 	public void setMaxHealth(Double maxHealth) {this.maxHealth = maxHealth; owner.setMaxHealth(maxHealth);}
 	public void setPower(boolean powerEnabled) {this.powerEnabled = powerEnabled;}
 	public void neoAttackedByPlayer(Player attacker, GameState gameState) {}
@@ -412,9 +412,6 @@ public abstract class RoleBase implements IRole {
 			}
 		}
 	}
-	public void onALLPlayerDamage(EntityDamageEvent e, Player victim) {}
-	public void onProjectileLaunch(ProjectileLaunchEvent event, Player shooter) {}
-	public void onProjectileHit(ProjectileHitEvent event, Player shooter) {}
 	public Player getTargetPlayer(Player player, double distanceMax) {
         return RayTrace.getTargetPlayer(player, distanceMax, null);
     }
@@ -689,7 +686,8 @@ public abstract class RoleBase implements IRole {
 	public void removePower(final Power power) {
         this.getPowers().remove(power);
 	}
-	public void removePower(final Class<? extends Power> classPower) {
+
+    public void removePower(final Class<? extends Power> classPower) {
 		for (final Power power : new ArrayList<>(this.getPowers())) {
 			if (power.getClass().equals(classPower)) {
 				this.getPowers().remove(power);

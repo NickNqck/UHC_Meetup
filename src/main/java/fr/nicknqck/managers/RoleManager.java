@@ -2,6 +2,9 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.RoleGiveEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.ErenV2;
@@ -10,6 +13,7 @@ import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.krystal.LeComteV2;
 import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.krystal.Heldige;
@@ -20,6 +24,10 @@ import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.roles.ns.akatsuki.*;
+import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
+import fr.nicknqck.roles.ns.builders.IAkatsukiChief;
+import fr.nicknqck.roles.ns.builders.ISAkatsukiChief;
+import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edov2.KabutoV2;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
@@ -33,13 +41,18 @@ import fr.nicknqck.roles.ns.solo.jubi.MadaraV2;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.*;
+import fr.nicknqck.utils.event.EventUtils;
 import lombok.Getter;
+import lombok.NonNull;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 @Getter
-public class RoleManager {
+public class RoleManager implements Listener {
 
     private final Map<Class<? extends RoleBase>, IRole> rolesRegistery;
     private final Map<Class<? extends RoleBase>, Integer> rolesEnable;
@@ -51,6 +64,7 @@ public class RoleManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        EventUtils.registerEvents(this);
     }
     public void addRole(Class<? extends RoleBase> role) {
         if (rolesEnable.containsKey(role)) {
@@ -100,39 +114,37 @@ public class RoleManager {
         registerRole(InosukeV2.class);
         registerRole(HotaruV2.class);
         registerRole(KanaoV2.class);
-        registerRole(Makomo.class);
+        registerRole(MakomoV2.class);
         registerRole(NezukoV2.class);
         registerRole(PourfendeurV2.class);
         registerRole(SabitoV2.class);
         registerRole(Tanjiro.class);
-        registerRole(UrokodakiV2.class);
+        registerRole(UrokodakiV3.class);
         registerRole(ZenItsuV2.class);
         registerRole(KaigakuSlayer.class);
         //Register Demons
         registerRole(Akaza.class);
-        registerRole(Daki.class);
+        registerRole(DakiV2.class);
         registerRole(DomaV2.class);
         registerRole(EnmuV2.class);
         registerRole(Gyokko.class);
         registerRole(GyutaroV2.class);
-        registerRole(Hantengu.class);
-        registerRole(HantenguV2.class);
+        registerRole(HantenguV3.class);
         registerRole(KaigakuV2.class);
         registerRole(KokushiboV2.class);
         registerRole(Nakime.class);
         registerRole(RuiV2.class);
         registerRole(DemonSimple.class);
-        registerRole(DemonMain.class);
         registerRole(FurutoV2.class);
         registerRole(KumoV2.class);
         registerRole(MuzanV2.class);
         registerRole(SusamaruV2.class);
         registerRole(YahabaV2.class);
         //Register Solo
-        registerRole(Jigoro.class);
+        registerRole(JigoroV1V2.class);
         registerRole(JigoroV2.class);
         registerRole(KyogaiDemon.class);
-        registerRole(KyogaiV2.class);
+        registerRole(KyogaiV3.class);
         registerRole(Shinjuro.class);
         registerRole(ShinjuroV2.class);
         registerRole(YoriichiV2.class);
@@ -174,29 +186,28 @@ public class RoleManager {
         //Register Shinobi
         registerRole(Asuma.class);
         registerRole(Fugaku.class);
-        registerRole(Gai.class);
         registerRole(InoV2.class);
         registerRole(Jiraya.class);
-        registerRole(Kakashi.class);
+        registerRole(KakashiV2.class);
         registerRole(KillerBeeV2.class);
         registerRole(KonohamaruV2.class);
         registerRole(KurenaiV2.class);
-        registerRole(Minato.class);
+        registerRole(MinatoV2.class);
         registerRole(NarutoV2.class);
-        registerRole(RockLee.class);
         registerRole(Sakura.class);
         registerRole(Shikamaru.class);
-        registerRole(Tenten.class);
+        registerRole(TenTenV2.class);
         registerRole(Tsunade.class);
         registerRole(RaikageV2.class);
         registerRole(RockLeeV2.class);
         registerRole(GaiV2.class);
         registerRole(Hinata.class);
+        registerRole(Neji.class);
         //Register Orochimaru
         registerRole(Jugo.class);
         registerRole(KabutoV2.class);
-        registerRole(Karin.class);
-        registerRole(Kimimaro.class);
+        registerRole(KarinV2.class);
+        registerRole(KimimaroV2.class);
         registerRole(OrochimaruV2.class);
         registerRole(SasukeV2.class);
         registerRole(SuigetsuV2.class);
@@ -207,10 +218,12 @@ public class RoleManager {
         registerRole(ItachiV2.class);
         registerRole(KakuzuV2.class);
         registerRole(KisameV2.class);
-        registerRole(Konan.class);
+        registerRole(KonanV2.class);
         registerRole(NagatoV2.class);
-        registerRole(ZetsuBlanc.class);
+        registerRole(Sasori.class);
+        registerRole(ZetsuBlancV3.class);
         registerRole(ZetsuNoir.class);
+        registerRole(ZetsuBlancV2.class);
         //Register Jubi
         registerRole(MadaraV2.class);
         registerRole(ObitoV2.class);
@@ -260,5 +273,36 @@ public class RoleManager {
             }
         }
         return role;
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onEndGiveRole(@NonNull final RoleGiveEvent event) {
+        if (!event.isEndGive()) return;
+        for (@NonNull final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
+            if (gamePlayer.getRole() == null)continue;
+            final RoleBase role = gamePlayer.getRole();
+            if (role instanceof IAkatsukiChief) {
+                role.addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
+                        , Deidara.class, HidanV2.class, ItachiV2.class,
+                        KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
+                        NagatoV2.class, ZetsuBlanc.class,
+                        ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
+            }
+            if (role instanceof ISAkatsukiChief) {
+                role.addKnowedPlayersWithRoles("§7Voici l'identité de§c Nagato§7 et de§c Konan§7: ", KonanV2.class, NagatoV2.class);
+            }
+            if (!event.getGameState().getAttributedRole().contains(Roles.Orochimaru)) {
+                if (role instanceof OrochimaruRoles) {
+                    if (event.getGameState().getAttributedRole().contains(Roles.Kabuto)) {
+                        role.addKnowedRole(KabutoV2.class);
+                    } else {
+                        if (event.getGameState().getAttributedRole().contains(Roles.Kimimaro)) {
+                            role.addKnowedRole(KimimaroV2.class);
+                        } else {
+                            role.addKnowedPlayersFromTeam(TeamList.Orochimaru);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

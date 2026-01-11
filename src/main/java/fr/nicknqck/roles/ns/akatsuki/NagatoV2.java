@@ -9,9 +9,7 @@ import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
-import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
-import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
+import fr.nicknqck.roles.ns.builders.ChiefAkatsukiRoles;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
@@ -43,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class NagatoV2 extends AkatsukiRoles implements Listener {
+public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
 
     private final ItemStack ShuradoItem = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).setName("§7Shuradô").setUnbreakable(true).setDroppable(false).toItemStack();
 
@@ -82,11 +80,6 @@ public class NagatoV2 extends AkatsukiRoles implements Listener {
     @Override
     public void RoleGiven(GameState gameState) {
         setMaxHealth(getMaxHealth()+6.0);
-        addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
-                , Deidara.class, HidanV2.class, ItachiV2.class,
-                KakuzuV2.class, KisameV2.class, Konan.class,
-                NagatoV2.class, ZetsuBlanc.class,
-                ZetsuNoir.class, ZetsuBlancV2.class , ObitoV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999, 0, false, false), EffectWhen.PERMANENT);
         setChakraType(Chakras.SUITON);
         addPower(new ShikushodoPower(this), true);

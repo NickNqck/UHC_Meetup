@@ -26,11 +26,20 @@ public class InfoCommand implements CommandExecutor {
 
         // Si un nom est donné
         if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("reset")) {
+                PlayerInfo selfInfo = Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId());
+                if (selfInfo == null) {
+                    player.sendMessage("§cOpération impossible, aucune information disponible.");
+                    return true;
+                }
+                Main.getInstance().getInfoManager().resetData(player.getUniqueId());
+                player.sendMessage("§aVos statistiques ont bien été réinitialisé !");
+                return true;
+            }
             if (!player.isOp()) {
                 player.sendMessage("§cTu ne peux voir que tes propres informations.");
                 return true;
             }
-
             Player target = Bukkit.getPlayerExact(args[0]);
             if (target == null) {
                 player.sendMessage("§cCe joueur est introuvable ou hors ligne.");
@@ -73,11 +82,9 @@ public class InfoCommand implements CommandExecutor {
                 "§7Nombre de game joué:§a "+info.getGamePlayed(),
                 "§7Nombre de game gagner: §a"+info.getGameWin(),
                 "§7Nombre de game perdu:§a "+info.getGameLoose(),
-                "§7Kills totaux:§a "+info.getTotalKills(),
-                "§7Morts totals:§a "+info.getDeaths(),
+                "§7Nombre de réinitialisation des informations:§a "+info.getResetAmount(),
                 "§7Ratio K/D: §a"+info.getKDRatio(),
                 "§7Joueur le plus tué: "+info.getMostKilledPlayerName(),
-                "",
                 "",
                 "§7Camps obtenus: ",
                 "",

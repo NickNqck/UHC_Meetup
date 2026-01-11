@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.builders;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.managers.BijuManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.TeamList;
@@ -27,7 +27,7 @@ import org.bukkit.inventory.Inventory;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class JubiRoles extends NSRoles implements IUchiwa{
+public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
 
     public JubiRoles(UUID player) {
         super(player);
@@ -46,11 +46,6 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
     @Override
     public @NonNull EUchiwaType getUchiwaType() {
         return EUchiwaType.LEGENDAIRE;
-    }
-
-    @Override
-    public @NonNull Intelligence getIntelligence() {
-        return Intelligence.GENIE;
     }
 
     public static class TraqueurPower extends ItemPower implements Listener {
@@ -100,7 +95,7 @@ public abstract class JubiRoles extends NSRoles implements IUchiwa{
             return false;
         }
         @EventHandler
-        private void onEndGame(EndGameEvent event) {
+        private void onEndGame(GameEndEvent event) {
             EventUtils.unregisterEvents(this);
         }
         @EventHandler

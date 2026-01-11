@@ -1,13 +1,17 @@
 package fr.nicknqck.config;
 
+import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.invs.MDJ_AOT_Config;
+import fr.nicknqck.invs.MDJ_DS_Config;
+import fr.nicknqck.invs.MDJ_NS_Config;
+import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -33,6 +37,10 @@ public class GameConfig {
     private int forcePercent = 30;
     private int resiPercent = 20;
     private StunType stunType = StunType.TELEPORT;
+    private boolean mortEclair = true;
+    private boolean tntGrief = false;
+    private final LinkedHashMap<MDJ, Class<? extends FastInv>> configurablesMdj;
+    private boolean rodTridimenssionel = false;
 
     public GameConfig() {
         instance = this;
@@ -40,12 +48,17 @@ public class GameConfig {
         itemOnKill.add(new ItemBuilder(Material.GOLDEN_APPLE).setAmount(2).toItemStack());
         this.stuffConfig = new StuffConfig();
         this.narutoConfig = new NarutoConfig();
+        this.configurablesMdj = new LinkedHashMap<>();
+        configurablesMdj.put(MDJ.DS, MDJ_DS_Config.class);
+        configurablesMdj.put(MDJ.AOT, MDJ_AOT_Config.class);
+        configurablesMdj.put(MDJ.NS, MDJ_NS_Config.class);
     }
 
     @Getter
     @Setter
     public final static class StuffConfig {
 
+        private final Map<Integer, ItemStack> startInventoryMap = new HashMap<>();
         private int protectionBoost = 2;
         private int protectionLeggings = 3;
         private int protectionChestplate = 2;
@@ -61,12 +74,17 @@ public class GameConfig {
         private int nmbGap = 20;
         private int minGap = 12;
 
+        private boolean defaultInventory = true;
+        private UUID starterInvConfigurator = null;
+
     }
     @Getter
     @Setter
     public final static class NarutoConfig {
 
         private double edoHealthRemove = 4.0;
+        private int minTimeSpawnBiju = 90;
+        private int maxTimeSpawnBiju = 160;
 
     }
     public enum StunType {

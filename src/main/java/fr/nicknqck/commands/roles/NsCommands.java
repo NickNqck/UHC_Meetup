@@ -52,19 +52,36 @@ public class NsCommands implements CommandExecutor {
 					final List<NSRoles> intelligent = new ArrayList<>();
 					final List<NSRoles> moyenne = new ArrayList<>();
 					final List<NSRoles> peu = new ArrayList<>();
-					for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
-						if (!gamePlayer.isAlive())continue;
-						if (gamePlayer.getRole() == null)continue;
-						if (gamePlayer.getRole() instanceof NSRoles) {
-							NSRoles role = (NSRoles) gamePlayer.getRole();
-							if (role.getIntelligence().equals(Intelligence.GENIE)) {
-								genie.add(role);
-							} else if (role.getIntelligence().equals(Intelligence.INTELLIGENT)) {
-								intelligent.add(role);
-							} else if (role.getIntelligence().equals(Intelligence.MOYENNE) || role.getIntelligence().equals(Intelligence.CONNUE)) {
-								moyenne.add(role);
-							} else if (role.getIntelligence().equals(Intelligence.PEUINTELLIGENT)) {
-								peu.add(role);
+					if (GameState.inGame()) {
+						for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+							if (!gamePlayer.isAlive())continue;
+							if (gamePlayer.getRole() == null)continue;
+							if (gamePlayer.getRole() instanceof NSRoles) {
+								NSRoles role = (NSRoles) gamePlayer.getRole();
+								if (role.getIntelligence().equals(Intelligence.GENIE)) {
+									genie.add(role);
+								} else if (role.getIntelligence().equals(Intelligence.INTELLIGENT)) {
+									intelligent.add(role);
+								} else if (role.getIntelligence().equals(Intelligence.MOYENNE) || role.getIntelligence().equals(Intelligence.CONNUE)) {
+									moyenne.add(role);
+								} else if (role.getIntelligence().equals(Intelligence.PEUINTELLIGENT)) {
+									peu.add(role);
+								}
+							}
+						}
+					} else {
+						for (IRole iRole : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+							if (iRole instanceof NSRoles) {
+								NSRoles role = (NSRoles) iRole;
+								if (role.getIntelligence().equals(Intelligence.GENIE)) {
+									genie.add(role);
+								} else if (role.getIntelligence().equals(Intelligence.INTELLIGENT)) {
+									intelligent.add(role);
+								} else if (role.getIntelligence().equals(Intelligence.MOYENNE) || role.getIntelligence().equals(Intelligence.CONNUE)) {
+									moyenne.add(role);
+								} else if (role.getIntelligence().equals(Intelligence.PEUINTELLIGENT)) {
+									peu.add(role);
+								}
 							}
 						}
 					}
@@ -82,6 +99,7 @@ public class NsCommands implements CommandExecutor {
 						}
 						String string = sb.substring(0, sb.toString().length()-3)+".";
 						sender.sendMessage(string);
+						sender.sendMessage("");
 					}
 					if (!intelligent.isEmpty()) {
 						sender.sendMessage("§a§lIntelligent: ");
@@ -91,6 +109,7 @@ public class NsCommands implements CommandExecutor {
 						}
 						String string = sb.substring(0, sb.toString().length()-3)+".";
 						sender.sendMessage(string);
+						sender.sendMessage("");
 					}
 					if (!moyenne.isEmpty()) {
 						sender.sendMessage("§e§lMoyenne: ");
@@ -100,6 +119,7 @@ public class NsCommands implements CommandExecutor {
 						}
 						String string = sb.substring(0, sb.toString().length()-3)+".";
 						sender.sendMessage(string);
+						sender.sendMessage("");
 					}
 					if (!peu.isEmpty()) {
 						sender.sendMessage("§c§lPeu Intelligent: ");
@@ -109,6 +129,7 @@ public class NsCommands implements CommandExecutor {
 						}
 						String string = sb.substring(0, sb.toString().length()-3)+".";
 						sender.sendMessage(string);
+						sender.sendMessage("");
 					}
 					return true;
 				}

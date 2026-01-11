@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -136,7 +136,7 @@ public class Akaza extends DemonsRoles implements Listener {
 		}
 	}
 	@EventHandler
-	private void onEndGame(EndGameEvent event) {
+	private void onEndGame(GameEndEvent event) {
 		this.runnable.cancel();
 		HandlerList.unregisterAll(this);
 	}

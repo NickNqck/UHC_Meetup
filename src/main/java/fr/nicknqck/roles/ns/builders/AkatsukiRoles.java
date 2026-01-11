@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.builders;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.TeamList;
-import fr.nicknqck.roles.ns.akatsuki.Konan;
+import fr.nicknqck.roles.ns.akatsuki.KonanV2;
 import fr.nicknqck.roles.ns.akatsuki.NagatoV2;
 import lombok.NonNull;
 
@@ -21,11 +21,11 @@ public abstract class AkatsukiRoles extends NSRoles{
 
     @Override
     public void RoleGiven(GameState gameState) {
-        if (!(this instanceof NagatoV2) && !(this instanceof Konan)) {
+        if (!(this instanceof NagatoV2) && !(this instanceof KonanV2)) {
             if (Main.RANDOM.nextInt(101) <= 50) {
                 addKnowedRole(NagatoV2.class);
             } else {
-                addKnowedRole(Konan.class);
+                addKnowedRole(KonanV2.class);
             }
         }
         super.RoleGiven(gameState);

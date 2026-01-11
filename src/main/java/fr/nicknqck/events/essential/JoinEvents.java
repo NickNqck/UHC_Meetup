@@ -2,17 +2,15 @@ package fr.nicknqck.events.essential;
 
 import java.util.UUID;
 
+import fr.nicknqck.events.custom.GamePlayerEatGappleEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.rank.ChatRank;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import fr.nicknqck.GameState;
@@ -29,6 +27,7 @@ public class JoinEvents implements Listener{
 	
  	@EventHandler(priority = EventPriority.LOWEST)
 	public void OnJoin(PlayerJoinEvent event) {
+        System.out.println("LOWEST");
 		Player player = event.getPlayer();
 		GameState gameState = GameState.getInstance();
 		Main.getInstance().getScoreboardManager().onLogin(player);
@@ -76,6 +75,7 @@ public class JoinEvents implements Listener{
 	}
  	@EventHandler(priority = EventPriority.HIGHEST)
 	private void onCustomJoin(PlayerJoinEvent e) {
+        System.out.println("HIGHEST");
 		if (gameState.getServerState().equals(GameState.ServerStates.InGame))return;
 		gameState.updateGameCanLaunch();
 		UUID uuid = e.getPlayer().getUniqueId();
@@ -103,4 +103,14 @@ public class JoinEvents implements Listener{
 			}
 		}
 	}
+    @EventHandler(priority = EventPriority.HIGHEST)
+    private void onEat(final PlayerItemConsumeEvent event) {
+        if (!event.getItem().getType().equals(Material.GOLDEN_APPLE))return;
+        final GamePlayer gamePlayer = gameState.getGamePlayer().get(event.getPlayer().getUniqueId());
+        if (gamePlayer != null) {
+            final GamePlayerEatGappleEvent gamePlayerEatEvent = new GamePlayerEatGappleEvent(gamePlayer, event.getPlayer());
+            Bukkit.getPluginManager().callEvent(gamePlayerEatEvent);
+            event.setCancelled(gamePlayerEatEvent.isCancelled());
+        }
+    }
 }

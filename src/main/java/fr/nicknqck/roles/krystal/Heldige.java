@@ -31,8 +31,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -90,14 +88,15 @@ public class Heldige extends BonusKrystalBase {
         addPower(this.bowSwapPower);
         addPower(new CustomiseSwapPower(this));
         setKrystalAmount(50);
+        addBonus(new ForcePermaBonus(50, this));
     }
-
+/*
     @Override
     public @NonNull Map<PotionEffect, Integer> getBonus() {
         final Map<PotionEffect, Integer> map = new HashMap<>();
         map.put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), 50);
         return map;
-    }
+    }*/
 
     private static class BattleSwapPower extends Power implements Listener {
 
@@ -209,7 +208,7 @@ public class Heldige extends BonusKrystalBase {
             private final List<UUID> alreadyTeleported;
 
             public TeleportCommandPower(@NonNull RoleBase role) {
-                super("Swap interdimensionel", "enderswap", new Cooldown(60*5), role, CommandType.CUSTOM);
+                super("Swap interdimensionel", "enderswap", new Cooldown(60*5), role, CommandType.KRYSTAL);
                 setShowInDesc(false);
                 this.alreadyTeleported = new ArrayList<>();
                 this.targetMap = new HashMap<>();
@@ -315,7 +314,7 @@ public class Heldige extends BonusKrystalBase {
         private final Heldige heldige;
 
         public CustomiseSwapPower(@NonNull Heldige role) {
-            super("/c config", "config", null, role, CommandType.CUSTOM,
+            super("/c config", "config", null, role, CommandType.KRYSTAL,
                     "§7Vous permet d'§aActivé§7/§cDésactivé§7 vos pouvoir \"Swap\"",
                     "",
                     "§7(par défaut les pouvoirs sont§a activé§7)");

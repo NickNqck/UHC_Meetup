@@ -103,4 +103,16 @@ public class InfoManager {
         double percentage = (maxCount * 100.0) / total;
         return "§7Rôle le plus joué : §e" + mostPlayedRole + " §7(" + maxCount + " fois, " + String.format("%.2f", percentage) + "%)";
     }
+    public void resetData(UUID uuid) {
+        if (!this.data.containsKey(uuid)) {
+            return;
+        }
+        PlayerInfo actual = getPlayerInfo(uuid);
+        int i = actual.getResetAmount();
+        this.data.put(uuid, new PlayerInfo(uuid));
+        actual = getPlayerInfo(uuid);
+        i++;
+        actual.setResetAmount(i);
+        save(uuid);
+    }
 }

@@ -12,7 +12,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ZabuzaV2 extends NSRoles implements Listener {
+public class ZabuzaV2 extends NSSoloRoles implements Listener {
 
     public ZabuzaV2(UUID player) {
         super(player);

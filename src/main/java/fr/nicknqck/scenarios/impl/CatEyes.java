@@ -1,7 +1,7 @@
 package fr.nicknqck.scenarios.impl;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.StartGameEvent;
+import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -34,7 +34,7 @@ public class CatEyes extends BasicScenarios implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
     }
     @EventHandler
-    private void onStartGame(StartGameEvent e){
+    private void onStartGame(GameStartEvent e){
         System.out.println("game started for CatEyes");
         if (isActivated){
             e.getInGamePlayers().stream().filter(u -> Bukkit.getPlayer(u) != null).forEach(u -> Bukkit.getPlayer(u).addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false), true));

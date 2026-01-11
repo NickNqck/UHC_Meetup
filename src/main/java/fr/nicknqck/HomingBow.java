@@ -1,5 +1,6 @@
 package fr.nicknqck;
 
+import lombok.NonNull;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -17,13 +18,7 @@ public class HomingBow implements Listener {
 
 	@EventHandler
     public void onProjectileLaunch(ProjectileLaunchEvent event) {
-		Projectile projectile = event.getEntity();
-		if (projectile.getShooter() instanceof Player) {
-			Player shooter = (Player) projectile.getShooter();
-			if (!gameState.hasRoleNull(shooter.getUniqueId())) {
-				gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileLaunch(event, shooter);
-			}
-		}
+		@NonNull final Projectile projectile = event.getEntity();
         if (projectile instanceof Arrow) {
             Arrow arrow = (Arrow) projectile;
             if (arrow.getShooter() instanceof Player) {
@@ -36,12 +31,6 @@ public class HomingBow implements Listener {
     }
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent event) {
-		if (event.getEntity().getShooter() instanceof Player) {
-			Player shooter = (Player) event.getEntity().getShooter();
-			if (!gameState.hasRoleNull(shooter.getUniqueId())) {
-				gameState.getGamePlayer().get(shooter.getUniqueId()).getRole().onProjectileHit(event, shooter);
-			}
-		}
 	    if (event.getEntity() instanceof Arrow) {
 	        Arrow arrow = (Arrow) event.getEntity();
 	        if (arrow.getShooter() instanceof Player) {

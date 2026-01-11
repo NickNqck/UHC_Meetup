@@ -19,6 +19,7 @@ public abstract class Event implements IEvent {
 
     public String[] getLore() {
         return new String[] {
+                "§fShift + Clique§7 pour accéder à la configuration complète",
                 "",
                 "§fPourcentage de chance:§c "+percent+"%",
                 "",
@@ -26,7 +27,8 @@ public abstract class Event implements IEvent {
                 "§fTemp maximal de déclanchement: §c"+ StringUtils.secondsTowardsBeautiful(maxTimeProc),
                 "",
                 (isEnable() ? "§aActivé" : "§cDésactivé"),
-                ""
+                "",
+                "§fMode de jeu: "+getMDJ().getItem().getItemMeta().getDisplayName()
         };
     }
     public boolean onGameStart(final GameState gameState) {

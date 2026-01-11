@@ -2,6 +2,8 @@ package fr.nicknqck.utils;
 
 import java.util.*;
 
+import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.builder.EffectWhen;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -91,5 +93,19 @@ public class PotionUtils implements Listener {
     }
     public static ArrayList<Player> getNoFalls(){
     	return noFall;
+    }
+    public static boolean givePotionEffect(@NonNull final Player player, @NonNull final PotionEffect potionEffect, @NonNull final EffectWhen when) {
+        final GamePlayer gamePlayer = GamePlayer.of(player.getUniqueId());
+        boolean activate = false;
+        if (gamePlayer != null) {
+            if (gamePlayer.getRole() != null) {
+                gamePlayer.getRole().givePotionEffect(potionEffect, when);
+                activate = true;
+            }
+        }
+        if (!activate) {
+            player.addPotionEffect(potionEffect, true);
+        }
+        return activate;
     }
 }

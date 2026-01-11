@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -11,7 +11,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -41,7 +41,7 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class HakuV2 extends NSRoles {
+public class HakuV2 extends NSSoloRoles {
 
     public HakuV2(UUID player) {
         super(player);
@@ -151,7 +151,7 @@ public class HakuV2 extends NSRoles {
                                 return false;
                             }
                             final RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
-                            final List<Vector> positions = rayTrace.traverse(30, 0.2D);
+                            final List<Vector> positions = rayTrace.traverse(40, 0.2D);
                             Block one = null;
                             Block two = null;
                             Block ice = null;
@@ -163,7 +163,9 @@ public class HakuV2 extends NSRoles {
                                     continue;
                                 }
                                 if (!block.getType().equals(Material.AIR)) {
-                                    ice = block;
+                                    if (block.getType().name().contains("ICE")){
+                                        ice = block;
+                                    }
                                 } else {
                                     if (ice == null) {
                                         one = block;
@@ -173,10 +175,13 @@ public class HakuV2 extends NSRoles {
                                         three = block;
                                     }
                                 }
-                                MathUtil.sendParticle(EnumParticle.FLAME, block.getLocation());
+                                MathUtil.sendParticleTo(player, EnumParticle.FLAME, block.getLocation());
                             }
                             if (one != null && ice != null && three != null) {
-                                player.teleport(one.getLocation());
+                                @NonNull final Location loc = one.getLocation();
+                                loc.setPitch(player.getEyeLocation().getPitch());
+                                loc.setYaw(player.getEyeLocation().getYaw());
+                                player.teleport(loc);
                                 this.tpCD.use();
                             }
                         } else {
@@ -214,7 +219,7 @@ public class HakuV2 extends NSRoles {
                 }
             }
             @EventHandler
-            private void onEndGame(@NonNull final EndGameEvent event) {
+            private void onEndGame(@NonNull final GameEndEvent event) {
                 if (!this.power.blockList.isEmpty()) {
                     for (final Block block : this.power.blockList) {
                         block.setType(Material.AIR);
@@ -286,6 +291,10 @@ public class HakuV2 extends NSRoles {
                     }
                     this.timeLeft--;
                     this.hyoton.getRole().getGamePlayer().getActionBarManager().updateActionBar("haku.hyoton", "§bHyôton:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                    double distance = this.hyoton.getRole().getGamePlayer().getLastLocation().distance(this.hyoton.centerLocation);
+                    if (distance > 20) {
+                        this.hyoton.getRole().getGamePlayer().teleport(this.hyoton.centerLocation);
+                    }
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                         this.hyoton.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NOW);
                         if (this.timeLeft <= 0) {

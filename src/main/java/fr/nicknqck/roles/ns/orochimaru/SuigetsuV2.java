@@ -103,7 +103,7 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
             this.orochimaruDead = true;
         }
         if (event.getGameState().getAttributedRole().contains(Roles.Karin)){
-            addKnowedRole(Karin.class);
+            addKnowedRole(KarinV2.class);
         } else {
             this.karinDead = true;
             if (event.getGameState().getAvailableRoles().containsKey(Roles.Jugo)) {
@@ -119,7 +119,7 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
     @EventHandler
     private void onDeath(final UHCDeathEvent event) {
         if (event.getRole() == null)return;
-        if (event.getRole() instanceof Karin) {
+        if (event.getRole() instanceof KarinV2) {
             this.karinDead = true;
             addKnowedRole(Jugo.class);
         }
@@ -158,7 +158,7 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
                 if (!gamePlayer.isOnline()) continue;
                 if (gamePlayer.getUuid().equals(this.suigetsuV2.getPlayer()))continue;
                 final RoleBase role = gamePlayer.getRole();
-                if (role instanceof OrochimaruV2 || role instanceof SasukeV2 || role instanceof Karin) {
+                if (role instanceof OrochimaruV2 || role instanceof SasukeV2 || role instanceof KarinV2) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.suigetsuV2.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NOW));
                     break;
                 }

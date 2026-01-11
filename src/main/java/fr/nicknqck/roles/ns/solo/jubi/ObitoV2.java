@@ -11,8 +11,9 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.akatsuki.*;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
+import fr.nicknqck.roles.ns.builders.ISAkatsukiChief;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
@@ -46,7 +47,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class ObitoV2 extends JubiRoles {
+public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
 
     public ObitoV2(UUID player) {
         super(player);
@@ -80,11 +81,11 @@ public class ObitoV2 extends JubiRoles {
         setChakraType(Chakras.KATON);
         addKnowedRole(MadaraV2.class);
         getGamePlayer().startChatWith("§dObito:", "!", MadaraV2.class);
-        addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7:",
-                Deidara.class, HidanV2.class, ItachiV2.class,
-                KakuzuV2.class, KisameV2.class, Konan.class,
-                NagatoV2.class, ZetsuBlanc.class,
-                ZetsuNoir.class, ZetsuBlancV2.class);
+    }
+
+    @Override
+    public @NonNull Intelligence getIntelligence() {
+        return Intelligence.INTELLIGENT;
     }
 
     @Override
@@ -235,7 +236,7 @@ public class ObitoV2 extends JubiRoles {
             super("Kamui", null, new ItemBuilder(Material.NETHER_STAR).setName("§dKamui"), role,
                     "§7Vous ouvre un menu vous permettant d'accéder à§c deux pouvoirs§7:",
                     "",
-                    "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximal de§c 5 minutes§7. (1x/10m)",
+                    "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximal de§c 5 minutes§7. (1x/5m)",
                     "",
                     "§dSonohaka§7: Vous permet d'ouvrir un autre menu vous permettant de cibler un joueur,",
                     "§7La personne cibler ce verra téléporter dans la§c dimension Kamui§7 pendant§c 5 minutes§7. (1x/10m)");
@@ -284,7 +285,7 @@ public class ObitoV2 extends JubiRoles {
         private static class Arimasu extends Power {
 
             public Arimasu(@NonNull RoleBase role) {
-                super("Kamui§7 (§dArimasu§7)", new Cooldown(60*15), role);
+                super("Kamui§7 (§dArimasu§7)", new Cooldown(60*5), role);
                 setShowInDesc(false);
             }
 
@@ -333,7 +334,7 @@ public class ObitoV2 extends JubiRoles {
             private final KamuiPower kamuiPower;
 
             public Sonohaka(@NonNull RoleBase role, KamuiPower kamuiPower) {
-                super("Kamui§7 (§dSonohaka§7)§r", new Cooldown(60*15), role);
+                super("Kamui§7 (§dSonohaka§7)§r", new Cooldown(60*10), role);
                 this.kamuiPower = kamuiPower;
                 setShowInDesc(false);
             }

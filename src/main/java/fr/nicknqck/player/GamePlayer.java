@@ -20,8 +20,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -180,6 +178,13 @@ public class GamePlayer {
 			this.getDiscRunnable().setTeleportLocation(location);
 		}
 	}
+
+	/***
+	 *
+	 * @param begin = Ce avec quoi le joueur doit commencer pour parler avec son/ses mates
+	 * @param constructor = Le début du message qui sera affiché dans le chat des joueurs étant dans la conversation
+	 * @param roleToTalks = Tout simplement le/les rôles qui vont parler (en plus de celui dans lequel il est créé)
+	 */
 	@SafeVarargs
     public final void startChatWith(final String begin, final String constructor, final Class<? extends RoleBase>... roleToTalks) {
 		this.chatWithManager.add(new ChatWithManager(begin, constructor, this, roleToTalks));
@@ -196,6 +201,9 @@ public class GamePlayer {
 			}
 		}
 	}
+    public static GamePlayer of(final UUID uuid) {
+        return GameState.getInstance().getGamePlayer().get(uuid);
+    }
     public static class DiscRunnable extends BukkitRunnable {
 
 		private final GamePlayer gamePlayer;
@@ -388,6 +396,11 @@ public class GamePlayer {
 						final RoleBase role = gameState.getGamePlayer().get(uuid).getRole();
 						if (!toTalk.contains(role.getClass()))continue;
 						role.getGamePlayer().sendMessage(starter+" §f"+ ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(constructor.length())));
+					}
+				}
+				if (me.getRole() != null) {
+					if (toTalk.contains(me.getRole().getClass())) {
+						return;
 					}
 				}
 				me.sendMessage(starter+" §f"+ ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(constructor.length())));

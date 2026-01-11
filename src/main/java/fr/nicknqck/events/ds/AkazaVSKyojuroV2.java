@@ -3,6 +3,7 @@ package fr.nicknqck.events.ds;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -187,6 +188,11 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 "§7a l'activation pendant§c 2 minutes§7 fait qu'à chaque coup reçus il y est",
                 "§c10%§7 de chance que l'attaque sois esquivé"
         };
+    }
+
+    @Override
+    public @NonNull MDJ getMDJ() {
+        return MDJ.DS;
     }
 
     private static class VagueItemPower extends ItemPower implements Listener {

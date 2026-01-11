@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.nicknqck.player.GamePlayer;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -61,12 +62,30 @@ public class Loc {
         return new Vector(direction.getZ(), 0.0, -direction.getX()).normalize();
     }
     public static void teleportBehindPlayer(final Player teleported,final Player target) {
-    	Location loc = target.getLocation().clone();
-		loc.setX(loc.getX()+Math.cos(Math.toRadians(-target.getEyeLocation().getYaw()+90)));
-		loc.setZ(loc.getZ()+Math.sin(Math.toRadians(target.getEyeLocation().getYaw()-90)));
-		loc.setPitch(0);
-		teleported.teleport(loc);
+		teleported.teleport(getLocationBehindPlayer(target));
     }
+    public static Location getLocationBehindPlayer(@NonNull final Player player) {
+        Location loc = player.getLocation().clone();
+        loc.setX(loc.getX()+Math.cos(Math.toRadians(-player.getEyeLocation().getYaw()+90)));
+        loc.setZ(loc.getZ()+Math.sin(Math.toRadians(player.getEyeLocation().getYaw()-90)));
+        loc.setPitch(0);
+        return loc;
+    }
+    public static Location getLocationBehindPlayer(@NonNull final Player player, double distance) {
+        Location loc = player.getLocation().clone();
+
+        float yaw = player.getEyeLocation().getYaw();
+
+        // Calcul du vecteur derrière le joueur
+        double x = Math.cos(Math.toRadians(-yaw + 90)) * distance;
+        double z = Math.sin(Math.toRadians(yaw - 90)) * distance;
+
+        loc.add(x, 0, z);
+        loc.setPitch(0);
+
+        return loc;
+    }
+
     public static List<Player> getNearbyPlayersExcept(Entity entity, int distance) {
         List<Player> toReturn = new ArrayList<>();
         entity.getWorld().getPlayers().stream()

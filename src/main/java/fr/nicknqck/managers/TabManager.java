@@ -2,7 +2,7 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TPS;
 import fr.nicknqck.utils.event.EventUtils;
@@ -53,7 +53,7 @@ public class TabManager implements Listener {
         }
     }
     @EventHandler
-    private void onEndGame(@NonNull final EndGameEvent event) {
+    private void onEndGame(@NonNull final GameEndEvent event) {
         for (@NonNull final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (this.schedulerMap.containsKey(onlinePlayer.getUniqueId())) {
                 for (@NonNull final Player target : Bukkit.getOnlinePlayers()) {

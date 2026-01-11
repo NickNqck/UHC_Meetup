@@ -81,7 +81,7 @@ public class HantenguV2 extends DemonsRoles {
 				if (!owner.hasPotionEffect(PotionEffectType.SPEED)) {
 					owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false));
 				}
-				if (!isHasNoFall()) {
+				if (!isNoFall()) {
 					setNoFall(true);
 				}
 			} else {
@@ -91,7 +91,7 @@ public class HantenguV2 extends DemonsRoles {
 				if (owner.hasPotionEffect(PotionEffectType.SPEED)) {
 					owner.removePotionEffect(PotionEffectType.SPEED);
 				}
-				if (isHasNoFall()) {
+				if (isNoFall()) {
 					setNoFall(false);
 				}
 			}
@@ -153,7 +153,7 @@ public class HantenguV2 extends DemonsRoles {
 			if (urogi) {
 				OLDgivePotionEffet(owner, PotionEffectType.JUMP, 20, 4, true);
 			}
-			if (!isHasNoFall()) {
+			if (!isNoFall()) {
 				setNoFall(true);
 			}
 			if (timeinUrogi >= 1) {

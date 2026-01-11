@@ -1,5 +1,7 @@
 package fr.nicknqck;
 
+import fr.nicknqck.commands.completer.AdminTabCompletor;
+import fr.nicknqck.commands.completer.KrystalTabCompletor;
 import fr.nicknqck.commands.completer.NSCompleter;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.commands.*;
@@ -22,7 +24,10 @@ import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
+import fr.nicknqck.roles.krystal.KrystalManager;
+import fr.nicknqck.roles.krystal.MDJConfig;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
+import fr.nicknqck.roles.ns.power.KatsuyuManager;
 import fr.nicknqck.runnables.PubRunnable;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
@@ -35,10 +40,14 @@ import fr.nicknqck.utils.fastinv.FastInvManager;
 import fr.nicknqck.utils.inventories.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.managers.TabManager;
+import fr.nicknqck.utils.rank.ChatRank;
 import fr.nicknqck.worlds.WorldListener;
 import fr.nicknqck.worlds.worldloader.WorldFillTask;
+import hm.zelha.particlesfx.util.ParticleSFX;
 import lombok.Getter;
+import lombok.NonNull;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.Validate;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -47,27 +56,31 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /*
 [UHC-MTP UHC Plugin Credits]
-Ideas and Game Design: NickNack, Mega02600, Egaly inspirated by goldenuhc.eu and yukanmc
-Programming: NickNack, Mega02600
-Roles: NickNack, Mega02600
+Ideas and Game Design: NickNqck, Mega02600, Egaly inspirated by goldenuhc.eu and yukanmc
+Programming: NickNqck, Mega02600
+Roles: NickNqck
 */
 @Getter
 public class Main extends JavaPlugin {
 
 	public final String PLUGIN_NAME = "UHC-Meetup";
+	private final String NAME = "§7[§6UHC-Meetup§7]";
 	private ScoreboardManager scoreboardManager;
 	private ScheduledExecutorService executorMonoThread;
 	private ScheduledExecutorService scheduledExecutorService;
@@ -100,6 +113,8 @@ public class Main extends JavaPlugin {
 	private HokageManager hokageManager;
 	private InfoManager infoManager;
 	private PlayersNameManager playersNameManager;
+    private KatsuyuManager katsuyuManager;
+	private KrystalManager krystalManager;
 
     @Override
 	public void onEnable() {
@@ -151,7 +166,11 @@ public class Main extends JavaPlugin {
 		this.tabManager = new TabManager();
 		this.infoManager = new InfoManager(getDataFolder());
 		this.playersNameManager = new PlayersNameManager(getDataFolder());
+        this.katsuyuManager = new KatsuyuManager();
         new UpdateChecker(this, "NickNqck/UHC_Meetup");
+		this.krystalManager = new KrystalManager();
+		ParticleSFX.setPlugin(this);
+		saveResource("wing.png", false);
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -246,7 +265,9 @@ public class Main extends JavaPlugin {
 		System.out.println("Starting registering commands");
 		getCommand("ds").setExecutor(new DSmtpCommands(gameState));
 		getCommand("a").setExecutor(new AdminCommands(gameState));
-		getCommand("c").setExecutor(new CRolesCommands(gameState));
+		getCommand("a").setTabCompleter(new AdminTabCompletor());
+		getCommand("kr").setExecutor(new KrystalCommands(gameState));
+        getCommand("kr").setTabCompleter(new KrystalTabCompletor());
 		getCommand("aot").setExecutor(new AotCommands(gameState));
 		getCommand("ns").setExecutor(new NsCommands(gameState));
 		getCommand("ns").setTabCompleter(new NSCompleter());
@@ -258,7 +279,6 @@ public class Main extends JavaPlugin {
 		getCommand("gm").setExecutor(new Gamemode());
 		getCommand("wl").setExecutor(new Whitelist(gameState));
 		getCommand("whitelist").setExecutor(new Whitelist(gameState));
-		getCommand("mc").setExecutor(new McCommands(gameState));
 		getCommand("discord").setExecutor(new Discord());
 		getCommand("color").setExecutor(new Color(gameState));
 		getCommand("pack").setExecutor(new PackCommand());
@@ -327,6 +347,7 @@ public class Main extends JavaPlugin {
 		System.out.println("Original Base : "+creator.generator());
 		creator.generatorSettings(getBase());
 		System.out.println("After Config Base Settings: "+creator.generatorSettings());
+        Bukkit.broadcastMessage("§f[§6UHC-Meetup§f]§a Génération en cours d'une nouvelle§c arène§a.");
 		World gameWorld = creator.createWorld();
 		gameWorld.setTime(6000);
 		gameWorld.setGameRuleValue("doMobSpawning", "false");
@@ -463,5 +484,59 @@ public class Main extends JavaPlugin {
 			e.printStackTrace();
 			return "Ip Introuvable";
 		}
+	}
+	public void sendMessageToHosts(@NonNull final String message) {
+		for (@NonNull final Player onlinePlayer : getServer().getOnlinePlayers()) {
+			if (!ChatRank.isHost(onlinePlayer))continue;
+			onlinePlayer.sendMessage(message);
+		}
+	}
+	private void initRoles() {
+		Collection<Class<?>> classesOf = getClassesOf(Main.getInstance());
+		for (Class<?> aClass : classesOf) {
+			if(!aClass.isAnnotationPresent(MDJConfig.class)) continue;
+
+		}
+	}
+	private Collection<Class<?>> getClassesOf(Plugin plugin) {
+		try {
+			Objects.requireNonNull(plugin, "Plugin is null!");
+			Validate.isTrue(JavaPlugin.class.isAssignableFrom(plugin.getClass()), "Plugin must be a JavaPlugin");
+
+			final Method m = JavaPlugin.class.getDeclaredMethod("getFile");
+			m.setAccessible(true);
+
+			final File pluginFile = (File) m.invoke(plugin);
+			final Collection<Class<?>> classes = new ArrayList<>();
+
+			try (JarFile jarFile = new JarFile(pluginFile)) {
+				Enumeration<JarEntry> entries = jarFile.entries();
+
+				while (entries.hasMoreElements()) {
+					String name = entries.nextElement().getName();
+
+					if (name.endsWith(".class")) {
+						name = name.replace("/", ".").replaceFirst(".class", "");
+
+						Class<?> clazz;
+
+						try {
+							clazz = Class.forName(name);
+                            if (!clazz.getPackage().getName().contains("role")) {
+                                clazz = null;
+                            }
+						} catch (NoClassDefFoundError ex) {
+							continue;
+						}
+						if (clazz == null)continue;
+						classes.add(clazz);
+					}
+				}
+			}
+			return classes;
+		} catch (ReflectiveOperationException | IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
 	}
 }

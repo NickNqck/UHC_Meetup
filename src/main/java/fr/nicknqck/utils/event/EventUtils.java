@@ -1,8 +1,7 @@
 package fr.nicknqck.utils.event;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.EndGameEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.power.PowerItemRecupEvent;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.Getter;
@@ -52,7 +51,7 @@ public class EventUtils implements Listener{
         }
     }
     @EventHandler
-    private void onEndGame(EndGameEvent event) {
+    private void onEndGame(GameEndEvent event) {
         assert !toUnregister.isEmpty();
         for (final Listener listener : toUnregister) {
             unregisterEvents(listener);
