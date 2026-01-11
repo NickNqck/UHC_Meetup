@@ -127,66 +127,74 @@ public class HubListener implements Listener {
 	public void giveStartInventory(Player p) {
 		Main.getInstance().getScoreboardManager().update(p);
 		ItemsManager.ClearInventory(p);
-		p.getInventory().setItem(0, Items.getdiamondsword());
-		p.getInventory().setItem(2, Items.getbow());
-		if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 1) {
-			p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, Main.getInstance().getGameConfig().getStuffConfig().getPearl()));
+		if (Main.getInstance().getGameConfig().getStuffConfig().isDefaultInventory()) {
+			p.getInventory().setItem(0, Items.getdiamondsword());
+			p.getInventory().setItem(2, Items.getbow());
+			if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 1) {
+				p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, Main.getInstance().getGameConfig().getStuffConfig().getPearl()));
+			}
+			p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
+			p.getInventory().setItem(9, new ItemStack(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()));
+			p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
+			p.getInventory().setItem(11, Items.getironshovel());
+			p.getInventory().setItem(12, Items.getironpickaxe());
+			if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 1) {
+				p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 2) {
+				p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
+				p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 3) {
+				p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
+				p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
+				p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 4) {
+				p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
+				p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
+				p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
+				p.getInventory().setItem(10, new ItemStack(Material.BRICK, 64));
+			}
+			if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 1) {
+				p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 2) {
+				p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
+				p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 3) {
+				p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
+				p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
+				p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 4) {
+				p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
+				p.getInventory().setItem(16, new ItemStack(Material.WATER_BUCKET, 1));
+				p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
+				p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
+			}
+			if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 1) {
+				p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 2) {
+				p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
+				p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 3) {
+				p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
+				p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));
+				p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
+			} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 4) {
+				p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
+				p.getInventory().setItem(15, new ItemStack(Material.LAVA_BUCKET, 1));
+				p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));
+				p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
+			}
+			p.getInventory().setHelmet(Items.getdiamondhelmet());
+			p.getInventory().setChestplate(Items.getdiamondchestplate());
+			p.getInventory().setLeggings(Items.getironleggings());
+			p.getInventory().setBoots(Items.getdiamondboots());
+			p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()));
+		} else {
+			for (int slot = 0; slot <= 53; slot++) {
+				final ItemStack item = Main.getInstance().getGameConfig().getStuffConfig().getStartInventoryMap().get(slot);
+				if (item == null)continue;
+				p.getInventory().setItem(slot, item);
+			}
 		}
-		p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
-		p.getInventory().setItem(9, new ItemStack(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()));
-		p.getInventory().setItem(20, new ItemStack(Material.ANVIL, 1));
-		p.getInventory().setItem(11, Items.getironshovel());
-		p.getInventory().setItem(12, Items.getironpickaxe());
-		if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 1) {
-			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 2) {
-			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
-			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 3) {
-			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
-			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
-			p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() == 4) {
-			p.getInventory().setItem(1, new ItemStack(Material.BRICK, 64));
-			p.getInventory().setItem(28, new ItemStack(Material.BRICK, 64));
-			p.getInventory().setItem(19, new ItemStack(Material.BRICK, 64));
-			p.getInventory().setItem(10, new ItemStack(Material.BRICK, 64));
-		}
-		if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 1) {
-			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 2) {
-			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
-			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 3) {
-			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
-			p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
-			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getEau() == 4) {
-			p.getInventory().setItem(7, new ItemStack(Material.WATER_BUCKET, 1));
-			p.getInventory().setItem(16, new ItemStack(Material.WATER_BUCKET, 1));
-			p.getInventory().setItem(25, new ItemStack(Material.WATER_BUCKET, 1));
-			p.getInventory().setItem(34, new ItemStack(Material.WATER_BUCKET, 1));
-		}
-		if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 1) {
-			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 2) {
-			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
-			p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 3) {
-			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
-			p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));
-			p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
-		} else if (Main.getInstance().getGameConfig().getStuffConfig().getLave() == 4) {
-			p.getInventory().setItem(6, new ItemStack(Material.LAVA_BUCKET, 1));
-			p.getInventory().setItem(15, new ItemStack(Material.LAVA_BUCKET, 1));
-			p.getInventory().setItem(24, new ItemStack(Material.LAVA_BUCKET, 1));
-			p.getInventory().setItem(33, new ItemStack(Material.LAVA_BUCKET, 1));
-		}
-		p.getInventory().setHelmet(Items.getdiamondhelmet());
-		p.getInventory().setChestplate(Items.getdiamondchestplate());
-		p.getInventory().setLeggings(Items.getironleggings());
-		p.getInventory().setBoots(Items.getdiamondboots());
-		p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()));
 		p.updateInventory();
 		p.setWalkSpeed(0.2f);
 		((CraftPlayer) p).getHandle().setAbsorptionHearts(0);

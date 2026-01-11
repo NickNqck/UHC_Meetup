@@ -58,6 +58,7 @@ public class GameConfig {
     @Setter
     public final static class StuffConfig {
 
+        private final Map<Integer, ItemStack> startInventoryMap = new HashMap<>();
         private int protectionBoost = 2;
         private int protectionLeggings = 3;
         private int protectionChestplate = 2;
@@ -72,6 +73,9 @@ public class GameConfig {
 
         private int nmbGap = 20;
         private int minGap = 12;
+
+        private boolean defaultInventory = true;
+        private UUID starterInvConfigurator = null;
 
     }
     @Getter

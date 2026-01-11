@@ -21,7 +21,7 @@ public class InventoryConfig implements Listener {
     public InventoryConfig(GameState gameState) {
         this.gameState = gameState;
         new HubConfig(gameState);
-    }
+    }/*
     @EventHandler
     private void onInventoryClick(InventoryClickEvent event){
         if (event.getClickedInventory() == null) return;
@@ -190,5 +190,5 @@ public class InventoryConfig implements Listener {
             }
         }
     }
-
+*/
 }

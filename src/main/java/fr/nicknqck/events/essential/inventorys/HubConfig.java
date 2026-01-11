@@ -48,7 +48,7 @@ public class HubConfig implements Listener {
             ItemStack item = event.getCurrentItem();
             if (!item.hasItemMeta())return;
             switch (inv.getTitle()) {
-                case "§fConfiguration":
+                case "§7(§c!§7)§f Configuration":
                     if (item.isSimilar(GUIItems.getStartGameButton()) && ChatRank.isHost(player)) {
                         HubListener.getInstance().StartGame(player);
                     } else if (item.isSimilar(GUIItems.getSelectRoleButton())  &&ChatRank.isHost(player)) {

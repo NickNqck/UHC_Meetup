@@ -391,7 +391,7 @@ public static ItemStack getSelectConfigButton() {
         return Bukkit.createInventory(null, 9*3, "§fConfiguration§7 -> §6scenarios");
 	}
 	public static Inventory getAdminWatchGUI() {
-        return Bukkit.createInventory(null, 54, "§fConfiguration");
+        return Bukkit.createInventory(null, 54, "§7(§c!§7)§f Configuration");
 	}
 	
 	public static Inventory getConfigSelectGUI() {

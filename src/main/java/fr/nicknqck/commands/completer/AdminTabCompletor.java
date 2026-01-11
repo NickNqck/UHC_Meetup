@@ -34,6 +34,7 @@ public class AdminTabCompletor implements TabCompleter {
                     stringList.add("delrole");
                     stringList.add("addAll");
                     stringList.add("preview");
+                    stringList.add("invconfig");
                 }
             }
             if (GameState.inGame()) {
@@ -83,6 +84,11 @@ public class AdminTabCompletor implements TabCompleter {
                     strings[0].equalsIgnoreCase("info") ||
                     strings[0].equalsIgnoreCase("camp")) {
                 stringList.addAll(getListOfPlayer(strings[1]));
+            }
+            if (!GameState.inGame() && commandSender instanceof Player && ChatRank.isHost(((Player) commandSender).getUniqueId())) {
+                stringList.add("start");
+                stringList.add("save");
+                stringList.add("quit");
             }
             if (strings[1] != null) {
                 final List<String> list = new ArrayList<>();

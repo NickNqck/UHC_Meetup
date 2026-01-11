@@ -9,7 +9,9 @@ import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.invs.Configuration_Inventory;
 import fr.nicknqck.invs.Configuration_RolesInventory;
+import fr.nicknqck.invs.FirstConfigurationInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.IRole;
@@ -689,7 +691,8 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§fConfiguration")) {
+                if (inv.getTitle().equalsIgnoreCase("§7(§c!§7)§f Configuration")) {
+
                     if (gameState.gameCanLaunch) {
                         inv.setItem(0, GUIItems.getGreenStainedGlassPane());
                         inv.setItem(1, GUIItems.getGreenStainedGlassPane());
@@ -764,8 +767,11 @@ public class Inventories {
                         inv.setItem(40, AntiPvP.getnotlobbypvp());
                     }
                     inv.setItem(43, GUIItems.getCrit(gameState));
+
+     //               new FirstConfigurationInventory().open(player);
                 }
-            }
+
+               }
         }
         player.updateInventory();
     }
@@ -791,46 +797,9 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§fConfiguration§7 ->§6 Inventaire")) {
-                    inv.setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()).setName("§r§fNombre de pomme d'§eor").setLore(
-                                    "§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNombre actuelle:§e "+Main.getInstance().getGameConfig().getStuffConfig().getNmbGap())
-                            .toItemStack());
-                    inv.setItem(0, new ItemBuilder(Material.DIAMOND_HELMET).setLore(
-                                    "§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet()
-                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
-
-                            .toItemStack());
-                    inv.setItem(9, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setLore(
-                                    "§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()
-                            ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
-                            .toItemStack());
-                    inv.setItem(18, new ItemBuilder(Material.IRON_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
-                            .setLore("§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionLeggings())
-                            .toItemStack());
-                    inv.setItem(27, new ItemBuilder(Material.DIAMOND_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2).hideEnchantAttributes()
-                            .setLore("§a+1§f (Clique gauche)",
-                                    "§c-1§f (Clique droit)",
-                                    "§r§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost())
-                            .toItemStack());
-                    inv.setItem(45, GUIItems.getdiamondsword());
-                    inv.setItem(46, GUIItems.getblock());
-                    inv.setItem(47, GUIItems.getbow());
-                    inv.setItem(49, GUIItems.getEnderPearl());
-                    inv.setItem(50, GUIItems.getGoldenCarrot());
-                    inv.setItem(51, GUIItems.getlave());
-                    inv.setItem(52, GUIItems.geteau());
-                    inv.setItem(38, new ItemBuilder(Material.ARROW, Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).setName("§fFlèches").setLore("","§7Max:§c 64","§7Minimum:§c 1","§7Actuelle:§c "+Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()).toItemStack());
-                    //inv.setItem(9, GUIItems.getx());
-
-                    inv.setItem(8, GUIItems.getSelectBackMenu());
+                final Configuration_Inventory config = new Configuration_Inventory();
+                if (inv.getTitle().equals(config.getInventory().getTitle())) {
+                    config.open(player);
                 }
             }
         }
