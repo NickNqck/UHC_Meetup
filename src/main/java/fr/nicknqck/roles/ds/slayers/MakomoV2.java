@@ -34,6 +34,8 @@ import java.util.UUID;
 
 public class MakomoV2 extends SlayerRoles implements Listener{
 
+    private boolean targetByUrokodaki = false;
+
     public MakomoV2(UUID player) {
         super(player);
     }
@@ -64,12 +66,13 @@ public class MakomoV2 extends SlayerRoles implements Listener{
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine("§7Si§a Urokodaki§7 vous§c cible§7 avec son§b /ds water§7 vous obtiendrez l'effet§e Speed II§7 le§e jour§7.")
+                .addCustomLine(targetByUrokodaki ? "" : "§7Si§a Urokodaki§7 vous§c cible§7 avec son§b /ds water§7 vous obtiendrez l'effet§e Speed II§7 le§e jour§7.")
                 .getText();
     }
     public void targetedByUrokodaki() {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 80, 1, false, false), EffectWhen.DAY);
         getGamePlayer().sendMessage("§7Vous avez gagnez l'effet§e Speed II§7 le§c jour§7.");
+        this.targetByUrokodaki = true;
     }
     @EventHandler
     private void onUrokodakiTarget(final UrokodakiDsWaterEvent event) {
