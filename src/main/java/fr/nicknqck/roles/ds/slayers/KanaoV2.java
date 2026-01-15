@@ -7,6 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
@@ -64,7 +65,8 @@ public class KanaoV2 extends SlayerRoles {
     private static class TanjiroCommand extends CommandPower {
 
         public TanjiroCommand(@NonNull RoleBase role) {
-            super("§a/ds tanjiro <joueur>", "tanjiro", null, role, CommandType.DS);
+            super("§a/ds tanjiro <joueur>", "tanjiro", null, role, CommandType.DS,
+                    "§7Si le joueur cibler a le rôle§a Tanjiro§7, vous obtiendrez§c 2"+ AllDesc.coeur+"§c permanent ainsi que Force I§7 proche de lui (§c20 blocs§7).");
             setMaxUse(1);
         }
 
@@ -133,7 +135,8 @@ public class KanaoV2 extends SlayerRoles {
     private static class FouilleCommand extends CommandPower {
 
         public FouilleCommand(@NonNull RoleBase role) {
-            super("/ds fouille <joueur>", "fouille", new Cooldown(60*10), role, CommandType.DS);
+            super("/ds fouille <joueur>", "fouille", new Cooldown(60*10), role, CommandType.DS,
+                    "§7Vous permet de voir ce qu'il y a dans l'inventaire du joueur viser.");
         }
 
         @Override
