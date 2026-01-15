@@ -66,7 +66,8 @@ public class KanaoV2 extends SlayerRoles {
 
         public TanjiroCommand(@NonNull RoleBase role) {
             super("§a/ds tanjiro <joueur>", "tanjiro", null, role, CommandType.DS,
-                    "§7Si le joueur cibler a le rôle§a Tanjiro§7, vous obtiendrez§c 2"+ AllDesc.coeur+"§c permanent ainsi que Force I§7 proche de lui (§c20 blocs§7).");
+                    "§7Si le joueur cibler a le rôle§a Tanjiro§7, vous obtiendrez§c 2"+ AllDesc.coeur+"§c permanent ainsi que Force I§7 proche de lui (§c20 blocs§7),",
+                    "§7sinon vous perdrez§c 1"+AllDesc.coeur+" permanent§7.");
             setMaxUse(1);
         }
 
@@ -93,7 +94,7 @@ public class KanaoV2 extends SlayerRoles {
                         new ForceRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 10);
                     } else {
                         player.sendMessage("§c"+args[1]+"§7 n'est§c pas§a Tanjiro§7, vous perdez§c 1❤ permanent§7.");
-                        getRole().setMaxHealth(getRole().getMaxHealth()+4.0);
+                        getRole().setMaxHealth(getRole().getMaxHealth()-2.0);
                         player.setMaxHealth(getRole().getMaxHealth());
                     }
                     return true;
