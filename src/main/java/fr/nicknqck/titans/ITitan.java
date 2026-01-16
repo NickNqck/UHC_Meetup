@@ -1,6 +1,6 @@
 package fr.nicknqck.titans;
 
-import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.player.GamePlayer;
 import lombok.NonNull;
 import org.bukkit.Material;
@@ -19,6 +19,7 @@ public interface ITitan {
     @NonNull List<PotionEffect> getEffects();
     int getTransfoDuration();
     @NonNull String[] getDescription();
-    @NonNull PrepareTitanStealEvent.TitanForm getTitanForm();
+    @NonNull
+    TitanForm getTitanForm();
 
 }

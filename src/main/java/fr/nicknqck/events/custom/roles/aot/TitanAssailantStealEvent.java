@@ -8,14 +8,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
 @Getter
-public class TitanStealEvent extends GameEvent implements Cancellable {
+public class TitanAssailantStealEvent extends GameEvent implements Cancellable {
 
     private final AotRoles role;
     private final GamePlayer gamePlayer;
     private final Player player;
     private boolean cancelled = false;
 
-    public TitanStealEvent(AotRoles role, GamePlayer gamePlayer, Player player) {
+    public TitanAssailantStealEvent(AotRoles role, GamePlayer gamePlayer, Player player) {
         this.role = role;
         this.gamePlayer = gamePlayer;
         this.player = player;

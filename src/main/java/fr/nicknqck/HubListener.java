@@ -11,7 +11,6 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.NonNull;
@@ -109,7 +108,6 @@ public class HubListener implements Listener {
 			gameState.getGamePlayer().put(u, gamePlayer);
 			System.out.println("Player "+p+" a ete ajouter a la partie");
 		}
-		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
 		for (Bijus b : Bijus.values()) {
 			b.getBiju().setHote(null);

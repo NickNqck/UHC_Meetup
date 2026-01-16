@@ -1,5 +1,6 @@
 package fr.nicknqck.titans.impl;
 
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
@@ -73,8 +74,8 @@ public class CuirasseV2 extends TitanBase implements Listener {
     }
 
     @Override
-    public @NonNull PrepareTitanStealEvent.TitanForm getTitanForm() {
-        return PrepareTitanStealEvent.TitanForm.CUIRASSE;
+    public @NonNull TitanForm getTitanForm() {
+        return TitanForm.CUIRASSE;
     }
 
     @EventHandler
@@ -110,7 +111,7 @@ public class CuirasseV2 extends TitanBase implements Listener {
 
         protected ChangementDeCuirassePower(@NonNull CuirasseV2 cuirasseV2) {
             super("Changement de Cuirasse", new Cooldown(5), new ItemBuilder(Material.QUARTZ).setName("§f§lChangement de Cuirasse").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes(), cuirasseV2.getGamePlayer().getRole(),
-                    "§7Vous permet de retirer ou de vous rééquipez de votre cuirasse, plus de détail dans le§6 /aot info");
+                    "§7Vous permet de retirer ou de vous rééquipez de votre cuirasse, plus de détail dans le§6 /aot titan");
             this.cuirasse = cuirasseV2;
         }
 

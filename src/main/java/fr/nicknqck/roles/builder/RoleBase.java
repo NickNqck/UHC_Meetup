@@ -10,7 +10,6 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -241,9 +240,6 @@ public abstract class RoleBase implements IRole {
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		for (Bijus value : Bijus.values()) {
 			value.getBiju().onAPlayerDie(player, gameState, killer);
-		}
-		for (Titans value : Titans.values()) {
-			value.getTitan().onAPlayerDie(player, killer);
 		}
 		if (!player.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld()), 20);

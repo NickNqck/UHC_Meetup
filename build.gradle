@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'fr.nicknqck'
-version '10'
+version '12'
 
 repositories {
     mavenLocal()
@@ -26,7 +26,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
     implementation 'com.google.code.gson:gson:2.13.1'
     implementation 'io.github.hmzel:particlesfx:1.8.8'
-    compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\spigot.jar')
+    compileOnly files('/home/nicknqck/Téléchargements/Serveur Exemple/spigot.jar')
 }
 
 shadowJar {
@@ -34,4 +34,4 @@ shadowJar {
     relocate("hm.zelha.particlesfx", "fr.nicknqck.particles")
 }
 
-setLibsDirName("C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\plugins")
+setLibsDirName("/home/nicknqck/Téléchargements/Serveur Exemple/plugins")

@@ -152,6 +152,8 @@ public class TitanManager implements Listener {
                     GamePlayer gamePlayer = null;
                     for (@NonNull final GamePlayer gP : this.map.keySet()) {
                         if (gP.getRole() == null)continue;
+                        if (!gP.isOnline())continue;
+                        if (!gP.isAlive())continue;
                         if (gP.getRole() instanceof AotRoles) {
                             if (gamePlayer == null) {
                                 gamePlayer = gP;

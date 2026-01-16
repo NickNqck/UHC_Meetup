@@ -6,11 +6,10 @@ import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.ErenV2;
-import fr.nicknqck.roles.aot.solo.Gabi;
+import fr.nicknqck.roles.aot.solo.GabiV2;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -345,7 +344,7 @@ public class GameState{
 			role = new Erwin(player);
 			break;
 		case Gabi:
-			role = new Gabi(player);
+			role = new GabiV2(player);
 			break;
 		case Nakime:
 			role = new Nakime(player);
@@ -668,9 +667,6 @@ public class GameState{
 	}
 	public void sendDescription(Player player) {
 		if (!hasRoleNull(player.getUniqueId())) {
-			for (Titans t : Titans.values()) {
-				t.getTitan().onGetDescription(player);
-			}
 			final RoleBase role = getGamePlayer().get(player.getUniqueId()).getRole();
 			player.sendMessage(role.Desc());
 			player.spigot().sendMessage(role.getComponent());

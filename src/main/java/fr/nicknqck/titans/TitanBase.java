@@ -80,7 +80,7 @@ public abstract class TitanBase implements ITitan {
 
         public TransformationPower(@NonNull TitanBase titan) {
             super("§fTransformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§fTransformation"), titan.getGamePlayer().getRole(),
-                    "§7Cette objet vous permet de vous transformez en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot info");
+                    "§7Cette objet vous permet de vous transformez en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot titan");
             this.titanBase = titan;
             setWorkWhenInCooldown(true);
         }

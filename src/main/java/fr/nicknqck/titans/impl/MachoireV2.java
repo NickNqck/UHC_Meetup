@@ -1,5 +1,6 @@
 package fr.nicknqck.titans.impl;
 
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -68,8 +69,8 @@ public class MachoireV2 extends TitanBase implements Listener {
     }
 
     @Override
-    public @NonNull PrepareTitanStealEvent.TitanForm getTitanForm() {
-        return PrepareTitanStealEvent.TitanForm.MACHOIRE;
+    public @NonNull TitanForm getTitanForm() {
+        return TitanForm.MACHOIRE;
     }
 
     @EventHandler
@@ -87,7 +88,7 @@ public class MachoireV2 extends TitanBase implements Listener {
 
         protected JumpPower(@NonNull RoleBase role, MachoireV2 machoire) {
             super("Saut", new Cooldown(25), new ItemBuilder(Material.SLIME_BALL).setName("§aSaut").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes(), role,
-                    "§7Les informations sur ce pouvoirs sont contenue dans votre§6 /aot info");
+                    "§7Les informations sur ce pouvoirs sont contenue dans votre§6 /aot titan");
             this.machoire = machoire;
             setShowInDesc(false);
         }

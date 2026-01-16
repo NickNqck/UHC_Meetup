@@ -7,7 +7,6 @@ import fr.nicknqck.PatchCritical;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.titans.impl.MachoireV2;
 import lombok.NonNull;
@@ -22,7 +21,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
 import java.util.UUID;
 
 public class Patch implements Listener{
@@ -52,7 +50,6 @@ public class Patch implements Listener{
         final Player damager = (Player) event.getDamager();
         final Player victim = (Player) event.getEntity();
      	if (damager.getItemInHand() == null) return;
-        Arrays.stream(Titans.values()).forEach(titans -> titans.getTitan().onPlayerAttackAnotherPlayer(damager, victim, event));
 		if (checkNull(damager, victim)) {
 			event.setCancelled(true);
 			return;
@@ -67,13 +64,6 @@ public class Patch implements Listener{
             ApplyForce(event, Main.getInstance().getGameConfig().getForcePercent(), true);
         }
 		ApplyForce(event, gameDamager.getRole().getBonusForce(), false);
-        if (Titans.Machoire.getTitan().getOwner() != null && Titans.Machoire.getTitan().getOwner() == damager.getUniqueId() && Titans.Machoire.getTitan().isTransformedinTitan()) {
-			if (Main.isDebug()){
-				System.out.println(victim.getName()+" has been resi cancelled by Titan Machoire");
-			}
-			event.setDamage(event.getDamage()*1.2);
-            return;
-		}
 		if (Main.getInstance().getTitanManager().hasTitan(event.getDamager().getUniqueId())) {
 			if (Main.getInstance().getTitanManager().getTitan(event.getDamager().getUniqueId()) instanceof MachoireV2) {
 				if (Main.getInstance().getTitanManager().getTitan(event.getDamager().getUniqueId()).isTransformed()) {

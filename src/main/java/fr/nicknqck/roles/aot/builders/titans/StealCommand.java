@@ -29,6 +29,7 @@ public class StealCommand extends CommandPower {
                 if (((AotRoles) role).isCanVoleTitan()) {
                     final PrepareStealCommandEvent stealEvent = new PrepareStealCommandEvent(player, (AotRoles) role);
                     Bukkit.getPluginManager().callEvent(stealEvent);
+                    return true;
                 }
             }
         }

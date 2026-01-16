@@ -12,7 +12,6 @@ import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -197,11 +196,6 @@ public class AdminCommands implements CommandExecutor{
 								}
 							}
 						}
-						for (Titans titans : Titans.values()) {
-							if (titans.getTitan().getOwner() != null&&titans.getTitan().getOwner() == player.getUniqueId()) {
-								titans.getTitan().resetCooldown();
-							}
-						}
 						return true;
 					}
 				}
@@ -218,11 +212,6 @@ public class AdminCommands implements CommandExecutor{
 										bijuBase.getBijuPower().getCooldown().setActualCooldown(0);
 									}
 								}
-							}
-						}
-						for (Titans titans : Titans.values()) {
-							if (titans.getTitan().getOwner() != null&&titans.getTitan().getOwner() == player.getUniqueId()) {
-								titans.getTitan().resetCooldown();
 							}
 						}
 						if (!gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers().isEmpty()) {

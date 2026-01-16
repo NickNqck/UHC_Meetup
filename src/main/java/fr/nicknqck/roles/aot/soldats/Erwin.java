@@ -3,7 +3,7 @@ package fr.nicknqck.roles.aot.soldats;
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
-import fr.nicknqck.roles.aot.solo.Eren;
+import fr.nicknqck.roles.aot.solo.ErenV2;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
@@ -56,7 +56,7 @@ public class Erwin extends SoldatsRoles {
 								owner.sendMessage("La personne visée ne possède pas de rôle veuiller visée quelqu'un d'autre");
 							}else {
                                 gameState.getGamePlayer().get(target.getUniqueId()).getRole().getOriginTeam();
-                                if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof Eren) {
+                                if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof ErenV2) {
                                     owner.sendMessage(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeamColor() + target.getName() + "§r appartient au camp des§a " + TeamList.Soldat.name());
                                     cmdUse += 1;
                                     int r = RandomUtils.getRandomInt(0, 2);

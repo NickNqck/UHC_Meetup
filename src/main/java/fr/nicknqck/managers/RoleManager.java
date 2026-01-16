@@ -8,7 +8,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.ErenV2;
-import fr.nicknqck.roles.aot.solo.Gabi;
+import fr.nicknqck.roles.aot.solo.GabiV2;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.IRole;
@@ -179,7 +179,7 @@ public class RoleManager implements Listener {
         registerRole(ReinerV2.class);
         //Register Solo
         registerRole(ErenV2.class);
-        registerRole(Gabi.class);
+        registerRole(GabiV2.class);
         registerRole(TitanUltime.class);
     }
     private void registerNs() throws Exception {

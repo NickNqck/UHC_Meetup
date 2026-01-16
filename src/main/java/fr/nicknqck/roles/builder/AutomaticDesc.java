@@ -114,6 +114,7 @@ public class AutomaticDesc {
         if (lines.length < 1)return this;
         int i = 0;
         for (final String string : lines) {
+            if (string.equals("/*"))continue;
             text.addExtra(new TextComponent("\n"));
             if (i == 0){
                 text.addExtra(new TextComponent("\n"+AllDesc.point));
