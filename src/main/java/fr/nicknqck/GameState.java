@@ -371,7 +371,7 @@ public class GameState{
 			role = new Onyankopon(player);
 			break;
 		case Hansi:
-			role = new Hansi(player);
+			role = new HansiV2(player);
 			break;
 		case TitanUltime:
 			role = new TitanUltime(player);

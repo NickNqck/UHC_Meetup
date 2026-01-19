@@ -2,6 +2,7 @@ package fr.nicknqck.titans;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareStealCommandEvent;
@@ -92,6 +93,16 @@ public class TitanManager implements Listener {
     @EventHandler
     private void onEndGame(@NonNull final GameEndEvent event) {
         this.titansMap.clear();
+    }
+    public boolean isTitanAttributed(@NonNull final TitanForm titanForm) {
+        if (!titansMap.isEmpty()) {
+            for (final TitanBase base : new ArrayList<>(this.titansMap.values())) {
+                if (base.getTitanForm().equals(titanForm)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     private static class TitanStealManager implements Listener {
 

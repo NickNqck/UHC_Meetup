@@ -10,6 +10,7 @@ import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.titans.TitanBase;
 import fr.nicknqck.titans.impl.*;
 import fr.nicknqck.utils.event.EventUtils;
@@ -86,7 +87,7 @@ public class GabiV2 extends AotRoles implements Listener {
         } else {
             setCanVoleTitan(false);
             //On va lui donner un Titan aléatoire
-            setMaxHealth(20.0);
+            setMaxHealth(24.0);
             final List<Class<? extends TitanBase>> classes = new ArrayList<>();
             classes.add(AssaillantV2.class);
             classes.add(BestialV2.class);
@@ -105,6 +106,11 @@ public class GabiV2 extends AotRoles implements Listener {
                      NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
+            final Player player = Bukkit.getPlayer(getPlayer());
+            if (player != null) {
+                player.setMaxHealth(getMaxHealth());
+                player.setHealth(player.getMaxHealth());
+            }
         }
     }
 
@@ -112,7 +118,7 @@ public class GabiV2 extends AotRoles implements Listener {
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
                 .addCustomLines(
-                        getTitanListInDesc().length == 10 ? new String[0] : getTitanListInDesc()//Si c'est vide alors je n'affiche rien
+                        this.titanList.isEmpty() && !Main.getInstance().getTitanManager().hasTitan(getPlayer()) ? new String[0] : getTitanListInDesc()//Si c'est vide alors je n'affiche rien
                 )
                 .getText();
     }
@@ -120,15 +126,18 @@ public class GabiV2 extends AotRoles implements Listener {
         return new String[]{
                 "§7Voici une liste de joueurs qui possèdent un§c titan shifter§7:",
                 "",
-                !this.titanList.isEmpty() ? isGamePlayerGood(this.titanList.get(0)) ? "§b"+this.titanList.get(0).getPlayerName()+"§7 possède un Titan" : "/*" : "/*",
-                titanList.isEmpty() ? "/*" :  titanList.size() < 2 ? "/*" : isGamePlayerGood(this.titanList.get(1)) ? "§b"+this.titanList.get(1).getPlayerName()+"§7 possède un Titan" : "/*",
-               titanList.isEmpty() ? "/*" : titanList.size() < 3 ? "/*" : isGamePlayerGood(this.titanList.get(2)) ? "§b"+this.titanList.get(2).getPlayerName()+"§7 possède un Titan" : "/*",
+                !this.titanList.isEmpty() ? isGamePlayerGood(this.titanList.get(0)) ? "§8 - §b"+this.titanList.get(0).getPlayerName()+"§7 possède un Titan" : "/*" : "/*",
+                titanList.isEmpty() ? "/*" :  titanList.size() < 2 ? "/*" : isGamePlayerGood(this.titanList.get(1)) ? "§8 - §b"+this.titanList.get(1).getPlayerName()+"§7 possède un Titan" : "/*",
+               titanList.isEmpty() ? "/*" : titanList.size() < 3 ? "/*" : isGamePlayerGood(this.titanList.get(2)) ? "§8 - §b"+this.titanList.get(2).getPlayerName()+"§7 possède un Titan" : "/*",
                 "",
-                "§7Au moment de la mort d'un§c titan shifter§7 si vous êtes assez §7proche,"+
-                "§7vous §7pourrez récupérer son§c titan§7 via la commande §6/aot steal§7,",
-                "§7Qu'importe le nombre de joueurs essayant de récupérer ce §ctitan§7, vous serez toujours§c prioritaire§7.",
+                "§8 - §7Au moment de la mort d'un§c titan shifter§7 si vous êtes assez §7proche,"+
+                "§7vous §7pourrez récupérer son§c titan§7 via la commande §6/aot steal§7.",
                 "",
-                "§7Si vous récupérez de cette façon un titan appartenenant §7originellement au camp§9 Mahr§7, vous rejoindrez ce dernier."
+                "§8 - §7Qu'importe le nombre de joueurs essayant de récupérer §7ce §ctitan§7, vous serez toujours§c prioritaire§7.",
+                "",
+                "§8 - §7Si vous récupérez de cette façon un titan appartenenant §7originellement au camp§9 Mahr§7, vous rejoindrez ce dernier.",
+                "",
+                "§8 - §7En récupérant un§c titan§7, vous perdez immédiatement§c 3"+ AllDesc.coeur+" §cpermanents§7."
         };
     }
     private boolean isGamePlayerGood(GamePlayer gamePlayer) {
@@ -141,6 +150,7 @@ public class GabiV2 extends AotRoles implements Listener {
                 setTeam(TeamList.Mahr);
                 addKnowedPlayersFromTeam(TeamList.Mahr);
                 event.getNewGamePlayer().sendMessage("§7Vous avez rejoint le camp:§9 Mahr§7.");
+                setMaxHealth(getMaxHealth()-6.0);
             }
         }
     }

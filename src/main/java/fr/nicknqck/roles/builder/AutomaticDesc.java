@@ -3,6 +3,7 @@ package fr.nicknqck.roles.builder;
 import fr.nicknqck.Main;
 import fr.nicknqck.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
@@ -195,7 +196,7 @@ public class AutomaticDesc {
                     if (cooldown.getOriginalCooldown() == -500) {
                         textComponent.addExtra("§7 (1x/partie)");
                     } else {
-                        textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
+                        textComponent.addExtra(" §7(§71§7x§7/§7" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + "§7)");
                     }
                 }
                 if (power.getMaxUse() != -1) {
@@ -274,6 +275,11 @@ public class AutomaticDesc {
                                         ((OrochimaruV2) this.role).getChakraString() :
                                         ((NSRoles) this.role).getChakras().getShowedName())) :
                         ""));
+        if (this.role instanceof AotRoles) {
+            if (((AotRoles) this.role).isCanVoleTitan()) {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7avez §7la §7capacité §7de §7voler §7un §ctitan §7via §7la §7commande §6/aot steal"));
+            }
+        }
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
         return text;
     }

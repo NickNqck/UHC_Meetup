@@ -3,6 +3,8 @@ package fr.nicknqck.roles.aot.soldats;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.TitanForm;
+import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -24,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class ArminV2 extends SoldatsRoles {
+public class ArminV2 extends SoldatsRoles implements Listener{
 
     public ArminV2(UUID player) {
         super(player);
@@ -43,12 +45,7 @@ public class ArminV2 extends SoldatsRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new AotInvCommand(this));
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
-            if (!gameState.getAttributedRole().contains(Roles.Bertolt)) {
-                Main.getInstance().getTitanManager().addTitan(getPlayer(), new ColossalV2(getGamePlayer()));
-                getGamePlayer().sendMessage("§7Comme§9 Bertolt§7 n'est pas dans la partie vous recevez le§c titan Colossal§7.");
-            }
-        }, 20);
+        EventUtils.registerRoleEvent(this);
         super.RoleGiven(gameState);
     }
 
@@ -59,7 +56,14 @@ public class ArminV2 extends SoldatsRoles {
                 .setPowers(getPowers())
                 .getText();
     }
-
+    @EventHandler
+    private void onEndGiveRole(final RoleGiveEvent event) {
+        if (!event.isEndGive())return;
+        if (!Main.getInstance().getTitanManager().isTitanAttributed(TitanForm.COLOSSAL)) {
+            Main.getInstance().getTitanManager().addTitan(getPlayer(), new ColossalV2(getGamePlayer()));
+            getGamePlayer().sendMessage("§7Comme§9 Bertolt§7 n'est pas dans la partie vous recevez le§c titan Colossal§7.");
+        }
+    }
     private static class AotInvCommand extends CommandPower implements Listener {
 
         public AotInvCommand(@NonNull RoleBase role) {

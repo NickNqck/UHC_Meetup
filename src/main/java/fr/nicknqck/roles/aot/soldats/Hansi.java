@@ -6,7 +6,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.solo.ErenV2;
-import fr.nicknqck.roles.aot.solo.Gabi;
+import fr.nicknqck.roles.aot.solo.GabiV2;
 import fr.nicknqck.roles.aot.titanrouge.Jelena;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -70,7 +70,7 @@ public class Hansi extends SoldatsRoles {
 									owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 									giveHeartatInt(target, 1);
 								}else {
-									if (gamePlayer.getRole() instanceof Gabi) {
+									if (gamePlayer.getRole() instanceof GabiV2) {
 										target.sendMessage("§7Vous avez censé avoir perdu 2"+AllDesc.coeur+"§7 permanent suite à la torture de§a Hansi§7 mais à la place vous avez gagner 1"+AllDesc.coeur+" permanent, elle à appris que vous êtes dans le camp des §a Soldats");
 										owner.sendMessage("§7Vous avez torturer§f "+target.getName()+"§7 il a perdu 2"+AllDesc.coeur+"§7 permanent, cependant vous avez appris qu'il est du camp§a Soldat");
 										giveHeartatInt(target, 1);
