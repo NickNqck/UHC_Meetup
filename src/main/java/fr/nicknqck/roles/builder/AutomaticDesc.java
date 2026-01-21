@@ -200,7 +200,7 @@ public class AutomaticDesc {
                     }
                 }
                 if (power.getMaxUse() != -1) {
-                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/parti"+"§7e§7)");
                 }
             }
             textComponent.addExtra("§7.");

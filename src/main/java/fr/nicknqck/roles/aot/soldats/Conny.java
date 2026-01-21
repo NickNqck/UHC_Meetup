@@ -105,7 +105,7 @@ public class Conny extends SoldatsRoles {
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(this.sucre)) {
 			if (this.protegerRole != null) {
-				if (this.protegerRole instanceof Jean) {
+				if (this.protegerRole instanceof JeanV2) {
 					if (!protegerdead) {
 						giveJeanEffect(owner);
 					} else {
@@ -139,7 +139,7 @@ public class Conny extends SoldatsRoles {
 					for (UUID u : gameState.getInGamePlayers()) {
 						Player p = Bukkit.getPlayer(u);
 						if (p == null)continue;
-						if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Jean) {
+						if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof JeanV2) {
 							amountJean++;
 							this.protegerRole = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 							cmd = true;

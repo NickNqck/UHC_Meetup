@@ -359,7 +359,7 @@ public class GameState{
 			role = new Eclaireur(player);
 			break;
 		case Jean:
-			role = new Jean(player);
+			role = new JeanV2(player);
 			break;
 		case Jelena:
 			role = new Jelena(player);
