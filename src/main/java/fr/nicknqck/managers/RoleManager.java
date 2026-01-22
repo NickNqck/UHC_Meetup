@@ -161,7 +161,7 @@ public class RoleManager implements Listener {
         registerRole(Livai.class);
         registerRole(Mikasa.class);
         registerRole(Onyankopon.class);
-        registerRole(Sasha.class);
+        registerRole(SashaV2.class);
         registerRole(Soldat.class);
         //Register Titan Rouge
         registerRole(GrandTitan.class);

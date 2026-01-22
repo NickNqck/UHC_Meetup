@@ -49,12 +49,13 @@ public class SashaV2 extends SoldatsRoles {
 
     @Override
     public TextComponent getComponent() {
-        return AutomaticDesc.createFullAutomaticDesc(this);
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7A l'annonce des rôles vous obtenez§c 32 flèches §csupplémentaires§7.").getText();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new ArcDuChasseurItem(this), true);
+        getGamePlayer().addItems(new ItemBuilder(Material.ARROW, 32).toItemStack());
         super.RoleGiven(gameState);
     }
     private static class ArcDuChasseurItem extends ItemPower implements Listener {
@@ -64,9 +65,9 @@ public class SashaV2 extends SoldatsRoles {
                     "§7Lorsque vous tirez une flèche et qu'elle atteint un joueur,",
                     "§7cela lui inflige un malus différent en fonction de l'endroit toucher",
                     "",
-                    "Tête: Elle obtiendra 7 secondes de Blindness",
-                    "Torse: Elle perdra 1 coeur supplémentaire (en plus des dégâts de la flèche)",
-                    "Jambes: Elle obtient 7 secondes de Slowness");
+                    "§aTête§7: Elle obtiendra§c 7 secondes§7 de§9 Blindness",
+                    "§aTorse§7: Elle perdra§c 1"+AllDesc.coeur+"§c supplémentaire§7 (en plus des dégâts de la flèche)",
+                    "§aJambes§7: Elle obtient§c 7 secondes§7 de§8 Slowness");
             EventUtils.registerRoleEvent(this);
         }
 

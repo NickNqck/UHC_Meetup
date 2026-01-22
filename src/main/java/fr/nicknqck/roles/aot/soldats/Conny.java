@@ -113,7 +113,7 @@ public class Conny extends SoldatsRoles {
 					}
 					cd = 60*8;
 					return true;
-				} else if (this.protegerRole instanceof Sasha) {
+				} else if (this.protegerRole instanceof SashaV2) {
 					if (!protegerdead) {
 						giveSashaEffect(owner);
 					} else {
@@ -156,7 +156,7 @@ public class Conny extends SoldatsRoles {
 						for (UUID u : gameState.getInGamePlayers()) {
 							Player p = Bukkit.getPlayer(u);
 							if (p == null)continue;
-							if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof Sasha) {
+							if (gameState.getGamePlayer().get(p.getUniqueId()).getRole() instanceof SashaV2) {
 								amountSasha++;
 								this.protegerRole = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 								cmd = true;

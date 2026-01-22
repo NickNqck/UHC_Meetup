@@ -377,7 +377,7 @@ public class GameState{
 			role = new TitanUltime(player);
 			break;
 		case Sasha:
-			role = new Sasha(player);
+			role = new SashaV2(player);
 			break;
 		case Conny:
 			role = new Conny(player);
