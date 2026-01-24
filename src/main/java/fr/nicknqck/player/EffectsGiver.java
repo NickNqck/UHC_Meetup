@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,9 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class EffectsGiver implements Listener {
 
@@ -22,107 +21,7 @@ public class EffectsGiver implements Listener {
 
     public EffectsGiver() {
         Bukkit.getServer().getPluginManager().registerEvents(this, Main.getInstance());
-        new BukkitRunnable() {
-            private final GameState gameState = GameState.getInstance();
-            @Override
-            public void run() {
-                if (gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                    for (final UUID u : gameState.getInGamePlayers()) {
-                        final Player player = Bukkit.getPlayer(u);
-                        if (player == null)continue;
-                        if (!gameState.hasRoleNull(player.getUniqueId())) {
-                            final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-                            if (!role.getEffects().isEmpty()) {
-                                for (final PotionEffect effect : role.getEffects().keySet()) {
-                                    if (role.getEffects().get(effect).equals(EffectWhen.PERMANENT)) {
-                                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                                            final PotionEffect potionEffect = new PotionEffect(effect.getType(), Integer.MAX_VALUE, effect.getAmplifier(), false, false);
-                                            final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, role, potionEffect, EffectWhen.DAY);
-                                            Bukkit.getPluginManager().callEvent(effectGiveEvent);
-                                            if (!effectGiveEvent.isCancelled()){
-                                                player.addPotionEffect(potionEffect);
-                                            }
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20*10);//une fois toute les 10 secondes
-    }
-    @EventHandler
-    private void onDay(DayEvent event) {
-        for (final UUID u : event.getInGamePlayersWithRole()) {
-            Player player = Bukkit.getPlayer(u);
-            if (player == null)continue;
-            final RoleBase roleBase = event.getGameState().getGamePlayer().get(player.getUniqueId()).getRole();
-            if (!roleBase.getEffects().isEmpty()) {
-                for (final PotionEffect potionEffect : roleBase.getEffects().keySet()) {
-                    if (roleBase.getEffects().get(potionEffect).equals(EffectWhen.DAY)) {
-                        new BukkitRunnable() {
-                            private int timeRemaining = Main.getInstance().getGameConfig().getMaxTimeDay();
-                            private final UUID uuid = player.getUniqueId();
-                            @Override
-                            public void run() {
-                                if (event.getGameState().getServerState() != GameState.ServerStates.InGame || timeRemaining == 0 || event.getGameState().isNightTime()) {
-                                    cancel();
-                                    return;
-                                }
-                                timeRemaining--;
-                                Player p = Bukkit.getPlayer(uuid);
-                                if (p != null) {
-                                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                                        final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, roleBase, potionEffect, EffectWhen.DAY);
-                                        Bukkit.getPluginManager().callEvent(effectGiveEvent);
-                                        if (!effectGiveEvent.isCancelled()){
-                                            p.addPotionEffect(potionEffect, true);
-                                        }
-                                    });
-                                }
-                            }
-                        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-                    }
-                }
-            }
-        }
-    }
-    @EventHandler
-    private void onNight(NightEvent event) {
-        for (final UUID u : event.getInGamePlayersWithRole()) {
-            final Player player = Bukkit.getPlayer(u);
-            if (player == null)continue;
-            final RoleBase roleBase = event.getGameState().getGamePlayer().get(player.getUniqueId()).getRole();
-            if (!roleBase.getEffects().isEmpty()) {
-                for (PotionEffect potionEffect : roleBase.getEffects().keySet()) {
-                    if (roleBase.getEffects().get(potionEffect).equals(EffectWhen.NIGHT)) {
-                        new BukkitRunnable() {
-                            private int timeRemaining = Main.getInstance().getGameConfig().getMaxTimeDay();
-                            private final UUID uuid = player.getUniqueId();
-                            @Override
-                            public void run() {
-                                if (event.getGameState().getServerState() != GameState.ServerStates.InGame || timeRemaining == 0 || !event.getGameState().isNightTime()) {
-                                    cancel();
-                                    return;
-                                }
-                                timeRemaining--;
-                                Player p = Bukkit.getPlayer(uuid);
-                                if (p != null) {
-                                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                                        final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, roleBase, potionEffect, EffectWhen.NIGHT);
-                                        Bukkit.getPluginManager().callEvent(effectGiveEvent);
-                                        if (!effectGiveEvent.isCancelled()){
-                                            p.addPotionEffect(potionEffect, true);
-                                        }
-                                    });
-                                }
-                            }
-                        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-                    }
-                }
-            }
-        }
+        new EffectRunnable().runTaskTimerAsynchronously(Main.getInstance(), 0L, 20L);
     }
     @EventHandler
     private void onKill(UHCPlayerKillEvent event) {
@@ -162,5 +61,64 @@ public class EffectsGiver implements Listener {
             killGiver.put(gamePlayer, one);
         }
     }
+    private static final class EffectRunnable extends BukkitRunnable {
 
+        @Override
+        public void run() {
+            if (GameState.inGame()) {
+                for (final GamePlayer gamePlayer : new ArrayList<>(GameState.getInstance().getGamePlayer().values())){
+                    if (gamePlayer.getRole() == null) continue;
+                    if (!gamePlayer.isAlive())continue;
+                    if (!gamePlayer.isOnline())continue;
+                    final RoleBase role = gamePlayer.getRole();
+                    final Player player = Bukkit.getPlayer(role.getPlayer());
+                    if (player == null)continue;
+                    if (!role.getEffects().isEmpty()){
+                        @NonNull final Map<PotionEffect, EffectWhen> map = new HashMap<>(role.getEffects());
+                        @NonNull final List<PotionEffect> permaEffects = new ArrayList<>();
+                        map.keySet().stream().filter(potion -> map.get(potion).equals(EffectWhen.PERMANENT)).forEach(permaEffects::add);
+                        permaEffects.forEach(map::remove);
+                        if (!permaEffects.isEmpty()) {
+                            for (@NonNull final PotionEffect potionEffect : permaEffects) {
+                                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                    final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, role, potionEffect, EffectWhen.PERMANENT);
+                                    Bukkit.getPluginManager().callEvent(effectGiveEvent);
+                                    if (!effectGiveEvent.isCancelled()){
+                                        player.addPotionEffect(potionEffect, true);
+                                    }
+                                });
+                            }
+                        }
+                        if (GameState.getInstance().isNightTime()) {
+                            for (@NonNull PotionEffect potionEffect : map.keySet()) {
+                                @NonNull final EffectWhen effectWhen = map.get(potionEffect);
+                                if (effectWhen.equals(EffectWhen.NIGHT)) {
+                                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                        final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, role, potionEffect, effectWhen);
+                                        Bukkit.getPluginManager().callEvent(effectGiveEvent);
+                                        if (!effectGiveEvent.isCancelled()){
+                                            player.addPotionEffect(potionEffect, true);
+                                        }
+                                    });
+                                }
+                            }
+                        } else {
+                            for (@NonNull PotionEffect potionEffect : map.keySet()) {
+                                @NonNull final EffectWhen effectWhen = map.get(potionEffect);
+                                if (effectWhen.equals(EffectWhen.DAY)) {
+                                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                        final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, role, potionEffect, effectWhen);
+                                        Bukkit.getPluginManager().callEvent(effectGiveEvent);
+                                        if (!effectGiveEvent.isCancelled()){
+                                            player.addPotionEffect(potionEffect, true);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

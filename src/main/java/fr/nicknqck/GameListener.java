@@ -734,7 +734,6 @@ public class GameListener implements Listener {
 					    p.closeInventory();
 						if (!gameState.hasRoleNull(p.getUniqueId())){
 							gameState.getGamePlayer().get(p.getUniqueId()).getRole().FormChoosen(item, gameState);
-							gameState.getGamePlayer().get(p.getUniqueId()).getRole().neoFormChoosen(item, inv, event.getSlot(), gameState);
 						}
 					}
 				}

@@ -3,6 +3,7 @@ package fr.nicknqck.titans;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.TitanForm;
+import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareStealCommandEvent;
@@ -11,6 +12,7 @@ import fr.nicknqck.events.custom.roles.aot.TitanOwnerChangeEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.titans.StealCommand;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
 import lombok.NonNull;
@@ -18,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -93,6 +96,20 @@ public class TitanManager implements Listener {
     @EventHandler
     private void onEndGame(@NonNull final GameEndEvent event) {
         this.titansMap.clear();
+    }
+    @EventHandler
+    private void onEffectGive(@NonNull final EffectGiveEvent event) {
+        if (hasTitan(event.getPlayer().getUniqueId())) {
+            if (event.getEffectWhen().equals(EffectWhen.SPECIAL))return;
+            final TitanBase titan = getTitan(event.getPlayer().getUniqueId());
+            if (titan.isTransformed()) {
+                final List<PotionEffectType> titanTypes = new ArrayList<>();
+                titan.getEffects().forEach(effect -> titanTypes.add(effect.getType()));
+                if (titanTypes.contains(event.getPotionEffect().getType()) || !event.getEffectWhen().equals(EffectWhen.SPECIAL)) {
+                    event.setCancelled(true);
+                }
+            }
+        }
     }
     public boolean isTitanAttributed(@NonNull final TitanForm titanForm) {
         if (!titansMap.isEmpty()) {

@@ -356,7 +356,7 @@ public class GameState{
 			role = new ErenV2(player);
 			break;
 		case Eclaireur:
-			role = new Eclaireur(player);
+			role = new EclaireurV2(player);
 			break;
 		case Jean:
 			role = new JeanV2(player);

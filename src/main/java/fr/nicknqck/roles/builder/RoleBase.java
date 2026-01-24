@@ -556,7 +556,6 @@ public abstract class RoleBase implements IRole {
     }
 	public void onInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 	}
-	public void neoFormChoosen(ItemStack item, Inventory inv, int slot, GameState gameState) {}
 	public void playSound(Player p, String sound) {
 		p.getWorld().setGameRuleValue("sendCommandFeedback", "false");
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
@@ -575,7 +574,7 @@ public abstract class RoleBase implements IRole {
 	}
 
 	public void givePotionEffect(PotionEffect effect, EffectWhen when) {
-		if (when.equals(EffectWhen.NOW)) {
+		if (when.equals(EffectWhen.NOW) || when.equals(EffectWhen.SPECIAL)) {
 			final Player owner = Bukkit.getPlayer(getPlayer());
 			if (owner != null) {
 				final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(owner, this, effect, when);

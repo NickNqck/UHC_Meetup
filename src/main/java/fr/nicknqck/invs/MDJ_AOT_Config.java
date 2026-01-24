@@ -48,7 +48,7 @@ public class MDJ_AOT_Config extends FastInv {
             });
         }
         setItem(12, new ItemBuilder(Material.LAVA_BUCKET)
-                .setName("Capacité d'utiliser de la§6 lave§f pour les§c titans§f (§ctransformer§f)")
+                .setName("§fCapacité d'utiliser de la§6 lave§f pour les§c titans§f (§ctransformer§f)")
                 .setLore(Main.getInstance().getGameConfig().isLaveTitans() ?
                         "§fLes titans§a peuvent§f utiliser de la§6 lave§f une fois§c transformer§f."
                         :

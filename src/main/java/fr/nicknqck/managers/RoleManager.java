@@ -154,7 +154,7 @@ public class RoleManager implements Listener {
         //Register Soldats
         registerRole(ArminV2.class);
         registerRole(Conny.class);
-        registerRole(Eclaireur.class);
+        registerRole(EclaireurV2.class);
         registerRole(Erwin.class);
         registerRole(HansiV2.class);
         registerRole(JeanV2.class);

@@ -109,7 +109,17 @@ public abstract class TitanBase implements ITitan {
             }
             return false;
         }
+        private synchronized void removePermanentEffects(Player player) {
+            // Copie de la collection pour éviter les erreurs de modification concurrente
+            for (PotionEffect effect : player.getActivePotionEffects()) {
+
+                if (effect.getDuration() > 1000000) {
+                    player.removePotionEffect(effect.getType());
+                }
+            }
+        }
         public synchronized void startTransformation(@NonNull final Player player) {
+            removePermanentEffects(player);
             this.titanBase.setTransformed(true);
             @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, true, player);
             Bukkit.getPluginManager().callEvent(event);
@@ -172,7 +182,7 @@ public abstract class TitanBase implements ITitan {
                     Bukkit.getScheduler().runTask(this.power.getPlugin(), () -> {
                         if (!this.power.titanBase.getEffects().isEmpty()) {
                             for (final PotionEffect potionEffect : this.power.titanBase.getEffects()) {
-                                this.power.getRole().givePotionEffect(potionEffect, EffectWhen.NOW);
+                                this.power.getRole().givePotionEffect(potionEffect, EffectWhen.SPECIAL);
                             }
                         }
                     });
