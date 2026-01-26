@@ -123,21 +123,22 @@ public class GabiV2 extends AotRoles implements Listener {
                 .getText();
     }
     private String[] getTitanListInDesc() {
+        final boolean hasTitan = Main.getInstance().getTitanManager().hasTitan(getPlayer());
         return new String[]{
-                "§7Voici une liste de joueurs qui possèdent un§c titan shifter§7:",
-                "",
+                titanList.isEmpty() ? "/*" : "§7Voici une liste de joueurs qui possèdent un§c titan shifter§7:",
+                titanList.isEmpty() ? "/*" : "",
                 !this.titanList.isEmpty() ? isGamePlayerGood(this.titanList.get(0)) ? "§8 - §b"+this.titanList.get(0).getPlayerName()+"§7 possède un Titan" : "/*" : "/*",
                 titanList.isEmpty() ? "/*" :  titanList.size() < 2 ? "/*" : isGamePlayerGood(this.titanList.get(1)) ? "§8 - §b"+this.titanList.get(1).getPlayerName()+"§7 possède un Titan" : "/*",
                titanList.isEmpty() ? "/*" : titanList.size() < 3 ? "/*" : isGamePlayerGood(this.titanList.get(2)) ? "§8 - §b"+this.titanList.get(2).getPlayerName()+"§7 possède un Titan" : "/*",
-                "",
-                "§8 - §7Au moment de la mort d'un§c titan shifter§7 si vous êtes assez §7proche,"+
+                hasTitan ? "/*" :"",
+                hasTitan ? "/*" :"§8 - §7Au moment de la mort d'un§c titan shifter§7 si vous êtes assez §7proche,"+
                 "§7vous §7pourrez récupérer son§c titan§7 via la commande §6/aot steal§7.",
-                "",
-                "§8 - §7Qu'importe le nombre de joueurs essayant de récupérer §7ce §ctitan§7, vous serez toujours§c prioritaire§7.",
-                "",
-                "§8 - §7Si vous récupérez de cette façon un titan appartenenant §7originellement au camp§9 Mahr§7, vous rejoindrez ce dernier.",
-                "",
-                "§8 - §7En récupérant un§c titan§7, vous perdez immédiatement§c 3"+ AllDesc.coeur+" §cpermanents§7."
+                hasTitan ? "/*" :"",
+                hasTitan ? "/*" :"§8 - §7Qu'importe le nombre de joueurs essayant de récupérer §7ce §ctitan§7, vous serez toujours§c prioritaire§7.",
+                hasTitan ? "/*" :"",
+                hasTitan ? "/*" :"§8 - §7Si vous récupérez de cette façon un titan appartenenant §7originellement au camp§9 Mahr§7, vous rejoindrez ce dernier.",
+                hasTitan ? "/*" : "",
+                hasTitan ? "/*" : "§8 - §7En récupérant un§c titan§7, vous perdez immédiatement§c 3"+ AllDesc.coeur+" §cpermanents§7."
         };
     }
     private boolean isGamePlayerGood(GamePlayer gamePlayer) {
