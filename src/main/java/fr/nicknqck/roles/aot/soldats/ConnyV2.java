@@ -9,7 +9,9 @@ import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -19,6 +21,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +53,14 @@ public class ConnyV2 extends SoldatsRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
+        givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
         addPower(new AmisCommand(this));
         super.RoleGiven(gameState);
     }
     private static final class AmisCommand extends CommandPower implements Listener, UpdatablePowerLore {
 
         private final List<GamePlayer> amisList = new ArrayList<>();
+        private final ForceRunnable forceRunnable;
         private Boolean sasha = null;
 
         public AmisCommand(@NonNull RoleBase role) {
@@ -69,6 +76,7 @@ public class ConnyV2 extends SoldatsRoles {
             );
             setMaxUse(2);
             EventUtils.registerRoleEvent(this);
+            this.forceRunnable = new ForceRunnable(this);
         }
 
         @Override
@@ -124,7 +132,8 @@ public class ConnyV2 extends SoldatsRoles {
         @EventHandler
         private void onDeath(@NonNull final FinalDeathEvent event) {
             if (this.amisList.contains(event.getRole().getGamePlayer())) {
-                
+                this.forceRunnable.start();
+                getRole().getGamePlayer().sendMessage("§7Votre§a ami§7(§ae§7)§a "+event.getPlayer().getName()+"§7 est§c mort§7, de§c rage§7 votre tension monte et vous vous apercevez l'endroit ou§a il§7/§aelle§7 est§c mort§7(§ce§7), c'était ici:§c x§7:§c "+event.getPlayer().getLocation().getBlockX()+"§7,§c y§7:§c "+event.getPlayer().getLocation().getBlockY()+"§7,§c z§7:§c "+event.getPlayer().getLocation().getBlockZ()+"§7.");
             }
         }
         @Override
@@ -139,6 +148,46 @@ public class ConnyV2 extends SoldatsRoles {
                     "§8 -§7 Par défaut vous avez au moins un§a ami§7 qui est choisi§c aléatoirement",
                     "§7entre§a Sasha§7 et§a Jean§7, cette partie il s'agit de:§a "+(this.sasha == null ? "/aot me pour actualiser" : this.sasha ? "Sasha" : "Jean")
             };
+        }
+        private static final class ForceRunnable extends BukkitRunnable {
+
+            private final AmisCommand amisCommand;
+            private boolean running = false;
+            private int actualForceTimer = 0;
+
+            private ForceRunnable(AmisCommand amisCommand) {
+                this.amisCommand = amisCommand;
+            }
+
+            @Override
+            public void run() {
+                if (!GameState.inGame()) {
+                    cancel();
+                    return;
+                }
+                if (this.actualForceTimer > 0) {
+                    this.actualForceTimer--;
+                    amisCommand.getRole().getGamePlayer().getActionBarManager().updateActionBar("conny.forcebar", "§bTemps de§c Force§b restant:§c "+ StringUtils.secondsTowardsBeautiful(this.actualForceTimer));
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.amisCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), EffectWhen.NOW));
+                } else {
+                    if (this.amisCommand.getRole().getGamePlayer().getActionBarManager().containsKey("conny.forcebar")) {
+                        this.actualForceTimer = -5;
+                        this.amisCommand.getRole().getGamePlayer().getActionBarManager().removeInActionBar("conny.forcebar");
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.amisCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*120, 0, false, false), EffectWhen.NOW));
+                        this.amisCommand.getRole().getGamePlayer().sendMessage("§7Votre§c rage§7 c'est calmer, votre peine se fais ressentir...");
+                        cancel();
+                        this.running = false;
+                    }
+                }
+            }
+            public synchronized void start() {
+                this.actualForceTimer+=120;
+                if (running) {
+                    return;
+                }
+                this.running = true;
+                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            }
         }
     }
 }
