@@ -153,7 +153,7 @@ public class RoleManager implements Listener {
     private void registerAot() throws Exception{
         //Register Soldats
         registerRole(ArminV2.class);
-        registerRole(Conny.class);
+        registerRole(ConnyV2.class);
         registerRole(EclaireurV2.class);
         registerRole(Erwin.class);
         registerRole(HansiV2.class);
