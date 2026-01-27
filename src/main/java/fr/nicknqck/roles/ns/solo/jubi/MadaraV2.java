@@ -244,7 +244,7 @@ public class MadaraV2 extends JubiRoles {
                 if (target == null)return;
                 final Map<String, Object> map = new HashMap<>();
                 map.put("rien", "rien");
-                if (!this.checkUse(target, map))return;
+                if (!this.checkUse(((Player) event.getWhoClicked()), map))return;
                 target.teleport(event.getWhoClicked());
                 event.getWhoClicked().sendMessage("§7Vous avez téléporter§c "+target.getName()+"§7 à votre position");
                 target.sendMessage("§7Vous êtes sous l'effet du§c Benshô Ten'in§7.");
