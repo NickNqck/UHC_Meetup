@@ -4,12 +4,15 @@ import java.util.*;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.EffectWhen;
 import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.MuichiroV2;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
@@ -21,6 +24,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -34,7 +39,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import static fr.nicknqck.Main.RANDOM;
 
-public class Gyokko extends DemonsRoles {
+public class Gyokko extends DemonsRoles implements Listener {
 
 	public Gyokko(UUID player) {
 		super(player);
@@ -64,39 +69,33 @@ public class Gyokko extends DemonsRoles {
 		return "Gyokko";
 	}
 
+    @EventHandler
+    private void onKill(@NonNull final UHCPlayerKillEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
+        if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
+            GamePlayer gamePlayer = GamePlayer.of(event.getVictim().getUniqueId());
+            if (gamePlayer != null) {
+                if (gamePlayer.getRole() instanceof MuichiroV2) {
+                    if (event.getPlayerKiller().getInventory().getBoots() != null) {
+                        event.getPlayerKiller().getInventory().setBoots(new ItemBuilder(event.getPlayerKiller().getInventory().getBoots()).addEnchant(Enchantment.DEPTH_STRIDER, 2).toItemStack());
+                    } else {
+                        giveItem(event.getPlayerKiller(), false, Items.getGyokkoBoots());
+                    }
+                    givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.DAY);
+                    event.getKiller().sendMessage("§7Vous venez de tuez§a Muichiro§7 vous obtenez donc§c force 1 le§e jour§7, ainsi que des bottes en diamant enchantée avec:§6 Depht Strider 2");
+                }
+            }
+        }
+    }
     @Override
-	public void PlayerKilled(Player killer, Player victim, GameState gameState) {
-		if (victim.getUniqueId() == getPlayer()) {
-			owner.getInventory().remove(Items.getGyokkoPlastron());
-			owner.getInventory().remove(Items.getGyokkoBoots());
-		}
-		if (killer.getUniqueId() == getPlayer()) {
-			if (victim.getUniqueId() != killer.getUniqueId()){
-				if (gameState.getInGamePlayers().contains(victim.getUniqueId())) {
-					if (!gameState.hasRoleNull(victim.getUniqueId())) {
-						final RoleBase role = gameState.getGamePlayer().get(victim.getUniqueId()).getRole();
-						if (role instanceof MuichiroV2) {
-                            giveItem(killer, false, Items.getGyokkoBoots());
-							givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.DAY);
-							killer.sendMessage("§7Vous venez de tuez§6 "+role.getRoles() +"§7vous obtenez donc§c force 1 le§e jour§7, ainsi que des bottes en diamant enchantée avec:§6 Depht Strider 2");
-						}
-					}
-				}
-			}
-		}
-		
-		super.PlayerKilled(killer, victim, gameState);
-	}
-
-	@Override
 	public void RoleGiven(GameState gameState) {
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.NIGHT);
 		addPower(new PotItemPower(this), true);
 		addPower(new FormeDemoniaquePower(this), true);
 		addPower(new BulleItemPower(this), true);
 		addKnowedRole(MuzanV2.class);
+        EventUtils.registerRoleEvent(this);
 	}
-
 	private static class PotItemPower extends ItemPower {
 
 		private final List<Location> locations;
