@@ -17,7 +17,10 @@ import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_8_R3.PacketPlayOutNamedSoundEffect;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -62,7 +65,9 @@ public class Sieg extends TitansRoles {
     private static class CriPower extends CommandPower {
 
         public CriPower(@NonNull RoleBase role) {
-            super("/aot cri", "cri", null, role, CommandType.AOT);
+            super("/aot cri", "cri", null, role, CommandType.AOT,
+                    "§c10 secondes§7 après l'exécution de cette commande,",
+                    "§7les autres§c titans§7 recevront vos§c coordonnées§7.");
             setMaxUse(1);
         }
 
@@ -72,12 +77,15 @@ public class Sieg extends TitansRoles {
             for (@NonNull final GamePlayer gamePlayer : getRole().getGameState().getGamePlayer().values()) {
                 if (!gamePlayer.isAlive())continue;
                 if (gamePlayer.getRole() == null)continue;
-                if (gamePlayer.getRole().getTeam().equals(TeamList.Titan) || gamePlayer.getRole().getOriginTeam().equals(TeamList.Titan) || gamePlayer.getRole() instanceof TitanUltime) {
+                if (!gamePlayer.isOnline())continue;
+                if (gamePlayer.getRole().getTeam().equals(TeamList.Titan) ||
+                        gamePlayer.getRole().getOriginTeam().equals(TeamList.Titan) ||
+                        gamePlayer.getRole() instanceof TitanUltime) {
                     titansRouge.add(gamePlayer);
                 }
             }
             if (!titansRouge.isEmpty()) {
-                player.sendMessage("§7Votre cri retentira dans §c 10 secondes");
+                player.sendMessage("§7Votre cri retentira dans§c 10 secondes");
                 new CriRunnable(getRole().getGameState(), titansRouge, getRole().getGamePlayer()).runTaskTimerAsynchronously(getPlugin(), 0, 20);
                 return true;
             }
@@ -99,7 +107,7 @@ public class Sieg extends TitansRoles {
 
             @Override
             public void run() {
-                if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+                if (!GameState.inGame()) {
                     cancel();
                     return;
                 }
@@ -116,10 +124,14 @@ public class Sieg extends TitansRoles {
                                     this.gamePlayer.getLastLocation().getBlockX()+"§7,§c y:"+
                                     this.gamePlayer.getLastLocation().getBlockY()+"§7,§c z:"+
                                     this.gamePlayer.getLastLocation().getBlockZ()+"§7.");
-                            continue;
                         }
                         player.sendMessage("");
-                        player.playSound(player.getLocation(), "goldenuhc.bestialcri", 1, 8);
+                        Location loc = player.getLocation();
+                        double x = (double)loc.getBlockX() + (double)0.5F;
+                        double y = (double)loc.getBlockY() + (double)0.5F;
+                        double z = (double)loc.getBlockZ() + (double)0.5F;
+                        PacketPlayOutNamedSoundEffect packet = new PacketPlayOutNamedSoundEffect("aotmtp.bestialcri", x, y, z, 5f, 1f);
+                        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
                     }
                     cancel();
                     return;
