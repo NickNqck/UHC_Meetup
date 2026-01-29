@@ -149,6 +149,7 @@ public class RoleManager implements Listener {
         registerRole(ShinjuroV2.class);
         registerRole(YoriichiV2.class);
         registerRole(SlayerSolo.class);
+        registerRole(Asahiro.class);
     }
     private void registerAot() throws Exception{
         //Register Soldats
