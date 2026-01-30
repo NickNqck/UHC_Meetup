@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public enum Roles {
     //Solo ds
     Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
-    Jigoro(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
+    JigoroV1(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
     Shinjuro(TeamList.Solo, "ds", 2, new ItemBuilder(Material.LAVA_BUCKET).setName("§eShinjuro").toItemStack(), "§bNickNqck"),
     ShinjuroV2(TeamList.Solo, "ds", 3, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§eShinjuro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
     JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("§eJigoro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),

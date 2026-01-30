@@ -65,7 +65,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
 
     @Override
     public @NonNull Roles getRoles() {
-        return Roles.Jigoro;
+        return Roles.JigoroV1;
     }
 
     @Override

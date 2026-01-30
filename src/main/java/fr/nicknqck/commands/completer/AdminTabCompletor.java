@@ -71,7 +71,7 @@ public class AdminTabCompletor implements TabCompleter {
             }
             if (strings[0].equalsIgnoreCase("addrole") || strings[0].equalsIgnoreCase("delrole")) {
                 for (final Roles roles : Roles.values()) {
-                    String name = roles.getItem().getItemMeta().getDisplayName();
+                    String name = roles.name().toLowerCase();
                     stringList.add(name);
                 }
             }
