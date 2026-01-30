@@ -17,6 +17,7 @@ public final class EasyRoleAdder {
                 break;
             }
         }*/
+        Main.getInstance().getLogger().info("Name = "+name);
         for (Class<? extends RoleBase> aClass : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
             if (name.equalsIgnoreCase(cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName())) || name.equalsIgnoreCase(getCleanSimpleName(aClass))) {
                 Main.getInstance().getLogger().info("ClassName: "+aClass.getSimpleName()+", class: "+aClass+", roles: "+name+", cleanName: "+getCleanSimpleName(aClass)+", cleanedString: "+cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName()));
@@ -24,7 +25,7 @@ public final class EasyRoleAdder {
         }
         //Ancien système de rôle
         for (Roles roles : Roles.values()) {
-            if (roles.name().equalsIgnoreCase(name)) {
+            if (roles.name().equalsIgnoreCase(cleanString(name))) {
                 GameState.getInstance().addInAvailableRoles(roles, Math.min(GameState.getInstance().getInLobbyPlayers().size(), GameState.getInstance().getAvailableRoles().get(roles)+1));
                 GameState.getInstance().updateGameCanLaunch();
                 break;
@@ -59,7 +60,6 @@ public final class EasyRoleAdder {
 
         return result;
     }
-
 
     public static void removeRoles(String name) {
         for (Roles roles : Roles.values()) {

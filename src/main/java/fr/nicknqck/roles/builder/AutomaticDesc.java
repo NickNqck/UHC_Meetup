@@ -1,7 +1,6 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.desc.AllDesc;

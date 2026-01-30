@@ -2,7 +2,7 @@ package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.UpdatablePowerLore;
+import fr.nicknqck.roles.builder.UpdatablePowerLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.FinalDeathEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;

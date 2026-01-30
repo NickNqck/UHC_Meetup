@@ -1,4 +1,4 @@
-package fr.nicknqck;
+package fr.nicknqck.roles.builder;
 
 public interface UpdatablePowerLore {
 
