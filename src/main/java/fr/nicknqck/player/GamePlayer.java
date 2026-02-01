@@ -178,7 +178,9 @@ public class GamePlayer {
 			this.getDiscRunnable().setTeleportLocation(location);
 		}
 	}
-
+    public boolean check() {
+        return isAlive() && isOnline() && getRole() != null;
+    }
 	/***
 	 *
 	 * @param begin = Ce avec quoi le joueur doit commencer pour parler avec son/ses mates
