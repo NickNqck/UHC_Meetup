@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.titanrouge.Sieg;
@@ -24,11 +25,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-public class ErenV2 extends AotRoles {
+public class ErenV2 extends AotRoles implements Listener{
 
     public ErenV2(UUID player) {
         super(player);
@@ -54,14 +53,30 @@ public class ErenV2 extends AotRoles {
         Main.getInstance().getTitanManager().addTitan(getPlayer(), new AssaillantV2(getGamePlayer()));
         addPower(new KillBonusPower(this));
         addPower(new FastTimeTravelPower(this));
+        EventUtils.registerRoleEvent(this);
     }
 
     @Override
     public TextComponent getComponent() {
-        return new AutomaticDesc(this)
-                .addEffects(getEffects())
-                .setPowers(getPowers())
+        return AutomaticDesc.createAutomaticDesc(this)
+                .addCustomLine("§7Lorsque vous êtes§c cibler§7 par un§a rôle à information§7, un§c autre joueur§7 deviendra la§c cible§7 du pouvoir sans que personne ne le sache (sauf vous qui recevrez l'information)")
                 .getText();
+    }
+    @EventHandler
+    private void onInfoTake(@NonNull final PowerTakeInfoEvent event) {
+        //Donc si Eren est la cible
+        if (event.getGameTarget().getUuid().equals(getPlayer())) {
+            final List<GamePlayer> gamePlayerList = new ArrayList<>(GameState.getInstance().getGamePlayer().values());
+            Collections.shuffle(gamePlayerList, Main.RANDOM);
+            for (GamePlayer gamePlayer : gamePlayerList) {
+                if (!gamePlayer.check())continue;
+                if (gamePlayer.getRole().getTeam().getColor().equals("§a")) {
+                    getGamePlayer().sendMessage("§7Vous avez été cibler par un§c pouvoir§7 visant a savoir quel est votre§a "+event.getInfoType().getName().toLowerCase());
+                    event.setGameTarget(gamePlayer);
+                    break;
+                }
+            }
+        }
     }
 
     private static class KillBonusPower extends Power implements Listener {
