@@ -1,6 +1,5 @@
 package fr.nicknqck.roles.builder;
 
-import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;

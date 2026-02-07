@@ -2,6 +2,7 @@ package fr.nicknqck.roles.aot.builders.titans;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.roles.aot.PrepareStealCommandEvent;
+import fr.nicknqck.roles.aot.builders.Ackerman;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.powers.CommandPower;
@@ -26,10 +27,13 @@ public class StealCommand extends CommandPower {
         if (!gameState.hasRoleNull(player.getUniqueId())) {
             final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
             if (role instanceof AotRoles) {
-                if (((AotRoles) role).isCanVoleTitan()) {
+                if (((AotRoles) role).isCanVoleTitan() && role.getGamePlayer().check() && !(role instanceof Ackerman)) {
                     final PrepareStealCommandEvent stealEvent = new PrepareStealCommandEvent(player, (AotRoles) role);
                     Bukkit.getPluginManager().callEvent(stealEvent);
-                    return true;
+                    return !stealEvent.isCancelled();
+                } else {
+                    player.sendMessage("§cImpossible de voler un titan pour vous !");
+                    return false;
                 }
             }
         }

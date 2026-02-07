@@ -10,6 +10,7 @@ import fr.nicknqck.events.custom.roles.aot.PrepareStealCommandEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.events.custom.roles.aot.TitanOwnerChangeEvent;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.aot.builders.Ackerman;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.titans.StealCommand;
 import fr.nicknqck.roles.builder.EffectWhen;
@@ -177,27 +178,33 @@ public class TitanManager implements Listener {
                     gamePlayer.getActionBarManager().updateActionBar("stealmanager.steal", "§7Temp avant obtention du§c titan§7: §c"+this.timeLeft+"s");
                 }
                 if (this.timeLeft <= 0) {
-                    GamePlayer gamePlayer = null;
-                    for (@NonNull final GamePlayer gP : this.map.keySet()) {
-                        if (gP.getRole() == null)continue;
-                        if (!gP.isOnline())continue;
-                        if (!gP.isAlive())continue;
-                        if (gP.getRole() instanceof AotRoles) {
-                            if (gamePlayer == null) {
-                                gamePlayer = gP;
-                            } else {
-                                if (((AotRoles) gP.getRole()).getStealPriority() > ((AotRoles)gamePlayer.getRole()).getStealPriority()) {
-                                    gamePlayer = gP;
-                                }
-                            }
-                        }
-                    }
+                    GamePlayer gamePlayer = getGamePlayer();
                     if (gamePlayer != null){
                         this.stealManager.forceSteal(gamePlayer);
                         return;
                     }
                 }
                 this.timeLeft--;
+            }
+
+            private GamePlayer getGamePlayer() {
+                GamePlayer gamePlayer = null;
+                for (@NonNull final GamePlayer gP : this.map.keySet()) {
+                    if (gP.getRole() == null)continue;
+                    if (!gP.isOnline())continue;
+                    if (!gP.isAlive())continue;
+                    if (gP.getRole() instanceof AotRoles) {
+                        if (gP.getRole() instanceof Ackerman)continue;
+                        if (gamePlayer == null) {
+                            gamePlayer = gP;
+                        } else {
+                            if (((AotRoles) gP.getRole()).getStealPriority() > ((AotRoles)gamePlayer.getRole()).getStealPriority()) {
+                                gamePlayer = gP;
+                            }
+                        }
+                    }
+                }
+                return gamePlayer;
             }
 
             public synchronized void stop() {

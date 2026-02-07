@@ -332,7 +332,7 @@ public class GameState{
 			role = new GaaraV2(player);
 			break;
 		case Livai:
-			role = new Livai(player);
+			role = new LivaiV2(player);
 			break;
 		case Sieg:
 			role = new Sieg(player);

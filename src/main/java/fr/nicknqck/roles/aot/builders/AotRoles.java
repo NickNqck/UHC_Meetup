@@ -28,6 +28,9 @@ public abstract class AotRoles extends RoleBase {
     @Getter
     @Setter
     private int stealPriority = 0;
+    @Setter
+    private SoldatsRoles ackerman = null;
+
     public AotRoles(UUID player) {
         super(player);
         gazAmount= 100.0;
@@ -52,6 +55,10 @@ public abstract class AotRoles extends RoleBase {
     @Override
     public ItemStack[] getItems() {
         return new ItemStack[0];
+    }
+
+    public boolean isMaster() {
+        return ackerman != null;
     }
 
     private static class RodCooldownRunnable extends BukkitRunnable {

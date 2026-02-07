@@ -2,6 +2,7 @@ package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.aot.builders.Ackerman;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -277,6 +278,13 @@ public class AutomaticDesc {
         if (this.role instanceof AotRoles) {
             if (((AotRoles) this.role).isCanVoleTitan()) {
                 this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7avez §7la §7capacité §7de §7voler §7un §ctitan §7via §7la §7commande §6/aot steal"));
+            }
+        }
+        if (this.role instanceof Ackerman) {
+            if (((Ackerman) this.role).knowHisMaster() && ((Ackerman) this.role).getMaster() != null) {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a "+((Ackerman) this.role).getMaster().getGamePlayer().getPlayerName()+((((Ackerman) this.role).getGamePlayer().check() ? "" : " §7(§cMort§7)"))));
+            } else {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a §kJeNeSaisPas"));
             }
         }
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));

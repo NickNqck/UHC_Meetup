@@ -159,7 +159,7 @@ public class RoleManager implements Listener {
         registerRole(ErwinV2.class);
         registerRole(HansiV2.class);
         registerRole(JeanV2.class);
-        registerRole(Livai.class);
+        registerRole(LivaiV2.class);
         registerRole(Mikasa.class);
         registerRole(Onyankopon.class);
         registerRole(SashaV2.class);

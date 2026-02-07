@@ -4,22 +4,28 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.InfoType;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.TitanForm;
+import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.titans.impl.ColossalV2;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import java.util.Map;
 import java.util.UUID;
 
-public class ErwinV2 extends SoldatsRoles {
+public class ErwinV2 extends SoldatsRoles implements Listener {
 
     public ErwinV2(UUID player) {
         super(player);
@@ -43,7 +49,16 @@ public class ErwinV2 extends SoldatsRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new AotCampPower(this));
+        EventUtils.registerRoleEvent(this);
         super.RoleGiven(gameState);
+    }
+    @EventHandler
+    private void onEndGiveRole(final RoleGiveEvent event) {
+        if (!event.isEndGive())return;
+        if (!Main.getInstance().getTitanManager().isTitanAttributed(TitanForm.COLOSSAL)) {
+            Main.getInstance().getTitanManager().addTitan(getPlayer(), new ColossalV2(getGamePlayer()));
+            getGamePlayer().sendMessage("§7Comme§9 Bertolt§7 n'est pas dans la partie vous recevez le§c titan Colossal§7.");
+        }
     }
     private static final class AotCampPower extends CommandPower {
 

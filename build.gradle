@@ -26,7 +26,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
     implementation 'com.google.code.gson:gson:2.13.1'
     implementation 'io.github.hmzel:particlesfx:1.8.8'
-    compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\marveluhc\\spigot.jar')
+    compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\spigot.jar')
 }
 
 shadowJar {
