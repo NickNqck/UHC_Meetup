@@ -5,7 +5,10 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.*;
+import fr.nicknqck.roles.aot.builders.Ackerman;
+import fr.nicknqck.roles.aot.builders.AckermanPower;
+import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -23,19 +26,19 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
+public class MikasaV2 extends SoldatsRoles implements Ackerman, Listener {
 
     private SoldatsRoles master = null;
     private boolean knowHisMaster = false;
     private final AckermanPower ackermanPower = new AckermanPower(this, this);
 
-    public LivaiV2(UUID player) {
+    public MikasaV2(UUID player) {
         super(player);
     }
 
     @Override
     public String getName() {
-        return "Livai";
+        return "Mikasa";
     }
 
     @Nullable
@@ -61,15 +64,15 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
 
     @Override
     public @NonNull Roles getRoles() {
-        return Roles.Livai;
+        return Roles.Mikasa;
     }
 
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine("§7Vous avez une§c force 0,75§7 contre les autres joueurs§a transformé§7 en§c titan")
-                .addCustomLine("§7Vous avez une§c force 0,25§7 contre les autres joueurs§c non-transformé§7 en§c titan")
-                .addCustomLine("§7Vous avez une§9 résistance 0,25§7 contre tout les autres joueurs")
+                .addCustomLine("§7Vous avez une§c force 0,25§7 contre tout les autres joueurs")
+                .addCustomLine("§7Vous avez une§9 résistance 1,5§7 contre les autres joueurs§a transformé§7 en§c titan")
+                .addCustomLine("§7Vous avez une§9 résistance 0,75§7 contre les autres joueurs§c non-transformé§7 en§c titan")
                 .getText();
     }
 
@@ -90,7 +93,7 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
             final SoldatsRoles role = (SoldatsRoles) gamePlayer.getRole();
             if (role instanceof Ackerman)continue;
             int random = RandomUtils.getRandomInt(0, 100);
-            if (role instanceof ErwinV2) {
+            if (role instanceof ArminV2) {
                 random = random+10;
             }
             if (random > mostPoints) {
@@ -111,7 +114,7 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
         }
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    private void onDamage(@NonNull final EntityDamageByEntityEvent event) {
+    private void onDamageAttackEditor(@NonNull final EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player)) return;
         final Player damager = (Player) event.getDamager();
         final Player victim = (Player) event.getEntity();
@@ -122,14 +125,21 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
                 return;
             }
         }
-        final double forcePercent = (double) Main.getInstance().getGameConfig().getForcePercent() /100;
+        final double forcePercent = Main.getInstance().getGameConfig().getForcePercent();
+        final double toApply = 1 + ((forcePercent/4)/100);
+        event.setDamage(event.getDamage()*toApply);
+    }
+    @EventHandler(priority = EventPriority.HIGHEST)
+    private void onDamageDefenseEditor(@NonNull final EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player))return;
+        if (!event.getEntity().getUniqueId().equals(getPlayer()))return;
         boolean titan = false;
-        if (Main.getInstance().getTitanManager().hasTitan(victim.getUniqueId())) {
-            if (Main.getInstance().getTitanManager().getTitan(victim.getUniqueId()).isTransformed()) {
+        if (Main.getInstance().getTitanManager().hasTitan(event.getDamager().getUniqueId())) {
+            if (Main.getInstance().getTitanManager().getTitan(event.getDamager().getUniqueId()).isTransformed()) {
                 titan = true;
             }
         }
-        GamePlayer gamePlayer = GamePlayer.of(victim.getUniqueId());
+        GamePlayer gamePlayer = GamePlayer.of(event.getDamager().getUniqueId());
         if (gamePlayer != null) {
             if (gamePlayer.getRole() != null) {
                 if (gamePlayer.getRole() instanceof AotRoles) {
@@ -139,22 +149,11 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
                 }
             }
         }
-        if (!titan){
-            //En gros, je compte comme force 0,25.
-            Main.getInstance().getLogger().info("1 old Damage : "+event.getDamage());
-            event.setDamage(event.getDamage()*(1 + ((forcePercent/4))));
-            Main.getInstance().getLogger().info("1 new Damage : "+event.getDamage());
+        final double resiPercent = (double) Main.getInstance().getGameConfig().getResiPercent() /100;
+        if (!titan) {
+            event.setDamage(event.getDamage()*(1-MathUtil.get34(resiPercent)));
         } else {
-            Main.getInstance().getLogger().info("2 old Damage : "+event.getDamage());
-            //En gros, je compte comme force 0,75.
-            event.setDamage(event.getDamage()*(1 + (MathUtil.get34(forcePercent))));
-            Main.getInstance().getLogger().info("2 new Damage : "+event.getDamage());
+            event.setDamage(event.getDamage()*(1+(resiPercent*1.5)));
         }
-    }
-    @EventHandler(priority = EventPriority.HIGHEST)
-    private void onDamage2(@NonNull final EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player))return;
-        if (!event.getEntity().getUniqueId().equals(getPlayer()))return;
-        event.setDamage(event.getDamage()*(1 - ((((double) Main.getInstance().getGameConfig().getResiPercent() /4))/100)));
     }
 }

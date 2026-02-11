@@ -381,4 +381,8 @@ public class MathUtil {
             }
         }.runTaskTimerAsynchronously(Main.getInstance(), 0,1);
     }
+    public static double get34(final double value) {
+        final double one = value / 4;
+        return value - one;
+    }
 }

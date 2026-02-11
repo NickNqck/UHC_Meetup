@@ -1,7 +1,7 @@
 package fr.nicknqck.roles.aot.builders;
 
 import fr.nicknqck.roles.aot.soldats.LivaiV2;
-import fr.nicknqck.roles.aot.soldats.Mikasa;
+import fr.nicknqck.roles.aot.soldats.MikasaV2;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.powers.Power;
 import lombok.Getter;
@@ -24,7 +24,7 @@ public class AckermanPower extends Power {
                 "§7passer proche de lui vous gagnerez§c 1/2❤ permanent§7.",
                 "",
                 role instanceof LivaiV2 ? "§7Votre§a maitre§7 à§a 10%§7 de chance en plus d'être§a Erwin§7." :
-                        role instanceof Mikasa ? "§7Votre§a maitre§7 à§a 10%§7 de chance en plus d'être§a Armin§7." :
+                        role instanceof MikasaV2 ? "§7Votre§a maitre§7 à§a 10%§7 de chance en plus d'être§a Armin§7." :
                                 "§7Tout les joueurs ont la même probabilité d'être votre§a maitre§7.");
         this.ackerman = ackerman;
         this.ackermanTimer = new AckermanTimer(this.ackerman);

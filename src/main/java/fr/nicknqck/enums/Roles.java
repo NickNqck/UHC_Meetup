@@ -84,6 +84,7 @@ public enum Roles {
     Hansi(TeamList.Soldat, "aot", 7, new ItemBuilder(Material.THIN_GLASS).setName("§aHansi").toItemStack(), "§bNickNqck"),
     Sasha(TeamList.Soldat, "aot", 8, new ItemBuilder(Material.BOW).setName("§aSasha").toItemStack(), "§bNickNqck"),
     Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("§aConny").toItemStack(), "§bMega02600"),
+    Mikasa(TeamList.Soldat, "aot", 10, new ItemBuilder(Material.FISHING_ROD).setName("§aMikasa").toItemStack(), "§bNickNqck"),
     //Solo Aot
     Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("§eEren").toItemStack(), "§bNickNqck"),
     Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("§eGabi").toItemStack(), "§bNickNqck"),

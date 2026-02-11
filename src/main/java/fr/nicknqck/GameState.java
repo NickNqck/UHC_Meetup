@@ -550,6 +550,9 @@ public class GameState{
             case Asahiro:
                 role = new Asahiro(player);
                 break;
+            case Mikasa:
+                role = new MikasaV2(player);
+                break;
 		}
 		if (role == null) return null;
 		print(player, role);
