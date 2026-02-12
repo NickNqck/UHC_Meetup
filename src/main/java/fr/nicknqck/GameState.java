@@ -368,7 +368,7 @@ public class GameState{
 			role = new TitanDeviant(player);
 			break;
 		case Onyankopon:
-			role = new Onyankopon(player);
+			role = new OnyankoponV2(player);
 			break;
 		case Hansi:
 			role = new HansiV2(player);

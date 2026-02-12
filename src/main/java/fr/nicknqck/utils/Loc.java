@@ -3,13 +3,12 @@ package fr.nicknqck.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;
 import lombok.NonNull;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -137,6 +136,47 @@ public class Loc {
             }
         }
         return toReturn;
+    }
+    public static Location getLocationAtDistance(Location origin, double distance) {
+        World world = origin.getWorld();
+        Random random = Main.RANDOM;
+
+        // 1. Calculer un angle aléatoire (0 à 2 PI)
+        double angle = random.nextDouble() * 2 * Math.PI;
+
+        // 2. Calculer les coordonnées brutes à "distance" (150 blocs)
+        double x = origin.getX() + (distance * Math.cos(angle));
+        double z = origin.getZ() + (distance * Math.sin(angle));
+
+        // 3. Récupérer les infos de la WorldBorder
+        WorldBorder border = world.getWorldBorder();
+        double size = border.getSize();
+        double centerX = border.getCenter().getX();
+        double centerZ = border.getCenter().getZ();
+
+        // On calcule le rayon (moitié de la taille)
+        double radius = size / 2.0;
+
+        // 4. Définir les limites sûres (Bordure - 5 blocs)
+        double minX = centerX - radius + 5;
+        double maxX = centerX + radius - 5;
+        double minZ = centerZ - radius + 5;
+        double maxZ = centerZ + radius - 5;
+
+        // 5. "Clamp" (Restreindre) les coordonnées X et Z
+        // Si x est trop à droite, on le ramène à maxX, s'il est trop à gauche, à minX
+        if (x > maxX) x = maxX;
+        if (x < minX) x = minX;
+
+        if (z > maxZ) z = maxZ;
+        if (z < minZ) z = minZ;
+
+        // 6. Ajuster la hauteur Y pour être au sol
+        // On convertit en int pour chercher le bloc le plus haut à ces coordonnées
+        int groundY = world.getHighestBlockYAt((int) x, (int) z);
+
+        // On retourne la location finale (+1 en Y pour être sur le bloc et pas dedans)
+        return new Location(world, x, groundY + 1, z);
     }
     public static void inverserDirectionJoueur(Player joueurCible) {
         // Récupérer l'emplacement actuel du joueur
