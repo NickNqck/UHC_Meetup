@@ -10,10 +10,11 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
+import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
@@ -243,11 +244,11 @@ public class AdminCommands implements CommandExecutor{
 						@Override
 						public void run() {
 							if (gameState.getroleNMB() > 0) {
-								for (Roles roles : gameState.getAvailableRoles().keySet()) {
+								for (IRoles roles : gameState.getAvailableRoles().keySet()) {
 									if (gameState.getAvailableRoles().get(roles) > 0) {
 										int e = gameState.getAvailableRoles().get(roles);
 										gameState.addInAvailableRoles(roles, Math.max(0, gameState.getAvailableRoles().get(roles)-gameState.getAvailableRoles().get(roles)));
-										sender.sendMessage(roles.getTeam().getColor()+roles.name()+"§f (§7x"+e+"§f) à été retiré de la compo");
+										sender.sendMessage(roles.getTeam().getColor()+roles+"§f (§7x"+e+"§f) à été retiré de la compo");
 										sender.sendMessage("");
 										return;
 									}

@@ -13,7 +13,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.Ackerman;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.titans.StealCommand;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
 import lombok.NonNull;

@@ -6,9 +6,12 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
+import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
 import fr.nicknqck.utils.RandomUtils;
@@ -102,7 +105,7 @@ public abstract class RoleBase implements IRole {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
                 owner.sendMessage(ChatColor.BOLD + "Camp: " + this.getTeam().getColor() + StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
                 System.out.println(owner.getName() +" Team: "+ this.getTeam());
-                System.out.println(owner.getName() + " Role: " + getRoles().name());
+                System.out.println(owner.getName() + " Role: " + getRoles());
             }, 20);
 			this.uuidOwner = owner.getUniqueId();
 			owner.sendMessage("");

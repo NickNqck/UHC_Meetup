@@ -1,6 +1,6 @@
 package fr.nicknqck.roles.aot.builders;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.titans.TitanBase;
 import lombok.Getter;
 import lombok.NonNull;

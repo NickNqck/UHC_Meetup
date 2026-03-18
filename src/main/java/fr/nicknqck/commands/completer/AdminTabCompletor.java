@@ -2,7 +2,7 @@ package fr.nicknqck.commands.completer;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
 import org.bukkit.Bukkit;

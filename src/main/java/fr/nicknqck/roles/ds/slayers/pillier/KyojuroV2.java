@@ -4,10 +4,13 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
+import fr.nicknqck.events.ds.alliance.EAllianceRole;
+import fr.nicknqck.events.ds.alliance.IAllianceRole;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.builders.Lames;
 import fr.nicknqck.roles.ds.builders.Soufle;
 import fr.nicknqck.utils.Loc;
@@ -40,7 +43,7 @@ import org.bukkit.util.Vector;
 import java.util.Map;
 import java.util.UUID;
 
-public class KyojuroV2 extends PilierRoles {
+public class KyojuroV2 extends PilierRoles implements IAllianceRole {
 
     private TextComponent desc;
     @Setter
@@ -79,12 +82,35 @@ public class KyojuroV2 extends PilierRoles {
     public TextComponent getComponent() {
         return this.desc;
     }
+
+    @Override
+    public boolean isInAlliance() {
+        return this.alliance;
+    }
+
+    @Override
+    public void setInAlliance(boolean b) {
+        this.alliance = b;
+    }
+
+    @Override
+    public EAllianceRole knowHas() {
+        return EAllianceRole.KYOJURO;
+    }
+
+    @Override
+    public DemonsSlayersRoles getRole() {
+        return this;
+    }
+
     private static class FlammePower extends CommandPower implements Listener {
 
         private boolean end;
 
         public FlammePower(@NonNull KyojuroV2 role) {
-            super("§6/ds flamme", "flamme", new Cooldown(60*10), role, CommandType.DS, "§7Vous permet d'§6enflammer§7 les joueurs que vous frappez et ceux sur lesquelles vous tirez,","§7En frappant un joueur vous aurez§c 35%§7 de§c chance§7 de recevoir§c 5 secondes§7 de l'effet§c Force I§7.");
+            super("§6/ds flamme", "flamme", new Cooldown(60*10), role, CommandType.DS,
+                    "§7Vous permet d'§6enflammer§7 les joueurs que vous frappez et ceux sur lesquelles vous tirez,",
+                    "§7En frappant un joueur vous aurez§c 35%§7 de§c chance§7 de recevoir§c 5 secondes§7 de l'effet§c Force I§7.");
         }
 
         @Override

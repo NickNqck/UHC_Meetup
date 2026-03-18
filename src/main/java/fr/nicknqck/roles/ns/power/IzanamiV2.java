@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ns.power;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
@@ -324,7 +325,7 @@ public class IzanamiV2 implements Listener {
             GamePlayer gOwner = GameState.getInstance().getGamePlayer().get(owner.getUniqueId());
             GamePlayer gTo = GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId());
             toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+gOwner.getRole().getTeamColor()+ infecteur.getOriginTeam().name());
-            toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+this.color+infecteur.getName()+": "+(infecteur.getPlayerFromRole(infecteur.getRoles()) != null ? infecteur.getPlayerFromRole(infecteur.getRoles()).getName() : "§cMort"));
+            toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+this.color+infecteur.getName()+": "+(infecteur.getPlayerFromRole((Roles) infecteur.getRoles()) != null ? infecteur.getPlayerFromRole((Roles)infecteur.getRoles()).getName() : "§cMort"));
             gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.color+"Izanami§7)");
             final IzanamiFinishEvent izanamiFinishEvent = new IzanamiFinishEvent(infecteur, infecter, this.color, owner, toIzanami);
             Bukkit.getPluginManager().callEvent(izanamiFinishEvent);

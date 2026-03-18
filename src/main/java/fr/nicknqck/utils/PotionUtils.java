@@ -3,7 +3,7 @@ package fr.nicknqck.utils;
 import java.util.*;
 
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

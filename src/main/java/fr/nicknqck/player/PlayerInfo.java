@@ -1,7 +1,7 @@
 package fr.nicknqck.player;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;

@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 
 public class Loc {
 
@@ -143,6 +143,10 @@ public class Loc {
 
         // 1. Calculer un angle aléatoire (0 à 2 PI)
         double angle = random.nextDouble() * 2 * Math.PI;
+        return getLocationAtDistance(origin, distance, angle);
+    }
+    public static Location getLocationAtDistance(Location origin, double distance, double angle) {
+        World world = origin.getWorld();
 
         // 2. Calculer les coordonnées brutes à "distance" (150 blocs)
         double x = origin.getX() + (distance * Math.cos(angle));

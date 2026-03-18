@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.builder;
+package fr.nicknqck.enums;
 
 import lombok.Getter;
 

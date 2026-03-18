@@ -2,7 +2,7 @@ package fr.nicknqck.commands;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.player.PlayerInfo;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

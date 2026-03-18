@@ -1,6 +1,6 @@
 package fr.nicknqck.events.custom;
 
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import org.bukkit.entity.Player;

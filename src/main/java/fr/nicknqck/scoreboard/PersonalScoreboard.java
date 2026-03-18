@@ -20,7 +20,7 @@ import org.bukkit.scoreboard.Team;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
-import static fr.nicknqck.roles.builder.TeamList.Jubi;
+import static fr.nicknqck.enums.TeamList.Jubi;
 
 /*
  * This file is part of SamaGamesAPI.
@@ -84,7 +84,7 @@ public class PersonalScoreboard {
 					roleName = role.getRoles().getItem().getItemMeta().getDisplayName();
 				}
 				if (premsg.length()+iRole.length()+role.getRoles().getItem().getItemMeta().getDisplayName().length() >= 40) {
-					roleName = role.getRoles().name();
+					roleName = String.valueOf(role.getRoles());
 				}
     			if (role.getTeam() != null) {
     				objectiveSign.setLine(1, premsg+iRole+role.getTeam().getColor()+roleName);
@@ -122,9 +122,9 @@ public class PersonalScoreboard {
     				if (!this.gameState.hasRoleNull(player.getUniqueId())) {
 						final RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
     					if (role.getOriginTeam() != null) {
-    						this.gameState.changeTabPseudo(role.getOriginTeam().getColor()+role.getRoles().name()+" "+player.getDisplayName(), player);
+    						this.gameState.changeTabPseudo(role.getOriginTeam().getColor()+role.getRoles()+" "+player.getDisplayName(), player);
 						}else {
-							this.gameState.changeTabPseudo(role.getRoles().name()+" "+player.getDisplayName(), player);
+							this.gameState.changeTabPseudo(role.getRoles()+" "+player.getDisplayName(), player);
 						}
     				}
     			}

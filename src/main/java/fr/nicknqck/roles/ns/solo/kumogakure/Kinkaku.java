@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.solo.kumogakure;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;

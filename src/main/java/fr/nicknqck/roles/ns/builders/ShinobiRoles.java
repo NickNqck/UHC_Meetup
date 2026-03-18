@@ -1,8 +1,7 @@
 package fr.nicknqck.roles.ns.builders;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import lombok.NonNull;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 

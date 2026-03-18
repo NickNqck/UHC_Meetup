@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.utils.discord.WebhookBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -93,7 +94,7 @@ public class WebHookListeners implements Listener {
                     playerNames += player.getName()+", ";
                 }
                 String igRoles = "";
-                for (Roles roles : event.getIgRoles()) {
+                for (IRoles roles : event.getIgRoles()) {
                     igRoles += roles.getItem().getItemMeta().getDisplayName()+", ";
                 }
                 sendWebHook(name,

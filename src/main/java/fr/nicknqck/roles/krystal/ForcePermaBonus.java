@@ -1,6 +1,6 @@
 package fr.nicknqck.roles.krystal;
 
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;

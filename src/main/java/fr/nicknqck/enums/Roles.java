@@ -1,13 +1,13 @@
 package fr.nicknqck.enums;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-public enum Roles {
+public enum Roles implements IRoles {
     //Solo ds
     Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
     JigoroV1(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),

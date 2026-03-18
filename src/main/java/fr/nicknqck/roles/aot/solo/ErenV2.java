@@ -10,7 +10,7 @@ import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.titanrouge.Sieg;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.titans.TitanBase;
 import fr.nicknqck.titans.impl.*;
 import fr.nicknqck.utils.event.EventUtils;

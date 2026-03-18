@@ -9,7 +9,7 @@ import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.titans.TitanBase;
 import fr.nicknqck.titans.impl.BestialV2;
 import fr.nicknqck.utils.Loc;
