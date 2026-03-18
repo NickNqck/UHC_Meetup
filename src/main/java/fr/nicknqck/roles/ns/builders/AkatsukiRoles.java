@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ns.builders;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ns.akatsuki.KonanV2;
 import fr.nicknqck.roles.ns.akatsuki.NagatoV2;
 import lombok.NonNull;

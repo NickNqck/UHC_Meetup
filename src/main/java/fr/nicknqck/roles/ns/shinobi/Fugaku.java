@@ -7,7 +7,7 @@ import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Chakras;

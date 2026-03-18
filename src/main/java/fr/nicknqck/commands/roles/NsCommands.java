@@ -8,7 +8,7 @@ import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.Jubi;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.builder.IRole;
+import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;

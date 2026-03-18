@@ -24,6 +24,7 @@ public class GameConfig {
     private final List<ItemStack> itemOnKill;
     private final StuffConfig stuffConfig;
     private final NarutoConfig narutoConfig;
+    private final AotConfig aotConfig;
     private boolean laveTitans = true;
     private boolean stuffUnbreak = true;
     private boolean pvpEnable = false;
@@ -33,14 +34,12 @@ public class GameConfig {
     private int timingAssassin = 30;
     private int infectionTime = 60;
     private int groupe = 5;
-    private int tridiCooldown = 16;
     private int forcePercent = 30;
     private int resiPercent = 20;
     private StunType stunType = StunType.TELEPORT;
     private boolean mortEclair = true;
     private boolean tntGrief = false;
     private final LinkedHashMap<MDJ, Class<? extends FastInv>> configurablesMdj;
-    private boolean rodTridimenssionel = false;
 
     public GameConfig() {
         instance = this;
@@ -49,6 +48,7 @@ public class GameConfig {
         this.stuffConfig = new StuffConfig();
         this.narutoConfig = new NarutoConfig();
         this.configurablesMdj = new LinkedHashMap<>();
+        this.aotConfig = new AotConfig();
         configurablesMdj.put(MDJ.DS, MDJ_DS_Config.class);
         configurablesMdj.put(MDJ.AOT, MDJ_AOT_Config.class);
         configurablesMdj.put(MDJ.NS, MDJ_NS_Config.class);
@@ -85,6 +85,15 @@ public class GameConfig {
         private double edoHealthRemove = 4.0;
         private int minTimeSpawnBiju = 90;
         private int maxTimeSpawnBiju = 160;
+
+    }
+    @Getter
+    @Setter
+    public static final class AotConfig {
+
+        private boolean rodTridimenssionel = false;
+        private int tridiCooldown = 16;
+        private int amountLanceMax = 3;
 
     }
     public enum StunType {

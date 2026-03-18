@@ -21,7 +21,6 @@ import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
 import fr.nicknqck.managers.*;
 import fr.nicknqck.player.EffectsGiver;
-import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
 import fr.nicknqck.roles.krystal.KrystalManager;
@@ -231,7 +230,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Arctridi(gameState), this);
 		getServer().getPluginManager().registerEvents(new Whitelist(gameState), this);
 		getServer().getPluginManager().registerEvents(new BijuListener(), this);
-		getServer().getPluginManager().registerEvents(new TitanListener(), this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);

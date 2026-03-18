@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.titans.impl.WarhammerV2;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;

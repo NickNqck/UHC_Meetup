@@ -3,7 +3,6 @@ package fr.nicknqck.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
@@ -25,7 +24,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.scenarios.impl.AntiDrop;
 import fr.nicknqck.scenarios.impl.Anti_Abso;
 

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.StringUtils;

@@ -2,7 +2,7 @@ package fr.nicknqck.commands.completer;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -71,7 +71,7 @@ public class AdminTabCompletor implements TabCompleter {
             }
             if (strings[0].equalsIgnoreCase("addrole") || strings[0].equalsIgnoreCase("delrole")) {
                 for (final Roles roles : Roles.values()) {
-                    String name = roles.getItem().getItemMeta().getDisplayName();
+                    String name = roles.name().toLowerCase();
                     stringList.add(name);
                 }
             }

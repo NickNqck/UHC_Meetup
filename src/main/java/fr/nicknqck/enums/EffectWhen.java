@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.builder;
+package fr.nicknqck.enums;
 
 import lombok.Getter;
 
@@ -9,7 +9,8 @@ public enum EffectWhen {
     PERMANENT("Permanent"),
     AT_KILL("En tuant un joueur"),
     MID_LIFE("Moins de 5 coeurs"),
-    NOW("Maintenant");
+    NOW("Maintenant"),
+    SPECIAL("Special");
     private final String name;
     EffectWhen(String name) {
         this.name = name;

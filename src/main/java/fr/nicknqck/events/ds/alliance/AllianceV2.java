@@ -1,15 +1,16 @@
-package fr.nicknqck.events.ds;
+package fr.nicknqck.events.ds.alliance;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.builder.EffectWhen;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.EffectWhen;
+import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
-import fr.nicknqck.roles.ds.solos.Shinjuro;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
@@ -22,13 +23,13 @@ import org.bukkit.potion.PotionEffectType;
 
 public class AllianceV2 extends Event implements Listener {
 
-    private KyojuroV2 kyojuro;
-    private Shinjuro shinjuro;
+    private DemonsSlayersRoles kyojuro;
+    private DemonsSlayersRoles shinjuro;
     private boolean activated = false;
 
     @Override
     public String getName() {
-        return "§fAlliance§a Kyojuro§7 -§6 Shinjuro";
+        return "§fAlliance§a père-fils";
     }
 
     @Override
@@ -36,24 +37,28 @@ public class AllianceV2 extends Event implements Listener {
         for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
             if (!gamePlayer.isAlive())continue;
             if (gamePlayer.getRole() == null)continue;
-            if (gamePlayer.getRole() instanceof KyojuroV2 || gamePlayer.getRole() instanceof Shinjuro) {
-                gamePlayer.getRole().setTeam(TeamList.Alliance);
-                if (gamePlayer.getRole() instanceof KyojuroV2) {
-                    KyojuroV2 k = (KyojuroV2) gamePlayer.getRole();
-                    gamePlayer.sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
-                    gamePlayer.sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
-                    k.giveHealedHeartatInt(2);
-                    this.kyojuro = k;
-                    k.setAlliance(true);
-                    k.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
-                }
-                if (gamePlayer.getRole() instanceof Shinjuro) {
-                    Shinjuro s = (Shinjuro) gamePlayer.getRole();
-                    s.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Kyojuro).getName());
-                    s.getGamePlayer().sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
-                    this.shinjuro = s;
-                    s.procAlliance();
-                }
+            final RoleBase roleBase = gamePlayer.getRole();
+            if (!(roleBase instanceof DemonsSlayersRoles))continue;
+            final DemonsSlayersRoles role = (DemonsSlayersRoles) roleBase;
+            if (!(role instanceof IAllianceRole))continue;
+            if (((IAllianceRole) role).knowHas().equals(EAllianceRole.SHINJURO) && this.shinjuro == null) {
+                this.shinjuro = role;
+            }
+            if (((IAllianceRole) role).knowHas().equals(EAllianceRole.KYOJURO) && this.kyojuro == null) {
+                this.kyojuro = role;
+            }
+            if (this.shinjuro != null && this.kyojuro != null && this.shinjuro instanceof IAllianceRole && this.kyojuro instanceof IAllianceRole) {
+                this.kyojuro.setTeam(TeamList.Alliance, true);
+                this.kyojuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
+                this.kyojuro.getGamePlayer().sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
+                this.kyojuro.giveHealedHeartatInt(2);
+                this.kyojuro.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
+                ((IAllianceRole) this.kyojuro).setInAlliance(true);
+
+                this.shinjuro.setTeam(TeamList.Alliance, true);
+                this.shinjuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Kyojuro).getName());
+                this.shinjuro.getGamePlayer().sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
+                break;
             }
         }
         EventUtils.registerRoleEvent(this);

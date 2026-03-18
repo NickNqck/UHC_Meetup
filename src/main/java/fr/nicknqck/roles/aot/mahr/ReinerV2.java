@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.roles.builder.TeamList;
 import fr.nicknqck.titans.TitanBase;
 import fr.nicknqck.titans.impl.CuirasseV2;
 import fr.nicknqck.utils.event.EventUtils;
@@ -14,7 +13,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 

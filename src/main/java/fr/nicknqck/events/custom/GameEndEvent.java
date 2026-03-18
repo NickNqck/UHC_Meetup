@@ -1,7 +1,7 @@
 package fr.nicknqck.events.custom;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import lombok.Getter;
 
 @Getter

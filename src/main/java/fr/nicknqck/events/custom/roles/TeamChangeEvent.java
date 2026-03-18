@@ -2,7 +2,7 @@ package fr.nicknqck.events.custom.roles;
 
 import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import lombok.Getter;
 import org.bukkit.event.Cancellable;
 

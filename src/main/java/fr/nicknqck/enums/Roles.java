@@ -1,21 +1,22 @@
 package fr.nicknqck.enums;
 
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-public enum Roles {
+public enum Roles implements IRoles {
     //Solo ds
     Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
-    Jigoro(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
+    JigoroV1(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
     Shinjuro(TeamList.Solo, "ds", 2, new ItemBuilder(Material.LAVA_BUCKET).setName("§eShinjuro").toItemStack(), "§bNickNqck"),
     ShinjuroV2(TeamList.Solo, "ds", 3, new ItemBuilder(Material.FLINT_AND_STEEL).setName("§eShinjuro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
     JigoroV2(TeamList.Solo, "ds", 4, new ItemBuilder(Material.NETHER_STAR).setName("§eJigoro§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
     KyogaiV2(TeamList.Solo, "ds", 5, new ItemBuilder(Material.STICK).setName("§eKyogai §7(§6V2§7)").toItemStack(), "§bNickNqck"),
     SlayerSolo(TeamList.Solo, "ds", 6, new ItemBuilder(Material.IRON_SWORD).setName("§ePourfendeur Solitaire").toItemStack(), "§bNickNqck"),
+    Asahiro(TeamList.Solo, "ds", 7, new ItemBuilder(Material.FEATHER).setName("§eAsahiro").toItemStack(), "§bNicknqck"),
     //Démons ds
     Muzan(TeamList.Demon, "ds", 0, new ItemBuilder(Material.REDSTONE_ORE).setName("§cMuzan").toItemStack(), "§bNickNqck"),
     Kokushibo(TeamList.Demon, "ds", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cKokushibo").toItemStack(), "§bNickNqck"),
@@ -73,16 +74,17 @@ public enum Roles {
     TitanDeviant(TeamList.Titan, "aot", 4, new ItemBuilder(Material.SNOW_BALL).setName("§cTitan Deviant").toItemStack(), "§bNickNqck"),
     Jelena(TeamList.Titan, "aot", 3, new ItemBuilder(Material.CHEST).setName("§cJelena").toItemStack(), "§bNickNqck"),
     //Soldat aot
-    Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("§aLivai").toItemStack(), "§bMega02600"),
+    Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("§aLivai").toItemStack(), "§bNickNqck"),
     Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("§aSoldat").toItemStack(), "§bMega02600"),
     Erwin(TeamList.Soldat, "aot", 2, new ItemBuilder(Material.SIGN).setName("§aErwin").toItemStack(), "§bNickNqck"),
     Armin(TeamList.Soldat, "aot", 3, new ItemBuilder(Material.CHEST).setName("§aArmin").toItemStack(), "§bNickNqck"),
-    Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("§aEclaireur").toItemStack(), "§bMega02600"),
-    Jean(TeamList.Soldat, "aot", 5, new ItemBuilder(Material.FIREWORK).setName("§aJean").toItemStack(), "§bMega02600"),
-    Onyankopon(TeamList.Soldat, "aot", 6, new ItemBuilder(Material.ENDER_PEARL).setName("§aOnyankopon").toItemStack(), "§bMega02600"),
+    Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("§aEclaireur").toItemStack(), "§bNickNqck"),
+    Jean(TeamList.Soldat, "aot", 5, new ItemBuilder(Material.FIREWORK).setName("§aJean").toItemStack(), "§bNickNqck"),
+    Onyankopon(TeamList.Soldat, "aot", 6, new ItemBuilder(Material.ENDER_PEARL).setName("§aOnyankopon").toItemStack(), "§bNickNqck"),
     Hansi(TeamList.Soldat, "aot", 7, new ItemBuilder(Material.THIN_GLASS).setName("§aHansi").toItemStack(), "§bNickNqck"),
     Sasha(TeamList.Soldat, "aot", 8, new ItemBuilder(Material.BOW).setName("§aSasha").toItemStack(), "§bNickNqck"),
-    Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("§aConny").toItemStack(), "§bMega02600"),
+    Conny(TeamList.Soldat, "aot", 9, new ItemBuilder(Material.SUGAR_CANE).setName("§aConny").toItemStack(), "§bNickNqck"),
+    Mikasa(TeamList.Soldat, "aot", 10, new ItemBuilder(Material.FISHING_ROD).setName("§aMikasa").toItemStack(), "§bNickNqck"),
     //Solo Aot
     Eren(TeamList.Solo, "aot", 11, new ItemBuilder(Material.ROTTEN_FLESH).setName("§eEren").toItemStack(), "§bNickNqck"),
     Gabi(TeamList.Solo, "aot", 10, new ItemBuilder(Material.SPONGE).setName("§eGabi").toItemStack(), "§bNickNqck"),

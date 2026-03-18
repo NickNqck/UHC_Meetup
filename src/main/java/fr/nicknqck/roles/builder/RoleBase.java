@@ -6,11 +6,13 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
+import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -103,7 +105,7 @@ public abstract class RoleBase implements IRole {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
                 owner.sendMessage(ChatColor.BOLD + "Camp: " + this.getTeam().getColor() + StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
                 System.out.println(owner.getName() +" Team: "+ this.getTeam());
-                System.out.println(owner.getName() + " Role: " + getRoles().name());
+                System.out.println(owner.getName() + " Role: " + getRoles());
             }, 20);
 			this.uuidOwner = owner.getUniqueId();
 			owner.sendMessage("");
@@ -241,9 +243,6 @@ public abstract class RoleBase implements IRole {
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		for (Bijus value : Bijus.values()) {
 			value.getBiju().onAPlayerDie(player, gameState, killer);
-		}
-		for (Titans value : Titans.values()) {
-			value.getTitan().onAPlayerDie(player, killer);
 		}
 		if (!player.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld()), 20);
@@ -560,7 +559,6 @@ public abstract class RoleBase implements IRole {
     }
 	public void onInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {
 	}
-	public void neoFormChoosen(ItemStack item, Inventory inv, int slot, GameState gameState) {}
 	public void playSound(Player p, String sound) {
 		p.getWorld().setGameRuleValue("sendCommandFeedback", "false");
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
@@ -579,7 +577,7 @@ public abstract class RoleBase implements IRole {
 	}
 
 	public void givePotionEffect(PotionEffect effect, EffectWhen when) {
-		if (when.equals(EffectWhen.NOW)) {
+		if (when.equals(EffectWhen.NOW) || when.equals(EffectWhen.SPECIAL)) {
 			final Player owner = Bukkit.getPlayer(getPlayer());
 			if (owner != null) {
 				final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(owner, this, effect, when);

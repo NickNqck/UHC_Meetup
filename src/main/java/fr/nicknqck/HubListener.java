@@ -6,12 +6,12 @@ import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.NonNull;
@@ -65,8 +65,8 @@ public class HubListener implements Listener {
 		}
 		// Debug Affichages des roles InGame
 		int roleNmb = 0;
-		List<Roles> rolesList = new ArrayList<>();
-		for (Roles r : gameState.getAvailableRoles().keySet()) {
+		List<IRoles> rolesList = new ArrayList<>();
+		for (IRoles r : gameState.getAvailableRoles().keySet()) {
 			if (Main.isDebug()){
 				System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
 			}
@@ -109,7 +109,6 @@ public class HubListener implements Listener {
 			gameState.getGamePlayer().put(u, gamePlayer);
 			System.out.println("Player "+p+" a ete ajouter a la partie");
 		}
-		TitanListener.getInstance().onStartGame();
 		gameState.nightTime = false;
 		for (Bijus b : Bijus.values()) {
 			b.getBiju().setHote(null);

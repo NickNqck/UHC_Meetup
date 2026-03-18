@@ -1,6 +1,7 @@
 package fr.nicknqck.titans.impl;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -68,8 +69,8 @@ public class ColossalV2 extends TitanBase {
     }
 
     @Override
-    public @NonNull PrepareTitanStealEvent.TitanForm getTitanForm() {
-        return PrepareTitanStealEvent.TitanForm.COLOSSAL;
+    public @NonNull TitanForm getTitanForm() {
+        return TitanForm.COLOSSAL;
     }
 
     private static class ChaleurPower extends ItemPower {

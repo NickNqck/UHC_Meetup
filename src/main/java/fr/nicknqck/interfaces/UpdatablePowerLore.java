@@ -1,4 +1,4 @@
-package fr.nicknqck;
+package fr.nicknqck.interfaces;
 
 public interface UpdatablePowerLore {
 

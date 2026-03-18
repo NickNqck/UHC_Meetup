@@ -37,7 +37,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
 
     @Override
     public void RoleGiven(GameState gameState) {
-        if (getRoles().equals(Roles.Orochimaru)){
+        if (this instanceof OrochimaruV2){
             addPower(new EdoTenseiPower(this), true);
         }
         super.RoleGiven(gameState);

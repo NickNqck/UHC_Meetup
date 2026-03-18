@@ -33,50 +33,6 @@ public class AllDesc{
 	public static final String chakra = "Vous possédez la nature de Chakra: ";
 	public final static String tab = "§7     →";
 
-	public static String[] Daki = new String[] {
-			bar,
-			"§lRôle: §r§cDaki",
-			"",
-			ChatColor.BOLD+"Capacité: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"1 fois par partie vous pouvez réssucité"),
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Force+" 1 la nuit, "+Resi+" 1 à moins de 30 blocs de Gyutaro, Weakness 1 à moins de 15 blocs des rôles : Tengen, Tanjiro, Inosuke, ZenItsu, Nezuko"),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Obi: "+ChatColor.WHITE+" En activant cette objet tout les joueurs étant à moins de 30 blocs (sauf les rôles: Tanjiro, Inosuke, ZenItsu, Tengen, Gyutaro et les démons) ne pourront plus bouger pendant 8 secondes"),
-			"",
-			(ChatColor.DARK_GRAY+" • "+ChatColor.GOLD+ChatColor.BOLD+"Troisième Oeil: "+ChatColor.WHITE+" Vous donne "+Speed+" 1 pendant 1 minutes"),
-			"",
-			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
-			"",
-			(ChatColor.DARK_GRAY+" • " + ChatColor.WHITE+"A la mort de: "+ChatColor.GOLD+"Gyutaro"+ChatColor.WHITE+" peux importe qui le tue vous obtenez "+Resi+" 1 permanent, mais vous perdez aussi votre troisième oeil"),
-			"",
-			(ChatColor.DARK_GRAY+" • "+   ChatColor.WHITE+"A la mort de: "+ChatColor.GOLD+"Tanjiro OU Inosuke OU ZenItsu"+ChatColor.WHITE+" peux importe qui le/les tues vous perdez votre effet weakness proche des rôles: Tanjiro, Inosuke, ZenItsu, Tengen, Nezuko"),
-			"",
-			bar
-	};
-	public static String[] Doma = new String[] {
-			bar,
-			"§lRôle: §r§cDoma",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Force+" 1 la nuit"),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Epouventaille de Glace: "+ChatColor.WHITE+"Épée en diamant tranchant 3"),
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Pouvoir Sanginaire, Zone de Glace: "+ChatColor.WHITE+" En activant cette objet pendant 25 secondes tout les joueurs étant à moins de 30 blocs de vous obtiendront slowness 1 et les joueurs étant à moins de 5 blocs auront slowness 3"),
-			"",
-			(ChatColor.DARK_GRAY+" • "+ChatColor.GOLD+ChatColor.BOLD+"Pouvoir Sanginaire, Statut de Glace: "+ChatColor.WHITE+" En activant cette objet pendant 5 minutes en tapant un joueur avec votre Epouventaille de Glace vous aurez 1 chance sur 4 d'obtenir "+Resi+" 1 pendant 10s"),
-			"",
-			bar
-	};
 	public static String[] Gyokko = new String[] {
 			bar,
 			"§lRôle: §r§cGyokko",
@@ -99,32 +55,7 @@ public class AllDesc{
 			"",
 			bar
 	};
-	public static String[] Muzan = new String[] {
-			bar,
-			"§lRôle: §r§cMuzan",
-			"",
-			ChatColor.BOLD+"Capacité: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Vous possédez la régénération naturel à hauteur de 1 demi"+coeur+" toute les 10 secondes"),
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Resi+" 1 permanent, "+Force+" 1 et "+Speed+" 1 la "+nuit),
-			"",
-			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuer un joueur possédant le rôle de§a Nezuko "+ChatColor.WHITE+"vous obtiendrez "+Force+" 1 le "+jour+" et "+Resi+" 2 la "+nuit),
-			"",
-			(ChatColor.BOLD+"Commande: "),
-			"",
-			ChatColor.DARK_GRAY+" • "+"§6§l/ds give§r Vous permet en spécifiant un joueur de lui donner le pouvoir de l'§cinfection§r, il pourra alors via un item séléctionné un joueur pour le rallier au camp des§c démons§r ("+ChatColor.DARK_RED+"ATTENTION§r: ce pouvoir ne permet d'infecter que les rôles§f Slayers§r)",
-			"",
-			particularite,
-			"",
-			ChatColor.DARK_GRAY + " • Lorsque vous envoyez un message dans le§c chat§f commençant par un \"§c!§f\", vous permet de parler avec§c Kokushibo",
-			"",
-			bar
-	};
+
 	public static String[] Tanjiro = new String[] {
 			bar,
 			"§lRôle: §r§aTanjiro",

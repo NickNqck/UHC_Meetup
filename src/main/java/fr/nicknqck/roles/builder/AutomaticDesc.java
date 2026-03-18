@@ -1,9 +1,16 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.UpdatablePowerLore;
+import fr.nicknqck.enums.EffectWhen;
+import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.events.ds.alliance.IAllianceRole;
+import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.aot.builders.Ackerman;
+import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.StringUtils;
@@ -114,6 +121,7 @@ public class AutomaticDesc {
         if (lines.length < 1)return this;
         int i = 0;
         for (final String string : lines) {
+            if (string.equals("/*"))continue;
             text.addExtra(new TextComponent("\n"));
             if (i == 0){
                 text.addExtra(new TextComponent("\n"+AllDesc.point));
@@ -194,11 +202,11 @@ public class AutomaticDesc {
                     if (cooldown.getOriginalCooldown() == -500) {
                         textComponent.addExtra("§7 (1x/partie)");
                     } else {
-                        textComponent.addExtra("§7 (1x/" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + ")");
+                        textComponent.addExtra(" §7(§71§7x§7/§7" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + "§7)");
                     }
                 }
                 if (power.getMaxUse() != -1) {
-                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/partie)");
+                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/parti"+"§7e§7)");
                 }
             }
             textComponent.addExtra("§7.");
@@ -273,6 +281,23 @@ public class AutomaticDesc {
                                         ((OrochimaruV2) this.role).getChakraString() :
                                         ((NSRoles) this.role).getChakras().getShowedName())) :
                         ""));
+        if (this.role instanceof AotRoles) {
+            if (((AotRoles) this.role).isCanVoleTitan()) {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7avez §7la §7capacité §7de §7voler §7un §ctitan §7via §7la §7commande §6/aot steal"));
+            }
+        }
+        if (this.role instanceof Ackerman) {
+            if (((Ackerman) this.role).knowHisMaster() && ((Ackerman) this.role).getMaster() != null) {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a "+((Ackerman) this.role).getMaster().getGamePlayer().getPlayerName()+((((Ackerman) this.role).getGamePlayer().check() ? "" : " §7(§cMort§7)"))));
+            } else {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a §kJeNeSaisPas"));
+            }
+        }
+        if (this.role instanceof DemonsSlayersRoles) {
+            if (((DemonsSlayersRoles) this.role).isLameincassable()) {
+                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§c lame§7 est§c incassable§7."));
+            }
+        }
         text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
         return text;
     }

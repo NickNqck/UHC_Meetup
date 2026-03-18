@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;

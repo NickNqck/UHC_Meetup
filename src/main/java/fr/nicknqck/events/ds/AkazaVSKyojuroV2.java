@@ -7,7 +7,7 @@ import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.ds.demons.lune.Akaza;
 import fr.nicknqck.roles.ds.slayers.pillier.KyojuroV2;
 import fr.nicknqck.utils.StringUtils;

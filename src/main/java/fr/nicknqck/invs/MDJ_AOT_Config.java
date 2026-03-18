@@ -16,25 +16,25 @@ public class MDJ_AOT_Config extends FastInv {
         setItems(getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
 
         setItem(10, new ItemBuilder(Material.WATCH).setName("§fCooldown de l'équipement tridimensionnel").setLore(
-                "§fCooldown actuel:§b "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getTridiCooldown()),
+                "§fCooldown actuel:§b "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown()),
                 "",
                 "§fClique gauche:§a + 1 seconde",
                 "§fClique droit:§c - 1 seconde"
         ).toItemStack(), event -> {
             if (event.isLeftClick()) {
-                Main.getInstance().getGameConfig().setTridiCooldown(Math.min(64, Main.getInstance().getGameConfig().getTridiCooldown() + 1));
+                Main.getInstance().getGameConfig().getAotConfig().setTridiCooldown(Math.min(64, Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown() + 1));
             }
             if (event.isRightClick()) {
-                Main.getInstance().getGameConfig().setTridiCooldown(Math.max(5,  Main.getInstance().getGameConfig().getTridiCooldown() - 1));
+                Main.getInstance().getGameConfig().getAotConfig().setTridiCooldown(Math.max(5,  Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown() - 1));
             }
             new MDJ_AOT_Config().open((Player) event.getWhoClicked());
         });
 
-        if (Main.getInstance().getGameConfig().isRodTridimenssionel()) {
+        if (Main.getInstance().getGameConfig().getAotConfig().isRodTridimenssionel()) {
             setItem(11, new ItemBuilder(Material.FISHING_ROD)
                     .setName("§fEquipement Tridimentionnel")
                     .toItemStack(), event -> {
-                Main.getInstance().getGameConfig().setRodTridimenssionel(false);
+                Main.getInstance().getGameConfig().getAotConfig().setRodTridimenssionel(false);
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'équipement tridimentionnel sur: \"§fArc§7\".");
                 new MDJ_AOT_Config().open((Player) event.getWhoClicked());
             });
@@ -42,13 +42,13 @@ public class MDJ_AOT_Config extends FastInv {
             setItem(11, new ItemBuilder(Material.BOW)
                     .setName("§fEquipement Tridimentionnel")
                     .toItemStack(), event -> {
-                Main.getInstance().getGameConfig().setRodTridimenssionel(true);
+                Main.getInstance().getGameConfig().getAotConfig().setRodTridimenssionel(true);
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'équipement tridimentionnel sur: \"§fCânne à pêche§7\".");
                 new MDJ_AOT_Config().open((Player) event.getWhoClicked());
             });
         }
         setItem(12, new ItemBuilder(Material.LAVA_BUCKET)
-                .setName("Capacité d'utiliser de la§6 lave§f pour les§c titans§f (§ctransformer§f)")
+                .setName("§fCapacité d'utiliser de la§6 lave§f pour les§c titans§f (§ctransformer§f)")
                 .setLore(Main.getInstance().getGameConfig().isLaveTitans() ?
                         "§fLes titans§a peuvent§f utiliser de la§6 lave§f une fois§c transformer§f."
                         :

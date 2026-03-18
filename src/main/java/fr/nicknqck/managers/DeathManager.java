@@ -8,9 +8,8 @@ import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -167,9 +166,6 @@ public class DeathManager implements Listener {
             } else {//La cause de la mort n'est pas une flèche
                 DeathMessage(killedPlayer);
             }
-        }
-        for (Titans t : Titans.values()) {
-            t.getTitan().PlayerKilled(killedPlayer, entityKiller);
         }
         gameState.delInGamePlayers(killedPlayer);
         gameState.addInSpecPlayers(killedPlayer);

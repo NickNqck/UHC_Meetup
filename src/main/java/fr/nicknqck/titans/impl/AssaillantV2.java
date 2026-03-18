@@ -1,5 +1,6 @@
 package fr.nicknqck.titans.impl;
 
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -45,7 +46,7 @@ public class AssaillantV2 extends TitanBase {
 
     @Override
     public @NonNull String getName() {
-        return "§6Assaillant";
+        return "§6Assaillant§r";
     }
 
     @Override
@@ -64,8 +65,8 @@ public class AssaillantV2 extends TitanBase {
     }
 
     @Override
-    public @NonNull PrepareTitanStealEvent.TitanForm getTitanForm() {
-        return PrepareTitanStealEvent.TitanForm.ASSAILLANT;
+    public @NonNull TitanForm getTitanForm() {
+        return TitanForm.ASSAILLANT;
     }
     private static class ShutDownPower extends ItemPower {
 

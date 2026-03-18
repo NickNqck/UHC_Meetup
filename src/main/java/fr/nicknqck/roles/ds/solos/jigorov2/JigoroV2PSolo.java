@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ds.solos.jigorov2;
 
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;

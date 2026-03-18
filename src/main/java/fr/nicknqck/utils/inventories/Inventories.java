@@ -11,11 +11,10 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.invs.Configuration_Inventory;
 import fr.nicknqck.invs.Configuration_RolesInventory;
-import fr.nicknqck.invs.FirstConfigurationInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
-import fr.nicknqck.roles.builder.IRole;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.scenarios.Scenarios;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
@@ -24,7 +23,6 @@ import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
@@ -362,7 +360,7 @@ public class Inventories {
 
                     inv.setItem(4, GUIItems.getSelectBackMenu());
 
-                    inv.setItem(10, new ItemBuilder(Material.BOW).setName("§rCooldown Equipement Tridimentionnel").setLore("§fCooldownActuel: "+Main.getInstance().getGameConfig().getTridiCooldown()).toItemStack());
+                    inv.setItem(10, new ItemBuilder(Material.BOW).setName("§rCooldown Equipement Tridimentionnel").setLore("§fCooldownActuel: "+Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown()).toItemStack());
                     if (gameState.rod) {
                         inv.setItem(11, new ItemBuilder(Material.FISHING_ROD).setName("§rEquipement Tridimentionnel").setLore("§fEquipement actuel:§l Rod Tridimentionnelle").toItemStack());
                     }else {

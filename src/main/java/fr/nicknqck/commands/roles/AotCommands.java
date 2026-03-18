@@ -10,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.aot.builders.titans.Titans;
 
 public class AotCommands implements CommandExecutor {
 	private final GameState gameState;
@@ -36,19 +35,14 @@ public class AotCommands implements CommandExecutor {
 							}
 						}
 						if (args[0].equalsIgnoreCase("steal")) {
-							for (Titans value : Titans.values()) {
-								value.getTitan().onSteal(player, args);
-							}
+
                         } else {
 							if (args[0].equalsIgnoreCase("titan")) {
-								for (Titans value : Titans.values()) {
-									value.getTitan().onAotTitan(player, args);
+								if (Main.getInstance().getTitanManager().hasTitan(player.getUniqueId())) {
+									player.sendMessage(Main.getInstance().getTitanManager().getDescriptions(player.getUniqueId()));
 									return true;
 								}
                             } else {
-								for (Titans t : Titans.values()) {
-									t.getTitan().onSubCommand(player, args);
-								}
 								if (gameState.getGamePlayer().get(player.getUniqueId()).getRole() instanceof AotRoles) {
 									AotRoles aotRoles = (AotRoles) gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 									if (aotRoles.getGamePlayer().isAlive()) {

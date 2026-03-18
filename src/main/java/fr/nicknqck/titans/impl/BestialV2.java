@@ -2,7 +2,7 @@ package fr.nicknqck.titans.impl;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.roles.aot.TitanOwnerChangeEvent;
 import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -61,9 +61,9 @@ public class BestialV2 extends TitanBase implements Listener {
     @Override
     public @NonNull String getName() {
         if (this.bestialForm == null) {
-            return "Bestial";
+            return "§cBestial";
         }
-        return "Bestial§7 ("+this.bestialForm.getName()+"§7)";
+        return "§cBestial§7 ("+this.bestialForm.getName()+"§7)";
     }
 
     @Override
@@ -82,8 +82,8 @@ public class BestialV2 extends TitanBase implements Listener {
     }
 
     @Override
-    public @NonNull PrepareTitanStealEvent.TitanForm getTitanForm() {
-        return PrepareTitanStealEvent.TitanForm.BESTIAL;
+    public @NonNull TitanForm getTitanForm() {
+        return TitanForm.BESTIAL;
     }
     @EventHandler
     private void TitanOwnerChangeEvent(@NonNull final TitanOwnerChangeEvent event) {
@@ -162,14 +162,15 @@ public class BestialV2 extends TitanBase implements Listener {
         }
         getGamePlayer().sendMessage("§7Votre titan bestial à maintenant la forme \""+this.bestialForm.getName()+"§7\"");
         this.potionEffects.addAll(this.bestialForm.getPotionEffects());
-        Bukkit.getPlayer(getGamePlayer().getUuid()).performCommand("/aot info");
+        Bukkit.getPlayer(getGamePlayer().getUuid()).performCommand("/aot titan");
     }
     private static class DashPower extends ItemPower {
 
         private final BestialV2 bestialV2;
 
         protected DashPower(@NonNull final BestialV2 bestialV2) {
-            super("Dash (Titan Bestial)", new Cooldown(60*4), new ItemBuilder(Material.QUARTZ).setName("§cDash").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes(), bestialV2.getGamePlayer().getRole());
+            super("Dash (Titan Bestial)", new Cooldown(60*4), new ItemBuilder(Material.QUARTZ).setName("§cDash").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes(), bestialV2.getGamePlayer().getRole(),
+                    "§7La description est disponible dans le§6 /aot titan");
             this.bestialV2 = bestialV2;
         }
 
@@ -193,7 +194,8 @@ public class BestialV2 extends TitanBase implements Listener {
         private final BestialV2 bestialV2;
 
         protected BattementDailePower(@NonNull BestialV2 bestialV2) {
-            super("Battement d'aile", new Cooldown(60*4), new ItemBuilder(Material.FEATHER).setName("§fBattement d'aile"), bestialV2.getTransformationPower().getRole());
+            super("Battement d'aile", new Cooldown(60*4), new ItemBuilder(Material.FEATHER).setName("§fBattement d'aile"), bestialV2.getTransformationPower().getRole(),
+                    "§7La description est disponible dans le§6 /aot titan");
             this.bestialV2 = bestialV2;
         }
 
@@ -255,7 +257,8 @@ public class BestialV2 extends TitanBase implements Listener {
         private final BestialV2 bestialV2;
 
         protected ChargePower(@NonNull BestialV2 bestialV2) {
-            super("Charge en piqué", new Cooldown(60*4), new ItemBuilder(Material.QUARTZ).setName("§fCharge en piqué"), bestialV2.getTransformationPower().getRole());
+            super("Charge en piqué", new Cooldown(60*4), new ItemBuilder(Material.QUARTZ).setName("§fCharge en piqué"), bestialV2.getTransformationPower().getRole(),
+                    "§7La description est disponible dans le§6 /aot titan");
             this.bestialV2 = bestialV2;
         }
 
@@ -291,7 +294,8 @@ public class BestialV2 extends TitanBase implements Listener {
         private final BestialV2 bestialV2;
 
         protected LanguePower(@NonNull BestialV2 bestialV2) {
-            super("Langue", new Cooldown(30*3), new ItemBuilder(Material.NAME_TAG).setName("§fLangue"), bestialV2.getTransformationPower().getRole());
+            super("Langue", new Cooldown(30*3), new ItemBuilder(Material.NAME_TAG).setName("§fLangue"), bestialV2.getTransformationPower().getRole(),
+                    "§7La description est disponible dans le§6 /aot titan");
             this.bestialV2 = bestialV2;
         }
 

@@ -1,5 +1,6 @@
 package fr.nicknqck.titans.impl;
 
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.roles.aot.PrepareTitanStealEvent;
 import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
@@ -71,8 +72,8 @@ public class CharetteV2 extends TitanBase implements Listener {
     }
 
     @Override
-    public @NonNull PrepareTitanStealEvent.TitanForm getTitanForm() {
-        return PrepareTitanStealEvent.TitanForm.CHARETTE;
+    public @NonNull TitanForm getTitanForm() {
+        return TitanForm.CHARETTE;
     }
     @EventHandler
     private void onTitanTransform(@NonNull final TitanTransformEvent event) {
@@ -109,7 +110,7 @@ public class CharetteV2 extends TitanBase implements Listener {
         protected StackPower(@NonNull final CharetteV2 charetteV2) {
             super("Équipement du Charette", null,
                     new ItemBuilder(Material.MINECART).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§fÉquipement du Charette")
-                    , charetteV2.getGamePlayer().getRole(), "§7Description disponible dans le§6 /aot info");
+                    , charetteV2.getGamePlayer().getRole(), "§7Description disponible dans le§6 /aot titan");
             this.charette = charetteV2;
         }
 

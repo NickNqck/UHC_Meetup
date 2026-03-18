@@ -10,9 +10,9 @@ import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -38,6 +38,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -122,6 +123,7 @@ public class EnmuV2 extends DemonsRoles {
             world.setSpawnLocation(0, world.getHighestBlockYAt(0, 0), 0);
             world.setGameRuleValue("doMobSpawning", "false");
             world.setGameRuleValue("doFireTick", "false");
+            world.setMetadata("noeffects", new FixedMetadataValue(getPlugin(), "noeffects"));
             return world;
         }
         private String getBase() {

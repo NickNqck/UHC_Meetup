@@ -8,12 +8,12 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
 import fr.nicknqck.roles.aot.soldats.*;
 import fr.nicknqck.roles.aot.solo.ErenV2;
-import fr.nicknqck.roles.aot.solo.Gabi;
+import fr.nicknqck.roles.aot.solo.GabiV2;
 import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
-import fr.nicknqck.roles.builder.IRole;
+import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.krystal.LeComteV2;
 import fr.nicknqck.roles.custom.LeJuge;
 import fr.nicknqck.roles.krystal.Heldige;
@@ -149,19 +149,20 @@ public class RoleManager implements Listener {
         registerRole(ShinjuroV2.class);
         registerRole(YoriichiV2.class);
         registerRole(SlayerSolo.class);
+        registerRole(Asahiro.class);
     }
     private void registerAot() throws Exception{
         //Register Soldats
         registerRole(ArminV2.class);
-        registerRole(Conny.class);
-        registerRole(Eclaireur.class);
-        registerRole(Erwin.class);
-        registerRole(Hansi.class);
-        registerRole(Jean.class);
-        registerRole(Livai.class);
-        registerRole(Mikasa.class);
-        registerRole(Onyankopon.class);
-        registerRole(Sasha.class);
+        registerRole(ConnyV2.class);
+        registerRole(EclaireurV2.class);
+        registerRole(ErwinV2.class);
+        registerRole(HansiV2.class);
+        registerRole(JeanV2.class);
+        registerRole(LivaiV2.class);
+        registerRole(MikasaV2.class);
+        registerRole(OnyankoponV2.class);
+        registerRole(SashaV2.class);
         registerRole(Soldat.class);
         //Register Titan Rouge
         registerRole(GrandTitan.class);
@@ -179,7 +180,7 @@ public class RoleManager implements Listener {
         registerRole(ReinerV2.class);
         //Register Solo
         registerRole(ErenV2.class);
-        registerRole(Gabi.class);
+        registerRole(GabiV2.class);
         registerRole(TitanUltime.class);
     }
     private void registerNs() throws Exception {

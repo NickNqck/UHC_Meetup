@@ -9,9 +9,8 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
-import fr.nicknqck.roles.aot.builders.titans.TitanListener;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.builder.TeamList;
+import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.SusamaruV2;
 import fr.nicknqck.roles.ns.Chakras;
@@ -73,7 +72,6 @@ public class GameListener implements Listener {
 				ch.getChakra().onSecond(gameState);
 			}
 			BijuListener.getInstance().runnableTask(gameState);
-			TitanListener.getInstance().onSecond();
 
 		}, 20, 20);
 	}
@@ -295,7 +293,6 @@ public class GameListener implements Listener {
 			HubListener.spawnPlatform(Main.getInstance().getWorldManager().getLobbyWorld(), Material.GLASS);
 			gameState.TitansRouge.clear();
 			gameState.infectedbyadmin.clear();
-			TitanListener.getInstance().resetCooldown();
 			BetterItem.getRegisteredItems().clear();
 			PotionUtils.getNoFalls().clear();
 			AttackUtils.CantAttack.clear();
@@ -737,7 +734,6 @@ public class GameListener implements Listener {
 					    p.closeInventory();
 						if (!gameState.hasRoleNull(p.getUniqueId())){
 							gameState.getGamePlayer().get(p.getUniqueId()).getRole().FormChoosen(item, gameState);
-							gameState.getGamePlayer().get(p.getUniqueId()).getRole().neoFormChoosen(item, inv, event.getSlot(), gameState);
 						}
 					}
 				}

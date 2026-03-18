@@ -2,6 +2,7 @@ package fr.nicknqck.events.custom;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.interfaces.IRoles;
 import lombok.Getter;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -17,9 +18,9 @@ public class GameStartEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final GameState gameState;
     private final List<UUID> inGamePlayers;
-    private final List<Roles> igRoles;
+    private final List<IRoles> igRoles;
 
-    public GameStartEvent(GameState gameState, List<Roles> rolesList) {
+    public GameStartEvent(GameState gameState, List<IRoles> rolesList) {
         this.gameState = gameState;
         this.igRoles = rolesList;
         this.inGamePlayers = new ArrayList<>(gameState.getInGamePlayers());

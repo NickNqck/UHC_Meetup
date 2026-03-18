@@ -1,6 +1,7 @@
 package fr.nicknqck.events.custom.roles.aot;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
@@ -37,13 +38,5 @@ public class PrepareTitanStealEvent extends GameEvent implements Cancellable {
         this.cancelled = b;
     }
 
-    public enum TitanForm {
-        ASSAILLANT,
-        CUIRASSE,
-        CHARETTE,
-        BESTIAL,
-        COLOSSAL,
-        MACHOIRE,
-        WARHAMMER
-    }
+
 }

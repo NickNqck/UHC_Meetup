@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.builder.EffectWhen;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -80,7 +80,7 @@ public abstract class TitanBase implements ITitan {
 
         public TransformationPower(@NonNull TitanBase titan) {
             super("§fTransformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§fTransformation"), titan.getGamePlayer().getRole(),
-                    "§7Cette objet vous permet de vous transformez en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot info");
+                    "§7Cette objet vous permet de vous transformez en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot titan");
             this.titanBase = titan;
             setWorkWhenInCooldown(true);
         }
@@ -109,7 +109,17 @@ public abstract class TitanBase implements ITitan {
             }
             return false;
         }
+        private synchronized void removePermanentEffects(Player player) {
+            // Copie de la collection pour éviter les erreurs de modification concurrente
+            for (PotionEffect effect : player.getActivePotionEffects()) {
+
+                if (effect.getDuration() > 1000000) {
+                    player.removePotionEffect(effect.getType());
+                }
+            }
+        }
         public synchronized void startTransformation(@NonNull final Player player) {
+            removePermanentEffects(player);
             this.titanBase.setTransformed(true);
             @NonNull final TitanTransformEvent event = new TitanTransformEvent(this.titanBase, true, player);
             Bukkit.getPluginManager().callEvent(event);
@@ -172,7 +182,7 @@ public abstract class TitanBase implements ITitan {
                     Bukkit.getScheduler().runTask(this.power.getPlugin(), () -> {
                         if (!this.power.titanBase.getEffects().isEmpty()) {
                             for (final PotionEffect potionEffect : this.power.titanBase.getEffects()) {
-                                this.power.getRole().givePotionEffect(potionEffect, EffectWhen.NOW);
+                                this.power.getRole().givePotionEffect(potionEffect, EffectWhen.SPECIAL);
                             }
                         }
                     });
