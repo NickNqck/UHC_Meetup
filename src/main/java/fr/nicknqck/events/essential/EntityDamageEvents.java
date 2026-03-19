@@ -137,8 +137,6 @@ public class EntityDamageEvents implements Listener{
 				if (damageur instanceof Player) {
 					Player damager = (Player) event.getDamager();
 					if (!gameState.hasRoleNull(damager.getUniqueId())) {
-						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().ItemUseAgainst(damager.getItemInHand(), player, gameState);
-						gameState.getGamePlayer().get(damager.getUniqueId()).getRole().neoItemUseAgainst(damager.getItemInHand(), player, gameState, damager);
 						/*
 						 * (damager).getItemInHand() = ItemStack item
 						 * player = Player victim

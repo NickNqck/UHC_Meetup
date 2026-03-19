@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.RoleCustomLore;
+import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -11,7 +11,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;

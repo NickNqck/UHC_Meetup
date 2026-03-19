@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ds.builders;
+package fr.nicknqck.enums;
 
 public enum Soufle {
 

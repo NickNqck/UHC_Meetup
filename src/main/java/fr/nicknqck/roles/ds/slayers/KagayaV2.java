@@ -10,7 +10,7 @@ import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;

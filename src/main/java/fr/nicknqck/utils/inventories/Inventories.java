@@ -6,7 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.MDJ;
-import fr.nicknqck.enums.RoleCustomLore;
+import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.invs.Configuration_Inventory;

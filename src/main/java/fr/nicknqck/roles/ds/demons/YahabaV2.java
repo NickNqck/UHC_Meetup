@@ -8,7 +8,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;

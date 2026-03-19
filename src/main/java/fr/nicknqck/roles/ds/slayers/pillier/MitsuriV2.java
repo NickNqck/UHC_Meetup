@@ -7,7 +7,7 @@ import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

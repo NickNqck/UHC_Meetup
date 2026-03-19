@@ -12,7 +12,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

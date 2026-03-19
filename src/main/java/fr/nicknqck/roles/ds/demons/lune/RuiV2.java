@@ -7,7 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.KumoV2;
 import fr.nicknqck.utils.Loc;

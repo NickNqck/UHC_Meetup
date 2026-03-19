@@ -17,7 +17,7 @@ public interface IRole {
     UUID getPlayer();
     String getName();
     @NonNull
-    IRoles getRoles();
+    IRoles<?> getRoles();
     @NonNull
     TeamList getOriginTeam();
     TeamList getTeam();

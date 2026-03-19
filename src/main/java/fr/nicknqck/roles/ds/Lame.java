@@ -6,7 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.enums.Lames;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

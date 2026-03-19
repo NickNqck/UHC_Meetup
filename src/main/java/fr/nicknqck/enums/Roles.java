@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-public enum Roles implements IRoles {
+public enum Roles implements IRoles<Roles> {
     //Solo ds
     Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
     JigoroV1(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),

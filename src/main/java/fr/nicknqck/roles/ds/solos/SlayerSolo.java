@@ -12,7 +12,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

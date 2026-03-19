@@ -181,14 +181,7 @@ public class GameListener implements Listener {
 				SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 				Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 				Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("doDaylightCycle", "false");
-				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-					for (final Player p : Bukkit.getOnlinePlayers()) {
-						if (!gameState.hasRoleNull(p.getUniqueId())) {
-							gameState.getGamePlayer().get(p.getUniqueId()).getRole().onDay(gameState);
-						}
-					}
-					Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
-	        }, 50);
+				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Bukkit.getPluginManager().callEvent(new DayEvent(gameState)), 50);
 			} else {
 				gameState.t--;
 				if (gameState.t <= 0) {
@@ -199,11 +192,6 @@ public class GameListener implements Listener {
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant jour");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-						for (UUID u : gameState.getInGamePlayers()) {
-							if (!gameState.hasRoleNull(u)) {
-								gameState.getGamePlayer().get(u).getRole().onDay(gameState);
-							}
-						}
 						Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
 					} else {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(16500);

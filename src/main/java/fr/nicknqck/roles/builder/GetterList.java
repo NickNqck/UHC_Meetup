@@ -6,7 +6,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.aot.titanrouge.Sieg;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;

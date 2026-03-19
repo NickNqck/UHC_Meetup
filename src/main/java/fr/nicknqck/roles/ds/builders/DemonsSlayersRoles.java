@@ -2,6 +2,8 @@ package fr.nicknqck.roles.ds.builders;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.Lames;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;

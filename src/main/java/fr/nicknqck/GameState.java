@@ -58,7 +58,7 @@ public class GameState{
 	@Setter
 	private int timeProcHokage = 90;
 	@Getter
-	private final List<IRoles> deadRoles = new ArrayList<>();
+	private final List<IRoles<?>> deadRoles = new ArrayList<>();
 	public boolean hasPregen = false;
 	public boolean pregenNakime = false;
 	public boolean gameCanLaunch = false;
@@ -91,7 +91,7 @@ public class GameState{
 	@Getter
 	private ServerStates serverState = ServerStates.InLobby;
 	@Getter
-	private final HashMap<IRoles, Integer> availableRoles = new HashMap<>();
+	private final HashMap<IRoles<?>, Integer> availableRoles = new HashMap<>();
 	@Getter
 	private final List<UUID> inLobbyPlayers = new ArrayList<>();
 	@Setter
@@ -125,9 +125,9 @@ public class GameState{
 	public List<Player> TitansRouge = new ArrayList<>();
 	public List<Player> shutdown = new ArrayList<>();
 	public List<Player> infectedbyadmin = new ArrayList<>();
-	public List<IRoles> DeadRole = new ArrayList<>();
+	public List<IRoles<?>> DeadRole = new ArrayList<>();
 	@Getter
-	private final List<IRoles> attributedRole = new ArrayList<>();
+	private final List<IRoles<?>> attributedRole = new ArrayList<>();
 
 	public GameState() {
 		instance = this;
@@ -156,15 +156,15 @@ public class GameState{
         return !getGamePlayer().containsKey(uuid) || !isRoleAttributed();
 	}
 
-	public void addInAvailableRoles(IRoles role, Integer nmb) {availableRoles.put(role, nmb);}
+	public void addInAvailableRoles(IRoles<?> role, Integer nmb) {availableRoles.put(role, nmb);}
 	public void addPlayerKills(Player player) {playerKills.put(player.getUniqueId(), new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
 	public RoleBase GiveRole(Player aziz) {
 		if (!hasRoleNull(aziz.getUniqueId())) return null;
 		//Roles roleType = getAvailableRoles().get(new Random().nextInt(getAvailableRoles().size()));
-		ArrayList<IRoles> roles = new ArrayList<>();
-		for (IRoles role : getAvailableRoles().keySet()) {
+		ArrayList<IRoles<?>> roles = new ArrayList<>();
+		for (IRoles<?> role : getAvailableRoles().keySet()) {
 			for (int i = 0; i < getAvailableRoles().get(role); i++) {
 				roles.add(role);
 			}
@@ -172,7 +172,7 @@ public class GameState{
 		for (RoleBase r : getPlayerRoles().values()) {
             roles.remove(r.getRoles());
 		}
-		IRoles roleType;
+		IRoles<?> roleType;
 		roleType = roles.get(Main.RANDOM.nextInt(roles.size()));
 		RoleBase role = null;
 		UUID player = aziz.getUniqueId();
@@ -589,7 +589,7 @@ public class GameState{
 	public int getroleNMB() {
 		int nmbrole = 0;
 		//Ancien système de rôle
-		for (IRoles r : getAvailableRoles().keySet()) {
+		for (IRoles<?> r : getAvailableRoles().keySet()) {
 			nmbrole += getAvailableRoles().get(r);
 		}
 		/*Nouveau système de rôle
@@ -754,7 +754,7 @@ public class GameState{
 		return null;
 	}
 	public String getRolesList() {
-		Map<TeamList, List<IRoles>> hashMap = new LinkedHashMap<>();
+		Map<TeamList, List<IRoles<?>>> hashMap = new LinkedHashMap<>();
 		StringBuilder tr = new StringBuilder();
 		if (Main.isDebug()) {
 			System.out.println("getRolesList used");
@@ -773,13 +773,13 @@ public class GameState{
 					final Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
 					if (owner != null && !owner.getGameMode().equals(GameMode.SPECTATOR)) {
 						if (hashMap.get(e.getOriginTeam()) == null){
-							List<IRoles> r = new ArrayList<>();
+							List<IRoles<?>> r = new ArrayList<>();
 							hashMap.put(e.getOriginTeam(), r);
 						}
 						if (Main.isDebug()){
 							System.out.println("[getRoleList] "+e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
 						}
-						List<IRoles> aList = hashMap.get(e.getOriginTeam());
+						List<IRoles<?>> aList = hashMap.get(e.getOriginTeam());
 						aList.add(e.getRoles());
 						hashMap.remove(e.getOriginTeam(), hashMap.get(e.getOriginTeam()));
 						hashMap.put(e.getOriginTeam(), aList);
@@ -788,13 +788,13 @@ public class GameState{
 			}
 		} else {
 			if (!getAvailableRoles().isEmpty()){
-				for (IRoles e : getAvailableRoles().keySet()) {
+				for (IRoles<?> e : getAvailableRoles().keySet()) {
 					if (getAvailableRoles().get(e) > 0){
 						if (hashMap.get(e.getTeam()) == null){
-							List<IRoles> r = new ArrayList<>();
+							List<IRoles<?>> r = new ArrayList<>();
 							hashMap.put(e.getTeam(), r);
 						}
-						List<IRoles> aList = hashMap.get(e.getTeam());
+						List<IRoles<?>> aList = hashMap.get(e.getTeam());
 						aList.add(e);
 						hashMap.remove(e.getTeam(), hashMap.get(e.getTeam()));
 						hashMap.put(e.getTeam(), aList);
@@ -803,7 +803,7 @@ public class GameState{
 			}
 		}
 		if (!hashMap.isEmpty()){
-			List<IRoles> appenned = new ArrayList<>();
+			List<IRoles<?>> appenned = new ArrayList<>();
 			for (TeamList t : TeamList.values()){
 				int size = 0;
 				if (hashMap.get(t) != null){
@@ -813,7 +813,7 @@ public class GameState{
 					tr.append("\n§r(").append(t.getColor()).append(size).append("§f)").append(t.getColor()).append(StringUtils.replaceUnderscoreWithSpace(t.name())).append("(s): \n");
 					int i = 0;
 					if (hashMap.containsKey(t) && !hashMap.get(t).isEmpty()) {
-						for (IRoles roles : hashMap.get(t)){
+						for (IRoles<?> roles : hashMap.get(t)){
 							i++;
 							if (!appenned.contains(roles)) {
 								if (getServerState().equals(ServerStates.InLobby)) {
