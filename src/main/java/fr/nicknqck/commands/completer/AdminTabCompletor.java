@@ -1,8 +1,10 @@
 package fr.nicknqck.commands.completer;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -70,9 +72,14 @@ public class AdminTabCompletor implements TabCompleter {
                 stringList.addAll(getListOfPlayer(strings[1]));
             }
             if (strings[0].equalsIgnoreCase("addrole") || strings[0].equalsIgnoreCase("delrole")) {
-                for (final Roles roles : Roles.values()) {
-                    String name = roles.name().toLowerCase();
-                    stringList.add(name);
+                for (IRole iRole : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+                    if (iRole.getRoles() instanceof Roles) {
+                        String name = ((Roles)iRole.getRoles()).name().toLowerCase();
+                        stringList.add(name);
+                    } else {
+                        String name = iRole.getRoles().toString().toLowerCase();
+                        stringList.add(name);
+                    }
                 }
             }
             if (strings[0].equalsIgnoreCase("addhost") ||

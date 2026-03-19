@@ -94,7 +94,7 @@ public class RoleManager implements Listener {
         registerNs();
         registerCustomRoles();
     }
-    private void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
+    public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
     }
