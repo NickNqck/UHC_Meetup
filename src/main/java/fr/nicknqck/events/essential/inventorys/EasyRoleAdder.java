@@ -3,6 +3,7 @@ package fr.nicknqck.events.essential.inventorys;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 
 public final class EasyRoleAdder {
@@ -19,18 +20,23 @@ public final class EasyRoleAdder {
         }*/
         Main.getInstance().getLogger().info("Name = "+name);
         for (Class<? extends RoleBase> aClass : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
-            if (name.equalsIgnoreCase(cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName())) || name.equalsIgnoreCase(getCleanSimpleName(aClass))) {
+            final IRole iRole = Main.getInstance().getRoleManager().getRolesRegistery().get(aClass);
+            if (name.equalsIgnoreCase(cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName())) ||
+                    name.equalsIgnoreCase(getCleanSimpleName(aClass)) ||
+                    iRole.getRoles().getItem().getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
                 Main.getInstance().getLogger().info("ClassName: "+aClass.getSimpleName()+", class: "+aClass+", roles: "+name+", cleanName: "+getCleanSimpleName(aClass)+", cleanedString: "+cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName()));
-            }
-        }
-        //Ancien système de rôle
-        for (Roles roles : Roles.values()) {
-            if (roles.name().equalsIgnoreCase(cleanString(name))) {
-                GameState.getInstance().addInAvailableRoles(roles, Math.min(GameState.getInstance().getInLobbyPlayers().size(), GameState.getInstance().getAvailableRoles().get(roles)+1));
-                GameState.getInstance().updateGameCanLaunch();
+                GameState.getInstance().addInAvailableRoles(iRole.getRoles(), GameState.getInstance().getAvailableRoles().get(iRole.getRoles())+1);
                 break;
             }
         }
+       /*Ancien système de rôle
+        for (Roles roles : Roles.values()) {
+            if (roles.name().equalsIgnoreCase(cleanString(name))) {
+                GameState.getInstance().addInAvailableRoles(roles, Math.min(GameState.getInstance().getInLobbyPlayers().size(), GameState.getInstance().getAvailableRoles().get(roles)+1));
+                break;
+            }
+        }*/
+        GameState.getInstance().updateGameCanLaunch();
     }
     public static String getCleanSimpleName(Class<?> clazz) {
         String name = clazz.getSimpleName();

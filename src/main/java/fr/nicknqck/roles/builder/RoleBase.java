@@ -273,17 +273,15 @@ public abstract class RoleBase implements IRole {
 	}
 	public void onLeftClick(PlayerInteractEvent event, GameState gameState) {}
 	public void KnowRole(Player knower, Roles toknow, int delayinTick) {
-		if (Main.isDebug()){
-			System.out.println("Starting trying to get player who own the role "+toknow.name());
-		}
+        Main.getInstance().debug("Starting trying to get player who own the role "+toknow.name());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (gameState.getInSpecPlayers().contains(p))return;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					if (getListPlayerFromRole(toknow).contains(p)) {
 						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p.getUniqueId())) {
-                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam();
-                            knower.sendMessage("Le joueur possédant le rôle de " + toknow.getTeam().getColor() + toknow.name() + "§f est " + p.getName());
+                            final RoleBase roleBase = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+                            knower.sendMessage("Le joueur possédant le rôle de " + roleBase.getTeam().getColor() + roleBase.getName() + "§f est " + p.getName());
                         }
 					}
 				}

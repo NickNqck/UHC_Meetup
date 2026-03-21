@@ -382,7 +382,7 @@ public static ItemStack getSelectConfigButton() {
         return Bukkit.createInventory(null, 9, "§bCutClean");
 	}
 	public static Inventory getDSSoloSelectGUI() {
-        return Bukkit.createInventory(null, 54, "DemonSlayer -> §eSolo");
+        return Bukkit.createInventory(null, 54, "§fDemonSlayer§7 -> §eSolo");
 	}
 	public static Inventory getAOTSoloSelectGUI() {
 		return Bukkit.createInventory(null, 54, "§fAOT§7 -> §eSolo");

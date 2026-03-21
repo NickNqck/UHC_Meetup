@@ -244,7 +244,7 @@ public class AdminCommands implements CommandExecutor{
 						@Override
 						public void run() {
 							if (gameState.getroleNMB() > 0) {
-								for (IRoles roles : gameState.getAvailableRoles().keySet()) {
+								for (IRoles<?> roles : gameState.getAvailableRoles().keySet()) {
 									if (gameState.getAvailableRoles().get(roles) > 0) {
 										int e = gameState.getAvailableRoles().get(roles);
 										gameState.addInAvailableRoles(roles, Math.max(0, gameState.getAvailableRoles().get(roles)-gameState.getAvailableRoles().get(roles)));
@@ -259,7 +259,7 @@ public class AdminCommands implements CommandExecutor{
 								cancel();
 							}
 						}
-					}.runTaskTimer(Main.getInstance(), 0, 20);
+					}.runTaskTimer(Main.getInstance(), 0, 12);
 					return true;
 				}
 				if (sender instanceof Player) {

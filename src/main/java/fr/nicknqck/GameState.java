@@ -756,9 +756,7 @@ public class GameState{
 	public String getRolesList() {
 		Map<TeamList, List<IRoles<?>>> hashMap = new LinkedHashMap<>();
 		StringBuilder tr = new StringBuilder();
-		if (Main.isDebug()) {
-			System.out.println("getRolesList used");
-		}
+        Main.getInstance().debug("getRolesList used");
 		tr.append(AllDesc.bar);
 		if (getServerState() == ServerStates.InGame) {
 			for (GamePlayer gamePlayer : getGamePlayer().values()) {
@@ -776,9 +774,7 @@ public class GameState{
 							List<IRoles<?>> r = new ArrayList<>();
 							hashMap.put(e.getOriginTeam(), r);
 						}
-						if (Main.isDebug()){
-							System.out.println("[getRoleList] "+e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
-						}
+                        Main.getInstance().debug("[getRoleList] "+e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
 						List<IRoles<?>> aList = hashMap.get(e.getOriginTeam());
 						aList.add(e.getRoles());
 						hashMap.remove(e.getOriginTeam(), hashMap.get(e.getOriginTeam()));

@@ -79,6 +79,8 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
     @Override
     public String[] getCustomLore(String amount, String gDesign) {
         return new String[] {
+                amount,
+                "",
                 "§7Ce rôle ne viens pas de l'univers§c DemonSlayer§7 mais entièrement",
                 "§7par§b NickNqck§7, il est simplement inspirer de son§c univers§7,",
                 "",

@@ -537,4 +537,9 @@ public class Main extends JavaPlugin {
 		}
 		return new ArrayList<>();
 	}
+    public void debug(String message) {
+        if (isDebug()) {
+            getLogger().info(message);
+        }
+    }
 }

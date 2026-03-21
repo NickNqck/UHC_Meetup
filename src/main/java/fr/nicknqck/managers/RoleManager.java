@@ -170,7 +170,6 @@ public class RoleManager implements Listener {
         registerRole(PetitTitan.class);
         registerRole(Sieg.class);
         registerRole(TitanDeviant.class);
-        registerRole(TitanSouriant.class);
         //Register Mahr
         registerRole(BertoltV2.class);
         registerRole(LaraV2.class);
