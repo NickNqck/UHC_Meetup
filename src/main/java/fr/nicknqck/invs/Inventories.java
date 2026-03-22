@@ -1,4 +1,4 @@
-package fr.nicknqck.utils.inventories;
+package fr.nicknqck.invs;
 
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
@@ -8,9 +8,6 @@ import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.ds.Event;
-import fr.nicknqck.invs.Configuration_Inventory;
-import fr.nicknqck.invs.Configuration_RolesInventory;
-import fr.nicknqck.invs.TeamRoleInventory;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.interfaces.IRole;

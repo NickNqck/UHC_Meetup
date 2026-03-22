@@ -36,7 +36,7 @@ import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.biome.BiomeChanger;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.fastinv.FastInvManager;
-import fr.nicknqck.utils.inventories.Inventories;
+import fr.nicknqck.invs.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.managers.TabManager;
 import fr.nicknqck.utils.rank.ChatRank;
