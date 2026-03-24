@@ -51,6 +51,17 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kakuzu";
     }
@@ -77,7 +88,6 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
             }
         }
         Collections.shuffle(chakrasList, Main.RANDOM);
-        setChakraType(chakrasList.get(0));
         this.chakrasVoled.addAll(chakrasList);
         EventUtils.registerRoleEvent(this);
         addPower(new NSChangeCommand(this));
@@ -129,13 +139,13 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
             event.getPlayer().sendMessage("§7Vous n'avez plus asser de§a nature de chakra§7 pour§c réapparaitre !");
             return;
         }
-        if (getMaxHealth() > 10.0) {//Il faut que le Kakuzu revive tant qu'il a + que 5coeurs perma (sa lui coûte une nature de chakra et 1coeurs perma)
+        if (getMaxHealth() > 10.0) {//Il faut que le Kakuzu revive tant qu'il a + que 5coeurs perma (ça lui coûte une nature de chakra et 1coeurs perma)
             setMaxHealth(getMaxHealth()-2.0);
             this.chakrasVoled.remove(getChakras());
             Collections.shuffle(this.chakrasVoled);
             event.getPlayer().sendMessage("§7Vous avez perdu la nature de chakra: "+getChakras().getShowedName());
             if (!this.chakrasVoled.isEmpty()) {
-                setChakraType(this.chakrasVoled.get(0));
+                setChakras(this.chakrasVoled.get(0));
                 event.getPlayer().sendMessage("§7Vous utilisez maintenant la nature de chakra: "+getChakras().getShowedName());
             }
             getGamePlayer().setLastArmorContent(event.getPlayer().getInventory().getArmorContents());
@@ -233,7 +243,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
                         if (this.kakuzuV2.getChakras() != null) {
                             this.kakuzuV2.getChakras().getChakra().getList().remove(event.getWhoClicked().getUniqueId());
                         }
-                        this.kakuzuV2.setChakraType(chakras);
+                        this.kakuzuV2.setChakras(chakras);
                         event.getWhoClicked().sendMessage("§7Vous pouvez maintenant utilisé le "+chakras.getShowedName());
                         event.getWhoClicked().closeInventory();
                         break;

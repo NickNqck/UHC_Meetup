@@ -72,6 +72,13 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON
+        };
+    }
+
+    @Override
     public void GiveItems() {
         giveItem(owner, false, getItems());
         super.GiveItems();
@@ -81,7 +88,6 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         setMaxHealth(getMaxHealth()+6.0);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999, 0, false, false), EffectWhen.PERMANENT);
-        setChakraType(Chakras.SUITON);
         addPower(new ShikushodoPower(this), true);
         addPower(new BenshoTeninPower(this), true);
         addPower(new JigokudoPower(this));

@@ -1,21 +1,19 @@
 package fr.nicknqck.roles.ns.builders;
 
+import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.utils.RandomUtils;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
-@Getter
 public abstract class NSRoles extends RoleBase {
     @Setter
+    @Getter
     private boolean canBeHokage = false;
     private Chakras chakras = null;
     public NSRoles(UUID player) {
@@ -23,14 +21,6 @@ public abstract class NSRoles extends RoleBase {
     }
 
     public abstract @NonNull Intelligence getIntelligence();
-    public void setChakraType(@Nullable Chakras chakras) {
-        if (chakras == null) {
-            this.chakras = null;
-            return;
-        }
-        chakras.getChakra().getList().add(getPlayer());
-        this.chakras = chakras;
-    }
 
     @Override
     public ItemStack[] getItems() {
@@ -45,44 +35,19 @@ public abstract class NSRoles extends RoleBase {
     public boolean hasChakras() {
         return chakras != null;
     }
-    public Chakras getRandomChakras() {
-        Chakras toReturn = null;
-        int rdm = RandomUtils.getRandomInt(1, 5);
-        if (rdm == 1) {
-            toReturn = Chakras.DOTON;
-        }
-        if (rdm == 2) {
-            toReturn = Chakras.FUTON;
-        }
-        if (rdm == 3) {
-            toReturn = Chakras.KATON;
-        }
-        if (rdm == 4) {
-            toReturn = Chakras.RAITON;
-        }
-        if (rdm == 5) {
-            toReturn = Chakras.SUITON;
-        }
-
-        return toReturn;
-    }
-    public Chakras getRandomChakrasBetween(Chakras... c) {
-        Chakras tr = null;
-        HashMap<Integer, Chakras> canReturn = new HashMap<>();
-        int i = 0;
-        for (Chakras ch : c) {
-            i++;
-            canReturn.put(i, ch);
-        }
-        int max = canReturn.size()+1;
-        int rdm = RandomUtils.getRandomInt(1, max);
-        for (Chakras r : canReturn.values()) {
-            if (canReturn.get(rdm).equals(r)) {
-                tr = r;
-                break;
-            }
-        }
-        return tr;
-    }
     public void onNsCommand(String[] args) {}
+    public abstract Chakras[] getChakrasCanHave();
+
+    public Chakras getChakras() {
+        if (this.chakras == null) {
+            final List<Chakras> chakrasList = new ArrayList<>(Arrays.asList(getChakrasCanHave()));
+            Collections.shuffle(chakrasList);
+            this.setChakras(chakrasList.get(0));
+            Main.getInstance().debug(getPlayer()+" ("+(Main.getInstance().getServer().getPlayer(getPlayer()) == null ? "null" : Main.getInstance().getServer().getPlayer(getPlayer()).getName())+") chakra is now "+this.chakras);
+        }
+        return chakras;
+    }
+    public void setChakras(final Chakras chakras) {
+        this.chakras = chakras;
+    }
 }

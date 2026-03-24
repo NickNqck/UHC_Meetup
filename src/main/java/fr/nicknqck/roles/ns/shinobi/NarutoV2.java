@@ -48,6 +48,13 @@ public class NarutoV2 extends ShinobiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Naruto";
     }
@@ -70,7 +77,6 @@ public class NarutoV2 extends ShinobiRoles {
         addPower(new Rasengan(this), true);
         addPower(new KyubiPower(this), true);
         addPower(new NSClone(this));
-        setChakraType(Chakras.FUTON);
         setMaxHealth(getMaxHealth()+4.0);
         setCanBeHokage(true);
         if (owner != null) {

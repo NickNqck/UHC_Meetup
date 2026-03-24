@@ -52,6 +52,13 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Sasuke";
     }
@@ -78,7 +85,6 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         addPower(new Izanagi(this));
         addKnowedRole(OrochimaruV2.class);
         EventUtils.registerRoleEvent(this);
-        setChakraType(Chakras.KATON);
         setCanBeHokage(true);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Itachi)) {

@@ -50,6 +50,13 @@ public class KakashiV2 extends HShinobiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.RAITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kakashi";
     }
@@ -64,7 +71,6 @@ public class KakashiV2 extends HShinobiRoles {
         addPower(new KamuiPower(this), true);
         addPower(new SharinganPower(this), true);
         addPower(new YameruPower(this));
-        setChakraType(Chakras.RAITON);
         super.RoleGiven(gameState);
     }
 

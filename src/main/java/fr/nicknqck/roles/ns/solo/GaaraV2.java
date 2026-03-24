@@ -63,6 +63,13 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Gaara";
     }
@@ -79,7 +86,6 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(Chakras.FUTON);
         addPower(new DefensePower(this), true);
         addPower(new AttackPower(this), true);
         addPower(new ShukakuPower(this), true);

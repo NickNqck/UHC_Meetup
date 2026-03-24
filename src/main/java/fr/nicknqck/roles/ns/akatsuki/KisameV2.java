@@ -50,6 +50,13 @@ public class KisameV2 extends AkatsukiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kisame";
     }
@@ -63,7 +70,6 @@ public class KisameV2 extends AkatsukiRoles {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.PERMANENT);
-        setChakraType(Chakras.SUITON);
         addPower(new SamehadaSwordPower(this), true);
         addPower(new SuibunPower(this), true);
         final ItemStack Book = new ItemStack(Material.ENCHANTED_BOOK);

@@ -42,7 +42,6 @@ public class Naruto extends ShinobiRoles {
 
 	public Naruto(UUID player) {
 		super(player);
-		setChakraType(Chakras.FUTON);
 		setCanBeHokage(true);
 	}
 	@Override
@@ -166,7 +165,15 @@ public class Naruto extends ShinobiRoles {
             }
 		}
 	}
-	@Override
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.FUTON
+        };
+    }
+
+    @Override
 	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
 		if (villager != null) {
 			if (entity.getUniqueId().equals(villager.getUniqueId()) && e.getEntity().getLastDamage() < 100) {

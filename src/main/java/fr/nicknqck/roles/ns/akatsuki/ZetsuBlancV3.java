@@ -48,6 +48,13 @@ public class ZetsuBlancV3 extends AkatsukiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.DOTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Zetsu Blanc§7 (§6V3§7)";
     }
@@ -60,7 +67,6 @@ public class ZetsuBlancV3 extends AkatsukiRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         new SporeManager(this);
-        setChakraType(Chakras.DOTON);
         addKnowedRole(ZetsuNoir.class);
         getGamePlayer().startChatWith("§cZetsu Blanc:", "!", ZetsuNoir.class, ZetsuBlancV3.class);
         super.RoleGiven(gameState);

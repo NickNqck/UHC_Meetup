@@ -5,6 +5,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.power.CooldownFinishEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.edov2.KabutoV2;
@@ -49,6 +50,17 @@ public class KimimaroV2 extends OrochimaruRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kimimaro";
     }
@@ -62,7 +74,6 @@ public class KimimaroV2 extends OrochimaruRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new EpeeItemPower(this), true);
         addPower(new ForetItemPower(this), true);
-        setChakraType(getRandomChakras());
         addKnowedRole(OrochimaruV2.class);
         addKnowedRole(KabutoV2.class);
         super.RoleGiven(gameState);

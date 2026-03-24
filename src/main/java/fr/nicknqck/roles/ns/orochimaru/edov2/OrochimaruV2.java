@@ -67,7 +67,6 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(getRandomChakras());
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
         giveItem(owner, false, getItems());
         this.chakrasVoled.add(getChakras());
@@ -85,6 +84,18 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
                 this.kusanagi
         };
     }
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
     public String getChakraString() {
         StringBuilder sb = new StringBuilder();
         int i = 0;

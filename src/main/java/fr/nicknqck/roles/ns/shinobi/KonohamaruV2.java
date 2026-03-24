@@ -52,6 +52,13 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Konohamaru";
     }
@@ -76,7 +83,6 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         new NarutoRunnable(this, getGameState());
         addPower(new NueArdente(this), true);
-        setChakraType(Chakras.KATON);
         super.RoleGiven(gameState);
     }
     @EventHandler

@@ -41,6 +41,13 @@ public class RaikageV2 extends ShinobiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.RAITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Yondaime Raikage";
     }
@@ -57,7 +64,6 @@ public class RaikageV2 extends ShinobiRoles {
         addKnowedRole(YondaimeRaikage.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new ArmureRaiton(this), true);
-        setChakraType(Chakras.RAITON);
     }
 
     @Override

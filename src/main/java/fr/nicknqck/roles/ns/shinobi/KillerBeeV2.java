@@ -49,6 +49,13 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.RAITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Killer Bee";
     }
@@ -63,7 +70,6 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
         super.RoleGiven(gameState);
         addKnowedRole(RaikageV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-        setChakraType(Chakras.RAITON);
         EventUtils.registerRoleEvent(this);
         this.hashibiPower = new HashibiPower(this);
         addPower(this.hashibiPower, true);

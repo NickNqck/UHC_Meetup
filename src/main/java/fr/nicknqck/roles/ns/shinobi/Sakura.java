@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -25,7 +26,6 @@ public class Sakura extends ShinobiRoles {
 
 	public Sakura(UUID player) {
 		super(player);
-		setChakraType(getRandomChakras());
 		setCanBeHokage(true);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
@@ -58,7 +58,19 @@ public class Sakura extends ShinobiRoles {
 				AllDesc.bar
 		};
 	}
-	@Override
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
 				ByakugoItem()

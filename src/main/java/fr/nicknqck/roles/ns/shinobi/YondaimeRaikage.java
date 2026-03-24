@@ -22,7 +22,6 @@ public class YondaimeRaikage extends ShinobiRoles {
 
 	public YondaimeRaikage(UUID player) {
 		super(player);
-		setChakraType(Chakras.RAITON);
 	}
 
 	@Override
@@ -62,7 +61,15 @@ public class YondaimeRaikage extends ShinobiRoles {
 				
 		};
 	}
-	private ItemStack ArmureItem() {
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.RAITON
+        };
+    }
+
+    private ItemStack ArmureItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§eArmure Raiton").setLore("§7Vous permet d'obtenir l'effet Résistance 1 et Speed 2").toItemStack();
 	}
 	private int timeLeft = 60*5;

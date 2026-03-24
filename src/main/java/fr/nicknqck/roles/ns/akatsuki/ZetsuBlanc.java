@@ -26,8 +26,6 @@ public class ZetsuBlanc extends AkatsukiRoles {
 
 	public ZetsuBlanc(UUID player) {
 		super(player);
-		setChakraType(Chakras.DOTON);
-
 	}
 
 	@Override
@@ -67,7 +65,14 @@ public class ZetsuBlanc extends AkatsukiRoles {
 		};
 	}
 
-	@Override
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.DOTON
+        };
+    }
+
+    @Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
 				SporeItem()

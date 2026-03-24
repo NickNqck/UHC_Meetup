@@ -64,7 +64,6 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(Chakras.KATON);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addEffects(getEffects())
                 .setItems(new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Ouvre un menu donnant accès à§c 3 pouvoirs§7:\n\n"
@@ -91,6 +90,13 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
     public ItemStack[] getItems() {
         return new ItemStack[] {
                 oeilItem
+        };
+    }
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
         };
     }
 

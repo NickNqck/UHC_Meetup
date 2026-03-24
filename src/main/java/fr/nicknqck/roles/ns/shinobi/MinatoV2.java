@@ -56,6 +56,13 @@ public class MinatoV2 extends HShinobiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Minato";
     }
@@ -80,7 +87,6 @@ public class MinatoV2 extends HShinobiRoles {
         addPower(new Rasengan(this), true);
         addPower(new BalisesPermanentes(this), true);
         new NarutoRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 1, 20);
-        setChakraType(Chakras.KATON);
     }
     private static class NarutoRunnable extends BukkitRunnable {
 

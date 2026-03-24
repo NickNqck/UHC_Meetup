@@ -3,7 +3,6 @@ package fr.nicknqck.roles.builder;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.events.ds.alliance.IAllianceRole;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
@@ -273,14 +272,15 @@ public class AutomaticDesc {
                 this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez§a No Fall§7 de manière§c permanente"));
             }
         }
-        text.addExtra(new TextComponent(
-                this.role instanceof NSRoles ?
-                        "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ?
-                                "§cInexistante" :
-                                ((this.role instanceof OrochimaruV2) ?
-                                        ((OrochimaruV2) this.role).getChakraString() :
-                                        ((NSRoles) this.role).getChakras().getShowedName())) :
-                        ""));
+        if (this.role instanceof NSRoles) {
+            text.addExtra(new TextComponent(
+                    "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ?
+                            "§cInexistante" :
+                            this.role instanceof OrochimaruV2 ?
+                                    ((OrochimaruV2) this.role).getChakraString() :
+                                    ((NSRoles) this.role).getChakras().getShowedName()))
+            );
+        }
         if (this.role instanceof AotRoles) {
             if (((AotRoles) this.role).isCanVoleTitan()) {
                 this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7avez §7la §7capacité §7de §7voler §7un §ctitan §7via §7la §7commande §6/aot steal"));

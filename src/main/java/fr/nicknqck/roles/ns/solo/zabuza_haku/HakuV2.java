@@ -53,6 +53,13 @@ public class HakuV2 extends NSSoloRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Haku";
     }
@@ -83,7 +90,6 @@ public class HakuV2 extends NSSoloRoles {
         addKnowedRole(ZabuzaV2.class);
         getGamePlayer().startChatWith("§bHaku:", "!", ZabuzaV2.class);
         addPower(new HyotonPower(this));
-        setChakraType(Chakras.SUITON);
         super.RoleGiven(gameState);
     }
     private static class HyotonPower extends Power {

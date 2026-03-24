@@ -43,6 +43,13 @@ public class KonanV2 extends ChiefAkatsukiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Konan";
     }
@@ -55,7 +62,6 @@ public class KonanV2 extends ChiefAkatsukiRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         setNoFall(true);
-        setChakraType(Chakras.SUITON);
         addPower(new VolDeCombat(this), true);
         addPower(new DanceDuShikigami(this), true);
         super.RoleGiven(gameState);

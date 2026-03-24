@@ -52,6 +52,13 @@ public class MadaraV2 extends JubiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Madara";
     }
@@ -72,7 +79,6 @@ public class MadaraV2 extends JubiRoles {
         addPower(new Izanagi(this));
         addKnowedRole(ObitoV2.class);
         getGamePlayer().startChatWith("!", "§dMadara: ", ObitoV2.class);
-        setChakraType(Chakras.KATON);
     }
 
     @Override

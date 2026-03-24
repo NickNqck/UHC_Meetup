@@ -53,6 +53,14 @@ public class Hinata extends ShinobiRoles implements IByakuganUser {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON,
+                Chakras.RAITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Hinata";
     }
@@ -73,7 +81,6 @@ public class Hinata extends ShinobiRoles implements IByakuganUser {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(getRandomChakrasBetween(Chakras.KATON, Chakras.RAITON));
         addPower(new Byakugan(this), true);
         addPower(new ByakuganCommand(this));
         addPower(new TenketsuPower(this));

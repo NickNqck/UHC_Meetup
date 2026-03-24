@@ -9,6 +9,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
@@ -53,6 +54,17 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Hidan";
     }
@@ -69,7 +81,6 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
         new ForceRunnable(this);
         EventUtils.registerRoleEvent(this);
         addPower(new RituelPower(this), true);
-        setChakraType(getRandomChakras());
     }
 
     @EventHandler

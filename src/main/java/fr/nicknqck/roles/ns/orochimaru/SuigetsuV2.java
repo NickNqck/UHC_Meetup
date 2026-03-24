@@ -52,6 +52,13 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Suigetsu";
     }
@@ -65,7 +72,6 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
         EventUtils.registerRoleEvent(this);
-        setChakraType(Chakras.SUITON);
     }
 
     @Override

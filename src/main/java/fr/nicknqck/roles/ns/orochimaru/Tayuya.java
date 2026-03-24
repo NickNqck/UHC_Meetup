@@ -6,6 +6,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.Loc;
@@ -46,6 +47,17 @@ public class Tayuya extends OrochimaruRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Tayuya";
     }
@@ -60,7 +72,6 @@ public class Tayuya extends OrochimaruRoles {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new MarqueMaudite(this), true);
         addPower(new FluteDemoniaque(this), true);
-        setChakraType(getRandomChakras());
         addKnowedRole(KimimaroV2.class);
         super.RoleGiven(gameState);
     }

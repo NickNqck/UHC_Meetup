@@ -49,6 +49,14 @@ public class InoV2 extends ShinobiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON,
+                Chakras.DOTON, Chakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Ino";
     }
@@ -62,7 +70,6 @@ public class InoV2 extends ShinobiRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new SphereDeCaptation(this), true);
         addPower(new TelepatiCommand(this));
-        setChakraType(getRandomChakrasBetween(Chakras.KATON, Chakras.DOTON, Chakras.SUITON));
         addKnowedRole(Shikamaru.class);
         addPower(new ControleCommand(this));
         super.RoleGiven(gameState);

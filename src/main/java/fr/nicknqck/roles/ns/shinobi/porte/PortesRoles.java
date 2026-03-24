@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.shinobi.porte;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.desc.AllDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.TripleMap;
@@ -32,9 +33,20 @@ public abstract class PortesRoles extends HShinobiRoles implements Listener {
 
     public PortesRoles(UUID player) {
         super(player);
-        setChakraType(getRandomChakras());
 
     }
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
     @Override
     public void resetCooldown() {
         huitUsed = false;

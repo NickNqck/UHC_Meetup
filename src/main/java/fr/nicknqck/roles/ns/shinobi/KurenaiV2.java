@@ -46,6 +46,13 @@ public class KurenaiV2 extends ShinobiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kurenai";
     }
@@ -64,7 +71,6 @@ public class KurenaiV2 extends ShinobiRoles {
                 new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
             }
         }, 20);
-        setChakraType(Chakras.KATON);
         super.RoleGiven(gameState);
     }
 

@@ -38,6 +38,13 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Itachi";
     }
@@ -64,7 +71,6 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
         addPower(new Genjutsu(this), true);
         addPower(new Amaterasu(this), true);
         addPower(new Izanagi(this));
-        setChakraType(Chakras.KATON);
         addKnowedRole(KisameV2.class);
         super.RoleGiven(gameState);
     }

@@ -8,6 +8,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.GlobalUtils;
@@ -55,6 +56,17 @@ public class Sasori extends AkatsukiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Sasori";
     }
@@ -76,7 +88,6 @@ public class Sasori extends AkatsukiRoles {
         owner.setHealth(owner.getMaxHealth());
         addPower(new MarionnetteSansVie(this), true);
         addPower(new MarionetisationCommand(this));
-        setChakraType(getRandomChakras());
         super.RoleGiven(gameState);
     }
     private static class MarionetisationCommand extends CommandPower implements Listener {

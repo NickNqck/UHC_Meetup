@@ -52,6 +52,15 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.DOTON,
+                Chakras.RAITON,
+                Chakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Neji";
     }
@@ -68,7 +77,6 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
         addPower(new ByakuganCommand(this));
         addPower(new ChakraCommand(this));
         new ForceRunnable(getGameState(), this);
-        setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON, Chakras.KATON));
         super.RoleGiven(gameState);
     }
 

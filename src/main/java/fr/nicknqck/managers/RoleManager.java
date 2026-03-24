@@ -213,7 +213,7 @@ public class RoleManager implements Listener {
         registerRole(SuigetsuV2.class);
         registerRole(Tayuya.class);
         //Register Akatsuki
-        registerRole(Deidara.class);
+        registerRole(DeidaraV2.class);
         registerRole(HidanV2.class);
         registerRole(ItachiV2.class);
         registerRole(KakuzuV2.class);
@@ -282,7 +282,7 @@ public class RoleManager implements Listener {
             final RoleBase role = gamePlayer.getRole();
             if (role instanceof IAkatsukiChief) {
                 role.addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
-                        , Deidara.class, HidanV2.class, ItachiV2.class,
+                        , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
                         NagatoV2.class, ZetsuBlanc.class,
                         ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);

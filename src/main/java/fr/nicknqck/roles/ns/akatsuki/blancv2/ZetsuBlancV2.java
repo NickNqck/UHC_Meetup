@@ -5,6 +5,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.TripleMap;
@@ -36,8 +37,18 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(getRandomChakras());
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.setItems(
           new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous §ctuez§7 un joueur vous gagnez l'un de ses effet permanent, les autres effets qu'il possédait son stocké dans cette item et sont récupérable constemment.")}), "§fBanque", 5)

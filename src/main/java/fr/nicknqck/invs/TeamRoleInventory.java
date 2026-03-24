@@ -8,6 +8,8 @@ import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.fastinv.PaginatedFastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
@@ -85,7 +87,6 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
         // ── 7. Chargement initial des rôles ──────────────────────────────────
         loadRoles(mdj);
 
-
         addSomeItem(this);
         // ── 8. Enregistrement / désenregistrement automatique ────────────────
         addOpenHandler(e -> register(this));
@@ -94,25 +95,12 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
 
     // ── Méthodes abstraites ──────────────────────────────────────────────────
 
-    /**
-     * Appelée quand le joueur clique sur le bouton retour.
-     * Exemple :
-     * <pre>
-     *   player.openInventory(GUIItems.getDemonSlayerInventory());
-     *   Main.getInstance().getInventories().updateDSInventory(player);
-     * </pre>
-     */
     protected abstract void onBackClick(Player player);
 
-    protected void addSomeItem(@NonNull final TeamRoleInventory teamRoleInventory) {
+    protected void addSomeItem(@NonNull final TeamRoleInventory teamRoleInventory) {}
 
-    }
     // ── Refresh ──────────────────────────────────────────────────────────────
 
-    /**
-     * Recharge le contenu de cet inventaire et retourne sur la page courante.
-     * Appelé automatiquement sur tous les inventaires du même camp après chaque onRoleClick.
-     */
     public void refresh(String mdj) {
         clearContent();
         loadRoles(mdj);
@@ -121,9 +109,6 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
         addSomeItem(this);
     }
 
-    /**
-     * Rafraîchit tous les inventaires ouverts appartenant au camp donné.
-     */
     public static void refreshAll(TeamList team, String mdj) {
         final List<TeamRoleInventory> openList = OPEN_INVENTORIES.get(team);
         if (openList == null) return;
@@ -136,52 +121,56 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
 
     private void loadRoles(String mdj) {
         for (final IRole iRole : getRolesByTeam(team)) {
-            if (!iRole.getRoles().getMdj().equalsIgnoreCase(mdj))continue;
+            if (!iRole.getRoles().getMdj().equalsIgnoreCase(mdj)) continue;
+
             final Integer available = gameState.getAvailableRoles().get(iRole.getRoles());
-            final String l1     = (available != null && available > 0) ? "§c(" + available + ")" : "§c(0)";
+            final int count         = (available != null) ? available : 0;
+
+            final String l1     = count > 0 ? "§c(" + count + ")" : "§c(0)";
             final String design = "§fGDesign: " + iRole.getRoles().getGDesign();
+
             final ItemStack roleItem = new ItemBuilder(iRole.getRoles().getItem())
-                    .setAmount(available != null && available > 0 ? available : 1)
+                    // Si count == 0 → amount 0 (affiche "0" dans le GUI),
+                    // sinon → le nombre réel de slots disponibles
+                    .setAmount(count)
                     .setLore(iRole instanceof RoleCustomLore
                             ? ((RoleCustomLore) iRole).getCustomLore(l1, design)
-                            : new String[]{ l1, "", design })
+                            : iRole instanceof NSRoles ?
+                            new String[] { getChakraLine((NSRoles) iRole), l1, "", design}
+                            :
+                            new String[]{ l1, "", design })
                     .toItemStack();
 
             addContent(roleItem, e -> {
                 final Player player = (Player) e.getWhoClicked();
-                // Vérification : l'item cliqué n'est pas le bouton retour
                 final ItemStack clicked = e.getCurrentItem();
-                if (clicked == null) {
-                    refresh(mdj);
-                    return;
-                }
-                if (clicked.isSimilar(GUIItems.getSelectBackMenu())) {
-                    refresh(mdj);
-                    return;
-                }
 
-                if (clicked.hasItemMeta()) {
-                    if (clicked.getItemMeta().hasDisplayName()) {
-                        if (clicked.isSimilar(GUIItems.getStartGameButton()) && GameState.getInstance().gameCanLaunch) {
-                            HubListener.getInstance().StartGame(player);
-                            return;
-                        }/*9
-                        if (clicked.isSimilar(GUIItems.getSelectBackMenu())) {
-                            onBackClick((Player) e.getWhoClicked());
-                            return;
-                        }*/
-                        final String name = clicked.getItemMeta().getDisplayName();
-                        if (e.getAction().equals(InventoryAction.PICKUP_ALL)) {
-                            EasyRoleAdder.addRoles(name);
-                        } else if (e.getAction().equals(InventoryAction.PICKUP_HALF)) {
-                            EasyRoleAdder.removeRoles(name);
-                        }
+                if (clicked == null) { refresh(mdj); return; }
+                if (clicked.isSimilar(GUIItems.getSelectBackMenu())) { refresh(mdj); return; }
+
+                if (clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()) {
+                    if (clicked.isSimilar(GUIItems.getStartGameButton()) && GameState.getInstance().gameCanLaunch) {
+                        HubListener.getInstance().StartGame(player);
+                        return;
+                    }
+                    final String name = clicked.getItemMeta().getDisplayName();
+                    if (e.getAction().equals(InventoryAction.PICKUP_ALL)) {
+                        EasyRoleAdder.addRoles(name);
+                    } else if (e.getAction().equals(InventoryAction.PICKUP_HALF)) {
+                        EasyRoleAdder.removeRoles(name);
                     }
                 }
-                // Refresh automatique sur tous les inventaires ouverts du même camp
                 refreshAll(team, mdj);
             });
         }
+    }
+
+    private String getChakraLine(final NSRoles roles) {
+        StringBuilder sb = new StringBuilder();
+        for (@NonNull final Chakras chakras : roles.getChakrasCanHave()) {
+            sb.append(chakras.getShowedName()).append("§7, ");
+        }
+        return sb.substring(0, sb.length()-4);
     }
 
     private void refreshStartButton() {
@@ -229,23 +218,27 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
 
     private static short teamColorToGlassData(TeamList team) {
         switch (team) {
-            case Demon:          return 14; // §c → rouge
-            case Slayer:         return 5;  // §a → vert lime
-            case Solo:           return 4;  // §e → jaune
-            case Jigoro:         return 1;  // §6 → orange
-            case Mahr:           return 11; // §9 → bleu
-            case Titan:          return 14; // §c → rouge
-            case Soldat:         return 5;  // §a → vert lime
-            case Alliance:       return 1;  // §6 → orange
-            case Jubi:           return 2;  // §d → magenta
-            case Orochimaru:     return 10; // §5 → violet
-            case Akatsuki:       return 14; // §c → rouge
-            case Sasuke:         return 4;  // §e§l → jaune
-            case Zabuza_et_Haku: return 3;  // §b → bleu clair
-            case Shinobi:        return 5;  // §a → vert lime
-            case Kabuto:         return 1;  // §6§l → orange
-            case Kumogakure:     return 1;  // §6 → orange
-            case Shisui:         return 4;  // §e§l → jaune
+            case Demon:
+            case Titan:
+            case Akatsuki:
+                return 14;
+            case Slayer:
+            case Soldat:
+            case Shinobi:
+                return 5;
+            case Solo:
+            case Sasuke:
+            case Shisui:
+                return 4;
+            case Jigoro:
+            case Alliance:
+            case Kabuto:
+            case Kumogakure:
+                return 1;
+            case Mahr:           return 11;
+            case Jubi:           return 2;
+            case Orochimaru:     return 10;
+            case Zabuza_et_Haku: return 3;
             default:             return 7;
         }
     }

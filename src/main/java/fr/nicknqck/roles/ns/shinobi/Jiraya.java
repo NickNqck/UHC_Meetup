@@ -37,7 +37,6 @@ public class Jiraya extends ShinobiRoles {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
-		setChakraType(Chakras.KATON);
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "nakime Gamabunta8vzqzZvv189Zbxc:!");
 		setCanBeHokage(true);
@@ -107,7 +106,13 @@ public class Jiraya extends ShinobiRoles {
 			}
 		}
 	}
-	private void returnGamabuntaPlayers() {
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {Chakras.KATON};
+    }
+
+    private void returnGamabuntaPlayers() {
 		if(Bukkit.getWorld("Gamabunta") != null) {
 			if (owner.getWorld().equals(Bukkit.getWorld("Gamabunta"))) {
 				for (Player p : owner.getWorld().getPlayers()) {

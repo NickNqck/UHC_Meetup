@@ -10,7 +10,6 @@ import fr.nicknqck.utils.Loc;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
@@ -21,7 +20,6 @@ public class ZetsuNoir extends AkatsukiRoles {
 
 	public ZetsuNoir(UUID player) {
 		super(player);
-		setChakraType(Chakras.DOTON);
 	}
 	@Override
 	public @NonNull Roles getRoles() {
@@ -52,6 +50,13 @@ public class ZetsuNoir extends AkatsukiRoles {
 				AllDesc.bar
 		};
 	}
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.DOTON
+        };
+    }
 
     @Override
 	public void resetCooldown() {

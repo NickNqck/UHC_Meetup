@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.Loc;
@@ -47,6 +48,17 @@ public class TenTenV2 extends ShinobiRoles {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Tenten";
     }
@@ -63,7 +75,6 @@ public class TenTenV2 extends ShinobiRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(getRandomChakras());
         addPower(new KunaiItem(this), true);
         addPower(new ParcheminItem(this), true);
         super.RoleGiven(gameState);

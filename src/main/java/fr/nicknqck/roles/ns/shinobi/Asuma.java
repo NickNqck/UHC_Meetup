@@ -23,7 +23,6 @@ public class Asuma extends ShinobiRoles {
 
 	public Asuma(UUID player) {
 		super(player);
-		setChakraType(Chakras.FUTON);
 		setCanBeHokage(true);
 	}
 	@Override
@@ -59,7 +58,15 @@ public class Asuma extends ShinobiRoles {
 				AllDesc.bar
 		};
 	}
-	private ItemStack LameItem() {
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.FUTON
+        };
+    }
+
+    private ItemStack LameItem() {
 		return new ItemBuilder(Material.IRON_SWORD).setName("§aLame de chakra").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true).setLore("§7Lame remplit de chakra§a Futon§7 de§a Asuma").toItemStack();
 	}
 	private ItemStack NueesItem() {

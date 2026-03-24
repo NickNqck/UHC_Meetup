@@ -54,6 +54,13 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kabuto";
     }
@@ -65,7 +72,6 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(Chakras.SUITON);
         addKnowedRole(OrochimaruV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
         this.healPower = new HealPower(this);

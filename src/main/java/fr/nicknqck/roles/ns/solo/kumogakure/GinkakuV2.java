@@ -8,6 +8,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
@@ -44,6 +45,17 @@ public class GinkakuV2 extends KumogakureRole {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON,
+                Chakras.RAITON,
+                Chakras.KATON,
+                Chakras.DOTON,
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public void onEndKyubi() {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.NIGHT);
     }
@@ -67,7 +79,6 @@ public class GinkakuV2 extends KumogakureRole {
         addPower(new GourdePower(this), true);
         addPower(new SabrePower(this), true);
         addPower(new CordeOrPower(this), true);
-        setChakraType(getRandomChakras());
     }
 
     @Override

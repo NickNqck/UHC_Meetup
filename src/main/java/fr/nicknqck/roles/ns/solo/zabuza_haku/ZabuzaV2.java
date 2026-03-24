@@ -50,6 +50,13 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Zabuza";
     }
@@ -72,7 +79,6 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
         EventUtils.registerRoleEvent(this);
         addPower(new InvisibilitePower(this), true);
         addPower(new KubikiribochoPower(this), true);
-        setChakraType(Chakras.SUITON);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Haku)) {
                 onHakuDeath(false);

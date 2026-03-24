@@ -45,7 +45,6 @@ public class Shikamaru extends ShinobiRoles {
 
     public Shikamaru(UUID player) {
         super(player);
-        setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
     }
     @Override
     public @NonNull Roles getRoles() {
@@ -172,6 +171,13 @@ public class Shikamaru extends ShinobiRoles {
                 }
             }
         }
+    }
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.DOTON, Chakras.KATON
+        };
     }
 
     @Override

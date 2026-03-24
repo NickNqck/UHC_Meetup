@@ -77,7 +77,6 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
         addPower(new YameruPower(this));
         addPower(new ObtainSusanoPower(this));
         addPower(new Izanagi(this));
-        setChakraType(Chakras.KATON);
         addKnowedRole(MadaraV2.class);
         getGamePlayer().startChatWith("§dObito:", "!", MadaraV2.class);
     }
@@ -85,6 +84,13 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
     @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.INTELLIGENT;
+    }
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.KATON
+        };
     }
 
     @Override

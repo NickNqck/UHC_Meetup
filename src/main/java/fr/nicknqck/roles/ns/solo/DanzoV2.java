@@ -62,6 +62,13 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
     }
 
     @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Danzo";
     }
@@ -102,7 +109,6 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
         addPower(new FutonPower(this), true);
         addPower(new Izanagi(this));
         new FindersRunnable(this, this.getGamePlayer());
-        setChakraType(Chakras.FUTON);
         giveHealedHeartatInt(2.0);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             int nmbUchiwa = 0;

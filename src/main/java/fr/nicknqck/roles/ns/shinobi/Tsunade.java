@@ -24,7 +24,6 @@ public class Tsunade extends ShinobiRoles {
 
 	public Tsunade(UUID player) {
 		super(player);
-		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
 		setCanBeHokage(true);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
@@ -55,7 +54,18 @@ public class Tsunade extends ShinobiRoles {
 				AllDesc.bar
 			};
 	}
-	private ItemStack ByakugoItem() {
+
+    @Override
+    public Chakras[] getChakrasCanHave() {
+        return new Chakras[] {
+                Chakras.DOTON,
+                Chakras.KATON,
+                Chakras.RAITON,
+                Chakras.SUITON
+        };
+    }
+
+    private ItemStack ByakugoItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§aByakugo").setLore("§7Vous permet de§c stocker§7 votre§c vie§7 ou d'utiliser la vie§c stocker").toItemStack();
 	}
 	@Override

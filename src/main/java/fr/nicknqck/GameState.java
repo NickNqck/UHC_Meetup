@@ -466,7 +466,7 @@ public class GameState{
                     role = new KonohamaruV2(player);
                     break;
                 case Deidara:
-                    role = new Deidara(player);
+                    role = new DeidaraV2(player);
                     break;
                 case Gai:
                     role = new GaiV2(player);
