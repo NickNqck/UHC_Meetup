@@ -1,9 +1,11 @@
 package fr.nicknqck.enums;
 
+import fr.nicknqck.interfaces.ITeam;
 import lombok.Getter;
 import org.bukkit.entity.Player;
+
 @Getter
-public enum TeamList {
+public enum TeamList implements ITeam {
 	
 	Demon("§c", "§cDémon", "ds", false),
 	Slayer("§a", "§aSlayer", "ds", false),
@@ -38,8 +40,5 @@ public enum TeamList {
 	}
 	public void addPlayer(Player player) {
 		list.add(player);
-	}
-	public TeamList getTeam(){
-		return this;
 	}
 }
