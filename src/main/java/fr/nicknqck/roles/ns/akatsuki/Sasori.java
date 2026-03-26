@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ns.Chakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.GlobalUtils;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -227,7 +228,7 @@ public class Sasori extends AkatsukiRoles {
         private BasicMarionnette actualMarionnette = null;
 
         public MarionnetteSansVie(@NonNull RoleBase role) {
-            super("Marionnettes sans vie", null, new ItemBuilder(Material.NETHER_STAR).setName("§cMarionnettes sans vie"), role,
+            super("Marionnettes sans vie", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cMarionnettes sans vie"), role,
                     "§7Effectue différente action en fonction du clique: ",
                     "",
                     "§8 -§f Clique droit§7: Ouvre un menu, à l'intérieur vous aurez§c plusieurs§7 possibilité de fabrication de§c marionette§7,",
@@ -250,6 +251,9 @@ public class Sasori extends AkatsukiRoles {
                     }
                 }
             }, 20);
+            setShowCdInDesc(false);
+            setSendCooldown(false);
+            getShowCdRunnable().setCustomText(true);
         }
 
         @Override
@@ -310,6 +314,23 @@ public class Sasori extends AkatsukiRoles {
             }
             fastInv.open(player);
         }
+
+        @Override
+        public void tryUpdateActionBar() {
+            StringBuilder toSend = new StringBuilder();
+            for (BasicMarionnette basicMarionnette : this.marionnetteMap.keySet()) {
+                if (this.marionnetteMap.get(basicMarionnette)) {
+                    toSend
+                            .append(basicMarionnette.getName()).append("§7: ")
+                            .append(basicMarionnette.getCooldown().isInCooldown() ? StringUtils.secondsTowardsBeautiful(basicMarionnette.getCooldown().getCooldownRemaining()) : "§a ✔")
+                            .append("§7 | ");
+                }
+            }
+            if (toSend.length() > 5){
+                getShowCdRunnable().setCustomTexte(toSend.substring(0, toSend.length()-5));
+            }
+        }
+
         private static abstract class BasicMarionnette extends Power {
 
             public BasicMarionnette(@NonNull String name, @NonNull RoleBase role) {
