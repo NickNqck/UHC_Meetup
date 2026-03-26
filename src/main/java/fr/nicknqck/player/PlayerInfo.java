@@ -1,7 +1,6 @@
 package fr.nicknqck.player;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.interfaces.ITeam;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +47,6 @@ public class PlayerInfo {
         this.gameLoose++;
     }
     public void addGamePlayed() {
-        System.out.println("Added gamePlayed");
         this.gamePlayed++;
     }
 
