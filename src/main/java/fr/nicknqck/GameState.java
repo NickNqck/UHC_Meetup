@@ -4,6 +4,7 @@ import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
@@ -754,7 +755,7 @@ public class GameState{
 		return null;
 	}
 	public String getRolesList() {
-		Map<TeamList, List<IRoles<?>>> hashMap = new LinkedHashMap<>();
+		Map<ITeam, List<IRoles<?>>> hashMap = new LinkedHashMap<>();
 		StringBuilder tr = new StringBuilder();
         Main.getInstance().debug("getRolesList used");
 		tr.append(AllDesc.bar);

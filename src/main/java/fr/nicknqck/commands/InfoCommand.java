@@ -1,8 +1,8 @@
 package fr.nicknqck.commands;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.player.PlayerInfo;
-import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -69,7 +69,7 @@ public class InfoCommand implements CommandExecutor {
 
     private void displayInfo(Player viewer, String name, PlayerInfo info) {
         StringBuilder obtenedTeams = new StringBuilder();
-        for (Map.Entry<TeamList, Integer> entry : info.getTeamPlayed().entrySet()) {
+        for (Map.Entry<ITeam, Integer> entry : info.getTeamPlayed().entrySet()) {
             String string = entry.getKey().getName();
             obtenedTeams.append("§7").append(string).append("§7: §a").append(entry.getValue()).append(" fois\n");
         }

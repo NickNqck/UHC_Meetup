@@ -2,6 +2,7 @@ package fr.nicknqck.player;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.interfaces.ITeam;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -15,7 +16,7 @@ import java.util.UUID;
 public class PlayerInfo {
 
     private final Map<String, Integer> rolesPlayed = new LinkedHashMap<>();
-    private final Map<TeamList, Integer> teamPlayed = new LinkedHashMap<>();
+    private final Map<ITeam, Integer> teamPlayed = new LinkedHashMap<>();
     private final Map<UUID, Integer> playerKills = new LinkedHashMap<>();
     private final UUID uuid;
     private int joinCount = 0;
@@ -54,7 +55,7 @@ public class PlayerInfo {
     public void incrementRolePlayed(String roleName) {
         rolesPlayed.put(roleName, rolesPlayed.getOrDefault(roleName, 0) + 1);
     }
-    public void addTeamPlayed(final TeamList teamList) {
+    public void addTeamPlayed(final ITeam teamList) {
         this.teamPlayed.put(teamList, this.teamPlayed.getOrDefault(teamList, 0)+1);
     }
     public void addKill(UUID victimUUID) {

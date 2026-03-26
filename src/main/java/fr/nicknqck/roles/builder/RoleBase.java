@@ -13,6 +13,7 @@ import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
 import fr.nicknqck.utils.RandomUtils;
@@ -69,7 +70,7 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	@Setter
 	private GamePlayer gamePlayer;
-	private TeamList team;
+	private ITeam team;
 	@Getter
 	private final Map<PotionEffect, EffectWhen> effects = new LinkedHashMap<>();
 	@Getter
@@ -168,15 +169,15 @@ public abstract class RoleBase implements IRole {
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 
 	@Override
-	public TeamList getTeam() {
+	public ITeam getTeam() {
 		if (this.team == null) this.team = getOriginTeam();
 		return team;
 	}
 
-	public void setTeam(@NonNull final TeamList team) {
+	public void setTeam(@NonNull final ITeam team) {
 		setTeam(team, false);
 	}
-	public void setTeam(@NonNull final TeamList team, boolean force) {
+	public void setTeam(@NonNull final ITeam team, boolean force) {
 		final TeamChangeEvent event = new TeamChangeEvent(this, this.team, team);
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled() && !force) {

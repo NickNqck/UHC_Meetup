@@ -2,6 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
@@ -347,7 +348,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                     if (!gamePlayer.isOnline())continue;
                     if (!gamePlayer.isAlive())continue;
                     if (gamePlayer.getRole() == null)continue;
-                    final TeamList team = gamePlayer.getRole().getTeam();
+                    final ITeam team = gamePlayer.getRole().getTeam();
                     final Location center = target.getEyeLocation();
                     center.setY(center.getY()+0.5);
                     if (team.equals(TeamList.Slayer)) {

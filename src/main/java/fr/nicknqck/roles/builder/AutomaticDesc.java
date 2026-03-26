@@ -4,6 +4,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.Ackerman;
@@ -45,7 +46,7 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n§7Role: "+role.getTeam().getColor()+role.getName()));
     }
     private void addObjectif() {
-        final TeamList team = role.getTeam();
+        final ITeam team = role.getTeam();
         text.addExtra(new TextComponent("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
     }
     public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {
