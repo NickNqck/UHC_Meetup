@@ -2,6 +2,7 @@ package fr.nicknqck.invs;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.fastinv.InventoryScheme;
@@ -24,7 +25,7 @@ public class MDJConfigInventory extends PaginatedFastInv {
         nextPageItem(24, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + lastPage()).toItemStack());
 
         if (!Main.getInstance().getGameConfig().getConfigurablesMdj().isEmpty()) {
-            for (@NonNull final MDJ mdj : Main.getInstance().getGameConfig().getConfigurablesMdj().keySet()) {
+            for (@NonNull final IMDJ mdj : Main.getInstance().getGameConfig().getConfigurablesMdj().keySet()) {
                 addContent(new ItemBuilder(mdj.getItem()).setLore().toItemStack(), event -> {
                     try {
                         final FastInv inv = Main.getInstance().getGameConfig().getConfigurablesMdj().get(mdj).newInstance();

@@ -2,6 +2,7 @@ package fr.nicknqck.enums;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.Collections;
 import java.util.function.Consumer;
 
 @Getter
-public enum MDJ {
+public enum MDJ implements IMDJ {
 
     Aucun(new ItemBuilder(Material.WOOL).setName("Aucun").toItemStack(),null ),
     DS(new ItemBuilder(Material.REDSTONE).setName("§6Demon Slayer").toItemStack(), event ->{
