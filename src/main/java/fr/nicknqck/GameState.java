@@ -2,6 +2,7 @@ package fr.nicknqck;
 
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
@@ -557,6 +558,14 @@ public class GameState{
                     role = new MikasaV2(player);
                     break;
             }
+        } else {
+            final GiveRoleDeclenchExternalPluginEvent externalPluginEvent = new GiveRoleDeclenchExternalPluginEvent(roleType, player);
+            Main.getInstance().getServer().getPluginManager().callEvent(externalPluginEvent);
+            if (externalPluginEvent.getRoleBase() != null) {
+                role = externalPluginEvent.getRoleBase();
+            } else {
+                Main.getInstance().debug("Impossible de trouver le role associer, il faut utiliser l'event fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent ("+externalPluginEvent.getRoleType()+")");
+            }
         }
 		if (role == null) return null;
 		print(player, role);
@@ -765,28 +774,24 @@ public class GameState{
 				if (gamePlayer.getRole() == null)continue;
 				if (!gamePlayer.isAlive())continue;
 				final RoleBase e = gamePlayer.getRole();
-				if (e.getOriginTeam() == null){
-					e.setTeam(e.getRoles().getTeam());
-				}
-				if (e.getOriginTeam() != null) {
-					final Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
-					if (owner != null && !owner.getGameMode().equals(GameMode.SPECTATOR)) {
-						if (hashMap.get(e.getOriginTeam()) == null){
-							List<IRoles<?>> r = new ArrayList<>();
-							hashMap.put(e.getOriginTeam(), r);
-						}
-                        Main.getInstance().debug("[getRoleList] "+e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
-						List<IRoles<?>> aList = hashMap.get(e.getOriginTeam());
-						aList.add(e.getRoles());
-						hashMap.remove(e.getOriginTeam(), hashMap.get(e.getOriginTeam()));
-						hashMap.put(e.getOriginTeam(), aList);
-					}
-				}
-			}
+                final Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
+                if (owner != null && !owner.getGameMode().equals(GameMode.SPECTATOR)) {
+                    if (hashMap.get(e.getOriginTeam()) == null){
+                        List<IRoles<?>> r = new ArrayList<>();
+                        hashMap.put(e.getOriginTeam(), r);
+                    }
+                    Main.getInstance().debug("[getRoleList] "+e+" zzz "+e.getRoles().getItem().getItemMeta().getDisplayName()+" aaa "+e.getRoles());
+                    List<IRoles<?>> aList = hashMap.get(e.getOriginTeam());
+                    aList.add(e.getRoles());
+                    hashMap.remove(e.getOriginTeam(), hashMap.get(e.getOriginTeam()));
+                    hashMap.put(e.getOriginTeam(), aList);
+                }
+            }
 		} else {
 			if (!getAvailableRoles().isEmpty()){
 				for (IRoles<?> e : getAvailableRoles().keySet()) {
-					if (getAvailableRoles().get(e) > 0){
+                    int amount = getAvailableRoles().get(e);
+					if (amount > 0){
 						if (hashMap.get(e.getTeam()) == null){
 							List<IRoles<?>> r = new ArrayList<>();
 							hashMap.put(e.getTeam(), r);
@@ -797,11 +802,14 @@ public class GameState{
 						hashMap.put(e.getTeam(), aList);
 					}
 				}
-			}
+			} else {
+                tr.append("Availableroles vide");
+            }
 		}
 		if (!hashMap.isEmpty()){
 			List<IRoles<?>> appenned = new ArrayList<>();
-			for (TeamList t : TeamList.values()){
+            final List<ITeam> iTeamList = new ArrayList<>(hashMap.keySet());
+			for (ITeam t : iTeamList){
 				int size = 0;
 				if (hashMap.get(t) != null){
 					size = hashMap.get(t).size();
@@ -833,7 +841,9 @@ public class GameState{
 					}
 				}
 			}
-		}
+		} else {
+            tr.append("hashmap vide");
+        }
 		tr.append("\n");
 		tr.append("\n").append(AllDesc.bar);
 		return tr.toString();
