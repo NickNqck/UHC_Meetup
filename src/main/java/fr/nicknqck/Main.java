@@ -401,6 +401,14 @@ public class Main extends JavaPlugin {
 		}
 		return debug;
 	}
+    public void setDebug(boolean b) {
+        if (b){
+            getConfig().set("debug", true);
+        } else {
+            getConfig().set("debug", false);
+        }
+        saveConfig();
+    }
 	private String getBase() {
         return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + (600+getWorldConfig().getCaveBooster())+
         		",\"depthNoiseScaleZ\":" + (600+getWorldConfig().getCaveBooster()) +

@@ -262,6 +262,16 @@ public class AdminCommands implements CommandExecutor{
 					}.runTaskTimer(Main.getInstance(), 0, 12);
 					return true;
 				}
+                if (args[0].equalsIgnoreCase("debug")) {
+                    if (Main.isDebug()) {
+                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§c désactiver§7 le§c debug§7.");
+                        Main.getInstance().setDebug(false);
+                    } else {
+                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§a activer§7 le§c debug§7.");
+                        Main.getInstance().setDebug(true);
+                    }
+                    return true;
+                }
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
 					if (ChatRank.isHost(sender)) {
