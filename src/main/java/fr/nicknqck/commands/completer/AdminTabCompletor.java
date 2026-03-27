@@ -26,6 +26,7 @@ public class AdminTabCompletor implements TabCompleter {
             stringList.add("list");
             stringList.add("name");
             stringList.add("resetCooldown");
+            stringList.add("debug");
             if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InLobby)) {
                 stringList.add("reset");
                 if (commandSender instanceof Player && ChatRank.isHost(((Player) commandSender).getUniqueId())) {
