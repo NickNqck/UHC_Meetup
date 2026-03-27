@@ -21,11 +21,15 @@ public final class EasyRoleAdder {
         Main.getInstance().getLogger().info("Name = "+name);
         for (Class<? extends RoleBase> aClass : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
             final IRole iRole = Main.getInstance().getRoleManager().getRolesRegistery().get(aClass);
+            if (iRole == null) {
+                Main.getInstance().debug(aClass+" is null, maybe isn't a IRole ?");
+                continue;
+            }
             if (name.equalsIgnoreCase(cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName())) ||
                     name.equalsIgnoreCase(getCleanSimpleName(aClass)) ||
                     iRole.getRoles().getItem().getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
                 Main.getInstance().getLogger().info("ClassName: "+aClass.getSimpleName()+", class: "+aClass+", roles: "+name+", cleanName: "+getCleanSimpleName(aClass)+", cleanedString: "+cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName()));
-                GameState.getInstance().addInAvailableRoles(iRole.getRoles(), GameState.getInstance().getAvailableRoles().get(iRole.getRoles())+1);
+                GameState.getInstance().addInAvailableRoles(iRole.getRoles(), GameState.getInstance().getAvailableRoles().getOrDefault(iRole.getRoles(), 0)+1);
                 break;
             }
         }
