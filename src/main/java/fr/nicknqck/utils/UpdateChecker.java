@@ -35,7 +35,7 @@ public class UpdateChecker implements Listener {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::checkForUpdates, delay, period);
     }
 
-    private void checkForUpdates() {
+    public void checkForUpdates() {
         HttpURLConnection conn = null;
         try {
             // URL vers ton plugin.yml brut sur GitHub

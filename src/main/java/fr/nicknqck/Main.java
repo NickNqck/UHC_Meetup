@@ -114,6 +114,7 @@ public class Main extends JavaPlugin {
 	private PlayersNameManager playersNameManager;
     private KatsuyuManager katsuyuManager;
 	private KrystalManager krystalManager;
+    private UpdateChecker updateChecker;
 
     @Override
 	public void onEnable() {
@@ -166,7 +167,7 @@ public class Main extends JavaPlugin {
 		this.infoManager = new InfoManager(getDataFolder());
 		this.playersNameManager = new PlayersNameManager(getDataFolder());
         this.katsuyuManager = new KatsuyuManager();
-        new UpdateChecker(this, "NickNqck/UHC_Meetup");
+        this.updateChecker = new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		this.krystalManager = new KrystalManager();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
@@ -401,12 +402,13 @@ public class Main extends JavaPlugin {
 		}
 		return debug;
 	}
+    /**
+     * Définit la valeur du boolean "debug" dans le config.yml.
+     *
+     * @param b true pour activer le mode debug, false pour le désactiver
+     */
     public void setDebug(boolean b) {
-        if (b){
-            getConfig().set("debug", true);
-        } else {
-            getConfig().set("debug", false);
-        }
+        getConfig().set("debug", b);
         saveConfig();
     }
 	private String getBase() {
