@@ -43,22 +43,31 @@ public class GlobalUtils {
 	        playerHead.setItemMeta(skullMeta);
 	        return playerHead;
 	    }
-	    public static ItemStack getPlayerHead(UUID playerUUID) {
-	        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-	        SkullMeta meta = (SkullMeta) head.getItemMeta();
-	        GameProfile profile = new GameProfile(playerUUID, null);
-	        profile.getProperties().put("textures", new Property("textures", getTexture(playerUUID)));
-	        Field profileField;
-	        try {
-	            profileField = meta.getClass().getDeclaredField("profile");
-	            profileField.setAccessible(true);
-	            profileField.set(meta, profile);
-	        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-	            e.printStackTrace();
-	        }
-	        head.setItemMeta(meta);
-	        return head;
-	    }
+    public static ItemStack getPlayerHead(UUID playerUUID) {
+        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+        SkullMeta meta = (SkullMeta) head.getItemMeta();
+
+        GameProfile profile = new GameProfile(playerUUID, null);
+
+        // Utilise getTextureProperty au lieu de getTexture
+        // getTexture appelait Crafatar (retourne une image PNG, pas une texture Minecraft)
+        Property texture = getTextureProperty(playerUUID);
+        if (texture != null) {
+            profile.getProperties().put("textures", texture);
+        }
+        // Si null → on laisse le profil sans texture, pas de crash
+
+        try {
+            Field profileField = meta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(meta, profile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        head.setItemMeta(meta);
+        return head;
+    }
 	    public static String getTexture(UUID playerUUID) {
 	        String texture = null;
 	        try {
