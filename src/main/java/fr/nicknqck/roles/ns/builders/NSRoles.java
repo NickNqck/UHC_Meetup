@@ -49,5 +49,6 @@ public abstract class NSRoles extends RoleBase {
     }
     public void setChakras(final Chakras chakras) {
         this.chakras = chakras;
+        chakras.getChakra().getList().add(getPlayer());
     }
 }

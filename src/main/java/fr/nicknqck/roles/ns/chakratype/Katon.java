@@ -31,7 +31,7 @@ public class Katon implements Chakra {
 	public Chakras getChakres() {
 		return Chakras.KATON;
 	}
-	private List<UUID> Katon = new ArrayList<>();
+	private final List<UUID> Katon = new ArrayList<>();
 
 	@Override
 	public List<UUID> getList() {

@@ -32,7 +32,7 @@ public class Suiton implements Chakra {
 	public List<UUID> getList() {
 		return Suiton;
 	}
-	private List<UUID> Suiton = new ArrayList<>();
+	private final List<UUID> Suiton = new ArrayList<>();
 	@Override
 	public void onSecond(GameState gameState) {}
 

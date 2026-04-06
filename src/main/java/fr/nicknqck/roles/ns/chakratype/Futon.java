@@ -32,7 +32,7 @@ public class Futon implements Chakra {
 	public List<UUID> getList() {
 		return Futon;
 	}
-	private List<UUID> Futon = new ArrayList<>();
+	private final List<UUID> Futon = new ArrayList<>();
 	@Override
 	public void onSecond(GameState gameState) {
 	}

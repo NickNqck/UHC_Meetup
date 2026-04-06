@@ -35,11 +35,11 @@ public class Patch implements Listener{
     private void onPatchPotion(EntityDamageByEntityEvent event) {
         if (gameState.getServerState() != ServerStates.InGame)return;
 		if (Main.isDebug()){
-		System.out.println("Original Damage: "+event.getDamage());
+            Main.getInstance().debug("Original Damage: "+event.getDamage());
 		}
 		new PatchCritical(event, Main.getInstance().getGameConfig().getCritPercent());
 		if (Main.isDebug()){
-			System.out.println("Original Damage (After Critical Nerf): "+event.getDamage());
+            Main.getInstance().debug("Original Damage (After Critical Nerf): "+event.getDamage());
 		}
 		for (final Chakras ch : Chakras.values()) {
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
@@ -138,14 +138,14 @@ public class Patch implements Listener{
 			event.setDamage(event.getDamage()*force);
 		//	event.setDamage((event.getDamage() / 2.3f) *(1 + 20 / 100.0f));
 			if (Main.isDebug()){
-				System.out.println("Force Damage to "+event.getDamage());
+                Main.getInstance().debug("Force Damage to "+event.getDamage());
 			}
 		} else {
 			if (fPercent > 0){
 				double rValue = (fPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
 				if (Main.isDebug()){
-					System.out.println("Force Damage to "+event.getDamage());
+                    Main.getInstance().debug("Force Damage to "+event.getDamage());
 				}
 			}
 		}
@@ -156,7 +156,7 @@ public class Patch implements Listener{
 		if (resistancePatchEvent.isCancelled())return;
 		if (isEffect) {
 			double baseDamage = event.getDamage();
-			System.out.println("initDamage: " + baseDamage+", reiPercent = "+reiPercent);
+            Main.getInstance().debug("initDamage: " + baseDamage+", reiPercent = "+reiPercent);
 
 // Annule la réduction de Résistance SI elle est active
 			for (PotionEffect effect : ((Player) event.getEntity()).getActivePotionEffects()) {
@@ -169,11 +169,11 @@ public class Patch implements Listener{
 				}
 			}
 
-			System.out.println("AfterPatchResiDamage: " + baseDamage);
+            Main.getInstance().debug("AfterPatchResiDamage: " + baseDamage);
 
 // Maintenant on applique NOTRE pourcentage de réduction perso
 			double finalDamage = baseDamage * (1.0 - (reiPercent / 100.0));
-			System.out.println("AfterFullPatchDamage: " + finalDamage);
+			Main.getInstance().debug("AfterFullPatchDamage: " + finalDamage);
 
 			event.setDamage(finalDamage);
 
@@ -190,14 +190,14 @@ public class Patch implements Listener{
 		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch l'effet de rési car il est de base dans les valeurs que je veux
 			*/
 			if (Main.isDebug()){
-				System.out.println("Resi Damage to "+event.getDamage());
+                Main.getInstance().debug("Resi Damage to "+event.getDamage());
 			}
 		} else {
 			if (reiPercent > 0){
 				double reductionFactor = 1 - (reiPercent / 100);
 				event.setDamage(event.getDamage() * reductionFactor);
 				if (Main.isDebug()){
-					System.out.println("Bonus Resi Damage to "+event.getDamage());
+                    Main.getInstance().debug("Bonus Resi Damage to "+event.getDamage());
 				}
 			}
 		}
