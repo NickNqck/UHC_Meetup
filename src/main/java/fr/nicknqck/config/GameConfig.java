@@ -91,6 +91,7 @@ public class GameConfig {
         private double edoHealthRemove = 4.0;
         private int minTimeSpawnBiju = 90;
         private int maxTimeSpawnBiju = 160;
+        private boolean obitoCanGetKakashiEye = true;
 
     }
     @Getter
