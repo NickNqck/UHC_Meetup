@@ -9,7 +9,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.edov2.KabutoV2;
@@ -52,9 +52,9 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.SUITON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON
         };
     }
 

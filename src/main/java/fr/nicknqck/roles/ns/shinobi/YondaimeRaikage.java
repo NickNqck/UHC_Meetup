@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -63,9 +63,9 @@ public class YondaimeRaikage extends ShinobiRoles {
 	}
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.RAITON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.RAITON
         };
     }
 

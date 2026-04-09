@@ -8,7 +8,7 @@ import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.fastinv.PaginatedFastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -167,7 +167,7 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
 
     private String getChakraLine(final NSRoles roles) {
         StringBuilder sb = new StringBuilder();
-        for (@NonNull final Chakras chakras : roles.getChakrasCanHave()) {
+        for (@NonNull final EChakras chakras : roles.getChakrasCanHave()) {
             sb.append(chakras.getShowedName()).append("§7, ");
         }
         return sb.substring(0, sb.length()-4);

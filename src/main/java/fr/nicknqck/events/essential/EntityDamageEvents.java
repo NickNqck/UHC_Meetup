@@ -3,7 +3,7 @@ package fr.nicknqck.events.essential;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.utils.AttackUtils;
 import org.bukkit.Bukkit;
@@ -17,8 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-
-import java.util.UUID;
 
 public class EntityDamageEvents implements Listener{
 
@@ -56,7 +54,7 @@ public class EntityDamageEvents implements Listener{
 				Player player = (Player) event.getEntity();
 				Player killer = player.getKiller();
 				double damage = event.getFinalDamage();
-				for (Chakras ch : Chakras.values()) {
+				for (EChakras ch : EChakras.values()) {
 					ch.getChakra().onEntityDamage(event, player);
 				}
 				if (event.getCause() == DamageCause.FALL) {

@@ -8,7 +8,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
@@ -45,13 +45,13 @@ public class GinkakuV2 extends KumogakureRole {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.SUITON,
-                Chakras.RAITON,
-                Chakras.KATON,
-                Chakras.DOTON,
-                Chakras.FUTON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
         };
     }
 

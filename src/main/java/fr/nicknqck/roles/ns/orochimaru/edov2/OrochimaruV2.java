@@ -7,7 +7,7 @@ import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.orochimaru.*;
@@ -35,7 +35,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
 
     private final ItemStack kusanagi = new ItemBuilder(Material.DIAMOND_SWORD).setName("§5Kusanagi").addEnchant(Enchantment.DAMAGE_ALL, 4).
         setLore("§7Vous permet d'avoir§c 25%§7 de§c chance§7 de voler la nature de chakra des joueurs que vous§c tuées").setUnbreakable(true).setDroppable(false).toItemStack();
-    private final List<Chakras> chakrasVoled = new ArrayList<>();
+    private final List<EChakras> chakrasVoled = new ArrayList<>();
 
     public OrochimaruV2(UUID player) {
         super(player);
@@ -86,20 +86,20 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.SUITON,
-                Chakras.RAITON,
-                Chakras.KATON,
-                Chakras.DOTON,
-                Chakras.FUTON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
         };
     }
 
     public String getChakraString() {
         StringBuilder sb = new StringBuilder();
         int i = 0;
-        for (Chakras chakras : chakrasVoled) {
+        for (EChakras chakras : chakrasVoled) {
             i++;
             if (i + 1 != chakrasVoled.size()+1) {
                 sb.append(chakras.getShowedName()).append("§f,");

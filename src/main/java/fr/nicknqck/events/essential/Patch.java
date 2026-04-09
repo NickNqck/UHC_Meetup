@@ -7,7 +7,7 @@ import fr.nicknqck.PatchCritical;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.titans.impl.MachoireV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -41,7 +41,7 @@ public class Patch implements Listener{
 		if (Main.isDebug()){
             Main.getInstance().debug("Original Damage (After Critical Nerf): "+event.getDamage());
 		}
-		for (final Chakras ch : Chakras.values()) {
+		for (final EChakras ch : EChakras.values()) {
 			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
 		}
 		if (!(event.getEntity() instanceof Player)) return;

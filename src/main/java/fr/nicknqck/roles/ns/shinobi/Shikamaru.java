@@ -7,7 +7,7 @@ import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.TripleMap;
@@ -174,9 +174,9 @@ public class Shikamaru extends ShinobiRoles {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.DOTON, Chakras.KATON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON, EChakras.KATON
         };
     }
 

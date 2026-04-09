@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.ns.Chakra;
+import fr.nicknqck.roles.ns.IChakra;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -15,11 +15,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.utils.RandomUtils;
 import net.minecraft.server.v1_8_R3.DamageSource;
 
-public class Raiton implements Chakra {
+public class Raiton implements IChakra {
 
 	private final List<UUID> Raiton = new ArrayList<>();
 
@@ -36,8 +36,8 @@ public class Raiton implements Chakra {
 			}
 	}
 	@Override
-	public Chakras getChakres() {
-		return Chakras.RAITON;
+	public EChakras getChakres() {
+		return EChakras.RAITON;
 	}
 	@Override
 	public List<UUID> getList() {

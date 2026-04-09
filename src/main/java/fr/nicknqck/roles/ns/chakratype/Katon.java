@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.ns.Chakra;
+import fr.nicknqck.roles.ns.IChakra;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -13,10 +13,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Katon implements Chakra {
+public class Katon implements IChakra {
 
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity	 victim) {
@@ -28,8 +28,8 @@ public class Katon implements Chakra {
 	}
 
 	@Override
-	public Chakras getChakres() {
-		return Chakras.KATON;
+	public EChakras getChakres() {
+		return EChakras.KATON;
 	}
 	private final List<UUID> Katon = new ArrayList<>();
 

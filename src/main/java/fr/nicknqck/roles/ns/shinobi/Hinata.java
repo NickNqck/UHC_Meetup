@@ -7,7 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.EByakuganUserType;
 import fr.nicknqck.roles.ns.builders.IByakuganUser;
@@ -53,10 +53,10 @@ public class Hinata extends ShinobiRoles implements IByakuganUser {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.KATON,
-                Chakras.RAITON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON,
+                EChakras.RAITON
         };
     }
 

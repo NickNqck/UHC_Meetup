@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.akatsuki;
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
@@ -52,9 +52,9 @@ public class ZetsuNoir extends AkatsukiRoles {
 	}
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.DOTON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON
         };
     }
 

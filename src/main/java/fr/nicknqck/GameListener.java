@@ -14,7 +14,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.SusamaruV2;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
@@ -69,7 +69,7 @@ public class GameListener implements Listener {
 			@NonNull final OnSecond onSecond = new OnSecond(this.gameState);
 			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
-			for (Chakras ch : Chakras.values()) {
+			for (EChakras ch : EChakras.values()) {
 				ch.getChakra().onSecond(gameState);
 			}
 			BijuListener.getInstance().runnableTask(gameState);
@@ -287,7 +287,7 @@ public class GameListener implements Listener {
 			AttackUtils.CantAttack.clear();
 			AttackUtils.CantReceveAttack.clear();
 			gameState.getDeadRoles().clear();
-			for (Chakras ch : Chakras.values()) {
+			for (EChakras ch : EChakras.values()) {
 				ch.getChakra().getList().clear();
 			}
 			for (Player p : Bukkit.getOnlinePlayers()) {
@@ -838,7 +838,7 @@ public class GameListener implements Listener {
 			p.teleport(new Location(to.getWorld(), to.getX(), to.getWorld().getHighestBlockYAt(to), to.getZ()));
 		}
         if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ce passe rien
-        for (Chakras ch : Chakras.values()) {
+        for (EChakras ch : EChakras.values()) {
         	ch.getChakra().onPlayerMoove(e, p, from, to);
         }
     	if (gameState.shutdown.contains(e.getPlayer())) {

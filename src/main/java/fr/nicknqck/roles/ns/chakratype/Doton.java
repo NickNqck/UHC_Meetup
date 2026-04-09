@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.ns.Chakra;
+import fr.nicknqck.roles.ns.IChakra;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -16,17 +16,17 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.utils.RandomUtils;
 
-public class Doton implements Chakra {
+public class Doton implements IChakra {
 
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {}
 
 	@Override
-	public Chakras getChakres() {
-		return Chakras.DOTON;
+	public EChakras getChakres() {
+		return EChakras.DOTON;
 	}
 	private final List<UUID> Doton = new ArrayList<>();
 	@Override

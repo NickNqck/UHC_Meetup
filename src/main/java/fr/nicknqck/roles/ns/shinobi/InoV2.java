@@ -6,7 +6,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.Loc;
@@ -49,10 +49,10 @@ public class InoV2 extends ShinobiRoles {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.KATON,
-                Chakras.DOTON, Chakras.SUITON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON,
+                EChakras.DOTON, EChakras.SUITON
         };
     }
 

@@ -7,7 +7,7 @@ import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.Loc;
@@ -40,9 +40,9 @@ public class AsumaV2 extends HShinobiRoles {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.FUTON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.FUTON
         };
     }
 

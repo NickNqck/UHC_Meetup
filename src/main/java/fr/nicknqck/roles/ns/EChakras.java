@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ns;
 
 import fr.nicknqck.roles.ns.chakratype.*;
 
-public enum Chakras {
+public enum EChakras {
 
 	KATON("§cKaton", new Katon(), (short)1),
 	SUITON("§bSuiton", new Suiton(), (short) 4),
@@ -10,9 +10,9 @@ public enum Chakras {
 	DOTON("§6Doton", new Doton(), (short) 14),
 	RAITON("§eRaiton", new Raiton(), (short) 11);
 	private final String showed;
-	private final Chakra ch;
+	private final IChakra ch;
 	private final short color;
-	Chakras(String a, Chakra ch, short colorCode) {
+	EChakras(String a, IChakra ch, short colorCode) {
 		this.showed = a;
 		this.ch = ch;
 		this.color = colorCode;
@@ -20,7 +20,7 @@ public enum Chakras {
 	public String getShowedName() {
 		return showed;
 	}
-	public Chakra getChakra() {
+	public IChakra getChakra() {
 		return ch;
 	}
 	public short getColorCode() {

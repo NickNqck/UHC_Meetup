@@ -6,7 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -109,13 +109,13 @@ public class Ginkaku extends NSSoloRoles {
 	}
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.SUITON,
-                Chakras.RAITON,
-                Chakras.KATON,
-                Chakras.DOTON,
-                Chakras.FUTON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
         };
     }
 

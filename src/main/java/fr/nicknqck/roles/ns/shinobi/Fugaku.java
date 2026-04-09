@@ -10,7 +10,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
@@ -73,7 +73,7 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
                 +AllDesc.tab+"§7Vous serez insensible à tout les projectiles\n"
                 +AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégat au joueur viser\n"
                 +AllDesc.tab+"§7Vous subirez §c-25%§7 de dégat de sa part")}), "§cOeil Maléfique", 0))
-                .addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra "+Chakras.KATON.getShowedName())})
+                .addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez la nature de chakra "+ EChakras.KATON.getShowedName())})
                 , new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toutes les§c 5 minutes§7, vous saurez si vous avez croisé un porteur de §cSharingan§7 à moins de §c10 blocs§7.")})
                 );
         this.desc = desc.getText();
@@ -94,9 +94,9 @@ public class Fugaku extends ShinobiRoles implements Listener, IUchiwa {
     }
 
     @Override
-    public Chakras[] getChakrasCanHave() {
-        return new Chakras[] {
-                Chakras.KATON
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
         };
     }
 
