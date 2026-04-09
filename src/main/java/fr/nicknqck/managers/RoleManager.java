@@ -184,7 +184,7 @@ public class RoleManager implements Listener {
     }
     private void registerNs() throws Exception {
         //Register Shinobi
-        registerRole(Asuma.class);
+        registerRole(AsumaV2.class);
         registerRole(Fugaku.class);
         registerRole(InoV2.class);
         registerRole(Jiraya.class);

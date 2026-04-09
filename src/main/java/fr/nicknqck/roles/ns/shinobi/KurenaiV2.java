@@ -222,7 +222,7 @@ public class KurenaiV2 extends ShinobiRoles {
                 return;
             }
             if (!kurenai.getGamePlayer().isAlive()) return;
-            List<Player> aList = new ArrayList<>(kurenai.getListPlayerFromRole(Asuma.class));
+            List<Player> aList = new ArrayList<>(kurenai.getListPlayerFromRole(AsumaV2.class));
             if (aList.isEmpty()) {
                 return;
             }

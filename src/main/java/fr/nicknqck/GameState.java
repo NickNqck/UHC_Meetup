@@ -481,7 +481,7 @@ public class GameState{
                     role = new HidanV2(player);
                     break;
                 case Asuma:
-                    role = new Asuma(player);
+                    role = new AsumaV2(player);
                     break;
                 case KillerBee:
                     role = new KillerBeeV2(player);
