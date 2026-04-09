@@ -5,6 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -72,7 +73,7 @@ public class AdminTabCompletor implements TabCompleter {
             if (strings[0].equalsIgnoreCase("vie") || strings[0].equalsIgnoreCase("resetcooldown")) {
                 stringList.addAll(getListOfPlayer(strings[1]));
             }
-            if (strings[0].equalsIgnoreCase("addrole") || strings[0].equalsIgnoreCase("delrole")) {
+            if (strings[0].equalsIgnoreCase("addrole")) {
                 for (IRole iRole : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
                     if (iRole.getRoles() instanceof Roles) {
                         String name = ((Roles)iRole.getRoles()).name().toLowerCase();
@@ -82,6 +83,16 @@ public class AdminTabCompletor implements TabCompleter {
                         stringList.add(name);
                     }
                 }
+            }
+            if (strings[0].equalsIgnoreCase("delrole")){
+                final List<String> tkt = new ArrayList<>();
+                for (IRoles<?> iRoles : GameState.getInstance().getAvailableRoles().keySet()) {
+                    int amount = GameState.getInstance().getAvailableRoles().get(iRoles);
+                    if (amount > 0){
+                        tkt.add(iRoles.name().toLowerCase());
+                    }
+                }
+                return tkt;
             }
             if (strings[0].equalsIgnoreCase("addhost") ||
                     strings[0].equalsIgnoreCase("delhost") ||

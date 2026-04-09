@@ -9,5 +9,6 @@ public interface IRoles<E extends Enum<E> & IRoles<E>>{
     int getNmb();
     ItemStack getItem();
     String getGDesign();
+    String name();
 
 }
