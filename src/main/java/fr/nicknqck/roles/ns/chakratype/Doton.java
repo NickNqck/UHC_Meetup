@@ -24,10 +24,6 @@ public class Doton implements IChakra {
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {}
 
-	@Override
-	public EChakras getChakres() {
-		return EChakras.DOTON;
-	}
 	private final List<UUID> Doton = new ArrayList<>();
 	@Override
 	public List<UUID> getList() {

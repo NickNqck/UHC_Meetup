@@ -24,11 +24,6 @@ public class Suiton implements IChakra {
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {}
 
 	@Override
-	public EChakras getChakres() {
-		return EChakras.SUITON;
-	}
-
-	@Override
 	public List<UUID> getList() {
 		return Suiton;
 	}

@@ -14,7 +14,6 @@ import java.util.UUID;
 public interface IChakra {
 
     void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity);
-    EChakras getChakres();
     List<UUID> getList();
     void onSecond(GameState gameState);
     void onEntityDamage(EntityDamageEvent event, Player player);

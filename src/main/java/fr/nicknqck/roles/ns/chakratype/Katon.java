@@ -26,11 +26,6 @@ public class Katon implements IChakra {
 			}
 		}
 	}
-
-	@Override
-	public EChakras getChakres() {
-		return EChakras.KATON;
-	}
 	private final List<UUID> Katon = new ArrayList<>();
 
 	@Override

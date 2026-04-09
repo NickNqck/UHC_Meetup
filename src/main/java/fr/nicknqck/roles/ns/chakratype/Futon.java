@@ -24,11 +24,6 @@ public class Futon implements IChakra {
 	}
 
 	@Override
-	public EChakras getChakres() {
-		return EChakras.FUTON;
-	}
-
-	@Override
 	public List<UUID> getList() {
 		return Futon;
 	}

@@ -36,10 +36,6 @@ public class Raiton implements IChakra {
 			}
 	}
 	@Override
-	public EChakras getChakres() {
-		return EChakras.RAITON;
-	}
-	@Override
 	public List<UUID> getList() {
 		return Raiton;
 	}
