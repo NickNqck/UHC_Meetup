@@ -26,6 +26,7 @@ import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -68,6 +69,10 @@ public class KakashiV2 extends HShinobiRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
+        if (!gameState.getAttributedRole().contains(Roles.Obito)) {
+            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+            Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
+        }
         addPower(new KamuiPower(this), true);
         addPower(new SharinganPower(this), true);
         addPower(new YameruPower(this));
