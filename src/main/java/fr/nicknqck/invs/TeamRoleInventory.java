@@ -3,9 +3,9 @@ package fr.nicknqck.invs;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
 import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.ns.Chakras;
@@ -42,16 +42,16 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
     }
 
     // ── Registre statique des inventaires ouverts par team ───────────────────
-    private static final Map<TeamList, List<TeamRoleInventory>> OPEN_INVENTORIES = new EnumMap<>(TeamList.class);
+    private static final Map<ITeam, List<TeamRoleInventory>> OPEN_INVENTORIES = new HashMap<>();
 
     // ── Champs d'instance ────────────────────────────────────────────────────
     @Getter
-    private final TeamList team;
+    private final ITeam team;
     private final GameState gameState;
 
     // ── Constructeur ─────────────────────────────────────────────────────────
 
-    public TeamRoleInventory(String title, TeamList team, String mdj) {
+    public TeamRoleInventory(String title, ITeam team, String mdj) {
         super(54, title);
 
         this.team      = team;
@@ -109,7 +109,7 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
         addSomeItem(this);
     }
 
-    public static void refreshAll(TeamList team, String mdj) {
+    public static void refreshAll(ITeam team, String mdj) {
         final List<TeamRoleInventory> openList = OPEN_INVENTORIES.get(team);
         if (openList == null) return;
         for (final TeamRoleInventory inv : openList) {
@@ -199,47 +199,33 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
 
     // ── getRolesByTeam ────────────────────────────────────────────────────────
 
-    private static List<IRole> getRolesByTeam(TeamList team) {
+    private static List<IRole> getRolesByTeam(ITeam team) {
         return Main.getInstance().getRoleManager().getRolesRegistery().values().stream()
                 .filter(iRole -> iRole.getRoles().getTeam() == team)
                 .sorted(Comparator.comparingInt(iRole -> iRole.getRoles().getNmb()))
                 .collect(Collectors.toList());
     }
 
-    // ── Vitre colorée ─────────────────────────────────────────────────────────
-
-    private static ItemStack buildTeamGlass(TeamList team) {
-        final ItemStack pane = new ItemStack(Material.STAINED_GLASS_PANE, 1, teamColorToGlassData(team));
+    private static ItemStack buildTeamGlass(ITeam team) {
+        final ItemStack pane = new ItemStack(
+                Material.STAINED_GLASS_PANE, 1, colorCodeToGlassData(team.getColor())
+        );
         final ItemMeta meta = pane.getItemMeta();
         meta.setDisplayName(" ");
         pane.setItemMeta(meta);
         return pane;
     }
 
-    private static short teamColorToGlassData(TeamList team) {
-        switch (team) {
-            case Demon:
-            case Titan:
-            case Akatsuki:
-                return 14;
-            case Slayer:
-            case Soldat:
-            case Shinobi:
-                return 5;
-            case Solo:
-            case Sasuke:
-            case Shisui:
-                return 4;
-            case Jigoro:
-            case Alliance:
-            case Kabuto:
-            case Kumogakure:
-                return 1;
-            case Mahr:           return 11;
-            case Jubi:           return 2;
-            case Orochimaru:     return 10;
-            case Zabuza_et_Haku: return 3;
-            default:             return 7;
-        }
+    // Remplace le switch par une conversion depuis le code couleur §
+    private static short colorCodeToGlassData(String colorCode) {
+        if (colorCode.contains("§c")) return 14; // rouge
+        if (colorCode.contains("§a")) return 5;  // vert lime
+        if (colorCode.contains("§e")) return 4;  // jaune
+        if (colorCode.contains("§6")) return 1;  // orange
+        if (colorCode.contains("§9")) return 11; // bleu
+        if (colorCode.contains("§d")) return 2;  // magenta
+        if (colorCode.contains("§5")) return 10; // violet
+        if (colorCode.contains("§b")) return 3;  // bleu clair
+        return 7; // gris (fallback)
     }
 }
