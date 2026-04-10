@@ -139,7 +139,7 @@ public class EventsManager implements Listener {
             }
         }
     }
-    private void openInv(final Player player, final String name, final Event event) {
+    public void openInv(final Player player, final String name, final Event event) {
         final Inventory gameInv = Bukkit.createInventory(player, 27, "§f"+name);
         final int minTime = event.getMinTimeProc();
         final int maxTime = event.getMaxTimeProc();

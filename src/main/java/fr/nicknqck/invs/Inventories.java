@@ -15,16 +15,19 @@ import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.scenarios.Scenarios;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.scenarios.impl.CutClean;
+import fr.nicknqck.utils.fastinv.PaginatedFastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -854,12 +857,36 @@ public class Inventories {
         if (invView != null) {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
-                if (inv.getTitle().equals("§fConfiguration§7 -> §6Événements")) {
+                if (inv.getTitle().equals("§7(§c!§7)§f Configuration§7 ->§6 Événements")) {
                     inv.clear();
-                    inv.setItem(8, GUIItems.getSelectBackMenu());
-                    for (final Event event : Main.getInstance().getEventsManager().getEventsList()) {
-                        inv.addItem(event.getMenuItem());
+                    PaginatedFastInv paginatedFastInv = new PaginatedFastInv(27, "§7(§c!§7)§f Configuration§7 ->§6 Événements");
+                    paginatedFastInv.setItems(paginatedFastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
+                    final List<Integer> list = new ArrayList<>();
+                    for (int i = 10; i <= 16; i++) {
+                        list.add(i);
                     }
+                    paginatedFastInv.setContentSlots(list);
+                    paginatedFastInv.setItem(4, GUIItems.getSelectBackMenu(), event -> {
+                        event.getWhoClicked().openInventory(GUIItems.getAdminWatchGUI());
+                        Main.getInstance().getInventories().updateAdminInventory(player);
+                    });
+                    paginatedFastInv.previousPageItem(3, new ItemBuilder(Material.WOOD_BUTTON)
+                            .setName("§7◄ Page précédente").toItemStack());
+                    paginatedFastInv.nextPageItem(5, new ItemBuilder(Material.WOOD_BUTTON)
+                            .setName("§7Page suivante ►").toItemStack());
+                    for (@NonNull final Event gameEvent : Main.getInstance().getEventsManager().getEventsList()) {
+                        paginatedFastInv.addContent(gameEvent.getMenuItem(), event -> {
+                            if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
+                                gameEvent.setPercent(Math.min(100, gameEvent.getPercent() + 1));
+                            } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
+                                gameEvent.setPercent(Math.max(1, gameEvent.getPercent()) - 1);
+                            } else if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                                Main.getInstance().getEventsManager().openInv(player, gameEvent.getName(), gameEvent);
+                            }
+                            updateEventInventory(player);
+                        });
+                    }
+                    paginatedFastInv.open(player);
                 }
             }
         }
