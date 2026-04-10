@@ -111,6 +111,11 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         }, 10*20);
     }
 
+    @Override
+    public boolean isCanBeHokage() {
+        return true;
+    }
+
     @EventHandler
     private void UHCDeathEvent(@NonNull final UHCDeathEvent event) {
         if (event.isCancelled())return;

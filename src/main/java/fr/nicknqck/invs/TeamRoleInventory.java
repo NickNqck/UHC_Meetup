@@ -136,7 +136,7 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
                     .setLore(iRole instanceof RoleCustomLore
                             ? ((RoleCustomLore) iRole).getCustomLore(l1, design)
                             : iRole instanceof NSRoles ?
-                            new String[] { getChakraLine((NSRoles) iRole), l1, "", design}
+                            new String[] { ((NSRoles) iRole).isCanBeHokage() ? "§7Peut devenir§a Hokage§7:§a Oui" : "§7Peut devenir§a Hokage§7:§c Non",getChakraLine((NSRoles) iRole), l1, "", design}
                             :
                             new String[]{ l1, "", design })
                     .toItemStack();
@@ -167,6 +167,7 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
 
     private String getChakraLine(final NSRoles roles) {
         StringBuilder sb = new StringBuilder();
+        sb.append("§7Peut avoir un§a chakra§c aléatoire§7 parmi ceux-ci: ");
         for (@NonNull final EChakras chakras : roles.getChakrasCanHave()) {
             sb.append(chakras.getShowedName()).append("§7, ");
         }

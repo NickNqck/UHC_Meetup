@@ -9,10 +9,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.EByakuganUserType;
-import fr.nicknqck.roles.ns.builders.IByakuganUser;
-import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.roles.ns.builders.*;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
@@ -41,7 +38,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public class Hinata extends ShinobiRoles implements IByakuganUser {
+public class Hinata extends HShinobiRoles implements IByakuganUser {
 
     public Hinata(UUID player) {
         super(player);

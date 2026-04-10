@@ -7,7 +7,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -29,7 +29,7 @@ import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
-public class Jiraya extends ShinobiRoles {
+public class Jiraya extends HShinobiRoles {
 
 	public Jiraya(UUID player) {
 		super(player);
@@ -39,7 +39,6 @@ public class Jiraya extends ShinobiRoles {
 	public void RoleGiven(GameState gameState) {
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "nakime Gamabunta8vzqzZvv189Zbxc:!");
-		setCanBeHokage(true);
 	}
 
 	@Override

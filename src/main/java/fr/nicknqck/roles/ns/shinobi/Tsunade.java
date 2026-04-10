@@ -6,7 +6,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -20,11 +20,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class Tsunade extends ShinobiRoles {
+public class Tsunade extends HShinobiRoles {
 
 	public Tsunade(UUID player) {
 		super(player);
-		setCanBeHokage(true);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
