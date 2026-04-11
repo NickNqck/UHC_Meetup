@@ -78,6 +78,7 @@ public class MadaraV2 extends JubiRoles {
                 "§7Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7."), true);
         addPower(new Izanagi(this));
         addKnowedRole(ObitoV2.class);
+        addKnowedRole(JubiSasuke.class);
         getGamePlayer().startChatWith("!", "§dMadara: ", ObitoV2.class);
     }
 

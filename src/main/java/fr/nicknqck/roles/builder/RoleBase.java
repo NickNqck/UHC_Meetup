@@ -495,9 +495,6 @@ public abstract class RoleBase implements IRole {
 	}
 	public HashMap<UUID, String> customName = new HashMap<>();
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
-	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
-		return false;
-	}
 
 	@Override
 	public TextComponent getComponent() {

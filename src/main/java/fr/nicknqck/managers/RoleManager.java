@@ -37,6 +37,7 @@ import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.DanzoV2;
 import fr.nicknqck.roles.ns.solo.GaaraV2;
 import fr.nicknqck.roles.ns.solo.ShisuiSolo;
+import fr.nicknqck.roles.ns.solo.jubi.JubiSasuke;
 import fr.nicknqck.roles.ns.solo.jubi.MadaraV2;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.*;
@@ -227,6 +228,7 @@ public class RoleManager implements Listener {
         //Register Jubi
         registerRole(MadaraV2.class);
         registerRole(ObitoV2.class);
+        registerRole(JubiSasuke.class);
         //Register Kumogakure
         registerRole(GinkakuV2.class);
         registerRole(Kinkaku.class);

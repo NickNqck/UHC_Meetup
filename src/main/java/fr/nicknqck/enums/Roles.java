@@ -92,6 +92,7 @@ public enum Roles implements IRoles<Roles> {
     //Jubi ns
     Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dMadara").toItemStack(), "§aYukan"),
     Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("§dObito").toItemStack(), "§aYukan"),
+    JubiSasuke(TeamList.Jubi, "ns", 2, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dSasuke").toItemStack(), "§bNickNqck"),
     //Solo ns
     Gaara(TeamList.Solo, "ns", 0, new ItemBuilder(Material.SAND).setName("§eGaara").toItemStack(), "§bNickNqck"),
     Danzo(TeamList.Solo, "ns", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eDanzo").toItemStack(), "§bNickNqck"),

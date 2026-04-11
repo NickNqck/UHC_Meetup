@@ -1,6 +1,7 @@
 package fr.nicknqck.utils.powers;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.power.CreateActionBarEvent;
 import fr.nicknqck.events.custom.power.UpdateActionBarEvent;
@@ -111,7 +112,6 @@ public abstract class ItemPower extends Power {
     public static class ShowCdRunnable extends BukkitRunnable {
 
         private final UUID user;
-        private final Cooldown cooldown;
         private final GameState gameState;
         private final ItemStack item;
         private final GamePlayer gamePlayer;
@@ -126,7 +126,6 @@ public abstract class ItemPower extends Power {
         public ShowCdRunnable(final ItemPower itemPower) {
             this.user = itemPower.getRole().getPlayer();
             this.gamePlayer = itemPower.getRole().getGamePlayer();
-            this.cooldown = itemPower.getCooldown();
             this.gameState = GameState.getInstance();
             this.item = itemPower.getItem();
             this.itemPower = itemPower;
@@ -141,56 +140,58 @@ public abstract class ItemPower extends Power {
             }
             if (!this.gamePlayer.isAlive())return;
             if (!this.itemPower.isShowCdInHand())  {
-                System.out.println("Cancelled "+this+" for "+user+" because ce n'etait pas cense start de base");
+                Main.getInstance().debug("Cancelled "+this+" for "+user+" because ce n'etait pas cense start de base");
                 cancel();
                 return;
             }
             final Player player = Bukkit.getPlayer(user);
             if (player != null) {
+                if (this.itemPower.getCooldown() == null)return;
+                final Cooldown cooldown = this.itemPower.getCooldown();
                 if (player.getItemInHand().isSimilar(item)) {
-                    if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
-                        updateActionBar();
+                    if (this.gamePlayer.getActionBarManager().containsKey(cooldown.getUniqueId().toString())) {
+                        updateActionBar(cooldown);
                     } else {
-                        createActionBar();
+                        createActionBar(cooldown);
                     }
-                } else if (this.gamePlayer.getActionBarManager().containsKey(this.cooldown.getUniqueId().toString())) {
-                    this.gamePlayer.getActionBarManager().removeInActionBar(this.cooldown.getUniqueId().toString());
+                } else if (this.gamePlayer.getActionBarManager().containsKey(cooldown.getUniqueId().toString())) {
+                    this.gamePlayer.getActionBarManager().removeInActionBar(cooldown.getUniqueId().toString());
                 }
             }
         }
-        private void updateActionBar() {
+        private void updateActionBar(@NonNull final Cooldown cooldown) {
             if (this.isCustomText()) {
                 this.itemPower.tryUpdateActionBar();
-                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(this.cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
+                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
                 Bukkit.getPluginManager().callEvent(updateActionBarEvent);
                 if (!updateActionBarEvent.isCancelled()){
-                    this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
+                    this.gamePlayer.getActionBarManager().updateActionBar(cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
                 }
             } else {
-                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                final UpdateActionBarEvent updateActionBarEvent = new UpdateActionBarEvent(cooldown.getUniqueId().toString(), cooldown.isInCooldown() ?
                         "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
                         item.getItemMeta().getDisplayName()+" est§c utilisable", this.itemPower, false);
                 Bukkit.getPluginManager().callEvent(updateActionBarEvent);
                 if (!updateActionBarEvent.isCancelled()){
-                    this.gamePlayer.getActionBarManager().updateActionBar(this.cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
+                    this.gamePlayer.getActionBarManager().updateActionBar(cooldown.getUniqueId().toString(), updateActionBarEvent.getValue());
                 }
             }
         }
-        private void createActionBar() {
+        private void createActionBar(@NonNull final Cooldown cooldown) {
             if (this.isCustomText()) {
                 this.itemPower.tryUpdateActionBar();
-                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(this.cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
+                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(cooldown.getUniqueId().toString(), this.customTexte, this.itemPower, true);
                 Bukkit.getPluginManager().callEvent(createActionBarEvent);
                 if (!createActionBarEvent.isCancelled()){
-                    this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
+                    this.gamePlayer.getActionBarManager().addToActionBar(cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
                 }
             } else {
-                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(this.cooldown.getUniqueId().toString(), this.cooldown.isInCooldown() ?
+                final CreateActionBarEvent createActionBarEvent = new CreateActionBarEvent(cooldown.getUniqueId().toString(), cooldown.isInCooldown() ?
                         "§bCooldown: §c"+ StringUtils.secondsTowardsBeautiful(cooldown.getCooldownRemaining()) :
                         item.getItemMeta().getDisplayName()+" est§c utilisable", this.itemPower, true);
                 Bukkit.getPluginManager().callEvent(createActionBarEvent);
                 if (!createActionBarEvent.isCancelled()){
-                    this.gamePlayer.getActionBarManager().addToActionBar(this.cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
+                    this.gamePlayer.getActionBarManager().addToActionBar(cooldown.getUniqueId().toString(), createActionBarEvent.getValue());
                 }
             }
         }

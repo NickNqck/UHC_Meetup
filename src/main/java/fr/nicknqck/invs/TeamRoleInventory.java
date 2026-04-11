@@ -4,9 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
-import fr.nicknqck.interfaces.IRole;
-import fr.nicknqck.interfaces.ITeam;
-import fr.nicknqck.interfaces.RoleCustomLore;
+import fr.nicknqck.interfaces.*;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -129,16 +127,43 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
             final String l1     = count > 0 ? "§c(" + count + ")" : "§c(0)";
             final String design = "§fGDesign: " + iRole.getRoles().getGDesign();
 
+            final LinkedList<String> stringList = new LinkedList<>();
+
+            if (iRole instanceof RoleCustomLore) {
+                stringList.addAll(Arrays.asList(((RoleCustomLore) iRole).getCustomLore(l1, design)));
+            } else {
+                if (iRole instanceof NSRoles) {
+                    if (((NSRoles) iRole).isCanBeHokage()) {
+                        stringList.add("§7Peut devenir§a Hokage§7:§a Oui");
+                    } else {
+                        stringList.add("§7Peut devenir§a Hokage§7:§c Non");
+                    }
+                    stringList.add(getChakraLine((NSRoles) iRole));
+                }
+                if (iRole instanceof IUncompatibleRole) {
+                    StringBuilder sb = new StringBuilder("§7Ce rôle est incompatible avec le/les role(s): ");
+                    for (IRoles<?> iRoles : ((IUncompatibleRole) iRole).getUncompatibleList()) {
+                        sb.append(iRoles.getItem().getItemMeta().getDisplayName());
+                    }
+                    stringList.add(sb.toString());
+                }
+                stringList.add(l1);
+                stringList.add("§r");
+                stringList.add(design);
+            }
+
             final ItemStack roleItem = new ItemBuilder(iRole.getRoles().getItem())
                     // Si count == 0 → amount 0 (affiche "0" dans le GUI),
                     // sinon → le nombre réel de slots disponibles
                     .setAmount(count)
-                    .setLore(iRole instanceof RoleCustomLore
+                    .setLore(stringList
+                            /*
+                    iRole instanceof RoleCustomLore
                             ? ((RoleCustomLore) iRole).getCustomLore(l1, design)
                             : iRole instanceof NSRoles ?
                             new String[] { ((NSRoles) iRole).isCanBeHokage() ? "§7Peut devenir§a Hokage§7:§a Oui" : "§7Peut devenir§a Hokage§7:§c Non",getChakraLine((NSRoles) iRole), l1, "", design}
                             :
-                            new String[]{ l1, "", design })
+                            new String[]{ l1, "", design }*/)
                     .toItemStack();
 
             addContent(roleItem, e -> {

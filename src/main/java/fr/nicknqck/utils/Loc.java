@@ -39,18 +39,21 @@ public class Loc {
         return shape;
     }
 	public static Location getRandomLocationAroundPlayer(Player player, double radius) {
-	    World world = player.getWorld();
-	    double angle = Math.random() * Math.PI * 2; // Angle aléatoire
-	    double x = Math.cos(angle) * radius; // Calcul des coordonnées x et z
-	    double z = Math.sin(angle) * radius;
-
-	    Location playerLocation = player.getLocation();
-	    double newX = playerLocation.getX() + x; // Ajout des coordonnées à la position actuelle du joueur
-	    double newZ = playerLocation.getZ() + z;
-
-	    double newY = world.getHighestBlockYAt((int) newX, (int) newZ); // Obtention de la hauteur du sol
-	    return new Location(world, newX, newY, newZ); // Création et retour de la nouvelle location
+	    return getRandomLocationAroundLocation(player.getLocation(), radius);
 	}
+
+    public static Location getRandomLocationAroundLocation(final Location originalLocation, double radius) {
+        World world = originalLocation.getWorld();
+        double angle = Math.random() * Math.PI * 2; // Angle aléatoire
+        double x = Math.cos(angle) * radius; // Calcul des coordonnées x et z
+        double z = Math.sin(angle) * radius;
+
+        double newX = originalLocation.getX() + x; // Ajout des coordonnées à la position actuelle du joueur
+        double newZ = originalLocation.getZ() + z;
+
+        double newY = world.getHighestBlockYAt((int) newX, (int) newZ); // Obtention de la hauteur du sol
+        return new Location(world, newX, newY, newZ); // Création et retour de la nouvelle location
+    }
 
     public static Vector getRightHeadDirection(Player player) {
         Vector direction = player.getLocation().getDirection().normalize();

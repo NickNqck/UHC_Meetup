@@ -5,6 +5,9 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.interfaces.IUncompatibleRole;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -47,7 +50,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class ObitoV2 extends JubiRoles implements ISAkatsukiChief{
+public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatibleRole {
 
     public ObitoV2(UUID player) {
         super(player);
@@ -101,6 +104,14 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief{
                 .setPowers(getPowers())
                 .getText();
     }
+
+    @Override
+    public IRoles<?>[] getUncompatibleList() {
+        return new IRoles[] {
+                Roles.JubiSasuke
+        };
+    }
+
     private static class ObtainSusanoPower extends CommandPower implements Listener {
 
         private final Map<String, Location> deathLocations;

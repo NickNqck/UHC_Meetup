@@ -402,6 +402,9 @@ public class GameState{
                 case Obito:
                     role = new ObitoV2(player);
                     break;
+                case JubiSasuke:
+                    role = new JubiSasuke(player);
+                    break;
                 case Danzo:
                     role = new DanzoV2(player);
                     break;

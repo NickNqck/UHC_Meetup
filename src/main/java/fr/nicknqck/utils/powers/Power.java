@@ -2,6 +2,7 @@ package fr.nicknqck.utils.powers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.roles.PowerActivateAfterCheckEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -9,6 +10,7 @@ import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -81,7 +83,9 @@ public abstract class Power implements Cloneable{
                 powerCooldown.use();
                 this.setCooldownResetSended(false);
             }
+            Bukkit.getServer().getPluginManager().callEvent(new PowerActivateAfterCheckEvent(Main.getInstance(), player, this));
         }
+
         return canUse;
     }
     public abstract boolean onUse(@NonNull Player player,@NonNull Map<String, Object> map);

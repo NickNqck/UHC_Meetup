@@ -44,6 +44,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
 
     public SasukeV2(UUID player) {
         super(player);
+        setCanBeHokage(true);
     }
 
     @Override
@@ -85,7 +86,6 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         addPower(new Izanagi(this));
         addKnowedRole(OrochimaruV2.class);
         EventUtils.registerRoleEvent(this);
-        setCanBeHokage(true);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Itachi)) {
                 onItachiKill(false);
