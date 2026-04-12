@@ -110,7 +110,7 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
         return new String[] {
                 "§7Peut devenir§a Hokage§7:§c Non",
                 "§7Peut avoir un§a chakra§c aléatoire§7 parmi ceux-ci:§c Katon",
-                "§7Ce rôle est incompatible avec le/les role(s): "+Roles.Obito.getItem().getItemMeta().getDisplayName(),
+                "§7Ce rôle est incompatible avec le/les role(s): "+Roles.Obito.getItem().getItemMeta().getDisplayName()+"§7 et§d "+Roles.Sasuke.getItem().getItemMeta().getDisplayName(),
                 amount,
                 "",
                 gDesign,
