@@ -71,7 +71,8 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
     @Override
     public IRoles<?>[] getUncompatibleList() {
         return new IRoles[] {
-                Roles.Obito
+                Roles.Obito,
+                Roles.Sasuke
         };
     }
 

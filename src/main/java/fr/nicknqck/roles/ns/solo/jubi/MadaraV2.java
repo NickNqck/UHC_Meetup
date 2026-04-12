@@ -79,7 +79,7 @@ public class MadaraV2 extends JubiRoles {
         addPower(new Izanagi(this));
         addKnowedRole(ObitoV2.class);
         addKnowedRole(JubiSasuke.class);
-        getGamePlayer().startChatWith("!", "§dMadara: ", ObitoV2.class);
+        getGamePlayer().startChatWith("§dMadaraV2: ", "!", ObitoV2.class, JubiSasuke.class);
     }
 
     @Override
