@@ -40,6 +40,7 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new TraqueurPower(this), true);
+        super.RoleGiven(gameState);
     }
 
     @Override
