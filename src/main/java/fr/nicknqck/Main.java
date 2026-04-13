@@ -115,6 +115,7 @@ public class Main extends JavaPlugin {
     private KatsuyuManager katsuyuManager;
 	private KrystalManager krystalManager;
     private UpdateChecker updateChecker;
+    private RoleWorldManager roleWorldManager;
 
     @Override
 	public void onEnable() {
@@ -169,6 +170,7 @@ public class Main extends JavaPlugin {
         this.katsuyuManager = new KatsuyuManager();
         this.updateChecker = new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		this.krystalManager = new KrystalManager();
+        this.roleWorldManager = new RoleWorldManager();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		System.out.println("ENDING ONENABLE");
@@ -552,4 +554,5 @@ public class Main extends JavaPlugin {
             getLogger().info(message);
         }
     }
+
 }

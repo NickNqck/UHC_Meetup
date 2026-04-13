@@ -1,5 +1,6 @@
 package fr.nicknqck.runnables;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -12,7 +13,7 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import java.text.DecimalFormat;
 
 public class PregenerationTask extends BukkitRunnable {
-	
+	@Getter
 	private Double percent;
 	private Double currentChunkLoad;
 	private final Double totalChunkToLoad;

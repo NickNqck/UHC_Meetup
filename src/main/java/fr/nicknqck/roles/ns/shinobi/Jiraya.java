@@ -4,20 +4,19 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.interfaces.ISubRoleWorld;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.roles.ns.Intelligence;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
+import fr.nicknqck.runnables.PregenerationTask;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.particles.MathUtil;
 import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -39,6 +38,7 @@ public class Jiraya extends HShinobiRoles {
 	public void RoleGiven(GameState gameState) {
 		ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
 		Bukkit.dispatchCommand(console, "nakime Gamabunta8vzqzZvv189Zbxc:!");
+        Main.getInstance().getRoleWorldManager().addWorldManaged("Gamabunta2", new JirayaSubWorld());
 	}
 
 	@Override
@@ -258,4 +258,54 @@ public class Jiraya extends HShinobiRoles {
 	public String getName() {
 		return "Jiraya";
 	}
+
+    private static final class JirayaSubWorld implements ISubRoleWorld {
+
+        private double percent;
+
+        @Override
+        public String getWorldName() {
+            return "Gamabunta2";
+        }
+
+        @Override
+        public String getZipFileName() {
+            return "Gamabunta2.zip";
+        }
+
+        @Override
+        public World createWorld() {
+            final World world = getWorldCreator().generateStructures(false).createWorld();
+            world.setGameRuleValue("doMobSpawning", "false");
+            world.setGameRuleValue("doDaylightCycle", "false");
+            world.setGameRuleValue("spectatorsGenerateChunks", "false");
+            world.setGameRuleValue("naturalRegeneration", "false");
+            world.setGameRuleValue("announceAdvancements", "false");
+            world.setGameRuleValue("doMobSpawning", "false");
+            world.setGameRuleValue("doFireTick", "false");
+            return world;
+        }
+
+        @Override
+        public double getActualPercentPregenTask() {
+            return this.percent;
+        }
+
+        @Override
+        public void startPregen(World world) {
+            final PregenerationTask pregenerationTask = new PregenerationTask(world, 150);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    pregenerationTask.run();
+                    percent = pregenerationTask.getPercent();
+                }
+            }.runTaskTimer(Main.getInstance(), 1, 5);
+        }
+
+        @Override
+        public WorldCreator getWorldCreator() {
+            return new WorldCreator(getWorldName());
+        }
+    }
 }
