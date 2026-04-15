@@ -147,6 +147,9 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
                     }
                     stringList.add(sb.toString());
                 }
+                if (iRole instanceof IRoleGotSubWorld) {
+                    stringList.add("§7Ce rôle est lié au monde:§a "+((IRoleGotSubWorld) iRole).getSubWorld().getWorldName());
+                }
                 stringList.add(l1);
                 stringList.add("§r");
                 stringList.add(design);

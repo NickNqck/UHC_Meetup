@@ -356,11 +356,11 @@ public class Main extends JavaPlugin {
 		gameWorld.setGameRuleValue("spectatorsGenerateChunks", "false");
 		gameWorld.setGameRuleValue("naturalRegeneration", "false");
 		gameWorld.setGameRuleValue("announceAdvancements", "false");
-		gameWorld.setDifficulty(Difficulty.HARD);
-		gameWorld.setSpawnLocation(0, gameWorld.getHighestBlockYAt(0, 0), 0);
-		gameWorld.setGameRuleValue("randomTickSpeed", "3");
-		gameWorld.setGameRuleValue("doMobSpawning", "false");
-		gameWorld.setGameRuleValue("doFireTick", "false");
+        gameWorld.setGameRuleValue("randomTickSpeed", "3");
+        gameWorld.setGameRuleValue("doMobSpawning", "false");
+        gameWorld.setGameRuleValue("doFireTick", "false");
+        gameWorld.setDifficulty(Difficulty.HARD);
+        gameWorld.setSpawnLocation(0, gameWorld.getHighestBlockYAt(0, 0), 0);
 		getWorldManager().setGameWorld(gameWorld);
 		System.out.println("Created world gameWorld");
 		return true;
@@ -396,6 +396,9 @@ public class Main extends JavaPlugin {
 				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);
 			}
 		}
+        for (String string : getRoleWorldManager().getSubRoleWorldMap().keySet()) {
+            deleteWorld(getRoleWorldManager().getSubRoleWorldMap().get(string).getWorldName());
+        }
 	}
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");

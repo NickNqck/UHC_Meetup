@@ -3,9 +3,7 @@ package fr.nicknqck.events.essential.inventorys;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.interfaces.IRole;
-import fr.nicknqck.interfaces.IRoles;
-import fr.nicknqck.interfaces.IUncompatibleRole;
+import fr.nicknqck.interfaces.*;
 import fr.nicknqck.roles.builder.RoleBase;
 
 public final class EasyRoleAdder {
@@ -31,6 +29,10 @@ public final class EasyRoleAdder {
                     }
                 }
                 GameState.getInstance().addInAvailableRoles(iRole.getRoles(), GameState.getInstance().getAvailableRoles().getOrDefault(iRole.getRoles(), 0)+1);
+                if (iRole instanceof IRoleGotSubWorld) {
+                    final ISubRoleWorld iSubRoleWorld = ((IRoleGotSubWorld) iRole).getSubWorld();
+                    Main.getInstance().getRoleWorldManager().addWorldManaged(iSubRoleWorld.getWorldName(), iSubRoleWorld);
+                }
                 break;
             }
         }

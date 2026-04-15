@@ -1,7 +1,10 @@
 package fr.nicknqck.interfaces;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+
+import java.util.List;
 
 public interface ISubRoleWorld {
 
@@ -11,5 +14,8 @@ public interface ISubRoleWorld {
     double getActualPercentPregenTask();
     void startPregen(World world);
     WorldCreator getWorldCreator();
+    void setHasBeenPregen(boolean pregen);
+    boolean isPregen();
+    List<Location> getPossibleTeleportLocations();
 
 }

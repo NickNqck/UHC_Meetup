@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,9 +38,14 @@ public class RoleWorldManager implements Listener {
     private void onGameStart(@NonNull final GameStartEvent event) {
         this.startedManaging = true;
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     private void onGameStop(@NonNull final GameEndEvent event) {
         this.startedManaging = false;
+        for (String string : this.subRoleWorldMap.keySet()) {
+            Main.getInstance().deleteWorld(string);
+            final ISubRoleWorld iSubRoleWorld = this.getSubRoleWorldMap().get(string);
+            iSubRoleWorld.setHasBeenPregen(false);
+        }
         this.subRoleWorldMap.clear();
     }
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -53,7 +59,7 @@ public class RoleWorldManager implements Listener {
                 for (Player player : world.getPlayers()) {
                     player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
                 }
-                Main.getInstance().deleteWorld(string);
+                Main.getInstance().deleteWorld(iSubRoleWorld.getWorldName());
             }
             extractWorld(iSubRoleWorld.getZipFileName());
             final World w = iSubRoleWorld.createWorld();
@@ -66,7 +72,18 @@ public class RoleWorldManager implements Listener {
         try {
             ZipFile zipFile = new ZipFile(link);
             zipFile.extractAll(Bukkit.getWorldContainer().getAbsolutePath());
-            System.out.println("Extracting "+source);
+            System.out.println("Extracting " + source);
+
+            // Supprimer le uid.dat pour éviter le "duplicate world" au rechargement
+            final String worldName = source.replace(".zip", "");
+            final File uidFile = new File(Bukkit.getWorldContainer(), worldName + "/uid.dat");
+            if (uidFile.exists()) {
+                if (uidFile.delete()) {
+                    Main.getInstance().debug("[RoleWorldManager] uid.dat supprimé pour " + worldName);
+                } else {
+                    Main.getInstance().getLogger().warning("[RoleWorldManager] Impossible de supprimer uid.dat pour " + worldName);
+                }
+            }
         } catch (ZipException e) {
             e.fillInStackTrace();
         }
