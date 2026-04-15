@@ -44,6 +44,9 @@ public class Loc {
 
     public static Location getRandomLocationAroundLocation(final Location originalLocation, double radius) {
         World world = originalLocation.getWorld();
+        if (!world.getName().equalsIgnoreCase("arena")) {
+            return originalLocation;
+        }
         double angle = Math.random() * Math.PI * 2; // Angle aléatoire
         double x = Math.cos(angle) * radius; // Calcul des coordonnées x et z
         double z = Math.sin(angle) * radius;
