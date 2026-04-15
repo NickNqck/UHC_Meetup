@@ -12,7 +12,6 @@ import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.interfaces.IRole;
-import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
@@ -51,9 +50,6 @@ public abstract class RoleBase implements IRole {
 	@Setter
     @Getter
 	private boolean noFall = false;
-	@Setter
-	@Getter
-	private IRoles<?> oldRole = null;
 	@Getter
 	private boolean powerEnabled = true;
 	@Getter
@@ -104,8 +100,8 @@ public abstract class RoleBase implements IRole {
 			owner.resetMaxHealth();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
                 owner.sendMessage(ChatColor.BOLD + "Camp: " + this.getTeam().getColor() + StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
-                System.out.println(owner.getName() +" Team: "+ this.getTeam());
-                System.out.println(owner.getName() + " Role: " + getRoles());
+                Main.getInstance().debug(owner.getName() +" Team: "+ this.getTeam());
+                Main.getInstance().debug(owner.getName() + " Role: " + getRoles());
             }, 20);
 			this.uuidOwner = owner.getUniqueId();
 			owner.sendMessage("");
@@ -113,9 +109,9 @@ public abstract class RoleBase implements IRole {
 			owner.setFlying(false);
 			owner.setGameMode(GameMode.SURVIVAL);
 			roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
-			System.out.println(owner.getName()+", RoleID: "+roleID);
+            Main.getInstance().debug(owner.getName()+", RoleID: "+roleID);
 			StringID = RandomUtils.generateRandomString(24);
-			System.out.println(owner.getName()+", StringID: "+StringID);
+            Main.getInstance().debug(owner.getName()+", StringID: "+StringID);
 			Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
 			new BukkitRunnable() {
 
@@ -460,7 +456,7 @@ public abstract class RoleBase implements IRole {
 					}
 				} else {
 					target.setHealth(target.getHealth()-damage);
-					System.out.println(target.getHealth());
+                    Main.getInstance().debug(""+target.getHealth());
 				}
 				target.damage(0.0);
 			}, delay);
@@ -554,7 +550,7 @@ public abstract class RoleBase implements IRole {
 	}
 	public void addKnowedRole(final Class<? extends RoleBase> role) {
 		if (Main.isDebug()) {
-			System.out.println(this+" added "+role+" to his knowedRole");
+            Main.getInstance().debug(this+" added "+role+" to his knowedRole");
 		}
 		getKnowedRoles().add(role);
 	}
