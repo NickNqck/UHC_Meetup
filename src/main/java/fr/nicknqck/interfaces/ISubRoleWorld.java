@@ -17,5 +17,8 @@ public interface ISubRoleWorld {
     void setHasBeenPregen(boolean pregen);
     boolean isPregen();
     List<Location> getPossibleTeleportLocations();
+    boolean isPlayerCanBreakNaturalBlock();
+    boolean isPlayersCanPlaceBlocks();
+    boolean isPlayerCanBreakOtherPlayersBlocks();
 
 }

@@ -396,5 +396,20 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
             }
             return this.locationList;
         }
+
+        @Override
+        public boolean isPlayerCanBreakNaturalBlock() {
+            return false;
+        }
+
+        @Override
+        public boolean isPlayersCanPlaceBlocks() {
+            return true;
+        }
+
+        @Override
+        public boolean isPlayerCanBreakOtherPlayersBlocks() {
+            return true;
+        }
     }
 }

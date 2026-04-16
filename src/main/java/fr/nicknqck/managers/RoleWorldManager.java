@@ -11,20 +11,28 @@ import lombok.NonNull;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RoleWorldManager implements Listener {
 
     @Getter
     private final Map<String, ISubRoleWorld> subRoleWorldMap = new HashMap<>();
+    private final List<Block> blockPlaced = new ArrayList<>();
     private boolean startedManaging = false;
 
     public RoleWorldManager() {
@@ -64,6 +72,45 @@ public class RoleWorldManager implements Listener {
             extractWorld(iSubRoleWorld.getZipFileName());
             final World w = iSubRoleWorld.createWorld();
             iSubRoleWorld.startPregen(w);
+        }
+    }
+    @EventHandler
+    private void onPoseBlock(@NonNull final BlockPlaceEvent event) {
+        if (this.subRoleWorldMap.containsKey(event.getBlockPlaced().getWorld().getName())) {
+            final ISubRoleWorld iSubRoleWorld = this.subRoleWorldMap.get(event.getBlockPlaced().getWorld().getName());
+            if (!iSubRoleWorld.isPlayersCanPlaceBlocks()) {
+                event.setCancelled(true);
+                event.getPlayer().sendMessage("§cImpossible de poser un bloc ici !");
+                return;
+            }
+            this.blockPlaced.add(event.getBlockPlaced());
+        }
+    }
+    @EventHandler
+    private void onBlockBreak(@NonNull final BlockBreakEvent event) {
+        if (this.subRoleWorldMap.containsKey(event.getBlock().getWorld().getName())) {
+            final ISubRoleWorld iSubRoleWorld = this.subRoleWorldMap.get(event.getBlock().getWorld().getName());
+            if (!iSubRoleWorld.isPlayerCanBreakNaturalBlock()) {
+                if (!this.blockPlaced.contains(event.getBlock())) {
+                    event.setCancelled(true);
+                    event.getPlayer().sendMessage("§cImpossible de casser ce bloc !");
+                    return;
+                }
+            }
+            if (!iSubRoleWorld.isPlayerCanBreakOtherPlayersBlocks()) {
+                if (this.blockPlaced.contains(event.getBlock())) {
+                    event.setCancelled(true);
+                    event.getPlayer().sendMessage("§cImpossible de casser ce bloc !");
+                    return;
+                }
+            }
+            this.blockPlaced.remove(event.getBlock());
+        }
+    }
+    @EventHandler
+    public void onObsidianForm(BlockFormEvent event) {
+        if (event.getNewState().getType() == Material.OBSIDIAN || event.getNewState().getType().equals(Material.COBBLESTONE)) {
+            this.blockPlaced.add(event.getBlock());
         }
     }
     public void extractWorld(String source) {
