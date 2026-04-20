@@ -108,6 +108,7 @@ public class HubConfig implements Listener {
                                 Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c pré-génération du monde§a \""+string+"§a\".");
                                 iSubRoleWorld.startPregen(world1);
                                 iSubRoleWorld.setHasBeenPregen(true);
+                                iSubRoleWorld.startPrecalculs(world1);
                             }
                         }
                     } else if (item.isSimilar(GUIItems.getSelectEventButton())) {

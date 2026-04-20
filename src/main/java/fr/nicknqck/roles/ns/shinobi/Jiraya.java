@@ -26,6 +26,7 @@ import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
@@ -311,9 +312,11 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
         private double percent = 0.0;
         private boolean pregen = false;
         private final List<Location> locationList;
+        private final List<Block> blockList;
 
         private JirayaSubWorld() {
             this.locationList = new ArrayList<>();
+            this.blockList = new ArrayList<>();
         }
 
         @Override
@@ -410,6 +413,25 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
         @Override
         public boolean isPlayerCanBreakOtherPlayersBlocks() {
             return true;
+        }
+
+        @Override
+        public List<Block> getPrecalculateList() {
+            return this.blockList;
+        }
+
+        @Override
+        public void startPrecalculs(@NonNull final World world) {
+            if (!isPregen())return;
+            for (int x = -30; x <= 30; x++) {
+                for (int y = 1; y <= 12; y++) {
+                    for (int z = -30; z <= 30; z++) {
+                        final Block block = world.getBlockAt(x, y, z);
+                        if (block.getType().equals(Material.AIR))continue;
+                        this.blockList.add(block);
+                    }
+                }
+            }
         }
     }
 }
