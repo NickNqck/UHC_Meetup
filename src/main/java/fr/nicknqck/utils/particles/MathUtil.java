@@ -127,6 +127,34 @@ public class MathUtil {
             sendParticle(particle, x, y+1, z, startLocation.getWorld());
         }
     }
+    public static void sendParticleLineTo(Player player, final Location startLocation, final Location endLocation, final EnumParticle particle, final int amount) {
+
+        double distanceX = (endLocation.getX() - startLocation.getX()) / amount;
+        double distanceY = (endLocation.getY() - startLocation.getY()) / amount;
+        double distanceZ = (endLocation.getZ() - startLocation.getZ()) / amount;
+
+        for (int i = 0; i < amount; i++) {
+            double x = startLocation.getX() + (distanceX * i);
+            double y = startLocation.getY() + (distanceY * i);
+            double z = startLocation.getZ() + (distanceZ * i);
+
+            sendParticleTo(player, particle, x, y+1, z);
+        }
+    }
+    public static List<Location> getLine(final Location startLocation, final Location endLocation, final int amount) {
+        final List<Location> list = new ArrayList<>();
+        double distanceX = (endLocation.getX() - startLocation.getX()) / amount;
+        double distanceY = (endLocation.getY() - startLocation.getY()) / amount;
+        double distanceZ = (endLocation.getZ() - startLocation.getZ()) / amount;
+        for (int i = 0; i < amount; i++) {
+            double x = startLocation.getX() + (distanceX * i);
+            double y = startLocation.getY() + (distanceY * i);
+            double z = startLocation.getZ() + (distanceZ * i);
+
+            list.add(new Location(endLocation.getWorld(), x, y+1, z));
+        }
+        return list;
+    }
     private final List<FallingBlock> fallingBlocks = new ArrayList<>();
     public Set<Location> sphere(Location location, int radius, boolean hollow){
         Set<Location> blocks = new HashSet<>();

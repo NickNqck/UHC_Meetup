@@ -408,6 +408,9 @@ public class GameState{
                 case Danzo:
                     role = new DanzoV2(player);
                     break;
+                case KabutoSolo:
+                    role = new KabutoSolo(player);
+                    break;
                 case Orochimaru:
                     role = new OrochimaruV2(player);
                     break;
