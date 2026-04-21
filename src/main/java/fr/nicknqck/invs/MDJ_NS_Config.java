@@ -49,7 +49,7 @@ public class MDJ_NS_Config extends FastInv {
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a modifier la valeur: \"§fCoût de l'§5Edo Tensei§7\",§c "+(oldValue/2)+AllDesc.coeur+"§7 -> "+(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)+AllDesc.coeur);
             }
             if (event.isRightClick()) {
-                Main.getInstance().getGameConfig().getNarutoConfig().setEdoHealthRemove(Math.max(1.0,  oldValue+1.0));
+                Main.getInstance().getGameConfig().getNarutoConfig().setEdoHealthRemove(Math.max(1.0,  oldValue-1.0));
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a modifier la valeur: \"§fCoût de l'§5Edo Tensei§7\",§c "+(oldValue/2)+AllDesc.coeur+"§7 -> "+(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)+AllDesc.coeur);
             }
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
