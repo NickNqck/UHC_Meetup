@@ -4,8 +4,12 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 import static java.lang.Math.*;
 import static java.lang.Math.PI;
@@ -28,6 +32,8 @@ public class ADNParticle2 {
     private ADNRunnable adnRunnable;
     @Getter
     private boolean running = false;
+    @Getter
+    private final UUID toShow;
 
     public ADNParticle2(Location center, int r, int g, int b) {
         this.center = center;
@@ -36,6 +42,7 @@ public class ADNParticle2 {
         this.b = b;
         this.radius = 2.5;
         this.height = 15.0;
+        this.toShow = null;
     }
     public ADNParticle2(Location center, int r, int g, int b, double radius, double hauteur) {
         this.center = center;
@@ -44,6 +51,16 @@ public class ADNParticle2 {
         this.b = b;
         this.radius = radius;
         this.height = hauteur;
+        this.toShow = null;
+    }
+    public ADNParticle2(Location center, int r, int g, int b, double radius, double hauteur, UUID uuid) {
+        this.center = center;
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.radius = radius;
+        this.height = hauteur;
+        this.toShow = uuid;
     }
     public void start() {
         this.adnRunnable = new ADNRunnable(this);
@@ -52,9 +69,6 @@ public class ADNParticle2 {
     public static class ADNRunnable extends BukkitRunnable {
 
         private final ADNParticle2 adnParticle2;
-        @Getter
-        @Setter
-        private boolean goCancel = false;
 
         public ADNRunnable(ADNParticle2 adnParticle2) {
             this.adnParticle2 = adnParticle2;
@@ -65,15 +79,11 @@ public class ADNParticle2 {
         public void run() {
             // Vérifie si la partie est en cours
             if (!GameState.inGame()) {
-                goCancel = true;
-            }
-            if (isGoCancel()) {
                 cancel();
                 return;
             }
 
             this.adnParticle2.angleOffset += 0.1; // ADN tourne doucement
-
             for (double y = 0; y <= this.adnParticle2.height; y += this.adnParticle2.yStep) {
                 double angle = y * this.adnParticle2.speed + this.adnParticle2.angleOffset;
 
@@ -88,8 +98,15 @@ public class ADNParticle2 {
                 double y2 = this.adnParticle2.center.getY() + y;
 
                 // Particules avec la couleur choisie
-                MathUtil.spawnParticle(new Location(this.adnParticle2.center.getWorld(), x1, y1, z1), this.adnParticle2.r, this.adnParticle2.g, this.adnParticle2.b);
-                MathUtil.spawnParticle(new Location(this.adnParticle2.center.getWorld(), x2, y2, z2), this.adnParticle2.r, this.adnParticle2.g, this.adnParticle2.b);
+                if (this.adnParticle2.toShow == null) {
+                    MathUtil.spawnParticle(new Location(this.adnParticle2.center.getWorld(), x1, y1, z1), this.adnParticle2.r, this.adnParticle2.g, this.adnParticle2.b);
+                    MathUtil.spawnParticle(new Location(this.adnParticle2.center.getWorld(), x2, y2, z2), this.adnParticle2.r, this.adnParticle2.g, this.adnParticle2.b);
+                } else {
+                    final Player player = Bukkit.getPlayer(this.adnParticle2.toShow);
+                    if (player == null)break;
+                    MathUtil.spawnParticle(new Location(this.adnParticle2.center.getWorld(), x1, y1, z1), this.adnParticle2.r, this.adnParticle2.g, this.adnParticle2.b, player);
+                    MathUtil.spawnParticle(new Location(this.adnParticle2.center.getWorld(), x2, y2, z2), this.adnParticle2.r, this.adnParticle2.g, this.adnParticle2.b, player);
+                }
             }
         }
     }

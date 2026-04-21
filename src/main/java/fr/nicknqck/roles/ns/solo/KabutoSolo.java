@@ -10,6 +10,7 @@ import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
+import fr.nicknqck.interfaces.IUncompatibleRole;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -22,6 +23,7 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.fastinv.PaginatedFastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.particles.ADNParticle2;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -37,6 +39,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
@@ -45,7 +48,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class KabutoSolo extends NSSoloRoles {
+public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
 
     public KabutoSolo(UUID player) {
         super(player);
@@ -89,6 +92,13 @@ public class KabutoSolo extends NSSoloRoles {
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);
+    }
+
+    @Override
+    public IRoles<?>[] getUncompatibleList() {
+        return new IRoles[] {
+                Roles.Kabuto
+        };
     }
 
     private static final class ErmitePower extends ItemPower {
@@ -141,7 +151,7 @@ public class KabutoSolo extends NSSoloRoles {
                         }
                     } else {
                         for (Location location : MathUtil.getLine(player.getLocation(), gamePlayer.getLastLocation(), (int) distance)) {
-                            final Color color = getRGBFromMinecraftColor(gamePlayer.getRole().getTeam().getColor());
+                            final Color color = GlobalUtils.getRGBFromMinecraftColor(gamePlayer.getRole().getTeam().getColor());
                             MathUtil.spawnColoredParticle(player, location, EnumParticle.REDSTONE, color.getRed(), color.getGreen(), color.getBlue());
                         }
                     }
@@ -151,40 +161,6 @@ public class KabutoSolo extends NSSoloRoles {
                 this.timeLeft--;
                 Bukkit.getScheduler().runTask(this.ermitePower.getPlugin(), () -> this.ermitePower.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NOW));
             }
-            public static Color getRGBFromMinecraftColor(String code) {
-                if (code == null || code.length() < 2) {
-                    return Color.fromRGB(255, 255, 255);
-                }
-
-                // On cherche le caractère après le §
-                int index = code.indexOf('§');
-                if (index == -1 || index + 1 >= code.length()) {
-                    return Color.fromRGB(255, 255, 255);
-                }
-
-                char c = Character.toLowerCase(code.charAt(index + 1));
-
-                switch (c) {
-                    case '0': return Color.fromRGB(0, 0, 0);
-                    case '1': return Color.fromRGB(0, 0, 170);
-                    case '2': return Color.fromRGB(0, 170, 0);
-                    case '3': return Color.fromRGB(0, 170, 170);
-                    case '4': return Color.fromRGB(170, 0, 0);
-                    case '5': return Color.fromRGB(170, 0, 170);
-                    case '6': return Color.fromRGB(255, 170, 0);
-                    case '7': return Color.fromRGB(170, 170, 170);
-                    case '8': return Color.fromRGB(85, 85, 85);
-                    case '9': return Color.fromRGB(85, 85, 255);
-                    case 'a': return Color.fromRGB(85, 255, 85);
-                    case 'b': return Color.fromRGB(85, 255, 255);
-                    case 'c': return Color.fromRGB(255, 85, 85);
-                    case 'd': return Color.fromRGB(255, 85, 255);
-                    case 'e': return Color.fromRGB(255, 255, 85);
-                    default:  return Color.fromRGB(255, 255, 255);
-                }
-            }
-
-
         }
     }
     private static final class EdoTenseiPower extends ItemPower implements Listener {
@@ -196,21 +172,21 @@ public class KabutoSolo extends NSSoloRoles {
 
         public EdoTenseiPower(@NonNull RoleBase role) {
             super("Edo Tensei", null, new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei"), role,
-                    "§7Quand vous tuez un joueur, vous pourrez le ressusciter en échange de§c "+ (MathUtil.get34(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()))+"1/2❤");
+                    "§7Quand vous tuez un joueur, vous pouvez le ressusciter en échange de§c "+ ((Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove())/2)+"❤",
+                    "",
+                    "§7Vous possédez un§c traqueur§7 pointant vers tout vos§5 Edo Tenseis§7."
+            );
             EventUtils.registerRoleEvent(this);
             this.edoTenseis = new LinkedHashMap<>();
             this.killLocation = new LinkedHashMap<>();
+            new EdoTraque(this).runTaskTimerAsynchronously(getPlugin(), 0, 1);
+            role.addPower(new ADNPower(this));
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
-                if (!this.edoTenseis.isEmpty()) {
-                    player.sendMessage("§7Vous avez déjà un§5 Edo Tensei§7 en§a vie");
-                    event.setCancelled(true);
-                    return false;
-                }
                 if (this.killLocation.isEmpty()) {
                     player.sendMessage("§7Il faut avoir tuer un joueur pour utiliser cette technique.");
                     event.setCancelled(true);
@@ -222,29 +198,40 @@ public class KabutoSolo extends NSSoloRoles {
                     return false;
                 }
                 final PaginatedFastInv fastInv = new PaginatedFastInv(27, "§6Edo Tensei");
-                fastInv.setItems(fastInv.getBorders(), new ItemBuilder(Material.ANVIL).toItemStack());
+                fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
+                final List<Integer> list = new ArrayList<>();
+                for (int i = 10; i <= 16; i++) {
+                    list.add(i);
+                }
+                fastInv.setContentSlots(list);
+
+                fastInv.previousPageItem(3, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + fastInv.lastPage()).toItemStack());
+
+                fastInv.nextPageItem(5, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + fastInv.lastPage()).toItemStack());
+
                 for (UUID uuid : this.killLocation.keySet()) {
                     final Player target = Bukkit.getPlayer(uuid);
                     if (target == null)continue;
-                    if (!target.getWorld().equals(player.getWorld()))continue;
-                    final double distance = target.getLocation().distance(player.getLocation());
+                    final Location deathLocation = this.killLocation.get(uuid);
+                    if (!player.getWorld().equals(deathLocation.getWorld()))continue;
+                    final double distance = deathLocation.distance(player.getLocation());
                     if (distance <= 65) {
                         fastInv.addContent(new ItemBuilder(GlobalUtils.getPlayerHead(uuid))
                                 .setName("§a"+target.getName())
-                                .setLore("§7Cliquez ici pour réssusciter ce joueur !\n\n/7Coût: §c"+
-                                (MathUtil.get34(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()))
+                                .setLore("§7Cliquez ici pour réssusciter ce joueur !",
+                                        "§7Coût: §c"+
+                                ((Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove())/2)
                                 +"❤ permanent")
                                 .toItemStack(),
                                 event1 -> {
-                            event1.getWhoClicked().closeInventory();
-                            this.revive(getRole().getGameState(), target, player);
-                        });
+                                    event1.getWhoClicked().closeInventory();
+                                    this.revive(getRole().getGameState(), target, player);
+                                });
                     }
                 }
-                fastInv.setItems(fastInv.getBorders(), new ItemBuilder(Material.AIR).toItemStack());
-                fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
                 fastInv.open(player);
                 event.setCancelled(true);
+                return true;
             }
             return false;
         }
@@ -264,6 +251,7 @@ public class KabutoSolo extends NSSoloRoles {
             }
         }
 
+        @SuppressWarnings("deprecation")
         private void revive(final GameState gameState, final Player clicked, final Player owner) {
             List<Double> cercles = Arrays.asList(1.0, 2.5, 5.0, 7.5);
             new InwardCircleAnimation(clicked.getLocation(), cercles, 70, 139, 0, 139)
@@ -403,6 +391,123 @@ public class KabutoSolo extends NSSoloRoles {
                     } else {
                         // Utilisation de ta méthode MathUtil pour les particules NMS
                         MathUtil.sendParticle(particle, x, center.getY() + 0.1, z, center.getWorld());
+                    }
+                }
+            }
+        }
+        private static final class EdoTraque extends BukkitRunnable {
+
+            private final EdoTenseiPower edoTenseiPower;
+
+            private EdoTraque(EdoTenseiPower edoTenseiPower) {
+                this.edoTenseiPower = edoTenseiPower;
+            }
+
+            @Override
+            public void run() {
+                if (!GameState.inGame()) {
+                    cancel();
+                    return;
+                }
+                if (this.edoTenseiPower.edoTenseis.isEmpty())return;
+                final List<RoleBase> roles = new ArrayList<>(this.edoTenseiPower.edoTenseis.values());
+                final StringBuilder toShow = new StringBuilder();
+                for (RoleBase role : roles) {
+                    if (role.getGamePlayer() == null)continue;
+                    if (!role.getGamePlayer().check())continue;
+                    toShow.append(Loc.getDirectionMate(this.edoTenseiPower.getRole().getGamePlayer(), role.getGamePlayer(), true))
+                            .append("§7 | ");
+                }
+                this.edoTenseiPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("kabutosolo.edo", toShow.substring(0, toShow.length()-5));
+            }
+        }
+        private static final class ADNPower extends Power implements Listener{
+
+            private final Map<UUID, RoleBase> roleBaseMap = new HashMap<>();
+            private final Map<UUID, ADNParticle2> particle2Map = new HashMap<>();
+            private final EdoTenseiPower edoTenseiPower;
+
+            public ADNPower(EdoTenseiPower edoTenseiPower) {
+                super("§5ADN", null, edoTenseiPower.getRole(),
+                        "§7En restant proche des§c cadavres§7 vous pouvez récupérer leurs§c adn§7.",
+                        "",
+                        "§7Vous pourrez observer des§c particules§7 émanent des§c cadavres§7.",
+                        "§7",
+                        "§7En récupérant l'§cadn§7 des différents§c joueurs§7, vous pourrez utiliser l'§5Edo Tensei§7 sur eux",
+                        "§7sans être vous même leurs tueurs."
+                );
+                this.edoTenseiPower = edoTenseiPower;
+                new ADNTakeRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+                EventUtils.registerRoleEvent(this);
+            }
+
+            @Override
+            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+                if (map.containsKey("player") && map.containsKey("role") && map.get("player") instanceof Player && map.get("role") instanceof RoleBase) {
+                    final Player target = (Player) map.get("player");
+                    final RoleBase role = (RoleBase) map.get("role");
+                    this.roleBaseMap.put(target.getUniqueId(), role);
+                    final Color color = GlobalUtils.getRGBFromMinecraftColor(role.getTeam().getColor());
+                    this.particle2Map.put(target.getUniqueId(), new ADNParticle2(target.getLocation(), color.getRed(), color.getGreen(), color.getBlue(), 2.5, 10.0 ,player.getUniqueId()));
+                    this.particle2Map.get(target.getUniqueId()).start();
+                    return true;
+                }
+                return false;
+            }
+            @EventHandler(priority = EventPriority.MONITOR)
+            private void onDeath(@NonNull final UHCDeathEvent event) {
+                if (event.isCancelled()) {
+                    return;
+                }
+                if (event.getRole() == null)return;
+                if (event.getRole().getGamePlayer() == null)return;
+                final Player player = Bukkit.getPlayer(getRole().getPlayer());
+                if (player == null)return;
+                final Map<String, Object> map = new HashMap<>();
+                map.put("player", event.getPlayer());
+                map.put("role", event.getRole());
+                checkUse(player, map);
+            }
+            private static final class ADNTakeRunnable extends BukkitRunnable {
+
+                private final ADNPower adnPower;
+                private final Map<UUID, Integer> timesMap = new HashMap<>();
+
+                private ADNTakeRunnable(ADNPower adnPower) {
+                    this.adnPower = adnPower;
+                }
+
+                @Override
+                public void run() {
+                    if (!GameState.inGame()) {
+                        cancel();
+                        return;
+                    }
+                    if (this.adnPower.roleBaseMap.isEmpty())return;
+                    if (this.adnPower.particle2Map.isEmpty()) {
+                        return;
+                    }
+                    final Player owner = Bukkit.getPlayer(this.adnPower.getRole().getPlayer());
+                    if (owner == null)return;
+                    final List<UUID> adnList = new ArrayList<>(this.adnPower.particle2Map.keySet());
+                    for (UUID uuid : adnList) {
+                        final ADNParticle2 adnParticle2 = this.adnPower.particle2Map.get(uuid);
+                        if (!owner.getWorld().equals(adnParticle2.getCenter().getWorld()))continue;
+                        if (this.adnPower.edoTenseiPower.killLocation.containsKey(uuid))continue;
+                        if (owner.getLocation().distance(adnParticle2.getCenter()) < 5) {
+                            Integer integer = this.timesMap.getOrDefault(uuid, 0);
+                            integer = integer+1;
+                            if (integer == 10) {
+                                this.timesMap.remove(uuid);
+                                this.adnPower.edoTenseiPower.killLocation.put(uuid, adnParticle2.getCenter());
+                                owner.sendMessage("§7Vous avez réussi a récupérer l'§cadn§7 de§a "+this.adnPower.roleBaseMap.get(uuid).getGamePlayer().getPlayerName());
+                                adnParticle2.getAdnRunnable().cancel();
+                                this.adnPower.particle2Map.remove(uuid);
+                            } else {
+                                this.timesMap.put(uuid, integer);
+                                owner.sendMessage("§7Vous êtes entrain de récupérer l'§cadn§7 de§a "+this.adnPower.roleBaseMap.get(uuid).getGamePlayer().getPlayerName()+"§7, plus que§c "+(10-integer)+"s");
+                            }
+                        }
                     }
                 }
             }

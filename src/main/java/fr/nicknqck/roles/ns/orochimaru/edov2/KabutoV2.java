@@ -4,6 +4,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.interfaces.IUncompatibleRole;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -37,7 +39,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.UUID;
 
-public class KabutoV2 extends EdoOrochimaruRoles implements Listener {
+public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompatibleRole {
 
     private HealPower healPower;
     private boolean karinDEAD = false;
@@ -180,6 +182,14 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener {
         getGamePlayer().sendMessage("§7Vous êtes le dernier disciple d'§5Orochimaru§7, en sa mémoire vous allez essayer de le venger, vous devenez un rôle§e Solitaire§7.");
         this.solo = true;
     }
+
+    @Override
+    public IRoles<?>[] getUncompatibleList() {
+        return new IRoles[] {
+                Roles.KabutoSolo
+        };
+    }
+
     private static class HealPower extends ItemPower {
 
         private final Cooldown gaucheCD;
