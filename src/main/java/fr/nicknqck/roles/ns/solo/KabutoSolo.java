@@ -147,12 +147,12 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
                     final double distance = player.getLocation().distance(gamePlayer.getLastLocation());
                     if (distance > 10) {
                         for (Location location : MathUtil.getLine(player.getLocation(), gamePlayer.getLastLocation(), 45)) {
-                            MathUtil.spawnColoredParticle(player, location, EnumParticle.REDSTONE, 255, 255,255);
+                            MathUtil.spawnParticle(location, Color.WHITE.getRed(), Color.WHITE.getGreen(), Color.WHITE.getBlue(), player);
                         }
                     } else {
                         for (Location location : MathUtil.getLine(player.getLocation(), gamePlayer.getLastLocation(), (int) distance)) {
                             final Color color = GlobalUtils.getRGBFromMinecraftColor(gamePlayer.getRole().getTeam().getColor());
-                            MathUtil.spawnColoredParticle(player, location, EnumParticle.REDSTONE, color.getRed(), color.getGreen(), color.getBlue());
+                            MathUtil.spawnParticle(location, color.getRed(), color.getGreen(), color.getBlue(), player);
                         }
                     }
                 }
