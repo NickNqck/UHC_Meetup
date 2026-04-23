@@ -10,7 +10,7 @@ import fr.nicknqck.items.Jubi;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.NSRoles;

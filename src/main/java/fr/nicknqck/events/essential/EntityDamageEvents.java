@@ -3,7 +3,7 @@ package fr.nicknqck.events.essential;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.roles.ns.EChakras;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.scenarios.impl.AntiPvP;
 import fr.nicknqck.utils.AttackUtils;
 import org.bukkit.Bukkit;

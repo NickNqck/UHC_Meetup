@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.EffectWhen;
-import fr.nicknqck.roles.ns.EChakras;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;

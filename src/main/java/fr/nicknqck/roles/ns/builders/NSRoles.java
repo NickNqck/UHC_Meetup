@@ -2,8 +2,8 @@ package fr.nicknqck.roles.ns.builders;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.EChakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;

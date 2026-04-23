@@ -7,7 +7,7 @@ import fr.nicknqck.PatchCritical;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.ns.EChakras;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.titans.impl.MachoireV2;
 import lombok.NonNull;
 import org.bukkit.Bukkit;

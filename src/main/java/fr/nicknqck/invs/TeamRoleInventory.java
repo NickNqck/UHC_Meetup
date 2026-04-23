@@ -6,7 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
 import fr.nicknqck.interfaces.*;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.roles.ns.EChakras;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.fastinv.PaginatedFastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

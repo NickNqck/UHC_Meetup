@@ -1,5 +1,6 @@
-package fr.nicknqck.roles.ns;
+package fr.nicknqck.enums;
 
+import fr.nicknqck.interfaces.IChakra;
 import fr.nicknqck.roles.ns.chakratype.*;
 
 public enum EChakras {

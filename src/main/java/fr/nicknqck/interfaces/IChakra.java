@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ns;
+package fr.nicknqck.interfaces;
 
 import fr.nicknqck.GameState;
 import org.bukkit.Location;

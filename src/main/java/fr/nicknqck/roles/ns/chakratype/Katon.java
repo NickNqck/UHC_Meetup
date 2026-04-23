@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.ns.IChakra;
+import fr.nicknqck.interfaces.IChakra;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -13,7 +13,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.EChakras;
 import fr.nicknqck.utils.RandomUtils;
 
 public class Katon implements IChakra {
