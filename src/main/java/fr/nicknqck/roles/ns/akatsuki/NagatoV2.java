@@ -7,8 +7,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ChiefAkatsukiRoles;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.Loc;
@@ -72,6 +72,13 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON
+        };
+    }
+
+    @Override
     public void GiveItems() {
         giveItem(owner, false, getItems());
         super.GiveItems();
@@ -81,7 +88,6 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         setMaxHealth(getMaxHealth()+6.0);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999, 0, false, false), EffectWhen.PERMANENT);
-        setChakraType(Chakras.SUITON);
         addPower(new ShikushodoPower(this), true);
         addPower(new BenshoTeninPower(this), true);
         addPower(new JigokudoPower(this));

@@ -8,8 +8,8 @@ import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -41,6 +41,13 @@ public class RaikageV2 extends ShinobiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.RAITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Yondaime Raikage";
     }
@@ -57,7 +64,6 @@ public class RaikageV2 extends ShinobiRoles {
         addKnowedRole(YondaimeRaikage.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new ArmureRaiton(this), true);
-        setChakraType(Chakras.RAITON);
     }
 
     @Override

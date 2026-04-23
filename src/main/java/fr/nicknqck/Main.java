@@ -36,7 +36,7 @@ import fr.nicknqck.utils.betteritem.BetterItemListener;
 import fr.nicknqck.utils.biome.BiomeChanger;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.fastinv.FastInvManager;
-import fr.nicknqck.utils.inventories.Inventories;
+import fr.nicknqck.invs.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.managers.TabManager;
 import fr.nicknqck.utils.rank.ChatRank;
@@ -114,6 +114,8 @@ public class Main extends JavaPlugin {
 	private PlayersNameManager playersNameManager;
     private KatsuyuManager katsuyuManager;
 	private KrystalManager krystalManager;
+    private UpdateChecker updateChecker;
+    private RoleWorldManager roleWorldManager;
 
     @Override
 	public void onEnable() {
@@ -166,8 +168,9 @@ public class Main extends JavaPlugin {
 		this.infoManager = new InfoManager(getDataFolder());
 		this.playersNameManager = new PlayersNameManager(getDataFolder());
         this.katsuyuManager = new KatsuyuManager();
-        new UpdateChecker(this, "NickNqck/UHC_Meetup");
+        this.updateChecker = new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		this.krystalManager = new KrystalManager();
+        this.roleWorldManager = new RoleWorldManager();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		System.out.println("ENDING ONENABLE");
@@ -353,11 +356,11 @@ public class Main extends JavaPlugin {
 		gameWorld.setGameRuleValue("spectatorsGenerateChunks", "false");
 		gameWorld.setGameRuleValue("naturalRegeneration", "false");
 		gameWorld.setGameRuleValue("announceAdvancements", "false");
-		gameWorld.setDifficulty(Difficulty.HARD);
-		gameWorld.setSpawnLocation(0, gameWorld.getHighestBlockYAt(0, 0), 0);
-		gameWorld.setGameRuleValue("randomTickSpeed", "3");
-		gameWorld.setGameRuleValue("doMobSpawning", "false");
-		gameWorld.setGameRuleValue("doFireTick", "false");
+        gameWorld.setGameRuleValue("randomTickSpeed", "3");
+        gameWorld.setGameRuleValue("doMobSpawning", "false");
+        gameWorld.setGameRuleValue("doFireTick", "false");
+        gameWorld.setDifficulty(Difficulty.HARD);
+        gameWorld.setSpawnLocation(0, gameWorld.getHighestBlockYAt(0, 0), 0);
 		getWorldManager().setGameWorld(gameWorld);
 		System.out.println("Created world gameWorld");
 		return true;
@@ -393,6 +396,9 @@ public class Main extends JavaPlugin {
 				world.getBlockAt(new Location(world, x, 150, z)).setType(Material.AIR);
 			}
 		}
+        for (String string : getRoleWorldManager().getSubRoleWorldMap().keySet()) {
+            deleteWorld(getRoleWorldManager().getSubRoleWorldMap().get(string).getWorldName());
+        }
 	}
 	public static boolean isDebug(){
 		boolean debug = getInstance().getConfig().getBoolean("debug");
@@ -401,6 +407,15 @@ public class Main extends JavaPlugin {
 		}
 		return debug;
 	}
+    /**
+     * Définit la valeur du boolean "debug" dans le config.yml.
+     *
+     * @param b true pour activer le mode debug, false pour le désactiver
+     */
+    public void setDebug(boolean b) {
+        getConfig().set("debug", b);
+        saveConfig();
+    }
 	private String getBase() {
         return "{\"coordinateScale\":684.412,\"heightScale\":684.412,\"lowerLimitScale\":512.0,\"upperLimitScale\":512.0,\"depthNoiseScaleX\":" + (600+getWorldConfig().getCaveBooster())+
         		",\"depthNoiseScaleZ\":" + (600+getWorldConfig().getCaveBooster()) +
@@ -537,4 +552,10 @@ public class Main extends JavaPlugin {
 		}
 		return new ArrayList<>();
 	}
+    public void debug(String message) {
+        if (isDebug()) {
+            getLogger().info(message);
+        }
+    }
+
 }

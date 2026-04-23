@@ -1,6 +1,7 @@
 package fr.nicknqck.config;
 
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.invs.MDJ_AOT_Config;
 import fr.nicknqck.invs.MDJ_DS_Config;
 import fr.nicknqck.invs.MDJ_NS_Config;
@@ -39,7 +40,8 @@ public class GameConfig {
     private StunType stunType = StunType.TELEPORT;
     private boolean mortEclair = true;
     private boolean tntGrief = false;
-    private final LinkedHashMap<MDJ, Class<? extends FastInv>> configurablesMdj;
+    private final LinkedHashMap<IMDJ, Class<? extends FastInv>> configurablesMdj;
+    private final LinkedList<IMDJ> playableMdj;
 
     public GameConfig() {
         instance = this;
@@ -49,9 +51,13 @@ public class GameConfig {
         this.narutoConfig = new NarutoConfig();
         this.configurablesMdj = new LinkedHashMap<>();
         this.aotConfig = new AotConfig();
+        this.playableMdj = new LinkedList<>();
         configurablesMdj.put(MDJ.DS, MDJ_DS_Config.class);
         configurablesMdj.put(MDJ.AOT, MDJ_AOT_Config.class);
         configurablesMdj.put(MDJ.NS, MDJ_NS_Config.class);
+        this.playableMdj.addAll(Arrays.asList(MDJ.values()));
+        this.playableMdj.remove(MDJ.KRYSTAL);
+        this.playableMdj.remove(MDJ.Aucun);
     }
 
     @Getter
@@ -85,6 +91,7 @@ public class GameConfig {
         private double edoHealthRemove = 4.0;
         private int minTimeSpawnBiju = 90;
         private int maxTimeSpawnBiju = 160;
+        private boolean obitoCanGetKakashiEye = true;
 
     }
     @Getter

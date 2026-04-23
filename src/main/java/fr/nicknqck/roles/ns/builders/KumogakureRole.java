@@ -7,7 +7,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

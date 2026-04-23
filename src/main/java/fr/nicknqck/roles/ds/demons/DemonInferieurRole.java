@@ -5,7 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.event.EventUtils;
 import lombok.Getter;

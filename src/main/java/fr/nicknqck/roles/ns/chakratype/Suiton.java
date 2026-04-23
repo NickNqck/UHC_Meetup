@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.ns.Chakra;
+import fr.nicknqck.interfaces.IChakra;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -16,23 +16,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakras;
 
-public class Suiton implements Chakra {
+public class Suiton implements IChakra {
 
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {}
 
 	@Override
-	public Chakras getChakres() {
-		return Chakras.SUITON;
-	}
-
-	@Override
 	public List<UUID> getList() {
 		return Suiton;
 	}
-	private List<UUID> Suiton = new ArrayList<>();
+	private final List<UUID> Suiton = new ArrayList<>();
 	@Override
 	public void onSecond(GameState gameState) {}
 

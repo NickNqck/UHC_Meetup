@@ -8,8 +8,8 @@ import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.Loc;
@@ -48,6 +48,13 @@ public class ZetsuBlancV3 extends AkatsukiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Zetsu Blanc§7 (§6V3§7)";
     }
@@ -60,7 +67,6 @@ public class ZetsuBlancV3 extends AkatsukiRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         new SporeManager(this);
-        setChakraType(Chakras.DOTON);
         addKnowedRole(ZetsuNoir.class);
         getGamePlayer().startChatWith("§cZetsu Blanc:", "!", ZetsuNoir.class, ZetsuBlancV3.class);
         super.RoleGiven(gameState);

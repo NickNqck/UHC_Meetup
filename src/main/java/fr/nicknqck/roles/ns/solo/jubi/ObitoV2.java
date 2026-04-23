@@ -5,19 +5,22 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.interfaces.IUncompatibleRole;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ISAkatsukiChief;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
 import fr.nicknqck.roles.ns.power.Izanagi;
 import fr.nicknqck.roles.ns.power.YameruPower;
+import fr.nicknqck.roles.ns.shinobi.KakashiV2;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -32,6 +35,7 @@ import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -43,10 +47,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
-public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
+public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatibleRole {
 
     public ObitoV2(UUID player) {
         super(player);
@@ -77,7 +80,6 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
         addPower(new YameruPower(this));
         addPower(new ObtainSusanoPower(this));
         addPower(new Izanagi(this));
-        setChakraType(Chakras.KATON);
         addKnowedRole(MadaraV2.class);
         getGamePlayer().startChatWith("§dObito:", "!", MadaraV2.class);
     }
@@ -88,12 +90,27 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
                 .getText();
     }
+
+    @Override
+    public IRoles<?>[] getUncompatibleList() {
+        return new IRoles[] {
+                Roles.JubiSasuke
+        };
+    }
+
     private static class ObtainSusanoPower extends CommandPower implements Listener {
 
         private final Map<String, Location> deathLocations;
@@ -139,12 +156,15 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
                             this.getRole().getPowers().remove(this);
                             this.getRole().getGamePlayer().sendMessage("§7Vous avez reçus le§c§l Susanô");
                             this.deathLocations.clear();
+                            if (string.toLowerCase().contains("kakashi")) {
+                                this.getRole().getPowers().forEach(power -> power.setCooldown(new Cooldown(power.getCooldown().getOriginalCooldown()/2)));
+                            }
                         }, 20);
                         EventUtils.unregisterEvents(this);
                         return true;
-                    } else {
-                        player.sendMessage("§7Vous êtes trop loin de la mort de §c"+string+"§7 pour récupérer ses yeux"+(location.getWorld().equals(player.getWorld()) ? " §7(§c"+new DecimalFormat("0").format(player.getLocation().distance(location)) : ""));
-                    }
+                    } /*else {
+                 //       player.sendMessage("§7Vous êtes trop loin de la mort de §c"+string+"§7 pour récupérer ses yeux"+(location.getWorld().equals(player.getWorld()) ? " §7(§c"+new DecimalFormat("0").format(player.getLocation().distance(location)) : ""));
+                    }*/
                 }
             } else {
                 if (args[1].equalsIgnoreCase("list")) {
@@ -178,6 +198,32 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief {
                 this.deathLocations.put(event.getRole().getTeamColor()+event.getRole().getName(), event.getPlayer().getLocation());
             }
         }
+        @EventHandler(priority = EventPriority.HIGH)//Priorité élever = ça passe après le code au-dessus
+        private void GamePlayerDeathEvent2(@NonNull final UHCDeathEvent event) {
+            if (!Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye())return;
+            if (event.getPlayer().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!event.getPlayer().getWorld().getName().equals("arena") || !event.getPlayer().getWorld().getName().equalsIgnoreCase("kamui"))return;
+            if (!this.getRole().getPowers().contains(this))return;
+            if (event.getRole() instanceof KakashiV2) {
+                getRole().getGamePlayer().sendMessage("§aKakashi§c est mort ! C'est sûrement l'occasion pour vous de récupérez §nvotre§4 Sharingan§c, avec un peux de chance vous pourriez obtenir un Susanô voir même diminuer vos cooldowns...",
+                        " ",
+                        "§cx: "+event.getPlayer().getLocation().getBlockX(),
+                        " ",
+                        "§cz: "+event.getPlayer().getLocation().getBlockZ());
+                this.deathLocations.put(event.getRole().getTeamColor()+event.getRole().getName(), event.getPlayer().getLocation());
+            }
+        }
+
+        @Override
+        public List<String> getCompletor(String[] args) {
+            if (args.length >= 2) {
+                final List<String> stringList = new ArrayList<>();
+                stringList.add("list");
+                return stringList;
+            }
+            return super.getCompletor(args);
+        }
+
         private static class SusanoPower extends ItemPower {
 
             protected SusanoPower(@NonNull RoleBase role) {

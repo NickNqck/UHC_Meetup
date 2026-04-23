@@ -9,8 +9,8 @@ import fr.nicknqck.events.custom.time.OnSecond;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.*;
 import fr.nicknqck.utils.event.EventUtils;
@@ -63,6 +63,13 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Gaara";
     }
@@ -79,7 +86,6 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(Chakras.FUTON);
         addPower(new DefensePower(this), true);
         addPower(new AttackPower(this), true);
         addPower(new ShukakuPower(this), true);

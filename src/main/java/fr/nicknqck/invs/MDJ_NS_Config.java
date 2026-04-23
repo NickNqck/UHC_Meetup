@@ -49,11 +49,25 @@ public class MDJ_NS_Config extends FastInv {
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a modifier la valeur: \"§fCoût de l'§5Edo Tensei§7\",§c "+(oldValue/2)+AllDesc.coeur+"§7 -> "+(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)+AllDesc.coeur);
             }
             if (event.isRightClick()) {
-                Main.getInstance().getGameConfig().getNarutoConfig().setEdoHealthRemove(Math.max(1.0,  oldValue+1.0));
+                Main.getInstance().getGameConfig().getNarutoConfig().setEdoHealthRemove(Math.max(1.0,  oldValue-1.0));
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a modifier la valeur: \"§fCoût de l'§5Edo Tensei§7\",§c "+(oldValue/2)+AllDesc.coeur+"§7 -> "+(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)+AllDesc.coeur);
             }
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
+        setItem(12, new ItemBuilder(Material.EYE_OF_ENDER)
+                .setName("§dObito§f peut récupérer le§c Sharingan§f de§a Kakashi")
+                .setLore(
+                        "§fValeur actuel:§c "+ (Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye() ? "§aActivé" : "§cDésactivé"),
+                        "",
+                        "§7Si§a activer§7 et qu'§dObito§7 obtient le§c Sharingan§7 de§a Kakashi§7, alors,",
+                        "§7tout ses§c cooldowns§7 seront§c divisé§7 par§c deux§7."
+                )
+                .toItemStack(), event -> {
+            Main.getInstance().getGameConfig().getNarutoConfig().setObitoCanGetKakashiEye(!Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye());
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié la valeur de "+"§dObito§f peut récupérer le§c Sharingan§f de§a Kakashi"+"§7 sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye() ? "§aActivé" : "§cDésactivé"));
+            new MDJ_NS_Config().open((Player) event.getWhoClicked());
+                }
+        );
         setItem(26, GUIItems.getSelectBackMenu(), event -> {
             if (GameState.getInstance().isAllMdjNull()) {
                 new MDJConfigInventory().open((Player) event.getWhoClicked());

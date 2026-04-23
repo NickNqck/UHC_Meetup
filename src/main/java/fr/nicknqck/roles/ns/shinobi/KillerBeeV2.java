@@ -7,8 +7,8 @@ import fr.nicknqck.events.custom.roles.ns.SamehadaUseEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -49,6 +49,13 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.RAITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Killer Bee";
     }
@@ -63,7 +70,6 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
         super.RoleGiven(gameState);
         addKnowedRole(RaikageV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-        setChakraType(Chakras.RAITON);
         EventUtils.registerRoleEvent(this);
         this.hashibiPower = new HashibiPower(this);
         addPower(this.hashibiPower, true);

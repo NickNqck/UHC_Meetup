@@ -6,8 +6,8 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -46,6 +46,13 @@ public class KurenaiV2 extends ShinobiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kurenai";
     }
@@ -64,7 +71,6 @@ public class KurenaiV2 extends ShinobiRoles {
                 new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
             }
         }, 20);
-        setChakraType(Chakras.KATON);
         super.RoleGiven(gameState);
     }
 
@@ -216,7 +222,7 @@ public class KurenaiV2 extends ShinobiRoles {
                 return;
             }
             if (!kurenai.getGamePlayer().isAlive()) return;
-            List<Player> aList = new ArrayList<>(kurenai.getListPlayerFromRole(Asuma.class));
+            List<Player> aList = new ArrayList<>(kurenai.getListPlayerFromRole(AsumaV2.class));
             if (aList.isEmpty()) {
                 return;
             }

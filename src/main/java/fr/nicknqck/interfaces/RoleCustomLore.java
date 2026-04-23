@@ -1,4 +1,4 @@
-package fr.nicknqck.enums;
+package fr.nicknqck.interfaces;
 
 public interface RoleCustomLore {
 

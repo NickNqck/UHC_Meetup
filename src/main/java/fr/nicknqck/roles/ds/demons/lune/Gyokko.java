@@ -8,7 +8,7 @@ import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.MuichiroV2;

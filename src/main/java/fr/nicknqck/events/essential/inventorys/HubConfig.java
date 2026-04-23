@@ -7,6 +7,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.interfaces.ISubRoleWorld;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.runnables.PregenerationTask;
@@ -19,6 +20,7 @@ import fr.nicknqck.utils.rank.ChatRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -87,6 +89,27 @@ public class HubConfig implements Listener {
                         if (!gameState.hasPregen){
                             new PregenerationTask(Main.getInstance().getWorldManager().getGameWorld(), Border.getMaxBorderSize());
                             gameState.hasPregen = true;
+                            for (String string : Main.getInstance().getRoleWorldManager().getSubRoleWorldMap().keySet()) {
+                                final ISubRoleWorld iSubRoleWorld = Main.getInstance().getRoleWorldManager().getSubRoleWorldMap().get(string);
+                                if (iSubRoleWorld.isPregen()) {
+                                    continue;
+                                }
+                                final World world = Bukkit.getWorld(string);
+                                if (world != null) {
+                                    for (Player wplayer : world.getPlayers()) {
+                                        wplayer.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+                                    }
+                                    Main.getInstance().deleteWorld(string);
+                                }
+                                Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c décompression du monde§a \""+string+"§a\".");
+                                Main.getInstance().getRoleWorldManager().extractWorld(iSubRoleWorld.getZipFileName());
+                                Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c création du monde§a \""+string+"§a\".");
+                                final World world1 = iSubRoleWorld.createWorld();
+                                Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c pré-génération du monde§a \""+string+"§a\".");
+                                iSubRoleWorld.startPregen(world1);
+                                iSubRoleWorld.setHasBeenPregen(true);
+                                iSubRoleWorld.startPrecalculs(world1);
+                            }
                         }
                     } else if (item.isSimilar(GUIItems.getSelectEventButton())) {
                         player.openInventory(GUIItems.getEventSelectGUI());

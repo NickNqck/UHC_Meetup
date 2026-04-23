@@ -3,8 +3,8 @@ package fr.nicknqck.roles.builder;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.events.ds.alliance.IAllianceRole;
 import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.Ackerman;
@@ -46,7 +46,7 @@ public class AutomaticDesc {
         text.addExtra(new TextComponent("\n§7Role: "+role.getTeam().getColor()+role.getName()));
     }
     private void addObjectif() {
-        final TeamList team = role.getTeam();
+        final ITeam team = role.getTeam();
         text.addExtra(new TextComponent("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
     }
     public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {
@@ -265,7 +265,7 @@ public class AutomaticDesc {
             if (!((RoleBase) this.role).getGamePlayer().getChatWithManager().isEmpty()) {
                 for (@NonNull final GamePlayer.ChatWithManager chatWithManager : ((RoleBase) this.role).getGamePlayer().getChatWithManager()) {
                     if (chatWithManager.isShowInDesc()){
-                        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getStarter()+"§7\"."));
+                        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
                     }
                 }
             }
@@ -273,14 +273,15 @@ public class AutomaticDesc {
                 this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez§a No Fall§7 de manière§c permanente"));
             }
         }
-        text.addExtra(new TextComponent(
-                this.role instanceof NSRoles ?
-                        "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ?
-                                "§cInexistante" :
-                                ((this.role instanceof OrochimaruV2) ?
-                                        ((OrochimaruV2) this.role).getChakraString() :
-                                        ((NSRoles) this.role).getChakras().getShowedName())) :
-                        ""));
+        if (this.role instanceof NSRoles) {
+            text.addExtra(new TextComponent(
+                    "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ?
+                            "§cInexistante" :
+                            this.role instanceof OrochimaruV2 ?
+                                    ((OrochimaruV2) this.role).getChakraString() :
+                                    ((NSRoles) this.role).getChakras().getShowedName()))
+            );
+        }
         if (this.role instanceof AotRoles) {
             if (((AotRoles) this.role).isCanVoleTitan()) {
                 this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7avez §7la §7capacité §7de §7voler §7un §ctitan §7via §7la §7commande §6/aot steal"));

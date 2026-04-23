@@ -6,6 +6,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
@@ -232,7 +233,7 @@ public class LeComte extends CustomRolesBase implements Listener {
                     owner.sendMessage("§c"+target.getName()+"§7 possède§e "+gapAmount+" pomme§7(§es§7)§e d'or");
 
                 } else if (time == 120) {
-                    TeamList team = GameState.getInstance().getGamePlayer().get(target.getUniqueId()).getRole().getTeam();
+                    ITeam team = GameState.getInstance().getGamePlayer().get(target.getUniqueId()).getRole().getTeam();
                     if (team != null) {
                         owner.sendMessage("§c"+target.getName()+"§7 est dans le camp \""+team.getName()+"§7\"");
                     }

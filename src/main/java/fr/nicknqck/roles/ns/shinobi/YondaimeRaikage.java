@@ -4,8 +4,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
@@ -22,7 +22,6 @@ public class YondaimeRaikage extends ShinobiRoles {
 
 	public YondaimeRaikage(UUID player) {
 		super(player);
-		setChakraType(Chakras.RAITON);
 	}
 
 	@Override
@@ -62,7 +61,15 @@ public class YondaimeRaikage extends ShinobiRoles {
 				
 		};
 	}
-	private ItemStack ArmureItem() {
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.RAITON
+        };
+    }
+
+    private ItemStack ArmureItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§eArmure Raiton").setLore("§7Vous permet d'obtenir l'effet Résistance 1 et Speed 2").toItemStack();
 	}
 	private int timeLeft = 60*5;

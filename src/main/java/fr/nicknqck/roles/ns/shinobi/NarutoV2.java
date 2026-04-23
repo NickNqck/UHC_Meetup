@@ -6,9 +6,9 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
+import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.roles.ns.power.Rasengan;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -36,7 +36,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public class NarutoV2 extends ShinobiRoles {
+public class NarutoV2 extends HShinobiRoles {
 
     public NarutoV2(UUID player) {
         super(player);
@@ -45,6 +45,13 @@ public class NarutoV2 extends ShinobiRoles {
     @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.PEUINTELLIGENT;
+    }
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.FUTON
+        };
     }
 
     @Override
@@ -70,7 +77,6 @@ public class NarutoV2 extends ShinobiRoles {
         addPower(new Rasengan(this), true);
         addPower(new KyubiPower(this), true);
         addPower(new NSClone(this));
-        setChakraType(Chakras.FUTON);
         setMaxHealth(getMaxHealth()+4.0);
         setCanBeHokage(true);
         if (owner != null) {

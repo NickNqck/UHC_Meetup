@@ -69,7 +69,6 @@ public class ItemsManager implements Listener {
 		Player player = event.getPlayer();
 		if (gameState.hasRoleNull(player.getUniqueId()))return;
 		final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-		role.onEat(item, gameState);
 		if (item.getType() == Material.GOLDEN_APPLE) {
             player.updateInventory();
 			if (Anti_Abso.isAntiabsoall()) {
@@ -90,9 +89,6 @@ public class ItemsManager implements Listener {
 	@EventHandler
 	public void PlayerRecupItemEvent(PlayerPickupItemEvent e) {
 		ItemStack s = e.getItem().getItemStack();
-		if (!gameState.hasRoleNull(e.getPlayer().getUniqueId())) {
-			e.setCancelled(gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).getRole().onPickupItem(e.getItem()));
-		}
 		if (s.hasItemMeta()) {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
 				for (Bijus value : Bijus.values()) {

@@ -9,7 +9,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.enums.Lames;
 import fr.nicknqck.roles.ds.demons.lune.KokushiboV2;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;
 import fr.nicknqck.utils.RandomUtils;

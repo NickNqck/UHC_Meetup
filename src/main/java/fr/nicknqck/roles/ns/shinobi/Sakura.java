@@ -5,8 +5,9 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
+import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -21,12 +22,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class Sakura extends ShinobiRoles {
+public class Sakura extends HShinobiRoles {
 
 	public Sakura(UUID player) {
 		super(player);
-		setChakraType(getRandomChakras());
-		setCanBeHokage(true);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
@@ -58,7 +57,19 @@ public class Sakura extends ShinobiRoles {
 				AllDesc.bar
 		};
 	}
-	@Override
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
+        };
+    }
+
+    @Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
 				ByakugoItem()

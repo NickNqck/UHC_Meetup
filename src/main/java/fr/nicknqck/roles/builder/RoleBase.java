@@ -12,6 +12,7 @@ import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.interfaces.IRole;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.demons.lune.Nakime;
 import fr.nicknqck.utils.RandomUtils;
@@ -25,7 +26,6 @@ import lombok.NonNull;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
@@ -36,8 +36,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -49,11 +47,9 @@ public abstract class RoleBase implements IRole {
 	@Setter
 	@Getter
 	private boolean canRespawn = false;
-	@Getter
-	private boolean noFall = false;
 	@Setter
-	@Getter
-	private Roles oldRole = null;
+    @Getter
+	private boolean noFall = false;
 	@Getter
 	private boolean powerEnabled = true;
 	@Getter
@@ -70,7 +66,7 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	@Setter
 	private GamePlayer gamePlayer;
-	private TeamList team;
+	private ITeam team;
 	@Getter
 	private final Map<PotionEffect, EffectWhen> effects = new LinkedHashMap<>();
 	@Getter
@@ -104,8 +100,8 @@ public abstract class RoleBase implements IRole {
 			owner.resetMaxHealth();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
                 owner.sendMessage(ChatColor.BOLD + "Camp: " + this.getTeam().getColor() + StringUtils.replaceUnderscoreWithSpace(this.getTeam().name()));
-                System.out.println(owner.getName() +" Team: "+ this.getTeam());
-                System.out.println(owner.getName() + " Role: " + getRoles());
+                Main.getInstance().debug(owner.getName() +" Team: "+ this.getTeam());
+                Main.getInstance().debug(owner.getName() + " Role: " + getRoles());
             }, 20);
 			this.uuidOwner = owner.getUniqueId();
 			owner.sendMessage("");
@@ -113,9 +109,9 @@ public abstract class RoleBase implements IRole {
 			owner.setFlying(false);
 			owner.setGameMode(GameMode.SURVIVAL);
 			roleID = RandomUtils.getRandomDeviationValue(1, -500000, 500000);
-			System.out.println(owner.getName()+", RoleID: "+roleID);
+            Main.getInstance().debug(owner.getName()+", RoleID: "+roleID);
 			StringID = RandomUtils.generateRandomString(24);
-			System.out.println(owner.getName()+", StringID: "+StringID);
+            Main.getInstance().debug(owner.getName()+", StringID: "+StringID);
 			Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
 			new BukkitRunnable() {
 
@@ -148,13 +144,6 @@ public abstract class RoleBase implements IRole {
 			giveItem(player, false, itemPower.getItem());
 		}
 	}
-	public void sendActionBarCooldown(Player player, int cooldown) {
-		if (cooldown > 0) {
-			NMSPacket.sendActionBar(player, "Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));
-		}else {
-			NMSPacket.sendActionBar(player, getItemNameInHand(player)+" Utilisable");
-		}
-	}
 	public void sendCustomActionBar(Player player, String msg) {NMSPacket.sendActionBar(player, msg);}
 	public void sendMessageAfterXseconde(Player player, String message, int seconde) {
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> player.sendMessage(message), 20L *seconde);
@@ -173,19 +162,18 @@ public abstract class RoleBase implements IRole {
 		if (owner == null)return;
 		OLDgivePotionEffet(owner, type, time, level, force);
 	}
-	public String getItemNameInHand(Player player) {return player.getItemInHand().getItemMeta().getDisplayName()+"§r";}
 	public void sendCooldown(Player player, int cooldown) {player.sendMessage("Cooldown: "+StringUtils.secondsTowardsBeautiful(cooldown));}
 
 	@Override
-	public TeamList getTeam() {
+	public ITeam getTeam() {
 		if (this.team == null) this.team = getOriginTeam();
 		return team;
 	}
 
-	public void setTeam(@NonNull final TeamList team) {
+	public void setTeam(@NonNull final ITeam team) {
 		setTeam(team, false);
 	}
-	public void setTeam(@NonNull final TeamList team, boolean force) {
+	public void setTeam(@NonNull final ITeam team, boolean force) {
 		final TeamChangeEvent event = new TeamChangeEvent(this, this.team, team);
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled() && !force) {
@@ -224,22 +212,13 @@ public abstract class RoleBase implements IRole {
 		}
 	}
 	public boolean ItemUse(ItemStack item, GameState gameState) {return false;}
-	public void ItemUseAgainst(ItemStack item, Player victim, GameState gameState) {}
-	public void OpenFormInventory(GameState gameState) {}
 	public void FormChoosen(ItemStack item, GameState gameState) {}
 	public void PlayerKilled(Player killer, Player victim, GameState gameState) {OnAPlayerDie(victim, gameState, killer);}
-	public void setNoFall(boolean hasNoFall) {this.noFall = hasNoFall;}
-	public void setMaxHealth(Double maxHealth) {this.maxHealth = maxHealth; owner.setMaxHealth(maxHealth);}
+
+    public void setMaxHealth(Double maxHealth) {this.maxHealth = maxHealth; owner.setMaxHealth(maxHealth);}
 	public void setPower(boolean powerEnabled) {this.powerEnabled = powerEnabled;}
 	public void neoAttackedByPlayer(Player attacker, GameState gameState) {}
-	public void onDay(GameState gameState) {}
 	public void addSpeedAtInt(Player player, float speedpercent) {player.setWalkSpeed(player.getWalkSpeed()+(speedpercent/500));}
-	public void neoItemUseAgainst(ItemStack itemInHand, Player player, GameState gameState, Player damager) {
-		ItemUseAgainst(itemInHand, player, gameState);
-	}
-	public void onEat(ItemStack item, GameState gameState) {}
-	public boolean onPickupItem(Item item) {
-		return false;}
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
 		for (Bijus value : Bijus.values()) {
 			value.getBiju().onAPlayerDie(player, gameState, killer);
@@ -260,12 +239,6 @@ public abstract class RoleBase implements IRole {
 			gameState.DeadRole.add(gameState.getGamePlayer().get(player.getUniqueId()).getRole().getRoles());
 		}
 	}
-	public void OnAPlayerKillAnotherPlayer(Player player, Player damager, GameState gameState) {}
-	public void giveHeartatInt(Player target, double coeur) {
-		if (!gameState.hasRoleNull(target.getUniqueId())) {
-			gameState.getGamePlayer().get(target.getUniqueId()).getRole().setMaxHealth(gameState.getGamePlayer().get(target.getUniqueId()).getRole().getMaxHealth()+coeur*2);
-		}
-	}
 	public final void giveHealedHeartatInt(final Player target,final double coeur) {
 		if (!gameState.hasRoleNull(target.getUniqueId())) {
 			GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());
@@ -283,19 +256,6 @@ public abstract class RoleBase implements IRole {
 		}
 	}
 	public final void giveHealedHeartatInt(final double coeur) {giveHealedHeartatInt(owner, coeur);}
-	public void giveHalfHeartatInt(Player target, double demicoeur){
-		if (!gameState.hasRoleNull(target.getUniqueId())) {
-			GamePlayer GP = gameState.getGamePlayer().get(target.getUniqueId());
-			GP.getRole().setMaxHealth(GP.getRole().getMaxHealth()+demicoeur);
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
-				if (target.getHealth() <= (GP.getRole().getMaxHealth())-(demicoeur)) {
-					target.setHealth(target.getHealth()+(demicoeur));
-				}else {
-					target.setHealth(GP.getRole().getMaxHealth());
-				}
-			}, 20);
-		}
-	}
 	public void Heal(Player target, double demicoeur) {
 		Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
 			if (target.getHealth() - demicoeur <= 0 && demicoeur <0) {
@@ -310,17 +270,15 @@ public abstract class RoleBase implements IRole {
 	}
 	public void onLeftClick(PlayerInteractEvent event, GameState gameState) {}
 	public void KnowRole(Player knower, Roles toknow, int delayinTick) {
-		if (Main.isDebug()){
-			System.out.println("Starting trying to get player who own the role "+toknow.name());
-		}
+        Main.getInstance().debug("Starting trying to get player who own the role "+toknow.name());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (gameState.getInSpecPlayers().contains(p))return;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					if (getListPlayerFromRole(toknow).contains(p)) {
 						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p.getUniqueId())) {
-                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().getOriginTeam();
-                            knower.sendMessage("Le joueur possédant le rôle de " + toknow.getTeam().getColor() + toknow.name() + "§f est " + p.getName());
+                            final RoleBase roleBase = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
+                            knower.sendMessage("Le joueur possédant le rôle de " + roleBase.getTeam().getColor() + roleBase.getName() + "§f est " + p.getName());
                         }
 					}
 				}
@@ -329,25 +287,6 @@ public abstract class RoleBase implements IRole {
 	}
 	public void onProjectileLaunch(Projectile projectile, Player shooter) {}
 	public void onProjectileHit(Projectile entity, Player shooter) {}
-	public void listPotionEffects(Player target, Player receiver) {
-		receiver.sendMessage("\nEffets de potion actifs pour§7 " + target.getName() + "§r:");
-	    for (PotionEffect effect : target.getActivePotionEffects()) {
-			PotionEffectType type = effect.getType();
-			if (type != PotionEffectType.ABSORPTION) {
-				String effectName = formatEffectName(type.getName());
-				String message = ChatColor.GRAY + "- " + effectName;
-				receiver.sendMessage(message);
-			}
-		}
-	}
-	private String formatEffectName(String effectName) {
-		String[] words = effectName.split("_");
-		StringBuilder formattedName = new StringBuilder();
-		for (String word : words) {
-			formattedName.append(ChatColor.WHITE).append(word.substring(0, 1).toUpperCase()).append(word.substring(1)).append(" ");
-		}
-		return formattedName.toString().trim();
-	}
 	public void onAllPlayerMoove(PlayerMoveEvent e, Player moover) {}
 
 	@Override
@@ -413,21 +352,6 @@ public abstract class RoleBase implements IRole {
 	}
 	public Player getTargetPlayer(Player player, double distanceMax) {
         return RayTrace.getTargetPlayer(player, distanceMax, null);
-    }
-	public static Location getTargetLocation(Player player, int maxDistance) {
-        BlockIterator blockIterator = new BlockIterator(player, maxDistance);
-        
-        while (blockIterator.hasNext()) {
-            Block block = blockIterator.next();
-            // Vous pouvez ajouter des vérifications supplémentaires ici si nécessaire
-            if (!block.getType().equals(Material.AIR)) {
-                return block.getLocation();
-            }
-        }
-
-        // Si aucune cible n'est trouvée, retournez la position du joueur à la distance maximale
-        Vector targetDirection = player.getLocation().getDirection().normalize().multiply(maxDistance);
-        return player.getLocation().add(targetDirection);
     }
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {}
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {}
@@ -532,7 +456,7 @@ public abstract class RoleBase implements IRole {
 					}
 				} else {
 					target.setHealth(target.getHealth()-damage);
-					System.out.println(target.getHealth());
+                    Main.getInstance().debug(""+target.getHealth());
 				}
 				target.damage(0.0);
 			}, delay);
@@ -567,9 +491,6 @@ public abstract class RoleBase implements IRole {
 	}
 	public HashMap<UUID, String> customName = new HashMap<>();
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
-	public boolean onEntityDeath(EntityDeathEvent e, LivingEntity entity) {
-		return false;
-	}
 
 	@Override
 	public TextComponent getComponent() {
@@ -629,7 +550,7 @@ public abstract class RoleBase implements IRole {
 	}
 	public void addKnowedRole(final Class<? extends RoleBase> role) {
 		if (Main.isDebug()) {
-			System.out.println(this+" added "+role+" to his knowedRole");
+            Main.getInstance().debug(this+" added "+role+" to his knowedRole");
 		}
 		getKnowedRoles().add(role);
 	}

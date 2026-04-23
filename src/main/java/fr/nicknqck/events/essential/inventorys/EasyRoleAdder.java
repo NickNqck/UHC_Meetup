@@ -3,34 +3,47 @@ package fr.nicknqck.events.essential.inventorys;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.interfaces.*;
 import fr.nicknqck.roles.builder.RoleBase;
 
 public final class EasyRoleAdder {
 
     public static void addRoles(String name) {
-       /* Nouveau système de rôle
-        for (Class<? extends RoleBase> classs : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
-            if (name.equalsIgnoreCase(classs.getName()) || name.equalsIgnoreCase(classs.toString()) || name.equalsIgnoreCase(Main.getInstance().getRoleManager().getRolesRegistery().get(classs).getName())) {
-                Main.getInstance().getRoleManager().addRole(classs);
-                System.out.println("Added role: "+classs);
-                GameState.getInstance().updateGameCanLaunch();
-                break;
-            }
-        }*/
         Main.getInstance().getLogger().info("Name = "+name);
         for (Class<? extends RoleBase> aClass : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
-            if (name.equalsIgnoreCase(cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName())) || name.equalsIgnoreCase(getCleanSimpleName(aClass))) {
-                Main.getInstance().getLogger().info("ClassName: "+aClass.getSimpleName()+", class: "+aClass+", roles: "+name+", cleanName: "+getCleanSimpleName(aClass)+", cleanedString: "+cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName()));
+            final IRole iRole = Main.getInstance().getRoleManager().getRolesRegistery().get(aClass);
+            if (iRole == null) {
+                Main.getInstance().debug(aClass+" is null, maybe isn't a IRole ?");
+                continue;
+            }
+            if (name.equalsIgnoreCase(cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName())) ||
+                    name.equalsIgnoreCase(getCleanSimpleName(aClass)) ||
+                    iRole.getRoles().getItem().getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
+                Main.getInstance().debug("ClassName: "+aClass.getSimpleName()+", class: "+aClass+", roles: "+name+", cleanName: "+getCleanSimpleName(aClass)+", cleanedString: "+cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName()));
+                if (iRole instanceof IUncompatibleRole) {
+                    for (final IRoles<?> uncampatibleClass : ((IUncompatibleRole) iRole).getUncompatibleList()) {
+                        if (GameState.getInstance().getAvailableRoles().containsKey(uncampatibleClass) && GameState.getInstance().getAvailableRoles().get(uncampatibleClass) > 0) {
+                            Main.getInstance().sendMessageToHosts("§cImpossible d'ajouter le rôle§b "+name+"§c, l'un des rôles incompatible est déjà dans la composition de la partie !");
+                            return;
+                        }
+                    }
+                }
+                GameState.getInstance().addInAvailableRoles(iRole.getRoles(), GameState.getInstance().getAvailableRoles().getOrDefault(iRole.getRoles(), 0)+1);
+                if (iRole instanceof IRoleGotSubWorld) {
+                    final ISubRoleWorld iSubRoleWorld = ((IRoleGotSubWorld) iRole).getSubWorld();
+                    Main.getInstance().getRoleWorldManager().addWorldManaged(iSubRoleWorld.getWorldName(), iSubRoleWorld);
+                }
+                break;
             }
         }
-        //Ancien système de rôle
+       /*Ancien système de rôle
         for (Roles roles : Roles.values()) {
             if (roles.name().equalsIgnoreCase(cleanString(name))) {
                 GameState.getInstance().addInAvailableRoles(roles, Math.min(GameState.getInstance().getInLobbyPlayers().size(), GameState.getInstance().getAvailableRoles().get(roles)+1));
-                GameState.getInstance().updateGameCanLaunch();
                 break;
             }
-        }
+        }*/
+        GameState.getInstance().updateGameCanLaunch();
     }
     public static String getCleanSimpleName(Class<?> clazz) {
         String name = clazz.getSimpleName();

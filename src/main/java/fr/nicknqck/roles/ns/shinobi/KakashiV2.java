@@ -6,8 +6,8 @@ import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.roles.ns.power.YameruPower;
 import fr.nicknqck.utils.GlobalUtils;
@@ -26,6 +26,7 @@ import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,6 +51,13 @@ public class KakashiV2 extends HShinobiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.RAITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kakashi";
     }
@@ -61,10 +69,13 @@ public class KakashiV2 extends HShinobiRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
+        if (!gameState.getAttributedRole().contains(Roles.Obito)) {
+            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+            Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
+        }
         addPower(new KamuiPower(this), true);
         addPower(new SharinganPower(this), true);
         addPower(new YameruPower(this));
-        setChakraType(Chakras.RAITON);
         super.RoleGiven(gameState);
     }
 

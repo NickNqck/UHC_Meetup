@@ -5,7 +5,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.WorldUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;

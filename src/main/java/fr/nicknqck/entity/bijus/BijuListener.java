@@ -190,15 +190,7 @@ public class BijuListener implements Listener{
 	}
 	@EventHandler
 	public void onDeath(EntityDeathEvent e) {
-		for (UUID u : GameState.getInstance().getInGamePlayers()) {
-			Player p = Bukkit.getPlayer(u);
-			if (p == null)continue;
-			if (!GameState.getInstance().hasRoleNull(p.getUniqueId())) {
-				if (GameState.getInstance().getGamePlayer().get(p.getUniqueId()).getRole().onEntityDeath(e, e.getEntity())) {
-					return;
-				}
-			}
-		}
+
 		Bijus bijus = null;
 		for (Bijus value : Bijus.values()) {
 			if (value.getBiju().getLivingEntity() != null) {

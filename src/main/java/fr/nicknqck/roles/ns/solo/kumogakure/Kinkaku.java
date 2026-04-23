@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.EffectWhen;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.roles.ns.builders.KumogakureRole;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -40,7 +41,6 @@ public class Kinkaku extends KumogakureRole {
     private final List<UUID> cantBeMission = new ArrayList<>();
     public Kinkaku(UUID player) {
         super(player);
-        super.setChakraType(super.getRandomChakras());
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Ginkaku)){
                 OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
@@ -94,6 +94,17 @@ public class Kinkaku extends KumogakureRole {
                 "",
                 "Vous possédez la nature de Chakra: "+getChakras().getShowedName(),
                 AllDesc.bar
+        };
+    }
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
         };
     }
 

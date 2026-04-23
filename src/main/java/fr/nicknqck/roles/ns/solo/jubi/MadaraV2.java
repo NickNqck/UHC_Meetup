@@ -8,8 +8,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Izanagi;
 import fr.nicknqck.roles.ns.power.SuperSusanoPower;
@@ -52,6 +52,13 @@ public class MadaraV2 extends JubiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Madara";
     }
@@ -71,8 +78,8 @@ public class MadaraV2 extends JubiRoles {
                 "§7Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7."), true);
         addPower(new Izanagi(this));
         addKnowedRole(ObitoV2.class);
-        getGamePlayer().startChatWith("!", "§dMadara: ", ObitoV2.class);
-        setChakraType(Chakras.KATON);
+        addKnowedRole(JubiSasuke.class);
+        getGamePlayer().startChatWith("§dMadaraV2: ", "!", ObitoV2.class, JubiSasuke.class);
     }
 
     @Override

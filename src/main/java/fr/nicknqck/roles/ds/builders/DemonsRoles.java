@@ -1,5 +1,7 @@
 package fr.nicknqck.roles.ds.builders;
 
+import fr.nicknqck.enums.DemonType;
+import fr.nicknqck.enums.Soufle;
 import lombok.NonNull;
 
 import java.util.UUID;

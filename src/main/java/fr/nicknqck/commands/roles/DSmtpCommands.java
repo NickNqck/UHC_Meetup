@@ -29,13 +29,7 @@ public class DSmtpCommands implements CommandExecutor {
 		}
 		if (args.length >= 1) {
 			if (args.length == 1) {
-				if (args[0].equalsIgnoreCase("role")) {
-                    Player player = (Player) sender;
-                    if (gameState.getInGamePlayers().contains(player.getUniqueId()) && !gameState.hasRoleNull(player.getUniqueId())) {
-                        gameState.getGamePlayer().get(player.getUniqueId()).getRole().OpenFormInventory(gameState);
-                        return true;
-                    }
-                } else if (args[0].equalsIgnoreCase("roles")) {
+				if (args[0].equalsIgnoreCase("roles")) {
                     //ArrayList<String> message = new ArrayList<String>();
                     sender.sendMessage(gameState.getRolesList());
                     return true;

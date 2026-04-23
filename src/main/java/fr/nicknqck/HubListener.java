@@ -65,8 +65,8 @@ public class HubListener implements Listener {
 		}
 		// Debug Affichages des roles InGame
 		int roleNmb = 0;
-		List<IRoles> rolesList = new ArrayList<>();
-		for (IRoles r : gameState.getAvailableRoles().keySet()) {
+		List<IRoles<?>> rolesList = new ArrayList<>();
+		for (IRoles<?> r : gameState.getAvailableRoles().keySet()) {
 			if (Main.isDebug()){
 				System.out.println("role: "+r+", nmb: "+gameState.getAvailableRoles().get(r));
 			}

@@ -5,8 +5,8 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
@@ -38,6 +38,13 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Itachi";
     }
@@ -64,7 +71,6 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
         addPower(new Genjutsu(this), true);
         addPower(new Amaterasu(this), true);
         addPower(new Izanagi(this));
-        setChakraType(Chakras.KATON);
         addKnowedRole(KisameV2.class);
         super.RoleGiven(gameState);
     }

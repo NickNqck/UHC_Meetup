@@ -9,8 +9,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.Loc;
@@ -37,7 +37,7 @@ import java.util.*;
 
 public class KakuzuV2 extends AkatsukiRoles implements Listener {
 
-    private final List<Chakras> chakrasVoled = new ArrayList<>();
+    private final List<EChakras> chakrasVoled = new ArrayList<>();
     private final Map<Integer, ItemStack> getContents = new HashMap<>();
     private ItemStack[] getArmors = new ItemStack[0];
 
@@ -48,6 +48,17 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
     @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.MOYENNE;
+    }
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
+        };
     }
 
     @Override
@@ -64,10 +75,10 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new CorpsRapiece(this), true);
-        final List<Chakras> chakrasList = new ArrayList<>();
+        final List<EChakras> chakrasList = new ArrayList<>();
         int i = 0;
         while (i != 3) {
-            for (final Chakras chakras : Chakras.values()) {
+            for (final EChakras chakras : EChakras.values()) {
                 if (Main.RANDOM.nextBoolean()) {
                     if (chakrasList.contains(chakras))continue;
                     chakrasList.add(chakras);
@@ -77,7 +88,6 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
             }
         }
         Collections.shuffle(chakrasList, Main.RANDOM);
-        setChakraType(chakrasList.get(0));
         this.chakrasVoled.addAll(chakrasList);
         EventUtils.registerRoleEvent(this);
         addPower(new NSChangeCommand(this));
@@ -100,7 +110,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
     }
     private String getChakrasList() {
         final StringBuilder sb = new StringBuilder();
-        for (final Chakras chakras : this.chakrasVoled) {
+        for (final EChakras chakras : this.chakrasVoled) {
             sb.append(chakras.getShowedName()).append("§7, ");
         }
         return sb.substring(0, sb.length()-4);
@@ -115,7 +125,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         if (!(role instanceof NSRoles))return;//si le rôle ne viens pas du NaruVerse return
         if (((NSRoles) role).getChakras() == null)return;//Si la victim n'à pas de chakra return
         if (!this.chakrasVoled.contains(((NSRoles) role).getChakras())) {
-            final Chakras chakras = ((NSRoles) role).getChakras();
+            final EChakras chakras = ((NSRoles) role).getChakras();
             event.getKiller().sendMessage("§7Vous avez gagner la§a nature de chakra§7: "+chakras.getShowedName());
             this.chakrasVoled.add(chakras);
         }
@@ -129,13 +139,13 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
             event.getPlayer().sendMessage("§7Vous n'avez plus asser de§a nature de chakra§7 pour§c réapparaitre !");
             return;
         }
-        if (getMaxHealth() > 10.0) {//Il faut que le Kakuzu revive tant qu'il a + que 5coeurs perma (sa lui coûte une nature de chakra et 1coeurs perma)
+        if (getMaxHealth() > 10.0) {//Il faut que le Kakuzu revive tant qu'il a + que 5coeurs perma (ça lui coûte une nature de chakra et 1coeurs perma)
             setMaxHealth(getMaxHealth()-2.0);
             this.chakrasVoled.remove(getChakras());
             Collections.shuffle(this.chakrasVoled);
             event.getPlayer().sendMessage("§7Vous avez perdu la nature de chakra: "+getChakras().getShowedName());
             if (!this.chakrasVoled.isEmpty()) {
-                setChakraType(this.chakrasVoled.get(0));
+                setChakras(this.chakrasVoled.get(0));
                 event.getPlayer().sendMessage("§7Vous utilisez maintenant la nature de chakra: "+getChakras().getShowedName());
             }
             getGamePlayer().setLastArmorContent(event.getPlayer().getInventory().getArmorContents());
@@ -204,7 +214,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final Inventory inv = Bukkit.createInventory(player, 27, "§7(§c!§7)§a Nature de chakra");
             int i = 9;
-            for (final Chakras chakras : this.kakuzuV2.chakrasVoled) {
+            for (final EChakras chakras : this.kakuzuV2.chakrasVoled) {
                 if (this.kakuzuV2.getChakras().equals(chakras)) {
                     inv.setItem(i, new ItemBuilder(Material.INK_SACK).setDurability(chakras.getColorCode()).addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setName(chakras.getShowedName()).toItemStack());
                 } else {
@@ -228,12 +238,12 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
                 if (!item.getType().equals(Material.INK_SACK))return;
                 if (item.getItemMeta() == null)return;
                 if (!item.getItemMeta().hasDisplayName())return;
-                for (final Chakras chakras : Chakras.values()) {
+                for (final EChakras chakras : EChakras.values()) {
                     if (chakras.getShowedName().equalsIgnoreCase(item.getItemMeta().getDisplayName())) {
                         if (this.kakuzuV2.getChakras() != null) {
                             this.kakuzuV2.getChakras().getChakra().getList().remove(event.getWhoClicked().getUniqueId());
                         }
-                        this.kakuzuV2.setChakraType(chakras);
+                        this.kakuzuV2.setChakras(chakras);
                         event.getWhoClicked().sendMessage("§7Vous pouvez maintenant utilisé le "+chakras.getShowedName());
                         event.getWhoClicked().closeInventory();
                         break;

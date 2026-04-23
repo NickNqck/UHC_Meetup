@@ -7,7 +7,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -38,6 +39,17 @@ public class KarinV2 extends OrochimaruRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Karin";
     }
@@ -50,7 +62,6 @@ public class KarinV2 extends OrochimaruRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new MorsureItem(this), true);
-        setChakraType(getRandomChakras());
         addKnowedRole(KimimaroV2.class);
         addPower(new DonItem(this));
         new KnowRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);

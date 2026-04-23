@@ -12,8 +12,8 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.akatsuki.ItachiV2;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
@@ -67,6 +67,13 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Shisui";
     }
@@ -96,10 +103,14 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
     }
 
     @Override
+    public boolean isCanBeHokage() {
+        return true;
+    }
+
+    @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
-        setChakraType(Chakras.KATON);
         addPower(new Genjutsu(this), true);
         addPower(new KotoAmatsukamiPower(this), true);
         addPower(new SuperSusanoPower(this, null,

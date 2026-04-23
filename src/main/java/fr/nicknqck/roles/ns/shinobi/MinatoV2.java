@@ -9,8 +9,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.roles.ns.power.Rasengan;
 import fr.nicknqck.utils.Loc;
@@ -56,6 +56,13 @@ public class MinatoV2 extends HShinobiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Minato";
     }
@@ -80,7 +87,6 @@ public class MinatoV2 extends HShinobiRoles {
         addPower(new Rasengan(this), true);
         addPower(new BalisesPermanentes(this), true);
         new NarutoRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 1, 20);
-        setChakraType(Chakras.KATON);
     }
     private static class NarutoRunnable extends BukkitRunnable {
 

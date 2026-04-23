@@ -9,8 +9,8 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.roles.ns.power.Izanagi;
@@ -62,6 +62,13 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.FUTON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Danzo";
     }
@@ -102,7 +109,6 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
         addPower(new FutonPower(this), true);
         addPower(new Izanagi(this));
         new FindersRunnable(this, this.getGamePlayer());
-        setChakraType(Chakras.FUTON);
         giveHealedHeartatInt(2.0);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             int nmbUchiwa = 0;

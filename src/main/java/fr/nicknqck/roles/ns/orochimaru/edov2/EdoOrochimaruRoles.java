@@ -2,7 +2,6 @@ package fr.nicknqck.roles.ns.orochimaru.edov2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -69,7 +68,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
 
         public EdoTenseiPower(@NonNull EdoOrochimaruRoles role) {
             super("Edo Tensei", null, new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei"), role,
-                    "§7Quand vous tuez un joueur, vous pourrez le ressusciter en échange d");
+                    "§7Quand vous tuez un joueur, vous pourrez le ressusciter en échange de§c "+(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)+"1/2❤");
             this.role = role;
             EventUtils.registerRoleEvent(this);
             this.edoTenseis = new LinkedHashMap<>();

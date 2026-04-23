@@ -1,4 +1,4 @@
-package fr.nicknqck.roles.ns;
+package fr.nicknqck.interfaces;
 
 import fr.nicknqck.GameState;
 import org.bukkit.Location;
@@ -11,10 +11,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import java.util.List;
 import java.util.UUID;
 
-public interface Chakra {
+public interface IChakra {
 
     void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity);
-    Chakras getChakres();
     List<UUID> getList();
     void onSecond(GameState gameState);
     void onEntityDamage(EntityDamageEvent event, Player player);

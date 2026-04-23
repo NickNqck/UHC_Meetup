@@ -9,8 +9,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
@@ -50,6 +50,13 @@ public class KisameV2 extends AkatsukiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Kisame";
     }
@@ -63,7 +70,6 @@ public class KisameV2 extends AkatsukiRoles {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.PERMANENT);
-        setChakraType(Chakras.SUITON);
         addPower(new SamehadaSwordPower(this), true);
         addPower(new SuibunPower(this), true);
         final ItemStack Book = new ItemStack(Material.ENCHANTED_BOOK);

@@ -6,8 +6,8 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
@@ -49,6 +49,14 @@ public class InoV2 extends ShinobiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON,
+                EChakras.DOTON, EChakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Ino";
     }
@@ -62,7 +70,6 @@ public class InoV2 extends ShinobiRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new SphereDeCaptation(this), true);
         addPower(new TelepatiCommand(this));
-        setChakraType(getRandomChakrasBetween(Chakras.KATON, Chakras.DOTON, Chakras.SUITON));
         addKnowedRole(Shikamaru.class);
         addPower(new ControleCommand(this));
         super.RoleGiven(gameState);

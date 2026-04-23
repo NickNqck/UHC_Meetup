@@ -6,7 +6,8 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
@@ -46,7 +47,6 @@ public class Ginkaku extends NSSoloRoles {
 	private int cdGourde = 0;
 	public Ginkaku(UUID player) {
 		super(player);
-		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 			if (!gameState.getAttributedRole().contains(Roles.Kinkaku)){
 				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
@@ -107,7 +107,19 @@ public class Ginkaku extends NSSoloRoles {
 
 		};
 	}
-	@Override
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
+        };
+    }
+
+    @Override
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(GourdeItem)){
 			if (cdGourde <= 0){

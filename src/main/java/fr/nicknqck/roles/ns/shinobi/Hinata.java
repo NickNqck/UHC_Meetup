@@ -7,12 +7,9 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.EByakuganUserType;
-import fr.nicknqck.roles.ns.builders.IByakuganUser;
-import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
+import fr.nicknqck.roles.ns.builders.*;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
@@ -41,7 +38,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public class Hinata extends ShinobiRoles implements IByakuganUser {
+public class Hinata extends HShinobiRoles implements IByakuganUser {
 
     public Hinata(UUID player) {
         super(player);
@@ -50,6 +47,14 @@ public class Hinata extends ShinobiRoles implements IByakuganUser {
     @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.MOYENNE;
+    }
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON,
+                EChakras.RAITON
+        };
     }
 
     @Override
@@ -73,7 +78,6 @@ public class Hinata extends ShinobiRoles implements IByakuganUser {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        setChakraType(getRandomChakrasBetween(Chakras.KATON, Chakras.RAITON));
         addPower(new Byakugan(this), true);
         addPower(new ByakuganCommand(this));
         addPower(new TenketsuPower(this));

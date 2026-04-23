@@ -8,15 +8,16 @@ import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.Lames;
+import fr.nicknqck.enums.Lames;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.Loc;
@@ -262,7 +263,7 @@ public class EnmuV2 extends DemonsRoles {
                             this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);
                             event.getPlayerKiller().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                         }
-                        final TeamList team = victim.getRole().getOriginTeam();
+                        final ITeam team = victim.getRole().getOriginTeam();
                         if (team.equals(TeamList.Solo) || team.equals(TeamList.Jubi) || team.equals(TeamList.Jigoro) || team.equals(TeamList.Alliance) || team.equals(TeamList.Sasuke)) {
                             event.getGamePlayerKiller().sendMessage("§7On dirait que vous avez vaincu un rôle§e solitaire§7, vous gagnez donc§a +§c1/2❤ permanent");
                             this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);

@@ -229,6 +229,13 @@ public class AdminCommands implements CommandExecutor{
 				}
 			}
 			if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("version")) {
+                    Main.getInstance().getUpdateChecker().checkForUpdates();
+                    if (sender instanceof Player) {
+                        sender.sendMessage("§cLes informations ont été envoyer dans la§b console§c.");
+                    }
+                    return true;
+                }
 				if (args[0].equalsIgnoreCase("reset")) {
 					if (gameState.getServerState() != ServerStates.InLobby) {
 						sender.sendMessage("§7Vous ne pouvez pas faire ça en dehors du Lobby");
@@ -244,7 +251,7 @@ public class AdminCommands implements CommandExecutor{
 						@Override
 						public void run() {
 							if (gameState.getroleNMB() > 0) {
-								for (IRoles roles : gameState.getAvailableRoles().keySet()) {
+								for (IRoles<?> roles : gameState.getAvailableRoles().keySet()) {
 									if (gameState.getAvailableRoles().get(roles) > 0) {
 										int e = gameState.getAvailableRoles().get(roles);
 										gameState.addInAvailableRoles(roles, Math.max(0, gameState.getAvailableRoles().get(roles)-gameState.getAvailableRoles().get(roles)));
@@ -259,9 +266,24 @@ public class AdminCommands implements CommandExecutor{
 								cancel();
 							}
 						}
-					}.runTaskTimer(Main.getInstance(), 0, 20);
+					}.runTaskTimer(Main.getInstance(), 0, 12);
 					return true;
 				}
+                if (args[0].equalsIgnoreCase("debug")) {
+                    final boolean d = Main.isDebug();
+                    Main.getInstance().getLogger().info("Debug avant = "+d);
+                    if (d) {
+                        Main.getInstance().getLogger().info("Debug est maintenant desactiver");
+                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§c désactiver§7 le§c debug§7.");
+                        Main.getInstance().setDebug(false);
+                    } else {
+                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§a activer§7 le§c debug§7.");
+                        Main.getInstance().setDebug(true);
+                        Main.getInstance().getLogger().info("Debug est maintenant activer");
+                    }
+                    Main.getInstance().getLogger().info("Debug apres = "+Main.isDebug());
+                    return true;
+                }
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
 					if (ChatRank.isHost(sender)) {

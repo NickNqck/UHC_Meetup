@@ -4,9 +4,9 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
+import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -20,12 +20,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class Tsunade extends ShinobiRoles {
+public class Tsunade extends HShinobiRoles {
 
 	public Tsunade(UUID player) {
 		super(player);
-		setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON, Chakras.RAITON, Chakras.SUITON));
-		setCanBeHokage(true);
 		new onTick(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 	}
 	@Override
@@ -55,7 +53,18 @@ public class Tsunade extends ShinobiRoles {
 				AllDesc.bar
 			};
 	}
-	private ItemStack ByakugoItem() {
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON,
+                EChakras.KATON,
+                EChakras.RAITON,
+                EChakras.SUITON
+        };
+    }
+
+    private ItemStack ByakugoItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§aByakugo").setLore("§7Vous permet de§c stocker§7 votre§c vie§7 ou d'utiliser la vie§c stocker").toItemStack();
 	}
 	@Override

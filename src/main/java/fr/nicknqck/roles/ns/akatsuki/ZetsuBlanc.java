@@ -5,8 +5,8 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -26,8 +26,6 @@ public class ZetsuBlanc extends AkatsukiRoles {
 
 	public ZetsuBlanc(UUID player) {
 		super(player);
-		setChakraType(Chakras.DOTON);
-
 	}
 
 	@Override
@@ -67,7 +65,14 @@ public class ZetsuBlanc extends AkatsukiRoles {
 		};
 	}
 
-	@Override
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON
+        };
+    }
+
+    @Override
 	public ItemStack[] getItems() {
 		return new ItemStack[] {
 				SporeItem()

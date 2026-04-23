@@ -10,8 +10,8 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -50,6 +50,13 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Zabuza";
     }
@@ -72,7 +79,6 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
         EventUtils.registerRoleEvent(this);
         addPower(new InvisibilitePower(this), true);
         addPower(new KubikiribochoPower(this), true);
-        setChakraType(Chakras.SUITON);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Haku)) {
                 onHakuDeath(false);

@@ -9,8 +9,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
@@ -52,6 +52,13 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Konohamaru";
     }
@@ -76,7 +83,6 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         new NarutoRunnable(this, getGameState());
         addPower(new NueArdente(this), true);
-        setChakraType(Chakras.KATON);
         super.RoleGiven(gameState);
     }
     @EventHandler

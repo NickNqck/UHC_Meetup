@@ -14,11 +14,11 @@ public class RoleGiveEvent extends Event {
 
     private final GameState gameState;
     private final RoleBase role;
-    private final IRoles type;
+    private final IRoles<?> type;
     private final GamePlayer gamePlayer;
     private static final HandlerList handlers = new HandlerList();
     private final boolean endGive;
-    public RoleGiveEvent(GameState gameState, RoleBase role, IRoles roleType, GamePlayer gamePlayer, final boolean end) {
+    public RoleGiveEvent(GameState gameState, RoleBase role, IRoles<?> roleType, GamePlayer gamePlayer, final boolean end) {
         super();
         this.gameState = gameState;
         this.role = role;

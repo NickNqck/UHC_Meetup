@@ -10,7 +10,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.roles.ds.slayers.MakomoV2;
 import fr.nicknqck.roles.ds.slayers.SabitoV2;
 import fr.nicknqck.roles.ds.slayers.Tanjiro;

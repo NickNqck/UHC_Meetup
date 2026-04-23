@@ -2,7 +2,8 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.RoleCustomLore;
+import fr.nicknqck.interfaces.ITeam;
+import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
@@ -11,10 +12,10 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ds.builders.DemonType;
+import fr.nicknqck.enums.DemonType;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.PilierRoles;
 import fr.nicknqck.utils.*;
@@ -79,6 +80,8 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
     @Override
     public String[] getCustomLore(String amount, String gDesign) {
         return new String[] {
+                amount,
+                "",
                 "§7Ce rôle ne viens pas de l'univers§c DemonSlayer§7 mais entièrement",
                 "§7par§b NickNqck§7, il est simplement inspirer de son§c univers§7,",
                 "",
@@ -345,7 +348,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                     if (!gamePlayer.isOnline())continue;
                     if (!gamePlayer.isAlive())continue;
                     if (gamePlayer.getRole() == null)continue;
-                    final TeamList team = gamePlayer.getRole().getTeam();
+                    final ITeam team = gamePlayer.getRole().getTeam();
                     final Location center = target.getEyeLocation();
                     center.setY(center.getY()+0.5);
                     if (team.equals(TeamList.Slayer)) {

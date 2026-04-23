@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 @Getter
-public enum Roles implements IRoles {
+public enum Roles implements IRoles<Roles> {
     //Solo ds
     Yoriichi(TeamList.Solo, "ds", 0, new ItemBuilder(Material.DOUBLE_PLANT).setName("§eYoriichi").toItemStack(), "§bNickNqck"),
     JigoroV1(TeamList.Solo, "ds", 1, new ItemBuilder(Material.GLOWSTONE).setName("§eJigoro").toItemStack(), "§bNickNqck"),
@@ -92,10 +92,12 @@ public enum Roles implements IRoles {
     //Jubi ns
     Madara(TeamList.Jubi, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dMadara").toItemStack(), "§aYukan"),
     Obito(TeamList.Jubi, "ns", 1, new ItemBuilder(Material.COMPASS).setName("§dObito").toItemStack(), "§aYukan"),
+    JubiSasuke(TeamList.Jubi, "ns", 2, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dSasuke").toItemStack(), "§bNickNqck"),
     //Solo ns
     Gaara(TeamList.Solo, "ns", 0, new ItemBuilder(Material.SAND).setName("§eGaara").toItemStack(), "§bNickNqck"),
     Danzo(TeamList.Solo, "ns", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eDanzo").toItemStack(), "§bNickNqck"),
     Shisui(TeamList.Solo, "ns", 2, new ItemBuilder(Material.EYE_OF_ENDER).setName("§eShisui").toItemStack(), "§bNickNqck"),
+    KabutoSolo(TeamList.Solo, "ns", 3, new ItemBuilder(Material.BONE).setName("§eKabuto").toItemStack(), "§bNickNqck"),
     //Orochimaru ns
     Orochimaru(TeamList.Orochimaru, "ns", 0, new ItemBuilder(Material.NETHER_STAR).setName("§5Orochimaru").toItemStack(), "§bNickNqck"),
     Kabuto(TeamList.Orochimaru, "ns", 1, new ItemBuilder(Material.WATER_LILY).setName("§5Kabuto").toItemStack(), "§bNickNqck"),

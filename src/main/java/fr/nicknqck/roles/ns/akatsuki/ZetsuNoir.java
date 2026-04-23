@@ -3,14 +3,13 @@ package fr.nicknqck.roles.ns.akatsuki;
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.desc.AllDesc;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
@@ -21,7 +20,6 @@ public class ZetsuNoir extends AkatsukiRoles {
 
 	public ZetsuNoir(UUID player) {
 		super(player);
-		setChakraType(Chakras.DOTON);
 	}
 	@Override
 	public @NonNull Roles getRoles() {
@@ -52,6 +50,13 @@ public class ZetsuNoir extends AkatsukiRoles {
 				AllDesc.bar
 		};
 	}
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON
+        };
+    }
 
     @Override
 	public void resetCooldown() {

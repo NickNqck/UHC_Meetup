@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import fr.nicknqck.roles.ns.Chakra;
+import fr.nicknqck.interfaces.IChakra;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -14,9 +14,8 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.roles.ns.Chakras;
 
-public class Futon implements Chakra {
+public class Futon implements IChakra {
 
 	@Override
 	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {
@@ -24,15 +23,10 @@ public class Futon implements Chakra {
 	}
 
 	@Override
-	public Chakras getChakres() {
-		return Chakras.FUTON;
-	}
-
-	@Override
 	public List<UUID> getList() {
 		return Futon;
 	}
-	private List<UUID> Futon = new ArrayList<>();
+	private final List<UUID> Futon = new ArrayList<>();
 	@Override
 	public void onSecond(GameState gameState) {
 	}

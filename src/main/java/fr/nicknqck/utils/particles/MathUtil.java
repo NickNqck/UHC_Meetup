@@ -127,6 +127,34 @@ public class MathUtil {
             sendParticle(particle, x, y+1, z, startLocation.getWorld());
         }
     }
+    public static void sendParticleLineTo(Player player, final Location startLocation, final Location endLocation, final EnumParticle particle, final int amount) {
+
+        double distanceX = (endLocation.getX() - startLocation.getX()) / amount;
+        double distanceY = (endLocation.getY() - startLocation.getY()) / amount;
+        double distanceZ = (endLocation.getZ() - startLocation.getZ()) / amount;
+
+        for (int i = 0; i < amount; i++) {
+            double x = startLocation.getX() + (distanceX * i);
+            double y = startLocation.getY() + (distanceY * i);
+            double z = startLocation.getZ() + (distanceZ * i);
+
+            sendParticleTo(player, particle, x, y+1, z);
+        }
+    }
+    public static List<Location> getLine(final Location startLocation, final Location endLocation, final int amount) {
+        final List<Location> list = new ArrayList<>();
+        double distanceX = (endLocation.getX() - startLocation.getX()) / amount;
+        double distanceY = (endLocation.getY() - startLocation.getY()) / amount;
+        double distanceZ = (endLocation.getZ() - startLocation.getZ()) / amount;
+        for (int i = 0; i < amount; i++) {
+            double x = startLocation.getX() + (distanceX * i);
+            double y = startLocation.getY() + (distanceY * i);
+            double z = startLocation.getZ() + (distanceZ * i);
+
+            list.add(new Location(endLocation.getWorld(), x, y+1, z));
+        }
+        return list;
+    }
     private final List<FallingBlock> fallingBlocks = new ArrayList<>();
     public Set<Location> sphere(Location location, int radius, boolean hollow){
         Set<Location> blocks = new HashSet<>();
@@ -384,5 +412,41 @@ public class MathUtil {
     public static double get34(final double value) {
         final double one = value / 4;
         return value - one;
+    }
+    /**
+     * Tire un projectile de flammes dans la direction du regard du joueur sur {@code range} blocs.
+     * Les particules sont spawnées immédiatement (pas de BukkitRunnable).
+     *
+     * @param shooter       le joueur qui tire
+     * @param range         distance max en blocs (ex: 8)
+     * @param hitRadius     rayon de détection de collision autour de chaque point (ex: 0.8)
+     * @return              liste des joueurs touchés (sans doublons, shooter exclu)
+     */
+    public static List<Player> flameShot(Player shooter, double range, double hitRadius) {
+        final List<Player> hit = new ArrayList<>();
+        final Location origin = shooter.getEyeLocation().clone();
+        final Vector direction = origin.getDirection().normalize();
+        final double step = 0.4; // pas entre chaque particule (blocs)
+
+        for (double d = step; d <= range; d += step) {
+            final Location point = origin.clone().add(direction.clone().multiply(d));
+
+            // Arrêt si on entre dans un bloc solide
+            if (point.getBlock().getType().isSolid()) break;
+
+            // Spawner la particule FLAME à ce point
+            sendParticle(EnumParticle.FLAME, point);
+
+            // Détecter les joueurs proches
+            for (final Player nearby : point.getWorld().getPlayers()) {
+                if (nearby.equals(shooter)) continue;
+                if (hit.contains(nearby)) continue;
+                if (nearby.getLocation().add(0, 1, 0).distance(point) <= hitRadius) {
+                    hit.add(nearby);
+                }
+            }
+        }
+
+        return hit;
     }
 }

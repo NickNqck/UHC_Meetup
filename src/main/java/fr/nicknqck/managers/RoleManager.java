@@ -36,7 +36,9 @@ import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.DanzoV2;
 import fr.nicknqck.roles.ns.solo.GaaraV2;
+import fr.nicknqck.roles.ns.solo.KabutoSolo;
 import fr.nicknqck.roles.ns.solo.ShisuiSolo;
+import fr.nicknqck.roles.ns.solo.jubi.JubiSasuke;
 import fr.nicknqck.roles.ns.solo.jubi.MadaraV2;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.*;
@@ -94,7 +96,7 @@ public class RoleManager implements Listener {
         registerNs();
         registerCustomRoles();
     }
-    private void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
+    public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
     }
@@ -170,7 +172,6 @@ public class RoleManager implements Listener {
         registerRole(PetitTitan.class);
         registerRole(Sieg.class);
         registerRole(TitanDeviant.class);
-        registerRole(TitanSouriant.class);
         //Register Mahr
         registerRole(BertoltV2.class);
         registerRole(LaraV2.class);
@@ -185,7 +186,7 @@ public class RoleManager implements Listener {
     }
     private void registerNs() throws Exception {
         //Register Shinobi
-        registerRole(Asuma.class);
+        registerRole(AsumaV2.class);
         registerRole(Fugaku.class);
         registerRole(InoV2.class);
         registerRole(Jiraya.class);
@@ -214,7 +215,7 @@ public class RoleManager implements Listener {
         registerRole(SuigetsuV2.class);
         registerRole(Tayuya.class);
         //Register Akatsuki
-        registerRole(Deidara.class);
+        registerRole(DeidaraV2.class);
         registerRole(HidanV2.class);
         registerRole(ItachiV2.class);
         registerRole(KakuzuV2.class);
@@ -228,6 +229,7 @@ public class RoleManager implements Listener {
         //Register Jubi
         registerRole(MadaraV2.class);
         registerRole(ObitoV2.class);
+        registerRole(JubiSasuke.class);
         //Register Kumogakure
         registerRole(GinkakuV2.class);
         registerRole(Kinkaku.class);
@@ -238,6 +240,7 @@ public class RoleManager implements Listener {
         registerRole(DanzoV2.class);
         registerRole(GaaraV2.class);
         registerRole(ShisuiSolo.class);
+        registerRole(KabutoSolo.class);
     }
     private void registerCustomRoles() throws Exception {
         //Register Custom Roles
@@ -283,7 +286,7 @@ public class RoleManager implements Listener {
             final RoleBase role = gamePlayer.getRole();
             if (role instanceof IAkatsukiChief) {
                 role.addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
-                        , Deidara.class, HidanV2.class, ItachiV2.class,
+                        , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
                         NagatoV2.class, ZetsuBlanc.class,
                         ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);

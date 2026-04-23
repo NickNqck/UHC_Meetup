@@ -1,5 +1,7 @@
 package fr.nicknqck.runnables;
 
+import fr.nicknqck.GameState;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -12,7 +14,7 @@ import fr.nicknqck.utils.packets.NMSPacket;
 import java.text.DecimalFormat;
 
 public class PregenerationTask extends BukkitRunnable {
-	
+	@Getter
 	private Double percent;
 	private Double currentChunkLoad;
 	private final Double totalChunkToLoad;
@@ -23,6 +25,7 @@ public class PregenerationTask extends BukkitRunnable {
 	private final Integer mz;
 	private final Integer radius;
 	private final World world;
+    @Getter
 	private boolean finished;
 	private int chunkFinded;
 	private final long oldTimeMilis;
@@ -39,7 +42,9 @@ public class PregenerationTask extends BukkitRunnable {
 		this.mz = r + world.getSpawnLocation().getBlockZ();
 		this.finished = false;
 		this.oldTimeMilis = System.currentTimeMillis();
-		Bukkit.broadcastMessage("§8[§cPregen§8] §fLancement de la pré-génération de §c"+world.getName());
+        if (!GameState.inGame()){
+            Bukkit.broadcastMessage("§8[§cPregen§8] §fLancement de la pré-génération de §c"+world.getName());
+        }
 		runTaskTimer(Main.getInstance(), 0L, 5L);
 	}
 	
@@ -61,13 +66,17 @@ public class PregenerationTask extends BukkitRunnable {
 			}
 		}
 		this.percent = this.currentChunkLoad / this.totalChunkToLoad * 100.0D;
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			NMSPacket.sendActionBar(p, "§fPré-génération de §c"+world.getName()+" §8» §c"+this.percent.intValue()+"%");
-		}
+        if (!GameState.inGame()) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                NMSPacket.sendActionBar(p, "§fPré-génération de §c"+world.getName()+" §8» §c"+this.percent.intValue()+"%");
+            }
+        }
 		if(this.finished) {
-			long time = System.currentTimeMillis();
-			Bukkit.broadcastMessage("§8[§cPregen§8] §fLa pré-génération de§c "+world.getName()+"§f est terminée !");
-			Bukkit.broadcastMessage("§c"+chunkFinded+"§7 on essayer d'être généré, §c"+new DecimalFormat("0").format(time-this.oldTimeMilis).substring(2)+" ticks§7 ont été nécessaire");
+            if (!GameState.inGame()) {
+                long time = System.currentTimeMillis();
+                Bukkit.broadcastMessage("§8[§cPregen§8] §fLa pré-génération de§c "+world.getName()+"§f est terminée !");
+                Bukkit.broadcastMessage("§c"+chunkFinded+"§7 on essayer d'être généré, §c"+new DecimalFormat("0").format(time-this.oldTimeMilis).substring(2)+" ticks§7 ont été nécessaire");
+            }
 			cancel();
 			//Bukkit.getOnlinePlayers().forEach(players -> NMSMethod.sendActionbar(players, "§fPré-génération §8» [§r"+UHCAPI.get().getGameManager().getProgressBar(this.percent.intValue(), 100, 20, "|", "§c", "§f")+"§8] §c"+this.percent.intValue()+"%"));
 		}

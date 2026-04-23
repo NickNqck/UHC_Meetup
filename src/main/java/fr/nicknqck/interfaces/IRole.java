@@ -1,7 +1,6 @@
 package fr.nicknqck.interfaces;
 
 import fr.nicknqck.enums.EffectWhen;
-import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -17,10 +16,10 @@ public interface IRole {
     UUID getPlayer();
     String getName();
     @NonNull
-    IRoles getRoles();
+    IRoles<?> getRoles();
     @NonNull
-    TeamList getOriginTeam();
-    TeamList getTeam();
+    ITeam getOriginTeam();
+    ITeam getTeam();
     Map<PotionEffect, EffectWhen> getEffects();
     void resetCooldown();
     TextComponent getComponent();

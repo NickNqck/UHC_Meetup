@@ -17,7 +17,6 @@ public class GaiV2 extends PortesRoles{
     @Override
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
-        setChakraType(getRandomChakras());
         addPower(new TroisPortePower(this), true);
         addPower(new SixPortesPower(this), true);
         addPower(new HuitPortesPower(this), true);

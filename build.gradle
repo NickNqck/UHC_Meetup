@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'fr.nicknqck'
-version '12'
+version '13'
 
 repositories {
     mavenLocal()
@@ -20,17 +20,18 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
 }
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.32'
-    annotationProcessor 'org.projectlombok:lombok:1.18.32'
-    testCompileOnly 'org.projectlombok:lombok:1.18.32'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
-    implementation 'com.google.code.gson:gson:2.13.1'
+    compileOnly 'org.projectlombok:lombok:1.18.42'
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+    testCompileOnly 'org.projectlombok:lombok:1.18.42'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
+    implementation 'com.google.code.gson:gson:2.13.2'
     implementation 'io.github.hmzel:particlesfx:1.8.8'
+    implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.11.5'
     compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\spigot.jar')
 }
 
 shadowJar {
-    // 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
+    relocate 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
     relocate("hm.zelha.particlesfx", "fr.nicknqck.particles")
 }
 

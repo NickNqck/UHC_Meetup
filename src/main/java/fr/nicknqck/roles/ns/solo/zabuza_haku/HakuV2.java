@@ -9,8 +9,8 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.NSSoloRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -53,6 +53,13 @@ public class HakuV2 extends NSSoloRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Haku";
     }
@@ -83,7 +90,6 @@ public class HakuV2 extends NSSoloRoles {
         addKnowedRole(ZabuzaV2.class);
         getGamePlayer().startChatWith("§bHaku:", "!", ZabuzaV2.class);
         addPower(new HyotonPower(this));
-        setChakraType(Chakras.SUITON);
         super.RoleGiven(gameState);
     }
     private static class HyotonPower extends Power {

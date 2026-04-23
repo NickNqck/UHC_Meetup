@@ -6,7 +6,8 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.TripleMap;
@@ -40,7 +41,6 @@ public class Jugo extends OrochimaruRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);
-		setChakraType(getRandomChakras());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (!gameState.getAttributedRole().contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);
@@ -88,7 +88,19 @@ public class Jugo extends OrochimaruRoles {
 				MarqueMauditeItem()
 		};
 	}
-	private ItemStack MarqueMauditeItem() {
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON,
+                EChakras.RAITON,
+                EChakras.KATON,
+                EChakras.DOTON,
+                EChakras.FUTON
+        };
+    }
+
+    private ItemStack MarqueMauditeItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§5Marque maudite").setLore("§7Vous permet de devenir plus puissant pendant un court instant").toItemStack();
 	}
 	private void onKimimaroDeath(boolean msg) {

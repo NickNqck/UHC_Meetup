@@ -9,7 +9,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.event.EventUtils;

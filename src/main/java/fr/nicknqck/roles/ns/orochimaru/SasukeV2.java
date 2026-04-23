@@ -10,8 +10,8 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.akatsuki.ItachiV2;
 import fr.nicknqck.roles.ns.builders.EUchiwaType;
 import fr.nicknqck.roles.ns.builders.IUchiwa;
@@ -44,11 +44,19 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
 
     public SasukeV2(UUID player) {
         super(player);
+        setCanBeHokage(true);
     }
 
     @Override
     public @NonNull Intelligence getIntelligence() {
         return Intelligence.INTELLIGENT;
+    }
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.KATON
+        };
     }
 
     @Override
@@ -78,8 +86,6 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         addPower(new Izanagi(this));
         addKnowedRole(OrochimaruV2.class);
         EventUtils.registerRoleEvent(this);
-        setChakraType(Chakras.KATON);
-        setCanBeHokage(true);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Itachi)) {
                 onItachiKill(false);
@@ -103,6 +109,11 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
                 this.orochimaruDEAD = true;
             }
         }, 10*20);
+    }
+
+    @Override
+    public boolean isCanBeHokage() {
+        return true;
     }
 
     @EventHandler

@@ -18,9 +18,9 @@ public class GameStartEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final GameState gameState;
     private final List<UUID> inGamePlayers;
-    private final List<IRoles> igRoles;
+    private final List<IRoles<?>> igRoles;
 
-    public GameStartEvent(GameState gameState, List<IRoles> rolesList) {
+    public GameStartEvent(GameState gameState, List<IRoles<?>> rolesList) {
         this.gameState = gameState;
         this.igRoles = rolesList;
         this.inGamePlayers = new ArrayList<>(gameState.getInGamePlayers());

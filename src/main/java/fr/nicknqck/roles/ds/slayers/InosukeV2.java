@@ -6,7 +6,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.builders.SlayerRoles;
-import fr.nicknqck.roles.ds.builders.Soufle;
+import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.NMSPacket;

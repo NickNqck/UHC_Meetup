@@ -6,10 +6,10 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
-import fr.nicknqck.roles.ns.builders.ShinobiRoles;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -32,7 +32,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class Shikamaru extends ShinobiRoles {
+public class Shikamaru extends HShinobiRoles {
 
     private final ItemStack stunItem = new ItemBuilder(Material.NETHER_STAR).setName("§aStun").setLore("§7Vous permet d'empêcher de bouger un joueur").toItemStack();
     private int cdStun = 0;
@@ -45,7 +45,6 @@ public class Shikamaru extends ShinobiRoles {
 
     public Shikamaru(UUID player) {
         super(player);
-        setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.KATON));
     }
     @Override
     public @NonNull Roles getRoles() {
@@ -172,6 +171,13 @@ public class Shikamaru extends ShinobiRoles {
                 }
             }
         }
+    }
+
+    @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON, EChakras.KATON
+        };
     }
 
     @Override

@@ -7,8 +7,8 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.EByakuganUserType;
 import fr.nicknqck.roles.ns.builders.IByakuganUser;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -52,6 +52,15 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.DOTON,
+                EChakras.RAITON,
+                EChakras.KATON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Neji";
     }
@@ -68,7 +77,6 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
         addPower(new ByakuganCommand(this));
         addPower(new ChakraCommand(this));
         new ForceRunnable(getGameState(), this);
-        setChakraType(getRandomChakrasBetween(Chakras.DOTON, Chakras.RAITON, Chakras.KATON));
         super.RoleGiven(gameState);
     }
 
@@ -232,8 +240,8 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final String[] args = (String[]) map.get("args");
             if (args.length == 3) {
-                Chakras chakras = null;
-                for (final Chakras chakra : Chakras.values()) {
+                EChakras chakras = null;
+                for (final EChakras chakra : EChakras.values()) {
                     if (args[1].equalsIgnoreCase(chakra.name())) {
                         chakras = chakra;
                         break;
@@ -281,7 +289,7 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
             if (args.length > 2) {
                 return super.getCompletor(args);
             }
-            for (final Chakras chakras : Chakras.values()) {
+            for (final EChakras chakras : EChakras.values()) {
                 list.add(chakras.name().toLowerCase());
             }
             return list;

@@ -5,8 +5,8 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.Chakras;
-import fr.nicknqck.roles.ns.Intelligence;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.ChiefAkatsukiRoles;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
@@ -43,6 +43,13 @@ public class KonanV2 extends ChiefAkatsukiRoles {
     }
 
     @Override
+    public EChakras[] getChakrasCanHave() {
+        return new EChakras[] {
+                EChakras.SUITON
+        };
+    }
+
+    @Override
     public String getName() {
         return "Konan";
     }
@@ -55,7 +62,6 @@ public class KonanV2 extends ChiefAkatsukiRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         setNoFall(true);
-        setChakraType(Chakras.SUITON);
         addPower(new VolDeCombat(this), true);
         addPower(new DanceDuShikigami(this), true);
         super.RoleGiven(gameState);

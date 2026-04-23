@@ -5,6 +5,7 @@ import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
@@ -13,7 +14,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.SusamaruV2;
-import fr.nicknqck.roles.ns.Chakras;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
@@ -68,7 +69,7 @@ public class GameListener implements Listener {
 			@NonNull final OnSecond onSecond = new OnSecond(this.gameState);
 			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
-			for (Chakras ch : Chakras.values()) {
+			for (EChakras ch : EChakras.values()) {
 				ch.getChakra().onSecond(gameState);
 			}
 			BijuListener.getInstance().runnableTask(gameState);
@@ -181,14 +182,7 @@ public class GameListener implements Listener {
 				SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
 				Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 				Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("doDaylightCycle", "false");
-				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-					for (final Player p : Bukkit.getOnlinePlayers()) {
-						if (!gameState.hasRoleNull(p.getUniqueId())) {
-							gameState.getGamePlayer().get(p.getUniqueId()).getRole().onDay(gameState);
-						}
-					}
-					Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
-	        }, 50);
+				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Bukkit.getPluginManager().callEvent(new DayEvent(gameState)), 50);
 			} else {
 				gameState.t--;
 				if (gameState.t <= 0) {
@@ -199,11 +193,6 @@ public class GameListener implements Listener {
 						SendToEveryone(ChatColor.DARK_GRAY + "§o§m-----------------------------------");
 						SendToEveryone("\n §bIl fait maintenant jour");
 						SendToEveryone(ChatColor.DARK_GRAY + "\n§o§m-----------------------------------");
-						for (UUID u : gameState.getInGamePlayers()) {
-							if (!gameState.hasRoleNull(u)) {
-								gameState.getGamePlayer().get(u).getRole().onDay(gameState);
-							}
-						}
 						Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
 					} else {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(16500);
@@ -281,7 +270,7 @@ public class GameListener implements Listener {
 		}
 	}
 	@SuppressWarnings("deprecation")
-	public static void EndGame(final GameState gameState, final TeamList team) {
+	public static void EndGame(final GameState gameState, final ITeam team) {
 		gameState.setServerState(ServerStates.GameEnded);
 		Bukkit.getPluginManager().callEvent(new GameEndEvent(gameState, team));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
@@ -298,7 +287,7 @@ public class GameListener implements Listener {
 			AttackUtils.CantAttack.clear();
 			AttackUtils.CantReceveAttack.clear();
 			gameState.getDeadRoles().clear();
-			for (Chakras ch : Chakras.values()) {
+			for (EChakras ch : EChakras.values()) {
 				ch.getChakra().getList().clear();
 			}
 			for (Player p : Bukkit.getOnlinePlayers()) {
@@ -344,7 +333,7 @@ public class GameListener implements Listener {
 			if (team != null) {
 				if (team != TeamList.Solo) {
 					String Vainqueurs = "Victoire du camp: "+team.getColor()+StringUtils.replaceUnderscoreWithSpace(team.name());
-					title = "Victoire des: "+team.getColor()+StringUtils.replaceUnderscoreWithSpace(team.name());
+					title = "Victoire du camp: "+team.getColor()+StringUtils.replaceUnderscoreWithSpace(team.name());
                     SendToEveryone(Vainqueurs);
 				} else {
 					if (gameState.getInGamePlayers().get(0) != null) {
@@ -500,6 +489,13 @@ public class GameListener implements Listener {
         }
         return sum;
     }
+    private static int trueCount2(Collection<Boolean> b) {
+        int sum = 0;
+        for (boolean b1 : b) {
+            if (b1) sum++;
+        }
+        return sum;
+    }
 	public static void detectWin(GameState gameState) {
         List<Player> players = new ArrayList<>();
 		for (final UUID uuid : gameState.getInGamePlayers()) {
@@ -509,11 +505,40 @@ public class GameListener implements Listener {
 		}
 		players.removeAll(gameState.getInSpecPlayers());
 		boolean gameDone = false;
-		TeamList winer = null;
+		ITeam winer = null;
 		if (players.isEmpty()) {
 			gameState.sendTitleToAll("§fVictoire de", "§7Personne", false);
             gameDone = true;
         }
+        final Map<ITeam, Boolean> teams = new HashMap<>();
+        for (GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
+            if (!gamePlayer.check())continue;
+            final RoleBase role = gamePlayer.getRole();
+            if (!teams.containsKey(role.getTeam())) {
+                teams.put(role.getTeam(), true);
+            }
+        }
+        final int test = trueCount2(teams.values());
+        Main.getInstance().debug("TrueCount is = "+test);
+        if (test == 0) {
+            EndGame(gameState, null);
+        } else if (test == 1) {
+            //Comme l'int est égal à 1 on sait déjà qu'il n'y a qu'une team gagnante
+            final ITeam winTeam = teams.keySet().stream().findFirst().get();
+            if (winTeam instanceof TeamList && winTeam.equals(TeamList.Solo)) {
+                if (gameState.getInGamePlayers().size() == 1) {
+                    gameDone = true;
+                    winer = winTeam;
+                }
+            } else {
+                winer = winTeam;
+                gameDone = true;
+            }
+        }
+        if (gameDone) {
+            EndGame(gameState, winer);
+        }
+/*5
 		boolean Slayer = false, Demon = false, Solo = false, Jigoro = false, Alliance = false;
 		
 		boolean Mahr = false, Titans = false, Soldat = false;
@@ -678,7 +703,7 @@ public class GameListener implements Listener {
 		}
 		if (gameDone){
 			EndGame(gameState, winer);
-		}
+		}*/
 	}
 	@EventHandler
 	private void OnGuiInterract(InventoryClickEvent event) {
@@ -813,7 +838,7 @@ public class GameListener implements Listener {
 			p.teleport(new Location(to.getWorld(), to.getX(), to.getWorld().getHighestBlockYAt(to), to.getZ()));
 		}
         if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ce passe rien
-        for (Chakras ch : Chakras.values()) {
+        for (EChakras ch : EChakras.values()) {
         	ch.getChakra().onPlayerMoove(e, p, from, to);
         }
     	if (gameState.shutdown.contains(e.getPlayer())) {
