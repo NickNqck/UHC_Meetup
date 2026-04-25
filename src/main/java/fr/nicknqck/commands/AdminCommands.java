@@ -10,6 +10,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.essential.inventorys.EasyRoleAdder;
+import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -229,6 +230,16 @@ public class AdminCommands implements CommandExecutor{
 				}
 			}
 			if (args.length == 1) {
+				if (args[0].equalsIgnoreCase("bidiba")) {
+					for (IRole iRole : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+						if (iRole instanceof RoleBase) {
+							if (((RoleBase) iRole).Desc().length > 0) {
+								sender.sendMessage("lenght = "+((RoleBase) iRole).Desc().length+", role: "+iRole.getName());
+							}
+						}
+					}
+					return true;
+				}
                 if (args[0].equalsIgnoreCase("version")) {
                     Main.getInstance().getUpdateChecker().checkForUpdates();
                     if (sender instanceof Player) {

@@ -9,6 +9,7 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.enums.DemonType;
+import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.roles.ds.slayers.pillier.MuichiroV2;
@@ -18,6 +19,7 @@ import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,7 +36,6 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.desc.AllDesc;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static fr.nicknqck.Main.RANDOM;
@@ -55,10 +56,6 @@ public class Gyokko extends DemonsRoles implements Listener {
 		return DemonType.SUPERIEUR;
 	}
 
-	@Override
-	public String[] Desc() {
-		return AllDesc.Gyokko;
-	}
 	@Override
 	public @NonNull TeamList getOriginTeam() {
 		return TeamList.Demon;
@@ -96,6 +93,12 @@ public class Gyokko extends DemonsRoles implements Listener {
 		addKnowedRole(MuzanV2.class);
         EventUtils.registerRoleEvent(this);
 	}
+
+	@Override
+	public TextComponent getComponent() {
+		return AutomaticDesc.createFullAutomaticDesc(this);
+	}
+
 	private static class PotItemPower extends ItemPower {
 
 		private final List<Location> locations;
@@ -163,7 +166,13 @@ public class Gyokko extends DemonsRoles implements Listener {
 		private int timeLeft = 60;
 
 		protected FormeDemoniaquePower(@NonNull RoleBase role) {
-			super("Forme Démoniaque", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cForme Démoniaque"), role);
+			super("Forme Démoniaque", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cForme Démoniaque"), role,
+					"§7Vous disposez d'un compte à rebours de§c 60 secondes§7, lorsque vous§a activez§7 votre§c Forme Démoniaque",
+					"§7le compte à rebours démarre et vous obtenez l'effet§9 Résistance I§7, une fois que le compte à rebours atteint",
+					"§c0 seconde§7 il revient à§c 60s§7 et vous perdez§c 1❤ permanent§7.",
+					"",
+					"§7Vous pouvez§c désactiver§7 à tout moment votre§c Forme Démoniaque§7 (le compteur sera§c sauvegarder§7)."
+			);
 			new FormeRunnable(this, getRole());
 			setShowCdInDesc(false);
 		}
@@ -222,6 +231,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 					final Player owner = Bukkit.getPlayer(role.getPlayer());
 					if (owner != null) {
 						owner.setMaxHealth(this.role.getMaxHealth());
+						owner.sendMessage(Main.getInstance().getNAME()+"§7 Votre§c Forme Démoniaque§7 vous à fait perdre§c 1❤ permanent§7.");
 					}
 					this.power.timeLeft = 60;
 				}
@@ -235,14 +245,16 @@ public class Gyokko extends DemonsRoles implements Listener {
 					this.power.timeLeft--;
 					Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.role.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.NOW));
 				}
-				role.getGamePlayer().getActionBarManager().updateActionBar("gyokko.forme", "§bTemp avant perte de§c coeur§b: §c"+this.power.timeLeft+"s");
+				role.getGamePlayer().getActionBarManager().updateActionBar("gyokko.forme", "§bCompte à rebours: §c"+this.power.timeLeft+"s");
 			}
 		}
 	}
 	private static class BulleItemPower extends ItemPower {
 
 		protected BulleItemPower(@NonNull RoleBase role) {
-			super("Bulle d'eau", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bBulle d'eau"), role);
+			super("Bulle d'eau", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bBulle d'eau"), role,
+					"§7Vous enferme vous et le joueur viser dans une§b bulle d'eau§7, à l'intérieur vous ne pourrez pas vous noyer"
+			);
 		}
 
 		@Override
