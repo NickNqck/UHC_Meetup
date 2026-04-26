@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'fr.nicknqck'
-version '13'
+version '14'
 
 repositories {
     mavenLocal()
@@ -26,7 +26,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.42'
     implementation 'com.google.code.gson:gson:2.13.2'
     implementation 'io.github.hmzel:particlesfx:1.8.8'
-    implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.11.5'
+    implementation "net.lingala.zip4j:zip4j:2.11.5"
     compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\spigot.jar')
 }
 
