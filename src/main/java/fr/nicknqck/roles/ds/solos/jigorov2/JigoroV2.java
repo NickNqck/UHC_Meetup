@@ -18,6 +18,7 @@ import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,7 +44,10 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	public Soufle getSoufle() {
 		return Soufle.FOUDRE;
 	}
-
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);

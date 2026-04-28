@@ -10,6 +10,7 @@ import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -57,7 +58,10 @@ public class Sakura extends HShinobiRoles {
 				AllDesc.bar
 		};
 	}
-
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
     @Override
     public EChakras[] getChakrasCanHave() {
         return new EChakras[] {

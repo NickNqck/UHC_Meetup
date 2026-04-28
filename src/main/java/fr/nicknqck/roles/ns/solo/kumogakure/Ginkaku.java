@@ -14,6 +14,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.PropulserUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -52,6 +53,10 @@ public class Ginkaku extends NSSoloRoles {
 				OLDgivePotionEffet(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true);
 			}
 		}, 100);
+	}
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
 	}
 	@Override
 	public @NonNull Roles getRoles() {

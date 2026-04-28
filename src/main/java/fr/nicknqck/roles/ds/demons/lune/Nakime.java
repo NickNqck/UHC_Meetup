@@ -15,6 +15,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.powers.LocPlayer;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -45,7 +46,10 @@ public class Nakime extends DemonsRoles {
 			}
 		}
 	}
-
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public @NonNull DemonType getRank() {
 		return DemonType.SUPERIEUR;

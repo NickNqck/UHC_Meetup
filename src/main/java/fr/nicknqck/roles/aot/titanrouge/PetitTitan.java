@@ -4,6 +4,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +41,10 @@ public class PetitTitan extends TitansRoles {
 			"",
 			AllDesc.bar
 	};
+	}
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
 	}
 	@Override
 	public void GiveItems() {

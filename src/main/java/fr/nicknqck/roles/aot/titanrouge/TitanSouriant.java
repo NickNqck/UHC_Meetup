@@ -8,6 +8,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -35,6 +36,10 @@ public class TitanSouriant extends TitansRoles {
 			"",
 			AllDesc.bar,
 		};
+	}
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
 	}
 	@Override
 	public ItemStack[] getItems() {

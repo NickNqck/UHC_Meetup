@@ -15,6 +15,7 @@ import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.packets.PacketDisplay;
 import fr.nicknqck.utils.WorldUtils;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -52,7 +53,10 @@ public class Yoriichi extends DemonsSlayersRoles implements Listener {
 	public Soufle getSoufle() {
 		return Soufle.SOLEIL;
 	}
-
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public @NonNull Roles getRoles() {
 		return Roles.Yoriichi;

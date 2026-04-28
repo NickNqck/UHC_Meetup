@@ -11,6 +11,7 @@ import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,7 +43,10 @@ public class ZetsuBlanc extends AkatsukiRoles {
 	public @NonNull Intelligence getIntelligence() {
 		return Intelligence.PEUINTELLIGENT;
 	}
-
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public String[] Desc() {
 		KnowRole(owner, Roles.ZetsuNoir, 1);

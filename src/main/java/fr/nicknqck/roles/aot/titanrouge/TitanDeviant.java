@@ -7,6 +7,7 @@ import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.Loc;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -36,6 +37,10 @@ public class TitanDeviant extends TitansRoles {
 				"",
 				AllDesc.bar,
 		};
+	}
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
 	}
 	@Override
 	public void Update(GameState gameState) {

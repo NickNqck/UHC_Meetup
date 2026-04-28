@@ -14,6 +14,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -47,7 +48,10 @@ public class Kinkaku extends KumogakureRole {
             }
         }, 100);
     }
-
+    @Override
+    public TextComponent getComponent() {
+        return new TextComponent("");
+    }
     @Override
     public void onEndKyubi() {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.DAY);

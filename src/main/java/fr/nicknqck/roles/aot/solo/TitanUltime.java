@@ -13,6 +13,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -56,6 +57,10 @@ public class TitanUltime extends TitansRoles {
 				"",
 				AllDesc.bar
 		};
+	}
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
 	}
 	@Override
 	public void GiveItems() {

@@ -10,6 +10,7 @@ import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -44,7 +45,10 @@ public class Soldat extends SoldatsRoles {
 				
 		};
 	}
-
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public String getName() {
 		return "Soldat";

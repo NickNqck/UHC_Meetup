@@ -84,7 +84,15 @@ public abstract class RoleBase implements IRole {
 	@Getter
 	private final Map<String, List<Class<? extends RoleBase>>> knowedPlayersByRole = new HashMap<>();
 
-	public abstract String[] Desc();
+	public String[] Desc() {
+		return new String[0];
+	}
+
+	@Override
+	public ItemStack[] getItems() {
+		return new ItemStack[0];
+	}
+
 	public int roleID = 0;
 	public String StringID = "";
 	private UUID uuidOwner;
@@ -493,9 +501,7 @@ public abstract class RoleBase implements IRole {
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
 
 	@Override
-	public TextComponent getComponent() {
-		return new TextComponent("");
-	}
+	public abstract TextComponent getComponent();
 
 	public void givePotionEffect(PotionEffect effect, EffectWhen when) {
 		if (when.equals(EffectWhen.NOW) || when.equals(EffectWhen.SPECIAL)) {

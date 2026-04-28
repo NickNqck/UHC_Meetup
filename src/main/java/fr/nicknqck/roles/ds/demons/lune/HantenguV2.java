@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ds.demons.MuzanV2;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,7 +30,10 @@ public class HantenguV2 extends DemonsRoles {
 		super(player);
 		clone = Clone.Hantengu;
 	}
-
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public void RoleGiven(GameState gameState) {
 		super.RoleGiven(gameState);

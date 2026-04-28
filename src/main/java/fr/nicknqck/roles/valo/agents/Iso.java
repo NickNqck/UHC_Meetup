@@ -53,6 +53,10 @@ public class Iso extends RoleBase {
         super(player);
 
     }
+    @Override
+    public TextComponent getComponent() {
+        return new TextComponent("");
+    }
 
     @Override
     public void RoleGiven(GameState gameState) {

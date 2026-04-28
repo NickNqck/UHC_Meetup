@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ns.builders.ShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -68,6 +69,10 @@ public class YondaimeRaikage extends ShinobiRoles {
                 EChakras.RAITON
         };
     }
+	@Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 
     private ItemStack ArmureItem() {
 		return new ItemBuilder(Material.NETHER_STAR).setName("§eArmure Raiton").setLore("§7Vous permet d'obtenir l'effet Résistance 1 et Speed 2").toItemStack();
