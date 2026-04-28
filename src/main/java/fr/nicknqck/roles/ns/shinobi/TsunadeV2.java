@@ -224,6 +224,7 @@ public class TsunadeV2 extends HShinobiRoles {
                     this.nsRoles.addPower(new KatsuyuPower(nsRoles), true);
                     this.nsRoles.getGamePlayer().sendMessage("§aTsunade§7 vous a§a enseigner§7 comment utiliser§d Katsuyu§7.");
                     this.power.getRole().getGamePlayer().sendMessage("§7Vous avez§a enseigner§7 comment uriliser§d Katsuyu§7 a§a "+nsRoles.getGamePlayer().getPlayerName());
+                    this.power.getRole().getGamePlayer().getActionBarManager().removeInActionBar("tsunadev2.enseignement");
                     Bukkit.getScheduler().runTask(this.power.getPlugin(), () -> this.power.getRole().giveHealedHeartatInt(2.0));
                     cancel();
                     return;
