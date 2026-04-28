@@ -28,94 +28,10 @@ public class AllDesc{
 	public final static String objectifteam = "§fVotre objectif est de gagner avec le camp: ";
 	public final static String objectifsolo = "§fVotre objectif est de gagner ";
 	public final static String particularite = ChatColor.BOLD + "Particularité: ";
-	public final static String nausee = "§2Nausée";
-	static final String t =  "§fSi vous parvenez à tuez un joueur possédant le rôle de§6 Muzan§r vous obtiendrez "+Force+" 1 permanent, de plus votre§6 Dance du Dieu du Feu§r ne vous coutera plus de "+coeur+" permanent";
 	public static final String chakra = "Vous possédez la nature de Chakra: ";
 	public final static String tab = "§7     →";
 
-	public static String[] Gyokko = new String[] {
-			bar,
-			"§lRôle: §r§cGyokko",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Force+" 1 la "+nuit),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Pouvoir Sanginaire: "+ChatColor.WHITE+"Vous téléportera dans un rayon de 15 blocs au tour de vous (à la même couche que la ou vous êtes)"),
-			"",
-			(ChatColor.DARK_GRAY+" • "+ChatColor.GOLD+ChatColor.BOLD+"Forme Démoniaque: "+ChatColor.WHITE+"Quand vous activez votre Forme Démonique vous lancez un compte à rebours qui vous fera perdre 1"+coeur+" permanent toute les minutes, mais il vous donnera également des aventages très pratique comme: un plastron Thorns 3, "+Resi+" 1 Permanent"),
-			"",
-			ChatColor.DARK_GRAY+" • "+ChatColor.GOLD+ChatColor.BOLD+"Bulle: "+ChatColor.WHITE+"Crée une bulle d'eau autours de vous de rayon 8",
-			"",
-			(ChatColor.BOLD+"Amélioration: "),
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuez un joueur possédant le rôle de "+ChatColor.GOLD+"Muichiro"+ChatColor.WHITE+" vous obtiendrez force 1 le jour ainsi que des bottes depht strider 2"),
-			"",
-			bar
-	};
 
-	public static String[] Tanjiro = new String[] {
-			bar,
-			"§lRôle: §r§aTanjiro",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Speed+" 1 le "+jour),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Dance du Dieu du Feu: "+ChatColor.WHITE+"Vous donne "+Resi+" 1 et "+fireResi+" 1 pendant 3 minutes, pendant la première minutes lorsque vous tapez un joueur vous le mettrez en feu, 3 minutes après activation vous perdrez 2"+coeur+" permanent"),
-			"",
-			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
-			"",
-			ChatColor.DARK_GRAY+" • " +t,
-			"",
-			ChatColor.BOLD + " Commande: ",
-            "",
-            ChatColor.DARK_GRAY + " • " + ChatColor.GOLD+"/ds sentir"+ChatColor.RESET+ " Permet de savoir combien il y à de démon autours de vous",
-            "",
-			bar
-	};
-	public static String[] Jigoro = new String[] {
-			bar,
-			"§lRôle: §r§6Jigoro",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Speed+" 1 permanent, "+Resi+" 1 permanent"),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Zone De Foudre:§f Crée une zone circulaire de 5 blocs de rayon, délimitée par des particules, dans laquelle vous recevrez l'effet "+regen+" 1 pendant 15s. Toutes les 4 secondes, un éclair infligeant 2"+coeur+" apparaîtra sur les joueurs présent dans la zone.",
-			"",
-			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tué un joueur possédant le rôle de§a Zen'Itsu§f vous obtiendrez "+Force+" 1 le "+jour+ChatColor.WHITE+" et aussi l'accès au"+ChatColor.GOLD+" Premier Mouvement du Souffle de la Foudre."),
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez a tué un joueur possédant le rôle de§c Kaigaku§f vous obtiendrez " +Force+" 1 la "+nuit+ChatColor.WHITE+" mais également l'accès au:"+ChatColor.GOLD+" Quatrième Mouvement du Souffle de la Foudre."),
-			"",
-			bar
-	};
-	public static String[] Yoriichi = new String[] {
-			bar,
-			"§lRôle: §r§6Yoriichi",
-			"",
-			ChatColor.BOLD+"Effet: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +Speed+" 1 et "+Force+" 1 permanents, "+Resi+" 1 le "+jour),
-			"",
-			ChatColor.BOLD+"Items: ",
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.GOLD+ChatColor.BOLD+"Souffle du Soleil:§f En activant cet objet vous activerez un passif qui est que quand vous tapez un joueur il perdra automatiquement son absorption"),
-			"",
-			(ChatColor.WHITE+""+ChatColor.BOLD+"Amélioration: "),
-			"",
-			(ChatColor.DARK_GRAY+" • " +ChatColor.WHITE+"Si vous parvenez à tuer un joueur possédant le rôle de "+ChatColor.GOLD+"Kokushibo"+ChatColor.WHITE+" vous obtiendrez "+Resi+" 1 la "+nuit),
-			"",
-			bar
-	};
 	public static String[] JigoroV2 = new String[] {
 			bar,
 			"§lRôle: §r§6Jigoro",
