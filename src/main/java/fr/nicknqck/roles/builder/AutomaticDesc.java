@@ -193,20 +193,20 @@ public class AutomaticDesc {
             textComponent.addExtra(powerName);
             textComponent.addExtra("§7\"");
             if (power.getUse() == power.getMaxUse()) {
-                textComponent.addExtra("§7 (§cInutilisable§7).");
+                textComponent.addExtra("§7 (§cInu§ctilisable§7).");
                 this.text.addExtra(textComponent);
                 continue;
             }
             if (power.isShowCdInDesc()) {
                 if (cooldown != null) {
                     if (cooldown.getOriginalCooldown() == -500) {
-                        textComponent.addExtra("§7 (1x/partie)");
+                        textComponent.addExtra("§7 (1x§7/partie)");
                     } else {
                         textComponent.addExtra(" §7(§71§7x§7/§7" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + "§7)");
                     }
                 }
                 if (power.getMaxUse() != -1) {
-                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/parti"+"§7e§7)");
+                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x§7/parti"+"§7e§7)");
                 }
             }
             textComponent.addExtra("§7.");

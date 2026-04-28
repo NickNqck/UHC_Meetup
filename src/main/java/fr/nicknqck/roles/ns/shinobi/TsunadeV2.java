@@ -8,17 +8,22 @@ import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GamePlayerEatGappleEvent;
 import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
+import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
+import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -28,7 +33,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,6 +70,7 @@ public class TsunadeV2 extends HShinobiRoles {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
         addPower(new KatsuyuPower(this), true);
+        addPower(new EnseignementPower(this));
         super.RoleGiven(gameState);
     }
 
@@ -141,6 +150,104 @@ public class TsunadeV2 extends HShinobiRoles {
                 final double dif = Math.abs((actualHealth + 4.0) - maxHealth);
                 this.stocked += dif;
                 getRole().getGamePlayer().getActionBarManager().updateActionBar("tsunadev2.katsuyu", "§aVie stocker:§c "+(this.stocked/2)+"❤");
+            }
+        }
+    }
+    private static final class EnseignementPower extends CommandPower {
+
+        public EnseignementPower(@NonNull RoleBase role) {
+            super("/ns enseignement <joueur>", "enseignement", null, role, CommandType.NS,
+                    "§7En restant à moins de§c 30 blocs§7 du joueur§c cibler§7,",
+                    "§7vous lui§a enseignerez§7 comment utiliser§d Katsuyu§7,",
+                    "§7celà durera plus ou moins de temps en fonction de son§a intelligence§7.",
+                    "",
+                    "§7Une fois fait, vous obtiendrez§c 2❤ permanents supplémentaire§7."
+            );
+            setMaxUse(1);
+        }
+
+        @Override
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            final String[] args = (String[]) map.get("args");
+            if (args.length == 2) {
+                final Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                    if (gamePlayer != null) {
+                        if (gamePlayer.check()) {
+                            if (gamePlayer.getRole() instanceof NSRoles) {
+                                final NSRoles role = (NSRoles) gamePlayer.getRole();
+                                final Intelligence intelligence = role.getIntelligence();
+                                new EnseignementRunnable(this, role, intelligence).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+                                return true;
+                            } else {
+                                player.sendMessage("§b"+gamePlayer.getPlayerName()+"§c ne possède pas un rôle du§a Naruto UHC§c.");
+                            }
+                        } else {
+                            player.sendMessage("§b"+args[1]+"§c n'est pas connecté(e) ou n'existe pas !");
+                        }
+                    } else {
+                        player.sendMessage("§b"+args[1]+"§c n'est pas connecté(e) ou n'existe pas !");
+                    }
+                } else {
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté(e) ou n'existe pas !");
+                }
+            }
+            return false;
+        }
+        private static final class EnseignementRunnable extends BukkitRunnable {
+
+            private final EnseignementPower power;
+            private final NSRoles nsRoles;
+            private final Intelligence intelligence;
+            private int timeLeft;
+
+            private EnseignementRunnable(EnseignementPower power, NSRoles nsRoles, Intelligence intelligence) {
+                this.power = power;
+                this.nsRoles = nsRoles;
+                this.intelligence = intelligence;
+                this.timeLeft = 0;
+            }
+
+            @Override
+            public void run() {
+                if (!GameState.inGame()) {
+                    cancel();
+                    return;
+                }
+                if (!this.power.getRole().getGamePlayer().check())return;
+                if (!this.nsRoles.getGamePlayer().check()) {
+                    this.power.getRole().getGamePlayer().getActionBarManager().removeInActionBar("tsunadev2.enseignement");
+                    return;
+                }
+                if (this.timeLeft >= intelligence.getEnseignemenTime()) {
+                    this.nsRoles.addPower(new KatsuyuPower(nsRoles), true);
+                    this.nsRoles.getGamePlayer().sendMessage("§aTsunade§7 vous a§a enseigner§7 comment utiliser§d Katsuyu§7.");
+                    this.power.getRole().getGamePlayer().sendMessage("§7Vous avez§a enseigner§7 comment uriliser§d Katsuyu§7 a§a "+nsRoles.getGamePlayer().getPlayerName());
+                    Bukkit.getScheduler().runTask(this.power.getPlugin(), () -> this.power.getRole().giveHealedHeartatInt(2.0));
+                    cancel();
+                    return;
+                }
+                final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayers(power.getRole().getGamePlayer().getLastLocation(), 30));
+                for (Player player : playerList) {
+                    if (player.getUniqueId().equals(nsRoles.getPlayer())) {
+                        this.timeLeft++;
+                        final String percent = getCompletionPercent(this.timeLeft, this.intelligence.getEnseignemenTime());
+                        this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("tsunadev2.enseignement", "§bEnseignement:§c "+percent);
+                        break;
+                    }
+                }
+            }
+            /**
+             * Retourne un pourcentage de complétion formaté en String.
+             *
+             * @param current valeur actuelle
+             * @param total   valeur totale
+             * @return ex: "75.00%", ou "0.00%" si total == 0
+             */
+            public static String getCompletionPercent(int current, int total) {
+                if (total == 0) return "0.00%";
+                return String.format("%.2f%%", (current * 100.0) / total);
             }
         }
     }
