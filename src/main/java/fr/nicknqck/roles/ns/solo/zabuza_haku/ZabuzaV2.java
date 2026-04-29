@@ -113,7 +113,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
 
     @Override
     public TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7Lorsqu'un joueur utiliser un§c pouvoir§7, vous êtes au courant de qui utiliser quel pouvoir").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7Lorsqu'un joueur utiliser un§c pouvoir§7, vous êtes au courant §7de qui utiliser quel pouvoir").getText();
     }
 
     private static class InvisibilitePower extends ItemPower {
@@ -129,7 +129,8 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                     "§7Vous permet de vous rendre§a invisible§7 pendant§c 5 minutes§7.",
                     "§7",
                     "§7En réutilisant ce§c pouvoir§7, vous pourrez vous retirer l'§ainvisibilité§7.",
-                    "§7Tant que vous êtes§a Invisible§7 vous ne pourrez n'y§c recevoir de coup§7, n'y en§c infliger§7."
+                    "§7Tant que vous êtes§a Invisible§7 vous ne pourrez n'y§c recevoir de coup§7, n'y en§c infliger§7.",
+                    "§7Tant que vous êtes§a invisible§7, tous les joueurs étant dans votre camp pourront voir des§c particules§7 à vos pieds."
             );
             this.zabuza = role;
             this.cooldown = new Cooldown(60*5);
