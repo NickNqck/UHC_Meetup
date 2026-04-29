@@ -5,7 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.events.custom.roles.PowerActivateEvent;
+import fr.nicknqck.events.custom.roles.PowerActivateAfterCheckEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -89,13 +89,9 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
         super.RoleGiven(gameState);
     }
     @EventHandler
-    private void onPowerUse(@NonNull final PowerActivateEvent event) {
-        if (event.isCancel())return;
+    private void onPowerUse(@NonNull final PowerActivateAfterCheckEvent event) {
         if (event.getPower().getCooldown() != null) {
             if (event.getPower().isCooldownResetSended())return;
-            if (event.getPower().getCooldown().isInCooldown())return;
-        } else {
-            return;
         }
         if (event.getPower() instanceof KubikiribochoPower)return;
         String name = event.getPower().getName();
@@ -117,10 +113,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
 
     @Override
     public TextComponent getComponent() {
-        return new AutomaticDesc(this)
-                .addEffects(getEffects())
-                .setPowers(getPowers())
-                .getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7Lorsqu'un joueur utiliser un§c pouvoir§7, vous êtes au courant de qui utiliser quel pouvoir").getText();
     }
 
     private static class InvisibilitePower extends ItemPower {
@@ -132,7 +125,12 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
         private final Cooldown cooldown;
 
         protected InvisibilitePower(ZabuzaV2 role) {
-            super("Invisibilité", null, new ItemBuilder(Material.NETHER_STAR).setName("§aInvisibilité").setLore("§7Vous permez de devenir invisible"), role);
+            super("Invisibilité", null, new ItemBuilder(Material.NETHER_STAR).setName("§aInvisibilité").setLore("§7Vous permez de devenir invisible"), role,
+                    "§7Vous permet de vous rendre§a invisible§7 pendant§c 5 minutes§7.",
+                    "§7",
+                    "§7En réutilisant ce§c pouvoir§7, vous pourrez vous retirer l'§ainvisibilité§7.",
+                    "§7Tant que vous êtes§a Invisible§7 vous ne pourrez n'y§c recevoir de coup§7, n'y en§c infliger§7."
+            );
             this.zabuza = role;
             this.cooldown = new Cooldown(60*5);
         }
@@ -242,7 +240,8 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
         private int coup = 0;
 
         private KubikiribochoPower(@NonNull RoleBase role) {
-            super("Kubikirobocho", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bKubikiribôchô").addEnchant(Enchantment.DAMAGE_ALL,4 ), role);
+            super("Kubikirobocho", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bKubikiribôchô").addEnchant(Enchantment.DAMAGE_ALL,4 ), role,
+                    "§7Tout les§c 25 coups§7, vous vous§d régénérer§7 de§c 2❤§7.");
             role.getGamePlayer().getActionBarManager().addToActionBar("zabuza.kubikiribocho", "§7Coups: §c"+this.coup+"§7/§625");
         }
 
