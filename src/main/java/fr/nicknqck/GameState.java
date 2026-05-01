@@ -38,8 +38,7 @@ import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.*;
 import fr.nicknqck.roles.ns.solo.jubi.*;
-import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
-import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
+import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.HakuV2;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.ZabuzaV2;
 import fr.nicknqck.roles.valo.agents.Iso;
@@ -502,7 +501,7 @@ public class GameState{
                     role = new GinkakuV2(player);
                     break;
                 case Kinkaku:
-                    role = new Kinkaku(player);
+                    role = new KinkakuV2(player);
                     break;
                 case Nagato:
                     role = new NagatoV2(player);

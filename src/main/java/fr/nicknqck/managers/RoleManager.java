@@ -232,7 +232,7 @@ public class RoleManager implements Listener {
         registerRole(JubiSasuke.class);
         //Register Kumogakure
         registerRole(GinkakuV2.class);
-        registerRole(Kinkaku.class);
+        registerRole(KinkakuV2.class);
         //Register Zabuza et Haku
         registerRole(ZabuzaV2.class);
         registerRole(HakuV2.class);

@@ -188,7 +188,7 @@ public class AutomaticDesc {
                 description = ((UpdatablePowerLore) power).getCustomPowerLore();
             }
             Cooldown cooldown = power.getCooldown();
-            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
+            TextComponent textComponent = fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
             TextComponent powerName = getPowerName(name, description);
             textComponent.addExtra(powerName);
             textComponent.addExtra("§7\"");
@@ -202,17 +202,64 @@ public class AutomaticDesc {
                     if (cooldown.getOriginalCooldown() == -500) {
                         textComponent.addExtra("§7 (1x§7/partie)");
                     } else {
-                        textComponent.addExtra(" §7(§71§7x§7/§7" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + "§7)");
+                        textComponent.addExtra(fromLegacyTextSafe(" §7(§71§7x§7/§7" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + "§7)"));
                     }
                 }
                 if (power.getMaxUse() != -1) {
-                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x§7/parti"+"§7e§7)");
+                    textComponent.addExtra(fromLegacyTextSafe("§7 ("+(power.getMaxUse()-power.getUse())+"x§7/parti"+"§7e§7)"));
                 }
             }
             textComponent.addExtra("§7.");
             this.text.addExtra(textComponent);
         }
         return this;
+    }
+
+    /**
+     * Crée un TextComponent depuis un texte pouvant contenir des \n,
+     * en garantissant que la couleur est conservée après chaque saut de ligne.
+     *
+     * @param text le texte avec codes couleur §
+     * @return un TextComponent avec la couleur persistante sur chaque ligne
+     */
+    private static TextComponent fromLegacyTextSafe(String text) {
+        // Extraire le préfixe de couleur (ex: "§7", "§a§l", etc.)
+        String colorPrefix = extractColorPrefix(text);
+
+        String[] lines = text.split("\n", -1);
+        TextComponent root = new TextComponent("");
+
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+
+            // Sur chaque ligne après la première, on réinjecte la couleur
+            if (i > 0) {
+                root.addExtra(new TextComponent("\n"));
+                if (!line.startsWith("§")) {
+                    line = colorPrefix + line;
+                }
+            }
+
+            // fromLegacyText gère correctement les codes §
+            for (BaseComponent component : TextComponent.fromLegacyText(line)) {
+                root.addExtra(component);
+            }
+        }
+        return root;
+    }
+
+    /**
+     * Extrait le(s) code(s) couleur/format en début de chaîne.
+     * Ex: "§7Texte" → "§7", "§a§lTexte" → "§a§l"
+     */
+    private static String extractColorPrefix(String text) {
+        StringBuilder prefix = new StringBuilder();
+        int i = 0;
+        while (i + 1 < text.length() && text.charAt(i) == '§') {
+            prefix.append(text, i, i + 2);
+            i += 2;
+        }
+        return prefix.toString();
     }
 
     private TextComponent getPowerName(String name, String[] description) {

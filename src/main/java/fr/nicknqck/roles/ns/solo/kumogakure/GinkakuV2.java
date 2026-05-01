@@ -72,7 +72,7 @@ public class GinkakuV2 extends KumogakureRole {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        addKnowedRole(Kinkaku.class);
+        addKnowedRole(KinkakuV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.NIGHT);
         new EffectGiver(getGameState(), this);
         addPower(new KyubiPower(this), true);
@@ -120,7 +120,7 @@ public class GinkakuV2 extends KumogakureRole {
             if (gamePlayerList.isEmpty())return;
             for (@NonNull final GamePlayer gamePlayer : gamePlayerList) {
                 if (gamePlayer.getRole() == null)continue;
-                if (gamePlayer.getRole() instanceof Kinkaku) {
+                if (gamePlayer.getRole() instanceof KinkakuV2) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.ginkaku.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NOW));
                     break;
                 }
