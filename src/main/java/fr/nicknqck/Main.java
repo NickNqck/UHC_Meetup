@@ -370,16 +370,18 @@ public class Main extends JavaPlugin {
 			if (world.getName().equals(worldName)) {
 				File worldFolder = world.getWorldFolder();
 				if (!world.getPlayers().isEmpty()) {
-					System.out.println("Can't delete world \""+ worldName +"\" because "+world.getPlayers().size()+" is inside");
-					return false;
+					world.getPlayers().forEach(player -> player.teleport(getWorldManager().getLobbyWorld().getSpawnLocation()));
+				//	System.out.println("Can't delete world \""+ worldName +"\" because "+world.getPlayers().size()+" is inside");
+				//	return false;
 				}
 				Bukkit.unloadWorld(world, false);
 				try {
 					FileUtils.deleteDirectory(worldFolder);
-					System.out.println("Deleted world "+worldFolder.getName());
+					debug("Deleted world "+worldFolder.getName());
 				} catch (IOException e) {
 					e.fillInStackTrace();
 				}
+				break;
 			}
 		}
 		return true;

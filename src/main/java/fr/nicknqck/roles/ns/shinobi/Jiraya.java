@@ -45,7 +45,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
-        Main.getInstance().getRoleWorldManager().addWorldManaged("Gamabunta2", new JirayaSubWorld());
+        Main.getInstance().getRoleWorldManager().addWorldManaged("Gamabunta2", getSubWorld());
         addPower(new Rasengan(this), true);
         addPower(new FukasakuEtShimaPower(this), true);
         addPower(new GamabuntaPower(this), true);

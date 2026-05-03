@@ -5,9 +5,10 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.interfaces.IRoleGotSubWorld;
 import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.interfaces.ISubRoleWorld;
 import fr.nicknqck.interfaces.IUncompatibleRole;
-import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -19,37 +20,32 @@ import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.builders.JubiRoles;
 import fr.nicknqck.roles.ns.power.Genjutsu;
 import fr.nicknqck.roles.ns.power.Izanagi;
+import fr.nicknqck.roles.ns.power.KamuiPower;
 import fr.nicknqck.roles.ns.power.YameruPower;
 import fr.nicknqck.roles.ns.shinobi.KakashiV2;
-import fr.nicknqck.utils.GlobalUtils;
-import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.KamuiDimension;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.*;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatibleRole {
+public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatibleRole, IRoleGotSubWorld {
+
+    private KamuiPower kamuiPower;
 
     public ObitoV2(UUID player) {
         super(player);
@@ -68,13 +64,11 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
     @Override
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
-        if (!gameState.getAttributedRole().contains(Roles.Kakashi)) {
-            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-            Bukkit.dispatchCommand(console, "nakime Gh6Iu2YjZl8A9Bv3Tn0Pq5Rm");
-        }
+        Main.getInstance().getRoleWorldManager().addWorldManaged(getSubWorld());
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-        addPower(new KamuiPower(this), true);
+        this.kamuiPower = new KamuiPower(this);
+        addPower(this.kamuiPower, true);
         addPower(new NinjutsuSpatioTemporel(this), true);
         addPower(new Genjutsu(this), true);
         addPower(new YameruPower(this));
@@ -109,6 +103,15 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
         return new IRoles[] {
                 Roles.JubiSasuke
         };
+    }
+
+    @Override
+    public ISubRoleWorld getSubWorld() {
+        if (this.kamuiPower == null) {
+            //Je peux faire ceci, car normalement, ce sera utiliser juste pour le menu donc c'est OK
+            return new KamuiDimension();
+        }
+        return this.kamuiPower.getKamuiDimension();
     }
 
     private static class ObtainSusanoPower extends CommandPower implements Listener {
@@ -162,7 +165,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                         }, 20);
                         EventUtils.unregisterEvents(this);
                         return true;
-                    } /*else {
+                    } /*2else {
                  //       player.sendMessage("§7Vous êtes trop loin de la mort de §c"+string+"§7 pour récupérer ses yeux"+(location.getWorld().equals(player.getWorld()) ? " §7(§c"+new DecimalFormat("0").format(player.getLocation().distance(location)) : ""));
                     }*/
                 }
@@ -268,182 +271,6 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                     }
                     this.timeLeft--;
                     this.gamePlayer.getActionBarManager().updateActionBar("obito.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
-                }
-            }
-        }
-    }
-    private static class KamuiPower extends ItemPower implements Listener {
-
-        private final Arimasu arimasu;
-        private final Sonohaka sonohaka;
-
-        protected KamuiPower(@NonNull RoleBase role) {
-            super("Kamui", null, new ItemBuilder(Material.NETHER_STAR).setName("§dKamui"), role,
-                    "§7Vous ouvre un menu vous permettant d'accéder à§c deux pouvoirs§7:",
-                    "",
-                    "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximal de§c 5 minutes§7. (1x/5m)",
-                    "",
-                    "§dSonohaka§7: Vous permet d'ouvrir un autre menu vous permettant de cibler un joueur,",
-                    "§7La personne cibler ce verra téléporter dans la§c dimension Kamui§7 pendant§c 5 minutes§7. (1x/10m)");
-            this.arimasu = new Arimasu(role);
-            this.sonohaka = new Sonohaka(role, this);
-            role.addPower(arimasu);
-            role.addPower(sonohaka);
-            EventUtils.registerRoleEvent(this);
-        }
-
-        @Override
-        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                openMenu(player);
-                return true;
-            }
-            return false;
-        }
-        @EventHandler
-        private void onInventoryClick(@NonNull final InventoryClickEvent event) {
-            if (event.getInventory() == null)return;
-            if (event.getInventory().getTitle() == null)return;
-            if (!(event.getWhoClicked() instanceof Player))return;
-            if (!event.getWhoClicked().getUniqueId().equals(this.getRole().getPlayer()))return;
-            if (event.getInventory().getTitle().equalsIgnoreCase("§7(§c!§7)§d Kamui")) {
-                if (event.getCurrentItem() == null)return;
-                if (event.getCurrentItem().getItemMeta() == null)return;
-                if (event.getCurrentItem().getItemMeta().getDisplayName() == null)return;
-                if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§dArimasu")) {
-                    event.setCancelled(true);
-                    this.arimasu.checkUse((Player) event.getWhoClicked(), new HashMap<>());
-                } else if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§dSonohaka")) {
-                    event.setCancelled(true);
-                    this.sonohaka.checkUse((Player) event.getWhoClicked(), new HashMap<>());
-                }
-            }
-        }
-        private void openMenu(@NonNull final Player player) {
-            @NonNull final Inventory inv = Bukkit.createInventory(player, 27, "§7(§c!§7)§d Kamui");
-            inv.setItem(12, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+ StringUtils.secondsTowardsBeautiful(this.arimasu.getCooldown().getCooldownRemaining()),
-                    "§7Permet de vous téléportez dans le Kamui").toItemStack());
-            inv.setItem(14, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(this.sonohaka.getCooldown().getCooldownRemaining()),
-                    "§7Permet de téléporter un joueur dans le Kamui").toItemStack());
-            player.openInventory(inv);
-        }
-        private static class Arimasu extends Power {
-
-            public Arimasu(@NonNull RoleBase role) {
-                super("Kamui§7 (§dArimasu§7)", new Cooldown(60*5), role);
-                setShowInDesc(false);
-            }
-
-            @Override
-            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                KamuiUtils.start(player.getLocation(), KamuiUtils.Users.obito, player, true);
-                new ArimasuRunnable(getRole().getGameState(), this);
-                return true;
-            }
-            private static class ArimasuRunnable extends BukkitRunnable {
-
-                private final GameState gameState;
-                private final Arimasu arimasu;
-                private int timeLeft = 60*3;
-
-                private ArimasuRunnable(GameState gameState, Arimasu arimasu) {
-                    this.gameState = gameState;
-                    this.arimasu = arimasu;
-                    arimasu.getRole().getGamePlayer().getActionBarManager().addToActionBar("obito.arimasu", "§bTemp restant dans le§d Kamui§b: §c3 minutes");
-                    runTaskTimerAsynchronously(arimasu.getPlugin(), 0, 20);
-                }
-
-                @Override
-                public void run() {
-                    if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
-                        cancel();
-                        return;
-                    }
-                    arimasu.getRole().getGamePlayer().getActionBarManager().updateActionBar("obito.arimasu", "§bTemp restant dans le§d Kamui: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
-
-                    final Player owner = Bukkit.getPlayer(this.arimasu.getRole().getPlayer());
-                    if (owner != null) {
-                        if (this.timeLeft <= 0 || !owner.getWorld().getName().equalsIgnoreCase("Kamui")) {
-                            Bukkit.getScheduler().runTask(this.arimasu.getPlugin(), () -> KamuiUtils.end(owner));
-                            this.arimasu.getRole().getGamePlayer().getActionBarManager().removeInActionBar("obito.arimasu");
-                            cancel();
-                            return;
-                        }
-                    }
-                    this.timeLeft--;
-                }
-            }
-        }
-        private static class Sonohaka extends Power implements Listener {
-
-            private final KamuiPower kamuiPower;
-
-            public Sonohaka(@NonNull RoleBase role, KamuiPower kamuiPower) {
-                super("Kamui§7 (§dSonohaka§7)§r", new Cooldown(60*10), role);
-                this.kamuiPower = kamuiPower;
-                setShowInDesc(false);
-            }
-
-            @Override
-            public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                if (map.isEmpty()) {
-                    @NonNull final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§d Sonohaka");
-                    for (int i = 0; i <= 8; i++) {
-                        inv.setItem(i, GUIItems.getPurpleStainedGlassPane());
-                    }
-                    inv.setItem(4, GUIItems.getSelectBackMenu());
-                    @NonNull final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayersExcept(player, 30));
-                    for (@NonNull Player p : playerList) {
-                        @NonNull final ItemStack item = GlobalUtils.getPlayerHead(p.getName());
-                        inv.addItem(new ItemBuilder(item)
-                                .setName("§b"+p.getName())
-                                .setLore("§7Cliquez ici pour envoyer§c "+p.getDisplayName()+"§7 dans le§5 Kamui")
-                                .toItemStack());
-                    }
-                    player.openInventory(inv);
-                    EventUtils.registerRoleEvent(this);
-                } else {
-                    return true;
-                }
-                return false;
-            }
-            @EventHandler
-            private void onInventoryClick(@NonNull final InventoryClickEvent event) {
-                if (event.getInventory() == null)return;
-                if (event.getInventory().getTitle() == null)return;
-                if (!(event.getWhoClicked() instanceof Player))return;
-                if (!event.getWhoClicked().getUniqueId().equals(this.getRole().getPlayer()))return;
-                if (event.getInventory().getTitle().equals("§7(§c!§7)§d Sonohaka")) {
-                    if (event.getCurrentItem() == null)return;
-                    if (event.getCurrentItem().getItemMeta() == null)return;
-                    if (event.getCurrentItem().getItemMeta().getDisplayName() == null)return;
-                    if (event.getCurrentItem().isSimilar(GUIItems.getSelectBackMenu())) {
-                        event.setCancelled(true);
-                        this.kamuiPower.openMenu((Player) event.getWhoClicked());
-                    } else {
-                        event.setCancelled(true);
-                        String name = event.getCurrentItem().getItemMeta().getDisplayName();
-                        if (name.length() > 2) {
-                            name = name.substring(2);
-                            @NonNull final Player target = Bukkit.getPlayer(name);
-                            if (target != null) {
-                                event.getWhoClicked().closeInventory();
-                                Map<String, Object> map = new HashMap<>();
-                                map.put("((Player)event.getWhoClicked())", event.getClick());
-                                if (checkUse((Player) event.getWhoClicked(), map)){
-                                    KamuiUtils.start(target.getLocation(), KamuiUtils.Users.cibleObito, (target), true);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            @EventHandler
-            private void InventoryCloseEvent(@NonNull final InventoryCloseEvent event) {
-                if (event.getInventory() == null)return;
-                if (!event.getPlayer().getUniqueId().equals(getRole().getPlayer()))return;
-                if (event.getInventory().getTitle().equals("§7(§c!§7)§d Sonohaka")) {
-                    EventUtils.unregisterEvents(this);
                 }
             }
         }
