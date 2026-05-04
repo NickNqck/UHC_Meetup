@@ -42,7 +42,7 @@ public class KurenaiV2 extends ShinobiRoles {
 
     @Override
     public @NonNull Intelligence getIntelligence() {
-        return Intelligence.INTELLIGENT;
+        return Intelligence.MOYENNE;
     }
 
     @Override

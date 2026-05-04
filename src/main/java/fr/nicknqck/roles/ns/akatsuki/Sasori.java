@@ -53,7 +53,7 @@ public class Sasori extends AkatsukiRoles {
 
     @Override
     public @NonNull Intelligence getIntelligence() {
-        return Intelligence.MOYENNE;
+        return Intelligence.INTELLIGENT;
     }
 
     @Override
