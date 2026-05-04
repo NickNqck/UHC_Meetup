@@ -166,7 +166,7 @@ public class TsunadeV2 extends HShinobiRoles {
             super("/ns enseignement <joueur>", "enseignement", null, role, CommandType.NS,
                     "§7En restant à moins de§c 30 blocs§7 du joueur§c cibler§7,",
                     "§7vous lui§a enseignerez§7 comment utiliser§d Katsuyu§7,",
-                    "§7celà durera plus ou moins de temps en fonction de son§a intelligence§7.",
+                    "§7celà durera plus ou moins de temps en fonction de son§a intelligence§7. (§6/ns intelligences§7)",
                     "",
                     "§7Une fois fait, vous obtiendrez§c 2❤ permanents supplémentaire§7."
             );
