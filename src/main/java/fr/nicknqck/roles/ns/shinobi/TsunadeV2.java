@@ -88,9 +88,16 @@ public class TsunadeV2 extends HShinobiRoles {
                     .setName("§dKatsuyu")
                     .addEnchant(Enchantment.ARROW_DAMAGE, 1)
                     .hideEnchantAttributes(), role,
-                    "§7Lorsque vous mangez une§e pomme d'or§7 ce qui ne vous soigne pas directement est stocker",
+                    "§7Lorsque vous mangez une§e pomme d'or§7, ce qui n'est pas§d soigné§7 est stocker dans§d Katsuyu§7.",
+                    "",
+                    "§7En utilisant un§c clique droit§7, vous pouvez§c vous soignez§7 de manière plus",
+                    "§7ou moins complète en fonction de ce qui est stocké.",
+                    "",
+                    "§7En utilisant un§c clique gauche§7, vous§d soignerez§7 un joueur viser de manière plus",
+                    "§7ou moins complète en fonction de ce qui est stocké."
+                    /*"§7Lorsque vous mangez une§e pomme d'or§7 ce qui ne vous soigne pas directement est stocker",
                     "§7lorsque vous utilisez§d Katsuyu§7 avec un§c clique droit§7, celà vous§d soigne§7 le plus possible (en fonction des réserves)",
-                    "§7tandis que si vous utilisez le§c clique gauche§7 en visant un joueur§7, il sera§d soigner§7 (distance maximal:§c 10m§7)."
+                    "§7tandis que si vous utilisez le§c clique gauche§7 en visant un joueur§7, il sera§d soigner§7 (distance maximal:§c 10m§7)."*/
             );
             EventUtils.registerRoleEvent(this);
         }
