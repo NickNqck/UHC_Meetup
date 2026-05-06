@@ -288,7 +288,7 @@ public class RoleManager implements Listener {
                 role.addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
                         , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
-                        NagatoV2.class, ZetsuBlanc.class,
+                        NagatoV2.class,
                         ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
             }
             if (role instanceof ISAkatsukiChief) {
