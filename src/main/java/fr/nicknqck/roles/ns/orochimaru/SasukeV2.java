@@ -5,6 +5,8 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.interfaces.IRoles;
+import fr.nicknqck.interfaces.IUncompatibleRole;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -37,7 +39,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Map;
 import java.util.UUID;
 
-public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
+public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUncompatibleRole {
 
     private boolean orochimaruDEAD = false;
     private boolean itachiDEAD = false;
@@ -174,6 +176,14 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener {
         addPower(new Genjutsu(this), true);
         giveHealedHeartatInt(2);
     }
+
+    @Override
+    public IRoles<?>[] getUncompatibleList() {
+        return new IRoles[] {
+                Roles.JubiSasuke
+        };
+    }
+
     private static class ItachiTraqueur extends BukkitRunnable {
 
         private final GameState gameState;
