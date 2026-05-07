@@ -222,7 +222,7 @@ public class AutomaticDesc {
      * @param text le texte avec codes couleur §
      * @return un TextComponent avec la couleur persistante sur chaque ligne
      */
-    private static TextComponent fromLegacyTextSafe(String text) {
+    public static TextComponent fromLegacyTextSafe(String text) {
         // Extraire le préfixe de couleur (ex: "§7", "§a§l", etc.)
         String colorPrefix = extractColorPrefix(text);
 
@@ -263,7 +263,7 @@ public class AutomaticDesc {
     }
 
     private TextComponent getPowerName(String name, String[] description) {
-        TextComponent powerName = new TextComponent(name);
+        TextComponent powerName = fromLegacyTextSafe(name);
         if (description != null && description.length > 0) {
             StringBuilder d = new StringBuilder();
             int lines = 0;
@@ -277,7 +277,7 @@ public class AutomaticDesc {
             BaseComponent[] hoverText = new BaseComponent[]{fromLegacyTextSafe(d.toString())};
             powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText));
         } else {
-            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune description trouver !")}));
+            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{fromLegacyTextSafe("§cAucune description trouver !")}));
         }
         return powerName;
     }

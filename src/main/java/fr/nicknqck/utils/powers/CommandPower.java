@@ -34,6 +34,7 @@ public abstract class CommandPower extends Power{
         return new ArrayList<>();
     }
     public enum CommandType implements ICommandType {
+
         DS("ds"),
         AOT("aot"),
         NS("ns"),
