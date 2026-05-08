@@ -66,6 +66,11 @@ public class WorldConfig implements Listener {
                 player.openInventory(GUIItems.getAdminWatchGUI());
                 Main.getInstance().getInventories().updateAdminInventory(player);
                 event.setCancelled(true);
+            } else if (item.getType().equals(Material.FEATHER)) {
+                for (final World world : Bukkit.getWorlds()) {
+                    Main.getInstance().clearMap(world);
+                }
+                event.setCancelled(true);
             }
         } else if (event.getClickedInventory().getTitle().equalsIgnoreCase("§fConfiguration§7 ->§6 Grottes")) {
             if (item.getType().equals(Material.GOLD_ORE)) {
@@ -92,11 +97,6 @@ public class WorldConfig implements Listener {
                 }
             }
             openMineralConfig(player);
-            event.setCancelled(true);
-        } else if (item.getType().equals(Material.FEATHER)) {
-            for (final World world : Bukkit.getWorlds()) {
-                Main.getInstance().clearMap(world);
-            }
             event.setCancelled(true);
         }
 
