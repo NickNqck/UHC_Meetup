@@ -294,7 +294,7 @@ public class Main extends JavaPlugin {
 		getCommand("team").setTabCompleter(new TeamTabComplete());*/
 		System.out.println("Ending registering commands");
 	}
-	private void clearMap(World world) {
+	public void clearMap(World world) {
 		System.out.println("Starting cleaning map");
 		System.out.println("Starting cleaning blocks");
 		for (int x = -150; x <= 150; x++) {

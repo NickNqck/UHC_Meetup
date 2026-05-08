@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -92,6 +93,11 @@ public class WorldConfig implements Listener {
             }
             openMineralConfig(player);
             event.setCancelled(true);
+        } else if (item.getType().equals(Material.FEATHER)) {
+            for (final World world : Bukkit.getWorlds()) {
+                Main.getInstance().clearMap(world);
+            }
+            event.setCancelled(true);
         }
 
     }
@@ -101,6 +107,7 @@ public class WorldConfig implements Listener {
         wConfig.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§6Configuration des grottes").toItemStack());
         wConfig.setItem(13, new ItemBuilder(Material.EYE_OF_ENDER).setName("§fObserver le monde générer").toItemStack());
         wConfig.setItem(15, new ItemBuilder(Material.GRASS).setName("§aChanger de Monde").toItemStack());
+        wConfig.setItem(17, new ItemBuilder(Material.FEATHER).setName("§aNettoyer les maps").toItemStack());
         wConfig.setItem(wConfig.getSize()-1, GUIItems.getSelectBackMenu());
         player.openInventory(wConfig);
     }
