@@ -27,7 +27,6 @@ import fr.nicknqck.roles.krystal.KrystalManager;
 import fr.nicknqck.roles.krystal.MDJConfig;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.roles.ns.power.KatsuyuManager;
-import fr.nicknqck.runnables.PubRunnable;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
 import fr.nicknqck.titans.TitanManager;
@@ -116,6 +115,7 @@ public class Main extends JavaPlugin {
 	private KrystalManager krystalManager;
     private UpdateChecker updateChecker;
     private RoleWorldManager roleWorldManager;
+	private PubManager pubManager;
 
     @Override
 	public void onEnable() {
@@ -171,8 +171,15 @@ public class Main extends JavaPlugin {
         this.updateChecker = new UpdateChecker(this, "NickNqck/UHC_Meetup");
 		this.krystalManager = new KrystalManager();
         this.roleWorldManager = new RoleWorldManager();
+		this.pubManager = new PubManager();
+		this.pubManager.add("§bLa commande§6 /color <joueur1> <joueur2> etc§b est maintenant disponible.");
+		this.pubManager.add("§bSi vous rencontrez des bugs, n'hésitez pas à le notifier sur§6 /discord§b.");
+		this.pubManager.add("§bSachez où vous visez avec votre rôle via la commande§6 /settings§b.");
+		this.pubManager.add("§bUn SoundPack est disponible avec la commande§6 /pack§b.");
+		this.pubManager.start();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
+		debug("PubManager size = "+this.pubManager.size()+", toString -> "+this.pubManager.toString());
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -251,7 +258,6 @@ public class Main extends JavaPlugin {
 		EventUtils.registerEvents(manager2);
 		this.eventsManager = manager2;
 		this.hokageManager = new HokageManager(gameState);
-		new PubRunnable().start();
         FastInvManager.register(this);
 		System.out.println("Ending registering events");
 	}
