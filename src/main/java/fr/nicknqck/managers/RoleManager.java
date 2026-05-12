@@ -14,9 +14,6 @@ import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.krystal.LeComteV2;
-import fr.nicknqck.roles.custom.LeJuge;
-import fr.nicknqck.roles.krystal.Heldige;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
@@ -94,7 +91,6 @@ public class RoleManager implements Listener {
         registerDemonSlayer();
         registerAot();
         registerNs();
-        registerCustomRoles();
     }
     public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
@@ -241,12 +237,6 @@ public class RoleManager implements Listener {
         registerRole(GaaraV2.class);
         registerRole(ShisuiSolo.class);
         registerRole(KabutoSolo.class);
-    }
-    private void registerCustomRoles() throws Exception {
-        //Register Custom Roles
-        registerRole(LeComteV2.class);
-        registerRole(LeJuge.class);
-        registerRole(Heldige.class);
     }
     public RoleBase getRandomRole(final UUID uuid) {
         //Si le mec est déjà un GamePlayer, je renvoie null

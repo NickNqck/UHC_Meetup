@@ -20,11 +20,10 @@ import fr.nicknqck.events.essential.inventorys.HubInventory;
 import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
 import fr.nicknqck.managers.*;
+import fr.nicknqck.managers.schem.SchematicManager;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
-import fr.nicknqck.roles.krystal.KrystalManager;
-import fr.nicknqck.roles.krystal.MDJConfig;
 import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.roles.ns.power.KatsuyuManager;
 import fr.nicknqck.scenarios.impl.TimberPvP;
@@ -104,7 +103,6 @@ public class Main extends JavaPlugin {
 
 	private EventsManager eventsManager;
 
-	private KrystalBeastManager krystalBeastManager;
 	private TitanManager titanManager;
 	private BijuManager bijuManager;
 	private TabManager tabManager;
@@ -112,10 +110,10 @@ public class Main extends JavaPlugin {
 	private InfoManager infoManager;
 	private PlayersNameManager playersNameManager;
     private KatsuyuManager katsuyuManager;
-	private KrystalManager krystalManager;
     private UpdateChecker updateChecker;
     private RoleWorldManager roleWorldManager;
 	private PubManager pubManager;
+	private SchematicManager schematicManager;
 
     @Override
 	public void onEnable() {
@@ -161,7 +159,6 @@ public class Main extends JavaPlugin {
 		saveDefaultWebhookConfig();
 		this.roleManager = new RoleManager();
 		BiomeChanger.init();
-		this.krystalBeastManager = new KrystalBeastManager();
 		this.titanManager = new TitanManager();
 		this.bijuManager = new BijuManager();
 		this.tabManager = new TabManager();
@@ -169,7 +166,6 @@ public class Main extends JavaPlugin {
 		this.playersNameManager = new PlayersNameManager(getDataFolder());
         this.katsuyuManager = new KatsuyuManager();
         this.updateChecker = new UpdateChecker(this, "NickNqck/UHC_Meetup");
-		this.krystalManager = new KrystalManager();
         this.roleWorldManager = new RoleWorldManager();
 		this.pubManager = new PubManager();
 		this.pubManager.add("§bLa commande§6 /color <joueur1> <joueur2> etc§b est maintenant disponible.");
@@ -177,6 +173,7 @@ public class Main extends JavaPlugin {
 		this.pubManager.add("§bSachez où vous visez avec votre rôle via la commande§6 /settings§b.");
 		this.pubManager.add("§bUn SoundPack est disponible avec la commande§6 /pack§b.");
 		this.pubManager.start();
+		this.schematicManager = new SchematicManager(this);
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		debug("PubManager size = "+this.pubManager.size()+", toString -> "+this.pubManager.toString());
@@ -273,8 +270,8 @@ public class Main extends JavaPlugin {
 		getCommand("ds").setExecutor(new DSmtpCommands(gameState));
 		getCommand("a").setExecutor(new AdminCommands(gameState));
 		getCommand("a").setTabCompleter(new AdminTabCompletor());
-		getCommand("kr").setExecutor(new KrystalCommands(gameState));
-        getCommand("kr").setTabCompleter(new KrystalTabCompletor());
+		getCommand("cr").setExecutor(new KrystalCommands(gameState));
+        getCommand("cr").setTabCompleter(new KrystalTabCompletor());
 		getCommand("aot").setExecutor(new AotCommands(gameState));
 		getCommand("ns").setExecutor(new NsCommands(gameState));
 		getCommand("ns").setTabCompleter(new NSCompleter());
@@ -510,13 +507,6 @@ public class Main extends JavaPlugin {
 		for (@NonNull final Player onlinePlayer : getServer().getOnlinePlayers()) {
 			if (!ChatRank.isHost(onlinePlayer))continue;
 			onlinePlayer.sendMessage(message);
-		}
-	}
-	private void initRoles() {
-		Collection<Class<?>> classesOf = getClassesOf(Main.getInstance());
-		for (Class<?> aClass : classesOf) {
-			if(!aClass.isAnnotationPresent(MDJConfig.class)) continue;
-
 		}
 	}
 	private Collection<Class<?>> getClassesOf(Plugin plugin) {

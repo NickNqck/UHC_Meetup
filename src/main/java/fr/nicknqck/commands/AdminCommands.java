@@ -51,6 +51,21 @@ public class AdminCommands implements CommandExecutor{
 			this.gameState = GameState.getInstance();
 		}
 		if (args.length >= 1) {
+			/*Test sur les schematics
+			if (args[0].equalsIgnoreCase("schem")&& sender instanceof Player) {
+				// Pour coller (ex: au début d'une game)
+				Schematic arena = Main.getInstance().getSchematicManager().getSchematic("Narutops");
+				if (arena != null) {
+					// Collage immédiat (petit schematic)
+					arena.paste(((Player) sender).getLocation(), false);
+					final Cuboid cuboid = arena.toCuboid(((Player) sender).getLocation());
+
+					// OU : collage progressif (grand schematic, 2000 blocs/tick)
+					/*arena.pasteSpread(((Player) sender).getLocation(), false, Main.getInstance(), 150, () ->
+							Main.getInstance().debug("Schematic collé !")
+					);
+				}
+			}*/
 			if (args[0].equalsIgnoreCase("invconfig")) {
 				if (args.length == 2 && sender instanceof Player && ChatRank.isHost(((Player) sender).getUniqueId())) {
 					if (args[1].equalsIgnoreCase("start")) {

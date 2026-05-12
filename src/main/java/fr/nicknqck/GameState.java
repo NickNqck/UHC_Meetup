@@ -18,9 +18,6 @@ import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.krystal.LeComteV2;
-import fr.nicknqck.roles.custom.LeJuge;
-import fr.nicknqck.roles.krystal.Heldige;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -518,12 +515,6 @@ public class GameState{
                 case Iso:
                     role = new Iso(player);
                     break;
-                case LeComte:
-                    role = new LeComteV2(player);
-                    break;
-                case LeJuge:
-                    role = new LeJuge(player);
-                    break;
                 case Fugaku:
                     role = new Fugaku(player);
                     break;
@@ -535,9 +526,6 @@ public class GameState{
                     break;
                 case Neon:
                     role = new Neon(player);
-                    break;
-                case Heldige:
-                    role = new Heldige(player);
                     break;
                 case Shisui:
                     role = new ShisuiSolo(player);
