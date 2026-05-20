@@ -46,6 +46,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
@@ -89,6 +90,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

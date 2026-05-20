@@ -35,6 +35,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -59,6 +60,7 @@ public class UrokodakiV3 extends SlayerRoles {
         return Roles.Urokodaki;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

@@ -29,6 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KonanV2 extends ChiefAkatsukiRoles {
@@ -67,6 +68,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

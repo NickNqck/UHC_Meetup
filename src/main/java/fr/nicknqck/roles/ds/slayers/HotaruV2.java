@@ -22,6 +22,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -59,6 +60,7 @@ public class HotaruV2 extends SlayerRoles {
         setCanuseblade(false);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.textComponent;

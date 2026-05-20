@@ -44,6 +44,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class EnmuV2 extends DemonsRoles {
@@ -72,6 +73,7 @@ public class EnmuV2 extends DemonsRoles {
         return TeamList.Demon;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

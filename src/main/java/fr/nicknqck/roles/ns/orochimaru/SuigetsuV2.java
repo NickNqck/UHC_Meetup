@@ -35,6 +35,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class SuigetsuV2 extends OrochimaruRoles implements Listener {
@@ -74,6 +75,7 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
         EventUtils.registerRoleEvent(this);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

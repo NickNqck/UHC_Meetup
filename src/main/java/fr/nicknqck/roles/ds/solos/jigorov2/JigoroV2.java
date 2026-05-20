@@ -31,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -44,7 +45,8 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	public Soufle getSoufle() {
 		return Soufle.FOUDRE;
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

@@ -5,7 +5,7 @@ import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameStartEvent;
-import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -241,7 +241,7 @@ public class HubListener implements Listener {
 
 	@EventHandler
 	@SuppressWarnings("deprecation")
-	private void onSecond(@NonNull final OnSecond event) {
+	private void onSecond(@NonNull final SecondPassEvent event) {
 		if (event.isInGame()) {
 			for (@NonNull final Scoreboard scoreboard : Main.getInstance().getScoreboardManager().getColorScoreboard().values()) {
 				if (scoreboard.getTeams().isEmpty())continue;

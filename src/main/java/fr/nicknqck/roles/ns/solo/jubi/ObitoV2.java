@@ -41,6 +41,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatibleRole, IRoleGotSubWorld {
@@ -90,6 +91,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
         };
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

@@ -30,6 +30,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class RuiV2 extends DemonsRoles {
@@ -58,6 +59,7 @@ public class RuiV2 extends DemonsRoles {
         return TeamList.Demon;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

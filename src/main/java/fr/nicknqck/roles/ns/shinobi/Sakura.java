@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Sakura extends HShinobiRoles {
@@ -58,7 +59,8 @@ public class Sakura extends HShinobiRoles {
 				AllDesc.bar
 		};
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

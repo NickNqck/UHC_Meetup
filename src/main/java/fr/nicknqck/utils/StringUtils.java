@@ -96,4 +96,29 @@ public class StringUtils {
 
         return result.toString();
     }
+    /**
+     * Retourne un pourcentage de complétion formaté en String.
+     *
+     * @param current valeur actuelle
+     * @param total   valeur totale
+     * @return ex: "75.00%", ou "0.00%" si total == 0
+     */
+    public static String getCompletionPercent(int current, int total) {
+        if (total == 0) return "0.00%";
+        return String.format("%.2f%%", (current * 100.0) / total);
+    }
+    /**
+     * Retourne un pourcentage de complétion formaté en String.
+     *
+     * @param current valeur actuelle
+     * @param total   valeur totale
+     * @return ex: "75.00%", ou "0.00%" si total == 0
+     */
+    public static String getCompletionPercent(double current, double total) {
+        if (total == 0D) {
+            return "0.00%";
+        }
+
+        return String.format("%.2f%%", (current * 100D) / total);
+    }
 }

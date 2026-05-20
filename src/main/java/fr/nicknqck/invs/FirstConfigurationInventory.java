@@ -25,7 +25,7 @@ public class FirstConfigurationInventory extends FastInv {
         if (Main.getInstance().isGoodServer()) {
             setItem(12, new ItemBuilder(Material.DIAMOND_PICKAXE).setName("§cMinage").setLore("§7État: "+(Main.getInstance().getGameConfig().isMinage() ? "§aActivé" : "§cDésactiver")).toItemStack());
         }
-        setItem(13, GUIItems.getPregen(GameState.getInstance()));
+        setItem(13, GUIItems.getPregen());
         setItem(16, new ItemBuilder(Material.GRASS).setName("§aChanger le monde de jeu").toItemStack());
         setItem(19, GUIItems.getSelectConfigButton());
         setItem(22, GameState.getInstance().gameCanLaunch ? GUIItems.getStartGameButton() : GUIItems.getCantStartGameButton());

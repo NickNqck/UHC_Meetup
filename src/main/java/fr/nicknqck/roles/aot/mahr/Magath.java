@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
@@ -31,7 +32,8 @@ public class Magath extends MahrRoles {
 		giveHealedHeartatInt(4.0);
 		addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

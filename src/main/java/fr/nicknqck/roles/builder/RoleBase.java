@@ -501,6 +501,7 @@ public abstract class RoleBase implements IRole {
 	public void onALLPlayerDamageByEntityAfterPatch(EntityDamageByEntityEvent event, Player victim, Player damager) {}
 
 	@Override
+	@NonNull
 	public abstract TextComponent getComponent();
 
 	public void givePotionEffect(PotionEffect effect, EffectWhen when) {

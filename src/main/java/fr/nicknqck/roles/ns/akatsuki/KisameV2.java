@@ -36,6 +36,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KisameV2 extends AkatsukiRoles {
@@ -84,6 +85,7 @@ public class KisameV2 extends AkatsukiRoles {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

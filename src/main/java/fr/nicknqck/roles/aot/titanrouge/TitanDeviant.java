@@ -11,6 +11,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +39,8 @@ public class TitanDeviant extends TitansRoles {
 				AllDesc.bar,
 		};
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

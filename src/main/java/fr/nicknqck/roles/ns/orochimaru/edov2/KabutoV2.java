@@ -35,6 +35,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.UUID;
@@ -97,6 +98,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

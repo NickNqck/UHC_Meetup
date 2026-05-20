@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

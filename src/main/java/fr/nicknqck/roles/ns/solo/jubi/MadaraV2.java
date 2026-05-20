@@ -38,6 +38,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class MadaraV2 extends JubiRoles {
@@ -82,6 +83,7 @@ public class MadaraV2 extends JubiRoles {
         getGamePlayer().startChatWith("§dMadaraV2: ", "!", ObitoV2.class, JubiSasuke.class);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

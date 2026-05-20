@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Soldat extends SoldatsRoles {
@@ -45,7 +46,8 @@ public class Soldat extends SoldatsRoles {
 				
 		};
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

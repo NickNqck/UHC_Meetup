@@ -53,8 +53,8 @@ public class WorldConfig implements Listener {
                     return;
                 }
                 event.getWhoClicked().sendMessage("§7Vous avez crée un nouveau monde.");
-                if (gameState.hasPregen) {
-                    gameState.hasPregen = false;
+                if (Main.getInstance().getGameConfig().isPregen()) {
+                    Main.getInstance().getGameConfig().setPregen(false);
                 }
                 Main.getInstance().getWorldListener().setEnable(false);
                 event.setCancelled(true);

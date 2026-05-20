@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Jelena extends TitansRoles {
@@ -43,7 +44,8 @@ public class Jelena extends TitansRoles {
 				AllDesc.bar,
 		};
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

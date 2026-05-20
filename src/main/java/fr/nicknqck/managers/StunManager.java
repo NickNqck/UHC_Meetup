@@ -2,7 +2,7 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.config.GameConfig;
+import fr.nicknqck.enums.StunType;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.event.EventUtils;
@@ -19,7 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class StunManager {
 
     public static void stun(final GamePlayer gamePlayer, final int tick, final boolean blind, final boolean text, final Location stunLocation) {
-        if (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.TELEPORT)) {
+        if (Main.getInstance().getGameConfig().getStunType().equals(StunType.TELEPORT)) {
             new TeleportationStunRunnable(gamePlayer, tick, blind, text, stunLocation);
         } else {
             new StuckStunListener(gamePlayer, tick, blind, text);

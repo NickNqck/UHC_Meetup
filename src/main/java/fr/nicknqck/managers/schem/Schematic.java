@@ -228,9 +228,13 @@ public class Schematic {
      * @param ignoreAir Si {@code true}, les blocs d'air du schematic ne remplacent pas
      *                  les blocs existants dans le monde.
      */
-    public void paste(Location origin, boolean ignoreAir) {
+    public List<org.bukkit.block.Block> paste(Location origin, boolean ignoreAir) {
         net.minecraft.server.v1_8_R3.World nmsWorld =
                 ((CraftWorld) origin.getWorld()).getHandle();
+
+        final List<org.bukkit.block.Block> blockList = new ArrayList<>();
+
+        CraftWorld craftWorld = (CraftWorld) origin.getWorld();
 
         int ox = origin.getBlockX();
         int oy = origin.getBlockY();
@@ -239,24 +243,43 @@ public class Schematic {
         for (int y = 0; y < height; y++) {
             for (int z = 0; z < length; z++) {
                 for (int x = 0; x < width; x++) {
-                    int index = (y * length + z) * width + x;
-                    int blockId = resolveBlockId(index);
-                    int dataVal = blockData[index] & 0x0F; // 4 bits bas uniquement
 
-                    if (ignoreAir && blockId == 0) continue;
+                    int index = (y * length + z) * width + x;
+
+                    int blockId = resolveBlockId(index);
+                    int dataVal = blockData[index] & 0x0F;
+
+                    if (ignoreAir && blockId == 0) {
+                        continue;
+                    }
 
                     Block nmsBlock = Block.getById(blockId);
-                    if (nmsBlock == null) continue;
 
-                    BlockPosition bp  = new BlockPosition(ox + x, oy + y, oz + z);
-                    IBlockData    ibd = nmsBlock.fromLegacyData(dataVal);
-                    // Flag 2 : envoie la mise à jour aux clients, sans déclencher la physique.
+                    if (nmsBlock == null) {
+                        continue;
+                    }
+
+                    int bx = ox + x;
+                    int by = oy + y;
+                    int bz = oz + z;
+
+                    BlockPosition bp = new BlockPosition(bx, by, bz);
+
+                    IBlockData ibd = nmsBlock.fromLegacyData(dataVal);
+
+                    // Flag 2 : update client sans physique
                     nmsWorld.setTypeAndData(bp, ibd, 2);
+
+                    blockList.add(
+                            craftWorld.getBlockAt(bx, by, bz)
+                    );
                 }
             }
         }
 
         pasteTileEntities(nmsWorld, ox, oy, oz);
+
+        return blockList;
     }
 
     // ──────────────────────────────────────────────────────────────────────────

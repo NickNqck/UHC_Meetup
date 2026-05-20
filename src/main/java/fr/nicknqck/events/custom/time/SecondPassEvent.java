@@ -5,11 +5,11 @@ import fr.nicknqck.events.custom.GameEvent;
 import lombok.Getter;
 
 @Getter
-public class OnSecond extends GameEvent {
+public class SecondPassEvent extends GameEvent {
 
     private final GameState gameState;
 
-    public OnSecond(GameState gameState) {
+    public SecondPassEvent(GameState gameState) {
         this.gameState = gameState;
     }
 

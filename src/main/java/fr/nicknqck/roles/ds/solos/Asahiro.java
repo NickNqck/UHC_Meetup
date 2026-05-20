@@ -45,6 +45,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Listener {
@@ -114,6 +115,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

@@ -14,6 +14,7 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
@@ -35,6 +36,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +76,7 @@ public class TsunadeV2 extends HShinobiRoles {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);
@@ -240,22 +243,11 @@ public class TsunadeV2 extends HShinobiRoles {
                 for (Player player : playerList) {
                     if (player.getUniqueId().equals(nsRoles.getPlayer())) {
                         this.timeLeft++;
-                        final String percent = getCompletionPercent(this.timeLeft, this.intelligence.getEnseignemenTime());
+                        final String percent = StringUtils.getCompletionPercent(this.timeLeft, this.intelligence.getEnseignemenTime());
                         this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("tsunadev2.enseignement", "§bEnseignement:§c "+percent);
                         break;
                     }
                 }
-            }
-            /**
-             * Retourne un pourcentage de complétion formaté en String.
-             *
-             * @param current valeur actuelle
-             * @param total   valeur totale
-             * @return ex: "75.00%", ou "0.00%" si total == 0
-             */
-            public static String getCompletionPercent(int current, int total) {
-                if (total == 0) return "0.00%";
-                return String.format("%.2f%%", (current * 100.0) / total);
             }
         }
     }

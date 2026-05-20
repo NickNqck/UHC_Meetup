@@ -53,6 +53,7 @@ public class GamePlayer {
     private GamePlayer killer;
 	private final ActionBarManager actionBarManager;
 	private final List<ChatWithManager> chatWithManager;
+	private final Map<String, Object> metaData;
 
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
@@ -62,6 +63,7 @@ public class GamePlayer {
 		this.scoreboard = Main.getInstance().getScoreboardManager().getScoreboards().get(gamePlayer.getUniqueId());
 		this.actionBarManager = new ActionBarManager(this);
 		this.chatWithManager = new ArrayList<>();
+		this.metaData = new HashMap<>();
 		setAlive(true);
 		setCanRevive(false);
 	}

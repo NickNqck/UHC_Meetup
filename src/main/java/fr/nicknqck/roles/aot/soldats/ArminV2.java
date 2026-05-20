@@ -25,6 +25,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ArminV2 extends SoldatsRoles implements Listener{
@@ -50,6 +51,7 @@ public class ArminV2 extends SoldatsRoles implements Listener{
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

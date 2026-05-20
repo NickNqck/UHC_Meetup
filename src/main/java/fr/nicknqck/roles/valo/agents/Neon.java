@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class Neon extends RoleBase {
         return new ItemStack[0];
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

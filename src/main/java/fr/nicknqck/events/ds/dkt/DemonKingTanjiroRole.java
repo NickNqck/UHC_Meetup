@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
@@ -58,6 +59,7 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
         cdEnergie = 0;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new TextComponent("");

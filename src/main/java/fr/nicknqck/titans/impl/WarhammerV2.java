@@ -7,7 +7,7 @@ import fr.nicknqck.enums.TitanForm;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
 import fr.nicknqck.events.custom.roles.aot.WarHammerBlockBreakEvent;
-import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.LaraV2;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -179,7 +179,7 @@ public class WarhammerV2 extends TitanBase implements Listener {
         world.getBlockAt(1, 1, 0).setType(Material.BEDROCK);
     }
     @EventHandler
-    private void onSecond(@NonNull final OnSecond onSecond) {
+    private void onSecond(@NonNull final SecondPassEvent onSecond) {
         if (!onSecond.isInGame())return;
         if (this.location == null)return;
         if (!isTransformed())return;

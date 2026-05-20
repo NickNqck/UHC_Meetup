@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class SlayerSolo extends DemonsSlayersRoles {
@@ -117,6 +118,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         this.desc = automaticDesc.getText();
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.desc;

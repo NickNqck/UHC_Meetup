@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
@@ -79,6 +80,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
         return this.jirayaSubWorld;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

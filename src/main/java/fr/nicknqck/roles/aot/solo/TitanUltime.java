@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class TitanUltime extends TitansRoles {
@@ -58,7 +59,8 @@ public class TitanUltime extends TitansRoles {
 				AllDesc.bar
 		};
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

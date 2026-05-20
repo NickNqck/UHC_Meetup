@@ -40,6 +40,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class GyutaroV2 extends DemonsRoles implements Listener {
@@ -106,6 +107,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
         }
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

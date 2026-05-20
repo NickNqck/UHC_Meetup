@@ -154,14 +154,12 @@ public abstract class GUIItems{
 		private static String a(final GameState gameState) {
 			return gameState.roletab ? "§aActiver" : "§cDésactiver";
 		}
-		private static String b(final GameState gameState) {
-			return gameState.hasPregen ? "Faite" : "Pas faite";
-		}
-		public static ItemStack getPregen(GameState gameState) {
+
+		public static ItemStack getPregen() {
 			ItemStack stack = new ItemStack(Material.SIGN, 1);
 			ItemMeta meta = stack.getItemMeta();
 			meta.setDisplayName(ChatColor.GOLD+"Pregen");
-			meta.setLore(Arrays.asList(ChatColor.WHITE+b(gameState)));
+			meta.setLore(Arrays.asList(ChatColor.WHITE+(Main.getInstance().getGameConfig().isPregen() ? "Faite" : "Pas faite")));
 			meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			stack.setItemMeta(meta);

@@ -1,6 +1,9 @@
 package fr.nicknqck.config;
 
+import fr.nicknqck.enums.CeintureElements;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.enums.StunType;
+import fr.nicknqck.interfaces.IElements;
 import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.invs.MDJ_AOT_Config;
 import fr.nicknqck.invs.MDJ_DS_Config;
@@ -26,6 +29,7 @@ public class GameConfig {
     private final StuffConfig stuffConfig;
     private final NarutoConfig narutoConfig;
     private final AotConfig aotConfig;
+    private final CrystalConfig crystalConfig;
     private boolean laveTitans = true;
     private boolean stuffUnbreak = true;
     private boolean pvpEnable = false;
@@ -42,6 +46,7 @@ public class GameConfig {
     private boolean tntGrief = false;
     private final LinkedHashMap<IMDJ, Class<? extends FastInv>> configurablesMdj;
     private final LinkedList<IMDJ> playableMdj;
+    private boolean pregen = false;
 
     public GameConfig() {
         instance = this;
@@ -58,6 +63,7 @@ public class GameConfig {
         this.playableMdj.addAll(Arrays.asList(MDJ.values()));
         this.playableMdj.remove(MDJ.KRYSTAL);
         this.playableMdj.remove(MDJ.Aucun);
+        this.crystalConfig = new CrystalConfig();
     }
 
     @Getter
@@ -103,18 +109,19 @@ public class GameConfig {
         private int amountLanceMax = 3;
 
     }
-    public enum StunType {
-        TELEPORT("Téléportation", "§a"),
-        STUCK("Anti-Déplacement", "§c");
+    @Getter
+    @Setter
+    public static final class CrystalConfig {
 
-        @Getter
-        private final String name;
-        @Getter
-        private final String color;
+        private final List<IElements> elements;
+        private int timeForgeStay = 60*10;
+        private int timeForgeRespawn = 60*5;
+        private int timeForgeFirstSpawn = 30;
+        private boolean forgeActivated = false;
+        private int nmbBlockForRaffinage = 250;
 
-        StunType(String name, String color) {
-            this.name = name;
-            this.color = color;
+        public CrystalConfig() {
+            this.elements = new ArrayList<>(Arrays.asList(CeintureElements.values()));
         }
     }
 }

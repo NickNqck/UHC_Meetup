@@ -16,6 +16,7 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.betteritem.BetterItem;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class PetitTitan extends TitansRoles {
@@ -42,7 +43,8 @@ public class PetitTitan extends TitansRoles {
 			AllDesc.bar
 	};
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KakuzuV2 extends AkatsukiRoles implements Listener {
@@ -95,6 +96,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

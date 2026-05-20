@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
@@ -69,6 +70,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

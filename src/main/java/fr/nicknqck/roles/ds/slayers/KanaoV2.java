@@ -28,6 +28,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -52,6 +53,7 @@ public class KanaoV2 extends SlayerRoles {
         return Roles.Kanao;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

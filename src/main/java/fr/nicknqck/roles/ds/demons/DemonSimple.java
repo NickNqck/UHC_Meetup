@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class DemonSimple extends DemonInferieurRole implements Listener {
@@ -74,6 +75,7 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
         }
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

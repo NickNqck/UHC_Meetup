@@ -74,6 +74,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
         return Roles.Hinata;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

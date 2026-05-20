@@ -34,6 +34,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -98,7 +99,8 @@ public class Akaza extends DemonsRoles implements Listener {
 	public ItemStack[] getItems() {
 		return new ItemStack[0];
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return desc;
 	}

@@ -2,7 +2,9 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.CrystalRoles;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
@@ -14,6 +16,7 @@ import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.roles.crystal.royaume.Leolio;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
@@ -60,6 +63,7 @@ public class RoleManager implements Listener {
         this.rolesEnable = new HashMap<>();
         try {
             registerRoles();
+            registerRole(Leolio.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -296,6 +300,14 @@ public class RoleManager implements Listener {
                         }
                     }
                 }
+            }
+        }
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onExternGiveRole(@NonNull final GiveRoleDeclenchExternalPluginEvent event) {
+        if (event.getRoleType() instanceof CrystalRoles) {
+            if (event.getRoleType().equals(CrystalRoles.Leolio)) {
+                event.setRoleBase(new Leolio(event.getPlayerUUID()));
             }
         }
     }

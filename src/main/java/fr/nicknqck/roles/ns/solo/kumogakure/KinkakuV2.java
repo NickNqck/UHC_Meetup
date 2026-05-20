@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KinkakuV2 extends KumogakureRole {
@@ -67,6 +68,7 @@ public class KinkakuV2 extends KumogakureRole {
         return Roles.Kinkaku;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

@@ -32,6 +32,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -58,6 +59,7 @@ public class KagayaV2 extends SlayerRoles {
         return Roles.Kagaya;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

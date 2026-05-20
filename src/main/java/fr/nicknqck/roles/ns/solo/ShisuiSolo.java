@@ -50,6 +50,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
@@ -88,6 +89,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
         return TeamList.Shisui;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

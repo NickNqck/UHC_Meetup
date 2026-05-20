@@ -15,6 +15,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class GrandTitan extends TitansRoles {
@@ -41,7 +42,8 @@ public class GrandTitan extends TitansRoles {
 				AllDesc.bar
 		};
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}

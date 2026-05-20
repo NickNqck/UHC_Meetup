@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,6 +63,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         return Roles.ZenItsu;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return textComponent;

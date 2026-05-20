@@ -114,6 +114,7 @@ public class Main extends JavaPlugin {
     private RoleWorldManager roleWorldManager;
 	private PubManager pubManager;
 	private SchematicManager schematicManager;
+	private CrystalManager crystalManager;
 
     @Override
 	public void onEnable() {
@@ -174,6 +175,7 @@ public class Main extends JavaPlugin {
 		this.pubManager.add("§bUn SoundPack est disponible avec la commande§6 /pack§b.");
 		this.pubManager.start();
 		this.schematicManager = new SchematicManager(this);
+		this.crystalManager = new CrystalManager();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		debug("PubManager size = "+this.pubManager.size()+", toString -> "+this.pubManager.toString());

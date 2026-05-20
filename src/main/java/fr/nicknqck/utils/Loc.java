@@ -144,11 +144,7 @@ public class Loc {
         return toReturn;
     }
     public static Location getLocationAtDistance(Location origin, double distance) {
-        World world = origin.getWorld();
-        Random random = Main.RANDOM;
-
-        // 1. Calculer un angle aléatoire (0 à 2 PI)
-        double angle = random.nextDouble() * 2 * Math.PI;
+        double angle = Main.RANDOM.nextDouble() * 2 * Math.PI;
         return getLocationAtDistance(origin, distance, angle);
     }
     public static Location getLocationAtDistance(Location origin, double distance, double angle) {

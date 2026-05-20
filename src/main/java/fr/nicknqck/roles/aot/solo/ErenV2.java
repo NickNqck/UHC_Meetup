@@ -25,6 +25,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ErenV2 extends AotRoles implements Listener{
@@ -56,6 +57,7 @@ public class ErenV2 extends AotRoles implements Listener{
         EventUtils.registerRoleEvent(this);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

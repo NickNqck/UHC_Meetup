@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class PorcoV2 extends MahrRoles implements Listener {
@@ -45,6 +46,7 @@ public class PorcoV2 extends MahrRoles implements Listener {
         }
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

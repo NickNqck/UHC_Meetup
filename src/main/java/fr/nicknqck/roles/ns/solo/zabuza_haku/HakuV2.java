@@ -39,6 +39,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class HakuV2 extends NSSoloRoles {
@@ -74,6 +75,7 @@ public class HakuV2 extends NSSoloRoles {
         return TeamList.Zabuza_et_Haku;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

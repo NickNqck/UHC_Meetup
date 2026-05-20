@@ -41,6 +41,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
@@ -84,6 +85,7 @@ public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

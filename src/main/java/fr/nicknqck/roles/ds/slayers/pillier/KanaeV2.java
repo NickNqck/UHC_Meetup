@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,6 +54,7 @@ public class KanaeV2 extends PilierRoles {
         this.textComponent = desc.getText();
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return textComponent;

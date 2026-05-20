@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class InosukeV2 extends SlayerRoles {
         return Roles.Inosuke;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.textComponent;

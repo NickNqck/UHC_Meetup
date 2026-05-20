@@ -28,6 +28,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -55,6 +56,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         return Roles.Obanai;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.textComponent;

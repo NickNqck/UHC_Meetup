@@ -35,6 +35,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class TomiokaV2 extends PilierRoles {
@@ -58,6 +59,7 @@ public class TomiokaV2 extends PilierRoles {
         return Roles.Tomioka;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

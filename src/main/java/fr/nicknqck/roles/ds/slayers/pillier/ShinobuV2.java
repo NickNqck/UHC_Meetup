@@ -34,6 +34,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ShinobuV2 extends PilierRoles {
@@ -59,6 +60,7 @@ public class ShinobuV2 extends PilierRoles {
         return Roles.Shinobu;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

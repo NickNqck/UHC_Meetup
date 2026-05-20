@@ -4,7 +4,7 @@ import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
-import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
@@ -66,7 +66,7 @@ public class GameListener implements Listener {
 		border = Main.getInstance().getWorldManager().getGameWorld().getWorldBorder();
 		border.setSize(Border.getMaxBorderSize());
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), () -> {
-			@NonNull final OnSecond onSecond = new OnSecond(this.gameState);
+			@NonNull final SecondPassEvent onSecond = new SecondPassEvent(this.gameState);
 			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
 			for (EChakras ch : EChakras.values()) {
@@ -429,7 +429,7 @@ public class GameListener implements Listener {
 				}
 	        }, 20);
 		}, 1);
-		gameState.hasPregen = false;
+		Main.getInstance().getGameConfig().setPregen(false);
 		System.out.println("game ended");
 	}
 	public static void SendToEveryone(String message) {for (Player p : Bukkit.getOnlinePlayers()) {p.sendMessage(message);}}

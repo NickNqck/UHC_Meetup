@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
@@ -71,6 +72,7 @@ public class ZetsuBlancV2 extends AkatsukiRoles implements Listener {
         return Roles.ZetsuBlancV2;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.desc;

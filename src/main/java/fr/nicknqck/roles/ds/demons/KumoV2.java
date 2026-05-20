@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.demons;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -29,6 +29,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KumoV2 extends DemonInferieurRole {
@@ -72,6 +73,7 @@ public class KumoV2 extends DemonInferieurRole {
         }, 20);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
@@ -122,7 +124,7 @@ public class KumoV2 extends DemonInferieurRole {
             }
         }
         @EventHandler
-        private void onSecond(final OnSecond event) {
+        private void onSecond(final SecondPassEvent event) {
             if (!event.isInGame()) {
                 resetBlocks();
             } else {

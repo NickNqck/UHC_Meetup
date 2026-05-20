@@ -23,6 +23,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,6 +42,7 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         EventUtils.registerRoleEvent(this);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this).setItems(troisPorteMap(), sixPorteMap(), huitPorteMap(),

@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class PieckV2 extends MahrRoles {
@@ -30,6 +31,7 @@ public class PieckV2 extends MahrRoles {
         return Roles.Pieck;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

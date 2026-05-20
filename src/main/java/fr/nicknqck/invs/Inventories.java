@@ -7,6 +7,7 @@ import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.StunType;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -367,14 +368,14 @@ public class Inventories {
                     ).toItemStack());
                     inv.addItem(new ItemBuilder(Material.TRIPWIRE_HOOK).setName("§fTypes de stun").setLore(
                             "",
-                            (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.TELEPORT) ?
-                                    "§8 -§r "+ GameConfig.StunType.TELEPORT.getColor()+"§l"+ GameConfig.StunType.TELEPORT.getName()
+                            (Main.getInstance().getGameConfig().getStunType().equals(StunType.TELEPORT) ?
+                                    "§8 -§r "+ StunType.TELEPORT.getColor()+"§l"+ StunType.TELEPORT.getName()
                                     :
-                                    "§8 -§r "+ GameConfig.StunType.TELEPORT.getColor() + GameConfig.StunType.TELEPORT.getName()),
-                            (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.STUCK) ?
-                                    "§8 -§r"+ GameConfig.StunType.STUCK.getColor()+" §l"+ GameConfig.StunType.STUCK.getName()
+                                    "§8 -§r "+ StunType.TELEPORT.getColor() + StunType.TELEPORT.getName()),
+                            (Main.getInstance().getGameConfig().getStunType().equals(StunType.STUCK) ?
+                                    "§8 -§r"+ StunType.STUCK.getColor()+" §l"+ StunType.STUCK.getName()
                                     :
-                                    "§8 -§r "+ GameConfig.StunType.STUCK.getColor() + GameConfig.StunType.STUCK.getName())
+                                    "§8 -§r "+ StunType.STUCK.getColor() + StunType.STUCK.getName())
                     ).toItemStack());
                     inv.setItem(26, GUIItems.getSelectBackMenu());
                 }
@@ -653,7 +654,7 @@ public class Inventories {
                         inv.setItem(12, new ItemBuilder(Material.DIAMOND_PICKAXE).setName("§cMinage").setLore("§7État: "+(Main.getInstance().getGameConfig().isMinage() ? "§aActivé" : "§cDésactiver")).toItemStack());
                     }
 
-                    inv.setItem(13, GUIItems.getPregen(gameState));
+                    inv.setItem(13, GUIItems.getPregen());
                     inv.setItem(16, new ItemBuilder(Material.GRASS).setName("§aChanger le monde de jeu").toItemStack());
                     inv.setItem(19, GUIItems.getSelectConfigButton());
                     inv.setItem(31, GUIItems.getSelectScenarioButton());

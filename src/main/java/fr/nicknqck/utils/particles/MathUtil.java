@@ -1,6 +1,7 @@
 package fr.nicknqck.utils.particles;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.particle.ParticleBallGroundEvent;
 import lombok.NonNull;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
@@ -154,6 +155,114 @@ public class MathUtil {
             list.add(new Location(endLocation.getWorld(), x, y+1, z));
         }
         return list;
+    }
+    /**
+     * Lance une boule de particules RGB depuis la position des yeux du joueur,
+     * dans la direction de son regard. S'exécute de façon asynchrone.
+     *
+     * La boule disparaît après {@code maxDistance} blocs parcourus.
+     * Si elle touche un bloc solide avant, un {@link ParticleBallGroundEvent}
+     * est déclenché sur le thread principal avec le nom et l'UUID du lanceur.
+     *
+     * @param player      le joueur qui lance la boule
+     * @param name        identifiant libre utilisé dans l'event (ex: "rasengan")
+     * @param red         composante rouge   (0-255)
+     * @param green       composante verte   (0-255)
+     * @param blue        composante bleue   (0-255)
+     * @param ballRadius  rayon de la sphère de particules (ex: 0.5)
+     * @param maxDistance distance max avant disparition (max recommandé : 55)
+     */
+    public static void launchParticleBall(
+            @NonNull Player player,
+            @NonNull String name,
+            float red,
+            float green,
+            float blue,
+            double ballRadius,
+            double maxDistance
+    ) {
+        final UUID     shooterUUID = player.getUniqueId();
+        final Location origin      = player.getEyeLocation().clone();
+        final Vector   direction   = origin.getDirection().normalize();
+        final double   step        = 0.4; // blocs avancés par tick
+
+        new BukkitRunnable() {
+
+            private double traveled = 0;
+
+            @Override
+            public void run() {
+                // Distance max atteinte → disparition silencieuse
+                if (traveled >= maxDistance) {
+                    cancel();
+                    return;
+                }
+
+                traveled += step;
+                final Location pos = origin.clone().add(direction.clone().multiply(traveled));
+
+                // ── Vérification de collision + callEvent sur le thread principal ──
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                    // Collision avec un bloc solide
+                    if (pos.getBlock().getType().isSolid()) {
+                        cancel();
+                        Bukkit.getPluginManager().callEvent(
+                                new ParticleBallGroundEvent(name, shooterUUID, pos.clone())
+                        );
+                        return;
+                    }
+
+                    // Collision avec un joueur (shooter exclu)
+                    for (Player nearby : pos.getWorld().getPlayers()) {
+                        if (nearby.getUniqueId().equals(shooterUUID)) continue;
+                        if (nearby.getLocation().add(0, 1, 0).distance(pos) <= ballRadius + 0.5) {
+                            cancel();
+                            Bukkit.getPluginManager().callEvent(
+                                    new ParticleBallGroundEvent(name, shooterUUID, pos.clone(), nearby)
+                            );
+                            return;
+                        }
+                    }
+                });
+
+                // ── Particules : restent async (safe, lecture seule sur le monde) ──
+                drawParticleSphereRGB(red, green, blue, pos, ballRadius);
+            }
+
+        }.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+    }
+
+    /**
+     * Dessine une sphère creuse de particules RGB autour d'un point central.
+     *
+     * @param red    composante rouge   (0-255)
+     * @param green  composante verte   (0-255)
+     * @param blue   composante bleue   (0-255)
+     * @param center centre de la sphère
+     * @param radius rayon en blocs
+     */
+    private static void drawParticleSphereRGB(
+            float red,
+            float green,
+            float blue,
+            @NonNull Location center,
+            double radius
+    ) {
+        final int rings   = 8;   // anneaux verticaux
+        final int perRing = 12;  // particules par anneau
+
+        for (int r = 0; r < rings; r++) {
+            final double phi = Math.PI * r / rings;
+            final double y   = center.getY() + radius * Math.cos(phi);
+            final double rxy = radius * Math.sin(phi);
+
+            for (int p = 0; p < perRing; p++) {
+                final double theta = 2 * Math.PI * p / perRing;
+                final double x     = center.getX() + rxy * Math.cos(theta);
+                final double z     = center.getZ() + rxy * Math.sin(theta);
+                spawnParticle(new Location(center.getWorld(), x, y, z), red, green, blue);
+            }
+        }
     }
     private final List<FallingBlock> fallingBlocks = new ArrayList<>();
     public Set<Location> sphere(Location location, int radius, boolean hollow){

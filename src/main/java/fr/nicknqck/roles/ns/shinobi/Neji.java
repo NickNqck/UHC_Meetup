@@ -38,6 +38,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Neji extends ShinobiRoles implements IByakuganUser {
@@ -80,6 +81,7 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

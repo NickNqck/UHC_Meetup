@@ -34,6 +34,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -111,6 +112,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7Lorsqu'un joueur utiliser un§c pouvoir§7, vous êtes au courant §7de qui utiliser quel pouvoir").getText();

@@ -38,6 +38,8 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.RoleBase;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
+
 import static fr.nicknqck.Main.RANDOM;
 
 public class Gyokko extends DemonsRoles implements Listener {
@@ -94,7 +96,8 @@ public class Gyokko extends DemonsRoles implements Listener {
         EventUtils.registerRoleEvent(this);
 	}
 
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return AutomaticDesc.createFullAutomaticDesc(this);
 	}

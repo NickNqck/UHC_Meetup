@@ -4,9 +4,9 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.enums.StunType;
 import fr.nicknqck.interfaces.ISubRoleWorld;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
@@ -85,10 +85,10 @@ public class HubConfig implements Listener {
                                 Main.getInstance().getGameConfig().setCritPercent(Main.getInstance().getGameConfig().getCritPercent()-1);
                             }
                         }
-                    } else if (item.isSimilar(GUIItems.getPregen(gameState))) {
-                        if (!gameState.hasPregen){
+                    } else if (item.isSimilar(GUIItems.getPregen())) {
+                        if (!Main.getInstance().getGameConfig().isPregen()){
                             new PregenerationTask(Main.getInstance().getWorldManager().getGameWorld(), Border.getMaxBorderSize());
-                            gameState.hasPregen = true;
+                            Main.getInstance().getWorldListener().setEnable(true);
                             for (String string : Main.getInstance().getRoleWorldManager().getSubRoleWorldMap().keySet()) {
                                 final ISubRoleWorld iSubRoleWorld = Main.getInstance().getRoleWorldManager().getSubRoleWorldMap().get(string);
                                 if (iSubRoleWorld.isPregen()) {
@@ -126,8 +126,8 @@ public class HubConfig implements Listener {
                                 return;
                             }
                             event.getWhoClicked().sendMessage("§7Vous avez crée un nouveau monde.");
-                            if (gameState.hasPregen) {
-                                gameState.hasPregen = false;
+                            if (Main.getInstance().getGameConfig().isPregen()) {
+                                Main.getInstance().getGameConfig().setPregen(false);
                             }
                             Main.getInstance().getWorldListener().setEnable(false);
                         }
@@ -414,10 +414,10 @@ public class HubConfig implements Listener {
                             }
                         }
                         if (name.equals("§fTypes de stun")) {
-                            if (Main.getInstance().getGameConfig().getStunType().equals(GameConfig.StunType.TELEPORT)) {
-                                Main.getInstance().getGameConfig().setStunType(GameConfig.StunType.STUCK);
+                            if (Main.getInstance().getGameConfig().getStunType().equals(StunType.TELEPORT)) {
+                                Main.getInstance().getGameConfig().setStunType(StunType.STUCK);
                             } else {
-                                Main.getInstance().getGameConfig().setStunType(GameConfig.StunType.TELEPORT);
+                                Main.getInstance().getGameConfig().setStunType(StunType.TELEPORT);
                             }
                         }
                         if (name.equalsIgnoreCase("§fPourcentage de Résistance")) {

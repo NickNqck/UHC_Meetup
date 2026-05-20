@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class HantenguV2 extends DemonsRoles {
@@ -30,7 +31,8 @@ public class HantenguV2 extends DemonsRoles {
 		super(player);
 		clone = Clone.Hantengu;
 	}
-	@Override
+	@Nonnull
+    @Override
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}
