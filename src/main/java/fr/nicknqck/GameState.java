@@ -698,7 +698,7 @@ public class GameState{
 				}
 			}
 			if (!role.getKnowedPlayer().isEmpty()) {
-				@NonNull final StringBuilder sb = new StringBuilder("§7Voici la liste de tout vos aliés ");
+				@NonNull final StringBuilder sb = new StringBuilder("§7Voici la liste de tout vos alliés ");
 				for (@NonNull final String string : role.getKnowedPlayer().keySet()) {
 					sb.append(string).append("§7:\n");
 					for (@NonNull final GamePlayer gamePlayer : role.getKnowedPlayer().get(string)) {
