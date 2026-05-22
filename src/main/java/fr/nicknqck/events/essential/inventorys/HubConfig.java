@@ -137,31 +137,6 @@ public class HubConfig implements Listener {
                     if (item.isSimilar(GUIItems.getx())) player.closeInventory();
                     event.setCancelled(true);
                     break;
-                case "Séléction du mode de jeu":
-                    if (item.getType() != Material.AIR) {
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getRoleSelectGUI());
-                            Main.getInstance().getInventories().updateRoleInventory(player);
-                        }
-                        for (MDJ mdj : MDJ.values()) {
-                            if (item.isSimilar(mdj.getItem())) {
-                                if (gameState.getMdj().equals(mdj)) {
-                                    gameState.setMdj(MDJ.Aucun);
-                                    gameState.updateGameCanLaunch();
-                                }else {
-                                    gameState.setMdj(MDJ.Aucun);
-                                    gameState.setMdj(mdj);
-                                }
-                            }
-                        }
-                    }
-                    for (UUID u : gameState.getInLobbyPlayers()) {
-                        Player p = Bukkit.getPlayer(u);
-                        if (p == null)continue;
-                        Main.getInstance().getInventories().updateSelectMDJ(p);
-                    }
-                    event.setCancelled(true);
-                    break;
                 case "§fConfiguration§7 -> §6scenarios":
                     for (Scenarios scenario : Scenarios.values()){
                         if (item.isSimilar(scenario.getScenarios().getAffichedItem())){

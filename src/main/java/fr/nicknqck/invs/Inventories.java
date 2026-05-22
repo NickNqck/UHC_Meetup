@@ -3,7 +3,6 @@ package fr.nicknqck.invs;
 import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.config.GameConfig;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
@@ -706,25 +705,6 @@ public class Inventories {
     }
     public void updateRoleInventory(Player player) {
         new Configuration_RolesInventory(player).open(player);
-        player.updateInventory();
-        gameState.updateGameCanLaunch();
-    }
-    public void updateSelectMDJ(Player player) {
-        InventoryView invView = player.getOpenInventory();
-        if (invView != null) {
-            Inventory inv = invView.getTopInventory();
-            if (inv != null) {
-                if (inv.getTitle().equalsIgnoreCase("Séléction du mode de jeu")) {
-                    inv.clear();
-                    for (MDJ mdj : MDJ.values()) {
-                        if (mdj != MDJ.Aucun && mdj != MDJ.KRYSTAL){
-                            inv.addItem(mdj.getItem());
-                        }
-                    }
-                    inv.setItem(8, GUIItems.getSelectBackMenu());
-                }
-            }
-        }
         player.updateInventory();
         gameState.updateGameCanLaunch();
     }

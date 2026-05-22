@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.crystal.royaume;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.CrystalFaction;
 import fr.nicknqck.enums.CrystalRoles;
 import fr.nicknqck.enums.CrystalTeam;
 import fr.nicknqck.enums.EffectWhen;
@@ -47,6 +48,11 @@ public class Leolio extends CrystalBase implements IGotBuyable {
     public void onRoleGive(@NonNull GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 60, 0, false, false), EffectWhen.DAY);
         addPower(new MoreCrystalPower(this));
+    }
+
+    @Override
+    public @NonNull CrystalFaction getCrystalFaction() {
+        return CrystalFaction.PEUPLE;
     }
 
     @Override

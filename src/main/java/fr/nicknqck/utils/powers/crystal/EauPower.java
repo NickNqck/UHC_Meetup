@@ -23,7 +23,7 @@ import java.util.Map;
 public class EauPower extends ElementalPower {
 
     public EauPower(@NonNull RoleBase role) {
-        super("§9Eau§r", new Cooldown(60*3), role, CeintureElements.EAU, 0, 0, 255);
+        super("§9Eau§r", new Cooldown(60*3), role, CeintureElements.EAU, 73, 43, 251);
     }
 
     @Override

@@ -61,7 +61,7 @@ public class GameConfig {
         configurablesMdj.put(MDJ.AOT, MDJ_AOT_Config.class);
         configurablesMdj.put(MDJ.NS, MDJ_NS_Config.class);
         this.playableMdj.addAll(Arrays.asList(MDJ.values()));
-        this.playableMdj.remove(MDJ.KRYSTAL);
+        this.playableMdj.remove(MDJ.CRYSTAL);
         this.playableMdj.remove(MDJ.Aucun);
         this.crystalConfig = new CrystalConfig();
     }

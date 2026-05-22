@@ -351,8 +351,7 @@ public class CrystalManager implements Listener {
                 } else {
                     final GamePlayer gamePlayer = GamePlayer.of(humanEntity.getUniqueId());
                     if (gamePlayer != null) {
-                        if (gamePlayer.check()) {
-                            this.gettingRefinedList.put(humanEntity.getUniqueId(), gamePlayer);
+                        if (tryToGiveRefinedCrystal(gamePlayer)) {
                             return;
                         }
                     }
@@ -451,6 +450,14 @@ public class CrystalManager implements Listener {
         this.crystalPowerMap.clear();
     }
 
+    public boolean tryToGiveRefinedCrystal(@NonNull final GamePlayer gamePlayer) {
+        if (!gamePlayer.check()) {
+            return false;
+        }
+        this.gettingRefinedList.put(gamePlayer.getUuid(), gamePlayer);
+        return true;
+    }
+
     private static final class CrystalPower extends ItemPower implements Listener{
 
         private final Map<IElements, ElementalPower> ceintures;
@@ -493,14 +500,14 @@ public class CrystalManager implements Listener {
         }
 
         public IElements getCeintureElements() {
-            int random = RandomUtils.getRandomInt(1, this.ceintures.size());
+            int random = RandomUtils.getRandomInt(0, this.getPlugin().getGameConfig().getCrystalConfig().getElements().size());
             int i = 0;
-            //Random est minimum sur 1 °_°
             for (IElements ceintureElements : this.getPlugin().getGameConfig().getCrystalConfig().getElements()) {
-                i++;
+                Main.getInstance().debug("Elements detected: " + ceintureElements+", id: "+i+", rdm =" + random);
                 if (i == random) {
                     return ceintureElements;
                 }
+                i++;
             }
             return null;
         }

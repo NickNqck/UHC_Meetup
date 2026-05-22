@@ -16,6 +16,7 @@ import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.roles.crystal.guilde.Bartholome;
 import fr.nicknqck.roles.crystal.royaume.Leolio;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -63,7 +64,6 @@ public class RoleManager implements Listener {
         this.rolesEnable = new HashMap<>();
         try {
             registerRoles();
-            registerRole(Leolio.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,6 +95,7 @@ public class RoleManager implements Listener {
         registerDemonSlayer();
         registerAot();
         registerNs();
+        registerCrystal();
     }
     public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
@@ -242,6 +243,12 @@ public class RoleManager implements Listener {
         registerRole(ShisuiSolo.class);
         registerRole(KabutoSolo.class);
     }
+    private void registerCrystal() throws Exception{
+        registerRole(Leolio.class);
+        registerRole(Bartholome.class);
+    }
+
+
     public RoleBase getRandomRole(final UUID uuid) {
         //Si le mec est déjà un GamePlayer, je renvoie null
         if (GameState.getInstance().getGamePlayer().containsKey(uuid))return null;
@@ -308,6 +315,8 @@ public class RoleManager implements Listener {
         if (event.getRoleType() instanceof CrystalRoles) {
             if (event.getRoleType().equals(CrystalRoles.Leolio)) {
                 event.setRoleBase(new Leolio(event.getPlayerUUID()));
+            } else if (event.getRoleType().equals(CrystalRoles.Bartholome)) {
+                event.setRoleBase(new Bartholome(event.getPlayerUUID()));
             }
         }
     }

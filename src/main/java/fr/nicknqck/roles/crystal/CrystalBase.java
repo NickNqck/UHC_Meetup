@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.crystal;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.CrystalFaction;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.NonNull;
 
@@ -18,4 +19,6 @@ public abstract class CrystalBase extends RoleBase {
         this.onRoleGive(gameState);
     }
     public abstract void onRoleGive(@NonNull final GameState gameState);
+    @NonNull
+    public abstract CrystalFaction getCrystalFaction();
 }

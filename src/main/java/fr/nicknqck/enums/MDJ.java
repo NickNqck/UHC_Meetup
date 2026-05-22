@@ -33,7 +33,7 @@ public enum MDJ implements IMDJ {
         Main.getInstance().getInventories().updateNSInventory(event);
     }),
     //	MC(new ItemBuilder(Material.GRASS).setName("§aMinecraft").toItemStack()),
-    KRYSTAL(new ItemBuilder(Material.EMERALD_ORE).setName("§dKrystal UHC").toItemStack(), null);
+    CRYSTAL(new ItemBuilder(Material.EMERALD_ORE).setName("§dCrystal UHC").toItemStack(), null);
 
     private final ItemStack item;
     private final Consumer<Player> consumer;

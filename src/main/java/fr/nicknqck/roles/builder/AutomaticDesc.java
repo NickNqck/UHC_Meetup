@@ -9,6 +9,7 @@ import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.Ackerman;
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.crystal.CrystalBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -48,6 +49,9 @@ public class AutomaticDesc {
     private void addObjectif() {
         final ITeam team = role.getTeam();
         text.addExtra(fromLegacyTextSafe("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
+        if (this.role instanceof CrystalBase) {
+            text.addExtra(fromLegacyTextSafe("\n§7Vous faite partie de la§c faction§7: \"§c"+((CrystalBase) this.role).getCrystalFaction().getName()+"§7\""));
+        }
     }
     public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {
         text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+getWhenString(when)));
