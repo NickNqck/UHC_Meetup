@@ -26,6 +26,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Jugo extends OrochimaruRoles {
@@ -77,6 +78,7 @@ public class Jugo extends OrochimaruRoles {
 		giveItem(owner, false, getItems());
 	}
 
+    @Nonnull
     @Override
 	public TextComponent getComponent() {
 		return this.desc;

@@ -40,6 +40,9 @@ public class RoleWorldManager implements Listener {
     public void addWorldManaged(@NonNull final String worldName, @NonNull final ISubRoleWorld iSubRoleWorld) {
         subRoleWorldMap.put(worldName, iSubRoleWorld);
     }
+    public void addWorldManaged(@NonNull final ISubRoleWorld iSubRoleWorld) {
+        subRoleWorldMap.put(iSubRoleWorld.getWorldName(), iSubRoleWorld);
+    }
     @EventHandler
     private void onGameStart(@NonNull final GameStartEvent event) {
         this.startedManaging = true;

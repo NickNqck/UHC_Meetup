@@ -9,6 +9,7 @@ import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.Ackerman;
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.crystal.CrystalBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -43,18 +44,21 @@ public class AutomaticDesc {
         addObjectif();
     }
     private void addRoleName() {
-        text.addExtra(new TextComponent("\n§7Role: "+role.getTeam().getColor()+role.getName()));
+        text.addExtra(fromLegacyTextSafe("\n§7Role: "+role.getTeam().getColor()+role.getName()));
     }
     private void addObjectif() {
         final ITeam team = role.getTeam();
-        text.addExtra(new TextComponent("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
+        text.addExtra(fromLegacyTextSafe("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
+        if (this.role instanceof CrystalBase) {
+            text.addExtra(fromLegacyTextSafe("\n§7Vous faite partie de la§c faction§7: \"§c"+((CrystalBase) this.role).getCrystalFaction().getName()+"§7\""));
+        }
     }
     public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {
-        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+getWhenString(when)));
+        text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+getWhenString(when)));
         return this;
     }
     public AutomaticDesc addCustomWhenEffect(PotionEffect potionEffect, String when) {
-        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+when));
+        text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "+getPotionEffectNameWithRomanLevel(potionEffect)+"§7 "+when));
         return this;
     }
     public AutomaticDesc addEffects(Map<PotionEffect, EffectWhen> map) {
@@ -80,7 +84,7 @@ public class AutomaticDesc {
                     permaEffects.append((permaEffectList.get(permaEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
                 }
             }
-            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+permaEffects+" §7de §7manière §cpermanente"));
+            text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez les effets "+permaEffects+" §7de §7manière §cpermanente"));
         }
         if (!dayEffectList.isEmpty()) {
             for (@NonNull final PotionEffect potionEffect : dayEffectList) {
@@ -89,7 +93,7 @@ public class AutomaticDesc {
                     dayEffects.append((dayEffectList.get(dayEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
                 }
             }
-            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+dayEffects+" §7le §cjour"));
+            text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez les effets "+dayEffects+" §7le §cjour"));
         }
         if (!nightEffectList.isEmpty()) {
             for (@NonNull final PotionEffect potionEffect : nightEffectList) {
@@ -98,14 +102,14 @@ public class AutomaticDesc {
                     nightEffects.append((nightEffectList.get(nightEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
                 }
             }
-            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez les effets "+nightEffects+" §7la §cnuit"));
+            text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez les effets "+nightEffects+" §7la §cnuit"));
         }
         for (@NonNull final PotionEffect effect : map.keySet()) {
             EffectWhen when = map.get(effect);
             if (when.equals(EffectWhen.PERMANENT))continue;
             if (when.equals(EffectWhen.DAY))continue;
             if (when.equals(EffectWhen.NIGHT))continue;
-            text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
+            text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l'effet§c "));
             text.addExtra("§c"+getPotionEffectNameWithRomanLevel(effect)+"§7 ");
             text.addExtra(when.equals(EffectWhen.AT_KILL) ? "§7pendant §c"+StringUtils.secondsTowardsBeautiful(effect.getDuration()/20)+" §7" : "");
             text.addExtra("§7"+getWhenString(when));
@@ -114,7 +118,7 @@ public class AutomaticDesc {
     }
     public AutomaticDesc addCustomLine(String line) {
         if (line.isEmpty())return this;
-        text.addExtra(new TextComponent("\n\n"+AllDesc.point+line));
+        text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+line));
         return this;
     }
     public AutomaticDesc addCustomLines(String[] lines) {
@@ -122,30 +126,30 @@ public class AutomaticDesc {
         int i = 0;
         for (final String string : lines) {
             if (string.equals("/*"))continue;
-            text.addExtra(new TextComponent("\n"));
+            text.addExtra(fromLegacyTextSafe("\n"));
             if (i == 0){
-                text.addExtra(new TextComponent("\n"+AllDesc.point));
+                text.addExtra(fromLegacyTextSafe("\n"+AllDesc.point));
             }
-            text.addExtra(new TextComponent(string));
+            text.addExtra(fromLegacyTextSafe(string));
             i++;
         }
         return this;
     }
     public AutomaticDesc addCustomText(TextComponent text) {
-        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point));
+        this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point));
         this.text.addExtra(text);
         return this;
     }
     public AutomaticDesc addItem(TextComponent textComponent, int cooldown) {
-        text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item "));
+        text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l'item "));
         text.addExtra(textComponent);
-        text.addExtra(new TextComponent("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
+        text.addExtra(fromLegacyTextSafe("§7"+(cooldown > 0 ? " (1x/"+StringUtils.secondsTowardsBeautiful(cooldown)+")" : "" )+"."));
         return this;
     }
     @SafeVarargs
     public final AutomaticDesc setItems(TripleMap<HoverEvent, String, Integer>... tripleMaps) {
         for (TripleMap<HoverEvent, String, Integer> tripleMap : tripleMaps) {
-            TextComponent interogativDot = new TextComponent(tripleMap.getSecond());
+            TextComponent interogativDot = fromLegacyTextSafe(tripleMap.getSecond());
             interogativDot.setHoverEvent(tripleMap.getFirst());
             text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
             text.addExtra(interogativDot);
@@ -166,7 +170,7 @@ public class AutomaticDesc {
     }
     public final AutomaticDesc setPowers(List<Power> powers) {
         if (Main.getInstance().getKatsuyuManager().containsUser(role.getPlayer())) {
-            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
+            TextComponent textComponent = fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l'item \"");
             TextComponent name = getPowerName("§dKatsuyu", Main.getInstance().getKatsuyuManager().getPowerDescription());
             textComponent.addExtra(name);
             textComponent.addExtra("§7.");
@@ -188,25 +192,25 @@ public class AutomaticDesc {
                 description = ((UpdatablePowerLore) power).getCustomPowerLore();
             }
             Cooldown cooldown = power.getCooldown();
-            TextComponent textComponent = new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
+            TextComponent textComponent = fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez l"+(power instanceof ItemPower ? "'item" : power instanceof CommandPower ? "a commande" : "e pouvoir")+" \"");
             TextComponent powerName = getPowerName(name, description);
             textComponent.addExtra(powerName);
             textComponent.addExtra("§7\"");
             if (power.getUse() == power.getMaxUse()) {
-                textComponent.addExtra("§7 (§cInutilisable§7).");
+                textComponent.addExtra("§7 (§cInu§ctilisable§7).");
                 this.text.addExtra(textComponent);
                 continue;
             }
             if (power.isShowCdInDesc()) {
                 if (cooldown != null) {
                     if (cooldown.getOriginalCooldown() == -500) {
-                        textComponent.addExtra("§7 (1x/partie)");
+                        textComponent.addExtra("§7 (1x§7/partie)");
                     } else {
-                        textComponent.addExtra(" §7(§71§7x§7/§7" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + "§7)");
+                        textComponent.addExtra(fromLegacyTextSafe(" §7(§71§7x§7/§7" + StringUtils.secondsTowardsBeautiful(cooldown.getOriginalCooldown()) + "§7)"));
                     }
                 }
                 if (power.getMaxUse() != -1) {
-                    textComponent.addExtra("§7 ("+(power.getMaxUse()-power.getUse())+"x/parti"+"§7e§7)");
+                    textComponent.addExtra(fromLegacyTextSafe("§7 ("+(power.getMaxUse()-power.getUse())+"x§7/parti"+"§7e§7)"));
                 }
             }
             textComponent.addExtra("§7.");
@@ -215,8 +219,55 @@ public class AutomaticDesc {
         return this;
     }
 
+    /**
+     * Crée un TextComponent depuis un texte pouvant contenir des \n,
+     * en garantissant que la couleur est conservée après chaque saut de ligne.
+     *
+     * @param text le texte avec codes couleur §
+     * @return un TextComponent avec la couleur persistante sur chaque ligne
+     */
+    public static TextComponent fromLegacyTextSafe(String text) {
+        // Extraire le préfixe de couleur (ex: "§7", "§a§l", etc.)
+        String colorPrefix = extractColorPrefix(text);
+
+        String[] lines = text.split("\n", -1);
+        TextComponent root = new TextComponent("");
+
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+
+            // Sur chaque ligne après la première, on réinjecte la couleur
+            if (i > 0) {
+                root.addExtra(new TextComponent("\n"));
+                if (!line.startsWith("§")) {
+                    line = colorPrefix + line;
+                }
+            }
+
+            // fromLegacyText gère correctement les codes §
+            for (BaseComponent component : TextComponent.fromLegacyText(line)) {
+                root.addExtra(component);
+            }
+        }
+        return root;
+    }
+
+    /**
+     * Extrait le(s) code(s) couleur/format en début de chaîne.
+     * Ex: "§7Texte" → "§7", "§a§lTexte" → "§a§l"
+     */
+    private static String extractColorPrefix(String text) {
+        StringBuilder prefix = new StringBuilder();
+        int i = 0;
+        while (i + 1 < text.length() && text.charAt(i) == '§') {
+            prefix.append(text, i, i + 2);
+            i += 2;
+        }
+        return prefix.toString();
+    }
+
     private TextComponent getPowerName(String name, String[] description) {
-        TextComponent powerName = new TextComponent(name);
+        TextComponent powerName = fromLegacyTextSafe(name);
         if (description != null && description.length > 0) {
             StringBuilder d = new StringBuilder();
             int lines = 0;
@@ -227,10 +278,10 @@ public class AutomaticDesc {
                 }
                 d.append(string);
             }
-            BaseComponent[] hoverText = new BaseComponent[]{new TextComponent(d.toString())};
+            BaseComponent[] hoverText = new BaseComponent[]{fromLegacyTextSafe(d.toString())};
             powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText));
         } else {
-            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune description trouver !")}));
+            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{fromLegacyTextSafe("§cAucune description trouver !")}));
         }
         return powerName;
     }
@@ -239,12 +290,12 @@ public class AutomaticDesc {
     public final AutomaticDesc setCommands(TripleMap<HoverEvent, String, Integer>... hoverAndCooldown) {
         text.addExtra("\n\n" + "§7 - Commandes: ");
         for (TripleMap<HoverEvent, String, Integer> tripleMap : hoverAndCooldown) {
-            TextComponent interogativDot = new TextComponent("§b[?]");
+            TextComponent interogativDot = fromLegacyTextSafe("§b[?]");
             interogativDot.setHoverEvent(tripleMap.getFirst());
             text.addExtra("\n\n§7 " + AllDesc.point + " ");
             text.addExtra(interogativDot);
             text.addExtra("§7 " + tripleMap.getSecond());
-            text.addExtra(new TextComponent("§7 (1x/" + (tripleMap.getThird() != -500 ? StringUtils.secondsTowardsBeautiful(tripleMap.getThird()) : "partie") + ")."));
+            text.addExtra(fromLegacyTextSafe("§7 (1x/" + (tripleMap.getThird() != -500 ? StringUtils.secondsTowardsBeautiful(tripleMap.getThird()) : "partie") + ")."));
         }
         return this;
     }
@@ -252,7 +303,7 @@ public class AutomaticDesc {
         text.addExtra("\n\n"+AllDesc.point+"§7Voud possédez §c"+hoverEvents.length+"§7 particularités: ");
         int i = 1;
         for (HoverEvent hover : hoverEvents) {
-            TextComponent toAdd = new TextComponent("§b["+i+"]");
+            TextComponent toAdd = fromLegacyTextSafe("§b["+i+"]");
             toAdd.setHoverEvent(hover);
             i++;
             text.addExtra(toAdd);
@@ -261,20 +312,20 @@ public class AutomaticDesc {
         return this;
     }
     public TextComponent getText(){
-        if (this.role instanceof RoleBase) {
-            if (!((RoleBase) this.role).getGamePlayer().getChatWithManager().isEmpty()) {
-                for (@NonNull final GamePlayer.ChatWithManager chatWithManager : ((RoleBase) this.role).getGamePlayer().getChatWithManager()) {
-                    if (chatWithManager.isShowInDesc()){
-                        this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
-                    }
+        if (!this.role.getGamePlayer().getChatWithManager().isEmpty()) {
+            for (@NonNull final GamePlayer.ChatWithManager chatWithManager : this.role.getGamePlayer().getChatWithManager()) {
+                if (chatWithManager.isShowInDesc()){
+                    this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous §7possédez §7un §7chat §7en §7commun §7avec "+chatWithManager.findGoodNameRoles()+" §7pour §7ce §7faire §7il §7vous §7faudra §7écrire §7un §7message §7en §7commençant §7par §7\"§c"+chatWithManager.getConstructor()+"§7\"."));
                 }
             }
+        }
+        if (this.role instanceof RoleBase) {
             if (((RoleBase)role).isNoFall()) {
-                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous possédez§a No Fall§7 de manière§c permanente"));
+                this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez§a No Fall§7 de manière§c permanente"));
             }
         }
         if (this.role instanceof NSRoles) {
-            text.addExtra(new TextComponent(
+            text.addExtra(fromLegacyTextSafe(
                     "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ?
                             "§cInexistante" :
                             this.role instanceof OrochimaruV2 ?
@@ -284,22 +335,22 @@ public class AutomaticDesc {
         }
         if (this.role instanceof AotRoles) {
             if (((AotRoles) this.role).isCanVoleTitan()) {
-                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Vous §7avez §7la §7capacité §7de §7voler §7un §ctitan §7via §7la §7commande §6/aot steal"));
+                this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous §7avez §7la §7capacité §7de §7voler §7un §ctitan §7via §7la §7commande §6/aot steal"));
             }
         }
         if (this.role instanceof Ackerman) {
             if (((Ackerman) this.role).knowHisMaster() && ((Ackerman) this.role).getMaster() != null) {
-                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a "+((Ackerman) this.role).getMaster().getGamePlayer().getPlayerName()+((((Ackerman) this.role).getGamePlayer().check() ? "" : " §7(§cMort§7)"))));
+                this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a "+((Ackerman) this.role).getMaster().getGamePlayer().getPlayerName()+((((Ackerman) this.role).getGamePlayer().check() ? "" : " §7(§cMort§7)"))));
             } else {
-                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a §kJeNeSaisPas"));
+                this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a §kJeNeSaisPas"));
             }
         }
         if (this.role instanceof DemonsSlayersRoles) {
             if (((DemonsSlayersRoles) this.role).isLameincassable()) {
-                this.text.addExtra(new TextComponent("\n\n"+AllDesc.point+"§7Votre§c lame§7 est§c incassable§7."));
+                this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre§c lame§7 est§c incassable§7."));
             }
         }
-        text.addExtra(new TextComponent("\n\n"+AllDesc.bar));
+        text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.bar));
         return text;
     }
     private String getWhenString(EffectWhen when) {

@@ -2,14 +2,13 @@ package fr.nicknqck.events.essential.inventorys;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.Roles;
 import fr.nicknqck.interfaces.*;
 import fr.nicknqck.roles.builder.RoleBase;
 
 public final class EasyRoleAdder {
 
     public static void addRoles(String name) {
-        Main.getInstance().getLogger().info("Name = "+name);
+        Main.getInstance().debug("Name = "+name);
         for (Class<? extends RoleBase> aClass : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
             final IRole iRole = Main.getInstance().getRoleManager().getRolesRegistery().get(aClass);
             if (iRole == null) {
@@ -75,6 +74,33 @@ public final class EasyRoleAdder {
     }
 
     public static void removeRoles(String name) {
+        Main.getInstance().debug("Name = "+name);
+        for (Class<? extends RoleBase> aClass : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
+            final IRole iRole = Main.getInstance().getRoleManager().getRolesRegistery().get(aClass);
+            if (iRole == null) {
+                Main.getInstance().debug(aClass+" is null, maybe isn't a IRole ?");
+                continue;
+            }
+            if (name.equalsIgnoreCase(cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName())) ||
+                    name.equalsIgnoreCase(getCleanSimpleName(aClass)) ||
+                    iRole.getRoles().getItem().getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
+                Main.getInstance().debug("ClassName: "+aClass.getSimpleName()+", class: "+aClass+", roles: "+name+", cleanName: "+getCleanSimpleName(aClass)+", cleanedString: "+cleanString(Main.getInstance().getRoleManager().getRolesRegistery().get(aClass).getName()));
+                if (GameState.getInstance().getAvailableRoles().containsKey(iRole.getRoles())) {
+                    if (GameState.getInstance().getAvailableRoles().get(iRole.getRoles()) > 0) {
+                        int newAmount = Math.max(0, GameState.getInstance().getAvailableRoles().get(iRole.getRoles())-1);
+                        GameState.getInstance().addInAvailableRoles(iRole.getRoles(), newAmount
+                                );
+                        GameState.getInstance().updateGameCanLaunch();
+                        if (iRole instanceof IRoleGotSubWorld && newAmount == 0) {
+                            final ISubRoleWorld iSubRoleWorld = ((IRoleGotSubWorld) iRole).getSubWorld();
+                            Main.getInstance().getRoleWorldManager().getSubRoleWorldMap().remove(iSubRoleWorld.getWorldName());
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        /*z
         for (Roles roles : Roles.values()) {
             if (roles.getItem().getItemMeta().getDisplayName().contains(name)) {
                 if (GameState.getInstance().getAvailableRoles().get(roles) > 0) {
@@ -85,5 +111,6 @@ public final class EasyRoleAdder {
                 }
             }
         }
+         */
     }
 }

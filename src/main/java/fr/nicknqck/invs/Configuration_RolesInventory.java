@@ -32,9 +32,6 @@ public class Configuration_RolesInventory extends FastInv {
         if (ChatRank.isHost(player)) {
             setItem(25, new ItemBuilder(Material.BOOKSHELF).setName("Configuration du mode de jeu").toItemStack(), event -> {
                 new SelectModeDeJeuInventory().open((Player) event.getWhoClicked());
-               /*1 Inventory inventaire = Bukkit.createInventory(player, 9, "Séléction du mode de jeu");
-                player.openInventory(inventaire);
-                Main.getInstance().getInventories().updateSelectMDJ(player);*/
             });
             if (GameState.getInstance().isAllMdjNull()) {
                 setItem(18, new ItemBuilder(Material.CAULDRON_ITEM).setName("§fAppuyer pour configurer d'autres modes de jeux").toItemStack(), inventoryClickEvent -> new MDJConfigInventory().open(player));

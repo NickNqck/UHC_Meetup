@@ -40,6 +40,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class MinatoV2 extends HShinobiRoles {
@@ -72,6 +73,7 @@ public class MinatoV2 extends HShinobiRoles {
         return Roles.Minato;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

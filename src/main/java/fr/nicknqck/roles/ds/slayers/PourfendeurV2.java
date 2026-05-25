@@ -34,6 +34,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class PourfendeurV2 extends SlayerRoles implements Listener {
@@ -126,6 +127,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         cdFoudre = 0;
         cdEau = 0;
     }
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.desc;

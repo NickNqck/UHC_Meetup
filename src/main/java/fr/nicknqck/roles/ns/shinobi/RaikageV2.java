@@ -26,6 +26,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -61,11 +62,11 @@ public class RaikageV2 extends ShinobiRoles {
     public void RoleGiven(GameState gameState) {
         super.RoleGiven(gameState);
         addKnowedRole(KillerBeeV2.class);
-        addKnowedRole(YondaimeRaikage.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new ArmureRaiton(this), true);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

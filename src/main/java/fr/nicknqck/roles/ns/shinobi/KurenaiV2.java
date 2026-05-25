@@ -32,6 +32,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KurenaiV2 extends ShinobiRoles {
@@ -42,7 +43,7 @@ public class KurenaiV2 extends ShinobiRoles {
 
     @Override
     public @NonNull Intelligence getIntelligence() {
-        return Intelligence.INTELLIGENT;
+        return Intelligence.MOYENNE;
     }
 
     @Override
@@ -74,6 +75,7 @@ public class KurenaiV2 extends ShinobiRoles {
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

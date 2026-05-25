@@ -43,6 +43,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -90,6 +91,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
         return Roles.Tanjiro;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return automaticDesc;

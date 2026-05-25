@@ -36,6 +36,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCustomLore, Listener {
@@ -94,6 +95,7 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

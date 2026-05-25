@@ -198,6 +198,16 @@ public class GlobalUtils {
 		}
 		return toReturn;
 	}
+	public static int getItemAmount(Player player, ItemStack item) {
+		int toReturn = 0;
+		for (ItemStack content : player.getInventory().getContents()) {
+			if (content == null)continue;
+			if (content.isSimilar(item)) {
+				toReturn += content.getAmount();
+			}
+		}
+		return toReturn;
+	}
     public static Color getRGBFromMinecraftColor(String code) {
         if (code == null || code.length() < 2) {
             return Color.fromRGB(255, 255, 255);

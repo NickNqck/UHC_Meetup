@@ -31,6 +31,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -76,6 +77,7 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
         addPower(new TentaculesPower(this), true);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7Vous êtes immunisé aux effets de§c Samehada§7.").getText();

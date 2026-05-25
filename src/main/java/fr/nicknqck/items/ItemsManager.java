@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import fr.nicknqck.managers.CrystalManager;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
@@ -89,6 +90,7 @@ public class ItemsManager implements Listener {
 	@EventHandler
 	public void PlayerRecupItemEvent(PlayerPickupItemEvent e) {
 		ItemStack s = e.getItem().getItemStack();
+		if (s.isSimilar(CrystalManager.crystalItem))return;
 		if (s.hasItemMeta()) {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
 				for (Bijus value : Bijus.values()) {

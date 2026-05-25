@@ -31,6 +31,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class MuzanV2 extends DemonsRoles implements Listener {
@@ -74,6 +75,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
         EventUtils.registerRoleEvent(this);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.killNezuko ?

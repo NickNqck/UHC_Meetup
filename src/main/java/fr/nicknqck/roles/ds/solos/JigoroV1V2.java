@@ -37,6 +37,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -84,6 +85,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
         super.RoleGiven(gameState);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

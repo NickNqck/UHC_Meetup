@@ -40,6 +40,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.UUID;
 
@@ -78,6 +79,7 @@ public class KyojuroV2 extends PilierRoles implements IAllianceRole {
         this.desc = desc.getText();
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.desc;

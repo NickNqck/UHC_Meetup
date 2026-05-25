@@ -43,6 +43,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
+
 import static fr.nicknqck.utils.particles.MathUtil.spawnParticle;
 
 public class HantenguV3 extends DemonsRoles implements Listener {
@@ -73,6 +75,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
         return TeamList.Demon;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)

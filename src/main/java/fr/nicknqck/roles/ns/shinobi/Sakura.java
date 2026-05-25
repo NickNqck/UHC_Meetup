@@ -10,6 +10,7 @@ import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,6 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Sakura extends HShinobiRoles {
@@ -57,7 +59,11 @@ public class Sakura extends HShinobiRoles {
 				AllDesc.bar
 		};
 	}
-
+	@Nonnull
+    @Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
     @Override
     public EChakras[] getChakrasCanHave() {
         return new EChakras[] {

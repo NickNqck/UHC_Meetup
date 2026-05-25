@@ -18,9 +18,6 @@ import fr.nicknqck.roles.aot.solo.TitanUltime;
 import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.krystal.LeComteV2;
-import fr.nicknqck.roles.custom.LeJuge;
-import fr.nicknqck.roles.krystal.Heldige;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -38,8 +35,7 @@ import fr.nicknqck.roles.ns.shinobi.porte.GaiV2;
 import fr.nicknqck.roles.ns.shinobi.porte.RockLeeV2;
 import fr.nicknqck.roles.ns.solo.*;
 import fr.nicknqck.roles.ns.solo.jubi.*;
-import fr.nicknqck.roles.ns.solo.kumogakure.GinkakuV2;
-import fr.nicknqck.roles.ns.solo.kumogakure.Kinkaku;
+import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.HakuV2;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.ZabuzaV2;
 import fr.nicknqck.roles.valo.agents.Iso;
@@ -62,7 +58,6 @@ public class GameState{
 	private int timeProcHokage = 90;
 	@Getter
 	private final List<IRoles<?>> deadRoles = new ArrayList<>();
-	public boolean hasPregen = false;
 	public boolean pregenNakime = false;
 	public boolean gameCanLaunch = false;
 	@Getter
@@ -469,7 +464,7 @@ public class GameState{
                     role = new MinatoV2(player);
                     break;
                 case Tsunade:
-                    role = new Tsunade(player);
+                    role = new TsunadeV2(player);
                     break;
                 case Konohamaru:
                     role = new KonohamaruV2(player);
@@ -502,7 +497,7 @@ public class GameState{
                     role = new GinkakuV2(player);
                     break;
                 case Kinkaku:
-                    role = new Kinkaku(player);
+                    role = new KinkakuV2(player);
                     break;
                 case Nagato:
                     role = new NagatoV2(player);
@@ -519,12 +514,6 @@ public class GameState{
                 case Iso:
                     role = new Iso(player);
                     break;
-                case LeComte:
-                    role = new LeComteV2(player);
-                    break;
-                case LeJuge:
-                    role = new LeJuge(player);
-                    break;
                 case Fugaku:
                     role = new Fugaku(player);
                     break;
@@ -536,9 +525,6 @@ public class GameState{
                     break;
                 case Neon:
                     role = new Neon(player);
-                    break;
-                case Heldige:
-                    role = new Heldige(player);
                     break;
                 case Shisui:
                     role = new ShisuiSolo(player);
@@ -712,7 +698,7 @@ public class GameState{
 				}
 			}
 			if (!role.getKnowedPlayer().isEmpty()) {
-				@NonNull final StringBuilder sb = new StringBuilder("§7Voici la liste de tout vos aliés ");
+				@NonNull final StringBuilder sb = new StringBuilder("§7Voici la liste de tout vos alliés ");
 				for (@NonNull final String string : role.getKnowedPlayer().keySet()) {
 					sb.append(string).append("§7:\n");
 					for (@NonNull final GamePlayer gamePlayer : role.getKnowedPlayer().get(string)) {

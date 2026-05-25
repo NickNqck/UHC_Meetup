@@ -2,7 +2,9 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.CrystalRoles;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
@@ -14,9 +16,8 @@ import fr.nicknqck.roles.aot.titanrouge.*;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.roles.krystal.LeComteV2;
-import fr.nicknqck.roles.custom.LeJuge;
-import fr.nicknqck.roles.krystal.Heldige;
+import fr.nicknqck.roles.crystal.guilde.Bartholome;
+import fr.nicknqck.roles.crystal.royaume.Leolio;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
@@ -94,7 +95,7 @@ public class RoleManager implements Listener {
         registerDemonSlayer();
         registerAot();
         registerNs();
-        registerCustomRoles();
+        registerCrystal();
     }
     public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
@@ -199,7 +200,7 @@ public class RoleManager implements Listener {
         registerRole(Sakura.class);
         registerRole(Shikamaru.class);
         registerRole(TenTenV2.class);
-        registerRole(Tsunade.class);
+        registerRole(TsunadeV2.class);
         registerRole(RaikageV2.class);
         registerRole(RockLeeV2.class);
         registerRole(GaiV2.class);
@@ -232,7 +233,7 @@ public class RoleManager implements Listener {
         registerRole(JubiSasuke.class);
         //Register Kumogakure
         registerRole(GinkakuV2.class);
-        registerRole(Kinkaku.class);
+        registerRole(KinkakuV2.class);
         //Register Zabuza et Haku
         registerRole(ZabuzaV2.class);
         registerRole(HakuV2.class);
@@ -242,12 +243,12 @@ public class RoleManager implements Listener {
         registerRole(ShisuiSolo.class);
         registerRole(KabutoSolo.class);
     }
-    private void registerCustomRoles() throws Exception {
-        //Register Custom Roles
-        registerRole(LeComteV2.class);
-        registerRole(LeJuge.class);
-        registerRole(Heldige.class);
+    private void registerCrystal() throws Exception{
+        registerRole(Leolio.class);
+        registerRole(Bartholome.class);
     }
+
+
     public RoleBase getRandomRole(final UUID uuid) {
         //Si le mec est déjà un GamePlayer, je renvoie null
         if (GameState.getInstance().getGamePlayer().containsKey(uuid))return null;
@@ -288,7 +289,7 @@ public class RoleManager implements Listener {
                 role.addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
                         , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
-                        NagatoV2.class, ZetsuBlanc.class,
+                        NagatoV2.class,
                         ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
             }
             if (role instanceof ISAkatsukiChief) {
@@ -306,6 +307,16 @@ public class RoleManager implements Listener {
                         }
                     }
                 }
+            }
+        }
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onExternGiveRole(@NonNull final GiveRoleDeclenchExternalPluginEvent event) {
+        if (event.getRoleType() instanceof CrystalRoles) {
+            if (event.getRoleType().equals(CrystalRoles.Leolio)) {
+                event.setRoleBase(new Leolio(event.getPlayerUUID()));
+            } else if (event.getRoleType().equals(CrystalRoles.Bartholome)) {
+                event.setRoleBase(new Bartholome(event.getPlayerUUID()));
             }
         }
     }

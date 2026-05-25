@@ -53,6 +53,7 @@ public class GamePlayer {
     private GamePlayer killer;
 	private final ActionBarManager actionBarManager;
 	private final List<ChatWithManager> chatWithManager;
+	private final Map<String, Object> metaData;
 
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
@@ -62,6 +63,7 @@ public class GamePlayer {
 		this.scoreboard = Main.getInstance().getScoreboardManager().getScoreboards().get(gamePlayer.getUniqueId());
 		this.actionBarManager = new ActionBarManager(this);
 		this.chatWithManager = new ArrayList<>();
+		this.metaData = new HashMap<>();
 		setAlive(true);
 		setCanRevive(false);
 	}
@@ -110,33 +112,7 @@ public class GamePlayer {
 		Player player = Bukkit.getPlayer(getUuid());
 		if (player == null)return;
 		StunManager.stun(this, tick, blind, text, player.getLocation());
-		/*new BukkitRunnable() {
-			private int ticks = tick;
-			private final Location stunLocation = player.getLocation();
-			@Override
-			public void run() {
-				if (ticks == 0 || !isAlive || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
-					cancel();
-					return;
-				}
-				Player player = Bukkit.getPlayer(getUuid());
-				if (player == null)return;
-				if (!player.getWorld().equals(stunLocation.getWorld())) {
-					cancel();
-					return;
-				}
-				player.teleport(stunLocation);
-				if (blind) {
-					Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0, false, false), true));
-				}
-				if (text && isGoodNumber(ticks)) {
-					player.sendTitle("§7Vous êtes immobilisé", "§7Il reste§c "+(ticks/20)+"!");
-				}
-				ticks--;
-
-			}
-		}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);*/
-	}
+    }
 
 	public void sendMessage(final String... messages) {
 		Player owner = Bukkit.getPlayer(getUuid());

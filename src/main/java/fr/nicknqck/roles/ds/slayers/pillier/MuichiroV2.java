@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class MuichiroV2 extends PilierRoles {
@@ -54,6 +55,7 @@ public class MuichiroV2 extends PilierRoles {
         this.desc = automaticDesc.getText();
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.desc;

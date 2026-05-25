@@ -10,11 +10,13 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
@@ -30,7 +32,11 @@ public class Magath extends MahrRoles {
 		giveHealedHeartatInt(4.0);
 		addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
 	}
-
+	@Nonnull
+    @Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public @NonNull Roles getRoles() {
 		return Roles.Magath;

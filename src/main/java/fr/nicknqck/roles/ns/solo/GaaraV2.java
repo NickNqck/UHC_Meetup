@@ -5,7 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.UHCPlayerKillEvent;
-import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
@@ -43,6 +43,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
         super.RoleGiven(gameState);
     }
     @EventHandler
-    private void onSecond(final OnSecond onSecond) {
+    private void onSecond(final SecondPassEvent onSecond) {
         this.reserve++;
         getGamePlayer().getActionBarManager().updateActionBar("gaara.sablecount", "§eSable(s): "+this.reserve);
     }
@@ -107,6 +108,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
         }
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
@@ -141,7 +143,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
             return false;
         }
         @EventHandler
-        private void onSecond(OnSecond onSecond) {
+        private void onSecond(SecondPassEvent onSecond) {
             if (this.timeLeft > 0) {
                 this.gaaraV2.getGamePlayer().getActionBarManager().updateActionBar("gaara.shukaku", "§eShukaku:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 this.timeLeft--;
@@ -246,7 +248,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
             ARMURE
         }
         @EventHandler
-        private void onSecond(OnSecond onSecond) {
+        private void onSecond(SecondPassEvent onSecond) {
             if (this.armure) {
                 if (this.gaaraV2.reserve < 5) {
                     this.gaaraV2.getGamePlayer().sendMessage("§cVotre§e Armure de Sable§c doit arrêter de fonctionner suite à votre manque de§e sable§c.");

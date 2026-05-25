@@ -31,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Iso extends RoleBase {
@@ -52,6 +53,11 @@ public class Iso extends RoleBase {
     public Iso(UUID player) {
         super(player);
 
+    }
+    @Nonnull
+    @Override
+    public TextComponent getComponent() {
+        return new TextComponent("");
     }
 
     @Override

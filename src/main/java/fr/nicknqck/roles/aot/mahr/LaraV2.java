@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class LaraV2 extends MahrRoles implements Listener {
@@ -29,6 +30,7 @@ public class LaraV2 extends MahrRoles implements Listener {
     public @NonNull Roles getRoles() {
         return Roles.Lara;
     }
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)

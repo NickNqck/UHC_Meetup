@@ -7,12 +7,14 @@ import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
 import fr.nicknqck.roles.desc.AllDesc;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Jelena extends TitansRoles {
@@ -42,7 +44,11 @@ public class Jelena extends TitansRoles {
 				AllDesc.bar,
 		};
 	}
-
+	@Nonnull
+    @Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
 	@Override
 	public String getName() {
 		return "Jelena";

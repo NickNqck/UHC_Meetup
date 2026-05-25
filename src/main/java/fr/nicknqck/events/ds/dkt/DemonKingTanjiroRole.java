@@ -10,6 +10,7 @@ import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.utils.WorldUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
@@ -55,6 +57,12 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     @Override
     public void resetCooldown() {
         cdEnergie = 0;
+    }
+
+    @Nonnull
+    @Override
+    public TextComponent getComponent() {
+        return new TextComponent("");
     }
 
     @Override

@@ -6,6 +6,7 @@ import fr.nicknqck.roles.builder.AutomaticDesc;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class GaiV2 extends PortesRoles{
@@ -32,6 +33,7 @@ public class GaiV2 extends PortesRoles{
         return Roles.Gai;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this).setItems(troisPorteMap(), sixPorteMap(), huitPorteMap()).getText();

@@ -14,6 +14,7 @@ import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,6 +32,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class ShinjuroV2 extends DemonsSlayersRoles {
@@ -57,7 +59,11 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
         super(player);
 
     }
-
+    @Nonnull
+    @Override
+    public TextComponent getComponent() {
+        return new TextComponent("");
+    }
     @Override
     public void GiveItems() {
         giveItem(owner, false, getItems());

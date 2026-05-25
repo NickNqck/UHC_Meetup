@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class GinkakuV2 extends KumogakureRole {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        addKnowedRole(Kinkaku.class);
+        addKnowedRole(KinkakuV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.NIGHT);
         new EffectGiver(getGameState(), this);
         addPower(new KyubiPower(this), true);
@@ -81,6 +82,7 @@ public class GinkakuV2 extends KumogakureRole {
         addPower(new CordeOrPower(this), true);
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
@@ -120,7 +122,7 @@ public class GinkakuV2 extends KumogakureRole {
             if (gamePlayerList.isEmpty())return;
             for (@NonNull final GamePlayer gamePlayer : gamePlayerList) {
                 if (gamePlayer.getRole() == null)continue;
-                if (gamePlayer.getRole() instanceof Kinkaku) {
+                if (gamePlayer.getRole() instanceof KinkakuV2) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.ginkaku.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NOW));
                     break;
                 }

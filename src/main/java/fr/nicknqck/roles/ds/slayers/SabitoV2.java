@@ -31,6 +31,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class SabitoV2 extends SlayerRoles {
@@ -54,6 +55,7 @@ public class SabitoV2 extends SlayerRoles {
         return Roles.Sabito;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

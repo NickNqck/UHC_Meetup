@@ -147,11 +147,7 @@ public enum Roles implements IRoles<Roles> {
     Kinkaku(TeamList.Kumogakure, "ns", 1, new ItemBuilder(Material.NETHER_STAR).setName("§6Kinkaku").toItemStack(), "§bByC3RV0L3NT"),
     //Agent valorant (il n'y aura que Iso)
     Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck"),
-    Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck"),
-    //Custom roles
-    LeComte(TeamList.Solo, "custom", 0, new ItemBuilder(Material.NETHER_STAR).setName("§eLe Compte").toItemStack(), "§bNickNqck"),
-    LeJuge(TeamList.Solo, "custom", 1, new ItemBuilder(Material.DIAMOND_SWORD).setName("§eLe Juge").toItemStack(), "§bNickNqck"),
-    Heldige(TeamList.Solo, "custom", 2, new ItemBuilder(Material.ENDER_PEARL).setName("§eHeldige").toItemStack(), "§bNickNqck§7 &§b Mega02600")
+    Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck")
     ;
     private final TeamList team;
     private final String mdj;

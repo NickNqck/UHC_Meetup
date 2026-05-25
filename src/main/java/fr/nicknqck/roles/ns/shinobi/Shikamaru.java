@@ -30,6 +30,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Shikamaru extends HShinobiRoles {
@@ -137,6 +138,7 @@ public class Shikamaru extends HShinobiRoles {
         poisonUse = 0;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return this.desc;

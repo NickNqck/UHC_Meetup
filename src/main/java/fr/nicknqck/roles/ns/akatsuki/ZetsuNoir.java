@@ -8,10 +8,12 @@ import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.Loc;
 import lombok.NonNull;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -50,7 +52,11 @@ public class ZetsuNoir extends AkatsukiRoles {
 				AllDesc.bar
 		};
 	}
-
+	@Nonnull
+    @Override
+	public TextComponent getComponent() {
+		return new TextComponent("");
+	}
     @Override
     public EChakras[] getChakrasCanHave() {
         return new EChakras[] {

@@ -39,6 +39,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class HakuV2 extends NSSoloRoles {
@@ -74,12 +75,13 @@ public class HakuV2 extends NSSoloRoles {
         return TeamList.Zabuza_et_Haku;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7A la mort de§b Zabuza§7, vous obtiendrez l'effet§c Force I§7 de manière§c permanente§7 ainsi qu'une réduction de cooldown sur votre§b dome Hyôton")
+                .addCustomLine("§7A la mort de§b Zabuza§7, vous obtiendrez l'effet§c Force I§7 de §7manière§c permanente§7 ainsi qu'une réduction de cooldown sur §7votre§b dome Hyôton")
                 .getText();
     }
 

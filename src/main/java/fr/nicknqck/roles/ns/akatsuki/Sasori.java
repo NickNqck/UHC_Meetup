@@ -43,6 +43,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Sasori extends AkatsukiRoles {
@@ -53,7 +54,7 @@ public class Sasori extends AkatsukiRoles {
 
     @Override
     public @NonNull Intelligence getIntelligence() {
-        return Intelligence.MOYENNE;
+        return Intelligence.INTELLIGENT;
     }
 
     @Override
@@ -77,6 +78,7 @@ public class Sasori extends AkatsukiRoles {
         return Roles.Sasori;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

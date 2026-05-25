@@ -3,7 +3,7 @@ package fr.nicknqck.events.essential;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
-import fr.nicknqck.events.custom.time.OnSecond;
+import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.player.PlayerInfo;
 import org.bukkit.entity.Arrow;
@@ -117,7 +117,7 @@ public class InfoListener implements Listener {
         Main.getInstance().getInfoManager().save(event.getPlayerKiller().getUniqueId());
     }
     @EventHandler
-    private void onSecond(OnSecond onSecond) {
+    private void onSecond(SecondPassEvent onSecond) {
         if (onSecond.isInGame()){
             for (final GamePlayer gamePlayer : onSecond.getGameState().getGamePlayer().values()) {
                 if (!gamePlayer.isAlive())continue;

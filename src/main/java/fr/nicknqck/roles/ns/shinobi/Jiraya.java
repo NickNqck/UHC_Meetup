@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
@@ -45,7 +46,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
-        Main.getInstance().getRoleWorldManager().addWorldManaged("Gamabunta2", new JirayaSubWorld());
+        Main.getInstance().getRoleWorldManager().addWorldManaged("Gamabunta2", getSubWorld());
         addPower(new Rasengan(this), true);
         addPower(new FukasakuEtShimaPower(this), true);
         addPower(new GamabuntaPower(this), true);
@@ -79,6 +80,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
         return this.jirayaSubWorld;
     }
 
+    @Nonnull
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createFullAutomaticDesc(this);

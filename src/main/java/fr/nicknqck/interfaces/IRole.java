@@ -1,6 +1,7 @@
 package fr.nicknqck.interfaces;
 
 import fr.nicknqck.enums.EffectWhen;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -25,4 +26,5 @@ public interface IRole {
     TextComponent getComponent();
     ItemStack[] getItems();
     List<Power> getPowers();
+    GamePlayer getGamePlayer();
 }
