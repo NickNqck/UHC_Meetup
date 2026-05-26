@@ -100,6 +100,9 @@ public class RoleManager implements Listener {
     public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
+        if (!GameState.getInstance().getAvailableRoles().containsKey(role.getRoles())) {
+            GameState.getInstance().getAvailableRoles().put(role.getRoles(), 0);
+        }
     }
     private void registerDemonSlayer() throws Exception {
         //Register Slayers
