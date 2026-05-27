@@ -18,16 +18,26 @@ public class KrystalCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         if (commandSender instanceof Player) {
             final Player sender = (Player) commandSender;
-            if (!gameState.hasRoleNull(sender.getUniqueId())) {
-                final RoleBase role = gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
-                if (role.getGamePlayer().isAlive()) {
-                    if (!role.getPowers().isEmpty()) {
-                        for (final Power power : role.getPowers()) {
-                            if (power instanceof CommandPower) {
-                                ((CommandPower) power).call(strings, CommandPower.CommandType.KRYSTAL, sender);
+            if (args.length >= 1) {
+                if (args[0].equalsIgnoreCase("roles") || args[0].equalsIgnoreCase("compo")) {
+                    sender.sendMessage(gameState.getRolesList());
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("me") || args[0].equalsIgnoreCase("role")) {
+                    gameState.sendDescription(sender);
+                    return true;
+                }
+                if (!gameState.hasRoleNull(sender.getUniqueId())) {
+                    final RoleBase role = gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
+                    if (role.getGamePlayer().isAlive()) {
+                        if (!role.getPowers().isEmpty()) {
+                            for (final Power power : role.getPowers()) {
+                                if (power instanceof CommandPower) {
+                                    ((CommandPower) power).call(args, CommandPower.CommandType.CRYSTAL, sender);
+                                }
                             }
                         }
                     }

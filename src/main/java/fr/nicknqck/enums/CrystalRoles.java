@@ -10,6 +10,7 @@ public enum CrystalRoles implements IRoles<CrystalRoles> {
 
     //ROYAUME
     Leolio(CrystalTeam.Royaume, "cr", 0, new ItemBuilder(Material.DIAMOND_PICKAXE).setName("§aLeolio").toItemStack(), "§bNickNqck"),
+    Gaudween(CrystalTeam.Royaume, "cr", 1, new ItemBuilder(Material.ARMOR_STAND).setName("§aGaudween").toItemStack(), "§bNickNqck"),
     //GUILDE
     Bartholome(CrystalTeam.Guilde, "cr", 0, new ItemBuilder(Material.DIAMOND_PICKAXE).setName("§5Bartholome").toItemStack(), "§bNickNqck")
 

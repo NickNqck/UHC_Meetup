@@ -17,6 +17,7 @@ import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.crystal.guilde.Bartholome;
+import fr.nicknqck.roles.crystal.royaume.Gaudween;
 import fr.nicknqck.roles.crystal.royaume.Leolio;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
@@ -248,6 +249,7 @@ public class RoleManager implements Listener {
     }
     private void registerCrystal() throws Exception{
         registerRole(Leolio.class);
+        registerRole(Gaudween.class);
         registerRole(Bartholome.class);
     }
 
@@ -320,6 +322,17 @@ public class RoleManager implements Listener {
                 event.setRoleBase(new Leolio(event.getPlayerUUID()));
             } else if (event.getRoleType().equals(CrystalRoles.Bartholome)) {
                 event.setRoleBase(new Bartholome(event.getPlayerUUID()));
+            }
+            for (Class<? extends RoleBase> aClass : getRolesRegistery().keySet()) {
+                if (getRolesRegistery().get(aClass).getRoles().equals(event.getRoleType())) {
+                    try {
+                        event.setRoleBase(aClass.getConstructor(UUID.class).newInstance(event.getPlayerUUID()));
+                    } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
+                             NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                }
             }
         }
     }

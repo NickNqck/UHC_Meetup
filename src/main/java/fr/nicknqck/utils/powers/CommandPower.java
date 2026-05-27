@@ -39,7 +39,7 @@ public abstract class CommandPower extends Power{
         AOT("aot"),
         NS("ns"),
         MC("mc"),
-        KRYSTAL("cr");
+        CRYSTAL("cr");
 
         private final String alias;
 

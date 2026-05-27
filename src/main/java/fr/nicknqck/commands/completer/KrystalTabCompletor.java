@@ -16,8 +16,11 @@ public class KrystalTabCompletor implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         final List<String> stringList = new ArrayList<>();
-        if (strings.length < 2) {
-            stringList.add("bonusinfo");
+        if (strings.length <= 1) {
+            stringList.add("roles");
+            stringList.add("me");
+            stringList.add("role");
+            stringList.add("compo");
         }
         if (commandSender instanceof Player) {
             if (GameState.inGame()) {
@@ -25,12 +28,14 @@ public class KrystalTabCompletor implements TabCompleter {
                     final List<Power> powerList = new ArrayList<>(GameState.getInstance().getGamePlayer().get(((Player) commandSender).getUniqueId()).getRole().getPowers());
                     for (final Power power : powerList) {
                         if (power instanceof CommandPower) {
-                            if (((CommandPower) power).getCommandType().equals(CommandPower.CommandType.KRYSTAL)) {
+                            if (((CommandPower) power).getCommandType().equals(CommandPower.CommandType.CRYSTAL)) {
                                 if (((CommandPower) power).getArg0() != null) {
                                     if (((CommandPower) power).getArg0().equalsIgnoreCase(strings[0])) {
                                         if (!((CommandPower) power).getCompletor(strings).isEmpty()) {
                                             return ((CommandPower) power).getCompletor(strings);
                                         }
+                                    } else if (((CommandPower) power).getArg0().startsWith(strings[0])) {
+                                        stringList.add(((CommandPower) power).getArg0());
                                     }
                                 }
                             }
@@ -42,7 +47,7 @@ public class KrystalTabCompletor implements TabCompleter {
         if (strings[0] != null) {
             final List<String> list = new ArrayList<>();
             for (final String string : stringList) {
-                if (string.contains(strings[0])) {
+                if (string.startsWith(strings[0])) {
                     list.add(string);
                 }
             }
