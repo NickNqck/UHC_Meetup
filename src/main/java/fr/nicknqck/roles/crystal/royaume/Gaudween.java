@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.UUID;
 
 //ça se prononce Godwin
-public class Gaudween extends CrystalBase {
+public class Gaudween extends RoyaumeBase {
 
     public Gaudween(UUID player) {
         super(player);
@@ -51,11 +51,6 @@ public class Gaudween extends CrystalBase {
     @Override
     public @NonNull IRoles<?> getRoles() {
         return CrystalRoles.Gaudween;
-    }
-
-    @Override
-    public @NonNull ITeam getOriginTeam() {
-        return CrystalTeam.Royaume;
     }
 
     @Override

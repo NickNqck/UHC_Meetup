@@ -3,15 +3,12 @@ package fr.nicknqck.roles.crystal.royaume;
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.CrystalFaction;
 import fr.nicknqck.enums.CrystalRoles;
-import fr.nicknqck.enums.CrystalTeam;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.interfaces.IGotBuyable;
 import fr.nicknqck.interfaces.IRoles;
-import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.managers.CrystalManager;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.crystal.CrystalBase;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -38,7 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Leolio extends CrystalBase implements IGotBuyable {
+public class Leolio extends RoyaumeBase implements IGotBuyable {
 
     public Leolio(UUID player) {
         super(player);
@@ -63,11 +60,6 @@ public class Leolio extends CrystalBase implements IGotBuyable {
     @Override
     public @NonNull IRoles<?> getRoles() {
         return CrystalRoles.Leolio;
-    }
-
-    @Override
-    public @NonNull ITeam getOriginTeam() {
-        return CrystalTeam.Royaume;
     }
 
     @Nonnull
