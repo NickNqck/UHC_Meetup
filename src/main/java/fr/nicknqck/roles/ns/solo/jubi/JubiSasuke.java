@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateAfterCheckEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.IUncompatibleRole;
@@ -130,11 +130,11 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
         }
     }
     @EventHandler
-    private void onKill(@NonNull final UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (!event.getGamePlayerKiller().check())return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            final GamePlayer gameVictim = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId());
+            final GamePlayer gameVictim = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId());
             if (gameVictim.getRole() == null)return;
             if (gameVictim.getRole() instanceof ItachiV2) {
                 onKillItachi();

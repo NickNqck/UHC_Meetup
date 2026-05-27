@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ds.solos.jigorov2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -49,7 +50,7 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
     }
 
     @EventHandler
-    private void UHCKillEvent(UHCPlayerKillEvent event) {
+    private void UHCKillEvent(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(this.kaigaku.getPlayer()) || event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
             final String msg = "§7Vous avez reçus §c1/2❤ permanent§7 car§6 Jigoro§r ou§c Kaigaku§7 à fait un §ckill";
@@ -57,8 +58,8 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
             kaigaku.getGamePlayer().sendMessage(msg);
             kaigaku.setMaxHealth(kaigaku.getMaxHealth()+1.0);
             setMaxHealth(getMaxHealth()+1.0);
-            if (!event.getGameState().hasRoleNull(event.getVictim().getUniqueId())) {
-                final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayerKiller().getUniqueId()).getRole();
+            if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId())) {
+                final RoleBase role = event.getGamePlayerKiller().getRole();
                 if (role instanceof ZenItsuV2) {
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
                     getGamePlayer().sendMessage("§aZen'Itsu§7 est§c mort§7, grâce à ceci vous gagnez l'effet§c Force I§7 de manière§c permanente");

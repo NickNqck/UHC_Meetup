@@ -4,7 +4,7 @@ import java.util.*;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
@@ -69,19 +69,20 @@ public class Gyokko extends DemonsRoles implements Listener {
 	}
 
     @EventHandler
-    private void onKill(@NonNull final UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            GamePlayer gamePlayer = GamePlayer.of(event.getVictim().getUniqueId());
+            GamePlayer gamePlayer = GamePlayer.of(event.getPlayer().getUniqueId());
             if (gamePlayer != null) {
                 if (gamePlayer.getRole() instanceof MuichiroV2) {
-                    if (event.getPlayerKiller().getInventory().getBoots() != null) {
-                        event.getPlayerKiller().getInventory().setBoots(new ItemBuilder(event.getPlayerKiller().getInventory().getBoots()).addEnchant(Enchantment.DEPTH_STRIDER, 2).toItemStack());
+					final Player killer = Bukkit.getPlayer(event.getGamePlayerKiller().getUuid());
+                    if (killer.getInventory().getBoots() != null) {
+                        killer.getInventory().setBoots(new ItemBuilder(killer.getInventory().getBoots()).addEnchant(Enchantment.DEPTH_STRIDER, 2).toItemStack());
                     } else {
-                        giveItem(event.getPlayerKiller(), false, Items.getGyokkoBoots());
+                        giveItem(killer, false, Items.getGyokkoBoots());
                     }
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.DAY);
-                    event.getKiller().sendMessage("§7Vous venez de tuez§a Muichiro§7 vous obtenez donc§c force 1 le§e jour§7, ainsi que des bottes en diamant enchantée avec:§6 Depht Strider 2");
+                    killer.sendMessage("§7Vous venez de tuez§a Muichiro§7 vous obtenez donc§c force 1 le§e jour§7, ainsi que des bottes en diamant enchantée avec:§6 Depht Strider 2");
                 }
             }
         }

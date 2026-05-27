@@ -2,9 +2,9 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -122,10 +122,10 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
     }
 
     @EventHandler
-    private void onKill(final UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
-        if (event.getVictim() == null)return;
-        if (!event.getVictim().getUniqueId().equals(getPlayer()))return;
+        if (event.getPlayer() == null)return;
+        if (!event.getPlayer().getUniqueId().equals(getPlayer()))return;
         if (event.getGamePlayerKiller().getRole() == null)return;
         if (dead)return;
         final RoleBase role = event.getGamePlayerKiller().getRole();
@@ -147,9 +147,9 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                             30
             );
             if (proba <= random) {
-                final ItemStack[] itemStacks = event.getVictim().getInventory().getContents();
-                final ItemStack[] armors = event.getVictim().getInventory().getArmorContents();
-                event.setCancel(true);
+                final ItemStack[] itemStacks = event.getPlayer().getInventory().getContents();
+                final ItemStack[] armors = event.getPlayer().getInventory().getArmorContents();
+                event.setCancelled(true);
                 setTeam(TeamList.Demon, true);
                 getGamePlayer().sendMessage("§7Vous avez été§c infecté§7, vous êtes maintenant dans le camp des§c Démons§7.");
                 event.getGamePlayerKiller().sendMessage("§a"+getGamePlayer().getPlayerName()+"§7 à rejoint votre§a camp§7.");

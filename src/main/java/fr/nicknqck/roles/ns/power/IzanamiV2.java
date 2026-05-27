@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiStartEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -242,16 +242,19 @@ public class IzanamiV2 implements Listener {
         taperCoupRemaining = 15;
         this.color = null;
     }
+
     @EventHandler
-    private void onKill(UHCPlayerKillEvent e) {
+    private void onDeath(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
         if (isNotNull()) {
             if (isGoodMission(MissionTarget.Tuer)) {
-                if (e.getKiller().getUniqueId().equals(this.gameTarget.getUuid())) {
+                if (event.getGamePlayerKiller().getUuid().equals(this.gameTarget.getUuid())) {
                     setTrueMissions(MissionTarget.Tuer);
                 }
             }
         }
     }
+
     @EventHandler
     private void onDrop(PlayerDropItemEvent e) {
         if (isGoodMission(MissionUser.Gap) && isNotNull()) {

@@ -6,7 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.GameEndEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.player.GamePlayer;
@@ -246,15 +246,15 @@ public class EnmuV2 extends DemonsRoles {
             }
 
             @EventHandler
-            private void onKill(UHCPlayerKillEvent event) {
+            private void onKill(@NonNull final UHCDeathEvent event) {
                 if (event.getGamePlayerKiller() == null)return;
-                if (!event.getKiller().getWorld().getName().equals("enmuv2_duel"))return;
-                final GamePlayer victim = this.gameState.getGamePlayer().get(event.getVictim().getUniqueId());
+                if (!event.getGamePlayerKiller().getLastLocation().getWorld().getName().equals("enmuv2_duel"))return;
+                final GamePlayer victim = this.gameState.getGamePlayer().get(event.getPlayer().getUniqueId());
                 if (victim == null)return;
                 //Si le gagnant c'est Enmu
                 if (event.getGamePlayerKiller().getUuid().equals(this.sommeilUltime.getRole().getPlayer())) {
                     this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);
-                    event.getPlayerKiller().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
+                    event.getGamePlayerKiller().getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     event.getGamePlayerKiller().sendMessage("§7Bravo, vous avez vaincu§c "+victim.getPlayerName()+"§7 dans son sommeil, vous gagnez donc§a +§c1/2❤ permanent§7 ainsi qu'une utilisation de ce pouvoir, vous serez téléporter en dehors du rêve dans§c 10 secondes§7.");
                     this.sommeilUltime.setMaxUse(this.sommeilUltime.getMaxUse()+1);
                     //Du coup la je vais tp QUE enmu
@@ -263,13 +263,13 @@ public class EnmuV2 extends DemonsRoles {
                         if (victim.getRole() instanceof PilierRoles) {
                             event.getGamePlayerKiller().sendMessage("§7On dirait que vous avez vaincu un§a pilier§7, vous gagnez donc§a +§c1/2❤ permanent");
                             this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);
-                            event.getPlayerKiller().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
+                            event.getGamePlayerKiller().getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                         }
                         final ITeam team = victim.getRole().getOriginTeam();
                         if (team.equals(TeamList.Solo) || team.equals(TeamList.Jubi) || team.equals(TeamList.Jigoro) || team.equals(TeamList.Alliance) || team.equals(TeamList.Sasuke)) {
                             event.getGamePlayerKiller().sendMessage("§7On dirait que vous avez vaincu un rôle§e solitaire§7, vous gagnez donc§a +§c1/2❤ permanent");
                             this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);
-                            event.getPlayerKiller().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
+                            event.getGamePlayerKiller().getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                         }
                         final Map<PotionEffect, EffectWhen> potionEffects = victim.getRole().getEffects();
                         if (potionEffects.isEmpty())return;
@@ -280,7 +280,7 @@ public class EnmuV2 extends DemonsRoles {
                                     if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                                         this.sommeilUltime.getRole().addBonusforce(10.0);
                                     } else if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
-                                        this.sommeilUltime.getRole().addSpeedAtInt(event.getPlayerKiller(), 10f);
+                                        this.sommeilUltime.getRole().addSpeedAtInt(event.getGamePlayerKiller().getRole().owner, 10f);
                                     } else if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
                                         this.sommeilUltime.getRole().addBonusResi(10.0);
                                     }
@@ -290,7 +290,7 @@ public class EnmuV2 extends DemonsRoles {
                                     if (potionEffect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
                                         this.sommeilUltime.getRole().addBonusforce(10.0);
                                     } else if (potionEffect.getType().equals(PotionEffectType.SPEED)) {
-                                        this.sommeilUltime.getRole().addSpeedAtInt(event.getPlayerKiller(), 10f);
+                                        this.sommeilUltime.getRole().addSpeedAtInt(event.getGamePlayerKiller().getRole().owner, 10f);
                                     } else if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
                                         this.sommeilUltime.getRole().addBonusResi(10.0);
                                     }
@@ -301,22 +301,22 @@ public class EnmuV2 extends DemonsRoles {
                 }
                 //Si le perdant c'est Enmu
                 if (victim.getUuid().equals(this.sommeilUltime.getRole().getPlayer())) {
-                    event.getPlayerKiller().getInventory().remove(this.sommeilUltime.getItem());
+                    event.getGamePlayerKiller().getRole().owner.getInventory().remove(this.sommeilUltime.getItem());
                     victim.getRole().getPowers().remove(this.sommeilUltime);
                     victim.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()-4.0);
-                    event.getVictim().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
+                    event.getPlayer().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
                     victim.sendMessage("§7Vous avez perdu votre§c duel§7, pourtant il était à votre avantage... Tant pis vous allez ressusciter dans§c 10 secondes§7 en perdant§c 2❤ permanents");
-                    this.enmuItems = event.getVictim().getInventory().getContents();
-                    this.enmuArmors = event.getVictim().getInventory().getArmorContents();
+                    this.enmuItems = event.getPlayer().getInventory().getContents();
+                    this.enmuArmors = event.getPlayer().getInventory().getArmorContents();
                     for (final ItemStack itemStack : this.enmuItems) {
                         if (itemStack == null)continue;
                         if (itemStack.getType().equals(Material.AIR))continue;
-                        GameListener.dropItem(event.getVictim().getLocation(), itemStack);
+                        GameListener.dropItem(event.getPlayer().getLocation(), itemStack);
                     }
                     //Et la je tp les deux joueurs avec chacun sont propres runnable
                     new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     new ReturnBackRunnable(this, victim, true).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
-                    event.setCancel(true);
+                    event.setCancelled(true);
                 }
             }
             private boolean isGoodEffect(PotionEffectType type) {

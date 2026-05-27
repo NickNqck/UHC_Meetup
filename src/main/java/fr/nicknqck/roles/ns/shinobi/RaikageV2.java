@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -113,10 +113,11 @@ public class RaikageV2 extends ShinobiRoles {
             }
         }
         @EventHandler
-        private void onKill(UHCPlayerKillEvent event) {
-            if (event.getKiller().getUniqueId().equals(getRole().getPlayer())) {
+        private void onKill(@NonNull final UHCDeathEvent event) {
+            if (event.getGamePlayerKiller() == null)return;
+            if (event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer())) {
                 this.timeLeft+=60;
-                event.getKiller().sendMessage("§7Vous avez gagner§c 60 secondes§7 dans votre§c banque de temp§7.");
+                event.getGamePlayerKiller().sendMessage("§7Vous avez gagner§c 60 secondes§7 dans votre§c banque de temp§7.");
             }
         }
         private static class ArmureRunnable extends BukkitRunnable {

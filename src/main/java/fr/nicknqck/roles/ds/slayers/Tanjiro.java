@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.assassin.ProcAssassinEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
@@ -145,13 +145,13 @@ public class Tanjiro extends SlayerRoles implements Listener {
     }
 
     @EventHandler
-    private void onUHCPlayerKill(UHCPlayerKillEvent event){
-        if (event.getPlayerKiller() != null) {
-            if (event.getPlayerKiller().getUniqueId().equals(getPlayer())) {
+    private void onUHCPlayerKill(@NonNull final UHCDeathEvent event){
+        if (event.getGamePlayerKiller() != null) {
+            if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
                 if (this.gameAssassin != null) {
-                    if (this.gameAssassin.getUuid().equals(event.getVictim().getUniqueId())) {
+                    if (this.gameAssassin.getUuid().equals(event.getPlayer().getUniqueId())) {
                         getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-                        event.getPlayerKiller().sendMessage("§7Vous avez venger votre famille, vous recevez l'effet§c Force I§7 de manière§c permanente");
+                        event.getGamePlayerKiller().sendMessage("§7Vous avez venger votre famille, vous recevez l'effet§c Force I§7 de manière§c permanente");
                     }
                 }
             }

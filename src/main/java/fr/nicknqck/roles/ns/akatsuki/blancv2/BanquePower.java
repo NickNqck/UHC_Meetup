@@ -3,10 +3,11 @@ package fr.nicknqck.roles.ns.akatsuki.blancv2;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.RoleGiveEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -82,14 +83,15 @@ public class BanquePower implements Listener {
         player.openInventory(inv);
     }
     @EventHandler
-    private void onKill(UHCPlayerKillEvent event) {
-        if (zetsus.contains(event.getKiller().getUniqueId())) {
-            if (event.getPlayerKiller() == null)return;
-            if (!event.getGameState().hasRoleNull(event.getPlayerKiller().getUniqueId())) {
-                RoleBase role = event.getGameState().getGamePlayer().get(event.getKiller().getUniqueId()).getRole();
+    private void onKill(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
+        if (zetsus.contains(event.getGamePlayerKiller().getUuid())) {
+            if (event.getGamePlayerKiller().getPlayer() == null)return;
+            if (!event.getGameState().hasRoleNull(event.getGamePlayerKiller().getUuid())) {
+                RoleBase role = event.getGamePlayerKiller().getRole();
                 if (!(role instanceof ZetsuBlancV2))return;
-                if (!getPermanentPotionEffects(event.getVictim()).isEmpty()) {
-                    List<PotionEffect> effectList = getPermanentPotionEffects(event.getVictim());
+                if (!getPermanentPotionEffects(event.getPlayer()).isEmpty()) {
+                    List<PotionEffect> effectList = getPermanentPotionEffects(event.getPlayer());
                     if (!effectList.isEmpty()){
                         Collections.shuffle(effectList, Main.RANDOM);
                         PotionEffect potionEffect = effectList.get(0);
@@ -105,14 +107,14 @@ public class BanquePower implements Listener {
                                 addToBanque(potion);
                             }
                         }
-                        if (getPermanentPotionEffects(event.getPlayerKiller()).isEmpty()) {
+                        if (getPermanentPotionEffects(event.getGamePlayerKiller().getPlayer()).isEmpty()) {
                             role.givePotionEffect(potionEffect, EffectWhen.PERMANENT);
                         } else {
                             if (!this.effects.containsKey(potionEffect)) {
                                 sendMessagetoZetsus("§7Un nouvelle effet à été ajouter à la§f §nBanque");
                                 addToBanque(potionEffect);
                             } else {
-                                event.getPlayerKiller().sendMessage("L'effet est déjà dans la banque (§c"+potionEffect.getType().getName()+"§f)");
+                                event.getGamePlayerKiller().sendMessage("L'effet est déjà dans la banque (§c"+potionEffect.getType().getName()+"§f)");
                             }
                         }
                     }

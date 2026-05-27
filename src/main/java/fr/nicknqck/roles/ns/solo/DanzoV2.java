@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -143,20 +143,20 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
         }
     }
     @EventHandler(priority = EventPriority.HIGH)
-    private void onKill(UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
-        if (event.isCancel())return;
+        if (event.isCancelled())return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            if (event.getPlayerKiller().getMaxHealth() < 24.0) {
-                setMaxHealth(event.getPlayerKiller().getMaxHealth()+1.0);
-                event.getPlayerKiller().setMaxHealth(getMaxHealth());
-                event.getPlayerKiller().sendMessage("§7Tuer un joueur vous a rendu §c1/2❤§7 permanent");
+            if (event.getGamePlayerKiller().getPlayer().getMaxHealth() < 24.0) {
+                setMaxHealth(event.getGamePlayerKiller().getPlayer().getMaxHealth()+1.0);
+                event.getGamePlayerKiller().getPlayer().setMaxHealth(getMaxHealth());
+                event.getGamePlayerKiller().sendMessage("§7Tuer un joueur vous a rendu §c1/2❤§7 permanent");
             }
-            if (isUchiwa(event.getVictim())) {
-                event.getPlayerKiller().sendMessage("§7Vous venez de tuer un de ces démons du clan §4§lUchiwa !");
+            if (isUchiwa(event.getPlayer())) {
+                event.getGamePlayerKiller().sendMessage("§7Vous venez de tuer un de ces démons du clan §4§lUchiwa !");
                 if (!killUchiwa) {
                     givePotionEffect(this.resistance, EffectWhen.PERMANENT);
-                    event.getPlayerKiller().sendMessage("§7Vous obtenez l'effet §9Résistance 1§7 de manière permanente");
+                    event.getGamePlayerKiller().sendMessage("§7Vous obtenez l'effet §9Résistance 1§7 de manière permanente");
                     this.killUchiwa = true;
                 }
             }

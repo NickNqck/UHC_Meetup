@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.IUncompatibleRole;
 import fr.nicknqck.player.GamePlayer;
@@ -139,12 +138,12 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
         }
     }
     @EventHandler
-    private void UHCKillEvent(@NonNull final UHCPlayerKillEvent event) {
-        if (event.isCancel())return;
+    private void UHCKillEvent(@NonNull final UHCDeathEvent event) {
+        if (event.isCancelled())return;
         if (event.getGamePlayerKiller() == null)return;
-        if (event.getKiller().getUniqueId().equals(getPlayer())) {
-            if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
-            @NonNull final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+        if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
+            if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
+            @NonNull final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
             if (role instanceof ItachiV2) {
                 onItachiKill(true);
             }

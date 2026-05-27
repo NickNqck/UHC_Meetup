@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.DemonKillEvent;
 import fr.nicknqck.events.custom.FinalDeathEvent;
 import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -61,12 +60,13 @@ public class DeathManager implements Listener {
             final GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setLastInventoryContent(killedPlayer.getInventory().getContents());
         }
-        @NonNull
-        final UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(killedPlayer, entityKiller, gameState);
-        Bukkit.getPluginManager().callEvent(playerKillEvent);
-        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole());
+        if (this.cantDie(gameState, killedPlayer, entityKiller)) {
+            return;
+        }
+        final GamePlayer gamePlayerKiller = GamePlayer.of(entityKiller.getUniqueId());
+        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), gamePlayerKiller);
         Bukkit.getPluginManager().callEvent(uhcDeathEvent);
-        if (this.cantDie(gameState, killedPlayer, entityKiller) || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
+        if (uhcDeathEvent.isCancelled()) {
             return;
         }
         final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller);
@@ -167,9 +167,9 @@ public class DeathManager implements Listener {
         killedPlayer.setGameMode(GameMode.SPECTATOR);
         killedPlayer.updateInventory();
         killedPlayer.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 100, 0.0));
-        if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
+    /*5    if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             gameState.getGamePlayer().get(killedPlayer.getUniqueId()).setKiller(playerKillEvent.getGamePlayerKiller());
-        }
+        }*/
         detectWin(gameState);
     }
     private void removeRoleItem(final GameState gameState, final Player player) {

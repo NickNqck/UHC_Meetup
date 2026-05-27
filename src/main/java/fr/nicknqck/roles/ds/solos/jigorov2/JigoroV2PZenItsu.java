@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ds.solos.jigorov2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,11 +54,11 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
     }
 
     @EventHandler
-    private void onUHCKill(final UHCPlayerKillEvent event) {
+    private void onUHCKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
-        if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
+        if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
         if (event.getGamePlayerKiller().getUuid().equals(this.zenItsu.getPlayer()) || event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+            final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
             if (role instanceof KaigakuV2) {
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), EffectWhen.MID_LIFE);
                 getGamePlayer().sendMessage("§6"+event.getGamePlayerKiller().getRole().getName()+"§f à tué§c Kaigaku§f ce qui vous permet d'avoir§b Speed II§f en dessous de §c5❤");

@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.orochimaru.edov2;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -112,19 +113,21 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
         return sb.toString();
     }
     @EventHandler
-    private void onUHCKill(@NonNull final UHCPlayerKillEvent event) {
+    private void onUHCKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            ((CraftPlayer) event.getPlayerKiller()).getHandle().setAbsorptionHearts(((CraftPlayer) event.getPlayerKiller()).getHandle().getAbsorptionHearts()+8.0f);
-            if (!event.getGameState().hasRoleNull(event.getVictim().getUniqueId())) {
-                final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+            final Player killer = event.getGamePlayerKiller().getPlayer();
+            if (killer == null)return;
+            ((CraftPlayer) killer).getHandle().setAbsorptionHearts(((CraftPlayer) killer).getHandle().getAbsorptionHearts()+8.0f);
+            if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId())) {
+                final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
                 if (role instanceof NSRoles) {
                     if (((NSRoles) role).getChakras() != null) {
                         if (!this.chakrasVoled.contains(((NSRoles) role).getChakras())) {
                             if (RandomUtils.getOwnRandomProbability(25.0)) {
                                 this.chakrasVoled.add(((NSRoles) role).getChakras());
                                 ((NSRoles) role).getChakras().getChakra().getList().add(getPlayer());
-                                event.getPlayerKiller().sendMessage("§7Vous maitrisez maintenant la nature de chakra: "+((NSRoles) role).getChakras().getShowedName());
+                                event.getGamePlayerKiller().sendMessage("§7Vous maitrisez maintenant la nature de chakra: "+((NSRoles) role).getChakras().getShowedName());
                             }
                         }
                     }

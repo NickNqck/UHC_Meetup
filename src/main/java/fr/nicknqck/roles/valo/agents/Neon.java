@@ -3,7 +3,7 @@ package fr.nicknqck.roles.valo.agents;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -27,7 +27,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,11 +45,6 @@ public class Neon extends RoleBase {
     }
 
     @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
     public String getName() {
         return "Neon";
     }
@@ -63,11 +57,6 @@ public class Neon extends RoleBase {
     @Override
     public @NonNull TeamList getOriginTeam() {
         return TeamList.Solo;
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     @Nonnull
@@ -318,7 +307,7 @@ public class Neon extends RoleBase {
                 }
             }
             @EventHandler
-            private void onKill(UHCPlayerKillEvent event) {
+            private void onKill(@NonNull final UHCDeathEvent event) {
                 if (event.getGamePlayerKiller() != null) {
                     if (!event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer()))return;
                     if (this.getUse() <= this.getMaxUse() && this.getUse() > 0) {
@@ -328,7 +317,7 @@ public class Neon extends RoleBase {
                             this.killCount = 0;
                             getRole().getGamePlayer().getActionBarManager().updateActionBar("neon.dash.count", "§cDashs§7: §c"+(getUse())+"§7/§6"+getMaxUse());
                         } else {
-                            event.getKiller().sendMessage("§7Plus que§c 1 kill§7 avant de gagner un§c dash§7.");
+                            event.getGamePlayerKiller().sendMessage("§7Plus que§c 1 kill§7 avant de gagner un§c dash§7.");
                         }
                     }
                 }

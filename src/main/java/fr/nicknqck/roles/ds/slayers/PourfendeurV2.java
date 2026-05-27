@@ -4,8 +4,8 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -204,9 +204,9 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         }
     }
     @EventHandler
-    private void onKill(UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() != null) {
-            if (event.getPlayerKiller().getUniqueId().equals(getPlayer())) {
+            if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
                 if (this.souflesList.size() < 5) {
                     List<Soufles> allSoufles = new ArrayList<>(Arrays.asList(Soufles.values()));
                     allSoufles.remove(Soufles.RIEN);

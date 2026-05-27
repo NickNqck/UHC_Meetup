@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -105,7 +105,7 @@ public class Arctridi implements Listener{
     	}
     }
     @EventHandler
-    private void onKill(UHCPlayerKillEvent event) {
+    private void onKill(UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getRole() instanceof AotRoles){
             AotRoles role = (AotRoles) event.getGamePlayerKiller().getRole();
@@ -115,10 +115,10 @@ public class Arctridi implements Listener{
                     double killergaz = role.gazAmount;
                     DecimalFormat df = new DecimalFormat("0.0");
                     if (killergaz + victimgaz > 100.0) {
-                        event.getKiller().sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
+                        event.getGamePlayerKiller().sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
                         role.gazAmount = 100;
                     }else {
-                        event.getKiller().sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
+                        event.getGamePlayerKiller().sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
                         role.gazAmount += victimgaz/3;
                     }
                 }

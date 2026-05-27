@@ -5,7 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.player.GamePlayer;
@@ -138,14 +138,14 @@ public class KinkakuV2 extends KumogakureRole {
             return map.containsKey("rien");
         }
         @EventHandler
-        private void onKill(@NonNull final UHCPlayerKillEvent event) {
+        private void onKill(@NonNull final UHCDeathEvent event) {
             if (event.getGamePlayerKiller() != null) {
-                final GamePlayer gamePlayer = GamePlayer.of(event.getVictim().getUniqueId());
+                final GamePlayer gamePlayer = GamePlayer.of(event.getPlayer().getUniqueId());
                 if (gamePlayer != null && gamePlayer.check()) {
                     if (gamePlayer.getRole() instanceof NSRoles) {
                         final EChakras eChakras = ((NSRoles) gamePlayer.getRole()).getChakras();
                         if (eChakras != null) {
-                            if (!eChakras.getChakra().getList().contains(getRole().getPlayer()) && checkUse(event.getPlayerKiller(), Collections.singletonMap("rien", "rien"))) {
+                            if (!eChakras.getChakra().getList().contains(getRole().getPlayer()) && checkUse(event.getGamePlayerKiller().getPlayer(), Collections.singletonMap("rien", "rien"))) {
                                 eChakras.getChakra().getList().add(getRole().getPlayer());
                                 getRole().getGamePlayer().sendMessage(getPlugin().getPLUGIN_NAME()+"§7Vous utilisez maintenant la§a nature de chakra§7 \""+eChakras.getShowedName()+"§7\" en plus de celles que vous aviez déjà.");
                             }

@@ -19,6 +19,7 @@ import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.crystal.guilde.Bartholome;
 import fr.nicknqck.roles.crystal.royaume.Gaudween;
 import fr.nicknqck.roles.crystal.royaume.Leolio;
+import fr.nicknqck.roles.crystal.royaume.Othon;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
@@ -251,6 +252,7 @@ public class RoleManager implements Listener {
         registerRole(Leolio.class);
         registerRole(Gaudween.class);
         registerRole(Bartholome.class);
+        registerRole(Othon.class);
     }
 
 

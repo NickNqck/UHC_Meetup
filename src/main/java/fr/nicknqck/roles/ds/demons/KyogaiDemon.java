@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -101,12 +100,12 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
                 ).getText();
     }
     @EventHandler
-    private void UHCKillEvent(final UHCPlayerKillEvent event) {
-        if (event.isCancel())return;
+    private void UHCKillEvent(@NonNull final UHCDeathEvent event) {
+        if (event.isCancelled())return;
         if (event.getGamePlayerKiller() == null)return;
-        if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
-        if (!event.getKiller().getUniqueId().equals(getPlayer()))return;
-        final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+        if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
+        if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;
+        final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
         if (role instanceof Tanjiro || role instanceof ZenItsuV2 || role instanceof InosukeV2) {
             addPower(new PercussionRapidePower(this), true);
             EventUtils.unregisterEvents(this);

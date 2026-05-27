@@ -2,8 +2,8 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -115,31 +115,31 @@ public class YoriichiV2 extends DemonsSlayersRoles {
             return true;
         }
         @EventHandler
-        private void onKill(@NonNull final UHCPlayerKillEvent event) {
+        private void onKill(@NonNull final UHCDeathEvent event) {
             if (event.getGamePlayerKiller() == null)return;
             if (event.getGamePlayerKiller().getRole() == null)return;
-            if (!event.getKiller().getUniqueId().equals(this.getRole().getPlayer()))return;
-            if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
-            final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+            if (!event.getGamePlayerKiller().getUuid().equals(this.getRole().getPlayer()))return;
+            if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
+            final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
             if (role instanceof DemonsRoles) {
                 if (this.demonKills == 0) {
-                    this.yoriichiV2.giveItem(event.getPlayerKiller(), false, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bÉpée de§e Yoriichi").addEnchant(Enchantment.DAMAGE_ALL, 4).toItemStack());
-                    event.getKiller().sendMessage("§7Vous avez obtenue votre§c épée en diamant");
+                    this.yoriichiV2.giveItem(event.getGamePlayerKiller().getPlayer(), false, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bÉpée de§e Yoriichi").addEnchant(Enchantment.DAMAGE_ALL, 4).toItemStack());
+                    event.getGamePlayerKiller().sendMessage("§7Vous avez obtenue votre§c épée en diamant");
                 }
                 this.demonKills++;
             } else if (role instanceof SlayerRoles) {
                 if (this.slayerKills == 0) {
                     this.yoriichiV2.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.DAY);
-                event.getKiller().sendMessage("§7Vous avez obtenue l'effet§c résistance 1§7 le§e jour");
+                    event.getGamePlayerKiller().sendMessage("§7Vous avez obtenue l'effet§c résistance 1§7 le§e jour");
                 }
                 this.slayerKills++;
             } else if (role.getOriginTeam().equals(TeamList.Solo) || role.getOriginTeam().equals(TeamList.Jubi) || role.getOriginTeam().equals(TeamList.Zabuza_et_Haku)) {
-                this.yoriichiV2.addSpeedAtInt(event.getPlayerKiller(), 5.0f);
-                event.getKiller().sendMessage("§7Vous avez obtenue§c 5% de speed");
+                this.yoriichiV2.addSpeedAtInt(event.getGamePlayerKiller().getPlayer(), 5.0f);
+                event.getGamePlayerKiller().sendMessage("§7Vous avez obtenue§c 5% de speed");
             }
             if (this.demonKills == 3 && this.slayerKills == 3) {
                 this.yoriichiV2.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NIGHT);
-                event.getKiller().sendMessage("§7Vous avez maintenant§c résistance 1 permanent");
+                event.getGamePlayerKiller().sendMessage("§7Vous avez maintenant§c résistance 1 permanent");
             }
         }
         @EventHandler

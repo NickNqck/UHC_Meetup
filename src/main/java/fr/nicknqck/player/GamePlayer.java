@@ -179,9 +179,14 @@ public class GamePlayer {
 			}
 		}
 	}
+
     public static GamePlayer of(final UUID uuid) {
         return GameState.getInstance().getGamePlayer().get(uuid);
     }
+	@Nullable
+	public Player getPlayer() {
+		return Bukkit.getPlayer(getUuid());
+	}
     public static class DiscRunnable extends BukkitRunnable {
 
 		private final GamePlayer gamePlayer;
