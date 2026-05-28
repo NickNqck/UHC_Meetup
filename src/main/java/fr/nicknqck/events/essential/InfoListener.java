@@ -1,8 +1,10 @@
 package fr.nicknqck.events.essential;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.CrystalTeam;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
+import fr.nicknqck.events.custom.info.InfoListAddEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -129,5 +131,9 @@ public class InfoListener implements Listener {
                 info.addTimePlayed();
             }
         }
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onInfoAdd(@NonNull final InfoListAddEvent event) {
+        event.register(CrystalTeam.class);
     }
 }
