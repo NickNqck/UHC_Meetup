@@ -6,7 +6,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.events.custom.EffectGiveEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.IUncompatibleRole;

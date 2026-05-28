@@ -3,7 +3,7 @@ package fr.nicknqck.roles.aot.soldats;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.FinalDeathEvent;
+import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.SoldatsRoles;
 import fr.nicknqck.roles.aot.solo.ErenV2;

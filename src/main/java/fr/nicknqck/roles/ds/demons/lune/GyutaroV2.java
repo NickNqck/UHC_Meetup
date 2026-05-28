@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.FinalDeathEvent;
+import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.events.custom.GamePlayerEatGappleEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;

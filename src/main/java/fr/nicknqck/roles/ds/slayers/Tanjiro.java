@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.slayers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.assassin.ProcAssassinEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;

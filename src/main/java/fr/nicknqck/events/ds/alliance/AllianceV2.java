@@ -3,7 +3,7 @@ package fr.nicknqck.events.ds.alliance;
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;

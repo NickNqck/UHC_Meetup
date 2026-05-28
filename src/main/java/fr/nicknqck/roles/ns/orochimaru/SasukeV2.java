@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.orochimaru;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.IUncompatibleRole;
 import fr.nicknqck.player.GamePlayer;

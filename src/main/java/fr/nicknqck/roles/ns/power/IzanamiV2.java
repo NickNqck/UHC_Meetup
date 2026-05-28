@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiStartEvent;
 import fr.nicknqck.player.GamePlayer;

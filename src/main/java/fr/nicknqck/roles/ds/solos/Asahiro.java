@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;

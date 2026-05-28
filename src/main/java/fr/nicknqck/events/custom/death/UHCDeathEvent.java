@@ -1,4 +1,4 @@
-package fr.nicknqck.events.custom;
+package fr.nicknqck.events.custom.death;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.player.GamePlayer;

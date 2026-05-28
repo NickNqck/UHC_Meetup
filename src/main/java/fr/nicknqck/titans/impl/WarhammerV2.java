@@ -4,7 +4,7 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.TitanForm;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.aot.TitanTransformEvent;
 import fr.nicknqck.events.custom.roles.aot.WarHammerBlockBreakEvent;
 import fr.nicknqck.events.custom.time.SecondPassEvent;

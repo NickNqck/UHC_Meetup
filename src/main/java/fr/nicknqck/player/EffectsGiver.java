@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.enums.EffectWhen;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
