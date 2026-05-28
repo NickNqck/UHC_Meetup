@@ -320,11 +320,6 @@ public class RoleManager implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void onExternGiveRole(@NonNull final GiveRoleDeclenchExternalPluginEvent event) {
         if (event.getRoleType() instanceof CrystalRoles) {
-            if (event.getRoleType().equals(CrystalRoles.Leolio)) {
-                event.setRoleBase(new Leolio(event.getPlayerUUID()));
-            } else if (event.getRoleType().equals(CrystalRoles.Bartholome)) {
-                event.setRoleBase(new Bartholome(event.getPlayerUUID()));
-            }
             for (Class<? extends RoleBase> aClass : getRolesRegistery().keySet()) {
                 if (getRolesRegistery().get(aClass).getRoles().equals(event.getRoleType())) {
                     try {
