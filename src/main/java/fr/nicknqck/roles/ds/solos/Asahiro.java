@@ -42,8 +42,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -383,32 +381,20 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                 if (viewer == null || target == null) return;
                 if (!viewer.isOnline() || !target.isOnline()) return;
                 if (viewer.equals(target)) return;
-
-                Scoreboard board = viewer.getScoreboard();
-                if (board == null || board == Bukkit.getScoreboardManager().getMainScoreboard()) {
-                    board = Main.getInstance().getScoreboardManager().getColorScoreboard().get(viewer.getUniqueId());
-                    viewer.setScoreboard(board);
-                }
-
-                String teamName = target.getName();
-                Team team = board.getTeam(teamName);
-
-                if (team == null) {
-                    team = board.registerNewTeam(teamName);
-                    team.addEntry(target.getName());
-                }
+                String suffix;
                 if (percent < 25){
-                    team.setSuffix("§c " + percent + "%");
+                    suffix = ("§c " + percent + "%");
                 } else if (percent < 75) {
-                    team.setSuffix("§6 " + percent + "%");
+                    suffix = ("§6 " + percent + "%");
                 } else if (percent < 95) {
-                    team.setSuffix("§a " + percent + "%");
+                    suffix =("§a " + percent + "%");
                 } else {
-                    team.setSuffix("§2 " + percent + "%");
+                    suffix = ("§2 " + percent + "%");
                 }
                 if (percent == 100) {
-                    team.setSuffix("§2 ✔");
+                    suffix = ("§2 ✔");
                 }
+                Main.getInstance().getCustomTabManager().setSuffix(viewer.getUniqueId(), target.getUniqueId(), suffix);
             }
 
         }

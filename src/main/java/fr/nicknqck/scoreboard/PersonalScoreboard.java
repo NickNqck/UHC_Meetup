@@ -14,8 +14,6 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
@@ -145,28 +143,4 @@ public class PersonalScoreboard {
         objectiveSign.removeReceiver(Bukkit.getServer().getOfflinePlayer(uuid));
         System.out.println("removing "+Bukkit.getPlayer(uuid).getName()+" from PersonalScoreboard");
     }
-	public void changeDisplayName(final Player sender, final Player target, final String color) {
-		setCustomName(sender, target, color);
-	}
-	/*@param
-        - player = Le mec qui verra le pseudo
-        - target = Le mec à qui on veut changer le pseudo
-        - customName = Le nom qui sera afficher
-     */
-	private void setCustomName(Player player, Player target, String customName) {
-		Scoreboard scoreboard = player.getScoreboard();
-		Team team = scoreboard.getTeam(target.getName());
-		if (team == null) {
-			team = scoreboard.registerNewTeam(target.getName());
-		}
-		team.setPrefix(customName);
-		team.setCanSeeFriendlyInvisibles(false);
-		team.addEntry(target.getName());
-		if (Main.getInstance().getScoreboardManager().getColorScoreboard().containsKey(player.getUniqueId())) {
-			Main.getInstance().getScoreboardManager().getColorScoreboard().remove(player.getUniqueId());
-			Main.getInstance().getScoreboardManager().getColorScoreboard().put(player.getUniqueId(), scoreboard);
-		} else {
-			Main.getInstance().getScoreboardManager().getColorScoreboard().put(player.getUniqueId(), scoreboard);
-		}
-	}
 }
