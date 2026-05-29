@@ -1,8 +1,11 @@
 package fr.nicknqck.commands.completer;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -24,7 +27,24 @@ public class NSCompleter implements TabCompleter {
             stringList.add("uchirang");
             if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                 stringList.add("me");
-                stringList.add("jubicraft");
+                final GamePlayer gamePlayer = GamePlayer.of(((Player) commandSender).getUniqueId());
+                if (gamePlayer != null) {
+                    if (gamePlayer.check()) {
+                        if (gamePlayer.getRole().getTeam().equals(TeamList.Jubi) || gamePlayer.getRole().getOriginTeam().equals(TeamList.Jubi)) {
+                            stringList.add("jubicraft");
+                        }
+                        @NonNull final List<Power> powers = new ArrayList<>(gamePlayer.getRole().getPowers());
+                        for (Power power : powers) {
+                            if (power instanceof CommandPower) {
+                                if (((CommandPower) power).getCommandType().equals(CommandPower.CommandType.NS)) {
+                                    if (((CommandPower) power).getArg0() != null) {
+                                        stringList.add(((CommandPower) power).getArg0());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 if (!GameState.getInstance().hasRoleNull(((Player) commandSender).getUniqueId())) {
                     final List<Power> powerList = new ArrayList<>(GameState.getInstance().getGamePlayer().get(((Player) commandSender).getUniqueId()).getRole().getPowers());
                     for (final Power power : powerList) {
