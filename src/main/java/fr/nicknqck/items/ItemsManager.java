@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.nicknqck.managers.CrystalManager;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;

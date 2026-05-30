@@ -1,4 +1,4 @@
-package fr.nicknqck.managers;
+package fr.nicknqck.managers.crystaluhc;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.Main;

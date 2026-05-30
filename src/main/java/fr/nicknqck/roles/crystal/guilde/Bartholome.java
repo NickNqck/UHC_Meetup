@@ -7,7 +7,7 @@ import fr.nicknqck.enums.CrystalRoles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IGotMultpleFaction;
 import fr.nicknqck.interfaces.IRoles;
-import fr.nicknqck.managers.CrystalManager;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.crystal.CrystalBase;

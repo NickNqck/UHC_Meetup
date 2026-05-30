@@ -20,6 +20,7 @@ import fr.nicknqck.events.essential.inventorys.HubInventory;
 import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
 import fr.nicknqck.managers.*;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.managers.schem.SchematicManager;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.builder.GetterList;

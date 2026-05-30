@@ -6,7 +6,7 @@ import fr.nicknqck.enums.CrystalRoles;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.interfaces.IGotBuyable;
 import fr.nicknqck.interfaces.IRoles;
-import fr.nicknqck.managers.CrystalManager;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.RandomUtils;
