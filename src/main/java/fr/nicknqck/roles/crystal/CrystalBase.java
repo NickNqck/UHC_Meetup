@@ -1,11 +1,14 @@
 package fr.nicknqck.roles.crystal;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.CrystalFaction;
+import fr.nicknqck.events.custom.CrystalUHCReputationObtainEvent;
 import fr.nicknqck.interfaces.IGotReputation;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.RandomUtils;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 
 import java.util.UUID;
 
@@ -57,6 +60,9 @@ public abstract class CrystalBase extends RoleBase implements IGotReputation {
     }
     @Override
     public int getReputation() {
-        return this.actualReputation;
+        @NonNull final CrystalUHCReputationObtainEvent event = new CrystalUHCReputationObtainEvent(this, this.actualReputation);
+        Bukkit.getPluginManager().callEvent(event);
+        Main.getInstance().debug("Reputation of "+getGamePlayer().getPlayer().getName()+" is "+event.getReputation()+" (reel: "+this.actualReputation+")");
+        return event.getReputation();
     }
 }

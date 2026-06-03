@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.PatchCritical;
+import fr.nicknqck.events.custom.ForcePatchEvent;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -129,24 +130,28 @@ public class Patch implements Listener{
 	}
 	private void ApplyForce(EntityDamageByEntityEvent event, double fPercent, boolean effect) {
 		if (effect) {
-			event.setDamage(event.getDamage()*0.5304740497679363);//Pour retirer la force
+			//event.setDamage(event.getDamage()*0.5304740497679363);//Pour retirer la force
+			event.setDamage(event.getDamage()/2.3D);
 			double force = fPercent/100;
 			force = force+1.0;
             BigDecimal bd = new BigDecimal(event.getDamage());
 			bd = bd.setScale(2, RoundingMode.HALF_UP);
 			event.setDamage(bd.doubleValue());
-			event.setDamage(event.getDamage()*force);
-		//	event.setDamage((event.getDamage() / 2.3f) *(1 + 20 / 100.0f));
-			if (Main.isDebug()){
-                Main.getInstance().debug("Force Damage to "+event.getDamage());
-			}
+			final GamePlayer gamePlayer = GamePlayer.of(event.getDamager().getUniqueId());
+			final GamePlayer gameVictim = GamePlayer.of(event.getEntity().getUniqueId());
+			if (gamePlayer == null ||gameVictim == null)return;
+			@NonNull final ForcePatchEvent forcePatchEvent = new ForcePatchEvent(event.getDamage(), force, gamePlayer, gameVictim);
+			 Bukkit.getPluginManager().callEvent(forcePatchEvent);
+			 if (!forcePatchEvent.isCancelled()) {
+				 event.setDamage(forcePatchEvent.getDamage());
+				 event.setDamage(event.getDamage()*forcePatchEvent.getForcePercentToUse());
+				 Main.getInstance().debug("Force Damage to "+event.getDamage());
+			 }
 		} else {
 			if (fPercent > 0){
 				double rValue = (fPercent/100) +1;
 				event.setDamage(event.getDamage() *rValue);
-				if (Main.isDebug()){
-                    Main.getInstance().debug("Force Damage to "+event.getDamage());
-				}
+				Main.getInstance().debug("Force Damage to "+event.getDamage());
 			}
 		}
 	}
