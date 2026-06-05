@@ -88,8 +88,6 @@ public class DeathManager implements Listener {
         if (uhcDeathEvent.isCancelled()) {
             return;
         }
-        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller);
-        Bukkit.getPluginManager().callEvent(finalDeathEvent);
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setAlive(false);
@@ -110,6 +108,8 @@ public class DeathManager implements Listener {
         }
         removeRoleItem(gameState, killedPlayer);
         dropDeathItems(killedPlayer.getLocation());
+        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller);
+        Bukkit.getPluginManager().callEvent(finalDeathEvent);
         //damager = le tueur
         //player = la victim/le mort
         if (entityKiller instanceof Player) {
