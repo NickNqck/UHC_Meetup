@@ -28,6 +28,7 @@ import fr.nicknqck.utils.powers.*;
 import fr.nicknqck.utils.powers.crystal.EauPower;
 import fr.nicknqck.utils.powers.crystal.FeuPower;
 import fr.nicknqck.utils.powers.crystal.VentPower;
+import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -69,6 +70,8 @@ public class CrystalManager implements Listener {
     private Villager villager;
     private final Map<UUID, GamePlayer> gettingRefinedList;
     private final Map<UUID, CrystalPower> crystalPowerMap;
+    @Getter
+    private final BailliManager bailliManager;
 
     public static final ItemStack crystalItem = new ItemBuilder(Material.EMERALD)
             .setName("§dCrystal")
@@ -94,6 +97,7 @@ public class CrystalManager implements Listener {
         this.blockList = new ArrayList<>();
         this.gettingRefinedList = new HashMap<>();
         this.crystalPowerMap = new HashMap<>();
+        this.bailliManager = new BailliManager();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
