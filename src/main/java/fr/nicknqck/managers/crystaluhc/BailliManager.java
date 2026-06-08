@@ -60,6 +60,25 @@ public class BailliManager implements Listener {
         Main.getInstance().debug("Info of "+gamePlayer.getPlayerName()+" is "+ info);
         this.bailliInfos.add(info);
     }
+    public List<BailliInfo> getBailliInfos(final BailliInfoType bailliInfoType) {
+        @NonNull final List<BailliInfo> bailliInfos = new ArrayList<>();
+        for (BailliInfo bailliInfo : new ArrayList<>(this.bailliInfos)) {
+            if (bailliInfo.getType().equals(bailliInfoType)) {
+                bailliInfos.add(bailliInfo);
+            }
+        }
+        return bailliInfos;
+    }
+    public List<String> getPlayerListName(@NonNull final String stack) {
+        @NonNull final List<BailliInfo> bailliInfoList = new ArrayList<>(this.bailliInfos);
+        @NonNull final List<String> toReturn = new ArrayList<>();
+        for (BailliInfo bailliInfo : bailliInfoList) {
+            if (bailliInfo.getGamePlayer().getPlayerName().toLowerCase().startsWith(stack.toLowerCase())) {
+                toReturn.add(bailliInfo.getGamePlayer().getPlayerName());
+            }
+        }
+        return toReturn;
+    }
     private static final class LocationInfo implements BailliInfo {
 
         private final GamePlayer gamePlayer;
@@ -85,6 +104,18 @@ public class BailliManager implements Listener {
         @Override
         public @NonNull Object getValue() {
             return this.location;
+        }
+
+        @Override
+        public void sendValueInfoTo(@NonNull GamePlayer gamePlayer) {
+            Location location = getGamePlayer().getDeathLocation();
+            if (location == null) {
+                location = getGamePlayer().getLastLocation();
+            }
+            int x = location.getBlockX();
+            int y = location.getBlockY();
+            int z = location.getBlockZ();
+            gamePlayer.sendMessage("§aBailli Thomas§7: Bien sur ! Je m'en souviens§c "+getGamePlayer().getPlayerName()+"§7 est mort ici§c x: "+x+"§7,§c y: "+y+"§7,§c z: "+z);
         }
 
         @Override

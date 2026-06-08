@@ -12,5 +12,6 @@ public interface BailliInfo {
     GamePlayer getGamePlayer();
     @NonNull
     Object getValue();
+    void sendValueInfoTo(@NonNull final GamePlayer gamePlayer);
 
 }

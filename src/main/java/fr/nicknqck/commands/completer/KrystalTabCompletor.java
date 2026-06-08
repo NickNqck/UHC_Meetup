@@ -1,8 +1,11 @@
 package fr.nicknqck.commands.completer;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
+import fr.nicknqck.enums.BailliInfoType;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -21,6 +24,23 @@ public class KrystalTabCompletor implements TabCompleter {
             stringList.add("me");
             stringList.add("role");
             stringList.add("compo");
+            stringList.add("bailli");
+        }
+        if (strings.length == 2) {
+            if (strings[0].equalsIgnoreCase("bailli") && commandSender instanceof Player) {
+                List<String> playerNameList = Main.getInstance().getCrystalManager().getBailliManager().getPlayerListName(strings[1]);
+                stringList.addAll(playerNameList);
+            }
+        }
+        if (strings.length == 3) {
+            if (strings[0].equalsIgnoreCase("bailli") && commandSender instanceof Player) {
+                final Player target = Bukkit.getPlayer(strings[1]);
+                if (target != null) {
+                    for (BailliInfoType value : BailliInfoType.values()) {
+                        stringList.add(value.toString().toLowerCase());
+                    }
+                }
+            }
         }
         if (commandSender instanceof Player) {
             if (GameState.inGame()) {
