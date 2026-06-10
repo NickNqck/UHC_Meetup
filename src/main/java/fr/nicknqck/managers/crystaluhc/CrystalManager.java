@@ -559,6 +559,7 @@ public class CrystalManager implements Listener {
                 setContentSlots(integerList);
                 for (IElements ceintureElements : power.getPlugin().getGameConfig().getCrystalConfig().getElements()) {
                     if (!power.ceintures.containsKey(ceintureElements)) {continue;}
+                    if (power.ceintures.get(ceintureElements).getMaxUse() <= 0)continue;
                     if (power.equippedCrystal != null) {
                         if (power.equippedCrystal.getElement().equals(ceintureElements)) {
                             addContent(new ItemBuilder(Material.INK_SACK)
@@ -569,6 +570,8 @@ public class CrystalManager implements Listener {
                                     .setLore(ceintureElements.getDescription())
                                     .addLoreLine("")
                                     .addLoreLine("§7Actuellement équiper")
+                                    .addLoreLine("")
+                                    .addLoreLine("§fUtilisation:§a "+power.ceintures.get(ceintureElements).getUse()+"§7/§c"+power.ceintures.get(ceintureElements).getMaxUse())
                                     .toItemStack());
                             continue;
                         }
@@ -577,6 +580,8 @@ public class CrystalManager implements Listener {
                             .setDurability(ceintureElements.getDyeColor())
                             .setName(ceintureElements.getName())
                             .setLore(ceintureElements.getDescription())
+                            .addLoreLine("")
+                            .addLoreLine("§fUtilisation:§a "+power.ceintures.get(ceintureElements).getUse()+"§7/§c"+power.ceintures.get(ceintureElements).getMaxUse())
                             .toItemStack(), event -> {
                         power.equippedCrystal = power.ceintures.get(ceintureElements);
                         if (!power.getRole().getPowers().contains(power.equippedCrystal)) {
