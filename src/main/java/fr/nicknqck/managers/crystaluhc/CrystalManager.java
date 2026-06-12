@@ -569,7 +569,7 @@ public class CrystalManager implements Listener {
                                     .hideEnchantAttributes()
                                     .setLore(ceintureElements.getDescription())
                                     .addLoreLine("")
-                                    .addLoreLine("§7Actuellement équiper")
+                                    .addLoreLine("§aActuellement équiper")
                                     .addLoreLine("")
                                     .addLoreLine("§fUtilisation:§a "+power.ceintures.get(ceintureElements).getUse()+"§7/§c"+power.ceintures.get(ceintureElements).getMaxUse())
                                     .toItemStack());
