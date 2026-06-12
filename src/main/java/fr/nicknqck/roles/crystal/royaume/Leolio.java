@@ -134,16 +134,18 @@ public class Leolio extends RoyaumeBase implements IGotBuyable {
                 final ItemStack item = player.getItemInHand();
                 // Vérifie que le joueur tient une pioche
                 if (!isPickaxe(item)) return;
-
+                if (!canMineBlock(item.getType(), event.getBlock().getType())) {
+                    return;
+                }
+                if (event.getBlock().getType().equals(Material.BEDROCK))return;
                 // 50% de chance
                 if (!checkUse(player, new HashMap<>()))return;
-
                 // Appelle un BlockBreakEvent pour vérifier que les autres plugins/protections l'autorisent
                 final BlockBreakEvent breakEvent = new BlockBreakEvent(event.getBlock(), player);
                 Bukkit.getPluginManager().callEvent(breakEvent);
                 if (breakEvent.isCancelled()) return;
 
-                // Casse le bloc instantanément en droppant les items normalement
+                // Casse le bloc instantanément en dropant les items normalement
                 event.getBlock().breakNaturally(item);
             }
 
@@ -158,6 +160,38 @@ public class Leolio extends RoyaumeBase implements IGotBuyable {
                         return true;
                     default:
                         return false;
+                }
+            }
+            private boolean canMineBlock(Material pickaxe, Material block) {
+
+                switch (block) {
+
+                    // Nécessite au minimum une pioche en pierre
+                    case IRON_ORE:
+                    case IRON_BLOCK:
+                    case LAPIS_ORE:
+                    case LAPIS_BLOCK:
+                        return pickaxe != Material.WOOD_PICKAXE;
+
+                    // Nécessite au minimum une pioche en fer
+                    case GOLD_ORE:
+                    case GOLD_BLOCK:
+                    case REDSTONE_ORE:
+                    case GLOWING_REDSTONE_ORE:
+                    case DIAMOND_ORE:
+                    case DIAMOND_BLOCK:
+                    case EMERALD_ORE:
+                    case EMERALD_BLOCK:
+                        return pickaxe == Material.IRON_PICKAXE
+                                || pickaxe == Material.DIAMOND_PICKAXE;
+
+                    // Nécessite une pioche en diamant
+                    case OBSIDIAN:
+                        return pickaxe == Material.DIAMOND_PICKAXE;
+
+                    // Tous les autres blocs cassables à la pioche
+                    default:
+                        return true;
                 }
             }
         }
