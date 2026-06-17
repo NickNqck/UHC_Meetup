@@ -428,6 +428,7 @@ public class GameListener implements Listener {
 					Main.getInstance().getScoreboardManager().onLogin(p);
 				}
 	        }, 20);
+			Main.getInstance().getCustomTabManager().resetAllTabs(true);
 		}, 1);
 		Main.getInstance().getGameConfig().setPregen(false);
 		System.out.println("game ended");
