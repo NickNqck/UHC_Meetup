@@ -116,7 +116,7 @@ public class DomaV2 extends DemonsRoles {
                     cancel();
                     return;
                 }
-                if (!this.zoneDeGlacePower.getRole().getGamePlayer().isAlive()) timeLeft = 0;
+                if (!this.zoneDeGlacePower.getRole().getGamePlayer().check()) timeLeft = 0;
                 this.zoneDeGlacePower.getRole().getGamePlayer().getActionBarManager().updateActionBar("doma.zone", "§bTemp restant (Zone de glace):§c "+ StringUtils.secondsTowardsBeautiful(timeLeft));
                 MathUtil.spawnRGBCircleParticle(0, 255, 245, this.zoneDeGlacePower.getRole().getGamePlayer().getLastLocation(), 8, 32);
                 for (final GamePlayer gamePlayer : Loc.getNearbyGamePlayers(this.zoneDeGlacePower.getRole().getGamePlayer().getLastLocation(), 8)) {
