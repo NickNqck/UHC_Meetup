@@ -6,7 +6,6 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
@@ -92,11 +91,6 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         +AllDesc.tab+"§7(§c15%§7) Devenir§c Démon§7: Si celà arrive vous obtiendrez l'effet§c Force I§7 la§c nuit§7, également, vous apparaitrez dans la liste de§c Muzan§7.\n\n"
                         +AllDesc.tab+"§7(§c80%§7) Rester§a Slayer§7: Vous ne gagnez rien de plus")}));
         this.desc = desc.getText();
-    }
-
-    @Override
-    public void GiveItems() {
-        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override

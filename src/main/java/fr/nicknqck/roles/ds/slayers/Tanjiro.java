@@ -60,7 +60,6 @@ public class Tanjiro extends SlayerRoles implements Listener {
     @Override
     public void GiveItems() {
         giveItem(owner, false, getItems());
-        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override

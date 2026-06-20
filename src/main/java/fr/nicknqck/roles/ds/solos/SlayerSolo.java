@@ -5,7 +5,6 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -127,7 +126,6 @@ public class SlayerSolo extends DemonsSlayersRoles {
     @Override
     public void GiveItems() {
         giveItem(owner, false, getItems());
-        giveItem(owner, false, Items.getLamedenichirin());
     }
 
     @Override
