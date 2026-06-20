@@ -119,19 +119,13 @@ public class PersonalScoreboard {
     			if (this.gameState.roleTimer < this.gameState.getInGameTime()) {
     				if (!this.gameState.hasRoleNull(player.getUniqueId())) {
 						final RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-    					if (role.getOriginTeam() != null) {
-    						this.gameState.changeTabPseudo(role.getOriginTeam().getColor()+role.getRoles()+" "+player.getDisplayName(), player);
-						}else {
-							this.gameState.changeTabPseudo(role.getRoles()+" "+player.getDisplayName(), player);
-						}
-    				}
+						Main.getInstance().getCustomTabManager().setPrefixForAll(role.getPlayer(), role.getOriginTeam().getColor()+role.getName());
+                    }
     			}
     		}
     		if (fr.nicknqck.items.Jubi.getUuidCrafter() != null) {
-    			if (fr.nicknqck.items.Jubi.getUuidCrafter().equals(player.getUniqueId())) {
-    				gameState.changeTabPseudo("§dJubi "+player.getDisplayName(), player);
-    			} else if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getOriginTeam().equals(Jubi)) {
-    				gameState.changeTabPseudo("§d "+player.getDisplayName(), player);
+    			if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getTeam().equals(Jubi)) {
+					Main.getInstance().getCustomTabManager().setPrefixForAll(player.getUniqueId(), "§dJubi ");
     			}
     		}
     	}
