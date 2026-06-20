@@ -207,7 +207,7 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
     private static final class ItachiTracker extends Power {
 
         public ItachiTracker(@NonNull RoleBase role) {
-            super("§cVengeance§r", null, role,
+            super("§cSacrifice Messianique§r", null, role,
                     "§7Tant que vous serez à§c plus§7 de§c 30 blocs§7 d'§cItachi§7,",
                     "§7une§c flèche§7 pointra dans sa§c direction§7.");
             new TrackerRunnable(this).runTaskTimerAsynchronously(getPlugin(), 1, 15);
@@ -243,9 +243,13 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
                     final Location location = itachiV2.getGamePlayer().getLastLocation();
                     final Location ownerLoc = this.itachiTracker.getRole().getGamePlayer().getLastLocation();
                     if (ownerLoc.getWorld().equals(location.getWorld())) {
-                        this.itachiTracker.getRole().getGamePlayer().getActionBarManager().updateActionBar("jubisuke.vengeance", "§cVengeance§b: "+ ArrowTargetUtils.calculateArrow(ownerLoc, location));
+                        if (ownerLoc.distance(location) >= 30.0){
+                            this.itachiTracker.getRole().getGamePlayer().getActionBarManager().updateActionBar("jubisuke.vengeance", "§cItachi§b: "+ ArrowTargetUtils.calculateArrow(ownerLoc, location));
+                        } else {
+                            this.itachiTracker.getRole().getGamePlayer().getActionBarManager().removeInActionBar("jubisuke.vengeance");
+                        }
                     } else {
-                        this.itachiTracker.getRole().getGamePlayer().getActionBarManager().updateActionBar("jubisuke.vengeance", "§cVengeance§b: "+location.getWorld().getName());
+                        this.itachiTracker.getRole().getGamePlayer().getActionBarManager().updateActionBar("jubisuke.vengeance", "§cItachi§b: "+location.getWorld().getName());
                     }
                 } else {
                     this.itachiTracker.getRole().getGamePlayer().getActionBarManager().removeInActionBar("jubisuke.vengeance");
