@@ -237,7 +237,9 @@ public class Sasori extends AkatsukiRoles {
                     "§7chacune aura ses spécificités et son§c coût§7 de§c fabrication§7.",
                     "§7Une fois§c fabriquer§7, vous pourrez choisir une§c marionette§7 à§c équiper§7.",
                     "",
-                    "§8 -§f Clique gauche§7: Permet d'utiliser l'effet de la§c marionette équiper§7."
+                    "§8 -§f Clique gauche§7: Permet d'utiliser l'effet de la§c marionette équiper§7.",
+                    "",
+                    "§7Si vous avez fabriquer toute vos marionnette, tant qu'une est§a équiper§7, vous pouvez changer rapidement via§f Shift + Clique droit§7."
             );
             marionnetteMap.put(new Hiruko(role), false);
             marionnetteMap.put(new Kazegake(role), false);
@@ -269,6 +271,17 @@ public class Sasori extends AkatsukiRoles {
                     }
                     return this.actualMarionnette.checkUse(player, map);
                 } else if (event.getAction().name().contains("RIGHT")) {
+                    if (player.isSneaking()) {
+                        if (actualMarionnette != null) {
+                            for (BasicMarionnette basicMarionnette : this.marionnetteMap.keySet()) {
+                                if (actualMarionnette.equals(basicMarionnette))continue;
+                                if (!this.marionnetteMap.get(basicMarionnette)) continue;
+                                this.actualMarionnette = basicMarionnette;
+                                player.sendMessage("§7La§c marionnette§7 est maintenant§c "+basicMarionnette.getName());
+                                return false;
+                            }
+                        }
+                    }
                     openChooseInv(player);
                     return false;
                 }
@@ -320,11 +333,16 @@ public class Sasori extends AkatsukiRoles {
         @Override
         public void tryUpdateActionBar() {
             StringBuilder toSend = new StringBuilder();
+            if (this.actualMarionnette != null) {
+                toSend.append("§fÉquiper: ").append(this.actualMarionnette.getName()).append("§7 | ");
+            } else {
+                toSend.append("§fÉquiper:§c Aucune marionnette équiper§7 | ");
+            }
             for (BasicMarionnette basicMarionnette : this.marionnetteMap.keySet()) {
                 if (this.marionnetteMap.get(basicMarionnette)) {
                     toSend
                             .append(basicMarionnette.getName()).append("§7: ")
-                            .append(basicMarionnette.getCooldown().isInCooldown() ? StringUtils.secondsTowardsBeautiful(basicMarionnette.getCooldown().getCooldownRemaining()) : "§a ✔")
+                            .append(basicMarionnette.getCooldown().isInCooldown() ? "§c"+StringUtils.secondsTowardsBeautiful(basicMarionnette.getCooldown().getCooldownRemaining()) : "§a ✔")
                             .append("§7 | ");
                 }
             }
