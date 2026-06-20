@@ -11,8 +11,6 @@ import java.util.UUID;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import fr.nicknqck.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
