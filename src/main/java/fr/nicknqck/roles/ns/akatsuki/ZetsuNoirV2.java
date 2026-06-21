@@ -17,6 +17,7 @@ import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.AttackUtils;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -40,6 +41,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
+
+    private boolean nagatoDeath = false;
 
     public ZetsuNoirV2(UUID player) {
         super(player);
@@ -69,13 +72,14 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
 
     @Override
     public @NonNull TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7A la mort de§c Nagato§7, vous obtiendrez une liste de tout les membres encore en§a vie§7 de l'§cAkatsuki§7 (dont§d Obito§7)").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.nagatoDeath ? "" :"§7A la mort de§c Nagato§7, vous obtiendrez une liste de tout les membres encore en§a vie§7 de l'§cAkatsuki§7 (dont§d Obito§7)").getText();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new InvisibilitePower(this), true);
         addPower(new RegenPower(this));
+        EventUtils.registerRoleEvent(this);
         getGamePlayer().startChatWith("§cZetsu Noir:", "!", ZetsuBlancV2.class, ZetsuBlancV3.class);
     }
 
@@ -97,6 +101,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
     }
 
     private void onNagatoDeath() {
+        if (this.nagatoDeath) return;
         for (GamePlayer gamePlayer : getGameState().getGamePlayer().values()) {
             if (gamePlayer == null)continue;
             if (!gamePlayer.check())continue;
@@ -104,6 +109,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
                 getGamePlayer().sendMessage("§c"+gamePlayer.getPlayerName()+"§7 semble faire ou avoir fait partie de l'§cAkatsuki§7.");
             }
         }
+        this.nagatoDeath = true;
     }
     @EventHandler
     private void onDeath(@NonNull final FinalDeathEvent event) {
