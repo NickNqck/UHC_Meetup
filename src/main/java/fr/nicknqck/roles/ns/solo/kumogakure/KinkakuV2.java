@@ -7,6 +7,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
+import fr.nicknqck.interfaces.IChakraV2;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -145,8 +146,9 @@ public class KinkakuV2 extends KumogakureRole {
                     if (gamePlayer.getRole() instanceof NSRoles) {
                         final EChakras eChakras = ((NSRoles) gamePlayer.getRole()).getChakras();
                         if (eChakras != null) {
-                            if (!eChakras.getChakra().getList().contains(getRole().getPlayer()) && checkUse(event.getGamePlayerKiller().getPlayer(), Collections.singletonMap("rien", "rien"))) {
-                                eChakras.getChakra().getList().add(getRole().getPlayer());
+                            final IChakraV2 iChakraV2 = Main.getInstance().getBijuManager().getChakraManager().getChakra(eChakras);
+                            if (!iChakraV2.isActivate(getRole().getPlayer()) && checkUse(event.getGamePlayerKiller().getPlayer(), Collections.singletonMap("rien", "rien"))) {
+                                iChakraV2.setActivateFor(getRole().getPlayer(), true);
                                 getRole().getGamePlayer().sendMessage(getPlugin().getPLUGIN_NAME()+"§7Vous utilisez maintenant la§a nature de chakra§7 \""+eChakras.getShowedName()+"§7\" en plus de celles que vous aviez déjà.");
                             }
                         }

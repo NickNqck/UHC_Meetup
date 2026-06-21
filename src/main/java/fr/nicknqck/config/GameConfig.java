@@ -98,6 +98,9 @@ public class GameConfig {
         private int minTimeSpawnBiju = 90;
         private int maxTimeSpawnBiju = 160;
         private boolean obitoCanGetKakashiEye = true;
+        private int katonPercent = 3;
+        private int raitonPercent = 3;
+        private int dotonPercent = 3;
 
     }
     @Getter

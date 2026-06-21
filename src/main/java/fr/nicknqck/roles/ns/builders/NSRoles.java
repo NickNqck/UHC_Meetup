@@ -1,13 +1,13 @@
 package fr.nicknqck.roles.ns.builders;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.interfaces.IChakraV2;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.enums.Intelligence;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -22,22 +22,13 @@ public abstract class NSRoles extends RoleBase {
 
     public abstract @NonNull Intelligence getIntelligence();
 
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
-    }
-
-    @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
     public boolean hasChakras() {
         return chakras != null;
     }
     public void onNsCommand(String[] args) {}
     public abstract EChakras[] getChakrasCanHave();
 
+    @NonNull
     public EChakras getChakras() {
         if (this.chakras == null) {
             final List<EChakras> chakrasList = new ArrayList<>(Arrays.asList(getChakrasCanHave()));
@@ -48,7 +39,19 @@ public abstract class NSRoles extends RoleBase {
         return chakras;
     }
     public void setChakras(final EChakras chakras) {
+        if (this.chakras != null) {
+            for (IChakraV2 iChakraV2 : Main.getInstance().getBijuManager().getChakraManager().getLoadedChakra()) {
+                if (iChakraV2.getMap().containsKey(getPlayer())) {
+                    iChakraV2.setActivateFor(getPlayer(), false);
+                }
+            }
+        }
         this.chakras = chakras;
-        chakras.getChakra().getList().add(getPlayer());
+        for (IChakraV2 iChakraV2 : Main.getInstance().getBijuManager().getChakraManager().getLoadedChakra()) {
+            if (iChakraV2.getChakraType().equals(this.chakras)) {
+                iChakraV2.setActivateFor(getPlayer(), !iChakraV2.isActivate(getPlayer()));
+                break;
+            }
+        }
     }
 }

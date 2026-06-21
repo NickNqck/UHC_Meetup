@@ -241,9 +241,6 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
                 if (!item.getItemMeta().hasDisplayName())return;
                 for (final EChakras chakras : EChakras.values()) {
                     if (chakras.getShowedName().equalsIgnoreCase(item.getItemMeta().getDisplayName())) {
-                        if (this.kakuzuV2.getChakras() != null) {
-                            this.kakuzuV2.getChakras().getChakra().getList().remove(event.getWhoClicked().getUniqueId());
-                        }
                         this.kakuzuV2.setChakras(chakras);
                         event.getWhoClicked().sendMessage("§7Vous pouvez maintenant utilisé le "+chakras.getShowedName());
                         event.getWhoClicked().closeInventory();

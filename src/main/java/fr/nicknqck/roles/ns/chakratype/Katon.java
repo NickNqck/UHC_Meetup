@@ -1,53 +1,61 @@
 package fr.nicknqck.roles.ns.chakratype;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-import fr.nicknqck.interfaces.IChakra;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-
-import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.interfaces.IChakraV2;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class Katon implements IChakra {
+public class Katon implements IChakraV2, Listener {
+
+	private final Map<UUID, Boolean> map;
+
+    public Katon() {
+        map = new HashMap<>();
+		EventUtils.registerEvents(this);
+    }
+
+    @Override
+	public @NonNull Map<UUID, Boolean> getMap() {
+		return this.map;
+	}
 
 	@Override
-	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity	 victim) {
-		if (getList().contains(event.getDamager().getUniqueId())) {
-			if (RandomUtils.getOwnRandomProbability(2)) {
-				victim.setFireTicks(victim.getFireTicks()+100);
+	public @NonNull String getArg0() {
+		return "Katon";
+	}
+
+	@Override
+	public @NonNull EChakras getChakraType() {
+		return EChakras.KATON;
+	}
+
+	@Override
+	public boolean isActivate(UUID uuid) {
+		return this.map.containsKey(uuid) && this.map.get(uuid);
+	}
+
+	@Override
+	public void setActivateFor(UUID uuid, boolean activate) {
+		if (!this.map.containsKey(uuid)) {
+			this.map.put(uuid, activate);
+			return;
+		}
+		this.map.replace(uuid, activate);
+	}
+	@EventHandler(priority = EventPriority.HIGH)
+	private void onDamage(@NonNull final EntityDamageByEntityEvent event) {
+		if (isActivate(event.getDamager().getUniqueId())) {
+			if (RandomUtils.getOwnRandomProbability(Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent())) {
+				event.getEntity().setFireTicks(100);
 			}
 		}
 	}
-	private final List<UUID> Katon = new ArrayList<>();
-
-	@Override
-	public List<UUID> getList() {
-		return Katon;
-	}
-
-	@Override
-	public void onSecond(GameState gameState) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onEntityDamage(EntityDamageEvent event, Player player) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onPlayerMoove(PlayerMoveEvent e, Player p, Location from, Location to) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -1,7 +1,9 @@
 package fr.nicknqck.commands.completer;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.interfaces.IChakraV2;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
@@ -32,6 +34,14 @@ public class NSCompleter implements TabCompleter {
                     if (gamePlayer.check()) {
                         if (gamePlayer.getRole().getTeam().equals(TeamList.Jubi) || gamePlayer.getRole().getOriginTeam().equals(TeamList.Jubi)) {
                             stringList.add("jubicraft");
+                        }
+                        if (strings.length == 1) {
+                            for (IChakraV2 iChakraV2 : Main.getInstance().getBijuManager().getChakraManager().getLoadedChakra()) {
+                                if (!iChakraV2.getMap().containsKey(((Player) commandSender).getUniqueId()))continue;
+                                if (iChakraV2.getArg0().toLowerCase().startsWith(strings[0].toLowerCase())) {
+                                    stringList.add(iChakraV2.getArg0().toLowerCase());
+                                }
+                            }
                         }
                         @NonNull final List<Power> powers = new ArrayList<>(gamePlayer.getRole().getPowers());
                         for (Power power : powers) {
@@ -69,6 +79,7 @@ public class NSCompleter implements TabCompleter {
             }
             return stringList;
         }
+        final List<String> stringList = new ArrayList<>();
         if (commandSender instanceof Player) {
             if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                 if (!GameState.getInstance().hasRoleNull(((Player) commandSender).getUniqueId())) {
@@ -89,7 +100,6 @@ public class NSCompleter implements TabCompleter {
                 }
             }
         }
-        final List<String> stringList = new ArrayList<>();
         for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (onlinePlayer.getName().contains(strings[strings.length-1])){
                 stringList.add(onlinePlayer.getName());

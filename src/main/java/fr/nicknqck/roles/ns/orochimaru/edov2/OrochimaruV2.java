@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
+import fr.nicknqck.interfaces.IChakraV2;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -126,7 +127,8 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
                         if (!this.chakrasVoled.contains(((NSRoles) role).getChakras())) {
                             if (RandomUtils.getOwnRandomProbability(25.0)) {
                                 this.chakrasVoled.add(((NSRoles) role).getChakras());
-                                ((NSRoles) role).getChakras().getChakra().getList().add(getPlayer());
+                                final IChakraV2 iChakraV2 = Main.getInstance().getBijuManager().getChakraManager().getChakra(((NSRoles) role).getChakras());
+                                iChakraV2.setActivateFor(getPlayer(), true);
                                 event.getGamePlayerKiller().sendMessage("§7Vous maitrisez maintenant la nature de chakra: "+((NSRoles) role).getChakras().getShowedName());
                             }
                         }

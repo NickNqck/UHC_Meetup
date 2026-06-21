@@ -69,9 +69,6 @@ public class GameListener implements Listener {
 			@NonNull final SecondPassEvent onSecond = new SecondPassEvent(this.gameState);
 			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
-			for (EChakras ch : EChakras.values()) {
-				ch.getChakra().onSecond(gameState);
-			}
 			BijuListener.getInstance().runnableTask(gameState);
 
 		}, 20, 20);
@@ -287,9 +284,6 @@ public class GameListener implements Listener {
 			AttackUtils.CantAttack.clear();
 			AttackUtils.CantReceveAttack.clear();
 			gameState.getDeadRoles().clear();
-			for (EChakras ch : EChakras.values()) {
-				ch.getChakra().getList().clear();
-			}
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				Main.getInstance().getScoreboardManager().onLogout(p);
 				p.setPlayerListName(Bukkit.getPlayer(p.getUniqueId()).getName());
@@ -666,9 +660,6 @@ public class GameListener implements Listener {
 			p.teleport(new Location(to.getWorld(), to.getX(), to.getWorld().getHighestBlockYAt(to), to.getZ()));
 		}
         if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ce passe rien
-        for (EChakras ch : EChakras.values()) {
-        	ch.getChakra().onPlayerMoove(e, p, from, to);
-        }
     	if (gameState.shutdown.contains(e.getPlayer())) {
     		p.teleport(from);
     		p.setAllowFlight(false);

@@ -2,6 +2,7 @@ package fr.nicknqck.invs;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.utils.fastinv.FastInv;
@@ -68,6 +69,54 @@ public class MDJ_NS_Config extends FastInv {
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
                 }
         );
+        setItem(13, new ItemBuilder(Material.INK_SACK).setDurability(EChakras.KATON.getColorCode()).setName(EChakras.KATON.getShowedName()).setLore(
+                "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+"%",
+                "",
+                "§fClique gauche:§a +1%",
+                "",
+                "§fClique droit:§c -1%"
+        ).toItemStack(), event -> {
+            if (event.isLeftClick()) {
+                Main.getInstance().getGameConfig().getNarutoConfig().setKatonPercent(Math.min(100, Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+1));
+            }
+            if (event.isRightClick()) {
+                Main.getInstance().getGameConfig().getNarutoConfig().setKatonPercent(Math.max(0, Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()-1));
+            }
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié la valeur de \"§fChance d'activation du "+EChakras.KATON.getShowedName()+"§7\" sur§c "+Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+"%");
+            new MDJ_NS_Config().open((Player) event.getWhoClicked());
+        });
+        setItem(14, new ItemBuilder(Material.INK_SACK).setDurability(EChakras.RAITON.getColorCode()).setName(EChakras.RAITON.getShowedName()).setLore(
+                "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+"%",
+                "",
+                "§fClique gauche:§a +1%",
+                "",
+                "§fClique droit:§c -1%"
+        ).toItemStack(), event -> {
+            if (event.isLeftClick()) {
+                Main.getInstance().getGameConfig().getNarutoConfig().setRaitonPercent(Math.min(100, Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+1));
+            }
+            if (event.isRightClick()) {
+                Main.getInstance().getGameConfig().getNarutoConfig().setRaitonPercent(Math.max(0, Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()-1));
+            }
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié la valeur de \"§fChance d'activation du "+EChakras.RAITON.getShowedName()+"§7\" sur§c "+Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+"%");
+            new MDJ_NS_Config().open((Player) event.getWhoClicked());
+        });
+        setItem(15, new ItemBuilder(Material.INK_SACK).setDurability(EChakras.DOTON.getColorCode()).setName(EChakras.DOTON.getShowedName()).setLore(
+                "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%",
+                "",
+                "§fClique gauche:§a +1%",
+                "",
+                "§fClique droit:§c -1%"
+        ).toItemStack(), event -> {
+            if (event.isLeftClick()) {
+                Main.getInstance().getGameConfig().getNarutoConfig().setDotonPercent(Math.min(100, Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+1));
+            }
+            if (event.isRightClick()) {
+                Main.getInstance().getGameConfig().getNarutoConfig().setDotonPercent(Math.max(0, Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()-1));
+            }
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié la valeur de \"§fChance d'activation du "+EChakras.DOTON.getShowedName()+"§7\" sur§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%");
+            new MDJ_NS_Config().open((Player) event.getWhoClicked());
+        });
         setItem(26, GUIItems.getSelectBackMenu(), event -> {
             if (GameState.getInstance().isAllMdjNull()) {
                 new MDJConfigInventory().open((Player) event.getWhoClicked());

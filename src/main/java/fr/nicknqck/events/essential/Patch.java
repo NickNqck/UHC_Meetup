@@ -42,9 +42,6 @@ public class Patch implements Listener{
 		if (Main.isDebug()){
             Main.getInstance().debug("Original Damage (After Critical Nerf): "+event.getDamage());
 		}
-		for (final EChakras ch : EChakras.values()) {
-			ch.getChakra().onPlayerDamageAnEntity(event, (event.getEntity()));
-		}
 		if (!(event.getEntity() instanceof Player)) return;
 		callRoleDamage(event);
         if (!(event.getDamager() instanceof Player)) return;
