@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class Doton implements IChakraV2, Listener {
 
@@ -52,8 +52,8 @@ public class Doton implements IChakraV2, Listener {
 		this.map.replace(uuid, activate);
 	}
 	@EventHandler(priority = EventPriority.HIGH)
-	private void onDamage(@NonNull final EntityDamageByEntityEvent event) {
-		if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))return;
+	private void onDamage(@NonNull final EntityDamageEvent event) {
+		if (!(event.getEntity() instanceof Player))return;
 		if (isActivate(event.getEntity().getUniqueId())) {
 			if (RandomUtils.getOwnRandomProbability(Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent())) {
 				event.setDamage(0.0);

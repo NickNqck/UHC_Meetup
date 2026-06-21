@@ -425,7 +425,7 @@ public class GameState{
                     role = new KimimaroV2(player);
                     break;
                 case ZetsuNoir:
-                    role = new ZetsuNoir(player);
+                    role = new ZetsuNoirV2(player);
                     break;
                 case ZetsuBlanc:
                     role = new ZetsuBlancV3(player);

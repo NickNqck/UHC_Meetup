@@ -230,7 +230,7 @@ public class RoleManager implements Listener {
         registerRole(NagatoV2.class);
         registerRole(Sasori.class);
         registerRole(ZetsuBlancV3.class);
-        registerRole(ZetsuNoir.class);
+        registerRole(ZetsuNoirV2.class);
         registerRole(ZetsuBlancV2.class);
         //Register Jubi
         registerRole(MadaraV2.class);
@@ -297,7 +297,7 @@ public class RoleManager implements Listener {
                         , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
                         NagatoV2.class,
-                        ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
+                        ZetsuNoirV2.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
             }
             if (role instanceof ISAkatsukiChief) {
                 role.addKnowedPlayersWithRoles("§7Voici l'identité de§c Nagato§7 et de§c Konan§7: ", KonanV2.class, NagatoV2.class);
