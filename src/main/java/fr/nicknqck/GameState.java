@@ -550,6 +550,9 @@ public class GameState{
                 case Mikasa:
                     role = new MikasaV2(player);
                     break;
+                case Sai:
+                    role = new Sai(player);
+                    break;
             }
         } else {
             final GiveRoleDeclenchExternalPluginEvent externalPluginEvent = new GiveRoleDeclenchExternalPluginEvent(roleType, player);

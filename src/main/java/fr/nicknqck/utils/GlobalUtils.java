@@ -11,8 +11,13 @@ import java.util.UUID;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import lombok.NonNull;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutAnimation;
+import net.minecraft.server.v1_8_R3.PacketPlayOutUpdateHealth;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -238,4 +243,26 @@ public class GlobalUtils {
             default:  return Color.fromRGB(255, 255, 255);
         }
     }
+	/**
+	 * Simule visuellement des dégâts uniquement côté client du joueur.
+	 * Les autres joueurs ne voient rien.
+	 *
+	 * @param player le joueur qui doit voir l'animation de dégât
+	 */
+	public static void fakeDamage(@NonNull Player player) {
+		final EntityPlayer nms = ((CraftPlayer) player).getHandle();
+
+		// Animation de dégât (flash rouge + léger recul)
+		final PacketPlayOutAnimation animPacket = new PacketPlayOutAnimation(nms, 1);
+		nms.playerConnection.sendPacket(animPacket);
+
+		// Refresh de la barre de vie côté client uniquement
+		// (même valeur que la vraie vie = aucun changement réel, juste le "hit" visuel)
+		final PacketPlayOutUpdateHealth healthPacket = new PacketPlayOutUpdateHealth(
+				(float) player.getHealth(),
+				player.getFoodLevel(),
+				player.getSaturation()
+		);
+		nms.playerConnection.sendPacket(healthPacket);
+	}
 }

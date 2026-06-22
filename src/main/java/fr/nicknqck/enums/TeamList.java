@@ -23,7 +23,8 @@ public enum TeamList implements ITeam {
 	Shinobi("§a", "§aShinobi", "ns", false),
 	Kabuto("§6§l", "§6§lKabuto", "ns", true),
 	Kumogakure("§6", "§6Kumogakure", "ns", true),
-	Shisui("§e§l", "§e§lShisui", "ns", true);
+	Shisui("§e§l", "§e§lShisui", "ns", true),
+	Racine("§2", "§2Racine", "ns", true);
 
 	private final java.util.List<Player> list;
 	private final String Color;

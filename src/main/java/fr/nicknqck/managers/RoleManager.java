@@ -211,6 +211,7 @@ public class RoleManager implements Listener {
         registerRole(GaiV2.class);
         registerRole(Hinata.class);
         registerRole(Neji.class);
+        registerRole(Sai.class);
         //Register Orochimaru
         registerRole(Jugo.class);
         registerRole(KabutoV2.class);
