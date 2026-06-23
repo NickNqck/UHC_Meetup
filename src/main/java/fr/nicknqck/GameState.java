@@ -553,6 +553,9 @@ public class GameState{
                 case Sai:
                     role = new Sai(player);
                     break;
+                case Shino:
+                    role = new Shino(player);
+                    break;
             }
         } else {
             final GiveRoleDeclenchExternalPluginEvent externalPluginEvent = new GiveRoleDeclenchExternalPluginEvent(roleType, player);
