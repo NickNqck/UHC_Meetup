@@ -72,25 +72,7 @@ public class GlobalUtils {
         head.setItemMeta(meta);
         return head;
     }
-	    public static String getTexture(UUID playerUUID) {
-	        String texture = null;
-	        try {
-	            URL url = new URL("https://crafatar.com/avatars/" + playerUUID.toString() + "?overlay");
-	            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	            connection.setRequestMethod("GET");
-	            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-	            String line;
-	            StringBuilder response = new StringBuilder();
-	            while ((line = reader.readLine()) != null) {
-	                response.append(line);
-	            }
-	            reader.close();
-	            texture = Base64.getEncoder().encodeToString(response.toString().getBytes());
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        return texture;
-	    }
+
 	public static ItemStack getAsyncPlayerHead(UUID uuid) {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta meta = (SkullMeta) skull.getItemMeta();
