@@ -141,6 +141,7 @@ public enum Roles implements IRoles<Roles> {
     Neji(TeamList.Shinobi, "ns", 18, new ItemBuilder(Material.SNOW_BLOCK).setName("§aNeji").toItemStack(), "§bNickNqck"),
     Sai(TeamList.Shinobi, "ns", 19, new ItemBuilder(Material.PAPER).setName("§aSaï").toItemStack(), "§bNicKNqck"),
     Shino(TeamList.Shinobi, "ns", 20, new ItemBuilder(Material.RED_MUSHROOM).setName("§aShino").toItemStack(), "§bNickNqck"),
+    Hiruzen(TeamList.Shinobi, "ns", 21, new ItemBuilder(Material.DIRT).setName("§aHiruzen").toItemStack(), "§bByC3RV0L3NT"),
     //Haku et Zabuza
     Zabuza(TeamList.Zabuza_et_Haku, "ns", 0, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bZabuza").toItemStack(), "§aYukan"),
     Haku(TeamList.Zabuza_et_Haku, "ns", 1, new ItemBuilder(Material.PACKED_ICE).setName("§bHaku").toItemStack(), "§aYukan"),
