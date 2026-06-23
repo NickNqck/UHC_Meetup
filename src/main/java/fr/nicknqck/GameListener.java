@@ -600,7 +600,7 @@ public class GameListener implements Listener {
 					if (power == null)continue;
 					if (power instanceof ItemPower) {
 						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
-							event.setCancelled(true);
+						//	event.setCancelled(true);
 							((ItemPower) power).call(event);
 						}
 					}
