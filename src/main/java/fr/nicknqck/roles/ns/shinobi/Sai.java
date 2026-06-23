@@ -33,6 +33,7 @@ import fr.nicknqck.utils.powers.Power;
 import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,6 +44,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -152,7 +154,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     "§8 -§c Sangsues§7: En visant un joueur, vous lui volerez ses§a points de vie§7 petit-à-petit.",
                     "",
                     "§8 -§a Scellement de papier§7: En visant un joueur, puis, en restant proche de lui pendant§c 10 secondes§7",
-                    "§7vous§a scellerez§7 ses§c pouvoirs§7, il ne pourra donc plus les utiliser dans que vous êtes à moins de§c 150 blocs§7",
+                    "§7vous§a scellerez§7 ses§c pouvoirs§7, il ne pourra donc plus les utiliser tant que vous êtes à moins de§c 150 blocs§7",
                     "§7de lui, aussi, lors de votre§c mort§7 il pourra à nouveau les utilisés."
             );
             setShowCdInDesc(false);
@@ -235,12 +237,13 @@ public class Sai extends ShinobiRoles implements Listener {
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (map.containsKey("event")) {
-                    openInventory(player);
+                    Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> openInventory(player));
                     return false;
                 }
                 if (map.containsKey("target")) {
                     if (map.get("target") instanceof GamePlayer) {
                         new SourisRunnable(this, (GamePlayer) map.get("target"));
+                        player.closeInventory();
                         return true;
                     }
                 }
@@ -267,38 +270,37 @@ public class Sai extends ShinobiRoles implements Listener {
                 }
             }
             private void openInventory(@NonNull Player player) {
-                final PaginatedFastInv fastInv = new PaginatedFastInv(9*4, "§aSouris Messagères");
-                fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
-                final List<Integer> list = new ArrayList<>();
-                for (int i = 10; i <= 16; i++) {
-                    list.add(i);
+                final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(9*5, "§aSouris Messagères");
+                paginatedFastInv.setItems(paginatedFastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
+                final List<Integer> integerList = new ArrayList<>();
+                for (int line = 0; line <= 2; line++ ) {
+                    for (int slot = 10+(line*9); slot <= (10+(line*9))+6; slot++) {
+                        integerList.add(slot);
+                    }
                 }
-                for (int i = 19; i <= 25; i++) {
-                    list.add(i);
-                }
-                fastInv.setContentSlots(list);
+                paginatedFastInv.setContentSlots(integerList);
+                paginatedFastInv.previousPageItem(3, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + paginatedFastInv.lastPage()).toItemStack());
 
-                fastInv.previousPageItem(3, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + fastInv.lastPage()).toItemStack());
+                paginatedFastInv.nextPageItem(5, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + paginatedFastInv.lastPage()).toItemStack());
 
-                fastInv.nextPageItem(5, p -> new ItemBuilder(Material.ARROW).setName("§fPage " + p + "/" + fastInv.lastPage()).toItemStack());
-
-                for (@NonNull final Player target : player.getWorld().getPlayers()) {
-                    if (target.equals(player))continue;
-                    final GamePlayer gamePlayer = GamePlayer.of(this.targetUUID);
+                final List<GamePlayer> gamePlayerList = Loc.getNearbyGamePlayers(player.getLocation(), 9999);
+                for (GamePlayer gamePlayer : gamePlayerList) {
                     if (gamePlayer == null)continue;
                     if (!gamePlayer.check())continue;
-                    fastInv.addContent(new ItemBuilder(GlobalUtils.getAsyncPlayerHead(targetUUID)).setName("§a"+target.getName()).setLore("§7Cliquez ici pour essayer de communiquer avec ce§a "+target.getName()).toItemStack(), event -> {
-                        final Map<String, Object> map = new HashMap<>();
-                        map.put("target", gamePlayer);
-                        if (checkUse(player, map)) {
-                            player.sendMessage("§7Vos§a Souris Messagères§7 vont essayer de démarrer la discussion avec§a "+target.getName());
-                        }
-                        event.setCancelled(true);
-                        event.getWhoClicked().closeInventory();
+                    final Player target = Bukkit.getPlayer(gamePlayer.getUuid());
+                    if (target == null)continue;
+                    if (target.hasPotionEffect(PotionEffectType.INVISIBILITY))continue;
+                    if (target.getUniqueId().equals(getRole().getPlayer()))continue;
+                    //Le pouvoir ne touche pas les joueurs invisibles
+                    paginatedFastInv.addContent(new ItemBuilder(GlobalUtils.getAsyncPlayerHead(gamePlayer.getUuid()))
+                            .setName("§a"+target.getName())
+                            .toItemStack(), event -> {
+                        final Map<String, Object> test = new HashMap<>();
+                        test.put("target", gamePlayer);
+                        this.checkUse(player, test);
                     });
                 }
-
-                fastInv.open(player);
+                paginatedFastInv.open(player);
             }
             private static final class SourisRunnable extends BukkitRunnable {
 
@@ -314,6 +316,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     this.gameCible = gameCible;
                     this.distanceMax = this.gameCible.getLastLocation().distance(this.sourisMessager.getRole().getGamePlayer().getLastLocation());
                     this.distanceParcouru = 0.0;
+                    runTaskTimerAsynchronously(this.sourisMessager.getPlugin(), 0, 20);
                 }
 
                 @Override
