@@ -55,7 +55,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0), EffectWhen.PERMANENT);
+        givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
         new CroiserRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         addPower(new OeilPower(this), true);
     }
