@@ -26,6 +26,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -97,7 +98,11 @@ public class Hiruzen extends HShinobiRoles implements Listener {
     private static final class Enma extends ItemPower {
 
         public Enma(@NonNull RoleBase role) {
-            super("§aEnma", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§aEnma"), role, "§7Qui à besoin d'§aami§7 quand§a Enma§7 est la pour nous.");
+            super("§aEnma", null, new ItemBuilder(Material.DIAMOND_SWORD)
+                            .addEnchant(Enchantment.DAMAGE_ALL, 4)
+                    .setName("§aEnma"),
+                    role,
+                    "§7Qui à besoin d'§aami§7 quand§a Enma§7 est la pour nous.");
         }
 
         @Override
