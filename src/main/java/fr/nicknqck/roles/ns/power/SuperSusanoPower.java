@@ -95,10 +95,10 @@ public class SuperSusanoPower extends ItemPower {
         @Override
         public void run() {
             if (!GameState.inGame()) {
-                cancel();
+                stop();
                 return;
             }
-            if (this.timeLeft <= 0) {
+            if (this.timeLeft <= 0 || !this.superSusanoPower.getRole().getGamePlayer().check()) {
                 stop();
                 return;
             }
