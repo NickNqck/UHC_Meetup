@@ -6,6 +6,7 @@ import fr.nicknqck.managers.StunManager;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.scoreboard.PersonalScoreboard;
+import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
@@ -54,6 +55,8 @@ public class GamePlayer {
 	private final ActionBarManager actionBarManager;
 	private final List<ChatWithManager> chatWithManager;
 	private final Map<String, Object> metaData;
+	@Nullable
+	private final ItemStack headItem;
 
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
@@ -66,6 +69,7 @@ public class GamePlayer {
 		this.metaData = new HashMap<>();
 		setAlive(true);
 		setCanRevive(false);
+		this.headItem = GlobalUtils.getAsyncPlayerHead(gamePlayer.getUniqueId());
 	}
 	public void onQuit() {
 		if (this.discRunnable == null){

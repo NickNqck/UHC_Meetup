@@ -203,7 +203,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                         if (target.hasPotionEffect(PotionEffectType.INVISIBILITY))continue;
                         if (target.getUniqueId().equals(getRole().getPlayer()))continue;
                         //Le pouvoir ne touche pas les joueurs invisibles
-                        paginatedFastInv.addContent(new ItemBuilder(GlobalUtils.getAsyncPlayerHead(gamePlayer.getUuid()))
+                        paginatedFastInv.addContent(new ItemBuilder(gamePlayer.getHeadItem() == null ? GlobalUtils.getAsyncPlayerHead(gamePlayer.getUuid()) : gamePlayer.getHeadItem())
                                 .setName("§a"+target.getName())
                                 .toItemStack(), event -> {
                             final Map<String, Object> test = new HashMap<>();
