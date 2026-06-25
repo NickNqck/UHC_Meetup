@@ -556,6 +556,9 @@ public class GameState{
                 case Shino:
                     role = new Shino(player);
                     break;
+                case Hiruzen:
+                    role = new Hiruzen(player);
+                    break;
             }
         } else {
             final GiveRoleDeclenchExternalPluginEvent externalPluginEvent = new GiveRoleDeclenchExternalPluginEvent(roleType, player);
