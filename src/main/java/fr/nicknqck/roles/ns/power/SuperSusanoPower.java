@@ -16,6 +16,7 @@ import hm.zelha.particlesfx.util.Color;
 import hm.zelha.particlesfx.util.LocationSafe;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -85,6 +86,8 @@ public class SuperSusanoPower extends ItemPower {
         private ParticleCircle circle2;
         private ParticleCircle circle3;
 
+        @Setter
+        @Getter
         private int timeLeft = 60*5*20;
         private boolean running = false;
 
@@ -116,6 +119,7 @@ public class SuperSusanoPower extends ItemPower {
             this.running = true;
         }
         public synchronized void stop() {
+            Main.getInstance().debug("SuperSusanoRunnable.stop()");
             if (!running)return;
             cancel();
             this.timeLeft = 0;
@@ -137,6 +141,7 @@ public class SuperSusanoPower extends ItemPower {
             if (this.superSusanoPower.subSusanoPower != null) {
                 this.superSusanoPower.subSusanoPower.onSusanoEnd();
             }
+            Main.getInstance().debug("SuperSusanoRunnable.stop()2");
         }
         private void activate(@NonNull final Player player) {
             final List<LocationSafe> list = new ArrayList<>();
