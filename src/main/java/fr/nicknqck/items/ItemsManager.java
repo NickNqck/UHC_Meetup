@@ -24,7 +24,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.scenarios.impl.AntiDrop;
 import fr.nicknqck.scenarios.impl.Anti_Abso;
@@ -69,7 +68,6 @@ public class ItemsManager implements Listener {
 		ItemStack item = event.getItem();
 		Player player = event.getPlayer();
 		if (gameState.hasRoleNull(player.getUniqueId()))return;
-		final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 		if (item.getType() == Material.GOLDEN_APPLE) {
             player.updateInventory();
 			if (Anti_Abso.isAntiabsoall()) {
