@@ -11,6 +11,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.Setter;
@@ -100,6 +101,10 @@ public class HubListener implements Listener {
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);
 			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);
+			if (!Main.getInstance().getPlayersHeadItemDB().containsKey(gamePlayer.getUuid())) {
+				Main.getInstance().getPlayersHeadItemDB().put(gamePlayer.getUuid(), GlobalUtils.getAsyncPlayerHead(gamePlayer.getUuid()));
+			}
+			gamePlayer.setHeadItem(Main.getInstance().getPlayersHeadItemDB().get(gamePlayer.getUuid()));
 			gameState.getGamePlayer().put(u, gamePlayer);
 			System.out.println("Player "+p+" a ete ajouter a la partie");
 		}

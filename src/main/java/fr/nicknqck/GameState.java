@@ -613,14 +613,6 @@ public class GameState{
 		}*/
 		return nmbrole;
 	}
-
-	public void changeTabPseudo(final String name,final Player player) {
-		try {
-            player.setPlayerListName(name);
-        } catch (Exception e) {
-            e.fillInStackTrace();
-        }
-	}
 	public void spawnLightningBolt(World world, Location loc) {world.strikeLightningEffect(loc);}
 	public boolean isApoil(Player player) {
 		boolean apoil;
