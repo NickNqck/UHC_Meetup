@@ -68,7 +68,6 @@ public class AsumaV2 extends HShinobiRoles {
         addPower(new LameDeChakra(this), true);
         addPower(new NueArdente(this), true);
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.PERMANENT);
-        super.RoleGiven(gameState);
     }
 
     private static final class LameDeChakra extends ItemPower {

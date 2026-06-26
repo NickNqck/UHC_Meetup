@@ -41,7 +41,6 @@ public class Jugo extends OrochimaruRoles {
 
 	@Override
 	public void RoleGiven(GameState gameState) {
-		super.RoleGiven(gameState);
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			if (!gameState.getAttributedRole().contains(Roles.Kimimaro)) {
 				onKimimaroDeath(false);

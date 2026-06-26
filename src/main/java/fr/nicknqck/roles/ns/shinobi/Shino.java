@@ -74,7 +74,6 @@ public class Shino extends ShinobiRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         addPower(new RinkaichuPower(this), true);
         addPower(new TracagePower(this));
     }

@@ -84,7 +84,6 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
         addPower(new OrageBrulantItem(this), true);
         EventUtils.registerRoleEvent(this);
         new ZenItsuRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

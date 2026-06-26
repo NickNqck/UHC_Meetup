@@ -85,7 +85,6 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         new NarutoRunnable(this, getGameState());
         addPower(new NueArdente(this), true);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onDeath(@NonNull final UHCDeathEvent event) {

@@ -41,7 +41,6 @@ public abstract class CrystalBase extends RoleBase implements IGotReputation {
                 setReputation(7);
             }
         }
-        super.RoleGiven(gameState);
         this.onRoleGive(gameState);
 
     }

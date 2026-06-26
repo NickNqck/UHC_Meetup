@@ -123,7 +123,6 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
         EventUtils.registerRoleEvent(this);
         setCanBeHokage(true);
         this.cantChangeTeam.add(getPlayer());
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onEndIzanami(@NonNull final IzanamiFinishEvent event) {

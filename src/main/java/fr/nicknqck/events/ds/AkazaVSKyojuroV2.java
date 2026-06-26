@@ -196,6 +196,11 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         return MDJ.DS;
     }
 
+    @Override
+    public boolean onGameStart(@NonNull GameState gameState) {
+        return false;
+    }
+
     private static class VagueItemPower extends ItemPower implements Listener {
 
         protected VagueItemPower(@NonNull KyojuroV2 role) {

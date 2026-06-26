@@ -95,7 +95,6 @@ public class KokushiboV2 extends DemonsRoles {
         new PourcentageLunaireRunnable(this);
         setCanuseblade(true);
         this.orginalMaxHealth = getMaxHealth();
-        super.RoleGiven(gameState);
     }
     private static class DSLunePower extends CommandPower implements Listener {
 

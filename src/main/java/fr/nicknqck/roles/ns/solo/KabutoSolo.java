@@ -86,7 +86,6 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
         addPower(new EdoTenseiPower(this), true);
         addPower(new MueDuSerpent(this));
         giveHealedHeartatInt(2.0);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

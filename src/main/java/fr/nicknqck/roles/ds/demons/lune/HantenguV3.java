@@ -90,7 +90,6 @@ public class HantenguV3 extends DemonsRoles implements Listener {
         addPower(choicePower, true);
         new InvisibilityRunnable(this, choicePower).runTaskTimerAsynchronously(Main.getInstance(), 100, 20);
         EventUtils.registerRoleEvent(this);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onDamage(final EntityDamageEvent event) {

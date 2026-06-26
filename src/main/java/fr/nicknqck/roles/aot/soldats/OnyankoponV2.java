@@ -49,7 +49,6 @@ public class OnyankoponV2 extends SoldatsRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         addPower(new TelortationItem(this), true);
     }
     private static final class TelortationItem extends ItemPower {

@@ -87,7 +87,6 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
             }
         }, 20*10);
         addKnowedRole(HakuV2.class);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onPowerUse(@NonNull final PowerActivateAfterCheckEvent event) {

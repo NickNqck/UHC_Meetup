@@ -73,6 +73,12 @@ public class PetitTitan extends TitansRoles {
 				}).setDespawnable(true).setPosable(false).setDroppable(false).getItemStack()
 		};
 	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+
+	}
+
 	@Override
 	public void Update(GameState gameState) {
 		if (isTransformedinTitan) {

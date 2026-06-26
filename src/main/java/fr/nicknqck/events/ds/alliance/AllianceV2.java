@@ -115,4 +115,9 @@ public class AllianceV2 extends Event implements Listener {
     public @NonNull MDJ getMDJ() {
         return MDJ.DS;
     }
+
+    @Override
+    public boolean onGameStart(@NonNull GameState gameState) {
+        return false;
+    }
 }

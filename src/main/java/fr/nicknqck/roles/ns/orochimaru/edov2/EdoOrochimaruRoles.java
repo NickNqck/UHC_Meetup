@@ -38,7 +38,6 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
         if (this instanceof OrochimaruV2){
             addPower(new EdoTenseiPower(this), true);
         }
-        super.RoleGiven(gameState);
         EventUtils.registerRoleEvent(new EdoRegister(this));
     }
 

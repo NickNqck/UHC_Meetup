@@ -52,7 +52,6 @@ public class ErwinV2 extends SoldatsRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         addPower(new AotCampPower(this));
         EventUtils.registerRoleEvent(this);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onEndGiveRole(final RoleGiveEvent event) {

@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.aot.titanrouge;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.TitansRoles;
@@ -59,7 +60,12 @@ public class TitanSouriant extends TitansRoles {
 		};
 	}
 
-    @Override
+	@Override
+	public void RoleGiven(GameState gameState) {
+
+	}
+
+	@Override
 	public String getName() {
 		return "Titan Souriant";
 	}

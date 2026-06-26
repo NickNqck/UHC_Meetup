@@ -93,7 +93,6 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
         EventUtils.registerRoleEvent(this);
         getGamePlayer().getActionBarManager().addToActionBar("gaara.sablecount", "§eSable(s): "+this.reserve);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onSecond(final SecondPassEvent onSecond) {

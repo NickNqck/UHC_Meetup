@@ -77,7 +77,6 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         EventUtils.registerRoleEvent(this);
     }
     @EventHandler(priority = EventPriority.HIGH)

@@ -74,7 +74,6 @@ public class Hiruzen extends HShinobiRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         addPower(new Enma(this), true);
         addPower(new Balsamine(this), true);
         addPower(new CouleDeBoue(this), true);

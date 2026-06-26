@@ -86,7 +86,6 @@ public class Sai extends ShinobiRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         addPower(new ToileAuMonstreFantomatique(this), true);
         addPower(new EvaluationPower(this));
         EventUtils.registerRoleEvent(this);

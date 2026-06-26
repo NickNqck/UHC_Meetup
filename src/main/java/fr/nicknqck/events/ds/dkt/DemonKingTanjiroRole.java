@@ -1,5 +1,6 @@
 package fr.nicknqck.events.ds.dkt;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
@@ -78,6 +79,11 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
         return new ItemStack[] {
                 this.energieItem
         };
+    }
+
+    @Override
+    public void RoleGiven(GameState gameState) {
+
     }
 
     @Override

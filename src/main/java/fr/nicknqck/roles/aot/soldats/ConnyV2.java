@@ -57,7 +57,6 @@ public class ConnyV2 extends SoldatsRoles {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
         addPower(new AmisCommand(this));
-        super.RoleGiven(gameState);
     }
     private static final class AmisCommand extends CommandPower implements Listener, UpdatablePowerLore {
 

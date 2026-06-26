@@ -83,7 +83,6 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addKnowedRole(DakiV2.class);
         addKnowedRole(MuzanV2.class);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onEndGiveRole(final RoleGiveEvent event) {

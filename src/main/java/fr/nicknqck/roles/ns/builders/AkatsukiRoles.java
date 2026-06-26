@@ -28,6 +28,5 @@ public abstract class AkatsukiRoles extends NSRoles{
                 addKnowedRole(KonanV2.class);
             }
         }
-        super.RoleGiven(gameState);
     }
 }

@@ -125,7 +125,6 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                 this.killUchiwa = true;
             }
         }, 20*10);
-        super.RoleGiven(gameState);
     }
     private boolean isUchiwa(Player p){
         if (!gameState.hasRoleNull(p.getUniqueId())) {

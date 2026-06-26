@@ -55,7 +55,6 @@ public class JeanV2 extends SoldatsRoles implements Listener {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new FuseCommand(this));
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

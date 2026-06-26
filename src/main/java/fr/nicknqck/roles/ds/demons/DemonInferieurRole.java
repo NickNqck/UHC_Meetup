@@ -32,7 +32,6 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
             List<DemonsRoles> roles = new ArrayList<>();
             for (UUID u : gameState.getInGamePlayers()) {

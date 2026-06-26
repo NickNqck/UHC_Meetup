@@ -111,7 +111,6 @@ public void RoleGiven(GameState gameState) {
 		owner.sendMessage(Bataillon);
 	}
 	}
-	super.RoleGiven(gameState);
 }
 int cdalcool = 0;
 int cdcarabine = 0;

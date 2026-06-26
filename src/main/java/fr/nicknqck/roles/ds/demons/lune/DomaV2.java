@@ -77,7 +77,6 @@ public class DomaV2 extends DemonsRoles {
         addKnowedRole(MuzanV2.class);
         addPower(new GeleProgressif(this));
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0,  false, false), EffectWhen.NIGHT);
-        super.RoleGiven(gameState);
     }
     private static class ZoneDeGlacePower extends ItemPower {
 

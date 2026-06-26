@@ -67,7 +67,6 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
         addPower(this.kamuiPower, true);
         addPower(new SharinganPower(this), true);
         addPower(new YameruPower(this));
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

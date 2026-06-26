@@ -66,7 +66,6 @@ public class KarinV2 extends OrochimaruRoles {
         addKnowedRole(KimimaroV2.class);
         addPower(new DonItem(this));
         new KnowRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

@@ -80,7 +80,6 @@ public class MikasaV2 extends SoldatsRoles implements Ackerman, Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         EventUtils.registerRoleEvent(this);
     }
     @EventHandler(priority = EventPriority.HIGH)

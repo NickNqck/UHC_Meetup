@@ -82,7 +82,6 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
         EventUtils.registerRoleEvent(this);
         this.orageBrulantItem = new OrageBrulantItem(this);
         this.speedTroisPower = new SpeedTroisPower(this);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

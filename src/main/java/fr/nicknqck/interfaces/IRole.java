@@ -1,5 +1,6 @@
 package fr.nicknqck.interfaces;
 
+import fr.nicknqck.GameState;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.powers.Power;
@@ -27,4 +28,5 @@ public interface IRole {
     ItemStack[] getItems();
     List<Power> getPowers();
     GamePlayer getGamePlayer();
+    void RoleGiven(GameState gameState);
 }

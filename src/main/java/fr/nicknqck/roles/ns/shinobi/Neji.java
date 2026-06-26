@@ -78,7 +78,6 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
         addPower(new ByakuganCommand(this));
         addPower(new ChakraCommand(this));
         new ForceRunnable(getGameState(), this);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

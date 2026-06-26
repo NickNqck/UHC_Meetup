@@ -75,7 +75,6 @@ public class Tayuya extends OrochimaruRoles {
         addPower(new MarqueMaudite(this), true);
         addPower(new FluteDemoniaque(this), true);
         addKnowedRole(KimimaroV2.class);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

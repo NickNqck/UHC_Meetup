@@ -110,7 +110,6 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         addPower(new SwordPower(this), true);
         addPower(new BrumeSuspendue(this), true);
         addPower(new PatiencePower(this));
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

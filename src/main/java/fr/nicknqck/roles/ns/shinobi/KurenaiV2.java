@@ -72,7 +72,6 @@ public class KurenaiV2 extends ShinobiRoles {
                 new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
             }
         }, 20);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

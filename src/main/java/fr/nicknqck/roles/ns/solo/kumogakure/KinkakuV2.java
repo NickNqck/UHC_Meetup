@@ -80,7 +80,6 @@ public class KinkakuV2 extends KumogakureRole {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         addKnowedRole(GinkakuV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.DAY);
         new EffectGiver(getGameState(), this);

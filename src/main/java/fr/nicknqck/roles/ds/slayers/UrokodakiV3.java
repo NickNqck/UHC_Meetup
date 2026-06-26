@@ -78,7 +78,6 @@ public class UrokodakiV3 extends SlayerRoles {
         }
         addPower(new ImpacteItem(this), true);
         addPower(new DSWATER(this));
-        super.RoleGiven(gameState);
     }
     private static class ImpacteItem extends ItemPower implements Listener {
 

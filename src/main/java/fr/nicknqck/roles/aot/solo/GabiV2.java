@@ -53,7 +53,6 @@ public class GabiV2 extends AotRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         EventUtils.registerRoleEvent(this);
         setStealPriority(8000);
         setMaxHealth(getMaxHealth()+10.0);

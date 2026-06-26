@@ -65,7 +65,6 @@ public class SabitoV2 extends SlayerRoles {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new SouffleItem(this), true);
-        super.RoleGiven(gameState);
     }
     private static class SouffleItem extends ItemPower implements Listener {
 

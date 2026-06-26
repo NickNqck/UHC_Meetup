@@ -71,7 +71,6 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         EventUtils.registerRoleEvent(this);
     }
 
