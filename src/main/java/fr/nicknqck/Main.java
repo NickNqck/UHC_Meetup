@@ -119,6 +119,8 @@ public class Main extends JavaPlugin {
 	private CrystalManager crystalManager;
 	private CustomTabManager customTabManager;
 
+	private final Map<UUID, ItemStack> playersHeadItemDB = new HashMap<>();
+
     @Override
 	public void onEnable() {
 		Instance = this;
