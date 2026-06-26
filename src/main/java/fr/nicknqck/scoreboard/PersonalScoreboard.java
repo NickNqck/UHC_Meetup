@@ -119,7 +119,7 @@ public class PersonalScoreboard {
     			if (this.gameState.roleTimer < this.gameState.getInGameTime()) {
     				if (!this.gameState.hasRoleNull(player.getUniqueId())) {
 						final RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-						Main.getInstance().getCustomTabManager().setPrefixForAll(role.getPlayer(), role.getOriginTeam().getColor()+role.getName());
+						Main.getInstance().getCustomTabManager().setPrefixForAll(role.getPlayer(), role.getOriginTeam().getColor()+role.getName()+" §r");
                     }
     			}
     		}
