@@ -101,6 +101,9 @@ public class GameConfig {
         private int katonPercent = 3;
         private int raitonPercent = 3;
         private int dotonPercent = 3;
+        private boolean izanamiCanInfectSolo = true;
+        private boolean shisuiByPassIzanamiLimitation = true;
+        private boolean shisuiKotoAmatsukamiInfectSolo = true;
 
     }
     @Getter
