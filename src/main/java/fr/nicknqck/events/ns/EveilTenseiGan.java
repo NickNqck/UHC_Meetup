@@ -36,6 +36,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -156,7 +157,7 @@ public class EveilTenseiGan extends Event implements Listener {
     }
 
     @Override
-    public boolean onGameStart(GameState gameState) {
+    public boolean onGameStart(@Nonnull GameState gameState) {
         EventUtils.registerRoleEvent(this);
         return true;
     }

@@ -1,6 +1,5 @@
 package fr.nicknqck.events.ds;
 
-import fr.nicknqck.GameState;
 import fr.nicknqck.events.IEvent;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
@@ -29,16 +28,6 @@ public abstract class Event implements IEvent {
                 (isEnable() ? "§aActivé" : "§cDésactivé"),
                 "",
                 "§fMode de jeu: "+getMDJ().getItem().getItemMeta().getDisplayName()
-        };
-    }
-    public boolean onGameStart(final GameState gameState) {
-        return false;
-    }
-
-    @Override
-    public String[] getExplications() {
-        return new String[] {
-                "§cAucune description trouver"
         };
     }
 }
