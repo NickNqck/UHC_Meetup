@@ -559,6 +559,9 @@ public class GameState{
                 case Hiruzen:
                     role = new Hiruzen(player);
                     break;
+                case Choji:
+                    role = new  Choji(player);
+                    break;
             }
         } else {
             final GiveRoleDeclenchExternalPluginEvent externalPluginEvent = new GiveRoleDeclenchExternalPluginEvent(roleType, player);
