@@ -1,6 +1,7 @@
-package fr.nicknqck.events.custom;
+package fr.nicknqck.events.custom.death;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import org.bukkit.craftbukkit.libs.jline.internal.Nullable;

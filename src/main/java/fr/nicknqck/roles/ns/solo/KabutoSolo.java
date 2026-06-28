@@ -6,8 +6,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.events.custom.EffectGiveEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.IUncompatibleRole;
@@ -87,7 +86,6 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
         addPower(new EdoTenseiPower(this), true);
         addPower(new MueDuSerpent(this));
         giveHealedHeartatInt(2.0);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull
@@ -245,10 +243,10 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
             }
         }
         @EventHandler
-        private void onUHCKill(UHCPlayerKillEvent event){
-            if (event.getPlayerKiller() != null) {
-                if (event.getPlayerKiller().getUniqueId().equals(this.getRole().getPlayer())) {
-                    this.killLocation.put(event.getVictim().getUniqueId(), event.getVictim().getLocation());
+        private void onUHCKill(@NonNull final UHCDeathEvent event){
+            if (event.getGamePlayerKiller() != null) {
+                if (event.getGamePlayerKiller().getUuid().equals(this.getRole().getPlayer())) {
+                    this.killLocation.put(event.getPlayer().getUniqueId(), event.getPlayer().getLocation());
                 }
             }
         }

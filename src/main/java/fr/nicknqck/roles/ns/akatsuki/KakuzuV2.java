@@ -3,8 +3,7 @@ package fr.nicknqck.roles.ns.akatsuki;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -118,17 +117,17 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         return sb.substring(0, sb.length()-4);
     }
     @EventHandler
-    private void onKill(final UHCPlayerKillEvent event) {
-        if (event.getVictim().getUniqueId().equals(getPlayer()))return;//Si Kakuzu est la victim return
+    private void onKill(@NonNull final UHCDeathEvent event) {
+        if (event.getPlayer().getUniqueId().equals(getPlayer()))return;//Si Kakuzu est la victim return
         if (event.getGamePlayerKiller() == null)return;//Si le tueur n'est pas register return
         if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;//Si le tueur n'est pas mon Kakuzu return
-        if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;//Si la victime n'a pas de rôle return
-        final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();//récupération de l'instance du rôle
+        if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;//Si la victime n'a pas de rôle return
+        final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();//récupération de l'instance du rôle
         if (!(role instanceof NSRoles))return;//si le rôle ne viens pas du NaruVerse return
         if (((NSRoles) role).getChakras() == null)return;//Si la victim n'à pas de chakra return
         if (!this.chakrasVoled.contains(((NSRoles) role).getChakras())) {
             final EChakras chakras = ((NSRoles) role).getChakras();
-            event.getKiller().sendMessage("§7Vous avez gagner la§a nature de chakra§7: "+chakras.getShowedName());
+            event.getGamePlayerKiller().sendMessage("§7Vous avez gagner la§a nature de chakra§7: "+chakras.getShowedName());
             this.chakrasVoled.add(chakras);
         }
     }
@@ -242,9 +241,6 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
                 if (!item.getItemMeta().hasDisplayName())return;
                 for (final EChakras chakras : EChakras.values()) {
                     if (chakras.getShowedName().equalsIgnoreCase(item.getItemMeta().getDisplayName())) {
-                        if (this.kakuzuV2.getChakras() != null) {
-                            this.kakuzuV2.getChakras().getChakra().getList().remove(event.getWhoClicked().getUniqueId());
-                        }
                         this.kakuzuV2.setChakras(chakras);
                         event.getWhoClicked().sendMessage("§7Vous pouvez maintenant utilisé le "+chakras.getShowedName());
                         event.getWhoClicked().closeInventory();

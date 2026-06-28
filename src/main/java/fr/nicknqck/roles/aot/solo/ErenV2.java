@@ -3,7 +3,7 @@ package fr.nicknqck.roles.aot.solo;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
@@ -94,34 +94,35 @@ public class ErenV2 extends AotRoles implements Listener{
             return true;
         }
         @EventHandler
-        private void onKill(@NonNull final UHCPlayerKillEvent event) {
-            if (!event.getKiller().getUniqueId().equals(this.getRole().getPlayer()))return;
-            if (event.isCancel())return;
-            if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
-            @NonNull final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+        private void onKill(@NonNull final UHCDeathEvent event) {
+            if (event.isCancelled())return;
+            if (event.getGamePlayerKiller() == null)return;
+            if (!event.getGamePlayerKiller().getUuid().equals(this.getRole().getPlayer()))return;
+            if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
+            @NonNull final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
             if (!(role instanceof AotRoles))return;
             if (role instanceof Sieg) {
                 this.getRole().addKnowedPlayersFromTeam(TeamList.Titan);
-                event.getKiller().sendMessage("§7En tuant§c Sieg§7, vous avez obtenu la liste des§c titans rouges§7.");
+                event.getGamePlayerKiller().sendMessage("§7En tuant§c Sieg§7, vous avez obtenu la liste des§c titans rouges§7.");
                 return;
             }
             if (!Main.getInstance().getTitanManager().hasTitan(role.getPlayer()))return;
             @NonNull final TitanBase titan = Main.getInstance().getTitanManager().getTitan(role.getPlayer());
             if (titan instanceof CharetteV2) {
-                this.getRole().addSpeedAtInt(event.getPlayerKiller(), 10);
-                event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Charette§7 vous avez obtenue§c 10%§7 de§c vitesse supplémentaire");
+                this.getRole().addSpeedAtInt(event.getGamePlayerKiller().getRole().owner, 10);
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Charette§7 vous avez obtenue§c 10%§7 de§c vitesse supplémentaire");
             }
             if (titan instanceof MachoireV2) {
                 this.getRole().addBonusforce(5.0);
-                event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Machoire§7 vous avez obtenue§c 5%§7 de§c force supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Machoire§7 vous avez obtenue§c 5%§7 de§c force supplémentaire");
             }
             if (titan instanceof CuirasseV2) {
                 this.getRole().addBonusResi(5.0);
-                event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Cuirasse§7 vous avez obtenue§c 5%§7 de§c résistance supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Cuirasse§7 vous avez obtenue§c 5%§7 de§c résistance supplémentaire");
             }
             if (titan instanceof ColossalV2) {
                 this.getRole().addBonusResi(10.0);
-                event.getKiller().sendMessage("§7En tuant la personne ayant le§c Titan Colossal§7 vous avez obtenue§c 10%§7 de§c résistance supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Colossal§7 vous avez obtenue§c 10%§7 de§c résistance supplémentaire");
             }
         }
     }

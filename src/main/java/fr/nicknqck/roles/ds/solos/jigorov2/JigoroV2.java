@@ -52,7 +52,6 @@ public class JigoroV2 extends DemonsSlayersRoles {
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {
-		super.RoleGiven(gameState);
 		setCanuseblade(true);
 		addKnowedRole(ZenItsuV2.class);
 		addKnowedRole(KaigakuV2.class);

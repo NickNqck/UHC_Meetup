@@ -4,7 +4,6 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
-import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.StunType;
 import fr.nicknqck.events.ds.Event;
@@ -18,6 +17,7 @@ import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.utils.fastinv.PaginatedFastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.rank.ChatRank;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -704,6 +704,7 @@ public class Inventories {
         player.updateInventory();
     }
     public void updateRoleInventory(Player player) {
+        if (!ChatRank.isHost(player.getUniqueId()))return;
         new Configuration_RolesInventory(player).open(player);
         player.updateInventory();
         gameState.updateGameCanLaunch();

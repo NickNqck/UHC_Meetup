@@ -42,7 +42,6 @@ public class HansiV2 extends SoldatsRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new GiveSeringueCommand(this));
         LancePowerManager.giveLance(getGamePlayer(), 3);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

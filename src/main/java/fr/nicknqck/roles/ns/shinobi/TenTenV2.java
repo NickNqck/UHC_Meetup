@@ -79,7 +79,6 @@ public class TenTenV2 extends ShinobiRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new KunaiItem(this), true);
         addPower(new ParcheminItem(this), true);
-        super.RoleGiven(gameState);
     }
     private static class KunaiItem extends ItemPower implements Listener {
 

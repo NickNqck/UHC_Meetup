@@ -77,7 +77,6 @@ public class KimimaroV2 extends OrochimaruRoles {
         addPower(new ForetItemPower(this), true);
         addKnowedRole(OrochimaruV2.class);
         addKnowedRole(KabutoV2.class);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

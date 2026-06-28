@@ -1,6 +1,7 @@
-package fr.nicknqck.events.custom;
+package fr.nicknqck.events.custom.death;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +21,14 @@ public class UHCDeathEvent extends Event {
     private boolean cancelled = false;
     @Nullable
     private final RoleBase role;
-    public UHCDeathEvent(Player player, GameState gameState, @Nullable RoleBase role) {
+    @Nullable
+    private final GamePlayer gamePlayerKiller;
+
+    public UHCDeathEvent(Player player, GameState gameState, @Nullable RoleBase role, @Nullable GamePlayer gamePlayerKiller) {
         this.player = player;
         this.gameState = gameState;
         this.role = role;
+        this.gamePlayerKiller = gamePlayerKiller;
     }
 
     @Override

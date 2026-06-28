@@ -5,8 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.ds.Event;
 import fr.nicknqck.player.GamePlayer;
@@ -37,6 +36,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -157,7 +157,7 @@ public class EveilTenseiGan extends Event implements Listener {
     }
 
     @Override
-    public boolean onGameStart(GameState gameState) {
+    public boolean onGameStart(@Nonnull GameState gameState) {
         EventUtils.registerRoleEvent(this);
         return true;
     }
@@ -196,14 +196,15 @@ public class EveilTenseiGan extends Event implements Listener {
         event.setCancelled(true);
     }
     @EventHandler(priority = EventPriority.LOWEST)
-    private void onKill(final UHCPlayerKillEvent event) {
+    private void onDeath2(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (this.gamePlayer == null)return;
-        if (this.gamePlayer.getUuid().equals(event.getKiller().getUniqueId())) {
-            if (gamePlayer.getRole() == null)return;
-            if (gamePlayer.getRole().getMaxHealth() < 30.0) {
-                gamePlayer.getRole().setMaxHealth(gamePlayer.getRole().getMaxHealth()+1.0);
-                event.getKiller().sendMessage("§7En tuant un joueur, vous avez gagner§c 1/2❤ permanent");
+        if (this.gamePlayer.getUuid().equals(event.getGamePlayerKiller().getUuid())) {
+            if (this.gamePlayer.check()) {
+                if (this.gamePlayer.getRole().getMaxHealth() < 30.0) {
+                    gamePlayer.getRole().setMaxHealth(gamePlayer.getRole().getMaxHealth()+1.0);
+                    gamePlayer.sendMessage("§7En tuant un joueur, vous avez gagner§c 1/2❤ permanent");
+                }
             }
         }
     }
@@ -295,12 +296,13 @@ public class EveilTenseiGan extends Event implements Listener {
             if (!this.chakraRunnable.running)return;
             event.setCancelled(true);
         }
+
         @EventHandler
-        private void onKill(UHCPlayerKillEvent event) {
+        private void onKill(UHCDeathEvent event) {
             if (event.getGamePlayerKiller() == null)return;
-            if (event.getKiller().getUniqueId().equals(getRole().getPlayer())) {
+            if (event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer())) {
                 this.timeLeft+=60;
-                event.getKiller().sendMessage("§7Vous avez gagner§c 60 secondes§7 dans votre§c banque de temp§7.");
+                event.getGamePlayerKiller().sendMessage("§7Vous avez gagner§c 60 secondes§7 dans votre§c banque de temp§7.");
             }
         }
         private final static class ChakraRunnable extends BukkitRunnable {

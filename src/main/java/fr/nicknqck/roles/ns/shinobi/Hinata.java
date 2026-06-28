@@ -92,7 +92,6 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
         addPower(new PowersInfo(this));
         new WeaknessRunnable(this);
         setCanBeHokage(true);
-        super.RoleGiven(gameState);
     }
 
     @Override

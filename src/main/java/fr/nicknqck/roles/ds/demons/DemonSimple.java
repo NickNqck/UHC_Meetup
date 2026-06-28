@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ds.demons;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
@@ -61,11 +61,11 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
         super.RoleGiven(gameState);
     }
     @EventHandler
-    private void onUHCKill(final UHCPlayerKillEvent event) {
+    private void onUHCKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
             addBonusforce(3.0);
-            event.getKiller().sendMessage("§7Vous avez gagnez§c 3%§7 de§c force§7, ce qui vous fait monter à §c"+getBonusForce()+" de force§7.");
+            event.getGamePlayerKiller().sendMessage("§7Vous avez gagnez§c 3%§7 de§c force§7, ce qui vous fait monter à §c"+getBonusForce()+" de force§7.");
         }
     }
     @EventHandler

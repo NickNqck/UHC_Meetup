@@ -2,8 +2,7 @@ package fr.nicknqck.roles.ns.orochimaru.edov2;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.GlobalUtils;
@@ -39,7 +38,6 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
         if (this instanceof OrochimaruV2){
             addPower(new EdoTenseiPower(this), true);
         }
-        super.RoleGiven(gameState);
         EventUtils.registerRoleEvent(new EdoRegister(this));
     }
 
@@ -51,10 +49,10 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
             this.role = roles;
         }
         @EventHandler
-        private void onUHCKill(UHCPlayerKillEvent event){
-            if (event.getPlayerKiller() != null) {
-                if (event.getPlayerKiller().getUniqueId().equals(this.role.getPlayer())) {
-                    this.role.killLocation.put(event.getVictim().getUniqueId(), event.getVictim().getLocation());
+        private void onUHCKill(@NonNull final UHCDeathEvent event){
+            if (event.getGamePlayerKiller() != null) {
+                if (event.getGamePlayerKiller().getUuid().equals(this.role.getPlayer())) {
+                    this.role.killLocation.put(event.getPlayer().getUniqueId(), event.getPlayer().getLocation());
                 }
             }
         }

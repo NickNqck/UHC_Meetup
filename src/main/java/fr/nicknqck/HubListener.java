@@ -5,16 +5,15 @@ import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameStartEvent;
-import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -26,10 +25,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.NameTagVisibility;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.util.*;
 
@@ -106,6 +101,10 @@ public class HubListener implements Listener {
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);
 			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);
+			if (!Main.getInstance().getPlayersHeadItemDB().containsKey(gamePlayer.getUuid())) {
+				Main.getInstance().getPlayersHeadItemDB().put(gamePlayer.getUuid(), GlobalUtils.getAsyncPlayerHead(gamePlayer.getUuid()));
+			}
+			gamePlayer.setHeadItem(Main.getInstance().getPlayersHeadItemDB().get(gamePlayer.getUuid()));
 			gameState.getGamePlayer().put(u, gamePlayer);
 			System.out.println("Player "+p+" a ete ajouter a la partie");
 		}
@@ -236,29 +235,6 @@ public class HubListener implements Listener {
 			player.closeInventory();
 		} else {
 			player.closeInventory();
-		}
-	}
-
-	@EventHandler
-	@SuppressWarnings("deprecation")
-	private void onSecond(@NonNull final SecondPassEvent event) {
-		if (event.isInGame()) {
-			for (@NonNull final Scoreboard scoreboard : Main.getInstance().getScoreboardManager().getColorScoreboard().values()) {
-				if (scoreboard.getTeams().isEmpty())continue;
-				for (@NonNull final Team team : scoreboard.getTeams()) {
-					if (team.getEntries().isEmpty())continue;
-					if (team.getPlayers().isEmpty())continue;
-					for (@NonNull final OfflinePlayer offlinePlayer : team.getPlayers()) {
-						if (offlinePlayer.getPlayer() == null)continue;
-						@NonNull final Player player = offlinePlayer.getPlayer();
-						if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-							team.setNameTagVisibility(NameTagVisibility.NEVER);
-						} else {
-							team.setNameTagVisibility(NameTagVisibility.ALWAYS);
-						}
-					}
-				}
-			}
 		}
 	}
 }

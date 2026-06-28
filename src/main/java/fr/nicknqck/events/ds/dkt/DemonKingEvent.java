@@ -138,4 +138,9 @@ public class DemonKingEvent extends Event {
     public @NonNull MDJ getMDJ() {
         return MDJ.DS;
     }
+
+    @Override
+    public boolean onGameStart(@NonNull GameState gameState) {
+        return false;
+    }
 }

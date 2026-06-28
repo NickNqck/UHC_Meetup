@@ -4,12 +4,13 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiFinishEvent;
 import fr.nicknqck.events.custom.roles.ns.IzanamiStartEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.NSRoles;
+import fr.nicknqck.roles.ns.solo.ShisuiSolo;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -242,16 +243,19 @@ public class IzanamiV2 implements Listener {
         taperCoupRemaining = 15;
         this.color = null;
     }
+
     @EventHandler
-    private void onKill(UHCPlayerKillEvent e) {
+    private void onDeath(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
         if (isNotNull()) {
             if (isGoodMission(MissionTarget.Tuer)) {
-                if (e.getKiller().getUniqueId().equals(this.gameTarget.getUuid())) {
+                if (event.getGamePlayerKiller().getUuid().equals(this.gameTarget.getUuid())) {
                     setTrueMissions(MissionTarget.Tuer);
                 }
             }
         }
     }
+
     @EventHandler
     private void onDrop(PlayerDropItemEvent e) {
         if (isGoodMission(MissionUser.Gap) && isNotNull()) {
@@ -320,18 +324,34 @@ public class IzanamiV2 implements Listener {
         Player toIzanami = Bukkit.getPlayer(infecter.getPlayer());
         if (owner != null && toIzanami != null) {
             owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
-            infecter.setTeam(infecteur.getTeam());
             toIzanami.resetTitle();
             GamePlayer gOwner = GameState.getInstance().getGamePlayer().get(owner.getUniqueId());
             GamePlayer gTo = GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId());
-            toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+gOwner.getRole().getTeamColor()+ infecteur.getOriginTeam().name());
-            toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+this.color+infecteur.getName()+": "+(infecteur.getPlayerFromRole((Roles) infecteur.getRoles()) != null ? infecteur.getPlayerFromRole((Roles)infecteur.getRoles()).getName() : "§cMort"));
-            gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.color+"Izanami§7)");
-            final IzanamiFinishEvent izanamiFinishEvent = new IzanamiFinishEvent(infecteur, infecter, this.color, owner, toIzanami);
-            Bukkit.getPluginManager().callEvent(izanamiFinishEvent);
-            return true;
+            if (gTo.check() && gTo.getRole().getTeam().isSolo()) {
+                if (!Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo()) {
+                    if (infecteur instanceof ShisuiSolo && Main.getInstance().getGameConfig().getNarutoConfig().isShisuiByPassIzanamiLimitation()) {
+                        return this.applySuccessfullInfection(infecteur, infecter, toIzanami, gOwner, owner, gTo);
+                    }
+                    toIzanami.sendMessage(this.color+infecteur.getName()+"§7 a essayé de vous forcez à rejoindre son camp, hors, vous êtes beaucoup trop fort pour lui alors ce n'est pas arrivé (lui pense que ça a fonctionné).");
+                    gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.color+"Izanami§7 (§cÉchoué§7))");
+                    final IzanamiFinishEvent izanamiFinishEvent = new IzanamiFinishEvent(infecteur, infecter, this.color, owner, toIzanami, false);
+                    Bukkit.getPluginManager().callEvent(izanamiFinishEvent);
+                    return true;
+                }
+            }
+            return this.applySuccessfullInfection(infecteur, infecter, toIzanami, gOwner, owner, gTo);
         }
         return false;
+    }
+    @SuppressWarnings("deprecation")
+    private boolean applySuccessfullInfection(NSRoles infecteur, RoleBase infecter, Player toIzanami, GamePlayer gOwner, Player owner, GamePlayer gTo) {
+        infecter.setTeam(infecteur.getTeam());
+        toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+gOwner.getRole().getTeamColor()+ infecteur.getOriginTeam().name());
+        toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+this.color+infecteur.getName()+": "+(infecteur.getPlayerFromRole((Roles) infecteur.getRoles()) != null ? infecteur.getPlayerFromRole((Roles)infecteur.getRoles()).getName() : "§cMort"));
+        gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.color+"Izanami§7)");
+        final IzanamiFinishEvent izanamiFinishEvent = new IzanamiFinishEvent(infecteur, infecter, this.color, owner, toIzanami, true);
+        Bukkit.getPluginManager().callEvent(izanamiFinishEvent);
+        return true;
     }
     private static class ResterRunnable extends BukkitRunnable {
 

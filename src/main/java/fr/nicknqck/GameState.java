@@ -425,7 +425,7 @@ public class GameState{
                     role = new KimimaroV2(player);
                     break;
                 case ZetsuNoir:
-                    role = new ZetsuNoir(player);
+                    role = new ZetsuNoirV2(player);
                     break;
                 case ZetsuBlanc:
                     role = new ZetsuBlancV3(player);
@@ -550,6 +550,18 @@ public class GameState{
                 case Mikasa:
                     role = new MikasaV2(player);
                     break;
+                case Sai:
+                    role = new Sai(player);
+                    break;
+                case Shino:
+                    role = new Shino(player);
+                    break;
+                case Hiruzen:
+                    role = new Hiruzen(player);
+                    break;
+                case Choji:
+                    role = new  Choji(player);
+                    break;
             }
         } else {
             final GiveRoleDeclenchExternalPluginEvent externalPluginEvent = new GiveRoleDeclenchExternalPluginEvent(roleType, player);
@@ -603,14 +615,6 @@ public class GameState{
 			nmbrole+=map.get(classRole);
 		}*/
 		return nmbrole;
-	}
-
-	public void changeTabPseudo(final String name,final Player player) {
-		try {
-            player.setPlayerListName(name);
-        } catch (Exception e) {
-            e.fillInStackTrace();
-        }
 	}
 	public void spawnLightningBolt(World world, Location loc) {world.strikeLightningEffect(loc);}
 	public boolean isApoil(Player player) {

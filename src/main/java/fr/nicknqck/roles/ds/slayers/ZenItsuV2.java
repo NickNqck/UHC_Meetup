@@ -4,8 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.NightEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.ds.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -90,9 +89,10 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         new NightEffectRunnable(middleOfTheNight, gameState, this);
     }
     @EventHandler
-    private void onKill(UHCPlayerKillEvent event) {
-        if (event.getKiller().getUniqueId().equals(getPlayer())) {
-            GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId());
+    private void onKill(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
+        if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
+            GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId());
             if (gamePlayer == null)return;
             if (gamePlayer.getRole() == null)return;
             if (gamePlayer.getRole() instanceof KaigakuV2) {

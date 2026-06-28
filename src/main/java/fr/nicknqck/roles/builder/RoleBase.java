@@ -202,7 +202,6 @@ public abstract class RoleBase implements IRole {
 	public void setBonusResi(double Bonusresi) {this.Bonusresi = Bonusresi;}
 	public void addBonusResi(double Bonusresi) {setBonusResi(getBonusResi() + Bonusresi);}
 	public void GiveItems() {}
-	public void RoleGiven(GameState gameState) {}
 	public void Update(GameState gameState) {
 		Player owner = Bukkit.getPlayer(getPlayer());
 		if (owner != null) {

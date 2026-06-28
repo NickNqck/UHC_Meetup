@@ -44,6 +44,12 @@ public class TitanDeviant extends TitansRoles {
 	public TextComponent getComponent() {
 		return new TextComponent("");
 	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+
+	}
+
 	@Override
 	public void Update(GameState gameState) {
 		for (Player p: Loc.getNearbyPlayers(owner, 20)) {

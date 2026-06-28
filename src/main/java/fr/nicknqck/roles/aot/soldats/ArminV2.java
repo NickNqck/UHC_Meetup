@@ -48,7 +48,6 @@ public class ArminV2 extends SoldatsRoles implements Listener{
     public void RoleGiven(GameState gameState) {
         addPower(new AotInvCommand(this));
         EventUtils.registerRoleEvent(this);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

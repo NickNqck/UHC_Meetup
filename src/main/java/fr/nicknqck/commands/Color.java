@@ -9,6 +9,7 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -60,7 +61,7 @@ public class Color implements CommandExecutor, Listener {
             }
             if (!playerList.isEmpty()) {
                 final Inventory inv = Bukkit.createInventory(sender, 54, "§cChoix des couleurs");
-                final Map<ItemStack, String> colors = new HashMap<>();
+                final Map<ItemStack, ChatColor> colorMap = new HashMap<>();
                 inv.setItem(0, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(5).setName(" ").toItemStack());
                 inv.setItem(1, new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName(" ").toItemStack());
                 inv.setItem(4, GUIItems.getSelectBackMenu());
@@ -101,17 +102,18 @@ public class Color implements CommandExecutor, Listener {
                 inv.setItem(33, rougefonce);
                 sender.openInventory(inv);
 
-                colors.put(red, "§c");
-                colors.put(yellow, "§e");
-                colors.put(bleu, "§9");
-                colors.put(bleuciel, "§b");
-                colors.put(rose, "§d");
-                colors.put(violet, "§5");
-                colors.put(orange, "§6");
-                colors.put(vertclair, "§a");
-                colors.put(vertfonce, "§2");
-                colors.put(rougefonce, "§4");
-                new ColorSetter(sender.getUniqueId(), playerList, colors);
+                colorMap.put(red, ChatColor.RED);
+                colorMap.put(yellow, ChatColor.YELLOW);
+                colorMap.put(bleu, ChatColor.BLUE);
+                colorMap.put(bleuciel, ChatColor.AQUA);
+                colorMap.put(rose, ChatColor.LIGHT_PURPLE);
+                colorMap.put(violet, ChatColor.DARK_PURPLE);
+                colorMap.put(orange, ChatColor.GOLD);
+                colorMap.put(vertclair, ChatColor.GREEN);
+                colorMap.put(vertfonce, ChatColor.DARK_GREEN);
+                colorMap.put(rougefonce, ChatColor.DARK_RED);
+
+                new ColorSetter(sender.getUniqueId(), playerList, colorMap);
             }
             return true;
         }
@@ -127,18 +129,17 @@ public class Color implements CommandExecutor, Listener {
                 team.unregister();
             }
         }
-        Main.getInstance().getScoreboardManager().getColorScoreboard().clear();
     }
     private static class ColorSetter implements Listener {
 
         private final List<Player> toColor;
         private final UUID uuid;
-        private final Map<ItemStack, String> colors;
+        private final Map<ItemStack, ChatColor> colorMap;
 
-        private ColorSetter(@NonNull UUID uuid, @NonNull List<Player> players, @NonNull Map<ItemStack, String> map) {
+        private ColorSetter(@NonNull UUID uuid, @NonNull List<Player> players, Map<ItemStack, ChatColor> colorMap) {
             this.uuid = uuid;
             this.toColor = new ArrayList<>(players);
-            this.colors = map;
+            this.colorMap = colorMap;
             EventUtils.registerRoleEvent(this);
         }
         @EventHandler
@@ -161,12 +162,11 @@ public class Color implements CommandExecutor, Listener {
                     if (event.getCurrentItem().getItemMeta().getDisplayName() == null)return;
                     if (!(event.getWhoClicked() instanceof Player))return;
                     if (event.getCurrentItem().getType().equals(Material.INK_SACK) || event.getCurrentItem().getType().equals(Material.REDSTONE)) {
-                        if (colors.containsKey(event.getCurrentItem())) {
+                        if (this.colorMap.containsKey(event.getCurrentItem())) {
                             Player clicker = (Player) event.getWhoClicked();
                             for (final Player target : this.toColor) {
                                 if (target == null)continue;
-                                Main.getInstance().getScoreboardManager().getScoreboards().get(uuid)
-                                        .changeDisplayName(clicker, target, this.colors.get(event.getCurrentItem()));
+                                Main.getInstance().getCustomTabManager().setColor(event.getWhoClicked().getUniqueId(), target.getUniqueId(), this.colorMap.get(event.getCurrentItem()));
                             }
                             event.setCancelled(true);
                             clicker.closeInventory();

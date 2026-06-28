@@ -218,9 +218,9 @@ public class EventsManager implements Listener {
                 timeGonnaProc1 = RandomUtils.getRandomDeviationValue(Main.RANDOM.nextInt(), events.getMinTimeProc(), events.getMaxTimeProc());
             }
             this.timeGonnaProc = timeGonnaProc1;
-            System.out.println(events.getName()+" gonna proc at "+timeGonnaProc1+" ("+StringUtils.secondsTowardsBeautiful(timeGonnaProc1)+")");
+            Main.getInstance().debug(events.getName()+" gonna proc at "+timeGonnaProc1+" ("+StringUtils.secondsTowardsBeautiful(timeGonnaProc1)+")");
             if (events.onGameStart(gameState)) {
-                System.out.println("Method onGameStart has been successfully return true");
+                Main.getInstance().debug("Method onGameStart has been successfully return true");
             }
         }
 

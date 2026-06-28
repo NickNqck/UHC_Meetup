@@ -71,7 +71,7 @@ public class InfoCommand implements CommandExecutor {
         StringBuilder obtenedTeams = new StringBuilder();
         for (Map.Entry<ITeam, Integer> entry : info.getTeamPlayed().entrySet()) {
             String string = entry.getKey().getName();
-            obtenedTeams.append("§7").append(string).append("§7: §a").append(entry.getValue()).append(" fois\n");
+            obtenedTeams.append(entry.getKey().getColor()).append(string).append("§7: §a").append(entry.getValue()).append(" fois\n");
         }
         viewer.sendMessage(new String[]{
                 "§e--- Statistiques de " + name + " ---",

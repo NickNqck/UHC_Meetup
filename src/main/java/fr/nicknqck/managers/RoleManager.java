@@ -17,7 +17,9 @@ import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.crystal.guilde.Bartholome;
+import fr.nicknqck.roles.crystal.royaume.Gaudween;
 import fr.nicknqck.roles.crystal.royaume.Leolio;
+import fr.nicknqck.roles.crystal.royaume.Othon;
 import fr.nicknqck.roles.ds.demons.*;
 import fr.nicknqck.roles.ds.demons.lune.*;
 import fr.nicknqck.roles.ds.slayers.*;
@@ -100,6 +102,9 @@ public class RoleManager implements Listener {
     public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
         this.rolesRegistery.put(roleClass, role);
+        if (!GameState.getInstance().getAvailableRoles().containsKey(role.getRoles())) {
+            GameState.getInstance().getAvailableRoles().put(role.getRoles(), 0);
+        }
     }
     private void registerDemonSlayer() throws Exception {
         //Register Slayers
@@ -206,6 +211,10 @@ public class RoleManager implements Listener {
         registerRole(GaiV2.class);
         registerRole(Hinata.class);
         registerRole(Neji.class);
+        registerRole(Sai.class);
+        registerRole(Shino.class);
+        registerRole(Hiruzen.class);
+        registerRole(Choji.class);
         //Register Orochimaru
         registerRole(Jugo.class);
         registerRole(KabutoV2.class);
@@ -225,7 +234,7 @@ public class RoleManager implements Listener {
         registerRole(NagatoV2.class);
         registerRole(Sasori.class);
         registerRole(ZetsuBlancV3.class);
-        registerRole(ZetsuNoir.class);
+        registerRole(ZetsuNoirV2.class);
         registerRole(ZetsuBlancV2.class);
         //Register Jubi
         registerRole(MadaraV2.class);
@@ -245,7 +254,9 @@ public class RoleManager implements Listener {
     }
     private void registerCrystal() throws Exception{
         registerRole(Leolio.class);
+        registerRole(Gaudween.class);
         registerRole(Bartholome.class);
+        registerRole(Othon.class);
     }
 
 
@@ -290,7 +301,7 @@ public class RoleManager implements Listener {
                         , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
                         NagatoV2.class,
-                        ZetsuNoir.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
+                        ZetsuNoirV2.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
             }
             if (role instanceof ISAkatsukiChief) {
                 role.addKnowedPlayersWithRoles("§7Voici l'identité de§c Nagato§7 et de§c Konan§7: ", KonanV2.class, NagatoV2.class);
@@ -313,10 +324,16 @@ public class RoleManager implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     private void onExternGiveRole(@NonNull final GiveRoleDeclenchExternalPluginEvent event) {
         if (event.getRoleType() instanceof CrystalRoles) {
-            if (event.getRoleType().equals(CrystalRoles.Leolio)) {
-                event.setRoleBase(new Leolio(event.getPlayerUUID()));
-            } else if (event.getRoleType().equals(CrystalRoles.Bartholome)) {
-                event.setRoleBase(new Bartholome(event.getPlayerUUID()));
+            for (Class<? extends RoleBase> aClass : getRolesRegistery().keySet()) {
+                if (getRolesRegistery().get(aClass).getRoles().equals(event.getRoleType())) {
+                    try {
+                        event.setRoleBase(aClass.getConstructor(UUID.class).newInstance(event.getPlayerUUID()));
+                    } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
+                             NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                }
             }
         }
     }

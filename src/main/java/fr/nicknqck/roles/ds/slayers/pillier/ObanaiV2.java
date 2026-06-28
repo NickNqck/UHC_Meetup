@@ -3,9 +3,8 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -89,8 +88,8 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         if (event.getRole() == null)return;
         if (event.getRole() instanceof MitsuriV2) {
             if (event.getRole().getGamePlayer() == null)return;
-            if (event.getRole().getGamePlayer().getKiller() == null)return;
-            onMitsuriDie(event.getGameState().isNightTime() ? EffectWhen.NIGHT: EffectWhen.DAY, event.getRole().getGamePlayer().getKiller().getPlayerName());
+            if (event.getGamePlayerKiller() == null)return;
+            onMitsuriDie(event.getGameState().isNightTime() ? EffectWhen.NIGHT: EffectWhen.DAY, event.getGamePlayerKiller().getPlayerName());
         }
     }
 
@@ -178,12 +177,12 @@ public class ObanaiV2 extends PilierRoles implements Listener{
             return true;
         }
         @EventHandler
-        private void onUHCDie(UHCPlayerKillEvent event) {
+        private void onUHCDie(@NonNull final UHCDeathEvent event) {
             if (event.getGamePlayerKiller() == null)return;
             if (event.getGamePlayerKiller().getRole() == null)return;
             final Map<UUID, GamePlayer> map = new HashMap<>(event.getGameState().getGamePlayer());
             map.remove(event.getGamePlayerKiller().getUuid(), event.getGamePlayerKiller());
-            map.remove(event.getVictim().getUniqueId());
+            map.remove(event.getPlayer().getUniqueId());
             final List<GamePlayer> list = new ArrayList<>(map.values());
             Collections.shuffle(list, Main.RANDOM);
             RoleBase zero = list.get(0).getRole();
@@ -198,7 +197,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
             if (deux == null) {
                 deux = event.getGamePlayerKiller().getRole();
             }
-            roleBaseMap.put(event.getVictim().getName(), new RoleBase[]{
+            roleBaseMap.put(event.getPlayer().getName(), new RoleBase[]{
                     zero,
                     un,
                     deux

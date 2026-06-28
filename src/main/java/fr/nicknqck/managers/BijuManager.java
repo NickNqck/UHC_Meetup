@@ -50,6 +50,8 @@ public class BijuManager implements Listener {
     private final List<BijuBase> bijusDeads = new ArrayList<>();
     @Getter
     private final Map<Class<? extends BijuBase>, BijuBase> classBijuMap = new HashMap<>();
+    @Getter
+    private final ChakraManager chakraManager;
 
     public BijuManager() {
         EventUtils.registerEvents(this);
@@ -62,6 +64,7 @@ public class BijuManager implements Listener {
         addBijuInRegistery(Isobu.class);
         addBijuInRegistery(Chomei.class);
         addBijuInRegistery(Kokuo.class);
+        this.chakraManager = new ChakraManager();
     }
 
     @EventHandler

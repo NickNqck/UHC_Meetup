@@ -72,6 +72,12 @@ public class GrandTitan extends TitansRoles {
 				}).setDroppable(false).setDespawnable(true).getItemStack()
 		};
 	}
+
+	@Override
+	public void RoleGiven(GameState gameState) {
+
+	}
+
 	@Override
 	public void Update(GameState gameState) {
 		if (isTransformedinTitan) {

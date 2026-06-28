@@ -5,7 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.DayEvent;
 import fr.nicknqck.events.custom.NightEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -215,8 +215,9 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             }
         }
         @EventHandler
-        private void UHCKillEvent(final UHCPlayerKillEvent event) {
-            if (event.getKiller().getUniqueId().equals(getRole().getPlayer())) {
+        private void UHCKillEvent(@NonNull final UHCDeathEvent event) {
+            if (event.getGamePlayerKiller() == null)return;
+            if (event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer())) {
                 addCharge(10);
             }
         }
@@ -291,14 +292,14 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             };
         }
         @EventHandler
-        private void onUHCKill(final UHCPlayerKillEvent event) {
+        private void onUHCKill(final UHCDeathEvent event) {
             if (event.getGamePlayerKiller() == null)return;
-            if (!event.getKiller().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer()))return;
             if (this.killZenItsu)return;
-            if (!event.getGameState().hasRoleNull(event.getVictim().getUniqueId())) {
-                final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+            if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId())) {
+                final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
                 if (role instanceof ZenItsuV2) {
-                    event.getKiller().sendMessage("Vous avez§c tué§a Zen'Itsu§f vous obtenez donc une amélioration de votre§c "+getName()+"§7 (voir description)");
+                    event.getGamePlayerKiller().sendMessage("Vous avez§c tué§a Zen'Itsu§f vous obtenez donc une amélioration de votre§c "+getName()+"§7 (voir description)");
                     this.killZenItsu = true;
                     getRole().addPower(this.lignePower);
                     setDescriptions(getNewDescription());

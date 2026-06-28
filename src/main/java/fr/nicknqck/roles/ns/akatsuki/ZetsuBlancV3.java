@@ -3,8 +3,8 @@ package fr.nicknqck.roles.ns.akatsuki;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.FinalDeathEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.FinalDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -68,8 +68,8 @@ public class ZetsuBlancV3 extends AkatsukiRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         new SporeManager(this);
-        addKnowedRole(ZetsuNoir.class);
-        getGamePlayer().startChatWith("§cZetsu Blanc:", "!", ZetsuNoir.class, ZetsuBlancV3.class);
+        addKnowedRole(ZetsuNoirV2.class);
+        getGamePlayer().startChatWith("§cZetsu Blanc:", "!", ZetsuNoirV2.class, ZetsuBlancV3.class);
         super.RoleGiven(gameState);
     }
 

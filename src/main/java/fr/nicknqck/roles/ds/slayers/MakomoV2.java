@@ -61,7 +61,6 @@ public class MakomoV2 extends SlayerRoles implements Listener{
         addPower(new LiquefactionAccelere(this), true);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.NIGHT);
         EventUtils.registerRoleEvent(this);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

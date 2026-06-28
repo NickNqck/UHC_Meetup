@@ -3,9 +3,10 @@ package fr.nicknqck.managers;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.DemonKillEvent;
-import fr.nicknqck.events.custom.FinalDeathEvent;
-import fr.nicknqck.events.custom.UHCDeathEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.FinalDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathMessageEvent;
+import fr.nicknqck.events.custom.death.UHCTimerDeathEvent;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -18,12 +19,14 @@ import org.bukkit.*;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -60,22 +63,37 @@ public class DeathManager implements Listener {
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             final GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setLastInventoryContent(killedPlayer.getInventory().getContents());
+            gamePlayer.setDeathLocation(gamePlayer.getLastLocation());
         }
-        @NonNull
-        final UHCPlayerKillEvent playerKillEvent = new UHCPlayerKillEvent(killedPlayer, entityKiller, gameState);
-        Bukkit.getPluginManager().callEvent(playerKillEvent);
-        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole());
-        Bukkit.getPluginManager().callEvent(uhcDeathEvent);
-        if (this.cantDie(gameState, killedPlayer, entityKiller) || playerKillEvent.isCancel() || uhcDeathEvent.isCancelled()) {
+        if (this.cantDie(gameState, killedPlayer)) {
             return;
         }
-        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller);
-        Bukkit.getPluginManager().callEvent(finalDeathEvent);
+        final GamePlayer gameDeathPlayer = GamePlayer.of(killedPlayer.getUniqueId());
+        if (gameDeathPlayer != null) {
+            Main.getInstance().debug("Killing " + killedPlayer.getDisplayName());
+            this.ReelKillHandler(killedPlayer, entityKiller);
+         /*test gameDeathPlayer.setAlive(false);
+            gameDeathPlayer.sendMessage("§7Vous êtes§c mort§7, mais ne vous§c déconnectez pas§7 vous avez une chance d'être§a réscucité§7.");
+            gameDeathPlayer.teleport(Main.getInstance().getWorldManager().getLobbyWorld().getSpawnLocation());
+            new DeathRunnable(gameDeathPlayer, entityKiller).runTaskTimer(Main.getInstance(), 0 , 20);*/
+        } else {
+            this.ReelKillHandler(killedPlayer, entityKiller);
+        }
+    }
+    public void ReelKillHandler(@NonNull final Player killedPlayer, @NonNull final Entity entityKiller) {
+        final GameState gameState = GameState.getInstance();
+        final GamePlayer gamePlayerKiller = GamePlayer.of(entityKiller.getUniqueId());
+        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), gamePlayerKiller);
+        Bukkit.getPluginManager().callEvent(uhcDeathEvent);
+        if (uhcDeathEvent.isCancelled()) {
+            return;
+        }
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setAlive(false);
             gamePlayer.setDeathLocation(killedPlayer.getLocation());
             gameState.getDeadRoles().add(gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole().getRoles());
+            gameState.getGamePlayer().get(killedPlayer.getUniqueId()).setKiller(uhcDeathEvent.getGamePlayerKiller());
         }
         for (ItemStack item : killedPlayer.getInventory().getContents()){
             if (item == null)continue;
@@ -90,11 +108,13 @@ public class DeathManager implements Listener {
         }
         removeRoleItem(gameState, killedPlayer);
         dropDeathItems(killedPlayer.getLocation());
+        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller);
+        Bukkit.getPluginManager().callEvent(finalDeathEvent);
         //damager = le tueur
         //player = la victim/le mort
         if (entityKiller instanceof Player) {
             Player killer = (Player) entityKiller;
-            DeathMessage(killedPlayer);
+            DeathMessage(killedPlayer, killer.getUniqueId());
             if (!gameState.hasRoleNull(killer.getUniqueId())) {
                 RoleBase role = gameState.getGamePlayer().get(killer.getUniqueId()).getRole();
                 if (role.getTeam() == TeamList.Demon || role instanceof KaigakuV2 || role instanceof NezukoV2) {
@@ -116,11 +136,13 @@ public class DeathManager implements Listener {
                 }
             }
         }else {
-            if (entityKiller instanceof Arrow) {
+            boolean find = false;
+            if (entityKiller instanceof Projectile) {
                 Arrow arr = (Arrow) entityKiller;
                 if (arr.getShooter() instanceof Player) {
                     Player killer = (Player) arr.getShooter();
-                    DeathMessage(killedPlayer);
+                    DeathMessage(killedPlayer, killer.getUniqueId());
+                    find = true;
                     if (!gameState.hasRoleNull(((Player) arr.getShooter()).getUniqueId())) {
                         RoleBase role = gameState.getGamePlayer().get(((Player) arr.getShooter()).getUniqueId()).getRole();
                         if (role.getTeam() == TeamList.Demon || role instanceof KaigakuV2 || role instanceof NezukoV2) {
@@ -144,11 +166,15 @@ public class DeathManager implements Listener {
                             gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerDie(killedPlayer, gameState, killer);
                         }
                     }
-                } else {//La cause de la mort n'est pas un projectile
-                    DeathMessage(killedPlayer);
+                } else {//La cause de la mort n'est pas une flèche tirer par un joueur
+                    if (arr.getShooter() instanceof Entity) {
+                        DeathMessage(killedPlayer, ((Entity) arr.getShooter()).getUniqueId());
+                        find = true;
+                    }
                 }
-            } else {//La cause de la mort n'est pas une flèche
-                DeathMessage(killedPlayer);
+            }
+            if (!find) {
+                DeathMessage(killedPlayer, entityKiller.getUniqueId());
             }
         }
         gameState.delInGamePlayers(killedPlayer);
@@ -167,9 +193,6 @@ public class DeathManager implements Listener {
         killedPlayer.setGameMode(GameMode.SPECTATOR);
         killedPlayer.updateInventory();
         killedPlayer.teleport(new Location(Main.getInstance().getWorldManager().getGameWorld(), 0.0, 100, 0.0));
-        if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
-            gameState.getGamePlayer().get(killedPlayer.getUniqueId()).setKiller(playerKillEvent.getGamePlayerKiller());
-        }
         detectWin(gameState);
     }
     private void removeRoleItem(final GameState gameState, final Player player) {
@@ -231,23 +254,44 @@ public class DeathManager implements Listener {
             dropItem(loc, item);
         }
     }
-    private void DeathMessage(@Nonnull Player victim) {
-        SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
-        SendToEveryone(victim.getDisplayName()+"§7 est mort,");
+    private void DeathMessage(@Nonnull Player victim, @NonNull final UUID killerUUID) {
+        @NonNull final List<String> toSend = new ArrayList<>();
+        toSend.add(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
+        toSend.add(victim.getDisplayName()+"§7 est mort,");
         if (!GameState.getInstance().hasRoleNull(victim.getUniqueId())) {
             World world = Bukkit.getWorld("nakime");
             RoleBase role = GameState.getInstance().getGamePlayer().get(victim.getUniqueId()).getRole();
             if (world != null && victim.getWorld().equals(world)){
-                SendToEveryone("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? role.getTeam().getColor()+role.getName() : "§k"+victim.getDisplayName()));
+                toSend.add("§7Son rôle était: "+(victim.getWorld().equals(Objects.requireNonNull(Bukkit.getWorld("nakime"))) ? role.getTeam().getColor()+role.getName() : "§k"+victim.getDisplayName()));
             } else {
-                SendToEveryone("§7Son rôle était: "+role.getTeam().getColor()+role.getName()+role.getSuffixString());
+                toSend.add("§7Son rôle était: "+role.getTeam().getColor()+role.getName()+role.getSuffixString());
             }
         } else {
-            SendToEveryone(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");
+            toSend.add(victim.getDisplayName()+"§c est mort, il n'avait pas de rôle");
         }
-        SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
+        toSend.add(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
+        @NonNull final UHCDeathMessageEvent event = new UHCDeathMessageEvent(toSend, victim, killerUUID);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isSendToVictim()) {
+            victim.sendMessage(toSend.toArray(new String[0]));
+        }
+        if (event.isSendToKiller()) {
+            final Player player = Bukkit.getPlayer(killerUUID);
+            if (player != null) {
+                player.sendMessage(toSend.toArray(new String[0]));
+            }
+        }
+        if (event.isSendToEveryoneElse()) {
+            for (@Nonnull final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (onlinePlayer.getUniqueId().equals(victim.getUniqueId())) {continue;}
+                if (onlinePlayer.getUniqueId().equals(killerUUID)) {
+                    continue;
+                }
+                onlinePlayer.sendMessage(toSend.toArray(new  String[0]));
+            }
+        }
     }
-    private boolean cantDie(final GameState gameState, final Player killedPlayer, final Entity entityKiller) {
+    private boolean cantDie(final GameState gameState, final Player killedPlayer) {
         if (!gameState.hasRoleNull(killedPlayer.getUniqueId())) {
             return gameState.getGamePlayer().get(killedPlayer.getUniqueId()).isCanRevive();
         }
@@ -260,4 +304,42 @@ public class DeathManager implements Listener {
         SendToEveryone("§7Son rôle était: " + role.getOriginTeam().getColor() + role.getName() + role.getSuffixString());
         SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
     }
+
+    @SuppressWarnings("unused")
+    private static final class DeathRunnable extends BukkitRunnable {
+
+        private final GamePlayer gameDeathPlayer;
+        private final Entity entityKiller;
+        private final UUID entityKillerUUID;
+
+        private int timeLeft = 6;
+
+        private DeathRunnable(GamePlayer gameDeathPlayer, Entity entityKiller) {
+            this.gameDeathPlayer = gameDeathPlayer;
+            this.entityKiller = entityKiller;
+            this.entityKillerUUID = entityKiller.getUniqueId();
+        }
+
+        @Override
+        public void run() {
+            if (!GameState.inGame()) {
+                cancel();
+                return;
+            }
+            @NonNull final UHCTimerDeathEvent uhcTimerDeathEvent = new UHCTimerDeathEvent(gameDeathPlayer, entityKiller, entityKillerUUID, this.timeLeft);
+            Bukkit.getPluginManager().callEvent(uhcTimerDeathEvent);
+            if (uhcTimerDeathEvent.isCancelled()) {
+                cancel();
+                return;
+            }
+            if (this.timeLeft <= 0) {
+                Main.getInstance().getDeathManager().ReelKillHandler(gameDeathPlayer.getPlayer(), entityKiller);
+                cancel();
+                return;
+            }
+            gameDeathPlayer.sendMessage("monde: "+gameDeathPlayer.getLastLocation().getWorld().getName());
+            this.timeLeft--;
+        }
+    }
+
 }

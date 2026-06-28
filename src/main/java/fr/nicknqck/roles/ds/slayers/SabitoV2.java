@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ds.slayers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -65,7 +65,6 @@ public class SabitoV2 extends SlayerRoles {
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new SouffleItem(this), true);
-        super.RoleGiven(gameState);
     }
     private static class SouffleItem extends ItemPower implements Listener {
 

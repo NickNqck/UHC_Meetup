@@ -1,6 +1,6 @@
 name: UHC-Meetup
 main: fr.nicknqck.Main
-version: 14
+version: 15
 author: NickNqck
 commands:
   ds:

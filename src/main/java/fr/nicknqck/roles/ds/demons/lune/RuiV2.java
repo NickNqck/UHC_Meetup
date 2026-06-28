@@ -326,7 +326,7 @@ public class RuiV2 extends DemonsRoles {
                     for (final GamePlayer gamePlayer : aroundPlayers) {
                         if (gamePlayer.getRole() == null)continue;
                         if (gamePlayer.getRole() instanceof KumoV2) {
-                            gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NOW);
+                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NOW));
                         }
                     }
                     timeRemaining--;

@@ -222,11 +222,11 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
             getRole().getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 Tout les joueurs sont sortie du§a Ventre du crapaud§7.");
             for (Player worldPlayer : world.getPlayers()) {
                 worldPlayer.setNoDamageTicks(60);
-                GameListener.RandomTp(worldPlayer);
                 final GamePlayer gamePlayer = GamePlayer.of(worldPlayer.getUniqueId());
                 if (gamePlayer != null){
                     gamePlayer.getActionBarManager().removeInActionBar(zipName);
                 }
+                GameListener.RandomTp(worldPlayer);
             }
         }
         private static final class GamabuntaRunnable extends BukkitRunnable {

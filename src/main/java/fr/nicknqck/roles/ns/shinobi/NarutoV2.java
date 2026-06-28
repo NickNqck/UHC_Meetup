@@ -84,7 +84,6 @@ public class NarutoV2 extends HShinobiRoles {
         if (owner != null) {
             owner.setHealth(owner.getHealth()+4.0);
         }
-        super.RoleGiven(gameState);
     }
     private static class KyubiPower extends ItemPower implements Listener{
 

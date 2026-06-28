@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.FormHantengu;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.power.CooldownFinishEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -90,7 +90,6 @@ public class HantenguV3 extends DemonsRoles implements Listener {
         addPower(choicePower, true);
         new InvisibilityRunnable(this, choicePower).runTaskTimerAsynchronously(Main.getInstance(), 100, 20);
         EventUtils.registerRoleEvent(this);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onDamage(final EntityDamageEvent event) {

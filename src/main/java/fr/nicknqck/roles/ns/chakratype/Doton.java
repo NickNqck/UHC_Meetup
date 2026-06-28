@@ -1,58 +1,66 @@
 package fr.nicknqck.roles.ns.chakratype;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-import fr.nicknqck.interfaces.IChakra;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
-import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
+import fr.nicknqck.enums.EChakras;
+import fr.nicknqck.interfaces.IChakraV2;
 import fr.nicknqck.utils.RandomUtils;
+import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-public class Doton implements IChakra {
+public class Doton implements IChakraV2, Listener {
 
-	@Override
-	public void onPlayerDamageAnEntity(EntityDamageByEntityEvent event, Entity entity) {}
+	private final Map<UUID, Boolean> map;
 
-	private final List<UUID> Doton = new ArrayList<>();
-	@Override
-	public List<UUID> getList() {
-		return Doton;
+    public Doton() {
+        map = new HashMap<>();
+		EventUtils.registerEvents(this);
+    }
+
+    @Override
+	public @NonNull Map<UUID, Boolean> getMap() {
+		return map;
 	}
 
 	@Override
-	public void onSecond(GameState gameState) {
-		for (UUID uuid : Doton) {
-			if (Bukkit.getPlayer(uuid) != null) {
-				if (Bukkit.getPlayer(uuid).getLocation().getY() < 50) {
-					Bukkit.getPlayer(uuid).addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 60, 0, false, false), true);
-				}
+	public @NonNull String getArg0() {
+		return "Doton";
+	}
+
+	@Override
+	public @NonNull EChakras getChakraType() {
+		return EChakras.DOTON;
+	}
+
+	@Override
+	public boolean isActivate(UUID uuid) {
+		return this.map.containsKey(uuid) && this.map.get(uuid);
+	}
+
+	@Override
+	public void setActivateFor(UUID uuid, boolean activate) {
+		if (!this.map.containsKey(uuid)) {
+			this.map.put(uuid, activate);
+			return;
+		}
+		this.map.replace(uuid, activate);
+	}
+	@EventHandler(priority = EventPriority.HIGH)
+	private void onDamage(@NonNull final EntityDamageEvent event) {
+		if (!(event.getEntity() instanceof Player))return;
+		if (isActivate(event.getEntity().getUniqueId())) {
+			if (RandomUtils.getOwnRandomProbability(Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent())) {
+				event.setDamage(0.0);
+				event.setCancelled(true);
+				((Player) event.getEntity()).setNoDamageTicks(20);
+
 			}
 		}
 	}
-
-	@Override
-	public void onEntityDamage(EntityDamageEvent event, Player player) {
-		if (event.isCancelled())return;
-		if (!Doton.contains(player.getUniqueId()))return;
-		if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL))return;
-		if (RandomUtils.getOwnRandomProbability(3)) {
-			player.setNoDamageTicks(15);
-			player.sendMessage("§7Vous avez esquivé un coup grâce à votre Chakra.");
-			event.setCancelled(true);
-		}
-	}
-
-	@Override
-	public void onPlayerMoove(PlayerMoveEvent e, Player p, Location from, Location to) {}
-
 }

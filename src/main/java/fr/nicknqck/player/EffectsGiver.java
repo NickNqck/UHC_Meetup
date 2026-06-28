@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.enums.EffectWhen;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.roles.builder.RoleBase;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -24,23 +25,26 @@ public class EffectsGiver implements Listener {
         new EffectRunnable().runTaskTimerAsynchronously(Main.getInstance(), 0L, 20L);
     }
     @EventHandler
-    private void onKill(UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() != null) {
-            for (PotionEffect potionEffect : event.getGamePlayerKiller().getRole().getEffects().keySet()) {
-                if (event.getGamePlayerKiller().getRole().getEffects().get(potionEffect).equals(EffectWhen.AT_KILL)) {
-                    event.getPlayerKiller().addPotionEffect(potionEffect, true);
+            final Player killer = Bukkit.getPlayer(event.getGamePlayerKiller().getUuid());
+            if (killer != null) {
+                for (PotionEffect potionEffect : event.getGamePlayerKiller().getRole().getEffects().keySet()) {
+                    if (event.getGamePlayerKiller().getRole().getEffects().get(potionEffect).equals(EffectWhen.AT_KILL)) {
+                        killer.addPotionEffect(potionEffect, true);
+                    }
                 }
             }
             if (killGiver.isEmpty())return;
             if (killGiver.containsKey(event.getGamePlayerKiller())) {
-                if (event.getGameState().getGamePlayer().containsKey(event.getVictim().getUniqueId())) {
-                    GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId());
+                if (event.getGameState().getGamePlayer().containsKey(event.getPlayer().getUniqueId())) {
+                    GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId());
                     if (gamePlayer.getRole() == null)return;
                     PotionEffect potionEffect = killGiver.get(gamePlayer).get(gamePlayer.getRole().getClass());
                     CustomKillEffectGiveEvent e = new CustomKillEffectGiveEvent(event.getGamePlayerKiller(), gamePlayer, gamePlayer.getRole(), potionEffect, event.getGameState());
                     Bukkit.getPluginManager().callEvent(e);
                     if (e.isCancelled())return;
-                    event.getPlayerKiller().addPotionEffect(potionEffect);
+                    event.getGamePlayerKiller().getRole().givePotionEffect(potionEffect, EffectWhen.NOW);
                 }
             }
         }

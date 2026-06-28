@@ -4,8 +4,10 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.events.custom.info.InfoListAddEvent;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.player.PlayerInfo;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 
 import java.io.*;
@@ -26,6 +28,11 @@ public class InfoManager {
     static {
         // TeamList est enregistrée en dur en tête de liste — elle est toujours prioritaire
         ITEAM_IMPLEMENTATIONS.add(TeamList.class);
+        @NonNull final InfoListAddEvent event = new InfoListAddEvent();
+        Bukkit.getPluginManager().callEvent(event);
+        for (Class<? extends Enum<?>> aClass : event.getToRegister()) {
+            registerITeamImplementation(aClass);
+        }
     }
 
     /**
@@ -55,6 +62,7 @@ public class InfoManager {
                                         + " ET dans " + clazz.getSimpleName()
                                         + ". " + existing.getSimpleName() + " est prioritaire."
                         );
+
                     }
                 }
             }
@@ -275,4 +283,5 @@ public class InfoManager {
         actual.setResetAmount(i);
         save(uuid);
     }
+
 }

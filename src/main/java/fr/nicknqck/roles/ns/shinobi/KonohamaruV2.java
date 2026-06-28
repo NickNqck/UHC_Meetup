@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -85,7 +85,6 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         new NarutoRunnable(this, getGameState());
         addPower(new NueArdente(this), true);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onDeath(@NonNull final UHCDeathEvent event) {

@@ -91,7 +91,6 @@ public class Sakura extends HShinobiRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 0, false, false), EffectWhen.PERMANENT);
-        super.RoleGiven(gameState);
     }
 
     @Override

@@ -14,12 +14,14 @@ public class IzanamiFinishEvent extends GameEvent {
     private final String infectColor;
     private final Player owner;
     private final Player target;
+    private final boolean successful;
 
-    public IzanamiFinishEvent(NSRoles infecteur, RoleBase infected, String infectColor, Player owner, Player target) {
+    public IzanamiFinishEvent(NSRoles infecteur, RoleBase infected, String infectColor, Player owner, Player target, boolean successful) {
         this.infecteur = infecteur;
         this.infected = infected;
         this.infectColor = infectColor;
         this.owner = owner;
         this.target = target;
+        this.successful = successful;
     }
 }

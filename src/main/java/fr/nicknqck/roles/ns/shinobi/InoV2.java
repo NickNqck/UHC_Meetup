@@ -73,7 +73,6 @@ public class InoV2 extends ShinobiRoles {
         addPower(new TelepatiCommand(this));
         addKnowedRole(Shikamaru.class);
         addPower(new ControleCommand(this));
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

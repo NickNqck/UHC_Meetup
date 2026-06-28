@@ -5,7 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.events.custom.RoleGiveEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
@@ -59,25 +59,29 @@ public class HokageManager implements Listener {
                     .runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
     }
+
     @EventHandler(priority = EventPriority.HIGHEST)
-    private void onPlayerKill(@NonNull final UHCPlayerKillEvent event) {
+    private void onDeath(@NonNull final UHCDeathEvent event) {
         if (this.hokage == null)return;
-        if (event.isCancel())return;
-        if (event.getGamePlayerKiller() == null)return;
-        if (event.getGamePlayerKiller().getRole() == null)return;
-        if (!this.hokage.getUuid().equals(event.getVictim().getUniqueId()))return;
-        if (event.getGamePlayerKiller().getRole() instanceof DanzoV2) {
-            ((DanzoV2) event.getGamePlayerKiller().getRole()).setKillHokage(true);
-            event.getPlayerKiller().sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
+        if (event.isCancelled())return;
+        if (!this.hokage.getUuid().equals(event.getPlayer().getUniqueId()))return;
+        if (event.getGamePlayerKiller() != null) {
+            if (event.getGamePlayerKiller().check()) {
+                if (event.getGamePlayerKiller().getRole() instanceof DanzoV2) {
+                    ((DanzoV2) event.getGamePlayerKiller().getRole()).setKillHokage(true);
+                    event.getGamePlayerKiller().sendMessage("§7Lors de la prochaine élection de l'§cHokage§7 vous serez obligatoirement élu");
+                }
+            }
         }
         this.hokage.getRole().addBonusResi(-10);
         this.hokage.getRole().addBonusforce(-10);
         this.hokage.getRole().removePower(NSBoost.class);
         this.hokage.getRole().removePower(NSInfo.class);
         this.hokage = null;
-        new HokageRunnable(event.getGameState(), this, event.getGameState().getTimeProcHokage())
+        new HokageRunnable(this.gameState, this, event.getGameState().getTimeProcHokage())
                 .runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
+
     private static class HokageRunnable extends BukkitRunnable {
 
         private final GameState gameState;

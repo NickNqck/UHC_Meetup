@@ -5,7 +5,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.ds.demons.lune.Akaza;
@@ -148,19 +148,20 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
     }
 
     @EventHandler
-    private void onKill(UHCPlayerKillEvent event) {
-        if (!endEvent) {
-            if (akaza != null && kyojuro != null) {
-                if (event.getKiller().getUniqueId() == kyojuro.getPlayer()) {//donc if victim == kyojuro donc winner == Akaza
-                    akaza.givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-                    AkazaWin = true;
-                    akaza.getGamePlayer().sendMessage("§7Vous avez gagné votre§c 1v1§7 contre§a§l Kyojuro§r§7 !");
-                }
-                if (event.getKiller().getUniqueId() == akaza.getPlayer()) {//donc if victim == akaza, donc winner == Kyojuro
+    private void onDeath(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
+        if (!this.endEvent) {
+            if (this.akaza != null && this.kyojuro != null) {
+                if (event.getGamePlayerKiller().getUuid().equals(this.kyojuro.getPlayer())) {//Donc victim = Akaza, donc winner = Kyojuro
                     KyojuroWin = true;
                     this.kyojuro.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
                     kyojuro.getGamePlayer().sendMessage("§7Vous avez gagné votre 1v1 contre§c§l Akaza§r§7 !");
-
+                    return;
+                }
+                if (event.getGamePlayerKiller().getUuid().equals(this.akaza.getPlayer())) {//Donc victim = Kyojuro, donc winner = Akaza
+                    akaza.givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+                    AkazaWin = true;
+                    akaza.getGamePlayer().sendMessage("§7Vous avez gagné votre§c 1v1§7 contre§a§l Kyojuro§r§7 !");
                 }
             }
         }
@@ -193,6 +194,11 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
     @Override
     public @NonNull MDJ getMDJ() {
         return MDJ.DS;
+    }
+
+    @Override
+    public boolean onGameStart(@NonNull GameState gameState) {
+        return false;
     }
 
     private static class VagueItemPower extends ItemPower implements Listener {

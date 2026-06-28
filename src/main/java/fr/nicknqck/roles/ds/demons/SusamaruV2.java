@@ -64,7 +64,6 @@ public class SusamaruV2 extends DemonsRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new BallonPower(this), true);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

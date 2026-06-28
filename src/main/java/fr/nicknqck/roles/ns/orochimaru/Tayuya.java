@@ -3,6 +3,7 @@ package fr.nicknqck.roles.ns.orochimaru;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -74,7 +75,6 @@ public class Tayuya extends OrochimaruRoles {
         addPower(new MarqueMaudite(this), true);
         addPower(new FluteDemoniaque(this), true);
         addKnowedRole(KimimaroV2.class);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull
@@ -187,6 +187,13 @@ public class Tayuya extends OrochimaruRoles {
                 if (ironGolem == null) {
                     cancel();
                     return;
+                }
+                final GamePlayer gamePlayer = GamePlayer.of(uuid);
+                if (gamePlayer != null) {
+                    if (!gamePlayer.isAlive()) {
+                        this.ironGolem.damage(9999);
+                        return;
+                    }
                 }
                 if (target == null) {
                     final Player player = Bukkit.getPlayer(this.uuid);

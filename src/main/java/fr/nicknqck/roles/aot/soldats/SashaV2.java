@@ -58,7 +58,6 @@ public class SashaV2 extends SoldatsRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new ArcDuChasseurItem(this), true);
         getGamePlayer().addItems(new ItemBuilder(Material.ARROW, 32).toItemStack());
-        super.RoleGiven(gameState);
     }
     private static class ArcDuChasseurItem extends ItemPower implements Listener {
 

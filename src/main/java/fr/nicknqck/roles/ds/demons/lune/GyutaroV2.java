@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.FinalDeathEvent;
+import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.events.custom.GamePlayerEatGappleEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.player.GamePlayer;
@@ -83,7 +83,6 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addKnowedRole(DakiV2.class);
         addKnowedRole(MuzanV2.class);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onEndGiveRole(final RoleGiveEvent event) {

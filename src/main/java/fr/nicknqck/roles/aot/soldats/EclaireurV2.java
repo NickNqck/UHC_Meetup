@@ -64,7 +64,6 @@ public class EclaireurV2 extends SoldatsRoles {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new Eclairage(this), true);
-        super.RoleGiven(gameState);
     }
     private static final class Eclairage extends ItemPower implements Listener {
 

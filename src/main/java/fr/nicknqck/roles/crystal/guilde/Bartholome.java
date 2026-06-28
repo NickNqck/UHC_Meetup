@@ -4,12 +4,10 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.CrystalFaction;
 import fr.nicknqck.enums.CrystalRoles;
-import fr.nicknqck.enums.CrystalTeam;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IGotMultpleFaction;
 import fr.nicknqck.interfaces.IRoles;
-import fr.nicknqck.interfaces.ITeam;
-import fr.nicknqck.managers.CrystalManager;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.crystal.CrystalBase;
@@ -28,7 +26,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
-public class Bartholome extends CrystalBase implements IGotMultpleFaction, Listener {
+public class Bartholome extends GuildeBase implements IGotMultpleFaction, Listener {
 
     public Bartholome(UUID player) {
         super(player);
@@ -54,11 +52,6 @@ public class Bartholome extends CrystalBase implements IGotMultpleFaction, Liste
     @Override
     public @NonNull IRoles<?> getRoles() {
         return CrystalRoles.Bartholome;
-    }
-
-    @Override
-    public @NonNull ITeam getOriginTeam() {
-        return CrystalTeam.Guilde;
     }
 
     @Nonnull

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.nicknqck.managers.CrystalManager;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
@@ -24,7 +24,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
-import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.scenarios.impl.AntiDrop;
 import fr.nicknqck.scenarios.impl.Anti_Abso;
@@ -69,7 +68,6 @@ public class ItemsManager implements Listener {
 		ItemStack item = event.getItem();
 		Player player = event.getPlayer();
 		if (gameState.hasRoleNull(player.getUniqueId()))return;
-		final RoleBase role = gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 		if (item.getType() == Material.GOLDEN_APPLE) {
             player.updateInventory();
 			if (Anti_Abso.isAntiabsoall()) {

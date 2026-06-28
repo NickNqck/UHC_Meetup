@@ -3,7 +3,6 @@ package fr.nicknqck.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.player.GamePlayer;

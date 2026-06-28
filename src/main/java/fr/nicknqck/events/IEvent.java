@@ -1,7 +1,7 @@
 package fr.nicknqck.events;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.interfaces.IMDJ;
 import lombok.NonNull;
 import org.bukkit.inventory.ItemStack;
 
@@ -12,6 +12,8 @@ public interface IEvent {
     ItemStack getMenuItem();
     boolean canProc(final GameState gameState);
     String[] getExplications();
-    @NonNull MDJ getMDJ();
+    @NonNull
+    IMDJ getMDJ();
+    boolean onGameStart(@NonNull final GameState gameState);
 
 }

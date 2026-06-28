@@ -3,15 +3,12 @@ package fr.nicknqck.roles.crystal.royaume;
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.CrystalFaction;
 import fr.nicknqck.enums.CrystalRoles;
-import fr.nicknqck.enums.CrystalTeam;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.interfaces.IGotBuyable;
 import fr.nicknqck.interfaces.IRoles;
-import fr.nicknqck.interfaces.ITeam;
-import fr.nicknqck.managers.CrystalManager;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.crystal.CrystalBase;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -38,7 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Leolio extends CrystalBase implements IGotBuyable {
+public class Leolio extends RoyaumeBase implements IGotBuyable {
 
     public Leolio(UUID player) {
         super(player);
@@ -63,11 +60,6 @@ public class Leolio extends CrystalBase implements IGotBuyable {
     @Override
     public @NonNull IRoles<?> getRoles() {
         return CrystalRoles.Leolio;
-    }
-
-    @Override
-    public @NonNull ITeam getOriginTeam() {
-        return CrystalTeam.Royaume;
     }
 
     @Nonnull
@@ -142,16 +134,18 @@ public class Leolio extends CrystalBase implements IGotBuyable {
                 final ItemStack item = player.getItemInHand();
                 // Vérifie que le joueur tient une pioche
                 if (!isPickaxe(item)) return;
-
+                if (!canMineBlock(item.getType(), event.getBlock().getType())) {
+                    return;
+                }
+                if (event.getBlock().getType().equals(Material.BEDROCK))return;
                 // 50% de chance
                 if (!checkUse(player, new HashMap<>()))return;
-
                 // Appelle un BlockBreakEvent pour vérifier que les autres plugins/protections l'autorisent
                 final BlockBreakEvent breakEvent = new BlockBreakEvent(event.getBlock(), player);
                 Bukkit.getPluginManager().callEvent(breakEvent);
                 if (breakEvent.isCancelled()) return;
 
-                // Casse le bloc instantanément en droppant les items normalement
+                // Casse le bloc instantanément en dropant les items normalement
                 event.getBlock().breakNaturally(item);
             }
 
@@ -166,6 +160,38 @@ public class Leolio extends CrystalBase implements IGotBuyable {
                         return true;
                     default:
                         return false;
+                }
+            }
+            private boolean canMineBlock(Material pickaxe, Material block) {
+
+                switch (block) {
+
+                    // Nécessite au minimum une pioche en pierre
+                    case IRON_ORE:
+                    case IRON_BLOCK:
+                    case LAPIS_ORE:
+                    case LAPIS_BLOCK:
+                        return pickaxe != Material.WOOD_PICKAXE;
+
+                    // Nécessite au minimum une pioche en fer
+                    case GOLD_ORE:
+                    case GOLD_BLOCK:
+                    case REDSTONE_ORE:
+                    case GLOWING_REDSTONE_ORE:
+                    case DIAMOND_ORE:
+                    case DIAMOND_BLOCK:
+                    case EMERALD_ORE:
+                    case EMERALD_BLOCK:
+                        return pickaxe == Material.IRON_PICKAXE
+                                || pickaxe == Material.DIAMOND_PICKAXE;
+
+                    // Nécessite une pioche en diamant
+                    case OBSIDIAN:
+                        return pickaxe == Material.DIAMOND_PICKAXE;
+
+                    // Tous les autres blocs cassables à la pioche
+                    default:
+                        return true;
                 }
             }
         }

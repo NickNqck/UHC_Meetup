@@ -38,7 +38,6 @@ public class HantenguV2 extends DemonsRoles {
 	}
 	@Override
 	public void RoleGiven(GameState gameState) {
-		super.RoleGiven(gameState);
 		owner.getInventory().addItem(Items.getMaterialisationEmotion());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> getKnowedRoles().add(MuzanV2.class), 20);
 	}

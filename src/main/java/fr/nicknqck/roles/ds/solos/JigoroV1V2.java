@@ -2,9 +2,9 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -82,7 +82,6 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
         EventUtils.registerRoleEvent(this);
         this.orageBrulantItem = new OrageBrulantItem(this);
         this.speedTroisPower = new SpeedTroisPower(this);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull
@@ -97,12 +96,12 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
     }
 
     @EventHandler
-    private void onKill(final UHCPlayerKillEvent event) {
-        if (event.getVictim() == null)return;
+    private void onKill(@NonNull final UHCDeathEvent event) {
+        if (event.getPlayer() == null)return;
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
-            final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+            if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
+            final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
             if (role instanceof ZenItsuV2 && !killZenItsu) {
                 boolean give = false;
                 //Si Jigoro a déjà force 1 alors il obtient force perma

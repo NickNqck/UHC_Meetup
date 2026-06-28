@@ -54,6 +54,9 @@ public class GamePlayer {
 	private final ActionBarManager actionBarManager;
 	private final List<ChatWithManager> chatWithManager;
 	private final Map<String, Object> metaData;
+	@Nullable
+	@Setter
+	private ItemStack headItem;
 
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
@@ -179,9 +182,14 @@ public class GamePlayer {
 			}
 		}
 	}
+
     public static GamePlayer of(final UUID uuid) {
         return GameState.getInstance().getGamePlayer().get(uuid);
     }
+	@Nullable
+	public Player getPlayer() {
+		return Bukkit.getPlayer(getUuid());
+	}
     public static class DiscRunnable extends BukkitRunnable {
 
 		private final GamePlayer gamePlayer;

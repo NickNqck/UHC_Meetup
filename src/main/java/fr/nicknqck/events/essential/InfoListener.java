@@ -1,11 +1,15 @@
 package fr.nicknqck.events.essential;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.CrystalTeam;
 import fr.nicknqck.events.custom.*;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
+import fr.nicknqck.events.custom.info.InfoListAddEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
 import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.player.PlayerInfo;
+import lombok.NonNull;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -110,11 +114,11 @@ public class InfoListener implements Listener {
         Main.getInstance().getInfoManager().save(event.getPlayer().getUniqueId());
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    private void onKill(final UHCPlayerKillEvent event) {
-        if (event.getPlayerKiller() == null)return;
-        final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getPlayerKiller().getUniqueId());
-        info.addKill(event.getVictim().getUniqueId());
-        Main.getInstance().getInfoManager().save(event.getPlayerKiller().getUniqueId());
+    private void onDeath2(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
+        final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getGamePlayerKiller().getUuid());
+        info.addKill(event.getPlayer().getUniqueId());
+        Main.getInstance().getInfoManager().save(event.getGamePlayerKiller().getUuid());
     }
     @EventHandler
     private void onSecond(SecondPassEvent onSecond) {
@@ -127,5 +131,9 @@ public class InfoListener implements Listener {
                 info.addTimePlayed();
             }
         }
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    private void onInfoAdd(@NonNull final InfoListAddEvent event) {
+        event.register(CrystalTeam.class);
     }
 }

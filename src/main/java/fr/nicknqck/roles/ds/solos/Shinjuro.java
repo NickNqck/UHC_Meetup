@@ -75,7 +75,6 @@ public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         setCanuseblade(true);
         Lames.FireResistance.getUsers().put(getPlayer(), Integer.MAX_VALUE);
         addPower(new UniversDeFlammePower(this), true);

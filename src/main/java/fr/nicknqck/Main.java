@@ -20,6 +20,7 @@ import fr.nicknqck.events.essential.inventorys.HubInventory;
 import fr.nicknqck.events.essential.inventorys.WorldConfig;
 import fr.nicknqck.items.*;
 import fr.nicknqck.managers.*;
+import fr.nicknqck.managers.crystaluhc.CrystalManager;
 import fr.nicknqck.managers.schem.SchematicManager;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.builder.GetterList;
@@ -38,6 +39,7 @@ import fr.nicknqck.invs.Inventories;
 import fr.nicknqck.utils.itembuilder.ItemBuilderListener;
 import fr.nicknqck.managers.TabManager;
 import fr.nicknqck.utils.rank.ChatRank;
+import fr.nicknqck.utils.tab.CustomTabManager;
 import fr.nicknqck.worlds.WorldListener;
 import fr.nicknqck.worlds.worldloader.WorldFillTask;
 import hm.zelha.particlesfx.util.ParticleSFX;
@@ -115,6 +117,9 @@ public class Main extends JavaPlugin {
 	private PubManager pubManager;
 	private SchematicManager schematicManager;
 	private CrystalManager crystalManager;
+	private CustomTabManager customTabManager;
+
+	private final Map<UUID, ItemStack> playersHeadItemDB = new HashMap<>();
 
     @Override
 	public void onEnable() {
@@ -216,6 +221,7 @@ public class Main extends JavaPlugin {
         executorMonoThread = Executors.newScheduledThreadPool(1);
         scoreboardManager = new ScoreboardManager(gameState);
         getScoreboardManager().onEnable();
+		this.customTabManager = new CustomTabManager();
 		System.out.println("End enable scoreboard");
 	}
 

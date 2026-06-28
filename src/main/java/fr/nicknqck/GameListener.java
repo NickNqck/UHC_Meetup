@@ -14,7 +14,6 @@ import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.roles.ds.demons.SusamaruV2;
-import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.scenarios.impl.Hastey_Babys;
 import fr.nicknqck.scenarios.impl.Hastey_Boys;
@@ -69,9 +68,6 @@ public class GameListener implements Listener {
 			@NonNull final SecondPassEvent onSecond = new SecondPassEvent(this.gameState);
 			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
-			for (EChakras ch : EChakras.values()) {
-				ch.getChakra().onSecond(gameState);
-			}
 			BijuListener.getInstance().runnableTask(gameState);
 
 		}, 20, 20);
@@ -287,9 +283,6 @@ public class GameListener implements Listener {
 			AttackUtils.CantAttack.clear();
 			AttackUtils.CantReceveAttack.clear();
 			gameState.getDeadRoles().clear();
-			for (EChakras ch : EChakras.values()) {
-				ch.getChakra().getList().clear();
-			}
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				Main.getInstance().getScoreboardManager().onLogout(p);
 				p.setPlayerListName(Bukkit.getPlayer(p.getUniqueId()).getName());
@@ -428,6 +421,7 @@ public class GameListener implements Listener {
 					Main.getInstance().getScoreboardManager().onLogin(p);
 				}
 	        }, 20);
+			Main.getInstance().getCustomTabManager().resetAllTabs(true);
 		}, 1);
 		Main.getInstance().getGameConfig().setPregen(false);
 		System.out.println("game ended");
@@ -482,13 +476,6 @@ public class GameListener implements Listener {
 				|| loc.getBlock().getType().name().contains("LAVA") || loc.getBlock().getType().name().contains("WATER"));
 	    return loc;
 	}
-	private static int trueCount(boolean... b) {
-        int sum = 0;
-        for (boolean b1 : b) {
-            if (b1) sum++;
-        }
-        return sum;
-    }
     private static int trueCount2(Collection<Boolean> b) {
         int sum = 0;
         for (boolean b1 : b) {
@@ -538,172 +525,6 @@ public class GameListener implements Listener {
         if (gameDone) {
             EndGame(gameState, winer);
         }
-/*5
-		boolean Slayer = false, Demon = false, Solo = false, Jigoro = false, Alliance = false;
-		
-		boolean Mahr = false, Titans = false, Soldat = false;
-		
-		boolean Jubi = false, Orochimaru = false, Akatsuki = false, Sasuke = false, Brume = false, Shinobi = false, Kumogakure = false, Kabuto = false, Shisui = false;
-
-		boolean OverWorld = false, Nether = false;
-
-		for (UUID u : gameState.getInGamePlayers()) {
-			Player player2 = Bukkit.getPlayer(u);
-			if (player2 == null)continue;
-			if (!gameState.hasRoleNull(u)) {
-				RoleBase role = gameState.getGamePlayer().get(u).getRole();
-				switch (role.getTeam()) {
-					case Akatsuki:
-						Akatsuki = true;
-						break;
-					case Alliance:
-						Alliance = true;
-						break;
-					case Demon:
-						Demon = true;
-						break;
-					case Jigoro:
-						Jigoro = true;
-						break;
-					case Jubi:
-						Jubi = true;
-						break;
-					case Kumogakure:
-						Kumogakure = true;
-						break;
-					case Mahr:
-						Mahr = true;
-						break;
-					case Orochimaru:
-						Orochimaru = true;
-						break;
-					case Sasuke:
-						Sasuke = true;
-						break;
-					case Shinobi:
-						Shinobi = true;
-						break;
-					case Slayer:
-						Slayer = true;
-						break;
-					case Soldat:
-						Soldat = true;
-						break;
-					case Solo:
-						Solo = true;
-						break;
-					case Titan:
-						Titans = true;
-						break;
-					case Zabuza_et_Haku:
-						Brume = true;
-						break;
-					case Kabuto:
-						Kabuto = true;
-						break;
-					case Shisui:
-						Shisui = true;
-						break;
-				}
-			}
-		}
-		int i = trueCount(Slayer, Demon, Solo, Jigoro, Alliance,
-				Mahr, Titans, Soldat,
-				Jubi, Orochimaru, Akatsuki, Sasuke, Brume, Shinobi, Kumogakure, Kabuto,
-				OverWorld, Nether, Shisui);
-		if (gameDone) {
-			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (!gameState.hasRoleNull(p.getUniqueId())) {
-					gameState.getGamePlayer().get(p.getUniqueId()).getRole().onEndGame();
-				}
-			}
-			System.out.println("game ending");
-		}
-		if (gameDone) {
-			EndGame(gameState, null);
-			return;
-		}
-		if (i == 0) {
-			EndGame(gameState, null);
-		} else if (i == 1) {
-			if (Kumogakure) {
-				winer = TeamList.Kumogakure;
-				gameDone = true;
-			}
-			if (Slayer) {
-				//win des slayers
-				winer = TeamList.Slayer;
-				gameDone = true;
-			}
-			if (Demon) {
-				//win des Demon
-				winer = TeamList.Demon;
-				gameDone = true;
-			}
-			if (Solo) {
-				if (gameState.getInGamePlayers().size() == 1) {
-					//win du solo (tah le bg)
-					winer = TeamList.Solo;
-					gameDone = true;
-				}	
-			}
-			if (Mahr) {
-				winer = TeamList.Mahr;
-				gameDone = true;
-			}
-			if (Jigoro) {
-				winer = TeamList.Jigoro;
-				gameDone = true;
-			}
-			if (Titans) {
-				winer = TeamList.Titan;
-				gameDone = true;
-			}
-			if (Soldat) {
-				winer = TeamList.Soldat;
-				gameDone = true;
-			}
-			if (Jubi) {
-				winer = TeamList.Jubi;
-				gameDone = true;
-			}
-			if (Alliance) {
-				winer = TeamList.Alliance;
-				//win de l'alliance Shinjuro-Kyojuro
-				gameDone = true;
-			}
-			if (Orochimaru) {
-				winer = TeamList.Orochimaru;
-				gameDone = true;
-			}
-			if (Akatsuki) {
-				winer = TeamList.Akatsuki;
-				gameDone = true;
-			}
-			if (Sasuke) {
-				winer = TeamList.Sasuke;
-				gameDone = true;
-			}
-			if (Shisui) {
-				winer = TeamList.Shisui;
-				gameDone = true;
-			}
-			if (Brume) {
-				winer = TeamList.Zabuza_et_Haku;
-				gameDone = true;
-			}
-			if (Shinobi) {
-				winer = TeamList.Shinobi;
-				gameDone = true;
-			}
-			if (Kabuto) {
-				winer = TeamList.Kabuto;
-				gameDone = true;
-			}
-		}
-		if (gameDone){
-			EndGame(gameState, winer);
-		}*/
 	}
 	@EventHandler
 	private void OnGuiInterract(InventoryClickEvent event) {
@@ -778,7 +599,7 @@ public class GameListener implements Listener {
 					if (power == null)continue;
 					if (power instanceof ItemPower) {
 						if (((ItemPower) power).getItem().isSimilar(event.getItem())) {
-							event.setCancelled(true);
+						//	event.setCancelled(true);
 							((ItemPower) power).call(event);
 						}
 					}
@@ -838,9 +659,6 @@ public class GameListener implements Listener {
 			p.teleport(new Location(to.getWorld(), to.getX(), to.getWorld().getHighestBlockYAt(to), to.getZ()));
 		}
         if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ce passe rien
-        for (EChakras ch : EChakras.values()) {
-        	ch.getChakra().onPlayerMoove(e, p, from, to);
-        }
     	if (gameState.shutdown.contains(e.getPlayer())) {
     		p.teleport(from);
     		p.setAllowFlight(false);

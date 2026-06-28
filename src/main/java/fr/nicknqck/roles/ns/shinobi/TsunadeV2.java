@@ -73,7 +73,6 @@ public class TsunadeV2 extends HShinobiRoles {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
         addPower(new KatsuyuPower(this), true);
         addPower(new EnseignementPower(this));
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

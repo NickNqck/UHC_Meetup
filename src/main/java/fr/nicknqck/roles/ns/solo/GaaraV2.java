@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.EffectGiveEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -93,7 +93,6 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
         EventUtils.registerRoleEvent(this);
         getGamePlayer().getActionBarManager().addToActionBar("gaara.sablecount", "§eSable(s): "+this.reserve);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onSecond(final SecondPassEvent onSecond) {
@@ -101,9 +100,10 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
         getGamePlayer().getActionBarManager().updateActionBar("gaara.sablecount", "§eSable(s): "+this.reserve);
     }
     @EventHandler
-    private void onKill(final UHCPlayerKillEvent event) {
-        if (event.getKiller().getUniqueId().equals(getPlayer())) {
-            event.getKiller().sendMessage("§7Vous avez gagner§e 128 sables§7.");
+    private void onKill(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
+        if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
+            event.getGamePlayerKiller().sendMessage("§7Vous avez gagner§e 128 sables§7.");
             this.reserve+=128;
         }
     }

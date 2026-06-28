@@ -6,15 +6,17 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Base64;
 import java.util.UUID;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import fr.nicknqck.Main;
-import org.bukkit.Bukkit;
+import lombok.NonNull;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutAnimation;
+import net.minecraft.server.v1_8_R3.PacketPlayOutUpdateHealth;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -69,25 +71,7 @@ public class GlobalUtils {
         head.setItemMeta(meta);
         return head;
     }
-	    public static String getTexture(UUID playerUUID) {
-	        String texture = null;
-	        try {
-	            URL url = new URL("https://crafatar.com/avatars/" + playerUUID.toString() + "?overlay");
-	            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	            connection.setRequestMethod("GET");
-	            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-	            String line;
-	            StringBuilder response = new StringBuilder();
-	            while ((line = reader.readLine()) != null) {
-	                response.append(line);
-	            }
-	            reader.close();
-	            texture = Base64.getEncoder().encodeToString(response.toString().getBytes());
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        return texture;
-	    }
+
 	public static ItemStack getAsyncPlayerHead(UUID uuid) {
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta meta = (SkullMeta) skull.getItemMeta();
@@ -240,4 +224,26 @@ public class GlobalUtils {
             default:  return Color.fromRGB(255, 255, 255);
         }
     }
+	/**
+	 * Simule visuellement des dégâts uniquement côté client du joueur.
+	 * Les autres joueurs ne voient rien.
+	 *
+	 * @param player le joueur qui doit voir l'animation de dégât
+	 */
+	public static void fakeDamage(@NonNull Player player) {
+		final EntityPlayer nms = ((CraftPlayer) player).getHandle();
+
+		// Animation de dégât (flash rouge + léger recul)
+		final PacketPlayOutAnimation animPacket = new PacketPlayOutAnimation(nms, 1);
+		nms.playerConnection.sendPacket(animPacket);
+
+		// Refresh de la barre de vie côté client uniquement
+		// (même valeur que la vraie vie = aucun changement réel, juste le "hit" visuel)
+		final PacketPlayOutUpdateHealth healthPacket = new PacketPlayOutUpdateHealth(
+				(float) player.getHealth(),
+				player.getFoodLevel(),
+				player.getSaturation()
+		);
+		nms.playerConnection.sendPacket(healthPacket);
+	}
 }

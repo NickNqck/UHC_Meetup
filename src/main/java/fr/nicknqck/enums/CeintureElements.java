@@ -7,7 +7,7 @@ public enum CeintureElements implements IElements {
     FEU("§cFeu", 1,
             "§7Lance le§d crystal§7 tout droit, à l'atterrissage, tout les joueurs (sauf l'utilisateur)",
             "§7étant à moins de§c 4,3 blocs§6 brûlerons§7 pendant§c 9 secondes§7,",
-            " si au lieu de toucher le sol le§d crystal§7 touche un joueur, alors, le temps de§6 brûlure§7",
+            "§7si au lieu de toucher le sol le§d crystal§7 touche un joueur, alors, le temps de§6 brûlure§7",
             "§7pour lui uniquement sera§c doublé§7."),
     EAU("§bEau", 12,
             "§7Lance le§d crystal§7 tout droit, à l'atterrissage, tout les joueurs (sauf l'utilisateur)",

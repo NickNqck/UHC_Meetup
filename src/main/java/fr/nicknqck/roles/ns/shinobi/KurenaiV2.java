@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.shinobi;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.EChakras;
@@ -72,7 +72,6 @@ public class KurenaiV2 extends ShinobiRoles {
                 new ForceRunneable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
             }
         }, 20);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull
@@ -191,18 +190,18 @@ public class KurenaiV2 extends ShinobiRoles {
                 this.kurenai.getGamePlayer().getActionBarManager().updateActionBar("kurenai.runnable", "§bTemp restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
             }
             @EventHandler
-            private void onUHCPlayerDie(UHCPlayerKillEvent e){
-                if (e.getVictim().getUniqueId().equals(owner) && timeRemaining > 0){
-                    e.getVictim().getInventory().clear();
+            private void onUHCPlayerDie(@NonNull final UHCDeathEvent e){
+                if (e.getPlayer().getUniqueId().equals(owner) && timeRemaining > 0){
+                    e.getPlayer().getInventory().clear();
                     Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                         timeRemaining = 0;
-                        e.getGameState().addInSpecPlayers(e.getVictim());
-                        e.getGameState().RevivePlayer(e.getVictim());
-                        if (e.getVictim().isDead()){
-                            e.getVictim().spigot().respawn();
+                        e.getGameState().addInSpecPlayers(e.getPlayer());
+                        e.getGameState().RevivePlayer(e.getPlayer());
+                        if (e.getPlayer().isDead()){
+                            e.getPlayer().spigot().respawn();
                         }
-                        e.getVictim().teleport(initLocation);
-                        e.getVictim().getInventory().clear();
+                        e.getPlayer().teleport(initLocation);
+                        e.getPlayer().getInventory().clear();
                         if (Main.isDebug()){
                             System.out.println(timeRemaining+ " string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
                         }

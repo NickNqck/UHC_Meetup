@@ -2,11 +2,11 @@ package fr.nicknqck.roles.ds.solos;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.interfaces.RoleCustomLore;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -42,8 +42,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -112,7 +110,6 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         addPower(new SwordPower(this), true);
         addPower(new BrumeSuspendue(this), true);
         addPower(new PatiencePower(this));
-        super.RoleGiven(gameState);
     }
 
     @Nonnull
@@ -133,7 +130,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         }
     }
     @EventHandler
-    private void onKill(@NonNull final UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() != null) {
             if (event.getGamePlayerKiller().getRole() == null)return;
             if (event.getGamePlayerKiller().getRole() instanceof DemonsRoles && !this.killLune) {
@@ -141,13 +138,13 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                 if (role.getRank().equals(DemonType.SUPERIEUR) || role.getRank().equals(DemonType.NEZUKO) || role instanceof MuzanV2) {
                     this.killLune = true;
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-                    event.getKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant une§c Lune Supérieur§7, vous avez acquis du§c sang de démon§7, ce qui vous permet de vous§c renforcer la nuit§7.");
+                    event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant une§c Lune Supérieur§7, vous avez acquis du§c sang de démon§7, ce qui vous permet de vous§c renforcer la nuit§7.");
                 }
             }
             if (event.getGamePlayerKiller().getRole() instanceof PilierRoles && !killPilier) {
                 this.killPilier = true;
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-                event.getKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous à permit d'être§c plus rapide§7 le§c jour§7.");
+                event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous à permit d'être§c plus rapide§7 le§c jour§7.");
             }
         }
     }
@@ -383,32 +380,20 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                 if (viewer == null || target == null) return;
                 if (!viewer.isOnline() || !target.isOnline()) return;
                 if (viewer.equals(target)) return;
-
-                Scoreboard board = viewer.getScoreboard();
-                if (board == null || board == Bukkit.getScoreboardManager().getMainScoreboard()) {
-                    board = Main.getInstance().getScoreboardManager().getColorScoreboard().get(viewer.getUniqueId());
-                    viewer.setScoreboard(board);
-                }
-
-                String teamName = target.getName();
-                Team team = board.getTeam(teamName);
-
-                if (team == null) {
-                    team = board.registerNewTeam(teamName);
-                    team.addEntry(target.getName());
-                }
+                String suffix;
                 if (percent < 25){
-                    team.setSuffix("§c " + percent + "%");
+                    suffix = ("§c " + percent + "%");
                 } else if (percent < 75) {
-                    team.setSuffix("§6 " + percent + "%");
+                    suffix = ("§6 " + percent + "%");
                 } else if (percent < 95) {
-                    team.setSuffix("§a " + percent + "%");
+                    suffix =("§a " + percent + "%");
                 } else {
-                    team.setSuffix("§2 " + percent + "%");
+                    suffix = ("§2 " + percent + "%");
                 }
                 if (percent == 100) {
-                    team.setSuffix("§2 ✔");
+                    suffix = ("§2 ✔");
                 }
+                Main.getInstance().getCustomTabManager().setSuffix(viewer.getUniqueId(), target.getUniqueId(), suffix);
             }
 
         }

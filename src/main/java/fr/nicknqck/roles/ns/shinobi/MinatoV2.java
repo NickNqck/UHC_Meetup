@@ -83,7 +83,6 @@ public class MinatoV2 extends HShinobiRoles {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new ArcHiraishin(this), true);
         addPower(new Rasengan(this), true);

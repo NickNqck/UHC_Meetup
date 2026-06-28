@@ -1,8 +1,12 @@
 package fr.nicknqck.utils;
 
+import fr.nicknqck.player.GamePlayer;
 import org.bukkit.ChatColor;
 
 import com.google.common.base.Strings;
+import org.bukkit.entity.Player;
+
+import java.util.*;
 
 public class StringUtils {
     public static String getProgressBar(int current, int max, int totalBars, char symbol, ChatColor completedColor, ChatColor notCompletedColor) {
@@ -121,4 +125,20 @@ public class StringUtils {
 
         return String.format("%.2f%%", (current * 100D) / total);
     }
+
+    public static List<String> getPlayerNameList(Collection<Player> players, String arg, UUID... exceptions) {
+        final List<String> list = new ArrayList<>();
+        final List<UUID> exceptionList = new ArrayList<>(Arrays.asList(exceptions));
+        for (Player player : players) {
+            if (exceptionList.contains(player.getUniqueId()))continue;
+            final GamePlayer gamePlayer = GamePlayer.of(player.getUniqueId());
+            if (gamePlayer == null)continue;
+            if (!gamePlayer.check())continue;
+            if (player.getName().toLowerCase().startsWith(arg.toLowerCase())) {
+                list.add(player.getName());
+            }
+        }
+        return list;
+    }
+
 }

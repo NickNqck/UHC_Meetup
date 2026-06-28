@@ -1,6 +1,6 @@
 package fr.nicknqck.roles.ds.solos.jigorov2;
 
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -8,6 +8,7 @@ import fr.nicknqck.roles.desc.AllDesc;
 import fr.nicknqck.roles.ds.demons.lune.KaigakuV2;
 import fr.nicknqck.roles.ds.slayers.ZenItsuV2;
 import fr.nicknqck.utils.event.EventUtils;
+import lombok.NonNull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
@@ -36,24 +37,25 @@ public class JigoroV2PSolo extends JigoroV2 implements Listener {
     }
 
     @EventHandler
-    private void onKill(final UHCPlayerKillEvent event) {
+    private void onKill(@NonNull final UHCDeathEvent event) {
+        if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getRole() == null)return;
         if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;
-        if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
-        final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+        if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
+        final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
         if (role instanceof ZenItsuV2) {
             if (killZen)return;
             this.killZen = true;
-            addSpeedAtInt(event.getPlayerKiller(), 10);
+            addSpeedAtInt(event.getGamePlayerKiller().getPlayer(), 10);
             givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 0, false, false), EffectWhen.DAY);
-            event.getKiller().sendMessage("Vous venez de tuez§a Zen'Itsu§f vous obtenez donc§9 résistance 1§f le§e jour§f, ainsi que§c 10%§f de §bSpeed");
+            event.getGamePlayerKiller().sendMessage("Vous venez de tuez§a Zen'Itsu§f vous obtenez donc§9 résistance 1§f le§e jour§f, ainsi que§c 10%§f de §bSpeed");
         }
         if (role instanceof KaigakuV2) {
             if (killKai)return;
             killKai = true;
-            addSpeedAtInt(event.getPlayerKiller(), 10);
+            addSpeedAtInt(event.getGamePlayerKiller().getPlayer(), 10);
             givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 0, false, false), EffectWhen.NIGHT);
-            event.getKiller().sendMessage("Vous venez de tuez§c Kaigaku§f vous obtenez donc§9 résistance 1§f la§c nuit§f, ainsi que§c 10%§f de§b Speed");
+            event.getGamePlayerKiller().sendMessage("Vous venez de tuez§c Kaigaku§f vous obtenez donc§9 résistance 1§f la§c nuit§f, ainsi que§c 10%§f de§b Speed");
 
         }
     }

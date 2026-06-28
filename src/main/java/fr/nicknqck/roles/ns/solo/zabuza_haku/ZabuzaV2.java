@@ -3,7 +3,7 @@ package fr.nicknqck.roles.ns.solo.zabuza_haku;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateAfterCheckEvent;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -87,7 +87,6 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
             }
         }, 20*10);
         addKnowedRole(HakuV2.class);
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onPowerUse(@NonNull final PowerActivateAfterCheckEvent event) {

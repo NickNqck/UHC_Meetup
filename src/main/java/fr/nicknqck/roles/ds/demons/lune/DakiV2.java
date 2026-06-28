@@ -2,7 +2,7 @@ package fr.nicknqck.roles.ds.demons.lune;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCDeathEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -68,7 +68,6 @@ public class DakiV2 extends DemonsRoles {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.NIGHT);
         addPower(new TroisiemeOeil(this), true);
         addKnowedRole(GyutaroV2.class);
-        super.RoleGiven(gameState);
     }
 
     @Nonnull

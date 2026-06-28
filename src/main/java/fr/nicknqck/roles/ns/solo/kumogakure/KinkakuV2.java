@@ -5,8 +5,9 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
+import fr.nicknqck.interfaces.IChakraV2;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -79,7 +80,6 @@ public class KinkakuV2 extends KumogakureRole {
 
     @Override
     public void RoleGiven(GameState gameState) {
-        super.RoleGiven(gameState);
         addKnowedRole(GinkakuV2.class);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false , false), EffectWhen.DAY);
         new EffectGiver(getGameState(), this);
@@ -138,15 +138,16 @@ public class KinkakuV2 extends KumogakureRole {
             return map.containsKey("rien");
         }
         @EventHandler
-        private void onKill(@NonNull final UHCPlayerKillEvent event) {
+        private void onKill(@NonNull final UHCDeathEvent event) {
             if (event.getGamePlayerKiller() != null) {
-                final GamePlayer gamePlayer = GamePlayer.of(event.getVictim().getUniqueId());
+                final GamePlayer gamePlayer = GamePlayer.of(event.getPlayer().getUniqueId());
                 if (gamePlayer != null && gamePlayer.check()) {
                     if (gamePlayer.getRole() instanceof NSRoles) {
                         final EChakras eChakras = ((NSRoles) gamePlayer.getRole()).getChakras();
                         if (eChakras != null) {
-                            if (!eChakras.getChakra().getList().contains(getRole().getPlayer()) && checkUse(event.getPlayerKiller(), Collections.singletonMap("rien", "rien"))) {
-                                eChakras.getChakra().getList().add(getRole().getPlayer());
+                            final IChakraV2 iChakraV2 = Main.getInstance().getBijuManager().getChakraManager().getChakra(eChakras);
+                            if (!iChakraV2.isActivate(getRole().getPlayer()) && checkUse(event.getGamePlayerKiller().getPlayer(), Collections.singletonMap("rien", "rien"))) {
+                                iChakraV2.setActivateFor(getRole().getPlayer(), true);
                                 getRole().getGamePlayer().sendMessage(getPlugin().getPLUGIN_NAME()+"§7Vous utilisez maintenant la§a nature de chakra§7 \""+eChakras.getShowedName()+"§7\" en plus de celles que vous aviez déjà.");
                             }
                         }

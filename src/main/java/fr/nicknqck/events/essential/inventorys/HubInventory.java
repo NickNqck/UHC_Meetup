@@ -97,67 +97,6 @@ public class HubInventory implements Listener {
                         }
                         event.setCancelled(true);
                         break;
-                    case "§fAOT§7 -> §eSolo":
-                        if (item.getItemMeta() == null)return;
-                        if (item.getItemMeta().getDisplayName() == null)return;
-                        if (item.getType() == Material.AIR)return;
-                        if (item.isSimilar(GUIItems.getx())) {
-                            event.setCancelled(true);
-                            return;
-                        }
-                        if (!ChatRank.isHost(player)) {
-                            event.setCancelled(true);
-                            return;
-                        }
-                        if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            if (!item.isSimilar(GUIItems.getOrangeStainedGlassPane()) && !solo && !d && !sl && !mahr && !titans && !soldat && !item.isSimilar(GUIItems.getCantStartGameButton()) && !item.isSimilar(GUIItems.getStartGameButton())) {
-                                name = item.getItemMeta().getDisplayName();
-                                if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    EasyRoleAdder.addRoles(name);
-                                } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                    EasyRoleAdder.removeRoles(name);
-                                }else {
-                                    event.setCancelled(true);
-                                }
-                            }
-                            if (item.isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
-
-                        } else {
-                            for (UUID u : gameState.getInLobbyPlayers()) {
-                                Player p = Bukkit.getPlayer(u);
-                                if (p == null)return;
-                                if (p == event.getWhoClicked()) {
-                                    if (ChatRank.isHost(player)){
-                                        p.openInventory(GUIItems.getSelectAOTInventory());
-                                        Main.getInstance().getInventories().updateAOTInventory(player);
-                                    }
-                                    if (!p.isOp() && p.getOpenInventory() != null && p.getInventory() != null) p.closeInventory();
-                                }
-                            }
-                        }
-                        for (UUID u : gameState.getInLobbyPlayers()) {
-                            Player p = Bukkit.getPlayer(u);
-                            if (p == null)return;
-                            Main.getInstance().getInventories().updateDSSoloInventory(p);
-                        }
-                        if (solo) {
-                            player.openInventory(GUIItems.getDSSoloSelectGUI());
-                            Main.getInstance().getInventories().updateDSSoloInventory(player);
-                        }
-                        if (mahr) {
-                            player.openInventory(GUIItems.getMahrGui());
-                            Main.getInstance().getInventories().updateMahrInventory(player);
-                        }
-                        if (titans) {
-                            player.openInventory(GUIItems.getSecretTitansGui());
-                            Main.getInstance().getInventories().updateTitansInventory(player);
-                        }
-                        if (soldat) {
-                            player.openInventory(GUIItems.getSecretSoldatGui());
-                            Main.getInstance().getInventories().updateSoldatInventory(player);
-                        }
-                        event.setCancelled(true);
-                        break;
                     case "§fRoles§7 ->§6 AOT":
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (solo || mahr || titans || soldat) {

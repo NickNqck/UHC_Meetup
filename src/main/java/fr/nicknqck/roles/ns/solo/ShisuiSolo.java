@@ -123,7 +123,6 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
         EventUtils.registerRoleEvent(this);
         setCanBeHokage(true);
         this.cantChangeTeam.add(getPlayer());
-        super.RoleGiven(gameState);
     }
     @EventHandler
     private void onEndIzanami(@NonNull final IzanamiFinishEvent event) {
@@ -210,8 +209,26 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayersExcept(player, 50));
+            if (!playerList.isEmpty()) {
+                if (!Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo()) {
+                    for (Player target : new ArrayList<>(playerList)) {
+                        final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                        if (gamePlayer == null) {
+                            playerList.remove(target);
+                            continue;
+                        }
+                        if (!gamePlayer.check()) {
+                            playerList.remove(target);
+                            continue;
+                        }
+                        if (gamePlayer.getRole().getTeam().isSolo()) {
+                            playerList.remove(target);
+                        }
+                    }
+                }
+            }
             if (playerList.isEmpty()) {
-                player.sendMessage("§cIl n'y a pas asser de personnes autours de vous pour utiliser cette technique.");
+                player.sendMessage("§cIl n'y a pas assez de personnes valide autours de vous pour utiliser cette technique.");
                 return false;
             }
             final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§c Kotoamatsukami");

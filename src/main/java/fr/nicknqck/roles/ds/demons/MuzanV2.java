@@ -4,7 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
-import fr.nicknqck.events.custom.UHCPlayerKillEvent;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
@@ -86,11 +86,11 @@ public class MuzanV2 extends DemonsRoles implements Listener {
     }
 
     @EventHandler
-    private void UHCKillEvent(@NonNull UHCPlayerKillEvent event) {
+    private void UHCKillEvent(@NonNull UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
-        if (event.getGameState().hasRoleNull(event.getVictim().getUniqueId()))return;
+        if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
         if (this.killNezuko)return;
-        final RoleBase role = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId()).getRole();
+        final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
         if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;
         if (role instanceof NezukoV2) {
             onKillNez();

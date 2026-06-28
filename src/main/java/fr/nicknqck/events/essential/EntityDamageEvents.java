@@ -54,9 +54,6 @@ public class EntityDamageEvents implements Listener{
 				Player player = (Player) event.getEntity();
 				Player killer = player.getKiller();
 				double damage = event.getFinalDamage();
-				for (EChakras ch : EChakras.values()) {
-					ch.getChakra().onEntityDamage(event, player);
-				}
 				if (event.getCause() == DamageCause.FALL) {
 					if (!gameState.hasRoleNull(player.getUniqueId())) {
 						if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isNoFall()) {
