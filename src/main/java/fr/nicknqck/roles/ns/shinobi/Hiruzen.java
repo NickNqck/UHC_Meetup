@@ -214,13 +214,14 @@ public class Hiruzen extends HShinobiRoles implements Listener {
                 @NonNull
                 final Player owner = this.couleDeBoue.getRole().getGamePlayer().getPlayer();
                 this.couleDeBoue.getRole().getGamePlayer().getActionBarManager().updateActionBar("hiruzen.boue", "§bDoton: coulé de boue:§c "+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
-                final List<Player> list = new ArrayList<>(owner.getWorld().getPlayers());
+                final List<Player> list = new ArrayList<>(this.centerLocation.getWorld().getPlayers());
                 for (Player player : list) {
                     if (player.getUniqueId().equals(owner.getUniqueId())) continue;
                     if (!player.getGameMode().equals(GameMode.SURVIVAL)) continue;
                     final GamePlayer gamePlayer = GamePlayer.of(player.getUniqueId());
                     if (gamePlayer == null) continue;
                     if (!gamePlayer.check()) continue;
+                    if (player.getLocation().distance(this.centerLocation) > 15.0)continue;
                     Bukkit.getScheduler().runTask(this.couleDeBoue.getPlugin(), () -> gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 1, false, false), EffectWhen.NOW));
                 }
                 this.timeLeft--;
