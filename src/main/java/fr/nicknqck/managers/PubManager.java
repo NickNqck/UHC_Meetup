@@ -144,8 +144,8 @@ public class PubManager {
 
     // ── Runnable interne ─────────────────────────────────────────────────────
 
-    private static final int MIN_INTERVAL = 60;       // 1 minute
-    private static final int MAX_INTERVAL = 60 * 10;  // 10 minutes
+    private static final int MIN_INTERVAL = 60*5;
+    private static final int MAX_INTERVAL = 60 * 20;
 
     private static final class PubRunnable extends BukkitRunnable {
 
