@@ -326,10 +326,14 @@ public class Sai extends ShinobiRoles implements Listener {
                     }
                     if (!this.gameCible.check()) {
                         this.sourisMessager.getRole().getGamePlayer().sendMessage("§7Vos§a Souris messagères§7 ne peuvent plus trouver§b "+this.gameCible.getPlayerName()+"§7, il/elle est§c mort(e)§7.");
+                        this.sourisMessager.getRole().getGamePlayer().getActionBarManager().removeInActionBar("sai.souris");
+                        this.sourisMessager.targetUUID = null;
                         cancel();
                         return;
                     }
                     if (!this.sourisMessager.getRole().getGamePlayer().check()) {
+                        this.sourisMessager.getRole().getGamePlayer().getActionBarManager().removeInActionBar("sai.souris");
+                        this.sourisMessager.targetUUID = null;
                         cancel();
                         return;
                     }
@@ -402,7 +406,7 @@ public class Sai extends ShinobiRoles implements Listener {
                 private SangsueRunnable(Sangsue sangsue, GamePlayer gameTarget) {
                     this.sangsue = sangsue;
                     this.gameTarget = gameTarget;
-                    this.maxPerCycle = 2.0;
+                    this.maxPerCycle = 30.0;
                 }
 
                 @Override
