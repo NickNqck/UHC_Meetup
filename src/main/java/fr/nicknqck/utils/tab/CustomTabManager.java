@@ -1,6 +1,7 @@
 package fr.nicknqck.utils.tab;
 
 import fr.nicknqck.Main;
+import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,6 +43,7 @@ import java.util.UUID;
 public class CustomTabManager implements Listener {
 
     /** Map viewer UUID → son tab personnalisé */
+    @Getter
     private final Map<UUID, PlayerTab> playerTabs = new HashMap<>();
 
     public CustomTabManager() {
