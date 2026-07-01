@@ -206,7 +206,7 @@ public class GameListener implements Listener {
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null) {
-						System.out.println("Player: "+u.toString()+", can't have role because he was offline");
+						Main.getInstance().debug("Player: "+u.toString()+", can't have role because he was offline");
 						continue;
 					}
                     RoleBase role;
@@ -216,7 +216,7 @@ public class GameListener implements Listener {
                         role.RoleGiven(gameState);
                         role.GiveItems();
                         lastRoleGive = role;
-						if (Main.getInstance().getGameConfig().isGiveLame()) {
+						if (Main.getInstance().getGameConfig().getDemonSlayerConfig().isGiveLame()) {
 							if (role instanceof DemonsSlayersRoles){
 								if (((DemonsSlayersRoles) role).isCanuseblade()){
 									role.giveItem(p, false, Items.getLamedenichirin());

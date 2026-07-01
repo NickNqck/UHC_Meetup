@@ -5,7 +5,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijus.Bijus;
-import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.StunType;
 import fr.nicknqck.interfaces.ISubRoleWorld;
 import fr.nicknqck.items.GUIItems;
@@ -304,9 +303,9 @@ public class HubConfig implements Listener {
                         }
                         if (item.getType() == Material.REDSTONE) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Main.getInstance().getGameConfig().setTimingAssassin(Math.min(60*5, Main.getInstance().getGameConfig().getTimingAssassin()+10));
+                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setTimingAssassin(Math.min(60*5, Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin()+10));
                             } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Main.getInstance().getGameConfig().setTimingAssassin(Math.max(10, Main.getInstance().getGameConfig().getTimingAssassin()-10));
+                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setTimingAssassin(Math.max(10, Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin()-10));
                             }
                         }
                         if (item.getType().equals(Material.TNT)) {
@@ -319,7 +318,7 @@ public class HubConfig implements Listener {
                             }
                         }
                         if (name.equals("§fLame")) {
-                            Main.getInstance().getGameConfig().setGiveLame(!Main.getInstance().getGameConfig().isGiveLame());
+                            Main.getInstance().getGameConfig().getDemonSlayerConfig().setGiveLame(!Main.getInstance().getGameConfig().getDemonSlayerConfig().isGiveLame());
                         }
                         Border.setMaxBorderSize(Math.max(50, Math.min(Border.getMaxBorderSize(), 2400)));
                         Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
@@ -376,9 +375,9 @@ public class HubConfig implements Listener {
                         }
                         if (name.equals("§cInfection")) {
                             if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Main.getInstance().getGameConfig().setInfectionTime(Math.min(60*20, Main.getInstance().getGameConfig().getInfectionTime()+10));
+                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setInfectionTime(Math.min(60*20, Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime()+10));
                             }else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Main.getInstance().getGameConfig().setInfectionTime(Math.max(10, Main.getInstance().getGameConfig().getInfectionTime()-10));
+                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setInfectionTime(Math.max(10, Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime()-10));
                             }
                         }
                         if (name.equalsIgnoreCase("§fPourcentage de Force")) {

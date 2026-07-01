@@ -84,7 +84,7 @@ public class AssassinManagerV2 implements Listener {
     }
     private void updateTime() {
         int oldTime = this.timeBeforeProc;
-        this.timeBeforeProc = Main.getInstance().getGameConfig().getTimingAssassin();
+        this.timeBeforeProc = Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin();
         System.out.println(this.prefix+"updated time from "+oldTime+" to "+this.timeBeforeProc);
     }
     private static class SetAssassinRunnable extends BukkitRunnable {
