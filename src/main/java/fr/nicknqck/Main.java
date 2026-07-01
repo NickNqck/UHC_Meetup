@@ -25,7 +25,6 @@ import fr.nicknqck.managers.schem.SchematicManager;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.roles.ns.power.KatsuyuManager;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
@@ -254,7 +253,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new WebHookListeners(gameState), this);
 		DeathManager manager = new DeathManager();
 		getServer().getPluginManager().registerEvents(manager, this);
-		EventUtils.registerEvents(new BanquePower());
 		WorldConfig worldConfig = new WorldConfig(gameState);
 		getServer().getPluginManager().registerEvents(worldConfig, this);
 		this.worldConfig = worldConfig;
