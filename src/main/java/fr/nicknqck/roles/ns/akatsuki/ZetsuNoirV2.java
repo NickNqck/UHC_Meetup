@@ -80,7 +80,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
         addPower(new InvisibilitePower(this), true);
         addPower(new RegenPower(this));
         EventUtils.registerRoleEvent(this);
-        getGamePlayer().startChatWith("§cZetsu Noir:", "!", ZetsuBlancV2.class, ZetsuBlancV3.class);
+        getGamePlayer().startChatWith("§cZetsu Noir:", "!", ZetsuBlancV2.class);
     }
 
     @EventHandler
@@ -237,7 +237,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
                     if (gamePlayer == null)continue;
                     if (!gamePlayer.check())continue;
                     if (gamePlayer.getRole().getTeam().equals(this.zabuza.getTeam())) {
-                        if (gamePlayer.getRole() instanceof ZetsuNoirV2 ||gamePlayer.getRole() instanceof ZetsuBlancV3 ||gamePlayer.getRole() instanceof ZetsuBlancV2) {
+                        if (gamePlayer.getRole() instanceof ZetsuNoirV2 ||gamePlayer.getRole() instanceof ZetsuBlancV2) {
                             MathUtil.sendParticleTo(p, EnumParticle.CLOUD, zabuza.owner.getLocation().clone());
                         }
                     }

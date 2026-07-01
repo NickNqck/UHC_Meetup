@@ -233,7 +233,6 @@ public class RoleManager implements Listener {
         registerRole(KonanV2.class);
         registerRole(NagatoV2.class);
         registerRole(Sasori.class);
-        registerRole(ZetsuBlancV3.class);
         registerRole(ZetsuNoirV2.class);
         registerRole(ZetsuBlancV2.class);
         //Register Jubi
