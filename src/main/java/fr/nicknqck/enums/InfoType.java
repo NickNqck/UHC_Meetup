@@ -10,7 +10,9 @@ public enum InfoType {
     CHAKRA("Chakra"),
     INV("Inventaire"),
     POSITION("Position"),
-    INTELLIGENCE("Intelligence");
+    INTELLIGENCE("Intelligence"),
+    POUVOIRS("Pouvoirs"),
+    EFFETS("Effets"),;
 
     private final String name;
 

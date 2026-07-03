@@ -1,10 +1,8 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.enums.EChakras;
-import fr.nicknqck.enums.EffectWhen;
-import fr.nicknqck.enums.Intelligence;
-import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.*;
+import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
@@ -188,8 +186,15 @@ public class Shino extends ShinobiRoles {
             if (args.length == 2) {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                    GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {
+                        final PowerTakeInfoEvent powerTakeInfoEvent = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
+                        getPlugin().getServer().getPluginManager().callEvent(powerTakeInfoEvent);
+                        if (powerTakeInfoEvent.isCancelled()) {
+                            powerTakeInfoEvent.sendCancelMessage(player);
+                            return false;
+                        }
+                        gamePlayer = powerTakeInfoEvent.getGameTarget();
                         if (gamePlayer.check() && target.getWorld().equals(player.getWorld()) && target.getLocation().distance(player.getLocation()) <= 10 && !target.getUniqueId().equals(player.getUniqueId())) {
                             player.sendMessage("§7La traque de§a "+target.getName()+"§7 commence.");
                             this.trackers.add(new Tracker(this, getUse()+1, gamePlayer));
