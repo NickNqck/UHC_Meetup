@@ -325,10 +325,10 @@ public class AutomaticDesc {
             }
         }
         if (this.role instanceof NSRoles) {
+            ((NSRoles) this.role).getChakras();
+            text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre niveau d'intelligence est:§a "+((NSRoles) this.role).getIntelligence().getName()));
             text.addExtra(fromLegacyTextSafe(
-                    "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(((NSRoles) this.role).getChakras() == null ?
-                            "§cInexistante" :
-                            this.role instanceof OrochimaruV2 ?
+                    "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(this.role instanceof OrochimaruV2 ?
                                     ((OrochimaruV2) this.role).getChakraString() :
                                     ((NSRoles) this.role).getChakras().getShowedName()))
             );
