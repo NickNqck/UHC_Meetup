@@ -89,7 +89,7 @@ public class GinkakuV2 extends KumogakureRole {
                 .addEffects(getEffects())
                 .setPowers(getPowers())
                 .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lorsque vous êtes proche de §6Kinkaku§7 vous avez l'effet §cRésistance I")
-                .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lors de la mort de §6Kinkaku§7 vous obtener l'effet§c Résistance I")
+                .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lors de la mort de §6Kinkaku§7 vous obtiendrez l'effet§c Résistance I§7 de manière§c permanente")
                 .getText();
     }
 
