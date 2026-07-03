@@ -4,7 +4,6 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.StunType;
 import fr.nicknqck.interfaces.ISubRoleWorld;
 import fr.nicknqck.items.GUIItems;
@@ -419,11 +418,6 @@ public class HubConfig implements Listener {
                         Main.getInstance().getInventories().updateConfigInventory(player);
                         event.setCancelled(true);
                         return;
-                    }
-                    for (Bijus bijus : Bijus.values()) {
-                        if (item.isSimilar(bijus.getBiju().getItemInMenu())) {
-                            bijus.getBiju().setEnable(!bijus.getBiju().isEnable());
-                        }
                     }
 
                     if (item.getItemMeta().hasDisplayName()){

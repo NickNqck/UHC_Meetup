@@ -32,9 +32,6 @@ public class NSCompleter implements TabCompleter {
                 final GamePlayer gamePlayer = GamePlayer.of(((Player) commandSender).getUniqueId());
                 if (gamePlayer != null) {
                     if (gamePlayer.check()) {
-                        if (gamePlayer.getRole().getTeam().equals(TeamList.Jubi) || gamePlayer.getRole().getOriginTeam().equals(TeamList.Jubi)) {
-                            stringList.add("jubicraft");
-                        }
                         if (strings.length == 1) {
                             for (IChakraV2 iChakraV2 : Main.getInstance().getBijuManager().getChakraManager().getLoadedChakra()) {
                                 if (!iChakraV2.getMap().containsKey(((Player) commandSender).getUniqueId()))continue;

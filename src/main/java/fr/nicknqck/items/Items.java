@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 
 public final class Items {
@@ -25,42 +24,6 @@ public final class Items {
 		stack.setItemMeta(meta);
 		return stack;
 	}
-	  public static ItemStack Matatabi() {
-	        ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-	        ItemMeta meta = stack.getItemMeta();
-	        meta.setDisplayName("§6Matatabi");
-	        stack.setItemMeta(meta);
-	        return stack;
-	  }
-	  public static ItemStack Saiken() {
-		  return new ItemBuilder(Material.NETHER_STAR)
-				  .setName("§5Saiken")
-				  .toItemStack();
-	  }
-	  public static ItemStack Isobu() {
-	        ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-	        ItemMeta meta = stack.getItemMeta();
-	        meta.setDisplayName("§eIsobu");
-	        stack.setItemMeta(meta);
-	        return stack;
-	  }
-	  public static ItemStack Kokuo() {
-	        ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
-	        ItemMeta meta = stack.getItemMeta();
-	        meta.setDisplayName(Bijus.Kokuo.getBiju().getName());
-	        stack.setItemMeta(meta);
-	        return stack;
-	  }
-	  public static ItemStack SonGoku() {
-		  return new ItemBuilder(Material.NETHER_STAR)
-				  .setName(Bijus.SonGoku.getBiju().getName())
-				  .toItemStack();
-	  }
-	  public static ItemStack Chomei() {
-		  return new ItemBuilder(Material.NETHER_STAR)
-				  .setName(Bijus.Chomei.getBiju().getName())
-				  .toItemStack();
-	  }
 	  public static ItemStack ArcTridi() {
 		  ItemStack stack = new ItemStack(Material.BOW, 1);
 		  ItemMeta meta = stack.getItemMeta();

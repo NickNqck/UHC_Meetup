@@ -5,7 +5,6 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.TeamList;
@@ -227,9 +226,6 @@ public abstract class RoleBase implements IRole {
 	public void neoAttackedByPlayer(Player attacker, GameState gameState) {}
 	public void addSpeedAtInt(Player player, float speedpercent) {player.setWalkSpeed(player.getWalkSpeed()+(speedpercent/500));}
 	public void OnAPlayerDie(Player player, GameState gameState, Entity killer) {
-		for (Bijus value : Bijus.values()) {
-			value.getBiju().onAPlayerDie(player, gameState, killer);
-		}
 		if (!player.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> GameListener.RandomTp(player, Main.getInstance().getWorldManager().getGameWorld()), 20);
 		}

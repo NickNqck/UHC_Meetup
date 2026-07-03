@@ -40,7 +40,7 @@ public class Matatabi extends BijuBase {
     }
 
     @Override
-    public @NonNull ItemStack getItemInMenu() {
+    public @NonNull ItemStack getTempMenuItem() {
         return new ItemBuilder(Material.BLAZE_ROD).setName(getName())
                 .addEnchant(Enchantment.ARROW_INFINITE, 1)
                 .hideEnchantAttributes()

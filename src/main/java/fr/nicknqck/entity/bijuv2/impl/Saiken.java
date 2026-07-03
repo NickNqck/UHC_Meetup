@@ -51,7 +51,7 @@ public class Saiken extends BijuBase {
     }
 
     @Override
-    public @NonNull ItemStack getItemInMenu() {
+    public @NonNull ItemStack getTempMenuItem() {
         return new ItemBuilder(new ItemStack(Material.SLIME_BALL)).addEnchant(Enchantment.DURABILITY, 1).hideEnchantAttributes().setName(getName()).toItemStack();
     }
 

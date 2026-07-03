@@ -7,6 +7,7 @@ import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.managers.BijuManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.roles.ns.power.JubiCraft;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -40,6 +41,7 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new TraqueurPower(this), true);
+        addPower(new JubiCraft(this));
     }
 
     @Override

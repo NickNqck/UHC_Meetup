@@ -44,7 +44,7 @@ public class Isobu extends BijuBase {
     }
 
     @Override
-    public @NonNull ItemStack getItemInMenu() {
+    public @NonNull ItemStack getTempMenuItem() {
         return new ItemBuilder(Material.INK_SACK).setName(getName())
                 .addEnchant(Enchantment.ARROW_INFINITE, 1).hideEnchantAttributes().toItemStack();
     }

@@ -2,7 +2,6 @@ package fr.nicknqck.managers.crystaluhc;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijus.Biju;
 import fr.nicknqck.enums.CeintureElements;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
@@ -322,7 +321,7 @@ public class CrystalManager implements Listener {
         if (!this.blockList.isEmpty()) {
             final List<Block> list = new ArrayList<>(this.blockList);
             for (Block block : list) {
-                if (!Biju.isOutsideOfBorder(block.getLocation())) {
+                if (!Loc.isOutsideOfBorder(block.getLocation())) {
                     return false;
                 }
             }

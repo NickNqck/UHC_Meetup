@@ -246,4 +246,48 @@ public class GlobalUtils {
 		);
 		nms.playerConnection.sendPacket(healthPacket);
 	}
+	/**
+	 * Ajoute une valeur String invisible dans les NBT de l'item.
+	 *
+	 * @param item  l'item à modifier
+	 * @param key   la clé NBT
+	 * @param value la valeur à stocker
+	 * @return l'item modifié avec le tag NBT
+	 */
+	public static ItemStack setNBT(ItemStack item, String key, String value) {
+		net.minecraft.server.v1_8_R3.ItemStack nms =
+				org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(item);
+
+		if (nms.getTag() == null) nms.setTag(new net.minecraft.server.v1_8_R3.NBTTagCompound());
+
+		nms.getTag().setString(key, value);
+		return org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asBukkitCopy(nms);
+	}
+
+	/**
+	 * Récupère une valeur String depuis les NBT de l'item.
+	 *
+	 * @param item l'item à lire
+	 * @param key  la clé NBT
+	 * @return la valeur, ou null si la clé n'existe pas
+	 */
+	public static String getNBT(ItemStack item, String key) {
+		net.minecraft.server.v1_8_R3.ItemStack nms =
+				org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(item);
+
+		if (nms.getTag() == null) return null;
+		if (!nms.getTag().hasKey(key)) return null;
+
+		return nms.getTag().getString(key);
+	}
+
+	/**
+	 * Vérifie si l'item possède une clé NBT donnée.
+	 */
+	public static boolean hasNBT(ItemStack item, String key) {
+		net.minecraft.server.v1_8_R3.ItemStack nms =
+				org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack.asNMSCopy(item);
+
+		return nms.getTag() != null && nms.getTag().hasKey(key);
+	}
 }

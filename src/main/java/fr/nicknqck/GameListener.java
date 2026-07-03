@@ -1,8 +1,6 @@
 package fr.nicknqck;
 
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.entity.bijus.BijuListener;
-import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.interfaces.ITeam;
@@ -68,7 +66,6 @@ public class GameListener implements Listener {
 			@NonNull final SecondPassEvent onSecond = new SecondPassEvent(this.gameState);
 			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
-			BijuListener.getInstance().runnableTask(gameState);
 
 		}, 20, 20);
 	}
@@ -287,14 +284,6 @@ public class GameListener implements Listener {
 				Main.getInstance().getScoreboardManager().onLogout(p);
 				p.setPlayerListName(Bukkit.getPlayer(p.getUniqueId()).getName());
 			}
-			for (Bijus b : Bijus.values()) {
-				b.getBiju().resetCooldown();
-				b.getBiju().setHote(null);
-				if (Main.isDebug()){
-					System.out.println("reseted "+b.name());
-				}
-			}
-			BijuListener.getInstance().resetCooldown();
 			gameState.DeadRole.clear();
 			gameState.getAttributedRole().clear();
 			KamuiUtils.resetUtils();
@@ -378,7 +367,6 @@ public class GameListener implements Listener {
 			System.out.println("end");
 			gameState.pregenNakime = false;
 			gameState.setInGamePlayers(new ArrayList<>());
-			BijuListener.getInstance().resetCooldown();
 			for (Player p : gameState.getInSpecPlayers()) {
 				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId())) {
 					gameState.addInLobbyPlayers(p);

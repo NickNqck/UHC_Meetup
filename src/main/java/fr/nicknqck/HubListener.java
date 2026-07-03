@@ -1,8 +1,6 @@
 package fr.nicknqck;
 
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.entity.bijus.BijuListener;
-import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.interfaces.IRoles;
@@ -109,13 +107,7 @@ public class HubListener implements Listener {
 			System.out.println("Player "+p+" a ete ajouter a la partie");
 		}
 		gameState.nightTime = false;
-		for (Bijus b : Bijus.values()) {
-			b.getBiju().setHote(null);
-			b.getBiju().resetCooldown();
-		}
 		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
-		BijuListener.getInstance().resetCooldown();
-	//	Bijus.initBiju(gameState);
 		Bukkit.getPluginManager().callEvent(new GameStartEvent(gameState, rolesList));
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);

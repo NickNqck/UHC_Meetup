@@ -3,7 +3,6 @@ package fr.nicknqck;
 import fr.nicknqck.commands.completer.AdminTabCompletor;
 import fr.nicknqck.commands.completer.KrystalTabCompletor;
 import fr.nicknqck.commands.completer.NSCompleter;
-import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.Color;
 import fr.nicknqck.commands.roles.*;
@@ -243,7 +242,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new Lame(), this);
 		getServer().getPluginManager().registerEvents(new Arctridi(gameState), this);
 		getServer().getPluginManager().registerEvents(new Whitelist(gameState), this);
-		getServer().getPluginManager().registerEvents(new BijuListener(), this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
