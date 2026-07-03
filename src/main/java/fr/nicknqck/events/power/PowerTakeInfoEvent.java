@@ -5,7 +5,9 @@ import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.powers.Power;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 
 public class PowerTakeInfoEvent extends GameEvent implements Cancellable {
@@ -33,5 +35,12 @@ public class PowerTakeInfoEvent extends GameEvent implements Cancellable {
     @Override
     public void setCancelled(boolean b) {
         this.cancelled = b;
+    }
+
+    public void sendCancelMessage(@NonNull final GamePlayer gamePlayer) {
+        gamePlayer.sendMessage("§cQuelque chose vous empêche d'utiliser votre pouvoir !");
+    }
+    public void sendCancelMessage(@NonNull final Player player) {
+        player.sendMessage("§cQuelque chose vous empêche d'utiliser votre pouvoir !");
     }
 }
