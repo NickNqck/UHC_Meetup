@@ -1,19 +1,21 @@
 package fr.nicknqck.roles.ns.power;
 
 import fr.nicknqck.GameListener;
-import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.powers.CommandPower;
 import lombok.NonNull;
-import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class JubiCraft extends CommandPower {
 
@@ -41,14 +43,21 @@ public class JubiCraft extends CommandPower {
             for (ItemStack itemStack : list) {
                 player.getInventory().remove(itemStack);
             }
-            player.setPlayerListName("§dJubi "+player.getName());
             GameListener.SendToEveryone("");
             GameListener.SendToEveryone("§c§lLe Jûbi à été invoquée !");
             GameListener.SendToEveryone("");
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!GameState.getInstance().hasRoleNull(p.getUniqueId())){
-                    GameState.getInstance().getGamePlayer().get(player.getUniqueId()).getRole().playSound(p, "mob.enderdragon.end");
+            @NonNull final List<UUID> jubis = new ArrayList<>();
+            for (Player onlinePlayer : player.getServer().getOnlinePlayers()) {
+                onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 8);
+                final GamePlayer gamePlayer = GamePlayer.of(onlinePlayer.getUniqueId());
+                if (gamePlayer == null)continue;
+                if (!gamePlayer.check())continue;
+                if (gamePlayer.getRole().getTeam().equals(this.getRole().getTeam())) {
+                    jubis.add(onlinePlayer.getUniqueId());
                 }
+            }
+            for (@NonNull final UUID jubi : jubis) {
+                Main.getInstance().getCustomTabManager().setPrefixForAll(jubi, "§dJubi §r");
             }
             //Pour la liste des sons
             //https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/mapping-and-modding-tutorials/2213619-1-8-all-playsound-sound-arguments

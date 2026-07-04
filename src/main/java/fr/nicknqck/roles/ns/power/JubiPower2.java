@@ -1,7 +1,9 @@
 package fr.nicknqck.roles.ns.power;
 
 import fr.nicknqck.GameListener;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.EffectWhen;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -12,7 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class JubiPower2 extends ItemPower {
 
@@ -33,6 +38,18 @@ public class JubiPower2 extends ItemPower {
             GameListener.SendToEveryone("");
             GameListener.SendToEveryone("§c§lLe récéptacle de§d§l Jûbi§c§l invoque sa puissance !");
             GameListener.SendToEveryone("");
+            @NonNull final List<UUID> jubis = new ArrayList<>();
+            for (Player onlinePlayer : player.getServer().getOnlinePlayers()) {
+                final GamePlayer gamePlayer = GamePlayer.of(onlinePlayer.getUniqueId());
+                if (gamePlayer == null)continue;
+                if (!gamePlayer.check())continue;
+                if (gamePlayer.getRole().getTeam().equals(this.getRole().getTeam())) {
+                    jubis.add(onlinePlayer.getUniqueId());
+                }
+            }
+            for (@NonNull final UUID jubi : jubis) {
+                Main.getInstance().getCustomTabManager().setPrefixForAll(jubi, "§dJubi §r");
+            }
             return true;
         }
         return false;
