@@ -48,7 +48,7 @@ public class JubiCraft extends CommandPower {
             GameListener.SendToEveryone("");
             @NonNull final List<UUID> jubis = new ArrayList<>();
             for (Player onlinePlayer : player.getServer().getOnlinePlayers()) {
-                onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 8);
+                onlinePlayer.playSound(onlinePlayer.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 1);
                 final GamePlayer gamePlayer = GamePlayer.of(onlinePlayer.getUniqueId());
                 if (gamePlayer == null)continue;
                 if (!gamePlayer.check())continue;
