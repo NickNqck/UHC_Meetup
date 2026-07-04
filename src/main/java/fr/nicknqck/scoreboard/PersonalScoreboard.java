@@ -18,8 +18,6 @@ import org.bukkit.entity.Player;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
-import static fr.nicknqck.enums.TeamList.Jubi;
-
 /*
  * This file is part of SamaGamesAPI.
  *
@@ -121,11 +119,6 @@ public class PersonalScoreboard {
 						final RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
 						Main.getInstance().getCustomTabManager().setPrefixForAll(role.getPlayer(), role.getOriginTeam().getColor()+role.getName()+" §r");
                     }
-    			}
-    		}
-    		if (fr.nicknqck.items.Jubi.getUuidCrafter() != null) {
-    			if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().getTeam().equals(Jubi)) {
-					Main.getInstance().getCustomTabManager().setPrefixForAll(player.getUniqueId(), "§dJubi ");
     			}
     		}
     	}
