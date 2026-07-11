@@ -30,7 +30,7 @@ public class Configuration_RolesInventory extends FastInv {
             }
         }
         if (ChatRank.isHost(player)) {
-            setItem(25, new ItemBuilder(Material.BOOKSHELF).setName("Configuration du mode de jeu").toItemStack(), event -> {
+            setItem(25, new ItemBuilder(Material.BOOKSHELF).setName("§fConfiguration du mode de jeu").toItemStack(), event -> {
                 new SelectModeDeJeuInventory().open((Player) event.getWhoClicked());
             });
             if (GameState.getInstance().isAllMdjNull()) {
@@ -50,6 +50,8 @@ public class Configuration_RolesInventory extends FastInv {
                     }
                 }
             }
+        } else {
+            player.closeInventory();
         }
         setItem(26, GUIItems.getSelectBackMenu(), event -> {
             if (ChatRank.isHost(player)) {
