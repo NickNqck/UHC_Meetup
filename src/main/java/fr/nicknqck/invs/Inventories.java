@@ -704,7 +704,10 @@ public class Inventories {
         player.updateInventory();
     }
     public void updateRoleInventory(Player player) {
-        if (!ChatRank.isHost(player.getUniqueId()))return;
+        if (!ChatRank.isHost(player.getUniqueId())) {
+            player.closeInventory();
+            return;
+        }
         new Configuration_RolesInventory(player).open(player);
         player.updateInventory();
         gameState.updateGameCanLaunch();
