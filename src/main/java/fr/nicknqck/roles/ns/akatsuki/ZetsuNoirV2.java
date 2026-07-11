@@ -79,7 +79,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
         addPower(new InvisibilitePower(this), true);
         addPower(new RegenPower(this));
         EventUtils.registerRoleEvent(this);
-        getGamePlayer().startChatWith("§cZetsu Noir:", "!");
+        getGamePlayer().startChatWith("§cZetsu Noir:", "!", ZetsuNoirV2.class, ZetsuBlancV4.class);
     }
 
     @EventHandler
