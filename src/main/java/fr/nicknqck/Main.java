@@ -240,7 +240,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BrickBlockListener(), this);
 		getServer().getPluginManager().registerEvents(new BetterItemListener(), this);
 		getServer().getPluginManager().registerEvents(new Lame(), this);
-		getServer().getPluginManager().registerEvents(new Arctridi(gameState), this);
 		getServer().getPluginManager().registerEvents(new Whitelist(gameState), this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);

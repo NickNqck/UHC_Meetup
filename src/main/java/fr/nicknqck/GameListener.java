@@ -8,6 +8,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.aot.builders.ArcTridimentionnelPower;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -210,18 +211,22 @@ public class GameListener implements Listener {
 					role = gameState.GiveRole(p);// (Ancien système de rôle)
 					//role = Main.getInstance().getRoleManager().getRandomRole(u);
                     if (role != null){
-                        role.RoleGiven(gameState);
-                        role.GiveItems();
-                        lastRoleGive = role;
+						if (role instanceof AotRoles) {
+							if (!gameState.rod) {
+								role.addPower(new ArcTridimentionnelPower(role), true);
+							} else {
+								role.giveItem(p, false, gameState.EquipementTridi());
+							}
+						}
+						role.RoleGiven(gameState);
+						role.GiveItems();
+						lastRoleGive = role;
 						if (Main.getInstance().getGameConfig().getDemonSlayerConfig().isGiveLame()) {
 							if (role instanceof DemonsSlayersRoles){
 								if (((DemonsSlayersRoles) role).isCanuseblade()){
 									role.giveItem(p, false, Items.getLamedenichirin());
 								}
 							}
-						}
-						if (role instanceof AotRoles) {
-							role.giveItem(p, false, gameState.EquipementTridi());
 						}
                         Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, role, role.getRoles(), role.getGamePlayer(), false));
                     }
