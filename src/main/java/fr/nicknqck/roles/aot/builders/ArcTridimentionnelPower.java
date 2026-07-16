@@ -19,9 +19,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +84,10 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
     private void onProjectileLaunch(@NonNull final ProjectileLaunchEvent event) {
         if (event.getEntity().getShooter() instanceof Player && event.getEntity() instanceof Arrow) {
             if (((Player) event.getEntity().getShooter()).getItemInHand().isSimilar(this.getItem())) {
+                final ItemStack bow = ((Player) event.getEntity().getShooter()).getItemInHand();
+                if(!bow.hasItemMeta())return;
+                if (!bow.getItemMeta().hasLore())return;
+                if (!bow.getItemMeta().getLore().equals(Arrays.asList(getDescriptions())))return;
                 //Si la personne a un titan
                 if (Main.getInstance().getTitanManager().hasTitan(((Player)event.getEntity().getShooter()).getUniqueId())) {
                     //Si la personne est transformé en titan
@@ -103,10 +109,14 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
     @EventHandler
     private void onProjectileHit(@NonNull final ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow && event.getEntity().getShooter() instanceof Player) {
+            if (!event.getEntity().hasMetadata("aot.arctridi."+this.getCooldown().getUniqueId()))return;
             if (!this.checkUse((Player) event.getEntity().getShooter(), new HashMap<>())) {
                 return;
             }
-            if (!event.getEntity().hasMetadata("aot.arctridi."+this.getCooldown().getUniqueId()))return;
+            final ItemStack bow = ((Player) event.getEntity().getShooter()).getItemInHand();
+            if(!bow.hasItemMeta())return;
+            if (!bow.getItemMeta().hasLore())return;
+            if (!bow.getItemMeta().getLore().equals(Arrays.asList(getDescriptions())))return;
             PotionUtils.addTempNoFall(((Player) event.getEntity().getShooter()).getUniqueId(), 1);
             final double distance = event.getEntity().getLocation().distance(((Player) event.getEntity().getShooter()).getLocation());
             final double gazToRemove = Math.max((Main.RANDOM.nextInt(2)+Main.RANDOM.nextDouble()), distance/8);
