@@ -14,20 +14,20 @@ public class AllDesc{
 	public final static String nuit = "§1nuit§r";
 	public final static String jour = "§ejour§r";
 	public final static String fireResi = "§6Fire Résistance§r";
-	public final static String bar = ChatColor.DARK_GRAY+"§o§m-----------------------------------§r";
+	public final static String bar = "§8§o§m-----------------------------------§r";
 	public final static String regen = "§dRégénération§r";
 	public final static String blind = "§1Blindness§r";
 	public final static String slow = "§9Slowness§r";
 	public final static String weak = "§7Weakness§r";
-	public final static String items = ChatColor.BOLD+"Items: ";
-	public final static String commande = ChatColor.BOLD + "Commande: ";
-	public final static String effet = ChatColor.BOLD+"Effet: ";
-	public final static String capacite = ChatColor.BOLD+"Capacité: ";
+	public final static String items = "§lItems: ";
+	public final static String commande = "§lCommande: ";
+	public final static String effet = "§lEffet: ";
+	public final static String capacite = "§lCapacité: ";
 	public final static String role = "§lRôle§r:§6 ";
 	public final static String point = "§8 • §r";
 	public final static String objectifteam = "§fVotre objectif est de gagner avec le camp: ";
 	public final static String objectifsolo = "§fVotre objectif est de gagner ";
-	public final static String particularite = ChatColor.BOLD + "Particularité: ";
+	public final static String particularite = "§lParticularité: ";
 	public static final String chakra = "Vous possédez la nature de Chakra: ";
 	public final static String tab = "§7     →";
 
