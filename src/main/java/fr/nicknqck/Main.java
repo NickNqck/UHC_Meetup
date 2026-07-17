@@ -96,6 +96,7 @@ public class Main extends JavaPlugin {
 	private FileConfiguration webhookConfig;
 
 	private WorldConfig worldConfig;
+	private InvManager invManager;
 
 	private WorldListener worldListener;
 
@@ -179,6 +180,7 @@ public class Main extends JavaPlugin {
 		this.pubManager.start();
 		this.schematicManager = new SchematicManager(this);
 		this.crystalManager = new CrystalManager();
+		this.invManager = new InvManager();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		debug("PubManager size = "+this.pubManager.size()+", toString -> "+this.pubManager.toString());
@@ -294,6 +296,7 @@ public class Main extends JavaPlugin {
 		getCommand("settings").setExecutor(settingsCommand);
 		Bukkit.getPluginManager().registerEvents(settingsCommand, this);
 		getCommand("info").setExecutor(new InfoCommand());
+		getCommand("inv").setExecutor(new InvCommand());
 	/*	getCommand("role").setExecutor(new RoleCommand());
 		getCommand("role").setTabCompleter(new RoleTabComplete());
 		getCommand("team").setExecutor(new TeamCommand());

@@ -56,3 +56,6 @@ commands:
   info:
     description: Permet d'obtenir vos propres informations
     usage: /info
+  inv:
+    description: Permet de configurer l'inventaire de départ
+    usage: /inv
