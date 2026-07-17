@@ -129,11 +129,14 @@ public class HubListener implements Listener {
 				int blockAmount = 0;
 				int eauAmount = 0;
 				int laveAmount = 0;
+				int amountGap = 0;
+				int amountArrow = 0;
 				for (Integer integer : map.keySet()) {
 					final ItemStack itemStack = map.get(integer);
 					if (itemStack == null)continue;
 					if (itemStack.getType().equals(Material.BRICK)) {
 						if (Main.getInstance().getGameConfig().getStuffConfig().getNmbblock() > blockAmount) {
+							itemStack.setAmount(64);
 							p.getInventory().setItem(integer, itemStack);
 							blockAmount++;
 							continue;
@@ -142,6 +145,7 @@ public class HubListener implements Listener {
 					}
 					if (itemStack.getType().equals(Material.WATER_BUCKET)) {
 						if (Main.getInstance().getGameConfig().getStuffConfig().getEau() > eauAmount) {
+							itemStack.setAmount(1);
 							p.getInventory().setItem(integer, itemStack);
 							eauAmount++;
 							continue;
@@ -150,6 +154,7 @@ public class HubListener implements Listener {
 					}
 					if (itemStack.getType().equals(Material.LAVA_BUCKET)) {
 						if (Main.getInstance().getGameConfig().getStuffConfig().getLave() > laveAmount) {
+							itemStack.setAmount(1);
 							p.getInventory().setItem(integer, itemStack);
 							laveAmount++;
 							continue;
@@ -157,12 +162,20 @@ public class HubListener implements Listener {
 						continue;
 					}
 					if (itemStack.getType().equals(Material.ARROW)) {
+						if (amountArrow == Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow()) {
+							continue;
+						}
 						itemStack.setAmount(Main.getInstance().getGameConfig().getStuffConfig().getNmbArrow());
+						amountArrow = itemStack.getAmount();
 						p.getInventory().setItem(integer, itemStack);
 						continue;
 					}
 					if (itemStack.getType().equals(Material.GOLDEN_APPLE)) {
+						if (amountGap == Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()) {
+							continue;
+						}
 						itemStack.setAmount(Main.getInstance().getGameConfig().getStuffConfig().getNmbGap());
+						amountGap = itemStack.getAmount();
 						p.getInventory().setItem(integer, itemStack);
 						continue;
 					}

@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -161,5 +163,15 @@ public final class InvManager implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onJoin(@NonNull final PlayerJoinEvent event) {
         this.configuring.remove(event.getPlayer().getUniqueId());
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onInteract(@NonNull final PlayerInteractEvent event) {
+        if (!this.configuring.contains(event.getPlayer().getUniqueId())) return;
+        event.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onInventoryClick(@NonNull final PlayerItemConsumeEvent event) {
+        if (!this.configuring.contains(event.getPlayer().getUniqueId())) return;
+        event.setCancelled(true);
     }
 }
