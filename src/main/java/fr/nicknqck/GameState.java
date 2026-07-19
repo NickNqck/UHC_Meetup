@@ -442,7 +442,7 @@ public class GameState{
                     role = new ZabuzaV2(player);
                     break;
                 case Jugo:
-                    role = new Jugo(player);
+                    role = new JugoV2(player);
                     break;
                 case Kakashi:
                     role = new KakashiV2(player);

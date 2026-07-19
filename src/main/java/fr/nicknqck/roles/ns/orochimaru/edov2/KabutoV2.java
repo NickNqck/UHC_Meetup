@@ -14,7 +14,7 @@ import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
-import fr.nicknqck.roles.ns.orochimaru.Jugo;
+import fr.nicknqck.roles.ns.orochimaru.JugoV2;
 import fr.nicknqck.roles.ns.orochimaru.KarinV2;
 import fr.nicknqck.roles.ns.orochimaru.KimimaroV2;
 import fr.nicknqck.utils.StringUtils;
@@ -132,7 +132,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         if (event.getRole() instanceof KarinV2 && !this.karinDEAD) {
             onKarinDeath();
         }
-        if (event.getRole() instanceof Jugo && !this.jugoDEAD) {
+        if (event.getRole() instanceof JugoV2 && !this.jugoDEAD) {
             onJugoDeath();
         }
         if (event.getRole() instanceof KimimaroV2 && !kimimaroDEAD) {
