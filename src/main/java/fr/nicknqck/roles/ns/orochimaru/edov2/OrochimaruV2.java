@@ -15,6 +15,7 @@ import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import lombok.Getter;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -38,6 +39,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
 
     private final ItemStack kusanagi = new ItemBuilder(Material.DIAMOND_SWORD).setName("§5Kusanagi").addEnchant(Enchantment.DAMAGE_ALL, 4).
         setLore("§7Vous permet d'avoir§c 25%§7 de§c chance§7 de voler la nature de chakra des joueurs que vous§c tuées").setUnbreakable(true).setDroppable(false).toItemStack();
+    @Getter
     private final List<EChakras> chakrasVoled = new ArrayList<>();
 
     public OrochimaruV2(UUID player) {

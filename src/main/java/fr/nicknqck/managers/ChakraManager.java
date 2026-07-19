@@ -3,7 +3,10 @@ package fr.nicknqck.managers;
 import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.interfaces.IChakraV2;
+import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.roles.ns.chakratype.*;
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.utils.event.EventUtils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -51,7 +54,20 @@ public class ChakraManager implements Listener {
     private void onCommand(@NonNull final PlayerCommandPreprocessEvent event) {
         String[] args = event.getMessage().split(" ");
         if (args[0].equalsIgnoreCase("/ns") && args.length == 2) {
+            GamePlayer gamePlayer = GamePlayer.of(event.getPlayer().getUniqueId());
+            if (gamePlayer == null)return;
+            if (!gamePlayer.check())return;
+            if (!(gamePlayer.getRole() instanceof NSRoles))return;
             for (IChakraV2 iChakraV2 : loadedChakra) {
+                if (!((NSRoles) gamePlayer.getRole()).getChakras().equals(iChakraV2.getChakraType())) {
+                    if (gamePlayer.getRole() instanceof OrochimaruV2) {
+                        if (!((OrochimaruV2) gamePlayer.getRole()).getChakrasVoled().contains(iChakraV2.getChakraType())) {
+                            continue;
+                        }
+                    } else {
+                        continue;
+                    }
+                }
                 if (iChakraV2.getArg0().equalsIgnoreCase(args[1])) {
                     iChakraV2.setActivateFor(event.getPlayer().getUniqueId(), !iChakraV2.isActivate(event.getPlayer().getUniqueId()));
                     if (iChakraV2.isActivate(event.getPlayer().getUniqueId())) {
