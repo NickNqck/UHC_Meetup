@@ -241,7 +241,7 @@ public class Sai extends ShinobiRoles implements Listener {
                 }
                 if (map.containsKey("target")) {
                     if (map.get("target") instanceof GamePlayer) {
-                        player.sendMessage("§7Vos "+getName()+"§7 partent àa la recherche de§a "+((GamePlayer) map.get("target")).getPlayerName());
+                        player.sendMessage("§7Vos "+getName()+"§7 partent à la recherche de§a "+((GamePlayer) map.get("target")).getPlayerName());
                         new SourisRunnable(this, (GamePlayer) map.get("target"));
                         player.closeInventory();
                         return true;
@@ -387,7 +387,7 @@ public class Sai extends ShinobiRoles implements Listener {
                                 player.sendMessage("§cIl vous est impossible de viser maitre§e Danzo§7.");
                                 return false;
                             }
-                            new SangsueRunnable(this, gamePlayer).runTaskTimer(getPlugin(), 1, 30);
+                            new SangsueRunnable(this, gamePlayer).runTaskTimer(getPlugin(), 1, 50);
                             player.sendMessage("§b"+gamePlayer.getPlayerName()+"§7 a été toucher par vos§c "+getName());
                             gamePlayer.sendMessage("§aSai§7 vous a toucher avec ses§c Sangsue§7.");
                             return true;
@@ -409,7 +409,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     this.sangsue = sangsue;
                     this.gameTarget = gameTarget;
                     this.maxPerCycle = 30.0;
-                    this.maxPerHeal = 4.0;
+                    this.maxPerHeal = 2.0;
                 }
 
                 @Override
