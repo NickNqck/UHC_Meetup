@@ -241,6 +241,7 @@ public class Sai extends ShinobiRoles implements Listener {
                 }
                 if (map.containsKey("target")) {
                     if (map.get("target") instanceof GamePlayer) {
+                        player.sendMessage("§7Vos "+getName()+"§7 partent àa la recherche de§a "+((GamePlayer) map.get("target")).getPlayerName());
                         new SourisRunnable(this, (GamePlayer) map.get("target"));
                         player.closeInventory();
                         return true;
@@ -402,11 +403,13 @@ public class Sai extends ShinobiRoles implements Listener {
                 private final GamePlayer gameTarget;
                 private double healObtained = 0.0;
                 private final double maxPerCycle;
+                private final double maxPerHeal;
 
                 private SangsueRunnable(Sangsue sangsue, GamePlayer gameTarget) {
                     this.sangsue = sangsue;
                     this.gameTarget = gameTarget;
                     this.maxPerCycle = 30.0;
+                    this.maxPerHeal = 4.0;
                 }
 
                 @Override
@@ -422,17 +425,21 @@ public class Sai extends ShinobiRoles implements Listener {
                     if (!this.sangsue.getRole().getGamePlayer().check())return;
                     final Player target = this.gameTarget.getPlayer();
                     final Player owner = this.sangsue.getRole().getGamePlayer().getPlayer();
-                    if (target.getHealth() - this.maxPerCycle > this.maxPerCycle+0.1) {
-                        final double dif = owner.getMaxHealth() - owner.getHealth();
-                        final double dif2 = this.maxPerCycle - healObtained;
-                        final double toHeal = Math.min(Math.min(dif, this.maxPerCycle), dif2);
+                    boolean needHealing = owner.getMaxHealth() - owner.getHealth() > 0;
+                    if (needHealing) {
+                        final double toHeal;
+                        if (this.maxPerHeal + this.healObtained > this.maxPerCycle) {
+                            toHeal = this.maxPerCycle - this.healObtained;
+                        } else {
+                            toHeal = this.maxPerHeal;
+                        }
+                        if (owner.getHealth() + toHeal > owner.getMaxHealth()) {return;}
+                        target.damage(0.0);
+                        target.setHealth(Math.max(0.1, target.getHealth()-toHeal));
+                        target.sendMessage("§7Votre§a vie§7 a été absorbé par les§a Sangsues§7 de§a Sai§7.");
+                        owner.sendMessage("§7Vous avez été§a soigné§7 par vos§a Sangsues§7.");
+                        owner.setHealth(owner.getHealth()+toHeal);
                         this.healObtained += toHeal;
-                        owner.setHealth(owner.getHealth() + toHeal);
-                        target.setHealth(target.getHealth() - toHeal);
-                        GlobalUtils.fakeDamage(target);
-                    }
-                    if (this.healObtained >= this.maxPerCycle) {
-                        cancel();
                     }
                 }
             }
@@ -459,6 +466,7 @@ public class Sai extends ShinobiRoles implements Listener {
                                 player.sendMessage("§cIl vous est impossible de viser maitre§e Danzo§7.");
                                 return false;
                             }
+                            player.sendMessage("§7Le "+getName()+"§7 a commencé, restez§c 10 secondes§7 proche de§a "+gamePlayer.getPlayerName()+"§7 pour que ce sois définitif§7.");
                             new ScellementRunnable(this, gamePlayer).runTaskTimerAsynchronously(getPlugin(), 1, 20);
                             return true;
                         }
