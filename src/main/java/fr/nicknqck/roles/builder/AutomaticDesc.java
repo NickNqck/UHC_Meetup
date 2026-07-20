@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.builder;
 
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.interfaces.IRole;
@@ -328,10 +329,48 @@ public class AutomaticDesc {
             ((NSRoles) this.role).getChakras();
             text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre niveau d'intelligence est:§a "+((NSRoles) this.role).getIntelligence().getName()));
             text.addExtra(fromLegacyTextSafe(
-                    "\n\n"+AllDesc.point+"§7Votre nature de chakra est: "+(this.role instanceof OrochimaruV2 ?
-                                    ((OrochimaruV2) this.role).getChakraString() :
-                                    ((NSRoles) this.role).getChakras().getShowedName()))
+                    "\n\n"+AllDesc.point+"§7Votre nature de chakra est: ")
             );
+            final List<EChakras> chakrasList = new ArrayList<>();
+            if (this.role instanceof OrochimaruV2) {
+                chakrasList.addAll(((OrochimaruV2) this.role).getChakrasVoled());
+            } else {
+                chakrasList.add(((NSRoles) this.role).getChakras());
+            }
+            boolean first = true;
+            for (EChakras eChakras : chakrasList) {
+                if (first) {
+                    final TextComponent toAdd = fromLegacyTextSafe(eChakras.getShowedName());
+                    if (eChakras.equals(EChakras.KATON)) {
+                        toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                                new TextComponent("§8 - §7Vous avez§c "+Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+"%§7 d'§6enflammer§7 les joueurs que vous frappez"),
+                                new TextComponent("\n\n§8 - §7Vous pouvez§a activer§7/§cdésactiver§7 cette§a nature de chakra§7 via la commande§6 /ns "+eChakras.name().toLowerCase()+"§7.")
+                        }));
+                    } else if (eChakras.equals(EChakras.FUTON)) {
+                        toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                                new TextComponent("§8 - §7Vous ne recevez§c aucun dégâts§7 de§a chute§7."),
+                                new TextComponent("\n\n§8 - §7Vous pouvez§a activer§7/§cdésactiver§7 cette§a nature de chakra§7 via la commande§6 /ns "+eChakras.name().toLowerCase()+"§7.")
+                        }));
+                    } else if (eChakras.equals(EChakras.DOTON)) {
+                        toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                                new TextComponent("§8 - §7Vous avez§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%§7 de ne pas subir les dégâts d'un coup."),
+                                new TextComponent("\n\n§8 - §7Vous pouvez§a activer§7/§cdésactiver§7 cette§a nature de chakra§7 via la commande§6 /ns "+eChakras.name().toLowerCase()+"§7.")
+                        }));
+                    } else if (eChakras.equals(EChakras.RAITON)) {
+                        toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                                new TextComponent("§8 - §7Vous avez§c "+Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+"%§7 de§a stun§7 pendant§c 0,5s§7 les joueurs que vous frappez"),
+                                new TextComponent("\n\n§8 - §7Vous pouvez§a activer§7/§cdésactiver§7 cette§a nature de chakra§7 via la commande§6 /ns "+eChakras.name().toLowerCase()+"§7.")
+                        }));
+                    } else if (eChakras.equals(EChakras.SUITON)) {
+                        toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
+                                new TextComponent("§8 - §7Dans l'§beau§7, vous avez l'enchantement§b Depth Strider I§7 sur vos§c bottes§7."),
+                                new TextComponent("\n\n§8 - §7Vous pouvez§a activer§7/§cdésactiver§7 cette§a nature de chakra§7 via la commande§6 /ns "+eChakras.name().toLowerCase()+"§7.")
+                        }));
+                    }
+                    this.text.addExtra(toAdd);
+                    first = false;
+                }
+            }
         }
         if (this.role instanceof AotRoles) {
             if (((AotRoles) this.role).isCanVoleTitan()) {
