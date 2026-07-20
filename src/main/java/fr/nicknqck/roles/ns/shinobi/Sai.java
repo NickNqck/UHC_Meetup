@@ -2,12 +2,11 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.EChakras;
-import fr.nicknqck.enums.Intelligence;
-import fr.nicknqck.enums.Roles;
-import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.enums.*;
+import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
+import fr.nicknqck.events.ns.GamePlayerBecomeHokageEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
@@ -44,14 +43,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class Sai extends ShinobiRoles implements Listener {
 
-    private boolean killSasuke = false;
+    private boolean unlocked = false;
 
     public Sai(UUID player) {
         super(player);
@@ -81,7 +82,7 @@ public class Sai extends ShinobiRoles implements Listener {
 
     @Override
     public @NonNull TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.killSasuke ? "" : "§7Si vous parvenez à tué§5 Sasuke§7,§e Danzo§7 obtiendra l'accès à la commande§c /ns sai§7, ce qui lui permettra de vous faire rejoindre son camp").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.unlocked ? "" : "§7Si vous parvenez à tué§5 Sasuke§7 ou que§e Danzo§7 réussi l'un de§c ses objectifs§7,§e il§7 obtiendra l'accès à la commande§c /ns sai§7, ce qui lui permettra de vous faire rejoindre son camp").getText();
     }
 
     @Override
@@ -98,7 +99,7 @@ public class Sai extends ShinobiRoles implements Listener {
         if (event.isCancelled())return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
             if (event.getRole() instanceof SasukeV2 || event.getRole() instanceof JubiSasuke) {
-                this.killSasuke = true;
+                this.unlocked = true;
                 for (@NonNull final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
                     if (!gamePlayer.check())continue;
                     if (gamePlayer.getRole() instanceof DanzoV2) {
@@ -110,7 +111,7 @@ public class Sai extends ShinobiRoles implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onCommand(@NonNull final PlayerCommandPreprocessEvent event) {
-        if (!this.killSasuke) return;
+        if (!this.unlocked) return;
         String message = event.getMessage();
         String[] args = message.split(" ");
         if (args[0].equalsIgnoreCase("/ns") && args.length == 2) {
@@ -122,15 +123,45 @@ public class Sai extends ShinobiRoles implements Listener {
                         if (gamePlayer.getRole() instanceof DanzoV2) {
                             //Si Danzo est infecté par Shisui alors, il ne peut plus changer de camp, donc on fait rejoindre à Sai ce camp-là
                             gamePlayer.getRole().setTeam(TeamList.Racine);
-                            setTeam(gamePlayer.getRole().getTeam());
+                            this.setTeam(gamePlayer.getRole().getTeam());
                             gamePlayer.sendMessage("§aSai§7 et vous faite maintenant la pair, la§a victoire§7 semble assuré !");
-                            getGamePlayer().sendMessage("§eDanzo§7 a reconnu votre valeur, vous pouvez enfin§a gagner§7 avec lui, il ne devrait pas vous trahir...");
+                            this.getGamePlayer().sendMessage("§eDanzo§7 a reconnu votre valeur, vous pouvez enfin§a gagner§7 avec lui, il ne devrait pas vous trahir...");
                         }
                     }
                 }
             }
         }
     }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    private void onBecomeHokage(@NonNull final GamePlayerBecomeHokageEvent event) {
+        if (!event.getHokage().check())return;
+        if (event.getHokage().getRole() instanceof DanzoV2 && !this.unlocked) {
+            event.getHokage().sendMessage("§7Vous êtes devenue le nouvel§a Hokage§7, si vous souhaitez que§a Saï§7 rejoigne votre§a camp§7, faite la commande§6 /ns sai§7.");
+            this.unlocked = true;
+        }
+    }
+    @EventHandler(priority = EventPriority.NORMAL)
+    private void onDeath(@NonNull final FinalDeathEvent event) {
+        if (event.getEntityKiller() == null)return;
+        @Nullable
+        final GamePlayer gamePlayer = GamePlayer.of(event.getEntityKiller().getUniqueId());
+        if (gamePlayer != null) {
+            if (gamePlayer.check()) {
+                if (gamePlayer.getRole() instanceof DanzoV2 && !this.unlocked) {
+                    final Map<PotionEffect, EffectWhen> danzoEffects = new HashMap<>(gamePlayer.getRole().getEffects());
+                    for (@NonNull PotionEffect potionEffect : danzoEffects.keySet()) {
+                        if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE) && danzoEffects.get(potionEffect).equals(EffectWhen.PERMANENT)) {
+                            this.unlocked = true;
+                            gamePlayer.getRole().getGamePlayer().sendMessage("§7En tuant ces maudits démon du clan§4§l Uchiwa§r§7, vous vous êtes souvenue que§a Sai§7 existe, faite la commande§6 /ns sai§7 pour le rallier à votre cause.");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private static final class ToileAuMonstreFantomatique extends ItemPower {
 
         @NonNull
@@ -558,7 +589,7 @@ public class Sai extends ShinobiRoles implements Listener {
         @Override
         public String[] getCustomPowerLore() {
             if (getRole() instanceof Sai) {
-                if (((Sai) getRole()).killSasuke) {
+                if (((Sai) getRole()).unlocked) {
                     return new String[] {
                             "§7En restant proche des autres joueurs pendant un temps définie en fonction de leurs§a intelligences§7",
                             "§7vous saurez dans quel camps ils sont parmi un§a vrai§7 et un§c faux§7."
@@ -596,7 +627,7 @@ public class Sai extends ShinobiRoles implements Listener {
                 if (gamePlayer == null)return;
                 if (!gamePlayer.check())return;
                 if (gamePlayer.getRole() instanceof Sai) {
-                    this.killSasuke = ((Sai) gamePlayer.getRole()).killSasuke;
+                    this.killSasuke = ((Sai) gamePlayer.getRole()).unlocked;
                 }
                 final Location location = gamePlayer.getLastLocation();
                 for (Player player : location.getWorld().getPlayers()) {
