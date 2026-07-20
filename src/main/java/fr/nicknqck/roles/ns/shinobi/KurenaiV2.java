@@ -80,6 +80,7 @@ public class KurenaiV2 extends ShinobiRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
+                .addCustomLine("§7Vous avez l'effet§c Force I§7 proche de§a Asuma§7.")
                 .getText();
     }
     private static class GenjutsuDesBoisPower extends ItemPower {
@@ -149,10 +150,10 @@ public class KurenaiV2 extends ShinobiRoles {
             private KurenaiRunnable(Player player, KurenaiV2 kurenai) {
                 this.initLocation = player.getLocation().clone();
                 this.owner = player.getUniqueId();
-                EventUtils.registerEvents(this);
+                EventUtils.registerRoleEvent(this);
                 this.armors = player.getInventory().getArmorContents();
                 this.kurenai = kurenai;
-                this.kurenai.getGamePlayer().setCanRevive(true);
+      //          this.kurenai.getGamePlayer().setCanRevive(true);
                 int i = 0;
                 for (ItemStack stack : player.getInventory().getContents()) {
                     if (stack != null && stack.getType() != Material.AIR){
@@ -175,6 +176,7 @@ public class KurenaiV2 extends ShinobiRoles {
                         player.sendMessage("§7Votre§c Genjutsu§7 est maintenant terminé.");
                         player.setGameMode(GameMode.SURVIVAL);
                         player.teleport(initLocation);
+                        this.kurenai.getGamePlayer().getActionBarManager().removeInActionBar("kurenai.runnable");
                         player.getInventory().clear();
                         player.getInventory().setArmorContents(armors);
                         getContents.keySet().stream().filter(z -> getContents.get(z).getAmount() > 0).filter(z -> getContents.get(z).getAmount() <= 64).forEach(z -> player.getInventory().setItem(z, getContents.get(z)));
@@ -192,6 +194,7 @@ public class KurenaiV2 extends ShinobiRoles {
             @EventHandler
             private void onUHCPlayerDie(@NonNull final UHCDeathEvent e){
                 if (e.getPlayer().getUniqueId().equals(owner) && timeRemaining > 0){
+                    Main.getInstance().debug("Kurenai is dead with a timeRemaining at "+this.timeRemaining);
                     e.getPlayer().getInventory().clear();
                     Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                         timeRemaining = 0;
@@ -206,6 +209,7 @@ public class KurenaiV2 extends ShinobiRoles {
                             System.out.println(timeRemaining+ " string "+StringUtils.secondsTowardsBeautiful(timeRemaining));
                         }
                     }, 21);
+                    e.setCancelled(true);
                 }
             }
         }
