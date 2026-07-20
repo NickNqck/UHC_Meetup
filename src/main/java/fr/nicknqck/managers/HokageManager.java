@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
+import fr.nicknqck.events.ns.GamePlayerBecomeHokageEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
@@ -122,7 +123,7 @@ public class HokageManager implements Listener {
                     GameListener.SendToEveryone(AllDesc.bar);
                     gamePlayer.sendMessage("§7Vous êtes devenue le nouvel§e Hokage§7, vous avez maintenant accès à la commande§e /ns boost <joueur>§7 qui donnera au joueurs visé§c +5§7 de§c Force§7 et de§9 Résistance",
                             "§7Vous avez maintenant également accès à la commande§6 /ns infos§7, ces deux commandes sont utilisable §c1x/partie");
-
+                    Main.getInstance().getServer().getPluginManager().callEvent(new GamePlayerBecomeHokageEvent(gamePlayer));
                 } else {
                     GameListener.SendToEveryone("§bLe conseil n'a trouver personne pour devenir le nouveau§e Hokage§b, le village est attristé par cette nouvelle.");
                     GameListener.SendToEveryone(AllDesc.bar);
