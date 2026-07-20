@@ -387,7 +387,7 @@ public class Sai extends ShinobiRoles implements Listener {
                                 player.sendMessage("§cIl vous est impossible de viser maitre§e Danzo§7.");
                                 return false;
                             }
-                            new SangsueRunnable(this, gamePlayer).runTaskTimer(getPlugin(), 1, 50);
+                            new SangsueRunnable(this, gamePlayer).runTaskTimer(getPlugin(), 1, 80);
                             player.sendMessage("§b"+gamePlayer.getPlayerName()+"§7 a été toucher par vos§c "+getName());
                             gamePlayer.sendMessage("§aSai§7 vous a toucher avec ses§c Sangsue§7.");
                             return true;
@@ -423,16 +423,16 @@ public class Sai extends ShinobiRoles implements Listener {
                         return;
                     }
                     if (!this.sangsue.getRole().getGamePlayer().check())return;
+                    if (this.healObtained >= this.maxPerCycle) {
+                        cancel();
+                        return;
+                    }
                     final Player target = this.gameTarget.getPlayer();
                     final Player owner = this.sangsue.getRole().getGamePlayer().getPlayer();
-                    boolean needHealing = owner.getMaxHealth() - owner.getHealth() > 0;
-                    if (needHealing) {
-                        final double toHeal;
-                        if (this.maxPerHeal + this.healObtained > this.maxPerCycle) {
-                            toHeal = this.maxPerCycle - this.healObtained;
-                        } else {
-                            toHeal = this.maxPerHeal;
-                        }
+                    double missingHealth = owner.getMaxHealth() - owner.getHealth();
+                    if (missingHealth > 0.0) {
+                        double toHeal = Math.min(this.maxPerHeal, this.maxPerCycle - this.healObtained);
+                        toHeal = Math.min(toHeal, missingHealth);
                         if (owner.getHealth() + toHeal > owner.getMaxHealth()) {return;}
                         target.damage(0.0);
                         target.setHealth(Math.max(0.1, target.getHealth()-toHeal));
