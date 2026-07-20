@@ -1,4 +1,4 @@
-package fr.nicknqck.events.custom.assassin;
+package fr.nicknqck.events.ds;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.player.GamePlayer;
@@ -7,7 +7,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

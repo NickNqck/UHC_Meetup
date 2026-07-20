@@ -1,4 +1,4 @@
-package fr.nicknqck.events.custom;
+package fr.nicknqck.events.ds;
 
 import lombok.Getter;
 import lombok.NonNull;

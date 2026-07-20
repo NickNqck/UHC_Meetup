@@ -1,26 +1,23 @@
-package fr.nicknqck.events.custom.assassin;
+package fr.nicknqck.events.ds;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.player.GamePlayer;
-import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import lombok.Getter;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 @Getter
-public class ProcAssassinEvent extends Event {
+public class ChooseAssassinEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
-
+    private final GamePlayer gamePlayer;
     private final GameState gameState;
-    private final GamePlayer assassin;
-    private final DemonsRoles role;
 
-    public ProcAssassinEvent(GameState gameState, GamePlayer assassin, DemonsRoles role) {
+    public ChooseAssassinEvent(GamePlayer gamePlayer, GameState gameState) {
+        this.gamePlayer = gamePlayer;
         this.gameState = gameState;
-        this.assassin = assassin;
-        this.role = role;
     }
+
 
     public static HandlerList getHandlerList() {
         return handlers;

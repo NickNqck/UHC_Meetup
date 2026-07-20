@@ -1,4 +1,4 @@
-package fr.nicknqck.events.custom.roles.ds;
+package fr.nicknqck.events.ds;
 
 import fr.nicknqck.events.custom.GameEvent;
 import lombok.Getter;

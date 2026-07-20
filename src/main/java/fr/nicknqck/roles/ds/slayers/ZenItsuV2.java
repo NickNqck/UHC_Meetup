@@ -5,7 +5,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.NightEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
-import fr.nicknqck.events.custom.roles.ds.JigoroV2ChoosePacteEvent;
+import fr.nicknqck.events.ds.JigoroV2ChoosePacteEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
