@@ -84,7 +84,6 @@ public class SuperSusanoPower extends ItemPower {
         private ParticleLine particleLine;
         private ParticleCircle circle;
         private ParticleCircle circle2;
-        private ParticleCircle circle3;
 
         @Setter
         @Getter
@@ -131,9 +130,6 @@ public class SuperSusanoPower extends ItemPower {
             if (this.circle != null) {
                 this.circle.stop();
             }
-            if (this.circle3 != null) {
-                this.circle3.stop();
-            }
             if (this.particleLine != null) {
                 this.particleLine.stop();
             }
@@ -152,7 +148,7 @@ public class SuperSusanoPower extends ItemPower {
                 clone.setY(y);
                 list.add(new LocationSafe(clone));
             }
-            final ParticleLine line = new ParticleLine(purple, 10, list.toArray(new LocationSafe[0]));
+            final ParticleLine line = new ParticleLine(purple, 5, list.toArray(new LocationSafe[0]));
             line.display();
             if (this.particleLine != null) {
                 this.particleLine.stop();
@@ -166,7 +162,7 @@ public class SuperSusanoPower extends ItemPower {
                     0,
                     player.getLocation().getYaw(),
                     0,
-                    12)
+                    7)
                     .setLimit(40);
             if (this.circle != null) {
                 this.circle.stop();
@@ -180,26 +176,12 @@ public class SuperSusanoPower extends ItemPower {
                     0,
                     player.getLocation().getYaw(),
                     0,
-                    12)
+                    7)
                     .setLimit(40);
             if (this.circle2 != null) {
                 this.circle2.stop();
             }
             this.circle2 = circle2;
-            @NonNull final ParticleCircle circle3 = new ParticleCircle(
-                    this.purple,
-                    new LocationSafe(a.clone().add(0.0, 2.0, 0.0)),
-                    1,
-                    1,
-                    0,
-                    player.getLocation().getYaw(),
-                    0,
-                    12)
-                    .setLimit(40);
-            if (this.circle3 != null) {
-                this.circle3.stop();
-            }
-            this.circle3 = circle3;
         }
     }
 }
