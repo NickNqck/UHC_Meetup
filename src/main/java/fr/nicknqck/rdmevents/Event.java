@@ -1,6 +1,5 @@
-package fr.nicknqck.events.ds;
+package fr.nicknqck.rdmevents;
 
-import fr.nicknqck.events.IEvent;
 import fr.nicknqck.utils.StringUtils;
 import lombok.Getter;
 import lombok.Setter;

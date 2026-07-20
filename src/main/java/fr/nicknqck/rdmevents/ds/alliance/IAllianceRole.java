@@ -1,4 +1,4 @@
-package fr.nicknqck.events.ds.alliance;
+package fr.nicknqck.rdmevents.ds.alliance;
 
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 

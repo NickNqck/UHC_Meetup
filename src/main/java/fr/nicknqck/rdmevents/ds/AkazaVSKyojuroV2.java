@@ -1,4 +1,4 @@
-package fr.nicknqck.events.ds;
+package fr.nicknqck.rdmevents.ds;
 
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
@@ -6,6 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
+import fr.nicknqck.rdmevents.Event;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.ds.demons.lune.Akaza;

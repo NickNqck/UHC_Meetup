@@ -1,4 +1,4 @@
-package fr.nicknqck.events.ds.dkt;
+package fr.nicknqck.rdmevents.ds.dkt;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;

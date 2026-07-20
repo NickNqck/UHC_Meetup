@@ -6,7 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.StunType;
-import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.rdmevents.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.interfaces.IRole;

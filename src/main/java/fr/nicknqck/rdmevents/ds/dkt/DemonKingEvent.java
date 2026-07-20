@@ -1,10 +1,10 @@
-package fr.nicknqck.events.ds.dkt;
+package fr.nicknqck.rdmevents.ds.dkt;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.rdmevents.Event;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.TeamList;

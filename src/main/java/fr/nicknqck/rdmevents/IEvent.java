@@ -1,4 +1,4 @@
-package fr.nicknqck.events;
+package fr.nicknqck.rdmevents;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.interfaces.IMDJ;

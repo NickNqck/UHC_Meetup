@@ -1,4 +1,4 @@
-package fr.nicknqck.events.ns;
+package fr.nicknqck.rdmevents.ns;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
@@ -7,7 +7,7 @@ import fr.nicknqck.events.custom.EffectGiveEvent;
 import fr.nicknqck.events.custom.ResistancePatchEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.TeamChangeEvent;
-import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.rdmevents.Event;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
