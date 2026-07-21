@@ -12,10 +12,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -24,6 +28,7 @@ import java.util.UUID;
  * Chaque joueur possède sa propre {@link PlayerTab} avec :
  *  - Prefix/suffix/color personnalisés par cible
  *  - Option de conserver les joueurs déconnectés dans la tab
+ *  - Masquage automatique du pseudo des joueurs invisibles (aux yeux des autres)
  * <p>
  * Utilisation :
  * <pre>
@@ -42,9 +47,17 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 public class CustomTabManager implements Listener {
 
+    /** Intervalle (en ticks) entre chaque vérification d'invisibilité */
+    private static final long INVISIBILITY_CHECK_INTERVAL = 10L;
+
     /** Map viewer UUID → son tab personnalisé */
     @Getter
     private final Map<UUID, PlayerTab> playerTabs = new HashMap<>();
+
+    /** UUID des joueurs actuellement invisibles (pour détecter les changements d'état) */
+    private final Set<UUID> invisiblePlayers = new HashSet<>();
+
+    private BukkitRunnable invisibilityTask;
 
     public CustomTabManager() {
         Bukkit.getPluginManager().registerEvents(this, Main.getInstance());
@@ -52,6 +65,7 @@ public class CustomTabManager implements Listener {
         for (final Player online : Bukkit.getOnlinePlayers()) {
             initTab(online);
         }
+        startInvisibilityWatcher();
     }
 
     // ── API publique ─────────────────────────────────────────────────────────
@@ -163,6 +177,64 @@ public class CustomTabManager implements Listener {
         }
     }
 
+    // ── Invisibilité ─────────────────────────────────────────────────────────
+
+    /**
+     * Démarre la tâche qui surveille l'état d'invisibilité de chaque joueur
+     * et masque/affiche son pseudo dans le tab des AUTRES joueurs en conséquence.
+     * Le joueur invisible continue de se voir lui-même dans son propre tab.
+     */
+    private void startInvisibilityWatcher() {
+        invisibilityTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (final Player player : Bukkit.getOnlinePlayers()) {
+                    final UUID uuid = player.getUniqueId();
+                    final boolean isInvisible = player.hasPotionEffect(PotionEffectType.INVISIBILITY);
+                    final boolean wasInvisible = invisiblePlayers.contains(uuid);
+
+                    if (isInvisible == wasInvisible) continue; // pas de changement d'état
+
+                    if (isInvisible) {
+                        invisiblePlayers.add(uuid);
+                        hideFromOtherTabs(player);
+                    } else {
+                        invisiblePlayers.remove(uuid);
+                        showInOtherTabs(player);
+                    }
+                }
+            }
+        };
+        invisibilityTask.runTaskTimer(Main.getInstance(), INVISIBILITY_CHECK_INTERVAL, INVISIBILITY_CHECK_INTERVAL);
+    }
+
+    /**
+     * Retire le pseudo de {@code player} du tab de tous les AUTRES viewers.
+     * Le tab de {@code player} lui-même n'est pas modifié : il se voit toujours.
+     */
+    private void hideFromOtherTabs(Player player) {
+        final UUID targetUUID = player.getUniqueId();
+        for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
+            if (entry.getKey().equals(targetUUID)) continue; // le joueur se voit toujours lui-même
+            entry.getValue().removeEntry(targetUUID);
+            entry.getValue().apply();
+        }
+    }
+
+    /**
+     * Réaffiche le pseudo de {@code player} dans le tab de tous les AUTRES viewers.
+     */
+    private void showInOtherTabs(Player player) {
+        final UUID targetUUID = player.getUniqueId();
+        for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
+            if (entry.getKey().equals(targetUUID)) continue;
+            final TabEntry tabEntry = new TabEntry(targetUUID, player.getName());
+            tabEntry.setGameProfile(((CraftPlayer) player).getHandle().getProfile());
+            entry.getValue().upsertEntry(tabEntry);
+            entry.getValue().apply();
+        }
+    }
+
     // ── Listeners ────────────────────────────────────────────────────────────
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -170,7 +242,8 @@ public class CustomTabManager implements Listener {
         final Player joined = event.getPlayer();
         initTab(joined);
 
-        // Ajouter le nouveau joueur dans le tab de tous les viewers existants
+        // Le joueur qui rejoint n'est jamais invisible à la connexion,
+        // donc il est ajouté dans le tab de tous les viewers existants
         for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
             if (entry.getKey().equals(joined.getUniqueId())) continue;
             final TabEntry tabEntry = new TabEntry(joined.getUniqueId(), joined.getName());
@@ -189,6 +262,9 @@ public class CustomTabManager implements Listener {
             tab.markOffline(quitUUID);
         }
 
+        // Le joueur ne fait plus partie du suivi d'invisibilité
+        invisiblePlayers.remove(quitUUID);
+
         // Supprimer le tab du joueur qui part (ses données viewers disparaissent)
         playerTabs.remove(quitUUID);
     }
@@ -197,11 +273,18 @@ public class CustomTabManager implements Listener {
 
     /**
      * Crée le {@link PlayerTab} d'un joueur et y ajoute tous les joueurs en ligne.
+     * Les joueurs actuellement invisibles ne sont pas ajoutés (sauf soi-même).
      */
     private void initTab(Player player) {
         final PlayerTab tab = new PlayerTab(player.getUniqueId());
 
         for (final Player online : Bukkit.getOnlinePlayers()) {
+            // Ne pas ajouter les joueurs invisibles dans le tab des autres
+            if (!online.getUniqueId().equals(player.getUniqueId())
+                    && invisiblePlayers.contains(online.getUniqueId())) {
+                continue;
+            }
+
             final TabEntry entry = new TabEntry(online.getUniqueId(), online.getName());
             entry.setGameProfile(((CraftPlayer) online).getHandle().getProfile());
             tab.upsertEntry(entry);
