@@ -56,7 +56,7 @@ public class CustomTabManager implements Listener {
 
     /** UUID des joueurs actuellement invisibles (pour détecter les changements d'état) */
     private final Set<UUID> invisiblePlayers = new HashSet<>();
-
+    @Getter
     private BukkitRunnable invisibilityTask;
 
     public CustomTabManager() {
