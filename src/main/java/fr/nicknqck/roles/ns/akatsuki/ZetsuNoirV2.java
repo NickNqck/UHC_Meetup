@@ -199,7 +199,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
             this.runnable.cancel();
             this.runnable = null;
             cooldown.use();
-            getRole().getGamePlayer().getActionBarManager().removeInActionBar("zabuza.invisibilite");
+            getRole().getGamePlayer().getActionBarManager().removeInActionBar("zetsu.invisibilite");
         }
 
         private static class InvisibiliteRunnable extends BukkitRunnable {
