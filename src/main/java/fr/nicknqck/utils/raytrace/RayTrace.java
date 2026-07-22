@@ -125,4 +125,25 @@ public class RayTrace
         }
         return null;
     }
+    public static Player getTargetPlayer(Player player, double distanceMax, final double accuracy) {
+        final RayTrace rayTrace = new RayTrace(player.getEyeLocation().toVector(), player.getEyeLocation().getDirection());
+        final List<Vector> positions = rayTrace.traverse(distanceMax, accuracy);
+        for (Vector vector : positions) {
+            final Location position = vector.toLocation(player.getWorld());
+            final Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
+            if (fr.nicknqck.commands.SettingsCommand.getRoleParticleViewers().contains(player.getUniqueId())) {
+                fr.nicknqck.utils.particles.MathUtil.sendParticleTo(player, EnumParticle.VILLAGER_HAPPY, position);
+            }
+            for (Entity entity : entities) {
+                if (entity instanceof Player && entity != player && rayTrace.intersects(new BoundingBox(entity), distanceMax, 0.01)) {
+                    final Player target = (Player) entity;
+                    if (target.getGameMode().equals(GameMode.SPECTATOR) || target.getGameMode().equals(GameMode.CREATIVE)) {
+                        continue;
+                    }
+                    return target;
+                }
+            }
+        }
+        return null;
+    }
 }

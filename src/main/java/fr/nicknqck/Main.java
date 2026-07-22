@@ -101,6 +101,7 @@ public class Main extends JavaPlugin {
 	private WorldListener worldListener;
 
 	private boolean goodServer;
+	private boolean lunarEnabled = false;
 
 	private EventsManager eventsManager;
 
@@ -185,6 +186,9 @@ public class Main extends JavaPlugin {
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		debug("PubManager size = "+this.pubManager.size()+", toString -> "+this.pubManager.toString());
+		if (Bukkit.getPluginManager().isPluginEnabled("Apollo-Bukkit")) {
+			this.lunarEnabled = true;
+		}
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
