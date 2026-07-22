@@ -14,7 +14,6 @@ import java.awt.*;
 public final class ShowGlowingRunnable extends BukkitRunnable {
 
     private final ItemPower itemPower;
-    @Getter
     private Player target = null;
     private boolean glowing = false;
 
@@ -71,4 +70,10 @@ public final class ShowGlowingRunnable extends BukkitRunnable {
         this.glowing = true;
     }
 
+    public Player getTarget() {
+        if (!Main.getInstance().isLunarEnabled()) {
+            this.target = RayTrace.getTargetPlayer(this.itemPower.getRole().getGamePlayer().getPlayer(), this.itemPower.getTargetDistance(), null);
+        }
+        return target;
+    }
 }
