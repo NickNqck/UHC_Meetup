@@ -64,6 +64,7 @@ public final class ShowGlowingRunnable extends BukkitRunnable {
 
         // Si une cible est trouvée et qu'Apollo est activé, on applique le Glow
         if (!this.glowing) {
+            if (this.itemPower.getCooldown() != null && this.itemPower.getCooldown().isInCooldown())return;
             LunarHandler.setGlow(owner, playerTarget.getUniqueId());
         }
 

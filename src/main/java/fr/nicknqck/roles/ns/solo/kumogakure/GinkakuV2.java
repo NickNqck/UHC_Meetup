@@ -284,12 +284,13 @@ public class GinkakuV2 extends KumogakureRole {
         protected CordeOrPower(@NonNull RoleBase role) {
             super("Corde d'or", new Cooldown(180), new ItemBuilder(Material.NETHER_STAR).setName("§6Corde d'or"), role,
                     "§7En visant un joueur, le repousse en l'air, puis, lorsqu'il atterrit, l'empêche de bouger pendant§c 5s§7.§7 (1x/3m)");
+            setTargetDistance(25);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 25, null);
+                final Player target = getShowGlowingRunnable().getTarget();
                 if (target != null) {
                     new PropulserUtils(player, 30).setNoFall(true).applyPropulsion(target);
                     new TargetFallChecker(getRole().getGameState()).starter(target.getUniqueId());
