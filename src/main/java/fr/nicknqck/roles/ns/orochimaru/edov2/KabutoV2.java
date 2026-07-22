@@ -22,7 +22,6 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -208,6 +207,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
             this.toHeal = 4.0;
             this.gaucheCD = new Cooldown(90);
             this.droiteCD = new Cooldown(120);
+            setTargetDistance(30);
         }
 
         @Override
@@ -229,7 +229,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
                         player.sendMessage("§cImpossible de soigner un autre joueur, vous êtes en cooldown:§b "+StringUtils.secondsTowardsBeautiful(this.droiteCD.getCooldownRemaining()));
                         return false;
                     }
-                    final Player target = RayTrace.getTargetPlayer(player, 30, null);
+                    final Player target = getShowGlowingRunnable().getTarget();
                     if (target == null) {
                         player.sendMessage("§cIl faut viser un joueur !");
                         return false;

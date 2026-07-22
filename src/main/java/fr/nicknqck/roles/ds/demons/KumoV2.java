@@ -17,7 +17,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -158,12 +157,13 @@ public class KumoV2 extends DemonInferieurRole {
         public CoconPower(@NonNull RoleBase role) {
             super("Cocon", new Cooldown(60*5), new ItemBuilder(Material.STRING).setName("§cCocon"), role,
                     "§7En visant un joueur, vous permet de lui mettre des§c cobweb§7 la ou il est.");
+            setTargetDistance(25);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 25, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;

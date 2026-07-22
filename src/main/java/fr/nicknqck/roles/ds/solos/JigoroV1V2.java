@@ -20,7 +20,6 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -162,6 +161,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                     "§7Faites jaillir un arc d’éclairs convergeant vers votre§c cible§7, une fois atteint,",
                     "§7vous vous§c téléporterez§7 derrière elle et elle obtiendra§c 10 secondes§7 de§c Slowness I§7.");
             EventUtils.registerRoleEvent(this);
+            setTargetDistance(30);
         }
 
         @Override
@@ -175,7 +175,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                     if (!player.getItemInHand().hasItemMeta()) return false;
                     if (!"§eOrage Brûlant".equals(player.getItemInHand().getItemMeta().getDisplayName())) return false;
 
-                    Player target = RayTrace.getTargetPlayer(player, 30, null);
+                    Player target = getShowGlowingRunnable().getTarget();
                     if (target == null) {
                         player.sendMessage("§cAucun joueur trouvé dans votre ligne de mire.");
                         return false;

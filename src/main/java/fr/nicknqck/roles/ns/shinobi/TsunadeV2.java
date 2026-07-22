@@ -20,7 +20,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -102,6 +101,7 @@ public class TsunadeV2 extends HShinobiRoles {
                     "§7tandis que si vous utilisez le§c clique gauche§7 en visant un joueur§7, il sera§d soigner§7 (distance maximal:§c 10m§7)."*/
             );
             EventUtils.registerRoleEvent(this);
+            setTargetDistance(10);
         }
 
         @Override
@@ -124,7 +124,7 @@ public class TsunadeV2 extends HShinobiRoles {
                             this.stocked = 0.0;
                         }
                     } else {
-                        final Player target = RayTrace.getTargetPlayer(player, 10.0, null);
+                        final Player target = getShowGlowingRunnable().getTarget();
                         if (target == null) {
                             player.sendMessage("§cIl faut viser un joueur !");
                             return false;

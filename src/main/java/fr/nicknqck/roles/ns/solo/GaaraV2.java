@@ -19,7 +19,6 @@ import fr.nicknqck.utils.particles.TapisSableEffect;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -493,11 +492,13 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
             if (this.attaque == null) {
                 getShowCdRunnable().setCustomTexte("§cAucun pouvoir n'a été sélectionné");
             } else {
+                setTargetDistance(0);
                 if (this.attaque.equals(Attaque.LANCE)) {
                     getShowCdRunnable().setCustomTexte("§cLance§7 est actuellement équiper");
                 } else if (this.attaque.equals(Attaque.TSUNAMI)) {
                     getShowCdRunnable().setCustomTexte("§eTsunami de sable§7 est actuellement équiper");
                 } else if (this.attaque.equals(Attaque.SARCOPHAGE)) {
+                    setTargetDistance(10);
                     getShowCdRunnable().setCustomTexte("§eSarcophage de sable§7 est actuellement équiper");
                 }
             }
@@ -601,7 +602,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                 return true;
             }
             private void useSarcophage(Player player) {
-                Player target = RayTrace.getTargetPlayer(player, 10, null);
+                Player target = this.attackPower.getShowGlowingRunnable().getTarget();
                 if(target != null){
                     Location min = target.getLocation().clone().subtract(2, 1, 2), max = target.getLocation().clone().add(2, 5, 2);
 

@@ -16,7 +16,6 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -119,12 +118,13 @@ public class Tayuya extends OrochimaruRoles {
                     "§7Si l'un de vos§c golems§7 est à plus de§c 35 blocs§7 de la§c cible§7 ou dans l'§beau§7 alors il sera téléporter autours de la personne"
             );
             EventUtils.registerRoleEvent(this);
+            setTargetDistance(50);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 50, null);
+                final Player target = getShowGlowingRunnable().getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur.");
                     return false;
@@ -205,10 +205,10 @@ public class Tayuya extends OrochimaruRoles {
                     return;
                 }
                 if (!target.getWorld().equals(ironGolem.getWorld())) {
-                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 10)));
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 8)));
                 } else {
-                    if (ironGolem.getLocation().distance(target.getLocation()) > 35.0 || ironGolem.getLocation().getBlock().getType().name().contains("WATER")) {
-                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 10)));
+                    if (ironGolem.getLocation().distance(target.getLocation()) > 28.0 || ironGolem.getLocation().getBlock().getType().name().contains("WATER")) {
+                        Bukkit.getScheduler().runTask(Main.getInstance(), () -> ironGolem.teleport(Loc.getRandomLocationAroundPlayer(this.target, 8)));
                     }
                 }
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.ironGolem.setTarget(this.target));

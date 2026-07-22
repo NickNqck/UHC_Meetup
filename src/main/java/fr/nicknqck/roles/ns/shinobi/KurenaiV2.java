@@ -16,7 +16,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -90,12 +89,13 @@ public class KurenaiV2 extends ShinobiRoles {
                     "§7En ciblant un joueur, vous permet de le§a stun§7 pendant§c 5 secondes§7.",
                     "",
                     "§7Après ceci, vous serez téléporter derrière la personne, également, il subira§c 3❤§7 de§c dégâts§7.");
+            setTargetDistance(30);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                Player target = RayTrace.getTargetPlayer(player, 30, null);
+                Player target = getShowGlowingRunnable().getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;

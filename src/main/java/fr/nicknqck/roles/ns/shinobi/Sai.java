@@ -29,7 +29,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -190,8 +189,8 @@ public class Sai extends ShinobiRoles implements Listener {
             setShowCdInDesc(false);
             setSendCooldown(false);
             this.sourisMessagere = new SourisMessagere(role);
-            this.sangsue = new Sangsue(role);
-            this.scellementDePapier = new ScellementDePapier(role);
+            this.sangsue = new Sangsue(this);
+            this.scellementDePapier = new ScellementDePapier(this);
             getShowCdRunnable().setCustomText(true);
         }
 
@@ -238,18 +237,21 @@ public class Sai extends ShinobiRoles implements Listener {
                 player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
+                setTargetDistance(0);
             });
             fastInv.setItem(13, new ItemBuilder(Material.REDSTONE).setName("§cSangsue").toItemStack(), event -> {
                 this.equipedPower = sangsue;
                 player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
+                setTargetDistance(30);
             });
             fastInv.setItem(15, new ItemBuilder(Material.PAPER).setName("§aScellement dans le papier").toItemStack(), event -> {
                 this.equipedPower = scellementDePapier;
                 player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
+                setTargetDistance(20);
             });
             fastInv.open(player);
         }
@@ -401,15 +403,18 @@ public class Sai extends ShinobiRoles implements Listener {
         }
         private static final class Sangsue extends Power {
 
-            public Sangsue(@NonNull RoleBase role) {
-                super("§cSangsue", new Cooldown(60*5), role);
+            private final ToileAuMonstreFantomatique toileAuMonstreFantomatique;
+
+            public Sangsue(@NonNull ToileAuMonstreFantomatique toileAuMonstreFantomatique) {
+                super("§cSangsue", new Cooldown(60*5), toileAuMonstreFantomatique.getRole());
                 setShowInDesc(false);
-                role.addPower(this);
+                getRole().addPower(this);
+                this.toileAuMonstreFantomatique = toileAuMonstreFantomatique;
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 30.0, null);
+                final Player target = this.toileAuMonstreFantomatique.getShowGlowingRunnable().getTarget();
                 if (target != null) {
                     final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {
@@ -477,18 +482,20 @@ public class Sai extends ShinobiRoles implements Listener {
         }
         private static final class ScellementDePapier extends Power implements Listener {
 
+            private final ToileAuMonstreFantomatique toileAuMonstreFantomatique;
             private UUID targetUUID = null;
 
-            public ScellementDePapier(@NonNull RoleBase role) {
-                super("§aScellement de papier", null, role);
+            public ScellementDePapier(@NonNull ToileAuMonstreFantomatique toileAuMonstreFantomatique) {
+                super("§aScellement de papier", null, toileAuMonstreFantomatique.getRole());
                 setShowInDesc(false);
                 setMaxUse(1);
-                role.addPower(this);
+                getRole().addPower(this);
+                this.toileAuMonstreFantomatique = toileAuMonstreFantomatique;
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 20.0, null);
+                final Player target = this.toileAuMonstreFantomatique.getShowGlowingRunnable().getTarget();
                 if (target != null) {
                     final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {

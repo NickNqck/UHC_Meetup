@@ -27,7 +27,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -107,6 +106,7 @@ public class EnmuV2 extends DemonsRoles {
             this.arena = getWorld();
             clearArena();
             setMaxUse(1);
+            setTargetDistance(30);
         }
 
         private World getWorld() {
@@ -186,7 +186,7 @@ public class EnmuV2 extends DemonsRoles {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 30, Objects::nonNull);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;
@@ -481,6 +481,11 @@ public class EnmuV2 extends DemonsRoles {
 
         @Override
         public void tryUpdateActionBar() {
+            if (this.cliqueDroit.getCooldown().isInCooldown()) {
+                setTargetDistance(0);
+            } else {
+                setTargetDistance(20);
+            }
             getShowCdRunnable().setCustomTexte((this.cliqueDroit.getCooldown().isInCooldown() ?
                     "§fClique droit: §c"+ StringUtils.secondsTowardsBeautiful(this.cliqueDroit.getCooldown().getCooldownRemaining()) :
                     "§fClique droit est§c utilisable") + "§7 | " + (this.cliqueGauche.getCooldown().isInCooldown() ?
@@ -493,11 +498,12 @@ public class EnmuV2 extends DemonsRoles {
             public CliqueDroit(@NonNull RoleBase role) {
                 super("§cEndormissement§7 (§fClique droit§7)", new Cooldown(60*10), role);
                 setShowInDesc(false);
+                setTargetDistance(20);
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 20, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;

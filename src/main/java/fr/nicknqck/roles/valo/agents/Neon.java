@@ -119,12 +119,13 @@ public class Neon extends RoleBase {
         protected EclairRelaisPower(@NonNull RoleBase role) {
             super("§bÉclair Relais", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bÉclair Relais"), role,
                     "§7En visant un §cjoueur§7 vous permet de le ralentir lui ainsi que les autres joueurs proche de lui pendant§c 15 secondes§7");
+            setTargetDistance(25);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = getRole().getTargetPlayer(player, 25.0);
+                final Player target = getTarget();
                 if (target != null) {
                     final List<Player> arounds1 = new ArrayList<>(Loc.getNearbyPlayers(player, 25));
                     final StringBuilder stringBuilder = new StringBuilder("§7Voici la liste des personnes autours de vous:\n\n");

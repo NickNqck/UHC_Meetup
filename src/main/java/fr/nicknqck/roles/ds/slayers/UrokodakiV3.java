@@ -17,7 +17,6 @@ import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -88,12 +87,13 @@ public class UrokodakiV3 extends SlayerRoles {
                     "§7En visant un joueur, vous propulse dans sa direction puis, lui fait perdre§c 2❤ non permanents§7 et",
                     "§7lui donne pendant§c 10 secondes§7 l'effet§c Slowness II§7.");
             EventUtils.registerRoleEvent(this);
+            setTargetDistance(20);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 20, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur");
                     return false;

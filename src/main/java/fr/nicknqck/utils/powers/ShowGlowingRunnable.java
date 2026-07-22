@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.utils.LunarHandler;
 import fr.nicknqck.utils.raytrace.RayTrace;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -14,7 +13,6 @@ import java.awt.*;
 public final class ShowGlowingRunnable extends BukkitRunnable {
 
     private final ItemPower itemPower;
-    private Player target = null;
     private boolean glowing = false;
 
     public ShowGlowingRunnable(ItemPower itemPower) {
@@ -51,7 +49,7 @@ public final class ShowGlowingRunnable extends BukkitRunnable {
         // Récupération de la cible avec la logique d'arguments conservée de ton code original
         double rayTraceArg = 1;
         Player playerTarget = RayTrace.getTargetPlayer(owner, this.itemPower.getTargetDistance(), rayTraceArg);
-        this.target = playerTarget;
+        this.itemPower.setTarget(playerTarget);
 
         // Si aucune cible n'est regardée
         if (playerTarget == null) {
@@ -73,8 +71,8 @@ public final class ShowGlowingRunnable extends BukkitRunnable {
 
     public Player getTarget() {
         if (!Main.getInstance().isLunarEnabled()) {
-            this.target = RayTrace.getTargetPlayer(this.itemPower.getRole().getGamePlayer().getPlayer(), this.itemPower.getTargetDistance(), null);
+            this.itemPower.setTarget(RayTrace.getTargetPlayer(this.itemPower.getRole().getGamePlayer().getPlayer(), this.itemPower.getTargetDistance(), null));
         }
-        return target;
+        return this.itemPower.getTarget();
     }
 }

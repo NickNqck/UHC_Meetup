@@ -19,7 +19,6 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -137,11 +136,12 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         protected TambourPower(@NonNull KyogaiDemon role) {
             super("Tambour", new Cooldown(30), new ItemBuilder(Material.STICK).setName("§cTambour"), role,
                     "§7Vous permet de retourner la personne visée");
+            setTargetDistance(30);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            final Player target = RayTrace.getTargetPlayer(player, 30.0, null);
+            final Player target = getTarget();
             if (target == null) {
                 player.sendMessage("§cIl faut viser un joueur !");
                 return false;

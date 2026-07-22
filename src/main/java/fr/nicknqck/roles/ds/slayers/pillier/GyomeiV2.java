@@ -15,7 +15,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -38,7 +37,6 @@ import java.util.UUID;
 
 public class GyomeiV2 extends PilierRoles implements Listener {
 
-   /* private MarquePower marquePower;*/
     private TextComponent desc;
 
     public GyomeiV2(UUID player) {
@@ -72,9 +70,6 @@ public class GyomeiV2 extends PilierRoles implements Listener {
         owner.setMaxHealth(getMaxHealth());
         owner.setHealth(owner.getMaxHealth());
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 0, false, false), EffectWhen.PERMANENT);
-    /*    MarquePower marquePower = new MarquePower(this);
-        addPower(marquePower, true);
-        this.marquePower = marquePower;*/
         addPower(new SouffleDeLaRochePower(this), true);
         EventUtils.registerEvents(this);
         AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffects(getEffects()).addCustomLine("§7Vous possédez§c 2❤§c permanent§7 supplémentaire").setPowers(getPowers());
@@ -84,72 +79,23 @@ public class GyomeiV2 extends PilierRoles implements Listener {
 
     @EventHandler
     private void onEndGame(GameEndEvent event) {
-   /*     this.marquePower.end = true;
-        this.marquePower = null;*/
         EventUtils.unregisterEvents(this);
     }
- /*   @EventHandler
-    private void onKill(UHCPlayerKillEvent event) {
-        if (event.getKiller().getUniqueId().equals(getPlayer())) {
-            GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getVictim().getUniqueId());
-            if (gamePlayer == null)return;
-            if (gamePlayer.getRole() == null)return;
-            if (this.marquePower == null)return;
-            if (gamePlayer.getRole() instanceof DemonsRoles && !this.marquePower.getCooldown().isInCooldown()) {
-                this.marquePower.demonsKills++;
-                event.getKiller().sendMessage("§7En tuant un§c démon§7 la puissance de votre "+this.marquePower.getItem().getItemMeta().getDisplayName()+"§7 de§c 1 point§7 ce qui vous fait montez à §c"+this.marquePower.demonsKills+"§7(§cs§7).");
-            }
-        }
-    }*/
 
-/*    private static class MarquePower extends ItemPower {
-
-        private int demonsKills = 0;
-        private boolean end = false;
-
-        protected MarquePower(RoleBase role) {
-            super("§aMarque des Pourfendeurs§7 (§aGyomei§7)", new Cooldown(-500), new ItemBuilder(Material.NETHER_STAR).setName("§aMarque des Pourfendeurs"), role
-                    , "§c1 fois§7 par partie, vous permet d'obtenir§c +3❤ permanent§7 ainsi que l'effet§c Résistance I§7 pendant§c 5 minutes§7, cependant, vous§c mourrez§7 après l'utilisation.","","§7En tuant un§c joueur§7 appartenant au camp des§c Démons§7 vous obtiendrez§e +1/2💛§7 d'§eabsorbtion§7 au moment de l'activation§7.");
-            setMaxUse(1);
-        }
-
-        @Override
-        public boolean onUse(Player player, Map<String, Object> args) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                getRole().setMaxHealth(getRole().getMaxHealth()+6.0);
-                player.setMaxHealth(getRole().getMaxHealth());
-                player.setHealth(player.getMaxHealth());
-                player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), true);
-                CraftPlayer craftPlayer = (CraftPlayer) player;
-                craftPlayer.getHandle().setAbsorptionHearts(craftPlayer.getHandle().getAbsorptionHearts()+demonsKills);
-                Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-                    if (end)return;
-                    getRole().setMaxHealth(getRole().getMaxHealth()-6.0);
-                    Player owner = Bukkit.getPlayer(getRole().getPlayer());
-                    if (owner != null) {
-                        owner.damage(9999.0);
-                        owner.sendMessage("§7Vous§c mourrez§7 suite à l'utilisation de votre "+getItem().getItemMeta().getDisplayName()+"§7.");
-                    }
-                }, 20*60*5);
-                return true;
-            }
-            return false;
-        }
-    }*/
     private static class SouffleDeLaRochePower extends ItemPower {
 
         private final FracasPower fracasPower;
         private final SuperGrabPower superGrabPower;
 
         protected SouffleDeLaRochePower(@NonNull RoleBase role) {
-            super("Souffle de la roche", new Cooldown(30), new ItemBuilder(Material.STONE_AXE).setName("§aSouffle de la Roche").addEnchant(Enchantment.DAMAGE_ALL, 4).hideEnchantAttributes(), role,
+            super("Souffle de la roche", new Cooldown(20), new ItemBuilder(Material.STONE_AXE).setName("§aSouffle de la Roche").addEnchant(Enchantment.DAMAGE_ALL, 4).hideEnchantAttributes(), role,
                     "§7Vous permet (en visant un joueur) d'activer un pouvoir différant en fonction de votre§c clique§7:",
                     "",
                     "§aFracas§7 (§cClique gauche§7): Vous permet de§c repousser§7 le joueur viser puis de lui infliger§c 2❤§7 de dégats§c 5 secondes§7 plus tard (1x/5m)",
                     "",
                     "§aGrab§7 (§cClique droit§7): Vous permet d'attirer le joueur devant vous et de lui donner§c 15 secondes§7 de§8 Slowness II§7 (1x/5m)",
                     "",
-                    "§cVous ne pouvez utiliser qu'un pouvoir toute les§4 30 secondes");
+                    "§cVous ne pouvez utiliser qu'un pouvoir toute les§4 20 secondes");
             final FracasPower fracasPower = new FracasPower(getRole());
             final SuperGrabPower superGrabPower1 = new SuperGrabPower(role);
             getRole().addPower(fracasPower);
@@ -157,6 +103,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
             this.fracasPower = fracasPower;
             this.superGrabPower = superGrabPower1;
             getShowCdRunnable().setCustomText(true);
+            setTargetDistance(50);
         }
 
         @Override
@@ -197,9 +144,9 @@ public class GyomeiV2 extends PilierRoles implements Listener {
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 15, null);
+                final Player target = getTarget();
                 if (target == null) {
-                    player.sendMessage("§cIl faut viser un joueur à moins de§b 15 blocs");
+                    player.sendMessage("§cIl faut viser un joueur à moins de§b 30 blocs");
                     return false;
                 }
                 new RepousserRunnable(getRole().getGameState(), target, getRole().getGamePlayer());
@@ -262,7 +209,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 50, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur à moins de§b 50 blocs");
                     return false;

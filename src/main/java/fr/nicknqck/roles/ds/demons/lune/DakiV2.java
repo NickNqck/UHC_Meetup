@@ -220,7 +220,7 @@ public class DakiV2 extends DemonsRoles {
                     cancel();
                     return;
                 }
-                final Player target = RayTrace.getTargetPlayer(owner, 30, null);
+                final Player target = RayTrace.getTargetPlayer(owner, 30, 2);
                 if (target == null)return;
                 final GamePlayer gameTarget = this.obisItems.getRole().getGameState().getGamePlayer().get(target.getUniqueId());
                 if (gameTarget == null)return;

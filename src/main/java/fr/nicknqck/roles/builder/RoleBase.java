@@ -19,7 +19,6 @@ import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -353,9 +352,6 @@ public abstract class RoleBase implements IRole {
 			}
 		}
 	}
-	public Player getTargetPlayer(Player player, double distanceMax) {
-        return RayTrace.getTargetPlayer(player, distanceMax, null);
-    }
 	public void onALLPlayerDamageByEntity(EntityDamageByEntityEvent event, Player victim, Entity entity) {}
 	public void onAllPlayerInventoryClick(InventoryClickEvent event, ItemStack item, Inventory inv, Player clicker) {}
 	@SuppressWarnings("deprecation")

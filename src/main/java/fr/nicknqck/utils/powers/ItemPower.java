@@ -38,7 +38,6 @@ public abstract class ItemPower extends Power {
     private final ShowGlowingRunnable showGlowingRunnable;
     @Setter
     private boolean targetPlayer = false;
-    private int targetDistance = 0;
 
     public ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
         super(name, cooldown, role, description);
@@ -113,11 +112,6 @@ public abstract class ItemPower extends Power {
         ATTACK_ENTITY,
         INTERACT_ENTITY,
         DROP_ITEM
-    }
-
-    public void setTargetDistance(int targetDistance) {
-        this.targetDistance = targetDistance;
-        setTargetPlayer(targetDistance > 0);
     }
 
     public static class ShowCdRunnable extends BukkitRunnable {

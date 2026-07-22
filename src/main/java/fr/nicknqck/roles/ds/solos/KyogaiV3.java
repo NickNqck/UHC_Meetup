@@ -15,7 +15,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
@@ -101,12 +100,13 @@ public class KyogaiV3 extends DemonsRoles {
             getShowCdRunnable().setCustomText(true);
             EventUtils.registerRoleEvent(this);
             this.powerUsedsPlayers = new HashMap<>();
+            setTargetDistance(30);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 30, null);
+                final Player target = getShowGlowingRunnable().getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur.");
                     return false;

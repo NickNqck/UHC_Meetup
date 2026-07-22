@@ -362,12 +362,13 @@ public class SlayerSolo extends DemonsSlayersRoles {
 
         protected RochePower(RoleBase role) {
             super("§8Soufle de la Roche", new Cooldown(60*8), new ItemBuilder(Material.STONE_AXE).setName("§8Soufle de la Roche").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideEnchantAttributes(), role);
+            setTargetDistance(25);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                Player target = getRole().getTargetPlayer(player, 25);
+                Player target = getTarget();
                 if (target != null) {
                     GamePlayer gamePlayer = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
                     if (gamePlayer == null) {

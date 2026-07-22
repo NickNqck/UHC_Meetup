@@ -78,12 +78,13 @@ public class YahabaV2 extends DemonInferieurRole {
                     "§7En visant un joueur, vous permet de manipuler ses mouvements pendant§c 10 secondes§7.",
                     "",
                     "§7La personne visée suivra votre§c crosshair§7 en la forcent à être à§c 15 blocs§7 de vous.");
+            setTargetDistance(15);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 15, Objects::nonNull);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;
