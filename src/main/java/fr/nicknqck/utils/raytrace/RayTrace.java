@@ -107,7 +107,7 @@ public class RayTrace
         for (Vector vector : positions) {
             final Location position = vector.toLocation(player.getWorld());
             final Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
-            if (fr.nicknqck.commands.SettingsCommand.getRoleParticleViewers().contains(player.getUniqueId())) {
+            if (Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isShowRoleParticle()) {
                 fr.nicknqck.utils.particles.MathUtil.sendParticleTo(player, EnumParticle.VILLAGER_HAPPY, position);
             }
             for (Entity entity : entities) {
@@ -131,7 +131,7 @@ public class RayTrace
         for (Vector vector : positions) {
             final Location position = vector.toLocation(player.getWorld());
             final Collection<Entity> entities = player.getWorld().getNearbyEntities(position, 1.0D, 1.0D, 1.0D);
-            if (fr.nicknqck.commands.SettingsCommand.getRoleParticleViewers().contains(player.getUniqueId())) {
+            if (Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isShowRoleParticle()) {
                 fr.nicknqck.utils.particles.MathUtil.sendParticleTo(player, EnumParticle.VILLAGER_HAPPY, position);
             }
             for (Entity entity : entities) {

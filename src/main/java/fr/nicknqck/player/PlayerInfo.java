@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
-public class PlayerInfo {
+public final class PlayerInfo {
 
     private final Map<String, Integer> rolesPlayed = new LinkedHashMap<>();
     private final Map<ITeam, Integer> teamPlayed = new LinkedHashMap<>();
@@ -30,6 +30,10 @@ public class PlayerInfo {
     private int timePlayed = 0;
     @Setter
     private int resetAmount = 0;
+    @Setter
+    private boolean showRoleParticle = false;
+    @Setter
+    private boolean antiDropSword = false;
 
     public PlayerInfo(UUID uuid) {
         this.uuid = uuid;

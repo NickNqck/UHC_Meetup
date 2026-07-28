@@ -23,7 +23,6 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.scenarios.impl.AntiDrop;
 import fr.nicknqck.scenarios.impl.Anti_Abso;
 

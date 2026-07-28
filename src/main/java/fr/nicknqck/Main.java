@@ -179,6 +179,7 @@ public class Main extends JavaPlugin {
 		this.pubManager.add("§bSachez où vous visez avec votre rôle via la commande§6 /settings§b.");
 		this.pubManager.add("§bUn SoundPack est disponible avec la commande§6 /pack§b.");
 		this.pubManager.add("§bIl est maintenant possible de customiser l'inventaire de départ par défaut via la commande§6 /inv§b.");
+		this.pubManager.add("§bIl est maintenant possible d'empêcher son§c épée§b d'être jeter grace a la commande§6 /settings§b.");
 		this.pubManager.start();
 		this.schematicManager = new SchematicManager(this);
 		this.crystalManager = new CrystalManager();
