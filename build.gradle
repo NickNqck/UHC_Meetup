@@ -38,8 +38,8 @@ dependencies {
 }
 
 shadowJar {
-    relocate 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
-    relocate("hm.zelha.particlesfx", "fr.nicknqck.particles")
+    relocate 'net.lingala.zip4j', 'fr.nicknqck.utils.zip'
+    relocate("hm.zelha.particlesfx", "fr.nicknqck.utils.particles")
 }
 
 setLibsDirName("C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\plugins")
