@@ -10,6 +10,7 @@ import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.fastinv.PaginatedFastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Material;
@@ -160,13 +161,7 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
                     // sinon → le nombre réel de slots disponibles
                     .setAmount(count)
                     .setLore(stringList
-                            /*
-                    iRole instanceof RoleCustomLore
-                            ? ((RoleCustomLore) iRole).getCustomLore(l1, design)
-                            : iRole instanceof NSRoles ?
-                            new String[] { ((NSRoles) iRole).isCanBeHokage() ? "§7Peut devenir§a Hokage§7:§a Oui" : "§7Peut devenir§a Hokage§7:§c Non",getChakraLine((NSRoles) iRole), l1, "", design}
-                            :
-                            new String[]{ l1, "", design }*/)
+                    )
                     .toItemStack();
 
             addContent(roleItem, e -> {
@@ -177,15 +172,17 @@ public abstract class TeamRoleInventory extends PaginatedFastInv {
                 if (clicked.isSimilar(GUIItems.getSelectBackMenu())) { refresh(mdj); return; }
 
                 if (clicked.hasItemMeta() && clicked.getItemMeta().hasDisplayName()) {
-                    if (clicked.isSimilar(GUIItems.getStartGameButton()) && GameState.getInstance().gameCanLaunch) {
+                    if (clicked.isSimilar(GUIItems.getStartGameButton()) && GameState.getInstance().gameCanLaunch && ChatRank.isHost(player.getUniqueId())) {
                         HubListener.getInstance().StartGame(player);
                         return;
                     }
                     final String name = clicked.getItemMeta().getDisplayName();
-                    if (e.getAction().equals(InventoryAction.PICKUP_ALL)) {
-                        EasyRoleAdder.addRoles(name);
-                    } else if (e.getAction().equals(InventoryAction.PICKUP_HALF)) {
-                        EasyRoleAdder.removeRoles(name);
+                    if (ChatRank.isHost(player.getUniqueId())) {
+                        if (e.getAction().equals(InventoryAction.PICKUP_ALL)) {
+                            EasyRoleAdder.addRoles(name);
+                        } else if (e.getAction().equals(InventoryAction.PICKUP_HALF)) {
+                            EasyRoleAdder.removeRoles(name);
+                        }
                     }
                 }
                 refreshAll(team, mdj);

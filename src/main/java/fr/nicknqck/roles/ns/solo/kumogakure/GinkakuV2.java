@@ -89,7 +89,7 @@ public class GinkakuV2 extends KumogakureRole {
                 .addEffects(getEffects())
                 .setPowers(getPowers())
                 .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lorsque vous êtes proche de §6Kinkaku§7 vous avez l'effet §cRésistance I")
-                .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lors de la mort de §6Kinkaku§7 vous obtener l'effet§c Résistance I")
+                .addCustomLine(getGameState().getDeadRoles().contains(Roles.Kinkaku) ? "" : "§7Lors de la mort de §6Kinkaku§7 vous obtiendrez l'effet§c Résistance I§7 de manière§c permanente")
                 .getText();
     }
 
@@ -284,12 +284,13 @@ public class GinkakuV2 extends KumogakureRole {
         protected CordeOrPower(@NonNull RoleBase role) {
             super("Corde d'or", new Cooldown(180), new ItemBuilder(Material.NETHER_STAR).setName("§6Corde d'or"), role,
                     "§7En visant un joueur, le repousse en l'air, puis, lorsqu'il atterrit, l'empêche de bouger pendant§c 5s§7.§7 (1x/3m)");
+            setTargetDistance(25);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final Player target = RayTrace.getTargetPlayer(player, 25, null);
+                final Player target = getShowGlowingRunnable().getTarget();
                 if (target != null) {
                     new PropulserUtils(player, 30).setNoFall(true).applyPropulsion(target);
                     new TargetFallChecker(getRole().getGameState()).starter(target.getUniqueId());

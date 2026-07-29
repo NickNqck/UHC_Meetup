@@ -20,7 +20,6 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -305,7 +304,6 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
             }.runTaskTimerAsynchronously(getPlugin(), 0L, 10L); // async, toutes les 0.5s (10 ticks)
         }
     }
-    /*OLD
     private static class OrageBrulantItem extends ItemPower implements Listener {
 
         public OrageBrulantItem(@NonNull RoleBase role) {
@@ -314,6 +312,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                     "§7Faites jaillir un arc d’éclairs convergeant vers votre§c cible§7, une fois atteint,",
                     "§7vous vous§c téléporterez§7 derrière elle et elle obtiendra§c 10 secondes§7 de§c Slowness I§7.");
             EventUtils.registerRoleEvent(this);
+            setTargetDistance(30);
         }
 
         @Override
@@ -327,126 +326,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                     if (!player.getItemInHand().hasItemMeta()) return false;
                     if (!"§eOrage Brûlant".equals(player.getItemInHand().getItemMeta().getDisplayName())) return false;
 
-                    Player target = RayTrace.getTargetPlayer(player, 30, null);
-                    if (target == null) {
-                        player.sendMessage("§cAucun joueur trouvé dans votre ligne de mire.");
-                        return false;
-                    }
-
-                    launchStorm(player, target);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private void launchStorm(Player caster, Player target) {
-            Location start = caster.getEyeLocation();
-            Vector dirToTarget = target.getLocation().toVector().subtract(start.toVector()).normalize();
-
-            // Vecteurs perpendiculaires de base
-            Vector perpRight = new Vector(-dirToTarget.getZ(), 0, dirToTarget.getX()).normalize();
-            Vector perpLeft = perpRight.clone().multiply(-1);
-
-            double maxDistance = start.distance(target.getLocation());
-
-            new BukkitRunnable() {
-                int step = 0;
-
-                @Override
-                public void run() {
-                    if (!caster.isOnline() || !target.isOnline()) {
-                        cancel();
-                        return;
-                    }
-
-                    double progressDist = step * 2;
-                    if (progressDist >= maxDistance) {
-                        target.damage(0.0);
-                        // Effet final sur la cible
-                        double newHealth = Math.max(1.0, target.getHealth() - 2.0); // -1 cœur
-                        target.setHealth(newHealth);
-
-                        // TP derrière target
-                        Location behind = target.getLocation().clone();
-                        behind.setDirection(target.getLocation().getDirection());
-                        behind.add(target.getLocation().getDirection().multiply(-1));
-                        caster.teleport(behind);
-
-                        caster.sendMessage("§eVous avez frappé " + target.getName() + " §eavec l'Orage Brûlant !");
-                        target.sendMessage("§cVous avez été touché par l'Orage Brûlant de " + caster.getName());
-                        Bukkit.getScheduler().runTask(getPlugin(), () -> target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0, false, false), true));
-                        cancel();
-                        return;
-                    }
-
-                    // Calcul positions des éclairs (effet entonnoir)
-                    Location center = start.clone().add(dirToTarget.clone().multiply(progressDist));
-
-                    // Facteur d’ouverture → plus grand au début, 0 à la fin
-                    double funnelFactor = 1.0 - (progressDist / maxDistance); // 1 au départ, 0 à la fin
-                    double spread = 6 * funnelFactor; // 6 blocs max d’écart, se réduit vers 0
-
-                    Location locRight = center.clone().add(perpRight.clone().multiply(spread));
-                    Location locLeft = center.clone().add(perpLeft.clone().multiply(spread));
-
-                    // Alignement au sol
-                    locRight.setY(locRight.getWorld().getHighestBlockYAt(locRight));
-                    locLeft.setY(locLeft.getWorld().getHighestBlockYAt(locLeft));
-
-                    // Spawn éclairs + effets (sync obligatoire)
-                    Bukkit.getScheduler().runTask(getPlugin(), () -> {
-                        strikeWithEffect(locRight, caster, target);
-                        strikeWithEffect(locLeft, caster, target);
-                    });
-
-                    step++;
-                }
-
-                private void strikeWithEffect(Location loc, Player caster, Player target) {
-                    World world = loc.getWorld();
-                    world.strikeLightningEffect(loc);
-
-                    for (Player near : world.getPlayers()) {
-                        if (near.equals(caster)) continue;
-                        if (near.equals(target)) continue;
-                        if (near.getLocation().distance(loc) <= 1.0) {
-                            near.damage(0.0);
-                            // 0.5 cœur de dégâts (non létal)
-                            double newHp = Math.max(1.0, near.getHealth() - 1.0);
-                            near.setHealth(newHp);
-                            // Slowness I 10s
-                            near.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * 10, 0, false, false), true);
-                            near.sendMessage("§7Vous avez été secoué par un éclair de l'§eOrage Brûlant§7 !");
-                        }
-                    }
-                }
-            }.runTaskTimerAsynchronously(getPlugin(), 0L, 5L); // toutes les 5 ticks (~0.25s)
-        }
-    }
-    */
-    private static class OrageBrulantItem extends ItemPower implements Listener {
-
-        public OrageBrulantItem(@NonNull RoleBase role) {
-            super("Orage Brûlant", new Cooldown(60 * 8),
-                    new ItemBuilder(Material.NETHER_STAR).setName("§eOrage Brûlant"), role,
-                    "§7Faites jaillir un arc d’éclairs convergeant vers votre§c cible§7, une fois atteint,",
-                    "§7vous vous§c téléporterez§7 derrière elle et elle obtiendra§c 10 secondes§7 de§c Slowness I§7.");
-            EventUtils.registerRoleEvent(this);
-        }
-
-        @Override
-        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            if (getInteractType().equals(InteractType.INTERACT)) {
-                if (map.containsKey("event") && map.get("event") instanceof PlayerInteractEvent) {
-                    PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
-
-                    if (!event.getAction().name().contains("RIGHT")) return false;
-                    if (player.getItemInHand() == null) return false;
-                    if (!player.getItemInHand().hasItemMeta()) return false;
-                    if (!"§eOrage Brûlant".equals(player.getItemInHand().getItemMeta().getDisplayName())) return false;
-
-                    Player target = RayTrace.getTargetPlayer(player, 30, null);
+                    Player target = getTarget();
                     if (target == null) {
                         player.sendMessage("§cAucun joueur trouvé dans votre ligne de mire.");
                         return false;

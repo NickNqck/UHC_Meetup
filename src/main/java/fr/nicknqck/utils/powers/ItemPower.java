@@ -23,6 +23,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -34,6 +35,9 @@ public abstract class ItemPower extends Power {
     @Setter
     private boolean showCdInHand = true;
     private final ShowCdRunnable showCdRunnable;
+    private final ShowGlowingRunnable showGlowingRunnable;
+    @Setter
+    private boolean targetPlayer = false;
 
     public ItemPower(@NonNull String name, Cooldown cooldown, ItemBuilder item,@NonNull RoleBase role, String... description) {
         super(name, cooldown, role, description);
@@ -47,6 +51,7 @@ public abstract class ItemPower extends Power {
         } else {
             this.showCdRunnable = null;
         }
+        this.showGlowingRunnable = new ShowGlowingRunnable(this);
         EventUtils.getPowerCantBeDropMap().put(this.item, this);
     }
     public void call(Object event) {
@@ -196,4 +201,5 @@ public abstract class ItemPower extends Power {
             }
         }
     }
+
 }

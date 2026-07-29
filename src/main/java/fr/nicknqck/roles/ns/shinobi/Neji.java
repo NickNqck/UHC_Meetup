@@ -2,13 +2,11 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.*;
+import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.enums.EChakras;
-import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.EByakuganUserType;
 import fr.nicknqck.roles.ns.builders.IByakuganUser;
 import fr.nicknqck.roles.ns.builders.NSRoles;
@@ -148,23 +146,40 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
             event.setCancelled(true);
             TextComponent textComponent = new TextComponent("§7Voici la liste des joueurs étant à moins de§c 100 blocs§7:\n\n");
             for (@NonNull final Player target : Loc.getNearbyPlayers(player.getLocation(), 100.0)) {
-                TextComponent text = new TextComponent("§8 - §a"+target.getName());
-                text.setHoverEvent(new HoverEvent(
-                        HoverEvent.Action.SHOW_TEXT,
-                        new BaseComponent[]{
-                                new TextComponent("§c§lCLIQUEZ ICI POUR TRAQUEZ §a"+target.getName()+"§7 (§6/ns byakugan <joueur>§7)")
-                        }
-                ));
-                text.setClickEvent(new ClickEvent(
-                        ClickEvent.Action.RUN_COMMAND,
-                        "/ns byakugan "+target.getName()
-                ));
+                GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                if (gamePlayer == null)continue;
+                if (!gamePlayer.check())continue;
+                @NonNull final PowerTakeInfoEvent powerTakeInfoEvent = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
+                getPlugin().getServer().getPluginManager().callEvent(powerTakeInfoEvent);
+                if (event.isCancelled()) {
+                    powerTakeInfoEvent.sendCancelMessage(player);
+                    continue;
+                }
+                gamePlayer = powerTakeInfoEvent.getGameTarget();
+                TextComponent text = getText(gamePlayer.getPlayer());
                 textComponent.addExtra(text);
                 textComponent.addExtra("\n");
             }
             player.spigot().sendMessage(textComponent);
             return true;
         }
+
+        @Nonnull
+        private static TextComponent getText(@Nonnull Player target) {
+            TextComponent text = new TextComponent("§8 - §a"+ target.getName());
+            text.setHoverEvent(new HoverEvent(
+                    HoverEvent.Action.SHOW_TEXT,
+                    new BaseComponent[]{
+                            new TextComponent("§c§lCLIQUEZ ICI POUR TRAQUEZ §a"+ target.getName()+"§7 (§6/ns byakugan <joueur>§7)")
+                    }
+            ));
+            text.setClickEvent(new ClickEvent(
+                    ClickEvent.Action.RUN_COMMAND,
+                    "/ns byakugan "+ target.getName()
+            ));
+            return text;
+        }
+
         @EventHandler(priority = EventPriority.HIGHEST)
         private void onLaunch(ProjectileLaunchEvent event) {
             if (event.getEntity() instanceof Snowball) {
@@ -190,12 +205,20 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
             if (args.length == 2) {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    if (getRole().getGameState().hasRoleNull(target.getUniqueId())) {
+                    GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                    if (gamePlayer == null || !gamePlayer.check()) {
                         player.sendMessage("§cImpossible de traquez§b "+target.getName());
                         return false;
                     }
                     player.sendMessage("§7Vous commencez a traquer§a "+target.getName());
-                    new ByakuganCommand.TraqueRunnable(this.getRole().getGameState().getGamePlayer().get(target.getUniqueId()), getRole().getGamePlayer());
+                    @NonNull final PowerTakeInfoEvent event = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
+                    getPlugin().getServer().getPluginManager().callEvent(event);
+                    if (event.isCancelled()) {
+                        event.sendCancelMessage(player);
+                        return false;
+                    }
+                    gamePlayer = event.getGameTarget();
+                    new ByakuganCommand.TraqueRunnable(gamePlayer, getRole().getGamePlayer());
                     return true;
                 }
             }
@@ -255,22 +278,26 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
                             player.sendMessage("§cLe joueur que vous avez visé est trop loin.");
                             return false;
                         }
-                        if (!getRole().getGameState().hasRoleNull(target.getUniqueId())) {
-                            final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
-                            if (role instanceof NSRoles) {
-                                if (((NSRoles) role).getChakras() != null) {
-                                    if (((NSRoles) role).getChakras().equals(chakras)) {
-                                        player.sendMessage("§c"+target.getDisplayName()+"§7 possède§c "+role.getPowers().size()+" pouvoirs");
-                                    } else {
-                                        player.sendMessage("§7Il semblerait que vous vous soyez tromper de§a nature de chakra§7.");
-                                    }
-                                    return true;
-                                } else {
-                                    player.sendMessage("§7Impossible de savoir,§c "+target.getDisplayName()+"§7 ne possède pas de nature de chakra.");
-                                }
+                        GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                        if (gamePlayer == null || !gamePlayer.check()) {
+                            player.sendMessage("§7Impossible de savoir,§c "+target.getDisplayName()+"§7 ne possède pas de nature de chakra.");
+                            return false;
+                        }
+                        final PowerTakeInfoEvent powerTakeInfoEvent = new PowerTakeInfoEvent(this, gamePlayer, InfoType.CHAKRA);
+                        getPlugin().getServer().getPluginManager().callEvent(powerTakeInfoEvent);
+                        if (powerTakeInfoEvent.isCancelled()) {
+                            powerTakeInfoEvent.sendCancelMessage(player);
+                            return false;
+                        }
+                        gamePlayer = powerTakeInfoEvent.getGameTarget();
+                        final RoleBase role = gamePlayer.getRole();
+                        if (role instanceof NSRoles) {
+                            if (((NSRoles) role).getChakras().equals(chakras)) {
+                                player.sendMessage("§c" + target.getDisplayName() + "§7 possède§c " + role.getPowers().size() + " pouvoirs");
                             } else {
-                                player.sendMessage("§7Impossible de savoir,§c "+target.getDisplayName()+"§7 ne possède pas de nature de chakra.");
+                                player.sendMessage("§7Il semblerait que vous vous soyez tromper de§a nature de chakra§7.");
                             }
+                            return true;
                         } else {
                             player.sendMessage("§7Impossible de savoir,§c "+target.getDisplayName()+"§7 ne possède pas de nature de chakra.");
                         }

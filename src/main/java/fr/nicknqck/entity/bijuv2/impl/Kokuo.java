@@ -43,7 +43,7 @@ public class Kokuo extends BijuBase {
     }
 
     @Override
-    public @NonNull ItemStack getItemInMenu() {
+    public @NonNull ItemStack getTempMenuItem() {
         return new ItemBuilder(Material.BONE).setName(getName()).toItemStack();
     }
 

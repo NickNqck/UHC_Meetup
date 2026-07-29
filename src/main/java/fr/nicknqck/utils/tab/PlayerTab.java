@@ -1,5 +1,6 @@
 package fr.nicknqck.utils.tab;
 
+import fr.nicknqck.Main;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
@@ -81,11 +82,12 @@ public class PlayerTab {
     public void removeEntry(UUID targetUUID) {
         final TabEntry entry = entries.remove(targetUUID);
         if (entry == null) return;
-
         final String teamName = teamNames.remove(targetUUID);
         if (teamName != null) {
             final Team team = scoreboard.getTeam(teamName);
-            if (team != null) team.unregister();
+            if (team != null) {
+                team.unregister();
+            }
         }
 
         // Retirer du tab via NMS si offline
@@ -97,6 +99,9 @@ public class PlayerTab {
     // ── Raccourcis de modification ────────────────────────────────────────────
 
     public void setPrefix(UUID targetUUID, String prefix) {
+        if (!this.entries.containsKey(targetUUID)) {
+            this.entries.put(targetUUID, new TabEntry(targetUUID, Bukkit.getOfflinePlayer(targetUUID).getName()));
+        }
         final TabEntry entry = entries.get(targetUUID);
         if (entry == null) return;
         entry.setPrefix(prefix);
@@ -105,16 +110,20 @@ public class PlayerTab {
     }
 
     public void setSuffix(UUID targetUUID, String suffix) {
+        if (!this.entries.containsKey(targetUUID)) {
+            this.entries.put(targetUUID, new TabEntry(targetUUID, Bukkit.getOfflinePlayer(targetUUID).getName()));
+        }
         final TabEntry entry = entries.get(targetUUID);
-        if (entry == null) return;
         entry.setSuffix(suffix);
         refreshTeam(entry);
         apply();
     }
 
     public void setColor(UUID targetUUID, ChatColor color) {
+        if (!this.entries.containsKey(targetUUID)) {
+            this.entries.put(targetUUID, new TabEntry(targetUUID, Bukkit.getOfflinePlayer(targetUUID).getName()));
+        }
         final TabEntry entry = entries.get(targetUUID);
-        if (entry == null) return;
         entry.setColor(color);
         refreshTeam(entry);
         apply();
@@ -142,7 +151,7 @@ public class PlayerTab {
             team = scoreboard.registerNewTeam(teamName);
         }
 
-        final String prefix = entry.getColor() + truncate(entry.getPrefix(), 14);
+        final String prefix = truncate(entry.getPrefix(), 14) + entry.getColor();
         final String suffix = truncate(entry.getSuffix(), 16);
 
         team.setPrefix(prefix);
@@ -194,7 +203,7 @@ public class PlayerTab {
     private void sendRemovePacket(TabEntry entry) {
         final Player viewer = Bukkit.getPlayer(viewerUUID);
         if (viewer == null || entry.getGameProfile() == null) return;
-
+        Main.getInstance().debug("G");
         final PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(
                 PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER
         );

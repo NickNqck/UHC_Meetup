@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.DecimalFormat;
@@ -21,7 +20,9 @@ public abstract class AotRoles extends RoleBase {
     public boolean canShift = false;
     public boolean isTransformedinTitan = false;
     public double RodSpeedMultipliyer = 0;
-    public double gazAmount;
+    @Getter
+    @Setter
+    private double gazAmount;
     @Getter
     @Setter
     private boolean canVoleTitan = false;
@@ -45,16 +46,6 @@ public abstract class AotRoles extends RoleBase {
             if (p == null)continue;
             p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");
         }
-    }
-
-    @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
     }
 
     public boolean isMaster() {

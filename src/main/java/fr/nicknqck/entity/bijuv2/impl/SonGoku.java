@@ -43,7 +43,7 @@ public class SonGoku extends BijuBase {
     }
 
     @Override
-    public @NonNull ItemStack getItemInMenu() {
+    public @NonNull ItemStack getTempMenuItem() {
         return new ItemBuilder(Material.MAGMA_CREAM)
                 .addEnchant(Enchantment.DURABILITY, 1)
                 .hideEnchantAttributes()

@@ -2,7 +2,7 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.events.custom.DemonKillEvent;
+import fr.nicknqck.events.ds.DemonKillEvent;
 import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.death.UHCDeathMessageEvent;

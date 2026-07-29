@@ -23,8 +23,6 @@ import org.bukkit.potion.PotionEffectType;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijus.Bijus;
-import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.scenarios.impl.AntiDrop;
 import fr.nicknqck.scenarios.impl.Anti_Abso;
 
@@ -91,22 +89,6 @@ public class ItemsManager implements Listener {
 		if (s.isSimilar(CrystalManager.crystalItem))return;
 		if (s.hasItemMeta()) {
 			if (s.getItemMeta().hasLore() || jsp.contains(s)|| s.isSimilar(Items.getironpickaxe())|| s.isSimilar(Items.getironshovel())) {
-				for (Bijus value : Bijus.values()) {
-					if (s.getItemMeta().hasDisplayName()) {
-						String name = s.getItemMeta().getDisplayName();
-						if (name.equalsIgnoreCase("§dGyûki") || name.equalsIgnoreCase("§6Kyubi") || name.equalsIgnoreCase("§6Kyûbi")) {
-							if (!gameState.hasRoleNull(e.getPlayer().getUniqueId())) {
-								if (gameState.getGamePlayer().get(e.getPlayer().getUniqueId()).getRole().getOriginTeam().equals(TeamList.Jubi)) {
-									return;
-								}
-							}
-						}
-						if (s.getItemMeta().getDisplayName().equals(value.getBiju().getItem().getItemMeta().getDisplayName())) {
-							return;
-						}
-						
-					}
-				}
 				e.setCancelled(true);
 			}
 		}

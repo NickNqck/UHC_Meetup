@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'fr.nicknqck'
-version '15'
+version '16'
 
 repositories {
     mavenLocal()
@@ -13,6 +13,12 @@ repositories {
     maven { url = "https://repo.codemc.io/repository/maven-snapshots/" }
     maven { url ="https://mvnrepository.com/artifact/"}
     maven { url ='https://jitpack.io' }
+    repositories {
+        maven {
+            name = 'lunarclient'
+            url = 'https://repo.lunarclient.dev'
+        }
+    }
 }
 
 compileJava.options.encoding = "UTF-8"
@@ -28,11 +34,12 @@ dependencies {
     implementation 'io.github.hmzel:particlesfx:1.8.8'
     implementation "net.lingala.zip4j:zip4j:2.11.5"
     compileOnly files('C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\spigot.jar')
+    compileOnly 'com.lunarclient:apollo-api:1.2.8'
 }
 
 shadowJar {
-    relocate 'net.lingala.zip4j', 'fr.nickncqk.utils.particles'
-    relocate("hm.zelha.particlesfx", "fr.nicknqck.particles")
+    relocate 'net.lingala.zip4j', 'fr.nicknqck.utils.zip'
+    relocate("hm.zelha.particlesfx", "fr.nicknqck.utils.particles")
 }
 
 setLibsDirName("C:\\Users\\NickNqck\\Documents\\dev\\serveur minecraft\\1.8.9\\plugins")

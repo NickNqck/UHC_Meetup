@@ -16,7 +16,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -124,6 +123,7 @@ public class RuiV2 extends DemonsRoles {
                                     "§c"+futurePower.getName()+" est§6 utilisable" :
                                     "§c"+futurePower.getName()+" est en cooldown (§b"+StringUtils.secondsTowardsBeautiful(futurePower.getCooldown().getCooldownRemaining())+"§c)"));
                     this.equipedPower = futurePower;
+                    setTargetDistance(this.equipedPower.getTargetDistance());
                 } else if (event.getAction().name().contains("RIGHT")){
                     if (this.equipedPower == null) {
                         player.sendMessage("§cAucun pouvoir n'a été équiper.");
@@ -162,11 +162,12 @@ public class RuiV2 extends DemonsRoles {
             public LongAttackFilPower(@NonNull RuiV2 role) {
                 super("Attaque longue porté", new Cooldown(60*7), role);
                 setShowInDesc(false);
+                setTargetDistance(25);
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 25, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;
@@ -192,11 +193,12 @@ public class RuiV2 extends DemonsRoles {
             public GrabPower(@NonNull RuiV2 role) {
                 super("Fil attractif", new Cooldown(60*5), role);
                 setShowInDesc(false);
+                setTargetDistance(25);
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 25, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;
@@ -222,11 +224,12 @@ public class RuiV2 extends DemonsRoles {
             public CobWebPower(@NonNull RuiV2 role) {
                 super("Emprisonnement dans la toile", new Cooldown(60*7), role);
                 setShowInDesc(false);
+                setTargetDistance(50);
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 50, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;
@@ -261,6 +264,7 @@ public class RuiV2 extends DemonsRoles {
                 super("Allègement d'araignée", new Cooldown(60*10), role);
                 this.filPower = filPower;
                 setShowInDesc(false);
+                setTargetDistance(0);
             }
 
             @Override

@@ -114,7 +114,7 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
         } else {
             this.karinDead = true;
             if (event.getGameState().getAvailableRoles().containsKey(Roles.Jugo)) {
-                addKnowedRole(Jugo.class);
+                addKnowedRole(JugoV2.class);
             } else {
                 addKnowedRole(SasukeV2.class);
             }
@@ -128,7 +128,7 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
         if (event.getRole() == null)return;
         if (event.getRole() instanceof KarinV2) {
             this.karinDead = true;
-            addKnowedRole(Jugo.class);
+            addKnowedRole(JugoV2.class);
         }
         if (event.getRole() instanceof OrochimaruV2) {
             addKnowedRole(KabutoV2.class);

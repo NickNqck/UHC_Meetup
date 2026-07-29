@@ -56,7 +56,7 @@ public class RodTridimensionnelle implements Listener {
         	if (player.getItemInHand().isSimilar(getItem())) {
                 if (!(roleBase instanceof AotRoles))return;
                 AotRoles role = (AotRoles) roleBase;
-        		if (role.gazAmount > 0) {
+        		if (role.getGazAmount() > 0) {
             		if (role.getActualTridiCooldown() <= 0) {
             			if (!role.isTransformedinTitan) {
                             if (Main.getInstance().getTitanManager().hasTitan(player.getUniqueId())) {
@@ -170,13 +170,13 @@ public class RodTridimensionnelle implements Listener {
             if (bool) {
                 if (!(role instanceof AotRoles))return;
                 AotRoles aotRoles = (AotRoles) role;
-            	if (aotRoles.gazAmount - r <= 0) {
-                	aotRoles.gazAmount = 0;
+            	if (aotRoles.getGazAmount() - r <= 0) {
+                	aotRoles.setGazAmount(0);
                 } else{
-                	aotRoles.gazAmount -= r;
+                	aotRoles.setGazAmount(aotRoles.getGazAmount()-r);
                 }
                 DecimalFormat df = new DecimalFormat("0.0");
-                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(aotRoles.gazAmount)+"%");
+                this.player.sendMessage("§7Vous avez perdu§c "+df.format(r)+"%§7 de gaz, il ne vous en reste plus que§c "+df.format(aotRoles.getGazAmount())+"%");
                 aotRoles.setActualTridiCooldown(Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown());
             }
         }

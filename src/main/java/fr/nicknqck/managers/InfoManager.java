@@ -196,6 +196,7 @@ public class InfoManager {
 
     // ── CRUD ──────────────────────────────────────────────────────────────────
 
+    @NonNull
     public PlayerInfo getPlayerInfo(UUID uuid) {
         if (!this.data.containsKey(uuid)) {
             load(uuid);

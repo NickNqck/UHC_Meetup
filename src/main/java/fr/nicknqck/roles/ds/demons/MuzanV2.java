@@ -198,7 +198,11 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                 }
                 final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                 if (role instanceof DemonsSlayersRoles) {
-                    if (role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon)) {
+                    if (role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon) || role.getTeam().equals(TeamList.Demon)) {
+                        if (!getPlugin().getGameConfig().getDemonSlayerConfig().isMuzanAutoGive() && target.getUniqueId().equals(player.getUniqueId())) {
+                            player.sendMessage("§cErreur | Il est interdit selon les règles actuels de vous donnez à vous même ce pouvoir !");
+                            return false;
+                        }
                         player.sendMessage("§cVous avez donné le pouvoir de l'infection à§b "+target.getDisplayName());
                         target.sendMessage("§4Muzan§c vous à donnez le pouvoir de l'infection, ne le gâchez pas... (§6/ds infection <joueur>§7)");
                         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> role.addPower(new InfectPower((DemonsRoles) role)));
@@ -212,7 +216,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
 
             private InfectPower(@NonNull DemonsRoles role) {
                 super("/ds infection <joueur>", "infection", new Cooldown(-500), role, CommandType.DS,
-                        "§7Cette§c commande§7 vous permet d'§cinfecter§7 le joueur cibler dans le camp des§c Démons§7 (au bout de§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getInfectionTime())+"§7)");
+                        "§7Cette§c commande§7 vous permet d'§cinfecter§7 le joueur cibler dans le camp des§c Démons§7 (au bout de§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime())+"§7)");
                 setMaxUse(1);
             }
 
@@ -251,7 +255,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                     this.gameState = gameState;
                     this.roleInfecteur = roleInfecteur;
                     this.roleTarget = roleTarget;
-                    this.timeRemaining = Main.getInstance().getGameConfig().getInfectionTime();
+                    this.timeRemaining = Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime();
                     roleInfecteur.getGamePlayer().getActionBarManager().addToActionBar("infection.timer", "§bTemp avant§c infection§b: "+ this.timeRemaining);
                     runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }

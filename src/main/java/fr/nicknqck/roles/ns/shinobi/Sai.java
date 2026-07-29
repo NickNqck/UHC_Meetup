@@ -2,12 +2,11 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.EChakras;
-import fr.nicknqck.enums.Intelligence;
-import fr.nicknqck.enums.Roles;
-import fr.nicknqck.enums.TeamList;
+import fr.nicknqck.enums.*;
+import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.roles.PowerActivateEvent;
+import fr.nicknqck.events.ns.GamePlayerBecomeHokageEvent;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.UpdatablePowerLore;
 import fr.nicknqck.player.GamePlayer;
@@ -30,7 +29,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -44,14 +42,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class Sai extends ShinobiRoles implements Listener {
 
-    private boolean killSasuke = false;
+    private boolean unlocked = false;
 
     public Sai(UUID player) {
         super(player);
@@ -81,7 +81,7 @@ public class Sai extends ShinobiRoles implements Listener {
 
     @Override
     public @NonNull TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.killSasuke ? "" : "§7Si vous parvenez à tué§5 Sasuke§7,§e Danzo§7 obtiendra l'accès à la commande§c /ns sai§7, ce qui lui permettra de vous faire rejoindre son camp").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.unlocked ? "" : "§7Si vous parvenez à tué§5 Sasuke§7 ou que§e Danzo§7 réussi l'un de§c ses objectifs§7,§e il§7 obtiendra l'accès à la commande§c /ns sai§7, ce qui lui permettra de vous faire rejoindre son camp").getText();
     }
 
     @Override
@@ -98,7 +98,7 @@ public class Sai extends ShinobiRoles implements Listener {
         if (event.isCancelled())return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
             if (event.getRole() instanceof SasukeV2 || event.getRole() instanceof JubiSasuke) {
-                this.killSasuke = true;
+                this.unlocked = true;
                 for (@NonNull final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
                     if (!gamePlayer.check())continue;
                     if (gamePlayer.getRole() instanceof DanzoV2) {
@@ -110,7 +110,7 @@ public class Sai extends ShinobiRoles implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onCommand(@NonNull final PlayerCommandPreprocessEvent event) {
-        if (!this.killSasuke) return;
+        if (!this.unlocked) return;
         String message = event.getMessage();
         String[] args = message.split(" ");
         if (args[0].equalsIgnoreCase("/ns") && args.length == 2) {
@@ -122,15 +122,45 @@ public class Sai extends ShinobiRoles implements Listener {
                         if (gamePlayer.getRole() instanceof DanzoV2) {
                             //Si Danzo est infecté par Shisui alors, il ne peut plus changer de camp, donc on fait rejoindre à Sai ce camp-là
                             gamePlayer.getRole().setTeam(TeamList.Racine);
-                            setTeam(gamePlayer.getRole().getTeam());
+                            this.setTeam(gamePlayer.getRole().getTeam());
                             gamePlayer.sendMessage("§aSai§7 et vous faite maintenant la pair, la§a victoire§7 semble assuré !");
-                            getGamePlayer().sendMessage("§eDanzo§7 a reconnu votre valeur, vous pouvez enfin§a gagner§7 avec lui, il ne devrait pas vous trahir...");
+                            this.getGamePlayer().sendMessage("§eDanzo§7 a reconnu votre valeur, vous pouvez enfin§a gagner§7 avec lui, il ne devrait pas vous trahir...");
                         }
                     }
                 }
             }
         }
     }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    private void onBecomeHokage(@NonNull final GamePlayerBecomeHokageEvent event) {
+        if (!event.getHokage().check())return;
+        if (event.getHokage().getRole() instanceof DanzoV2 && !this.unlocked) {
+            event.getHokage().sendMessage("§7Vous êtes devenue le nouvel§a Hokage§7, si vous souhaitez que§a Saï§7 rejoigne votre§a camp§7, faite la commande§6 /ns sai§7.");
+            this.unlocked = true;
+        }
+    }
+    @EventHandler(priority = EventPriority.NORMAL)
+    private void onDeath(@NonNull final FinalDeathEvent event) {
+        if (event.getEntityKiller() == null)return;
+        @Nullable
+        final GamePlayer gamePlayer = GamePlayer.of(event.getEntityKiller().getUniqueId());
+        if (gamePlayer != null) {
+            if (gamePlayer.check()) {
+                if (gamePlayer.getRole() instanceof DanzoV2 && !this.unlocked) {
+                    final Map<PotionEffect, EffectWhen> danzoEffects = new HashMap<>(gamePlayer.getRole().getEffects());
+                    for (@NonNull PotionEffect potionEffect : danzoEffects.keySet()) {
+                        if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE) && danzoEffects.get(potionEffect).equals(EffectWhen.PERMANENT)) {
+                            this.unlocked = true;
+                            gamePlayer.getRole().getGamePlayer().sendMessage("§7En tuant ces maudits démon du clan§4§l Uchiwa§r§7, vous vous êtes souvenue que§a Sai§7 existe, faite la commande§6 /ns sai§7 pour le rallier à votre cause.");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private static final class ToileAuMonstreFantomatique extends ItemPower {
 
         @NonNull
@@ -159,8 +189,8 @@ public class Sai extends ShinobiRoles implements Listener {
             setShowCdInDesc(false);
             setSendCooldown(false);
             this.sourisMessagere = new SourisMessagere(role);
-            this.sangsue = new Sangsue(role);
-            this.scellementDePapier = new ScellementDePapier(role);
+            this.sangsue = new Sangsue(this);
+            this.scellementDePapier = new ScellementDePapier(this);
             getShowCdRunnable().setCustomText(true);
         }
 
@@ -207,18 +237,21 @@ public class Sai extends ShinobiRoles implements Listener {
                 player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
+                setTargetDistance(0);
             });
             fastInv.setItem(13, new ItemBuilder(Material.REDSTONE).setName("§cSangsue").toItemStack(), event -> {
                 this.equipedPower = sangsue;
                 player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
+                setTargetDistance(30);
             });
             fastInv.setItem(15, new ItemBuilder(Material.PAPER).setName("§aScellement dans le papier").toItemStack(), event -> {
                 this.equipedPower = scellementDePapier;
                 player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
+                setTargetDistance(20);
             });
             fastInv.open(player);
         }
@@ -241,6 +274,7 @@ public class Sai extends ShinobiRoles implements Listener {
                 }
                 if (map.containsKey("target")) {
                     if (map.get("target") instanceof GamePlayer) {
+                        player.sendMessage("§7Vos "+getName()+"§7 partent à la recherche de§a "+((GamePlayer) map.get("target")).getPlayerName());
                         new SourisRunnable(this, (GamePlayer) map.get("target"));
                         player.closeInventory();
                         return true;
@@ -326,10 +360,14 @@ public class Sai extends ShinobiRoles implements Listener {
                     }
                     if (!this.gameCible.check()) {
                         this.sourisMessager.getRole().getGamePlayer().sendMessage("§7Vos§a Souris messagères§7 ne peuvent plus trouver§b "+this.gameCible.getPlayerName()+"§7, il/elle est§c mort(e)§7.");
+                        this.sourisMessager.getRole().getGamePlayer().getActionBarManager().removeInActionBar("sai.souris");
+                        this.sourisMessager.targetUUID = null;
                         cancel();
                         return;
                     }
                     if (!this.sourisMessager.getRole().getGamePlayer().check()) {
+                        this.sourisMessager.getRole().getGamePlayer().getActionBarManager().removeInActionBar("sai.souris");
+                        this.sourisMessager.targetUUID = null;
                         cancel();
                         return;
                     }
@@ -365,15 +403,18 @@ public class Sai extends ShinobiRoles implements Listener {
         }
         private static final class Sangsue extends Power {
 
-            public Sangsue(@NonNull RoleBase role) {
-                super("§cSangsue", new Cooldown(60*5), role);
+            private final ToileAuMonstreFantomatique toileAuMonstreFantomatique;
+
+            public Sangsue(@NonNull ToileAuMonstreFantomatique toileAuMonstreFantomatique) {
+                super("§cSangsue", new Cooldown(60*5), toileAuMonstreFantomatique.getRole());
                 setShowInDesc(false);
-                role.addPower(this);
+                getRole().addPower(this);
+                this.toileAuMonstreFantomatique = toileAuMonstreFantomatique;
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 30.0, null);
+                final Player target = this.toileAuMonstreFantomatique.getShowGlowingRunnable().getTarget();
                 if (target != null) {
                     final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {
@@ -382,7 +423,7 @@ public class Sai extends ShinobiRoles implements Listener {
                                 player.sendMessage("§cIl vous est impossible de viser maitre§e Danzo§7.");
                                 return false;
                             }
-                            new SangsueRunnable(this, gamePlayer).runTaskTimer(getPlugin(), 1, 30);
+                            new SangsueRunnable(this, gamePlayer).runTaskTimer(getPlugin(), 1, 80);
                             player.sendMessage("§b"+gamePlayer.getPlayerName()+"§7 a été toucher par vos§c "+getName());
                             gamePlayer.sendMessage("§aSai§7 vous a toucher avec ses§c Sangsue§7.");
                             return true;
@@ -398,11 +439,13 @@ public class Sai extends ShinobiRoles implements Listener {
                 private final GamePlayer gameTarget;
                 private double healObtained = 0.0;
                 private final double maxPerCycle;
+                private final double maxPerHeal;
 
                 private SangsueRunnable(Sangsue sangsue, GamePlayer gameTarget) {
                     this.sangsue = sangsue;
                     this.gameTarget = gameTarget;
-                    this.maxPerCycle = 2.0;
+                    this.maxPerCycle = 30.0;
+                    this.maxPerHeal = 2.0;
                 }
 
                 @Override
@@ -416,37 +459,43 @@ public class Sai extends ShinobiRoles implements Listener {
                         return;
                     }
                     if (!this.sangsue.getRole().getGamePlayer().check())return;
-                    final Player target = this.gameTarget.getPlayer();
-                    final Player owner = this.sangsue.getRole().getGamePlayer().getPlayer();
-                    if (target.getHealth() - this.maxPerCycle > this.maxPerCycle+0.1) {
-                        final double dif = owner.getMaxHealth() - owner.getHealth();
-                        final double dif2 = this.maxPerCycle - healObtained;
-                        final double toHeal = Math.min(Math.min(dif, this.maxPerCycle), dif2);
-                        this.healObtained += toHeal;
-                        owner.setHealth(owner.getHealth() + toHeal);
-                        target.setHealth(target.getHealth() - toHeal);
-                        GlobalUtils.fakeDamage(target);
-                    }
                     if (this.healObtained >= this.maxPerCycle) {
                         cancel();
+                        return;
+                    }
+                    final Player target = this.gameTarget.getPlayer();
+                    final Player owner = this.sangsue.getRole().getGamePlayer().getPlayer();
+                    double missingHealth = owner.getMaxHealth() - owner.getHealth();
+                    if (missingHealth > 0.0) {
+                        double toHeal = Math.min(this.maxPerHeal, this.maxPerCycle - this.healObtained);
+                        toHeal = Math.min(toHeal, missingHealth);
+                        if (owner.getHealth() + toHeal > owner.getMaxHealth()) {return;}
+                        target.damage(0.0);
+                        target.setHealth(Math.max(0.1, target.getHealth()-toHeal));
+                        target.sendMessage("§7Votre§a vie§7 a été absorbé par les§a Sangsues§7 de§a Sai§7.");
+                        owner.sendMessage("§7Vous avez été§a soigné§7 par vos§a Sangsues§7.");
+                        owner.setHealth(owner.getHealth()+toHeal);
+                        this.healObtained += toHeal;
                     }
                 }
             }
         }
         private static final class ScellementDePapier extends Power implements Listener {
 
+            private final ToileAuMonstreFantomatique toileAuMonstreFantomatique;
             private UUID targetUUID = null;
 
-            public ScellementDePapier(@NonNull RoleBase role) {
-                super("§aScellement de papier", null, role);
+            public ScellementDePapier(@NonNull ToileAuMonstreFantomatique toileAuMonstreFantomatique) {
+                super("§aScellement de papier", null, toileAuMonstreFantomatique.getRole());
                 setShowInDesc(false);
                 setMaxUse(1);
-                role.addPower(this);
+                getRole().addPower(this);
+                this.toileAuMonstreFantomatique = toileAuMonstreFantomatique;
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 20.0, null);
+                final Player target = this.toileAuMonstreFantomatique.getShowGlowingRunnable().getTarget();
                 if (target != null) {
                     final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {
@@ -455,6 +504,7 @@ public class Sai extends ShinobiRoles implements Listener {
                                 player.sendMessage("§cIl vous est impossible de viser maitre§e Danzo§7.");
                                 return false;
                             }
+                            player.sendMessage("§7Le "+getName()+"§7 a commencé, restez§c 10 secondes§7 proche de§a "+gamePlayer.getPlayerName()+"§7 pour que ce sois définitif§7.");
                             new ScellementRunnable(this, gamePlayer).runTaskTimerAsynchronously(getPlugin(), 1, 20);
                             return true;
                         }
@@ -546,7 +596,7 @@ public class Sai extends ShinobiRoles implements Listener {
         @Override
         public String[] getCustomPowerLore() {
             if (getRole() instanceof Sai) {
-                if (((Sai) getRole()).killSasuke) {
+                if (((Sai) getRole()).unlocked) {
                     return new String[] {
                             "§7En restant proche des autres joueurs pendant un temps définie en fonction de leurs§a intelligences§7",
                             "§7vous saurez dans quel camps ils sont parmi un§a vrai§7 et un§c faux§7."
@@ -584,7 +634,7 @@ public class Sai extends ShinobiRoles implements Listener {
                 if (gamePlayer == null)return;
                 if (!gamePlayer.check())return;
                 if (gamePlayer.getRole() instanceof Sai) {
-                    this.killSasuke = ((Sai) gamePlayer.getRole()).killSasuke;
+                    this.killSasuke = ((Sai) gamePlayer.getRole()).unlocked;
                 }
                 final Location location = gamePlayer.getLastLocation();
                 for (Player player : location.getWorld().getPlayers()) {

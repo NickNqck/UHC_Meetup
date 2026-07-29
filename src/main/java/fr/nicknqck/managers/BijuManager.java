@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
+import fr.nicknqck.entity.bijuv2.BijuPower;
 import fr.nicknqck.entity.bijuv2.impl.*;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.GameStartEvent;
@@ -90,7 +91,7 @@ public class BijuManager implements Listener {
     private void bijuInstantiateEvent(final BijuInstantiateEvent event) {
         this.runnableList.add(new BijuSpawnRunnable(event.getBiju(), event.getSpawnTime()));
         if (!this.getBijuSpawnMap().containsKey(event.getBiju())) {
-            System.out.println(a+" Fixed Error, the BijuSpawnMap have now finally added "+event.getBiju().getName());
+            Main.getInstance().debug(a+" Fixed Error, the BijuSpawnMap have now finally added "+event.getBiju().getName());
             this.getBijuSpawnMap().put(event.getBiju(), event.getSpawnTime());
         }
     }
@@ -148,7 +149,7 @@ public class BijuManager implements Listener {
             if (!GameState.getInstance().hasRoleNull(event.getKiller().getUniqueId())) {
                 final RoleBase role = GameState.getInstance().getGamePlayer().get(event.getKiller().getUniqueId()).getRole();
                 if (!this.ownerMap.containsKey(role.getGamePlayer())) {
-                    role.addPower(new BijuBase.BijuPower(event.getBiju(), role), true);
+                    role.addPower(new BijuPower(event.getBiju(), role), true);
                     role.getGamePlayer().sendMessage("§7Vous êtes devenus l'hôte de "+event.getBiju().getName());
                     this.ownerMap.put(role.getGamePlayer(), event.getBiju());
                 } else {

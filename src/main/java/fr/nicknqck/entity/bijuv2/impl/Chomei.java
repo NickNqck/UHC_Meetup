@@ -40,7 +40,7 @@ public class Chomei extends BijuBase {
     }
 
     @Override
-    public @NonNull ItemStack getItemInMenu() {
+    public @NonNull ItemStack getTempMenuItem() {
         return new ItemBuilder(Material.INK_SACK).setName(getName()).setDurability(2).toItemStack();
     }
 

@@ -226,6 +226,7 @@ public class KokushiboV2 extends DemonsRoles {
             role.addPower(horizontalPower);
             role.addPower(verticalPower);
             getShowCdRunnable().setCustomText(true);
+            setTargetDistance(this.verticalPower.getTargetDistance());
         }
 
         @Override
@@ -375,6 +376,7 @@ public class KokushiboV2 extends DemonsRoles {
             public VerticalPower(@NonNull RoleBase role) {
                 super("Soufle de la lune (Frappe Vertical)", new Cooldown(60*5), role);
                 setShowInDesc(false);
+                setTargetDistance(5);
             }
 
             @Override

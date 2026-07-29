@@ -5,15 +5,19 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.roles.ns.builders.HShinobiRoles;
 import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.enums.Intelligence;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.TripleMap;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -31,6 +35,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Shikamaru extends HShinobiRoles {
@@ -81,15 +87,8 @@ public class Shikamaru extends HShinobiRoles {
                 "§aZone d'ombre",
                 60*5
         ));
-        desc.setCommands(
-          new TripleMap<>(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                  new TextComponent(
-                          "§7Vous permet d'obtenir l'information du niveau d'intélligence de la personne cibler, si la personne cibler est§a Chôji§7 ou§a Ino§7, alors vous le saurez§c immédiatement§7.\n\n"
-                          +"§7L'§cannexe§7 des niveaux d'§aintelligence§7 est disponnible avec la commande§6 /ns intelligences§7."
-                  )}),
-                  "§6/ns shogi <joueur>",
-                  60*5)
-        );
+        addPower(new ShogiCommand(this));
+        desc.setPowers(getPowers());
         this.desc = desc.getText();
         addKnowedRole(InoV2.class);
     }
@@ -142,37 +141,6 @@ public class Shikamaru extends HShinobiRoles {
     @Override
     public TextComponent getComponent() {
         return this.desc;
-    }
-
-    @Override
-    public void onNsCommand(String[] args) {
-        super.onNsCommand(args);
-        if  (args[0].equalsIgnoreCase("shogi")){
-            if (cdShogi > 0){
-                sendCooldown(owner, cdShogi);
-                return;
-            }
-            if (args.length == 2) {
-                Player target = Bukkit.getPlayer(args[1]);
-                if (target != null) {
-                    if (!gameState.hasRoleNull(target.getUniqueId())) {
-                        if (gameState.getGamePlayer().get(target.getUniqueId()).getRole() instanceof NSRoles){
-                            Intelligence intelligence = ((NSRoles) gameState.getGamePlayer().get(target.getUniqueId()).getRole()).getIntelligence();
-                            if (intelligence.equals(Intelligence.CONNUE)) {
-                                owner.sendMessage("§7Le rôle de§c "+target.getDisplayName()+"§7 est "+gameState.getGamePlayer().get(target.getUniqueId()).getRole().getName());
-                            } else {
-                                owner.sendMessage("§c"+target.getDisplayName()+"§7 est§a "+intelligence.getName());
-                            }
-                            cdShogi = 60*5;
-                        } else {
-                            owner.sendMessage("§c"+target.getDisplayName()+"§7 ne viens pas du§a Naruto§2 UHC");
-                        }
-                    }
-                } else {
-                    owner.sendMessage("§b"+args[1]+"§c n'est pas connecter");
-                }
-            }
-        }
     }
 
     @Override
@@ -341,6 +309,47 @@ public class Shikamaru extends HShinobiRoles {
                     target.setHealth(target.getHealth()-1.0);
                 }
             }
+        }
+    }
+    private static final class ShogiCommand extends CommandPower {
+
+        public ShogiCommand(@NonNull RoleBase role) {
+            super("§a/ns shogi <joueur>", "shogi", new Cooldown(60*5), role, CommandType.NS);
+        }
+
+        @Override
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            final String[] args = (String[])map.get("args");
+            if (args.length == 2) {
+                Player target = Bukkit.getPlayer(args[1]);
+                if (target != null) {
+                    GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                    if (gamePlayer == null)return false;
+                    if (!gamePlayer.check())return false;
+                    if (gamePlayer.getRole() instanceof NSRoles) {
+                        Intelligence intelligence = ((NSRoles)gamePlayer.getRole()).getIntelligence();
+                        if (intelligence.equals(Intelligence.CONNUE)) {
+                            player.sendMessage("§7Le rôle de§c " + target.getDisplayName() + "§7 est " + gamePlayer.getRole().getName());
+                        } else {
+                            player.sendMessage("§c" + target.getDisplayName() + "§7 est§a " + intelligence.getName());
+                        }
+                        return true;
+                    } else {
+                        player.sendMessage("§c" + target.getDisplayName() + "§7 ne viens pas du§a Naruto§2 UHC");
+                    }
+                } else {
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecter");
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public List<String> getCompletor(String[] args) {
+            if (args.length == 2) {
+                return StringUtils.getPlayerNameList(getRole().getGamePlayer().getLastLocation().getWorld().getPlayers(), args[1], getRole().getPlayer());
+            }
+            return super.getCompletor(args);
         }
     }
 }

@@ -1,8 +1,6 @@
 package fr.nicknqck;
 
 import fr.nicknqck.GameState.ServerStates;
-import fr.nicknqck.entity.bijus.BijuListener;
-import fr.nicknqck.entity.bijus.Bijus;
 import fr.nicknqck.events.custom.*;
 import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.interfaces.ITeam;
@@ -10,6 +8,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.aot.builders.ArcTridimentionnelPower;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
@@ -68,7 +67,6 @@ public class GameListener implements Listener {
 			@NonNull final SecondPassEvent onSecond = new SecondPassEvent(this.gameState);
 			Bukkit.getPluginManager().callEvent(onSecond);
 			UpdateGame();
-			BijuListener.getInstance().runnableTask(gameState);
 
 		}, 20, 20);
 	}
@@ -206,25 +204,29 @@ public class GameListener implements Listener {
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
 					if (p == null) {
-						System.out.println("Player: "+u.toString()+", can't have role because he was offline");
+						Main.getInstance().debug("Player: "+u.toString()+", can't have role because he was offline");
 						continue;
 					}
                     RoleBase role;
 					role = gameState.GiveRole(p);// (Ancien système de rôle)
 					//role = Main.getInstance().getRoleManager().getRandomRole(u);
                     if (role != null){
-                        role.RoleGiven(gameState);
-                        role.GiveItems();
-                        lastRoleGive = role;
-						if (Main.getInstance().getGameConfig().isGiveLame()) {
+						if (role instanceof AotRoles) {
+							if (!gameState.rod) {
+								role.addPower(new ArcTridimentionnelPower(role), true);
+							} else {
+								role.giveItem(p, false, gameState.EquipementTridi());
+							}
+						}
+						role.RoleGiven(gameState);
+						role.GiveItems();
+						lastRoleGive = role;
+						if (Main.getInstance().getGameConfig().getDemonSlayerConfig().isGiveLame()) {
 							if (role instanceof DemonsSlayersRoles){
 								if (((DemonsSlayersRoles) role).isCanuseblade()){
 									role.giveItem(p, false, Items.getLamedenichirin());
 								}
 							}
-						}
-						if (role instanceof AotRoles) {
-							role.giveItem(p, false, gameState.EquipementTridi());
 						}
                         Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this.gameState, role, role.getRoles(), role.getGamePlayer(), false));
                     }
@@ -287,14 +289,6 @@ public class GameListener implements Listener {
 				Main.getInstance().getScoreboardManager().onLogout(p);
 				p.setPlayerListName(Bukkit.getPlayer(p.getUniqueId()).getName());
 			}
-			for (Bijus b : Bijus.values()) {
-				b.getBiju().resetCooldown();
-				b.getBiju().setHote(null);
-				if (Main.isDebug()){
-					System.out.println("reseted "+b.name());
-				}
-			}
-			BijuListener.getInstance().resetCooldown();
 			gameState.DeadRole.clear();
 			gameState.getAttributedRole().clear();
 			KamuiUtils.resetUtils();
@@ -378,7 +372,6 @@ public class GameListener implements Listener {
 			System.out.println("end");
 			gameState.pregenNakime = false;
 			gameState.setInGamePlayers(new ArrayList<>());
-			BijuListener.getInstance().resetCooldown();
 			for (Player p : gameState.getInSpecPlayers()) {
 				if (!gameState.getInLobbyPlayers().contains(p.getUniqueId())) {
 					gameState.addInLobbyPlayers(p);

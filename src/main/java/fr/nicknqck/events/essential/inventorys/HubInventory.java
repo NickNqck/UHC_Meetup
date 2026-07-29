@@ -37,7 +37,12 @@ public class HubInventory implements Listener {
             Inventory inv = event.getClickedInventory();
             InventoryAction action = event.getAction();
             if (inv != null && event.getCurrentItem() != null) {
-                if (event.getCurrentItem().isSimilar(GUIItems.getStartGameButton()) && gameState.gameCanLaunch) HubListener.getInstance().StartGame(player);
+                if (event.getCurrentItem().isSimilar(GUIItems.getStartGameButton())) {
+                    GameState.getInstance().updateGameCanLaunch();
+                    if (GameState.getInstance().gameCanLaunch) {
+                        HubListener.getInstance().StartGame(player);
+                    }
+                }
                 final ItemStack item = event.getCurrentItem();
                 final boolean mahr = item.isSimilar(GUIItems.getSelectMahrButton());
                 final boolean sl = item.isSimilar(GUIItems.getSelectSlayersButton());

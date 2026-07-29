@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.nicknqck.Main;
-import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.Roles;
-import fr.nicknqck.items.Jubi;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -17,16 +15,12 @@ import fr.nicknqck.roles.ns.builders.NSRoles;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.entity.bijus.BijuListener;
 
 public class NsCommands implements CommandExecutor {
 	final GameState gameState;
@@ -202,63 +196,6 @@ public class NsCommands implements CommandExecutor {
 						gameState.sendDescription(sender);
 						return true;
 					}
-					if (args[0].equalsIgnoreCase("jubicraft")) {
-						if (getListPlayerFromRole(Roles.Obito).contains(sender) || getListPlayerFromRole(Roles.Madara).contains(sender)) {
-							final List<ItemStack> toRemove = new ArrayList<>();
-							int countBiju = 0;
-							for (final BijuBase biju : Main.getInstance().getBijuManager().getBijuSpawnMap().keySet()) {
-								if (biju.getBijuPower() != null) {
-									if (sender.getInventory().contains(biju.getBijuPower().getItem())) {
-										countBiju++;
-										toRemove.add(biju.getBijuPower().getItem());
-										continue;
-									}
-								}
-								if (sender.getInventory().contains(biju.getItemInMenu())) {
-									countBiju++;
-									toRemove.add(biju.getItemInMenu());
-								}
-							}
-							for (ItemStack item : sender.getInventory().getContents()) {
-								if (item != null) {
-									if (item.getType() != Material.AIR) {
-										if (item.hasItemMeta()) {
-											if (item.getItemMeta().hasDisplayName()) {
-												if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kyubi") ||
-														item.getItemMeta().getDisplayName().equalsIgnoreCase("§dGyûki") ||
-												item.getItemMeta().getDisplayName().equalsIgnoreCase("§6Kyûbi")) {
-													countBiju++;
-												}
-											}
-										}
-									}
-								}
-							}
-							if (countBiju >= 6) {
-								for (final ItemStack item : toRemove) {
-									sender.getInventory().remove(item);
-								}
-								sender.setPlayerListName("§dJubi "+sender.getName());
-								GameListener.SendToEveryone("");
-								GameListener.SendToEveryone("§c§lLe Jûbi à été invoquée !");
-								GameListener.SendToEveryone("");
-								new Jubi(sender);
-								for (Player p : Bukkit.getOnlinePlayers()) {
-									if (!gameState.hasRoleNull(p.getUniqueId())){
-										gameState.getGamePlayer().get(sender.getUniqueId()).getRole().playSound(p, "mob.enderdragon.end");
-									}
-								}
-								//Pour la liste des sons
-								//https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/mapping-and-modding-tutorials/2213619-1-8-all-playsound-sound-arguments
-								gameState.getGamePlayer().get(sender.getUniqueId()).getRole().giveItem(sender, true, BijuListener.getInstance().JubiItem());
-                            } else {
-								send.sendMessage("§7Vous n'avez pas asser de§d Biju");
-                            }
-                        } else {
-							send.sendMessage("§7Vous n'avez pas la puissance pour devenir l'hôte de§d Jûbi");
-                        }
-                        return true;
-                    }
 					if (!gameState.hasRoleNull(sender.getUniqueId()) && gameState.getGamePlayer().get(sender.getUniqueId()).getRole().getGamePlayer().isAlive() && gameState.getGamePlayer().get(sender.getUniqueId()).getRole() instanceof NSRoles){
 						NSRoles role = (NSRoles) gameState.getGamePlayer().get(sender.getUniqueId()).getRole();
 						role.onNsCommand(args);

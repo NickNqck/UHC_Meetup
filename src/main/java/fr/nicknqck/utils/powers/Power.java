@@ -7,6 +7,7 @@ import fr.nicknqck.events.custom.roles.PowerActivateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -31,6 +32,8 @@ public abstract class Power implements Cloneable{
     private boolean workWhenInCooldown = false;
     private boolean showInDesc = true;
     private boolean showCdInDesc = true;
+    private Player target;
+    private int targetDistance = 0;
 
     public Power(@NonNull String name, Cooldown cooldown,@NonNull RoleBase role, String... descriptions) {
         this.name = name;
@@ -118,6 +121,18 @@ public abstract class Power implements Cloneable{
         player.sendMessage("§cVous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(getCooldown().getCooldownRemaining()));
     }
 
+    public Player getTarget() {
+        if (!Main.getInstance().isLunarEnabled()) {
+            this.setTarget(RayTrace.getTargetPlayer(this.getRole().getGamePlayer().getPlayer(), this.targetDistance == 0 ? 30 : this.targetDistance, null));
+        }
+        return target;
+    }
+    public void setTargetDistance(int targetDistance) {
+        this.targetDistance = targetDistance;
+        if (this instanceof ItemPower) {
+            ((ItemPower) this).setTargetPlayer(targetDistance > 0);
+        }
+    }
     @Override
     public Power clone() {
         try {

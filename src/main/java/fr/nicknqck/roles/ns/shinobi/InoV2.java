@@ -2,7 +2,9 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.InfoType;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
@@ -99,6 +101,19 @@ public class InoV2 extends ShinobiRoles {
                     CraftEntity craftEntity = ((CraftEntity) entity);
                     if (craftEntity.getHandle().hasCustomName() || entity instanceof Player) {
                         String name = (craftEntity.getHandle().hasCustomName() ? craftEntity.getCustomName() : entity.getName());
+                        if (entity instanceof Player) {
+                            GamePlayer gamePlayer = GamePlayer.of(entity.getUniqueId());
+                            if (gamePlayer == null)continue;
+                            if (!gamePlayer.check())continue;
+                            PowerTakeInfoEvent event = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
+                            Bukkit.getPluginManager().callEvent(event);
+                            if (event.isCancelled()) {
+                                event.sendCancelMessage(player);
+                                continue;
+                            }
+                            gamePlayer = event.getGameTarget();
+                            craftEntity = (CraftEntity) gamePlayer.getPlayer();
+                        }
                         sb.append("§8 - §c")
                                 .append(name)
                                 .append(": x: ")

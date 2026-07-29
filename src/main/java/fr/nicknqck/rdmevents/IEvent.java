@@ -1,0 +1,19 @@
+package fr.nicknqck.rdmevents;
+
+import fr.nicknqck.GameState;
+import fr.nicknqck.interfaces.IMDJ;
+import lombok.NonNull;
+import org.bukkit.inventory.ItemStack;
+
+public interface IEvent {
+
+    String getName();
+    void onProc(final GameState gameState);
+    ItemStack getMenuItem();
+    boolean canProc(final GameState gameState);
+    String[] getExplications();
+    @NonNull
+    IMDJ getMDJ();
+    boolean onGameStart(@NonNull final GameState gameState);
+
+}

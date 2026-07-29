@@ -26,7 +26,6 @@ import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.roles.ns.akatsuki.*;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.orochimaru.*;
 import fr.nicknqck.roles.ns.orochimaru.edov2.KabutoV2;
 import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
@@ -427,9 +426,6 @@ public class GameState{
                 case ZetsuNoir:
                     role = new ZetsuNoirV2(player);
                     break;
-                case ZetsuBlanc:
-                    role = new ZetsuBlancV3(player);
-                    break;
                 case Konan:
                     role = new KonanV2(player);
                     break;
@@ -446,10 +442,13 @@ public class GameState{
                     role = new ZabuzaV2(player);
                     break;
                 case Jugo:
-                    role = new Jugo(player);
+                    role = new JugoV2(player);
                     break;
                 case Kakashi:
                     role = new KakashiV2(player);
+                    break;
+                case ZetsuBlanc:
+                    role = new ZetsuBlancV4(player);
                     break;
                 case Naruto:
                     role = new NarutoV2(player);
@@ -519,9 +518,6 @@ public class GameState{
                     break;
                 case SlayerSolo:
                     role = new SlayerSolo(player);
-                    break;
-                case ZetsuBlancV2:
-                    role = new ZetsuBlancV2(player);
                     break;
                 case Neon:
                     role = new Neon(player);

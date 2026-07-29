@@ -4,9 +4,9 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
-import fr.nicknqck.events.custom.assassin.ChooseAssassinEvent;
-import fr.nicknqck.events.custom.assassin.PrepareAssassinEvent;
-import fr.nicknqck.events.custom.assassin.ProcAssassinEvent;
+import fr.nicknqck.events.ds.ChooseAssassinEvent;
+import fr.nicknqck.events.ds.PrepareAssassinEvent;
+import fr.nicknqck.events.ds.ProcAssassinEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.ds.builders.DemonsRoles;
 import fr.nicknqck.roles.ds.slayers.NezukoV2;
@@ -84,7 +84,7 @@ public class AssassinManagerV2 implements Listener {
     }
     private void updateTime() {
         int oldTime = this.timeBeforeProc;
-        this.timeBeforeProc = Main.getInstance().getGameConfig().getTimingAssassin();
+        this.timeBeforeProc = Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin();
         System.out.println(this.prefix+"updated time from "+oldTime+" to "+this.timeBeforeProc);
     }
     private static class SetAssassinRunnable extends BukkitRunnable {

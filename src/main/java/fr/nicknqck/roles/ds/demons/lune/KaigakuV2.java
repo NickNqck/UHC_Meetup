@@ -22,7 +22,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -190,6 +189,11 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             } else {
                 removeSpeed();
             }
+            if (this.charge >= 20) {
+                setTargetDistance(this.tpPower.getTargetDistance());
+            } else {
+                setTargetDistance(0);
+            }
             getRole().getGamePlayer().getActionBarManager().updateActionBar("kaigaku.electro", "§bCharge actuel: "+charge+"%");
         }
         @EventHandler
@@ -342,11 +346,12 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                 super("Électrokinésie (Clique gauche)", new Cooldown(5), role);
                 setShowInDesc(false);
                 setSendCooldown(false);
+                setTargetDistance(30);
             }
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                final Player target = RayTrace.getTargetPlayer(player, 30.0, null);
+                final Player target = getTarget();
                 if (target == null) {
                     player.sendMessage("§cIl faut viser un joueur");
                     return false;

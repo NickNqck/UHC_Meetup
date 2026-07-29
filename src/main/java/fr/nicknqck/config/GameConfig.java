@@ -35,9 +35,6 @@ public class GameConfig {
     private boolean pvpEnable = false;
     private int maxTimeDay = 60*3;
     private int critPercent = 20;
-    private boolean giveLame = false;
-    private int timingAssassin = 30;
-    private int infectionTime = 60;
     private int groupe = 5;
     private int forcePercent = 30;
     private int resiPercent = 20;
@@ -47,6 +44,7 @@ public class GameConfig {
     private final LinkedHashMap<IMDJ, Class<? extends FastInv>> configurablesMdj;
     private final LinkedList<IMDJ> playableMdj;
     private boolean pregen = false;
+    private final DemonSlayerConfig demonSlayerConfig;
 
     public GameConfig() {
         instance = this;
@@ -64,6 +62,7 @@ public class GameConfig {
         this.playableMdj.remove(MDJ.CRYSTAL);
         this.playableMdj.remove(MDJ.Aucun);
         this.crystalConfig = new CrystalConfig();
+        this.demonSlayerConfig = new DemonSlayerConfig();
     }
 
     @Getter
@@ -129,5 +128,15 @@ public class GameConfig {
         public CrystalConfig() {
             this.elements = new ArrayList<>(Arrays.asList(CeintureElements.values()));
         }
+    }
+    @Getter
+    @Setter
+    public static final class DemonSlayerConfig {
+
+        private int timingAssassin = 30;
+        private int infectionTime = 60;
+        private boolean giveLame = false;
+        private boolean muzanAutoGive = false;
+
     }
 }

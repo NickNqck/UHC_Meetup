@@ -21,12 +21,13 @@ public class Amaterasu extends ItemPower {
     public Amaterasu(@NonNull RoleBase role) {
         super("Amaterasu", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§cAmaterasu"), role,
                 "§7En visant un joueur, vous permet de lui infliger des dégâts et de§c l'enflammer§7 pendant§c 10 secondes§7. (1x/10m)");
+        setTargetDistance(30);
     }
 
     @Override
     public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
         if (getInteractType().equals(InteractType.INTERACT)) {
-            final Player target = RayTrace.getTargetPlayer(player, 30, null);
+            final Player target = getShowGlowingRunnable().getTarget();
             if (target == null) {
                 player.sendMessage("§cIl faut viser un joueur !");
                 return false;

@@ -1,6 +1,6 @@
 name: UHC-Meetup
 main: fr.nicknqck.Main
-version: 15
+version: 16
 author: NickNqck
 commands:
   ds:
@@ -56,3 +56,6 @@ commands:
   info:
     description: Permet d'obtenir vos propres informations
     usage: /info
+  inv:
+    description: Permet de configurer l'inventaire de départ
+    usage: /inv

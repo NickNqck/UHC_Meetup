@@ -3,7 +3,6 @@ package fr.nicknqck;
 import fr.nicknqck.commands.completer.AdminTabCompletor;
 import fr.nicknqck.commands.completer.KrystalTabCompletor;
 import fr.nicknqck.commands.completer.NSCompleter;
-import fr.nicknqck.entity.bijus.BijuListener;
 import fr.nicknqck.commands.*;
 import fr.nicknqck.commands.Color;
 import fr.nicknqck.commands.roles.*;
@@ -25,7 +24,6 @@ import fr.nicknqck.managers.schem.SchematicManager;
 import fr.nicknqck.player.EffectsGiver;
 import fr.nicknqck.roles.builder.GetterList;
 import fr.nicknqck.roles.ds.Lame;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.BanquePower;
 import fr.nicknqck.roles.ns.power.KatsuyuManager;
 import fr.nicknqck.scenarios.impl.TimberPvP;
 import fr.nicknqck.scoreboard.ScoreboardManager;
@@ -98,10 +96,12 @@ public class Main extends JavaPlugin {
 	private FileConfiguration webhookConfig;
 
 	private WorldConfig worldConfig;
+	private InvManager invManager;
 
 	private WorldListener worldListener;
 
 	private boolean goodServer;
+	private boolean lunarEnabled = false;
 
 	private EventsManager eventsManager;
 
@@ -178,12 +178,18 @@ public class Main extends JavaPlugin {
 		this.pubManager.add("§bSi vous rencontrez des bugs, n'hésitez pas à le notifier sur§6 /discord§b.");
 		this.pubManager.add("§bSachez où vous visez avec votre rôle via la commande§6 /settings§b.");
 		this.pubManager.add("§bUn SoundPack est disponible avec la commande§6 /pack§b.");
+		this.pubManager.add("§bIl est maintenant possible de customiser l'inventaire de départ par défaut via la commande§6 /inv§b.");
+		this.pubManager.add("§bIl est maintenant possible d'empêcher son§c épée§b d'être jeter grace a la commande§6 /settings§b.");
 		this.pubManager.start();
 		this.schematicManager = new SchematicManager(this);
 		this.crystalManager = new CrystalManager();
+		this.invManager = new InvManager();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		debug("PubManager size = "+this.pubManager.size()+", toString -> "+this.pubManager.toString());
+		if (Bukkit.getPluginManager().isPluginEnabled("Apollo-Bukkit")) {
+			this.lunarEnabled = true;
+		}
 		System.out.println("ENDING ONENABLE");
     }
 	private void saveDefaultWebhookConfig() {
@@ -242,9 +248,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BrickBlockListener(), this);
 		getServer().getPluginManager().registerEvents(new BetterItemListener(), this);
 		getServer().getPluginManager().registerEvents(new Lame(), this);
-		getServer().getPluginManager().registerEvents(new Arctridi(gameState), this);
 		getServer().getPluginManager().registerEvents(new Whitelist(gameState), this);
-		getServer().getPluginManager().registerEvents(new BijuListener(), this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
@@ -254,7 +258,6 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new WebHookListeners(gameState), this);
 		DeathManager manager = new DeathManager();
 		getServer().getPluginManager().registerEvents(manager, this);
-		EventUtils.registerEvents(new BanquePower());
 		WorldConfig worldConfig = new WorldConfig(gameState);
 		getServer().getPluginManager().registerEvents(worldConfig, this);
 		this.worldConfig = worldConfig;
@@ -299,6 +302,7 @@ public class Main extends JavaPlugin {
 		getCommand("settings").setExecutor(settingsCommand);
 		Bukkit.getPluginManager().registerEvents(settingsCommand, this);
 		getCommand("info").setExecutor(new InfoCommand());
+		getCommand("inv").setExecutor(new InvCommand());
 	/*	getCommand("role").setExecutor(new RoleCommand());
 		getCommand("role").setTabCompleter(new RoleTabComplete());
 		getCommand("team").setExecutor(new TeamCommand());

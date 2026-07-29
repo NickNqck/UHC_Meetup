@@ -1,14 +1,11 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
 import fr.nicknqck.GameState;
-import fr.nicknqck.Main;
-import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.*;
+import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.enums.TeamList;
-import fr.nicknqck.enums.EChakras;
-import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -16,6 +13,7 @@ import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
+import lombok.Getter;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -27,8 +25,6 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class KarinV2 extends OrochimaruRoles {
-
-    private final Map<UUID, Integer> timePassedNearby = new HashMap<>();
 
     public KarinV2(UUID player) {
         super(player);
@@ -65,7 +61,7 @@ public class KarinV2 extends OrochimaruRoles {
         addPower(new MorsureItem(this), true);
         addKnowedRole(KimimaroV2.class);
         addPower(new DonItem(this));
-        new KnowRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
+        addPower(new InfoObtainPower(this));
     }
 
     @Nonnull
@@ -167,45 +163,82 @@ public class KarinV2 extends OrochimaruRoles {
             }
         }
     }
-    private static class KnowRunnable extends BukkitRunnable {
+    private static final class InfoObtainPower extends Power {
 
-        private final KarinV2 karinV2;
+        private final Map<UUID, Integer> timePassedNearby = new HashMap<>();
+        @Getter
+        private final KnowRunnable knowRunnable;
 
-        private KnowRunnable(KarinV2 karinV2) {
-            this.karinV2 = karinV2;
+        public InfoObtainPower(@NonNull RoleBase role) {
+            super("§aIdentification du chakra§r", null, role,
+                    "§7En restant proche des autres joueurs vous connaitrez dans quel camp ils sont.",
+                    "",
+                    "§8 -§c 2 minutes§7 si la personne a pour camp d'origine "+TeamList.Orochimaru.getName(),
+                    "§8 -§c 5 minutes§7 pour les autres camp");
+            knowRunnable = new KnowRunnable(this);
+            this.knowRunnable.runTaskTimerAsynchronously(getPlugin(), 100, 20);
         }
 
         @Override
-        public void run() {
-            if (!karinV2.getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
-                cancel();
-                return;
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            return true;
+        }
+        private static class KnowRunnable extends BukkitRunnable {
+
+            private final InfoObtainPower infoObtainPower;
+
+            private KnowRunnable(InfoObtainPower infoObtainPower) {
+                this.infoObtainPower = infoObtainPower;
             }
-            final Player owner = Bukkit.getPlayer(karinV2.getPlayer());
-            if (owner == null)return;
-            for (@NonNull final Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
-                if (this.karinV2.getGameState().hasRoleNull(p.getUniqueId())) {
+
+            @Override
+            public void run() {
+                if (!this.infoObtainPower.getRole().getGameState().getServerState().equals(GameState.ServerStates.InGame)) {
+                    cancel();
                     return;
                 }
-                if (this.karinV2.timePassedNearby.containsKey(p.getUniqueId())) {
-                    int i = this.karinV2.timePassedNearby.get(p.getUniqueId());
-                    this.karinV2.timePassedNearby.put(p.getUniqueId(), i+1);
-                    if (GamePlayer.of(p.getUniqueId()).getRole().getOriginTeam() == TeamList.Orochimaru) {
-                        if (this.karinV2.timePassedNearby.get(p.getUniqueId()) == 60*2) {
-                            owner.sendMessage("§5"+p.getDisplayName()+"§f est dans le camp§5 Orochimaru");
-                        }
-                    }else {
-                        if (this.karinV2.timePassedNearby.get(p.getUniqueId()) == 60*5) {
-                            final GamePlayer gamePlayer = GamePlayer.of(p.getUniqueId());
-                            if (gamePlayer != null){
-                                owner.sendMessage(gamePlayer.getRole().getTeamColor()+p.getDisplayName()+
-                                        "§f est dans le camp "
-                                        +gamePlayer.getRole().getTeam().getName());
+                final Player owner = Bukkit.getPlayer(this.infoObtainPower.getRole().getPlayer());
+                if (owner == null)return;
+                for (@NonNull final Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
+                    if (this.infoObtainPower.getRole().getGameState().hasRoleNull(p.getUniqueId())) {
+                        return;
+                    }
+                    if (this.infoObtainPower.timePassedNearby.containsKey(p.getUniqueId())) {
+                        final GamePlayer gamePlayer = GamePlayer.of(p.getUniqueId());
+                        if (gamePlayer == null)continue;
+                        if (!gamePlayer.check())continue;
+                        if (this.infoObtainPower.timePassedNearby.get(p.getUniqueId()) == 60*2) {
+                            if (this.infoObtainPower.checkUse(owner, new HashMap<>())) {
+                                @NonNull final PowerTakeInfoEvent powerTakeInfoEvent = new PowerTakeInfoEvent(this.infoObtainPower, gamePlayer, InfoType.TEAM);
+                                this.infoObtainPower.getPlugin().getServer().getPluginManager().callEvent(powerTakeInfoEvent);
+                                if (!powerTakeInfoEvent.isCancelled()) {
+                                    if (powerTakeInfoEvent.getGameTarget().getRole().getOriginTeam().equals(TeamList.Orochimaru)) {
+                                        owner.sendMessage("§5"+p.getDisplayName()+"§f est dans le camp§5 Orochimaru");
+                                    }
+                                } else {
+                                    powerTakeInfoEvent.sendCancelMessage(owner);
+                                    continue;
+                                }
+                            }
+                        } else if (this.infoObtainPower.timePassedNearby.get(p.getUniqueId()) == 60*5) {
+                            if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Orochimaru)) continue;
+                            if (this.infoObtainPower.checkUse(owner, new HashMap<>())) {
+                                @NonNull final PowerTakeInfoEvent powerTakeInfoEvent = new PowerTakeInfoEvent(this.infoObtainPower, gamePlayer, InfoType.TEAM);
+                                this.infoObtainPower.getPlugin().getServer().getPluginManager().callEvent(powerTakeInfoEvent);
+                                if (!powerTakeInfoEvent.isCancelled()) {
+                                    owner.sendMessage(powerTakeInfoEvent.getGameTarget().getRole().getTeamColor()+p.getDisplayName()+
+                                            "§f est dans le camp "
+                                            +powerTakeInfoEvent.getGameTarget().getRole().getTeam().getName());
+                                } else {
+                                    powerTakeInfoEvent.sendCancelMessage(owner);
+                                    continue;
+                                }
                             }
                         }
+                        this.infoObtainPower.timePassedNearby.replace(p.getUniqueId(), this.infoObtainPower.timePassedNearby.get(p.getUniqueId())+1);
+                    }else {
+                        this.infoObtainPower.timePassedNearby.put(p.getUniqueId(), 1);
                     }
-                }else {
-                    this.karinV2.timePassedNearby.put(p.getUniqueId(), 1);
                 }
             }
         }

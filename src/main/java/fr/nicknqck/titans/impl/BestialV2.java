@@ -297,6 +297,7 @@ public class BestialV2 extends TitanBase implements Listener {
             super("Langue", new Cooldown(30*3), new ItemBuilder(Material.NAME_TAG).setName("§fLangue"), bestialV2.getTransformationPower().getRole(),
                     "§7La description est disponible dans le§6 /aot titan");
             this.bestialV2 = bestialV2;
+            setTargetDistance(30);
         }
 
         @Override
@@ -306,7 +307,7 @@ public class BestialV2 extends TitanBase implements Listener {
                     player.sendMessage("§cIl faut être transformé pour utiliser ce pouvoir !");
                     return false;
                 }
-                @NonNull final Player target = getRole().getTargetPlayer(player, 30);
+                @NonNull final Player target = getTarget();
                 if (target != null) {
                     lookAt(player, target);
                     @NonNull Vector direction = target.getEyeLocation().getDirection();

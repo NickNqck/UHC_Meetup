@@ -2,14 +2,12 @@ package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.Roles;
+import fr.nicknqck.enums.*;
 import fr.nicknqck.events.custom.power.CooldownFinishEvent;
+import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
-import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.enums.EChakras;
-import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.*;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
@@ -116,7 +114,17 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
             event.setCancelled(true);
             TextComponent textComponent = new TextComponent("§7Voici la liste des joueurs étant à moins de§c 100 blocs§7:\n\n");
             for (@NonNull final Player target : Loc.getNearbyPlayers(player.getLocation(), 100.0)) {
-                TextComponent text = getText(target);
+                GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                if (gamePlayer == null)continue;
+                if (!gamePlayer.check())continue;
+                @NonNull final PowerTakeInfoEvent powerTakeInfoEvent = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
+                getPlugin().getServer().getPluginManager().callEvent(powerTakeInfoEvent);
+                if (event.isCancelled()) {
+                    powerTakeInfoEvent.sendCancelMessage(player);
+                    continue;
+                }
+                gamePlayer = powerTakeInfoEvent.getGameTarget();
+                TextComponent text = getText(gamePlayer.getPlayer());
                 textComponent.addExtra(text);
                 textComponent.addExtra("\n");
             }
@@ -165,12 +173,20 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
             if (args.length == 2) {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    if (getRole().getGameState().hasRoleNull(target.getUniqueId())) {
+                    GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                    if (gamePlayer == null || !gamePlayer.check()) {
                         player.sendMessage("§cImpossible de traquez§b "+target.getName());
                         return false;
                     }
                     player.sendMessage("§7Vous commencez a traquer§a "+target.getName());
-                    new TraqueRunnable(this.getRole().getGameState().getGamePlayer().get(target.getUniqueId()), getRole().getGamePlayer());
+                    @NonNull final PowerTakeInfoEvent event = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
+                    getPlugin().getServer().getPluginManager().callEvent(event);
+                    if (event.isCancelled()) {
+                        event.sendCancelMessage(player);
+                        return false;
+                    }
+                    gamePlayer = event.getGameTarget();
+                    new TraqueRunnable(gamePlayer, getRole().getGamePlayer());
                     return true;
                 }
             }
@@ -209,7 +225,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
 
         public TenketsuPower(@NonNull RoleBase role) {
             super("/ns tenketsu <joueur>", "tenketsu", new Cooldown(60*5), role, CommandType.NS,
-                    "§7Vous permet de savoir quel est la§a nature de chakra§7 du joueur visée");
+                    "§7Vous permet de savoir quel est la§a nature de chakra§7 du joueur viser");
         }
 
         @Override
@@ -222,14 +238,22 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                         player.sendMessage("§cCette personne n'a pas de rôle, impossible de voir ses§a tenketsus");
                         return false;
                     }
-                    if (Loc.getNearbyPlayersExcept(player, 10).contains(target)) {
-                        final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
+                    GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                    if (gamePlayer == null || !gamePlayer.check()) {
+                        player.sendMessage("§cCette personne n'a pas de rôle, impossible de voir ses§a tenketsus");
+                        return false;
+                    }
+                    @NonNull final PowerTakeInfoEvent event = new PowerTakeInfoEvent(this, gamePlayer, InfoType.CHAKRA);
+                    getPlugin().getServer().getPluginManager().callEvent(event);
+                    if (event.isCancelled()) {
+                        event.sendCancelMessage(player);
+                        return false;
+                    }
+                    gamePlayer = event.getGameTarget();
+                    if (Loc.getNearbyGamePlayers(player.getLocation(), 10).contains(gamePlayer)) {
+                        final RoleBase role = gamePlayer.getRole();
                         if (role instanceof NSRoles) {
-                            if (((NSRoles) role).getChakras() != null) {
-                                player.sendMessage("§c"+target.getDisplayName()+"§7 possède le chakra: "+((NSRoles) role).getChakras().getShowedName());
-                            } else {
-                                player.sendMessage("§cC'est étrange, on dirait que§b "+target.getDisplayName()+"§c ne possède pas de nature de chakra");
-                            }
+                            player.sendMessage("§c" + target.getDisplayName() + "§7 possède le chakra: " + ((NSRoles) role).getChakras().getShowedName());
                         } else {
                             player.sendMessage("§cC'est étrange, on dirait que§b "+target.getDisplayName()+"§c n'a pas chakra dans son corp");
                         }
@@ -264,12 +288,19 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
             if (args.length == 3) {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
-                    final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
+                    GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {
                         if (gamePlayer.check()) {
-                             final List<Power> powerList = new ArrayList<>(gamePlayer.getRole().getPowers());
                              try {
                                  int grp = Integer.parseInt(args[2]);
+                                 @NonNull final PowerTakeInfoEvent event = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POUVOIRS);
+                                 getPlugin().getServer().getPluginManager().callEvent(event);
+                                 if (event.isCancelled()) {
+                                     event.sendCancelMessage(player);
+                                     return false;
+                                 }
+                                 gamePlayer = event.getGameTarget();
+                                 final List<Power> powerList = new ArrayList<>(gamePlayer.getRole().getPowers());
                                  if (powerList.size() == grp) {
                                      final TextComponent textComponent = new TextComponent("§aHinata§7 vous demande de divulger le nom de l'un de vos pouvoirs, si vous n'en choisissez pas un, vous perdez§c 1❤ permanent§7.\n\n");
                                      int amount = 0;

@@ -259,12 +259,13 @@ public class Gyokko extends DemonsRoles implements Listener {
 			super("Bulle d'eau", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bBulle d'eau"), role,
 					"§7Vous enferme vous et le joueur viser dans une§b bulle d'eau§7, à l'intérieur vous ne pourrez pas vous noyer"
 			);
+			setTargetDistance(20);
 		}
 
 		@Override
 		public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
 			if (getInteractType().equals(InteractType.INTERACT)) {
-				final Player target = RayTrace.getTargetPlayer(player, 20.0, null);
+				final Player target = getTarget();
 				if (target == null) {
 					player.sendMessage("§cIl faut viser un joueur !");
 					return false;

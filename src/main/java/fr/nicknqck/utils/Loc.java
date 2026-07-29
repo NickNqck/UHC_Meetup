@@ -398,5 +398,11 @@ public class Loc {
             }
         }
     }
-
+    public static boolean isOutsideOfBorder(Location location) {
+        WorldBorder border = location.getWorld().getWorldBorder();
+        double x = location.getX();
+        double z = location.getZ();
+        double size = border.getSize() / 2;
+        return ((x > size || (-x) > size) || (z > size || (-z) > size));
+    }
 }

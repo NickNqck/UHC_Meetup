@@ -62,8 +62,11 @@ public class Raiton implements IChakraV2, Listener {
 			if (RandomUtils.getOwnRandomProbability(Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent())) {
 				final GamePlayer gamePlayer = GamePlayer.of(event.getEntity().getUniqueId());
 				if (gamePlayer != null) {
-					gamePlayer.stun(5);
+					gamePlayer.stun(10);
 					((Player) event.getEntity()).setHealth(Math.max(1.0, ((Player) event.getEntity()).getHealth()-1.0));
+					event.getEntity().getWorld().strikeLightningEffect(event.getEntity().getLocation());
+					event.getEntity().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez été toucher par du§e Raiton§7.");
+					event.getDamager().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez toucher§c "+event.getEntity().getName()+"§7 avec votre§e Raiton§7.");
 				}
 			}
 		}

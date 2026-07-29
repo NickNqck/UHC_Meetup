@@ -27,7 +27,6 @@ import fr.nicknqck.roles.ds.slayers.pillier.*;
 import fr.nicknqck.roles.ds.solos.*;
 import fr.nicknqck.roles.ds.solos.jigorov2.JigoroV2;
 import fr.nicknqck.roles.ns.akatsuki.*;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.builders.IAkatsukiChief;
 import fr.nicknqck.roles.ns.builders.ISAkatsukiChief;
 import fr.nicknqck.roles.ns.builders.OrochimaruRoles;
@@ -216,7 +215,7 @@ public class RoleManager implements Listener {
         registerRole(Hiruzen.class);
         registerRole(Choji.class);
         //Register Orochimaru
-        registerRole(Jugo.class);
+        registerRole(JugoV2.class);
         registerRole(KabutoV2.class);
         registerRole(KarinV2.class);
         registerRole(KimimaroV2.class);
@@ -233,9 +232,8 @@ public class RoleManager implements Listener {
         registerRole(KonanV2.class);
         registerRole(NagatoV2.class);
         registerRole(Sasori.class);
-        registerRole(ZetsuBlancV3.class);
         registerRole(ZetsuNoirV2.class);
-        registerRole(ZetsuBlancV2.class);
+        registerRole(ZetsuBlancV4.class);
         //Register Jubi
         registerRole(MadaraV2.class);
         registerRole(ObitoV2.class);
@@ -301,7 +299,7 @@ public class RoleManager implements Listener {
                         , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
                         NagatoV2.class,
-                        ZetsuNoirV2.class, ZetsuBlancV2.class, Sasori.class, ObitoV2.class);
+                        ZetsuNoirV2.class, Sasori.class, ObitoV2.class);
             }
             if (role instanceof ISAkatsukiChief) {
                 role.addKnowedPlayersWithRoles("§7Voici l'identité de§c Nagato§7 et de§c Konan§7: ", KonanV2.class, NagatoV2.class);

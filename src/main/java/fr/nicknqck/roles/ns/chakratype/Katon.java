@@ -55,6 +55,8 @@ public class Katon implements IChakraV2, Listener {
 		if (isActivate(event.getDamager().getUniqueId())) {
 			if (RandomUtils.getOwnRandomProbability(Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent())) {
 				event.getEntity().setFireTicks(100);
+				event.getDamager().sendMessage(Main.getInstance().getNAME()+"§c "+event.getEntity().getName()+"§7 a subit les effets de votre§c Katon§7.");
+				event.getEntity().sendMessage(Main.getInstance().getNAME()+"§7Vous avez subit les effets d'un§c Katon§7.");
 			}
 		}
 	}

@@ -8,7 +8,11 @@ public enum InfoType {
     TEAM("Équipe"),
     ROLE("Rôle"),
     CHAKRA("Chakra"),
-    INV("Inventaire");
+    INV("Inventaire"),
+    POSITION("Position"),
+    INTELLIGENCE("Intelligence"),
+    POUVOIRS("Pouvoirs"),
+    EFFETS("Effets"),;
 
     private final String name;
 

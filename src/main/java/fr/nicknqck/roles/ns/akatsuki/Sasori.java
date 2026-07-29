@@ -12,6 +12,7 @@ import fr.nicknqck.enums.EChakras;
 import fr.nicknqck.enums.Intelligence;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.utils.GlobalUtils;
+import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.fastinv.FastInv;
@@ -477,7 +478,7 @@ public class Sasori extends AkatsukiRoles {
 
             @Override
             public String onTouch() {
-                return "§fLe joueur touché obtiendra§c 8 secondes§f de§c Poison I§f.";
+                return "§fLe joueur touché obtiendra§c 8 secondes§f de§c Poison I§f, aussi, quand vous êtes frappé dans le dos vous recevez§c -20%§f de§c dégâts§f.";
             }
 
             @EventHandler(priority = EventPriority.LOW)
@@ -558,7 +559,7 @@ public class Sasori extends AkatsukiRoles {
 
             @Override
             public String onTouch() {
-                return "§fLe joueur touché subira directement§c 1,5❤§f de§c dégâts§f,\n§fil aura§c 50% de chance§f d'obtenir§c 8 secondes§f de§c Wither II§f.";
+                return "§fLe joueur touché subira directement§c 1,5❤§f de§c dégâts§f,\n§fil aura§c 80% de chance§f d'obtenir§c 8 secondes§f de§c Wither II§f.";
             }
 
             @Override
@@ -580,7 +581,7 @@ public class Sasori extends AkatsukiRoles {
                 if (arrow.hasMetadata("kazekage.arrow")) {
                     event.setDamage(0.0);
                     victim.setHealth(Math.max(1.0, victim.getHealth()-3.0));
-                    if (Main.RANDOM.nextInt(101) <= 50) {
+                    if (RandomUtils.getOwnRandomProbability(80.0)) {
                         final GamePlayer gamePlayer = GamePlayer.of(victim.getUniqueId());
                         if (gamePlayer != null) {
                             if (gamePlayer.getRole() != null) {

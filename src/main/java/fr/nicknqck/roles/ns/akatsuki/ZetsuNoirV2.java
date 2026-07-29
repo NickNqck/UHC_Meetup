@@ -12,7 +12,6 @@ import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.roles.ns.akatsuki.blancv2.ZetsuBlancV2;
 import fr.nicknqck.roles.ns.builders.AkatsukiRoles;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.utils.AttackUtils;
@@ -80,7 +79,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
         addPower(new InvisibilitePower(this), true);
         addPower(new RegenPower(this));
         EventUtils.registerRoleEvent(this);
-        getGamePlayer().startChatWith("§cZetsu Noir:", "!", ZetsuBlancV2.class, ZetsuBlancV3.class);
+        getGamePlayer().startChatWith("§cZetsu Noir:", "!", ZetsuNoirV2.class, ZetsuBlancV4.class);
     }
 
     @EventHandler
@@ -200,7 +199,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
             this.runnable.cancel();
             this.runnable = null;
             cooldown.use();
-            getRole().getGamePlayer().getActionBarManager().removeInActionBar("zabuza.invisibilite");
+            getRole().getGamePlayer().getActionBarManager().removeInActionBar("zetsu.invisibilite");
         }
 
         private static class InvisibiliteRunnable extends BukkitRunnable {
@@ -237,7 +236,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
                     if (gamePlayer == null)continue;
                     if (!gamePlayer.check())continue;
                     if (gamePlayer.getRole().getTeam().equals(this.zabuza.getTeam())) {
-                        if (gamePlayer.getRole() instanceof ZetsuNoirV2 ||gamePlayer.getRole() instanceof ZetsuBlancV3 ||gamePlayer.getRole() instanceof ZetsuBlancV2) {
+                        if (gamePlayer.getRole() instanceof ZetsuNoirV2) {
                             MathUtil.sendParticleTo(p, EnumParticle.CLOUD, zabuza.owner.getLocation().clone());
                         }
                     }

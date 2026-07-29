@@ -20,7 +20,6 @@ import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -175,13 +174,14 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                     "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 ne pourra pas avoir d'§eabsorbtion§7 en mangeant une§e pomme d'or");
             this.sceauMap = new HashMap<>();
             this.absoLessList = new ArrayList<>();
+            setTargetDistance(30);
             EventUtils.registerRoleEvent(this);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (!getInteractType().equals(InteractType.INTERACT))return false;
-            final Player target = RayTrace.getTargetPlayer(player, 30, null);
+            final Player target = getShowGlowingRunnable().getTarget();
             if (target != null) {
                 if (RandomUtils.getOwnRandomProbability(50)) {
                     sceauMap.put(target.getUniqueId(), SceauAction.Wither);
@@ -275,12 +275,13 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                     "§8 -§7 Vous téléportez à moins de §c 10 blocs§7",
                     "§8 -§7 Vous vous§d régénérez§c entièrement",
                     "§8 -§7 Vous gagnerez§e 2 pommes d'or");
+            setTargetDistance(30);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                Player target = RayTrace.getTargetPlayer(player, 30, null);
+                Player target = getShowGlowingRunnable().getTarget();
                 if (target == null) {
                     player.sendMessage("§cMerci de viser un joueur !");
                     return false;

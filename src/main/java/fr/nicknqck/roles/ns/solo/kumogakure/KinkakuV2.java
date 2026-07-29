@@ -170,6 +170,7 @@ public class KinkakuV2 extends KumogakureRole {
                     "§cl'annule§7, puis, déclenche un autre§c compteur§7 de§c 10 minutes§7 durant lequel la§c cible§7 ne",
                     "§7peut utiliser§c aucun pouvoir§7."
             );
+            setTargetDistance(30);
         }
 
         @Override
@@ -195,7 +196,7 @@ public class KinkakuV2 extends KumogakureRole {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("RIGHT")) {
-                    final Player target = RayTrace.getTargetPlayer(player, 30, null);
+                    final Player target = getShowGlowingRunnable().getTarget();
                     if (target != null) {
                         final  GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                         if (gamePlayer != null && gamePlayer.check()) {

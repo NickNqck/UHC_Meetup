@@ -1,29 +1,22 @@
 package fr.nicknqck.commands;
 
-import fr.nicknqck.items.GUIItems;
+import fr.nicknqck.Main;
+import fr.nicknqck.player.PlayerInfo;
+import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
-import lombok.Getter;
 import lombok.NonNull;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class SettingsCommand implements CommandExecutor, Listener {
-
-    @Getter
-    private static final List<UUID> roleParticleViewers = new ArrayList<>();
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
@@ -32,52 +25,60 @@ public class SettingsCommand implements CommandExecutor, Listener {
             return false;
         }
         final Player sender = (Player) commandSender;
-        openParticleParametreInventory(sender);
+        openParamInv(sender);
         return true;
     }
-    @EventHandler
-    private void onInventoryClick(@NonNull final InventoryClickEvent event) {
-        if (event.getClickedInventory() == null)return;
-        if (event.getClickedInventory().getTitle() == null)return;
-        if (event.getCurrentItem() == null)return;
-        if (event.getClickedInventory().getTitle().equalsIgnoreCase("§fParamètres")) {
-            if (event.getCurrentItem().getType().equals(Material.REDSTONE)) {
-                event.setCancelled(true);
-                openParticleParametreInventory(event.getWhoClicked());
-            }
-        } else if (event.getClickedInventory().getTitle().equalsIgnoreCase("§fParamètres des particules")) {
+    private void openParamInv(final Player player) {
+        final FastInv fastInv = new FastInv(27, "§fParamètres");
+        fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
+        fastInv.setItem(12, new ItemBuilder(Material.REDSTONE).setName("§fAfficher les particules des rôles")
+                .setLore("§7Lorsqu'§aactiver§7, vous verrez des particules lorsque vous essayez de viser avec un pouvoir",
+                        "",
+                        "§fActuellement§7: "+(Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isShowRoleParticle() ? "§aActiver" : "§cDésactiver"))
+                .toItemStack(), event -> {
+            final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getWhoClicked().getUniqueId());
+            info.setShowRoleParticle(!info.isShowRoleParticle());
+            event.getWhoClicked().sendMessage(Main.getInstance().getNAME()+"§7 \"§fAfficher les particules des rôles§7\" est maintenant sur "+(info.isShowRoleParticle() ? "§aActiver" : "§cDésactiver"));
+            Main.getInstance().getInfoManager().save(event.getWhoClicked().getUniqueId());
+            openParamInv((Player) event.getWhoClicked());
+        });
+        fastInv.setItem(14, new ItemBuilder(Material.DIAMOND_SWORD)
+                .setName("§fEmpêcher le drop d'§cépée")
+                .setLore("§7Lorsqu'§aactiver§7, vous ne pourrez plus jeter vos§cc épées§7.",
+                        "§o§7(sauf si vous êtes accroupie)",
+                        "",
+                        "§fActuellement§7: "+(Main.getInstance().getInfoManager().getPlayerInfo(player.getUniqueId()).isAntiDropSword() ? "§aActiver" : "§cDésactiver"))
+                .toItemStack(), event -> {
+            final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getWhoClicked().getUniqueId());
+            info.setAntiDropSword(!info.isAntiDropSword());
+            event.getWhoClicked().sendMessage(Main.getInstance().getNAME()+"§7 \"§fEmpêcher le drop d'§cépée§7\" est maintenant définie sur: "+(info.isAntiDropSword() ? "§aActiver" : "§cDésactiver"));
+            Main.getInstance().getInfoManager().save(event.getWhoClicked().getUniqueId());
+            openParamInv((Player) event.getWhoClicked());
+        });
+        fastInv.open(player);
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onDrop(@NonNull final PlayerDropItemEvent event) {
+        if (event.isCancelled())return;
+        if (event.getPlayer().isSneaking())return;
+        final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(event.getPlayer().getUniqueId());
+        if (info.isAntiDropSword() && isSword(event.getItemDrop().getItemStack())) {
             event.setCancelled(true);
-            System.out.println(event.getCurrentItem());
-            if (event.getCurrentItem().getType().equals(Material.NETHER_STAR)) {
-                if (getRoleParticleViewers().contains(event.getWhoClicked().getUniqueId())) {
-                    getRoleParticleViewers().remove(event.getWhoClicked().getUniqueId());
-                    event.getWhoClicked().sendMessage("§7Vous ne verrez plus de particule lorsque vous utiliserez un pouvoir");
-                } else {
-                    getRoleParticleViewers().add(event.getWhoClicked().getUniqueId());
-                    event.getWhoClicked().sendMessage("§7Vous verrez maintenant les particules lorsque vous utilisez un pouvoir");
-                }
-                openParticleParametreInventory(event.getWhoClicked());
-            }
-            if (event.getCurrentItem().isSimilar(GUIItems.getSelectBackMenu())) {
-                openParametreInventory(event.getWhoClicked());
-            }
+            event.getPlayer().sendMessage(Main.getInstance().getNAME()+"§7 Vos paramètres vous empêche de jeter votre§c épéé§7.");
         }
     }
-    private void openParametreInventory(HumanEntity human) {
-        Inventory inv = Bukkit.createInventory(human, 27, "§fParamètres");
-        inv.setItem(13, new ItemBuilder(Material.REDSTONE)
-                .setName("§fParamètre des particules")
-                .toItemStack());
-        human.openInventory(inv);
-    }
-    private void openParticleParametreInventory(HumanEntity human) {
-        Inventory inv = Bukkit.createInventory(human, 9, "§fParamètres des particules");
-        inv.setItem(1, new ItemBuilder(Material.NETHER_STAR)
-                .setName("§fParticule de visée")
-                .setLore((roleParticleViewers.contains(human.getUniqueId()) ? "§a§lActivé" : "§c§lDésactivé"),
-                        "",
-                        "§7Permet de voir des particules quand vous essayez de viser avec le pouvoir d'un rôle")
-                .toItemStack());
-        human.openInventory(inv);
+    /**
+     * Vérifie si un ItemStack est une épée (Bois, Pierre, Fer, Or, Diamant).
+     *
+     * @param item L'itemStack à vérifier
+     * @return true si l'item est une épée, sinon false
+     */
+    public boolean isSword(ItemStack item) {
+        if (item == null || item.getType() == Material.AIR) {
+            return false;
+        }
+
+        // En 1.8.8, le nom de l'enum de chaque épée se termine par "_SWORD"
+        return item.getType().name().endsWith("_SWORD");
     }
 }

@@ -6,7 +6,7 @@ import fr.nicknqck.Main;
 import fr.nicknqck.entity.bijuv2.BijuBase;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.enums.StunType;
-import fr.nicknqck.events.ds.Event;
+import fr.nicknqck.rdmevents.Event;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.interfaces.IRole;
@@ -704,7 +704,10 @@ public class Inventories {
         player.updateInventory();
     }
     public void updateRoleInventory(Player player) {
-        if (!ChatRank.isHost(player.getUniqueId()))return;
+        if (!ChatRank.isHost(player.getUniqueId())) {
+            player.closeInventory();
+            return;
+        }
         new Configuration_RolesInventory(player).open(player);
         player.updateInventory();
         gameState.updateGameCanLaunch();
