@@ -100,8 +100,6 @@ public class GameState{
 	@Getter
 	private final HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	@Getter
-	private final HashMap<UUID, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
-	@Getter
 	@Setter
 	int inGameTime = 0;
 	@Getter
@@ -154,7 +152,6 @@ public class GameState{
 	}
 
 	public void addInAvailableRoles(IRoles<?> role, Integer nmb) {availableRoles.put(role, nmb);}
-	public void addPlayerKills(Player player) {playerKills.put(player.getUniqueId(), new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
 	public RoleBase GiveRole(Player aziz) {

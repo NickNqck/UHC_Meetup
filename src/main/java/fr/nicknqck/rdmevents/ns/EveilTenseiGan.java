@@ -170,7 +170,7 @@ public class EveilTenseiGan extends Event implements Listener {
         final RoleBase role = gamePlayer.getRole();
         final Player player = Bukkit.getPlayer(gamePlayer.getUuid());
         role.setTeam(TeamList.Solo, true);
-        int amountKill = role.getGameState().getPlayerKills().get(role.getPlayer()).size();
+        int amountKill = role.getGamePlayer().getKillAmounts();
         if (amountKill > 0) {
             role.setMaxHealth(role.getMaxHealth()+amountKill);
             if (player != null) {

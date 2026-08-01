@@ -57,6 +57,7 @@ public class GamePlayer {
 	@Nullable
 	@Setter
 	private ItemStack headItem;
+	private final LinkedList<DeathRapport> killsList;
 
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
@@ -67,6 +68,7 @@ public class GamePlayer {
 		this.actionBarManager = new ActionBarManager(this);
 		this.chatWithManager = new ArrayList<>();
 		this.metaData = new HashMap<>();
+		this.killsList = new LinkedList<>();
 		setAlive(true);
 		setCanRevive(false);
 	}
@@ -186,6 +188,9 @@ public class GamePlayer {
     public static GamePlayer of(final UUID uuid) {
         return GameState.getInstance().getGamePlayer().get(uuid);
     }
+	public int getKillAmounts() {
+		return this.getKillsList().size();
+	}
 	@Nullable
 	public Player getPlayer() {
 		return Bukkit.getPlayer(getUuid());
