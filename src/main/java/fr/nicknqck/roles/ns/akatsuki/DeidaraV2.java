@@ -398,6 +398,10 @@ public class DeidaraV2 extends AkatsukiRoles {
                 if (event.getDamager() instanceof TNTPrimed) {
                     TNTPrimed tnt = (TNTPrimed) event.getDamager();
                     if (tnt.hasMetadata("DeidaraC2"+getRole().StringID)) {
+                        if (event.getEntity().getUniqueId().equals(this.getRole().getPlayer())) {
+                            event.setDamage(0.0);
+                            return;
+                        }
                         if (event.getEntity().getUniqueId() != event.getDamager().getUniqueId()) {
                             event.setDamage(0);
                             if (event.getEntity() instanceof Player) {
@@ -410,9 +414,6 @@ public class DeidaraV2 extends AkatsukiRoles {
                                 }
                             }
                         }
-                    }
-                    if (event.getDamager().getUniqueId().equals(event.getDamager().getUniqueId())) {
-                        event.setDamage(0.0);
                     }
                 }
             }
