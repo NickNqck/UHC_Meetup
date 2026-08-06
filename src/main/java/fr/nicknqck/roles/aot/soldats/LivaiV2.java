@@ -2,26 +2,35 @@ package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
+import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.RoleGiveEvent;
+import fr.nicknqck.events.custom.power.CooldownUpdateEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.*;
 import fr.nicknqck.roles.builder.AutomaticDesc;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
-import fr.nicknqck.utils.particles.MathUtil;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
+import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.powers.ItemPower;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
 
 public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
@@ -69,15 +78,13 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine("§7Vous avez une§c force 0,75§7 contre les autres joueurs§a transformé§7 en§c titan")
-                .addCustomLine("§7Vous avez une§c force 0,25§7 contre les autres joueurs§c non-transformé§7 en§c titan")
-                .addCustomLine("§7Vous avez une§9 résistance 0,25§7 contre tout les autres joueurs")
                 .getText();
     }
 
     @Override
     public void RoleGiven(GameState gameState) {
         EventUtils.registerRoleEvent(this);
+        addPower(new BoostPower(this), true);
     }
     @EventHandler(priority = EventPriority.HIGH)
     private void onGiveRole(@NonNull final RoleGiveEvent event) {
@@ -111,51 +118,54 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
             }, 2);
         }
     }
-    @EventHandler(priority = EventPriority.HIGHEST)
-    private void onDamage(@NonNull final EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player)) return;
-        final Player damager = (Player) event.getDamager();
-        final Player victim = (Player) event.getEntity();
-        if (!damager.getUniqueId().equals(getPlayer()))return;
-        if (getMaster() != null) {
-            if (getMaster().getPlayer().equals(victim.getUniqueId())) {
-                event.setDamage(1.0);
-                return;
+    private static final class BoostPower extends ItemPower implements Listener{
+
+        private boolean activate = false;
+
+        public BoostPower(@NonNull RoleBase role) {
+            super("§aBoost d'Ackerman§r", new Cooldown(60*5), new ItemBuilder(Material.SUGAR).setName("§aBoost d'Ackerman"), role,
+                    "§7Vous permet d'obtenir pendant§c 2 minutes§7 l'effet§e Speed II§7.",
+                    "",
+                    "§7Tant que ce pouvoir est§a actif§7 vous avez§c Force I§7 contre les§c titans transformés§7."
+            );
+            EventUtils.registerRoleEvent(this);
+        }
+
+        @Override
+        public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+            if (getInteractType().equals(InteractType.INTERACT)) {
+                getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*120, 1, false, false), EffectWhen.NOW);
+                this.activate = true;
+                return true;
+            }
+            return false;
+        }
+        @EventHandler(priority = EventPriority.HIGH)
+        private void onTime(final CooldownUpdateEvent event) {
+            if (!this.getCooldown().isInCooldown())return;
+            if (!this.getCooldown().getUniqueId().equals(event.getCooldown().getUniqueId()))return;
+            if (event.getCooldown().getCooldownRemaining() == (event.getCooldown().getOriginalCooldown()-120)) {
+                this.activate = false;
+                getRole().getGamePlayer().sendMessage("§7Vous n'êtes plus sous l'effet de votre§a Boost Ackerman§7.");
             }
         }
-        final double forcePercent = (double) Main.getInstance().getGameConfig().getForcePercent() /100;
-        boolean titan = false;
-        if (Main.getInstance().getTitanManager().hasTitan(victim.getUniqueId())) {
-            if (Main.getInstance().getTitanManager().getTitan(victim.getUniqueId()).isTransformed()) {
-                titan = true;
-            }
-        }
-        GamePlayer gamePlayer = GamePlayer.of(victim.getUniqueId());
-        if (gamePlayer != null) {
-            if (gamePlayer.getRole() != null) {
-                if (gamePlayer.getRole() instanceof AotRoles) {
-                    if (((AotRoles) gamePlayer.getRole()).isTransformedinTitan) {
-                        titan = true;
+        @EventHandler(priority = EventPriority.HIGH)
+        private void onDamage(final EntityDamageByEntityEvent event) {
+            if (!(event.getEntity() instanceof Player))return;
+            if (!(event.getDamager() instanceof Player))return;
+            if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
+            final GamePlayer gamePlayer = GamePlayer.of(event.getEntity().getUniqueId());
+            if (gamePlayer != null) {
+                if (gamePlayer.getRole() != null) {
+                    if (gamePlayer.getRole() instanceof AotRoles) {
+                        if (((AotRoles) gamePlayer.getRole()).isTransformedinTitan && this.activate) {
+                            int forcePercent = Main.getInstance().getGameConfig().getForcePercent()/100;
+                            forcePercent = forcePercent +1;
+                            event.setDamage(event.getDamage()*forcePercent);
+                        }
                     }
                 }
             }
         }
-        if (!titan){
-            //En gros, je compte comme force 0,25.
-            Main.getInstance().getLogger().info("1 old Damage : "+event.getDamage());
-            event.setDamage(event.getDamage()*(1 + ((forcePercent/4))));
-            Main.getInstance().getLogger().info("1 new Damage : "+event.getDamage());
-        } else {
-            Main.getInstance().getLogger().info("2 old Damage : "+event.getDamage());
-            //En gros, je compte comme force 0,75.
-            event.setDamage(event.getDamage()*(1 + (MathUtil.get34(forcePercent))));
-            Main.getInstance().getLogger().info("2 new Damage : "+event.getDamage());
-        }
-    }
-    @EventHandler(priority = EventPriority.HIGHEST)
-    private void onDamage2(@NonNull final EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player))return;
-        if (!event.getEntity().getUniqueId().equals(getPlayer()))return;
-        event.setDamage(event.getDamage()*(1 - ((((double) Main.getInstance().getGameConfig().getResiPercent() /4))/100)));
     }
 }
