@@ -112,8 +112,10 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().equals(Action.PHYSICAL))return false;
                 if (event.getAction().name().contains("LEFT")) {
+                    this.fracasPower.setTarget(this.getTarget());
                     return this.fracasPower.checkUse(player, map);
                 } else {
+                    this.superGrabPower.setTarget(this.getTarget());
                     return this.superGrabPower.checkUse(player, map);
                 }
             }
