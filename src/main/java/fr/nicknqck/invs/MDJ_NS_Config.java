@@ -130,7 +130,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié la valeur de \"§fChance d'activation du "+EChakras.DOTON.getShowedName()+"§7\" sur§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%");
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
-        addContent(new ItemBuilder(Material.EYE_OF_ENDER).setName("§aIzanamai§f peut infecter les rôles§e Solo").setLore(
+        addContent(new ItemBuilder(Material.EYE_OF_ENDER).setName("§aIzanami§f peut infecter les rôles§e Solo").setLore(
                 "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo() ? "§aOui" : "§cNon"),
                 "",
                 "§fCliquez pour modifier ce paramètre."
