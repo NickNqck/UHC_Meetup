@@ -228,6 +228,18 @@ public class ItemBuilder {
         is.setItemMeta(im);
         return this;
     }
+
+    /**
+     * Add a lot of lore lines.
+     * @param lines The lore lines to add.
+     */
+    public ItemBuilder addLoreLines(String[] lines) {
+        if (lines == null)return this;
+        for (String line : lines) {
+            addLoreLine(line);
+        }
+        return this;
+    }
     /**
      * Add a lore line.
      * @param line The lore line to add.
