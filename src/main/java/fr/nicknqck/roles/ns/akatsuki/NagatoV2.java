@@ -88,7 +88,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
     @Override
     public void RoleGiven(GameState gameState) {
         setMaxHealth(getMaxHealth()+6.0);
-        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999, 0, false, false), EffectWhen.NIGHT);
+        givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new ShikushodoPower(this), true);
         addPower(new BenshoTeninPower(this), true);
         addPower(new JigokudoPower(this));
@@ -264,7 +264,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                         "",
                         "§7Il/Elle possède §c"+(new DecimalFormat("0").format(target.getMaxHealth()/2)+"❤ permanents")
                 });
-                target.setHealth(Math.max(1.0, player.getHealth()-2.0));
+                target.setHealth(Math.max(1.0, target.getHealth()-2.0));
                 return true;
             }
             return false;
@@ -333,7 +333,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                                 "❤§7/§c"+
                                 (new DecimalFormat("0").format(target.getMaxHealth()/2)+" permanents")
                 });
-                target.setHealth(Math.max(1.0, player.getHealth()-4.0));
+                target.setHealth(Math.max(1.0, target.getHealth()-4.0));
                 return true;
             }
             return false;
