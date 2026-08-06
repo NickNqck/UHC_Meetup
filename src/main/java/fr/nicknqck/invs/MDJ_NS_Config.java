@@ -161,6 +161,17 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             c.open((Player) event.getWhoClicked());
             c.openPage(2);
         });
+        addContent(new ItemBuilder(Material.ARMOR_STAND).setName("§cSasori§7 peut§a ressusciter un joueur").setLore(
+                "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"),
+                "",
+                "§fCliquez pour modifier ce paramètre."
+        ).toItemStack(), event -> {
+            Main.getInstance().getGameConfig().getNarutoConfig().setSasoriCanRevive(!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive());
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§cSasori§7 peut§a ressusciter un joueur§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"));
+            final MDJ_NS_Config c = new MDJ_NS_Config();
+            c.open((Player) event.getWhoClicked());
+            c.openPage(2);
+        });
         setItem(26, GUIItems.getSelectBackMenu(), event -> {
             if (GameState.getInstance().isAllMdjNull()) {
                 new MDJConfigInventory().open((Player) event.getWhoClicked());

@@ -103,6 +103,7 @@ public class GameConfig {
         private boolean izanamiCanInfectSolo = true;
         private boolean shisuiByPassIzanamiLimitation = true;
         private boolean shisuiKotoAmatsukamiInfectSolo = true;
+        private boolean sasoriCanRevive = true;
 
     }
     @Getter

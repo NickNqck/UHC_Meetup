@@ -121,6 +121,10 @@ public class Sasori extends AkatsukiRoles {
                     if (target != null) {
                         final GamePlayer gameTarget = GamePlayer.of(uuid);
                         if (gameTarget != null && gameTarget.getRole() != null && !resurrectedPlayers.contains(uuid)) {
+                            if (!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive()) {
+                                player.sendMessage("§cLes paramètres de la partie vous empêche d'utiliser ce pouvoir.");
+                                return false;
+                            }
                             revive(getRole().getGameState(), target, player);
                             return true;
                         } else {
@@ -131,6 +135,10 @@ public class Sasori extends AkatsukiRoles {
                 }
             }
             if (!activate) {
+                if (!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive()) {
+                    player.sendMessage("§cLes paramètres de la partie vous empêche d'utiliser ce pouvoir.");
+                    return false;
+                }
                 activate = true;
                 player.sendMessage("§7Vous avez§a activer§7 votre potentiel créatif.");
             } else {
