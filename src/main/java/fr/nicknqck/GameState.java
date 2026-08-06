@@ -7,7 +7,6 @@ import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
@@ -41,6 +40,7 @@ import fr.nicknqck.roles.valo.agents.Iso;
 import fr.nicknqck.roles.valo.agents.Neon;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
@@ -657,7 +657,7 @@ public class GameState{
 		if (this.rod) {
 			return RodTridimensionnelle.getItem();
 		}else {
-			return Items.ArcTridi();
+			return new ItemBuilder(Material.ARROW, 4).setName("§cUne erreur est survenue").toItemStack();
 		}
 	}
 
