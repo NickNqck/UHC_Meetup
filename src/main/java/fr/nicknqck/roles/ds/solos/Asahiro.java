@@ -133,15 +133,17 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
     private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() != null) {
             if (event.getGamePlayerKiller().getRole() == null)return;
-            if (event.getGamePlayerKiller().getRole() instanceof DemonsRoles && !this.killLune) {
-                DemonsRoles role = (DemonsRoles) event.getGamePlayerKiller().getRole();
+            //Donc si Asahiro est le tueur
+            if (event.getGamePlayerKiller().getUuid().equals(getPlayer()) && !this.killLune && event.getRole() instanceof DemonsRoles) {
+                final DemonsRoles role = (DemonsRoles) event.getRole();
                 if (role.getRank().equals(DemonType.SUPERIEUR) || role.getRank().equals(DemonType.NEZUKO) || role instanceof MuzanV2) {
                     this.killLune = true;
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
                     event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant une§c Lune Supérieur§7, vous avez acquis du§c sang de démon§7, ce qui vous permet de vous§c renforcer la nuit§7.");
                 }
             }
-            if (event.getGamePlayerKiller().getRole() instanceof PilierRoles && !killPilier) {
+            //Donc si Asahiro est le tueur
+            if (event.getGamePlayerKiller().getUuid().equals(getPlayer()) && !killPilier && event.getRole() instanceof PilierRoles) {
                 this.killPilier = true;
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
                 event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous à permit d'être§c plus rapide§7 le§c jour§7.");
@@ -274,7 +276,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
             }
         }
     }
-    private static final class PatiencePower extends Power implements Listener{
+    private static final class PatiencePower extends Power implements Listener {
 
         private final PointsRunnable pointsRunnable;
 
