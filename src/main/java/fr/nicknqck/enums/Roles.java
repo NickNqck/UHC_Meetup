@@ -75,7 +75,7 @@ public enum Roles implements IRoles<Roles> {
     Jelena(TeamList.Titan, "aot", 3, new ItemBuilder(Material.CHEST).setName("§cJelena").toItemStack(), "§bNickNqck"),
     //Soldat aot
     Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("§aLivai").toItemStack(), "§bNickNqck"),
-    Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("§aSoldat").toItemStack(), "§bMega02600"),
+    Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("§aSoldat").toItemStack(), "§bNickNqck"),
     Erwin(TeamList.Soldat, "aot", 2, new ItemBuilder(Material.SIGN).setName("§aErwin").toItemStack(), "§bNickNqck"),
     Armin(TeamList.Soldat, "aot", 3, new ItemBuilder(Material.CHEST).setName("§aArmin").toItemStack(), "§bNickNqck"),
     Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("§aEclaireur").toItemStack(), "§bNickNqck"),

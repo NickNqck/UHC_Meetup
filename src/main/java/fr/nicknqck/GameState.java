@@ -334,7 +334,7 @@ public class GameState{
                     role = new Sieg(player);
                     break;
                 case Soldat:
-                    role = new Soldat(player);
+                    role = new SoldatV2(player);
                     break;
                 case Erwin:
                     role = new ErwinV2(player);
