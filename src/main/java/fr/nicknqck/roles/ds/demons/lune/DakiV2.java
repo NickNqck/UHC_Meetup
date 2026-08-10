@@ -17,7 +17,6 @@ import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.particles.MathUtil;
 import fr.nicknqck.utils.powers.Cooldown;
 import fr.nicknqck.utils.powers.ItemPower;
-import fr.nicknqck.utils.raytrace.RayTrace;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.server.v1_8_R3.EnumParticle;
@@ -169,6 +168,7 @@ public class DakiV2 extends DemonsRoles {
                     "§7vous pouvez viser des§c joueurs§7 avec votre§c crosshair§7,",
                     "§7une fois les§c 5 secondes§7 passés (ou si vous n'avez plus vos§c Obis§7 en§c mains§7),",
                     "§7 tout les joueurs qui auront été viser seront§c stun§7 pendant§c 6 secondes§7.");
+            setTargetDistance(30);
         }
 
         @Override
@@ -181,6 +181,7 @@ public class DakiV2 extends DemonsRoles {
             return false;
         }
         private synchronized void onStop(@NonNull final List<GamePlayer> toStuns) {
+            this.getRole().getGamePlayer().getActionBarManager().removeInActionBar("daki.a");
             if (toStuns.isEmpty()) {
                 getRole().getGamePlayer().sendMessage("§7Vous avez réussi à viser personne avec vos§c Obis§7, le cooldown a été réduit.");
                 return;
@@ -189,6 +190,7 @@ public class DakiV2 extends DemonsRoles {
                 gamePlayer.stun(20*6);
                 MathUtil.sendParticleLine(getRole().getGamePlayer().getLastLocation(), gamePlayer.getLastLocation(), EnumParticle.FLAME, ((int) getRole().getGamePlayer().getLastLocation().distance(gamePlayer.getLastLocation()))+1);
                 getRole().getGamePlayer().sendMessage("§c"+gamePlayer.getPlayerName()+"§7 a été§c stun§7 par vos§c Obis§7.");
+                gamePlayer.sendMessage("§7Vous avez été§a stun§7 par les§c Obis§7 de§c Daki§7.");
             }
         }
         private static class ObisRunnable extends BukkitRunnable {
@@ -208,11 +210,12 @@ public class DakiV2 extends DemonsRoles {
                     return;
                 }
                 if (ticks > 100) {
+                    this.obisItems.onStop(toStuns);
                     cancel();
                     return;
                 }
                 ticks++;
-                this.obisItems.getRole().getGamePlayer().getActionBarManager().updateActionBar("daki.a" ,"§bTimeLeft =§c "+ StringUtils.secondsTowardsBeautiful(ticks));
+                this.obisItems.getRole().getGamePlayer().getActionBarManager().updateActionBar("daki.a" ,"§bCiblage avec§c Obis§b:§c "+ StringUtils.secondsTowardsBeautiful(ticks));
                 final Player owner = Bukkit.getPlayer(this.obisItems.getRole().getPlayer());
                 if (owner == null) return;
                 if (owner.getItemInHand() == null || !owner.getItemInHand().isSimilar(this.obisItems.getItem())) {
@@ -220,7 +223,7 @@ public class DakiV2 extends DemonsRoles {
                     cancel();
                     return;
                 }
-                final Player target = RayTrace.getTargetPlayer(owner, 30, 2);
+                final Player target = this.obisItems.getTarget();
                 if (target == null)return;
                 final GamePlayer gameTarget = this.obisItems.getRole().getGameState().getGamePlayer().get(target.getUniqueId());
                 if (gameTarget == null)return;
