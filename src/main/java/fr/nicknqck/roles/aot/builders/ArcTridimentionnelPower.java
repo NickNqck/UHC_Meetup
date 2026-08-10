@@ -3,6 +3,7 @@ package fr.nicknqck.roles.aot.builders;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.death.FinalDeathEvent;
+import fr.nicknqck.events.power.aot.GamePlayerTridimentionnelEvent;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -82,8 +83,9 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
     }
     @EventHandler
     private void onProjectileLaunch(@NonNull final ProjectileLaunchEvent event) {
-        if (event.getEntity().getShooter() instanceof Player && event.getEntity() instanceof Arrow) {
+        if (event.getEntity() instanceof Arrow && event.getEntity().getShooter() instanceof Player) {
             if (((Player) event.getEntity().getShooter()).getItemInHand().isSimilar(this.getItem())) {
+                if (!((Player) event.getEntity().getShooter()).getUniqueId().equals(getRole().getPlayer()))return;
                 final ItemStack bow = ((Player) event.getEntity().getShooter()).getItemInHand();
                 if(!bow.hasItemMeta())return;
                 if (!bow.getItemMeta().hasLore())return;
@@ -110,13 +112,10 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
     private void onProjectileHit(@NonNull final ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow && event.getEntity().getShooter() instanceof Player) {
             if (!event.getEntity().hasMetadata("aot.arctridi."+this.getCooldown().getUniqueId()))return;
+            if (!((Player) event.getEntity().getShooter()).getUniqueId().equals(getRole().getPlayer()))return;
             if (!this.checkUse((Player) event.getEntity().getShooter(), new HashMap<>())) {
                 return;
             }
-            final ItemStack bow = ((Player) event.getEntity().getShooter()).getItemInHand();
-            if(!bow.hasItemMeta())return;
-            if (!bow.getItemMeta().hasLore())return;
-            if (!bow.getItemMeta().getLore().equals(Arrays.asList(getDescriptions())))return;
             PotionUtils.addTempNoFall(((Player) event.getEntity().getShooter()).getUniqueId(), 1);
             final double distance = event.getEntity().getLocation().distance(((Player) event.getEntity().getShooter()).getLocation());
             final double gazToRemove = Math.max((Main.RANDOM.nextInt(2)+Main.RANDOM.nextDouble()), distance/8);
@@ -125,6 +124,7 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
             if (getRole() instanceof AotRoles) {
                 ((AotRoles) getRole()).setGazAmount(Math.max(0.0, ((AotRoles) getRole()).getGazAmount()-gazToRemove));
             }
+            Main.getInstance().getServer().getPluginManager().callEvent(new GamePlayerTridimentionnelEvent(getRole().getGamePlayer(), getRole()));
             event.getEntity().removeMetadata("aot.arctridi."+this.getCooldown().getUniqueId(), getPlugin());
         }
     }
