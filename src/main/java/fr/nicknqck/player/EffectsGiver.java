@@ -120,6 +120,19 @@ public class EffectsGiver implements Listener {
                                 }
                             }
                         }
+                        if (player.getHealth() <= player.getMaxHealth()/2) {
+                            @NonNull final List<PotionEffect> lowHPEffects = new ArrayList<>();
+                            map.keySet().stream().filter(potion -> map.get(potion).equals(EffectWhen.MID_LIFE)).forEach(lowHPEffects::add);
+                            for (PotionEffect lowHPEffect : lowHPEffects) {
+                                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                    final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(player, role, lowHPEffect, EffectWhen.MID_LIFE);
+                                    Bukkit.getPluginManager().callEvent(effectGiveEvent);
+                                    if (!effectGiveEvent.isCancelled()){
+                                        player.addPotionEffect(lowHPEffect, true);
+                                    }
+                                });
+                            }
+                        }
                     }
                 }
             }
