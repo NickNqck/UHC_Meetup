@@ -37,7 +37,9 @@ import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.HakuV2;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.ZabuzaV2;
 import fr.nicknqck.roles.valo.agents.Iso;
+import fr.nicknqck.roles.valo.agents.Le_DOC;
 import fr.nicknqck.roles.valo.agents.Neon;
+import fr.nicknqck.roles.valo.agents.Sage;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -554,6 +556,12 @@ public class GameState{
                     break;
                 case Choji:
                     role = new  Choji(player);
+                    break;
+                case Sage:
+                    role = new Sage(player);
+                    break;
+                case Doc:
+                    role = new Le_DOC(player);
                     break;
             }
         } else {

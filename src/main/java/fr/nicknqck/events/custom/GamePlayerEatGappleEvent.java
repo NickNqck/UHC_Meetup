@@ -4,8 +4,10 @@ import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
-public class GamePlayerEatGappleEvent extends GameEvent implements Cancellable {
+public class GamePlayerEatGappleEvent extends Event implements Cancellable {
 
     private boolean cancelled = false;
     @Getter
@@ -26,5 +28,14 @@ public class GamePlayerEatGappleEvent extends GameEvent implements Cancellable {
     @Override
     public void setCancelled(boolean b) {
         this.cancelled = b;
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

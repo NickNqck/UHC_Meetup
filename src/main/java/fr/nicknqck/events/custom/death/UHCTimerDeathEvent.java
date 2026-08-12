@@ -1,18 +1,19 @@
 package fr.nicknqck.events.custom.death;
 
-import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.player.GamePlayer;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 @Getter
-public class UHCTimerDeathEvent extends GameEvent implements Cancellable {
+public class UHCTimerDeathEvent extends Event implements Cancellable {
 
     @NonNull
     private final GamePlayer dieGamePlayer;
@@ -38,5 +39,14 @@ public class UHCTimerDeathEvent extends GameEvent implements Cancellable {
     @Override
     public void setCancelled(boolean b) {
         this.cancelled = b;
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

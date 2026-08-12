@@ -1,15 +1,16 @@
 package fr.nicknqck.events.custom.roles.aot;
 
-import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.titans.TitanBase;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
-public class TitanOwnerChangeEvent extends GameEvent implements Cancellable {
+public class TitanOwnerChangeEvent extends Event implements Cancellable {
 
     private boolean cancelled = false;
     @Getter
@@ -34,5 +35,14 @@ public class TitanOwnerChangeEvent extends GameEvent implements Cancellable {
     @Override
     public void setCancelled(boolean b) {
         this.cancelled = b;
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

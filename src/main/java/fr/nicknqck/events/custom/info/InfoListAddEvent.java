@@ -1,13 +1,14 @@
 package fr.nicknqck.events.custom.info;
 
-import fr.nicknqck.events.custom.GameEvent;
 import lombok.Getter;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoListAddEvent extends GameEvent {
+public class InfoListAddEvent extends Event {
 
     @Getter
     private final List<Class<? extends Enum<?>>> toRegister;
@@ -17,5 +18,14 @@ public class InfoListAddEvent extends GameEvent {
     }
     public void register(@Nonnull final Class<? extends Enum<?>> clazz) {
         this.toRegister.add(clazz);
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }
