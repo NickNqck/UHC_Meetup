@@ -45,6 +45,7 @@ public class GameConfig {
     private final LinkedList<IMDJ> playableMdj;
     private boolean pregen = false;
     private final DemonSlayerConfig demonSlayerConfig;
+    private boolean playerStunCanTakeDamage = true;
 
     public GameConfig() {
         instance = this;
