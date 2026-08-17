@@ -97,8 +97,10 @@ public class HubConfig implements Listener {
                                     }
                                     Main.getInstance().deleteWorld(string);
                                 }
-                                Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c décompression du monde§a \""+string+"§a\".");
-                                Main.getInstance().getRoleWorldManager().extractWorld(iSubRoleWorld.getZipFileName());
+                                if (!iSubRoleWorld.getZipFileName().isEmpty()){
+                                    Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c décompression du monde§a \""+string+"§a\".");
+                                    Main.getInstance().getRoleWorldManager().extractWorld(iSubRoleWorld.getZipFileName());
+                                }
                                 Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c création du monde§a \""+string+"§a\".");
                                 final World world1 = iSubRoleWorld.createWorld();
                                 Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c pré-génération du monde§a \""+string+"§a\".");
