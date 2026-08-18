@@ -33,10 +33,11 @@ import java.util.Map;
  * }
  * }</pre>
  */
+@Getter
 public class SchematicManager {
 
     /** Map <nom_sans_extension, Schematic> des schematics chargés. */
-    private final Map<String, Schematic> schematics = new HashMap<String, Schematic>();
+    private final Map<String, Schematic> schematics = new HashMap<>();
 
     /** Référence au dossier {@code <dataFolder>/schems/}. */
     private final File schemsFolder;
