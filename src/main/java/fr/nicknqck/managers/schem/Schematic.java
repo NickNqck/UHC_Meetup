@@ -1,8 +1,6 @@
 package fr.nicknqck.managers.schem;
 
-import fr.nicknqck.Main;
 import fr.nicknqck.utils.Cuboid;
-import lombok.Getter;
 import net.minecraft.server.v1_8_R3.Block;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.IBlockData;
@@ -10,6 +8,7 @@ import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 import net.minecraft.server.v1_8_R3.TileEntity;
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
@@ -40,6 +39,10 @@ import java.util.List;
  * <p>Index d'un bloc : {@code (y * Length + z) * Width + x}
  *
  * <p>NMS utilisé : net.minecraft.server.v1_8_R3 (Spigot 1.8.8 / v1_8_R3)
+ *
+ * <p>Cette classe ne dépend d'aucun plugin en particulier : le logging passe
+ * par un {@link SchematicLogger} injecté, ce qui permet de l'utiliser depuis
+ * n'importe quel plugin dépendant du jar (soft-depend + classpath).
  */
 public class Schematic {
 
@@ -119,14 +122,20 @@ public class Schematic {
     @Getter
     private final int weOffsetZ;
 
+    // ─── Logging ────────────────────────────────────────────────────────────
+
+    /** Callback de logging, jamais null (par défaut {@link SchematicLogger#NOOP}). */
+    private final SchematicLogger logger;
+
     // ──────────────────────────────────────────────────────────────────────────
-    // Constructeur privé — utiliser {@link #load(File)}
+    // Constructeur privé — utiliser {@link #load(File)} ou {@link #load(File, SchematicLogger)}
     // ──────────────────────────────────────────────────────────────────────────
 
     private Schematic(int width, int height, int length,
                       byte[] blocks, byte[] blockData, byte[] addBlocks,
                       List<NBTTagCompound> tileEntityData,
-                      int weOffsetX, int weOffsetY, int weOffsetZ) {
+                      int weOffsetX, int weOffsetY, int weOffsetZ,
+                      SchematicLogger logger) {
         this.width        = width;
         this.height       = height;
         this.length       = length;
@@ -137,6 +146,7 @@ public class Schematic {
         this.weOffsetX    = weOffsetX;
         this.weOffsetY    = weOffsetY;
         this.weOffsetZ    = weOffsetZ;
+        this.logger       = (logger != null) ? logger : SchematicLogger.NOOP;
     }
 
     // ──────────────────────────────────────────────────────────────────────────
@@ -144,10 +154,10 @@ public class Schematic {
     // ──────────────────────────────────────────────────────────────────────────
 
     /**
-     * Charge et parse un fichier {@code .schematic} (format MCEdit, GZip+NBT).
+     * Charge et parse un fichier {@code .schematic} (format MCEdit, GZip+NBT), sans logging.
      *
-     * <p>Utilise {@code NBTCompressedStreamTools.a(InputStream)} de NMS v1_8_R3
-     * pour décompresser et lire le flux NBT binaire.
+     * <p>Équivalent à {@code load(file, SchematicLogger.NOOP)}. Utile pour un usage
+     * ponctuel hors {@link SchematicManager}, sans avoir de callback de log à fournir.
      *
      * @param file Le fichier {@code .schematic} à charger. Ne doit pas être null.
      * @return Un objet {@link Schematic} prêt à l'emploi.
@@ -155,6 +165,23 @@ public class Schematic {
      * @throws IllegalArgumentException Si le contenu NBT est incomplet ou invalide.
      */
     public static Schematic load(File file) throws IOException {
+        return load(file, SchematicLogger.NOOP);
+    }
+
+    /**
+     * Charge et parse un fichier {@code .schematic} (format MCEdit, GZip+NBT).
+     *
+     * <p>Utilise {@code NBTCompressedStreamTools.a(InputStream)} de NMS v1_8_R3
+     * pour décompresser et lire le flux NBT binaire.
+     *
+     * @param file   Le fichier {@code .schematic} à charger. Ne doit pas être null.
+     * @param logger Callback de logging optionnel (utilisé pour les erreurs de TileEntity
+     *               lors du collage). Si {@code null}, {@link SchematicLogger#NOOP} est utilisé.
+     * @return Un objet {@link Schematic} prêt à l'emploi.
+     * @throws IOException              Si la lecture du fichier échoue.
+     * @throws IllegalArgumentException Si le contenu NBT est incomplet ou invalide.
+     */
+    public static Schematic load(File file, SchematicLogger logger) throws IOException {
         try (FileInputStream fis = new FileInputStream(file)) {
 
             // NBTCompressedStreamTools.a() décompresse le GZip et parse le NBT.
@@ -206,7 +233,8 @@ public class Schematic {
                     width, height, length,
                     blocks, data, addBlocks,
                     tileEntities,
-                    weOffX, weOffY, weOffZ
+                    weOffX, weOffY, weOffZ,
+                    logger
             );
 
         }
@@ -463,7 +491,7 @@ public class Schematic {
                     nmsWorld.setTileEntity(pos, tileEntity);
                 }
             } catch (Exception e) {
-                Main.getInstance().debug(
+                logger.log(
                         "[Schematic] Erreur TileEntity @ ("
                                 + (te.getInt("x") + ox) + ","
                                 + (te.getInt("y") + oy) + ","
@@ -479,6 +507,15 @@ public class Schematic {
 
     /** @return Nombre total de blocs (Width × Height × Length). */
     public int getTotalBlocks() { return width * height * length; }
+
+    /**
+     * Construit le {@link Cuboid} correspondant à l'emprise du schematic une fois
+     * collé à l'origine donnée.
+     *
+     * @param origin Coin bas-nord-ouest du schematic (identique à celui passé à {@link #paste}).
+     * @return Le {@link Cuboid} englobant.
+     * @throws IllegalArgumentException Si {@code origin} ou son monde sont null.
+     */
     public Cuboid toCuboid(Location origin) {
         if (origin == null) {
             throw new IllegalArgumentException("Origin cannot be null");
