@@ -111,7 +111,9 @@ public class GameState{
 	@Getter
 	@Setter
 	private int actualPvPTimer = getPvPTimer();
-	public int t = 0;//Utilisée dans GameListener
+    @Getter
+    @Setter
+    private int dayTimer = 0;
 	public int xpfer = 0;
 	public int xpor = 0;
 	public int xpcharbon = 0;

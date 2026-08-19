@@ -106,7 +106,7 @@ public class KokushiboV2 extends DemonsRoles {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             getRole().getGameState().nightTime = true;
-            getRole().getGameState().t = Main.getInstance().getGameConfig().getMaxTimeDay();
+            getRole().getGameState().setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
             GameListener.SendToEveryone("§cKokushibo§f à forcer la§9 nuit");
             Bukkit.getPluginManager().callEvent(new NightEvent(getRole().getGameState(), Main.getInstance().getGameConfig().getMaxTimeDay()));
             player.sendMessage("§cVous avez forcez la nuit");

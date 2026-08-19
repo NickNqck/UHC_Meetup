@@ -104,9 +104,9 @@ public class PersonalScoreboard {
     			objectiveSign.setLine(7, premsg+"§fBordure:§c Activé");
     		}
     		if (this.gameState.nightTime) {
-    			objectiveSign.setLine(8, premsg+"§9Nuit§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.t));
+    			objectiveSign.setLine(8, premsg+"§9Nuit§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getDayTimer()));
     		}else {
-				objectiveSign.setLine(8, premsg+"§eJour§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.t));
+				objectiveSign.setLine(8, premsg+"§eJour§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getDayTimer()));
 			}
     		objectiveSign.setLine(9, "§0");
     		if (!this.gameState.hasRoleNull(player.getUniqueId())) {

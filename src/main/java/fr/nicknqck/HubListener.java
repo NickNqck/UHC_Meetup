@@ -50,7 +50,7 @@ public class HubListener implements Listener {
 		gameState.getInLobbyPlayers().clear();
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
 		ItemsManager.instance.clearJspList();
-		gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
+		gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
 		gameState.getPlayerRoles().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;

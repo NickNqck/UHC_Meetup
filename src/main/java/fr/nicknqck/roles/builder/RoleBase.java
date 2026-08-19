@@ -511,7 +511,7 @@ public abstract class RoleBase implements IRole {
 			final Player owner = Bukkit.getPlayer(getPlayer());
 			if (owner != null) {
 				if (!gameState.isNightTime()) {
-					final PotionEffect potionEffect =  new PotionEffect(effect.getType(), gameState.t*20, effect.getAmplifier(), false, false);
+					final PotionEffect potionEffect =  new PotionEffect(effect.getType(), gameState.getDayTimer()*20, effect.getAmplifier(), false, false);
 					final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(owner, this, potionEffect, when);
 					Bukkit.getPluginManager().callEvent(effectGiveEvent);
 					if (!effectGiveEvent.isCancelled()) {
@@ -524,7 +524,7 @@ public abstract class RoleBase implements IRole {
 			final Player owner = Bukkit.getPlayer(getPlayer());
 			if (owner != null) {
 				if (gameState.isNightTime()) {
-					final PotionEffect potionEffect =  new PotionEffect(effect.getType(), gameState.t*20, effect.getAmplifier(), false, false);
+					final PotionEffect potionEffect =  new PotionEffect(effect.getType(), gameState.getDayTimer()*20, effect.getAmplifier(), false, false);
 					final EffectGiveEvent effectGiveEvent = new EffectGiveEvent(owner, this, potionEffect, when);
 					Bukkit.getPluginManager().callEvent(effectGiveEvent);
 					if (!effectGiveEvent.isCancelled()) {

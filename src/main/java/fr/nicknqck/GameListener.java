@@ -179,9 +179,9 @@ public class GameListener implements Listener {
 				Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("doDaylightCycle", "false");
 				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Bukkit.getPluginManager().callEvent(new DayEvent(gameState)), 50);
 			} else {
-				gameState.t--;
-				if (gameState.t <= 0) {
-					gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
+				gameState.setDayTimer(gameState.getDayTimer()-1);
+				if (gameState.getDayTimer() <= 0) {
+					gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
 					if (gameState.nightTime) {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 						gameState.nightTime = false;
