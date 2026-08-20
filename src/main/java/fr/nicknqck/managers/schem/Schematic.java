@@ -443,6 +443,105 @@ public class Schematic {
         }
         return ops;
     }
+    /**
+     * Supprime (remplace par de l'air) la zone occupée par ce schematic, à une vitesse
+     * configurable en blocs par seconde, en étalant le travail sur plusieurs ticks.
+     *
+     * @param origin          Coin bas-nord-ouest du schematic (identique à celui utilisé pour paste/pasteSpread).
+     * @param removeBaseLayer Si {@code true}, la couche la plus basse (y=0 relatif au schematic) est
+     *                         également supprimée. Si {@code false}, elle est préservée (utile pour
+     *                         garder un plancher/plateforme après suppression du reste de la structure).
+     * @param plugin          Instance du plugin (nécessaire pour le scheduler Bukkit).
+     * @param blocksPerSecond Vitesse de suppression, en blocs par seconde. Une valeur ≤ 0 est ramenée à 1.
+     * @param onComplete      Callback appelé sur le thread principal une fois la suppression terminée.
+     *                        Peut être {@code null}.
+     */
+    public void removeSpread(final Location origin, final boolean removeBaseLayer,
+                             Plugin plugin, final int blocksPerSecond,
+                             final Runnable onComplete) {
+
+        final List<int[]> positions = buildRemovalPositionList(removeBaseLayer);
+        if (positions.isEmpty()) {
+            if (onComplete != null) onComplete.run();
+            return;
+        }
+
+        final int ox = origin.getBlockX();
+        final int oy = origin.getBlockY();
+        final int oz = origin.getBlockZ();
+        final int[] cursor = {0};
+
+        final long[] rate = computeRemovalRate(blocksPerSecond);
+        final long blocksPerRun = rate[0];
+        final long tickPeriod = rate[1];
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                net.minecraft.server.v1_8_R3.World nmsWorld =
+                        ((CraftWorld) origin.getWorld()).getHandle();
+
+                IBlockData air = net.minecraft.server.v1_8_R3.Blocks.AIR.getBlockData();
+
+                int end = (int) Math.min(cursor[0] + blocksPerRun, positions.size());
+
+                for (int i = cursor[0]; i < end; i++) {
+                    int[] pos = positions.get(i);
+                    BlockPosition bp = new BlockPosition(ox + pos[0], oy + pos[1], oz + pos[2]);
+                    nmsWorld.setTypeAndData(bp, air, 2);
+                }
+
+                cursor[0] = end;
+
+                if (cursor[0] >= positions.size()) {
+                    cancel();
+                    if (onComplete != null) {
+                        onComplete.run();
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 0L, tickPeriod);
+    }
+
+    /**
+     * Construit la liste aplatie des positions relatives (au schematic) à supprimer.
+     *
+     * @param removeBaseLayer Si {@code false}, exclut la couche y=0 (base) du schematic.
+     * @return Liste de tableaux {@code [x, y, z]} relatifs à l'origine du schematic.
+     */
+    private List<int[]> buildRemovalPositionList(boolean removeBaseLayer) {
+        List<int[]> positions = new ArrayList<int[]>(width * height * length);
+        int startY = removeBaseLayer ? 0 : 1;
+
+        for (int y = startY; y < height; y++) {
+            for (int z = 0; z < length; z++) {
+                for (int x = 0; x < width; x++) {
+                    positions.add(new int[]{x, y, z});
+                }
+            }
+        }
+        return positions;
+    }
+
+    /**
+     * Convertit une vitesse en blocs/seconde en un couple (blocs par exécution, période en ticks),
+     * pour rester proche de la vitesse demandée même en-dessous de 20 blocs/seconde
+     * (1 exécution par tick minimum équivalant déjà à 20 blocs/sec).
+     *
+     * @param blocksPerSecond Vitesse voulue, en blocs par seconde. Une valeur ≤ 0 est ramenée à 1.
+     * @return Tableau {@code [blocksPerRun, tickPeriod]}.
+     */
+    private long[] computeRemovalRate(int blocksPerSecond) {
+        int rate = Math.max(1, blocksPerSecond);
+
+        if (rate >= 20) {
+            long blocksPerRun = Math.round(rate / 20.0);
+            return new long[]{Math.max(1L, blocksPerRun), 1L};
+        } else {
+            long tickPeriod = Math.round(20.0 / rate);
+            return new long[]{1L, Math.max(1L, tickPeriod)};
+        }
+    }
 
     /**
      * Applique les TileEntities du schematic dans le monde cible.
