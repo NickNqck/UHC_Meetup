@@ -10,6 +10,8 @@ import net.minecraft.server.v1_8_R3.NBTTagList;
 import net.minecraft.server.v1_8_R3.TileEntity;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -443,6 +445,7 @@ public class Schematic {
         }
         return ops;
     }
+
     /**
      * Supprime (remplace par de l'air) la zone occupée par ce schematic, à une vitesse
      * configurable en blocs par seconde, en étalant le travail sur plusieurs ticks.
@@ -466,6 +469,7 @@ public class Schematic {
             return;
         }
 
+        final World world = origin.getWorld();
         final int ox = origin.getBlockX();
         final int oy = origin.getBlockY();
         final int oz = origin.getBlockZ();
@@ -478,17 +482,11 @@ public class Schematic {
         new BukkitRunnable() {
             @Override
             public void run() {
-                net.minecraft.server.v1_8_R3.World nmsWorld =
-                        ((CraftWorld) origin.getWorld()).getHandle();
-
-                IBlockData air = net.minecraft.server.v1_8_R3.Blocks.AIR.getBlockData();
-
                 int end = (int) Math.min(cursor[0] + blocksPerRun, positions.size());
-
                 for (int i = cursor[0]; i < end; i++) {
                     int[] pos = positions.get(i);
-                    BlockPosition bp = new BlockPosition(ox + pos[0], oy + pos[1], oz + pos[2]);
-                    nmsWorld.setTypeAndData(bp, air, 2);
+                    org.bukkit.block.Block block = world.getBlockAt(ox + pos[0], oy + pos[1], oz + pos[2]);
+                    block.setType(Material.AIR, false);
                 }
 
                 cursor[0] = end;
@@ -510,7 +508,7 @@ public class Schematic {
      * @return Liste de tableaux {@code [x, y, z]} relatifs à l'origine du schematic.
      */
     private List<int[]> buildRemovalPositionList(boolean removeBaseLayer) {
-        List<int[]> positions = new ArrayList<int[]>(width * height * length);
+        List<int[]> positions = new ArrayList<>(width * height * length);
         int startY = removeBaseLayer ? 0 : 1;
 
         for (int y = startY; y < height; y++) {
