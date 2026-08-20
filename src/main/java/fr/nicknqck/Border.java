@@ -8,10 +8,10 @@ public class Border {
 
     @Getter
     @Setter
-    private static int maxBorderSize = 250;
+    private static int maxBorderSize = 300;
     @Getter
     @Setter
-    private static int minBorderSize = 50;
+    private static int minBorderSize = 150;
     @Getter
     @Setter
     private static long borderSpeed = 1;
