@@ -14,7 +14,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
                 Border.setMaxBorderSize(Border.getMaxBorderSize()-50);
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setName("§fTaille de la bordure minimum").setDurability(14).setLore(
                 "§r§f[50b < "+Border.getMinBorderSize()+"b > "+Border.getMaxBorderSize()+"b]",
@@ -55,6 +55,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
                 Border.setMinBorderSize(Border.getMinBorderSize()-50);
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName("§r§fTemp avant réduction de la bordure").setLore(
                 "§r§f[0 minute < "+Border.getTempReduction()/60+" minutes > 60 minutes]",
@@ -66,6 +67,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
                 Border.setTempReduction(Math.max(Border.getTempReduction()-60, 0));
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(3).setName("§r§fVitesse de la bordure")
                 .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 10b/s",
@@ -76,6 +78,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
                 Border.setBorderSpeed(Math.max(Border.getBorderSpeed()-1, 1));
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.IRON_SWORD).setName("§r§fTemp avant activation du PVP").setLore(
                 "§r§f[0 minute < "+ GameState.getInstance().getPvPTimer()/60+" minutes > 40 minutes]",
@@ -87,6 +90,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
                 GameState.getInstance().pvpTimer -= 60;
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemp avant annonce des roles").setLore(
                 "§r§f[0 minute < "+GameState.getInstance().getRoleTimer()/60+" minutes > 40 minutes]",
@@ -98,6 +102,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
                 GameState.getInstance().roleTimer-=60;
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.WATCH).setName("§r§fDurée du jour (et de la nuit)").setLore(
                 "§r§fDurée actuel:§6 "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getMaxTimeDay()),
@@ -115,6 +120,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
                     }
                 }
             }
+            refreshCurrentPage();
         });
         addContent(GUIItems.getTabRoleInfo(GameState.getInstance()), event -> {
             if (ChatRank.isHost(event.getWhoClicked())) {
@@ -138,6 +144,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
                     Main.getInstance().getGameConfig().setMortEclair(false);
                 }
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
                 "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
@@ -158,6 +165,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
                     event.getWhoClicked().sendMessage("Timing minimal atteint !");
                 }
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemp avant despawn de la§6 Lave").setLore(
                 "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getLavaEmptyTiming())+" > 1 minutes",
@@ -178,6 +186,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
                     event.getWhoClicked().sendMessage("Timing minimal atteint !");
                 }
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(Main.getInstance().getGameConfig().isTntGrief() ? "§aActivé" : "§cDésactivé").toItemStack(), event -> {
             if (Main.getInstance().getGameConfig().isTntGrief()) {
@@ -187,6 +196,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
                 Main.getInstance().getGameConfig().setTntGrief(true);
                 Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade((Player) event.getWhoClicked()).getPrefix()+event.getWhoClicked().getName()+"§7 a définie la règle \"§cGrief par les tnt§7\" sur§a activer§7.");
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.DIAMOND_SWORD).setName("§fPourcentage de force").setLore(
                 "§c"+Main.getInstance().getGameConfig().getForcePercent()+"%",
@@ -199,6 +209,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else {
                 Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()-5));
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.IRON_CHESTPLATE).setName("§fPourcentage de Résistance").setLore(
                 "§9Résistance I§f: "+Main.getInstance().getGameConfig().getResiPercent()+"%",
@@ -212,6 +223,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else {
                 Main.getInstance().getGameConfig().setResiPercent(Math.max(10, Main.getInstance().getGameConfig().getResiPercent()-5));
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.TRIPWIRE_HOOK).setName("§fTypes de stun").setLore(
                 "",
@@ -229,12 +241,14 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             } else {
                 Main.getInstance().getGameConfig().setStunType(StunType.TELEPORT);
             }
+            refreshCurrentPage();
         });
         addContent(new ItemBuilder(Material.IRON_SWORD).setName("§fLes joueurs§a stun§f peuvent subir des dégâts").setLore(
                 "§fValeur actuel: "+(Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage() ? "§aActiver" : "§cDésactiver")
         ).toItemStack(), event -> {
             Main.getInstance().getGameConfig().setPlayerStunCanTakeDamage(!Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage());
             Main.getInstance().sendMessageToHosts("§c"+event.getWhoClicked().getName()+"§7 a définie la règle \""+event.getCurrentItem().getItemMeta().getDisplayName()+"§7\" sur "+(Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage() ? "§aActiver" : "§cDésactiver"));
+            refreshCurrentPage();
         });
     }
 
@@ -265,11 +279,5 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         list.add(33);
         list.add(34);
         return list;
-    }
-
-    @Override
-    protected void onClick(InventoryClickEvent event) {
-        if (event.isCancelled())return;
-        refreshCurrentPage();
     }
 }
