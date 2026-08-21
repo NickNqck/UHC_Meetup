@@ -27,6 +27,11 @@ public final class StunManager implements Listener{
 
     private final List<UUID> stunedPlayers = new ArrayList<>();
 
+    public StunManager() {
+        //RoleEvent parce qu'un GamePlayer est créé a chaque démarrage de partie pour chaque joueur
+        EventUtils.registerRoleEvent(this);
+    }
+
     public void stun(final GamePlayer gamePlayer, final int tick, final boolean blind, final boolean text, final Location stunLocation) {
         this.stunedPlayers.add(gamePlayer.getUuid());
         if (Main.getInstance().getGameConfig().getStunType().equals(StunType.TELEPORT)) {
