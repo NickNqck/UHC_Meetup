@@ -9,6 +9,7 @@ import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 import net.minecraft.server.v1_8_R3.TileEntity;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -449,6 +450,11 @@ public class Schematic {
     /**
      * Supprime (remplace par de l'air) la zone occupée par ce schematic, à une vitesse
      * configurable en blocs par seconde, en étalant le travail sur plusieurs ticks.
+     * Ordre de suppression : de la couche la plus basse vers la plus haute (comportement par défaut,
+     * équivalent à {@code removeSpread(origin, removeBaseLayer, plugin, blocksPerSecond, false, onComplete)}).
+     *
+     * <p>Utilise uniquement l'API Bukkit standard ({@link org.bukkit.block.Block#setType(Material, boolean)}),
+     * sans appel NMS.
      *
      * @param origin          Coin bas-nord-ouest du schematic (identique à celui utilisé pour paste/pasteSpread).
      * @param removeBaseLayer Si {@code true}, la couche la plus basse (y=0 relatif au schematic) est
@@ -462,8 +468,37 @@ public class Schematic {
     public void removeSpread(final Location origin, final boolean removeBaseLayer,
                              Plugin plugin, final int blocksPerSecond,
                              final Runnable onComplete) {
+        removeSpread(origin, removeBaseLayer, plugin, blocksPerSecond, false, onComplete);
+    }
 
-        final List<int[]> positions = buildRemovalPositionList(removeBaseLayer);
+    /**
+     * Supprime (remplace par de l'air) la zone occupée par ce schematic, à une vitesse
+     * configurable en blocs par seconde, en étalant le travail sur plusieurs ticks.
+     *
+     * <p>Utilise uniquement l'API Bukkit standard ({@link org.bukkit.block.Block#setType(Material, boolean)}),
+     * sans appel NMS.
+     *
+     * @param origin          Coin bas-nord-ouest du schematic (identique à celui utilisé pour paste/pasteSpread).
+     * @param removeBaseLayer Si {@code true}, la couche la plus basse (y=0 relatif au schematic) est
+     *                         également supprimée. Si {@code false}, elle est préservée (utile pour
+     *                         garder un plancher/plateforme après suppression du reste de la structure).
+     * @param plugin          Instance du plugin (nécessaire pour le scheduler Bukkit).
+     * @param blocksPerSecond Vitesse de suppression, en blocs par seconde. Une valeur ≤ 0 est ramenée à 1.
+     * @param topToBottom     Si {@code true}, la suppression se fait de la couche la plus haute
+     *                         vers la plus basse (effet "démolition"). Si {@code false},
+     *                         comportement par défaut (bas vers haut).
+     * @param onComplete      Callback appelé sur le thread principal une fois la suppression terminée.
+     *                        Peut être {@code null}.
+     */
+    public void removeSpread(final Location origin, final boolean removeBaseLayer,
+                             Plugin plugin, final int blocksPerSecond,
+                             final boolean topToBottom,
+                             final Runnable onComplete) {
+
+        final List<int[]> positions = topToBottom
+                ? buildRemovalPositionListTopDown(removeBaseLayer)
+                : buildRemovalPositionList(removeBaseLayer);
+
         if (positions.isEmpty()) {
             if (onComplete != null) onComplete.run();
             return;
@@ -482,6 +517,17 @@ public class Schematic {
         new BukkitRunnable() {
             @Override
             public void run() {
+                // Le monde a été déchargé (supprimé) ou remplacé par une nouvelle instance
+                // (régénération) : on annule la suppression, poursuivre risquerait de
+                // modifier un monde invalide ou de recréer les blocs dans le mauvais monde.
+                World currentWorld = Bukkit.getWorld(world.getName());
+                if (currentWorld == null || !currentWorld.equals(world)) {
+                    logger.log("[Schematic] Suppression annulée : le monde '" + world.getName()
+                            + "' a été supprimé ou régénéré pendant la suppression du schematic.");
+                    cancel();
+                    return;
+                }
+
                 int end = (int) Math.min(cursor[0] + blocksPerRun, positions.size());
                 for (int i = cursor[0]; i < end; i++) {
                     int[] pos = positions.get(i);
@@ -502,10 +548,16 @@ public class Schematic {
     }
 
     /**
-     * Construit la liste aplatie des positions relatives (au schematic) à supprimer.
+     * Construit la liste aplatie des positions relatives (au schematic) à supprimer,
+     * ordonnée de la couche la plus basse vers la plus haute (ordre par défaut).
+     *
+     * <p>Les positions où le schematic contenait de l'air à l'origine sont exclues :
+     * elles n'ont jamais été posées lors du {@link #paste}/{@link #pasteSpread}, donc
+     * il n'y a rien à supprimer, et elles ne doivent pas fausser le comptage de blocs.
      *
      * @param removeBaseLayer Si {@code false}, exclut la couche y=0 (base) du schematic.
-     * @return Liste de tableaux {@code [x, y, z]} relatifs à l'origine du schematic.
+     * @return Liste de tableaux {@code [x, y, z]} relatifs à l'origine du schematic,
+     *         triée par y croissant, sans les positions d'air.
      */
     private List<int[]> buildRemovalPositionList(boolean removeBaseLayer) {
         List<int[]> positions = new ArrayList<>(width * height * length);
@@ -514,6 +566,36 @@ public class Schematic {
         for (int y = startY; y < height; y++) {
             for (int z = 0; z < length; z++) {
                 for (int x = 0; x < width; x++) {
+                    int index = (y * length + z) * width + x;
+                    if (resolveBlockId(index) == 0) continue; // bloc d'air dans le schematic, rien à supprimer
+                    positions.add(new int[]{x, y, z});
+                }
+            }
+        }
+        return positions;
+    }
+
+    /**
+     * Construit la liste aplatie des positions relatives (au schematic) à supprimer,
+     * ordonnée de la couche la plus haute vers la plus basse (démolition du haut vers le bas).
+     *
+     * <p>Les positions où le schematic contenait de l'air à l'origine sont exclues :
+     * elles n'ont jamais été posées lors du {@link #paste}/{@link #pasteSpread}, donc
+     * il n'y a rien à supprimer, et elles ne doivent pas fausser le comptage de blocs.
+     *
+     * @param removeBaseLayer Si {@code false}, exclut la couche y=0 (base) du schematic.
+     * @return Liste de tableaux {@code [x, y, z]} relatifs à l'origine du schematic,
+     *         triée par y décroissant, sans les positions d'air.
+     */
+    private List<int[]> buildRemovalPositionListTopDown(boolean removeBaseLayer) {
+        List<int[]> positions = new ArrayList<>(width * height * length);
+        int lowestY = removeBaseLayer ? 0 : 1;
+
+        for (int y = height - 1; y >= lowestY; y--) {
+            for (int z = 0; z < length; z++) {
+                for (int x = 0; x < width; x++) {
+                    int index = (y * length + z) * width + x;
+                    if (resolveBlockId(index) == 0) continue; // bloc d'air dans le schematic, rien à supprimer
                     positions.add(new int[]{x, y, z});
                 }
             }
