@@ -10,7 +10,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import fr.nicknqck.GameState;
-
+///Event call when a Night Start
 @Getter
 public class NightEvent extends Event{
 	private static final HandlerList handlers = new HandlerList();
