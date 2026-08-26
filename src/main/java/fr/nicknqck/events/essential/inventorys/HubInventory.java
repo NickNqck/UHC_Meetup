@@ -4,7 +4,6 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -55,31 +54,6 @@ public class HubInventory implements Listener {
                 final boolean shinobi = item.isSimilar(GUIItems.getSelectShinobiButton());
                 if (!item.hasItemMeta())return;
                 switch(inv.getTitle()) {
-                    case "Configuration -> AOT":
-                        if (!item.hasItemMeta())return;
-                        if (!item.getItemMeta().hasDisplayName())return;
-                        if (item.getType() == Material.AIR)return;
-                        String name = item.getItemMeta().getDisplayName();
-                        if (name.equals("§rCooldown Equipement Tridimentionnel")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Main.getInstance().getGameConfig().getAotConfig().setTridiCooldown(Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown()-1);
-                            }else {
-                                Main.getInstance().getGameConfig().getAotConfig().setTridiCooldown(Math.max(1, Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown()+1));
-                            }
-                        }
-                        if (name.equals("§rEquipement Tridimentionnel")){
-                            gameState.rod = !gameState.rod;
-                        }
-                        if (name.equals("§r§6Lave§f pour les titans (transformé)")) {
-                            Main.getInstance().getGameConfig().setLaveTitans(!Main.getInstance().getGameConfig().isLaveTitans());
-                        }
-                        if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                            player.openInventory(GUIItems.getMahrGui());
-                            Main.getInstance().getInventories().updateMahrInventory(player);
-                        }
-                        Main.getInstance().getInventories().updateAOTConfiguration(player);
-                        event.setCancelled(true);
-                        break;
                     case "§fRoles§7 ->§6 DemonSlayer":
                         if (!item.isSimilar(GUIItems.getSelectBackMenu())) {
                             if (sl || d || solo) {

@@ -3,6 +3,7 @@ package fr.nicknqck.events.blocks;
 import java.util.Arrays;
 
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.powers.ItemPower;
 import fr.nicknqck.utils.powers.Power;
 import org.bukkit.*;
@@ -49,15 +50,23 @@ public class BlockManager implements Listener{
 	                }
 	            }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getWaterEmptyTiming());
 	        }
-	        if (!Main.getInstance().getGameConfig().isLaveTitans()) {
+	        if (!Main.getInstance().getGameConfig().getAotConfig().isLaveTitans() && event.getBucket().equals(Material.LAVA_BUCKET)) {
 	        	if (!gameState.hasRoleNull(event.getPlayer().getUniqueId())) {
-	        		if (gameState.getGamePlayer().get(event.getPlayer().getUniqueId()).getRole() instanceof AotRoles && ((AotRoles) gameState.getGamePlayer().get(event.getPlayer().getUniqueId()).getRole()).isTransformedinTitan) {
-	        			if (event.getBucket() == Material.LAVA_BUCKET) {
-	            			event.getPlayer().sendMessage("§7Impossible de poser de la§c§l lave§7 lorsque vous êtes§l transformé en titan§7 !");
-		        			event.setCancelled(true);
-		        			return;
-	        			}
-	        		}
+					RoleBase role = gameState.getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
+			        if (role instanceof AotRoles) {
+						if (((AotRoles) role).isTransformedinTitan) {
+							event.getPlayer().sendMessage("§7Impossible de poser de la§c§l lave§7 lorsque vous êtes§l transformé en titan§7 !");
+							event.setCancelled(true);
+							return;
+						}
+						if (Main.getInstance().getTitanManager().hasTitan(role.getPlayer())) {
+							if (Main.getInstance().getTitanManager().getTitan(role.getPlayer()).isTransformed()) {
+								event.getPlayer().sendMessage("§7Impossible de poser de la§c§l lave§7 lorsque vous êtes§l transformé en titan§7 !");
+								event.setCancelled(true);
+								return;
+							}
+						}
+                    }
 	        	}
 	        }
 	        if (event.getBucket() == Material.LAVA_BUCKET) {

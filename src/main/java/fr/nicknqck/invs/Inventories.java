@@ -284,7 +284,7 @@ public class Inventories {
                     }else {
                         inv.setItem(11, new ItemBuilder(Material.BOW).setName("§rEquipement Tridimentionnel").setLore("§fÉquipement actuel:§l Arc Tridimentionnelle").toItemStack());
                     }
-                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(Main.getInstance().getGameConfig().isLaveTitans() ? "§aActivé" : "§cDésactivé").toItemStack());
+                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(Main.getInstance().getGameConfig().getAotConfig().isLaveTitans() ? "§aActivé" : "§cDésactivé").toItemStack());
                     this.clearRoleInventory(inv);
                 }
             }
