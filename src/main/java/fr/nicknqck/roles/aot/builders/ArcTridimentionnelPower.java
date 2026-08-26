@@ -51,6 +51,10 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
                             return false;
                         }
                     }
+                    if (((AotRoles) getRole()).isTransformedinTitan) {
+                        player.sendMessage("§cLes titans n'ont pas accès à§b l'équipement tridimensionnel§c.");
+                        return false;
+                    }
                     return map.isEmpty();
                 } else {
                     player.sendMessage("§cRéserve de§b gaz vespène§c épuiser. ");
