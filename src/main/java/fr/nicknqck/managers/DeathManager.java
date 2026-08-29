@@ -62,8 +62,8 @@ public class DeathManager implements Listener {
         final GameState gameState = GameState.getInstance();
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             final GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
-            gamePlayer.setLastInventoryContent(killedPlayer.getInventory().getContents());
-            gamePlayer.setDeathLocation(gamePlayer.getLastLocation());
+            gamePlayer.setLastInventoryContent(killedPlayer.getInventory().getContents().clone());
+            gamePlayer.setDeathLocation(gamePlayer.getLastLocation().clone());
         }
         if (this.cantDie(gameState, killedPlayer)) {
             return;

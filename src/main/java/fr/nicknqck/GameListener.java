@@ -238,6 +238,8 @@ public class GameListener implements Listener {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
+				if (p.isDead())continue;
+				if (!p.getGameMode().equals(GameMode.SURVIVAL))continue;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					GamePlayer gamePlayer = gameState.getGamePlayer().get(u);
 					gamePlayer.getRole().Update(gameState);
@@ -248,8 +250,8 @@ public class GameListener implements Listener {
 						if (item.getType().equals(Material.AIR))continue;
 						items.add(item);
 					}
-					gamePlayer.setLastInventoryContent(items.toArray(new ItemStack[0]));
-					gamePlayer.setLastArmorContent(p.getInventory().getArmorContents());
+					gamePlayer.setLastInventoryContent(items.toArray(new ItemStack[0]).clone());
+					gamePlayer.setLastArmorContent(p.getInventory().getArmorContents().clone());
 				}
 			}
 			if (gameState.getActualPvPTimer() == 0){
