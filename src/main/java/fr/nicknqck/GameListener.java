@@ -166,8 +166,15 @@ public class GameListener implements Listener {
 			gameState.prevNightTime = gameState.nightTime;
 			if (gameState.inGameTime == Border.getTempReduction()) {
 				gameState.shrinking = true;
-				long speed = Border.getBorderSpeed();
-				border.setSize(Border.getMinBorderSize()*2, speed*20);
+
+				double currentSize = border.getSize();
+				double targetSize = Border.getMinBorderSize() * 2;
+				double distance = currentSize - targetSize;
+
+				double speed = Border.getBorderSpeed(); // en blocs par seconde
+				long durationSeconds = Math.max(1L, Math.round(distance / speed));
+
+				border.setSize(targetSize, durationSeconds);
 				SendToEveryone("§7La bordure commence à bouger !");
 			}
 			if (gameState.inGameTime == 0) {
