@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class Hastey_Boys extends BasicScenarios {
-	private static boolean HasteyBoys = false;
+	private static boolean HasteyBoys = true;
 	public static void setHasteyBoys(boolean hasteyboys) {
 		HasteyBoys = hasteyboys;
 	}
