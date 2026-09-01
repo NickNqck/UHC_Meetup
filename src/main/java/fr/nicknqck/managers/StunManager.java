@@ -78,6 +78,7 @@ public final class StunManager implements Listener{
             if (player == null)return;
             if (!player.getWorld().equals(stunLocation.getWorld())) {
                 this.gamePlayer.getStunManager().stunedPlayers.remove(player.getUniqueId());
+                player.setFallDistance(0f);
                 cancel();
                 return;
             }
@@ -138,6 +139,9 @@ public final class StunManager implements Listener{
             public void run() {
                 if (this.stuckStunListener.tick <= 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                     this.stuckStunListener.gamePlayer.getStunManager().stunedPlayers.remove(this.stuckStunListener.gamePlayer.getUuid());
+                    if (this.stuckStunListener.gamePlayer.getPlayer() != null) {
+                        this.stuckStunListener.gamePlayer.getPlayer().setFallDistance(0f);
+                    }
                     cancel();
                     return;
                 }
