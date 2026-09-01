@@ -47,7 +47,7 @@ public class ItemBuilder {
      * @param is The itemstack to create the ItemBuilder over.
      */
     public ItemBuilder(ItemStack is){
-        this.is=is;
+        this.is=is.clone();
     }
     /**
      * Create a new ItemBuilder from scratch.
@@ -226,6 +226,18 @@ public class ItemBuilder {
         lore.add(line);
         im.setLore(lore);
         is.setItemMeta(im);
+        return this;
+    }
+
+    /**
+     * Add a lot of lore lines.
+     * @param lines The lore lines to add.
+     */
+    public ItemBuilder addLoreLines(String[] lines) {
+        if (lines == null)return this;
+        for (String line : lines) {
+            addLoreLine(line);
+        }
         return this;
     }
     /**

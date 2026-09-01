@@ -50,7 +50,7 @@ public class RaikageV2 extends ShinobiRoles {
 
     @Override
     public String getName() {
-        return "Yondaime Raikage";
+        return "Raikage";
     }
 
     @Override

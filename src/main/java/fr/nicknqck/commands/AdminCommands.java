@@ -14,6 +14,7 @@ import fr.nicknqck.interfaces.IRole;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.items.GUIItems;
 import fr.nicknqck.items.Items;
+import fr.nicknqck.player.DeathRapport;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
 import fr.nicknqck.roles.desc.AllDesc;
@@ -34,9 +35,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class AdminCommands implements CommandExecutor{
 
@@ -379,7 +378,7 @@ public class AdminCommands implements CommandExecutor{
 									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant nuit");
 									Bukkit.broadcastMessage("");
 									Main.getInstance().getWorldManager().getGameWorld().setTime(13000);
-									gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
+									gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
 									Bukkit.getServer().getPluginManager().callEvent(new NightEvent(gameState, Main.getInstance().getGameConfig().getMaxTimeDay()));
 									return true;
 									
@@ -388,7 +387,7 @@ public class AdminCommands implements CommandExecutor{
                             Bukkit.broadcastMessage("");
                             Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant jour");
                             Bukkit.broadcastMessage("");
-                            gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
+							gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
                             Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 							Bukkit.getPluginManager().callEvent(new DayEvent(gameState));
                             return true;
@@ -693,11 +692,36 @@ public class AdminCommands implements CommandExecutor{
 										texte.addExtra("\n");
 										texte.addExtra("Camp actuel:§b "+StringUtils.replaceUnderscoreWithSpace(role.getTeamColor()+role.getTeam().name()));
 										texte.addExtra("\n");
-										texte.addExtra("Nombre de kill(s):§b "+gameState.getPlayerKills().get(p.getUniqueId()).size());
+										texte.addExtra("Nombre de kill(s):§b "+role.getGamePlayer().getKillAmounts());
 										texte.addExtra("\n");
 										texte.addExtra("Joueurs tués: ");
 										TextComponent hver = new TextComponent("§b[?]");
-										hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(!gameState.getPlayerKills().get(p.getUniqueId()).isEmpty() ? getListPlayers(gameState.getPlayerKills().get(p.getUniqueId())) : "§7Aucun")}));
+										final List<TextComponent> kills = new ArrayList<>();
+                                        if (!role.getGamePlayer().getKillsList().isEmpty()) {
+											int i = 0;
+											for (final DeathRapport deathRapport : new ArrayList<>(role.getGamePlayer().getKillsList())) {
+                                                if (deathRapport.getGameKiller() == null)continue;
+												if (!deathRapport.getGameKiller().getUuid().equals(role.getPlayer())) {
+													Main.getInstance().debug("ERREUR | Le tueur n'est pas le meme dans le DeathRapport et dans la liste indiquer");
+													continue;
+												}
+												if (i > 0) {
+													kills.add(new TextComponent("\n"));
+												}
+												kills.add(new TextComponent(deathRapport.getTeamWhenDie().getColor()+deathRapport.getDeadPlayer().getPlayerName()+"§7 ("+deathRapport.getTeamWhenDie().getColor()+deathRapport.getTeamWhenDie().getName()+"§7)\n"));
+												i++;
+											}
+                                        } else {
+											kills.add(new TextComponent("§cBoulotKanao§7 (§cAkatsuki§7)\n"));
+											kills.add(new TextComponent("§5BoulotKanao§7 (§cOrochimaru§7)\n"));
+											kills.add(new TextComponent(TeamList.Shisui.getColor()+"BoulotKanao§7 ("+TeamList.Shisui.getColor()+"Shisui§7)"));
+										}
+										if (kills.isEmpty()) {
+											hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune information trouver")}));
+										} else {
+											hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, kills.toArray(new TextComponent[0])));
+										}
+									//	hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {new TextComponent(!gameState.getPlayerKills().get(p.getUniqueId()).isEmpty() ? getListPlayers(gameState.getPlayerKills().get(p.getUniqueId())) : "§7Aucun")}));
 										texte.addExtra(hver);
 										texte.addExtra("\n");
 									} else {

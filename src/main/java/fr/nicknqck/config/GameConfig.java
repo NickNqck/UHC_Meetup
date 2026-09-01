@@ -30,7 +30,6 @@ public class GameConfig {
     private final NarutoConfig narutoConfig;
     private final AotConfig aotConfig;
     private final CrystalConfig crystalConfig;
-    private boolean laveTitans = true;
     private boolean stuffUnbreak = true;
     private boolean pvpEnable = false;
     private int maxTimeDay = 60*3;
@@ -45,6 +44,7 @@ public class GameConfig {
     private final LinkedList<IMDJ> playableMdj;
     private boolean pregen = false;
     private final DemonSlayerConfig demonSlayerConfig;
+    private boolean playerStunCanTakeDamage = true;
 
     public GameConfig() {
         instance = this;
@@ -103,6 +103,7 @@ public class GameConfig {
         private boolean izanamiCanInfectSolo = true;
         private boolean shisuiByPassIzanamiLimitation = true;
         private boolean shisuiKotoAmatsukamiInfectSolo = true;
+        private boolean sasoriCanRevive = true;
 
     }
     @Getter
@@ -112,6 +113,7 @@ public class GameConfig {
         private boolean rodTridimenssionel = false;
         private int tridiCooldown = 16;
         private int amountLanceMax = 3;
+        private boolean laveTitans = false;
 
     }
     @Getter

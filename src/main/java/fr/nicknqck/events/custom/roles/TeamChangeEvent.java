@@ -1,14 +1,14 @@
 package fr.nicknqck.events.custom.roles;
 
-import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.roles.builder.RoleBase;
-import fr.nicknqck.enums.TeamList;
 import lombok.Getter;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 
-public class TeamChangeEvent extends GameEvent implements Cancellable {
+public class TeamChangeEvent extends Event implements Cancellable {
 
     @Getter
     private final RoleBase role;
@@ -33,4 +33,14 @@ public class TeamChangeEvent extends GameEvent implements Cancellable {
     public void setCancelled(boolean b) {
         this.cancel = b;
     }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
 }

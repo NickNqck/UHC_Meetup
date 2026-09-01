@@ -50,9 +50,8 @@ public class HubListener implements Listener {
 		gameState.getInLobbyPlayers().clear();
 		spawnPlatform(Main.getInstance().getWorldManager().getGameWorld(), Material.AIR);
 		ItemsManager.instance.clearJspList();
-		gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
+		gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
 		gameState.getPlayerRoles().clear();
-		gameState.getPlayerKills().clear();
 		Border.setActualBorderSize(Border.getMaxBorderSize());
 		gameState.shrinking = false;
 		Main.getInstance().getWorldManager().getGameWorld().getWorldBorder().setSize(Border.getMaxBorderSize()*2);
@@ -99,7 +98,6 @@ public class HubListener implements Listener {
 			p.setLevel(0);
 			p.setFallDistance(0);
 			GameListener.RandomTp(p);
-			gameState.addPlayerKills(p);
 			p.setGameMode(GameMode.SURVIVAL);
 			giveStartInventory(p);
 			fr.nicknqck.player.GamePlayer gamePlayer = new GamePlayer(p);

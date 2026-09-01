@@ -4,10 +4,8 @@ import fr.nicknqck.Border;
 import fr.nicknqck.GameState;
 import fr.nicknqck.HubListener;
 import fr.nicknqck.Main;
-import fr.nicknqck.enums.StunType;
 import fr.nicknqck.interfaces.ISubRoleWorld;
 import fr.nicknqck.items.GUIItems;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.runnables.PregenerationTask;
 import fr.nicknqck.scenarios.Scenarios;
 import fr.nicknqck.scenarios.impl.AntiPvP;
@@ -99,8 +97,10 @@ public class HubConfig implements Listener {
                                     }
                                     Main.getInstance().deleteWorld(string);
                                 }
-                                Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c décompression du monde§a \""+string+"§a\".");
-                                Main.getInstance().getRoleWorldManager().extractWorld(iSubRoleWorld.getZipFileName());
+                                if (!iSubRoleWorld.getZipFileName().isEmpty()){
+                                    Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c décompression du monde§a \""+string+"§a\".");
+                                    Main.getInstance().getRoleWorldManager().extractWorld(iSubRoleWorld.getZipFileName());
+                                }
                                 Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c création du monde§a \""+string+"§a\".");
                                 final World world1 = iSubRoleWorld.createWorld();
                                 Main.getInstance().getServer().broadcastMessage(Main.getInstance().getNAME()+"§a Démarrage de la§c pré-génération du monde§a \""+string+"§a\".");
@@ -223,192 +223,6 @@ public class HubConfig implements Listener {
                     }
                     player.updateInventory();
                     Main.getInstance().getInventories().updateCutCleanInventory(player);
-                    event.setCancelled(true);
-                    break;
-                case "§fConfiguration de la partie":
-                    if (item.getType() != Material.AIR) {
-                        String name = item.getItemMeta().getDisplayName();
-                        if (item.getType().equals(Material.WATER_BUCKET)) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                if (Main.getInstance().getGameConfig().getWaterEmptyTiming() != 60) {
-                                    Main.getInstance().getGameConfig().setWaterEmptyTiming(Main.getInstance().getGameConfig().getWaterEmptyTiming()+1);
-                                }else {
-                                    player.sendMessage("Timing maximal atteint !");
-                                }
-                            }else {
-                                if (Main.getInstance().getGameConfig().getWaterEmptyTiming() != 0) {
-                                    Main.getInstance().getGameConfig().setWaterEmptyTiming(Main.getInstance().getGameConfig().getWaterEmptyTiming()-1);
-                                }else {
-                                    player.sendMessage("Timing minimal atteint !");
-                                }
-                            }
-                        }
-                        if (item.getType().equals(Material.LAVA_BUCKET)) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                if (Main.getInstance().getGameConfig().getLavaEmptyTiming() != 60) {
-                                    Main.getInstance().getGameConfig().setLavaEmptyTiming(Main.getInstance().getGameConfig().getLavaEmptyTiming()+1);
-                                }else {
-                                    player.sendMessage("Timing maximal atteint !");
-                                }
-                            }else {
-                                if (Main.getInstance().getGameConfig().getLavaEmptyTiming() != 0) {
-                                    Main.getInstance().getGameConfig().setLavaEmptyTiming(Main.getInstance().getGameConfig().getLavaEmptyTiming()-1);
-                                }else {
-                                    player.sendMessage("Timing minimal atteint !");
-                                }
-                            }
-                        }
-                        if (name.contains("Taille de la bordure max")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Border.setMaxBorderSize(Border.getMaxBorderSize()+50);
-                            } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Border.setMaxBorderSize(Border.getMaxBorderSize()-50);
-                            }
-                        }
-                        if (name.contains("Taille de la bordure minimum")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Border.setMinBorderSize(Math.min(Border.getMinBorderSize()+50, 2400));
-                            } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Border.setMinBorderSize(Border.getMinBorderSize()-50);
-                            }
-                        }
-                        if (name.contains("Vitesse de la bordure")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Border.setBorderSpeed(Math.min(Border.getBorderSpeed()+1, 10));
-                            } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Border.setBorderSpeed(Math.max(Border.getBorderSpeed()-1, 1));
-                            }
-                        }
-                        if (name.contains("Temp avant activation du PVP")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                gameState.pvpTimer += 60;
-                            } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                gameState.pvpTimer -= 60;
-                            }
-                        }
-                        if (name.contains("Temp avant annonce des roles")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                gameState.roleTimer+=60;
-                            } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                gameState.roleTimer-=60;
-                            }
-                        }
-                        if (name.contains("Temp avant réduction de la bordure")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Border.setTempReduction(Math.min(Border.getTempReduction()+60, 60*60));
-                            } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Border.setTempReduction(Math.max(Border.getTempReduction()-60, 0));
-                            }
-                        }
-                        if (item.getType() == Material.REDSTONE) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setTimingAssassin(Math.min(60*5, Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin()+10));
-                            } else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setTimingAssassin(Math.max(10, Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin()-10));
-                            }
-                        }
-                        if (item.getType().equals(Material.TNT)) {
-                            if (Main.getInstance().getGameConfig().isTntGrief()) {
-                                Main.getInstance().getGameConfig().setTntGrief(false);
-                                Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a définie la règle \"§cGrief par les tnt§7\" sur§c désactiver§7.");
-                            } else {
-                                Main.getInstance().getGameConfig().setTntGrief(true);
-                                Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a définie la règle \"§cGrief par les tnt§7\" sur§a activer§7.");
-                            }
-                        }
-                        if (name.equals("§fLame")) {
-                            Main.getInstance().getGameConfig().getDemonSlayerConfig().setGiveLame(!Main.getInstance().getGameConfig().getDemonSlayerConfig().isGiveLame());
-                        }
-                        Border.setMaxBorderSize(Math.max(50, Math.min(Border.getMaxBorderSize(), 2400)));
-                        Border.setMinBorderSize(Math.max(50, Math.min(Border.getMinBorderSize(), Border.getMaxBorderSize())));
-                        gameState.pvpTimer = Math.max(0, Math.min(gameState.pvpTimer, 40*60));
-                        gameState.roleTimer = Math.max(0, Math.min(gameState.roleTimer, 40*60));
-                        if (name.contains("Durée du jour (et de la nuit)")) {
-                            if (ChatRank.isHost(player)) {
-                                if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                    Main.getInstance().getGameConfig().setMaxTimeDay(Main.getInstance().getGameConfig().getMaxTimeDay()+10);
-                                    player.updateInventory();
-                                    Main.getInstance().getInventories().updateConfigInventory(player);
-                                } else {
-                                    if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                        Main.getInstance().getGameConfig().setMaxTimeDay(Main.getInstance().getGameConfig().getMaxTimeDay()-10);
-                                        player.updateInventory();
-                                        Main.getInstance().getInventories().updateConfigInventory(player);
-                                    }
-                                }
-                            }
-                        }
-
-                        if (item.isSimilar(GUIItems.getTabRoleInfo(gameState))) {
-                            if (ChatRank.isHost(player)) {
-                                if (!gameState.roletab) {
-                                    player.sendMessage("Les roles seront maintenant afficher dans le tab");
-                                    gameState.roletab = true;
-                                } else {
-                                    player.sendMessage("Les roles ne seront plus afficher dans le tab");
-                                    gameState.roletab = false;
-                                }
-                                player.updateInventory();
-                                Main.getInstance().getInventories().updateConfigInventory(player);
-                            }
-                        }
-                        if (item.isSimilar(Items.geteclairmort())) {
-                            if (ChatRank.isHost(player)) {
-                                if (!Main.getInstance().getGameConfig().isMortEclair()) {
-                                    player.sendMessage("Éclair à la mort est désormais§6 activé");
-                                    Main.getInstance().getGameConfig().setMortEclair(true);
-                                } else {
-                                    player.sendMessage("Éclair à la mort est désormais§6 désactivé");
-                                    Main.getInstance().getGameConfig().setMortEclair(false);
-                                }
-                            }
-                        }
-                        if (name.equals("§fBijus")) {
-                            if (action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
-                                player.closeInventory();
-                                player.openInventory(Bukkit.createInventory(player, 9*4, "Configuration ->§6 Bijus"));
-                                Main.getInstance().getInventories().openConfigBijusInventory(player);
-                            } else {
-                                Main.getInstance().getBijuManager().setBijuEnable(!Main.getInstance().getBijuManager().isBijuEnable());
-                            }
-                        }
-                        if (name.equals("§cInfection")) {
-                            if (action.equals(InventoryAction.PICKUP_ALL)) {
-                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setInfectionTime(Math.min(60*20, Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime()+10));
-                            }else if (action.equals(InventoryAction.PICKUP_HALF)) {
-                                Main.getInstance().getGameConfig().getDemonSlayerConfig().setInfectionTime(Math.max(10, Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime()-10));
-                            }
-                        }
-                        if (name.equalsIgnoreCase("§fPourcentage de Force")) {
-                            if (event.isLeftClick()) {
-                                Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()+5));
-                            } else {
-                                Main.getInstance().getGameConfig().setForcePercent(Math.max(10, Main.getInstance().getGameConfig().getForcePercent()-5));
-                            }
-                        }
-                        if (name.equals("§fTypes de stun")) {
-                            if (Main.getInstance().getGameConfig().getStunType().equals(StunType.TELEPORT)) {
-                                Main.getInstance().getGameConfig().setStunType(StunType.STUCK);
-                            } else {
-                                Main.getInstance().getGameConfig().setStunType(StunType.TELEPORT);
-                            }
-                        }
-                        if (name.equalsIgnoreCase("§fPourcentage de Résistance")) {
-                            if (event.isLeftClick()) {
-                                Main.getInstance().getGameConfig().setResiPercent(Math.max(10, Main.getInstance().getGameConfig().getResiPercent()+5));
-                            } else {
-                                Main.getInstance().getGameConfig().setResiPercent(Math.max(10, Main.getInstance().getGameConfig().getResiPercent()-5));
-                            }
-                        }
-                    }
-                    for (UUID u : gameState.getInLobbyPlayers()) {
-                        Player p = Bukkit.getPlayer(u);
-                        if (p == null)continue;
-                        Main.getInstance().getInventories().updateConfigInventory(p);
-                    }
-                    if (item.isSimilar(GUIItems.getSelectBackMenu())) {
-                        if (ChatRank.isHost(player)) player.openInventory(GUIItems.getAdminWatchGUI());
-                    }
                     event.setCancelled(true);
                     break;
                 case "Configuration ->§6 Bijus":

@@ -284,7 +284,7 @@ public class Inventories {
                     }else {
                         inv.setItem(11, new ItemBuilder(Material.BOW).setName("§rEquipement Tridimentionnel").setLore("§fÉquipement actuel:§l Arc Tridimentionnelle").toItemStack());
                     }
-                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(Main.getInstance().getGameConfig().isLaveTitans() ? "§aActivé" : "§cDésactivé").toItemStack());
+                    inv.setItem(12, new ItemBuilder(Material.LAVA_BUCKET).setName("§r§6Lave§f pour les titans (transformé)").setLore(Main.getInstance().getGameConfig().getAotConfig().isLaveTitans() ? "§aActivé" : "§cDésactivé").toItemStack());
                     this.clearRoleInventory(inv);
                 }
             }
@@ -299,84 +299,7 @@ public class Inventories {
             Inventory inv = invView.getTopInventory();
             if (inv != null) {
                 if (inv.getTitle().equals("§fConfiguration de la partie")) {
-                    inv.clear();
-                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(5).setName("§r§fTaille de la bordure maximum").setLore(
-                            "§r§f[50b < "+ Border.getMaxBorderSize()+" > 2400b",
-                            "§r§fClique gauche: §a+50b",
-                            "§r§fClique droit: §c-50b"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setName("§r§fTaille de la bordure minimum").setDurability(14).setLore(
-                            "§r§f[50b < "+Border.getMinBorderSize()+"b > "+Border.getMaxBorderSize()+"b]",
-                            "§r§fClique gauche:§a +50b",
-                            "§r§fClique droit: §c-50b"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(7).setName("§r§fVitesse de la bordure")
-                            .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 10b/s",
-                                    "§r§fClique gauche: §a+1b/s",
-                                    "§r§fClique droit: §c-1b/s").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.IRON_SWORD).setName("§r§fTemp avant activation du PVP").setLore(
-                            "§r§f[0 minute < "+gameState.getPvPTimer()/60+" minutes > 40 minutes]",
-                            "§r§fClique gauche: §a+1 minutes",
-                            "§r§fClique droit: §c-1 minutes"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemp avant annonce des roles").setLore(
-                            "§r§f[0 minute < "+gameState.getRoleTimer()/60+" minutes > 40 minutes]",
-                            "§r§fClique gauche: §a+1 minutes",
-                            "§r§fClique droit: §c-1 minutes"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName("§r§fTemp avant réduction de la bordure").setLore(
-                            "§r§f[0 minute < "+Border.getTempReduction()/60+" minutes > 60 minutes]",
-                            "§r§fClique gauche: §a+1 minutes",
-                            "§r§fClique droit: §c-1 minutes"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.WATCH).setName("§r§fDurée du jour (et de la nuit)").setLore(
-                            "§r§fDurée actuel:§6 "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getMaxTimeDay()),
-                            "§r§fClique gauche: §a+10 secondes",
-                            "§r§fClique droit: §c-10 secondes"
-                    ).toItemStack());
-                    inv.addItem(GUIItems.getTabRoleInfo(gameState));
-                    inv.addItem(Items.geteclairmort());
-                    inv.addItem(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
-                            "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
-                            "§r§fClique gauche: §a+1 secondes",
-                            "§r§fClique droit: §c-1 secondes",
-                            "§r§f(0 secondes =§c désactiver"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemp avant despawn de la§6 Lave").setLore(
-                            "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getLavaEmptyTiming())+" > 1 minutes",
-                            "§r§fClique gauche: §a+1 seconde",
-                            "§r§fClique droit: §c-1 seconde",
-                            "§r§f(0 secondes =§c désactiver"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.NETHER_STAR).setName("§fBijus").setLore(Main.getInstance().getBijuManager().isBijuEnable() ?
-                            "§aActivé" : "§cDésactivé",
-                            "§r§fShift + Clique: Permet de configurer les bijus§7 (§aNaruto UHC§7)").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.TNT).setName("§fGrief du terrain par les§c TNT").setLore(Main.getInstance().getGameConfig().isTntGrief() ? "§aActivé" : "§cDésactivé").toItemStack());
-                    inv.addItem(new ItemBuilder(Material.DIAMOND_SWORD).setName("§fPourcentage de force").setLore(
-                            "§c"+Main.getInstance().getGameConfig().getForcePercent()+"%",
-                            "",
-                            "§fVanilla: §c130%",
-                            "§aMinimum:§c 10%"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.IRON_CHESTPLATE).setName("§fPourcentage de Résistance").setLore(
-                            "§9Résistance I§f: "+Main.getInstance().getGameConfig().getResiPercent()+"%",
-                            "§9Résistance II§f: "+(Main.getInstance().getGameConfig().getResiPercent()*2)+"%",
-                            "",
-                            "§fVanilla: §c20%",
-                            "§aMinimum:§c 10%"
-                    ).toItemStack());
-                    inv.addItem(new ItemBuilder(Material.TRIPWIRE_HOOK).setName("§fTypes de stun").setLore(
-                            "",
-                            (Main.getInstance().getGameConfig().getStunType().equals(StunType.TELEPORT) ?
-                                    "§8 -§r "+ StunType.TELEPORT.getColor()+"§l"+ StunType.TELEPORT.getName()
-                                    :
-                                    "§8 -§r "+ StunType.TELEPORT.getColor() + StunType.TELEPORT.getName()),
-                            (Main.getInstance().getGameConfig().getStunType().equals(StunType.STUCK) ?
-                                    "§8 -§r"+ StunType.STUCK.getColor()+" §l"+ StunType.STUCK.getName()
-                                    :
-                                    "§8 -§r "+ StunType.STUCK.getColor() + StunType.STUCK.getName())
-                    ).toItemStack());
-                    inv.setItem(26, GUIItems.getSelectBackMenu());
+                    new ConfigurationGameInventory().open(player);
                 }
             }
         }

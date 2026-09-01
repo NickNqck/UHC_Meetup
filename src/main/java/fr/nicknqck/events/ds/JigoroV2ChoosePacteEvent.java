@@ -1,14 +1,15 @@
 package fr.nicknqck.events.ds;
 
-import fr.nicknqck.events.custom.GameEvent;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 @Setter
 @Getter
-public class JigoroV2ChoosePacteEvent extends GameEvent {
+public class JigoroV2ChoosePacteEvent extends Event {
 
     private boolean cancelled = false;
     private final Player jigoro;
@@ -25,5 +26,14 @@ public class JigoroV2ChoosePacteEvent extends GameEvent {
         KAIGAKU,
         ZENITSU,
         NON_CHOISIS
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

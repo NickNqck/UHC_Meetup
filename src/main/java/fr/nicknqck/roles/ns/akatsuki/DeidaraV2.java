@@ -30,8 +30,10 @@ import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -258,7 +260,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                         i--;
                     }
                 }.runTaskTimer(Main.getInstance(), 0, 20);
-                return false;
+                return true;
             }
         }
         private static final class ArcExplosif extends ItemPower implements Listener {
@@ -272,6 +274,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                 setWorkWhenInCooldown(true);
                 getShowCdRunnable().setCustomText(true);
                 EventUtils.registerRoleEvent(this);
+                getRole().getGamePlayer().addItems(new ItemStack(Material.ARROW, 16));
             }
 
             @Override
@@ -398,6 +401,10 @@ public class DeidaraV2 extends AkatsukiRoles {
                 if (event.getDamager() instanceof TNTPrimed) {
                     TNTPrimed tnt = (TNTPrimed) event.getDamager();
                     if (tnt.hasMetadata("DeidaraC2"+getRole().StringID)) {
+                        if (event.getEntity().getUniqueId().equals(this.getRole().getPlayer())) {
+                            event.setDamage(0.0);
+                            return;
+                        }
                         if (event.getEntity().getUniqueId() != event.getDamager().getUniqueId()) {
                             event.setDamage(0);
                             if (event.getEntity() instanceof Player) {
@@ -411,9 +418,13 @@ public class DeidaraV2 extends AkatsukiRoles {
                             }
                         }
                     }
-                    if (event.getDamager().getUniqueId().equals(event.getDamager().getUniqueId())) {
-                        event.setDamage(0.0);
-                    }
+                }
+            }
+            @EventHandler(priority = EventPriority.NORMAL)
+            private void onDamage2(@NonNull final EntityDamageEvent event) {
+                if (event.getCause().name().contains("EXPLOSION")) {
+                    event.setDamage(0.0);
+                    event.setCancelled(true);
                 }
             }
         }

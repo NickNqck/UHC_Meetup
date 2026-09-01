@@ -10,6 +10,10 @@ import java.util.List;
 public interface ISubRoleWorld {
 
     String getWorldName();
+
+    /**
+     * @return Return a String that end with a '.zip' if String is empty the code do nothing with this
+     */
     String getZipFileName();
     World createWorld();
     double getActualPercentPregenTask();

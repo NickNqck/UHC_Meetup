@@ -199,7 +199,7 @@ public final class JugoV2 extends OrochimaruRoles {
                 super("§5Senninka§r", null, role,
                         "§7Toute les§c secondes§7 vous récupérez§c 3 points§5 Senninka",
                         "",
-                        "§7Vous gagnez§c 2 points supplémentaire§7 si§5 Kimimaro§7,§5 Suigetsu§7 ou§5 Tayuya§7 sont proche de vous§7 (§c20 blocs§7).",
+                        "§7Vous gagnez§c 2 points supplémentaire§7 si§5 Kimimaro§7,§5 Suigetsu§7 ou§5 Karin§7 sont proche de vous§7 (§c20 blocs§7).",
                         "§7Si vos§c points§5 Senninka§7 sont en dessous de§c 50 points§7, vous avez§c Hunger I§7.");
                 new SenninkaRunnable(this).runTaskTimerAsynchronously(this.getPlugin(), 0, 20);
             }

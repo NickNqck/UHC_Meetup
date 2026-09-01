@@ -1,32 +1,41 @@
 package fr.nicknqck.managers.schem;
 
-import fr.nicknqck.Main;
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
- * Gestionnaire centralisé des schematics du plugin.
+ * Gestionnaire centralisé des schematics d'un plugin.
  *
  * <p>Responsabilités :
  * <ul>
- *   <li>Créer le dossier {@code plugins/<PluginName>/schems/} s'il n'existe pas.</li>
+ *   <li>Créer le dossier {@code <dataFolder>/schems/} s'il n'existe pas.</li>
  *   <li>Détecter et charger automatiquement tous les fichiers {@code .schematic} présents.</li>
- *   <li>Notifier via {@link Main#debug(String)} si aucun schematic n'est trouvé.</li>
+ *   <li>Notifier via le {@link SchematicLogger} fourni si aucun schematic n'est trouvé.</li>
  *   <li>Exposer les schematics chargés via {@link #getSchematic(String)}.</li>
  *   <li>Permettre le rechargement à chaud via {@link #reload()}.</li>
  * </ul>
  *
- * <p><strong>Utilisation typique :</strong>
+ * <p><strong>Utilisation dans UHC-Meetup :</strong>
  * <pre>{@code
- * // Dans Main#onEnable()
- * SchematicManager schematicManager = new SchematicManager(this);
+ * SchematicManager schematicManager = new SchematicManager(this, Main.getInstance()::debug);
+ * }</pre>
  *
- * // Récupérer un schematic par son nom (sans extension)
+ * <p><strong>Utilisation depuis un plugin tiers (soft-depend + classpath) :</strong>
+ * <pre>{@code
+ * SchematicManager schematicManager = new SchematicManager(this, msg -> getLogger().info(msg));
  * Schematic arena = schematicManager.getSchematic("arena");
  * if (arena != null) {
  *     arena.paste(spawnLocation, true);
@@ -36,7 +45,7 @@ import java.util.Map;
 public class SchematicManager {
 
     /** Map <nom_sans_extension, Schematic> des schematics chargés. */
-    private final Map<String, Schematic> schematics = new HashMap<String, Schematic>();
+    private final Map<String, Schematic> schematics = new HashMap<>();
 
     /** Référence au dossier {@code <dataFolder>/schems/}. */
     private final File schemsFolder;
@@ -45,37 +54,53 @@ public class SchematicManager {
     @Getter
     private final Plugin plugin;
 
+    /** Callback de logging, jamais null (par défaut {@link SchematicLogger#NOOP}). */
+    private final SchematicLogger logger;
+
     // ──────────────────────────────────────────────────────────────────────────
-    // Constructeur
+    // Constructeurs
     // ──────────────────────────────────────────────────────────────────────────
+
+    /**
+     * Initialise le gestionnaire sans logging (silencieux).
+     *
+     * @param plugin L'instance du plugin propriétaire. Ne doit pas être null.
+     */
+    public SchematicManager(@NonNull Plugin plugin) {
+        this(plugin, SchematicLogger.NOOP);
+    }
 
     /**
      * Initialise le gestionnaire.
      *
      * <p>Crée le dossier {@code schems/} si nécessaire, puis lance le chargement
-     * de tous les fichiers {@code .schematic} présents.
+     * de tous les fichiers {@code .schematic} présents dans
+     * {@code <plugin.getDataFolder()>/schems/}.
      *
-     * @param plugin L'instance du plugin principal. Ne doit pas être null.
+     * @param plugin L'instance du plugin propriétaire. Ne doit pas être null.
+     * @param logger Callback de logging optionnel. Si {@code null}, {@link SchematicLogger#NOOP}
+     *               est utilisé (aucun log émis).
      */
-    public SchematicManager(Plugin plugin) {
+    public SchematicManager(@NonNull Plugin plugin, SchematicLogger logger) {
         this.plugin = plugin;
+        this.logger = (logger != null) ? logger : SchematicLogger.NOOP;
         this.schemsFolder = new File(plugin.getDataFolder(), "schems");
 
         // Création du dossier si absent
         if (!schemsFolder.exists()) {
             if (schemsFolder.mkdirs()) {
-                Main.getInstance().debug(
+                this.logger.log(
                         "[SchematicManager] Dossier 'schems' créé automatiquement dans : "
                                 + schemsFolder.getAbsolutePath()
                 );
             } else {
-                Main.getInstance().debug(
+                this.logger.log(
                         "[SchematicManager] ERREUR : impossible de créer le dossier 'schems' dans : "
                                 + schemsFolder.getAbsolutePath()
                 );
             }
         }
-
+        extractBundledSchematics();
         loadAll();
     }
 
@@ -91,7 +116,7 @@ public class SchematicManager {
      *
      * <p>Cas couverts :
      * <ul>
-     *   <li>Dossier vide ou aucun {@code .schematic} → message de debug explicite.</li>
+     *   <li>Dossier vide ou aucun {@code .schematic} → message de log explicite.</li>
      *   <li>Fichier corrompu / format invalide → loggé individuellement, les autres sont
      *       chargés normalement.</li>
      * </ul>
@@ -109,7 +134,7 @@ public class SchematicManager {
 
         // ── Cas : aucun schematic trouvé ──────────────────────────────────────
         if (files == null || files.length == 0) {
-            Main.getInstance().debug(
+            logger.log(
                     "[SchematicManager] Aucun schematic (.schematic) trouvé dans le dossier '"
                             + schemsFolder.getAbsolutePath()
                             + "'. Veuillez y déposer des fichiers .schematic avant de lancer une partie."
@@ -124,9 +149,9 @@ public class SchematicManager {
         for (File file : files) {
             String name = stripExtension(file.getName());
             try {
-                Schematic schematic = Schematic.load(file);
+                Schematic schematic = Schematic.load(file, logger);
                 schematics.put(name, schematic);
-                Main.getInstance().debug(
+                logger.log(
                         "[SchematicManager] ✔ Schematic chargé : '"
                                 + name + "' ("
                                 + schematic.getWidth()  + "x"
@@ -136,7 +161,7 @@ public class SchematicManager {
                 );
                 loaded++;
             } catch (Exception e) {
-                Main.getInstance().debug(
+                logger.log(
                         "[SchematicManager] ✘ Échec du chargement de '"
                                 + file.getName() + "' : " + e.getMessage()
                 );
@@ -147,13 +172,76 @@ public class SchematicManager {
         }
 
         // ── Bilan final ───────────────────────────────────────────────────────
-        Main.getInstance().debug(
+        logger.log(
                 "[SchematicManager] Chargement terminé : "
                         + loaded + " réussi(s), " + failed + " échec(s) sur "
                         + files.length + " fichier(s) trouvé(s)."
         );
     }
+    /**
+     * Extrait tous les .schematic embarqués dans le jar (src/main/resources/schems/)
+     * vers le dossier {@code <dataFolder>/schems/} sur le disque, en écrasant
+     * systématiquement les fichiers déjà présents (les schematics embarqués font foi).
+     *
+     * <p>Nécessite d'exécuter le plugin depuis un jar réellement construit
+     * (via {@code gradle shadowJar} par ex.) — ne fonctionne pas si le plugin
+     * tourne depuis des classes non-jarées (run exploded depuis l'IDE).
+     */
+    private void extractBundledSchematics() {
+        File jarFile = getPluginJarFile();
+        if (jarFile == null || !jarFile.isFile()) {
+            logger.log("[SchematicManager] Impossible de localiser le jar du plugin, extraction des schematics embarqués ignorée.");
+            return;
+        }
 
+        try (JarFile jar = new JarFile(jarFile)) {
+            Enumeration<JarEntry> entries = jar.entries();
+            int extracted = 0;
+
+            while (entries.hasMoreElements()) {
+                JarEntry entry = entries.nextElement();
+                String name = entry.getName();
+
+                if (entry.isDirectory()) continue;
+                if (!name.startsWith("schems/") || !name.toLowerCase().endsWith(".schematic")) continue;
+
+                String fileName = name.substring("schems/".length());
+                if (fileName.isEmpty()) continue;
+
+                File target = new File(schemsFolder, fileName);
+
+                try (InputStream in = jar.getInputStream(entry)) {
+                    Files.copy(in, target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    extracted++;
+                } catch (IOException e) {
+                    logger.log("[SchematicManager] Échec de l'extraction de '" + fileName + "' : " + e.getMessage());
+                }
+            }
+
+            if (extracted > 0) {
+                logger.log("[SchematicManager] " + extracted + " schematic(s) embarqué(s) extrait(s)/mis à jour dans '"
+                        + schemsFolder.getAbsolutePath() + "'.");
+            }
+        } catch (IOException e) {
+            logger.log("[SchematicManager] Erreur lors de l'ouverture du jar du plugin : " + e.getMessage());
+        }
+    }
+
+    /**
+     * Localise le fichier jar physique du plugin propriétaire, pour pouvoir
+     * en lire le contenu via {@link JarFile}.
+     */
+    private File getPluginJarFile() {
+        try {
+            return new File(plugin.getClass()
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI());
+        } catch (Exception e) {
+            return null;
+        }
+    }
     // ──────────────────────────────────────────────────────────────────────────
     // API publique
     // ──────────────────────────────────────────────────────────────────────────
@@ -209,7 +297,7 @@ public class SchematicManager {
      * Pratique pour recharger des fichiers ajoutés sans redémarrer le serveur.
      */
     public void reload() {
-        Main.getInstance().debug("[SchematicManager] Rechargement des schematics en cours...");
+        logger.log("[SchematicManager] Rechargement des schematics en cours...");
         loadAll();
     }
 

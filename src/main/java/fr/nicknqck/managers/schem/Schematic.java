@@ -1,8 +1,6 @@
 package fr.nicknqck.managers.schem;
 
-import fr.nicknqck.Main;
 import fr.nicknqck.utils.Cuboid;
-import lombok.Getter;
 import net.minecraft.server.v1_8_R3.Block;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.IBlockData;
@@ -10,7 +8,11 @@ import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 import net.minecraft.server.v1_8_R3.TileEntity;
+import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -40,6 +42,10 @@ import java.util.List;
  * <p>Index d'un bloc : {@code (y * Length + z) * Width + x}
  *
  * <p>NMS utilisé : net.minecraft.server.v1_8_R3 (Spigot 1.8.8 / v1_8_R3)
+ *
+ * <p>Cette classe ne dépend d'aucun plugin en particulier : le logging passe
+ * par un {@link SchematicLogger} injecté, ce qui permet de l'utiliser depuis
+ * n'importe quel plugin dépendant du jar (soft-depend + classpath).
  */
 public class Schematic {
 
@@ -119,14 +125,20 @@ public class Schematic {
     @Getter
     private final int weOffsetZ;
 
+    // ─── Logging ────────────────────────────────────────────────────────────
+
+    /** Callback de logging, jamais null (par défaut {@link SchematicLogger#NOOP}). */
+    private final SchematicLogger logger;
+
     // ──────────────────────────────────────────────────────────────────────────
-    // Constructeur privé — utiliser {@link #load(File)}
+    // Constructeur privé — utiliser {@link #load(File)} ou {@link #load(File, SchematicLogger)}
     // ──────────────────────────────────────────────────────────────────────────
 
     private Schematic(int width, int height, int length,
                       byte[] blocks, byte[] blockData, byte[] addBlocks,
                       List<NBTTagCompound> tileEntityData,
-                      int weOffsetX, int weOffsetY, int weOffsetZ) {
+                      int weOffsetX, int weOffsetY, int weOffsetZ,
+                      SchematicLogger logger) {
         this.width        = width;
         this.height       = height;
         this.length       = length;
@@ -137,6 +149,7 @@ public class Schematic {
         this.weOffsetX    = weOffsetX;
         this.weOffsetY    = weOffsetY;
         this.weOffsetZ    = weOffsetZ;
+        this.logger       = (logger != null) ? logger : SchematicLogger.NOOP;
     }
 
     // ──────────────────────────────────────────────────────────────────────────
@@ -144,10 +157,10 @@ public class Schematic {
     // ──────────────────────────────────────────────────────────────────────────
 
     /**
-     * Charge et parse un fichier {@code .schematic} (format MCEdit, GZip+NBT).
+     * Charge et parse un fichier {@code .schematic} (format MCEdit, GZip+NBT), sans logging.
      *
-     * <p>Utilise {@code NBTCompressedStreamTools.a(InputStream)} de NMS v1_8_R3
-     * pour décompresser et lire le flux NBT binaire.
+     * <p>Équivalent à {@code load(file, SchematicLogger.NOOP)}. Utile pour un usage
+     * ponctuel hors {@link SchematicManager}, sans avoir de callback de log à fournir.
      *
      * @param file Le fichier {@code .schematic} à charger. Ne doit pas être null.
      * @return Un objet {@link Schematic} prêt à l'emploi.
@@ -155,6 +168,23 @@ public class Schematic {
      * @throws IllegalArgumentException Si le contenu NBT est incomplet ou invalide.
      */
     public static Schematic load(File file) throws IOException {
+        return load(file, SchematicLogger.NOOP);
+    }
+
+    /**
+     * Charge et parse un fichier {@code .schematic} (format MCEdit, GZip+NBT).
+     *
+     * <p>Utilise {@code NBTCompressedStreamTools.a(InputStream)} de NMS v1_8_R3
+     * pour décompresser et lire le flux NBT binaire.
+     *
+     * @param file   Le fichier {@code .schematic} à charger. Ne doit pas être null.
+     * @param logger Callback de logging optionnel (utilisé pour les erreurs de TileEntity
+     *               lors du collage). Si {@code null}, {@link SchematicLogger#NOOP} est utilisé.
+     * @return Un objet {@link Schematic} prêt à l'emploi.
+     * @throws IOException              Si la lecture du fichier échoue.
+     * @throws IllegalArgumentException Si le contenu NBT est incomplet ou invalide.
+     */
+    public static Schematic load(File file, SchematicLogger logger) throws IOException {
         try (FileInputStream fis = new FileInputStream(file)) {
 
             // NBTCompressedStreamTools.a() décompresse le GZip et parse le NBT.
@@ -206,7 +236,8 @@ public class Schematic {
                     width, height, length,
                     blocks, data, addBlocks,
                     tileEntities,
-                    weOffX, weOffY, weOffZ
+                    weOffX, weOffY, weOffZ,
+                    logger
             );
 
         }
@@ -417,6 +448,182 @@ public class Schematic {
     }
 
     /**
+     * Supprime (remplace par de l'air) la zone occupée par ce schematic, à une vitesse
+     * configurable en blocs par seconde, en étalant le travail sur plusieurs ticks.
+     * Ordre de suppression : de la couche la plus basse vers la plus haute (comportement par défaut,
+     * équivalent à {@code removeSpread(origin, removeBaseLayer, plugin, blocksPerSecond, false, onComplete)}).
+     *
+     * <p>Utilise uniquement l'API Bukkit standard ({@link org.bukkit.block.Block#setType(Material, boolean)}),
+     * sans appel NMS.
+     *
+     * @param origin          Coin bas-nord-ouest du schematic (identique à celui utilisé pour paste/pasteSpread).
+     * @param removeBaseLayer Si {@code true}, la couche la plus basse (y=0 relatif au schematic) est
+     *                         également supprimée. Si {@code false}, elle est préservée (utile pour
+     *                         garder un plancher/plateforme après suppression du reste de la structure).
+     * @param plugin          Instance du plugin (nécessaire pour le scheduler Bukkit).
+     * @param blocksPerSecond Vitesse de suppression, en blocs par seconde. Une valeur ≤ 0 est ramenée à 1.
+     * @param onComplete      Callback appelé sur le thread principal une fois la suppression terminée.
+     *                        Peut être {@code null}.
+     */
+    public void removeSpread(final Location origin, final boolean removeBaseLayer,
+                             Plugin plugin, final int blocksPerSecond,
+                             final Runnable onComplete) {
+        removeSpread(origin, removeBaseLayer, plugin, blocksPerSecond, false, onComplete);
+    }
+
+    /**
+     * Supprime (remplace par de l'air) la zone occupée par ce schematic, à une vitesse
+     * configurable en blocs par seconde, en étalant le travail sur plusieurs ticks.
+     *
+     * <p>Utilise uniquement l'API Bukkit standard ({@link org.bukkit.block.Block#setType(Material, boolean)}),
+     * sans appel NMS.
+     *
+     * @param origin          Coin bas-nord-ouest du schematic (identique à celui utilisé pour paste/pasteSpread).
+     * @param removeBaseLayer Si {@code true}, la couche la plus basse (y=0 relatif au schematic) est
+     *                         également supprimée. Si {@code false}, elle est préservée (utile pour
+     *                         garder un plancher/plateforme après suppression du reste de la structure).
+     * @param plugin          Instance du plugin (nécessaire pour le scheduler Bukkit).
+     * @param blocksPerSecond Vitesse de suppression, en blocs par seconde. Une valeur ≤ 0 est ramenée à 1.
+     * @param topToBottom     Si {@code true}, la suppression se fait de la couche la plus haute
+     *                         vers la plus basse (effet "démolition"). Si {@code false},
+     *                         comportement par défaut (bas vers haut).
+     * @param onComplete      Callback appelé sur le thread principal une fois la suppression terminée.
+     *                        Peut être {@code null}.
+     */
+    public void removeSpread(final Location origin, final boolean removeBaseLayer,
+                             Plugin plugin, final int blocksPerSecond,
+                             final boolean topToBottom,
+                             final Runnable onComplete) {
+
+        final List<int[]> positions = topToBottom
+                ? buildRemovalPositionListTopDown(removeBaseLayer)
+                : buildRemovalPositionList(removeBaseLayer);
+
+        if (positions.isEmpty()) {
+            if (onComplete != null) onComplete.run();
+            return;
+        }
+
+        final World world = origin.getWorld();
+        final int ox = origin.getBlockX();
+        final int oy = origin.getBlockY();
+        final int oz = origin.getBlockZ();
+        final int[] cursor = {0};
+
+        final long[] rate = computeRemovalRate(blocksPerSecond);
+        final long blocksPerRun = rate[0];
+        final long tickPeriod = rate[1];
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                // Le monde a été déchargé (supprimé) ou remplacé par une nouvelle instance
+                // (régénération) : on annule la suppression, poursuivre risquerait de
+                // modifier un monde invalide ou de recréer les blocs dans le mauvais monde.
+                World currentWorld = Bukkit.getWorld(world.getName());
+                if (currentWorld == null || !currentWorld.equals(world)) {
+                    logger.log("[Schematic] Suppression annulée : le monde '" + world.getName()
+                            + "' a été supprimé ou régénéré pendant la suppression du schematic.");
+                    cancel();
+                    return;
+                }
+
+                int end = (int) Math.min(cursor[0] + blocksPerRun, positions.size());
+                for (int i = cursor[0]; i < end; i++) {
+                    int[] pos = positions.get(i);
+                    org.bukkit.block.Block block = world.getBlockAt(ox + pos[0], oy + pos[1], oz + pos[2]);
+                    block.setType(Material.AIR, false);
+                }
+
+                cursor[0] = end;
+
+                if (cursor[0] >= positions.size()) {
+                    cancel();
+                    if (onComplete != null) {
+                        onComplete.run();
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 0L, tickPeriod);
+    }
+
+    /**
+     * Construit la liste aplatie des positions relatives (au schematic) à supprimer,
+     * ordonnée de la couche la plus basse vers la plus haute (ordre par défaut).
+     *
+     * <p>Les positions où le schematic contenait de l'air à l'origine sont exclues :
+     * elles n'ont jamais été posées lors du {@link #paste}/{@link #pasteSpread}, donc
+     * il n'y a rien à supprimer, et elles ne doivent pas fausser le comptage de blocs.
+     *
+     * @param removeBaseLayer Si {@code false}, exclut la couche y=0 (base) du schematic.
+     * @return Liste de tableaux {@code [x, y, z]} relatifs à l'origine du schematic,
+     *         triée par y croissant, sans les positions d'air.
+     */
+    private List<int[]> buildRemovalPositionList(boolean removeBaseLayer) {
+        List<int[]> positions = new ArrayList<>(width * height * length);
+        int startY = removeBaseLayer ? 0 : 1;
+
+        for (int y = startY; y < height; y++) {
+            for (int z = 0; z < length; z++) {
+                for (int x = 0; x < width; x++) {
+                    int index = (y * length + z) * width + x;
+                    if (resolveBlockId(index) == 0) continue; // bloc d'air dans le schematic, rien à supprimer
+                    positions.add(new int[]{x, y, z});
+                }
+            }
+        }
+        return positions;
+    }
+
+    /**
+     * Construit la liste aplatie des positions relatives (au schematic) à supprimer,
+     * ordonnée de la couche la plus haute vers la plus basse (démolition du haut vers le bas).
+     *
+     * <p>Les positions où le schematic contenait de l'air à l'origine sont exclues :
+     * elles n'ont jamais été posées lors du {@link #paste}/{@link #pasteSpread}, donc
+     * il n'y a rien à supprimer, et elles ne doivent pas fausser le comptage de blocs.
+     *
+     * @param removeBaseLayer Si {@code false}, exclut la couche y=0 (base) du schematic.
+     * @return Liste de tableaux {@code [x, y, z]} relatifs à l'origine du schematic,
+     *         triée par y décroissant, sans les positions d'air.
+     */
+    private List<int[]> buildRemovalPositionListTopDown(boolean removeBaseLayer) {
+        List<int[]> positions = new ArrayList<>(width * height * length);
+        int lowestY = removeBaseLayer ? 0 : 1;
+
+        for (int y = height - 1; y >= lowestY; y--) {
+            for (int z = 0; z < length; z++) {
+                for (int x = 0; x < width; x++) {
+                    int index = (y * length + z) * width + x;
+                    if (resolveBlockId(index) == 0) continue; // bloc d'air dans le schematic, rien à supprimer
+                    positions.add(new int[]{x, y, z});
+                }
+            }
+        }
+        return positions;
+    }
+
+    /**
+     * Convertit une vitesse en blocs/seconde en un couple (blocs par exécution, période en ticks),
+     * pour rester proche de la vitesse demandée même en-dessous de 20 blocs/seconde
+     * (1 exécution par tick minimum équivalant déjà à 20 blocs/sec).
+     *
+     * @param blocksPerSecond Vitesse voulue, en blocs par seconde. Une valeur ≤ 0 est ramenée à 1.
+     * @return Tableau {@code [blocksPerRun, tickPeriod]}.
+     */
+    private long[] computeRemovalRate(int blocksPerSecond) {
+        int rate = Math.max(1, blocksPerSecond);
+
+        if (rate >= 20) {
+            long blocksPerRun = Math.round(rate / 20.0);
+            return new long[]{Math.max(1L, blocksPerRun), 1L};
+        } else {
+            long tickPeriod = Math.round(20.0 / rate);
+            return new long[]{1L, Math.max(1L, tickPeriod)};
+        }
+    }
+
+    /**
      * Applique les TileEntities du schematic dans le monde cible.
      *
      * <p>Doit impérativement être appelée <em>après</em> la pose des blocs,
@@ -463,7 +670,7 @@ public class Schematic {
                     nmsWorld.setTileEntity(pos, tileEntity);
                 }
             } catch (Exception e) {
-                Main.getInstance().debug(
+                logger.log(
                         "[Schematic] Erreur TileEntity @ ("
                                 + (te.getInt("x") + ox) + ","
                                 + (te.getInt("y") + oy) + ","
@@ -479,6 +686,15 @@ public class Schematic {
 
     /** @return Nombre total de blocs (Width × Height × Length). */
     public int getTotalBlocks() { return width * height * length; }
+
+    /**
+     * Construit le {@link Cuboid} correspondant à l'emprise du schematic une fois
+     * collé à l'origine donnée.
+     *
+     * @param origin Coin bas-nord-ouest du schematic (identique à celui passé à {@link #paste}).
+     * @return Le {@link Cuboid} englobant.
+     * @throws IllegalArgumentException Si {@code origin} ou son monde sont null.
+     */
     public Cuboid toCuboid(Location origin) {
         if (origin == null) {
             throw new IllegalArgumentException("Origin cannot be null");

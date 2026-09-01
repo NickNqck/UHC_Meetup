@@ -181,7 +181,7 @@ public class Main extends JavaPlugin {
 		this.pubManager.add("§bIl est maintenant possible de customiser l'inventaire de départ par défaut via la commande§6 /inv§b.");
 		this.pubManager.add("§bIl est maintenant possible d'empêcher son§c épée§b d'être jeter grace a la commande§6 /settings§b.");
 		this.pubManager.start();
-		this.schematicManager = new SchematicManager(this);
+		this.schematicManager = new SchematicManager(this, this::debug);
 		this.crystalManager = new CrystalManager();
 		this.invManager = new InvManager();
 		ParticleSFX.setPlugin(this);

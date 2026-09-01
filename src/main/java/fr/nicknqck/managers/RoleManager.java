@@ -45,6 +45,8 @@ import fr.nicknqck.roles.ns.solo.jubi.MadaraV2;
 import fr.nicknqck.roles.ns.solo.jubi.ObitoV2;
 import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.*;
+import fr.nicknqck.roles.valo.agents.Le_DOC;
+import fr.nicknqck.roles.valo.agents.Sage;
 import fr.nicknqck.utils.event.EventUtils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -97,6 +99,8 @@ public class RoleManager implements Listener {
         registerAot();
         registerNs();
         registerCrystal();
+        registerRole(Sage.class);
+        registerRole(Le_DOC.class);
     }
     public void registerRole(Class<? extends RoleBase> roleClass) throws Exception {
         final IRole role = roleClass.getConstructor(UUID.class).newInstance(UUID.randomUUID());
@@ -170,7 +174,7 @@ public class RoleManager implements Listener {
         registerRole(MikasaV2.class);
         registerRole(OnyankoponV2.class);
         registerRole(SashaV2.class);
-        registerRole(Soldat.class);
+        registerRole(SoldatV2.class);
         //Register Titan Rouge
         registerRole(GrandTitan.class);
         registerRole(Jelena.class);

@@ -8,6 +8,7 @@ import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.death.UHCDeathMessageEvent;
 import fr.nicknqck.events.custom.death.UHCTimerDeathEvent;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.player.DeathRapport;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.TeamList;
@@ -16,7 +17,6 @@ import fr.nicknqck.roles.ds.slayers.NezukoV2;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import lombok.NonNull;
 import org.bukkit.*;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -62,8 +62,8 @@ public class DeathManager implements Listener {
         final GameState gameState = GameState.getInstance();
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             final GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
-            gamePlayer.setLastInventoryContent(killedPlayer.getInventory().getContents());
-            gamePlayer.setDeathLocation(gamePlayer.getLastLocation());
+            gamePlayer.setLastInventoryContent(killedPlayer.getInventory().getContents().clone());
+            gamePlayer.setDeathLocation(gamePlayer.getLastLocation().clone());
         }
         if (this.cantDie(gameState, killedPlayer)) {
             return;
@@ -129,16 +129,21 @@ public class DeathManager implements Listener {
                 }
                 if (!gameState.hasRoleNull(p.getUniqueId())) {
                     gameState.getGamePlayer().get(p.getUniqueId()).getRole().PlayerKilled(killer, killedPlayer, gameState);
-                    if (!gameState.getPlayerKills().get(killer.getUniqueId()).containsKey(killedPlayer) && !gameState.hasRoleNull(killedPlayer.getUniqueId())) {
-                        RoleBase fakeRole = gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole();
-                        gameState.getPlayerKills().get(killer.getUniqueId()).put(killedPlayer, fakeRole);
+                }
+            }
+            final GamePlayer gamePlayer = GamePlayer.of(killer.getUniqueId());
+            if (gamePlayer != null) {
+                final GamePlayer deadPlayer = GamePlayer.of(killedPlayer.getUniqueId());
+                if (deadPlayer != null) {
+                    if (deadPlayer.getRole() != null) {
+                        gamePlayer.getKillsList().add(new DeathRapport(deadPlayer.getUuid(), deadPlayer, gamePlayerKiller, deadPlayer.getRole().getTeam(), deadPlayer.getRole()));
                     }
                 }
             }
         }else {
             boolean find = false;
             if (entityKiller instanceof Projectile) {
-                Arrow arr = (Arrow) entityKiller;
+                Projectile arr = (Projectile) entityKiller;
                 if (arr.getShooter() instanceof Player) {
                     Player killer = (Player) arr.getShooter();
                     DeathMessage(killedPlayer, killer.getUniqueId());
@@ -152,18 +157,19 @@ public class DeathManager implements Listener {
                     for (UUID u : gameState.getInGamePlayers()) {
                         Player p = Bukkit.getPlayer(u);
                         if (p == null)continue;
-                        if (!gameState.hasRoleNull(p.getUniqueId()))
+                        if (!gameState.hasRoleNull(p.getUniqueId())) {
                             gameState.getGamePlayer().get(p.getUniqueId()).getRole().PlayerKilled((Player)arr.getShooter(), killedPlayer, gameState);
-                        if (!gameState.getPlayerKills().get(((Player) arr.getShooter()).getUniqueId()).containsKey(killedPlayer)) {
-                            RoleBase fakeRole = gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole();
-                            gameState.getPlayerKills().get(((Player) arr.getShooter()).getUniqueId()).put(killedPlayer, fakeRole);
+                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerDie(killedPlayer, gameState, killer);
                         }
                     }
-                    for (UUID u : gameState.getInGamePlayers()) {
-                        Player p = Bukkit.getPlayer(u);
-                        if (p == null)continue;
-                        if (!gameState.hasRoleNull(killedPlayer.getUniqueId())) {
-                            gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerDie(killedPlayer, gameState, killer);
+                    final GamePlayer gamePlayer = GamePlayer.of(killer.getUniqueId());
+
+                    if (gamePlayer != null) {
+                        final GamePlayer deadPlayer = GamePlayer.of(killedPlayer.getUniqueId());
+                        if (deadPlayer != null) {
+                            if (deadPlayer.getRole() != null) {
+                                gamePlayer.getKillsList().add(new DeathRapport(deadPlayer.getUuid(), deadPlayer, gamePlayerKiller, deadPlayer.getRole().getTeam(), deadPlayer.getRole()));
+                            }
                         }
                     }
                 } else {//La cause de la mort n'est pas une flèche tirer par un joueur

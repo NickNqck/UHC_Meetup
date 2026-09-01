@@ -32,6 +32,9 @@ public class SelectModeDeJeuInventory extends PaginatedFastInv {
                 .setName("§7Page suivante ►").toItemStack());
         for (IMDJ imdj : Main.getInstance().getGameConfig().getPlayableMdj()) {
             addContent(imdj.getItem(), event -> {
+                if (imdj.equals(GameState.getInstance().getMdj())) {
+                    return;
+                }
                 GameState.getInstance().setMdj(imdj);
                 new SelectModeDeJeuInventory().open((Player) event.getWhoClicked());
                 Main.getInstance().sendMessageToHosts("§c"+event.getWhoClicked().getName()+"§7 a définie le§c mode de jeu§7 sur§c "+imdj.getItem().getItemMeta().getDisplayName());

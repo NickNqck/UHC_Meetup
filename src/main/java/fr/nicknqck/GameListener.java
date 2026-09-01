@@ -6,6 +6,7 @@ import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.interfaces.ITeam;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
+import fr.nicknqck.player.DeathRapport;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
 import fr.nicknqck.roles.aot.builders.ArcTridimentionnelPower;
@@ -165,8 +166,15 @@ public class GameListener implements Listener {
 			gameState.prevNightTime = gameState.nightTime;
 			if (gameState.inGameTime == Border.getTempReduction()) {
 				gameState.shrinking = true;
-				long speed = Border.getBorderSpeed()*20;
-				border.setSize(Border.getMinBorderSize()*2, speed*20);
+
+				double currentSize = border.getSize();
+				double targetSize = Border.getMinBorderSize() * 2;
+				double distance = currentSize - targetSize;
+
+				double speed = Border.getBorderSpeed(); // en blocs par seconde
+				long durationSeconds = Math.max(1L, Math.round(distance / speed));
+
+				border.setSize(targetSize, durationSeconds);
 				SendToEveryone("§7La bordure commence à bouger !");
 			}
 			if (gameState.inGameTime == 0) {
@@ -178,9 +186,9 @@ public class GameListener implements Listener {
 				Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("doDaylightCycle", "false");
 				Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Bukkit.getPluginManager().callEvent(new DayEvent(gameState)), 50);
 			} else {
-				gameState.t--;
-				if (gameState.t <= 0) {
-					gameState.t = Main.getInstance().getGameConfig().getMaxTimeDay();
+				gameState.setDayTimer(gameState.getDayTimer()-1);
+				if (gameState.getDayTimer() <= 0) {
+					gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
 					if (gameState.nightTime) {
 						Main.getInstance().getWorldManager().getGameWorld().setTime(0);
 						gameState.nightTime = false;
@@ -237,6 +245,8 @@ public class GameListener implements Listener {
 			for (UUID u : gameState.getInGamePlayers()) {
 				Player p = Bukkit.getPlayer(u);
 				if (p == null)continue;
+				if (p.isDead())continue;
+				if (!p.getGameMode().equals(GameMode.SURVIVAL))continue;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					GamePlayer gamePlayer = gameState.getGamePlayer().get(u);
 					gamePlayer.getRole().Update(gameState);
@@ -247,8 +257,8 @@ public class GameListener implements Listener {
 						if (item.getType().equals(Material.AIR))continue;
 						items.add(item);
 					}
-					gamePlayer.setLastInventoryContent(items.toArray(new ItemStack[0]));
-					gamePlayer.setLastArmorContent(p.getInventory().getArmorContents());
+					gamePlayer.setLastInventoryContent(items.toArray(new ItemStack[0]).clone());
+					gamePlayer.setLastArmorContent(p.getInventory().getArmorContents().clone());
 				}
 			}
 			if (gameState.getActualPvPTimer() == 0){
@@ -328,7 +338,7 @@ public class GameListener implements Listener {
 						String win = winer == null ? "§cDéconnecter" : winer.getName();
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
 						assert winer != null;
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName()+"§f avec§6 "+gameState.getPlayerKills().get(winer.getUniqueId()).size()+"§f kill(s)";
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName()+"§f avec§6 "+gameState.getGamePlayer().get(winer.getUniqueId()).getKillAmounts()+"§f kill(s)";
 						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName();
                         SendToEveryone(Vainqueurs);
 					}
@@ -353,19 +363,24 @@ public class GameListener implements Listener {
 				if (gamePlayer.getRole() == null)continue;
 				final RoleBase role1 = gamePlayer.getRole();
 				final StringBuilder s = new StringBuilder();
-				if (gameState.getPlayerKills().containsKey(role1.getPlayer())) {
-					if (!gameState.getPlayerKills().get(role1.getPlayer()).isEmpty()) {
-						int i = 0;
-						for (Player k : gameState.getPlayerKills().get(role1.getPlayer()).keySet()) {
-							i++;
-							RoleBase role = gameState.getPlayerKills().get(role1.getPlayer()).get(k);
-							s.append("§7 - §f").append(role.getTeamColor()).append(k.getName()).append("§7 (").append(role.getTeamColor()).append(role.getName());
-							s.append(i == gameState.getPlayerKills().get(role1.getPlayer()).size() ? "§7)" : "§7)\n");
+				if (!gamePlayer.getKillsList().isEmpty()) {
+					int i = 0;
+					for (DeathRapport deathRapport : gamePlayer.getKillsList()) {
+						if (i > 0) {
+							s.append("\n");
 						}
-						SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName(), s.toString(), "§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill(s)");
-					} else {
-						SendToEveryone(role1.getTeamColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeamColor()+role1.getRoles().getItem().getItemMeta().getDisplayName()+"§f) avec§c "+gameState.getPlayerKills().get(role1.getPlayer()).size()+"§f kill");
+						s.append("§7 -§f ")
+                                .append(deathRapport.getTeamWhenDie().getColor())
+                                .append(deathRapport.getDeadPlayer().getPlayerName())
+								.append("§7 (")
+								.append(deathRapport.getTeamWhenDie().getColor())
+								.append(deathRapport.getDeadRoleWhenDie().getName())
+								.append("§7)");
+						i++;
 					}
+					SendToEveryoneWithHoverMessage(role1.getTeamColor()+gamePlayer.getPlayerName(), "§f ("+role1.getTeam().getColor()+role1.getName(), s.toString(), "§f) avec§c "+role1.getGamePlayer().getKillAmounts()+"§f kill(s)");
+				} else {
+					SendToEveryone(role1.getTeam().getColor()+gamePlayer.getPlayerName()+"§f ("+role1.getTeam().getColor()+role1.getName()+"§f) avec§c "+role1.getGamePlayer().getKillAmounts()+"§f kill");
 				}
 			}
 			gameState.getGamePlayer().clear();

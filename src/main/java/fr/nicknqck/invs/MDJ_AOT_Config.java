@@ -49,16 +49,16 @@ public class MDJ_AOT_Config extends FastInv {
         }
         setItem(12, new ItemBuilder(Material.LAVA_BUCKET)
                 .setName("§fCapacité d'utiliser de la§6 lave§f pour les§c titans§f (§ctransformer§f)")
-                .setLore(Main.getInstance().getGameConfig().isLaveTitans() ?
+                .setLore(Main.getInstance().getGameConfig().getAotConfig().isLaveTitans() ?
                         "§fLes titans§a peuvent§f utiliser de la§6 lave§f une fois§c transformer§f."
                         :
                         "§fLes titans§c ne§f peuvent§c pas§f utiliser de la§6 lave§f une fois§c transformer§f.")
                 .toItemStack(), event -> {
-            if (!Main.getInstance().getGameConfig().isLaveTitans()) {
-                Main.getInstance().getGameConfig().setLaveTitans(true);
+            if (!Main.getInstance().getGameConfig().getAotConfig().isLaveTitans()) {
+                Main.getInstance().getGameConfig().getAotConfig().setLaveTitans(true);
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a définie la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§a Activer");
             } else {
-                Main.getInstance().getGameConfig().setLaveTitans(false);
+                Main.getInstance().getGameConfig().getAotConfig().setLaveTitans(false);
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a définie la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§c Désactiver");
             }
             new MDJ_AOT_Config().open((Player) event.getWhoClicked());

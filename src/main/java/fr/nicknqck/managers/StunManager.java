@@ -5,25 +5,48 @@ import fr.nicknqck.Main;
 import fr.nicknqck.enums.StunType;
 import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class StunManager {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-    public static void stun(final GamePlayer gamePlayer, final int tick, final boolean blind, final boolean text, final Location stunLocation) {
+public final class StunManager implements Listener{
+
+    private final List<UUID> stunedPlayers = new ArrayList<>();
+
+    public StunManager() {
+        //RoleEvent parce qu'un GamePlayer est créé a chaque démarrage de partie pour chaque joueur
+        EventUtils.registerRoleEvent(this);
+    }
+
+    public void stun(final GamePlayer gamePlayer, final int tick, final boolean blind, final boolean text, final Location stunLocation) {
+        this.stunedPlayers.add(gamePlayer.getUuid());
         if (Main.getInstance().getGameConfig().getStunType().equals(StunType.TELEPORT)) {
             new TeleportationStunRunnable(gamePlayer, tick, blind, text, stunLocation);
         } else {
             new StuckStunListener(gamePlayer, tick, blind, text);
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onDamage(final EntityDamageEvent event) {
+        if (!this.stunedPlayers.contains(event.getEntity().getUniqueId())) return;
+        if (Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage())return;
+        event.setDamage(0.0);
+        event.setCancelled(true);
     }
 
     private static class TeleportationStunRunnable extends BukkitRunnable {
@@ -34,7 +57,7 @@ public class StunManager {
         private final boolean text;
         private final Location stunLocation;
 
-        private TeleportationStunRunnable( GamePlayer gamePlayer, int tick, boolean blind, boolean text, final Location stunLocation) {
+        private TeleportationStunRunnable(GamePlayer gamePlayer, int tick, boolean blind, boolean text, final Location stunLocation) {
             this.gamePlayer = gamePlayer;
             this.tick = tick;
             this.blind = blind;
@@ -47,12 +70,15 @@ public class StunManager {
         @Override
         public void run() {
             if (tick == 0 || !gamePlayer.isAlive() || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                this.gamePlayer.getStunManager().stunedPlayers.remove(this.gamePlayer.getUuid());
                 cancel();
                 return;
             }
             Player player = Bukkit.getPlayer(gamePlayer.getUuid());
             if (player == null)return;
             if (!player.getWorld().equals(stunLocation.getWorld())) {
+                this.gamePlayer.getStunManager().stunedPlayers.remove(player.getUniqueId());
+                player.setFallDistance(0f);
                 cancel();
                 return;
             }
@@ -61,7 +87,7 @@ public class StunManager {
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0, false, false), true));
             }
             if (text && isGoodNumber(tick)) {
-                player.sendTitle("§7Vous êtes immobilisé", "§7Il reste§c "+(tick/20)+"!");
+                player.sendTitle("§7Vous êtes immobilisé", "§7Il reste§c "+ StringUtils.secondsTowardsBeautiful(tick/20)+"!");
             }
             tick--;
         }
@@ -112,6 +138,10 @@ public class StunManager {
             @Override
             public void run() {
                 if (this.stuckStunListener.tick <= 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                    this.stuckStunListener.gamePlayer.getStunManager().stunedPlayers.remove(this.stuckStunListener.gamePlayer.getUuid());
+                    if (this.stuckStunListener.gamePlayer.getPlayer() != null) {
+                        this.stuckStunListener.gamePlayer.getPlayer().setFallDistance(0f);
+                    }
                     cancel();
                     return;
                 }
@@ -121,7 +151,7 @@ public class StunManager {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0, false, false), true));
                 }
                 if (this.stuckStunListener.text && isGoodNumber(this.stuckStunListener.tick)) {
-                    player.sendTitle("§7Vous êtes immobilisé", "§7Il reste§c "+(this.stuckStunListener.tick/20)+"!");
+                    player.sendTitle("§7Vous êtes immobilisé", "§7Il reste§c "+StringUtils.secondsTowardsBeautiful(this.stuckStunListener.tick/20)+"!");
                 }
                 this.stuckStunListener.tick--;
             }

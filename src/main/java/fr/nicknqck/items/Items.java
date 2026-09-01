@@ -24,16 +24,7 @@ public final class Items {
 		stack.setItemMeta(meta);
 		return stack;
 	}
-	  public static ItemStack ArcTridi() {
-		  ItemStack stack = new ItemStack(Material.BOW, 1);
-		  ItemMeta meta = stack.getItemMeta();
-		  meta.setDisplayName(ChatColor.AQUA+"Arc Tridimentionel");
-		  meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-		  meta.spigot().setUnbreakable(true);
-		  meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		  stack.setItemMeta(meta);
-		  return stack;
-	  }
+
 	  public static ItemStack getTransformation() {
           ItemStack stack = new ItemStack(Material.NETHER_STAR, 1);
           ItemMeta meta = stack.getItemMeta();

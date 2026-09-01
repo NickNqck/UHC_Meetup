@@ -75,7 +75,7 @@ public enum Roles implements IRoles<Roles> {
     Jelena(TeamList.Titan, "aot", 3, new ItemBuilder(Material.CHEST).setName("§cJelena").toItemStack(), "§bNickNqck"),
     //Soldat aot
     Livai(TeamList.Soldat, "aot", 0, new ItemBuilder(Material.SUGAR).setName("§aLivai").toItemStack(), "§bNickNqck"),
-    Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("§aSoldat").toItemStack(), "§bMega02600"),
+    Soldat(TeamList.Soldat, "aot", 1, new ItemBuilder(Material.IRON_SWORD).setName("§aSoldat").toItemStack(), "§bNickNqck"),
     Erwin(TeamList.Soldat, "aot", 2, new ItemBuilder(Material.SIGN).setName("§aErwin").toItemStack(), "§bNickNqck"),
     Armin(TeamList.Soldat, "aot", 3, new ItemBuilder(Material.CHEST).setName("§aArmin").toItemStack(), "§bNickNqck"),
     Eclaireur(TeamList.Soldat, "aot", 4, new ItemBuilder(Material.GOLDEN_CARROT).setName("§aEclaireur").toItemStack(), "§bNickNqck"),
@@ -148,9 +148,12 @@ public enum Roles implements IRoles<Roles> {
     //KumoGakure
     Ginkaku(TeamList.Kumogakure, "ns", 0, new ItemBuilder(Material.LADDER).setName("§6Ginkaku").toItemStack(), "§bByC3RV0L3NT"),
     Kinkaku(TeamList.Kumogakure, "ns", 1, new ItemBuilder(Material.NETHER_STAR).setName("§6Kinkaku").toItemStack(), "§bByC3RV0L3NT"),
-    //Agent valorant (il n'y aura que Iso)
+    //Agent valorant (il n'y aura que Iso) (ou pas du coup lol)
     Iso(TeamList.Solo, "valo", 0, new ItemBuilder(Material.NETHER_STAR).setName("§dIso").toItemStack(), "§bNickNqck"),
-    Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck")
+    Neon(TeamList.Solo, "valo", 1, new ItemBuilder(Material.NETHER_STAR).setName("§9Neon").toItemStack(), "§bNickNqck"),
+    Sage(TeamList.Solo, "valo", 2, new ItemBuilder(Material.GOLDEN_APPLE).setName("§aSage").toItemStack(), "§bNicKNqck"),
+
+    Doc(TeamList.Solo, "custom", 0, new ItemBuilder(Material.ARMOR_STAND).setName("§aDoc").toItemStack(), "§bLe_DOCX")
     ;
     private final TeamList team;
     private final String mdj;

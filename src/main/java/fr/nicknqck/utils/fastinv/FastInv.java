@@ -392,7 +392,6 @@ public class FastInv implements InventoryHolder {
     }
 
     void handleClick(InventoryClickEvent e) {
-        onClick(e);
 
         this.clickHandlers.forEach(c -> c.accept(e));
 
@@ -401,6 +400,7 @@ public class FastInv implements InventoryHolder {
         if (clickConsumer != null) {
             clickConsumer.accept(e);
         }
+        onClick(e);
     }
 
     void handleDrag(InventoryDragEvent e) {

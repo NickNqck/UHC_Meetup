@@ -130,7 +130,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié la valeur de \"§fChance d'activation du "+EChakras.DOTON.getShowedName()+"§7\" sur§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%");
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
-        addContent(new ItemBuilder(Material.EYE_OF_ENDER).setName("§aIzanamai§f peut infecter les rôles§e Solo").setLore(
+        addContent(new ItemBuilder(Material.EYE_OF_ENDER).setName("§aIzanami§f peut infecter les rôles§e Solo").setLore(
                 "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo() ? "§aOui" : "§cNon"),
                 "",
                 "§fCliquez pour modifier ce paramètre."
@@ -157,6 +157,17 @@ public class MDJ_NS_Config extends PaginatedFastInv {
         ).toItemStack(), event -> {
             Main.getInstance().getGameConfig().getNarutoConfig().setShisuiKotoAmatsukamiInfectSolo(!Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo());
             Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§aKotoAmatsukami§7 de§e§l Shisui§7 peut§a infecter§7 les§e rôles Solitaire§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo() ? "§aOui" : "§cNon"));
+            final MDJ_NS_Config c = new MDJ_NS_Config();
+            c.open((Player) event.getWhoClicked());
+            c.openPage(2);
+        });
+        addContent(new ItemBuilder(Material.ARMOR_STAND).setName("§cSasori§7 peut§a ressusciter un joueur").setLore(
+                "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"),
+                "",
+                "§fCliquez pour modifier ce paramètre."
+        ).toItemStack(), event -> {
+            Main.getInstance().getGameConfig().getNarutoConfig().setSasoriCanRevive(!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive());
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§cSasori§7 peut§a ressusciter un joueur§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"));
             final MDJ_NS_Config c = new MDJ_NS_Config();
             c.open((Player) event.getWhoClicked());
             c.openPage(2);

@@ -1,15 +1,16 @@
 package fr.nicknqck.events.custom.particle;
 
-import fr.nicknqck.events.custom.GameEvent;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 @Getter
-public class ParticleBallGroundEvent extends GameEvent {
+public class ParticleBallGroundEvent extends Event {
 
     private final String ballName;
     private final UUID shooterUUID;
@@ -27,5 +28,14 @@ public class ParticleBallGroundEvent extends GameEvent {
         this.shooterUUID    = shooterUUID;
         this.impactLocation = impactLocation;
         this.hitPlayer      = hitPlayer;
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

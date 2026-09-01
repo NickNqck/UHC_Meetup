@@ -70,7 +70,9 @@ public class RoleWorldManager implements Listener {
                 }
                 Main.getInstance().deleteWorld(iSubRoleWorld.getWorldName());
             }
-            extractWorld(iSubRoleWorld.getZipFileName());
+            if (!iSubRoleWorld.getZipFileName().isEmpty()){
+                extractWorld(iSubRoleWorld.getZipFileName());
+            }
             final World w = iSubRoleWorld.createWorld();
             iSubRoleWorld.startPregen(w);
             iSubRoleWorld.setHasBeenPregen(true);

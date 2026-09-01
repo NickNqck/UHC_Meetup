@@ -104,13 +104,13 @@ public class PersonalScoreboard {
     			objectiveSign.setLine(7, premsg+"§fBordure:§c Activé");
     		}
     		if (this.gameState.nightTime) {
-    			objectiveSign.setLine(8, premsg+"§9Nuit§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.t));
+    			objectiveSign.setLine(8, premsg+"§9Nuit§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getDayTimer()));
     		}else {
-				objectiveSign.setLine(8, premsg+"§eJour§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.t));
+				objectiveSign.setLine(8, premsg+"§eJour§r: "+StringUtils.secondsTowardsBeautifulinScoreboard(this.gameState.getDayTimer()));
 			}
     		objectiveSign.setLine(9, "§0");
     		if (!this.gameState.hasRoleNull(player.getUniqueId())) {
-    			objectiveSign.setLine(10, premsg+"Kills:§6 "+this.gameState.getPlayerKills().get(player.getUniqueId()).size());
+    			objectiveSign.setLine(10, premsg+"Kills:§6 "+gameState.getGamePlayer().get(player.getUniqueId()).getKillAmounts());
     		}
     		objectiveSign.setLine(11, premsg+"§fCentre: §6"+ArrowTargetUtils.calculateArrow(player, new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))+new DecimalFormat("0").format(player.getLocation().distance(new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))));
     		if (this.gameState.roletab) {

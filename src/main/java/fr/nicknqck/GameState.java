@@ -7,7 +7,6 @@ import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
-import fr.nicknqck.items.Items;
 import fr.nicknqck.items.RodTridimensionnelle;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.mahr.*;
@@ -38,9 +37,12 @@ import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.HakuV2;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.ZabuzaV2;
 import fr.nicknqck.roles.valo.agents.Iso;
+import fr.nicknqck.roles.valo.agents.Le_DOC;
 import fr.nicknqck.roles.valo.agents.Neon;
+import fr.nicknqck.roles.valo.agents.Sage;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import lombok.Getter;
 import lombok.NonNull;
@@ -100,8 +102,6 @@ public class GameState{
 	@Getter
 	private final HashMap<Player, RoleBase> playerRoles = new HashMap<>();
 	@Getter
-	private final HashMap<UUID, HashMap<Player, RoleBase>> playerKills = new HashMap<>();
-	@Getter
 	@Setter
 	int inGameTime = 0;
 	@Getter
@@ -111,7 +111,9 @@ public class GameState{
 	@Getter
 	@Setter
 	private int actualPvPTimer = getPvPTimer();
-	public int t = 0;//Utilisée dans GameListener
+    @Getter
+    @Setter
+    private int dayTimer = 0;
 	public int xpfer = 0;
 	public int xpor = 0;
 	public int xpcharbon = 0;
@@ -154,7 +156,6 @@ public class GameState{
 	}
 
 	public void addInAvailableRoles(IRoles<?> role, Integer nmb) {availableRoles.put(role, nmb);}
-	public void addPlayerKills(Player player) {playerKills.put(player.getUniqueId(), new HashMap<>());}
 	//public void delPlayerKills(Player player) {playerKills.remove(player);}
 
 	public RoleBase GiveRole(Player aziz) {
@@ -337,7 +338,7 @@ public class GameState{
                     role = new Sieg(player);
                     break;
                 case Soldat:
-                    role = new Soldat(player);
+                    role = new SoldatV2(player);
                     break;
                 case Erwin:
                     role = new ErwinV2(player);
@@ -558,6 +559,12 @@ public class GameState{
                 case Choji:
                     role = new  Choji(player);
                     break;
+                case Sage:
+                    role = new Sage(player);
+                    break;
+                case Doc:
+                    role = new Le_DOC(player);
+                    break;
             }
         } else {
             final GiveRoleDeclenchExternalPluginEvent externalPluginEvent = new GiveRoleDeclenchExternalPluginEvent(roleType, player);
@@ -660,7 +667,7 @@ public class GameState{
 		if (this.rod) {
 			return RodTridimensionnelle.getItem();
 		}else {
-			return Items.ArcTridi();
+			return new ItemBuilder(Material.ARROW, 4).setName("§cUne erreur est survenue").toItemStack();
 		}
 	}
 

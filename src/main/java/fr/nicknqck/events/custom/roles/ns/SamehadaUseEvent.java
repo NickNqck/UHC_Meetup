@@ -1,12 +1,13 @@
 package fr.nicknqck.events.custom.roles.ns;
 
-import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.roles.ns.akatsuki.KisameV2;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
-public class SamehadaUseEvent extends GameEvent implements Cancellable {
+public class SamehadaUseEvent extends Event implements Cancellable {
 
     private boolean cancelled = false;
     @Getter
@@ -30,5 +31,14 @@ public class SamehadaUseEvent extends GameEvent implements Cancellable {
     @Override
     public void setCancelled(boolean b) {
         this.cancelled = b;
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

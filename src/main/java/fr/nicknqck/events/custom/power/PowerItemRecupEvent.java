@@ -1,13 +1,14 @@
 package fr.nicknqck.events.custom.power;
 
-import fr.nicknqck.events.custom.GameEvent;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.Getter;
 import org.bukkit.entity.Item;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
-public class PowerItemRecupEvent extends GameEvent implements Cancellable {
+public class PowerItemRecupEvent extends Event implements Cancellable {
 
     @Getter
     private final Item item;
@@ -33,5 +34,14 @@ public class PowerItemRecupEvent extends GameEvent implements Cancellable {
     @Override
     public void setCancelled(boolean b) {
         this.cancel = b;
+    }
+    private static final HandlerList handlers = new HandlerList();
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

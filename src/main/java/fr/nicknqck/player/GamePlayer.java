@@ -57,6 +57,8 @@ public class GamePlayer {
 	@Nullable
 	@Setter
 	private ItemStack headItem;
+	private final LinkedList<DeathRapport> killsList;
+	private final StunManager stunManager;
 
 	public GamePlayer(Player gamePlayer){
 		this.uuid = gamePlayer.getUniqueId();
@@ -67,6 +69,8 @@ public class GamePlayer {
 		this.actionBarManager = new ActionBarManager(this);
 		this.chatWithManager = new ArrayList<>();
 		this.metaData = new HashMap<>();
+		this.killsList = new LinkedList<>();
+		this.stunManager = new StunManager();
 		setAlive(true);
 		setCanRevive(false);
 	}
@@ -114,7 +118,7 @@ public class GamePlayer {
 	public void stun(final int tick, final boolean blind, final boolean text) {
 		Player player = Bukkit.getPlayer(getUuid());
 		if (player == null)return;
-		StunManager.stun(this, tick, blind, text, player.getLocation());
+		this.stunManager.stun(this, tick, blind, text, player.getLocation());
     }
 
 	public void sendMessage(final String... messages) {
@@ -186,6 +190,9 @@ public class GamePlayer {
     public static GamePlayer of(final UUID uuid) {
         return GameState.getInstance().getGamePlayer().get(uuid);
     }
+	public int getKillAmounts() {
+		return this.getKillsList().size();
+	}
 	@Nullable
 	public Player getPlayer() {
 		return Bukkit.getPlayer(getUuid());
