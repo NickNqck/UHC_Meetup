@@ -68,7 +68,7 @@ public class CustomTabManager implements Listener {
      * Structure : viewerUUID → (targetUUID → snapshot de la personnalisation voulue)
      */
     private final Map<UUID, Map<UUID, TabEntry>> customizationCache = new HashMap<>();
-@Getter
+    @Getter
     private BukkitRunnable invisibilityTask;
 
     public CustomTabManager() {
@@ -88,6 +88,9 @@ public class CustomTabManager implements Listener {
      */
     public void setPrefix(@NonNull UUID viewerUUID, @NonNull UUID targetUUID, @NonNull String prefix) {
         cachePrefix(viewerUUID, targetUUID, prefix);
+        // Cible invisible : on ne crée surtout pas d'équipe scoreboard (sinon son pseudo
+        // redevient visible). La valeur est en cache et sera appliquée par showInOtherTabs().
+        if (isHiddenFor(viewerUUID, targetUUID)) return;
         final PlayerTab tab = getOrCreate(viewerUUID);
         tab.setPrefix(targetUUID, prefix);
         tab.apply();
@@ -99,6 +102,9 @@ public class CustomTabManager implements Listener {
      */
     public void setSuffix(@NonNull UUID viewerUUID, @NonNull UUID targetUUID, @NonNull String suffix) {
         cacheSuffix(viewerUUID, targetUUID, suffix);
+        // Cible invisible : on ne crée surtout pas d'équipe scoreboard (sinon son pseudo
+        // redevient visible). La valeur est en cache et sera appliquée par showInOtherTabs().
+        if (isHiddenFor(viewerUUID, targetUUID)) return;
         final PlayerTab tab = getOrCreate(viewerUUID);
         tab.setSuffix(targetUUID, suffix);
         tab.apply();
@@ -110,6 +116,9 @@ public class CustomTabManager implements Listener {
      */
     public void setColor(@NonNull UUID viewerUUID, @NonNull UUID targetUUID, @NonNull ChatColor color) {
         cacheColor(viewerUUID, targetUUID, color);
+        // Cible invisible : on ne crée surtout pas d'équipe scoreboard (sinon son pseudo
+        // redevient visible). La valeur est en cache et sera appliquée par showInOtherTabs().
+        if (isHiddenFor(viewerUUID, targetUUID)) return;
         final PlayerTab tab = getOrCreate(viewerUUID);
         tab.setColor(targetUUID, color);
         tab.apply();
@@ -134,6 +143,7 @@ public class CustomTabManager implements Listener {
     public void setPrefixForAll(@NonNull UUID targetUUID, @NonNull String prefix) {
         for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
             cachePrefix(entry.getKey(), targetUUID, prefix);
+            if (isHiddenFor(entry.getKey(), targetUUID)) continue;
             entry.getValue().setPrefix(targetUUID, prefix);
             entry.getValue().apply();
         }
@@ -145,6 +155,7 @@ public class CustomTabManager implements Listener {
     public void setSuffixForAll(@NonNull UUID targetUUID, @NonNull String suffix) {
         for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
             cacheSuffix(entry.getKey(), targetUUID, suffix);
+            if (isHiddenFor(entry.getKey(), targetUUID)) continue;
             entry.getValue().setSuffix(targetUUID, suffix);
             entry.getValue().apply();
         }
@@ -156,6 +167,7 @@ public class CustomTabManager implements Listener {
     public void setColorForAll(@NonNull UUID targetUUID, @NonNull ChatColor color) {
         for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
             cacheColor(entry.getKey(), targetUUID, color);
+            if (isHiddenFor(entry.getKey(), targetUUID)) continue;
             entry.getValue().setColor(targetUUID, color);
             entry.getValue().apply();
         }
@@ -253,6 +265,20 @@ public class CustomTabManager implements Listener {
     }
 
     // ── Invisibilité ─────────────────────────────────────────────────────────
+
+    /**
+     * Indique si {@code targetUUID} doit rester "caché" dans le tab/scoreboard de {@code viewerUUID},
+     * c'est-à-dire s'il est actuellement invisible (et que le viewer n'est pas lui-même la cible :
+     * un joueur invisible continue de se voir normalement).
+     * <p>
+     * Pourquoi c'est nécessaire : côté client 1.8, un joueur appartenant à une équipe scoreboard
+     * suit la règle de visibilité de l'équipe (par défaut "toujours visible") au lieu de la règle
+     * vanilla "pseudo masqué si invisible". Ajouter une cible invisible dans une équipe (par exemple
+     * via /color) ferait donc réapparaître son pseudo coloré.
+     */
+    private boolean isHiddenFor(UUID viewerUUID, UUID targetUUID) {
+        return !viewerUUID.equals(targetUUID) && invisiblePlayers.contains(targetUUID);
+    }
 
     /**
      * Démarre la tâche qui surveille l'état d'invisibilité de chaque joueur
