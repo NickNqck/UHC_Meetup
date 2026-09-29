@@ -29,8 +29,9 @@ import java.util.UUID;
  *  - Prefix/suffix/color personnalisés par cible, persistants même après
  *    déconnexion/reconnexion du joueur (viewer ou cible)
  *  - Option de conserver les joueurs déconnectés visibles dans la tab
- *  - Masquage automatique du pseudo des joueurs invisibles (aux yeux des autres),
- *    avec restauration fidèle du prefix/suffix/color propres à chaque viewer
+ *  - Masquage automatique du nametag 3D (en jeu, au-dessus de la tête) des joueurs
+ *    invisibles aux yeux des autres — leur entrée dans le tab list, elle, reste
+ *    affichée en permanence avec son prefix/suffix/color, invisible ou non
  * <p>
  * Utilisation :
  * <pre>
@@ -88,9 +89,6 @@ public class CustomTabManager implements Listener {
      */
     public void setPrefix(@NonNull UUID viewerUUID, @NonNull UUID targetUUID, @NonNull String prefix) {
         cachePrefix(viewerUUID, targetUUID, prefix);
-        // Cible invisible : on ne crée surtout pas d'équipe scoreboard (sinon son pseudo
-        // redevient visible). La valeur est en cache et sera appliquée par showInOtherTabs().
-        if (isHiddenFor(viewerUUID, targetUUID)) return;
         final PlayerTab tab = getOrCreate(viewerUUID);
         tab.setPrefix(targetUUID, prefix);
         tab.apply();
@@ -102,9 +100,6 @@ public class CustomTabManager implements Listener {
      */
     public void setSuffix(@NonNull UUID viewerUUID, @NonNull UUID targetUUID, @NonNull String suffix) {
         cacheSuffix(viewerUUID, targetUUID, suffix);
-        // Cible invisible : on ne crée surtout pas d'équipe scoreboard (sinon son pseudo
-        // redevient visible). La valeur est en cache et sera appliquée par showInOtherTabs().
-        if (isHiddenFor(viewerUUID, targetUUID)) return;
         final PlayerTab tab = getOrCreate(viewerUUID);
         tab.setSuffix(targetUUID, suffix);
         tab.apply();
@@ -116,9 +111,6 @@ public class CustomTabManager implements Listener {
      */
     public void setColor(@NonNull UUID viewerUUID, @NonNull UUID targetUUID, @NonNull ChatColor color) {
         cacheColor(viewerUUID, targetUUID, color);
-        // Cible invisible : on ne crée surtout pas d'équipe scoreboard (sinon son pseudo
-        // redevient visible). La valeur est en cache et sera appliquée par showInOtherTabs().
-        if (isHiddenFor(viewerUUID, targetUUID)) return;
         final PlayerTab tab = getOrCreate(viewerUUID);
         tab.setColor(targetUUID, color);
         tab.apply();
@@ -143,7 +135,6 @@ public class CustomTabManager implements Listener {
     public void setPrefixForAll(@NonNull UUID targetUUID, @NonNull String prefix) {
         for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
             cachePrefix(entry.getKey(), targetUUID, prefix);
-            if (isHiddenFor(entry.getKey(), targetUUID)) continue;
             entry.getValue().setPrefix(targetUUID, prefix);
             entry.getValue().apply();
         }
@@ -155,7 +146,6 @@ public class CustomTabManager implements Listener {
     public void setSuffixForAll(@NonNull UUID targetUUID, @NonNull String suffix) {
         for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
             cacheSuffix(entry.getKey(), targetUUID, suffix);
-            if (isHiddenFor(entry.getKey(), targetUUID)) continue;
             entry.getValue().setSuffix(targetUUID, suffix);
             entry.getValue().apply();
         }
@@ -167,7 +157,6 @@ public class CustomTabManager implements Listener {
     public void setColorForAll(@NonNull UUID targetUUID, @NonNull ChatColor color) {
         for (final Map.Entry<UUID, PlayerTab> entry : playerTabs.entrySet()) {
             cacheColor(entry.getKey(), targetUUID, color);
-            if (isHiddenFor(entry.getKey(), targetUUID)) continue;
             entry.getValue().setColor(targetUUID, color);
             entry.getValue().apply();
         }
@@ -267,20 +256,6 @@ public class CustomTabManager implements Listener {
     // ── Invisibilité ─────────────────────────────────────────────────────────
 
     /**
-     * Indique si {@code targetUUID} doit rester "caché" dans le tab/scoreboard de {@code viewerUUID},
-     * c'est-à-dire s'il est actuellement invisible (et que le viewer n'est pas lui-même la cible :
-     * un joueur invisible continue de se voir normalement).
-     * <p>
-     * Pourquoi c'est nécessaire : côté client 1.8, un joueur appartenant à une équipe scoreboard
-     * suit la règle de visibilité de l'équipe (par défaut "toujours visible") au lieu de la règle
-     * vanilla "pseudo masqué si invisible". Ajouter une cible invisible dans une équipe (par exemple
-     * via /color) ferait donc réapparaître son pseudo coloré.
-     */
-    private boolean isHiddenFor(UUID viewerUUID, UUID targetUUID) {
-        return !viewerUUID.equals(targetUUID) && invisiblePlayers.contains(targetUUID);
-    }
-
-    /**
      * Démarre la tâche qui surveille l'état d'invisibilité de chaque joueur
      * et masque/affiche son pseudo dans le tab des AUTRES joueurs en conséquence.
      * Le joueur invisible continue de se voir lui-même dans son propre tab.
@@ -310,36 +285,30 @@ public class CustomTabManager implements Listener {
     }
 
     /**
-     * Retire le pseudo de {@code player} du tab de tous les AUTRES viewers.
-     * Le prefix/suffix/color reste intact dans le cache persistant, donc
-     * {@link #showInOtherTabs} pourra les restaurer fidèlement.
-     * Le tab de {@code player} lui-même n'est pas modifié : il se voit toujours.
+     * Masque le nametag 3D (au-dessus de la tête, en jeu) de {@code player} pour tous
+     * les AUTRES viewers, SANS toucher à son entrée dans le tab list : la couleur/prefix/suffix
+     * de {@code player} restent affichés en permanence dans le tab de chacun, invisible ou non.
+     * Le viewer {@code player} lui-même n'est pas modifié : il voit toujours son propre nametag.
      */
     private void hideFromOtherTabs(Player player) {
         final UUID targetUUID = player.getUniqueId();
 
         for (final Map.Entry<UUID, PlayerTab> mapEntry : playerTabs.entrySet()) {
             if (mapEntry.getKey().equals(targetUUID)) continue; // le joueur se voit toujours lui-même
-            mapEntry.getValue().removeEntry(targetUUID);
-            mapEntry.getValue().apply();
+            mapEntry.getValue().setNameTagHidden(targetUUID, true);
         }
     }
 
     /**
-     * Réaffiche le pseudo de {@code player} dans le tab de tous les AUTRES viewers,
-     * en restaurant pour chacun d'eux le prefix/suffix/color/keepWhenOffline
-     * enregistré dans le cache persistant.
+     * Réaffiche le nametag 3D de {@code player} en jeu pour tous les AUTRES viewers.
+     * Le tab list n'a jamais cessé d'afficher {@code player} coloré entre-temps.
      */
     private void showInOtherTabs(Player player) {
         final UUID targetUUID = player.getUniqueId();
 
         for (final Map.Entry<UUID, PlayerTab> mapEntry : playerTabs.entrySet()) {
-            final UUID viewerUUID = mapEntry.getKey();
-            if (viewerUUID.equals(targetUUID)) continue;
-
-            final PlayerTab tab = mapEntry.getValue();
-            tab.upsertEntry(buildEntry(viewerUUID, player));
-            tab.apply();
+            if (mapEntry.getKey().equals(targetUUID)) continue;
+            mapEntry.getValue().setNameTagHidden(targetUUID, false);
         }
     }
 
@@ -386,19 +355,19 @@ public class CustomTabManager implements Listener {
      * Crée le {@link PlayerTab} d'un joueur et y ajoute tous les joueurs en ligne,
      * en réappliquant pour chacun le prefix/suffix/color persistant s'il existe
      * (y compris si {@code player} se reconnecte après une déconnexion).
-     * Les joueurs actuellement invisibles ne sont pas ajoutés (sauf soi-même).
+     * Le nametag 3D des joueurs actuellement invisibles est masqué d'entrée
+     * (sauf pour soi-même) ; leur entrée dans le tab reste affichée normalement.
      */
     private void initTab(Player player) {
         final PlayerTab tab = new PlayerTab(player.getUniqueId());
 
         for (final Player online : Bukkit.getOnlinePlayers()) {
-            // Ne pas ajouter les joueurs invisibles dans le tab des autres
+            tab.upsertEntry(buildEntry(player.getUniqueId(), online));
+
             if (!online.getUniqueId().equals(player.getUniqueId())
                     && invisiblePlayers.contains(online.getUniqueId())) {
-                continue;
+                tab.setNameTagHidden(online.getUniqueId(), true);
             }
-
-            tab.upsertEntry(buildEntry(player.getUniqueId(), online));
         }
 
         playerTabs.put(player.getUniqueId(), tab);
