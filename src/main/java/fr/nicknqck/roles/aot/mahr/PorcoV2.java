@@ -24,7 +24,7 @@ public class PorcoV2 extends MahrRoles implements Listener {
 
     @Override
     public String getName() {
-        return "Porco§7 (§6V2§7)";
+        return "Porco";
     }
 
     @Override

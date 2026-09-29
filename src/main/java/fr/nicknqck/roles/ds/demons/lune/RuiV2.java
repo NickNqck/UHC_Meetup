@@ -45,7 +45,7 @@ public class RuiV2 extends DemonsRoles {
 
     @Override
     public String getName() {
-        return "Rui§7 (§6V2§7)";
+        return "Rui";
     }
 
     @Override
@@ -180,11 +180,11 @@ public class RuiV2 extends DemonsRoles {
                 target.damage(0.0);
                 if (Main.RANDOM.nextInt(100) <= 15) {
                     target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*10, 0, false, false), true);
-                    target.sendMessage("§7Vous avez été atteint par le§2 poison§7 de§c Rui§7 (§6V2§7)");
+                    target.sendMessage("§7Vous avez été atteint par le§2 poison§7 de§c Rui");
                     player.sendMessage("§7Votre§2 poison§7 à atteint§c "+target.getDisplayName());
                 }
                 player.sendMessage("§7Vous avez utiliser votre§c "+getName()+"§7 sur§c "+target.getDisplayName());
-                target.sendMessage("§cRui§7 (§6V2§7)§c a utilisé son "+getName()+" sur vous");
+                target.sendMessage("§cRui§c a utilisé son "+getName()+" sur vous");
                 return true;
             }
         }
@@ -205,7 +205,7 @@ public class RuiV2 extends DemonsRoles {
                 }
                 pullPlayerTowards(player, target);
                 player.sendMessage("§7Vous avez attirer§c "+target.getDisplayName());
-                target.sendMessage("§cRui§7 (§6V2§7) vous à attirer dans sa direction");
+                target.sendMessage("§cRui vous a attirer dans sa direction");
                 return true;
             }
             private void pullPlayerTowards(final @NonNull Player owner,final @NonNull Player target) {
@@ -239,7 +239,7 @@ public class RuiV2 extends DemonsRoles {
                     block.setType(Material.WEB);
                 }
                 player.sendMessage("§c"+target.getDisplayName()+"§7 à complètement été recouvert de toile d'araignée");
-                target.sendMessage("§cRui§7 (§6V2§7) vous à attraper dans sa§c toile d'araignée");
+                target.sendMessage("§cRui vous à attraper dans sa§c toile d'araignée");
                 return true;
             }
             private List<Block> getBlockAround(@NonNull final Player target) {

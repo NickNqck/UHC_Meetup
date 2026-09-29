@@ -62,7 +62,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
 
     @Override
     public String getName() {
-        return "Hantengu§7 (§6V2§7)";
+        return "Hantengu";
     }
 
     @Override

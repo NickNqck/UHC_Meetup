@@ -52,7 +52,7 @@ public class DomaV2 extends DemonsRoles {
 
     @Override
     public String getName() {
-        return "Doma§7 (§6V2§7)";
+        return "Doma";
     }
 
     @Override

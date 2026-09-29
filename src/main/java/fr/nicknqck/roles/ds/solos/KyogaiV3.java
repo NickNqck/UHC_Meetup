@@ -45,7 +45,7 @@ public class KyogaiV3 extends DemonsRoles {
 
     @Override
     public String getName() {
-        return "Kyogai§7 (§6V2§7)";
+        return "Kyogai";
     }
 
     @Override

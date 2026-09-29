@@ -25,7 +25,7 @@ public class ReinerV2 extends MahrRoles implements Listener {
 
     @Override
     public String getName() {
-        return "Reiner§7 (§6V2§7)";
+        return "Reiner";
     }
 
     @Override

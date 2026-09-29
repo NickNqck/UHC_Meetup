@@ -23,7 +23,7 @@ public class PieckV2 extends MahrRoles {
 
     @Override
     public String getName() {
-        return "Pieck§7 (§6V2§7)";
+        return "Pieck";
     }
 
     @Override

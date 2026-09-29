@@ -59,7 +59,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
 
     @Override
     public String getName() {
-        return "Kaigaku§7 (§6V2§7)§r";
+        return "Kaigaku";
     }
 
     @Override
@@ -397,7 +397,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                         target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*10, 0, false, false), true);
                         target.setFireTicks(20*10);
                     }
-                    target.sendMessage("§cKaigaku§7 (V2§7)§f vous à§e foudroyez");
+                    target.sendMessage("§cKaigaku§f vous à§e foudroyez");
                 }
                 if (this.power.charge == 100) {
                     this.power.addCharge(-100);

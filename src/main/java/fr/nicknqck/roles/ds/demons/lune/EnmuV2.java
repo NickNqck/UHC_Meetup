@@ -59,7 +59,7 @@ public class EnmuV2 extends DemonsRoles {
 
     @Override
     public String getName() {
-        return "Enmu§7 (§6V2§7)§r";
+        return "Enmu";
     }
 
     @Override
@@ -208,7 +208,7 @@ public class EnmuV2 extends DemonsRoles {
         }
         private void tryStartDuel(final Player target, final Player owner) {
             owner.sendMessage("§7Vous avez§c endormie§7 le joueur: "+target.getDisplayName());
-            target.sendMessage("§7Vous avez été§c endormie§7 par§c Enmu§7 (§6V2§7)");
+            target.sendMessage("§7Vous avez été§c endormie§7 par§c Enmu");
             final Location loc1 = new Location(this.arena, 25, this.arena.getHighestBlockYAt(25, 25), 25);
             final Location loc2 = new Location(this.arena, -25, this.arena.getHighestBlockYAt(-25, -25), -25);
             Bukkit.getScheduler().runTask(getPlugin(), () -> {
