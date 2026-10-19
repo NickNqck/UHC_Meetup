@@ -1,7 +1,7 @@
 #Si hook est sur true alors le webhook sur la partie url sera utilisable
 hook: true
 #Il faut mettre votre webhook dans les '' pour que celà fonctionne
-url: 'https://discord.com/api/webhooks/1278037751190519821/-ZxnkbxRej68ldWkPski712-8WazdEYQcGTO4_usb330EaropVd2qz9FiVtcIFlflVpI'
+url: ''
 #Dans la catégorie name vous pouvez définir le nom qui sera afficher sur le webhook,
 #Si vous écrivez <joueur> dans cette catégorie alors le nom du joueur concerné par le webhook sera également celui du message envoyer sur discord
 name: '<joueur>'
