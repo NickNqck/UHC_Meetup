@@ -156,9 +156,9 @@ public class IzanamiV2 implements Listener {
         final List<MissionUser> missionUserList = new ArrayList<>();
         final List<MissionTarget> missionTargetList = new ArrayList<>();
         while (rdm2 == rdm1 || rdm2 > 4) {
-            rdm2 = RandomUtils.getRandomInt(0, 5);
+            rdm2 = RandomUtils.getRandomInt(0, 4);
         }
-        int rdm3 = RandomUtils.getRandomInt(0, 3);
+        int rdm3 = RandomUtils.getRandomInt(0, 2);
         for (MissionUser mo : MissionUser.values()) {
             if (mo.getNmb() == rdm1) {
                 missionUserList.add(mo);

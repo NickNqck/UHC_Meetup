@@ -503,7 +503,7 @@ public class CrystalManager implements Listener {
         }
 
         public IElements getCeintureElements() {
-            int random = RandomUtils.getRandomInt(0, this.getPlugin().getGameConfig().getCrystalConfig().getElements().size());
+            int random = RandomUtils.getRandomInt(0, this.getPlugin().getGameConfig().getCrystalConfig().getElements().size() - 1);
             int i = 0;
             for (IElements ceintureElements : this.getPlugin().getGameConfig().getCrystalConfig().getElements()) {
                 Main.getInstance().debug("Elements detected: " + ceintureElements+", id: "+i+", rdm =" + random);
