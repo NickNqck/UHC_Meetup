@@ -61,7 +61,7 @@ public final class Cooldown {
             }
             if (this.cooldown.actualCooldown > 0) {
                 this.cooldown.actualCooldown--;
-                Bukkit.getPluginManager().callEvent(new CooldownUpdateEvent(this.cooldown));
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.getPluginManager().callEvent(new CooldownUpdateEvent(this.cooldown)));
             } else {
                 boolean call = false;
                 for (GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()) {
@@ -73,8 +73,7 @@ public final class Cooldown {
                     }
                 }
                 if (!call) {
-                    final CooldownFinishEvent cooldownFinishEvent = new CooldownFinishEvent(this.cooldown);
-                    Bukkit.getPluginManager().callEvent(cooldownFinishEvent);
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> Bukkit.getPluginManager().callEvent(new CooldownFinishEvent(this.cooldown)));
                 }
                 cancel();
             }
