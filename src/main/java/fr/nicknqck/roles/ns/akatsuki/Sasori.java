@@ -184,7 +184,7 @@ public class Sasori extends AkatsukiRoles {
 
             this.resurrectedPlayers.add(target.getUniqueId());
         }
-        @EventHandler(priority = EventPriority.HIGHEST)
+        @EventHandler(priority = EventPriority.MONITOR)
         private void onDeath(final UHCDeathEvent event) {
             if (!activate)return;
             if (event.getRole() == null)return;
@@ -194,6 +194,7 @@ public class Sasori extends AkatsukiRoles {
             if (event.getRole().getTeam().isSolo())return;
             if (!event.getPlayer().getWorld().equals(getRole().getGamePlayer().getLastLocation().getWorld()))return;
             if (event.getPlayer().getLocation().distance(getRole().getGamePlayer().getLastLocation()) > 20)return;
+            if (event.isCancelled())return;
             getRole().getGamePlayer().sendMessage("§7Vous avez§c 10 secondes§7 pour choisir si vous voulez§a réanimer§7 le joueur \"§c"+event.getPlayer().getName()+"§7\".");
             new ReviveRunnable(this, event.getPlayer().getName(), event.getPlayer().getUniqueId()).runTaskTimer(getPlugin(), 0, 20);
         }
