@@ -73,6 +73,21 @@ public final class EasyRoleAdder {
         return result;
     }
 
+    /**
+     * @return true si un rôle encore présent dans la composition est lié au monde {@code worldName}
+     */
+    private static boolean isSubWorldStillUsed(final String worldName) {
+        for (final IRole other : Main.getInstance().getRoleManager().getRolesRegistery().values()) {
+            if (!(other instanceof IRoleGotSubWorld)) continue;
+            if (GameState.getInstance().getAvailableRoles().getOrDefault(other.getRoles(), 0) <= 0) continue;
+            final ISubRoleWorld otherWorld = ((IRoleGotSubWorld) other).getSubWorld();
+            if (otherWorld != null && worldName.equals(otherWorld.getWorldName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void removeRoles(String name) {
         Main.getInstance().debug("Name = "+name);
         for (Class<? extends RoleBase> aClass : Main.getInstance().getRoleManager().getRolesRegistery().keySet()) {
@@ -93,7 +108,11 @@ public final class EasyRoleAdder {
                         GameState.getInstance().updateGameCanLaunch();
                         if (iRole instanceof IRoleGotSubWorld && newAmount == 0) {
                             final ISubRoleWorld iSubRoleWorld = ((IRoleGotSubWorld) iRole).getSubWorld();
-                            Main.getInstance().getRoleWorldManager().getSubRoleWorldMap().remove(iSubRoleWorld.getWorldName());
+                            // Le monde n'est retiré que si plus aucun rôle de la composition ne l'utilise
+                            // (ex : Kakashi et Obito partagent le monde "Kamui")
+                            if (!isSubWorldStillUsed(iSubRoleWorld.getWorldName())) {
+                                Main.getInstance().getRoleWorldManager().getSubRoleWorldMap().remove(iSubRoleWorld.getWorldName());
+                            }
                         }
                     }
                 }
