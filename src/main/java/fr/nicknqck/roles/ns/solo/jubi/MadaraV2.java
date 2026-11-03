@@ -131,14 +131,14 @@ public class MadaraV2 extends JubiRoles {
 
         public ChibakuTensei(@NonNull RoleBase role) {
             super("Chibaku Tensei", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cChibaku Tensei"), role,
-                    "§7Vous permet d'ouvrir un menu, ce dernier vous permettra d'accéder au§c 3 pouvoirs§7 suivant: ",
+                    "§7Vous permet d'ouvrir un menu, ce dernier vous permettra d'accéder aux§c 3 pouvoirs§7 suivants: ",
                     "",
                     "§8 - §cBenshô Ten'in§7: Ouvre un menu permettant de sélectionner un§c joueur§7, une fois fait ce dernier sera téléporter à votre position. (1x/5m)",
                     "",
-                    "§8 -§c Shinra Tensei§7: Vous permet de repousser toute les entités autours de vous. (1x/5m)",
+                    "§8 -§c Shinra Tensei§7: Vous permet de repousser toutes les entités autour de vous. (1x/5m)",
                     "",
-                    "§8 -§c Météorite§7: Au bout de§c 10 secondes§7 après avoir déclencher le pouvoir,",
-                    "§7toute les personnes étant à moins de§c 50 blocs§7 du point d'impacte tomberont à§c 1/2❤§7 (sauf vous). (1x/partie)");
+                    "§8 -§c Météorite§7: Au bout de§c 10 secondes§7 après avoir déclenché le pouvoir,",
+                    "§7toutes les personnes étant à moins de§c 50 blocs§7 du point d'impact tomberont à§c 1/2❤§7 (sauf vous). (1x/partie)");
             setShowCdInDesc(false);
             EventUtils.registerRoleEvent(this);
 
@@ -322,7 +322,7 @@ public class MadaraV2 extends JubiRoles {
                     if (this.timeLeft == 5) {
                         final Player owner = Bukkit.getPlayer(this.uuid);
                         if (owner != null){
-                            owner.sendMessage("§7Votre météorite attérira dans 5s");
+                            owner.sendMessage("§7Votre météorite atterrira dans 5s");
                         }
                         for (final GamePlayer gamePlayer : Loc.getNearbyGamePlayers(this.initLocation, 50)) {
                             final Player p = Bukkit.getPlayer(gamePlayer.getUuid());
@@ -348,7 +348,7 @@ public class MadaraV2 extends JubiRoles {
                                         } else {
                                             p.setHealth(p.getHealth()-10.0);
                                         }
-                                        p.sendMessage("§7Vous avez subit les dégâts de la§c météorite§7 de§d Madara§7.");
+                                        p.sendMessage("§7Vous avez subi les dégâts de la§c météorite§7 de§d Madara§7.");
                                     }
                                 }
                             }
@@ -357,7 +357,7 @@ public class MadaraV2 extends JubiRoles {
                         cancel();
                         return;
                     }
-                    this.meteorite.getRole().getGamePlayer().getActionBarManager().addToActionBar("madara.meteorite", "§bTemp avant déclanchement de la§c Météorite§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                    this.meteorite.getRole().getGamePlayer().getActionBarManager().addToActionBar("madara.meteorite", "§bTemps avant déclenchement de la§c Météorite§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                     this.timeLeft--;
                 }
             }
