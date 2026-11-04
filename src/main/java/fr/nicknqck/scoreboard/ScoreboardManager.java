@@ -1,8 +1,7 @@
 package fr.nicknqck.scoreboard;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +31,7 @@ import fr.nicknqck.Main;
  */
 public class ScoreboardManager {
     @Getter
-    private final Map<UUID, PersonalScoreboard> scoreboards;
+    private final ConcurrentHashMap<UUID, PersonalScoreboard> scoreboards;
     @SuppressWarnings({ "unused", "rawtypes" })
 	private final ScheduledFuture glowingTask;
     @SuppressWarnings({ "unused", "rawtypes" })
@@ -42,7 +41,7 @@ public class ScoreboardManager {
     private final GameState gameState;
     public ScoreboardManager(GameState gameState) {
     	this.gameState = gameState;
-        scoreboards = new HashMap<>();
+        scoreboards = new ConcurrentHashMap<>();
         ipCharIndex = 0;
         cooldown = 0;
 

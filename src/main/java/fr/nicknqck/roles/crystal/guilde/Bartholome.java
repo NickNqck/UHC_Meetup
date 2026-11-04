@@ -93,7 +93,7 @@ public class Bartholome extends GuildeBase implements IGotMultpleFaction, Listen
             }
         }
         toRemove = toRemove/100;
-        toRemove = toRemove + 1;
+        toRemove = 1 - toRemove;
         event.setDamage(event.getDamage()*toRemove);
     }
     @EventHandler

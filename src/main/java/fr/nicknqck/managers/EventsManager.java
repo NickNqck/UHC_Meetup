@@ -215,7 +215,7 @@ public class EventsManager implements Listener {
             this.actualTime = 0;
             timeGonnaProc1 = 0;
             while (timeGonnaProc1 == 0 || timeGonnaProc1 > events.getMaxTimeProc() || timeGonnaProc1 < events.getMinTimeProc()) {
-                timeGonnaProc1 = RandomUtils.getRandomDeviationValue(Main.RANDOM.nextInt(), events.getMinTimeProc(), events.getMaxTimeProc());
+                timeGonnaProc1 = RandomUtils.getRandomInt(events.getMinTimeProc(), events.getMaxTimeProc());
             }
             this.timeGonnaProc = timeGonnaProc1;
             Main.getInstance().debug(events.getName()+" gonna proc at "+timeGonnaProc1+" ("+StringUtils.secondsTowardsBeautiful(timeGonnaProc1)+")");

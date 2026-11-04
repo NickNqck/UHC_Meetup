@@ -83,13 +83,4 @@ public abstract class DemonsSlayersRoles extends RoleBase {
     public void onDSCommandSend(String[] args, GameState gameState) {}
     public abstract Soufle getSoufle();
 
-    @Override
-    public String[] Desc() {
-        return new String[0];
-    }
-
-    @Override
-    public ItemStack[] getItems() {
-        return new ItemStack[0];
-    }
 }

@@ -207,7 +207,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
         private void GamePlayerDeathEvent2(@NonNull final UHCDeathEvent event) {
             if (!Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye())return;
             if (event.getPlayer().getUniqueId().equals(getRole().getPlayer()))return;
-            if (!event.getPlayer().getWorld().getName().equals("arena") || !event.getPlayer().getWorld().getName().equalsIgnoreCase("kamui"))return;
+            if (!event.getPlayer().getWorld().getName().equals("arena") && !event.getPlayer().getWorld().getName().equalsIgnoreCase("kamui"))return;
             if (!this.getRole().getPowers().contains(this))return;
             if (event.getRole() instanceof KakashiV2) {
                 getRole().getGamePlayer().sendMessage("§aKakashi§c est mort ! C'est sûrement l'occasion pour vous de récupérez §nvotre§4 Sharingan§c, avec un peux de chance vous pourriez obtenir un Susanô voir même diminuer vos cooldowns...",
@@ -280,7 +280,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
     private static class NinjutsuSpatioTemporel extends ItemPower implements Listener{
 
         @NotNull
-        private final NinjutsuRunnable ninjutsuRunnable;
+        private NinjutsuRunnable ninjutsuRunnable;
 
         protected NinjutsuSpatioTemporel(@NonNull RoleBase role) {
             super("Ninjutsu Spatio-Temporel", new Cooldown(60*8), new ItemBuilder(Material.NETHER_STAR).setName("§dNinjutsu Spatio-Temporel"), role,
@@ -342,6 +342,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
             private final NinjutsuSpatioTemporel ninjutsu;
             private int timeLeft;
             private boolean running = false;
+            private boolean already = false;
 
             private NinjutsuRunnable(GameState gameState, NinjutsuSpatioTemporel ninjutsu) {
                 this.gameState = gameState;
@@ -356,6 +357,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                     this.running = false;
                     return;
                 }
+                this.already = true;
                 this.timeLeft--;
                 ninjutsu.getRole().getGamePlayer().getActionBarManager().updateActionBar("ninjutsu.runnable", "§bTemp restant§c invisible§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 if (this.timeLeft <= 0) {
@@ -367,6 +369,11 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
             }
 
             public void start(@NonNull Player player) {
+                if (already) {
+                    this.ninjutsu.ninjutsuRunnable = new NinjutsuRunnable(gameState, ninjutsu);
+                    this.ninjutsu.ninjutsuRunnable.start(player);
+                    return;
+                }
                 ninjutsu.getRole().getGamePlayer().getActionBarManager().addToActionBar("ninjutsu.runnable", "§bTemp restant§c invisible§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 this.ninjutsu.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20*60, 0, false, false), EffectWhen.NOW);
                 player.setSleepingIgnored(true);

@@ -314,7 +314,7 @@ public abstract class RoleBase implements IRole {
 			if (countEmptySlots(target) > 0) {
 				target.getInventory().addItem(stack);
 				if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && message) {
-					target.sendMessage(stack.getItemMeta().getDisplayName()+"§7 à été ajouté à votre inventaire !");
+					target.sendMessage(stack.getItemMeta().getDisplayName()+"§7 a été ajouté à votre inventaire !");
 				}
 				if (toClaim.contains(stack)) {
 					toClaim.remove(stack);
@@ -323,14 +323,14 @@ public abstract class RoleBase implements IRole {
 			}else {
 				if (target.getInventory().contains(stack)) {
 					for (ItemStack s : target.getInventory().getContents()) {
-						if (s == null)return;
-						if (s.getType() != stack.getType())return;
+						if (s == null)continue;
+						if (s.getType() != stack.getType())continue;
 						if (s.isSimilar(stack)) {
 							if (s.getAmount() + stack.getAmount() <= 64) {
 								target.getInventory().addItem(stack);
 								toClaim.remove(s);
 								if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && message) {
-									target.sendMessage(stack.getItemMeta().getDisplayName()+"§7 à été ajouté à votre inventaire !");
+									target.sendMessage(stack.getItemMeta().getDisplayName()+"§7 a été ajouté à votre inventaire !");
 								}
 								if (toClaim.contains(stack)) {
 									toClaim.remove(stack);
@@ -345,9 +345,9 @@ public abstract class RoleBase implements IRole {
 					toClaim.add(stack);
 				}
 				if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName()) {
-					target.sendMessage("L'item§6 "+stack.getItemMeta().getDisplayName()+"§f à été placé dans votre§l /claim");
+					target.sendMessage("L'item§6 "+stack.getItemMeta().getDisplayName()+"§f a été placé dans votre§l /claim");
 				}else {
-					target.sendMessage("Un item à été ajouté dans votre§l /claim");
+					target.sendMessage("Un item a été ajouté dans votre§l /claim");
 				}
 			}
 		}

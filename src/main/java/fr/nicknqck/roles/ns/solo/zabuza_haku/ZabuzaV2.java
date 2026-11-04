@@ -168,7 +168,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                 player.sendMessage("§aVous êtes maintenant invisible.");
                 AttackUtils.CantAttack.add(player.getUniqueId());
                 AttackUtils.CantReceveAttack.add(player.getUniqueId());
-                runnable = new InvisibilitePower.InvisibiliteRunnable(this);
+                runnable = new InvisibiliteRunnable(this);
                 return true;
             }
             return false;
@@ -196,6 +196,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
             }
             this.runnable.cancel();
             this.runnable = null;
+            this.armorContents.clear();
             cooldown.use();
             getRole().getGamePlayer().getActionBarManager().removeInActionBar("zabuza.invisibilite");
         }
@@ -222,6 +223,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                     return;
                 }
                 if (timeLeft <= 0) {
+                    cancel();
                     this.power.removeInvisibility();
                     this.power.invisible = false;
                     return;

@@ -40,6 +40,7 @@ public class TitanManager implements Listener {
     }
     public void replaceOwner(@NonNull final UUID oldUUID, @NonNull final GamePlayer gamePlayer, @NonNull final TitanBase titan) {
         @NonNull final TitanOwnerChangeEvent event = new TitanOwnerChangeEvent(oldUUID, gamePlayer, titan);
+        Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
         this.titansMap.remove(oldUUID, titan);
         this.addTitan(gamePlayer.getUuid(), titan);
@@ -59,7 +60,7 @@ public class TitanManager implements Listener {
         }
         return this.titansMap.get(uuid);
     }
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     private void onDeath(@NonNull final UHCDeathEvent event) {
         if (event.isCancelled())return;
         if (event.getRole() == null)return;

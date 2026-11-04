@@ -311,7 +311,7 @@ public final class Sage extends ValoBase {
             deathMap.put(gamePlayer, location);
             if (event.getEntityKiller() != null) {
                 final GamePlayer owner = GamePlayer.of(event.getEntityKiller().getUniqueId());
-                if (owner != null) {
+                if (owner != null && owner.getUuid().equals(this.getRole().getPlayer())) {
                     this.points++;
                     owner.sendMessage("§7Vous avez gagner un§a point§7, vous êtes maintenant à§c "+this.points);
                 }

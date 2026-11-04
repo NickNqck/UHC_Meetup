@@ -597,7 +597,7 @@ public class GameState{
 		gamePlayer.setRole(role);
 		role.setGamePlayer(gamePlayer);
 		attributedRole.add(role.getRoles());
-		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
+	//	Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
 	}
 
 	public void updateGameCanLaunch() {
