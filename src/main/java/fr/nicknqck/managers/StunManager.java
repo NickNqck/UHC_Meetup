@@ -114,8 +114,11 @@ public final class StunManager implements Listener{
         private void onEndGame(final GameEndEvent event) {
             EventUtils.unregisterEvents(this);
         }
-        @EventHandler
+        @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
         private void onMove(final PlayerMoveEvent event) {
+            if (!event.getPlayer().getUniqueId().equals(this.gamePlayer.getUuid())) {
+                return;
+            }
             final Location from = event.getFrom();
             final Location to = event.getTo();
             if (to != null && (from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ())) {
@@ -137,11 +140,12 @@ public final class StunManager implements Listener{
             @SuppressWarnings("deprecation")
             @Override
             public void run() {
-                if (this.stuckStunListener.tick <= 0 || !GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
+                if (this.stuckStunListener.tick <= 0 || !GameState.inGame()) {
                     this.stuckStunListener.gamePlayer.getStunManager().stunedPlayers.remove(this.stuckStunListener.gamePlayer.getUuid());
                     if (this.stuckStunListener.gamePlayer.getPlayer() != null) {
                         this.stuckStunListener.gamePlayer.getPlayer().setFallDistance(0f);
                     }
+                    Bukkit.getScheduler().runTask(Main.getInstance(), () -> EventUtils.unregisterEvents(this.stuckStunListener));
                     cancel();
                     return;
                 }

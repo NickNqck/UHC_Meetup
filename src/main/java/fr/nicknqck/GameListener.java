@@ -333,12 +333,12 @@ public class GameListener implements Listener {
                     SendToEveryone(Vainqueurs);
 				} else {
 					if (gameState.getInGamePlayers().get(0) != null) {
-						Player winer = Bukkit.getPlayer(gameState.getInGamePlayers().get(0));
+						UUID uuid = gameState.getInGamePlayers().get(0);
+						Player winer = Bukkit.getPlayer(uuid);
 						String win = winer == null ? "§cDéconnecter" : winer.getName();
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
-						assert winer != null;
-						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName()+"§f avec§6 "+gameState.getGamePlayer().get(winer.getUniqueId()).getKillAmounts()+"§f kill(s)";
-						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(winer.getUniqueId()).getRole().getRoles().getItem().getItemMeta().getDisplayName();
+						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(uuid).getRole().getRoles().getItem().getItemMeta().getDisplayName()+"§f avec§6 "+gameState.getGamePlayer().get(uuid).getKillAmounts()+"§f kill(s)";
+						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(uuid).getRole().getRoles().getItem().getItemMeta().getDisplayName();
                         SendToEveryone(Vainqueurs);
 					}
 				}

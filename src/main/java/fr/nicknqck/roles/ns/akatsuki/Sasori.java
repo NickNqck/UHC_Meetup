@@ -98,6 +98,7 @@ public class Sasori extends AkatsukiRoles {
 
         private boolean activate = false;
         private final List<UUID> resurrectedPlayers = new ArrayList<>();
+        private final Map<UUID, Integer> possibleReviving =  new HashMap<>();
 
         public MarionetisationCommand(@NonNull RoleBase role) {
             super("/ns marionette", "marionette", null, role, CommandType.NS,
@@ -125,8 +126,12 @@ public class Sasori extends AkatsukiRoles {
                                 player.sendMessage("§cLes paramètres de la partie vous empêche d'utiliser ce pouvoir.");
                                 return false;
                             }
-                            revive(getRole().getGameState(), target, player);
-                            return true;
+                            if (!gameTarget.isAlive()){
+                                if (this.possibleReviving.containsKey(uuid)) {
+                                    revive(getRole().getGameState(), target, player);
+                                    return true;
+                                }
+                            }
                         } else {
                             player.sendMessage("§cImpossible de§a réanimer§c le joueur§b "+target.getName());
                             return false;
@@ -183,8 +188,9 @@ public class Sasori extends AkatsukiRoles {
             getRole().setMaxHealth(getRole().getMaxHealth()-(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()+1.0));
 
             this.resurrectedPlayers.add(target.getUniqueId());
+            this.possibleReviving.remove(target.getUniqueId());
         }
-        @EventHandler(priority = EventPriority.MONITOR)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         private void onDeath(final UHCDeathEvent event) {
             if (!activate)return;
             if (event.getRole() == null)return;
@@ -195,12 +201,12 @@ public class Sasori extends AkatsukiRoles {
             if (!event.getPlayer().getWorld().equals(getRole().getGamePlayer().getLastLocation().getWorld()))return;
             if (event.getPlayer().getLocation().distance(getRole().getGamePlayer().getLastLocation()) > 20)return;
             if (event.isCancelled())return;
+            this.possibleReviving.put(event.getPlayer().getUniqueId(), 0);
             getRole().getGamePlayer().sendMessage("§7Vous avez§c 10 secondes§7 pour choisir si vous voulez§a réanimer§7 le joueur \"§c"+event.getPlayer().getName()+"§7\".");
             new ReviveRunnable(this, event.getPlayer().getName(), event.getPlayer().getUniqueId()).runTaskTimer(getPlugin(), 0, 20);
         }
         private static class ReviveRunnable extends BukkitRunnable {
 
-            private int time = 10;
             private final MarionetisationCommand marionetisationCommand;
             private final String targetName;
             private final UUID targetUuid;
@@ -217,20 +223,32 @@ public class Sasori extends AkatsukiRoles {
                     cancel();
                     return;
                 }
-                if (this.time <= 0 || this.marionetisationCommand.resurrectedPlayers.contains(targetUuid)) {
-                    this.marionetisationCommand.getRole().getGamePlayer().sendMessage("§cVous ne pouvez utiliser votre§2 Marionetisation§c sur§2 "+targetName);
+                if (this.marionetisationCommand.resurrectedPlayers.contains(targetUuid)) {
+                    this.marionetisationCommand.getRole().getGamePlayer().sendMessage("§cVous ne pouvez pas utiliser votre§2 Marionetisation§c sur§2 "+targetName);
                     cancel();
                     return;
                 }
                 final Player owner = Bukkit.getPlayer(this.marionetisationCommand.getRole().getPlayer());
                 if (owner == null)return;
-                final TextComponent text = new TextComponent("§fCliquez pour§a ressusciter§f dans votre camp§c "+targetName);
-                text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                        new TextComponent("§aCliquez pour ramener à la vie§c "+targetName)
-                }));
-                text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ns marionette revive "+this.targetUuid.toString()));
-                owner.spigot().sendMessage(text);
-                this.time--;
+                final Player target = Bukkit.getPlayer(this.targetUuid);
+                if (target == null)return;
+                final GamePlayer gamePlayer = GamePlayer.of(targetUuid);
+                if (this.marionetisationCommand.possibleReviving.containsKey(target.getUniqueId()) && gamePlayer != null && !gamePlayer.isAlive() && gamePlayer.getRole() != null) {
+                    if (this.marionetisationCommand.possibleReviving.get(target.getUniqueId()) >= 10) {
+                        this.marionetisationCommand.getRole().getGamePlayer().sendMessage("§cVous ne pouvez plus faire de§2 "+targetName+"§7 votre§2 marionette§c.");
+                        cancel();
+                        return;
+                    }
+                    final TextComponent text = new TextComponent("§fCliquez pour§a ressusciter§f dans votre camp§c "+targetName);
+                    text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
+                            new TextComponent("§aCliquez pour ramener à la vie§c "+targetName)
+                    }));
+                    text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ns marionette revive "+this.targetUuid.toString()));
+                    owner.spigot().sendMessage(text);
+                    this.marionetisationCommand.possibleReviving.replace(targetUuid, this.marionetisationCommand.possibleReviving.get(target.getUniqueId())+1);
+                } else {
+                    cancel();
+                }
             }
         }
     }
