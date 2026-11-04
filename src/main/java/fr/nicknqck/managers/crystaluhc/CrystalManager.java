@@ -394,7 +394,7 @@ public class CrystalManager implements Listener {
                     this.gettingRefinedList.remove(event.getPlayer().getUniqueId());
                     event.getPlayer().getInventory().remove(Material.EMERALD_BLOCK);
                     if (!this.crystalPowerMap.containsKey(event.getPlayer().getUniqueId())) {
-                        event.getPlayer().sendMessage("§fVous avez reçus le pouvoir du crystal");
+                        event.getPlayer().sendMessage("§fVous avez reçu le pouvoir du crystal");
                         this.crystalPowerMap.put(event.getPlayer().getUniqueId(), new CrystalPower(gamePlayer.getRole()));
                         doManeuvre(gamePlayer);
                     } else {

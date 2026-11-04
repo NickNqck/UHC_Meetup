@@ -255,7 +255,7 @@ public class WarhammerV2 extends TitanBase implements Listener {
                 return;
             }
             if (this.warhammer.blocDeathLocation == null) {
-                this.warhammer.getGamePlayer().sendMessage("§7Quelqu'un a détruit votre point de réaparition, vous allez donc mourir...");
+                this.warhammer.getGamePlayer().sendMessage("§7Quelqu'un a détruit votre point de réapparition, vous allez donc mourir...");
                 this.warhammer.getGamePlayer().getActionBarManager().removeInActionBar("warhammerv2.timedeath");
                 Player warhammer = Bukkit.getPlayer(this.warhammer.getGamePlayer().getUuid());
                 if (warhammer != null) {
@@ -281,7 +281,7 @@ public class WarhammerV2 extends TitanBase implements Listener {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                         player.setGameMode(GameMode.SURVIVAL);
                         player.teleport(this.getRandomLocation());
-                        player.sendMessage("§7Votre pouvoir de§c War Hammer§7 vous à permis de ressusciter");
+                        player.sendMessage("§7Votre pouvoir de§c War Hammer§7 vous a permis de ressusciter");
                         this.warhammer.getGamePlayer().getRole().setMaxHealth(this.warhammer.getGamePlayer().getRole().getMaxHealth()-2.0);
                         for (ItemStack item : this.warhammer.getGamePlayer().getLastInventoryContent()) {
                             if (item == null)continue;

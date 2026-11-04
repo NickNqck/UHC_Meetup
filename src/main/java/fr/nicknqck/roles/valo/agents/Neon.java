@@ -158,9 +158,9 @@ public class Neon extends RoleBase {
             super("Vitesse Supérieure", null, new ItemBuilder(Material.NETHER_STAR).setName("§bVitesse Supérieure"), role,
                     "§7Vous possédez une bar de§b Charge§7, elle se régénère lorsque vous ne l'utiliser pas et s'utilise différemment en fonction du clique que vous faite:",
                     "",
-                    "§bClique droit§7: Vous permet d'obtenir§e Speed II§7 (§cConssomation§7:§b 1%§7/s).",
+                    "§bClique droit§7: Vous permet d'obtenir§e Speed II§7 (§cConsommation§7:§b 1%§7/s).",
                     "",
-                    "§bClique gauche§7: Vous permet de faire un§c dash§7 en avant, vous gagnez§a +1§c dash§7 tout les§c 2 kills§7 (§cConssomation§7: §b5%§7) (2x/partie) (1x/2m)");
+                    "§bClique gauche§7: Vous permet de faire un§c dash§7 en avant, vous gagnez§a +1§c dash§7 tout les§c 2 kills§7 (§cConsommation§7: §b5%§7) (2x/partie) (1x/2m)");
             this.coursePower = new CoursePower(role);
             role.addPower(this.coursePower);
             this.dashPower = new DashPower(this);
@@ -198,7 +198,7 @@ public class Neon extends RoleBase {
                     player.removePotionEffect(PotionEffectType.SPEED);
                 } else {
                     if (this.runnable.speedBar <= 1) {
-                        player.sendMessage("§7Vous n'avez pas asser d'énergie pour courir");
+                        player.sendMessage("§7Vous n'avez pas assez d'énergie pour courir");
                         return false;
                     }
                     this.runnable.start = true;
@@ -278,7 +278,7 @@ public class Neon extends RoleBase {
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (this.speedItemPower.coursePower.runnable.speedBar <= 5) {
-                    player.sendMessage("§7Vous n'avez pas asser d'énergie pour dash");
+                    player.sendMessage("§7Vous n'avez pas assez d'énergie pour dash");
                     return false;
                 }
                 final Vector direction = player.getEyeLocation().getDirection();

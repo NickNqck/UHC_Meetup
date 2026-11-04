@@ -177,7 +177,7 @@ public class ConnyV2 extends SoldatsRoles {
                         this.actualForceTimer = -5;
                         this.amisCommand.getRole().getGamePlayer().getActionBarManager().removeInActionBar("conny.forcebar");
                         Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.amisCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*120, 0, false, false), EffectWhen.NOW));
-                        this.amisCommand.getRole().getGamePlayer().sendMessage("§7Votre§c rage§7 c'est calmer, votre peine se fais ressentir...");
+                        this.amisCommand.getRole().getGamePlayer().sendMessage("§7Votre§c rage§7 s'est calmée, votre peine se fait ressentir...");
                         cancel();
                         this.running = false;
                     }

@@ -197,7 +197,7 @@ public class HokageManager implements Listener {
                         double boost = 5.0;
                         gamePlayer.getRole().addBonusforce(boost);
                         gamePlayer.getRole().addBonusResi(boost);
-                        target.sendMessage("§7Vous avez reçus le boost de l'§eHokage");
+                        target.sendMessage("§7Vous avez reçu le boost de l'§eHokage");
                         player.sendMessage("§7Vous avez offert votre boost à§c "+target.getDisplayName());
                         return true;
                     } else {

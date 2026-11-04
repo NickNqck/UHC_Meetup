@@ -80,7 +80,7 @@ public abstract class TitanBase implements ITitan {
 
         public TransformationPower(@NonNull TitanBase titan) {
             super("§fTransformation", new Cooldown(titan.getTransfoDuration()*2), new ItemBuilder(titan.getTransformationMaterial()).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§fTransformation"), titan.getGamePlayer().getRole(),
-                    "§7Cette objet vous permet de vous transformez en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot titan");
+                    "§7Cet objet vous permet de vous transformer en Titan "+titan.getName()+"§7, plus de détail sur ce dernier dans le§6 /aot titan");
             this.titanBase = titan;
             setWorkWhenInCooldown(true);
         }
@@ -126,7 +126,7 @@ public abstract class TitanBase implements ITitan {
             for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 onlinePlayer.sendMessage(new String[]{
                         "",
-                        "§6Un humain c'est transformé en titan !",
+                        "§6Un humain s'est transformé en titan !",
                         ""
                 });
                 onlinePlayer.playSound(onlinePlayer.getLocation(), "aotmtp.transfo", 8, 1);
@@ -154,7 +154,7 @@ public abstract class TitanBase implements ITitan {
                 this.timeLeft = power.titanBase.getTransfoDuration();
                 power.titanBase.getGamePlayer().getActionBarManager().addToActionBar(
                         "titanbase."+power.titanBase.getName(),
-                        "§bTemp de transformation: "+ StringUtils.secondsTowardsBeautiful(this.timeLeft)
+                        "§bTemps de transformation: "+ StringUtils.secondsTowardsBeautiful(this.timeLeft)
                 );
             }
             @Override
@@ -176,7 +176,7 @@ public abstract class TitanBase implements ITitan {
                 this.timeLeft--;
                 power.titanBase.getGamePlayer().getActionBarManager().updateActionBar(
                         "titanbase."+power.titanBase.getName(),
-                        "§bTemp de transformation: "+ StringUtils.secondsTowardsBeautiful(this.timeLeft)
+                        "§bTemps de transformation: "+ StringUtils.secondsTowardsBeautiful(this.timeLeft)
                 );
                 if (this.timeLeft > 1) {
                     Bukkit.getScheduler().runTask(this.power.getPlugin(), () -> {

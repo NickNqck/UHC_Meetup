@@ -38,7 +38,7 @@ public class Iso extends RoleBase {
     private final ItemStack ProtectionItem = new ItemBuilder(Material.NETHER_STAR).setName("§dProtection couplé").setLore("§7Vous permet de crée un timer visant à ne pas subir de dégat").toItemStack();
     private int cdProtection = 0;
     private int stackedCoup = 0;
-    private final ItemStack BarriereItem = new ItemBuilder(Material.NETHER_STAR).setName("§5Barrière").setLore("§fVous permet de tier un laser de particule, les joueurs touchés auront un effet différent en fonction du clique utiliser:",
+    private final ItemStack BarriereItem = new ItemBuilder(Material.NETHER_STAR).setName("§5Barrière").setLore("§fVous permet de tirer un laser de particule, les joueurs touchés auront un effet différent en fonction du clic utilisé:",
             "§cClique gauche§f: Les jououeurs subiront§c +25%§f de dégat de votre pars pendant§c 1 minute§f",
             "§aClique droit§f: Les joueurs ne pourront plus vous tapez durant les§c 10 secondes§f qui suive."
     ).toItemStack();

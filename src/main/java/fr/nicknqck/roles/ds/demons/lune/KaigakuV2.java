@@ -139,7 +139,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("LEFT")) {
                     if (this.charge < 20) {
-                        player.sendMessage("§cVous n'avez pas asser d'§eélectrécité§c dans votre corp pour cette technique...");
+                        player.sendMessage("§cVous n'avez pas assez d'§eélectricité§c dans votre corps pour cette technique...");
                         return false;
                     }
                     if (this.tpPower.checkUse(player, map)) {
@@ -148,7 +148,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                     }
                 } else if (event.getAction().name().contains("RIGHT")) {
                     if (this.charge < 60) {
-                        player.sendMessage("§cVous n'avez pas asser d'§eélectrécité§c dans votre corp pour cette technique...");
+                        player.sendMessage("§cVous n'avez pas assez d'§eélectrécité§c dans votre corp pour cette technique...");
                         return false;
                     }
                     return this.foudrePower.checkUse(player, map);
