@@ -182,12 +182,12 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 "",
                 "§7Si§a Kyojuro§7 gagne le combat:",
                 "§7il obtiendra l'item \"§6Vague Flamboyante§7\"",
-                "§7a l'activation permet pendant§c 10 secondes§7 de faire qu'a chaque coup reçus il y est",
+                "§7a l'activation permet pendant§c 10 secondes§7 de faire qu'a chaque coup reçu il y ait",
                 "§c 10%§7 de chance que l'attaquant sois§6 enflammer",
                 "",
                 "§7Si§c Akaza§7 gagne le combat:",
                 "§7il obtiendra la commande \"§c/ds compa§7\"",
-                "§7a l'activation pendant§c 2 minutes§7 fait qu'à chaque coup reçus il y est",
+                "§7a l'activation pendant§c 2 minutes§7 fait qu'à chaque coup reçu il y ait",
                 "§c10%§7 de chance que l'attaque sois esquivé"
         };
     }

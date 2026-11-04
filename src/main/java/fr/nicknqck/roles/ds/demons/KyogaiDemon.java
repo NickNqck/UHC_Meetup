@@ -205,7 +205,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
                 this.power = percussionRapidePower;
                 this.gameState = gameState;
                 this.timeRemaining = 15;
-                power.getRole().getGamePlayer().getActionBarManager().addToActionBar("kyogai.percurapide", "§bTemp de percussion restant:§c "+timeRemaining+"s");
+                power.getRole().getGamePlayer().getActionBarManager().addToActionBar("kyogai.percurapide", "§bTemps de percussion restant:§c "+timeRemaining+"s");
                 runTaskTimerAsynchronously(power.getPlugin(), 0, 20);
             }
 
@@ -215,7 +215,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
                     cancel();
                     return;
                 }
-                this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("kyogai.percurapide", "§bTemp de percussion restant:§c "+timeRemaining+"s");
+                this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("kyogai.percurapide", "§bTemps de percussion restant:§c "+timeRemaining+"s");
                 if (this.timeRemaining <= 0) {
                     this.power.getRole().getGamePlayer().sendMessage("§7Vous êtes maintenant trop fatigué pour continué à utiliser vos§6 Percussion Rapide");
                     this.power.getRole().getGamePlayer().getActionBarManager().removeInActionBar("kyogai.percurapide");

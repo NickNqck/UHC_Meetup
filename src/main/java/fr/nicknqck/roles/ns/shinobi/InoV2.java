@@ -246,7 +246,7 @@ public class InoV2 extends ShinobiRoles {
                     return false;
                 }
                 this.gameTarget = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
-                player.sendMessage("§c"+target.getName()+"§a a bien reçus votre§c chakra");
+                player.sendMessage("§c"+target.getName()+"§a a bien reçu votre§c chakra");
                 return false;
             } else {
                 if (this.gameTarget == null) {

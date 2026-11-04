@@ -100,7 +100,7 @@ public class GabiV2 extends AotRoles implements Listener {
             try {
                 final Class<? extends TitanBase> clazz = classes.get(0);
                 final TitanBase titan = clazz.getConstructor(GamePlayer.class).newInstance(getGamePlayer());
-                getGamePlayer().sendMessage("§7Aucun titan volable est dans la partie, vous avez donc reçus par hasard le titan: "+titan.getName());
+                getGamePlayer().sendMessage("§7Aucun titan volable est dans la partie, vous avez donc reçu par hasard le titan: "+titan.getName());
                 Main.getInstance().getTitanManager().addTitan(getPlayer(), titan);
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException |
                      NoSuchMethodException e) {

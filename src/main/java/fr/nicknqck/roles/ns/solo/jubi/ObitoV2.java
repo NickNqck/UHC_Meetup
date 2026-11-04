@@ -138,7 +138,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                 if (amountUchiwa == 1) {//1 parce que Obito lui même est un Uchiwa (。_。)
                     getRole().removePower(this);
                     this.getRole().addPower(new SusanoPower(this.getRole()), true);
-                    this.getRole().getGamePlayer().sendMessage("§7Vous avez reçus le§c§l Susanô");
+                    this.getRole().getGamePlayer().sendMessage("§7Vous avez reçu le§c§l Susanô");
                     this.deathLocations.clear();
                     EventUtils.unregisterEvents(this);
                 }
@@ -159,7 +159,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                             this.getRole().addPower(new SusanoPower(this.getRole()), true);
                             this.getRole().getPowers().remove(this);
-                            this.getRole().getGamePlayer().sendMessage("§7Vous avez reçus le§c§l Susanô");
+                            this.getRole().getGamePlayer().sendMessage("§7Vous avez reçu le§c§l Susanô");
                             this.deathLocations.clear();
                             if (string.toLowerCase().contains("kakashi")) {
                                 this.getRole().getPowers().forEach(power -> power.setCooldown(new Cooldown(power.getCooldown().getOriginalCooldown()/2)));

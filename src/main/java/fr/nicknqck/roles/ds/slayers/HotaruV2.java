@@ -68,7 +68,7 @@ public class HotaruV2 extends SlayerRoles {
 
     private static class LamePower extends CommandPower {
         public LamePower(@NonNull RoleBase role) {
-            super("§6/ds lame <joueur>", "lame", new Cooldown(0), role, CommandType.DS, "Vous permez de savoir si un joueur possède une lame ou non, si il en possède une vous saurez quelle lame le joueur possède. (3x/partie)");
+            super("§6/ds lame <joueur>", "lame", new Cooldown(0), role, CommandType.DS, "Vous permet de savoir si un joueur possède une lame ou non, si il en possède une vous saurez quelle lame le joueur possède. (3x/partie)");
             setMaxUse(3);
         }
 
@@ -96,7 +96,7 @@ public class HotaruV2 extends SlayerRoles {
 
     private static class RepairPower extends CommandPower {
         public RepairPower(@NonNull RoleBase role) {
-            super("§6/ds repair <joueur>", "repair", new Cooldown(60 * 5), role, CommandType.DS, "§7Vous permez de réparer la lame d'un joueur. (3x/partie)  §cAttention : §7si le joueur que vous réparer ne possède pas de lame alors vous perderez votre pouvoir.");
+            super("§6/ds repair <joueur>", "repair", new Cooldown(60 * 5), role, CommandType.DS, "§7Vous permet de réparer la lame d'un joueur. (3x/partie)  §cAttention : §7si le joueur que vous réparer ne possède pas de lame alors vous perderez votre pouvoir.");
             setMaxUse(3);
         }
 
@@ -132,7 +132,7 @@ public class HotaruV2 extends SlayerRoles {
     private static class UnbreakPower extends CommandPower{
 
         public UnbreakPower(@NonNull RoleBase role) {
-            super("/ds Unbreak <joueur>", "unbreak", new Cooldown(0), role, CommandType.DS, "§7Vous permez de rendre la lame d'un joueur incassable. (1x/partie)");
+            super("/ds Unbreak <joueur>", "unbreak", new Cooldown(0), role, CommandType.DS, "§7Vous permet de rendre la lame d'un joueur incassable. (1x/partie)");
             setMaxUse(1);
         }
 
@@ -164,7 +164,7 @@ public class HotaruV2 extends SlayerRoles {
         private final Map<ItemStack, Lames> map;
 
         public RolePower(@NonNull RoleBase role) {
-            super("/ds chooseblade", "role", new Cooldown(60*5), role, CommandType.DS, "§7Vous permez de choisir votre lame.");
+            super("/ds chooseblade", "role", new Cooldown(60*5), role, CommandType.DS, "§7Vous permet de choisir votre lame.");
             this.map = new HashMap<>();
             init();
         }

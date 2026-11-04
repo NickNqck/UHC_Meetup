@@ -115,7 +115,7 @@ public class TabManager implements Listener {
                 sendTabTitle(
                         player,
                         "\n§6UHC-Meetup\n" ,
-                        "\n§bTemp de jeu: "+ StringUtils.secondsTowardsBeautiful(gameState.getInGameTime())+"     TPS: "+ new DecimalFormat("0").format(TPS.getAverageTPS(1)) +
+                        "\n§bTemps de jeu: "+ StringUtils.secondsTowardsBeautiful(gameState.getInGameTime())+"     TPS: "+ new DecimalFormat("0").format(TPS.getAverageTPS(1)) +
                                 "\n\n§bDev: NickNqck");
             } else {
                 sendTabTitle(

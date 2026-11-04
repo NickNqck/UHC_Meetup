@@ -148,7 +148,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                     }
                 } else if (event.getAction().name().contains("RIGHT")) {
                     if (this.charge < 60) {
-                        player.sendMessage("§cVous n'avez pas assez d'§eélectrécité§c dans votre corp pour cette technique...");
+                        player.sendMessage("§cVous n'avez pas assez d'§eélectricité§c dans votre corps pour cette technique...");
                         return false;
                     }
                     return this.foudrePower.checkUse(player, map);

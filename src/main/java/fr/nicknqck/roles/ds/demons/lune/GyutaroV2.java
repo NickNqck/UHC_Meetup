@@ -119,7 +119,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
 
         protected RappelPower(@NonNull GyutaroV2 role) {
             super("Rappel", new Cooldown(60 * 10), new ItemBuilder(Material.NETHER_STAR).setName("§cRappel"), role,
-                    "§7Vous permez de vous téléporter à §cDaki §7si elle est présente dans un rayon de §c50 blocs§7 autour de vous et qu'elle possède moins de§c 7❤§7.",
+                    "§7Vous permet de vous téléporter à §cDaki §7si elle est présente dans un rayon de §c50 blocs§7 autour de vous et qu'elle possède moins de§c 7❤§7.",
                     "",
                     "§7A la mort de§c Daki§7, le§c Rappel§7 deviendra le§c Troisième Oeil§7 (donne§e Speed I§7 pendant§c 3 minutes§7).");
             this.gyutaroV2 = role;

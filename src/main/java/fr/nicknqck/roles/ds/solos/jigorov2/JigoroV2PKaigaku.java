@@ -53,7 +53,7 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
     private void UHCKillEvent(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(this.kaigaku.getPlayer()) || event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            final String msg = "§7Vous avez reçus §c1/2❤ permanent§7 car§6 Jigoro§r ou§c Kaigaku§7 à fait un §ckill";
+            final String msg = "§7Vous avez reçu §c1/2❤ permanent§7 car§6 Jigoro§r ou§c Kaigaku§7 a fait un §ckill";
             getGamePlayer().sendMessage(msg);
             kaigaku.getGamePlayer().sendMessage(msg);
             kaigaku.setMaxHealth(kaigaku.getMaxHealth()+1.0);

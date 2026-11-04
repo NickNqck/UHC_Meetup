@@ -149,7 +149,7 @@ public class KanaoV2 extends SlayerRoles {
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
                     if (!Loc.getNearbyPlayers(player, 25).contains(target)) {
-                        player.sendMessage("§b"+args[1]+"§c n'est pas asser proche pour se faire fouiller");
+                        player.sendMessage("§b"+args[1]+"§c n'est pas assez proche pour se faire fouiller");
                         return false;
                     }
                     final String invName = "§aInventaire de§c "+target.getDisplayName();

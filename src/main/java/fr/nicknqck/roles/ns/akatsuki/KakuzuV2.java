@@ -137,7 +137,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         //A partir de la je suis la victime
         if (getChakras() == null)return;
         if (this.chakrasVoled.size() == 1) {
-            event.getPlayer().sendMessage("§7Vous n'avez plus asser de§a nature de chakra§7 pour§c réapparaitre !");
+            event.getPlayer().sendMessage("§7Vous n'avez plus assez de§a nature de chakra§7 pour§c réapparaitre !");
             return;
         }
         if (getMaxHealth() > 10.0) {//Il faut que le Kakuzu revive tant qu'il a + que 5coeurs perma (ça lui coûte une nature de chakra et 1coeurs perma)
