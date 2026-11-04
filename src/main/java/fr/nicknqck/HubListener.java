@@ -9,6 +9,7 @@ import fr.nicknqck.items.Items;
 import fr.nicknqck.items.ItemsManager;
 import fr.nicknqck.managers.AssassinManagerV2;
 import fr.nicknqck.player.GamePlayer;
+import fr.nicknqck.utils.AntiLopsa;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
@@ -114,6 +115,7 @@ public class HubListener implements Listener {
 		gameState.setActualPvPTimer(gameState.getPvPTimer());
 		gameState.setServerState(ServerStates.InGame);
 		new AssassinManagerV2(gameState);
+		AntiLopsa.startWorldBorderChecker();
 		System.out.println("Ended StartGame");
 	}
 	public void giveStartInventory(Player p) {

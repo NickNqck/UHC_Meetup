@@ -114,7 +114,6 @@ public class GameListener implements Listener {
 					if (p.getGameMode() != GameMode.SURVIVAL)p.setGameMode(GameMode.SURVIVAL);
 				}
 			}
-			AntiLopsa.startWorldBorderChecker();
 			if (Hastey_Boys.isHasteyBoys()) {
 				for (UUID u : gameState.getInGamePlayers()) {
 					Player p = Bukkit.getPlayer(u);
