@@ -199,11 +199,11 @@ public class EnmuV2 extends DemonsRoles {
                 }
                 final GamePlayer gameTarget = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
                 if (gameTarget == null) {
-                    player.sendMessage("§cIl faut viser un joueur !§7 (le joueur viser n'a pas de rôle)");
+                    player.sendMessage("§cIl faut viser un joueur !§7 (le joueur visé n'a pas de rôle)");
                     return false;
                 }
                 if (this.duelMap.containsKey(target.getUniqueId())) {
-                    player.sendMessage("§c"+target.getName()+"§7 a déjà été placer dans votre sommeil");
+                    player.sendMessage("§c"+target.getName()+"§7 a déjà été placé dans votre sommeil");
                     return false;
                 }
                 new SommeilRunnable(this, target.getUniqueId()).runTaskTimer(getPlugin(), 0, 20);
@@ -213,8 +213,8 @@ public class EnmuV2 extends DemonsRoles {
             return false;
         }
         private void tryStartDuel(final Player target, final Player owner) {
-            owner.sendMessage("§7Vous avez§c endormie§7 le joueur: "+target.getDisplayName());
-            target.sendMessage("§7Vous avez été§c endormie§7 par§c Enmu");
+            owner.sendMessage("§7Vous avez§c endormi§7 le joueur: "+target.getDisplayName());
+            target.sendMessage("§7Vous avez été§c endormi§7 par§c Enmu");
             final Location loc1 = new Location(this.arena, 25, this.arena.getHighestBlockYAt(25, 25), 25);
             final Location loc2 = new Location(this.arena, -25, this.arena.getHighestBlockYAt(-25, -25), -25);
             Bukkit.getScheduler().runTask(getPlugin(), () -> {
@@ -261,7 +261,7 @@ public class EnmuV2 extends DemonsRoles {
                 if (event.getGamePlayerKiller().getUuid().equals(this.sommeilUltime.getRole().getPlayer())) {
                     this.sommeilUltime.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()+1.0);
                     event.getGamePlayerKiller().getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
-                    event.getGamePlayerKiller().sendMessage("§7Bravo, vous avez vaincu§c "+victim.getPlayerName()+"§7 dans son sommeil, vous gagnez donc§a +§c1/2❤ permanent§7 ainsi qu'une utilisation de ce pouvoir, vous serez téléporter en dehors du rêve dans§c 10 secondes§7.");
+                    event.getGamePlayerKiller().sendMessage("§7Bravo, vous avez vaincu§c "+victim.getPlayerName()+"§7 dans son sommeil, vous gagnez donc§a +§c1/2❤ permanent§7 ainsi qu'une utilisation de ce pouvoir, vous serez téléporté en dehors du rêve dans§c 10 secondes§7.");
                     this.sommeilUltime.setMaxUse(this.sommeilUltime.getMaxUse()+1);
                     //Du coup la je vais tp QUE enmu
                     new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
@@ -397,7 +397,7 @@ public class EnmuV2 extends DemonsRoles {
                         this.winer.getActionBarManager().removeInActionBar("enmuv2.duelend");
                         return;
                     }
-                    this.winer.getActionBarManager().addToActionBar("enmuv2.duelend", "§bTemp avant téléportation:§c "+this.timeLeft+"s");
+                    this.winer.getActionBarManager().addToActionBar("enmuv2.duelend", "§bTemps avant téléportation:§c "+this.timeLeft+"s");
                     this.timeLeft--;
                 }
             }
@@ -412,7 +412,7 @@ public class EnmuV2 extends DemonsRoles {
                 this.sommeilUltime = sommeilUltime;
                 this.gameState = sommeilUltime.getRole().getGameState();
                 this.uuid = uuidTarget;
-                sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemp avant sommeil:§c 5 minutes");
+                sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemps avant sommeil:§c 5 minutes");
             }
 
             @Override
@@ -438,7 +438,7 @@ public class EnmuV2 extends DemonsRoles {
                         this.sommeilUltime.duelMap.remove(around.getUniqueId(), time);
                         time--;
                         this.sommeilUltime.duelMap.put(around.getUniqueId(), time);
-                        this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().updateActionBar("enmuv2.dueltime", "§bTemp avant sommeil:§c "+StringUtils.secondsTowardsBeautiful(this.sommeilUltime.duelMap.get(uuid)));
+                        this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().updateActionBar("enmuv2.dueltime", "§bTemps avant sommeil:§c "+StringUtils.secondsTowardsBeautiful(this.sommeilUltime.duelMap.get(uuid)));
                         if (time == 0) {
                             this.sommeilUltime.tryStartDuel(around, owner);
                             this.sommeilUltime.getRole().getGamePlayer().getActionBarManager().removeInActionBar("enmuv2.dueltime");

@@ -73,7 +73,7 @@ public class DemonKingEvent extends Event {
                             if (gamePlayer.getRole() != null) {
                                 if (gamePlayer.getRole() instanceof KokushiboV2) {
                                     KokushiboV2 kokushibo = (KokushiboV2) gamePlayer.getRole();
-                                    Bukkit.getScheduler().runTaskLater(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous sentez des pulsions montez en vous..."), 20);
+                                    Bukkit.getScheduler().runTaskLater(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous sentez des pulsions monter en vous..."), 20);
                                     Bukkit.getScheduler().runTaskLater(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous devenez de plus en plus aigri..."), 20*5);
                                     Bukkit.getScheduler().runTaskLater(Main.getPlugin(Main.class), () -> {
                                         kokushibo.setTeam(TeamList.Solo);

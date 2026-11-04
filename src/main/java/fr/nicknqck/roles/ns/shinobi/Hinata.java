@@ -326,7 +326,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                     }
                     player.sendMessage("§cImpossible de viser§b "+target.getName()+"§c.");
                 } else {
-                    player.sendMessage("§b"+args[1]+"§c n'existe pas ou n'est pas connecter !");
+                    player.sendMessage("§b"+args[1]+"§c n'existe pas ou n'est pas connecté !");
                 }
                 return false;
             } else {

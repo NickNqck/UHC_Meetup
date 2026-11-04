@@ -257,7 +257,7 @@ public class DeathManager implements Listener {
                 RoleBase role2 = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
                 if (role2.getOriginTeam() == TeamList.Demon || role2 instanceof KaigakuV2) {
                     demons.add(u);
-                    p.sendMessage("§cLe joueur§4 "+killerName+"§c à tué quelqu'un....");
+                    p.sendMessage("§cLe joueur§4 "+killerName+"§c a tué quelqu'un....");
                 }
             }
         }

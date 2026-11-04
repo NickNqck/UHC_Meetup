@@ -272,7 +272,7 @@ public class InoV2 extends ShinobiRoles {
                 this.gamePlayer = gamePlayer;
                 this.gameState = gameState;
                 this.initLoc = gamePlayer.getLastLocation();
-                gamePlayer.getActionBarManager().addToActionBar("ino.controlemental."+gameTarget.getPlayerName(), "§bTemp restant (§aControle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
+                gamePlayer.getActionBarManager().addToActionBar("ino.controlemental."+gameTarget.getPlayerName(), "§bTemps restant (§aContrôle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
                 runTaskTimer(Main.getInstance(), 0, 1);
             }
 
@@ -282,7 +282,7 @@ public class InoV2 extends ShinobiRoles {
                     cancel();
                     return;
                 }
-                gamePlayer.getActionBarManager().updateActionBar("ino.controlemental."+this.gameTarget.getPlayerName(), "§bTemp restant (§aControle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
+                gamePlayer.getActionBarManager().updateActionBar("ino.controlemental."+this.gameTarget.getPlayerName(), "§bTemps restant (§aContrôle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
                 if (this.timeLeft <= 0) {
                     gamePlayer.getActionBarManager().removeInActionBar("ino.controlemental."+this.gameTarget.getPlayerName());
                     final Player player = Bukkit.getPlayer(this.gamePlayer.getUuid());

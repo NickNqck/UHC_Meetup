@@ -89,7 +89,7 @@ public class TitanManager implements Listener {
                 if (!(player.getRole() instanceof AotRoles))continue;
                 if (!((AotRoles) player.getRole()).isCanVoleTitan())continue;
                 titan.getStealers().add(player);
-                player.sendMessage("§7Un§c titan§7 est mort proche de vous, vous pouvez faire la commande§6 /aot steal§7 pour§c récupérez§7 ce§c titan");
+                player.sendMessage("§7Un§c titan§7 est mort proche de vous, vous pouvez faire la commande§6 /aot steal§7 pour§c récupérer§7 ce§c titan");
                 player.getRole().addPower(new StealCommand(player.getRole()));
                 stealManager.map.put(player.getUuid(), ((AotRoles) player.getRole()).getStealPriority());
             }
@@ -141,7 +141,7 @@ public class TitanManager implements Listener {
                 if (this.stealRunnable == null) {
                     this.stealRunnable = new StealRunnable(event.getRole().getGameState(), this);
                 }
-                event.getPlayer().sendMessage("§7Vous avez été ajouter en tant que potentiel récupérateur du§c titan "+titan.getName()+"§7, vous aurez les résultas dans§c "+this.stealRunnable.timeLeft+"s");
+                event.getPlayer().sendMessage("§7Vous avez été ajouté en tant que potentiel récupérateur du§c titan "+titan.getName()+"§7, vous aurez les résultats dans§c "+this.stealRunnable.timeLeft+"s");
                 this.stealRunnable.addGamePlayer(event.getRole().getGamePlayer(), event.getRole().getStealPriority());
             }
         }
@@ -167,7 +167,7 @@ public class TitanManager implements Listener {
             }
             private void addGamePlayer(@NonNull final GamePlayer gamePlayer, final int stealPriority) {
                 this.map.put(gamePlayer, stealPriority);
-                gamePlayer.getActionBarManager().addToActionBar("stealmanager.steal", "§7Temp avant obtention du§c titan§7: §c"+this.timeLeft+"s");
+                gamePlayer.getActionBarManager().addToActionBar("stealmanager.steal", "§7Temps avant obtention du§c titan§7: §c"+this.timeLeft+"s");
             }
 
             @Override
@@ -177,7 +177,7 @@ public class TitanManager implements Listener {
                     return;
                 }
                 for (@NonNull final GamePlayer gamePlayer : this.map.keySet()) {
-                    gamePlayer.getActionBarManager().updateActionBar("stealmanager.steal", "§7Temp avant obtention du§c titan§7: §c"+this.timeLeft+"s");
+                    gamePlayer.getActionBarManager().updateActionBar("stealmanager.steal", "§7Temps avant obtention du§c titan§7: §c"+this.timeLeft+"s");
                 }
                 if (this.timeLeft <= 0) {
                     GamePlayer gamePlayer = getGamePlayer();

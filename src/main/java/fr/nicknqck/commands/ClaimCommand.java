@@ -59,7 +59,7 @@ public class ClaimCommand implements CommandExecutor {
 						return true;
 					}
 				}else {
-					sender.sendMessage("Vous n'avez rien à récupérée");
+					sender.sendMessage("Vous n'avez rien à récupérer");
 					return true;
 				}
 			}

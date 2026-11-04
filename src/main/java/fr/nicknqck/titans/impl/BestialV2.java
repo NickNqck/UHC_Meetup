@@ -160,7 +160,7 @@ public class BestialV2 extends TitanBase implements Listener {
         if (this.bestialForm.equals(BestialForm.OKAPI)) {
             getGamePlayer().getRole().addPower(new LanguePower(this), true);
         }
-        getGamePlayer().sendMessage("§7Votre titan bestial à maintenant la forme \""+this.bestialForm.getName()+"§7\"");
+        getGamePlayer().sendMessage("§7Votre titan bestial a maintenant la forme \""+this.bestialForm.getName()+"§7\"");
         this.potionEffects.addAll(this.bestialForm.getPotionEffects());
         final Player owner = Bukkit.getPlayer(getGamePlayer().getUuid());
         if (owner != null) {
