@@ -223,17 +223,23 @@ public class BestialV2 extends TitanBase implements Listener {
                 this.gameState = gameState;
                 this.power = power;
                 this.timeLeft = 10;
-                power.bestialV2.getGamePlayer().getActionBarManager().addToActionBar("oiseau.fly", "§bTemp de vol restant:§c "+this.timeLeft+"s");
+                power.bestialV2.getGamePlayer().getActionBarManager().addToActionBar("oiseau.fly", "§bTemps de vol restant:§c "+this.timeLeft+"s");
                 runTaskTimer(power.getPlugin(), 0, 20);
             }
 
             @Override
             public void run() {
                 if (!gameState.getServerState().equals(GameState.ServerStates.InGame) || !this.power.bestialV2.isTransformed() || !this.power.bestialV2.bestialForm.equals(BestialForm.OISEAU) || !this.power.bestialV2.getGamePlayer().isAlive()) {
+                    power.bestialV2.getGamePlayer().getActionBarManager().removeInActionBar("oiseau.fly");
+                    final Player player = Bukkit.getPlayer(this.power.bestialV2.getGamePlayer().getUuid());
+                    if (player != null && !player.getGameMode().equals(GameMode.SPECTATOR)) {
+                        player.setFlying(false);
+                        player.setAllowFlight(false);
+                    }
                     cancel();
                     return;
                 }
-                power.bestialV2.getGamePlayer().getActionBarManager().updateActionBar("oiseau.fly", "§bTemp de vol restant:§c "+this.timeLeft+"s");
+                power.bestialV2.getGamePlayer().getActionBarManager().updateActionBar("oiseau.fly", "§bTemps de vol restant:§c "+this.timeLeft+"s");
                 if (this.timeLeft <= 0) {
                     power.bestialV2.getGamePlayer().getActionBarManager().removeInActionBar("oiseau.fly");
                     @NonNull final Player player = Bukkit.getPlayer(this.power.bestialV2.getGamePlayer().getUuid());
@@ -244,7 +250,7 @@ public class BestialV2 extends TitanBase implements Listener {
                     }
                     player.setFlying(false);
                     player.setAllowFlight(false);
-                    player.sendMessage("§7Vous arrêter de voler...");
+                    player.sendMessage("§7Vous arrêtez de voler...");
                     cancel();
                     return;
                 }
@@ -272,13 +278,13 @@ public class BestialV2 extends TitanBase implements Listener {
                 @NonNull Vector direction = player.getEyeLocation().getDirection();
                 direction.multiply(1.8);
                 player.setVelocity(direction);
-                @NonNull Location to = direction.toLocation(player.getWorld());
+                @NonNull Location to = player.getLocation().add(direction);
                 for (@NonNull Player target : Loc.getNearbyPlayers(to, 10)) {
                     if (target.getUniqueId().equals(player.getUniqueId()))continue;
                     @NonNull Location location = target.getLocation();
                     float nouveauYaw = (location.getYaw() + 180) % 360;
                     location.setYaw(nouveauYaw);
-                    @NonNull Vector dir = target.getLocation().getDirection();
+                    @NonNull Vector dir = location.getDirection();
                     dir.multiply(1.8);
                     target.setVelocity(dir);
                     target.setHealth(Math.max(1.0, target.getHealth()-3.0));

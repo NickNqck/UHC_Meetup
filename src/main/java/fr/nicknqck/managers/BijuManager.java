@@ -303,20 +303,20 @@ public class BijuManager implements Listener {
         private Location moveToOrigin(Location location) {
             double x = location.getX();
             double z = location.getZ();
-            if (x < 0.0) {
-                location.setX(location.getBlockX()+5);
-                location.setY(location.getWorld().getHighestBlockYAt(location));
-                return location;
+            double halfSize = location.getWorld().getWorldBorder().getSize() / 2;
+            if (Math.abs(x) >= halfSize - 10) {
+                if (x < 0.0) {
+                    location.setX(location.getBlockX()+5);
+                } else {
+                    location.setX(location.getBlockX()-5);
+                }
             }
-            if (x > 0.0) {
-                location.setX(location.getBlockX()-5);
-                location.setY(location.getWorld().getHighestBlockYAt(location));
-                return location;
-            }
-            if (z < 0.0) {
-                location.setZ(location.getBlockZ()+5);
-            } else {
-                location.setX(location.getBlockZ()-5);
+            if (Math.abs(z) >= halfSize - 10) {
+                if (z < 0.0) {
+                    location.setZ(location.getBlockZ()+5);
+                } else {
+                    location.setZ(location.getBlockZ()-5);
+                }
             }
             location.setY(location.getWorld().getHighestBlockYAt(location));
             return location;
