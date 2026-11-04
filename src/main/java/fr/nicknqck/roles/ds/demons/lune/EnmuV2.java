@@ -88,7 +88,7 @@ public class EnmuV2 extends DemonsRoles {
         addPower(new EndormissementPower(this), true);
         addPower(new SommeilUltime(this), true);
     }
-    private static class SommeilUltime extends ItemPower {
+    private static class SommeilUltime extends ItemPower implements Listener {
 
         private final World arena;
         private final Map<UUID, Integer> duelMap = new HashMap<>();
@@ -107,6 +107,12 @@ public class EnmuV2 extends DemonsRoles {
             clearArena();
             setMaxUse(1);
             setTargetDistance(30);
+            EventUtils.registerEvents(this);
+        }
+        @EventHandler
+        private void onGameEnd(final GameEndEvent event) {
+            Main.getInstance().deleteWorld("enmuv2_duel");
+            EventUtils.unregisterEvents(this);
         }
 
         private World getWorld() {
@@ -200,7 +206,7 @@ public class EnmuV2 extends DemonsRoles {
                     player.sendMessage("§c"+target.getName()+"§7 a déjà été placer dans votre sommeil");
                     return false;
                 }
-                new SommeilRunnable(this, target.getUniqueId()).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+                new SommeilRunnable(this, target.getUniqueId()).runTaskTimer(getPlugin(), 0, 20);
                 this.duelMap.put(target.getUniqueId(), 30);
                 return true;
             }
@@ -259,7 +265,7 @@ public class EnmuV2 extends DemonsRoles {
                     this.sommeilUltime.setMaxUse(this.sommeilUltime.getMaxUse()+1);
                     //Du coup la je vais tp QUE enmu
                     new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
-                    onEndGame();
+                    endDuel();
                     if (victim.getRole() != null) {
                         if (victim.getRole() instanceof PilierRoles) {
                             event.getGamePlayerKiller().sendMessage("§7On dirait que vous avez vaincu un§a pilier§7, vous gagnez donc§a +§c1/2❤ permanent");
@@ -318,7 +324,7 @@ public class EnmuV2 extends DemonsRoles {
                     new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     new ReturnBackRunnable(this, victim, true).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     event.setCancelled(true);
-                    onEndGame();
+                    endDuel();
                 }
             }
             private boolean isGoodEffect(PotionEffectType type) {
@@ -340,10 +346,9 @@ public class EnmuV2 extends DemonsRoles {
             }
             @EventHandler
             private void onEndGame(final GameEndEvent event) {
-                onEndGame();
+                endDuel();
             }
-            private void onEndGame() {
-                Main.getInstance().deleteWorld("enmuv2_duel");
+            private void endDuel() {
                 EventUtils.unregisterEvents(this);
             }
 

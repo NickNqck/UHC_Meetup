@@ -31,7 +31,7 @@ public class ClaimCommand implements CommandExecutor {
 						sender.openInventory(inv);
 						sender.updateInventory();
 					} else {
-						for (ItemStack item : role.toClaim) {
+						for (ItemStack item : new java.util.ArrayList<>(role.toClaim)) {
 							if (gameState.countEmptySlots(sender) > 0) {
 								if (item.hasItemMeta()) {
 									if (item.getItemMeta().hasDisplayName()) {

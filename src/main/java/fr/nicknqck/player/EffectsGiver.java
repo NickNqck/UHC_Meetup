@@ -40,7 +40,8 @@ public class EffectsGiver implements Listener {
                 if (event.getGameState().getGamePlayer().containsKey(event.getPlayer().getUniqueId())) {
                     GamePlayer gamePlayer = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId());
                     if (gamePlayer.getRole() == null)return;
-                    PotionEffect potionEffect = killGiver.get(gamePlayer).get(gamePlayer.getRole().getClass());
+                    PotionEffect potionEffect = killGiver.get(event.getGamePlayerKiller()).get(gamePlayer.getRole().getClass());
+                    if (potionEffect == null)return;
                     CustomKillEffectGiveEvent e = new CustomKillEffectGiveEvent(event.getGamePlayerKiller(), gamePlayer, gamePlayer.getRole(), potionEffect, event.getGameState());
                     Bukkit.getPluginManager().callEvent(e);
                     if (e.isCancelled())return;

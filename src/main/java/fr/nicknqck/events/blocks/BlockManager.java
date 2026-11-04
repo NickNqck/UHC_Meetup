@@ -22,6 +22,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
+import fr.nicknqck.events.custom.GameStartEvent;
 import fr.nicknqck.items.Items;
 import fr.nicknqck.scenarios.impl.CutClean;
 import fr.nicknqck.scenarios.impl.DiamondLimit;
@@ -151,13 +152,15 @@ public class BlockManager implements Listener{
                 expOrb.setExperience(xpdiams+gameState.xpdiams);
                 block.setType(Material.AIR);
                 if (DiamondLimit.isLimit()) {
-                    if (DiamondLimit.getdiamsmined() >= DiamondLimit.getmaxdiams()) {
+                    if (DiamondLimit.getDiamsMined(player.getUniqueId()) >= DiamondLimit.getmaxdiams()) {
                         GameListener.dropItem(loc, new ItemStack(Material.GOLD_INGOT, 1));
                     } else {
                         GameListener.dropItem(loc, new ItemStack(Material.DIAMOND, 1));
-                        DiamondLimit.setdiamsmined(DiamondLimit.getdiamsmined() + 1);
-                        NMSPacket.sendActionBar(player, ChatColor.AQUA+"Diamond Limite: "+DiamondLimit.getdiamsmined()+"/"+DiamondLimit.getmaxdiams());
+                        DiamondLimit.addDiamMined(player.getUniqueId());
+                        NMSPacket.sendActionBar(player, ChatColor.AQUA+"Diamond Limite: "+DiamondLimit.getDiamsMined(player.getUniqueId())+"/"+DiamondLimit.getmaxdiams());
                     }
+                } else {
+                    GameListener.dropItem(loc, new ItemStack(Material.DIAMOND, 1));
                 }
             }
 			if (!gameState.hasRoleNull(player.getUniqueId())) {
@@ -207,5 +210,10 @@ public class BlockManager implements Listener{
 			block.setType(Material.AIR);
 			GameListener.dropItem(loc, new ItemStack(Material.TORCH, 4));
 		}
+	}
+
+	@EventHandler
+	private void onGameStart(final GameStartEvent event) {
+		DiamondLimit.resetDiamsMined();
 	}
 }

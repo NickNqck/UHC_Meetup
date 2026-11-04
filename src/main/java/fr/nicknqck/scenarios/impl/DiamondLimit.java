@@ -1,6 +1,9 @@
 package fr.nicknqck.scenarios.impl;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import fr.nicknqck.scenarios.BasicScenarios;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -15,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class DiamondLimit extends BasicScenarios {
 	
 	private static int maxdiams = 22;
-	private static int diamsmined = 0;
+	private static final Map<UUID, Integer> diamsMined = new HashMap<>();
 	private static boolean alimit = false;
 	
 	public static void setLimit(boolean a) {
@@ -29,11 +32,14 @@ public class DiamondLimit extends BasicScenarios {
 	public static void setMaxDiams(int maxd) {
 		maxdiams = maxd;
 	}
-	public static void setdiamsmined(int d) {
-		diamsmined = d;
+	public static int getDiamsMined(final UUID uuid) {
+		return diamsMined.getOrDefault(uuid, 0);
 	}
-	public static int getdiamsmined() {
-		return diamsmined;
+	public static void addDiamMined(final UUID uuid) {
+		diamsMined.put(uuid, getDiamsMined(uuid) + 1);
+	}
+	public static void resetDiamsMined() {
+		diamsMined.clear();
 	}
 	public static int getmaxdiams() {
 		return maxdiams;

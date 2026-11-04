@@ -269,7 +269,7 @@ public class Sai extends ShinobiRoles implements Listener {
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (map.containsKey("event")) {
-                    Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), () -> openInventory(player));
+                    Bukkit.getScheduler().runTask(getPlugin(), () -> openInventory(player));
                     return false;
                 }
                 if (map.containsKey("target")) {

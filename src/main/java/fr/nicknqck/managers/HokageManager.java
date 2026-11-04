@@ -4,6 +4,7 @@ import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.MDJ;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.ns.GamePlayerBecomeHokageEvent;
@@ -61,8 +62,15 @@ public class HokageManager implements Listener {
         }
     }
 
+    @EventHandler
+    private void onGameEnd(@NonNull final GameEndEvent event) {
+        this.hokage = null;
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     private void onDeath(@NonNull final UHCDeathEvent event) {
+        if (!isEnable())return;
+        if (!MDJ.NS.equals(event.getGameState().getMdj()))return;
         if (this.hokage == null)return;
         if (event.isCancelled())return;
         if (!this.hokage.getUuid().equals(event.getPlayer().getUniqueId()))return;

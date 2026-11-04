@@ -274,6 +274,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
         private boolean madeChoice = false;
         private int amountPowerChoice = -1;
         private UUID lastTargetUuid;
+        private int choiceSize = 0;
 
         public PowersInfo(@NonNull RoleBase role) {
             super("§a/ns pouvoirs <joueur> <nombre de pouvoirs>§r", "pouvoirs", new Cooldown(60*10), role, CommandType.NS
@@ -312,6 +313,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                                          amount++;
                                      }
                                      this.lastTargetUuid = gamePlayer.getUuid();
+                                     this.choiceSize = powerList.size();
                                      target.spigot().sendMessage(textComponent);
                                      new PowerRunnable(this, gamePlayer, powerList).runTaskTimerAsynchronously(getPlugin(), 0, 20);
                                  } else {
@@ -352,7 +354,12 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                 if (args.length == 3 && args[1].equalsIgnoreCase("choice") && this.lastTargetUuid.equals(event.getPlayer().getUniqueId()) && !this.madeChoice) {
                     String valueStr = args[2];
                     try {
-                        this.amountPowerChoice = Integer.parseInt(valueStr);
+                        final int choice = Integer.parseInt(valueStr);
+                        if (choice < 0 || choice >= this.choiceSize) {
+                            event.getPlayer().sendMessage("§cCe choix n'existe pas.");
+                            return;
+                        }
+                        this.amountPowerChoice = choice;
                         this.madeChoice = true;
                         this.lastTargetUuid = getRole().getPlayer();
                     } catch (NumberFormatException ignored) {
@@ -368,6 +375,11 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
             getRole().getGamePlayer().sendMessage("§c"+gameTarget.getPlayerName()+"§7 a l'un de ses pouvoirs qui se nomme \"§a"+name+"§7\".");
             this.madeChoice = false;
             this.amountPowerChoice = -1;
+        }
+        private void resetChoice() {
+            this.lastTargetUuid = getRole().getPlayer();
+            this.madeChoice = false;
+            this.choiceSize = 0;
         }
 
         @Override
@@ -417,12 +429,14 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                 if (this.powersInfo.madeChoice) {
                     this.powersInfo.getRole().getGamePlayer().getActionBarManager().removeInActionBar("hinata.power");
                     this.powersInfo.stopRunnableWithChoice(this.gameTarget, this.powerList);
+                    this.powersInfo.resetChoice();
                     cancel();
                     return;
 
                 }
                 if (this.timeLeft <= 0) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.powersInfo.stopRunnableNoChoice(gameTarget));
+                    this.powersInfo.resetChoice();
                     cancel();
                     return;
                 }

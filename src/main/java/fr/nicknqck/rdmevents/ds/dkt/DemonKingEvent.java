@@ -65,7 +65,7 @@ public class DemonKingEvent extends Event {
                 }
             }
         if (tanjiroDemon) {
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                     Bukkit.broadcastMessage(AllDesc.bar+"\n§rL'évènement aléatoire "+ getName()+" vient de se déclencher, le rôle§c Tanjiro§f est maintenant dans le camp des Démons !\n"+AllDesc.bar);
                     this.activated = true;
                     if (RandomUtils.getOwnRandomProbability(50)) {
@@ -73,9 +73,9 @@ public class DemonKingEvent extends Event {
                             if (gamePlayer.getRole() != null) {
                                 if (gamePlayer.getRole() instanceof KokushiboV2) {
                                     KokushiboV2 kokushibo = (KokushiboV2) gamePlayer.getRole();
-                                    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous sentez des pulsions montez en vous..."), 20);
-                                    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous devenez de plus en plus aigri..."), 20*5);
-                                    Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getPlugin(Main.class), () -> {
+                                    Bukkit.getScheduler().runTaskLater(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous sentez des pulsions montez en vous..."), 20);
+                                    Bukkit.getScheduler().runTaskLater(Main.getPlugin(Main.class), () -> kokushibo.getGamePlayer().sendMessage("§7Vous devenez de plus en plus aigri..."), 20*5);
+                                    Bukkit.getScheduler().runTaskLater(Main.getPlugin(Main.class), () -> {
                                         kokushibo.setTeam(TeamList.Solo);
                                         kokushibo.orginalMaxHealth = kokushibo.getMaxHealth();
                                         kokushibo.getGamePlayer().sendMessage(" \n§7La nouvelle de la mort de§c Muzan§7 est maintenant un simple pourfendeur devenu le chef des§c démons§7 quelle honte, vous explosez de rage et décidez de§l tuer§7 tout le monde\n ");

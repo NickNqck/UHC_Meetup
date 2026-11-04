@@ -273,7 +273,7 @@ public class InoV2 extends ShinobiRoles {
                 this.gameState = gameState;
                 this.initLoc = gamePlayer.getLastLocation();
                 gamePlayer.getActionBarManager().addToActionBar("ino.controlemental."+gameTarget.getPlayerName(), "§bTemp restant (§aControle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+                runTaskTimer(Main.getInstance(), 0, 1);
             }
 
             @Override

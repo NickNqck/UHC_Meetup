@@ -63,7 +63,7 @@ public final class StunManager implements Listener{
             this.blind = blind;
             this.text = text;
             this.stunLocation = stunLocation;
-            runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+            runTaskTimer(Main.getInstance(), 0, 1);
         }
 
         @SuppressWarnings("deprecation")

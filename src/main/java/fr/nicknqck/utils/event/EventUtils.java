@@ -6,6 +6,7 @@ import fr.nicknqck.events.custom.power.PowerItemRecupEvent;
 import fr.nicknqck.utils.powers.ItemPower;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,8 +58,10 @@ public class EventUtils implements Listener{
             unregisterEvents(listener);
         }
         toUnregister.clear();
-        for (Entity entity : Bukkit.getWorld("arena").getEntities()) {
-            if (entity instanceof Player) {return;}
+        final World arena = Bukkit.getWorld("arena");
+        if (arena == null) return;
+        for (Entity entity : arena.getEntities()) {
+            if (entity instanceof Player) {continue;}
             entity.remove();
         }
     }

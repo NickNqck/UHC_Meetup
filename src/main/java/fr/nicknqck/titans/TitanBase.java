@@ -25,7 +25,7 @@ public abstract class TitanBase implements ITitan {
     private boolean transformed = false;
     private GamePlayer gamePlayer;
     @Getter
-    private final TransformationPower transformationPower;
+    private TransformationPower transformationPower;
 
     protected TitanBase(final GamePlayer gamePlayer) {
         this.stealers = new ArrayList<>();
@@ -70,8 +70,17 @@ public abstract class TitanBase implements ITitan {
     public abstract @NonNull String getParticularites();
 
     public void setNewOwner(@NonNull GamePlayer gamePlayer) {
-        Main.getInstance().getTitanManager().replaceOwner(this.getGamePlayer().getUuid(), gamePlayer, this);
+        final GamePlayer oldOwner = this.gamePlayer;
+        final TransformationPower oldTransformationPower = this.transformationPower;
+        //Mise à jour avant l'évènement pour que les listeners (ex : Bestial) agissent sur le nouveau propriétaire
         this.gamePlayer = gamePlayer;
+        this.transformationPower = new TransformationPower(this);
+        if (!Main.getInstance().getTitanManager().replaceOwner(oldOwner.getUuid(), gamePlayer, this)) {
+            this.gamePlayer = oldOwner;
+            this.transformationPower = oldTransformationPower;
+            return;
+        }
+        gamePlayer.getRole().addPower(this.transformationPower, true);
     }
 
     public static class TransformationPower extends ItemPower {
@@ -131,7 +140,7 @@ public abstract class TitanBase implements ITitan {
                 });
                 onlinePlayer.playSound(onlinePlayer.getLocation(), "aotmtp.transfo", 8, 1);
             }
-            new TransformationRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+            new TransformationRunnable(this).runTaskTimer(getPlugin(), 0, 20);
         }
         public synchronized void stopTransformation(@NonNull final Player p) {
             this.titanBase.setTransformed(false);
@@ -163,14 +172,23 @@ public abstract class TitanBase implements ITitan {
                     cancel();
                     return;
                 }
+                final Player player = Bukkit.getPlayer(this.power.titanBase.getGamePlayer().getUuid());
                 if (!this.power.titanBase.getGamePlayer().isAlive()) {
-                    this.power.stopTransformation(Bukkit.getPlayer(this.power.titanBase.getGamePlayer().getUuid()));
+                    if (player != null) {
+                        this.power.stopTransformation(player);
+                    } else {//Mort hors ligne : arrêt sans TitanTransformEvent
+                        this.power.titanBase.setTransformed(false);
+                        this.power.getCooldown().setActualCooldown(this.power.titanBase.getTransfoDuration());
+                    }
                     cancel();
                     return;
                 }
                 if (!this.power.titanBase.isTransformed()) {
                     power.titanBase.getGamePlayer().getActionBarManager().removeInActionBar("titanbase."+power.titanBase.getName());
                     cancel();
+                    return;
+                }
+                if (player == null) {//En pause tant que le titan est déconnecté
                     return;
                 }
                 this.timeLeft--;
@@ -189,7 +207,7 @@ public abstract class TitanBase implements ITitan {
                 }
                 if (this.power.getCooldown().getCooldownRemaining() <= this.power.titanBase.getTransfoDuration()) {
                     power.titanBase.getGamePlayer().getActionBarManager().removeInActionBar("titanbase."+power.titanBase.getName());
-                    this.power.stopTransformation(Bukkit.getPlayer(this.power.titanBase.getGamePlayer().getUuid()));
+                    this.power.stopTransformation(player);
                     cancel();
                 }
             }

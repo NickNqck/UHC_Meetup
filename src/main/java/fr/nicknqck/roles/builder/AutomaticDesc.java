@@ -91,7 +91,7 @@ public class AutomaticDesc {
             for (@NonNull final PotionEffect potionEffect : dayEffectList) {
                 dayEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
                 if (dayEffectList.size() > 1){
-                    dayEffects.append((dayEffectList.get(dayEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                    dayEffects.append((dayEffectList.get(dayEffectList.size()-2).equals(potionEffect) ? " §7et §c" : dayEffectList.get(dayEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
                 }
             }
             text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez les effets "+dayEffects+" §7le §cjour"));
@@ -99,8 +99,8 @@ public class AutomaticDesc {
         if (!nightEffectList.isEmpty()) {
             for (@NonNull final PotionEffect potionEffect : nightEffectList) {
                 nightEffects.append("§c").append(getPotionEffectNameWithRomanLevel(potionEffect));
-                if (dayEffectList.size() > 1){
-                    nightEffects.append((nightEffectList.get(nightEffectList.size()-2).equals(potionEffect) ? " §7et §c" : permaEffectList.get(permaEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
+                if (nightEffectList.size() > 1){
+                    nightEffects.append((nightEffectList.get(nightEffectList.size()-2).equals(potionEffect) ? " §7et §c" : nightEffectList.get(nightEffectList.size()-1).equals(potionEffect) ? "" : "§7, "));
                 }
             }
             text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Vous possédez les effets "+nightEffects+" §7la §cnuit"));

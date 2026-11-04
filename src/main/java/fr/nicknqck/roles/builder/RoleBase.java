@@ -3,7 +3,6 @@ package fr.nicknqck.roles.builder;
 import com.avaje.ebean.validation.NotNull;
 import fr.nicknqck.GameListener;
 import fr.nicknqck.GameState;
-import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Roles;
@@ -33,7 +32,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -119,21 +117,6 @@ public abstract class RoleBase implements IRole {
 			StringID = RandomUtils.generateRandomString(24);
             Main.getInstance().debug(owner.getName()+", StringID: "+StringID);
 			Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> gameState.sendDescription(owner), 15);
-			new BukkitRunnable() {
-
-				@Override
-				public void run() {
-					if (gameState.getServerState() != ServerStates.InGame) {
-						cancel();
-						return;
-					}
-					Player owner = Bukkit.getPlayer(getPlayer());
-					if (owner == null) return;
-					if (owner.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) && getResi() < 20) {
-						setResi(20);
-					}
-				}
-			}.runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
 		}
 	}
 	@Override
@@ -260,11 +243,12 @@ public abstract class RoleBase implements IRole {
 	public final void giveHealedHeartatInt(final double coeur) {giveHealedHeartatInt(owner, coeur);}
 	public void Heal(Player target, double demicoeur) {
 		Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-			if (target.getHealth() - demicoeur <= 0 && demicoeur <0) {
-				Main.getInstance().getDeathManager().KillHandler(target, target);
+			if (target.getHealth() + demicoeur <= 0) {
+				Main.getInstance().getDeathManager().KillHandler(target, null);
+				return;
 			}
 			if (target.getHealth() <= (target.getMaxHealth()-demicoeur)) {
-				target.setHealth(target.getHealth()+demicoeur);
+				target.setHealth(Math.max(0, target.getHealth()+demicoeur));
 			}else {
 				target.setHealth(target.getMaxHealth());
 			}

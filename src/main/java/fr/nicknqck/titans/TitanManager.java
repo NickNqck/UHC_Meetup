@@ -38,12 +38,13 @@ public class TitanManager implements Listener {
     public void addTitan(final UUID uuid, final TitanBase titan){
         this.titansMap.put(uuid, titan);
     }
-    public void replaceOwner(@NonNull final UUID oldUUID, @NonNull final GamePlayer gamePlayer, @NonNull final TitanBase titan) {
+    public boolean replaceOwner(@NonNull final UUID oldUUID, @NonNull final GamePlayer gamePlayer, @NonNull final TitanBase titan) {
         @NonNull final TitanOwnerChangeEvent event = new TitanOwnerChangeEvent(oldUUID, gamePlayer, titan);
         Bukkit.getPluginManager().callEvent(event);
-        if (event.isCancelled()) return;
+        if (event.isCancelled()) return false;
         this.titansMap.remove(oldUUID, titan);
         this.addTitan(gamePlayer.getUuid(), titan);
+        return true;
     }
     public boolean hasTitan(@NonNull final UUID uuid) {
         return this.titansMap.containsKey(uuid);

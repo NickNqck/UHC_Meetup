@@ -162,7 +162,10 @@ public class BestialV2 extends TitanBase implements Listener {
         }
         getGamePlayer().sendMessage("§7Votre titan bestial à maintenant la forme \""+this.bestialForm.getName()+"§7\"");
         this.potionEffects.addAll(this.bestialForm.getPotionEffects());
-        Bukkit.getPlayer(getGamePlayer().getUuid()).performCommand("/aot titan");
+        final Player owner = Bukkit.getPlayer(getGamePlayer().getUuid());
+        if (owner != null) {
+            owner.performCommand("aot titan");
+        }
     }
     private static class DashPower extends ItemPower {
 

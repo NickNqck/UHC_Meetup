@@ -100,7 +100,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
     private void onDeath(final FinalDeathEvent event) {
         if (event.getRole() == null)return;
         if (event.getRole() instanceof DakiV2) {
-            if (this.daki == null && this.passifCommandPower != null) {
+            if (this.daki != null && this.passifCommandPower != null) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> this.passifCommandPower.onDakiDeath(), 20);
             }
         }

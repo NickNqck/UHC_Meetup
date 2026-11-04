@@ -23,12 +23,15 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,13 +55,18 @@ public class DeathManager implements Listener {
             if (player.getKiller() != null) {
                 KillHandler(player, player.getKiller());
             } else {
-                KillHandler(player, player.getLastDamageCause().getEntity());
+                final EntityDamageEvent lastDamageCause = player.getLastDamageCause();
+                if (lastDamageCause instanceof EntityDamageByEntityEvent) {
+                    KillHandler(player, ((EntityDamageByEntityEvent) lastDamageCause).getDamager());
+                } else {
+                    KillHandler(player, null);
+                }
             }
             e.setDroppedExp(15);
             e.getDrops().clear();
         }
     }
-    public void KillHandler(@Nonnull Player killedPlayer, @Nonnull Entity entityKiller) {
+    public void KillHandler(@Nonnull Player killedPlayer, @Nullable Entity entityKiller) {
         final GameState gameState = GameState.getInstance();
         if (gameState.getGamePlayer().containsKey(killedPlayer.getUniqueId())) {
             final GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
@@ -80,9 +88,9 @@ public class DeathManager implements Listener {
             this.ReelKillHandler(killedPlayer, entityKiller);
         }
     }
-    public void ReelKillHandler(@NonNull final Player killedPlayer, @NonNull final Entity entityKiller) {
+    public void ReelKillHandler(@NonNull final Player killedPlayer, @Nullable final Entity entityKiller) {
         final GameState gameState = GameState.getInstance();
-        final GamePlayer gamePlayerKiller = GamePlayer.of(entityKiller.getUniqueId());
+        final GamePlayer gamePlayerKiller = entityKiller == null ? null : GamePlayer.of(entityKiller.getUniqueId());
         UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), gamePlayerKiller);
         Bukkit.getPluginManager().callEvent(uhcDeathEvent);
         if (uhcDeathEvent.isCancelled()) {
@@ -180,7 +188,7 @@ public class DeathManager implements Listener {
                 }
             }
             if (!find) {
-                DeathMessage(killedPlayer, entityKiller.getUniqueId());
+                DeathMessage(killedPlayer, entityKiller == null ? null : entityKiller.getUniqueId());
             }
         }
         gameState.delInGamePlayers(killedPlayer);
@@ -260,7 +268,7 @@ public class DeathManager implements Listener {
             dropItem(loc, item);
         }
     }
-    private void DeathMessage(@Nonnull Player victim, @NonNull final UUID killerUUID) {
+    private void DeathMessage(@Nonnull Player victim, @Nullable final UUID killerUUID) {
         @NonNull final List<String> toSend = new ArrayList<>();
         toSend.add(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
         toSend.add(victim.getDisplayName()+"§7 est mort,");
@@ -281,7 +289,7 @@ public class DeathManager implements Listener {
         if (event.isSendToVictim()) {
             victim.sendMessage(toSend.toArray(new String[0]));
         }
-        if (event.isSendToKiller()) {
+        if (event.isSendToKiller() && killerUUID != null) {
             final Player player = Bukkit.getPlayer(killerUUID);
             if (player != null) {
                 player.sendMessage(toSend.toArray(new String[0]));
@@ -290,7 +298,7 @@ public class DeathManager implements Listener {
         if (event.isSendToEveryoneElse()) {
             for (@Nonnull final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.getUniqueId().equals(victim.getUniqueId())) {continue;}
-                if (onlinePlayer.getUniqueId().equals(killerUUID)) {
+                if (killerUUID != null && onlinePlayer.getUniqueId().equals(killerUUID)) {
                     continue;
                 }
                 onlinePlayer.sendMessage(toSend.toArray(new  String[0]));
