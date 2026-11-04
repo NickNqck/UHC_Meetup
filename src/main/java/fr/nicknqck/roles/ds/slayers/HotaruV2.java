@@ -68,7 +68,7 @@ public class HotaruV2 extends SlayerRoles {
 
     private static class LamePower extends CommandPower {
         public LamePower(@NonNull RoleBase role) {
-            super("§6/ds lame <joueur>", "lame", new Cooldown(0), role, CommandType.DS, "Vous permet de savoir si un joueur possède une lame ou non, si il en possède une vous saurez quelle lame le joueur possède. (3x/partie)");
+            super("§6/ds lame <joueur>", "lame", new Cooldown(0), role, CommandType.DS, "Vous permet de savoir si un joueur possède une lame ou non, s'il en possède une vous saurez quelle lame le joueur possède. (3x/partie)");
             setMaxUse(3);
         }
 
@@ -96,7 +96,7 @@ public class HotaruV2 extends SlayerRoles {
 
     private static class RepairPower extends CommandPower {
         public RepairPower(@NonNull RoleBase role) {
-            super("§6/ds repair <joueur>", "repair", new Cooldown(60 * 5), role, CommandType.DS, "§7Vous permet de réparer la lame d'un joueur. (3x/partie)  §cAttention : §7si le joueur que vous réparer ne possède pas de lame alors vous perderez votre pouvoir.");
+            super("§6/ds repair <joueur>", "repair", new Cooldown(60 * 5), role, CommandType.DS, "§7Vous permet de réparer la lame d'un joueur. (3x/partie)  §cAttention : §7si le joueur que vous réparez ne possède pas de lame alors vous perdrez votre pouvoir.");
             setMaxUse(3);
         }
 
