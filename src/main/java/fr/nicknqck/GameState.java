@@ -3,7 +3,6 @@ package fr.nicknqck;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent;
-import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
