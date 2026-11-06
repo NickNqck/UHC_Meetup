@@ -134,8 +134,8 @@ public class Sasori extends AkatsukiRoles {
                             }
                         } else {
                             player.sendMessage("§cImpossible de§a réanimer§c le joueur§b "+target.getName());
-                            return false;
                         }
+                        return false;
                     }
                 }
             }
