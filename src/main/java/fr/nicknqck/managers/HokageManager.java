@@ -105,7 +105,7 @@ public class HokageManager implements Listener {
 
         @Override
         public void run() {
-            if (!gameState.getServerState().equals(GameState.ServerStates.InGame)) {
+            if (!GameState.inGame()) {
                 cancel();
                 return;
             }
@@ -124,6 +124,7 @@ public class HokageManager implements Listener {
                             danzo.sendMessage("§7Voici le rôle de l'Hokage: §a"+gamePlayer.getRole().getName()+"§7 (§cAttention vous êtes le seul joueur à avoir cette information§7)");
                         }
                     }
+                    //On s'en fiche de donner ces choses en Async car elles ne sont pas capitale et ne peuvent pas causer d'erreur
                     gamePlayer.getRole().addBonusforce(10.0);
                     gamePlayer.getRole().addBonusResi(10.0);
                     gamePlayer.getRole().addPower(new NSBoost(gamePlayer.getRole()));
@@ -131,7 +132,7 @@ public class HokageManager implements Listener {
                     GameListener.SendToEveryone(AllDesc.bar);
                     gamePlayer.sendMessage("§7Vous êtes devenue le nouvel§e Hokage§7, vous avez maintenant accès à la commande§e /ns boost <joueur>§7 qui donnera au joueurs visé§c +5§7 de§c Force§7 et de§9 Résistance",
                             "§7Vous avez maintenant également accès à la commande§6 /ns infos§7, ces deux commandes sont utilisable §c1x/partie");
-                    Main.getInstance().getServer().getPluginManager().callEvent(new GamePlayerBecomeHokageEvent(gamePlayer));
+                    Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> Main.getInstance().getServer().getPluginManager().callEvent(new GamePlayerBecomeHokageEvent(gamePlayer)));
                 } else {
                     GameListener.SendToEveryone("§bLe conseil n'a trouver personne pour devenir le nouveau§e Hokage§b, le village est attristé par cette nouvelle.");
                     GameListener.SendToEveryone(AllDesc.bar);
