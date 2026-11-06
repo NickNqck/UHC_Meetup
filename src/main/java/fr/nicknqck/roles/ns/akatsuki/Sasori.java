@@ -210,6 +210,7 @@ public class Sasori extends AkatsukiRoles {
             private final MarionetisationCommand marionetisationCommand;
             private final String targetName;
             private final UUID targetUuid;
+            private int timeTooMuch = 0;
 
             private ReviveRunnable(MarionetisationCommand marionetisationCommand, String targetName, UUID targetUuid) {
                 this.marionetisationCommand = marionetisationCommand;
@@ -231,7 +232,14 @@ public class Sasori extends AkatsukiRoles {
                 final Player owner = Bukkit.getPlayer(this.marionetisationCommand.getRole().getPlayer());
                 if (owner == null)return;
                 final Player target = Bukkit.getPlayer(this.targetUuid);
-                if (target == null)return;
+                if (target == null) {
+                    if (this.timeTooMuch >= 30) {
+                        cancel();
+                        owner.sendMessage("§cIl n'est plus possible de§a réanimer§c le joueur \"§a"+this.targetName+"§c\" !");
+                    }
+                    this.timeTooMuch++;
+                    return;
+                }
                 final GamePlayer gamePlayer = GamePlayer.of(targetUuid);
                 if (this.marionetisationCommand.possibleReviving.containsKey(target.getUniqueId()) && gamePlayer != null && !gamePlayer.isAlive() && gamePlayer.getRole() != null) {
                     if (this.marionetisationCommand.possibleReviving.get(target.getUniqueId()) >= 10) {
