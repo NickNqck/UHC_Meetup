@@ -117,26 +117,32 @@ public class Sasori extends AkatsukiRoles {
             final String[] args = (String[]) map.get("args");
             if (args.length == 3) {
                 if (args[1].equalsIgnoreCase("revive")) {
-                    final UUID uuid = UUID.fromString(args[2]);
-                    final Player target = Bukkit.getPlayer(uuid);
-                    if (target != null) {
-                        final GamePlayer gameTarget = GamePlayer.of(uuid);
-                        if (gameTarget != null && gameTarget.getRole() != null && !resurrectedPlayers.contains(uuid)) {
-                            if (!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive()) {
-                                player.sendMessage("§cLes paramètres de la partie vous empêche d'utiliser ce pouvoir.");
-                                return false;
-                            }
-                            if (!gameTarget.isAlive()){
-                                if (this.possibleReviving.containsKey(uuid)) {
-                                    revive(getRole().getGameState(), target, player);
-                                    return true;
+                    try {
+                        final UUID uuid = UUID.fromString(args[2]);
+                        final Player target = Bukkit.getPlayer(uuid);
+                        if (target != null) {
+                            final GamePlayer gameTarget = GamePlayer.of(uuid);
+                            if (gameTarget != null && gameTarget.getRole() != null && !resurrectedPlayers.contains(uuid)) {
+                                if (!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive()) {
+                                    player.sendMessage("§cLes paramètres de la partie vous empêche d'utiliser ce pouvoir.");
+                                    return false;
                                 }
+                                if (!gameTarget.isAlive()){
+                                    if (this.possibleReviving.containsKey(uuid)) {
+                                        revive(getRole().getGameState(), target, player);
+                                        return true;
+                                    }
+                                }
+                            } else {
+                                player.sendMessage("§cImpossible de§a réanimer§c le joueur§b "+target.getName());
                             }
-                        } else {
-                            player.sendMessage("§cImpossible de§a réanimer§c le joueur§b "+target.getName());
+                            return false;
                         }
+                    } catch (RuntimeException ignored) {
+                        player.sendMessage("§aL'UUID saisi est invalide, merci de ne plus faire cette commande.");
                         return false;
                     }
+                    return false;
                 }
             }
             if (!activate) {
