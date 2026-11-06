@@ -1,6 +1,7 @@
 package fr.nicknqck.utils;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.player.GamePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -10,6 +11,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.Main;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AntiLopsa {
 	
@@ -22,9 +26,18 @@ public class AntiLopsa {
                     cancel();
                     return;
                 }
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    Location playerLocation = player.getLocation();
-                    World world = player.getWorld();
+                final List<Player> playerList = new ArrayList<>(Bukkit.getOnlinePlayers());
+                for (Player player : playerList) {
+                    final GamePlayer gamePlayer = GamePlayer.of(player.getUniqueId());
+                    if (gamePlayer == null) {
+                        Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+                            GamePlayer value = new GamePlayer(player);
+                            value.setAlive(false);
+                            GameState.getInstance().getGamePlayer().put(player.getUniqueId(), value);});
+                        continue;
+                    }
+                    final Location playerLocation = gamePlayer.getLastLocation();
+                    final World world = playerLocation.getWorld();
                     double worldBorderSize = world.getWorldBorder().getSize() / 2;
 
                     if (Math.abs(playerLocation.getX()) >= worldBorderSize || Math.abs(playerLocation.getZ()) >= worldBorderSize) {
