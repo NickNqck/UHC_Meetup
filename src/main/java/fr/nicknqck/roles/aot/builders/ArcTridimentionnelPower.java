@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.events.power.aot.GamePlayerTridimentionnelEvent;
+import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.PotionUtils;
 import fr.nicknqck.utils.StringUtils;
@@ -134,25 +135,20 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
     }
     @EventHandler
     private void onUHCKill(@NonNull final FinalDeathEvent event) {
-        if (event.getRole().getGamePlayer().getKiller() == null)return;
-        if (event.getRole().getGamePlayer().getKiller().check()) {
-            if (event.getRole().getGamePlayer().getKiller().getRole() instanceof AotRoles) {
-                AotRoles role = (AotRoles) event.getRole().getGamePlayer().getKiller().getRole();
-                if (role.getGazAmount() < 100.0) {
-                    double victimgaz = role.getGazAmount();
-                    if (victimgaz > 1.0) {
-                        double killergaz = role.getGazAmount();
-                        DecimalFormat df = new DecimalFormat("0.0");
-                        if (killergaz + victimgaz > 100.0) {
-                            event.getRole().getGamePlayer().getKiller().sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
-                            role.setGazAmount(100);
-                        }else {
-                            event.getRole().getGamePlayer().getKiller().sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
-                            role.setGazAmount(victimgaz/3);
-                        }
-                    }
-                }
-            }
-        }
+        final GamePlayer killer = event.getRole().getGamePlayer().getKiller();
+        if (killer == null)return;
+        //Chaque rôle AOT possède ce listener : seul celui du tueur doit agir
+        if (!killer.getUuid().equals(getRole().getGamePlayer().getUuid()))return;
+        if (!killer.check())return;
+        if (!(killer.getRole() instanceof AotRoles))return;
+        if (!(event.getRole() instanceof AotRoles))return;
+        final AotRoles role = (AotRoles) killer.getRole();
+        if (role.getGazAmount() >= 100.0)return;
+        final double victimgaz = ((AotRoles) event.getRole()).getGazAmount();
+        if (victimgaz <= 1.0)return;
+        final double killergaz = role.getGazAmount();
+        final DecimalFormat df = new DecimalFormat("0.0");
+        killer.sendMessage("§7Vous venez de récupérer§c "+df.format(victimgaz/3)+"%§7 de gaz");
+        role.setGazAmount(Math.min(100.0, killergaz + victimgaz/3));
     }
 }

@@ -305,7 +305,7 @@ public class KokushiboV2 extends DemonsRoles {
                     count++;
                 }
                 public void start() {
-                    runTaskTimerAsynchronously(Main.getInstance(), 0L, 4L);
+                    runTaskTimer(Main.getInstance(), 0L, 4L);
                 }
                 private Location displayCrescentMoon(Location location) {
                     World world = location.getWorld();

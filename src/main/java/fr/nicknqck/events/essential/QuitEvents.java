@@ -34,7 +34,7 @@ public class QuitEvents implements Listener{
 	        if (gameState.getInGamePlayers().contains(player.getUniqueId())) {
 				//   GameListener.getInstance().DeathHandler(player, player, 9999.0, gameState);
 				GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
-				quitMessage = "(Game)§b "+ player.getDisplayName() + "§f c'est déconnecter, il mourra suite à sa déconnexion d'ici§c "+ StringUtils.secondsTowardsBeautiful(gamePlayer.getTimeDisconnectLeft());
+				quitMessage = "(Game)§b "+ player.getDisplayName() + "§f s'est déconnecté, il mourra suite à sa déconnexion d'ici§c "+ StringUtils.secondsTowardsBeautiful(gamePlayer.getTimeDisconnectLeft());
 				gamePlayer.onQuit();
 				//gameState.delInGamePlayers(player);
 	        } else if (gameState.getInLobbyPlayers().contains(player.getUniqueId())){

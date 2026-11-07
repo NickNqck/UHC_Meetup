@@ -104,7 +104,7 @@ public class Chomei extends BijuBase {
         private FlyRunnable(final Player player, final GamePlayer gamePlayer) {
             this.uuid = player.getUniqueId();
             this.gamePlayer = gamePlayer;
-            gamePlayer.getActionBarManager().addToActionBar("chomei.fly", "§bTemp de fly restant: §c10 secondes");
+            gamePlayer.getActionBarManager().addToActionBar("chomei.fly", "§bTemps de fly restant: §c10 secondes");
             player.setAllowFlight(true);
             player.setFlying(true);
             runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
@@ -133,7 +133,7 @@ public class Chomei extends BijuBase {
                 }
                 return;
             }
-            gamePlayer.getActionBarManager().updateActionBar("chomei.fly", "§bTemp de fly restant: §c"+this.timeLeft+" secondes");
+            gamePlayer.getActionBarManager().updateActionBar("chomei.fly", "§bTemps de fly restant: §c"+this.timeLeft+" secondes");
             this.timeLeft--;
         }
     }

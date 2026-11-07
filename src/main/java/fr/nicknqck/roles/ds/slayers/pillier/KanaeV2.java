@@ -84,8 +84,8 @@ public class KanaeV2 extends PilierRoles {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
                 EntityDamageByEntityEvent event = ((UHCPlayerBattleEvent) args.get("event")).getOriginEvent();
                 if (!(event.getDamager() instanceof Player))return false;
-                StringBuilder toKanae = new StringBuilder("§c"+((Player) event.getEntity()).getDisplayName()+"§7 à reçus§c ");
-                StringBuilder toVictim = new StringBuilder("§7Vous avez reçus§c ");
+                StringBuilder toKanae = new StringBuilder("§c"+((Player) event.getEntity()).getDisplayName()+"§7 a reçu§c ");
+                StringBuilder toVictim = new StringBuilder("§7Vous avez reçu§c ");
                 int rdm = Main.RANDOM.nextInt(100);
                 System.out.println("rdm "+rdm);
                 if (rdm < 25) {
@@ -116,7 +116,7 @@ public class KanaeV2 extends PilierRoles {
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*10, 0, false, false), true);
                     ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*10, 0, false, false), true);
                 }
-                if (toVictim != null && !toVictim.toString().equals("§7Vous avez reçus§c ")) {
+                if (toVictim != null && !toVictim.toString().equals("§7Vous avez reçu§c ")) {
                     toVictim.append("§7 de la part de§a Kanae");
                     event.getEntity().sendMessage(toVictim.toString());
                     event.getDamager().sendMessage(toKanae.toString());

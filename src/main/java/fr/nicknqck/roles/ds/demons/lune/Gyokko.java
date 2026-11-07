@@ -198,7 +198,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 				
 			} else {
 				if (player.getMaxHealth() <= 8.0) {
-					player.sendMessage("§cVous n'avez pas asser de vie pour utiliser ce pouvoir");
+					player.sendMessage("§cVous n'avez pas assez de vie pour utiliser ce pouvoir");
 					return false;
 				}
 				getRole().getGamePlayer().getActionBarManager().addToActionBar("gyokko.forme", "§bTemp avant perte de§c coeur§b: §c"+timeLeft+"s");
@@ -242,7 +242,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 				if (this.role.getMaxHealth() <= 8.0) {
 					cancel();
 					role.getGamePlayer().getActionBarManager().removeInActionBar("gyokko.forme");
-					role.getGamePlayer().sendMessage("§cVous n'avez plus asser de vie pour utiliser votre forme démoniaque...");
+					role.getGamePlayer().sendMessage("§cVous n'avez plus assez de vie pour utiliser votre forme démoniaque...");
 					return;
 				}
 				if (this.power.activated) {

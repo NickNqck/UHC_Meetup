@@ -86,7 +86,7 @@ public class GamePlayer {
 	}
 	public void onJoin(Player player) {
 		if (this.discRunnable != null) {
-			player.sendMessage(this.discRunnable.toSend);
+			this.discRunnable.stringToSends.forEach(player::sendMessage);
 			if (this.discRunnable.toTeleport != null) {
 				player.teleport(this.discRunnable.toTeleport);
 			}
@@ -126,7 +126,9 @@ public class GamePlayer {
 		if (owner != null) {
 			owner.sendMessage(messages);
 		} else {
-			this.discRunnable.setMessagesToSend(messages);
+			if (this.discRunnable != null) {
+				this.discRunnable.setMessagesToSend(messages);
+			}
 		}
 	}
 	public void removeItem(final ItemStack... items) {
@@ -201,7 +203,7 @@ public class GamePlayer {
 
 		private final GamePlayer gamePlayer;
 		private final GameState gameState;
-		private String[] toSend = new String[0];
+		private List<String[]> stringToSends = new ArrayList<>();
 		@Getter
 		private boolean online = true;
 		private final List<ItemStack> toRemove;
@@ -217,7 +219,7 @@ public class GamePlayer {
 		}
 
 		private void setMessagesToSend(final String[] messages) {
-			this.toSend = messages;
+			this.stringToSends.add(messages);
 		}
 		private void addItemToRemove(final ItemStack item) {
 			toRemove.add(item);

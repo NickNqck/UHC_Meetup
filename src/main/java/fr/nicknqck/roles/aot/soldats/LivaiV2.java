@@ -112,7 +112,7 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
             addPower(this.ackermanPower);
         } else {
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-                getGamePlayer().sendMessage("§cAucun maitre n'a pus vous être attribuer, en compensation vous avez reçus 2❤ permanents.");
+                getGamePlayer().sendMessage("§cAucun maitre n'a pu vous être attribué, en compensation vous avez reçu 2❤ permanents.");
                 setMaxHealth(24.0);
                 owner.setMaxHealth(getMaxHealth());
             }, 2);

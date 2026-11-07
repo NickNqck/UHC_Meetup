@@ -77,8 +77,10 @@ public class Lame implements Listener{
 		if (lames.equals(Lames.Coeur)) {
 			final Player owner = Bukkit.getPlayer(role.getPlayer());
 			if (owner != null){
+				role.setMaxHealth(role.getMaxHealth()+4.0);
 				owner.setHealth(Math.min(owner.getHealth()+4.0, owner.getMaxHealth()));
 			}
 		}
+		role.setHasblade(true);
 	}
 }

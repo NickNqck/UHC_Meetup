@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -78,6 +79,9 @@ public class PlayerTab {
 
     /**
      * Supprime totalement l'entrée et l'équipe du scoreboard.
+     * Utilisée pour une suppression réelle (reset, ou nettoyage d'une entrée fantôme
+     * conservée après déconnexion) — PAS pour masquer un joueur encore connecté
+     * (voir {@link #setNameTagHidden(UUID, boolean)} pour ce cas).
      */
     public void removeEntry(UUID targetUUID) {
         final TabEntry entry = entries.remove(targetUUID);
@@ -94,6 +98,32 @@ public class PlayerTab {
         if (!entry.isOnline()) {
             sendRemovePacket(entry);
         }
+    }
+
+    /**
+     * Masque ou réaffiche le nametag flottant en jeu (au-dessus de la tête) d'une cible,
+     * <strong>sans jamais toucher à son entrée dans le tab list</strong> (couleur/prefix/suffix
+     * restent affichés en permanence dans le tab, invisible ou non).
+     *
+     * <p>En vanilla, un joueur invisible conserve normalement son nametag flottant visible —
+     * seule la propriété {@link NameTagVisibility#NEVER} sur son équipe scoreboard permet
+     * de le masquer réellement en jeu. Cette propriété n'affecte que le rendu 3D dans le monde,
+     * jamais l'affichage dans le tab list.
+     *
+     * <p>Ne fait rien si la cible n'a pas encore d'équipe enregistrée dans ce tab
+     * (cas rare : cible jamais vue par ce viewer).
+     *
+     * @param targetUUID Le joueur dont on veut masquer/réafficher le nametag 3D.
+     * @param hidden     {@code true} pour masquer le nametag en jeu, {@code false} pour le réafficher.
+     */
+    public void setNameTagHidden(UUID targetUUID, boolean hidden) {
+        final String teamName = teamNames.get(targetUUID);
+        if (teamName == null) return;
+
+        final Team team = scoreboard.getTeam(teamName);
+        if (team == null) return;
+
+        team.setNameTagVisibility(hidden ? NameTagVisibility.NEVER : NameTagVisibility.ALWAYS);
     }
 
     // ── Raccourcis de modification ────────────────────────────────────────────
@@ -203,7 +233,7 @@ public class PlayerTab {
     private void sendRemovePacket(TabEntry entry) {
         final Player viewer = Bukkit.getPlayer(viewerUUID);
         if (viewer == null || entry.getGameProfile() == null) return;
-        Main.getInstance().debug("G");
+
         final PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(
                 PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER
         );

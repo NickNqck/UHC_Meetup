@@ -184,7 +184,7 @@ public class InosukeV2 extends SlayerRoles {
                         this.targeted.add(player.getUniqueId());
                         return true;
                     } else {
-                        player.sendMessage("§c"+target.getDisplayName()+"§7 n'est pas asser proche de vous");
+                        player.sendMessage("§c"+target.getDisplayName()+"§7 n'est pas assez proche de vous");
                         return false;
                     }
                 } else {

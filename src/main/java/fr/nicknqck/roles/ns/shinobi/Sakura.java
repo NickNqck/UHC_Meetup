@@ -115,7 +115,7 @@ public class Sakura extends HShinobiRoles {
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
 		if (player.getUniqueId() == getPlayer()) {
 			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-				if (event.getItem().isSimilar(ByakugoItem())) {
+				if (event.getItem() != null && event.getItem().isSimilar(ByakugoItem())) {
 					if (Receve) {
 						Receve = false;
 						owner.sendMessage("§7Vous pouvez à nouveau charger votre§d Byakugo");

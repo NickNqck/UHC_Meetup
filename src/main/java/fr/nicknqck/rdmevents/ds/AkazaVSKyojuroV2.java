@@ -70,7 +70,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 pkyojuro.teleport(new Location(Bukkit.getWorld("AkazaVSKyojuro"), -3.5, 7, -23.5, 90, 0));
                 pkyojuro.playSound(pkyojuro.getLocation(), "dsmtp.avsk", 10, 1);
                 Bukkit.getWorld("AkazaVSKyojuro").setGameRuleValue("randomTickSpeed", "3");
-                Bukkit.broadcastMessage(getName()+"§r vient de ce déclancher !");
+                Bukkit.broadcastMessage(getName()+"§r vient de se déclencher !");
                 EventUtils.registerRoleEvent(this);
                 new CombatRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 this.activated = true;
@@ -182,12 +182,12 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 "",
                 "§7Si§a Kyojuro§7 gagne le combat:",
                 "§7il obtiendra l'item \"§6Vague Flamboyante§7\"",
-                "§7a l'activation permet pendant§c 10 secondes§7 de faire qu'a chaque coup reçus il y est",
+                "§7à l'activation permet pendant§c 10 secondes§7 de faire qu'à chaque coup reçu il y ait",
                 "§c 10%§7 de chance que l'attaquant sois§6 enflammer",
                 "",
                 "§7Si§c Akaza§7 gagne le combat:",
                 "§7il obtiendra la commande \"§c/ds compa§7\"",
-                "§7a l'activation pendant§c 2 minutes§7 fait qu'à chaque coup reçus il y est",
+                "§7à l'activation pendant§c 2 minutes§7 fait qu'à chaque coup reçu il y ait",
                 "§c10%§7 de chance que l'attaque sois esquivé"
         };
     }

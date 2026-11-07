@@ -71,7 +71,7 @@ public class AssassinManagerV2 implements Listener {
         final GamePlayer assassin = goodGamePlayers.get(0);
         updateTime();
         Bukkit.getPluginManager().callEvent(new ChooseAssassinEvent(assassin, this.gameState));
-        new SetAssassinRunnable(this.gameState, this.timeBeforeProc, assassin).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        new SetAssassinRunnable(this.gameState, this.timeBeforeProc, assassin).runTaskTimer(Main.getInstance(), 0, 20);
     }
     @EventHandler
     private void ProcAssassinEvent(@NonNull final ProcAssassinEvent event) {

@@ -61,7 +61,7 @@ public class ConnyV2 extends SoldatsRoles {
     private static final class AmisCommand extends CommandPower implements Listener, UpdatablePowerLore {
 
         private final List<GamePlayer> amisList = new ArrayList<>();
-        private final ForceRunnable forceRunnable;
+        private ForceRunnable forceRunnable;
         private Boolean sasha = null;
 
         public AmisCommand(@NonNull RoleBase role) {
@@ -155,6 +155,7 @@ public class ConnyV2 extends SoldatsRoles {
             private final AmisCommand amisCommand;
             private boolean running = false;
             private int actualForceTimer = 0;
+            private boolean already = false;
 
             private ForceRunnable(AmisCommand amisCommand) {
                 this.amisCommand = amisCommand;
@@ -167,6 +168,7 @@ public class ConnyV2 extends SoldatsRoles {
                     return;
                 }
                 if (this.actualForceTimer > 0) {
+                    this.already = true;
                     this.actualForceTimer--;
                     amisCommand.getRole().getGamePlayer().getActionBarManager().updateActionBar("conny.forcebar", "§bTemps de§c Force§b restant:§c "+ StringUtils.secondsTowardsBeautiful(this.actualForceTimer));
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.amisCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), EffectWhen.NOW));
@@ -175,7 +177,7 @@ public class ConnyV2 extends SoldatsRoles {
                         this.actualForceTimer = -5;
                         this.amisCommand.getRole().getGamePlayer().getActionBarManager().removeInActionBar("conny.forcebar");
                         Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.amisCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*120, 0, false, false), EffectWhen.NOW));
-                        this.amisCommand.getRole().getGamePlayer().sendMessage("§7Votre§c rage§7 c'est calmer, votre peine se fais ressentir...");
+                        this.amisCommand.getRole().getGamePlayer().sendMessage("§7Votre§c rage§7 s'est calmée, votre peine se fait ressentir...");
                         cancel();
                         this.running = false;
                     }
@@ -184,6 +186,11 @@ public class ConnyV2 extends SoldatsRoles {
             public synchronized void start() {
                 this.actualForceTimer+=120;
                 if (running) {
+                    return;
+                }
+                if (this.already) {
+                    this.amisCommand.forceRunnable = new ForceRunnable(this.amisCommand);
+                    this.amisCommand.forceRunnable.start();
                     return;
                 }
                 this.running = true;

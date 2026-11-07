@@ -50,10 +50,10 @@ public final class SoldatV2 extends SoldatsRoles implements Listener {
             boolean speed = RandomUtils.getRandomProbability(50);
             if (speed) {
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*25, 0, false, false), EffectWhen.NOW);
-                event.getGamePlayer().sendMessage("§7Vous avez reçus§c 25 secondes§7 de§e Speed I§7.");
+                event.getGamePlayer().sendMessage("§7Vous avez reçu§c 25 secondes§7 de§e Speed I§7.");
             } else {
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*15, 0, false, false), EffectWhen.NOW);
-                event.getGamePlayer().sendMessage("§7Vous avez reçus§c 15 secondes§7 de§e Speed I§7.");
+                event.getGamePlayer().sendMessage("§7Vous avez reçu§c 15 secondes§7 de§e Speed I§7.");
             }
         }
     }

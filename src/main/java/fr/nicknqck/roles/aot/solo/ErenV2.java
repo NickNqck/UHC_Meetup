@@ -36,7 +36,7 @@ public class ErenV2 extends AotRoles implements Listener{
 
     @Override
     public String getName() {
-        return "Eren§7 (§6V2§7)";
+        return "Eren";
     }
 
     @Override

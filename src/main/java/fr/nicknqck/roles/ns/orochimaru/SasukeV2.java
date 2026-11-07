@@ -91,7 +91,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Itachi)) {
                 onItachiKill(false);
-                getGamePlayer().sendMessage("§cItachi§7 n'étant pas dans la composition de la partie vous avez reçus tout de même le bonus dû à son kill");
+                getGamePlayer().sendMessage("§cItachi§7 n'étant pas dans la composition de la partie vous avez reçu tout de même le bonus dû à son kill");
             }
         }, 5*20);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

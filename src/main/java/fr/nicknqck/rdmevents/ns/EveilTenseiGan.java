@@ -262,7 +262,7 @@ public class EveilTenseiGan extends Event implements Listener {
                     this.chakraRunnable.stop();
                 } else {
                     if (this.timeLeft <= 0) {
-                        player.sendMessage("§7Vous n'avez plus asser de temp disponible pour utiliser votre§b mode chakra§7.");
+                        player.sendMessage("§7Vous n'avez plus assez de temps disponible pour utiliser votre§b mode chakra§7.");
                         return false;
                     }
                     this.chakraRunnable.start();

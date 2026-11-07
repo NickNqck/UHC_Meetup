@@ -31,35 +31,35 @@ public class ClaimCommand implements CommandExecutor {
 						sender.openInventory(inv);
 						sender.updateInventory();
 					} else {
-						for (ItemStack item : role.toClaim) {
+						for (ItemStack item : new java.util.ArrayList<>(role.toClaim)) {
 							if (gameState.countEmptySlots(sender) > 0) {
 								if (item.hasItemMeta()) {
 									if (item.getItemMeta().hasDisplayName()) {
 										role.giveItem(sender, true, item);
 										role.toClaim.remove(item);
-										sender.sendMessage("§7Vous avez reçus§r "+item.getItemMeta().getDisplayName());
+										sender.sendMessage("§7Vous avez reçu§r "+item.getItemMeta().getDisplayName());
 									}else {//else du hasDisplayName
 										role.giveItem(sender, true, item);
 										role.toClaim.remove(item);
-										sender.sendMessage("§7Vous avez reçus§r "+item.getType().name());
+										sender.sendMessage("§7Vous avez reçu§r "+item.getType().name());
 									}
 								}else {//else du hasItemMeta
 									role.giveItem(sender, true, item);
 									role.toClaim.remove(item);
-									sender.sendMessage("§7Vous avez reçus§r "+item.getType().name());
+									sender.sendMessage("§7Vous avez reçu§r "+item.getType().name());
 								}
 							}else {//else du countEmptySlots
 								if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-									sender.sendMessage("§cVous n'avez pas reçus§r "+item.getItemMeta().getDisplayName());
+									sender.sendMessage("§cVous n'avez pas reçu§r "+item.getItemMeta().getDisplayName());
 								}else {
-									sender.sendMessage("§cVous n'avez pas reçus§r "+item.getType().name());
+									sender.sendMessage("§cVous n'avez pas reçu§r "+item.getType().name());
 								}
 							}
 						}
 						return true;
 					}
 				}else {
-					sender.sendMessage("Vous n'avez rien à récupérée");
+					sender.sendMessage("Vous n'avez rien à récupérer");
 					return true;
 				}
 			}

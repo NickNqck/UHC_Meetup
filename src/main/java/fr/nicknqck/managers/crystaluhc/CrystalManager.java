@@ -394,7 +394,7 @@ public class CrystalManager implements Listener {
                     this.gettingRefinedList.remove(event.getPlayer().getUniqueId());
                     event.getPlayer().getInventory().remove(Material.EMERALD_BLOCK);
                     if (!this.crystalPowerMap.containsKey(event.getPlayer().getUniqueId())) {
-                        event.getPlayer().sendMessage("§fVous avez reçus le pouvoir du crystal");
+                        event.getPlayer().sendMessage("§fVous avez reçu le pouvoir du crystal");
                         this.crystalPowerMap.put(event.getPlayer().getUniqueId(), new CrystalPower(gamePlayer.getRole()));
                         doManeuvre(gamePlayer);
                     } else {
@@ -503,7 +503,7 @@ public class CrystalManager implements Listener {
         }
 
         public IElements getCeintureElements() {
-            int random = RandomUtils.getRandomInt(0, this.getPlugin().getGameConfig().getCrystalConfig().getElements().size());
+            int random = RandomUtils.getRandomInt(0, this.getPlugin().getGameConfig().getCrystalConfig().getElements().size() - 1);
             int i = 0;
             for (IElements ceintureElements : this.getPlugin().getGameConfig().getCrystalConfig().getElements()) {
                 Main.getInstance().debug("Elements detected: " + ceintureElements+", id: "+i+", rdm =" + random);

@@ -246,7 +246,7 @@ public class InoV2 extends ShinobiRoles {
                     return false;
                 }
                 this.gameTarget = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
-                player.sendMessage("§c"+target.getName()+"§a a bien reçus votre§c chakra");
+                player.sendMessage("§c"+target.getName()+"§a a bien reçu votre§c chakra");
                 return false;
             } else {
                 if (this.gameTarget == null) {
@@ -272,8 +272,8 @@ public class InoV2 extends ShinobiRoles {
                 this.gamePlayer = gamePlayer;
                 this.gameState = gameState;
                 this.initLoc = gamePlayer.getLastLocation();
-                gamePlayer.getActionBarManager().addToActionBar("ino.controlemental."+gameTarget.getPlayerName(), "§bTemp restant (§aControle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+                gamePlayer.getActionBarManager().addToActionBar("ino.controlemental."+gameTarget.getPlayerName(), "§bTemps restant (§aContrôle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
+                runTaskTimer(Main.getInstance(), 0, 1);
             }
 
             @Override
@@ -282,7 +282,7 @@ public class InoV2 extends ShinobiRoles {
                     cancel();
                     return;
                 }
-                gamePlayer.getActionBarManager().updateActionBar("ino.controlemental."+this.gameTarget.getPlayerName(), "§bTemp restant (§aControle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
+                gamePlayer.getActionBarManager().updateActionBar("ino.controlemental."+this.gameTarget.getPlayerName(), "§bTemps restant (§aContrôle mental§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
                 if (this.timeLeft <= 0) {
                     gamePlayer.getActionBarManager().removeInActionBar("ino.controlemental."+this.gameTarget.getPlayerName());
                     final Player player = Bukkit.getPlayer(this.gamePlayer.getUuid());

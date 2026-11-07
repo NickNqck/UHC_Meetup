@@ -23,7 +23,7 @@ public enum Roles implements IRoles<Roles> {
     Doma(TeamList.Demon, "ds", 2, new ItemBuilder(Material.PACKED_ICE).setName("§cDoma").toItemStack(), "§bNickNqck"),
     Akaza(TeamList.Demon, "ds", 3, new ItemBuilder(Material.APPLE).setName("§cAkaza").toItemStack(), "§bNickNqck"),
     Nakime(TeamList.Demon, "ds", 4, new ItemBuilder(Material.MAGMA_CREAM).setName("§cNakime").toItemStack(), "§bNickNqck"),
-    HantenguV2(TeamList.Demon, "ds", 5, new ItemBuilder(Material.NETHER_STAR).setName("§cHantengu§7 (§6V2§7)").toItemStack(), "§bNickNqck"),
+    HantenguV2(TeamList.Demon, "ds", 5, new ItemBuilder(Material.NETHER_STAR).setName("§cHantengu").toItemStack(), "§bNickNqck"),
     Gyokko(TeamList.Demon, "ds", 6, new ItemBuilder(Material.FLOWER_POT_ITEM).setName("§cGyokko").toItemStack(), "§bNickNqck"),
     Daki(TeamList.Demon, "ds", 7, new ItemBuilder(Material.IRON_FENCE).setName("§cDaki").toItemStack(), "§bNickNqck"),
     Gyutaro(TeamList.Demon, "ds", 8, new ItemBuilder(Material.DIAMOND_HOE).setName("§cGyutaro").toItemStack(), "§bNickNqck"),

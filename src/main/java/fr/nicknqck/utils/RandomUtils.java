@@ -6,14 +6,20 @@ import fr.nicknqck.Main;
 import org.bukkit.ChatColor;
 
 public class RandomUtils {
+    /**
+     * Renvoie un entier aléatoire uniforme entre {@code min} et {@code max}, <b>bornes incluses</b>.
+     * <p>
+     * (L'ancienne version calculait {@code min + nextInt(max) - min}, soit {@code nextInt(max)} :
+     * toutes les valeurs sous {@code min} étaient ramenées à {@code min}, qui sortait donc bien plus
+     * souvent que les autres, et {@code max} n'était jamais tiré.)
+     */
     public static int getRandomInt(int min, int max) {
-    	int toReturn =min + (Main.RANDOM).nextInt(max) - min;
-    	if (toReturn <min) {
-    		toReturn = min;
-    	}
-    	if (toReturn > max) {
-    		toReturn = max;
-    	}
+        if (max < min) {
+            final int tmp = min;
+            min = max;
+            max = tmp;
+        }
+        final int toReturn = min + (Main.RANDOM).nextInt(max - min + 1);
         if (Main.isDebug()){
             System.out.println("toReturn: "+toReturn);
         }

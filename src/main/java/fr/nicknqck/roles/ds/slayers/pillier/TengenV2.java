@@ -212,7 +212,7 @@ public class TengenV2 extends PilierRoles {
                     if (shooter.getUniqueId().equals(getRole().getPlayer())) {
                         if (Main.RANDOM.nextInt(100) <= 25) {
                             ((Player) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*6, 0, false, false), true);
-                            shooter.sendMessage("§c"+event.getEntity().getName()+"§7 à bien reçus §c6 secondes§7 de§2 Poison I");
+                            shooter.sendMessage("§c"+event.getEntity().getName()+"§7 a bien reçu §c6 secondes§7 de§2 Poison I");
                         } else {
                             shooter.sendMessage("§7Le§2 Poison§7 n'a pas atteint §c"+event.getEntity().getName()+"§7.");
                         }

@@ -29,7 +29,7 @@ public class BertoltV2 extends MahrRoles implements Listener {
 
     @Override
     public String getName() {
-        return "Bertolt§7 (§6V2§7)";
+        return "Bertolt";
     }
 
     @Override

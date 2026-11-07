@@ -161,7 +161,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
                 }.runTaskLater(Main.getInstance(), 20L); // 20L équivaut à une seconde
                 if (color.equals(Color.RED)) {
                     this.fuseCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60*5, 0, false, false), EffectWhen.NOW);
-                    this.fuseCommand.getRole().getGamePlayer().sendMessage("§7Comme il y a au moins§c 1 traitre§7 autours de vous, vous avez reçus§c 5 minutes§7 de§9 Résistance 1§7.");
+                    this.fuseCommand.getRole().getGamePlayer().sendMessage("§7Comme il y a au moins§c 1 traitre§7 autour de vous, vous avez reçu§c 5 minutes§7 de§9 Résistance 1§7.");
                 }
             }
         }

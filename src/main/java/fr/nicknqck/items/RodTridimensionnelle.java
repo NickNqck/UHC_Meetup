@@ -84,7 +84,7 @@ public class RodTridimensionnelle implements Listener {
             			event.setCancelled(true);
             		}
             	} else {
-            		player.sendMessage("§7Vous n'avez pas asser de gaz pour utiliser§l l'Equipement Tridimentionnel");
+            		player.sendMessage("§7Vous n'avez pas assez de gaz pour utiliser§l l'Equipement Tridimensionnel");
             		event.setCancelled(true);
             	}
         	}

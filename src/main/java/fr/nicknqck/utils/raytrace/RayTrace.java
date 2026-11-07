@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import fr.nicknqck.Main;
@@ -117,7 +118,13 @@ public class RayTrace
                         continue;
                     }
                     if (target.getGameMode().equals(GameMode.SPECTATOR) || target.getGameMode().equals(GameMode.CREATIVE)) {
-                        return null;
+                        continue;
+                    }
+                    if (target.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+                        continue;
+                    }
+                    if (!player.canSee(target)) {
+                        continue;
                     }
                     return target;
                 }

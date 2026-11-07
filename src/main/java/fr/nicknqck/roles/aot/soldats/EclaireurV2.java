@@ -67,7 +67,7 @@ public class EclaireurV2 extends SoldatsRoles {
     }
     private static final class Eclairage extends ItemPower implements Listener {
 
-        private final EclairageRunnable runnable;
+        private EclairageRunnable runnable;
 
         public Eclairage(@NonNull RoleBase role) {
             super("§aEclairage !§r", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§aEclairage !"), role,
@@ -153,6 +153,7 @@ public class EclaireurV2 extends SoldatsRoles {
             private final Eclairage eclaireage;
             private boolean running = false;
             private int actualTime = 0;
+            private boolean already = false;
 
             private EclairageRunnable(Eclairage eclaireage) {
                 this.eclaireage = eclaireage;
@@ -184,6 +185,7 @@ public class EclaireurV2 extends SoldatsRoles {
                         new ParticleDustColored().displayForPlayers(this.eclaireage.getRole().getGamePlayer().getLastLocation(), player);
                     }
                 }
+                this.already = true;
                 Bukkit.getScheduler().runTask(this.eclaireage.getPlugin(), () -> {
                     this.eclaireage.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 60, 0, false, false), EffectWhen.NOW);
                     final Player player = Bukkit.getPlayer(this.eclaireage.getRole().getPlayer());
@@ -231,6 +233,11 @@ public class EclaireurV2 extends SoldatsRoles {
             private synchronized void start() {
                 this.actualTime = 60*3;
                 this.running = true;
+                if (this.already) {
+                    this.eclaireage.runnable = new EclairageRunnable(this.eclaireage);
+                    this.eclaireage.runnable.start();
+                    return;
+                }
                 runTaskTimerAsynchronously(this.eclaireage.getPlugin(), 0, 20);
             }
             private synchronized void stop() {

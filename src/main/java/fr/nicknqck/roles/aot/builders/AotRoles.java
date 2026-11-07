@@ -44,7 +44,7 @@ public abstract class AotRoles extends RoleBase {
         for (UUID u : gameState.getInGamePlayers()) {
             Player p = Bukkit.getPlayer(u);
             if (p == null)continue;
-            p.sendMessage("\n§6§lUn Titan c'est transformé !");p.sendMessage("");
+            p.sendMessage("\n§6§lUn Titan s'est transformé !");p.sendMessage("");
         }
     }
 

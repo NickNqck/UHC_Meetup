@@ -3,14 +3,17 @@ package fr.nicknqck.roles.ds.slayers.pillier;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.GameEndEvent;
 import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
+import fr.nicknqck.events.custom.time.SecondPassEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.RandomUtils;
 import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.powers.CommandPower;
@@ -22,6 +25,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -144,12 +148,14 @@ public class ObanaiV2 extends PilierRoles implements Listener{
     private static class SerpentCommand extends CommandPower implements Listener {
 
         private final Map<String, RoleBase[]> roleBaseMap;
+        private boolean started = false;
+        private int timePassed = 0;
 
         public SerpentCommand(@NonNull RoleBase role) {
-            super("§6/ds drop", "drop", new Cooldown(60*10), role, CommandType.DS, "§7Vous permet de lacher votre serpent pendant§c 5 minutes§7,",
+            super("§6/ds drop", "drop", new Cooldown(60*10), role, CommandType.DS, "§7Vous permet de lâcher votre serpent pendant§c 5 minutes§7,",
                     "§7A chaque mort, le rôle du tueur ainsi que 2 rôle aléatoires de la partie seront enregistrer",
                     "",
-                    "§7Au bout des§c 5 minutes§7 le§2 serpent§7 reviens et vous donnera§c TOUTE§7 les informations accumulé");
+                    "§7Au bout des§c 5 minutes§7 le§2 serpent§7 reviens et vous donnera§c TOUTE§7 les informations accumulé.");
             this.roleBaseMap = new HashMap<>();
         }
 
@@ -157,51 +163,74 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             player.sendMessage("§7Vous avez lancer votre§2 Serpent");
             EventUtils.registerEvents(this);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+            this.started = true;
+            return true;
+        }
+        @EventHandler(priority =  EventPriority.MONITOR)
+        private void onSecond(final SecondPassEvent event) {
+            if (!started) return;
+            if (this.timePassed == 60*5) {
+                this.started = false;
+                this.timePassed = 0;
                 EventUtils.unregisterEvents(this);
                 if (roleBaseMap.isEmpty()) {
-                    player.sendMessage("§7Votre§2 Serpent§7 n'a trouver aucune information");
+                    this.getRole().getGamePlayer().sendMessage("§7Votre§2 Serpent§7 n'a trouver aucune information");
                 } else {
                     for (final String pseudo : roleBaseMap.keySet()) {
                         final List<RoleBase> roles = new ArrayList<>(Arrays.asList(roleBaseMap.get(pseudo)));
                         Collections.shuffle(roles, Main.RANDOM);
-                        player.sendMessage(new String[]{
-                                "§7Voici la liste des potentiels tueurs de§c "+pseudo,
+                        this.getRole().getGamePlayer().sendMessage("§7Voici la liste des potentiels tueurs de§c "+pseudo,
                                 "",
-                                roles.get(0).getName()+"§7, "+roles.get(1).getName()+"§7, "+roles.get(2).getName()
-                        });
+                                roles.get(0).getName()+"§7, "+roles.get(1).getName()+"§7, "+roles.get(2).getName());
 
                     }
                 }
-            }, 20*60*5);
-            return true;
+                return;
+            }
+            this.timePassed++;
         }
-        @EventHandler
+        @EventHandler(priority = EventPriority.MONITOR)
+        private void onEndGame(final GameEndEvent event) {
+            EventUtils.unregisterEvents(this);
+        }
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         private void onUHCDie(@NonNull final UHCDeathEvent event) {
             if (event.getGamePlayerKiller() == null)return;
             if (event.getGamePlayerKiller().getRole() == null)return;
+            if (event.isCancelled())return;
             final Map<UUID, GamePlayer> map = new HashMap<>(event.getGameState().getGamePlayer());
-            map.remove(event.getGamePlayerKiller().getUuid(), event.getGamePlayerKiller());
+            map.remove(event.getGamePlayerKiller().getUuid());
             map.remove(event.getPlayer().getUniqueId());
             final List<GamePlayer> list = new ArrayList<>(map.values());
+            if (!list.isEmpty()) {
+                list.removeIf(gamePlayer -> !gamePlayer.check());
+            }
             Collections.shuffle(list, Main.RANDOM);
-            RoleBase zero = list.get(0).getRole();
-            if (zero == null) {
-                zero = event.getGamePlayerKiller().getRole();
+            if (list.size() >= 2) {
+                final List<GamePlayer> keeped = new ArrayList<>();
+                final int rdm1 = RandomUtils.getRandomInt(0, list.size()-1);
+                keeped.add(list.get(rdm1));
+                list.remove(rdm1);
+                final int rdm2 = RandomUtils.getRandomInt(0, list.size()-1);
+                keeped.add(list.get(rdm2));
+                list.remove(rdm2);
+                keeped.add(event.getGamePlayerKiller());
+                Collections.shuffle(keeped, Main.RANDOM);
+                GamePlayer one = keeped.get(0);
+                GamePlayer two = keeped.get(1);
+                GamePlayer three = keeped.get(2);
+                this.roleBaseMap.put(event.getPlayer().getName(), new RoleBase[]{
+                   one.getRole(), two.getRole(), three.getRole()
+                });
+            } else {
+                list.add(event.getGamePlayerKiller());
+                Collections.shuffle(list, Main.RANDOM);
+                GamePlayer one = list.get(0);
+                GamePlayer two = list.get(1);
+                this.roleBaseMap.put(event.getPlayer().getName(), new RoleBase[]{
+                   one.getRole(), two.getRole(), one.getRole()
+                });
             }
-            RoleBase un = list.get(1).getRole();
-            if (un == null) {
-                un = event.getGamePlayerKiller().getRole();
-            }
-            RoleBase deux = list.get(1).getRole();
-            if (deux == null) {
-                deux = event.getGamePlayerKiller().getRole();
-            }
-            roleBaseMap.put(event.getPlayer().getName(), new RoleBase[]{
-                    zero,
-                    un,
-                    deux
-            });
         }
     }
 }

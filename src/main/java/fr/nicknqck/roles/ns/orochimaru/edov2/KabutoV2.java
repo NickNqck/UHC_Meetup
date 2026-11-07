@@ -148,7 +148,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         this.karinDEAD = true;
     }
     private void onJugoDeath() {
-        getGamePlayer().sendMessage("§5Jugo§7 est mort, en implémentant sa§5 marque maudite§7 vous avez reçus§c 10%§7 de§e Speed§7.");
+        getGamePlayer().sendMessage("§5Jugo§7 est mort, en implémentant sa§5 marque maudite§7 vous avez reçu§c 10%§7 de§e Speed§7.");
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> addSpeedAtInt(owner, 10f));
         this.jugoDEAD = true;
     }

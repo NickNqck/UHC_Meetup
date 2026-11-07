@@ -35,7 +35,7 @@ public class SuperSusanoPower extends ItemPower {
 
     @NonNull
     @Getter
-    private final SuperSusanoRunnable susanoRunnable;
+    private SuperSusanoRunnable susanoRunnable;
     @Getter
     private final SubSusanoPower subSusanoPower;
 
@@ -89,6 +89,7 @@ public class SuperSusanoPower extends ItemPower {
         @Getter
         private int timeLeft = 60*5*20;
         private boolean running = false;
+        private boolean already = false;
 
         public SuperSusanoRunnable(SuperSusanoPower superSusanoPower) {
             this.superSusanoPower = superSusanoPower;
@@ -108,11 +109,17 @@ public class SuperSusanoPower extends ItemPower {
             if (owner == null)return;
             this.superSusanoPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("common.susano", "§bTemps restant (§cSusanô§b):§c "+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
             this.timeLeft--;
+            this.already = true;
             activate(owner);
             Bukkit.getScheduler().runTask(superSusanoPower.getPlugin(), () -> superSusanoPower.getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NOW));
         }
         public synchronized void start() {
             if (running)return;
+            if (already) {
+                this.superSusanoPower.susanoRunnable = new  SuperSusanoRunnable(this.superSusanoPower);
+                this.superSusanoPower.susanoRunnable.start();
+                return;
+            }
             this.timeLeft = 60*5*20;
             runTaskTimerAsynchronously(Main.getInstance(), 0, 2);
             this.running = true;

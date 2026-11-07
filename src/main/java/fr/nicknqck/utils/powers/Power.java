@@ -99,7 +99,7 @@ public abstract class Power implements Cloneable{
             if (powerActivateEvent.getCancelMessage() != null) {
                 player.sendMessage(powerActivateEvent.getCancelMessage());
             } else {
-                player.sendMessage("§cCe pouvoir n'est pas utilisable pour le moment, réessayer plus tard !.");
+                player.sendMessage("§cCe pouvoir n'est pas utilisable pour le moment, réessayez plus tard !");
             }
             return false;
         }

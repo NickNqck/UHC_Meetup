@@ -3,6 +3,7 @@ package fr.nicknqck.commands.roles;
 import fr.nicknqck.GameState;
 import fr.nicknqck.GameState.ServerStates;
 import fr.nicknqck.roles.builder.RoleBase;
+import fr.nicknqck.utils.rank.ChatRank;
 import fr.nicknqck.roles.ds.builders.DemonsSlayersRoles;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
@@ -73,8 +74,21 @@ public class DSmtpCommands implements CommandExecutor {
 			} else if (args.length == 2) { //else du args.length == 1
 				if (args[0].equalsIgnoreCase("dimtp")) {
                     Player player = (Player) sender;
+                    if (!ChatRank.isHost(player.getUniqueId())) {
+                        player.sendMessage("§cCette commande est réservée à l'hôte.");
+                        return true;
+                    }
                     int x;
-                    x = Integer.parseInt(args[1]);
+                    try {
+                        x = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException e) {
+                        player.sendMessage("§cL'index du monde doit être un nombre.");
+                        return true;
+                    }
+                    if (x < 0 || x >= Bukkit.getWorlds().size()) {
+                        player.sendMessage("§cAucun monde ne correspond à cet index (0 à "+(Bukkit.getWorlds().size()-1)+").");
+                        return true;
+                    }
                     player.teleport(new Location(Bukkit.getWorlds().get(x), 0, 152, 0));
                     return true;
                 }

@@ -153,7 +153,7 @@ public class RaikageV2 extends ShinobiRoles {
                     return;
                 }
                 if (this.armureRaiton.timeLeft <= 0) {
-                    this.armureRaiton.getRole().getGamePlayer().sendMessage("§7Vous n'avez plus asser de temp pour que votre§e Armure Raiton§7 fonctionne");
+                    this.armureRaiton.getRole().getGamePlayer().sendMessage("§7Vous n'avez plus assez de temps pour que votre§e Armure Raiton§7 fonctionne");
                     this.armureRaiton.activate = false;
                     final Player player = Bukkit.getPlayer(this.armureRaiton.getRole().getPlayer());
                     if (player != null) {

@@ -3,7 +3,6 @@ package fr.nicknqck;
 import fr.nicknqck.enums.MDJ;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent;
-import fr.nicknqck.events.custom.RoleGiveEvent;
 import fr.nicknqck.interfaces.IMDJ;
 import fr.nicknqck.interfaces.IRoles;
 import fr.nicknqck.interfaces.ITeam;
@@ -597,7 +596,7 @@ public class GameState{
 		gamePlayer.setRole(role);
 		role.setGamePlayer(gamePlayer);
 		attributedRole.add(role.getRoles());
-		Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
+	//	Bukkit.getPluginManager().callEvent(new RoleGiveEvent(this, role, role.getRoles(), gamePlayer, false));
 	}
 
 	public void updateGameCanLaunch() {

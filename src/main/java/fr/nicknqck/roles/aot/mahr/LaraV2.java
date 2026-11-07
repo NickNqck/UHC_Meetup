@@ -23,7 +23,7 @@ public class LaraV2 extends MahrRoles implements Listener {
 
     @Override
     public String getName() {
-        return "Lara§7 (§6V2§7)";
+        return "Lara";
     }
 
     @Override

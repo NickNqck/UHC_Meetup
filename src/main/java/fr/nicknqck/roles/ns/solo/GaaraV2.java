@@ -169,7 +169,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                     "§8 -§e Suspension du désert§7: Vous permet de vous§a envolez§7 pendant§c 20 secondes§7, ",
                             "§7si vous subissez des dégâts pendant le§a vol§7 vous arrêterez de voler. (Coût:§e 96 sables§7)",
                     "",
-                    "§8 -§e Armure de sable§7: Vous permet d'activer un passif de§9 Résistance II§7 vous coûtant§c 5 sables§7 à chaque coût reçus. (Coût:§e 25 sables§7)",
+                    "§8 -§e Armure de sable§7: Vous permet d'activer un passif de§9 Résistance II§7 vous coûtant§c 5 sables§7 à chaque coup reçu. (Coût:§e 25 sables§7)",
                     "",
                     "§7Pour ouvrir le menu il vous faudra faire§c clique droit§7 et pour activer le pouvoir sélectionner il faudra faire un§a clique gauche");
             this.gaaraV2 = role;

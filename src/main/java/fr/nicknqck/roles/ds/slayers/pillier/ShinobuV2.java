@@ -230,7 +230,7 @@ public class ShinobuV2 extends PilierRoles {
                 }
                 if (!bool) {
                     this.kanaeDead = true;
-                    getRole().getGamePlayer().sendMessage("§aKanae§7 n'étant pas dans la partie vous avez directement reçus les§c bonus§7 du à sa§c mort§7.");
+                    getRole().getGamePlayer().sendMessage("§aKanae§7 n'étant pas dans la partie vous avez directement reçu les§c bonus§7 dû à sa§c mort§7.");
                 }
             }, 20*10);
         }
