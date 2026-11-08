@@ -122,7 +122,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                     "",
                     "§7     →§cC3§7: Fais apparaître une§c pluie de TNT§7 d'une taille de§c 10x10§7 qui apparaitront§c 15 blocs§7 au dessus du sol.§7 (1x/10m)",
                     "",
-                    "§7     →§cC4§7: Pendant§c 15s§7 tout les joueurs à moins de 25 blocs de la zone d'§catterissage§7 de la §c flèche§7 perdront§c 1/2"+AllDesc.coeur+"/§cs§7.§7 (1x/8m)",
+                    "§7     →§cC4§7: Pendant§c 15s§7 tous les joueurs à moins de 25 blocs de la zone d'§catterissage§7 de la §c flèche§7 perdront§c 1/2"+AllDesc.coeur+"/§cs§7.§7 (1x/8m)",
                     "",
                     "§7     →§cArt Ultime§7:§c Après avoir sélectionné§7 ce§c mode§7, en faisant un§c Shift + clique gauche avec le§6 Bakûton§7 vous empêche de bouger pendant§c 10s§7 puis,",
                     "§7crée une explosion énorme tuant tout joueurs dans la zone de cette dernière (dont vous).§7 (1x/partie)",

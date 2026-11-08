@@ -147,7 +147,7 @@ public class KisameV2 extends AkatsukiRoles {
 
         protected SuibunPower(@NonNull RoleBase role) {
             super("Suibun", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bSuibun"), role,
-                    "§7Remplace les blocs d'air autours de vous par de l'§beau§7 en téléportant tout les joueurs proche de vous à votre position.",
+                    "§7Remplace les blocs d'air autour de vous par de l'§beau§7 en téléportant tous les joueurs proche de vous à votre position.",
                     "",
                     "§7L'§beau§7 disparaitra au bout de§c 5 secondes§7 passé hors de l'§beau§7.");
             this.blockList = new ArrayList<>();

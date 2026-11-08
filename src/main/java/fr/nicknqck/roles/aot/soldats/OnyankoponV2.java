@@ -57,7 +57,7 @@ public class OnyankoponV2 extends SoldatsRoles {
 
         public TelortationItem(@NonNull RoleBase role) {
             super("§aTéleportation§r", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§aTéleportation"), role,
-                    "§7Après§c 5 secondes§7 vous téléporte vous ainsi que tout les joueurs",
+                    "§7Après§c 5 secondes§7 vous téléporte vous ainsi que tous les joueurs",
                     "§7étant à moins de§c 8 blocs§7 de vous dans une direction aléatoire très loin",
                     "",
                     "§7§oLes joueurs se font tous téléportation au même endroit.");

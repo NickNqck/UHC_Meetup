@@ -227,7 +227,7 @@ public class InoV2 extends ShinobiRoles {
             super("/ns controle <joueur>", "controle", new Cooldown(60*6), role, CommandType.NS,
                     "§7Vous permet d'insuffler du§a chakra§7 dans un joueur,",
                     "§7Une fois fait vous pourrez faire la commande \"§6/ns controle§7\"",
-                    "§7Elle vous mettra en§a spectateur§7 autours de la dernière personne à qui vous avez donner du§a chakra§7,",
+                    "§7Elle vous mettra en§a spectateur§7 autour de la dernière personne à qui vous avez donner du§a chakra§7,",
                     "",
                     "§aAprès§c 15 secondes§7 vous reviendrez à votre position de départ avec§c 2 minutes§7 de§9 Résistance§7 et votre§a vie§7 régénérer§c entièrement§7.");
         }

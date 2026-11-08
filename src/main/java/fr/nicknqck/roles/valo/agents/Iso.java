@@ -104,7 +104,7 @@ public class Iso extends RoleBase {
                 "",
                 AllDesc.items,
                 "",
-                AllDesc.point + "§dProtection couplé§f: A l'activation crée un timer de§c 15 secondes§f durant lesquelles tout les coups que vous infligerez au un joueur seront comptabilisé, après ce temp la vous pourrez esquiver un nombre de coup équivalant à ceux que vous aviez accumulé.§7 (1x/7min)",
+                AllDesc.point + "§dProtection couplé§f: A l'activation crée un timer de§c 15 secondes§f durant lesquelles tous les coups que vous infligerez au un joueur seront comptabilisé, après ce temp la vous pourrez esquiver un nombre de coup équivalant à ceux que vous aviez accumulé.§7 (1x/7min)",
                 "",
                 AllDesc.point + "§5Barrière§f: Vous permet de tier un laser de particule, les joueurs touchés auront un effet différent en fonction du clique utiliser: ",
                 AllDesc.tab + "§cClique gauche§f: Les joueurs touchés par le laser subiront§c +25%§f de dégat de votre pars pendant§c 1 minute§f.§7 (1x/5m)",

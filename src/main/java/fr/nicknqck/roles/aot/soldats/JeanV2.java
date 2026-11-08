@@ -78,7 +78,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
                     "§7sa couleur dépendra de s'il y§a a§7 ou§c non§7 au moins§c 1 ennemi§7.",
                     "",
                     "§7Lors de l'explosion de votre§a fusé§7, vous obtiendrez§c 5 minutes§7 de",
-                    "§9résistance 1§7 s'il y a au moins§c méchant§7 autours de vous.",
+                    "§9résistance 1§7 s'il y a au moins§c méchant§7 autour de vous.",
                     "",
                     "§7Vous obtiendrez la liste des joueurs étant à moins de§c 30 blocs§7 au",
                     "§7moment de l'§cexplosion§7.");

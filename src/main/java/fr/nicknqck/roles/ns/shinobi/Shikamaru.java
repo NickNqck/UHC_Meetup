@@ -45,7 +45,7 @@ public class Shikamaru extends HShinobiRoles {
     private int cdStun = 0;
     private int powerDistance = 25;
     private int poisonUse = 0;
-    private final ItemStack zoneItem = new ItemBuilder(Material.NETHER_STAR).setName("§aZone d'ombre").setLore("§7Vous permet d'empêcher tout les joueurs autours de vous de bouger").toItemStack();
+    private final ItemStack zoneItem = new ItemBuilder(Material.NETHER_STAR).setName("§aZone d'ombre").setLore("§7Vous permet d'empêcher tous les joueurs autour de vous de bouger").toItemStack();
     private int cdZone = 0;
     private int cdShogi = 0;
     private TextComponent desc;
@@ -81,7 +81,7 @@ public class Shikamaru extends HShinobiRoles {
         ),
         new TripleMap<>(
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                        "§7Vous permet de§a stun§7 toute les personnes autours de vous dans un rayon de§c 15 blocs§7.\n\n"
+                        "§7Vous permet de§a stun§7 toute les personnes autour de vous dans un rayon de§c 15 blocs§7.\n\n"
                         +"§7Les joueurs touchés par votre§a stun§7 pourront être§c frappez§7."
                 )}),
                 "§aZone d'ombre",

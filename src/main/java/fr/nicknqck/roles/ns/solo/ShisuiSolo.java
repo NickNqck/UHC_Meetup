@@ -228,7 +228,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                 }
             }
             if (playerList.isEmpty()) {
-                player.sendMessage("§cIl n'y a pas assez de personnes valide autours de vous pour utiliser cette technique.");
+                player.sendMessage("§cIl n'y a pas assez de personnes valide autour de vous pour utiliser cette technique.");
                 return false;
             }
             final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§c Kotoamatsukami");

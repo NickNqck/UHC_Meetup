@@ -91,7 +91,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                 .setPowers(getPowers())
                 .addCustomLine(killUchiwa ?
                         "" :
-                        "§7Jusqu'à ce que vous tuez un§4 Uchiwa§7, toute les§c 2 minutes§7 vous recevez l'information si un§4 Uchiwa§7 est présent autours de vous ou non, s'il y en a un vous obtiendrez sont rang (§6/ns uchirang§7)")
+                        "§7Jusqu'à ce que vous tuez un§4 Uchiwa§7, toute les§c 2 minutes§7 vous recevez l'information si un§4 Uchiwa§7 est présent autour de vous ou non, s'il y en a un vous obtiendrez sont rang (§6/ns uchirang§7)")
                 .addCustomLine("§7Vous infligez§c +10%§7 de§c dégâts§7 aux§4 Uchiwa")
                 .addCustomLine(killUchiwa ?
                         "" :
@@ -171,7 +171,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                     "",
                     "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 aura l'effet§c Wither II§7.",
                     "",
-                    "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 ne pourra pas avoir d'§eabsorbtion§7 en mangeant une§e pomme d'or");
+                    "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 ne pourra pas avoir d'§eabsorption§7 en mangeant une§e pomme d'or");
             this.sceauMap = new HashMap<>();
             this.absoLessList = new ArrayList<>();
             setTargetDistance(30);
@@ -222,7 +222,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                 if (!this.absoLessList.contains(event.getPlayer().getUniqueId()))return;
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                     ((CraftPlayer)event.getPlayer()).getHandle().setAbsorptionHearts(0f);
-                    event.getPlayer().sendMessage("§7Un§c Sceau§7 vous empêche d'avor de l'§eabsorbtion§7.");
+                    event.getPlayer().sendMessage("§7Un§c Sceau§7 vous empêche d'avoir de l'§eabsorption§7.");
                 }, 1);
             }
         }
@@ -348,7 +348,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
             if (this.time < 120) return;
             final List<Player> players = Loc.getNearbyPlayers(gamePlayer.getLastLocation(), 15);
             if (players.isEmpty()) {
-                owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autours de vous (§c15 blocs§7)");
+                owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autour de vous (§c15 blocs§7)");
                 return;
             }
             int nmbUchiwa = 0;
@@ -359,12 +359,12 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                 if (gm.getRole() == null)continue;
                 if (gm.getRole() instanceof IUchiwa) {
                     nmbUchiwa++;
-                    owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autours de vous, son aura vous fait donné l'impression qu'il est§c "+((IUchiwa)gm.getRole()).getUchiwaType().getName());
+                    owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autour de vous, son aura vous fait donné l'impression qu'il est§c "+((IUchiwa)gm.getRole()).getUchiwaType().getName());
                     break;
                 }
             }
             if (nmbUchiwa == 0) {
-                owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autours de vous (§c15 blocs§7)");
+                owner.sendMessage("§7Aucun membre de ce maudit clan des§4§l Uchiwas§7 n'est présent autour de vous (§c15 blocs§7)");
             }
             this.time = 0;
         }

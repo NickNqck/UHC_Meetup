@@ -115,7 +115,7 @@ public class Tayuya extends OrochimaruRoles {
                     "§7Fait apparaitre§c 3 golems§7 qui auront pour but d'attaquer le joueur viser,",
                     "",
                     "§7Lorsque l'un de vos golems est attaquer par un joueur, ce dernier aura§c 5%§7 de§c chance§7 d'§cexploser",
-                    "§7Si l'un de vos§c golems§7 est à plus de§c 35 blocs§7 de la§c cible§7 ou dans l'§beau§7 alors il sera téléporter autours de la personne"
+                    "§7Si l'un de vos§c golems§7 est à plus de§c 35 blocs§7 de la§c cible§7 ou dans l'§beau§7 alors il sera téléporter autour de la personne"
             );
             EventUtils.registerRoleEvent(this);
             setTargetDistance(50);

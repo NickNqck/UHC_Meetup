@@ -199,7 +199,7 @@ public class Main extends JavaPlugin {
 			getLogger().info("Creation du fichier webhook.yml par defaut...");
 			saveResource("webhook.yml", false);
 		} else {
-			getLogger().info("Fichier webhook.yml deja present.");
+			getLogger().info("Fichier webhook.yml déjà présent.");
 		}
 		updateWebHookConfig();
 	}

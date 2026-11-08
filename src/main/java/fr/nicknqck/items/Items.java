@@ -528,7 +528,7 @@ public final class Items {
 			public static ItemStack getInfection() {
 				return new ItemBuilder(Material.NETHER_STAR)
 						.setName("§cInfection")
-						.setLore("§fOuvre un menu dans lequel il y aura tout les joueurs étant à moins de 30blocs de vous,",
+						.setLore("§fOuvre un menu dans lequel il y aura tous les joueurs étant à moins de 30blocs de vous,",
 								"§f (si vous séléctionnez quelqu'un qui est déjà§c démon§f cela fonctionnera quand même)")
 						.toItemStack();
 			}

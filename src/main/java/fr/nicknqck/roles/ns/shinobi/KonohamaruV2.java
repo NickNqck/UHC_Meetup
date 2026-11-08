@@ -132,7 +132,7 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
 
         public NueArdente(@NonNull RoleBase role) {
             super("Nuée Ardente", new Cooldown(60*3), new ItemBuilder(Material.SULPHUR).setName("§aNuée Ardente"), role,
-                    "§7Donne l'effet§c Blindness I§7 pendant§c 20 secondes§7 à tout les joueurs proche.");
+                    "§7Donne l'effet§c Blindness I§7 pendant§c 20 secondes§7 à tous les joueurs proche.");
         }
 
         @Override

@@ -116,7 +116,7 @@ public class RaikageV2 extends ShinobiRoles {
             if (event.getGamePlayerKiller() == null)return;
             if (event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer())) {
                 this.timeLeft+=60;
-                event.getGamePlayerKiller().sendMessage("§7Vous avez gagner§c 60 secondes§7 dans votre§c banque de temp§7.");
+                event.getGamePlayerKiller().sendMessage("§7Vous avez gagné§c 60 secondes§7 dans votre§c banque de temps§7.");
             }
         }
         private static class ArmureRunnable extends BukkitRunnable {

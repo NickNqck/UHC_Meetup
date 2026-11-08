@@ -147,11 +147,11 @@ public class KimimaroV2 extends OrochimaruRoles {
             super("§fFôret d'os§r", new Cooldown(60*10), new ItemBuilder(Material.QUARTZ).setName("§fFôret d'os").addEnchant(Enchantment.DEPTH_STRIDER, 1).hideEnchantAttributes(), role,
                     "§7Crée une grande§a Fôret§7 fait à base d'§fos§7.",
                     "",
-                    "§7Toute les§c 5 secondes§7 tout les§c joueurs§7 étant dans la§f Fôret d'os§7",
+                    "§7Toute les§c 5 secondes§7 tous les§c joueurs§7 étant dans la§f Fôret d'os§7",
                     "§7subiront§c 1/2❤§7 de§c dégât§7 (aucun joueur ne peut mourir de cette effet).",
                     "",
                     "§7Lorsqu'un joueur subit des§c dégâts§7 dû à l'effet de ce§c pouvoir§7",
-                    "§7des§a particules§7 apparaisse autours de lui.",
+                    "§7des§a particules§7 apparaisse autour de lui.",
                     "",
                     "§7Vous ne pouvez subir§c aucun dégât§7 venant de ce§c pouvoir§7",
                     "§7mais les§a particules§7 apparaitront quand même.");

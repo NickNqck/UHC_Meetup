@@ -97,7 +97,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getSentir() {
         TextComponent dsSentir = new TextComponent("§c/ds sentir");
         dsSentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Vous permet de savoir combien il y a de§c démon§7 dans un rayon de§c 30 blocs§7 autours de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
+                "§7Vous permet de savoir combien il y a de§c démon§7 dans un rayon de§c 30 blocs§7 autour de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
         dsSentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir"));
         return dsSentir;
     }
@@ -261,7 +261,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                         }
                     }
                 }
-                player.sendMessage("§7Il y a§c "+amountDemon+" démon§7(§cs§7) autours de vous");
+                player.sendMessage("§7Il y a§c "+amountDemon+" démon§7(§cs§7) autour de vous");
                 return true;
             }
         }

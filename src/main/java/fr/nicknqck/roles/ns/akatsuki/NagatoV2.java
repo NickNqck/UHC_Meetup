@@ -190,7 +190,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 @NonNull final List<Player> playerList = new ArrayList<>(Loc.getNearbyPlayersExcept(player, 20));
                 if (playerList.isEmpty()) {
-                    player.sendMessage("§cImpossible d'utiliser ce pouvoir, personne n'est autours de vous");
+                    player.sendMessage("§cImpossible d'utiliser ce pouvoir, personne n'est autour de vous");
                     return false;
                 }
                 for (@NonNull final Player target : playerList) {

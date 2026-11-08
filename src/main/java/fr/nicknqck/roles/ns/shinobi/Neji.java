@@ -133,7 +133,7 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
 
         public Byakugan(@NonNull RoleBase role) {
             super("Byakugan", new Cooldown(60*5), new ItemBuilder(Material.SNOW_BALL).setName("§fByakugan"), role,
-                    "§7Vous permet d'obtenir la liste des joueurs présent autours de vous dans un rayon de§c 100 blocs§7,",
+                    "§7Vous permet d'obtenir la liste des joueurs présent autour de vous dans un rayon de§c 100 blocs§7,",
                     "",
                     "§7Si vous cliquez sur l'un des pseudos afficher dans le chat vous effectuerez la commande§6 /ns byakugan§7 sur ce dernier");
             EventUtils.registerRoleEvent(this);

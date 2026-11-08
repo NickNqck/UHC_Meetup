@@ -461,7 +461,7 @@ public class EnmuV2 extends DemonsRoles {
                     "",
                     "§8 • §fClique droit:§7 En §cvisant§7 un joueur, vous permet de l'§cendormir§7 pendant§c 8 secondes§7 (1x/10m)",
                     "",
-                    "§8 • §fClique gauche:§7 Vous permet d'endormir tout joueurs présent autours de vous dans un rayon de§c 30 blocs§7 pendant§c 3 secondes§7 (1x/10m)",
+                    "§8 • §fClique gauche:§7 Vous permet d'endormir tout joueurs présent autour de vous dans un rayon de§c 30 blocs§7 pendant§c 3 secondes§7 (1x/10m)",
                     "",
                     "§7Un joueur§c endormie§7 ne peut pas bouger mais il peut être§c frappé§7,",
                     "§7Les§c démons§7 étant§c endormie§7 seront toucher§c 2x§7 moins longtemps (dont§a Nezuko§7)");

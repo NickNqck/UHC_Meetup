@@ -169,7 +169,7 @@ public class Hiruzen extends HShinobiRoles implements Listener {
 
         public CouleDeBoue(@NonNull RoleBase role) {
             super("§6Doton: coulé de boue", new Cooldown(60*8), new ItemBuilder(Material.NETHER_STAR).setName("§6Doton: Coulé de boue"), role,
-                    "§7Crée une§c zone fixe§7 de§c 15x15§7, tout les joueurs à l'intérieur sauf vous",
+                    "§7Crée une§c zone fixe§7 de§c 15x15§7, tous les joueurs à l'intérieur sauf vous",
                     "§7obtiendront l'effet§c Slowness II§7.",
                     "",
                     "§7La§c zone§7 reste pour une durée de§c 1 minute§7."

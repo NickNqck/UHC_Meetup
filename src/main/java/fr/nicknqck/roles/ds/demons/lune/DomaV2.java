@@ -82,11 +82,11 @@ public class DomaV2 extends DemonsRoles {
 
         public ZoneDeGlacePower(@NonNull RoleBase role) {
             super("Zone de glace", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bZone de glace§f"), role,
-                    "§7A l'activation crée une§c zone§7 autours de vous, les joueurs étant à l'intérieur obtiendront l'effet§c Lenteur I§7",
+                    "§7A l'activation crée une§c zone§7 autour de vous, les joueurs étant à l'intérieur obtiendront l'effet§c Lenteur I§7",
                     "",
                     "§7Si une personne reste dans cette§c zone§7 pendant plus de§c 5 secondes§7, auront de la§b glace§7 à leurs pied",
                     "",
-                    "§7Lorsque la§c zone§7 expire, tout les joueurs ayant eu de la§b glace§7 à leurs§c pied§7 obtiendront§c 30 secondes§7 de§c Lenteur II§7.");
+                    "§7Lorsque la§c zone§7 expire, tous les joueurs ayant eu de la§b glace§7 à leurs§c pied§7 obtiendront§c 30 secondes§7 de§c Lenteur II§7.");
         }
 
         @Override
@@ -177,7 +177,7 @@ public class DomaV2 extends DemonsRoles {
             super("/ds gel", "gel", null, role, CommandType.DS,
                     "§7Vous permet d'§aactiver§7 et de§c désactiver§7 votre§b gel§7.",
                     "",
-                    "§7Lorsque votre§b gel§7 est§a activé§7, tout les§c 15 coups§7 (unique à chaque joueur§7)",
+                    "§7Lorsque votre§b gel§7 est§a activé§7, tous les§c 15 coups§7 (unique à chaque joueur§7)",
                     "§7la personne que vous avez frapper ne pourra§c pas utiliser ses pouvoirs§7 pendant§c 10 secondes§7.");
             EventUtils.registerRoleEvent(this);
         }

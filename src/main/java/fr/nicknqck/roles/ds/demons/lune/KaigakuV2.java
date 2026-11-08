@@ -96,7 +96,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                         new TextComponent("§7Si vous tué§a Zen'Itsu§7 votre§c Électrokinésie§7 aura des changements:\n\n" +
                                 "§7 - Votre§c clique droit§7 fera§c toujours§7 les mêmes effet que s'il est à pleine charge\n" +
                                 "§7 - Le dernier palier de charge aura un autre pouvoir qui s'activera en essayant de§c drop§7 votre§c item§7:\n\n" +
-                                "§7     → Créera une ligne d'§eéclair§7 qui infligera§c 2❤§7 à tout les joueurs qui seront touché")
+                                "§7     → Créera une ligne d'§eéclair§7 qui infligera§c 2❤§7 à tous les joueurs qui seront touché")
                 }),
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                         new TextComponent("§7Si vous êtes§c pacté§7 par§e Jigoro§7 des§c bonus§7:\n\n" +
@@ -387,7 +387,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 final List<Player> aroundPlayers = Loc.getNearbyPlayersExcept(player, 25);
                 if (aroundPlayers.isEmpty()) {
-                    player.sendMessage("§cIl n'y a pas assez de joueurs autours de vous pour cette technique !");
+                    player.sendMessage("§cIl n'y a pas assez de joueurs autour de vous pour cette technique !");
                     return false;
                 }
                 for (final Player target : aroundPlayers) {

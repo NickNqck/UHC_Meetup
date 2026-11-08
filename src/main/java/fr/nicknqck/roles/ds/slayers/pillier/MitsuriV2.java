@@ -111,7 +111,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
 
         protected ParIciPower(@NonNull MitsuriV2 role) {
             super("§dPar Ici !", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§dPar Ici !"), role,
-                    "§7Si§a Obanai§7 est à moins de§c 50 blocs§7 de vous, vous le téléporterez dans un§c rayon§7 de§c 5 blocs§7 autours de vous",
+                    "§7Si§a Obanai§7 est à moins de§c 50 blocs§7 de vous, vous le téléporterez dans un§c rayon§7 de§c 5 blocs§7 autour de vous",
                     "",
                     "§7Cependant s'il est plus loin il aura un§c traqueur§7 pointant vers vous pendant§c 30 secondes§7.");
             this.mitsuriV2 = role;
@@ -136,7 +136,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
             if (distance <= 50.0) {
                 Location loc = Loc.getRandomLocationAroundPlayer(player, 5);
                 obanai.teleport(loc);
-                player.sendMessage("§aVous avez téléporter votre§d amoureux§a autours de vous, n'hésitez pas à lui faire un gros §mbisou");
+                player.sendMessage("§aVous avez téléporter votre§d amoureux§a autour de vous, n'hésitez pas à lui faire un gros §mbisou");
                 obanai.sendMessage("§aVotre amour de toujours§d Mitsuri§a vous à téléportez autours d'elle.");
             } else {
                 obanai.sendMessage("§dMitsuri§a vous appel, vous devriez essayez de la rejoindre, elle se situt à environ §c"+((int)distance)+"§a de vous§c "+ ArrowTargetUtils.calculateArrow(obanai,player.getLocation()));

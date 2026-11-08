@@ -42,7 +42,7 @@ public class AckermanTimer extends BukkitRunnable {
                 if (this.timeNear == 60*5) {
                     this.amountHalfHeartGive++;
                     if (this.amountHalfHeartGive <= 4) {
-                        this.ackerman.getGamePlayer().sendMessage("§7Vous avez§a gagner§7§c 1/2❤ permanent§7.");
+                        this.ackerman.getGamePlayer().sendMessage("§7Vous avez§a gagné§7§c 1/2❤ permanent§7.");
                         Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.ackerman.getGamePlayer().getRole().setMaxHealth(this.ackerman.getGamePlayer().getRole().getMaxHealth()+1.0));
                     }
                 }

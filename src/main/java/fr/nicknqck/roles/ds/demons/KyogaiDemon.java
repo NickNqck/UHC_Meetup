@@ -94,7 +94,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
                         new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                                 new TextComponent("§7A la mort de§c Muzan§7 vous deviendrez un rôle§e Solitaire§7, vous obtiendrez donc les§c bonus§7 suivant:\n\n" +
                                         "§7Vous obtiendrez l'effet§9 Résistance I§7 de manière§c permanente§7 ainsi que§c 3❤ permanents\n\n" +
-                                        "§7Votre§c Tambour§7 aura §c50%§7 de §cchance§7 de retourner tout les joueurs autours de vous (§c30 blocs§7)")
+                                        "§7Votre§c Tambour§7 aura §c50%§7 de §cchance§7 de retourner tous les joueurs autour de vous (§c30 blocs§7)")
                         })
                 ).getText();
     }
@@ -120,7 +120,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     private void procSolo() {
         this.solo = true;
         getGamePlayer().sendMessage("§7Vous êtes enfin libéré de l'emprise de§c Muzan§7 vous obtenez l'effet§9 Résistance I§c permanent§7 ainsi que§c 3❤ permanents§7",
-                "§7Votre§c Tambour§7 à maintenant§c 50%§7 de§c chance§7 de retourner tout les joueurs autours de vous (§c30 blocs§7)");
+                "§7Votre§c Tambour§7 à maintenant§c 50%§7 de§c chance§7 de retourner tous les joueurs autour de vous (§c30 blocs§7)");
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.PERMANENT));
         setMaxHealth(getMaxHealth()+6.0);
         final Player owner = Bukkit.getPlayer(getPlayer());

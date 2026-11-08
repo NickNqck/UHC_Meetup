@@ -180,7 +180,7 @@ public class DeathManager implements Listener {
                             }
                         }
                     }
-                } else {//La cause de la mort n'est pas une flèche tirer par un joueur
+                } else {//La cause de la mort n'est pas une flèche tirée par un joueur
                     if (arr.getShooter() instanceof Entity) {
                         DeathMessage(killedPlayer, ((Entity) arr.getShooter()).getUniqueId());
                         find = true;

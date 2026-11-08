@@ -283,7 +283,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         public PatiencePower(@NonNull RoleBase role) {
             super("§fPatience§r", null, role,
                     "§7Au bout de§c 4 minutes§7 passer proche d'un joueur vous verrez",
-                    "§7des particules autours de lui qui seront coloré en fonction de son§a camp§7:",
+                    "§7des particules autour de lui qui seront coloré en fonction de son§a camp§7:",
                     "",
                     "§8 -§a Vert: Slayer",
                     "",

@@ -86,7 +86,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         + AllDesc.tab+"§8Soufle de la roche§7: Vous aurez l'effet§8 Résistance I§7 le jour.\n\n"
                         + AllDesc.tab+"§eSoufle de la foudre§7: Vous aurez un item vous permettant d'infliger (§caprès activation§7)§c 1❤§7 de§c dégat§7 ainsi que l'effet§l Slowness I§r§7. (1x/3min)")})
                 , new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque§c kill§7 que vous faite vous obtenez un soufle aléatoire parmis ceux cité.")}),
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous obtenez le§c cinquième§7 et §cdernier§7 soufle disponnible vous aurez un certain§c pourcentage de chance§7 de: \n\n"
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous obtenez le§c cinquième§7 et §cdernier§7 souffle disponible vous aurez un certain§c pourcentage de chance§7 de: \n\n"
                         +AllDesc.tab+"§7(§c5%§7) Devenir§e Solo§7: Si celà arrive vous obtiendrez les effets§b Speed I§7 et§c Force I§7 permanent\n§7Votre item \"§eSoufle de la Foudre§7\" infligera en plus de l'effet§l Slowness I§7 l'effet§l Weakness I§7 pendant§c 15 secondes\n§7Pour finir vous obtiendrez l'§cenchantement§b Depth Strider 2§7 sur vos bottes.\n\n"
                         +AllDesc.tab+"§7(§c15%§7) Devenir§c Démon§7: Si celà arrive vous obtiendrez l'effet§c Force I§7 la§c nuit§7, également, vous apparaitrez dans la liste de§c Muzan§7.\n\n"
                         +AllDesc.tab+"§7(§c80%§7) Rester§a Slayer§7: Vous ne gagnez rien de plus")}));

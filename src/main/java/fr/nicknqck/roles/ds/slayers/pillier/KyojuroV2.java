@@ -162,7 +162,7 @@ public class KyojuroV2 extends PilierRoles implements IAllianceRole {
         private final DashRunnable runnable;
 
         protected DashPower(RoleBase role) {
-            super("§cDash de Flamme", new Cooldown(60*10), new ItemBuilder(Material.BLAZE_ROD).setName("§cDash de Flamme"), role, "§7Vous permet d'effectuer un§c dash§6 enflammant§7 et détruisant tout les blocs autours de vous");
+            super("§cDash de Flamme", new Cooldown(60*10), new ItemBuilder(Material.BLAZE_ROD).setName("§cDash de Flamme"), role, "§7Vous permet d'effectuer un§c dash§6 enflammant§7 et détruisant tous les blocs autour de vous");
             this.runnable = new DashRunnable(this);
         }
 

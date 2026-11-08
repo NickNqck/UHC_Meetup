@@ -213,7 +213,7 @@ public class NarutoV2 extends HShinobiRoles {
 
             public void death(Villager villager) {
                 this.nsClone.getRole().getGamePlayer().getActionBarManager().removeInActionBar("naruto.clone");
-                final StringBuilder sb = new StringBuilder("§7Votre§a clone§7 est§c mort§7, voici la liste des joueurs autours de votre§a clone\n\n");
+                final StringBuilder sb = new StringBuilder("§7Votre§a clone§7 est§c mort§7, voici la liste des joueurs autour de votre§a clone\n\n");
                 for (@NonNull final Player aroundPlayers : Loc.getNearbyPlayersExcept(villager, 30)) {
                     sb.append("§8 - §c").append(aroundPlayers.getDisplayName()).append("\n");
                 }

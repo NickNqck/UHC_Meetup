@@ -128,7 +128,7 @@ public class Neon extends RoleBase {
                 final Player target = getTarget();
                 if (target != null) {
                     final List<Player> arounds1 = new ArrayList<>(Loc.getNearbyPlayers(player, 25));
-                    final StringBuilder stringBuilder = new StringBuilder("§7Voici la liste des personnes autours de vous:\n\n");
+                    final StringBuilder stringBuilder = new StringBuilder("§7Voici la liste des personnes autour de vous:\n\n");
                     arounds1.remove(player);
                     for (final Player p : arounds1) {
                         p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 2, false, false));
@@ -160,7 +160,7 @@ public class Neon extends RoleBase {
                     "",
                     "§bClique droit§7: Vous permet d'obtenir§e Speed II§7 (§cConsommation§7:§b 1%§7/s).",
                     "",
-                    "§bClique gauche§7: Vous permet de faire un§c dash§7 en avant, vous gagnez§a +1§c dash§7 tout les§c 2 kills§7 (§cConsommation§7: §b5%§7) (2x/partie) (1x/2m)");
+                    "§bClique gauche§7: Vous permet de faire un§c dash§7 en avant, vous gagnez§a +1§c dash§7 tous les§c 2 kills§7 (§cConsommation§7: §b5%§7) (2x/partie) (1x/2m)");
             this.coursePower = new CoursePower(role);
             role.addPower(this.coursePower);
             this.dashPower = new DashPower(this);

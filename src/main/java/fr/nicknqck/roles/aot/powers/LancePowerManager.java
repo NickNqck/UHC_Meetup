@@ -47,7 +47,7 @@ public class LancePowerManager {
                     "",
                     "§7Si une personne touché est§c transformer en titan§7, elle subira§c 1,5"+AllDesc.coeur+"§7, sinon ce sera§c 1"+AllDesc.coeur+"§7.",
                     "",
-                    "§7Si personne n'est touché, alors tout les joueurs étant à moins de§c 3 blocs§7 subiront les effets de la§c lance explosive§7."
+                    "§7Si personne n'est touché, alors tous les joueurs étant à moins de§c 3 blocs§7 subiront les effets de la§c lance explosive§7."
             )
             .toItemStack();
 

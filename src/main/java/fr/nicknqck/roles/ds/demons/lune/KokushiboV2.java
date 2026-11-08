@@ -217,7 +217,7 @@ public class KokushiboV2 extends DemonsRoles {
                     "",
                     "§fClique droite§7 (Frappe Vertical): En visant un joueur, vous permet de lui infligez§c 2❤§7 de§c dégâts§7 et de le repousser légèrement en arrière. (1x/5m)",
                     "",
-                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à hauteurs de (nombre de joueur autours de vous) toute les§c 4 secondes§7.",
+                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à hauteurs de (nombre de joueur autour de vous) toute les§c 4 secondes§7.",
                     "",
                     "§cChaque pouvoir du§1 Soufle de la lune§c vous coûtera§b 50%§c du \"§bPourcentage Lunaire§c\"");
             this.role = role;

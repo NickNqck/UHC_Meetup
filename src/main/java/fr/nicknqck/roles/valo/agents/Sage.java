@@ -253,7 +253,7 @@ public final class Sage extends ValoBase {
 
         public SageUltime(@NonNull RoleBase role) {
             super("§a§lRésurrection", null, new ItemBuilder(Material.NETHER_STAR).setName("§a§lRésurrection"), role,
-                    "§7Ouvre un menu, à l'intérieur est présent tout les joueurs§c mort§7 dans un rayon de§c 50 blocs§7,",
+                    "§7Ouvre un menu, à l'intérieur est présent tous les joueurs§c mort§7 dans un rayon de§c 50 blocs§7,",
                     "§7en cliquant sur l'un d'eux vous le§a ramènerez à la vie§7.",
                     "",
                     "§7Par défaut vous avez§c 1 point§7, en tuant un joueur vous en gagnez§c 1§7.",

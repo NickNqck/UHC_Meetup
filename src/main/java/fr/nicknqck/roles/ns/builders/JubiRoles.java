@@ -125,7 +125,7 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
                 player.sendMessage("§cVous ne traquez§c aucun§d biju§c actuellement§c !");
                 return;
             }
-            player.sendMessage("§7Voici tout les informations disponnible sur "+this.traqued.getName());
+            player.sendMessage("§7Voici tous les informations disponible sur "+this.traqued.getName());
             player.sendMessage("");
             if (this.traqued.getHote() == null) {
                 if (this.traqued.getEntity() == null) {

@@ -287,7 +287,7 @@ public class AdminCommands implements CommandExecutor{
 								}
 							} else {
 								gameState.updateGameCanLaunch();
-								sender.sendMessage("Suppression total de tout les rôles dans la partie fini");
+								sender.sendMessage("Suppression total de tous les rôles dans la partie fini");
 								cancel();
 							}
 						}

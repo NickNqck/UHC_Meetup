@@ -102,7 +102,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
     private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
-            event.getGamePlayerKiller().sendMessage("§7Vous avez gagner§e 128 sables§7.");
+            event.getGamePlayerKiller().sendMessage("§7Vous avez gagné§e 128 sables§7.");
             this.reserve+=128;
         }
     }
@@ -113,7 +113,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Vous commencez la partie avec§e 128 sables§7, toute les secondes vous en gagner§c 1§7.")
+                .addCustomLine("§7Vous commencez la partie avec§e 128 sables§7, toutes les secondes vous en gagnez§c 1§7.")
                 .addCustomLine("§7En tuant un joueur, vous récupérez§e 128 sables§7.")
                 .getText();
     }

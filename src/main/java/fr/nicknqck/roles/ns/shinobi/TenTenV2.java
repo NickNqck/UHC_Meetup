@@ -147,8 +147,8 @@ public class TenTenV2 extends ShinobiRoles {
 
         public ParcheminItem(@NonNull RoleBase role) {
             super("§aParchemin§r", new Cooldown(120), new ItemBuilder(Material.NETHER_STAR).setName("§aParchemin"), role,
-                    "§7Crée une zone de rayon§c 20§7 autours de vous pendant§c 20 secondes§7,",
-                    "§7à l'intérieur, tout les joueurs sauf vous auront des§c flèches§7 qui apparaitront au dessus d'eux");
+                    "§7Crée une zone de rayon§c 20§7 autour de vous pendant§c 20 secondes§7,",
+                    "§7à l'intérieur, tous les joueurs sauf vous auront des§c flèches§7 qui apparaitront au dessus d'eux");
         }
 
         @Override

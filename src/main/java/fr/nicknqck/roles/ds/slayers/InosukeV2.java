@@ -72,7 +72,7 @@ public class InosukeV2 extends SlayerRoles {
 
         public SentimentCommand(@NonNull RoleBase role) {
             super("/ds sentiments", "sentiments", new Cooldown(60*10), role, CommandType.DS,
-                    "§7Vous permet d'obtenir la liste de tout les joueurs autours de vous (§c50 blocs§7)",
+                    "§7Vous permet d'obtenir la liste de tous les joueurs autour de vous (§c50 blocs§7)",
                     "§7en cliquant sur l'un de ces joueurs vous pourrez le traquer pendant§c 20 secondes§7.",
                     "",
                     "§4! ATTENTION ! §cVous n'aurez que§4 10 secondes§c pour choisir un joueur à traquer");
@@ -82,7 +82,7 @@ public class InosukeV2 extends SlayerRoles {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> strings) {
             String[] args = (String[]) strings.get("args");
             if (args.length == 1) {
-                TextComponent component = new TextComponent("§7Voici la liste de tout les§c joueurs§7 autours de vous:\n\n");
+                TextComponent component = new TextComponent("§7Voici la liste de tous les§c joueurs§7 autour de vous:\n\n");
                 for (final Player aroundPlayer : Loc.getNearbyPlayers(player, 50)) {
                     TextComponent toAdd = new TextComponent("§7 -§c "+aroundPlayer.getDisplayName()+"§7 (§c"+ new DecimalFormat("0").format(aroundPlayer.getLocation().distance(player.getLocation()))+"m§7)\n");
                     toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{

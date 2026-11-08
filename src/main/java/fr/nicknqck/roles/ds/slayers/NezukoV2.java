@@ -142,7 +142,7 @@ public class NezukoV2 extends DemonsRoles {
                 if (Loc.getPlayerFacing((Player) event.getDamager()).equals(Loc.getPlayerFacing((Player) event.getEntity()))) {
                     if (!getCooldown().isInCooldown())return;
                     if (getCooldown().getCooldownRemaining() <= 60*15)return;
-                    event.getEntity().sendMessage("§7Vous avez gagner§c 10%§7 de§e Speed");
+                    event.getEntity().sendMessage("§7Vous avez gagné§c 10%§7 de§e Speed");
                     getRole().addSpeedAtInt((Player) event.getEntity(), 10);
                     Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
                         getRole().addSpeedAtInt((Player) event.getEntity(), -10);
@@ -156,7 +156,7 @@ public class NezukoV2 extends DemonsRoles {
             if (event.getItem().getType().equals(Material.GOLDEN_APPLE) && event.getPlayer().getUniqueId().equals(getRole().getPlayer())) {
                 if (!getCooldown().isInCooldown())return;
                 if (getCooldown().getCooldownRemaining() <= 60*15)return;
-                event.getPlayer().sendMessage("§7Vous avez gagner§c 5%§7 de§9 Résistance");
+                event.getPlayer().sendMessage("§7Vous avez gagné§c 5%§7 de§9 Résistance");
                 getRole().addBonusResi(5.0);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     event.getPlayer().sendMessage("§7Vous avez perdu§c 5%§7 de§9 Résistance");

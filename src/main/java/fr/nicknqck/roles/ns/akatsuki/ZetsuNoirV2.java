@@ -71,7 +71,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
 
     @Override
     public @NonNull TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.nagatoDeath ? "" :"§7A la mort de§c Nagato§7, vous obtiendrez une liste de tout les membres encore en§a vie§7 de l'§cAkatsuki§7 (dont§d Obito§7)").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.nagatoDeath ? "" :"§7A la mort de§c Nagato§7, vous obtiendrez une liste de tous les membres encore en§a vie§7 de l'§cAkatsuki§7 (dont§d Obito§7)").getText();
     }
 
     @Override

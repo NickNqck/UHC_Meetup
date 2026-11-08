@@ -41,7 +41,7 @@ public class AssaillantV2 extends TitanBase {
                 " \n"+
                 "§8 -§7 Votre transformation à une durée de§c 4 minutes§7.\n"+
                 " \n"+
-                "§8 -§7 Vous possédez l'item \"§lShutDown§r§7\", il vous permet d'empêcher de bouger§c tout les joueurs§7 étant à moins de§c 50 blocs§7 de vous, il possède un cooldown de§c 10 minutes§7.";
+                "§8 -§7 Vous possédez l'item \"§lShutDown§r§7\", il vous permet d'empêcher de bouger§c tous les joueurs§7 étant à moins de§c 50 blocs§7 de vous, il possède un cooldown de§c 10 minutes§7.";
     }
 
     @Override
@@ -72,7 +72,7 @@ public class AssaillantV2 extends TitanBase {
 
         protected ShutDownPower(@NonNull RoleBase role) {
             super("ShutDown", new Cooldown(60*10), new ItemBuilder(Material.RECORD_11).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§7§lShutDown"), role,
-                    "§7Vous permet d'empêcher tout les autres joueurs présent à moins de§c 50 blocs§7 de vous de bouger");
+                    "§7Vous permet d'empêcher tous les autres joueurs présent à moins de§c 50 blocs§7 de vous de bouger");
         }
 
         @Override
@@ -81,7 +81,7 @@ public class AssaillantV2 extends TitanBase {
                 @NonNull final List<GamePlayer> aroundGamePlayers = Loc.getNearbyGamePlayers(player.getLocation(), 50);
                 aroundGamePlayers.remove(this.getRole().getGamePlayer());
                 if (aroundGamePlayers.isEmpty()) {
-                    player.sendMessage("§7Il n'y a personne autours de vous,§c impossible§7 d'utiliser ce pouvoir...");
+                    player.sendMessage("§7Il n'y a personne autour de vous,§c impossible§7 d'utiliser ce pouvoir...");
                 } else {
                     for (@NonNull final GamePlayer gamePlayer : aroundGamePlayers) {
                         gamePlayer.stun(20*5);

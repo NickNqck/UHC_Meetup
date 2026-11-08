@@ -51,7 +51,7 @@ public class WarhammerV2 extends TitanBase implements Listener {
         return "§8 -§7 Votre transformation à une durée de§c 3 minutes§7.\n"+
                 "§8 -§7 Lorsque vous êtes transformé en titan vous possédez l'effet §cForce I§7 ainsi que §c3❤ supplémentaires§7, de plus, un fil de particule vous liera à la ou vous vous êtes transformé.\n" +
                 "§8 -§7 A votre transformation §c10 blocs§7 en dessous de vous, un §fbloc de fer§7 est posé, s'il est cassé vous serez transformer en humain et perdrez §c1❤ permanent§7.\n" +
-                "§8 -§7 Tant que vous êtes transformé en titan, à votre mort vous ferez apparaitre un§f bloc de fer§7 sera posé§c 10 blocs§7 en dessous de vous, s'il n'est pas cassé dans les§c 30 secondes§7, §cvous réssusciterez§7.";
+                "§8 -§7 Tant que vous êtes transformé en titan, à votre mort vous ferez apparaitre un§f bloc de fer§7 sera posé§c 10 blocs§7 en dessous de vous, s'il n'est pas cassé dans les§c 30 secondes§7, §cvous ressusciterez§7.";
     }
 
     @Override

@@ -214,7 +214,7 @@ public class KinkakuV2 extends KumogakureRole {
                     final List<GamePlayer> gamePlayerList = new ArrayList<>(Loc.getNearbyGamePlayers(player.getLocation(), 30));
                     gamePlayerList.remove(getRole().getGamePlayer());
                     if (gamePlayerList.isEmpty()) {
-                        player.sendMessage("§cImpossible, personne n'est autours de vous !");
+                        player.sendMessage("§cImpossible, personne n'est autour de vous !");
                         return false;
                     }
                     createInventory(player, gamePlayerList );

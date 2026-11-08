@@ -224,7 +224,7 @@ public class KagayaV2 extends SlayerRoles {
             this.kagaya.setMaxHealth(kagaya.getMaxHealth()-1);
             if (this.stade == 6) {
                 this.kagaya.addPower(new ShowHealthPower(kagaya));
-                this.kagaya.getGamePlayer().sendMessage("§7Vous avez gagner le pouvoir de§a voir la vie des joueurs");
+                this.kagaya.getGamePlayer().sendMessage("§7Vous avez gagné le pouvoir de§a voir la vie des joueurs");
             } else if (this.stade == 8) {
                 this.kagaya.addPower(new PilierCommand(this.kagaya));
                 this.kagaya.getGamePlayer().sendMessage("§7Vous avez obtenu la capacité de savoir si un joueur est un§a pilier§7 ou§c non§6 /ds me§7 pour plus§c d'information");

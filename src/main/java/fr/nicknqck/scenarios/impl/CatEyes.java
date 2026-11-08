@@ -25,7 +25,7 @@ public class CatEyes extends BasicScenarios implements Listener {
 
     @Override
     public ItemStack getAffichedItem() {
-        return new ItemBuilder(Material.EYE_OF_ENDER).setName(getName()).setLore("§r§fLe "+getName()+" est actuellement: "+(isActivated ? "§aActivé" : "§cDésactivé"),"", AllDesc.tab+"§7 Au lancement de la partie donne l'effet§9 Night Vision I§7 à tout les joueurs").toItemStack();
+        return new ItemBuilder(Material.EYE_OF_ENDER).setName(getName()).setLore("§r§fLe "+getName()+" est actuellement: "+(isActivated ? "§aActivé" : "§cDésactivé"),"", AllDesc.tab+"§7 Au lancement de la partie donne l'effet§9 Night Vision I§7 à tous les joueurs").toItemStack();
     }
 
     @Override

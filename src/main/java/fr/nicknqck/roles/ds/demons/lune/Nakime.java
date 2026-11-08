@@ -112,7 +112,7 @@ public class Nakime extends DemonsRoles {
 		if (args[0].equalsIgnoreCase("return")) {
 			if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
 				ejectPlayerinCage();
-				owner.sendMessage("Tout les joueurs étant dans votre cage on été éparpiller sur la map");
+				owner.sendMessage("Tous les joueurs étant dans votre cage ont été éparpillés sur la map");
 			}else {
 				owner.sendMessage("§7Il faut être dans la§l cage de§c§l Nakime§7 pour faire cette commande !");
 			}

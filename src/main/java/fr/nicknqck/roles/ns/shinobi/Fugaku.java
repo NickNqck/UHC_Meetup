@@ -99,11 +99,11 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                             "",
                             AllDesc.point+"§fAffaiblissement§7: Donne à la cible l'effet§8 Weakness I§7 pendant§c 18 secondes§7. (1x/2min)",
                             "",
-                            AllDesc.point+"§cAttaque§7: Vous téléporte dans un rayon de§c 10 blocs§7 autours de la cible. (1x/5min)",
+                            AllDesc.point+"§cAttaque§7: Vous téléporte dans un rayon de§c 10 blocs§7 autour de la cible. (1x/5min)",
                             "",
                             AllDesc.point+"§6§lPlace au combat !§7: Pendant§c 1 minutes§7 vous obtenez des §cbonus§7: (1x/10min)",
                             "",
-                            AllDesc.tab+"§7Vous serez insensible à tout les projectiles",
+                            AllDesc.tab+"§7Vous serez insensible à tous les projectiles",
                             AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégat au joueur viser",
                             AllDesc.tab+"§7Vous subirez §c-25%§7 de dégat de sa part"
             );
@@ -159,7 +159,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                     .setName("§6§lPlace au combat !")
                     .setLore("§7En visant un joueur vous obtiendrez des§c bonus§7 pendant§c 1 minutes§7: ",
                             "",
-                            AllDesc.tab+"§7Vous serez insensible à tout les projectiles",
+                            AllDesc.tab+"§7Vous serez insensible à tous les projectiles",
                             AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégât au joueur viser",
                             AllDesc.tab+"§7Vous subirez §c-25%§7 de dégât de sa part",
                             "",
@@ -275,8 +275,8 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                         final Player target = (Player) map.get("target");
                         Location loc = Loc.getRandomLocationAroundPlayer(target, 10);
                         player.teleport(loc);
-                        target.sendMessage("§7Vous sentez quelque chose de nouveau autours de vous.");
-                        player.sendMessage("§7Vous vous êtes téléportez autours de§c "+target.getName());
+                        target.sendMessage("§7Vous sentez quelque chose de nouveau autour de vous.");
+                        player.sendMessage("§7Vous vous êtes téléportez autour de§c "+target.getName());
                         player.closeInventory();
                         return true;
                     }

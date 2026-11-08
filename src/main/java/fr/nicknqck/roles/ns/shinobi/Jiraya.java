@@ -190,7 +190,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
 
         public GamabuntaPower(@NonNull RoleBase role) {
             super("§aVentre du crapaud§r", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§aVentre du crapaud"), role,
-                    "§7Téléporte tout les joueurs autours de vous dans une autre dimensions",
+                    "§7Téléporte tous les joueurs autour de vous dans une autre dimensions",
                     "§7toute les§c 5 secondes§7 a l'intérieur un joueur reçoit§c 5 secondes§7 de§2 poison§7.");
         }
 
@@ -219,7 +219,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
         }
         private void stopGamabunta(@NonNull final World world, @NonNull final String zipName) {
             getCooldown().setActualCooldown(getCooldown().getOriginalCooldown()-120);
-            getRole().getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 Tout les joueurs sont sortie du§a Ventre du crapaud§7.");
+            getRole().getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 Tous les joueurs sont sortis du§a Ventre du crapaud§7.");
             for (Player worldPlayer : world.getPlayers()) {
                 worldPlayer.setNoDamageTicks(60);
                 final GamePlayer gamePlayer = GamePlayer.of(worldPlayer.getUniqueId());

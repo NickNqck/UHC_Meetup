@@ -127,7 +127,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         if (((NSRoles) role).getChakras() == null)return;//Si la victim n'à pas de chakra return
         if (!this.chakrasVoled.contains(((NSRoles) role).getChakras())) {
             final EChakras chakras = ((NSRoles) role).getChakras();
-            event.getGamePlayerKiller().sendMessage("§7Vous avez gagner la§a nature de chakra§7: "+chakras.getShowedName());
+            event.getGamePlayerKiller().sendMessage("§7Vous avez gagné la§a nature de chakra§7: "+chakras.getShowedName());
             this.chakrasVoled.add(chakras);
         }
     }
@@ -178,7 +178,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
 
         public CorpsRapiece(@NonNull RoleBase role) {
             super("Corps Rapiécé", new Cooldown(60*3), new ItemBuilder(Material.NETHER_STAR).setName("§cCorps Rapiécé"), role,
-                    "§7Vous permet de§a stun§7 tout les joueurs autours de vous pendant§c 5 secondes§7.");
+                    "§7Vous permet de§a stun§7 tous les joueurs autour de vous pendant§c 5 secondes§7.");
         }
 
         @Override

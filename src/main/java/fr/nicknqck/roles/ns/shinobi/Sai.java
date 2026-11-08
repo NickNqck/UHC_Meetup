@@ -234,21 +234,21 @@ public class Sai extends ShinobiRoles implements Listener {
             fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
             fastInv.setItem(11, new ItemBuilder(Material.INK_SACK).setDurability(8).setName("§aSouris").toItemStack(), event -> {
                 this.equipedPower = sourisMessagere;
-                player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
+                player.sendMessage("§7La§a Toile équipée§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
                 setTargetDistance(0);
             });
             fastInv.setItem(13, new ItemBuilder(Material.REDSTONE).setName("§cSangsue").toItemStack(), event -> {
                 this.equipedPower = sangsue;
-                player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
+                player.sendMessage("§7La§a Toile équipée§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
                 setTargetDistance(30);
             });
             fastInv.setItem(15, new ItemBuilder(Material.PAPER).setName("§aScellement dans le papier").toItemStack(), event -> {
                 this.equipedPower = scellementDePapier;
-                player.sendMessage("§7La§a Toile équiper§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
+                player.sendMessage("§7La§a Toile équipée§7 est maintenant \""+this.equipedPower.getName()+"§7\".");
                 event.setCancelled(true);
                 event.getWhoClicked().closeInventory();
                 setTargetDistance(20);

@@ -39,7 +39,7 @@ public class Genjutsu extends ItemPower implements Listener {
                 .setName("§cGenjutsu"), role,
                 "§7Vous permet d'ouvrir un menu vous permettant d'accéder à§c trois pouvoirs§7:",
                 "",
-                "§8 -§c Tsukuyomi§7: Vous permet de stun pendant§c 8 secondes§7 tout les joueurs autours de vous (§c30 blocs§7). (1x/10m)",
+                "§8 -§c Tsukuyomi§7: Vous permet de stun pendant§c 8 secondes§7 tous les joueurs autour de vous (§c30 blocs§7). (1x/10m)",
                 "",
                 "§8 -§c Attaque§7: Vous permet d'ouvrir un menu vous permettant de sélectionner un joueur, celà vous téléportera derrière ce joueur. (1x/5m)",
                 "",
@@ -59,7 +59,7 @@ public class Genjutsu extends ItemPower implements Listener {
                         .setName("§cGenjutsu"), role,
                 "§7Vous permet d'ouvrir un menu vous permettant d'accéder à§c deux pouvoirs§7:",
                 "",
-                "§8 -§c Tsukuyomi§7: Vous permet de stun pendant§c 8 secondes§7 tout les joueurs autours de vous (§c30 blocs§7). (1x/10m)",
+                "§8 -§c Tsukuyomi§7: Vous permet de stun pendant§c 8 secondes§7 tous les joueurs autour de vous (§c30 blocs§7). (1x/10m)",
                 "",
                 "§8 -§c Attaque§7: Vous permet d'ouvrir un menu vous permettant de sélectionner un joueur, celà vous téléportera derrière ce joueur. (1x/5m)");
         this.haveIzanami = izanami;
@@ -136,7 +136,7 @@ public class Genjutsu extends ItemPower implements Listener {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             @NonNull final List<Player> playerList = Loc.getNearbyPlayersExcept(player, 30);
             if (playerList.isEmpty()) {
-                player.sendMessage("§cIl n'y a aucun joueur autours de vous, impossible de lancé le§4 Tsukuyomi§c.");
+                player.sendMessage("§cIl n'y a aucun joueur autour de vous, impossible de lancé le§4 Tsukuyomi§c.");
                 return false;
             }
             for (@NonNull final Player target : playerList) {

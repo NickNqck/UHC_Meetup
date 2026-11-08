@@ -203,7 +203,7 @@ public class EveilTenseiGan extends Event implements Listener {
             if (this.gamePlayer.check()) {
                 if (this.gamePlayer.getRole().getMaxHealth() < 30.0) {
                     gamePlayer.getRole().setMaxHealth(gamePlayer.getRole().getMaxHealth()+1.0);
-                    gamePlayer.sendMessage("§7En tuant un joueur, vous avez gagner§c 1/2❤ permanent");
+                    gamePlayer.sendMessage("§7En tuant un joueur, vous avez gagné§c 1/2❤ permanent");
                 }
             }
         }
@@ -302,7 +302,7 @@ public class EveilTenseiGan extends Event implements Listener {
             if (event.getGamePlayerKiller() == null)return;
             if (event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer())) {
                 this.timeLeft+=60;
-                event.getGamePlayerKiller().sendMessage("§7Vous avez gagner§c 60 secondes§7 dans votre§c banque de temp§7.");
+                event.getGamePlayerKiller().sendMessage("§7Vous avez gagné§c 60 secondes§7 dans votre§c banque de temps§7.");
             }
         }
         private final static class ChakraRunnable extends BukkitRunnable {

@@ -32,7 +32,7 @@ public class Anti_Abso extends BasicScenarios {
 
 	@Override
 	public ItemStack getAffichedItem() {
-		return new ItemBuilder(Material.GOLDEN_APPLE).setAmount(1).setName(getName()).setLore("§eAbsorbtion§f caché pour: "+(antiabsoall ? "§fTout les joueurs" : antiabsoinvi ? "§fLes joueurs invisible" : "§fAucun joueur")).toItemStack();
+		return new ItemBuilder(Material.GOLDEN_APPLE).setAmount(1).setName(getName()).setLore("§eAbsorption§f cachée pour: "+(antiabsoall ? "§fTous les joueurs" : antiabsoinvi ? "§fLes joueurs invisibles" : "§fAucun joueur")).toItemStack();
 	}
 
 	@Override
@@ -40,15 +40,15 @@ public class Anti_Abso extends BasicScenarios {
 		if (Anti_Abso.isAntiabsooff()) {
 			setAntiabsooff(false);
 			setAntiabsoinvi(true);
-			player.sendMessage(abso()+"L'absorbtion est maintenant caché pour ceux qui sont invisible");
+			player.sendMessage(abso()+"L'absorption est maintenant cachée pour ceux qui sont invisibles");
 		} else if (Anti_Abso.isAntiabsoinvi()) {
 			setAntiabsoinvi(false);
 			setAntiabsoall(true);
-			player.sendMessage(abso()+"L'absorbtion est maintenant caché pour tout les joueurs");
+			player.sendMessage(abso()+"L'absorption est maintenant cachée pour tous les joueurs");
 		} else if (Anti_Abso.isAntiabsoall()) {
 			setAntiabsoall(false);
 			setAntiabsooff(true);
-			player.sendMessage(abso()+"L'absorbtion n'est cachée pour personne");
+			player.sendMessage(abso()+"L'absorption n'est cachée pour personne");
 		}
 	}
 
