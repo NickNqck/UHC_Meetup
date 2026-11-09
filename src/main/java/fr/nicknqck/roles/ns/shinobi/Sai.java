@@ -123,7 +123,7 @@ public class Sai extends ShinobiRoles implements Listener {
                             //Si Danzo est infecté par Shisui alors, il ne peut plus changer de camp, donc on fait rejoindre à Sai ce camp-là
                             gamePlayer.getRole().setTeam(TeamList.Racine);
                             this.setTeam(gamePlayer.getRole().getTeam());
-                            gamePlayer.sendMessage("§aSai§7 et vous faite maintenant la pair, la§a victoire§7 semble assuré !");
+                            gamePlayer.sendMessage("§aSai§7 et vous faites maintenant la pair, la§a victoire§7 semble assuré !");
                             this.getGamePlayer().sendMessage("§eDanzo§7 a reconnu votre valeur, vous pouvez enfin§a gagner§7 avec lui, il ne devrait pas vous trahir...");
                         }
                     }
@@ -173,9 +173,9 @@ public class Sai extends ShinobiRoles implements Listener {
 
         public ToileAuMonstreFantomatique(@NonNull RoleBase role) {
             super("§aToile au monstres fantomatiques", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§aToile au monstres fantomatiques"), role,
-                    "§fClique gauche§7: Permet d'utiliser le§c pouvoir séléctionner§7.",
+                    "§fClic gauche§7: Permet d'utiliser le§c pouvoir séléctionner§7.",
                     "",
-                    "§fClique droit§7: Ouvre un inventaire, avec à l'intérieur les§c pouvoirs§7 ci-dessous.",
+                    "§fClic droit§7: Ouvre un inventaire, avec à l'intérieur les§c pouvoirs§7 ci-dessous.",
                     "",
                     "§8 -§a Souris Messagères§7: Avec une rapidité de§c 10b/s§7, se dirige§a discrètement§7 vers la§c cible§7",
                     "§7une fois atteint vous aurez§c 1 minute§7 pour converser avec la personne en mettant \"§cs§7\" devant votre message.",
@@ -203,7 +203,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     return true;
                 } else if (event.getAction().name().contains("LEFT")) {
                     if (this.equipedPower == null) {
-                        player.sendMessage("§7Il faut faire§f clique droit§7 pour sélectionner un§c pouvoir§7.");
+                        player.sendMessage("§7Il faut faire§f clic droit§7 pour sélectionner un§c pouvoir§7.");
                         return false;
                     }
                     return this.equipedPower.checkUse(player, map);

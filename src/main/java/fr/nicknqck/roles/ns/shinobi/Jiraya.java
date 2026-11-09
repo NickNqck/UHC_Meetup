@@ -92,11 +92,11 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
 
         public FukasakuEtShimaPower(@NonNull RoleBase role) {
             super("§aFukasaku et Shima§r", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§aFukasaku et Shima"), role,
-                    "§7Effectue une action différente en fonction du clique:",
+                    "§7Effectue une action différente en fonction du clic:",
                     "",
-                    "§fClique droit§7:§a Shima§7 vous offre pendant§c 3 minutes§7 un effet aléatoire parmi:§e Speed I§7,§c Force I§7 et§9 Résistance I§7. (1x/7min)",
+                    "§fClic droit§7:§a Shima§7 vous offre pendant§c 3 minutes§7 un effet aléatoire parmi:§e Speed I§7,§c Force I§7 et§9 Résistance I§7. (1x/7min)",
                     "",
-                    "§fClique gauche§7:§a Fukasaku§7 lancera des§c particules de feu§7, les joueurs touchés§c s'enflammeront§7. (1x/90s)"
+                    "§fClic gauche§7:§a Fukasaku§7 lancera des§c particules de feu§7, les joueurs touchés§c s'enflammeront§7. (1x/90s)"
             );
             this.shimaPower = new ShimaPower(role);
             this.fukasakuPower = new FukasakuPower(role);

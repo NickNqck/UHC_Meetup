@@ -160,11 +160,11 @@ public class KinkakuV2 extends KumogakureRole {
 
         public VasePower(@NonNull RoleBase role) {
             super("§eVase d'ambre§r", new Cooldown(60*8), new ItemBuilder(Material.FLOWER_POT_ITEM).setName("§eVase d'ambre"), role,
-                    "§7En fonction du clique, effectue une action différente:",
+                    "§7En fonction du clic, effectue une action différente:",
                     "",
-                    "§8 -§f Clique droit§7: En visant un joueur, enclenche la§a purification§7.",
+                    "§8 -§f Clic droit§7: En visant un joueur, enclenche la§a purification§7.",
                     "",
-                    "§8 -§f Clique gauche§7: Ouvre un menu, en choisissant un joueur, enclenche la§a purification§7.",
+                    "§8 -§f Clic gauche§7: Ouvre un menu, en choisissant un joueur, enclenche la§a purification§7.",
                     "",
                     "§aPurification§7: Démarre un§c compteur§7 de§c 1 minute§7, si la§c cible§7 utilise un§c pouvoir§7,",
                     "§cl'annule§7, puis, déclenche un autre§c compteur§7 de§c 10 minutes§7 durant lequel la§c cible§7 ne",

@@ -114,7 +114,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
                     "",
                     "§7Le joueur viser §csubit§7/§cinflige§7 un§c coup",
                     "",
-                    "§7Quand il y a un §cmort§7 autours du joueur (§c10 blocs§7)");
+                    "§7Quand il y a un §cmort§7 autour du joueur (§c10 blocs§7)");
         }
 
         @Override

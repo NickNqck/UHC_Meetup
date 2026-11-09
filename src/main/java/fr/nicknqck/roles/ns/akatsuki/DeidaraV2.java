@@ -113,7 +113,7 @@ public class DeidaraV2 extends AkatsukiRoles {
             super("§6Bakuton§r", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§6Bakuton"), role,
                     "§7Effectue plusieurs actions selon le§c clique effectué§7:",
                     "",
-                    "§fClique droit§7: Vous permet d'ouvrir un menu vous permettant de choisir une technique parmi§a celle-ci§f:",
+                    "§fClic droit§7: Vous permet d'ouvrir un menu vous permettant de choisir une technique parmi§a celle-ci§f:",
                     "",
                     "§7     →§cC1§7: Avec ce mode d'§aactiver§7, vos flèches créeront une explosion qui à l'impacte, inflige§c 1❤ de dégât au joueurs proche.§7 (1x/20s)",
                     "",
@@ -124,10 +124,10 @@ public class DeidaraV2 extends AkatsukiRoles {
                     "",
                     "§7     →§cC4§7: Pendant§c 15s§7 tous les joueurs à moins de 25 blocs de la zone d'§catterissage§7 de la §c flèche§7 perdront§c 1/2"+AllDesc.coeur+"/§cs§7.§7 (1x/8m)",
                     "",
-                    "§7     →§cArt Ultime§7:§c Après avoir sélectionné§7 ce§c mode§7, en faisant un§c Shift + clique gauche avec le§6 Bakûton§7 vous empêche de bouger pendant§c 10s§7 puis,",
+                    "§7     →§cArt Ultime§7:§c Après avoir sélectionné§7 ce§c mode§7, en faisant un§c Shift + clic gauche avec le§6 Bakûton§7 vous empêche de bouger pendant§c 10s§7 puis,",
                     "§7crée une explosion énorme tuant tout joueurs dans la zone de cette dernière (dont vous).§7 (1x/partie)",
                     "",
-                    "§fClique gauche§7: Vous permet de changer§c rapidement§7 de§c mode§7 (ne vous permet d'accédez à l'§cArt Ultime§7)."
+                    "§fClic gauche§7: Vous permet de changer§c rapidement§7 de§c mode§7 (ne vous permet d'accédez à l'§cArt Ultime§7)."
             );
             this.mode = Mode.C1;
             setSendCooldown(false);
@@ -167,7 +167,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                             if (player.isSneaking()) {
                                 return this.artUltimePower.checkUse(player, map);
                             } else {
-                                player.sendMessage("§7Pour vous§c sacrifiez§7 il faudra faire un§c Shift + Clique gauche§7.");
+                                player.sendMessage("§7Pour vous§c sacrifiez§7 il faudra faire un§c Shift + Clic gauche§7.");
                             }
                         }
                     } else {

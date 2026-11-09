@@ -84,9 +84,9 @@ public final class JugoV2 extends OrochimaruRoles {
 
         public TransformationErmite(@NonNull RoleBase role) {
             super("§aTransformation ermite§r", new Cooldown(2), new ItemBuilder(Material.NETHER_STAR).setName("§aTransformation ermite"), role,
-                    "§fClique gauche§7: Permet d'augmenter le niveau de§a Transformation ermite§7.",
+                    "§fClic gauche§7: Permet d'augmenter le niveau de§a Transformation ermite§7.",
                     "",
-                    "§fClique droit§7: Permet de réduire le niveau de§a Transformation ermite§7.",
+                    "§fClic droit§7: Permet de réduire le niveau de§a Transformation ermite§7.",
                     "",
                     "§8 -§c Niveau 0§7:",
                     "",

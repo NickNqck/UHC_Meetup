@@ -80,10 +80,10 @@ public class KyogaiV3 extends DemonsRoles {
 
         public TambourItem(@NonNull RoleBase role) {
             super("Tambour", new Cooldown(1), new ItemBuilder(Material.STICK).setName("§eTambour"), role,
-                    "§7Cette objet possède plusieurs utilisation en fonction du clique effectué:",
+                    "§7Cette objet possède plusieurs utilisation en fonction du clic effectué:",
                     "",
-                    "§8 -§b Ciel§7 (§cClique gauche§7): Le joueur visé se verra regarder le§b ciel§7.",
-                    "§8 -§e Sol§7 (§cClique droit§7): Le joueur visé se verra regarder le§e sol§7.",
+                    "§8 -§b Ciel§7 (§cClic gauche§7): Le joueur visé se verra regarder le§b ciel§7.",
+                    "§8 -§e Sol§7 (§cClic droit§7): Le joueur visé se verra regarder le§e sol§7.",
                     "§8 -§c Retournement§7 (§cShift§7 +§c Clique§7): Le joueur visé se fera retourner.",
                     "",
                     "§7Le joueur visé devra se situé à moins de§c 30 blocs§7 de§c vous§7.",

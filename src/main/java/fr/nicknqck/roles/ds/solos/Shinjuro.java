@@ -118,7 +118,7 @@ public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
                     "§7un immense§c cercle de feu§7 se dessinera n'importe quel joueur",
                     "§7toucher sera§c enflammer§7 pour une durée de§c 12 secondes§7 (ils§c ne§7 pourront§c pas s'éteindre§7).",
                     "",
-                    "§7En utilisant cette objet avec le§c clique gauche§7 vous ne ferez pas de saut en avant."
+                    "§7En utilisant cet objet avec le§c clic gauche§7 vous ne ferez pas de saut en avant."
             );
         }
 
@@ -277,7 +277,7 @@ public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
 
         public RegenerationPower(@NonNull RoleBase role) {
             super("Régénération", null, role,
-                    "§7Vous vous§d régénérez§7 de§c 1/2"+ AllDesc.coeur+"§7 toute les§c 10 secondes§7,",
+                    "§7Vous vous§d régénérez§7 de§c 1/2"+ AllDesc.coeur+"§7 toutes les§c 10 secondes§7,",
                     "§7en étant en§c feu§7 vous avez l'effet§9 Résistance I§7."
             );
             new RegenerationPower.RegenRunnable(role.getGameState(), role.getGamePlayer());

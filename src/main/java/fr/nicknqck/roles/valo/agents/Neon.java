@@ -156,11 +156,11 @@ public class Neon extends RoleBase {
 
         protected SpeedItemPower(@NonNull RoleBase role) {
             super("Vitesse Supérieure", null, new ItemBuilder(Material.NETHER_STAR).setName("§bVitesse Supérieure"), role,
-                    "§7Vous possédez une bar de§b Charge§7, elle se régénère lorsque vous ne l'utiliser pas et s'utilise différemment en fonction du clique que vous faite:",
+                    "§7Vous possédez une bar de§b Charge§7, elle se régénère lorsque vous ne l'utiliser pas et s'utilise différemment en fonction du clic que vous faites:",
                     "",
-                    "§bClique droit§7: Vous permet d'obtenir§e Speed II§7 (§cConsommation§7:§b 1%§7/s).",
+                    "§bClic droit§7: Vous permet d'obtenir§e Speed II§7 (§cConsommation§7:§b 1%§7/s).",
                     "",
-                    "§bClique gauche§7: Vous permet de faire un§c dash§7 en avant, vous gagnez§a +1§c dash§7 tous les§c 2 kills§7 (§cConsommation§7: §b5%§7) (2x/partie) (1x/2m)");
+                    "§bClic gauche§7: Vous permet de faire un§c dash§7 en avant, vous gagnez§a +1§c dash§7 tous les§c 2 kills§7 (§cConsommation§7: §b5%§7) (2x/partie) (1x/2m)");
             this.coursePower = new CoursePower(role);
             role.addPower(this.coursePower);
             this.dashPower = new DashPower(this);

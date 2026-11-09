@@ -312,7 +312,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
 
         public RegenPower(@NonNull RoleBase role) {
             super("Pouvoir régénérant", null, role,
-                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toute les§c 10 secondes");
+                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toutes les§c 10 secondes");
             new RegenerationRunnable(role.getGameState(), role.getPlayer(), this);
         }
 

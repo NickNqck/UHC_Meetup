@@ -273,15 +273,15 @@ public class Sasori extends AkatsukiRoles {
 
         public MarionnetteSansVie(@NonNull RoleBase role) {
             super("Marionnettes sans vie", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cMarionnettes sans vie"), role,
-                    "§7Effectue différente action en fonction du clique: ",
+                    "§7Effectue différente action en fonction du clic: ",
                     "",
-                    "§8 -§f Clique droit§7: Ouvre un menu, à l'intérieur vous aurez§c plusieurs§7 possibilité de fabrication de§c marionette§7,",
+                    "§8 -§f Clic droit§7: Ouvre un menu, à l'intérieur vous aurez§c plusieurs§7 possibilité de fabrication de§c marionette§7,",
                     "§7chacune aura ses spécificités et son§c coût§7 de§c fabrication§7.",
                     "§7Une fois§c fabriquer§7, vous pourrez choisir une§c marionette§7 à§c équiper§7.",
                     "",
-                    "§8 -§f Clique gauche§7: Permet d'utiliser l'effet de la§c marionette équiper§7.",
+                    "§8 -§f Clic gauche§7: Permet d'utiliser l'effet de la§c marionette équiper§7.",
                     "",
-                    "§7Si vous avez fabriquer toute vos marionnette, tant qu'une est§a équiper§7, vous pouvez changer rapidement via§f Shift + Clique droit§7."
+                    "§7Si vous avez fabriquer toute vos marionnette, tant qu'une est§a équiper§7, vous pouvez changer rapidement via§f Shift + Clic droit§7."
             );
             marionnetteMap.put(new Hiruko(role), false);
             marionnetteMap.put(new Kazegake(role), false);

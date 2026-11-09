@@ -91,11 +91,11 @@ public class GyomeiV2 extends PilierRoles implements Listener {
             super("Souffle de la roche", new Cooldown(20), new ItemBuilder(Material.STONE_AXE).setName("§aSouffle de la Roche").addEnchant(Enchantment.DAMAGE_ALL, 4).hideEnchantAttributes(), role,
                     "§7Vous permet (en visant un joueur) d'activer un pouvoir différant en fonction de votre§c clique§7:",
                     "",
-                    "§aFracas§7 (§cClique gauche§7): Vous permet de§c repousser§7 le joueur viser puis de lui infliger§c 2❤§7 de dégats§c 5 secondes§7 plus tard (1x/5m)",
+                    "§aFracas§7 (§cClic gauche§7): Vous permet de§c repousser§7 le joueur viser puis de lui infliger§c 2❤§7 de dégats§c 5 secondes§7 plus tard (1x/5m)",
                     "",
-                    "§aGrab§7 (§cClique droit§7): Vous permet d'attirer le joueur devant vous et de lui donner§c 15 secondes§7 de§8 Slowness II§7 (1x/5m)",
+                    "§aGrab§7 (§cClic droit§7): Vous permet d'attirer le joueur devant vous et de lui donner§c 15 secondes§7 de§8 Slowness II§7 (1x/5m)",
                     "",
-                    "§cVous ne pouvez utiliser qu'un pouvoir toute les§4 20 secondes");
+                    "§cVous ne pouvez utiliser qu'un pouvoir toutes les§4 20 secondes");
             final FracasPower fracasPower = new FracasPower(getRole());
             final SuperGrabPower superGrabPower1 = new SuperGrabPower(role);
             getRole().addPower(fracasPower);
@@ -130,10 +130,10 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                     "§fFracas est "+
                             (this.fracasPower.getCooldown().isInCooldown() ?
                                     "en cooldown§7 (§c"+ StringUtils.secondsTowardsBeautiful(this.fracasPower.getCooldown().getCooldownRemaining())+"§7)" :
-                                    "utilisable§7 (§cClique gauche§7)") + "§7 |§f Grab est " +
+                                    "utilisable§7 (§cClic gauche§7)") + "§7 |§f Grab est " +
                             (this.superGrabPower.getCooldown().isInCooldown() ?
                                     "en cooldown§7 (§c"+ StringUtils.secondsTowardsBeautiful(this.superGrabPower.getCooldown().getCooldownRemaining())+"§7)" :
-                                    "utilisable§7 (§cClique droit§7)")
+                                    "utilisable§7 (§cClic droit§7)")
             ));
         }
 

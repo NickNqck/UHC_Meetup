@@ -354,7 +354,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
             super("/ns shurikenjutsu", "shurikenjutsu", null, role, CommandType.NS,
                     "§7Vous permet d'§aactiver§7 ou de§c désactiver§7 votre§c Shuriken Jutsu§7",
                     "",
-                    "§7Quand il est§a activé§7 en faisant§c clique droit§7 avec une§c épée§7 vous pourrez lancé une§c flèche§7 qui,",
+                    "§7Quand il est§a activé§7 en faisant§c clic droit§7 avec une§c épée§7 vous pourrez lancé une§c flèche§7 qui,",
                     "§7S'il elle touche un joueur lui infligera un effet de§c stun§7 pendant§c 0,5s",
                     "",
                     "§cAttention, par défaut ce pouvoir est§4 désactiver");

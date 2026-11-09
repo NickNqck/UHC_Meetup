@@ -89,13 +89,13 @@ public class InoV2 extends ShinobiRoles {
 
         public SphereDeCaptation(@NonNull RoleBase role) {
             super("Sphere de Captation", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§aSphere de Captation"), role,
-                    "§7Vous permet d'obtenir§e Speed I§7 pendant§c 3 minutes§7 et d'obtenir les§c coordonnées§7 de toute les créatures possédant du chakra (§dBijuus§7 et§a humains§7)");
+                    "§7Vous permet d'obtenir§e Speed I§7 pendant§c 3 minutes§7 et d'obtenir les§c coordonnées§7 de toutes les créatures possédant du chakra (§dBijuus§7 et§a humains§7)");
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                final StringBuilder sb = new StringBuilder("§7Voici la position de toute les créatures possédant du chakra (§c100 blocs§7):\n\n");
+                final StringBuilder sb = new StringBuilder("§7Voici la position de toutes les créatures possédant du chakra (§c100 blocs§7):\n\n");
                 for (final Entity entity : player.getWorld().getEntities()) {
                     if (entity.getLocation().distance(player.getLocation()) > 100.0)continue;
                     CraftEntity craftEntity = ((CraftEntity) entity);

@@ -137,7 +137,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
                 Location loc = Loc.getRandomLocationAroundPlayer(player, 5);
                 obanai.teleport(loc);
                 player.sendMessage("§aVous avez téléporter votre§d amoureux§a autour de vous, n'hésitez pas à lui faire un gros §mbisou");
-                obanai.sendMessage("§aVotre amour de toujours§d Mitsuri§a vous à téléportez autours d'elle.");
+                obanai.sendMessage("§aVotre amour de toujours§d Mitsuri§a vous à téléportez autour d'elle.");
             } else {
                 obanai.sendMessage("§dMitsuri§a vous appel, vous devriez essayez de la rejoindre, elle se situt à environ §c"+((int)distance)+"§a de vous§c "+ ArrowTargetUtils.calculateArrow(obanai,player.getLocation()));
                 player.sendMessage("§7Vous avez envoyez votre position à §aObanai§7.");

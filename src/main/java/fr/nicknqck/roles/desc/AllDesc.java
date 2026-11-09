@@ -89,7 +89,7 @@ public class AllDesc{
             "",
             ChatColor.BOLD + "Pacte 2: ",
             "",
-            "Vous gagner en duo avec§c Kaigaku§r, pour ce faire vous et§c lui§r obtenez l'effet§3 "+Resi+" 1§r à moins de 50blocs l'un de l'autre, de plus quand§c Kaigaku§r ou vous faite un kill vous deux obtenez 1 demi"+coeur+" permanent, pour finir vous disposer d'un chat en commun via la commande§6 /ds chat",
+            "Vous gagner en duo avec§c Kaigaku§r, pour ce faire vous et§c lui§r obtenez l'effet§3 "+Resi+" 1§r à moins de 50blocs l'un de l'autre, de plus quand§c Kaigaku§r ou vous faites un kill vous deux obtenez 1 demi"+coeur+" permanent, pour finir vous disposer d'un chat en commun via la commande§6 /ds chat",
             "",
             bar	
 	};
@@ -121,7 +121,7 @@ public class AllDesc{
             "",
             items,
             "",
-            point+"§cCage§f: Vous téléporte vous ainsi que toute les personnes étant à moins de 20blocs de vous dans la§6 cage de Nakime§f, de plus quand un joueur meurt dans cette cage son rôle n'est pas afficher dans le chat au yeux des autres joueur exepté§c Muzan§f et§c vous§f",
+            point+"§cCage§f: Vous téléporte vous ainsi que toutes les personnes étant à moins de 20blocs de vous dans la§6 cage de Nakime§f, de plus quand un joueur meurt dans cette cage son rôle n'est pas afficher dans le chat au yeux des autres joueur exepté§c Muzan§f et§c vous§f",
             "",
             commande,
             "",

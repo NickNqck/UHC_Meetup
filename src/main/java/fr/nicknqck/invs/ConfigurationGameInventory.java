@@ -35,8 +35,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         setItems(getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(5).setName("§fTaille de la bordure maximum").setLore(
                 "§f[50b < "+ Border.getMaxBorderSize()+" > 2400b",
-                "§fClique gauche: §a+50b",
-                "§fClique droit: §c-50b"
+                "§fClic gauche: §a+50b",
+                "§fClic droit: §c-50b"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 Border.setMaxBorderSize(Border.getMaxBorderSize()+50);
@@ -49,8 +49,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setName("§fTaille de la bordure minimum").setDurability(14).setLore(
                 "§r§f[50b < "+Border.getMinBorderSize()+"b > "+Border.getMaxBorderSize()+"b]",
-                "§r§fClique gauche:§a +50b",
-                "§r§fClique droit: §c-50b"
+                "§r§fClic gauche:§a +50b",
+                "§r§fClic droit: §c-50b"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 Border.setMinBorderSize(Math.min(Border.getMinBorderSize()+50, 2400));
@@ -63,8 +63,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName("§r§fTemp avant réduction de la bordure").setLore(
                 "§r§f[0 minute < "+Border.getTempReduction()/60+" minutes > 60 minutes]",
-                "§r§fClique gauche: §a+1 minutes",
-                "§r§fClique droit: §c-1 minutes"
+                "§r§fClic gauche: §a+1 minutes",
+                "§r§fClic droit: §c-1 minutes"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 Border.setTempReduction(Math.min(Border.getTempReduction()+60, 60*60));
@@ -77,8 +77,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setAmount(1).setDurability(3).setName("§fVitesse de la bordure")
                 .setLore("§r§f[1b/s < "+Border.getBorderSpeed()+"§r§fb/s > 10b/s",
-                        "§r§fClique gauche: §a+1b/s",
-                        "§r§fClique droit: §c-1b/s").toItemStack(), event -> {
+                        "§r§fClic gauche: §a+1b/s",
+                        "§r§fClic droit: §c-1b/s").toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 Border.setBorderSpeed(Math.min(Border.getBorderSpeed()+1, 10));
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
@@ -90,8 +90,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.IRON_SWORD).setName("§r§fTemp avant activation du PVP").setLore(
                 "§r§f[0 minute < "+ GameState.getInstance().getPvPTimer()/60+" minutes > 40 minutes]",
-                "§r§fClique gauche: §a+1 minutes",
-                "§r§fClique droit: §c-1 minutes"
+                "§r§fClic gauche: §a+1 minutes",
+                "§r§fClic droit: §c-1 minutes"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 GameState.getInstance().pvpTimer += 60;
@@ -104,8 +104,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemp avant annonce des roles").setLore(
                 "§r§f[0 minute < "+GameState.getInstance().getRoleTimer()/60+" minutes > 40 minutes]",
-                "§r§fClique gauche: §a+1 minutes",
-                "§r§fClique droit: §c-1 minutes"
+                "§r§fClic gauche: §a+1 minutes",
+                "§r§fClic droit: §c-1 minutes"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 GameState.getInstance().roleTimer+=60;
@@ -118,8 +118,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.WATCH).setName("§r§fDurée du jour (et de la nuit)").setLore(
                 "§r§fDurée actuel:§6 "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getMaxTimeDay()),
-                "§r§fClique gauche: §a+10 secondes",
-                "§r§fClique droit: §c-10 secondes"
+                "§r§fClic gauche: §a+10 secondes",
+                "§r§fClic droit: §c-10 secondes"
         ).toItemStack(), event -> {
             if (ChatRank.isHost(event.getWhoClicked())) {
                 if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
@@ -170,8 +170,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
                 "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
-                "§r§fClique gauche: §a+1 secondes",
-                "§r§fClique droit: §c-1 secondes",
+                "§r§fClic gauche: §a+1 secondes",
+                "§r§fClic droit: §c-1 secondes",
                 "§r§f(0 secondes =§c désactiver"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
@@ -193,8 +193,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemp avant despawn de la§6 Lave").setLore(
                 "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getLavaEmptyTiming())+" > 1 minutes",
-                "§r§fClique gauche: §a+1 seconde",
-                "§r§fClique droit: §c-1 seconde",
+                "§r§fClic gauche: §a+1 seconde",
+                "§r§fClic droit: §c-1 seconde",
                 "§r§f(0 secondes =§c désactiver"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {

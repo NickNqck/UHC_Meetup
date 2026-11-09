@@ -215,7 +215,7 @@ public class GinkakuV2 extends KumogakureRole {
 
         protected SabrePower(@NonNull RoleBase role) {
             super("Sabre des Étoiles", new Cooldown(30), new ItemBuilder(Material.DIAMOND_SWORD).setName("§aSabre des Étoiles").addEnchant(Enchantment.DAMAGE_ALL, 3), role,
-                    "§7Infligera un effet de§c saignement§7 (§c1/2❤§7 toute les§c 2 secondes§7 pendant§c 8 secondes§7) au joueur sur qui vous infligerez§c 15 coups§7 d'affilé.§7 (1x/30s)");
+                    "§7Infligera un effet de§c saignement§7 (§c1/2❤§7 toutes les§c 2 secondes§7 pendant§c 8 secondes§7) au joueur sur qui vous infligerez§c 15 coups§7 d'affilé.§7 (1x/30s)");
             role.getGamePlayer().getActionBarManager().addToActionBar("sabre.coups", "§7Coup avant d'infliger le§c saignement§7:§c "+this.amountCoups+"§7/§615");
             setShowCdInHand(false);
         }

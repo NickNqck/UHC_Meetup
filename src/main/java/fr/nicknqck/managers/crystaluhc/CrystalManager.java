@@ -493,7 +493,7 @@ public class CrystalManager implements Listener {
                     return true;
                 } else {
                     if (this.equippedCrystal == null) {
-                        player.sendMessage("§cPour équiper un§d crystal§c il faut faire§f clique droit§c.");
+                        player.sendMessage("§cPour équiper un§d crystal§c il faut faire§f clic droit§c.");
                         return false;
                     }
                     return this.equippedCrystal.checkUse(player, map);

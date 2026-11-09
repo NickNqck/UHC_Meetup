@@ -90,11 +90,11 @@ public class KimimaroV2 extends OrochimaruRoles {
 
         public EpeeItemPower(@NonNull RoleBase role) {
             super("§fEpée en or§r", new Cooldown(120), new ItemBuilder(new EpeeOsItem().getItem()), role,
-                    "§7Vous ne pouvez infliger que§c 8 coups§7 avec cette objet",
+                    "§7Vous ne pouvez infliger que§c 8 coups§7 avec cet objet",
                     "",
                     "§7Au bout de§c 2 minutes§7 vous pourrez à nouveau l'utiliser§c 8 fois§7.",
                     "",
-                    "§7Les coups infliger par cette objet feront les mêmes§c dégâts§7 qu'une§b épée en diamant tranchant IV");
+                    "§7Les coups infliger par cet objet feront les mêmes§c dégâts§7 qu'une§b épée en diamant tranchant IV");
             EventUtils.registerRoleEvent(this);
         }
 

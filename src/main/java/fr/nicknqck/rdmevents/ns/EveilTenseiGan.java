@@ -368,7 +368,7 @@ public class EveilTenseiGan extends Event implements Listener {
 
             public SphereVeritePower(@NonNull ModeChakraPower chakraPower) {
                 super("Sphere de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphere de vérité"), chakraPower.getRole(),
-                        "§7Via un clique droit§a active§7/§cdésactive§7 votre§a fly§7,",
+                        "§7Via un clic droit§a active§7/§cdésactive§7 votre§a fly§7,",
                         "§7Si un joueur vous frappe ou que vous attaquez un autre joueur votre§a vole§7 s'arrêtera.",
                         "§7A l'activation vous perdrez§c 15 secondes directement§7.",
                         "",

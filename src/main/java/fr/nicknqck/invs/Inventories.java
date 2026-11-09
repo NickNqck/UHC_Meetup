@@ -730,13 +730,13 @@ public class Inventories {
                     inv.setItem(10, new ItemBuilder(Material.STAINED_GLASS)
                             .setAmount(1)
                             .setDurability(3)
-                            .setLore("§f"+(Border.getMinBorderSize()+50)+" <§b "+Border.getMinBijuSpawn()+"§f > "+(Border.getMaxBijuSpawn()-50),"","§aClique gauche§f: §a+50 blocs", "§cClique droit§f: §c-50 blocs")
+                            .setLore("§f"+(Border.getMinBorderSize()+50)+" <§b "+Border.getMinBijuSpawn()+"§f > "+(Border.getMaxBijuSpawn()-50),"","§aClic gauche§f: §a+50 blocs", "§cClic droit§f: §c-50 blocs")
                             .setName("§r§fCoordonnée minimal de spawn des bijus")
                             .toItemStack());
                     inv.setItem(11, new ItemBuilder(Material.STAINED_GLASS)
                             .setAmount(1)
                             .setDurability(11)
-                            .setLore("§f"+(Border.getMinBijuSpawn()+50)+" <§b "+Border.getMaxBijuSpawn()+"§f > "+(Border.getMaxBorderSize()-50),"","§aClique gauche§f: §a+50 blocs", "§cClique droit§f: §c-50 blocs")
+                            .setLore("§f"+(Border.getMinBijuSpawn()+50)+" <§b "+Border.getMaxBijuSpawn()+"§f > "+(Border.getMaxBorderSize()-50),"","§aClic gauche§f: §a+50 blocs", "§cClic droit§f: §c-50 blocs")
                             .setName("§r§fCoordonnée maximal de spawn des bijus")
                             .toItemStack());
                     int i = 19;

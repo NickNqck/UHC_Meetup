@@ -148,7 +148,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             fastInv.setItem(14, new ItemBuilder(Material.IRON_SWORD)
                     .hideAllAttributes()
                     .setName("§cAttaque")
-                    .setLore("§7Vous permet de vous téléporter dans un rayon de§c 10 blocs§7 autours d'un joueur visée",
+                    .setLore("§7Vous permet de vous téléporter dans un rayon de§c 10 blocs§7 autour d'un joueur visée",
                             "",
                             (this.attaquePower.getCooldown().getCooldownRemaining() <= 0 ? "§cPouvoir Utilisable":"§7Cooldown:§c "+StringUtils.secondsTowardsBeautiful(this.attaquePower.getCooldown().getCooldownRemaining())))
                     .toItemStack(), event -> {

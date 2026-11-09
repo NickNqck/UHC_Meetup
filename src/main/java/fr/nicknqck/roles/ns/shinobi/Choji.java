@@ -104,7 +104,7 @@ public class Choji extends ShinobiRoles {
             super("§a/ns gloutonnerie", "gloutonnerie", null, role, CommandType.NS,
                     "§7Tant que la§a gloutonnerie§7 est§a activer§7, vous pouvez manger une§e pomme d'or§c instantanément§7.",
                     "",
-                    "§7Vous ne pouvez manger qu'une§e pomme d'or§7 toute les§c 5 secondes§7 avec ce pouvoir.",
+                    "§7Vous ne pouvez manger qu'une§e pomme d'or§7 toutes les§c 5 secondes§7 avec ce pouvoir.",
                     "§7Tant que ce§c pouvoir§7 est§a actif§7 vous avez§2 Hunger II§7 de manière§c permanente§7.",
                     "§7Manger une§e pomme d'or§7 avec ce pouvoir§c ne remplie pas§7 la§a barre de nouriture§7. "
             );

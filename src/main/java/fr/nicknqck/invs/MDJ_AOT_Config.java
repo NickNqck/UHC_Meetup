@@ -18,8 +18,8 @@ public class MDJ_AOT_Config extends FastInv {
         setItem(10, new ItemBuilder(Material.WATCH).setName("§fCooldown de l'équipement tridimensionnel").setLore(
                 "§fCooldown actuel:§b "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown()),
                 "",
-                "§fClique gauche:§a + 1 seconde",
-                "§fClique droit:§c - 1 seconde"
+                "§fClic gauche:§a + 1 seconde",
+                "§fClic droit:§c - 1 seconde"
         ).toItemStack(), event -> {
             if (event.isLeftClick()) {
                 Main.getInstance().getGameConfig().getAotConfig().setTridiCooldown(Math.min(64, Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown() + 1));

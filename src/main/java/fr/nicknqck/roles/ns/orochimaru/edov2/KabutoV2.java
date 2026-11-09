@@ -201,9 +201,9 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
             super("Soins", null, new ItemBuilder(Material.NETHER_STAR).setName("§dSoins"), role,
                     "§7Vous permet de vous soignez ou de soigner quelqu'un d'autre: ",
                     "",
-                    "§fClique gauche§7: Vous soigne de§c 2❤§7. (1x/1m30s)",
+                    "§fClic gauche§7: Vous soigne de§c 2❤§7. (1x/1m30s)",
                     "",
-                    "§fClique droite§7: Soigne la personne visé de§c 2❤§7. (1x/2m)");
+                    "§fClic droite§7: Soigne la personne visé de§c 2❤§7. (1x/2m)");
             this.toHeal = 4.0;
             this.gaucheCD = new Cooldown(90);
             this.droiteCD = new Cooldown(120);

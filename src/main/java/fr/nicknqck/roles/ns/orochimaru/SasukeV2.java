@@ -82,9 +82,9 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new Amaterasu(this), true);
         addPower(new SuperSusanoPower(this, new SusanoSub(this),
-                "§fClique droit§7: Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7.",
+                "§fClic droit§7: Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7.",
                 "",
-                "§fClique gauche§7: Pendant§c 2 minutes§7, vos§c flèches§7 infligeront§c 50%§7 de§c dégâts supplémentaires§7."), true);
+                "§fClic gauche§7: Pendant§c 2 minutes§7, vos§c flèches§7 infligeront§c 50%§7 de§c dégâts supplémentaires§7."), true);
         addPower(new Izanagi(this));
         addKnowedRole(OrochimaruV2.class);
         EventUtils.registerRoleEvent(this);

@@ -65,9 +65,9 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
         givePotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         addPower(new SuperSusanoPower(this, new TheSubClass(this),
-                "§fClique droit§7: Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7.",
+                "§fClic droit§7: Vous offre pendant§c 5 minutes§7 l'effet§9 Résistance I§7.",
                 "",
-                "§fClique gauche§7: Pendant§c 2 minutes§7, vos coups infligeront§c 35%§7 de§c dégâts supplémentaires§7",
+                "§fClic gauche§7: Pendant§c 2 minutes§7, vos coups infligeront§c 35%§7 de§c dégâts supplémentaires§7",
                 "§7et vous recevrez§c 10%§7 de§c dégâts en moins§7 (En plus de vos effets)."), true);
         addPower(new Genjutsu(this), true);
         addPower(new Amaterasu(this), true);

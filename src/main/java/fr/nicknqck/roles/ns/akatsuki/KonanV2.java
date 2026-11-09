@@ -89,7 +89,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                     "§8 -§c Lance§7: Pendant§c 60 secondes§7, vous offre§c 20%§7 de§c force§7 (§c+2%§7 par§c 1/2❤§7 manquant).",
                     "§7§o(1x/5m)",
                     "",
-                    "§8 -§c Parchemins explosifs§7: Pose un§c parchemin§7 à votre position, si vous faite§f shift + clique§7 celà fera exploser§c tout§7",
+                    "§8 -§c Parchemins explosifs§7: Pose un§c parchemin§7 à votre position, si vous faites§f shift + clic§7 celà fera exploser§c tout§7",
                     "§7les§c parchemins explosifs§7 que vous aviez précédemment poser, infligeant donc§c 1,5❤§7 au joueurs toucher.",
                     "§7§o(1x/3m)"
             );
@@ -260,7 +260,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                 super("§cParchemins explosif§r", new Cooldown(60*3), role,
                         "§7Vous permet de poser un§c parchemin§7 la ou vous êtes§7. (1x/3m)",
                         "",
-                        "§7Dans le menu, en faisant un§f shift + clique§7, déclenche des explosions partout la ou vous aviez poser",
+                        "§7Dans le menu, en faisant un§f shift + clic§7, déclenche des explosions partout la ou vous aviez poser",
                         "§7des§c parchemins explosif§7, les joueurs touchés perdront§c 1,5❤§7 par§c explosion§7.",
                         "",
                         "§7§o(Aucun joueur ne peut mourir de vos explosions).",

@@ -50,7 +50,7 @@ public class BertoltV2 extends MahrRoles implements Listener {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Lorsque vous vous transformez/détransformez en titan vous donnerez l'effet§c Weakness I§7 pendant§c 30 secondes§7 à toute les personnes (sauf vos coéquipier) dans un rayon de§c 50 blocs")
+                .addCustomLine("§7Lorsque vous vous transformez/détransformez en titan vous donnerez l'effet§c Weakness I§7 pendant§c 30 secondes§7 à toutes les personnes (sauf vos coéquipier) dans un rayon de§c 50 blocs")
                 .getText();
     }
     @EventHandler

@@ -42,11 +42,11 @@ public class CharetteV2 extends TitanBase implements Listener {
                 " \n"+
                 "§8 -§7 Lorsque vous vous transformez en titan vous avez l'effet Speed I ainsi que§c 15❤ permanents§7.\n"+
                 " \n"+
-                "§8 -§7 Lorsque vous êtes transformés vous pouvez utiliser votre \"§fÉquipement du Charette§7\" qui fera une action différente en fonction de votre clique:\n"+
+                "§8 -§7 Lorsque vous êtes transformés vous pouvez utiliser votre \"§fÉquipement du Charette§7\" qui fera une action différente en fonction de votre clic:\n"+
                 " \n"+
-                "§7     →§f Clique gauche§7: Vous permet de sacrifier§c 2,5❤ permanents§7 ainsi que§c 15%§7 de§c force§7 pour gagner un niveau de§e speed§7.\n"+
+                "§7     →§f Clic gauche§7: Vous permet de sacrifier§c 2,5❤ permanents§7 ainsi que§c 15%§7 de§c force§7 pour gagner un niveau de§e speed§7.\n"+
                 " \n"+
-                "§7     →§f Clique droit§7: Vous permet de regagner§c 2,5❤ permanents§7 ainsi que§c 15%§7 de§c force§7 en échange d'un niveau de§e speed§7.";
+                "§7     →§f Clic droit§7: Vous permet de regagner§c 2,5❤ permanents§7 ainsi que§c 15%§7 de§c force§7 en échange d'un niveau de§e speed§7.";
     }
 
     @Override

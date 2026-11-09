@@ -120,7 +120,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
 
         protected ShikushodoPower(@NonNull RoleBase role) {
             super("Shikoshodo", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§fShikushodo"), role,
-                    "§7Vous permet de vous téléporter à une position que vous aurez poser au préalable via un §c Shift§7 +§c Clique droit");
+                    "§7Vous permet de vous téléporter à une position que vous aurez poser au préalable via un §c Shift§7 +§c Clic droit");
         }
 
         @Override
@@ -155,11 +155,11 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
 
         protected BenshoTeninPower(@NonNull RoleBase role) {
             super("Benshô Ten'in", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cBenshô Ten'in"), role,
-                    "§7Effectue différente action en fonction du clique utiliser:",
+                    "§7Effectue différente action en fonction du clic utiliser:",
                     "",
-                    "§aClique gauche§7: Vous permet de repousser toute entité étant à moins de§c 20 blocs§7 de vous.",
+                    "§aClic gauche§7: Vous permet de repousser toute entité étant à moins de§c 20 blocs§7 de vous.",
                     "",
-                    "§cClique droit§7: Vous permet de téléporter le joueur viser à votre position.");
+                    "§cClic droit§7: Vous permet de téléporter le joueur viser à votre position.");
             setShowCdInDesc(false);
             this.shinraTensei = new ShinraTensei(role);
             this.cliqueDroit = new CliqueDroit(role);
@@ -203,7 +203,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
         private static class CliqueDroit extends Power {
 
             public CliqueDroit(@NonNull RoleBase role) {
-                super("Clique droit (Benshô Ten'in)", new Cooldown(60*5), role);
+                super("Clic droit (Benshô Ten'in)", new Cooldown(60*5), role);
                 setShowInDesc(false);
             }
 

@@ -153,7 +153,7 @@ public class MinatoV2 extends HShinobiRoles {
                     .hideEnchantAttributes(), role,
                     "§7Lorsque vous lancez une§c flèche§7 avec l'§aArc Hiraishin§7, elle devient une§c balise§7.",
                     "",
-                    "§7Vous pouvez§c vous téléportez§7 à la dernière§a balise§7 poser en faisant un§f shift + clique gauche§7,",
+                    "§7Vous pouvez§c vous téléportez§7 à la dernière§a balise§7 poser en faisant un§f shift + clic gauche§7,",
                     "§7vous pouvez également téléporter un autre joueur en le frappant.",
                     "",
                     "§7A chaque fois que quelqu'un se§a téléporte§7 à votre§a balise§7, elle sera supprimé.",
@@ -288,10 +288,10 @@ public class MinatoV2 extends HShinobiRoles {
 
         public BalisesPermanentes(@NonNull RoleBase role) {
             super("§aBalises permanentes§r", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§aBalises permanentes"), role,
-                    "§7Vous pouvez poser une§a balise permanente§7 en faisant un§f shift + clique§7. (maximum 3)",
+                    "§7Vous pouvez poser une§a balise permanente§7 en faisant un§f shift + clic§7. (maximum 3)",
                     "",
                     "§7En faisant un§a clique§7 vous ouvre un menu contenant vos§a balise permanente§7,",
-                    "§7vous pourrez vous y téléportez en faisant un§c clique gauche§7 et la renommé avec§f shift + clique§7.",
+                    "§7vous pourrez vous y téléportez en faisant un§c clic gauche§7 et la renommé avec§f shift + clic§7.",
                     "",
                     "§7§oVous pouvez poser des§a balises permanentes§7§o même si vous êtes en§c cooldown§7.");
             this.balises = new LinkedHashMap<>();
@@ -319,7 +319,7 @@ public class MinatoV2 extends HShinobiRoles {
                         return false;
                     }
                     if (this.balises.isEmpty()) {
-                        player.sendMessage("§cIl faut d'abord poser une balise.§7 (§fShift + clique§7)");
+                        player.sendMessage("§cIl faut d'abord poser une balise.§7 (§fShift + clic§7)");
                         return false;
                     }
                     openFastInv(player);

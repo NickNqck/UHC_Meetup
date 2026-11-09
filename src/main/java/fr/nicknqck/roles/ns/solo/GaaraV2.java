@@ -171,7 +171,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                     "",
                     "§8 -§e Armure de sable§7: Vous permet d'activer un passif de§9 Résistance II§7 vous coûtant§c 5 sables§7 à chaque coup reçu. (Coût:§e 25 sables§7)",
                     "",
-                    "§7Pour ouvrir le menu il vous faudra faire§c clique droit§7 et pour activer le pouvoir sélectionner il faudra faire un§a clique gauche");
+                    "§7Pour ouvrir le menu il vous faudra faire§c clic droit§7 et pour activer le pouvoir sélectionner il faudra faire un§a clic gauche");
             this.gaaraV2 = role;
             this.suspensionPower = new SuspensionPower(role, this);
             this.armurePower = new ArmurePower(this);
@@ -395,7 +395,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                     "",
                     "§8 -§cLance§7: Fabrique une épée en diamant enchantée§c tranchant 4§7 ayant§c 30 durabilité§7. (Coût§7:§e 64 sables§7)",
                     "",
-                    "§7Pour ouvrir le menu il vous faudra faire§c clique droit§7 et pour activer le pouvoir sélectionner il faudra faire un§a clique gauche");
+                    "§7Pour ouvrir le menu il vous faudra faire§c clic droit§7 et pour activer le pouvoir sélectionner il faudra faire un§a clic gauche");
             this.gaaraV2 = role;
             this.tsunamiPower = new TsunamiPower(this);
             this.sarcophagePower = new SarcophagePower(this);

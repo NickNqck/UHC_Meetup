@@ -89,7 +89,7 @@ public class TomiokaV2 extends PilierRoles {
 
         public FindOthersPower(@NonNull RoleBase role) {
             super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", null, role,
-                    "§7Permet de savoir toute les "+(Main.getInstance().getGameConfig().isMinage() ? "§c10 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autour de vous ou non");
+                    "§7Permet de savoir toutes les "+(Main.getInstance().getGameConfig().isMinage() ? "§c10 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autour de vous ou non");
             new FinderRunnable(role.getGameState(), this);
         }
 

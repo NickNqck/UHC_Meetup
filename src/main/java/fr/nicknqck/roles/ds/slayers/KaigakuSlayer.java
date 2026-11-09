@@ -93,7 +93,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                 .addCustomLines(
                         dead ? new String[0] :
                                 new String[] {
-                                        "§7Si vous vous faite tué par un§c Démon§7 vous aurez un certain§c pourcentage de chance§7 (§ben fonction de son rôle§7) de vous transformez à votre tour en§c démon§7 :",
+                                        "§7Si vous vous faites tué par un§c Démon§7 vous aurez un certain§c pourcentage de chance§7 (§ben fonction de son rôle§7) de vous transformez à votre tour en§c démon§7 :",
                                         "",
                                         "§8 -§c Muzan§7 ou§c Kokushibo§7:§c 90%",
                                         "§8 -§c Lunes Supérieurs§7 (hors§c Kokushibo§7 et dont§a Nezuko§7): §c70%",

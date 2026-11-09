@@ -91,7 +91,7 @@ public class SusamaruV2 extends DemonsRoles {
                     "",
                     "§cBallon Transporteur§7: Vous fait suivre la flèche que vous avez lancer jusqu'à ce qu'elle touche quelqu'un ou le sol. (1x/60s)",
                     "",
-                    "§7Vous pouvez changer le modèle de votre§c Ballon§7 en faisant un§c clique gauche§7 avec votre§c arc§7.");
+                    "§7Vous pouvez changer le modèle de votre§c Ballon§7 en faisant un§c clic gauche§7 avec votre§c arc§7.");
             EventUtils.registerRoleEvent(this);
             this.cdExplosif = new Cooldown(15);
             this.cdTransporteur = new Cooldown(65);

@@ -94,7 +94,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                 }),
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                         new TextComponent("§7Si vous tué§a Zen'Itsu§7 votre§c Électrokinésie§7 aura des changements:\n\n" +
-                                "§7 - Votre§c clique droit§7 fera§c toujours§7 les mêmes effet que s'il est à pleine charge\n" +
+                                "§7 - Votre§c clic droit§7 fera§c toujours§7 les mêmes effet que s'il est à pleine charge\n" +
                                 "§7 - Le dernier palier de charge aura un autre pouvoir qui s'activera en essayant de§c drop§7 votre§c item§7:\n\n" +
                                 "§7     → Créera une ligne d'§eéclair§7 qui infligera§c 2❤§7 à tous les joueurs qui seront touché")
                 }),
@@ -258,10 +258,10 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
         }
         @Override
         public void tryUpdateActionBar() {
-            getShowCdRunnable().setCustomTexte(this.charge >= 20 ? "§fClique gauche est "+
+            getShowCdRunnable().setCustomTexte(this.charge >= 20 ? "§fClic gauche est "+
                     (this.tpPower.getCooldown().isInCooldown() ?
                             "en cooldown (§c"+ StringUtils.secondsTowardsBeautiful(this.tpPower.getCooldown().getCooldownRemaining())+"§f)" :
-                            "§cutilisable")+ (this.charge >= 60 ? "§7 |§f Clique droit est "+
+                            "§cutilisable")+ (this.charge >= 60 ? "§7 |§f Clic droit est "+
                     (this.foudrePower.getCooldown().isInCooldown() ?
                             "en cooldown (§c"+StringUtils.secondsTowardsBeautiful(this.foudrePower.getCooldown().getCooldownRemaining())+"§f)" :
                             "§cutilisable") : "")
@@ -286,13 +286,13 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                     "§7pour la remplir voir votre§c particularité 1§7:",
                     "",
                     "§7 -§c 0%§7: Aucun bonus",
-                    "§7 -§c 20%§7: (§fClique gauche§7) Vous permettra de vous téléportez derrière le joueur viser en lui infligeant§c 1❤§7 de dégat",
+                    "§7 -§c 20%§7: (§fClic gauche§7) Vous permettra de vous téléportez derrière le joueur viser en lui infligeant§c 1❤§7 de dégat",
                     "§7 -§6 40%§7: Vous irez§c 10%§7 plus§c vite§7 pendant la§c nuit",
-                    "§7 -§6 60%§7: (§fClique droit§7) Vous§c infligerez 2❤§7 de§c dégats§7 "+(killZenItsu ? "ainsi que l'effet§c Slowness I§7 et§6 enflammera§7" : "à tout")+" les joueurs proche (§c25 blocs§7)",
+                    "§7 -§6 60%§7: (§fClic droit§7) Vous§c infligerez 2❤§7 de§c dégats§7 "+(killZenItsu ? "ainsi que l'effet§c Slowness I§7 et§6 enflammera§7" : "à tout")+" les joueurs proche (§c25 blocs§7)",
                     "§7 -§a 80%§7: Vous irez§c 20%§7 plus§c vite§7 pendant la§c nuit",
                     "§7 -§a 100%§7: "+(killZenItsu ?
                             "(§fDrop§7) Vous permet de lancé une§c ligne§7 d'§eéclair§7 infligeant§c 2❤§7 de§c dégats§7 au joueurs touché" :
-                            "Votre clique droit (en plus du bonus précédent) infligera l'effet§c Slowness I§7 et§6 enflammera§7 les§c joueurs§7 touchés pendant§c 10 secondes")
+                            "Votre clic droit (en plus du bonus précédent) infligera l'effet§c Slowness I§7 et§6 enflammera§7 les§c joueurs§7 touchés pendant§c 10 secondes")
             };
         }
         @EventHandler
@@ -343,7 +343,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
         private static class TPPower extends Power {
 
             public TPPower(@NonNull RoleBase role) {
-                super("Électrokinésie (Clique gauche)", new Cooldown(5), role);
+                super("Électrokinésie (Clic gauche)", new Cooldown(5), role);
                 setShowInDesc(false);
                 setSendCooldown(false);
                 setTargetDistance(30);
@@ -377,7 +377,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             private final ElectroKinesiePower power;
 
             public FoudreZonePower(@NonNull ElectroKinesiePower power) {
-                super("Électrokinésie (Clique droit)", new Cooldown(5), power.getRole());
+                super("Électrokinésie (Clic droit)", new Cooldown(5), power.getRole());
                 this.power = power;
                 setShowInDesc(false);
                 setSendCooldown(false);

@@ -110,7 +110,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 		protected PotItemPower(@NonNull RoleBase role) {
 			super("Pot de téléportation", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cPot de téléportation"), role,
 					"§7Vous permet de poser jusqu'à§c 3 pots§7 (§cShift§7 +§c Clique§7)",
-					"§7Vous pouvez vous y téléportez à l'un d'entre eux de manière§c aléatoire§7 via un§c Clique droit");
+					"§7Vous pouvez vous y téléportez à l'un d'entre eux de manière§c aléatoire§7 via un§c Clic droit");
 			this.locations = new ArrayList<>();
 		}
 

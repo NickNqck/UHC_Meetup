@@ -51,7 +51,7 @@ public class AutomaticDesc {
         final ITeam team = role.getTeam();
         text.addExtra(fromLegacyTextSafe("\n§7Votre objectif est de gagner "+(team.equals(TeamList.Solo) ? "tout§e Seul" : "avec le camp: "+team.getColor()+team.name())));
         if (this.role instanceof CrystalBase) {
-            text.addExtra(fromLegacyTextSafe("\n§7Vous faite partie de la§c faction§7: \"§c"+((CrystalBase) this.role).getCrystalFaction().getName()+"§7\""));
+            text.addExtra(fromLegacyTextSafe("\n§7Vous faites partie de la§c faction§7: \"§c"+((CrystalBase) this.role).getCrystalFaction().getName()+"§7\""));
         }
     }
     public AutomaticDesc addEffect(PotionEffect potionEffect, EffectWhen when) {

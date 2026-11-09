@@ -84,7 +84,7 @@ public class NezukoV2 extends DemonsRoles {
 
         protected SangPower(@NonNull RoleBase role) {
             super("§cSang Démoniaque", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§cSang Démoniaque"), role,
-                    "§7Vous permet de mettre en §6feu§7 toute les personnes que vous§c taperez§7 dans les §c30§7 prochaines§c secondes");
+                    "§7Vous permet de mettre en §6feu§7 toutes les personnes que vous§c taperez§7 dans les §c30§7 prochaines§c secondes");
         }
 
         @Override

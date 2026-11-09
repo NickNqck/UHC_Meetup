@@ -20,7 +20,7 @@ public class Configuration_Inventory extends FastInv {
                 .setLore(
                         "§7Vous permet de modifier l'inventaire à votre guise l'inventaire de départ,",
                         "",
-                        "§7Si vous faite§f Shift + Clique§7 vous pourrez remettre l'inventaire par défaut (votre édition sera sauvegarder)."
+                        "§7Si vous faites§f Shift + Clic§7 vous pourrez remettre l'inventaire par défaut (votre édition sera sauvegarder)."
                 )
                 .toItemStack(), event -> {
             if (event.isShiftClick()) {
@@ -48,8 +48,8 @@ public class Configuration_Inventory extends FastInv {
         );
         if (Main.getInstance().getGameConfig().getStuffConfig().isDefaultInventory()) {
             setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()).setName("§fNombre de pomme d'§eor").setLore(
-                            "§fClique gauche:§a +1",
-                            "§fClique droit:§c -1",
+                            "§fClic gauche:§a +1",
+                            "§fClic droit:§c -1",
                             "§fMontant actuel:§e "+Main.getInstance().getGameConfig().getStuffConfig().getNmbGap())
                     .toItemStack(), event -> {
                 if (event.isLeftClick()) {
@@ -61,8 +61,8 @@ public class Configuration_Inventory extends FastInv {
                 new Configuration_Inventory().open((Player) event.getWhoClicked());
             });
             setItem(0, new ItemBuilder(Material.DIAMOND_HELMET).setLore(
-                            "§fClique gauche: §a+1",
-                            "§fClique droit: §c-1",
+                            "§fClic gauche: §a+1",
+                            "§fClic droit: §c-1",
                             "§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionHelmet()
                     ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
                     .toItemStack(), event -> {
@@ -75,8 +75,8 @@ public class Configuration_Inventory extends FastInv {
                 new Configuration_Inventory().open((Player) event.getWhoClicked());
             });
             setItem(9, new ItemBuilder(Material.DIAMOND_CHESTPLATE).setLore(
-                            "§fClique gauche: §a+1",
-                            "§fClique droit: §c-1",
+                            "§fClic gauche: §a+1",
+                            "§fClic droit: §c-1",
                             "§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionChestplate()
                     ).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
                     .toItemStack(), event -> {
@@ -90,8 +90,8 @@ public class Configuration_Inventory extends FastInv {
             });
             setItem(18, new ItemBuilder(Material.IRON_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
                     .setLore(
-                            "§fClique gauche; §a+1",
-                            "§fClique droit: §c-1",
+                            "§fClic gauche; §a+1",
+                            "§fClic droit: §c-1",
                             "§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionLeggings())
                     .toItemStack(), event -> {
                 if (event.isLeftClick()) {
@@ -104,8 +104,8 @@ public class Configuration_Inventory extends FastInv {
             });
             setItem(27, new ItemBuilder(Material.DIAMOND_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
                     .setLore(
-                            "§fClique gauche: §a+1",
-                            "§fClique droit: §c-1",
+                            "§fClic gauche: §a+1",
+                            "§fClic droit: §c-1",
                             "§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionBoost())
                     .toItemStack(), event -> {
                 if (event.isLeftClick()) {
@@ -117,8 +117,8 @@ public class Configuration_Inventory extends FastInv {
                 new Configuration_Inventory().open((Player) event.getWhoClicked());
             });
             setItem(45, new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, Main.getInstance().getGameConfig().getStuffConfig().getSharpness()).setLore(
-                    "§fClique gauche:§a +1 niveau",
-                    "§fClique droit:§c -1 niveau",
+                    "§fClic gauche:§a +1 niveau",
+                    "§fClic droit:§c -1 niveau",
                     "§fNiveau de tranchant:§b "+Main.getInstance().getGameConfig().getStuffConfig().getSharpness()
             ).toItemStack(), event -> {
                 if (event.isLeftClick()) {
@@ -131,8 +131,8 @@ public class Configuration_Inventory extends FastInv {
             });
             setItem(46, new ItemBuilder(Material.BRICK).setAmount(Main.getInstance().getGameConfig().getStuffConfig().getNmbblock())
                     .setLore(
-                            "§fClique gauche:§a + 1 stack",
-                            "§fClique droit:§c -1 stack",
+                            "§fClic gauche:§a + 1 stack",
+                            "§fClic droit:§c -1 stack",
                             "§fNombre de stack actuel: "+Main.getInstance().getGameConfig().getStuffConfig().getNmbblock(),
                             "§fNombre de blocs total:§c "+(64*Main.getInstance().getGameConfig().getStuffConfig().getNmbblock())
                     ).toItemStack(), event -> {
@@ -146,8 +146,8 @@ public class Configuration_Inventory extends FastInv {
             });
             setItem(47, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, Main.getInstance().getGameConfig().getStuffConfig().getPower())
                     .setLore(
-                            "§fClique gauche:§a + 1 niveau",
-                            "§fClique droit:§c - 1 niveau",
+                            "§fClic gauche:§a + 1 niveau",
+                            "§fClic droit:§c - 1 niveau",
                             "§fNiveau actuel de puissance:§b "+Main.getInstance().getGameConfig().getStuffConfig().getPower()
                     )
                     .toItemStack(), event -> {
@@ -161,8 +161,8 @@ public class Configuration_Inventory extends FastInv {
             });
             setItem(49, new ItemBuilder(Material.ENDER_PEARL).setAmount(Main.getInstance().getGameConfig().getStuffConfig().getPearl())
                     .setLore(
-                            "§fClique gauche:§a +1",
-                            "§fClique droit:§c -1",
+                            "§fClic gauche:§a +1",
+                            "§fClic droit:§c -1",
                             "§fNombre de perles de l'ender:§c "+Main.getInstance().getGameConfig().getStuffConfig().getPearl()
                     )
                     .toItemStack(), event -> {
@@ -178,8 +178,8 @@ public class Configuration_Inventory extends FastInv {
             setItem(51, new ItemBuilder(Material.LAVA_BUCKET)
                     .setAmount(Main.getInstance().getGameConfig().getStuffConfig().getLave())
                     .setLore(
-                            "§fClique gauche:§a +1",
-                            "§fClique droit:§c -1",
+                            "§fClic gauche:§a +1",
+                            "§fClic droit:§c -1",
                             "§fNombre de seau de lave:§c "+Main.getInstance().getGameConfig().getStuffConfig().getLave()
                     )
                     .toItemStack(), event -> {
@@ -194,8 +194,8 @@ public class Configuration_Inventory extends FastInv {
             setItem(52, new ItemBuilder(Material.WATER_BUCKET)
                     .setAmount(Main.getInstance().getGameConfig().getStuffConfig().getEau())
                     .setLore(
-                            "§fClique gauche:§a +1",
-                            "§fClique droit:§c -1",
+                            "§fClic gauche:§a +1",
+                            "§fClic droit:§c -1",
                             "§fNombre de seau d'eau:§c "+Main.getInstance().getGameConfig().getStuffConfig().getLave()
                     )
                     .toItemStack(), event -> {

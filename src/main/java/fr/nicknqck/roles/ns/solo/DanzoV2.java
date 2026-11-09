@@ -91,7 +91,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                 .setPowers(getPowers())
                 .addCustomLine(killUchiwa ?
                         "" :
-                        "§7Jusqu'à ce que vous tuez un§4 Uchiwa§7, toute les§c 2 minutes§7 vous recevez l'information si un§4 Uchiwa§7 est présent autour de vous ou non, s'il y en a un vous obtiendrez sont rang (§6/ns uchirang§7)")
+                        "§7Jusqu'à ce que vous tuez un§4 Uchiwa§7, toutes les§c 2 minutes§7 vous recevez l'information si un§4 Uchiwa§7 est présent autour de vous ou non, s'il y en a un vous obtiendrez sont rang (§6/ns uchirang§7)")
                 .addCustomLine("§7Vous infligez§c +10%§7 de§c dégâts§7 aux§4 Uchiwa")
                 .addCustomLine(killUchiwa ?
                         "" :

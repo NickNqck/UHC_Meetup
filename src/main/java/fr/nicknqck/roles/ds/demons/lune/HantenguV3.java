@@ -158,7 +158,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
         public ChoicePower(@NonNull RoleBase role) {
             super("Émotions", null, new ItemBuilder(Material.NETHER_STAR).setName("§cÉmotions"), role,
                     "§7Vous ouvre un menu vous permettant de choisir une§c forme§7, chacune d'entre elles ont leurs propres§c particularités§7 et",
-                    "§7leurs propres pouvoir utilisable via un§c clique gauche§7 sur cette objet, chacun d'entre eux à un§c cooldown§7 de§c 2 minutes§7.",
+                    "§7leurs propres pouvoir utilisable via un§c clic gauche§7 sur cet objet, chacun d'entre eux à un§c cooldown§7 de§c 2 minutes§7.",
                     "",
                     "§8 -§c Sekido§7: ",
                     "",
@@ -197,7 +197,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                     "",
                     "§8 -§e Zohakuten§7: ",
                     "§7§oCette§c§o forme§7§o vous permettra d'utiliser les pouvoirs des§c§o formes§7§o que vous aviez choisis jusqu'ici, les pouvoirs de§c Sekido§7§o ou de§a Karaku§7§o seront",
-                    "§7§oplacer sur le§c clique gauche§7§o, pour utiliser les pouvoirs de§c Aizetsu§7§o ou de§a Urogi§7§o il faudra faire§c shift + clique gauche§7.",
+                    "§7§oplacer sur le§c clic gauche§7§o, pour utiliser les pouvoirs de§c Aizetsu§7§o ou de§a Urogi§7§o il faudra faire§c shift + clic gauche§7.",
                     "",
                     AllDesc.tab+"§7Vous donne les effets§c Force I§7 et§9 Résistance I§7 pendant le temps de la§c transformation§7."
             );
@@ -317,7 +317,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                     fastInv.open(player);
                 } else {
                     if (this.leftClickPower == null || !using) {
-                        player.sendMessage("§7Vous n'avez aucun pouvoir équiper sur votre§c clique gauche§7 pour l'instant...");
+                        player.sendMessage("§7Vous n'avez aucun pouvoir équiper sur votre§c clic gauche§7 pour l'instant...");
                         return false;
                     }
                     if (player.isSneaking() && this.shiftClickPower != null) {

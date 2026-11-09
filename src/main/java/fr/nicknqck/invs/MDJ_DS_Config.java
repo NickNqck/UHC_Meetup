@@ -17,8 +17,8 @@ public class MDJ_DS_Config extends FastInv {
         setItem(10, new ItemBuilder(Material.REDSTONE).setName("§fTemps avant l'§cAssassin").setLore(
                 "§f10 secondes <§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin())+"§f > 5 minutes",
                 "",
-                "§fClique gauche:§a +10 secondes",
-                "§fClique droit:§c -10 secondes"
+                "§fClic gauche:§a +10 secondes",
+                "§fClic droit:§c -10 secondes"
         ).toItemStack(), event -> {
             if (event.isLeftClick()) {
                 Main.getInstance().getGameConfig().getDemonSlayerConfig().setTimingAssassin(Math.min(60*5, Main.getInstance().getGameConfig().getDemonSlayerConfig().getTimingAssassin()+10));
@@ -31,8 +31,8 @@ public class MDJ_DS_Config extends FastInv {
         setItem(11, new ItemBuilder(Material.GHAST_TEAR).setName("§fTemps avant§c infection").setLore(
                 "§f10 secondes <§c "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime())+"§f > 5 minutes",
                 "",
-                "§fClique gauche:§a +10 secondes",
-                "§fClique droit:§c -10 secondes"
+                "§fClic gauche:§a +10 secondes",
+                "§fClic droit:§c -10 secondes"
         ).toItemStack(), event -> {
             if (event.isLeftClick()) {
                 Main.getInstance().getGameConfig().getDemonSlayerConfig().setInfectionTime(Math.min(60*5, Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime()+10));

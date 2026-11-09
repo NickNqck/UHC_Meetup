@@ -248,7 +248,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
 
         public RegenPower(@NonNull RoleBase role) {
             super("Pouvoir régénérant", null, role,
-                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toute les§c 15 secondes");
+                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toutes les§c 15 secondes");
             new RegenPower.RegenerationRunnable(role.getGameState(), role.getPlayer(), this);
         }
 

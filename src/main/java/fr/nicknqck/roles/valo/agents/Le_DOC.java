@@ -72,7 +72,7 @@ public final class Le_DOC extends RoleBase {
         public MarteauPower(@NonNull RoleBase role) {
             super("Forgekraken", new Cooldown(90), new ItemBuilder(Material.DIAMOND_AXE).addEnchant(Enchantment.DAMAGE_ALL,4).setName("Forgekraken"), role,
                     "§7En frappant avec votre marteau sur un joueur vous aurez 30% de chance de §6l'enflammé§7.",
-                    "§7En faisant clique droit une flèche partira et elle propulsera le joueur et lui mettra §42,5❤ de dégâts§7.");
+                    "§7En faisant clic droit une flèche partira et elle propulsera le joueur et lui mettra §42,5❤ de dégâts§7.");
 
             EventUtils.registerRoleEvent(this);
             setSendCooldown(false);

@@ -132,7 +132,7 @@ public class KokushiboV2 extends DemonsRoles {
 
         public RegenPower(@NonNull RoleBase role) {
             super("Pouvoir régénérant", null, role,
-                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toute les§c 15 secondes");
+                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toutes les§c 15 secondes");
             new RegenPower.RegenerationRunnable(role.getGameState(), role.getPlayer(), this);
         }
 
@@ -212,12 +212,12 @@ public class KokushiboV2 extends DemonsRoles {
             super("Soufle de la lune", new Cooldown(30), new ItemBuilder(Material.NETHER_STAR).setName("§1Soufle de la lune"), role,
                     "§7Vous permet d'utiliser votre \"§bPourcentage Lunaire§7\" pour utiliser les pouvoirs suivant: ",
                     "",
-                    "§fClique gauche§7 (Frappe Horizontal): Vous permet de lancer un§c croissant de lune§7 la ou vous regardez qui parcourra§c 10 blocs" ,
+                    "§fClic gauche§7 (Frappe Horizontal): Vous permet de lancer un§c croissant de lune§7 la ou vous regardez qui parcourra§c 10 blocs" ,
                     "§7Il détruira les blocs sur son passage et en infligeant§c 2❤§7 de§c dégâts§7 au joueurs touchés tout en les repoussants fortement en arrière. (1x/5m)",
                     "",
-                    "§fClique droite§7 (Frappe Vertical): En visant un joueur, vous permet de lui infligez§c 2❤§7 de§c dégâts§7 et de le repousser légèrement en arrière. (1x/5m)",
+                    "§fClic droite§7 (Frappe Vertical): En visant un joueur, vous permet de lui infligez§c 2❤§7 de§c dégâts§7 et de le repousser légèrement en arrière. (1x/5m)",
                     "",
-                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à hauteurs de (nombre de joueur autour de vous) toute les§c 4 secondes§7.",
+                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à hauteurs de (nombre de joueur autour de vous) toutes les§c 4 secondes§7.",
                     "",
                     "§cChaque pouvoir du§1 Soufle de la lune§c vous coûtera§b 50%§c du \"§bPourcentage Lunaire§c\"");
             this.role = role;

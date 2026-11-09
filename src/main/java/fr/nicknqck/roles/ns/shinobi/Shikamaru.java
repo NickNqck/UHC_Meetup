@@ -75,13 +75,13 @@ public class Shikamaru extends HShinobiRoles {
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
                 "§7Permet d'ouvrir un menu vous permettant de choisir un§c joueur§7 étant à moins de§c 25 blocs§7 (portée augmenter de§c 10 blocs§7 s'il fait§c nuit§7),\n§7Ce joueur ainsi que vous serrez§a stun§7 pendant§c 10 secondes§7.\n\n"
                 +"§7Vous et le joueur§a stun§7 pourrez vous faire§c frappez§7 pendant le temp du§a stun§7.\n\n"
-                +"§7Si au moment de choisir le joueur vous faite un§c clique droit§7 vous infligerez au joueur viser§c 1/2❤§7 toute les§c 2 secondes§7.")}),
+                +"§7Si au moment de choisir le joueur vous faites un§c clic droit§7 vous infligerez au joueur viser§c 1/2❤§7 toutes les§c 2 secondes§7.")}),
                 "§aStun",
                 60*5
         ),
         new TripleMap<>(
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                        "§7Vous permet de§a stun§7 toute les personnes autour de vous dans un rayon de§c 15 blocs§7.\n\n"
+                        "§7Vous permet de§a stun§7 toutes les personnes autour de vous dans un rayon de§c 15 blocs§7.\n\n"
                         +"§7Les joueurs touchés par votre§a stun§7 pourront être§c frappez§7."
                 )}),
                 "§aZone d'ombre",
@@ -198,7 +198,7 @@ public class Shikamaru extends HShinobiRoles {
 
         int i = 10;
         for (Player p : Loc.getNearbyPlayersExcept(owner, this.powerDistance)){
-                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse != 2 ? "§aClique droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2": "§7Vous ne pouvez plus utiliser le deuxième pouvoirs (§fClique droit§7)").setName(p.getName()).toItemStack());
+                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse != 2 ? "§aClic droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2": "§7Vous ne pouvez plus utiliser le deuxième pouvoirs (§fClic droit§7)").setName(p.getName()).toItemStack());
                 i++;
         }
         inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());

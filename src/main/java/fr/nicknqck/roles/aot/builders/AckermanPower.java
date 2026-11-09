@@ -20,7 +20,7 @@ public class AckermanPower extends Power {
     public AckermanPower(@NonNull RoleBase role, @NonNull final Ackerman ackerman) {
         super("§aAckerman§r", null, role,
                 "§7Au début de la partie, parmi les autres membres du camps§a Soldat§7,",
-                "§7un joueur est désigner comme étant votre§a maitre§7, toute les§c 5 minutes§7",
+                "§7un joueur est désigner comme étant votre§a maitre§7, toutes les§c 5 minutes§7",
                 "§7passer proche de lui vous gagnerez§c 1/2❤ permanent§7.",
                 "",
                 role instanceof LivaiV2 ? "§7Votre§a maitre§7 à§a 10%§7 de chance en plus d'être§a Erwin§7." :

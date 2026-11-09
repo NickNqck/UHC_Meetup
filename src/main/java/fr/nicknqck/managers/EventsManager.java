@@ -119,7 +119,7 @@ public class EventsManager implements Listener {
                         gameEvent.setEnable(!gameEvent.isEnable());
                     }
                     if (name.equals("§bPourcentage (§cdiminution§b)")) {
-                        if (action.equals(InventoryAction.PICKUP_ALL)) {//Clique gauche
+                        if (action.equals(InventoryAction.PICKUP_ALL)) {//Clic gauche
                             gameEvent.setPercent(Math.max(0, gameEvent.getPercent()-5));
                         } else if (action.equals(InventoryAction.PICKUP_HALF)){
                             gameEvent.setPercent(Math.max(0, gameEvent.getPercent()-1));
@@ -146,9 +146,9 @@ public class EventsManager implements Listener {
         final boolean enable = event.isEnable();
         gameInv.setItem(9, new ItemBuilder(Material.WATCH).setName("§bTemp minimum").setLore(
                 "",
-                "§fClique gauche: §a+1 minute",
+                "§fClic gauche: §a+1 minute",
                 "",
-                "§fClique droit: §c-1 minute",
+                "§fClic droit: §c-1 minute",
                 "",
                 "§bTemp minimum actuel: §c"+ StringUtils.secondsTowardsBeautiful(minTime)
         ).toItemStack());
@@ -158,9 +158,9 @@ public class EventsManager implements Listener {
                 .toItemStack());
         gameInv.setItem(11, new ItemBuilder(Material.WATCH).setName("§bTemp maximum").setLore(
                 "",
-                "§fClique gauche: §a+1 minute",
+                "§fClic gauche: §a+1 minute",
                 "",
-                "§fClique droit: §c-1 minute",
+                "§fClic droit: §c-1 minute",
                 "",
                 "§bTemp maximum actuel: §c"+ StringUtils.secondsTowardsBeautiful(maxTime)
         ).toItemStack());
@@ -168,13 +168,13 @@ public class EventsManager implements Listener {
         gameInv.setItem(15, new ItemBuilder(Material.WATCH).setName("§bPourcentage (§cdiminution§b)").setLore(
                 "§fPourcentage actuel: §c"+event.getPercent()+"%",
                 "",
-                "§fClique gauche:§c -5%",
-                "§fClique droit:§c -1%").toItemStack());
+                "§fClic gauche:§c -5%",
+                "§fClic droit:§c -1%").toItemStack());
         gameInv.setItem(17, new ItemBuilder(Material.WATCH).setName("§bPourcentage (§aaugmentation§b)").setLore(
                 "§fPourcentage actuel: §a"+event.getPercent()+"%",
                 "",
-                "§fClique gauche:§a +5%",
-                "§fClique droit:§a +1%"
+                "§fClic gauche:§a +5%",
+                "§fClic droit:§a +1%"
         ).toItemStack());
         gameInv.setItem(4, GUIItems.getSelectBackMenu());
         player.openInventory(gameInv);

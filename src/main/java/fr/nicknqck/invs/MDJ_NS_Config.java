@@ -40,10 +40,10 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             } else {
                 if (Main.getInstance().getBijuManager().isBijuEnable()) {
                     Main.getInstance().getBijuManager().setBijuEnable(false);
-                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'apparition de tout les§d Bijus§7 sur:§c Désactiver");
+                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'apparition de tous les§d Bijus§7 sur:§c Désactiver");
                 } else {
                     Main.getInstance().getBijuManager().setBijuEnable(true);
-                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'apparition de tout les§d Bijus§7 sur:§a Activer");
+                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'apparition de tous les§d Bijus§7 sur:§a Activer");
                 }
                 new MDJ_NS_Config().open((Player) event.getWhoClicked());
             }
@@ -85,9 +85,9 @@ public class MDJ_NS_Config extends PaginatedFastInv {
         addContent(new ItemBuilder(Material.INK_SACK).setDurability(EChakras.KATON.getColorCode()).setName(EChakras.KATON.getShowedName()).setLore(
                 "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+"%",
                 "",
-                "§fClique gauche:§a +1%",
+                "§fClic gauche:§a +1%",
                 "",
-                "§fClique droit:§c -1%"
+                "§fClic droit:§c -1%"
         ).toItemStack(), event -> {
             if (event.isLeftClick()) {
                 Main.getInstance().getGameConfig().getNarutoConfig().setKatonPercent(Math.min(100, Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+1));
@@ -101,9 +101,9 @@ public class MDJ_NS_Config extends PaginatedFastInv {
         addContent(new ItemBuilder(Material.INK_SACK).setDurability(EChakras.RAITON.getColorCode()).setName(EChakras.RAITON.getShowedName()).setLore(
                 "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+"%",
                 "",
-                "§fClique gauche:§a +1%",
+                "§fClic gauche:§a +1%",
                 "",
-                "§fClique droit:§c -1%"
+                "§fClic droit:§c -1%"
         ).toItemStack(), event -> {
             if (event.isLeftClick()) {
                 Main.getInstance().getGameConfig().getNarutoConfig().setRaitonPercent(Math.min(100, Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+1));
@@ -117,9 +117,9 @@ public class MDJ_NS_Config extends PaginatedFastInv {
         addContent(new ItemBuilder(Material.INK_SACK).setDurability(EChakras.DOTON.getColorCode()).setName(EChakras.DOTON.getShowedName()).setLore(
                 "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%",
                 "",
-                "§fClique gauche:§a +1%",
+                "§fClic gauche:§a +1%",
                 "",
-                "§fClique droit:§c -1%"
+                "§fClic droit:§c -1%"
         ).toItemStack(), event -> {
             if (event.isLeftClick()) {
                 Main.getInstance().getGameConfig().getNarutoConfig().setDotonPercent(Math.min(100, Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+1));

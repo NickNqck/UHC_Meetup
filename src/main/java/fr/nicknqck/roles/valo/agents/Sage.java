@@ -90,12 +90,12 @@ public final class Sage extends ValoBase {
 
         public SageItem(@NonNull RoleBase role) {
             super("§aSage", new ItemBuilder(Material.NETHER_STAR).setName("§aSage"), role,
-                    "§7Effectue différentes actions en fonction du clique:",
+                    "§7Effectue différentes actions en fonction du clic:",
                     "",
-                    AllDesc.point+"§fClique gauche§7: Envoie une§f boule de neige§7 qui à l'impacte, créé une§c zone§7 de§c 10 blocs§7 pendant§c 10 secondes§7,",
+                    AllDesc.point+"§fClic gauche§7: Envoie une§f boule de neige§7 qui à l'impacte, créé une§c zone§7 de§c 10 blocs§7 pendant§c 10 secondes§7,",
                     "§7les joueurs à l'intérieur ont l'effet§c Slowness III§7. (vous aussi) (2x/partie) (1x/10s)",
                     "",
-                    AllDesc.point+"§fClique droit§7: Vous§a soigne complètement§7. (1x/45s)"
+                    AllDesc.point+"§fClic droit§7: Vous§a soigne complètement§7. (1x/45s)"
             );
             this.slowPower = new SlowPower(role);
             this.healPower = new HealPower(role);

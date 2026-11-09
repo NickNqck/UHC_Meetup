@@ -76,11 +76,11 @@ public class SabitoV2 extends SlayerRoles {
         public SouffleItem(@NonNull RoleBase role) {
             super("Souffle de l'Eau", new Cooldown(3),
                     new ItemBuilder(Material.NETHER_STAR).setName("§bSouffle de l'Eau"), role,
-                    "§7Utilise§c deux pouvoirs différent§7 en fonction du clique effectué:",
+                    "§7Utilise§c deux pouvoirs différent§7 en fonction du clic effectué:",
                     "",
-                    "§fClique droit§7: Vous donne§b Speed I§7 pendant§c 2 minutes§7 (Si§a Tomioka§7 est§c mort§7 vous obtiendrez§b Speed II§7 à la place). (1x/5m)",
+                    "§fClic droit§7: Vous donne§b Speed I§7 pendant§c 2 minutes§7 (Si§a Tomioka§7 est§c mort§7 vous obtiendrez§b Speed II§7 à la place). (1x/5m)",
                     "",
-                    "§fClique gauche§7: En échange d'un§b sceau d'eau§7, effectue un§c dash§7 en avant, si un joueur est touché par celui-ci il",
+                    "§fClic gauche§7: En échange d'un§b sceau d'eau§7, effectue un§c dash§7 en avant, si un joueur est touché par celui-ci il",
                     "§7recevra§c 10 secondes§7 de§c Slowness II§7 et perdra§c 1,5❤§7 de§c dégâts§7. (1x/5m)");
             EventUtils.registerRoleEvent(this);
             getShowCdRunnable().setCustomText(true);
@@ -230,16 +230,16 @@ public class SabitoV2 extends SlayerRoles {
             getShowCdRunnable().setCustomTexte(
                     (
                             droitCooldown.isInCooldown() ?
-                            "§bCooldown (§fClique droit§b):§c "+StringUtils.secondsTowardsBeautiful(droitCooldown.getCooldownRemaining())
+                            "§bCooldown (§fClic droit§b):§c "+StringUtils.secondsTowardsBeautiful(droitCooldown.getCooldownRemaining())
                             :
-                            "§fClique droit est§c utilisable"
+                            "§fClic droit est§c utilisable"
                     )
                     + "§7 | " +
                             (
                                     gaucheCooldown.isInCooldown() ?
-                                            "§bCooldown (§fClique gauche§b):§c "+StringUtils.secondsTowardsBeautiful(gaucheCooldown.getCooldownRemaining())
+                                            "§bCooldown (§fClic gauche§b):§c "+StringUtils.secondsTowardsBeautiful(gaucheCooldown.getCooldownRemaining())
                                             :
-                                            "§fClique gauche est§c utilisable"
+                                            "§fClic gauche est§c utilisable"
                             )
             );
         }
