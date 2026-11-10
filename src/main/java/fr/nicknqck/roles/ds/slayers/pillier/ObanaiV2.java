@@ -226,7 +226,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
                 list.add(event.getGamePlayerKiller());
                 Collections.shuffle(list, Main.RANDOM);
                 GamePlayer one = list.get(0);
-                GamePlayer two = list.get(1);
+                GamePlayer two = list.get(list.size() > 1 ? 1 : 0);
                 this.roleBaseMap.put(event.getPlayer().getName(), new RoleBase[]{
                    one.getRole(), two.getRole(), one.getRole()
                 });
