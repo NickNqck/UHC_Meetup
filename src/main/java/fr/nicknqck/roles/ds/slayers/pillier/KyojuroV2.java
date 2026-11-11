@@ -159,7 +159,7 @@ public class KyojuroV2 extends PilierRoles implements IAllianceRole {
     }
     private static class DashPower extends ItemPower implements Listener {
 
-        private final DashRunnable runnable;
+        private DashRunnable runnable;
 
         protected DashPower(RoleBase role) {
             super("§cDash de Flamme", new Cooldown(60*10), new ItemBuilder(Material.BLAZE_ROD).setName("§cDash de Flamme"), role, "§7Vous permet d'effectuer un§c dash§6 enflammant§7 et détruisant tous les blocs autour de vous");
@@ -169,7 +169,7 @@ public class KyojuroV2 extends PilierRoles implements IAllianceRole {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                runnable.time = 0;
+                runnable = new DashRunnable(this);
                 player.setAllowFlight(true);
                 runnable.runTaskTimerAsynchronously(getPlugin(), 0, 1);
                 EventUtils.registerRoleEvent(this);
