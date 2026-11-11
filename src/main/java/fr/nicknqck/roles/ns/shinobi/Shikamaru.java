@@ -262,7 +262,7 @@ public class Shikamaru extends HShinobiRoles {
                                 shikamaru.getGamePlayer().stun(10*20);
                                 GameState.getInstance().getGamePlayer().get(player.getUniqueId()).stun(10*20);
                                 if (e.getAction().equals(InventoryAction.PICKUP_HALF) && shikamaru.poisonUse < 2){
-                                    new PoisonPowerRunnable(shikamaru, player.getUniqueId()).runTaskTimerAsynchronously(Main.getInstance(), 0, 40);
+                                    new PoisonPowerRunnable(shikamaru, player.getUniqueId()).runTaskTimer(Main.getInstance(), 0, 40);
                                     shikamaru.poisonUse++;
                                 }
                                 player.closeInventory();
