@@ -149,7 +149,10 @@ public final class StunManager implements Listener{
             @Override
             public void run() {
                 if (!this.stuckStunListener.gamePlayer.check()) {
-                    Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> this.stuckStunListener.gamePlayer.getStunManager().stunedPlayers.remove(this.stuckStunListener.gamePlayer.getUuid()));
+                    Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> {
+                        this.stuckStunListener.gamePlayer.getStunManager().stunedPlayers.remove(this.stuckStunListener.gamePlayer.getUuid());
+                        EventUtils.unregisterEvents(this.stuckStunListener);
+                    });
                     cancel();
                     return;
                 }
