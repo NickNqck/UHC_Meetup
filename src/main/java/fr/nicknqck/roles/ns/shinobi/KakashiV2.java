@@ -143,7 +143,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                         if (!gamePlayer.isOnline())continue;
                         inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(gamePlayer.getUuid())).setName("§a"+gamePlayer.getPlayerName()).toItemStack(),
                                 event1 -> {
-                            String name = event1.getCurrentItem().getItemMeta().getDisplayName().substring(0, event1.getCurrentItem().getItemMeta().getDisplayName().length()-2);
+                            String name = event1.getCurrentItem().getItemMeta().getDisplayName().substring(2);
                             final Player target = Bukkit.getPlayer(name);
                             if (target != null){
                                 coping = true;
