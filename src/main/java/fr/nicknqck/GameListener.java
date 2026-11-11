@@ -515,7 +515,7 @@ public class GameListener implements Listener {
         final int test = trueCount2(teams.values());
         Main.getInstance().debug("TrueCount is = "+test);
         if (test == 0) {
-            EndGame(gameState, null);
+            gameDone = true;
         } else if (test == 1) {
             //Comme l'int est égal à 1 on sait déjà qu'il n'y a qu'une team gagnante
             final ITeam winTeam = teams.keySet().stream().findFirst().get();
