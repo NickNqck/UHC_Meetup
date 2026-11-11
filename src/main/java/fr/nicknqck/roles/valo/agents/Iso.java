@@ -35,11 +35,11 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Iso extends RoleBase {
-    private final ItemStack ProtectionItem = new ItemBuilder(Material.NETHER_STAR).setName("§dProtection couplé").setLore("§7Vous permet de crée un timer visant à ne pas subir de dégat").toItemStack();
+    private final ItemStack ProtectionItem = new ItemBuilder(Material.NETHER_STAR).setName("§dProtection couplé").setLore("§7Vous permet de crée un timer visant à ne pas subir de dégâts").toItemStack();
     private int cdProtection = 0;
     private int stackedCoup = 0;
     private final ItemStack BarriereItem = new ItemBuilder(Material.NETHER_STAR).setName("§5Barrière").setLore("§fVous permet de tirer un laser de particule, les joueurs touchés auront un effet différent en fonction du clic utilisé:",
-            "§cClic gauche§f: Les jououeurs subiront§c +25%§f de dégat de votre pars pendant§c 1 minute§f",
+            "§cClic gauche§f: Les joueurs subiront§c +25%§f de dégâts de votre part pendant§c 1 minute§f",
             "§aClic droit§f: Les joueurs ne pourront plus vous tapez durant les§c 10 secondes§f qui suive."
     ).toItemStack();
     private int cdBarriereDroite = 0;
@@ -107,7 +107,7 @@ public class Iso extends RoleBase {
                 AllDesc.point + "§dProtection couplé§f: A l'activation crée un timer de§c 15 secondes§f durant lesquelles tous les coups que vous infligerez au un joueur seront comptabilisé, après ce temp la vous pourrez esquiver un nombre de coup équivalant à ceux que vous aviez accumulé.§7 (1x/7min)",
                 "",
                 AllDesc.point + "§5Barrière§f: Vous permet de tier un laser de particule, les joueurs touchés auront un effet différent en fonction du clic utiliser: ",
-                AllDesc.tab + "§cClic gauche§f: Les joueurs touchés par le laser subiront§c +25%§f de dégat de votre pars pendant§c 1 minute§f.§7 (1x/5m)",
+                AllDesc.tab + "§cClic gauche§f: Les joueurs touchés par le laser subiront§c +25%§f de dégâts de votre part pendant§c 1 minute§f.§7 (1x/5m)",
                 AllDesc.tab + "§aClic droit§f: Les joueurs touchés par le laser ne pourront plus vous tapez durant les§c 10 secondes§f qui suive.§7 (1x/7m)",
                 "",
                 AllDesc.point + "Ultime: duel: En visant un joueur, vous permet de vous téléportez avec lui dans un§c 1v1§f dans une arène, le gagnant remporte le nombre de pomme d'or que possédait le perdant (avant la téléportation).§7 (1x/10min)",

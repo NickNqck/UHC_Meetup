@@ -159,7 +159,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                     "",
                     "§aClic gauche§7: Vous permet de repousser toute entité étant à moins de§c 20 blocs§7 de vous.",
                     "",
-                    "§cClic droit§7: Vous permet de téléporter le joueur viser à votre position.");
+                    "§cClic droit§7: Vous permet de téléporter le joueur visé à votre position.");
             setShowCdInDesc(false);
             this.shinraTensei = new ShinraTensei(role);
             this.cliqueDroit = new CliqueDroit(role);
@@ -225,7 +225,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
 
         public JigokudoPower(@NonNull RoleBase role) {
             super("/ns jigokudo <joueur>", "jigokudo", null, role, CommandType.NS,
-                    "§7Vous permet d'obtenir plusieurs information sur un joueur viser:",
+                    "§7Vous permet d'obtenir plusieurs information sur un joueur visé:",
                     "",
                     "§8 - §7S'il/elle possède oui ou non un ou des effets permanent(s)",
                     "",
@@ -233,7 +233,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                     "",
                     "§8 - §7Le nombre de§c coeurs permanents§7 que possède la cible",
                     "",
-                    "§cCette commande infligera 1❤ de dégat a la cible");
+                    "§cCette commande infligera 1❤ de dégâts à la cible");
             setMaxUse(2);
         }
 
@@ -282,7 +282,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                     "",
                     "§8 - §7Le nombre de §ccoeurs§7 que possède le joueur.",
                     "",
-                    "§cCette commande infligera a la cible 2❤ de dégats");
+                    "§cCette commande infligera à la cible 2❤ de dégâts");
             setMaxUse(2);
         }
 

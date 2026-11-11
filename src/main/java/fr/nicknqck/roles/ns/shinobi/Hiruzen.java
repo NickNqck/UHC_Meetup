@@ -116,7 +116,7 @@ public class Hiruzen extends HShinobiRoles implements Listener {
         public Balsamine(@NonNull RoleBase role) {
             super("§cKaton: Balsamine", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cKaton: Balsamine"), role,
                     "§7Suite à l'§aactivation§7 et ce pendant§c 10 secondes§7,",
-                    "§7tout les joueurs qui vous frappe se verront§6 enflammer§7."
+                    "§7tous les joueurs qui vous frappent se verront§6 enflammés§7."
             );
             EventUtils.registerRoleEvent(this);
         }

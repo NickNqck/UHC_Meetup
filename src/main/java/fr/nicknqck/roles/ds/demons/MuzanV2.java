@@ -143,7 +143,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
 
         public DSBoostPower(@NonNull RoleBase role) {
             super("/ds boost <joueur>", "boost", null, role, CommandType.DS,
-                    "§7Vous permet de donner§c +10%§7 de§c force§7 au joueur viser");
+                    "§7Vous permet de donner§c +10%§7 de§c force§7 au joueur visé");
             setMaxUse(1);
         }
 
@@ -216,7 +216,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
 
             private InfectPower(@NonNull DemonsRoles role) {
                 super("/ds infection <joueur>", "infection", new Cooldown(-500), role, CommandType.DS,
-                        "§7Cette§c commande§7 vous permet d'§cinfecter§7 le joueur cibler dans le camp des§c Démons§7 (au bout de§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime())+"§7)");
+                        "§7Cette§c commande§7 vous permet d'§cinfecter§7 le joueur ciblé dans le camp des§c Démons§7 (au bout de§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime())+"§7)");
                 setMaxUse(1);
             }
 
@@ -226,11 +226,11 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                 if (args.length == 2) {
                     final Player target = Bukkit.getPlayer(args[1]);
                     if (target == null) {
-                        player.sendMessage("§cLe joueur viser n'existe pas ou n'est pas connecté");
+                        player.sendMessage("§cLe joueur visé n'existe pas ou n'est pas connecté");
                         return false;
                     }
                     if (getRole().getGameState().hasRoleNull(target.getUniqueId())) {
-                        player.sendMessage("§cLe joueur viser n'a pas de rôle, impossible de l'infecter");
+                        player.sendMessage("§cLe joueur visé n'a pas de rôle, impossible de l'infecter");
                         return false;
                     }
                     if (target.getUniqueId().equals(player.getUniqueId())) {

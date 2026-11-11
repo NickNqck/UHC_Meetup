@@ -29,7 +29,7 @@ public enum BestialForm {
             " \n"+
             "§7     → \"§fBattement d'aile§7\": Vous permet de§a voler§7 pendant une durée de§c 10 secondes\n"+
             " \n"+
-            "§7     → \"§fCharge en piqué§7\": Vous permet d'effectuer une charge en avant propulsant légèrement toute personne proche de la ou vous allez en plus de leurs infliger§c 1,5❤§7 de dégat",
+            "§7     → \"§fCharge en piqué§7\": Vous permet d'effectuer une charge en avant propulsant légèrement toute personne proche de la ou vous allez en plus de leurs infliger§c 1,5❤§7 de dégâts",
             new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false)),
     OKAPI(4, "§cOkapi", "§7Votre transformation vous donne l'effet§c Force I§7 et§c Speed 1§7.\n"+
             " \n"+

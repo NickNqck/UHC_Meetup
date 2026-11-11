@@ -29,7 +29,7 @@ public final class InvCommand implements CommandExecutor {
         if (!Main.getInstance().getInvManager().getConfiguring().contains(sender.getUniqueId())) {
             Main.getInstance().getInvManager().getConfiguring().add(sender.getUniqueId());
             giveInventory(sender);
-            sender.sendMessage("§aFaite de nouveau la commande§6 /inv§a pour sauvegarder l'inventaire");
+            sender.sendMessage("§aFaites de nouveau la commande§6 /inv§a pour sauvegarder l'inventaire");
         } else {
             Main.getInstance().getInvManager().getConfiguring().remove(sender.getUniqueId());
             Main.getInstance().getInvManager().saveInventory(sender);

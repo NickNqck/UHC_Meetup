@@ -94,7 +94,7 @@ public class TsunadeV2 extends HShinobiRoles {
                     "§7En utilisant un§c clic droit§7, vous pouvez§c vous soignez§7 de manière plus",
                     "§7ou moins complète en fonction de ce qui est stocké.",
                     "",
-                    "§7En utilisant un§c clic gauche§7, vous§d soignerez§7 un joueur viser de manière plus",
+                    "§7En utilisant un§c clic gauche§7, vous§d soignerez§7 un joueur visé de manière plus",
                     "§7ou moins complète en fonction de ce qui est stocké."
                     /*"§7Lorsque vous mangez une§e pomme d'or§7 ce qui ne vous soigne pas directement est stocker",
                     "§7lorsque vous utilisez§d Katsuyu§7 avec un§c clic droit§7, celà vous§d soigne§7 le plus possible (en fonction des réserves)",

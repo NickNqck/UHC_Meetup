@@ -68,7 +68,7 @@ public class KanaoV2 extends SlayerRoles {
 
         public TanjiroCommand(@NonNull RoleBase role) {
             super("§a/ds tanjiro <joueur>", "tanjiro", null, role, CommandType.DS,
-                    "§7Si le joueur cibler a le rôle§a Tanjiro§7, vous obtiendrez§c 2"+ AllDesc.coeur+"§c permanent ainsi que Force I§7 proche de lui (§c20 blocs§7),",
+                    "§7Si le joueur ciblé a le rôle§a Tanjiro§7, vous obtiendrez§c 2"+ AllDesc.coeur+"§c permanent ainsi que Force I§7 proche de lui (§c20 blocs§7),",
                     "§7sinon vous perdrez§c 1"+AllDesc.coeur+" permanent§7.");
             setMaxUse(1);
         }
@@ -139,7 +139,7 @@ public class KanaoV2 extends SlayerRoles {
 
         public FouilleCommand(@NonNull RoleBase role) {
             super("/ds fouille <joueur>", "fouille", new Cooldown(60*10), role, CommandType.DS,
-                    "§7Vous permet de voir ce qu'il y a dans l'inventaire du joueur viser.");
+                    "§7Vous permet de voir ce qu'il y a dans l'inventaire du joueur visé.");
         }
 
         @Override

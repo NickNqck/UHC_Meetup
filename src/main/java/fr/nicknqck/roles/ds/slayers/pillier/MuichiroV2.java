@@ -85,7 +85,7 @@ public class MuichiroV2 extends PilierRoles {
         protected FrappeBrumeuse(@NonNull RoleBase role) {
             super("§bFrappe Brumeuse", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§bFrappe Brumeuse"), role,
                     "§7Vous permet de vous§c téléportez§7 dans un rayon de§c 10 blocs§7 autour de vous",
-                    "§7Le premier joueur que vous§c frapperez§7 après ceci prendra des §cdégats triplés",
+                    "§7Le premier joueur que vous§c frapperez§7 après ceci prendra des §cdégâts triplés",
                     "§7Il obtiendra également§1 Blindness I§7 pendant§c 15 secondes");
         }
 

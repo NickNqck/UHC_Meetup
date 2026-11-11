@@ -50,7 +50,7 @@ public class CuirasseV2 extends TitanBase implements Listener {
                 " \n"+
                 "§8 -§7 Vous pouvez utiliser votre objet \"§f§lChangement de Cuirasse§r§7\" pour retirer ou équiper votre cuirasse, lorsque vous l'avez vous avez l'effet§c Résistance I§7, sans, vous avez l'effet§c Speed I§7.\n"+
                 " \n"+
-                "§8 -§7 Lorsque vous êtes transformé en titan vous possédez un passif nommé \"§cCharge Énergique§7\"§7 il fait que tous les§c 25 coups infligés§7 vous faites un petit§c dash§7 en avant§7 vous soignant de§c 2,5❤§7 et infligeant§c 1,5❤§7 de§c dégats§7 à tous les joueurs proche";
+                "§8 -§7 Lorsque vous êtes transformé en titan vous possédez un passif nommé \"§cCharge Énergique§7\"§7 il fait que tous les§c 25 coups infligés§7 vous faites un petit§c dash§7 en avant§7 vous soignant de§c 2,5❤§7 et infligeant§c 1,5❤§7 de§c dégâts§7 à tous les joueurs proche";
     }
 
     @Override

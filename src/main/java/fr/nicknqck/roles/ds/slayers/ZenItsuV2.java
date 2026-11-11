@@ -112,7 +112,7 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
             super("§c/ds ecouter <pseudo>", "ecouter", new Cooldown(60*10), role, CommandType.DS,
                     "§7Pendant§c 5 minutes§7 vous permet de savoir lorsque:",
                     "",
-                    "§7Le joueur viser §csubit§7/§cinflige§7 un§c coup",
+                    "§7Le joueur visé §csubit§7/§cinflige§7 un§c coup",
                     "",
                     "§7Quand il y a un §cmort§7 autour du joueur (§c10 blocs§7)");
         }

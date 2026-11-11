@@ -75,7 +75,7 @@ public class Shikamaru extends HShinobiRoles {
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
                 "§7Permet d'ouvrir un menu vous permettant de choisir un§c joueur§7 étant à moins de§c 25 blocs§7 (portée augmenter de§c 10 blocs§7 s'il fait§c nuit§7),\n§7Ce joueur ainsi que vous serrez§a stun§7 pendant§c 10 secondes§7.\n\n"
                 +"§7Vous et le joueur§a stun§7 pourrez vous faire§c frappez§7 pendant le temp du§a stun§7.\n\n"
-                +"§7Si au moment de choisir le joueur vous faites un§c clic droit§7 vous infligerez au joueur viser§c 1/2❤§7 toutes les§c 2 secondes§7.")}),
+                +"§7Si au moment de choisir le joueur vous faites un§c clic droit§7 vous infligerez au joueur visé§c 1/2❤§7 toutes les§c 2 secondes§7.")}),
                 "§aStun",
                 60*5
         ),
@@ -198,7 +198,7 @@ public class Shikamaru extends HShinobiRoles {
 
         int i = 10;
         for (Player p : Loc.getNearbyPlayersExcept(owner, this.powerDistance)){
-                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse != 2 ? "§aClic droit§7 pour infliger des§c dégats§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2": "§7Vous ne pouvez plus utiliser le deuxième pouvoirs (§fClic droit§7)").setName(p.getName()).toItemStack());
+                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse != 2 ? "§aClic droit§7 pour infliger des§c dégâts§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2": "§7Vous ne pouvez plus utiliser le deuxième pouvoirs (§fClic droit§7)").setName(p.getName()).toItemStack());
                 i++;
         }
         inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());
@@ -272,7 +272,7 @@ public class Shikamaru extends HShinobiRoles {
                                     player.sendMessage("§7Vous pouvez à nouveau bouger");
                                 }, 200L);
                             } else {
-                                System.out.println("Le joueur viser par Shikamaru est null");
+                                System.out.println("Le joueur visé par Shikamaru est null");
                             }
                         }
                     }

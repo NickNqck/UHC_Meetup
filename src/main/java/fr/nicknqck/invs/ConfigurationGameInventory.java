@@ -63,8 +63,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName("§r§fTemp avant réduction de la bordure").setLore(
                 "§r§f[0 minute < "+Border.getTempReduction()/60+" minutes > 60 minutes]",
-                "§r§fClic gauche: §a+1 minutes",
-                "§r§fClic droit: §c-1 minutes"
+                "§r§fClic gauche: §a+1 minute",
+                "§r§fClic droit: §c-1 minute"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 Border.setTempReduction(Math.min(Border.getTempReduction()+60, 60*60));
@@ -90,8 +90,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.IRON_SWORD).setName("§r§fTemp avant activation du PVP").setLore(
                 "§r§f[0 minute < "+ GameState.getInstance().getPvPTimer()/60+" minutes > 40 minutes]",
-                "§r§fClic gauche: §a+1 minutes",
-                "§r§fClic droit: §c-1 minutes"
+                "§r§fClic gauche: §a+1 minute",
+                "§r§fClic droit: §c-1 minute"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 GameState.getInstance().pvpTimer += 60;
@@ -104,8 +104,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemp avant annonce des roles").setLore(
                 "§r§f[0 minute < "+GameState.getInstance().getRoleTimer()/60+" minutes > 40 minutes]",
-                "§r§fClic gauche: §a+1 minutes",
-                "§r§fClic droit: §c-1 minutes"
+                "§r§fClic gauche: §a+1 minute",
+                "§r§fClic droit: §c-1 minute"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
                 GameState.getInstance().roleTimer+=60;
@@ -170,8 +170,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         });
         addContent(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
                 "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
-                "§r§fClic gauche: §a+1 secondes",
-                "§r§fClic droit: §c-1 secondes",
+                "§r§fClic gauche: §a+1 seconde",
+                "§r§fClic droit: §c-1 seconde",
                 "§r§f(0 secondes =§c désactiver"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {

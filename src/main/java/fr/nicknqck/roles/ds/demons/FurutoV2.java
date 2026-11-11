@@ -215,7 +215,7 @@ public class FurutoV2 extends DemonInferieurRole {
 
         public ChiensPower(@NonNull RoleBase role) {
             super("/ds chiens", "chiens", new Cooldown(60*7), role, CommandType.DS,
-                    "§7Fait apparaitre§c 3 chiens§7 ayant chacun les effets§c Force I§7 (vanilla) et§e Speed III§7, ils auront également§c 25❤ permanents");
+                    "§7Fait apparaître§c 3 chiens§7 ayant chacun les effets§c Force I§7 (vanilla) et§e Speed III§7, ils auront également§c 25❤ permanents");
             setMaxUse(2);
         }
 

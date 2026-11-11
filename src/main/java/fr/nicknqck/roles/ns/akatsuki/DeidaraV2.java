@@ -317,7 +317,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                                     p.setHealth(p.getHealth()-2.0);
                                 }
                                 p.sendMessage("§7Vous avez été touché par le§c C1§7 de§c Deidara");
-                                getRole().getGamePlayer().sendMessage(p.getDisplayName()+"§7 à subit les dégats de votre§c C1");
+                                getRole().getGamePlayer().sendMessage(p.getDisplayName()+"§7 a subi les dégâts de votre§c C1");
                             }
                             p.playSound(p.getLocation(), Sound.EXPLODE, 1, 8);
                         }
@@ -386,7 +386,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                                     }
                                     p.resetTitle();
                                     p.sendTitle("§7Vous subissez les effets du§c C4", "§7de §cDeidara");
-                                    getRole().getGamePlayer().sendMessage("§c"+p.getDisplayName()+"§7 à subit les dégats de votre§c C4");
+                                    getRole().getGamePlayer().sendMessage("§c"+p.getDisplayName()+"§7 a subi les dégâts de votre§c C4");
                                 }
                                 i--;
                                 MathUtil.sendCircleParticle(EnumParticle.BARRIER, event.getEntity().getLocation(), 25, 100);

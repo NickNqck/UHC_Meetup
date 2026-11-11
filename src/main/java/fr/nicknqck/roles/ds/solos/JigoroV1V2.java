@@ -322,7 +322,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
         public ZoneDeFoudre(@NonNull RoleBase role) {
             super("Zone de Foudre", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§eZone de Foudre"), role,
                     "§7Crée une zone autour de vous d'une taille de§c 7x7x7§7 dans laquelle toutes les§c 4 secondes§7,",
-                    "§7tout les joueurs présent dans la§e zone de Foudre§7 perdront§c 1,5❤§7 via un§e éclair§7,",
+                    "§7tous les joueurs présents dans la§e zone de Foudre§7 perdront§c 1,5❤§7 via un§e éclair§7,",
                     "§7pour chaque joueur§e foudroyé§7 vous obtiendrez§e 1❤ d'absorption§7.",
                     "",
                     "§7Votre§e Zone de Foudre§7 à une durée d'§cactivation§7 de§c 15 secondes§7,",

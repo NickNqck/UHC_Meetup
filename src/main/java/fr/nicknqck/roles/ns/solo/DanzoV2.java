@@ -167,7 +167,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
 
         public SceauPower(@NonNull RoleBase role) {
             super("Sceau", new Cooldown(60*3), new ItemBuilder(Material.NETHER_STAR).setName("§cSceau"), role,
-                    "§7En visant un joueur, vous permet de lui apposer un§c Sceau§7 aléatoirement parmis ceux ci-dessous:",
+                    "§7En visant un joueur, vous permet de lui apposer un§c Sceau§7 aléatoirement parmi ceux ci-dessous:",
                     "",
                     "§8 -§7 Pendant§c 12 secondes§7, la§c cible§7 aura l'effet§c Wither II§7.",
                     "",

@@ -74,7 +74,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
 
         public FuseCommand(@NonNull RoleBase role) {
             super("/aot fuse", "fuse", new Cooldown(60*10), role, CommandType.AOT,
-                    "§c15 secondes§7 après l'éxécution de cette commande, lance une§a fusée",
+                    "§c15 secondes§7 après l'exécution de cette commande, lance une§a fusée",
                     "§7sa couleur dépendra de s'il y§a a§7 ou§c non§7 au moins§c 1 ennemi§7.",
                     "",
                     "§7Lors de l'explosion de votre§a fusé§7, vous obtiendrez§c 5 minutes§7 de",

@@ -78,7 +78,7 @@ public class TengenV2 extends PilierRoles {
 
         protected AttaqueFurtive(@NonNull RoleBase role) {
             super("§eSoufle du son", new Cooldown(60*5), new ItemBuilder(Material.FEATHER).setName("§eSoufle du son"), role,
-                    "§7Vous met §cinvisible§7 et vous donne§e Speed III§7 pendant§c 60 secondes§7, le premier §cjoueur§7 que vous frapperez subira ses§c dégats§7 multiplié par§c 1,5");
+                    "§7Vous met §cinvisible§7 et vous donne§e Speed III§7 pendant§c 60 secondes§7, le premier §cjoueur§7 que vous frapperez subira ses§c dégâts§7 multiplié par§c 1,5");
             EventUtils.registerRoleEvent(this);
         }
 

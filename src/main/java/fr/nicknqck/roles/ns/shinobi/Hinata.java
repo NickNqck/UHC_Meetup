@@ -225,7 +225,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
 
         public TenketsuPower(@NonNull RoleBase role) {
             super("/ns tenketsu <joueur>", "tenketsu", new Cooldown(60*5), role, CommandType.NS,
-                    "§7Vous permet de savoir quel est la§a nature de chakra§7 du joueur viser");
+                    "§7Vous permet de savoir quel est la§a nature de chakra§7 du joueur visé");
         }
 
         @Override

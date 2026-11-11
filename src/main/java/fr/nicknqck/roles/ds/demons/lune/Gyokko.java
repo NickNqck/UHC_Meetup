@@ -175,7 +175,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 					"§7le compte à rebours démarre et vous obtenez l'effet§9 Résistance I§7, une fois que le compte à rebours atteint",
 					"§c0 seconde§7 il revient à§c 60s§7 et vous perdez§c 1❤ permanent§7.",
 					"",
-					"§7Vous pouvez§c désactiver§7 à tout moment votre§c Forme Démoniaque§7 (le compteur sera§c sauvegarder§7)."
+					"§7Vous pouvez§c désactiver§7 à tout moment votre§c Forme Démoniaque§7 (le compteur sera§c sauvegardé§7)."
 			);
 			new FormeRunnable(this, getRole());
 			setShowCdInDesc(false);
@@ -257,7 +257,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 
 		protected BulleItemPower(@NonNull RoleBase role) {
 			super("Bulle d'eau", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bBulle d'eau"), role,
-					"§7Vous enferme vous et le joueur viser dans une§b bulle d'eau§7, à l'intérieur vous ne pourrez pas vous noyer"
+					"§7Vous enferme vous et le joueur visé dans une§b bulle d'eau§7, à l'intérieur vous ne pourrez pas vous noyer"
 			);
 			setTargetDistance(20);
 		}

@@ -52,7 +52,7 @@ public class MDJ_DS_Config extends FastInv {
         });
         setItem(13, new ItemBuilder(Material.REDSTONE_ORE).setName("§cMuzan§f peut s'auto donner l'§cInfection")
                 .setLore(
-                        "§7Si§a activer§7, alors§c Muzan§7 pourra éxécuter la commande§6 /ds give§7 sur lui-même",
+                        "§7Si§a activer§7, alors§c Muzan§7 pourra exécuter la commande§6 /ds give§7 sur lui-même",
                         "",
                         "§7Fonctionnalité actuellement: "+(Main.getInstance().getGameConfig().getDemonSlayerConfig().isMuzanAutoGive() ? "§aActiver" : "§cDésactiver")
                 )

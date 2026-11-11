@@ -69,7 +69,7 @@ public class WebHookListeners implements Listener {
                 if (name.equalsIgnoreCase("<joueur>")) {
                     name = event.getVictim().getPlayerName();
                 }
-                sendWebHook(name, event.getVictim().getPlayerName()+" ("+event.getVictim().getRole().getName()+") se fait frapper par "+event.getDamager().getPlayerName()+" ("+event.getDamager().getRole().getName()+"), les dégats sont de "+event.getDamage());
+                sendWebHook(name, event.getVictim().getPlayerName()+" ("+event.getVictim().getRole().getName()+") se fait frapper par "+event.getDamager().getPlayerName()+" ("+event.getDamager().getRole().getName()+"), les dégâts sont de "+event.getDamage());
             }
         }
     }

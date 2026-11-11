@@ -160,7 +160,7 @@ public class InosukeV2 extends SlayerRoles {
             super("§a/ds sentation <joueur>", "sentation", new Cooldown(60*6), role, CommandType.DS,
                     "§7En visant un joueur (à moins de§c 5 blocs§7), permet d'obtenir§c aléatoirement§7 l'une de ses informations: ",
                     "",
-                    "§8 • §7Vous obtiendrez le§c nombre§7 de§c point de vie§7 du joueur viser,",
+                    "§8 • §7Vous obtiendrez le§c nombre§7 de§c point de vie§7 du joueur visé,",
                     "",
                     "§8 • §7Vous saurrez si le joueur possède l'effet§c force§7 et/ou l'effet§c faiblesse",
                     "",

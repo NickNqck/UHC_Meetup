@@ -256,7 +256,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 if (!use)return;
                 if (Main.RANDOM.nextInt(100) <= 10) {
                     event.setDamage(0.0);
-                    event.getEntity().sendMessage("§7Vous avez esquivé les dégats d'une attaque !");
+                    event.getEntity().sendMessage("§7Vous avez esquivé les dégâts d'une attaque !");
                     ((Player) event.getEntity()).setNoDamageTicks(20);
                 }
             }

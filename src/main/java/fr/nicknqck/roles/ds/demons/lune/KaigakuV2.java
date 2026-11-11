@@ -286,12 +286,12 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                     "§7pour la remplir voir votre§c particularité 1§7:",
                     "",
                     "§7 -§c 0%§7: Aucun bonus",
-                    "§7 -§c 20%§7: (§fClic gauche§7) Vous permettra de vous téléportez derrière le joueur viser en lui infligeant§c 1❤§7 de dégat",
+                    "§7 -§c 20%§7: (§fClic gauche§7) Vous permettra de vous téléporter derrière le joueur visé en lui infligeant§c 1❤§7 de dégâts",
                     "§7 -§6 40%§7: Vous irez§c 10%§7 plus§c vite§7 pendant la§c nuit",
-                    "§7 -§6 60%§7: (§fClic droit§7) Vous§c infligerez 2❤§7 de§c dégats§7 "+(killZenItsu ? "ainsi que l'effet§c Slowness I§7 et§6 enflammera§7" : "à tout")+" les joueurs proche (§c25 blocs§7)",
+                    "§7 -§6 60%§7: (§fClic droit§7) Vous§c infligerez 2❤§7 de§c dégâts§7 "+(killZenItsu ? "ainsi que l'effet§c Slowness I§7 et§6 enflammera§7" : "à tout")+" les joueurs proche (§c25 blocs§7)",
                     "§7 -§a 80%§7: Vous irez§c 20%§7 plus§c vite§7 pendant la§c nuit",
                     "§7 -§a 100%§7: "+(killZenItsu ?
-                            "(§fDrop§7) Vous permet de lancé une§c ligne§7 d'§eéclair§7 infligeant§c 2❤§7 de§c dégats§7 au joueurs touché" :
+                            "(§fDrop§7) Vous permet de lancer une§c ligne§7 d'§eéclair§7 infligeant§c 2❤§7 de§c dégâts§7 aux joueurs touchés" :
                             "Votre clic droit (en plus du bonus précédent) infligera l'effet§c Slowness I§7 et§6 enflammera§7 les§c joueurs§7 touchés pendant§c 10 secondes")
             };
         }

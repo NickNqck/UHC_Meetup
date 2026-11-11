@@ -39,7 +39,7 @@ public class ReinerV2 extends MahrRoles implements Listener {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Lorsque vous n'êtes pas transformé en titan vos coups font §c10%§7 plus de dégat")
+                .addCustomLine("§7Lorsque vous n'êtes pas transformé en titan vos coups font §c10%§7 plus de dégâts")
                 .getText();
     }
 

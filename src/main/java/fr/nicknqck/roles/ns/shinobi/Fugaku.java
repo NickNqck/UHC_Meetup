@@ -104,8 +104,8 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                             AllDesc.point+"§6§lPlace au combat !§7: Pendant§c 1 minutes§7 vous obtenez des §cbonus§7: (1x/10min)",
                             "",
                             AllDesc.tab+"§7Vous serez insensible à tous les projectiles",
-                            AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégat au joueur viser",
-                            AllDesc.tab+"§7Vous subirez §c-25%§7 de dégat de sa part"
+                            AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégâts au joueur visé",
+                            AllDesc.tab+"§7Vous subirez §c-25%§7 de dégâts de sa part"
             );
             setSendCooldown(false);
             setShowCdInDesc(false);
@@ -160,7 +160,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                     .setLore("§7En visant un joueur vous obtiendrez des§c bonus§7 pendant§c 1 minutes§7: ",
                             "",
                             AllDesc.tab+"§7Vous serez insensible à tous les projectiles",
-                            AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégât au joueur viser",
+                            AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégât au joueur visé",
                             AllDesc.tab+"§7Vous subirez §c-25%§7 de dégât de sa part",
                             "",
                             (this.placeAuCombat.getCooldown().getCooldownRemaining() <= 0 ? "§cPouvoir Utilisable" : "§7Cooldown:§c "+StringUtils.secondsTowardsBeautiful(this.placeAuCombat.getCooldown().getCooldownRemaining())))

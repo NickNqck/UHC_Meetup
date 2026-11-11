@@ -77,7 +77,7 @@ public class RaikageV2 extends ShinobiRoles {
 
         public ArmureRaiton(@NonNull RoleBase role) {
             super("Armure Raiton", null, new ItemBuilder(Material.NETHER_STAR).setName("§eArmure Raiton"), role,
-                    "§7Vous possédez une banque de temp de§c 5 minutes§7 initialement qui ce remplis de§c 1 minutes§7 par§c kill§7 obtenu",
+                    "§7Vous possédez une banque de temps de§c 5 minutes§7 initialement qui se remplit de§c 1 minutes§7 par§c kill§7 obtenu",
                     "",
                     "§7Via un clic quelconque vous pouvez§a activer§7/§cdésactiver§7 votre§e Armure Raiton§7.",
                     "§7Quand elle est§a activer§7 vous avez les effets§e Speed II§7 ainsi que§9 Résistance I§7.");

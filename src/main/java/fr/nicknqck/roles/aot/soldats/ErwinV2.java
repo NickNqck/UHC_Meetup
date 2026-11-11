@@ -65,7 +65,7 @@ public class ErwinV2 extends SoldatsRoles implements Listener {
 
         public AotCampPower(@NonNull RoleBase role) {
             super("§a/aot camp <joueur>§r", "camp", new Cooldown(60*8), role, CommandType.AOT,
-                    "§7Vous permet de savoir dans quel§a camp§7 est le joueur viser.");
+                    "§7Vous permet de savoir dans quel§a camp§7 est le joueur visé.");
             setMaxUse(2);
         }
 
