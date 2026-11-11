@@ -35,10 +35,6 @@ import fr.nicknqck.roles.ns.solo.jubi.*;
 import fr.nicknqck.roles.ns.solo.kumogakure.*;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.HakuV2;
 import fr.nicknqck.roles.ns.solo.zabuza_haku.ZabuzaV2;
-import fr.nicknqck.roles.valo.agents.Iso;
-import fr.nicknqck.roles.valo.agents.Le_DOC;
-import fr.nicknqck.roles.valo.agents.Neon;
-import fr.nicknqck.roles.valo.agents.Sage;
 import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
@@ -510,17 +506,11 @@ public class GameState{
                 case Ino:
                     role = new InoV2(player);
                     break;
-                case Iso:
-                    role = new Iso(player);
-                    break;
                 case Fugaku:
                     role = new Fugaku(player);
                     break;
                 case SlayerSolo:
                     role = new SlayerSolo(player);
-                    break;
-                case Neon:
-                    role = new Neon(player);
                     break;
                 case Shisui:
                     role = new ShisuiSolo(player);
@@ -557,12 +547,6 @@ public class GameState{
                     break;
                 case Choji:
                     role = new  Choji(player);
-                    break;
-                case Sage:
-                    role = new Sage(player);
-                    break;
-                case Doc:
-                    role = new Le_DOC(player);
                     break;
             }
         } else {
