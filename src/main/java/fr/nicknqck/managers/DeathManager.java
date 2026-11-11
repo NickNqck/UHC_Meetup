@@ -100,7 +100,7 @@ public class DeathManager implements Listener {
             GamePlayer gamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
             gamePlayer.setAlive(false);
             gamePlayer.setDeathLocation(killedPlayer.getLocation());
-            gameState.getDeadRoles().add(gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole().getRoles());
+            if (gamePlayer.getRole() != null) gameState.getDeadRoles().add(gamePlayer.getRole().getRoles());
             gameState.getGamePlayer().get(killedPlayer.getUniqueId()).setKiller(uhcDeathEvent.getGamePlayerKiller());
         }
         for (ItemStack item : killedPlayer.getInventory().getContents()){
