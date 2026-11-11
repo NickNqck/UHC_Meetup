@@ -196,7 +196,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
     }
     private static final class BrumeSuspendue extends ItemPower implements Listener{
 
-        private final ZoneRunnable zoneRunnable;
+        private ZoneRunnable zoneRunnable;
 
         public BrumeSuspendue(@NonNull RoleBase role) {
             super("§bBrume suspendue§r", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§bBrume suspendue"), role,
@@ -212,6 +212,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
+                this.zoneRunnable = new ZoneRunnable(this);
                 this.zoneRunnable.start();
                 player.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez§a activer§7 votre§b Brume suspendue§7.");
                 return true;
