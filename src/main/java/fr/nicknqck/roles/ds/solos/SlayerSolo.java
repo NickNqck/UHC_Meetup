@@ -164,7 +164,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 this.using = true;
                 player.sendMessage("§7Votre§e Foudre§7 est prête, vous avez maintenant§c 60 secondes§7 pour l'utiliser sur un§c joueur§7.");
                 EventUtils.registerRoleEvent(this);
-                new EndFoudreRunnable(getRole().getGameState(), this);
+                new EndFoudreRunnable(getRole().getGameState(), this).runTaskTimer(getPlugin(), 0, 20);
                 return true;
             }
             return false;
