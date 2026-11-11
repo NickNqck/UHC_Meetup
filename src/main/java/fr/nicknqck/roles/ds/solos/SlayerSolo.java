@@ -206,7 +206,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                     return;
                 }
                 if (timeLeft == 0) {
-                    power.getRole().getGamePlayer().sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corp.");
+                    power.getRole().getGamePlayer().sendMessage("§7Vous ne ressentez plus la§e Foudre§7 dans votre corps.");
                     EventUtils.unregisterEvents(power);
                     cancel();
                     return;

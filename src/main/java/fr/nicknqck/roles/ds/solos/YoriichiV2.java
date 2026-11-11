@@ -187,7 +187,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
             super("/ds souffle", "souffle", null, role, CommandType.DS,
                     "§7Vous permet d'§aactiver§7/§cdésactiver§7 votre§e souffle du Soleil§7",
                     "",
-                    "§7Lorsqu'il est§a activer§7, les joueurs que vous frappez se§c régénèreront§7 plus§c lentement§7 et ne recevrons qu'§e1❤ d'absorption§7",
+                    "§7Lorsqu'il est§a activé§7, les joueurs que vous frappez se§c régénèreront§7 plus§c lentement§7 et ne recevrons qu'§e1❤ d'absorption§7",
                     "§7pendant§c 10 secondes§7.");
             EventUtils.registerRoleEvent(this);
         }

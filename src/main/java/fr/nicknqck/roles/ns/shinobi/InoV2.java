@@ -192,8 +192,8 @@ public class InoV2 extends ShinobiRoles {
                 this.gamePlayer = gamePlayer;
                 this.gameTarget = gameTarget;
                 this.telepatiCommand = telepatiCommand;
-                this.gamePlayer.getActionBarManager().addToActionBar("ino.telepathie", "§bTemp restant§a Télépathie§b: §c"+this.timeLeft+"s");
-                this.gameTarget.getActionBarManager().addToActionBar("ino.telepathie", "§bTemp restant§a Télépathie§b: §c"+this.timeLeft+"s");
+                this.gamePlayer.getActionBarManager().addToActionBar("ino.telepathie", "§bTemps restant§a Télépathie§b: §c"+this.timeLeft+"s");
+                this.gameTarget.getActionBarManager().addToActionBar("ino.telepathie", "§bTemps restant§a Télépathie§b: §c"+this.timeLeft+"s");
                 this.telepatiCommand.toTalk = gameTarget;
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
@@ -214,8 +214,8 @@ public class InoV2 extends ShinobiRoles {
                     return;
                 }
                 this.timeLeft--;
-                this.gamePlayer.getActionBarManager().addToActionBar("ino.telepathie", "§bTemp restant§a Télépathie§b: §c"+this.timeLeft+"s");
-                this.gameTarget.getActionBarManager().addToActionBar("ino.telepathie", "§bTemp restant§a Télépathie§b: §c"+this.timeLeft+"s");
+                this.gamePlayer.getActionBarManager().addToActionBar("ino.telepathie", "§bTemps restant§a Télépathie§b: §c"+this.timeLeft+"s");
+                this.gameTarget.getActionBarManager().addToActionBar("ino.telepathie", "§bTemps restant§a Télépathie§b: §c"+this.timeLeft+"s");
             }
         }
     }

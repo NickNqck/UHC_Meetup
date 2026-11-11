@@ -121,7 +121,7 @@ public class KamuiPower extends ItemPower implements Listener{
             private ArimasuRunnable(GameState gameState, Arimasu arimasu) {
                 this.gameState = gameState;
                 this.arimasu = arimasu;
-                arimasu.getRole().getGamePlayer().getActionBarManager().addToActionBar("power.kamui.arimasu", "§bTemp restant dans le§d Kamui§b: §c3 minutes");
+                arimasu.getRole().getGamePlayer().getActionBarManager().addToActionBar("power.kamui.arimasu", "§bTemps restant dans le§d Kamui§b: §c3 minutes");
                 runTaskTimerAsynchronously(arimasu.getPlugin(), 0, 20);
             }
 
@@ -131,7 +131,7 @@ public class KamuiPower extends ItemPower implements Listener{
                     cancel();
                     return;
                 }
-                arimasu.getRole().getGamePlayer().getActionBarManager().updateActionBar("power.kamui.arimasu", "§bTemp restant dans le§d Kamui§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                arimasu.getRole().getGamePlayer().getActionBarManager().updateActionBar("power.kamui.arimasu", "§bTemps restant dans le§d Kamui§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
 
                 final Player owner = Bukkit.getPlayer(this.arimasu.getRole().getPlayer());
                 if (owner != null) {

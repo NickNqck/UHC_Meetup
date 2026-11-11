@@ -107,7 +107,7 @@ public class KumoV2 extends DemonInferieurRole {
                     }
                 }
                 this.blockMaterialMap.putAll(blocks);
-                this.getRole().getGamePlayer().getActionBarManager().addToActionBar("kumo.prison", "§bTemp restant (§cPrison§b): "+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                this.getRole().getGamePlayer().getActionBarManager().addToActionBar("kumo.prison", "§bTemps restant (§cPrison§b): "+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 return true;
             }
             return false;
@@ -128,7 +128,7 @@ public class KumoV2 extends DemonInferieurRole {
                 resetBlocks();
             } else {
                 if (!this.blockMaterialMap.isEmpty()) {
-                    this.getRole().getGamePlayer().getActionBarManager().addToActionBar("kumo.prison", "§bTemp restant (§cPrison§b): "+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                    this.getRole().getGamePlayer().getActionBarManager().addToActionBar("kumo.prison", "§bTemps restant (§cPrison§b): "+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
                     if (this.timeLeft <= 0 || this.timeInside <= 0) {
                         this.getRole().getGamePlayer().getActionBarManager().removeInActionBar("kumo.prison");
                         this.resetBlocks();

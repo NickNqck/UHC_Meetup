@@ -162,7 +162,7 @@ public class KurenaiV2 extends ShinobiRoles {
                     }
                     i++;
                 }
-                kurenai.getGamePlayer().getActionBarManager().addToActionBar("kurenai.runnable", "§bTemp restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
+                kurenai.getGamePlayer().getActionBarManager().addToActionBar("kurenai.runnable", "§bTemps restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
             }
             @Override
             public void run() {
@@ -189,7 +189,7 @@ public class KurenaiV2 extends ShinobiRoles {
                 }
                 MathUtil.spawnMoovingCircle(EnumParticle.REDSTONE, initLocation, 1, 20, owner);
                 timeRemaining--;
-                this.kurenai.getGamePlayer().getActionBarManager().updateActionBar("kurenai.runnable", "§bTemp restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
+                this.kurenai.getGamePlayer().getActionBarManager().updateActionBar("kurenai.runnable", "§bTemps restant avant fin du§c Genjutsu§b: §c"+ StringUtils.secondsTowardsBeautiful(timeRemaining));
             }
             @EventHandler
             private void onUHCPlayerDie(@NonNull final UHCDeathEvent e){

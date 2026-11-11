@@ -338,7 +338,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
             private DanseRunnable(DanseItemPower power, GameState gameState) {
                 this.power = power;
                 this.gameState = gameState;
-                power.getRole().getGamePlayer().getActionBarManager().addToActionBar("tanjiro.danse", "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                power.getRole().getGamePlayer().getActionBarManager().addToActionBar("tanjiro.danse", "§bTemps restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
 
@@ -354,7 +354,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     return;
                 }
                 timeRemaining--;
-                this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("tanjiro.danse", "§bTemp restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("tanjiro.danse", "§bTemps restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                 final Player player = Bukkit.getPlayer(this.power.getRole().getPlayer());
                 if (player != null) {
                     MathUtil.sendCircleParticle(EnumParticle.FLAME, player.getLocation(), 1, 15);

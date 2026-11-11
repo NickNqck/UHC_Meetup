@@ -114,7 +114,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            player.sendMessage("§7Vous avez§a activer§7 votre§a Mode Ermite§7.");
+            player.sendMessage("§7Vous avez§a activé§7 votre§a Mode Ermite§7.");
             new ErmiteRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
             return true;
         }

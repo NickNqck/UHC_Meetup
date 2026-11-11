@@ -70,7 +70,7 @@ public class SuperSusanoPower extends ItemPower {
                     return false;
                 }
                 this.susanoRunnable.start();
-                player.sendMessage("§7[§6UHC-Meetup§7] Vous avez§a activer§7 votre§c§l Susanô§7.");
+                player.sendMessage("§7[§6UHC-Meetup§7] Vous avez§a activé§7 votre§c§l Susanô§7.");
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), EffectWhen.NOW);
                 return true;
             }

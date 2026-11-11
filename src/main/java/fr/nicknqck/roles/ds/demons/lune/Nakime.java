@@ -177,9 +177,9 @@ public class Nakime extends DemonsRoles {
 			if (cooldown >= 60*8) {
 				int newcooldown = cooldown-60*8;
 				if (Loc.getNearestPlayerforNakime(owner, 150, gameState) != null) {
-					sendCustomActionBar(owner, "§bTemp restant dans la cage: "+ StringUtils.secondsTowardsBeautiful(newcooldown)+"§a Slayer§b le plus proche: "+ArrowTargetUtils.calculateArrow(owner, Loc.getNearestPlayerforNakime(owner, 150, gameState).getLocation()));
+					sendCustomActionBar(owner, "§bTemps restant dans la cage: "+ StringUtils.secondsTowardsBeautiful(newcooldown)+"§a Slayer§b le plus proche: "+ArrowTargetUtils.calculateArrow(owner, Loc.getNearestPlayerforNakime(owner, 150, gameState).getLocation()));
 				}else{
-					sendCustomActionBar(owner, "§bTemp restant dans la cage: "+StringUtils.secondsTowardsBeautiful(newcooldown));
+					sendCustomActionBar(owner, "§bTemps restant dans la cage: "+StringUtils.secondsTowardsBeautiful(newcooldown));
 				}
 			}
 			if (cooldown == 60*8) {

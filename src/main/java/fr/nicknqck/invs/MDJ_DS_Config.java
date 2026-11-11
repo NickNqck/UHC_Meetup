@@ -43,7 +43,7 @@ public class MDJ_DS_Config extends FastInv {
             new MDJ_DS_Config().open((Player) event.getWhoClicked());
         });
         setItem(12, new ItemBuilder(Material.NETHER_STAR).setName("§fDon de lame").setLore(
-                "§7Lorsque ceci est§a activer§7 les joueurs le pouvant reçoive une§a Lame de Nichirin§7.",
+                "§7Lorsque ceci est§a activé§7 les joueurs le pouvant reçoive une§a Lame de Nichirin§7.",
                 "",
                 "§7Fonctionnalité actuellement: "+(Main.getInstance().getGameConfig().getDemonSlayerConfig().isGiveLame() ? "§aActiver" : "§cDésactiver")
         ).toItemStack(), event -> {

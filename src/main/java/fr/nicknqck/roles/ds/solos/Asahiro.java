@@ -203,8 +203,8 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                     "§7Crée une§c zone§7 de§c 7 blocs§7 vous suivant pendant§c 12 secondes§7.",
                     "",
                     "§7Les joueurs à l'intérieur de votre§c zone§7 auront l'effet§c slowness§7.",
-                    "§7Lorsque votre§c zone§7 est§a activer§7 vous aurez§c 20%§7 de§c chance§7",
-                    "§7d'§cesquiver§7 les coups qui vous sont porter."
+                    "§7Lorsque votre§c zone§7 est§a activée§7 vous aurez§c 20%§7 de§c chance§7",
+                    "§7d'§cesquiver§7 les coups qui vous sont portés."
             );
             this.zoneRunnable = new ZoneRunnable(this);
         }
@@ -214,7 +214,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
             if (getInteractType().equals(InteractType.INTERACT)) {
                 this.zoneRunnable = new ZoneRunnable(this);
                 this.zoneRunnable.start();
-                player.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez§a activer§7 votre§b Brume suspendue§7.");
+                player.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez§a activé§7 votre§b Brume suspendue§7.");
                 return true;
             }
             return false;

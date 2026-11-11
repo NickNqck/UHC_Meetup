@@ -102,7 +102,7 @@ public class Choji extends ShinobiRoles {
 
         public Gloutonnerie(@NonNull RoleBase role) {
             super("§a/ns gloutonnerie", "gloutonnerie", null, role, CommandType.NS,
-                    "§7Tant que la§a gloutonnerie§7 est§a activer§7, vous pouvez manger une§e pomme d'or§c instantanément§7.",
+                    "§7Tant que la§a gloutonnerie§7 est§a activée§7, vous pouvez manger une§e pomme d'or§c instantanément§7.",
                     "",
                     "§7Vous ne pouvez manger qu'une§e pomme d'or§7 toutes les§c 5 secondes§7 avec ce pouvoir.",
                     "§7Tant que ce§c pouvoir§7 est§a actif§7 vous avez§2 Hunger II§7 de manière§c permanente§7.",
@@ -116,7 +116,7 @@ public class Choji extends ShinobiRoles {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (!this.activate) {
-                player.sendMessage("§7Vous avez§a activer§7 votre§a gloutonnerie§7.");
+                player.sendMessage("§7Vous avez§a activé§7 votre§a gloutonnerie§7.");
                 this.activate = true;
                 getRole().givePotionEffect(this.hunger, EffectWhen.PERMANENT);
             } else {

@@ -106,7 +106,7 @@ public class ColossalV2 extends TitanBase {
                 this.chaleurPower = chaleurPower;
                 this.gameState = gameState;
                 runTaskTimerAsynchronously(chaleurPower.getPlugin(), 0, 20);
-                chaleurPower.colossal.getGamePlayer().getActionBarManager().addToActionBar("colossal.zonedefeu", "§bTemp restant (§cZone de Feu§b):§c 15s");
+                chaleurPower.colossal.getGamePlayer().getActionBarManager().addToActionBar("colossal.zonedefeu", "§bTemps restant (§cZone de Feu§b):§c 15s");
             }
 
             @Override
@@ -121,7 +121,7 @@ public class ColossalV2 extends TitanBase {
                         player.setFireTicks(250);
                     }
                     MathUtil.sendCircleParticle(EnumParticle.FLAME, this.chaleurPower.colossal.getGamePlayer().getLastLocation(), 8, 24);
-                    this.chaleurPower.colossal.getGamePlayer().getActionBarManager().updateActionBar("colossal.zonedefeu", "§bTemp restant (§cZone de Feu§b):§c "+this.timeLeft+"s");
+                    this.chaleurPower.colossal.getGamePlayer().getActionBarManager().updateActionBar("colossal.zonedefeu", "§bTemps restant (§cZone de Feu§b):§c "+this.timeLeft+"s");
                 } else {
                     this.chaleurPower.colossal.potionEffects.add(this.chaleurPower.colossal.resistance);
                     this.chaleurPower.colossal.getGamePlayer().getActionBarManager().removeInActionBar("colossal.zonedefeu");

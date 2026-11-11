@@ -71,7 +71,7 @@ public class ChakraManager implements Listener {
                 if (iChakraV2.getArg0().equalsIgnoreCase(args[1])) {
                     iChakraV2.setActivateFor(event.getPlayer().getUniqueId(), !iChakraV2.isActivate(event.getPlayer().getUniqueId()));
                     if (iChakraV2.isActivate(event.getPlayer().getUniqueId())) {
-                        event.getPlayer().sendMessage("§7Vous avez§a activer§7 votre "+iChakraV2.getChakraType().getShowedName());
+                        event.getPlayer().sendMessage("§7Vous avez§a activé§7 votre "+iChakraV2.getChakraType().getShowedName());
                     } else {
                         event.getPlayer().sendMessage("§7Vous avez§c désactiver§7 votre "+iChakraV2.getChakraType().getShowedName());
                     }

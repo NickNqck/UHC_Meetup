@@ -104,7 +104,7 @@ public class Sasori extends AkatsukiRoles {
             super("/ns marionette", "marionette", null, role, CommandType.NS,
                     "§7Lorsque vous effectuer cette commande vous§a activer§7/§cdésactiver§7 la \"§cMarionetisation§7\".",
                     "",
-                    "§7Si la§c Marionetisation§7 est§a activer§7, lorsqu'un joueur§c meurt§7 à moins de§c 20 blocs§7 de§c vous§7,",
+                    "§7Si la§c Marionetisation§7 est§a activée§7, lorsqu'un joueur§c meurt§7 à moins de§c 20 blocs§7 de§c vous§7,",
                     "§7vous pourrez§c cliquer§7 sur un message dans votre§c chat§7 pour le§a réanimer§7 dans votre§c camp§7.",
                     "",
                     "§7Si la personne avait pour§a camp d'origine§7 votre§c camp actuel§7, vous ne§c pourrez pas§7 la§a réanimer§7,",
@@ -151,7 +151,7 @@ public class Sasori extends AkatsukiRoles {
                     return false;
                 }
                 activate = true;
-                player.sendMessage("§7Vous avez§a activer§7 votre potentiel créatif.");
+                player.sendMessage("§7Vous avez§a activé§7 votre potentiel créatif.");
             } else {
                 activate = false;
                 player.sendMessage("§7Vous avez§c désactiver§7 votre potentiel créatif.");

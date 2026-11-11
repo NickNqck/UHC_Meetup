@@ -423,7 +423,7 @@ public class Iso extends RoleBase {
                 owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§d Protection couplé");
             }
             if (cdProtection >= 60 * 7) {
-                sendCustomActionBar(owner, "Coup accumulé:§c " + stackedCoup + "§7 |§f Temp restant pour l'accumulation: §c" + StringUtils.secondsTowardsBeautiful((60 * 7 + 15) - cdProtection) + "§7/§c15s");
+                sendCustomActionBar(owner, "Coup accumulé:§c " + stackedCoup + "§7 |§f Temps restant pour l'accumulation: §c" + StringUtils.secondsTowardsBeautiful((60 * 7 + 15) - cdProtection) + "§7/§c15s");
                 if (cdProtection == 60 * 7 - 1) {
                     owner.sendMessage("Il n'est maintenant plus temp d'accumulé des coups, mais de les utilisés !");
                 }

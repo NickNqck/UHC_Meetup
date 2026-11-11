@@ -237,7 +237,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
                 }
                 if (owner == null || this.target == null)return;
                 MathUtil.sendCircleParticle(EnumParticle.FLAME, this.initLocation, 2, 20);
-                this.rituelPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("hidanv2.ritueltime", "§bTemp restant du§c Rituel de Jashin§b:§c "+this.timeLeft+"s");
+                this.rituelPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("hidanv2.ritueltime", "§bTemps restant du§c Rituel de Jashin§b:§c "+this.timeLeft+"s");
             }
         }
     }

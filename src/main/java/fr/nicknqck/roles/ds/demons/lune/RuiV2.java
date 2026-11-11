@@ -322,9 +322,9 @@ public class RuiV2 extends DemonsRoles {
                     if (owner == null)return;
                     final String key = "ruiv2.resirunnable";
                     if (!ruiV2.getGamePlayer().getActionBarManager().containsKey(key)) {
-                        ruiV2.getGamePlayer().getActionBarManager().addToActionBar(key, "§cTemp restant: §b"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                        ruiV2.getGamePlayer().getActionBarManager().addToActionBar(key, "§cTemps restant: §b"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                     } else {
-                        ruiV2.getGamePlayer().getActionBarManager().updateActionBar(key, "§cTemp restant:§b "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                        ruiV2.getGamePlayer().getActionBarManager().updateActionBar(key, "§cTemps restant:§b "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                     }
                     final List<GamePlayer> aroundPlayers = Loc.getNearbyGamePlayers(owner.getLocation(), 30);
                     for (final GamePlayer gamePlayer : aroundPlayers) {

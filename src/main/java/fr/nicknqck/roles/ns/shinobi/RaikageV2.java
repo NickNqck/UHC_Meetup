@@ -80,7 +80,7 @@ public class RaikageV2 extends ShinobiRoles {
                     "§7Vous possédez une banque de temps de§c 5 minutes§7 initialement qui se remplit de§c 1 minutes§7 par§c kill§7 obtenu",
                     "",
                     "§7Via un clic quelconque vous pouvez§a activer§7/§cdésactiver§7 votre§e Armure Raiton§7.",
-                    "§7Quand elle est§a activer§7 vous avez les effets§e Speed II§7 ainsi que§9 Résistance I§7.");
+                    "§7Quand elle est§a activée§7 vous avez les effets§e Speed II§7 ainsi que§9 Résistance I§7.");
             new ArmureRunnable(this);
             EventUtils.registerRoleEvent(this);
         }
@@ -137,7 +137,7 @@ public class RaikageV2 extends ShinobiRoles {
                 final Player owner = Bukkit.getPlayer(this.armureRaiton.getRole().getPlayer());
                 if (owner != null) {
                     if (owner.getItemInHand() != null && owner.getItemInHand().isSimilar(this.armureRaiton.getItem())) {
-                        this.armureRaiton.getRole().getGamePlayer().getActionBarManager().addToActionBar("raikage.armure", "§bTemp restant (§eArmure Raiton§b): "+ StringUtils.secondsTowardsBeautiful(this.armureRaiton.timeLeft));
+                        this.armureRaiton.getRole().getGamePlayer().getActionBarManager().addToActionBar("raikage.armure", "§bTemps restant (§eArmure Raiton§b): "+ StringUtils.secondsTowardsBeautiful(this.armureRaiton.timeLeft));
                         return;
                     }
                 }
@@ -162,7 +162,7 @@ public class RaikageV2 extends ShinobiRoles {
                     return;
                 }
                 this.armureRaiton.timeLeft--;
-                this.armureRaiton.getRole().getGamePlayer().getActionBarManager().addToActionBar("raikage.armure", "§bTemp restant (§eArmure Raiton§b): "+ StringUtils.secondsTowardsBeautiful(this.armureRaiton.timeLeft));
+                this.armureRaiton.getRole().getGamePlayer().getActionBarManager().addToActionBar("raikage.armure", "§bTemps restant (§eArmure Raiton§b): "+ StringUtils.secondsTowardsBeautiful(this.armureRaiton.timeLeft));
                 final Player player = Bukkit.getPlayer(this.armureRaiton.getRole().getPlayer());
                 if (player != null) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> {

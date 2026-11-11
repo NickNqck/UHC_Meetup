@@ -336,12 +336,12 @@ public class EveilTenseiGan extends Event implements Listener {
                     }
                     return;
                 }
-                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
+                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("tenseigan.chakramode", "§bTemps restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.modeChakraPower.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1, false, false), EffectWhen.NOW));
                 this.modeChakraPower.timeBeforeMSG--;
                 if (this.modeChakraPower.timeBeforeMSG == 0) {
                     Bukkit.broadcastMessage(AllDesc.bar);
-                    Bukkit.broadcastMessage("§fL'évènement aléatoire §7\"§bÉveil du Tenseigan§7\"§f a eu lieu, un possésseur aléatoire du§a Byakugan§f est devenue un rôle§e Solitaire§7 (Peut importe son camp d'origine et s'il a changer de camp ou pas).");
+                    Bukkit.broadcastMessage("§fL'évènement aléatoire §7\"§bÉveil du Tenseigan§7\"§f a eu lieu, un possesseur aléatoire du§a Byakugan§f est devenu un rôle§e Solitaire§7 (Peu importe son camp d'origine et s'il a changé de camp ou pas).");
                     Bukkit.broadcastMessage(AllDesc.bar);
 
                 }
@@ -359,7 +359,7 @@ public class EveilTenseiGan extends Event implements Listener {
                     return;
                 }
                 this.running = true;
-                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("tenseigan.chakramode", "§bTemp restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
+                this.modeChakraPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("tenseigan.chakramode", "§bTemps restant mode chakra: §c"+ StringUtils.secondsTowardsBeautiful(this.modeChakraPower.timeLeft));
             }
         }
         private static class SphereVeritePower extends ItemPower implements Listener {

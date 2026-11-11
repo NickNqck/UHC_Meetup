@@ -75,7 +75,7 @@ public class BijuPower extends ItemPower {
             this.timeRemaining = 60*5;
             this.gamePlayer = gamePlayer;
             this.bijuPower = bijuPower;
-            this.gamePlayer.getActionBarManager().addToActionBar("bijurunnable."+this.bijuPower.getBiju().getName(), "§bTemp restant sous l'effet de "+this.bijuPower.getBiju().getName()+"§b: §c5 minutes");
+            this.gamePlayer.getActionBarManager().addToActionBar("bijurunnable."+this.bijuPower.getBiju().getName(), "§bTemps restant sous l'effet de "+this.bijuPower.getBiju().getName()+"§b: §c5 minutes");
             runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
 
@@ -94,7 +94,7 @@ public class BijuPower extends ItemPower {
             }
             this.gamePlayer.getActionBarManager().updateActionBar(
                     "bijurunnable."+this.bijuPower.getBiju().getName(),
-                    "§bTemp restant sous l'effet de "+this.bijuPower.getBiju().getName()+"§b: §c"+ StringUtils.secondsTowardsBeautiful(this.timeRemaining)
+                    "§bTemps restant sous l'effet de "+this.bijuPower.getBiju().getName()+"§b: §c"+ StringUtils.secondsTowardsBeautiful(this.timeRemaining)
             );
             this.timeRemaining--;
         }

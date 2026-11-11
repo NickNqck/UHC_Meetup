@@ -115,7 +115,7 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
             private GyukiRunnable(HashibiPower hashibiPower) {
                 this.hashibiPower = hashibiPower;
                 this.timeLeft = 60*5;
-                this.hashibiPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("killerbeev2.gyukitimer", "§bTemp restant (§aGyuki§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                this.hashibiPower.getRole().getGamePlayer().getActionBarManager().addToActionBar("killerbeev2.gyukitimer", "§bTemps restant (§aGyuki§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
 
@@ -129,7 +129,7 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
                 this.timeLeft--;
                 final Player owner = Bukkit.getPlayer(this.hashibiPower.getRole().getPlayer());
                 if (owner == null)return;
-                this.hashibiPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("killerbeev2.gyukitimer", "§bTemp restant (§aGyuki§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                this.hashibiPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("killerbeev2.gyukitimer", "§bTemps restant (§aGyuki§b): §c"+ StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), true));
             }
         }

@@ -255,7 +255,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                 private SusanoRunnable(GameState gameState, GamePlayer gamePlayer) {
                     this.gameState = gameState;
                     this.gamePlayer = gamePlayer;
-                    this.gamePlayer.getActionBarManager().addToActionBar("obito.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                    this.gamePlayer.getActionBarManager().addToActionBar("obito.susano", "§bTemps restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                     runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }
 
@@ -272,7 +272,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                         return;
                     }
                     this.timeLeft--;
-                    this.gamePlayer.getActionBarManager().updateActionBar("obito.susano", "§bTemp restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                    this.gamePlayer.getActionBarManager().updateActionBar("obito.susano", "§bTemps restant du§c§l Susanô§b: "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 }
             }
         }
@@ -359,7 +359,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                 }
                 this.already = true;
                 this.timeLeft--;
-                ninjutsu.getRole().getGamePlayer().getActionBarManager().updateActionBar("ninjutsu.runnable", "§bTemp restant§c invisible§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                ninjutsu.getRole().getGamePlayer().getActionBarManager().updateActionBar("ninjutsu.runnable", "§bTemps restant§c invisible§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 if (this.timeLeft <= 0) {
                     final Player player = Bukkit.getPlayer(this.ninjutsu.getRole().getPlayer());
                     if (player != null) {
@@ -374,7 +374,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                     this.ninjutsu.ninjutsuRunnable.start(player);
                     return;
                 }
-                ninjutsu.getRole().getGamePlayer().getActionBarManager().addToActionBar("ninjutsu.runnable", "§bTemp restant§c invisible§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
+                ninjutsu.getRole().getGamePlayer().getActionBarManager().addToActionBar("ninjutsu.runnable", "§bTemps restant§c invisible§b:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 this.ninjutsu.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20*60, 0, false, false), EffectWhen.NOW);
                 player.setSleepingIgnored(true);
                 for (@NonNull final UUID uuid : gameState.getInGamePlayers()) {
