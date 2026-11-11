@@ -320,6 +320,7 @@ public class EveilTenseiGan extends Event implements Listener {
             public void run() {
                 if (!GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                     stop();
+                    cancel();
                     return;
                 }
                 if (!running || this.modeChakraPower.timeLeft <= 0 || !this.modeChakraPower.getRole().getGamePlayer().isAlive()) return;
