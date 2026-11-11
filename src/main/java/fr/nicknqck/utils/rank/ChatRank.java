@@ -51,13 +51,22 @@ public enum ChatRank {
         return false;
     }
 
-    public static void resetRank(UUID player){
+    public static void resetRanks(UUID player){
         for (ChatRank rank : ChatRank.values()){
             rank.getPlayers().remove(player);
         }
     }
+    public static void resetRanksExcepts(UUID player, ChatRank... ranks){
+        final List<ChatRank> rankList = new ArrayList<>(Arrays.asList(ranks));
+        for (ChatRank rank : ChatRank.values()){
+            if (rankList.contains(rank)){
+                continue;
+            }
+            rank.getPlayers().remove(player);
+        }
+    }
     public static void updateRank(Player player){
-        ChatRank.resetRank(player.getUniqueId());
+        resetRanksExcepts(player.getUniqueId(), ChatRank.Host);
         if (!ChatRank.hasRank(player.getUniqueId())){
             if (player.isOp()){
                 ChatRank.Op.setPlayer(player);
