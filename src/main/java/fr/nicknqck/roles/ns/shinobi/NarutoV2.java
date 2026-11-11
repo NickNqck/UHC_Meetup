@@ -191,7 +191,7 @@ public class NarutoV2 extends HShinobiRoles {
                 this.nsClone = nsClone;
                 this.accumuledTime = 0;
                 nsClone.getRole().getGamePlayer().getActionBarManager().addToActionBar("naruto.clone", "§bTemps accumulé:§c 0 secondes");
-                runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
+                runTaskTimer(Main.getInstance(), 20, 20);
             }
 
             @Override

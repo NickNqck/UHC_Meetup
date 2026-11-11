@@ -53,7 +53,7 @@ public class Amaterasu extends ItemPower {
             this.gameState = gameState;
             this.gamePlayer = gamePlayer;
             this.gamePlayer.getActionBarManager().addToActionBar("power.amaterasu", "§7Vous êtes sous l'effet d'§cAmaterasu");
-            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            runTaskTimer(Main.getInstance(), 0, 20);
         }
 
         @Override

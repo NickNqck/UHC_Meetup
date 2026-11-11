@@ -411,7 +411,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                         }
                     }
                 }
-            }.runTaskTimerAsynchronously(getPlugin(), 0L, 5L); // toutes les 5 ticks (~0.25s)
+            }.runTaskTimer(getPlugin(), 0L, 5L); // toutes les 5 ticks (~0.25s)
         }
     }
 

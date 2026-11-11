@@ -19,7 +19,13 @@ public class ScoreBoardUpdateEvent extends Event {
     private final ConcurrentLinkedQueue<VObjective.VScore> scores;
     private final PersonalScoreboard scoreboard;
 
+    /**
+     * Événement asynchrone : il est appelé depuis l'exécuteur du ScoreboardManager,
+     * jamais depuis le thread principal. Les listeners ne doivent donc pas toucher
+     * au monde ni aux entités directement (passer par runTask si besoin).
+     */
     public ScoreBoardUpdateEvent(final HashMap<Integer, String> lines,final ConcurrentLinkedQueue<VObjective.VScore> scores,final PersonalScoreboard scoreboard) {
+        super(true);
         this.lines = lines;
         this.scores = scores;
         this.scoreboard = scoreboard;

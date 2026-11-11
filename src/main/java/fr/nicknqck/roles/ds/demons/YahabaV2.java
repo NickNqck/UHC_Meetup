@@ -107,7 +107,7 @@ public class YahabaV2 extends DemonInferieurRole {
                 this.name = target.getName();
                 this.gamePlayer = gamePlayer;
                 gamePlayer.getActionBarManager().addToActionBar("yahaba.manipulation", "§cManipulation§7 (§6"+this.name+"§7)§c:§6 10s");
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+                runTaskTimer(Main.getInstance(), 0, 1);
             }
 
             @Override

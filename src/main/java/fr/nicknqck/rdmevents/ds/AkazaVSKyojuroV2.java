@@ -72,7 +72,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 Bukkit.getWorld("AkazaVSKyojuro").setGameRuleValue("randomTickSpeed", "3");
                 Bukkit.broadcastMessage(getName()+"§r vient de se déclencher !");
                 EventUtils.registerRoleEvent(this);
-                new CombatRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                new CombatRunnable(this).runTaskTimer(Main.getInstance(), 0, 20);
                 this.activated = true;
             }
         }

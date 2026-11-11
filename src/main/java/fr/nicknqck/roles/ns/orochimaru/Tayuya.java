@@ -175,7 +175,7 @@ public class Tayuya extends OrochimaruRoles {
                 this.ironGolem = ironGolem;
                 this.target = target;
                 this.uuid = this.target.getUniqueId();
-                runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
+                runTaskTimer(Main.getInstance(), 20, 20);
             }
 
             @Override
@@ -192,6 +192,7 @@ public class Tayuya extends OrochimaruRoles {
                 if (gamePlayer != null) {
                     if (!gamePlayer.isAlive()) {
                         this.ironGolem.damage(9999);
+                        cancel();
                         return;
                     }
                 }
@@ -200,7 +201,7 @@ public class Tayuya extends OrochimaruRoles {
                     if (player == null)return;
                     this.target = player;
                 }
-                if (!ironGolem.getType().isAlive()) {
+                if (ironGolem.isDead()) {
                     cancel();
                     return;
                 }

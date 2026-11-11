@@ -281,7 +281,7 @@ public class HakuV2 extends NSSoloRoles {
                 private HyotonRunnable(GameState gameState, HyotonItem hyoton) {
                     this.gameState = gameState;
                     this.hyoton = hyoton;
-                    runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                    runTaskTimer(Main.getInstance(), 0, 20);
                     hyoton.getRole().getGamePlayer().getActionBarManager().addToActionBar("haku.hyoton", "§bHyôton:§c 3 minutes");
                 }
 

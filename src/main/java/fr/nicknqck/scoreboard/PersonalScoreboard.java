@@ -13,10 +13,12 @@ import fr.nicknqck.utils.rank.ChatRank;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /*
  * This file is part of SamaGamesAPI.
@@ -41,6 +43,15 @@ public class PersonalScoreboard {
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
     private final GameState gameState;
+
+    /*
+     * setLines() tourne hors du thread principal (exécuteur du ScoreboardManager) :
+     * la hauteur du centre (0, 0) est donc lue sur le thread principal via runTask,
+     * puis mise en cache ici pour les rafraîchissements suivants.
+     */
+    private final AtomicBoolean centerYPending = new AtomicBoolean(false);
+    private volatile String centerYWorld = null;
+    private volatile int centerY = 0;
 
     PersonalScoreboard(Player player, GameState gameState){
         this.player = player;
@@ -112,7 +123,8 @@ public class PersonalScoreboard {
     		if (!this.gameState.hasRoleNull(player.getUniqueId())) {
     			objectiveSign.setLine(10, premsg+"Kills:§6 "+gameState.getGamePlayer().get(player.getUniqueId()).getKillAmounts());
     		}
-    		objectiveSign.setLine(11, premsg+"§fCentre: §6"+ArrowTargetUtils.calculateArrow(player, new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))+new DecimalFormat("0").format(player.getLocation().distance(new Location(player.getWorld(), 0, player.getWorld().getHighestBlockYAt(new Location(player.getWorld(), 0, 0, 0)), 0))));
+    		final Location center = new Location(player.getWorld(), 0, getCenterY(player.getWorld()), 0);
+    		objectiveSign.setLine(11, premsg+"§fCentre: §6"+ArrowTargetUtils.calculateArrow(player, center)+new DecimalFormat("0").format(player.getLocation().distance(center)));
     		if (this.gameState.roletab) {
     			if (this.gameState.roleTimer < this.gameState.getInGameTime()) {
     				if (!this.gameState.hasRoleNull(player.getUniqueId())) {
@@ -126,6 +138,26 @@ public class PersonalScoreboard {
 		Bukkit.getPluginManager().callEvent(event);
         objectiveSign.updateLines();
     }
+    /**
+     * Retourne la hauteur du bloc le plus haut en (0, 0) dans {@code world} sans toucher
+     * au monde depuis ce thread : la lecture est déléguée au thread principal (runTask)
+     * et le résultat mis en cache. Tant qu'aucune valeur n'est connue pour ce monde
+     * (premier rafraîchissement), la hauteur du joueur est utilisée.
+     */
+    private int getCenterY(World world) {
+        if (Main.getInstance().isEnabled() && centerYPending.compareAndSet(false, true)) {
+            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                try {
+                    centerY = world.getHighestBlockYAt(0, 0);
+                    centerYWorld = world.getName();
+                } finally {
+                    centerYPending.set(false);
+                }
+            });
+        }
+        return world.getName().equals(centerYWorld) ? centerY : player.getLocation().getBlockY();
+    }
+
     public void onLogout(){
         objectiveSign.removeReceiver(Bukkit.getServer().getOfflinePlayer(uuid));
         System.out.println("removing "+Bukkit.getPlayer(uuid).getName()+" from PersonalScoreboard");

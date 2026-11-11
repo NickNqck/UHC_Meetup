@@ -331,7 +331,7 @@ public class BijuManager implements Listener {
             this.autorisedDistance = autorisedDistance;
             this.biju = biju;
             System.out.println(a+" Started Biju TP Runnable for "+biju.getName()+", actual origin loc is "+ biju.getOriginSpawn());
-            runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+            runTaskTimer(Main.getInstance(), 0, 20);
         }
 
         @Override

@@ -78,7 +78,7 @@ public class NezukoV2 extends DemonsRoles {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
         addPower(new FormePower(this),true);
         addPower(new SangPower(this), true);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> new TanjiroRunnable(getListGamePlayerFromRole(Tanjiro.class), this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20), 20);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> new TanjiroRunnable(getListGamePlayerFromRole(Tanjiro.class), this).runTaskTimer(Main.getInstance(), 0, 20), 20);
     }
     private static class SangPower extends ItemPower implements Listener {
 

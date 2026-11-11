@@ -59,6 +59,6 @@ public class AntiLopsa {
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(Main.getInstance(), 1, 20);
+        }.runTaskTimer(Main.getInstance(), 1, 20);
     }
 }

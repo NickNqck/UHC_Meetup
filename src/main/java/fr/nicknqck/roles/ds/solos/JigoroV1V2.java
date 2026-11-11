@@ -269,7 +269,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                         }
                     }
                 }
-            }.runTaskTimerAsynchronously(getPlugin(), 0L, 5L); // toutes les 5 ticks (~0.25s)
+            }.runTaskTimer(getPlugin(), 0L, 5L); // toutes les 5 ticks (~0.25s)
         }
     }
     private static class SpeedTroisPower extends ItemPower {

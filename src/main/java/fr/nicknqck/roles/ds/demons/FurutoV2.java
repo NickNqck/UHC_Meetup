@@ -234,7 +234,7 @@ public class FurutoV2 extends DemonInferieurRole {
                 wolf.setSitting(false);
                 wolf.setMaxHealth(50);
                 wolf.setHealth(wolf.getMaxHealth());
-                new WolfRunnable(wolf, player).runTaskTimerAsynchronously(Main.getInstance(), 20, 20);
+                new WolfRunnable(wolf, player).runTaskTimer(Main.getInstance(), 20, 20);
             }
             return true;
         }

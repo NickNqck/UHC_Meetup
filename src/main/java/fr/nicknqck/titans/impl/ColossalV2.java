@@ -105,7 +105,7 @@ public class ColossalV2 extends TitanBase {
             private ZoneDeFeuRunnable(ChaleurPower chaleurPower, GameState gameState) {
                 this.chaleurPower = chaleurPower;
                 this.gameState = gameState;
-                runTaskTimerAsynchronously(chaleurPower.getPlugin(), 0, 20);
+                runTaskTimer(chaleurPower.getPlugin(), 0, 20);
                 chaleurPower.colossal.getGamePlayer().getActionBarManager().addToActionBar("colossal.zonedefeu", "§bTemps restant (§cZone de Feu§b):§c 15s");
             }
 
