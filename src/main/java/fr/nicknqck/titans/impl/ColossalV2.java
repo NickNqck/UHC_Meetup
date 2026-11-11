@@ -87,7 +87,7 @@ public class ColossalV2 extends TitanBase {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (!this.colossal.isTransformed()) {
-                    player.sendMessage("§cIl faut être transformé pour utilisé ce pouvoir.");
+                    player.sendMessage("§cIl faut être transformé pour utiliser ce pouvoir.");
                     return false;
                 }
                 this.colossal.potionEffects.remove(this.colossal.resistance);

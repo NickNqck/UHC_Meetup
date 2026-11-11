@@ -77,7 +77,7 @@ public class YahabaV2 extends DemonInferieurRole {
             super("Manipulation", new Cooldown(120), new ItemBuilder(Material.COMPASS).setName("§cManipulation"), role,
                     "§7En visant un joueur, vous permet de manipuler ses mouvements pendant§c 10 secondes§7.",
                     "",
-                    "§7La personne visée suivra votre§c crosshair§7 en la forcent à être à§c 15 blocs§7 de vous.");
+                    "§7La personne visée suivra votre§c crosshair§7 en la forçant à être à§c 15 blocs§7 de vous.");
             setTargetDistance(15);
         }
 

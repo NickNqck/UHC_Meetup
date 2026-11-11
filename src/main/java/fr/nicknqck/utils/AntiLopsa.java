@@ -43,13 +43,13 @@ public class AntiLopsa {
                     if (Math.abs(playerLocation.getX()) >= worldBorderSize || Math.abs(playerLocation.getZ()) >= worldBorderSize) {
                         if (player.getGameMode() == GameMode.SPECTATOR) {
                             Bukkit.getScheduler().runTask(Main.getInstance(), () -> player.teleport(new Location(world, 0, world.getHighestBlockYAt(0, 0), 0)));
-                            player.sendMessage("[§cAnti-Lopsa§r] Teleportation au 0 0");
+                            player.sendMessage("[§cAnti-Lopsa§r] Téléportation au 0 0");
                         } else {
                             double newX = Math.max(-worldBorderSize + 1, Math.min(worldBorderSize - 1, playerLocation.getX()));
                             double newZ = Math.max(-worldBorderSize + 1, Math.min(worldBorderSize - 1, playerLocation.getZ()));
 
                             Location teleportLocation = new Location(world, newX, world.getHighestBlockYAt((int)newX, (int)newZ), newZ);
-                            player.sendMessage("Vous avez été automatiquement téléporter à l'intérieur de la bordure !");
+                            player.sendMessage("Vous avez été automatiquement téléporté à l'intérieur de la bordure !");
                             Vector direction = new Vector(0, 0, 0).subtract(teleportLocation.toVector()).normalize();
                             Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                                 player.teleport(teleportLocation);

@@ -144,7 +144,7 @@ public class Tayuya extends OrochimaruRoles {
                     ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, Integer.MAX_VALUE, 0, false, false));
                     new GolemRunnable(this, ironGolem, target);
                 }
-                player.sendMessage("§7Vos§c 3 golems§7 sont apparue, ils vont essayer d'aller se battre contre§c "+target.getDisplayName());
+                player.sendMessage("§7Vos§c 3 golems§7 sont apparus, ils vont essayer d'aller se battre contre§c "+target.getDisplayName());
                 return true;
             }
             return false;
@@ -159,7 +159,7 @@ public class Tayuya extends OrochimaruRoles {
                 event.getDamager().setVelocity(new Vector(0 ,1.8, 0));
                 event.getDamager().sendMessage("§7Vous avez été frappé par une défense de§5 Tayuya§7.");
                 if (event.getDamager() instanceof Player) {
-                    getRole().getGamePlayer().sendMessage("§7L'un de vos golem à exploser§c "+((Player) event.getDamager()).getDisplayName());
+                    getRole().getGamePlayer().sendMessage("§7L'un de vos golems a explosé§c "+((Player) event.getDamager()).getDisplayName());
                 }
             }
         }

@@ -90,7 +90,7 @@ public class NezukoV2 extends DemonsRoles {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§7Votre§4 sang§7 commence à§c bouilloner");
+                player.sendMessage("§7Votre§4 sang§7 commence à§c bouillonner");
                 EventUtils.registerEvents(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     player.sendMessage("§7Votre§4 sang§7 est à nouveau tiède");
