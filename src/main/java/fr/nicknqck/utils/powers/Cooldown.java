@@ -19,6 +19,8 @@ public final class Cooldown {
     private int actualCooldown;
     @Getter
     private final UUID uniqueId;
+    /** Décompteur en cours : un seul à la fois, sinon le cooldown décompte plusieurs fois plus vite */
+    private cdRemover remover;
 
     public Cooldown(int cooldown) {
         this.originalCooldown = cooldown;
@@ -35,7 +37,11 @@ public final class Cooldown {
 
     public void use() {
         this.actualCooldown = originalCooldown;
-        new cdRemover(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+        if (this.remover != null) {
+            this.remover.cancel();
+        }
+        this.remover = new cdRemover(this);
+        this.remover.runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
     }
 
     public void addSeconds(int seconds) {
