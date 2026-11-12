@@ -93,6 +93,7 @@ public class Main extends JavaPlugin {
 	private GameConfig gameConfig;
 
 	private DeathManager deathManager;
+	private AssistManager assistManager;
 	private FileConfiguration webhookConfig;
 
 	private WorldConfig worldConfig;
@@ -184,6 +185,7 @@ public class Main extends JavaPlugin {
 		this.schematicManager = new SchematicManager(this, this::debug);
 		this.crystalManager = new CrystalManager();
 		this.invManager = new InvManager();
+		this.assistManager = new AssistManager();
 		ParticleSFX.setPlugin(this);
 		saveResource("wing.png", false);
 		debug("PubManager size = "+this.pubManager.size()+", toString -> "+this.pubManager.toString());

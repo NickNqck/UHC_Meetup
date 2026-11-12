@@ -58,6 +58,8 @@ public class GamePlayer {
 	@Setter
 	private ItemStack headItem;
 	private final LinkedList<DeathRapport> killsList;
+	/** Nombre d'assistances (voir {@link fr.nicknqck.managers.AssistManager}) */
+	private int assistAmounts = 0;
 	private final StunManager stunManager;
 
 	public GamePlayer(Player gamePlayer){
@@ -194,6 +196,9 @@ public class GamePlayer {
     }
 	public int getKillAmounts() {
 		return this.getKillsList().size();
+	}
+	public void addAssist() {
+		this.assistAmounts++;
 	}
 	@Nullable
 	public Player getPlayer() {

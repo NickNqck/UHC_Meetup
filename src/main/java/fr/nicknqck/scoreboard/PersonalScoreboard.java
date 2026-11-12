@@ -121,7 +121,8 @@ public class PersonalScoreboard {
 			}
     		objectiveSign.setLine(9, "§0");
     		if (!this.gameState.hasRoleNull(player.getUniqueId())) {
-    			objectiveSign.setLine(10, premsg+"Kills:§6 "+gameState.getGamePlayer().get(player.getUniqueId()).getKillAmounts());
+    			final fr.nicknqck.player.GamePlayer gamePlayer = gameState.getGamePlayer().get(player.getUniqueId());
+    			objectiveSign.setLine(10, premsg+"K/A:§6 "+gamePlayer.getKillAmounts()+"§7/§6"+gamePlayer.getAssistAmounts());
     		}
     		final Location center = new Location(player.getWorld(), 0, getCenterY(player.getWorld()), 0);
     		objectiveSign.setLine(11, premsg+"§fCentre: §6"+ArrowTargetUtils.calculateArrow(player, center)+new DecimalFormat("0").format(player.getLocation().distance(center)));
