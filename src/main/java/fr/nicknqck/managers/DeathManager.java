@@ -116,7 +116,10 @@ public class DeathManager implements Listener {
         }
         removeRoleItem(gameState, killedPlayer);
         dropDeathItems(killedPlayer.getLocation());
-        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller);
+        final List<GamePlayer> assists = Main.getInstance().getAssistManager() == null
+                ? new ArrayList<>()
+                : Main.getInstance().getAssistManager().giveAssists(killedPlayer, entityKiller);
+        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller, assists);
         Bukkit.getPluginManager().callEvent(finalDeathEvent);
         //damager = le tueur
         //player = la victim/le mort

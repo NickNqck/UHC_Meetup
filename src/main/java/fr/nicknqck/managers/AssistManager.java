@@ -2,7 +2,6 @@ package fr.nicknqck.managers;
 
 import fr.nicknqck.GameState;
 import fr.nicknqck.events.custom.GameEndEvent;
-import fr.nicknqck.events.custom.death.FinalDeathEvent;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.utils.event.EventUtils;
 import lombok.NonNull;
@@ -19,7 +18,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -65,20 +67,25 @@ public class AssistManager implements Listener {
         recordDamage(attacker, event.getEntity().getUniqueId());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    private void onFinalDeath(final FinalDeathEvent event) {
-        final UUID victim = event.getPlayer().getUniqueId();
-        final Map<UUID, Long> attackers = this.lastDamages.remove(victim);
-        if (attackers == null || attackers.isEmpty()) return;
+    /**
+     * Attribue les assistances liées à la mort définitive de {@code victim} et renvoie
+     * la liste des joueurs qui en ont reçu une (liste vide s'il n'y en a aucune).
+     * Appelée par {@link DeathManager} juste avant le déclenchement de
+     * {@link fr.nicknqck.events.custom.death.FinalDeathEvent}, qui transporte cette liste.
+     */
+    public List<GamePlayer> giveAssists(@NonNull final Player victim, @Nullable final Entity entityKiller) {
+        final Map<UUID, Long> attackers = this.lastDamages.remove(victim.getUniqueId());
+        if (attackers == null || attackers.isEmpty()) return Collections.emptyList();
 
         // Pas d'assistance si la victime n'a pas été tuée par un joueur
-        final UUID killer = resolvePlayerSource(event.getEntityKiller());
-        if (killer == null) return;
+        final UUID killer = resolvePlayerSource(entityKiller);
+        if (killer == null) return Collections.emptyList();
 
         // Comme pour les kills : la victime doit avoir un rôle
-        final GamePlayer deadPlayer = GamePlayer.of(victim);
-        if (deadPlayer == null || deadPlayer.getRole() == null) return;
+        final GamePlayer deadPlayer = GamePlayer.of(victim.getUniqueId());
+        if (deadPlayer == null || deadPlayer.getRole() == null) return Collections.emptyList();
 
+        final List<GamePlayer> assistants = new ArrayList<>();
         final long now = System.currentTimeMillis();
         for (final Map.Entry<UUID, Long> entry : attackers.entrySet()) {
             final UUID attacker = entry.getKey();
@@ -87,7 +94,9 @@ public class AssistManager implements Listener {
             final GamePlayer assistant = GamePlayer.of(attacker);
             if (assistant == null) continue;
             assistant.addAssist();
+            assistants.add(assistant);
         }
+        return assistants;
     }
 
     @EventHandler
