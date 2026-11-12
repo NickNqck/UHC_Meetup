@@ -225,7 +225,7 @@ public class DeathManager implements Listener {
         GameState gameState = GameState.getInstance();
         gamePlayer.setAlive(false);
         gamePlayer.setDeathLocation(gamePlayer.getLastLocation());
-        gameState.getDeadRoles().add(gamePlayer.getRole().getRoles());
+        if (gamePlayer.getRole() != null) gameState.getDeadRoles().add(gamePlayer.getRole().getRoles());
         for (ItemStack item : gamePlayer.getLastInventoryContent()){
             if (item == null)continue;//l'IDE me dit que c'est impossible que item sois égale à null mais c'est faux
             if (item.getType() != Material.AIR) {
@@ -238,7 +238,7 @@ public class DeathManager implements Listener {
                 }
             }
         }
-        if (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) || gamePlayer.getRole() instanceof NezukoV2) {
+        if (gamePlayer.getRole() != null && (gamePlayer.getRole().getOriginTeam().equals(TeamList.Demon) || gamePlayer.getRole() instanceof NezukoV2)) {
             onDemonKill(gamePlayer.getPlayerName());
         }
         dropDeathItems(gamePlayer.getDeathLocation());
@@ -318,7 +318,7 @@ public class DeathManager implements Listener {
         SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------§r§7 (§cDéconnexion§7)");
         SendToEveryone(gamePlayer.getPlayerName()+"§7 est mort,");
         RoleBase role = gamePlayer.getRole();
-        SendToEveryone("§7Son rôle était: " + role.getOriginTeam().getColor() + role.getName() + role.getSuffixString());
+        if (role != null) SendToEveryone("§7Son rôle était: " + role.getOriginTeam().getColor() + role.getName() + role.getSuffixString());
         SendToEveryone(ChatColor.DARK_GRAY+"§o§m-----------------------------------");
     }
 
