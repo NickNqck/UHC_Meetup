@@ -135,7 +135,7 @@ public class DeathManager implements Listener {
             for (UUID u : gameState.getInGamePlayers()) {
                 Player p = Bukkit.getPlayer(u);
                 if (p == null)continue;
-                if (!gameState.hasRoleNull(killedPlayer.getUniqueId())) {
+                if (!gameState.hasRoleNull(killedPlayer.getUniqueId()) && !gameState.hasRoleNull(p.getUniqueId())) {
                     gameState.getGamePlayer().get(p.getUniqueId()).getRole().OnAPlayerDie(killedPlayer, gameState, killer);
                 }
                 if (!gameState.hasRoleNull(p.getUniqueId())) {
