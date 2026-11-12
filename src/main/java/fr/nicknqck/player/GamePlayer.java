@@ -374,8 +374,9 @@ public class GamePlayer {
 							.append(Main.getInstance().getRoleManager().getRolesRegistery().get(clazz).getName());
 				} else {
 					if (clazz.toGenericString().toLowerCase().contains("jigorov2")) {
-						string.append(string.append(Main.getInstance().getRoleManager().getRolesRegistery().get(JigoroV2.class).getOriginTeam().getColor()))
+						string.append(Main.getInstance().getRoleManager().getRolesRegistery().get(JigoroV2.class).getOriginTeam().getColor())
 								.append(Main.getInstance().getRoleManager().getRolesRegistery().get(JigoroV2.class).getName());
+						string.append(i+1 == this.toTalk.size() ? " §7et " : "§7, ");
 						continue;
 					}
 					string.append(clazz.toGenericString().toLowerCase());
