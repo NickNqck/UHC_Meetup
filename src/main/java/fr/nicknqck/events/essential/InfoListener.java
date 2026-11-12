@@ -86,7 +86,7 @@ public class InfoListener implements Listener {
     private void onGameEnd(final GameEndEvent event) {
         if (event.getTeam() == null)return;
         for (final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
-            if (gamePlayer.getRole() == null)return;
+            if (gamePlayer.getRole() == null)continue;
             final PlayerInfo info = Main.getInstance().getInfoManager().getPlayerInfo(gamePlayer.getUuid());
             if (gamePlayer.getRole().getTeam().equals(event.getTeam())) {
                 info.addGameWin();
