@@ -162,7 +162,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                             this.getRole().getGamePlayer().sendMessage("§7Vous avez reçu le§c§l Susanô");
                             this.deathLocations.clear();
                             if (string.toLowerCase().contains("kakashi")) {
-                                this.getRole().getPowers().forEach(power -> power.setCooldown(new Cooldown(power.getCooldown().getOriginalCooldown()/2)));
+                                this.getRole().getPowers().stream().filter(power -> power.getCooldown() != null).forEach(power -> power.setCooldown(new Cooldown(power.getCooldown().getOriginalCooldown()/2)));
                             }
                         }, 20);
                         EventUtils.unregisterEvents(this);
