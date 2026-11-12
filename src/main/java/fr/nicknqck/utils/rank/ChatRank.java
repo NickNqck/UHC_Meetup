@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public enum ChatRank {
@@ -19,7 +20,7 @@ public enum ChatRank {
     ChatRank(String prefix, String color){
         this.color = color;
         this.prefix = prefix;
-        this.players = new ArrayList<>();
+        this.players = new CopyOnWriteArrayList<>();
     }
 
     public void setPlayer(Player player) {
