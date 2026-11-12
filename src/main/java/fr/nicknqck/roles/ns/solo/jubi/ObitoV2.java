@@ -155,7 +155,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
             if (args.length < 2) {
                 for (@NonNull final String string : this.deathLocations.keySet()) {
                     final Location location = this.deathLocations.get(string);
-                    if (player.getLocation().distance(location) <= 5) {
+                    if (player.getWorld().equals(location.getWorld()) && player.getLocation().distance(location) <= 5) {
                         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                             this.getRole().addPower(new SusanoPower(this.getRole()), true);
                             this.getRole().getPowers().remove(this);
