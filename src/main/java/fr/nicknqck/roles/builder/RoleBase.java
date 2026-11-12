@@ -259,7 +259,7 @@ public abstract class RoleBase implements IRole {
         Main.getInstance().debug("Starting trying to get player who own the role "+toknow.name());
 		Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if (gameState.getInSpecPlayers().contains(p))return;
+				if (gameState.getInSpecPlayers().contains(p))continue;
 				if (!gameState.hasRoleNull(p.getUniqueId())) {
 					if (getListPlayerFromRole(toknow).contains(p)) {
 						if (knower.isOnline() && p.isOnline() && !gameState.hasRoleNull(p.getUniqueId())) {
