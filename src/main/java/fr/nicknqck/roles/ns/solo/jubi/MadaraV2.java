@@ -341,7 +341,7 @@ public class MadaraV2 extends JubiRoles {
                             for(final Location loc : mathUtil.sphere(this.initLocation, 30, false)) {
                                 loc.getBlock().setType(Material.AIR);
                                 for (final Player p : Loc.getNearbyPlayers(loc, 0.9)) {
-                                    if (p.getUniqueId() != this.uuid) {
+                                    if (!p.getUniqueId().equals(this.uuid)) {
                                         p.damage(0.0);
                                         if (p.getHealth() - 10.0 <= 0) {
                                             p.setHealth(1.0);
