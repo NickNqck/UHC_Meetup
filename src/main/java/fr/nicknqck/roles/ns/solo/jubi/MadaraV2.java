@@ -310,7 +310,7 @@ public class MadaraV2 extends JubiRoles {
                     this.uuid = player.getUniqueId();
                     this.initLocation = player.getLocation();
                     this.timeLeft = 10;
-                    runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                    runTaskTimer(Main.getInstance(), 0, 20);
                 }
 
                 @Override
