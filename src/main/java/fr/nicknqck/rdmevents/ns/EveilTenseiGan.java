@@ -81,7 +81,7 @@ public class EveilTenseiGan extends Event implements Listener {
         final GamePlayer gamePlayer = buyakuganUserList.get(0);
         System.out.println(print+gamePlayer.getPlayerName()+" has been chose, size of the list: "+buyakuganUserList.size());
         final RoleBase role = gamePlayer.getRole();
-        gamePlayer.sendMessage("§7Qu'est-ce qui se passe ? Vous sentez qu'un étrange§a chakra§7 se déverse dans vos yeux, après vérification on dirait qu'il s'agit la d'un§a chakra§e Otsutsuki§7, vous devriez essayer de récupérer d'autres§a byakugans§7 pour éveiller de nouveau pouvoirs.");
+        gamePlayer.sendMessage("§7Qu'est-ce qui se passe ? Vous sentez qu'un étrange§a chakra§7 se déverse dans vos yeux, après vérification on dirait qu'il s'agit la d'un§a chakra§e Otsutsuki§7, vous devriez essayer de récupérer d'autres§a byakugans§7 pour éveiller de nouveaux pouvoirs.");
         role.setTeam(TeamList.Solo, true);
         this.gamePlayer = gamePlayer;
         if (buyakuganUserList.size() == 1) {//donc si mon joueur est le seul porteur du byakugan
@@ -179,7 +179,7 @@ public class EveilTenseiGan extends Event implements Listener {
             System.out.println(print+ gamePlayer.getPlayerName()+" has been gived "+amountKill+" half-heart");
         }
         gamePlayer.addItems(this.sword);
-        gamePlayer.sendMessage("§7Vous avez obtenue le§b Tenseigan§7, vous devenez maintenant inéluctable!");
+        gamePlayer.sendMessage("§7Vous avez obtenu le§b Tenseigan§7, vous devenez maintenant inéluctable!");
         role.addPower(new ModeChakraPower(role), true);
         role.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         role.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
@@ -213,7 +213,7 @@ public class EveilTenseiGan extends Event implements Listener {
         if (this.gamePlayer == null)return;
         if (this.gamePlayer.getUuid().equals(event.getRole().getPlayer())) {
             if (!event.getNewTeam().equals(TeamList.Solo)) {
-                this.gamePlayer.sendMessage("§7Quelqu'un a essayer de vous faire changer de camp mais on dirait que sa n'a pas fonctionner.");
+                this.gamePlayer.sendMessage("§7Quelqu'un a essayé de vous faire changer de camp mais on dirait que ça n'a pas fonctionné.");
                 event.setCancelled(true);
             }
         }
@@ -417,7 +417,7 @@ public class EveilTenseiGan extends Event implements Listener {
                     return;
                 }
                 if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
-                    event.getDamager().sendMessage("§7Votre vole s'arrête");
+                    event.getDamager().sendMessage("§7Votre vol s'arrête");
                     ((Player) event.getDamager()).setFlying(false);
                     ((Player) event.getDamager()).setAllowFlight(false);
                     this.fly = false;
@@ -427,13 +427,13 @@ public class EveilTenseiGan extends Event implements Listener {
                 player.setFlying(false);
                 player.setAllowFlight(false);
                 this.fly = false;
-                player.sendMessage("§7Vous arrêtez de volé...");
+                player.sendMessage("§7Vous arrêtez de voler...");
             }
             private void start(final Player player) {
                 player.setAllowFlight(true);
                 player.setFlying(true);
                 this.fly = true;
-                player.sendMessage("§7Vous commencez à volé...");
+                player.sendMessage("§7Vous commencez à voler...");
                 this.modeChakraPower.timeLeft-=15;
             }
         }

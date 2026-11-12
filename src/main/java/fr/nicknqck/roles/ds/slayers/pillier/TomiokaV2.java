@@ -275,7 +275,7 @@ public class TomiokaV2 extends PilierRoles {
                 }
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), EffectWhen.DAY);
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, false, false), EffectWhen.NIGHT);
-                getRole().getGamePlayer().sendMessage("§7La petite§a Makomo§7 est§c morte§7, en homage à son stylé très fluide vous obtenez§c l'effet§b Speed II§7 le§e jour");
+                getRole().getGamePlayer().sendMessage("§7La petite§a Makomo§7 est§c morte§7, en hommage à son style très fluide vous obtenez§c l'effet§b Speed II§7 le§e jour");
             }
         }
         private boolean isGoodRole(@NonNull final RoleBase roleBase) {

@@ -154,7 +154,7 @@ public class Sasori extends AkatsukiRoles {
                 player.sendMessage("§7Vous avez§a activé§7 votre potentiel créatif.");
             } else {
                 activate = false;
-                player.sendMessage("§7Vous avez§c désactiver§7 votre potentiel créatif.");
+                player.sendMessage("§7Vous avez§c désactivé§7 votre potentiel créatif.");
             }
             return false;
         }
@@ -162,7 +162,7 @@ public class Sasori extends AkatsukiRoles {
         private void revive(@NonNull final GameState gameState,@NonNull final Player target,@NonNull final Player owner) {
             RoleBase targetRole = gameState.getGamePlayer().get(target.getUniqueId()).getRole();
             /// Envoie des messages et du Title
-            owner.sendMessage("§7Votre§c art§7 a toucher§c "+target.getName()+"§7.");
+            owner.sendMessage("§7Votre§c art§7 a touché§c "+target.getName()+"§7.");
             target.sendMessage("§7Vous avez été§c réanimer§7 par la§c Marionetisation§7 de§c Sasori§7.");
             target.resetTitle();
             target.sendTitle("§cMarionetisation !", "Vous êtes maintenant dans le camp "+this.getRole().getTeam().getName());

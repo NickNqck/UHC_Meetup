@@ -108,7 +108,7 @@ public class KamuiPower extends ItemPower implements Listener{
             Collections.shuffle(locationList);
             this.kamuiPower.kamuiDimension.getBeforeTpMap().put(player.getUniqueId(), player.getLocation());
             player.teleport(locationList.get(0));
-            player.sendMessage("§7Vous vous êtes aspirer dans le§d Kamui§7.");
+            player.sendMessage("§7Vous vous êtes aspiré dans le§d Kamui§7.");
             new ArimasuRunnable(getRole().getGameState(), this);
             return true;
         }
@@ -260,8 +260,8 @@ public class KamuiPower extends ItemPower implements Listener{
                     Bukkit.getScheduler().runTask(this.sonohaka.getPlugin(), () -> {
                         if (this.sonohaka.kamuiPower.kamuiDimension.getBeforeTpMap().containsKey(target.getUniqueId())) {
                             target.teleport(this.sonohaka.kamuiPower.kamuiDimension.getBeforeTpMap().get(target.getUniqueId()));
-                            this.sonohaka.getRole().getGamePlayer().sendMessage("§c"+target.getName()+"§7 s'est échapper du§d Kamui§7.");
-                            target.sendMessage("§7Vous vous êtes échapper du§d Kamui§7.");
+                            this.sonohaka.getRole().getGamePlayer().sendMessage("§c"+target.getName()+"§7 s'est échappé du§d Kamui§7.");
+                            target.sendMessage("§7Vous vous êtes échappé du§d Kamui§7.");
                         }
                     });
                     cancel();

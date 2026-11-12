@@ -136,7 +136,7 @@ public class Sai extends ShinobiRoles implements Listener {
     private void onBecomeHokage(@NonNull final GamePlayerBecomeHokageEvent event) {
         if (!event.getHokage().check())return;
         if (event.getHokage().getRole() instanceof DanzoV2 && !this.unlocked) {
-            event.getHokage().sendMessage("§7Vous êtes devenue le nouvel§a Hokage§7, si vous souhaitez que§a Saï§7 rejoigne votre§a camp§7, faite la commande§6 /ns sai§7.");
+            event.getHokage().sendMessage("§7Vous êtes devenu le nouvel§a Hokage§7, si vous souhaitez que§a Saï§7 rejoigne votre§a camp§7, faite la commande§6 /ns sai§7.");
             this.unlocked = true;
         }
     }

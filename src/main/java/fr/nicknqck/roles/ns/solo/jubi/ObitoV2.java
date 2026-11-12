@@ -149,7 +149,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             @NonNull final String[] args = (String[]) map.get("args");
             if (this.deathLocations.isEmpty()) {
-                player.sendMessage("§7Aucun§4§l Uchiwa§7 est mort...");
+                player.sendMessage("§7Aucun§4§l Uchiwa§7 n'est mort...");
                 return false;
             }
             if (args.length < 2) {
@@ -195,7 +195,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
             if (!event.getPlayer().getWorld().getName().equals("arena"))return;
             if (!this.getRole().getPowers().contains(this))return;
             if (event.getRole() instanceof IUchiwa) {
-                getRole().getGamePlayer().sendMessage("§cUn§4 Uchiwa§c est mort ! C'est sûrement l'occasion pour vous de récupérez un§4 Sharingan§c, avec un peux de chance vous pourriez obtenir un Susanô...",
+                getRole().getGamePlayer().sendMessage("§cUn§4 Uchiwa§c est mort ! C'est sûrement l'occasion pour vous de récupérer un§4 Sharingan§c, avec un peu de chance vous pourriez obtenir un Susanô...",
                         " ",
                         "§cx: "+event.getPlayer().getLocation().getBlockX(),
                         " ",
@@ -210,7 +210,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
             if (!event.getPlayer().getWorld().getName().equals("arena") && !event.getPlayer().getWorld().getName().equalsIgnoreCase("kamui"))return;
             if (!this.getRole().getPowers().contains(this))return;
             if (event.getRole() instanceof KakashiV2) {
-                getRole().getGamePlayer().sendMessage("§aKakashi§c est mort ! C'est sûrement l'occasion pour vous de récupérez §nvotre§4 Sharingan§c, avec un peux de chance vous pourriez obtenir un Susanô voir même diminuer vos cooldowns...",
+                getRole().getGamePlayer().sendMessage("§aKakashi§c est mort ! C'est sûrement l'occasion pour vous de récupérer §nvotre§4 Sharingan§c, avec un peu de chance vous pourriez obtenir un Susanô voir même diminuer vos cooldowns...",
                         " ",
                         "§cx: "+event.getPlayer().getLocation().getBlockX(),
                         " ",

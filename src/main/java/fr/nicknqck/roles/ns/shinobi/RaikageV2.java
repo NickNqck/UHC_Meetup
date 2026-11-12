@@ -90,12 +90,12 @@ public class RaikageV2 extends ShinobiRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (!this.activate) {
                     this.activate = true;
-                    player.sendMessage("§7Activation de voter§e Armure Raiton§7.");
+                    player.sendMessage("§7Activation de votre§e Armure Raiton§7.");
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1, false, false), true);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), true);
                 } else {
                     this.activate = false;
-                    player.sendMessage("§7Vous avez désactiver votre§e Armure Raiton§7.");
+                    player.sendMessage("§7Vous avez désactivé votre§e Armure Raiton§7.");
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0, false, false), true);
                 }
                 return true;
@@ -149,7 +149,7 @@ public class RaikageV2 extends ShinobiRoles {
                 }
                 if (!this.armureRaiton.getRole().getGamePlayer().isAlive()) {
                     this.armureRaiton.activate = false;
-                    this.armureRaiton.getRole().getGamePlayer().sendMessage("§7Votre§e Armure Raiton§7 s'est arrêter automatiquement suite à votre mort");
+                    this.armureRaiton.getRole().getGamePlayer().sendMessage("§7Votre§e Armure Raiton§7 s'est arrêtée automatiquement suite à votre mort");
                     return;
                 }
                 if (this.armureRaiton.timeLeft <= 0) {

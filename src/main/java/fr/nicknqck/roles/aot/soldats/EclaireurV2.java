@@ -91,7 +91,7 @@ public class EclaireurV2 extends SoldatsRoles {
                 return false;
             }
             if (this.runnable.running) {
-                player.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez annuler votre opération d'§aEclairage !");
+                player.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez annulé votre opération d'§aEclairage !");
                 this.runnable.stop();
                 this.runnable.cancel();
             } else {
@@ -108,13 +108,13 @@ public class EclaireurV2 extends SoldatsRoles {
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer()) && this.runnable.running && event.getDamager() instanceof Player) {
                 this.runnable.stop();
                 this.runnable.cancel();
-                event.getEntity().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez annuler votre opération d'§aEclairage !");
+                event.getEntity().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez annulé votre opération d'§aEclairage !");
                 this.runnable.updateEquipmentForObservers((Player) event.getEntity(), false);
             }
             if (event.getDamager().getUniqueId().equals(getRole().getPlayer()) && this.runnable.running && event.getEntity() instanceof Player) {
                 this.runnable.stop();
                 this.runnable.cancel();
-                event.getDamager().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez annuler votre opération d'§aEclairage !");
+                event.getDamager().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez annulé votre opération d'§aEclairage !");
                 this.runnable.updateEquipmentForObservers((Player) event.getDamager(), false);
             }
         }

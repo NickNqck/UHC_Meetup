@@ -113,10 +113,10 @@ public class HokageManager implements Listener {
                 GameListener.SendToEveryone(AllDesc.bar);
                 final GamePlayer gamePlayer = searchHokage();
                 if (gamePlayer != null) {
-                    GameListener.SendToEveryone("§bLe conseil viens d'élire un nouveau§e Hokage§b, le village est");
+                    GameListener.SendToEveryone("§bLe conseil vient d'élire un nouveau§e Hokage§b, le village est");
                     GameListener.SendToEveryoneWithHoverMessage("§b maintenant sous le commandement de ",
                             "§e"+gamePlayer.getPlayerName(),
-                            "§7La personne désigné comme étant l'§cHokage§7 obtient§c 10%§7 de§c Force§7 et de§9 Résistance", "§e.");
+                            "§7La personne désignée comme étant l'§cHokage§7 obtient§c 10%§7 de§c Force§7 et de§9 Résistance", "§e.");
                     this.hokageManager.hokage = gamePlayer;
                     for (final GamePlayer danzo : this.gameState.getGamePlayer().values()) {
                         if (danzo.getRole() == null)continue;
@@ -130,11 +130,11 @@ public class HokageManager implements Listener {
                     gamePlayer.getRole().addPower(new NSBoost(gamePlayer.getRole()));
                     gamePlayer.getRole().addPower(new NSInfo(gamePlayer.getRole()));
                     GameListener.SendToEveryone(AllDesc.bar);
-                    gamePlayer.sendMessage("§7Vous êtes devenue le nouvel§e Hokage§7, vous avez maintenant accès à la commande§e /ns boost <joueur>§7 qui donnera au joueurs visé§c +5§7 de§c Force§7 et de§9 Résistance",
+                    gamePlayer.sendMessage("§7Vous êtes devenu le nouvel§e Hokage§7, vous avez maintenant accès à la commande§e /ns boost <joueur>§7 qui donnera au joueurs visé§c +5§7 de§c Force§7 et de§9 Résistance",
                             "§7Vous avez maintenant également accès à la commande§6 /ns infos§7, ces deux commandes sont utilisable §c1x/partie");
                     Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> Main.getInstance().getServer().getPluginManager().callEvent(new GamePlayerBecomeHokageEvent(gamePlayer)));
                 } else {
-                    GameListener.SendToEveryone("§bLe conseil n'a trouver personne pour devenir le nouveau§e Hokage§b, le village est attristé par cette nouvelle.");
+                    GameListener.SendToEveryone("§bLe conseil n'a trouvé personne pour devenir le nouveau§e Hokage§b, le village est attristé par cette nouvelle.");
                     GameListener.SendToEveryone(AllDesc.bar);
                 }
                 cancel();
@@ -198,7 +198,7 @@ public class HokageManager implements Listener {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
                     if (target.getUniqueId().equals(player.getUniqueId())) {
-                        player.sendMessage("§cImpossible de se boost sois même.");
+                        player.sendMessage("§cImpossible de se boost soi-même.");
                         return false;
                     }
                     if (!getRole().getGameState().hasRoleNull(target.getUniqueId())) {
@@ -277,7 +277,7 @@ public class HokageManager implements Listener {
                 gamePlayers.add(random);
                 Collections.shuffle(gamePlayers, Main.RANDOM);
                 player.sendMessage(new String[]{
-                        "§7Voici les informations que vos informateurs on pu trouver: ",
+                        "§7Voici les informations que vos informateurs ont pu trouver: ",
                         "",
                         "§8 -§c "+gamePlayers.get(0).getPlayerName(),
                         "§8 -§c "+gamePlayers.get(1).getPlayerName(),
@@ -287,7 +287,7 @@ public class HokageManager implements Listener {
                         "§7Dans la liste de joueurs ci-dessus il y a (pas dans cette ordre là) un§a Shinobi§7, une personne n'étant pas un§a Shinobi§7 ainsi que§c 2 joueurs§7 ayant un camp§c aléatoire§7."
                 });
             } else {
-                player.sendMessage("§cVsos informateurs n'ont rien pus trouver de concluant sur les joueurs encore en vie");
+                player.sendMessage("§cVos informateurs n'ont rien pu trouver de concluant sur les joueurs encore en vie");
             }
             return true;
         }
