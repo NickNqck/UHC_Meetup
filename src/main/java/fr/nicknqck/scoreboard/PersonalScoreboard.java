@@ -45,13 +45,20 @@ public class PersonalScoreboard {
     private final GameState gameState;
 
     /*
-     * setLines() tourne hors du thread principal (exécuteur du ScoreboardManager) :
-     * la hauteur du centre (0, 0) est donc lue sur le thread principal via runTask,
-     * puis mise en cache ici pour les rafraîchissements suivants.
+     * setLines() est appelé hors du thread principal (exécuteur du ScoreboardManager).
+     * Les lignes y sont préparées, puis le ScoreBoardUpdateEvent et l'envoi des lignes
+     * se font sur le thread principal (runTask). Tant que cette tâche n'est pas terminée,
+     * les rafraîchissements suivants sont ignorés : les lignes ne sont donc jamais
+     * modifiées par un thread pendant que l'autre les lit.
      */
-    private final AtomicBoolean centerYPending = new AtomicBoolean(false);
+    private final AtomicBoolean updatePending = new AtomicBoolean(false);
+    /*
+     * Hauteur du bloc le plus haut en (0, 0) : lue uniquement sur le thread principal
+     * (au plus une fois par seconde) et mise en cache pour la ligne "Centre".
+     */
     private volatile String centerYWorld = null;
     private volatile int centerY = 0;
+    private long centerYTime = 0L;
 
     PersonalScoreboard(Player player, GameState gameState){
         this.player = player;
@@ -66,6 +73,32 @@ public class PersonalScoreboard {
     public void reloadData(){}
 
     public void setLines(String ip){
+        if (!Main.getInstance().isEnabled()) return;
+        // Un rafraîchissement est encore en attente sur le thread principal : on saute celui-ci
+        if (!updatePending.compareAndSet(false, true)) return;
+        boolean scheduled = false;
+        try {
+            buildLines(ip);
+            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                try {
+                    if (this.gameState.getServerState() == ServerStates.InGame && this.player.isOnline()) {
+                        refreshCenterY();
+                    }
+                    Bukkit.getPluginManager().callEvent(new ScoreBoardUpdateEvent(this.objectiveSign.lines, this.objectiveSign.scores, this));
+                    objectiveSign.updateLines();
+                } finally {
+                    updatePending.set(false);
+                }
+            });
+            scheduled = true;
+        } finally {
+            // Erreur pendant la préparation ou plugin en cours d'arrêt : on libère le verrou
+            if (!scheduled) updatePending.set(false);
+        }
+    }
+
+    /** Prépare les lignes du scoreboard (appelé hors du thread principal). */
+    private void buildLines(String ip){
     	String premsg = "§7§l ┃ §r";
 		ChatRank.updateRank(this.player);
     	if (this.gameState.getServerState() == ServerStates.InLobby) {
@@ -135,28 +168,28 @@ public class PersonalScoreboard {
     			}
     		}
     	}
-		final ScoreBoardUpdateEvent event = new ScoreBoardUpdateEvent(this.objectiveSign.lines, this.objectiveSign.scores, this);
-		Bukkit.getPluginManager().callEvent(event);
-        objectiveSign.updateLines();
     }
     /**
-     * Retourne la hauteur du bloc le plus haut en (0, 0) dans {@code world} sans toucher
-     * au monde depuis ce thread : la lecture est déléguée au thread principal (runTask)
-     * et le résultat mis en cache. Tant qu'aucune valeur n'est connue pour ce monde
-     * (premier rafraîchissement), la hauteur du joueur est utilisée.
+     * Retourne la hauteur en cache du bloc le plus haut en (0, 0) dans {@code world},
+     * sans toucher au monde depuis ce thread. Tant qu'aucune valeur n'est connue pour
+     * ce monde (premier rafraîchissement), la hauteur du joueur est utilisée.
      */
     private int getCenterY(World world) {
-        if (Main.getInstance().isEnabled() && centerYPending.compareAndSet(false, true)) {
-            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                try {
-                    centerY = world.getHighestBlockYAt(0, 0);
-                    centerYWorld = world.getName();
-                } finally {
-                    centerYPending.set(false);
-                }
-            });
-        }
         return world.getName().equals(centerYWorld) ? centerY : player.getLocation().getBlockY();
+    }
+
+    /**
+     * Met à jour la hauteur en cache du centre (0, 0) du monde du joueur.
+     * Appelé uniquement sur le thread principal, au plus une fois par seconde par monde :
+     * le monde est donc forcément celui où se trouve le joueur à cet instant (chargé).
+     */
+    private void refreshCenterY() {
+        final World world = this.player.getWorld();
+        final long now = System.currentTimeMillis();
+        if (world.getName().equals(centerYWorld) && now - centerYTime < 1000L) return;
+        centerY = world.getHighestBlockYAt(0, 0);
+        centerYWorld = world.getName();
+        centerYTime = now;
     }
 
     public void onLogout(){

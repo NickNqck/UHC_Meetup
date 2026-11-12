@@ -59,7 +59,7 @@ public class GamePlayer {
 	private ItemStack headItem;
 	private final LinkedList<DeathRapport> killsList;
 	/** Nombre d'assistances (voir {@link fr.nicknqck.managers.AssistManager}) */
-	private int assistAmounts = 0;
+	private volatile int assistAmounts = 0;
 	private final StunManager stunManager;
 
 	public GamePlayer(Player gamePlayer){

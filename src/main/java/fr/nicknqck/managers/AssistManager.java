@@ -62,6 +62,8 @@ public class AssistManager implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     private void onDamage(final EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
+        // Canne à pêche, boule de neige, œuf... : un coup à 0 dégât ne compte pas
+        if (event.getDamage() <= 0) return;
         final UUID attacker = resolvePlayerSource(event.getDamager());
         if (attacker == null) return;
         recordDamage(attacker, event.getEntity().getUniqueId());
@@ -80,6 +82,8 @@ public class AssistManager implements Listener {
         // Pas d'assistance si la victime n'a pas été tuée par un joueur
         final UUID killer = resolvePlayerSource(entityKiller);
         if (killer == null) return Collections.emptyList();
+        // Suicide (ex : sa propre flèche) : la victime est son propre "tueur", donc pas de tueur joueur
+        if (killer.equals(victim.getUniqueId())) return Collections.emptyList();
 
         // Comme pour les kills : la victime doit avoir un rôle
         final GamePlayer deadPlayer = GamePlayer.of(victim.getUniqueId());
