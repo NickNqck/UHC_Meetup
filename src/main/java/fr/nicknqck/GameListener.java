@@ -684,7 +684,7 @@ public class GameListener implements Listener {
         if (itemStack == null || itemStack.getType() == Material.AIR) {
         	return;
         }        
-        if (itemStack.getType().name().contains("AXE") || itemStack.getType().name().contains("SPADE") || itemStack.getType().name().contains("PICKAXE") && Hastey_Boys.isHasteyBoys()) {
+        if ((itemStack.getType().name().contains("AXE") || itemStack.getType().name().contains("SPADE")) && Hastey_Boys.isHasteyBoys()) {// "AXE" couvre aussi les pioches (PICKAXE)
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.addEnchant(Enchantment.DIG_SPEED, 3, true);
             itemMeta.addEnchant(Enchantment.DURABILITY, 3, true);
