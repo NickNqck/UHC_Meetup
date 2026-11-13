@@ -17,7 +17,7 @@ public final class ShowGlowingRunnable extends BukkitRunnable {
 
     public ShowGlowingRunnable(ItemPower itemPower) {
         this.itemPower = itemPower;
-        runTaskTimerAsynchronously(Main.getInstance(), 100, 1);
+        runTaskTimer(Main.getInstance(), 100, 1);
     }
 
     @Override
