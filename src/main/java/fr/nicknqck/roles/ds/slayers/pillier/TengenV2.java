@@ -128,6 +128,7 @@ public class TengenV2 extends PilierRoles {
             if (armorContents.get(4) != null) {
                 owner.getInventory().setBoots(armorContents.get(4));
             }
+            armorContents.clear();
             invisible = false;
             this.getRole().getGamePlayer().getActionBarManager().removeInActionBar("tengenv2.attaquefurtive");
             Bukkit.getScheduler().runTask(getPlugin(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), true));

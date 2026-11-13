@@ -196,6 +196,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
             if (armorContents.get(4) != null) {
                 owner.getInventory().setBoots(armorContents.get(4));
             }
+            this.armorContents.clear();
             this.runnable.cancel();
             this.runnable = null;
             cooldown.use();
