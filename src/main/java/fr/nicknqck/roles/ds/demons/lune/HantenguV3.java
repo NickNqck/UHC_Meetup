@@ -487,6 +487,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 for (Player target : player.getWorld().getPlayers()) {
                     if (target.getUniqueId().equals(player.getUniqueId()))continue;
+                    if (getRole().getGameState().hasRoleNull(target.getUniqueId()))continue;
                     if (target.getLocation().distance(player.getLocation()) > 50)continue;
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                     if (role instanceof DemonsRoles)continue;
