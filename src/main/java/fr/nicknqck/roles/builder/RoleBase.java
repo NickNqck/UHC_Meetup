@@ -294,7 +294,7 @@ public abstract class RoleBase implements IRole {
         return emptySlots;
     }
 	public void giveItem(Player target, boolean message, ItemStack... toGive) {
-		for (ItemStack stack : toGive) {
+		outer: for (ItemStack stack : toGive) {
 			if (countEmptySlots(target) > 0) {
 				target.getInventory().addItem(stack);
 				if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && message) {
@@ -320,7 +320,7 @@ public abstract class RoleBase implements IRole {
 									toClaim.remove(stack);
 									target.updateInventory();
 								}
-								return;
+								continue outer;
 							}
 						}
 					}
