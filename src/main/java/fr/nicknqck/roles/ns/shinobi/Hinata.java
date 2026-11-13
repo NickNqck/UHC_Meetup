@@ -435,6 +435,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
 
                 }
                 if (this.timeLeft <= 0) {
+                    this.powersInfo.getRole().getGamePlayer().getActionBarManager().removeInActionBar("hinata.power");
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.powersInfo.stopRunnableNoChoice(gameTarget));
                     this.powersInfo.resetChoice();
                     cancel();
