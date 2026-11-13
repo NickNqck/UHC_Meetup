@@ -301,7 +301,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
 
                     strikes++;
                 }
-            }.runTaskTimerAsynchronously(getPlugin(), 0L, 10L); // async, toutes les 0.5s (10 ticks)
+            }.runTaskTimer(getPlugin(), 0L, 10L); // toutes les 0.5s (10 ticks)
         }
     }
     private static class OrageBrulantItem extends ItemPower implements Listener {
