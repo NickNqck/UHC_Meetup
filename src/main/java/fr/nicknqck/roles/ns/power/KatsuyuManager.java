@@ -58,6 +58,7 @@ public class KatsuyuManager implements Listener {
     }
     @EventHandler
     private void onEat(@NonNull final GamePlayerEatGappleEvent event) {
+        if (katsuyu == null)return;
         final double actualHealth = event.getPlayer().getHealth();
         final double maxHealth = event.getPlayer().getMaxHealth();
         if (actualHealth + 4.0 > maxHealth) {
