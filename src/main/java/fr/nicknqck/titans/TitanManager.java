@@ -163,7 +163,7 @@ public class TitanManager implements Listener {
                 this.gameState = gameState;
                 this.stealManager = stealManager;
                 this.map = new HashMap<>();
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                runTaskTimer(Main.getInstance(), 0, 20);
             }
             private void addGamePlayer(@NonNull final GamePlayer gamePlayer, final int stealPriority) {
                 this.map.put(gamePlayer, stealPriority);
