@@ -180,6 +180,7 @@ public class Akaza extends DemonsRoles implements Listener {
 				} else {
 					owner.sendMessage("§7Vous n'avez croiser aucun§a pilier§7 durant ces§c 5 dernières minutes§7.");
 				}
+				timeRemaining = 60*5;
 			}
 			for (Player around : Loc.getNearbyPlayersExcept(owner, 10)) {
 				if (!akaza.getGameState().hasRoleNull(around.getUniqueId())) {
