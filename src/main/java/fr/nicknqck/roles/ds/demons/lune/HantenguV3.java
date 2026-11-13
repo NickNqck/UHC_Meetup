@@ -445,8 +445,8 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                     role.givePotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20*5, 3, false, false), EffectWhen.NOW);
                     target.getWorld().strikeLightningEffect(target.getEyeLocation());
                     target.setHealth(Math.max(target.getHealth()-4.0, 1.0));
-                    target.sendMessage("§7Vous avez été toucher par le§c Khakkhara§7 de§c Sekido§7.");
-                    player.sendMessage("§c"+target.getDisplayName()+"§7 a été toucher par votre§c Khakkhara§7.");
+                    target.sendMessage("§7Vous avez été touché par le§c Khakkhara§7 de§c Sekido§7.");
+                    player.sendMessage("§c"+target.getDisplayName()+"§7 a été touché par votre§c Khakkhara§7.");
                 }
                 return true;
             }
@@ -466,8 +466,8 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                     if (target.getLocation().distance(player.getLocation()) > 50)continue;
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                     if (role instanceof MuzanV2)continue;
-                    target.sendMessage("§7Vous avez été toucher par l'§a Uchiwa§7 de§a Karaku§7.");
-                    player.sendMessage("§c"+target.getDisplayName()+"§7 a été toucher par votre§a Uchiwa§7.");
+                    target.sendMessage("§7Vous avez été touché par l'§a Uchiwa§7 de§a Karaku§7.");
+                    player.sendMessage("§c"+target.getDisplayName()+"§7 a été touché par votre§a Uchiwa§7.");
                     target.teleport(target.getEyeLocation().add(0, 50, 0));
                 }
                 return true;
@@ -493,8 +493,8 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                     if (role instanceof DemonsRoles)continue;
                     if (role.getOriginTeam().equals(TeamList.Demon))continue;
                     if (role.getTeam().equals(TeamList.Demon))continue;
-                    target.sendMessage("§7Vous avez été toucher par l'§c Affaiblissement§7 d'§c Aizetsu§7.");
-                    player.sendMessage("§c"+target.getDisplayName()+"§7 a été toucher par votre§c Affaiblissement§7.");
+                    target.sendMessage("§7Vous avez été touché par l'§c Affaiblissement§7 d'§c Aizetsu§7.");
+                    player.sendMessage("§c"+target.getDisplayName()+"§7 a été touché par votre§c Affaiblissement§7.");
                     role.givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*30, 0, false, false), EffectWhen.NOW);
                     uuidList.add(target.getUniqueId());
                 }
@@ -512,7 +512,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                 if (event.getCooldown() == null)return;
                 if (!event.getCooldown().getUniqueId().equals(getCooldown().getUniqueId()))return;
                 this.uuidList.clear();
-                getRole().getGamePlayer().sendMessage("§7Vous n'infligez plus de dégâts supplémentaire...");
+                getRole().getGamePlayer().sendMessage("§7Vous n'infligez plus de dégâts supplémentaires...");
             }
         }
         private static class CriSoniquePower extends Power {
@@ -599,8 +599,8 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                                     target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*20, 0, false, false), true);
                                     target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*20, 0, false, false), true);
                                     target.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*20, 0, false, false), true);
-                                    target.sendMessage("§7Vous avez été toucher par le§e Cri Sonique§7 d'§aUrogi");
-                                    getRole().getGamePlayer().sendMessage("§c"+target.getDisplayName()+"§7 a été toucher par votre§e Cri Sonique§7.");
+                                    target.sendMessage("§7Vous avez été touché par le§e Cri Sonique§7 d'§aUrogi");
+                                    getRole().getGamePlayer().sendMessage("§c"+target.getDisplayName()+"§7 a été touché par votre§e Cri Sonique§7.");
                                     lastDamaged.put(id, now);
                                 }
                             }

@@ -179,8 +179,8 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
                     if (target == player)continue;
                     target.setHealth(Math.max(0.1, target.getHealth()-1.0));
                     target.setFireTicks(180);
-                    target.sendMessage("§aVous avez été toucher par la§c déflagration§2 de Fukasaku");
-                    player.sendMessage("§c"+target.getName()+"§a a été toucher par la§c déflagration§a de§2 Fukasaku§a.");
+                    target.sendMessage("§aVous avez été touché par la§c déflagration§2 de Fukasaku");
+                    player.sendMessage("§c"+target.getName()+"§a a été touché par la§c déflagration§a de§2 Fukasaku§a.");
                 }
                 return true;
             }

@@ -140,7 +140,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                         return false;
                     }
                     player.teleport(this.location);
-                    player.sendMessage("§7Vous avez été téléporter à l'emplacement de§f Shikushodo");
+                    player.sendMessage("§7Vous avez été téléporté à l'emplacement de§f Shikushodo");
                     this.location.getWorld().getBlockAt(this.location).setType(Material.AIR);
                     return true;
                 }

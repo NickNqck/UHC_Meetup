@@ -96,7 +96,7 @@ public abstract class KumogakureRole extends NSSoloRoles {
                 }
                 if (this.timeRemaining <= 0) {
                     this.gamePlayer.getActionBarManager().removeInActionBar("kyubi.runnable");
-                    this.gamePlayer.sendMessage("§6Kyubi§7 s'est arrêter");
+                    this.gamePlayer.sendMessage("§6Kyubi§7 s'est arrêté");
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> ((KumogakureRole) this.gamePlayer.getRole()).onEndKyubi());
                     cancel();
                     return;

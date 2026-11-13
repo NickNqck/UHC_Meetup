@@ -435,9 +435,9 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                 }
                 if (timeRemaining == 0) {
                     if (croised) {
-                        owner.sendMessage("§7Vous avez croiser un porteur du§c Sharingan§7 durant ces§c 5 dernières minutes§7.");
+                        owner.sendMessage("§7Vous avez croisé un porteur du§c Sharingan§7 durant ces§c 5 dernières minutes§7.");
                     } else {
-                        owner.sendMessage("§7Vous n'avez croiser aucun porteur du §cSharingan§7 ces dernières§c 5 minutes§7.");
+                        owner.sendMessage("§7Vous n'avez croisé aucun porteur du §cSharingan§7 ces dernières§c 5 minutes§7.");
                     }
                     timeRemaining = 60*5;
                     this.croised = false;

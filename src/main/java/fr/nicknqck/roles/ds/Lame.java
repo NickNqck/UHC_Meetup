@@ -73,7 +73,7 @@ public class Lame implements Listener{
 	public static void giveLame(DemonsSlayersRoles role, Lames lames){
 		lames.getUsers().put(role.getPlayer(), 40);
 		role.setLames(lames);
-		role.getGamePlayer().sendMessage("§7Vous avez obtenue la lame de "+lames.getName());
+		role.getGamePlayer().sendMessage("§7Vous avez obtenu la lame de "+lames.getName());
 		if (lames.equals(Lames.Coeur)) {
 			final Player owner = Bukkit.getPlayer(role.getPlayer());
 			if (owner != null){

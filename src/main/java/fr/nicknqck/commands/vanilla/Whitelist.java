@@ -78,7 +78,7 @@ public class Whitelist implements CommandExecutor, Listener {
 						}
 						if (args[0].equalsIgnoreCase("remove")) {
 							if (Whitelisted.contains(target.getUniqueId())) {
-								sender.sendMessage("§c"+target.getDisplayName()+"§7 à été retirer de la whitelist");
+								sender.sendMessage("§c"+target.getDisplayName()+"§7 a été retiré de la whitelist");
 								Whitelisted.remove(target.getUniqueId());
 								return true;
 							}

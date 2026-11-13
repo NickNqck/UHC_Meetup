@@ -293,7 +293,7 @@ public class Sasori extends AkatsukiRoles {
                             itemStack.setItemMeta(null);
                         }
                         getRole().getGamePlayer().addItems(list.toArray(new ItemStack[0]));
-                        getRole().getGamePlayer().sendMessage("§7Vous avez obtenue le nécéssaire pour crafter "+basicMarionnette.getName());
+                        getRole().getGamePlayer().sendMessage("§7Vous avez obtenu le nécessaire pour crafter "+basicMarionnette.getName());
                     }
                 }
             }, 20);

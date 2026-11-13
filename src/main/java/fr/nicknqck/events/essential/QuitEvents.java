@@ -25,7 +25,7 @@ public class QuitEvents implements Listener{
 			String quitMessage;
 			gameState.delInLobbyPlayers(player);
 			player.saveData();
-			quitMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.RED+" à quitté le Lobby "+ChatColor.GRAY+"["+gameState.getInLobbyPlayers().size()+"/"+gameState.getroleNMB()+"]";
+			quitMessage = ChatColor.LIGHT_PURPLE+player.getDisplayName()+ChatColor.RED+" a quitté le Lobby "+ChatColor.GRAY+"["+gameState.getInLobbyPlayers().size()+"/"+gameState.getroleNMB()+"]";
 			event.setQuitMessage(quitMessage);
 		}
 		gameState.updateGameCanLaunch();

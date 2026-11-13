@@ -53,8 +53,8 @@ public class BowSwap extends BasicScenarios implements Listener {
                 Location loc2 = ((Player) ((Arrow) e.getDamager()).getShooter()).getLocation();
                 e.getEntity().teleport(loc2);
                 ((Player) ((Arrow) e.getDamager()).getShooter()).teleport(loc1);
-                ((Player) ((Arrow) e.getDamager()).getShooter()).sendMessage("§7[§cBowSwap§7] §aVous avez échanger votre place avec §9"+((Player) e.getEntity()).getDisplayName());
-                e.getEntity().sendMessage("§7[§cBowSwap§7] §aVous avez échanger votre place avec §9"+((Player) ((Arrow) e.getDamager()).getShooter()).getDisplayName());
+                ((Player) ((Arrow) e.getDamager()).getShooter()).sendMessage("§7[§cBowSwap§7] §aVous avez échangé votre place avec §9"+((Player) e.getEntity()).getDisplayName());
+                e.getEntity().sendMessage("§7[§cBowSwap§7] §aVous avez échangé votre place avec §9"+((Player) ((Arrow) e.getDamager()).getShooter()).getDisplayName());
             }
         }
     }

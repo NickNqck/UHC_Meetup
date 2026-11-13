@@ -175,10 +175,10 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                 if (target != null) {
                     GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer == null || !gamePlayer.check()) {
-                        player.sendMessage("§cImpossible de traquez§b "+target.getName());
+                        player.sendMessage("§cImpossible de traquer§b "+target.getName());
                         return false;
                     }
-                    player.sendMessage("§7Vous commencez a traquer§a "+target.getName());
+                    player.sendMessage("§7Vous commencez à traquer§a "+target.getName());
                     @NonNull final PowerTakeInfoEvent event = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
                     getPlugin().getServer().getPluginManager().callEvent(event);
                     if (event.isCancelled()) {
@@ -255,7 +255,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                         if (role instanceof NSRoles) {
                             player.sendMessage("§c" + target.getDisplayName() + "§7 possède le chakra: " + ((NSRoles) role).getChakras().getShowedName());
                         } else {
-                            player.sendMessage("§cC'est étrange, on dirait que§b "+target.getDisplayName()+"§c n'a pas chakra dans son corp");
+                            player.sendMessage("§cC'est étrange, on dirait que§b "+target.getDisplayName()+"§c n'a pas de chakra dans son corps");
                         }
                         return true;
                     } else {

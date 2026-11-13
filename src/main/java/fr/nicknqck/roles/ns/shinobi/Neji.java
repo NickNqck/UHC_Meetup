@@ -207,10 +207,10 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
                 if (target != null) {
                     GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer == null || !gamePlayer.check()) {
-                        player.sendMessage("§cImpossible de traquez§b "+target.getName());
+                        player.sendMessage("§cImpossible de traquer§b "+target.getName());
                         return false;
                     }
-                    player.sendMessage("§7Vous commencez a traquer§a "+target.getName());
+                    player.sendMessage("§7Vous commencez à traquer§a "+target.getName());
                     @NonNull final PowerTakeInfoEvent event = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
                     getPlugin().getServer().getPluginManager().callEvent(event);
                     if (event.isCancelled()) {

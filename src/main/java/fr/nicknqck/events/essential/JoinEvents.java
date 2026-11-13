@@ -90,7 +90,7 @@ public class JoinEvents implements Listener{
 			Bukkit.broadcastMessage("§7Vous avez de la chance le §6Dev §c" + e.getPlayer().getName() + " §7vient d'arriver dans votre partie !");
 		}
 		if (uuid.equals(UUID.fromString("ae8635a5-1914-4ed7-9c7b-8cdb148309f2")) || player.getName().equals("Zerorapto")){
-			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE+"CramptéBOSS§n " + e.getPlayer().getName()+ChatColor.DARK_PURPLE + " à rejoint la partie");
+			Bukkit.broadcastMessage(ChatColor.DARK_PURPLE+"CramptéBOSS§n " + e.getPlayer().getName()+ChatColor.DARK_PURPLE + " a rejoint la partie");
 		}
 		if (uuid.equals(UUID.fromString("93d45061-5e32-4c49-8030-27c1d024505c"))) {
 			Bukkit.broadcastMessage("Ce§n§l§6 rat§r de§b "+player.getName()+"§f est arrivé parmi vous, merci de bien l'accueillir");

@@ -18,7 +18,7 @@ public class JigoroV2ChoosePacteEvent extends Event {
     public JigoroV2ChoosePacteEvent(@NonNull Pacte pacte, Player jigoro) {
         this.pacte = pacte;
         this.jigoro = jigoro;
-        this.message = "§7Le pacte que vous aviez choisis est §cinterdit§7 !";
+        this.message = "§7Le pacte que vous aviez choisi est §cinterdit§7 !";
     }
 
     public enum Pacte {

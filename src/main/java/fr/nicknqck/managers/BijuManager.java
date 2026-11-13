@@ -154,7 +154,7 @@ public class BijuManager implements Listener {
                     this.ownerMap.put(role.getGamePlayer(), event.getBiju());
                 } else {
                     role.giveItem(event.getKiller(), false, event.getBiju().getItemInMenu());
-                    role.getGamePlayer().sendMessage("§7Vous avez récupérer "+event.getBiju().getName());
+                    role.getGamePlayer().sendMessage("§7Vous avez récupéré "+event.getBiju().getName());
                 }
             } else {
                 event.getKiller().sendMessage("§cIl faut avoir un rôle pour utiliser les bijus !");
@@ -182,7 +182,7 @@ public class BijuManager implements Listener {
                     return;
                 }
                 if (biju.getHote() != null) {
-                    event.getPlayer().sendMessage("§7Vous avez récupérer "+biju.getName());
+                    event.getPlayer().sendMessage("§7Vous avez récupéré "+biju.getName());
                     return;
                 }
                 GamePlayer gamePlayer = GameState.getInstance().getGamePlayer().get(event.getPlayer().getUniqueId());

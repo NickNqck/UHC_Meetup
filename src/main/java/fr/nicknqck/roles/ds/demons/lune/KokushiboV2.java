@@ -363,7 +363,7 @@ public class KokushiboV2 extends DemonsRoles {
 
                                 // Appliquer le vecteur
                                 target.setVelocity(pushDirection);
-                                target.sendMessage("§cVous avez été toucher par la§4 Frappe Horizontal§c de§4 Kokushibo§c.");
+                                target.sendMessage("§cVous avez été touché par la§4 Frappe Horizontal§c de§4 Kokushibo§c.");
                             }
                         }
                     }
@@ -396,7 +396,7 @@ public class KokushiboV2 extends DemonsRoles {
 
                 // Appliquer le vecteur
                 target.setVelocity(pushDirection);
-                target.sendMessage("§cVous avez été toucher par la§4 Frappe Vertical§c de§4 Kokushibo§c.");
+                target.sendMessage("§cVous avez été touché par la§4 Frappe Vertical§c de§4 Kokushibo§c.");
                 return true;
             }
         }

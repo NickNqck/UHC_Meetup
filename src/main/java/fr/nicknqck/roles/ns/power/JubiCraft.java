@@ -44,7 +44,7 @@ public class JubiCraft extends CommandPower {
                 player.getInventory().remove(itemStack);
             }
             GameListener.SendToEveryone("");
-            GameListener.SendToEveryone("§c§lLe Jûbi à été invoquée !");
+            GameListener.SendToEveryone("§c§lLe Jûbi a été invoqué !");
             GameListener.SendToEveryone("");
             @NonNull final List<UUID> jubis = new ArrayList<>();
             for (Player onlinePlayer : player.getServer().getOnlinePlayers()) {

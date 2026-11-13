@@ -50,7 +50,7 @@ public class Color implements CommandExecutor, Listener {
             }
             final PersonalScoreboard personalScoreboard = Main.getInstance().getScoreboardManager().getScoreboards().get(sender.getUniqueId());
             if (personalScoreboard == null) {
-                sender.sendMessage("§cDésoler, il semblerait que vous n'ayez aucun scoreboard pour accueillir vos couleurs");
+                sender.sendMessage("§cDésolé, il semblerait que vous n'ayez aucun scoreboard pour accueillir vos couleurs");
                 return true;
             }
             final List<Player> playerList = new ArrayList<>();
@@ -117,7 +117,7 @@ public class Color implements CommandExecutor, Listener {
             }
             return true;
         }
-        commandSender.sendMessage("§cUne erreur c'est produite...");
+        commandSender.sendMessage("§cUne erreur s'est produite...");
         return false;
     }
     @EventHandler

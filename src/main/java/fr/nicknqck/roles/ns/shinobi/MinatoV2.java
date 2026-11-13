@@ -178,7 +178,7 @@ public class MinatoV2 extends HShinobiRoles {
                 this.aroundArrowRunnable.arrow.remove();
                 target.teleport(location);
                 player.sendMessage("§7Vous avez utilisez l'§aHiraishin§7 sur§c "+uhcEvent.getVictim().getPlayerName()+"§7.");
-                target.sendMessage("§7Vous avez été toucher par l'§aHiraishin§7.");
+                target.sendMessage("§7Vous avez été touché par l'§aHiraishin§7.");
                 PotionUtils.addTempNoFall(target.getUniqueId(), 1);
                 event.setCancelled(true);
                 this.own = false;
@@ -270,7 +270,7 @@ public class MinatoV2 extends HShinobiRoles {
                     return;
                 }
                 if (!this.uuid.equals(this.arcHiraishin.aroundArrowRunnable.uuid)) {
-                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7L'emplacement de votre balise a été modifier.");
+                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7L'emplacement de votre balise a été modifié.");
                     cancel();
                     return;
                 }

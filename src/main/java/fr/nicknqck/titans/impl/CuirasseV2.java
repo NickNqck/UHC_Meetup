@@ -88,7 +88,7 @@ public class CuirasseV2 extends TitanBase implements Listener {
             if (this.prepaDash == 25) {
                 event.getOriginEvent().getDamager().setVelocity(event.getOriginEvent().getDamager().getLocation().getDirection().multiply(1.8));
                 this.prepaDash = 0;
-                event.getDamager().sendMessage("§7Vous avez utiliser votre§c Dash Énergique");
+                event.getDamager().sendMessage("§7Vous avez utilisé votre§c Dash Énergique");
                 getGamePlayer().getActionBarManager().updateActionBar("cuirassev2.dash", "§cDash§7:§c "+this.prepaDash+"§7/§c25");
             }
         }

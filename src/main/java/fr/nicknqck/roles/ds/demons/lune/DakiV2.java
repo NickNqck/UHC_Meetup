@@ -183,7 +183,7 @@ public class DakiV2 extends DemonsRoles {
         private synchronized void onStop(@NonNull final List<GamePlayer> toStuns) {
             this.getRole().getGamePlayer().getActionBarManager().removeInActionBar("daki.a");
             if (toStuns.isEmpty()) {
-                getRole().getGamePlayer().sendMessage("§7Vous avez réussi à viser personne avec vos§c Obis§7, le cooldown a été réduit.");
+                getRole().getGamePlayer().sendMessage("§7Vous n'avez réussi à viser personne avec vos§c Obis§7, le cooldown a été réduit.");
                 return;
             }
             for (GamePlayer gamePlayer : toStuns) {
@@ -235,7 +235,7 @@ public class DakiV2 extends DemonsRoles {
                 if (!this.toStuns.contains(gameTarget)) {
                     this.toStuns.add(gameTarget);
                     owner.sendMessage("§c"+target.getDisplayName()+"§7 sera pris pour cible par vos§c Obis§7.");
-                    target.sendMessage("§7Vous vous sentez observez...");
+                    target.sendMessage("§7Vous vous sentez observé...");
                 }
             }
         }

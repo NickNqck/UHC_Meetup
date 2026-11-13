@@ -130,7 +130,7 @@ public class CrystalManager implements Listener {
         this.timePass++;
         if (this.timePass == Main.getInstance().getGameConfig().getCrystalConfig().getTimeForgeFirstSpawn()) {
             spawnForge();
-            Bukkit.broadcastMessage("\n§bLa§a forge§b est apparue sur la carte, elle restera à cette endroit pour§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getCrystalConfig().getTimeForgeStay()));
+            Bukkit.broadcastMessage("\n§bLa§a forge§b est apparue sur la carte, elle restera à cet endroit pour§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getCrystalConfig().getTimeForgeStay()));
         }
         if (this.inMap) {
             this.timeCheckBorder++;

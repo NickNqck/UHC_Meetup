@@ -174,11 +174,11 @@ public class Akaza extends DemonsRoles implements Listener {
 			if (timeRemaining == 0) {
 				if (!timeCroised.isEmpty()) {
 					for (String string : timeCroised.keySet()) {
-						owner.sendMessage("§7Vous avez croiser un joueur possédant le rôle de§a "+string+"§7 pendant §c"+ StringUtils.secondsTowardsBeautiful(timeCroised.get(string))+"§7.");
+						owner.sendMessage("§7Vous avez croisé un joueur possédant le rôle de§a "+string+"§7 pendant §c"+ StringUtils.secondsTowardsBeautiful(timeCroised.get(string))+"§7.");
 					}
 					timeCroised.clear();
 				} else {
-					owner.sendMessage("§7Vous n'avez croiser aucun§a pilier§7 durant ces§c 5 dernières minutes§7.");
+					owner.sendMessage("§7Vous n'avez croisé aucun§a pilier§7 durant ces§c 5 dernières minutes§7.");
 				}
 				timeRemaining = 60*5;
 			}

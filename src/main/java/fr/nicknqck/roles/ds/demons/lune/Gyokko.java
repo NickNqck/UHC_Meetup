@@ -128,7 +128,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 				} else {
 					if (locations.size() < 3) {
 						if (!registerLocation(player.getLocation())) {
-							player.sendMessage("§cVous n'avez pas pus poser de pot ici, peut-être que l'un de vos pots est trop proche ?");
+							player.sendMessage("§cVous n'avez pas pu poser de pot ici, peut-être que l'un de vos pots est trop proche ?");
 							return false;
 						}
 					}

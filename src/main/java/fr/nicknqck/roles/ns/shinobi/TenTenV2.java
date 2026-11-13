@@ -131,7 +131,7 @@ public class TenTenV2 extends ShinobiRoles {
                                 if (checkUse(damager, map)) {
                                     getRole().damage(victim, 2.0, 1, damager, true);
                                     damager.sendMessage(victim.getDisplayName()+"§7 à subit les effets de votre§a Kunai");
-                                    victim.sendMessage("§7Vous avez été toucher par le§a Kunai§7 de§a Tenten");
+                                    victim.sendMessage("§7Vous avez été touché par le§a Kunai§7 de§a Tenten");
                                     snow.removeMetadata(getRole().StringID, Main.getInstance());
                                     getRole().giveItem(damager, false, getItem());
                                     event.setDamage(0.0);

@@ -54,7 +54,7 @@ public abstract class DemonInferieurRole extends DemonsRoles implements Listener
                     getMessageOnDescription().add("§7Votre§c lune§7 est §c"+lune.getGamePlayer().getPlayerName());
                     this.lune = lune;
                 } else {
-                    getGamePlayer().sendMessage("§7Vous n'avez pas pus avoir de lune (Null)");
+                    getGamePlayer().sendMessage("§7Vous n'avez pas pu avoir de lune (Null)");
                 }
             } else {
                 getMessageOnDescription().add("§7Aucune§c Lune§7 n'a pus vous être assigner.");

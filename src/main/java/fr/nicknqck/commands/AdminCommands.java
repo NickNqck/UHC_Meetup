@@ -179,7 +179,7 @@ public class AdminCommands implements CommandExecutor{
 						}
 						String name2 = sb.toString();
 						if (name2.length() > 32) {
-							sender.sendMessage("Il y a beaucoup trop de charactères (32 max)");
+							sender.sendMessage("Il y a beaucoup trop de caractères (32 max)");
 							return true;
 						}
 						gameState.msgBoard = name2;
@@ -191,7 +191,7 @@ public class AdminCommands implements CommandExecutor{
 				if (args.length == 2) {
 					Player player = Bukkit.getPlayer(args[1]);
 					if (player == null) {
-						sender.sendMessage("§7Veuiller cibler un joueuer éxistant");
+						sender.sendMessage("§7Veuillez cibler un joueur existant");
 						return true;
 					}
 					if (!gameState.hasRoleNull(player.getUniqueId())) {
@@ -201,7 +201,7 @@ public class AdminCommands implements CommandExecutor{
 							if (!power.isSendCooldown())continue;
 							power.getCooldown().resetCooldown();
 						}
-						player.sendMessage("§fVos cooldown on été réinitialisé !");
+						player.sendMessage("§fVos cooldowns ont été réinitialisés !");
 						if (Main.getInstance().getBijuManager().isBijuEnable()) {
 							for (BijuBase bijuBase : Main.getInstance().getBijuManager().getClassBijuMap().values()) {
 								if (bijuBase.getBijuPower() != null) {
@@ -219,7 +219,7 @@ public class AdminCommands implements CommandExecutor{
 					Player player = (Player)sender;
 					if (!gameState.hasRoleNull(player.getUniqueId())) {
 						gameState.getGamePlayer().get(player.getUniqueId()).getRole().resetCooldown();
-						player.sendMessage("§fVos cooldown on été réinitialisé !");
+						player.sendMessage("§fVos cooldowns ont été réinitialisés !");
 						if (Main.getInstance().getBijuManager().isBijuEnable()) {
 							for (BijuBase bijuBase : Main.getInstance().getBijuManager().getClassBijuMap().values()) {
 								if (bijuBase.getBijuPower() != null) {
@@ -457,7 +457,7 @@ public class AdminCommands implements CommandExecutor{
 								return true;
 							}
 						} else {
-							sender.sendMessage("Il faut être op pour effectué cette commande ! ");
+							sender.sendMessage("Il faut être op pour effectuer cette commande ! ");
 							return true;
 						}
 					} else {
@@ -522,7 +522,7 @@ public class AdminCommands implements CommandExecutor{
                                     } else {
 										p.addAttachment(Main.getInstance(), "Host", true);
 										ChatRank.Host.add(p.getUniqueId());
-										sender.sendMessage("Vous avez ajouter "+p.getName()+" à la list(e) des hosts");
+										sender.sendMessage("Vous avez ajouté "+p.getName()+" à la list(e) des hosts");
 										Bukkit.broadcastMessage("§c"+p.getName()+"§f est maintenant§c Host");
                                     }
                                 }
