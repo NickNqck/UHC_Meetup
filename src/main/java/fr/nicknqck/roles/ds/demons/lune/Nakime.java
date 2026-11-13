@@ -110,7 +110,7 @@ public class Nakime extends DemonsRoles {
 	@Override
 	public void onDSCommandSend(String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("return")) {
-			if (owner.getWorld().equals(Main.getInstance().getWorldManager().getGameWorld())) {
+			if (owner.getWorld().getName().equalsIgnoreCase("nakime")) {
 				ejectPlayerinCage();
 				owner.sendMessage("Tous les joueurs étant dans votre cage ont été éparpillés sur la map");
 			}else {
