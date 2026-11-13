@@ -141,7 +141,9 @@ public class EntityDamageEvents implements Listener{
 							if (gameState.shutdown.contains(attacker)) {
 								event.setCancelled(true);
 							}
-							gameState.getGamePlayer().get(player.getUniqueId()).getRole().neoAttackedByPlayer(attacker, gameState);
+							if (!gameState.hasRoleNull(player.getUniqueId())) {
+								gameState.getGamePlayer().get(player.getUniqueId()).getRole().neoAttackedByPlayer(attacker, gameState);
+							}
 						}
 					}
 				}
