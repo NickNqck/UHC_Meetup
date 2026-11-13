@@ -113,7 +113,7 @@ public class Sakura extends HShinobiRoles {
 	}
 	@Override
 	public void onALLPlayerInteract(PlayerInteractEvent event, Player player) {
-		if (player.getUniqueId() == getPlayer()) {
+		if (player.getUniqueId().equals(getPlayer())) {
 			if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 				if (event.getItem() != null && event.getItem().isSimilar(ByakugoItem())) {
 					if (Receve) {
