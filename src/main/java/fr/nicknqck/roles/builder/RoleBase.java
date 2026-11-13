@@ -413,7 +413,7 @@ public abstract class RoleBase implements IRole {
 				if (target.getHealth() < 0) {
 					return;
 				}
-				if (target.getHealth() - damage < 0) {
+				if (target.getHealth() - damage <= 0) {
 					target.setHealth(1.0);
 				}else {
 					target.setHealth(target.getHealth()-damage);
@@ -431,7 +431,7 @@ public abstract class RoleBase implements IRole {
 				if (target.getHealth() < 0) {
 					return;
 				}
-				if ((target.getHealth() - damage) < 0) {
+				if ((target.getHealth() - damage) <= 0) {
 					if (!kill) {
 						target.setHealth(1.0);
 					} else {
