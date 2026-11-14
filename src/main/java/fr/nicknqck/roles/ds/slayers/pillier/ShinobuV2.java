@@ -159,7 +159,7 @@ public class ShinobuV2 extends PilierRoles {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             Player toHeal = Bukkit.getPlayer(lastPlayerlow);
-            if (toHeal != null && toHeal.getUniqueId() != getRole().getPlayer()) {
+            if (toHeal != null && !toHeal.getUniqueId().equals(getRole().getPlayer())) {
                 toHeal.setHealth(toHeal.getMaxHealth());
                 toHeal.sendMessage("§aShinobu§7 à décider de vous§d soigner§7.");
                 gapToEat = 25;
