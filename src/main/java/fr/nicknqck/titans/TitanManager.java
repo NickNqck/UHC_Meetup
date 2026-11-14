@@ -133,7 +133,7 @@ public class TitanManager implements Listener {
         private TitanStealManager(@NonNull final TitanBase titan) {
             this.titan = titan;
             this.map = new HashMap<>();
-            EventUtils.registerEvents(this);
+            EventUtils.registerRoleEvent(this);
         }
         @EventHandler
         private void StealCommandEvent(@NonNull final PrepareStealCommandEvent event) {
