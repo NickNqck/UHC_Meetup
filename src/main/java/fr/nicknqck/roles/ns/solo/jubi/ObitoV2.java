@@ -299,8 +299,8 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                     this.ninjutsuRunnable.start(player);
                     return true;
                 } else {
-                    if (getCooldown().getCooldownRemaining() > 60*9) {
-                        if (getCooldown().getCooldownRemaining() < (60*10)-5) {
+                    if (getCooldown().getCooldownRemaining() > getCooldown().getOriginalCooldown()-60) {
+                        if (getCooldown().getCooldownRemaining() < getCooldown().getOriginalCooldown()-5) {
                             this.ninjutsuRunnable.stop(player);
                         } else {
                             player.sendMessage("§cIl faut attendre avant de pouvoir annuler votre Ninjutsu.");
