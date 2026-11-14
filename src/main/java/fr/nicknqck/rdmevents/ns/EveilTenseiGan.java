@@ -400,6 +400,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 if (!fly)return;
                 ((Player) event.getEntity()).setFlying(false);
                 ((Player) event.getEntity()).setAllowFlight(false);
+                this.fly = false;
                 event.getEntity().sendMessage("§7Quelqu'un a stoppé votre envole.");
                 event.setDamage(event.getDamage()*0.55);
             }
