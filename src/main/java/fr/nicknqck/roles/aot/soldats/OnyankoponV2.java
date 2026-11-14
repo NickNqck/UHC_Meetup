@@ -98,6 +98,7 @@ public class OnyankoponV2 extends SoldatsRoles {
                                     gamePlayer.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez été téléporter par le pouvoir de§a Onyankopon§7.");
                                 }
                             });
+                            cancel();
                             return;
                         }
                         gamePlayer.getActionBarManager().updateActionBar("onyankopon.tp", "§bTemps avant§c téléportation§b:§c "+ StringUtils.secondsTowardsBeautiful(this.time));
