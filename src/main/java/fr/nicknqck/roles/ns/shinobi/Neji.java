@@ -151,7 +151,7 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
                 if (!gamePlayer.check())continue;
                 @NonNull final PowerTakeInfoEvent powerTakeInfoEvent = new PowerTakeInfoEvent(this, gamePlayer, InfoType.POSITION);
                 getPlugin().getServer().getPluginManager().callEvent(powerTakeInfoEvent);
-                if (event.isCancelled()) {
+                if (powerTakeInfoEvent.isCancelled()) {
                     powerTakeInfoEvent.sendCancelMessage(player);
                     continue;
                 }
