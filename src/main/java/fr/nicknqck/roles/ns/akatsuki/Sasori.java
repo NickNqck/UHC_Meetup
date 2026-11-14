@@ -240,6 +240,7 @@ public class Sasori extends AkatsukiRoles {
                 final Player target = Bukkit.getPlayer(this.targetUuid);
                 if (target == null) {
                     if (this.timeTooMuch >= 30) {
+                        this.marionetisationCommand.possibleReviving.remove(this.targetUuid);
                         cancel();
                         owner.sendMessage("§cIl n'est plus possible de§a réanimer§c le joueur \"§a"+this.targetName+"§c\" !");
                     }
@@ -250,6 +251,7 @@ public class Sasori extends AkatsukiRoles {
                 if (this.marionetisationCommand.possibleReviving.containsKey(target.getUniqueId()) && gamePlayer != null && !gamePlayer.isAlive() && gamePlayer.getRole() != null) {
                     if (this.marionetisationCommand.possibleReviving.get(target.getUniqueId()) >= 10) {
                         this.marionetisationCommand.getRole().getGamePlayer().sendMessage("§cVous ne pouvez plus faire de§2 "+targetName+"§7 votre§2 marionette§c.");
+                        this.marionetisationCommand.possibleReviving.remove(this.targetUuid);
                         cancel();
                         return;
                     }
