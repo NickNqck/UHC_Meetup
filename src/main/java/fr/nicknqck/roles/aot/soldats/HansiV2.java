@@ -122,6 +122,7 @@ public class HansiV2 extends SoldatsRoles {
                     this.role.setStealPriority(1);
                     this.role.getGamePlayer().sendMessage("§aHansi§7 vous a offert une§a§l Seringue§7.");
                     this.hansi.getGamePlayer().sendMessage("§7Une§a§l Seringue§7 a été offerte à§a "+this.role.getGamePlayer().getPlayerName());
+                    cancel();
                     return;
                 }
                 this.actualTime++;
