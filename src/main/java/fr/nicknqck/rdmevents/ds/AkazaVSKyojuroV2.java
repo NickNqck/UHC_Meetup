@@ -215,6 +215,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
                 EventUtils.registerEvents(this);
                 player.sendMessage("§7Maintenant vous§c enflammez§7 les joueurs qui vous frappe pendant§b 10s");
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> EventUtils.unregisterEvents(this), 20*10);
+                return true;
             }
             return false;
         }
