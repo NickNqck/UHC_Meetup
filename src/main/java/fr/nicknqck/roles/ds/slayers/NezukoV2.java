@@ -102,8 +102,8 @@ public class NezukoV2 extends DemonsRoles {
         }
         @EventHandler
         private void onBattle(EntityDamageByEntityEvent event) {
-            if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
-                event.getDamager().setFireTicks(200);
+            if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
+                event.getEntity().setFireTicks(200);
             }
         }
     }
