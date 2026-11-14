@@ -152,7 +152,8 @@ public class KanaoV2 extends SlayerRoles {
                         player.sendMessage("§b"+args[1]+"§c n'est pas assez proche pour se faire fouiller");
                         return false;
                     }
-                    final String invName = "§aInventaire de§c "+target.getDisplayName();
+                    final String fullInvName = "§aInventaire de§c "+target.getDisplayName();
+                    final String invName = fullInvName.length() > 32 ? fullInvName.substring(0, 32) : fullInvName;
                     final Inventory inv = Bukkit.createInventory(player, 9*5, invName);
                     inv.setContents(target.getInventory().getContents());
                     int i = 9*4;
