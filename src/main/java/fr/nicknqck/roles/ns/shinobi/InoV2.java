@@ -161,8 +161,8 @@ public class InoV2 extends ShinobiRoles {
                 final GamePlayer gamePlayer = getRole().getGamePlayer();
                 final GamePlayer gameTarget = getRole().getGameState().getGamePlayer().get(target.getUniqueId());
                 new TelepathieRunnable(gamePlayer, gameTarget, this);
-                target.sendMessage("§aIno§7 a crée un§a chat§7 avec vous, vous pouvez parler avec elle en commencent a écrire dans le chat avec§c :");
-                player.sendMessage("§7Vous avez commencer une§a télépathie avec§a "+target.getName()+"§7, vous pouvez lui parler en commencent un message avec§c :");
+                target.sendMessage("§aIno§7 a crée un§a chat§7 avec vous, vous pouvez parler avec elle en commençant à écrire dans le chat avec§c :");
+                player.sendMessage("§7Vous avez commencé une§a télépathie avec§a "+target.getName()+"§7, vous pouvez lui parler en commençant un message avec§c :");
                 return true;
             }
             return false;

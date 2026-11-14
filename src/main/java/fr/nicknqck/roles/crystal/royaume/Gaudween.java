@@ -102,7 +102,7 @@ public class Gaudween extends RoyaumeBase {
                     player.sendMessage("§b"+args[1]+"§c n'existe pas ou n'est pas connecté(e) !");
                 }
             } else {
-                player.sendMessage("§cComment j'ais pu oublier que la commande est§b "+getName());
+                player.sendMessage("§cComment ai-je pu oublier que la commande est§b "+getName());
             }
             return false;
         }
@@ -147,7 +147,7 @@ public class Gaudween extends RoyaumeBase {
                     if (owner != null) {
                         if (owner.getHealth() <= 8.0) {
                             owner.setHealth(16.0);
-                            owner.sendMessage("§aIncroyable, votre Théologie vous à évitez bien des problèmes !");
+                            owner.sendMessage("§aIncroyable, votre Théologie vous a évité bien des problèmes !");
                             this.timeLeft = 0;
                         }
                     }

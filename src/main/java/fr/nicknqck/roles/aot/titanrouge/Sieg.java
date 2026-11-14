@@ -114,7 +114,7 @@ public class Sieg extends TitansRoles {
                     return;
                 }
                 if (this.timeLeft <= 0) {
-                    this.gamePlayer.sendMessage("§cVotre cri commence à ce faire entendre");
+                    this.gamePlayer.sendMessage("§cVotre cri commence à se faire entendre");
                     for (@NonNull final GamePlayer gp : this.gameState.getGamePlayer().values()) {
                         final Player player = Bukkit.getPlayer(gp.getUuid());
                         if (player == null)continue;

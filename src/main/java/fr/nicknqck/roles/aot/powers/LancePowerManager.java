@@ -171,12 +171,12 @@ public class LancePowerManager {
                     final TitanBase titan = Main.getInstance().getTitanManager().getTitan(player.getUniqueId());
                     if (titan.isTransformed()) {
                         player.setHealth(Math.max(1.0, player.getHealth()-3.0));
-                        player.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été toucher par une§a§l Lance Explosive§r§a, vous avez perdu§c 1,5"+ AllDesc.coeur);
+                        player.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été touché par une§a§l Lance Explosive§r§a, vous avez perdu§c 1,5"+ AllDesc.coeur);
                     }
                     return;
                 }
                 player.setHealth(Math.max(1.0, player.getHealth()-2.0));
-                player.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été toucher par une§a§l Lance Explosive§r§a, vous avez perdu§c 1"+ AllDesc.coeur);
+                player.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été touché par une§a§l Lance Explosive§r§a, vous avez perdu§c 1"+ AllDesc.coeur);
             } else {
                 for (@NonNull final Player target : Loc.getNearbyPlayers(location, 3)) {
                     if (target.getUniqueId().equals(gamePlayer.getUuid()))continue;
@@ -186,12 +186,12 @@ public class LancePowerManager {
                         final TitanBase titan = Main.getInstance().getTitanManager().getTitan(target.getUniqueId());
                         if (titan.isTransformed()) {
                             target.setHealth(Math.max(1.0, target.getHealth()-2.0));
-                            target.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été toucher par une§a§l Lance Explosive§r§a, vous avez perdu§c 1"+ AllDesc.coeur);
+                            target.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été touché par une§a§l Lance Explosive§r§a, vous avez perdu§c 1"+ AllDesc.coeur);
                         }
                         continue;
                     }
                     target.setHealth(Math.max(1.0, target.getHealth()-1.0));
-                    target.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été toucher par une§a§l Lance Explosive§r§a, vous avez perdu§c 0,5"+ AllDesc.coeur);
+                    target.sendMessage(Main.getInstance().getNAME()+"§a Vous avez été touché par une§a§l Lance Explosive§r§a, vous avez perdu§c 0,5"+ AllDesc.coeur);
                 }
             }
         }

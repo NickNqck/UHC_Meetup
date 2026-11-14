@@ -95,7 +95,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
         }
         if (event.getPower() instanceof KubikiribochoPower)return;
         String name = event.getPower().getName();
-        getGamePlayer().sendMessage("§aLe pouvoir \"§r"+name+"§a\" a été utiliser par§c "+event.getPlayer().getName());
+        getGamePlayer().sendMessage("§aLe pouvoir \"§r"+name+"§a\" a été utilisé par§c "+event.getPlayer().getName());
     }
     @EventHandler
     private void uhcDeathEvent(@NonNull final UHCDeathEvent event) {
@@ -259,7 +259,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                 if (this.coup >= 25) {
                     player.setHealth(Math.min(player.getMaxHealth(), player.getHealth()+4.0));
                     this.coup = 0;
-                    player.sendMessage("§bKubikiribôchô§7 vous à régénérer");
+                    player.sendMessage("§bKubikiribôchô§7 vous a régénéré");
                 }
                 this.getRole().getGamePlayer().getActionBarManager().updateActionBar("zabuza.kubikiribocho", "§7Coups: §c"+this.coup+"§7/§625");
                 return true;

@@ -61,7 +61,7 @@ public class ErenV2 extends AotRoles implements Listener{
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine("§7Lorsque vous êtes§c cibler§7 par un§a rôle à information§7, un§c autre joueur§7 deviendra la§c cible§7 du pouvoir sans que personne ne le sache (sauf vous qui recevrez l'information)")
+                .addCustomLine("§7Lorsque vous êtes§c ciblé§7 par un§a rôle à information§7, un§c autre joueur§7 deviendra la§c cible§7 du pouvoir sans que personne ne le sache (sauf vous qui recevrez l'information)")
                 .getText();
     }
     @EventHandler
@@ -73,7 +73,7 @@ public class ErenV2 extends AotRoles implements Listener{
             for (GamePlayer gamePlayer : gamePlayerList) {
                 if (!gamePlayer.check())continue;
                 if (gamePlayer.getRole().getTeam().getColor().equals("§a")) {
-                    getGamePlayer().sendMessage("§7Vous avez été cibler par un§c pouvoir§7 visant a savoir quel est votre§a "+event.getInfoType().getName().toLowerCase());
+                    getGamePlayer().sendMessage("§7Vous avez été ciblé par un§c pouvoir§7 visant a savoir quel est votre§a "+event.getInfoType().getName().toLowerCase());
                     event.setGameTarget(gamePlayer);
                     break;
                 }
@@ -110,19 +110,19 @@ public class ErenV2 extends AotRoles implements Listener{
             @NonNull final TitanBase titan = Main.getInstance().getTitanManager().getTitan(role.getPlayer());
             if (titan instanceof CharetteV2) {
                 this.getRole().addSpeedAtInt(event.getGamePlayerKiller().getRole().owner, 10);
-                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Charette§7 vous avez obtenue§c 10%§7 de§c vitesse supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Charette§7 vous avez obtenu§c 10%§7 de§c vitesse supplémentaire");
             }
             if (titan instanceof MachoireV2) {
                 this.getRole().addBonusforce(5.0);
-                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Machoire§7 vous avez obtenue§c 5%§7 de§c force supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Machoire§7 vous avez obtenu§c 5%§7 de§c force supplémentaire");
             }
             if (titan instanceof CuirasseV2) {
                 this.getRole().addBonusResi(5.0);
-                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Cuirasse§7 vous avez obtenue§c 5%§7 de§c résistance supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Cuirasse§7 vous avez obtenu§c 5%§7 de§c résistance supplémentaire");
             }
             if (titan instanceof ColossalV2) {
                 this.getRole().addBonusResi(10.0);
-                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Colossal§7 vous avez obtenue§c 10%§7 de§c résistance supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Colossal§7 vous avez obtenu§c 10%§7 de§c résistance supplémentaire");
             }
         }
     }

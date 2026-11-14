@@ -144,8 +144,8 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
                 for (Player p : playerList) {
                     if (player.canSee(p)) {
                         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20*20, 0, false, false), true);
-                        p.sendMessage("Vous venez d'être touche par la §8Nuées Ardentes §fde §aKonohamaru");
-                        player.sendMessage("§7§l"+p.getName()+"§7 à été touchée");
+                        p.sendMessage("Vous venez d'être touché par les §8Nuées Ardentes §fde §aKonohamaru");
+                        player.sendMessage("§7§l"+p.getName()+"§7 a été touché");
                     }
                 }
                 return true;

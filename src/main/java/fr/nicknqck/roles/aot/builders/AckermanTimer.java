@@ -35,7 +35,7 @@ public class AckermanTimer extends BukkitRunnable {
             if (this.timeNear == -1) {
                 if (ownerLoc.distance(masterLoc) <= 5.0) {
                     this.ackerman.setKnowMaster(true);
-                    this.ackerman.getGamePlayer().sendMessage("§7Vous connaissez maintenant votre§a maitre§7 (§6/aot me§7). (§oLui ne le sais pas§7)");
+                    this.ackerman.getGamePlayer().sendMessage("§7Vous connaissez maintenant votre§a maitre§7 (§6/aot me§7). (§oLui ne le sait pas§7)");
                     this.timeNear = 1;
                 }
             } else {

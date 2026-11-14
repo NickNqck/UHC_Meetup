@@ -213,7 +213,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 EventUtils.registerEvents(this);
-                player.sendMessage("§7Maintenant vous§c enflammez§7 les joueurs qui vous frappe pendant§b 10s");
+                player.sendMessage("§7Maintenant vous§c enflammez§7 les joueurs qui vous frappent pendant§b 10s");
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> EventUtils.unregisterEvents(this), 20*10);
                 return true;
             }
@@ -223,8 +223,8 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         private void onDamage(EntityDamageByEntityEvent event) {
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
                 event.getDamager().setFireTicks(event.getDamager().getFireTicks()+160);
-                event.getDamager().sendMessage("§aKyojuro§7 vous à§6§l enflammé");
-                event.getEntity().sendMessage("§7Vous avez§6 brulé§7§l "+event.getDamager().getName());
+                event.getDamager().sendMessage("§aKyojuro§7 vous a§6§l enflammé");
+                event.getEntity().sendMessage("§7Vous avez§6 brûlé§7§l "+event.getDamager().getName());
                 if (!(event.getDamager() instanceof Player))return;
                 final Player attacker = (Player) event.getDamager();
                 if (attacker.getHealth() > 1.0) {
@@ -303,12 +303,12 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
             assert this.akaza != null;
             final Player akaza = Bukkit.getPlayer(this.akaza.getPlayer());
             if (akaza != null) {
-                NMSPacket.sendActionBar(akaza, "§bTemp de§c combat§b restant: §c"+ StringUtils.secondsTowardsBeautiful(battleTime));
+                NMSPacket.sendActionBar(akaza, "§bTemps de§c combat§b restant: §c"+ StringUtils.secondsTowardsBeautiful(battleTime));
             }
             assert this.kyojuro != null;
             Player kyojuro = Bukkit.getPlayer(this.kyojuro.getPlayer());
             if (kyojuro != null) {
-                NMSPacket.sendActionBar(kyojuro, "§bTemp de§c combat§b restant: §c"+ StringUtils.secondsTowardsBeautiful(battleTime));
+                NMSPacket.sendActionBar(kyojuro, "§bTemps de§c combat§b restant: §c"+ StringUtils.secondsTowardsBeautiful(battleTime));
             }
             battleTime++;
             if (this.akazaVSKyojuroV2.realEnd) {

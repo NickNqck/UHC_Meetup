@@ -182,7 +182,7 @@ public class KinkakuV2 extends KumogakureRole {
                     final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null && gamePlayer.check()) {
                         player.sendMessage("§7Les effets du§e vase d'ambre§7 vont essayer de toucher§c "+target.getName()+"§7.");
-                        target.sendMessage("§6Kinkaku§7 essaie de vous§a purifier§7 avec son§e Vase d'ambre§7, si vous utilisez un§c pouvoir§7 dans le prochaine§c minute§7, vous ne pourrez plus en utiliser pendant§c 10 minutes§7.");
+                        target.sendMessage("§6Kinkaku§7 essaie de vous§a purifier§7 avec son§e Vase d'ambre§7, si vous utilisez un§c pouvoir§7 dans la prochaine§c minute§7, vous ne pourrez plus en utiliser pendant§c 10 minutes§7.");
                         new VaseRunnable(this, gamePlayer).runTaskTimerAsynchronously(getPlugin(), 0, 20);
                         return true;
                     } else {
@@ -290,7 +290,7 @@ public class KinkakuV2 extends KumogakureRole {
                             absorptionHearts = absorptionHearts + 8f;
                             ((CraftPlayer) owner).getHandle().setAbsorptionHearts(absorptionHearts);
                         });
-                        owner.sendMessage(this.power.getPlugin().getNAME()+"§7Comme§c "+target.getName()+"§7 n'a utiliser§4 aucun pouvoir§7 pendant la dernière§c minute§7, le§c cooldown actuel§7 deviant§c 3 minutes§7, vous recevez également§e +4❤ d'absorption§7.");
+                        owner.sendMessage(this.power.getPlugin().getNAME()+"§7Comme§c "+target.getName()+"§7 n'a utilisé§4 aucun pouvoir§7 pendant la dernière§c minute§7, le§c cooldown actuel§7 devient§c 3 minutes§7, vous recevez également§e +4❤ d'absorption§7.");
                         cancel();
                         this.activate = true;
                     }

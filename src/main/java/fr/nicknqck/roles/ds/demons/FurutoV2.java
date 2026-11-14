@@ -112,7 +112,7 @@ public class FurutoV2 extends DemonInferieurRole {
                     }
                     bonus.consumer.accept(p);
                     new BonusRunnable(getRole().getGameState(), bonus, gamePlayer, p, this);
-                    player.sendMessage("§7Vous avez toucher§c "+p.getName()+"§7 avec votre§c Flûte§7.");
+                    player.sendMessage("§7Vous avez touché§c "+p.getName()+"§7 avec votre§c Flûte§7.");
                     p.sendMessage("§7Vous avez entendu la§c Flûte§7 de§c Furuto");
                 }
                 return true;
@@ -194,7 +194,7 @@ public class FurutoV2 extends DemonInferieurRole {
                     return;
                 }
                 this.timeLeft--;
-                gamePlayer.getActionBarManager().addToActionBar("furuto.bonus", "§cFuruto§7 vous à donné un bonus ("+this.bonus.goodString+"§7), plus que§c "+this.timeLeft+" secondes");
+                gamePlayer.getActionBarManager().addToActionBar("furuto.bonus", "§cFuruto§7 vous a donné un bonus ("+this.bonus.goodString+"§7), plus que§c "+this.timeLeft+" secondes");
             }
         }
 

@@ -131,7 +131,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
             event.getInfected().getGamePlayer().startChatWith("§e"+event.getInfected().getName(), "!", this.getClass());
             event.getTarget().sendMessage("§7Vous possédez maintenant un chat commun avec§e Shisui§7, il suffira de commencer votre message par un§c !");
             getGamePlayer().startChatWith("§e"+getName(), "!", event.getInfected().getClass());
-            event.getOwner().sendMessage("§7Vous possédez maintenant un chat commmun avec §c"+event.getTarget().getName()+"§7, il suffira de commencer votre message par un§c !");
+            event.getOwner().sendMessage("§7Vous possédez maintenant un chat commun avec §c"+event.getTarget().getName()+"§7, il suffira de commencer votre message par un§c !");
             this.cantChangeTeam.add(event.getInfected().getPlayer());
         }
     }

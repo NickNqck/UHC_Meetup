@@ -188,7 +188,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                 } else {
                     sceauMap.put(target.getUniqueId(), SceauAction.AntiAbso);
                 }
-                player.sendMessage("§7Votre§c Sceau§7 à toucher§c "+target.getDisplayName()+"§7, il se déclenchera des que vous le/la frapperez");
+                player.sendMessage("§7Votre§c Sceau§7 a touché§c "+target.getDisplayName()+"§7, il se déclenchera dès que vous le/la frapperez");
                 return true;
             } else {
                 player.sendMessage("§cIl faut viser un joueur !");

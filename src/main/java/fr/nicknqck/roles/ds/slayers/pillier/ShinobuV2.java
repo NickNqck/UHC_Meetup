@@ -161,11 +161,11 @@ public class ShinobuV2 extends PilierRoles {
             Player toHeal = Bukkit.getPlayer(lastPlayerlow);
             if (toHeal != null && !toHeal.getUniqueId().equals(getRole().getPlayer())) {
                 toHeal.setHealth(toHeal.getMaxHealth());
-                toHeal.sendMessage("§aShinobu§7 à décider de vous§d soigner§7.");
+                toHeal.sendMessage("§aShinobu§7 a décidé de vous§d soigner§7.");
                 gapToEat = 25;
                 return true;
             } else {
-                player.sendMessage("§7La personne que vous essayez de§d soignez§7 n'est pas connecter");
+                player.sendMessage("§7La personne que vous essayez de§d soigner§7 n'est pas connectée");
             }
             return false;
         }
