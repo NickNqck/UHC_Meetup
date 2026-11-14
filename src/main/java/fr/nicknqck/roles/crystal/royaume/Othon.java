@@ -100,6 +100,7 @@ public class Othon extends RoyaumeBase {
             if (!event.getGameVictim().getUuid().equals(getRole().getPlayer()))return;
             if (!checkUse(event.getGameVictim().getPlayer(), new HashMap<>()))return;
             if (!(getRole() instanceof IGotReputation))return;
+            if (((IGotReputation) getRole()).getReputation() <= 6)return;
             event.setForcePercentToUse(1.0);
         }
     }
