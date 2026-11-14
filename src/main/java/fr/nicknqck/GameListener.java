@@ -455,12 +455,7 @@ public class GameListener implements Listener {
 		}
 	}
 	public static void RandomTp(@NonNull final Entity entity, @NonNull final World world) {
-		Location loc = null;
-		while (loc == null || world.getBlockAt(loc).getType() == Material.WATER || world.getBlockAt(loc).getType() == Material.LAVA || world.getBlockAt(new Location(world, loc.getX(), loc.getY()-1, loc.getZ() ) ).getType() == Material.LAVA ) {
-			float x = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
-			float z = Border.getActualBorderSize()*Main.RANDOM.nextFloat();
-			loc = world.getHighestBlockAt(new Location(world, x-Border.getActualBorderSize(), 0, z-Border.getActualBorderSize())).getLocation();
-		}
+		Location loc = generateRandomLocation(world);
 		loc.setY(loc.getY()+1);
         entity.teleport(loc);
 		if (entity instanceof Player) {
