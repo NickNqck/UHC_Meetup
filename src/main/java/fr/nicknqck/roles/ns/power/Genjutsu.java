@@ -272,7 +272,7 @@ public class Genjutsu extends ItemPower implements Listener {
                 this.gameState = gameState;
                 this.power = power;
                 this.gameTarget = gameTarget;
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                runTaskTimer(Main.getInstance(), 0, 20);
             }
 
             @Override
