@@ -39,7 +39,7 @@ public class AckermanTimer extends BukkitRunnable {
                     this.timeNear = 1;
                 }
             } else {
-                if (this.timeNear == 60*5) {
+                if (this.timeNear % (60*5) == 0) {
                     this.amountHalfHeartGive++;
                     if (this.amountHalfHeartGive <= 4) {
                         this.ackerman.getGamePlayer().sendMessage("§7Vous avez§a gagné§7§c 1/2❤ permanent§7.");
