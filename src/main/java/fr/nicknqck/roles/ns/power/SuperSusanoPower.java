@@ -108,7 +108,7 @@ public class SuperSusanoPower extends ItemPower {
             final Player owner = Bukkit.getPlayer(this.superSusanoPower.getRole().getPlayer());
             if (owner == null)return;
             this.superSusanoPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("common.susano", "§bTemps restant (§cSusanô§b):§c "+ StringUtils.secondsTowardsBeautiful(this.timeLeft/20));
-            this.timeLeft--;
+            this.timeLeft-=2;
             this.already = true;
             activate(owner);
             Bukkit.getScheduler().runTask(superSusanoPower.getPlugin(), () -> superSusanoPower.getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NOW));
