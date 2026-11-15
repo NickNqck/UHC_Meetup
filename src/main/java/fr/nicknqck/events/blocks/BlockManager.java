@@ -74,7 +74,9 @@ public class BlockManager implements Listener{
 				if (Main.getInstance().getGameConfig().getLavaEmptyTiming() <= 0)return;
 	        	new BukkitRunnable() {
 	        		public void run() {
-	        				block.setType(Material.AIR);
+	        				if (block.getType() == Material.LAVA || block.getType() == Material.STATIONARY_LAVA) {
+	        					block.setType(Material.AIR);
+	        				}
 	        				cancel();
 	        		}
                 }.runTaskLater(Main.getInstance(), 20L *Main.getInstance().getGameConfig().getLavaEmptyTiming());
