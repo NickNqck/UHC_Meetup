@@ -106,6 +106,7 @@ public class MikasaV2 extends SoldatsRoles implements Ackerman, Listener {
             }
             if (random > mostPoints) {
                 most = role;
+                mostPoints = random;
             }
         }
         if (most != null) {

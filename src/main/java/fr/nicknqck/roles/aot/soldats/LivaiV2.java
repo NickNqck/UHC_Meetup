@@ -103,6 +103,7 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
             }
             if (random > mostPoints) {
                 most = role;
+                mostPoints = random;
             }
         }
         if (most != null) {
