@@ -13,6 +13,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.roles.builder.RoleBase;
 import fr.nicknqck.utils.Loc;
 import fr.nicknqck.utils.StringUtils;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
 import lombok.NonNull;
@@ -55,6 +56,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
     @Override
     public void RoleGiven(GameState gameState) {
         addPower(new FuseCommand(this));
+        EventUtils.registerRoleEvent(this);
     }
 
     @Nonnull
