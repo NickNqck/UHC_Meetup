@@ -88,7 +88,7 @@ public class ConnyV2 extends SoldatsRoles {
                 if (target != null) {
                     GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {
-                        if (gamePlayer.getRole() != null && gamePlayer.isOnline() && gamePlayer.isOnline()) {
+                        if (gamePlayer.getRole() != null && gamePlayer.isOnline() && gamePlayer.isAlive()) {
                             amisList.add(gamePlayer);
                             player.sendMessage("§a"+target.getName()+"§7 est maintenant considérer comme un/une§a ami§7§ae§7).");
                             return true;
