@@ -13,6 +13,7 @@ import fr.nicknqck.roles.ns.builders.IUchiwa;
 import fr.nicknqck.roles.ns.power.*;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.event.EventUtils;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
@@ -91,6 +92,7 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
 
         public TheSubClass(@NonNull RoleBase role) {
             super("§cSusanô (Armes légendaires)", new Cooldown(150), role);
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
