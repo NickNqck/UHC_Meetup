@@ -75,6 +75,7 @@ public class MachoireV2 extends TitanBase implements Listener {
 
     @EventHandler
     private void onDamage(@NonNull final EntityDamageEvent event) {
+        if (!event.getEntity().getUniqueId().equals(getGamePlayer().getUuid()))return;
         if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
             if (!isTransformed())return;
             event.setDamage(0.0);
