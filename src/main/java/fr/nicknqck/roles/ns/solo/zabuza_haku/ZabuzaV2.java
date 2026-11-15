@@ -224,7 +224,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                 }
                 if (timeLeft <= 0) {
                     cancel();
-                    this.power.removeInvisibility();
+                    Bukkit.getScheduler().runTask(Main.getInstance(), this.power::removeInvisibility);
                     this.power.invisible = false;
                     return;
                 }
