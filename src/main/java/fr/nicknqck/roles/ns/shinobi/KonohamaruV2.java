@@ -77,7 +77,7 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
                 .setPowers(getPowers())
                 .addCustomLine("§7Vous possédez une barre de point invisible augmentant quand vous êtes proche de§a Naruto§7, à chaque palier vous obtiendrez quelque chose: \n\n" +
                         "§8 - §a1000 points§7: Vous obtiendrez l'effet§c Force I§7 proche de§a Naruto§7.\n\n" +
-                        "§8 -§a 2000 points§7: Vous connaitrez le joueur possédant le rôle de§a Naruto§7, à partir de la à sa mort vous obtiendrez le§a Rasengan§7.")
+                        "§8 -§a 2000 points§7: Vous connaîtrez le joueur possédant le rôle de§a Naruto§7, à partir de là, à sa mort vous obtiendrez le§a Rasengan§7.")
                 .getText();
     }
 

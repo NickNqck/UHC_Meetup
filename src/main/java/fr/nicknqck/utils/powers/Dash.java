@@ -43,7 +43,7 @@ public class Dash {
 									} else {
 										p.setHealth(p.getHealth()-degats);
 									}
-									p.sendMessage("§7Vous avez subit§c "+degats/2+AllDesc.coeur+"§7 dû à un Dash");
+									p.sendMessage("§7Vous avez subi§c "+degats/2+AllDesc.coeur+"§7 dû à un Dash");
 									dashedPlayers.add(p.getUniqueId());
 								}
 							}

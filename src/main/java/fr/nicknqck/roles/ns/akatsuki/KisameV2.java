@@ -212,7 +212,7 @@ public class KisameV2 extends AkatsukiRoles {
                     return;
                 }
                 if (!gamePlayer.getLastLocation().getBlock().getType().name().contains("WATER")) {
-                    this.gamePlayer.sendMessage("§7Temp avant disparition de la bulle: §c"+this.timeLeft+"s");
+                    this.gamePlayer.sendMessage("§7Temps avant disparition de la bulle: §c"+this.timeLeft+"s");
                     if (this.timeLeft <= 0) {
                         this.suibun.stop(this);
                     }

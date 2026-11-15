@@ -362,7 +362,7 @@ public class IzanamiV2 implements Listener {
         private ResterRunnable(GameState gameState, IzanamiV2 izanami) {
             this.gameState = gameState;
             this.izanami = izanami;
-            this.izanami.gamePlayer.getActionBarManager().addToActionBar("izanami.rester", "§bTemp restant proche de §c"+this.izanami.gameTarget.getPlayerName()+"§7: "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+            this.izanami.gamePlayer.getActionBarManager().addToActionBar("izanami.rester", "§bTemps restant proche de §c"+this.izanami.gameTarget.getPlayerName()+"§7: "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
             runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
 
@@ -378,7 +378,7 @@ public class IzanamiV2 implements Listener {
             if (!this.izanami.gameTarget.isAlive()) {
                 return;
             }
-            this.izanami.gamePlayer.getActionBarManager().updateActionBar("izanami.rester", "§bTemp restant proche de §c"+this.izanami.gameTarget.getPlayerName()+"§b: §c"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+            this.izanami.gamePlayer.getActionBarManager().updateActionBar("izanami.rester", "§bTemps restant proche de §c"+this.izanami.gameTarget.getPlayerName()+"§b: §c"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
             if (this.timeRemaining <= 0) {
                 this.izanami.gamePlayer.getActionBarManager().removeInActionBar("izanami.rester");
                 this.izanami.setTrueMissions(MissionUser.Rester);
@@ -401,7 +401,7 @@ public class IzanamiV2 implements Listener {
         private DistanceRunnable(GameState gameState, IzanamiV2 izanami) {
             this.gameState = gameState;
             this.izanami = izanami;
-            this.izanami.gamePlayer.getActionBarManager().addToActionBar("izanami.distance", "§bTemp restant loin de §c"+this.izanami.gameTarget.getPlayerName()+"§b: §c"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+            this.izanami.gamePlayer.getActionBarManager().addToActionBar("izanami.distance", "§bTemps restant loin de §c"+this.izanami.gameTarget.getPlayerName()+"§b: §c"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
             runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         }
 
@@ -423,7 +423,7 @@ public class IzanamiV2 implements Listener {
                 cancel();
                 return;
             }
-            this.izanami.gamePlayer.getActionBarManager().updateActionBar("izanami.distance", "§bTemp restant loin de §c"+this.izanami.gameTarget.getPlayerName()+"§b: §c"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+            this.izanami.gamePlayer.getActionBarManager().updateActionBar("izanami.distance", "§bTemps restant loin de §c"+this.izanami.gameTarget.getPlayerName()+"§b: §c"+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
             if (this.izanami.gamePlayer.getLastLocation().getWorld().getName().equals(this.izanami.gameTarget.getLastLocation().getWorld().getName())){
                 if (this.izanami.gamePlayer.getLastLocation().distance(this.izanami.gameTarget.getLastLocation()) < 30){
                     return;

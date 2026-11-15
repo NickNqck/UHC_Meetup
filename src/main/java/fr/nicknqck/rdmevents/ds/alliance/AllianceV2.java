@@ -57,7 +57,7 @@ public class AllianceV2 extends Event implements Listener {
 
                 this.shinjuro.setTeam(TeamList.Alliance, true);
                 this.shinjuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Kyojuro).getName());
-                this.shinjuro.getGamePlayer().sendMessage("Votre fils vous à convaincue d'arrêter l'alcool, temp qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
+                this.shinjuro.getGamePlayer().sendMessage("Votre fils vous a convaincu d'arrêter l'alcool, tant qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
                 break;
             }
         }

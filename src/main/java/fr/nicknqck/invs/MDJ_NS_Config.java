@@ -40,10 +40,10 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             } else {
                 if (Main.getInstance().getBijuManager().isBijuEnable()) {
                     Main.getInstance().getBijuManager().setBijuEnable(false);
-                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'apparition de tous les§d Bijus§7 sur:§c Désactiver");
+                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a défini l'apparition de tous les§d Bijus§7 sur:§c Désactiver");
                 } else {
                     Main.getInstance().getBijuManager().setBijuEnable(true);
-                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'apparition de tous les§d Bijus§7 sur:§a Activer");
+                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a défini l'apparition de tous les§d Bijus§7 sur:§a Activer");
                 }
                 new MDJ_NS_Config().open((Player) event.getWhoClicked());
             }
@@ -136,7 +136,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {
             Main.getInstance().getGameConfig().getNarutoConfig().setIzanamiCanInfectSolo(!Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo());
-            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§aIzanami§f peut infecter les rôles§e Solo§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo() ? "§aOui" : "§cNon"));
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a défini le paramètre \"§aIzanami§f peut infecter les rôles§e Solo§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo() ? "§aOui" : "§cNon"));
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
         addContent(new ItemBuilder(Material.ENDER_PEARL).setName("§e§lShisui§f ignore la réglementation sur l'§aIzanami§f des rôles§e Solos").setLore(
@@ -145,7 +145,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {
             Main.getInstance().getGameConfig().getNarutoConfig().setShisuiByPassIzanamiLimitation(!Main.getInstance().getGameConfig().getNarutoConfig().isShisuiByPassIzanamiLimitation());
-            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§e§lShisui§f ignore la réglementation sur l'§aIzanami§f des rôles§e Solos§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiByPassIzanamiLimitation() ? "§aOui" : "§cNon"));
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a défini le paramètre \"§e§lShisui§f ignore la réglementation sur l'§aIzanami§f des rôles§e Solos§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiByPassIzanamiLimitation() ? "§aOui" : "§cNon"));
             final MDJ_NS_Config c = new MDJ_NS_Config();
             c.open((Player) event.getWhoClicked());
             c.openPage(2);
@@ -156,7 +156,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {
             Main.getInstance().getGameConfig().getNarutoConfig().setShisuiKotoAmatsukamiInfectSolo(!Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo());
-            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§aKotoAmatsukami§7 de§e§l Shisui§7 peut§a infecter§7 les§e rôles Solitaire§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo() ? "§aOui" : "§cNon"));
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a défini le paramètre \"§aKotoAmatsukami§7 de§e§l Shisui§7 peut§a infecter§7 les§e rôles Solitaire§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo() ? "§aOui" : "§cNon"));
             final MDJ_NS_Config c = new MDJ_NS_Config();
             c.open((Player) event.getWhoClicked());
             c.openPage(2);
@@ -167,7 +167,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {
             Main.getInstance().getGameConfig().getNarutoConfig().setSasoriCanRevive(!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive());
-            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§cSasori§7 peut§a ressusciter un joueur§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"));
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a défini le paramètre \"§cSasori§7 peut§a ressusciter un joueur§7\" sur "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"));
             final MDJ_NS_Config c = new MDJ_NS_Config();
             c.open((Player) event.getWhoClicked());
             c.openPage(2);

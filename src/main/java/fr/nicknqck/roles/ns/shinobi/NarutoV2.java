@@ -138,7 +138,7 @@ public class NarutoV2 extends HShinobiRoles {
 
         public NSClone(@NonNull RoleBase role) {
             super("/ns clone", "clone", new Cooldown(60*10), role, CommandType.NS,
-                    "§7Vous permet de faire apparaitre un§a villageois§7 portant le nom de§a Naruto§7, tant qu'il est en vie il accumule du temp,",
+                    "§7Vous permet de faire apparaître un§a villageois§7 portant le nom de§a Naruto§7, tant qu'il est en vie il accumule du temps,",
                     "§7en refaisant la commande, vous obtiendrez les effets§e Speed I§7 et§c Force I§7 pendant le temp accumulé");
             EventUtils.registerRoleEvent(this);
             setWorkWhenInCooldown(true);

@@ -250,7 +250,7 @@ public class KagayaV2 extends SlayerRoles {
             actualTime++;
             Player owner = Bukkit.getPlayer(this.kagaya.getPlayer());
             if (owner != null) {
-                NMSPacket.sendActionBar(owner, "§bTemp avant accentuation de la§2 maladie§b: §c"+ StringUtils.secondsTowardsBeautiful(this.maxTime-actualTime));
+                NMSPacket.sendActionBar(owner, "§bTemps avant accentuation de la§2 maladie§b: §c"+ StringUtils.secondsTowardsBeautiful(this.maxTime-actualTime));
             }
         }
         private static class PilierCommand extends CommandPower {

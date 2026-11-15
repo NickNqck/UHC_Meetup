@@ -101,7 +101,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                             "",
                             AllDesc.point+"§cAttaque§7: Vous téléporte dans un rayon de§c 10 blocs§7 autour de la cible. (1x/5min)",
                             "",
-                            AllDesc.point+"§6§lPlace au combat !§7: Pendant§c 1 minutes§7 vous obtenez des §cbonus§7: (1x/10min)",
+                            AllDesc.point+"§6§lPlace au combat !§7: Pendant§c 1 minute§7 vous obtenez des §cbonus§7: (1x/10min)",
                             "",
                             AllDesc.tab+"§7Vous serez insensible à tous les projectiles",
                             AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégâts au joueur visé",
@@ -157,7 +157,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             });
             fastInv.setItem(16, new ItemBuilder(Material.BOW)
                     .setName("§6§lPlace au combat !")
-                    .setLore("§7En visant un joueur vous obtiendrez des§c bonus§7 pendant§c 1 minutes§7: ",
+                    .setLore("§7En visant un joueur vous obtiendrez des§c bonus§7 pendant§c 1 minute§7: ",
                             "",
                             AllDesc.tab+"§7Vous serez insensible à tous les projectiles",
                             AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégât au joueur visé",
@@ -390,7 +390,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                         }
                         Player fugaku = Bukkit.getPlayer(manager.fugaku.getPlayer());
                         if (fugaku != null) {
-                            NMSPacket.sendActionBar(fugaku, "§bTemp avant fin du§c combat§b: §c"+StringUtils.secondsTowardsBeautiful(time));
+                            NMSPacket.sendActionBar(fugaku, "§bTemps avant fin du§c combat§b: §c"+StringUtils.secondsTowardsBeautiful(time));
                         }
                     }
                     private void cancelAll() {

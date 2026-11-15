@@ -222,7 +222,7 @@ public class DeidaraV2 extends AkatsukiRoles {
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-                player.sendMessage("§7L'§cArt Ultime§7 ce déclanche des maintenants");
+                player.sendMessage("§7L'§cArt Ultime§7 se déclenche dès maintenant");
                 player.setAllowFlight(true);
                 player.setFlying(true);
                 getRole().getGamePlayer().stun(20*10, false);

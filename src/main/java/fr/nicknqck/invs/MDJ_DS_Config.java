@@ -58,7 +58,7 @@ public class MDJ_DS_Config extends FastInv {
                 )
                 .toItemStack(), event -> {
             Main.getInstance().getGameConfig().getDemonSlayerConfig().setMuzanAutoGive(!Main.getInstance().getGameConfig().getDemonSlayerConfig().isMuzanAutoGive());
-            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a définie le paramètre \"§cMuzan§f peut s'auto donner l'§cInfection§7\" sur "+(Main.getInstance().getGameConfig().getDemonSlayerConfig().isMuzanAutoGive() ? "§aActiver" : "§cDésactiver"));
+            Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a défini le paramètre \"§cMuzan§f peut s'auto donner l'§cInfection§7\" sur "+(Main.getInstance().getGameConfig().getDemonSlayerConfig().isMuzanAutoGive() ? "§aActiver" : "§cDésactiver"));
             new MDJ_DS_Config().open((Player) event.getWhoClicked());
         });
         setItem(26, GUIItems.getSelectBackMenu(), event -> {

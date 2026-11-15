@@ -61,7 +61,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.open((Player) event.getWhoClicked());
             inventory.openPage(currentPage());
         });
-        addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName("§r§fTemp avant réduction de la bordure").setLore(
+        addContent(new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(0).setName("§r§fTemps avant réduction de la bordure").setLore(
                 "§r§f[0 minute < "+Border.getTempReduction()/60+" minutes > 60 minutes]",
                 "§r§fClic gauche: §a+1 minute",
                 "§r§fClic droit: §c-1 minute"
@@ -88,7 +88,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.open((Player) event.getWhoClicked());
             inventory.openPage(currentPage());
         });
-        addContent(new ItemBuilder(Material.IRON_SWORD).setName("§r§fTemp avant activation du PVP").setLore(
+        addContent(new ItemBuilder(Material.IRON_SWORD).setName("§r§fTemps avant activation du PVP").setLore(
                 "§r§f[0 minute < "+ GameState.getInstance().getPvPTimer()/60+" minutes > 40 minutes]",
                 "§r§fClic gauche: §a+1 minute",
                 "§r§fClic droit: §c-1 minute"
@@ -102,7 +102,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.open((Player) event.getWhoClicked());
             inventory.openPage(currentPage());
         });
-        addContent(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemp avant annonce des roles").setLore(
+        addContent(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemps avant annonce des roles").setLore(
                 "§r§f[0 minute < "+GameState.getInstance().getRoleTimer()/60+" minutes > 40 minutes]",
                 "§r§fClic gauche: §a+1 minute",
                 "§r§fClic droit: §c-1 minute"
@@ -168,8 +168,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.open((Player) event.getWhoClicked());
             inventory.openPage(currentPage());
         });
-        addContent(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemp avant despawn de l'§bEau").setLore(
-                "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minutes",
+        addContent(new ItemBuilder(Material.WATER_BUCKET).setName("§r§fTemps avant despawn de l'§bEau").setLore(
+                "§r§f[0 secondes < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getWaterEmptyTiming())+" > 1 minute",
                 "§r§fClic gauche: §a+1 seconde",
                 "§r§fClic droit: §c-1 seconde",
                 "§r§f(0 secondes =§c désactiver"
@@ -191,8 +191,8 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.open((Player) event.getWhoClicked());
             inventory.openPage(currentPage());
         });
-        addContent(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemp avant despawn de la§6 Lave").setLore(
-                "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getLavaEmptyTiming())+" > 1 minutes",
+        addContent(new ItemBuilder(Material.LAVA_BUCKET).setName("§r§fTemps avant despawn de la§6 Lave").setLore(
+                "§r§f[0 seconde < "+StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getLavaEmptyTiming())+" > 1 minute",
                 "§r§fClic gauche: §a+1 seconde",
                 "§r§fClic droit: §c-1 seconde",
                 "§r§f(0 secondes =§c désactiver"
@@ -284,7 +284,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
     }
 
     public void sendHostMessage(final Player player, final String rule, final boolean activate) {
-        Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a définie la règle \""+rule+"§7\" sur "+(activate ? "§aactiver" : "§cdésactiver")+"§7.");
+        Main.getInstance().sendMessageToHosts("§7[§6UHC-Meetup§7] "+ChatRank.getPlayerGrade(player).getPrefix()+player.getName()+"§7 a défini la règle \""+rule+"§7\" sur "+(activate ? "§aactiver" : "§cdésactiver")+"§7.");
     }
 
     @Nonnull

@@ -35,7 +35,7 @@ public class MDJ_AOT_Config extends FastInv {
                     .setName("§fEquipement Tridimentionnel")
                     .toItemStack(), event -> {
                 Main.getInstance().getGameConfig().getAotConfig().setRodTridimenssionel(false);
-                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'équipement tridimentionnel sur: \"§fArc§7\".");
+                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a défini l'équipement tridimensionnel sur: \"§fArc§7\".");
                 new MDJ_AOT_Config().open((Player) event.getWhoClicked());
             });
         } else {
@@ -43,7 +43,7 @@ public class MDJ_AOT_Config extends FastInv {
                     .setName("§fEquipement Tridimentionnel")
                     .toItemStack(), event -> {
                 Main.getInstance().getGameConfig().getAotConfig().setRodTridimenssionel(true);
-                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a définie l'équipement tridimentionnel sur: \"§fCânne à pêche§7\".");
+                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a défini l'équipement tridimensionnel sur: \"§fCanne à pêche§7\".");
                 new MDJ_AOT_Config().open((Player) event.getWhoClicked());
             });
         }
@@ -56,10 +56,10 @@ public class MDJ_AOT_Config extends FastInv {
                 .toItemStack(), event -> {
             if (!Main.getInstance().getGameConfig().getAotConfig().isLaveTitans()) {
                 Main.getInstance().getGameConfig().getAotConfig().setLaveTitans(true);
-                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a définie la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§a Activer");
+                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a défini la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§a Activer");
             } else {
                 Main.getInstance().getGameConfig().getAotConfig().setLaveTitans(false);
-                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a définie la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§c Désactiver");
+                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a défini la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§c Désactiver");
             }
             new MDJ_AOT_Config().open((Player) event.getWhoClicked());
         });

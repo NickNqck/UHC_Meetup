@@ -125,14 +125,14 @@ public class KurenaiV2 extends ShinobiRoles {
             super("Genjutsu Temporel", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu Temporel"), kurenaiV2,
                     "§7Vous permet de crée un point de téléportation qui restera actif pendant§c 60 secondse§7,",
                     "",
-                    "§7Au bout de§c 60 secondes§7 ou si vous§c mourrez§7 vous§a ressusciterez§7 à votre point de téléportation avec le même stuff qu'à l'activation");
+                    "§7Au bout de§c 60 secondes§7 ou si vous§c mourez§7 vous§a ressusciterez§7 à votre point de téléportation avec le même stuff qu'à l'activation");
             this.kurenaiV2 = kurenaiV2;
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§7Vous avez utiliser votre§c Genjutsu temporel§7.");
+                player.sendMessage("§7Vous avez utilisé votre§c Genjutsu temporel§7.");
                 new KurenaiRunnable(player, this.kurenaiV2).runTaskTimer(Main.getInstance(), 0, 20);
                 return true;
             }

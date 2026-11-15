@@ -138,7 +138,7 @@ public class KumoV2 extends DemonInferieurRole {
                     if (owner != null) {
                         if (owner.getLocation().getBlock().getType().equals(Material.WEB)) {
                             this.timeInside--;
-                            this.getRole().getGamePlayer().sendMessage("§cTemp avant disparition forcé de la prison: §b"+this.timeInside+"s");
+                            this.getRole().getGamePlayer().sendMessage("§cTemps avant disparition forcée de la prison: §b"+this.timeInside+"s");
                         }
                     }
                     this.timeLeft--;

@@ -77,7 +77,7 @@ public class MinatoV2 extends HShinobiRoles {
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine(knowNaruto ? "§7Vous possédez l'effet§c Force I§7 proche de§a Naruto§7." : "§7Au bout de§c 5 minutes§7 passé proche de§a Naruto§7 vous connaitrez son pseudonyme.")
+                .addCustomLine(knowNaruto ? "§7Vous possédez l'effet§c Force I§7 proche de§a Naruto§7." : "§7Au bout de§c 5 minutes§7 passées proche de§a Naruto§7 vous connaîtrez son pseudonyme.")
                 .getText();
     }
 

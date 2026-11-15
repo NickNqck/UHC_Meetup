@@ -385,7 +385,7 @@ public class Sai extends ShinobiRoles implements Listener {
                             this.activate = true;
                             this.timeLeft =60;
                             owner.sendMessage("§7Vos§a Souris messagères§7 ont enfin atteint§c "+target.getName()+"§7, vous aurez§c 1 minute§7 pour§c communiquer§7 avec lui, pour ce faire vous devrez commencer vos messages par un \"§cs§7\".");
-                            target.sendMessage("§7Les§a Souris messagères§7 de§a Sai§7 vous ont enfin atteint, vous pouvez des maintenant et ce pendant§c 1 minute§7 communiquer avec lui en commençant vos messages par un \"§cs§7\".");
+                            target.sendMessage("§7Les§a Souris messagères§7 de§a Sai§7 vous ont enfin atteint, vous pouvez dès maintenant et ce pendant§c 1 minute§7 communiquer avec lui en commençant vos messages par un \"§cs§7\".");
                             this.sourisMessager.targetUUID = target.getUniqueId();
                         }
                     } else {

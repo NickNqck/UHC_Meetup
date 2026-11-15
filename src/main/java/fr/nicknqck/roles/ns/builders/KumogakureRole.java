@@ -85,7 +85,7 @@ public abstract class KumogakureRole extends NSSoloRoles {
                 this.timeRemaining = 60*3;
                 this.timeRemainingEffect = 60;
                 this.stade= 1;
-                this.gamePlayer.getActionBarManager().addToActionBar("kyubi.runnable", "§bTemp avant prochain stade de§6 Kyubi§b:§c "+ StringUtils.secondsTowardsBeautiful(timeRemainingEffect));
+                this.gamePlayer.getActionBarManager().addToActionBar("kyubi.runnable", "§bTemps avant prochain stade de§6 Kyubi§b:§c "+ StringUtils.secondsTowardsBeautiful(timeRemainingEffect));
             }
 
             @Override
@@ -111,7 +111,7 @@ public abstract class KumogakureRole extends NSSoloRoles {
                         this.gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NOW);
                     }
                 });
-                this.gamePlayer.getActionBarManager().updateActionBar("kyubi.runnable", "§bTemp avant prochain stade de§6 Kyubi§b:§c "+ StringUtils.secondsTowardsBeautiful(timeRemainingEffect));
+                this.gamePlayer.getActionBarManager().updateActionBar("kyubi.runnable", "§bTemps avant prochain stade de§6 Kyubi§b:§c "+ StringUtils.secondsTowardsBeautiful(timeRemainingEffect));
                 if (this.timeRemainingEffect <= 0) {
                     this.stade++;
                     this.timeRemainingEffect = 60;

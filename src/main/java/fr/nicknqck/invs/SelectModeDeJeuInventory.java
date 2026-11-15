@@ -37,7 +37,7 @@ public class SelectModeDeJeuInventory extends PaginatedFastInv {
                 }
                 GameState.getInstance().setMdj(imdj);
                 new SelectModeDeJeuInventory().open((Player) event.getWhoClicked());
-                Main.getInstance().sendMessageToHosts("§c"+event.getWhoClicked().getName()+"§7 a définie le§c mode de jeu§7 sur§c "+imdj.getItem().getItemMeta().getDisplayName());
+                Main.getInstance().sendMessageToHosts("§c"+event.getWhoClicked().getName()+"§7 a défini le§c mode de jeu§7 sur§c "+imdj.getItem().getItemMeta().getDisplayName());
             });
         }
     }

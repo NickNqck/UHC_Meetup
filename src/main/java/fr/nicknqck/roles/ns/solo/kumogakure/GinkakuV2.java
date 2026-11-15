@@ -174,7 +174,7 @@ public class GinkakuV2 extends KumogakureRole {
                 this.gamePlayer = gamePlayer;
                 this.gameVictim = gameVictim;
                 this.hopperLocation = hopperLocation;
-                this.gamePlayer.getActionBarManager().addToActionBar("gourde.runnable", "§bTemp avant téléportation:§c "+ StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                this.gamePlayer.getActionBarManager().addToActionBar("gourde.runnable", "§bTemps avant téléportation:§c "+ StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
 
@@ -204,7 +204,7 @@ public class GinkakuV2 extends KumogakureRole {
                     return;
                 }
                 this.timeRemaining--;
-                this.gamePlayer.getActionBarManager().updateActionBar("gourde.runnable", "§bTemp avant téléportation:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                this.gamePlayer.getActionBarManager().updateActionBar("gourde.runnable", "§bTemps avant téléportation:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
             }
         }
     }

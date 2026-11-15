@@ -213,7 +213,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                 this.power = power;
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
                 this.power.invisible = true;
-                this.power.zabuza.getGamePlayer().getActionBarManager().addToActionBar("zabuza.invisibilite", "§bTemp d'invisibilité:§c 60s");
+                this.power.zabuza.getGamePlayer().getActionBarManager().addToActionBar("zabuza.invisibilite", "§bTemps d'invisibilité:§c 60s");
             }
 
             @Override
@@ -230,7 +230,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                 }
                 timeLeft--;
                 int toshow = timeLeft/20;
-                this.power.zabuza.getGamePlayer().getActionBarManager().updateActionBar("zabuza.invisibilite", "§bTemp d'invisibilité:§c "+(StringUtils.secondsTowardsBeautiful((60*5)-toshow)));
+                this.power.zabuza.getGamePlayer().getActionBarManager().updateActionBar("zabuza.invisibilite", "§bTemps d'invisibilité:§c "+(StringUtils.secondsTowardsBeautiful((60*5)-toshow)));
                 for (Player p : zabuza.getGamePlayer().getLastLocation().getWorld().getPlayers()) {
                     if (zabuza.getListPlayerFromRole(Roles.Haku).contains(p) || zabuza.getListPlayerFromRole(Roles.Zabuza).contains(p)) {
                         MathUtil.sendParticleTo(p, EnumParticle.CLOUD, zabuza.owner.getLocation().clone());
