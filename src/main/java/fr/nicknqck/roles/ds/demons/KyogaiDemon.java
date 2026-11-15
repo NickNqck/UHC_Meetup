@@ -71,7 +71,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
         addPower(new TambourPower(this), true);
         EventUtils.registerRoleEvent(this);
         addKnowedRole(MuzanV2.class);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Muzan) || gameState.getDeadRoles().contains(Roles.Muzan)){
                 procSolo();
             }
