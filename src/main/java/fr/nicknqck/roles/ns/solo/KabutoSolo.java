@@ -418,6 +418,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
                     toShow.append(Loc.getDirectionMate(this.edoTenseiPower.getRole().getGamePlayer(), role.getGamePlayer(), true))
                             .append("§7 | ");
                 }
+                if (toShow.length() < 5)return;
                 this.edoTenseiPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("kabutosolo.edo", toShow.substring(0, toShow.length()-5));
             }
         }
