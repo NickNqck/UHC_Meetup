@@ -48,7 +48,7 @@ public class Patch implements Listener{
         final Player damager = (Player) event.getDamager();
         final Player victim = (Player) event.getEntity();
      	if (damager.getItemInHand() == null) return;
-		if (checkNull(damager, victim)) {
+		if (checkNull(victim, damager)) {
 			event.setCancelled(true);
 			return;
 		}
