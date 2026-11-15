@@ -143,9 +143,9 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
 
     private boolean containsRoles(final GameState gameState) {
         return gameState.getAttributedRole().contains(Roles.Kyojuro) &&
-                !gameState.DeadRole.contains(Roles.Kyojuro) &&
+                !gameState.getDeadRoles().contains(Roles.Kyojuro) &&
                 gameState.getAttributedRole().contains(Roles.Akaza) &&
-                !gameState.DeadRole.contains(Roles.Akaza);
+                !gameState.getDeadRoles().contains(Roles.Akaza);
     }
 
     @EventHandler
