@@ -470,7 +470,7 @@ public class GameListener implements Listener {
 			System.out.println("x:  ->  "+x);
 	        float z = (float) ((Main.RANDOM.nextDouble() * 2 * number) - number);
 			System.out.println("z:  ->  "+z);
-	        loc = world.getHighestBlockAt(new Location(world, x - Border.getActualBorderSize() / 2, 0, z - Border.getActualBorderSize() / 2)).getLocation();
+	        loc = world.getHighestBlockAt(new Location(world, x, 0, z)).getLocation();
 	        loc.setY(loc.getY() + 1);
 			System.out.println("Loc:  ->  "+loc);
 	    } while (loc.getX() <= -(Border.getMaxBorderSize()-10) || loc.getX() >= (Border.getMaxBorderSize()-10)
