@@ -6,6 +6,7 @@ import fr.nicknqck.enums.Roles;
 import fr.nicknqck.roles.aot.builders.MahrRoles;
 import fr.nicknqck.roles.builder.AutomaticDesc;
 import fr.nicknqck.titans.impl.WarhammerV2;
+import fr.nicknqck.utils.event.EventUtils;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.event.EventHandler;
@@ -46,6 +47,7 @@ public class LaraV2 extends MahrRoles implements Listener {
         @NonNull final WarhammerV2 warhammerV2 = new WarhammerV2(this.getGamePlayer());
         setTitan(warhammerV2);
         Main.getInstance().getTitanManager().addTitan(getPlayer(), warhammerV2);
+        EventUtils.registerRoleEvent(this);
         addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
     }
     @EventHandler
