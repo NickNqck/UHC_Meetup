@@ -95,7 +95,7 @@ public class OnyankoponV2 extends SoldatsRoles {
                                 for (GamePlayer nearbyGamePlayer : Loc.getNearbyGamePlayers(gamePlayer.getLastLocation(), 8.0)) {
                                     if (!nearbyGamePlayer.check())continue;
                                     nearbyGamePlayer.teleport(loc);
-                                    gamePlayer.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez été téléporté par le pouvoir de§a Onyankopon§7.");
+                                    nearbyGamePlayer.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez été téléporté par le pouvoir de§a Onyankopon§7.");
                                 }
                             });
                             cancel();
