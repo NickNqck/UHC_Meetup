@@ -162,7 +162,7 @@ public class MikasaV2 extends SoldatsRoles implements Ackerman, Listener {
                 if (gamePlayer.getRole() != null) {
                     if (gamePlayer.getRole() instanceof AotRoles) {
                         if (((AotRoles) gamePlayer.getRole()).isTransformedinTitan && this.activate) {
-                            int forcePercent = Main.getInstance().getGameConfig().getForcePercent()/100;
+                            double forcePercent = Main.getInstance().getGameConfig().getForcePercent()/100.0;
                             forcePercent = forcePercent +1;
                             event.setDamage(event.getDamage()*forcePercent);
                         }
