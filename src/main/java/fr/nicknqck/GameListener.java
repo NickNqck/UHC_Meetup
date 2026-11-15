@@ -475,7 +475,7 @@ public class GameListener implements Listener {
 			System.out.println("Loc:  ->  "+loc);
 	    } while (loc.getX() <= -(Border.getMaxBorderSize()-10) || loc.getX() >= (Border.getMaxBorderSize()-10)
 				|| loc.getZ() <= -(Border.getMaxBorderSize()-10) || loc.getZ() >= (Border.getMaxBorderSize()-10)
-				|| loc.getBlock().getType().name().contains("LAVA") || loc.getBlock().getType().name().contains("WATER"));
+				|| loc.clone().subtract(0, 2, 0).getBlock().isLiquid());
 	    return loc;
 	}
     private static int trueCount2(Collection<Boolean> b) {
