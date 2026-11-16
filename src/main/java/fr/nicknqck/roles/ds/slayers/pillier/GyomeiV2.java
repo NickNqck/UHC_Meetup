@@ -188,10 +188,12 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                         this.gamePlayer.getActionBarManager().removeInActionBar("gyomei.repousser");
                         final Player target = Bukkit.getPlayer(uuidTarget);
                         if (target != null) {
-                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> target.setHealth(Math.max(0.1, target.getHealth()-4.0)));
+                            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                                target.setHealth(Math.max(0.1, target.getHealth()-4.0));
+                                target.damage(0.0);
+                            });
                             this.gamePlayer.sendMessage("§b"+this.nameTarget+"§f à subit§c 2❤§f de§c dégâts");
                             target.sendMessage("§aGyomei§f vous a infliger§c 2❤§f de dégâts");
-                            target.damage(0.0);
                         } else {
                             this.gamePlayer.sendMessage("§b"+this.nameTarget+"§c à déconnecter, il n'a donc pas subit les dégâts voulu");
                         }
