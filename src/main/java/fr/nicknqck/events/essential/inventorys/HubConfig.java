@@ -61,7 +61,7 @@ public class HubConfig implements Listener {
                     } else if (item.isSimilar(GUIItems.getSelectInvsButton())  && ChatRank.isHost(player)) {
                         player.openInventory(GUIItems.getSelectInventoryGUI());
                         Main.getInstance().getInventories().updateSelectInventory(player); //Ouvre le menu pour config l'inventaire
-                    } else if (item.isSimilar(AntiPvP.getlobbypvp())||item.isSimilar(AntiPvP.getnotlobbypvp())  && ChatRank.isHost(player)) {
+                    } else if ((item.isSimilar(AntiPvP.getlobbypvp())||item.isSimilar(AntiPvP.getnotlobbypvp()))  && ChatRank.isHost(player)) {
                         if (AntiPvP.isAntipvplobby()) {
                             AntiPvP.setAntipvplobby(false);
                             player.sendMessage("Vous venez d'activer le PvP dans le Lobby");
