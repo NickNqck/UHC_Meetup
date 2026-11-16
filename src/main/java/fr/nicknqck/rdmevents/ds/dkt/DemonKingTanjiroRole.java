@@ -56,6 +56,11 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
     }
 
     @Override
+    public void Update(GameState gameState) {
+        super.Update(gameState);
+        if (cdEnergie > 0) cdEnergie--;
+    }
+    @Override
     public void resetCooldown() {
         cdEnergie = 0;
     }
