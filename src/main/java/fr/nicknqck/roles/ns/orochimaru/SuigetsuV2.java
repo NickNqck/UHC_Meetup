@@ -133,6 +133,8 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
         if (event.getRole() instanceof OrochimaruV2) {
             addKnowedRole(KabutoV2.class);
             this.orochimaruDead = true;
+            givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
+            getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous obtenez l'effet§c Force 1§7 permanent");
         }
     }
     private static class EffectRunnable extends BukkitRunnable {
