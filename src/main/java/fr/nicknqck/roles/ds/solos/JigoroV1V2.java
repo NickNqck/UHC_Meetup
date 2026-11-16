@@ -298,7 +298,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
 
             private RecupSpeedRunnable(SpeedTroisPower power) {
                 this.power = power;
-                this.timeLeft = 0;
+                this.timeLeft = 60;
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
             }
 
