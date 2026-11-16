@@ -75,7 +75,7 @@ public class PregenerationTask extends BukkitRunnable {
             if (!GameState.inGame()) {
                 long time = System.currentTimeMillis();
                 Bukkit.broadcastMessage("§8[§cPregen§8] §fLa pré-génération de§c "+world.getName()+"§f est terminée !");
-                Bukkit.broadcastMessage("§c"+chunkFinded+"§7 on essayer d'être généré, §c"+new DecimalFormat("0").format(time-this.oldTimeMilis).substring(2)+" ticks§7 ont été nécessaire");
+                Bukkit.broadcastMessage("§c"+chunkFinded+"§7 ont essayé d'être générés, §c"+new DecimalFormat("0").format(time-this.oldTimeMilis).substring(2)+" ticks§7 ont été nécessaire");
             }
 			cancel();
 			//Bukkit.getOnlinePlayers().forEach(players -> NMSMethod.sendActionbar(players, "§fPré-génération §8» [§r"+UHCAPI.get().getGameManager().getProgressBar(this.percent.intValue(), 100, 20, "|", "§c", "§f")+"§8] §c"+this.percent.intValue()+"%"));

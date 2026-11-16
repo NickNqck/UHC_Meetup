@@ -36,7 +36,7 @@ public class JubiPower2 extends ItemPower {
             getRole().givePotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 0, false, false), EffectWhen.NOW);
             getRole().giveHealedHeartatInt(5.0);
             GameListener.SendToEveryone("");
-            GameListener.SendToEveryone("§c§lLe récéptacle de§d§l Jûbi§c§l invoque sa puissance !");
+            GameListener.SendToEveryone("§c§lLe réceptacle de§d§l Jûbi§c§l invoque sa puissance !");
             GameListener.SendToEveryone("");
             @NonNull final List<UUID> jubis = new ArrayList<>();
             for (Player onlinePlayer : player.getServer().getOnlinePlayers()) {

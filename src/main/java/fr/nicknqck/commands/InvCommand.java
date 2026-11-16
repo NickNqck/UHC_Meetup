@@ -35,7 +35,7 @@ public final class InvCommand implements CommandExecutor {
             Main.getInstance().getInvManager().saveInventory(sender);
             ItemsManager.ClearInventory(sender);
             ItemsManager.GiveHubItems(sender);
-            sender.sendMessage("§aVous avez sauvegardez votre inventaire de départ.");
+            sender.sendMessage("§aVous avez sauvegardé votre inventaire de départ.");
         }
         return true;
     }

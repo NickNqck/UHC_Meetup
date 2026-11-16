@@ -115,7 +115,7 @@ public class ItachiV2 extends AkatsukiRoles implements IUchiwa {
                     if (this.timeLeft <= 0 || !activate) {
                         activate = false;
                         getRole().getGamePlayer().getActionBarManager().removeInActionBar("itachi.sub");
-                        getRole().getGamePlayer().sendMessage("§7Les effets de vos§c Armes légendaires§7 s'estompe...");
+                        getRole().getGamePlayer().sendMessage("§7Les effets de vos§c Armes légendaires§7 s'estompent...");
                         cancel();
                         return;
                     }

@@ -209,7 +209,7 @@ public class KamuiPower extends ItemPower implements Listener{
                             event.getWhoClicked().closeInventory();
                             final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                             if (gamePlayer == null || !gamePlayer.check()) {
-                                event.getWhoClicked().sendMessage("§cUne erreur c'est produite, impossible de toucher§b "+target.getName()+"§c !");
+                                event.getWhoClicked().sendMessage("§cUne erreur s'est produite, impossible de toucher§b "+target.getName()+"§c !");
                                 return;
                             }
                             Map<String, Object> map = new HashMap<>();
@@ -219,7 +219,7 @@ public class KamuiPower extends ItemPower implements Listener{
                                 Collections.shuffle(locationList);
                                 this.kamuiPower.kamuiDimension.getBeforeTpMap().put(target.getUniqueId(), target.getLocation());
                                 target.teleport(locationList.get(0));
-                                target.sendMessage("§7Vous avez été aspirer dans le§d Kamui§7.");
+                                target.sendMessage("§7Vous avez été aspiré dans le§d Kamui§7.");
                                 new SonoHakaRunnable(this, gamePlayer).runTaskTimerAsynchronously(getPlugin(), 0, 20);
                             }
                         }

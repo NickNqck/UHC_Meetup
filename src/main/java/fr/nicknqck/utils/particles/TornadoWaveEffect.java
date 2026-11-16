@@ -180,7 +180,7 @@ public class TornadoWaveEffect {
      */
     private static void applyPersistentFire(Plugin plugin, Player target, final Player caster) {
         if (burningPlayers.contains(target.getUniqueId())) return;
-        caster.sendMessage(Main.getInstance().getNAME()+"§c "+target.getDisplayName()+"§7 a été§c toucher§7 par vos§6 flammes§7.");
+        caster.sendMessage(Main.getInstance().getNAME()+"§c "+target.getDisplayName()+"§7 a été§c touché§7 par vos§6 flammes§7.");
         burningPlayers.add(target.getUniqueId());
 
         new BukkitRunnable() {

@@ -161,7 +161,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 			Collections.shuffle(locs, RANDOM);
 			final Location finalLoc = locs.get(0);
 			player.teleport(finalLoc);
-			player.sendMessage("§cVous vous êtes téléporter avec succès.");
+			player.sendMessage("§cVous vous êtes téléporté avec succès.");
 		}
 	}
 	private static class FormeDemoniaquePower extends ItemPower {

@@ -68,7 +68,7 @@ public class ConnyV2 extends SoldatsRoles {
             super("§a/aot ami <joueur>§r", "ami", new Cooldown(180), role, CommandType.AOT,
                     "§7Vous permet d'ajouter§c un joueur§7 en tant qu'\"§aami§7\".",
                     "",
-                    "§7Lorsque l'un de vos§a amis§7 meurs, vous obtiendrez§c deux minutes",
+                    "§7Lorsque l'un de vos§a amis§7 meurt, vous obtiendrez§c deux minutes",
                     "§7 de§c Force I§7 (§ccumulable§7)§7 puis§c 2 minutes§7 de§c Faiblesse 1§7,",
                     "§7vous obtiendrez aussi les coordonnées de l'emplacement de la mort.",
                     "",
@@ -90,7 +90,7 @@ public class ConnyV2 extends SoldatsRoles {
                     if (gamePlayer != null) {
                         if (gamePlayer.getRole() != null && gamePlayer.isOnline() && gamePlayer.isAlive()) {
                             amisList.add(gamePlayer);
-                            player.sendMessage("§a"+target.getName()+"§7 est maintenant considérer comme un/une§a ami§7§ae§7).");
+                            player.sendMessage("§a"+target.getName()+"§7 est maintenant considéré comme un/une§a ami§7§ae§7).");
                             return true;
                         }
                     }
@@ -142,7 +142,7 @@ public class ConnyV2 extends SoldatsRoles {
             return new String[] {
                     "§7Vous permet d'ajouter§c un joueur§7 en tant qu'\"§aami§7\".",
                     "",
-                    "§8 -§7 Lorsque l'un de vos§a amis§7 meurs, vous obtiendrez§c deux minutes",
+                    "§8 -§7 Lorsque l'un de vos§a amis§7 meurt, vous obtiendrez§c deux minutes",
                     "§7 de§c Force I§7 (§ccumulable§7)§7 puis§c 2 minutes§7 de§c Faiblesse 1§7,",
                     "§7vous obtiendrez aussi les coordonnées de l'emplacement de la mort.",
                     "",

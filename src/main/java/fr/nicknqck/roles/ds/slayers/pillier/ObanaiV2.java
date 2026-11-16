@@ -98,7 +98,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
     }
 
     private void onMitsuriDie(EffectWhen effectWhen, @Nullable String killerName) {
-        owner.sendMessage("§aMitsuri§7 est morte, votre§c seul§7 raison de vivre à disparu "+ (killerName != null ? "§7vous pouvez vous venger contre§c "+killerName+"§7, si vous en avez le courage...." : ""));
+        owner.sendMessage("§aMitsuri§7 est morte, votre§c seule§7 raison de vivre a disparu "+ (killerName != null ? "§7vous pouvez vous venger contre§c "+killerName+"§7, si vous en avez le courage...." : ""));
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), effectWhen);
     }
     private static class SpeedRunnable extends BukkitRunnable {
@@ -174,7 +174,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
                 this.timePassed = 0;
                 EventUtils.unregisterEvents(this);
                 if (roleBaseMap.isEmpty()) {
-                    this.getRole().getGamePlayer().sendMessage("§7Votre§2 Serpent§7 n'a trouver aucune information");
+                    this.getRole().getGamePlayer().sendMessage("§7Votre§2 Serpent§7 n'a trouvé aucune information");
                 } else {
                     for (final String pseudo : roleBaseMap.keySet()) {
                         final List<RoleBase> roles = new ArrayList<>(Arrays.asList(roleBaseMap.get(pseudo)));

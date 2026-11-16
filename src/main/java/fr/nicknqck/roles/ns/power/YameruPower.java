@@ -24,7 +24,7 @@ public class YameruPower extends CommandPower {
         if (args.length == 2) {
             final Player target = Bukkit.getPlayer(args[1]);
             if (target == null) {
-                player.sendMessage("§cVeuiller cibler un joueur éxistant !");
+                player.sendMessage("§cVeuillez cibler un joueur existant !");
             } else {
                 if (target.getWorld().equals(Bukkit.getWorld("Kamui"))) {
                     if (getRole() instanceof IRoleGotSubWorld) {
@@ -42,7 +42,7 @@ public class YameruPower extends CommandPower {
                             }
                         }
                     }
-                    player.sendMessage("§cVotre rôle n'a pas les autorisations nécéssaire pour utiliser cette commande.");
+                    player.sendMessage("§cVotre rôle n'a pas les autorisations nécessaires pour utiliser cette commande.");
                     return false;
                 }
             }

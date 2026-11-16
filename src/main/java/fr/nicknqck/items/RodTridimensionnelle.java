@@ -66,7 +66,7 @@ public class RodTridimensionnelle implements Listener {
                                     fishHook.setVelocity(eyeLocation.getDirection().multiply(2.5D));
                                     (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
                                 } else {
-                                    player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petit pour votre corp de titan, vous ne pouvez pas l'utiliser");
+                                    player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petite pour votre corps de titan, vous ne pouvez pas l'utiliser");
                                     event.setCancelled(true);
                                 }
                             } else {
@@ -76,7 +76,7 @@ public class RodTridimensionnelle implements Listener {
                                 (new LaunchFishHook(fishHook, player, true)).runTaskTimer(Main.getInstance(), 1L, 1L);
                             }
             			} else {
-            				player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petit pour votre corp de titan, vous ne pouvez pas l'utiliser");
+            				player.sendMessage("§7Cette "+getItem().getItemMeta().getDisplayName()+"§7 est trop petite pour votre corps de titan, vous ne pouvez pas l'utiliser");
             				event.setCancelled(true);
             			}
             		}else {

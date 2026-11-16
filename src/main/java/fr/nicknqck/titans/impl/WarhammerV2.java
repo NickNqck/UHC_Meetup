@@ -244,7 +244,7 @@ public class WarhammerV2 extends TitanBase implements Listener {
             this.warhammer = warhammer;
             this.deathLocation = this.warhammer.blocDeathLocation;
             this.timeRemaining = 30;
-            this.warhammer.getGamePlayer().getActionBarManager().addToActionBar("warhammerv2.timedeath", "§bTemp avant réapparition: §c30 secondes");
+            this.warhammer.getGamePlayer().getActionBarManager().addToActionBar("warhammerv2.timedeath", "§bTemps avant réapparition: §c30 secondes");
         }
 
 
@@ -295,7 +295,7 @@ public class WarhammerV2 extends TitanBase implements Listener {
                     return;
                 }
             }
-            this.warhammer.getGamePlayer().getActionBarManager().updateActionBar("warhammerv2.timedeath", "§bTemp avant réapparition: §c"+this.timeRemaining+" secondes");
+            this.warhammer.getGamePlayer().getActionBarManager().updateActionBar("warhammerv2.timedeath", "§bTemps avant réapparition: §c"+this.timeRemaining+" secondes");
             Location loc = new Location(
                     this.deathLocation.getWorld(),
                     this.deathLocation.getBlockX(),

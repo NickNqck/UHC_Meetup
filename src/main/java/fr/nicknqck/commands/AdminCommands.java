@@ -257,7 +257,7 @@ public class AdminCommands implements CommandExecutor{
                 if (args[0].equalsIgnoreCase("version")) {
                     Main.getInstance().getUpdateChecker().checkForUpdates();
                     if (sender instanceof Player) {
-                        sender.sendMessage("§cLes informations ont été envoyer dans la§b console§c.");
+                        sender.sendMessage("§cLes informations ont été envoyées dans la§b console§c.");
                     }
                     return true;
                 }
@@ -299,10 +299,10 @@ public class AdminCommands implements CommandExecutor{
                     Main.getInstance().getLogger().info("Debug avant = "+d);
                     if (d) {
                         Main.getInstance().getLogger().info("Debug est maintenant desactiver");
-                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§c désactiver§7 le§c debug§7.");
+                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§c désactivé§7 le§c debug§7.");
                         Main.getInstance().setDebug(false);
                     } else {
-                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§a activer§7 le§c debug§7.");
+                        Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§a activé§7 le§c debug§7.");
                         Main.getInstance().setDebug(true);
                         Main.getInstance().getLogger().info("Debug est maintenant activer");
                     }
@@ -717,7 +717,7 @@ public class AdminCommands implements CommandExecutor{
 											kills.add(new TextComponent(TeamList.Shisui.getColor()+"BoulotKanao§7 ("+TeamList.Shisui.getColor()+"Shisui§7)"));
 										}
 										if (kills.isEmpty()) {
-											hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune information trouver")}));
+											hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§cAucune information trouvée")}));
 										} else {
 											hver.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, kills.toArray(new TextComponent[0])));
 										}

@@ -146,7 +146,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
             if (event.getGamePlayerKiller().getUuid().equals(getPlayer()) && !killPilier && event.getRole() instanceof PilierRoles) {
                 this.killPilier = true;
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-                event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous à permit d'être§c plus rapide§7 le§c jour§7.");
+                event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous a permis d'être§c plus rapide§7 le§c jour§7.");
             }
         }
     }
@@ -172,7 +172,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         if (!pil) {
             this.killPilier = true;
             givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-            getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous à permit d'être§c plus rapide§7 le§c jour§7.");
+            getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous a permis d'être§c plus rapide§7 le§c jour§7.");
         }
         if (!lun) {
             this.killLune = true;

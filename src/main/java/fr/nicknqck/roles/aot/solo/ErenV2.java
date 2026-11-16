@@ -148,7 +148,7 @@ public class ErenV2 extends AotRoles implements Listener{
                         player.teleport(this.timeLocations.get(i));
                         return true;
                     } else {
-                        player.sendMessage("§b"+i+"§c n'est pas un temp valide, essayer autre chose.");
+                        player.sendMessage("§b"+i+"§c n'est pas un temps valide, essayez autre chose.");
                     }
                 } catch (NumberFormatException e) {
                     e.fillInStackTrace();

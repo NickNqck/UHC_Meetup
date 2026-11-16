@@ -124,18 +124,18 @@ public class DSmtpCommands implements CommandExecutor {
 			sender.sendMessage(ChatColor.GOLD+"CommandHelper"+"§7§o§m-----------------------------------");//end message
 			return true;	
 		} 
-		sender.sendMessage("§cCommande inconnu !");
+		sender.sendMessage("§cCommande inconnue !");
 		return true;
 	}
 
 	private static ArrayList<String> getStrings() {
 		ArrayList<String> message = new ArrayList<>();
 		message.add(ChatColor.GOLD+"List des lames possibles : ");
-		message.add(ChatColor.GOLD + "Lame Coeur :" + ChatColor.LIGHT_PURPLE + " Donne 2 coeurs en plus permanent jusqu'a la fin de la partit.");
-		message.add(ChatColor.GOLD+"Lame de Résistance :"+ChatColor.GRAY+" Donne + 10% de résistance jusqu'a la fin de la partit.");
-		message.add(ChatColor.GOLD+"Lame de Speed :"+ ChatColor.GREEN+ " Donne + 10% de speed jusqu'a la fin de la partit.");
-		message.add("§6Lame de Force:§c Donne +10% de force jusqu'a la fin de la partit");
-		message.add(ChatColor.GOLD+"Lame de Fire Résistance :"+ ChatColor.YELLOW+" Donne l'effet fire résistance 1 jusqu'a la fin de la partit.");
+		message.add(ChatColor.GOLD + "Lame Coeur :" + ChatColor.LIGHT_PURPLE + " Donne 2 coeurs en plus permanent jusqu'à la fin de la partie.");
+		message.add(ChatColor.GOLD+"Lame de Résistance :"+ChatColor.GRAY+" Donne + 10% de résistance jusqu'à la fin de la partie.");
+		message.add(ChatColor.GOLD+"Lame de Speed :"+ ChatColor.GREEN+ " Donne + 10% de speed jusqu'à la fin de la partie.");
+		message.add("§6Lame de Force:§c Donne +10% de force jusqu'à la fin de la partie");
+		message.add(ChatColor.GOLD+"Lame de Fire Résistance :"+ ChatColor.YELLOW+" Donne l'effet fire résistance 1 jusqu'à la fin de la partie.");
 		return message;
 	}
 

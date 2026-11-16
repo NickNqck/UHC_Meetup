@@ -112,17 +112,17 @@ public class SashaV2 extends SoldatsRoles {
                             if (heightDifference > 1.5) {
                                 owner.sendMessage("§7Tu as touché la tête de§a " + victim.getName());
                                 PotionUtils.givePotionEffect(victim, new PotionEffect(PotionEffectType.BLINDNESS, 20*7, 0, false, false), EffectWhen.NOW);
-                                victim.sendMessage("§aSasha§7 vous à infliger§l 7secondes§7 de "+ AllDesc.blind);
+                                victim.sendMessage("§aSasha§7 vous a infligé§l 7secondes§7 de "+ AllDesc.blind);
                             } else if (heightDifference < 0.9) {
                                 owner.sendMessage("§7Tu as touché les jambes de§a " + victim.getName());
                                 PotionUtils.givePotionEffect(victim, new PotionEffect(PotionEffectType.SLOW, 20*7, 0, false, false), EffectWhen.NOW);
-                                victim.sendMessage("§aSasha§7 vous à infliger§l 7secondes§7 de "+AllDesc.slow);
+                                victim.sendMessage("§aSasha§7 vous a infligé§l 7secondes§7 de "+AllDesc.slow);
                             } else {
                                 owner.sendMessage("§7Tu as touché le torse de§a " + victim.getName());
                                 victim.setHealth(Math.max(0.1, victim.getHealth()-2.0));
                                 victim.damage(0.0);
-                                victim.sendMessage("§7Vous avez été toucher par l'arc de§a Sasha§7 au niveau de votre torse");
-                                victim.sendMessage("§aSasha§7 vous à infliger§l 1"+AllDesc.Coeur("§c"));
+                                victim.sendMessage("§7Vous avez été touché par l'arc de§a Sasha§7 au niveau de votre torse");
+                                victim.sendMessage("§aSasha§7 vous a infligé§l 1"+AllDesc.Coeur("§c"));
                             }
                         }
                     }

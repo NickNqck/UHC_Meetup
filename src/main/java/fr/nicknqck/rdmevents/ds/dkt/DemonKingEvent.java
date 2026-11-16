@@ -54,7 +54,7 @@ public class DemonKingEvent extends Event {
                                 newRole.setMaxHealth(20.0);
                             }
                             newRole.setLames(role.getLames());
-                            owner.sendMessage("Votre arrivé dans le camp des§c Démons§f restera secrète jusqu'à "+ StringUtils.secondsTowardsBeautiful(gameState.getInGameTime()+60));
+                            owner.sendMessage("Votre arrivée dans le camp des§c Démons§f restera secrète jusqu'à "+ StringUtils.secondsTowardsBeautiful(gameState.getInGameTime()+60));
                             tanjiroDemon = true;
                             if (role.getTeam() != TeamList.Slayer) {
                                 newRole.setTeam(role.getTeam());
@@ -128,8 +128,8 @@ public class DemonKingEvent extends Event {
                 "§7il recevra aussi un objet nommé \"§f§lBoule d'énergie§7\"",
                 "§7lui permettant en frappant un joueur de lui infliger§c 2❤§7 de§c dégâts§7 via une§c explosion§7.",
                 "",
-                "§c60 secondes§7 après que§a Tanjiro§7 sois devenue un§c Démon§7 un message dans le chat annoncera que",
-                "§7l'event c'est déclencher encore§c 10 secondes§7 plus tard§c Kokushibo§7 deviendra un rôle§e Solitaire§7,",
+                "§c60 secondes§7 après que§a Tanjiro§7 soit devenu un§c Démon§7 un message dans le chat annoncera que",
+                "§7l'event s'est déclenché, encore§c 10 secondes§7 plus tard§c Kokushibo§7 deviendra un rôle§e Solitaire§7,",
                 "§7pour l'aider il aura§c 15❤ permanents§7 ainsi que§9 Résistance I§7 pendant§c 3 minutes§7 en tuant un joueur"
         };
     }

@@ -130,7 +130,7 @@ public class TenTenV2 extends ShinobiRoles {
                                 map.put("snowball", snow);
                                 if (checkUse(damager, map)) {
                                     getRole().damage(victim, 2.0, 1, damager, true);
-                                    damager.sendMessage(victim.getDisplayName()+"§7 à subit les effets de votre§a Kunai");
+                                    damager.sendMessage(victim.getDisplayName()+"§7 a subi les effets de votre§a Kunai");
                                     victim.sendMessage("§7Vous avez été touché par le§a Kunai§7 de§a Tenten");
                                     snow.removeMetadata(getRole().StringID, Main.getInstance());
                                     getRole().giveItem(damager, false, getItem());
@@ -175,7 +175,7 @@ public class TenTenV2 extends ShinobiRoles {
                     return;
                 }
                 if (i == 0) {
-                    this.parcheminItem.getRole().getGamePlayer().sendMessage("§7Votre zone de§a Parchemin§7 c'est terminé");
+                    this.parcheminItem.getRole().getGamePlayer().sendMessage("§7Votre zone de§a Parchemin§7 s'est terminée");
                     cancel();
                     return;
                 }

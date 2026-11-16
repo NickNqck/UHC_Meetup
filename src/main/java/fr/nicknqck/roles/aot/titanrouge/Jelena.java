@@ -105,7 +105,7 @@ public class Jelena extends TitansRoles {
 						invuse-=1;
 						owner.sendMessage("Il ne vous reste que "+(invuse)+" utilisation(s) du§6 /aot inv");
 						} else {
-						owner.sendMessage("Vous avez atteind le maximum d'utilisation de cette commande (2)");
+						owner.sendMessage("Vous avez atteint le maximum d'utilisation de cette commande (2)");
 					}
 				}else {
 					owner.sendMessage("La cible n'a pas de rôle !");

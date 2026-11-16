@@ -50,7 +50,7 @@ public class AllianceV2 extends Event implements Listener {
             if (this.shinjuro != null && this.kyojuro != null && this.shinjuro instanceof IAllianceRole && this.kyojuro instanceof IAllianceRole) {
                 this.kyojuro.setTeam(TeamList.Alliance, true);
                 this.kyojuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
-                this.kyojuro.getGamePlayer().sendMessage("Vous avez convaincue votre père d'arrêter l'alcool, temp que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
+                this.kyojuro.getGamePlayer().sendMessage("Vous avez convaincu votre père d'arrêter l'alcool, tant que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
                 this.kyojuro.giveHealedHeartatInt(2);
                 this.kyojuro.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
                 ((IAllianceRole) this.kyojuro).setInAlliance(true);
@@ -101,7 +101,7 @@ public class AllianceV2 extends Event implements Listener {
     public String[] getExplications() {
         return new String[] {
                 "§7Fait en sorte que§a Kyojuro§7 et§e Shinjuro§7 (§6V1§7) sois en alliance et gagne ensemble,",
-                "§7pour les aidées ils gagnent l'effet§c Force I§7 proche l'un de l'autre",
+                "§7pour les aider ils gagnent l'effet§c Force I§7 proche l'un de l'autre",
                 "§1",
                 "§8 -§e Shinjuro§7: Il perdra son§c Sake§7 mais gagnera un traqueur permanent vers§a Kyojuro§7.",
                 "",

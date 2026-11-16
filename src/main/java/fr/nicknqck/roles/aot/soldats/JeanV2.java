@@ -89,7 +89,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            player.sendMessage("§bVotre§a fusé§b partira dans§c 15 secondes§b.");
+            player.sendMessage("§bVotre§a fusée§b partira dans§c 15 secondes§b.");
             new LaunchFuseRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0L, 20L);
             return true;
         }
@@ -140,7 +140,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
                     cancel();
                     return;
                 }
-                gamePlayer.getActionBarManager().updateActionBar("jean.fuse", "§bPréparation en cours de la§a fusé§b (§c"+ StringUtils.secondsTowardsBeautiful(this.time)+"§b)");
+                gamePlayer.getActionBarManager().updateActionBar("jean.fuse", "§bPréparation en cours de la§a fusée§b (§c"+ StringUtils.secondsTowardsBeautiful(this.time)+"§b)");
                 this.time--;
             }
             private synchronized void createFirework(Location location, Color color) {

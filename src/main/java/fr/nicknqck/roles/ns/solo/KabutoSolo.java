@@ -506,7 +506,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
                                 this.adnPower.particle2Map.remove(uuid);
                             } else {
                                 this.timesMap.put(uuid, integer);
-                                owner.sendMessage("§7Vous êtes entrain de récupérer l'§cadn§7 de§a "+this.adnPower.roleBaseMap.get(uuid).getGamePlayer().getPlayerName()+"§7, plus que§c "+(10-integer)+"s");
+                                owner.sendMessage("§7Vous êtes en train de récupérer l'§cadn§7 de§a "+this.adnPower.roleBaseMap.get(uuid).getGamePlayer().getPlayerName()+"§7, plus que§c "+(10-integer)+"s");
                             }
                         }
                     }

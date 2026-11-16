@@ -131,7 +131,7 @@ public class HokageManager implements Listener {
                     gamePlayer.getRole().addPower(new NSInfo(gamePlayer.getRole()));
                     GameListener.SendToEveryone(AllDesc.bar);
                     gamePlayer.sendMessage("§7Vous êtes devenu le nouvel§e Hokage§7, vous avez maintenant accès à la commande§e /ns boost <joueur>§7 qui donnera au joueurs visé§c +5§7 de§c Force§7 et de§9 Résistance",
-                            "§7Vous avez maintenant également accès à la commande§6 /ns infos§7, ces deux commandes sont utilisable §c1x/partie");
+                            "§7Vous avez maintenant également accès à la commande§6 /ns infos§7, ces deux commandes sont utilisables §c1x/partie");
                     Main.getInstance().getServer().getScheduler().runTask(Main.getInstance(), () -> Main.getInstance().getServer().getPluginManager().callEvent(new GamePlayerBecomeHokageEvent(gamePlayer)));
                 } else {
                     GameListener.SendToEveryone("§bLe conseil n'a trouvé personne pour devenir le nouveau§e Hokage§b, le village est attristé par cette nouvelle.");

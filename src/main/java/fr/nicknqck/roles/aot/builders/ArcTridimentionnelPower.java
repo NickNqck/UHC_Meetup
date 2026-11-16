@@ -58,7 +58,7 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
                     }
                     return map.isEmpty();
                 } else {
-                    player.sendMessage("§cRéserve de§b gaz vespène§c épuiser. ");
+                    player.sendMessage("§cRéserve de§b gaz vespène§c épuisée. ");
                 }
             }
         }

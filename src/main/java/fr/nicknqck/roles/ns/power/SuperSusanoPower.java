@@ -140,7 +140,7 @@ public class SuperSusanoPower extends ItemPower {
             if (this.particleLine != null) {
                 this.particleLine.stop();
             }
-            this.superSusanoPower.getRole().getGamePlayer().sendMessage("§7[§6UHC-Meetup§7] Votre§c§l Susanô§7 a été §c désactiver§7.");
+            this.superSusanoPower.getRole().getGamePlayer().sendMessage("§7[§6UHC-Meetup§7] Votre§c§l Susanô§7 a été §c désactivé§7.");
             if (this.superSusanoPower.subSusanoPower != null) {
                 this.superSusanoPower.subSusanoPower.onSusanoEnd();
             }

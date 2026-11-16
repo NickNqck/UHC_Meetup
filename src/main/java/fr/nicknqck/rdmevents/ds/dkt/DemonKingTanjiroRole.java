@@ -110,8 +110,8 @@ public class DemonKingTanjiroRole extends DemonsRoles implements Listener {
                     }
                     WorldUtils.createBeautyExplosion(event.getEntity().getLocation(), 3, true);
                     Heal(((Player) event.getEntity()), -2);
-                    event.getDamager().sendMessage("§7Vous avez touchez: §c"+ event.getEntity().getName()+"§7 avec votre "+((Player) event.getDamager()).getItemInHand().getItemMeta().getDisplayName());
-                    event.getEntity().sendMessage("§7Vous avez été toucher par la "+((Player) event.getDamager()).getItemInHand().getItemMeta().getDisplayName()+"§7 de§c "+getName());
+                    event.getDamager().sendMessage("§7Vous avez touché: §c"+ event.getEntity().getName()+"§7 avec votre "+((Player) event.getDamager()).getItemInHand().getItemMeta().getDisplayName());
+                    event.getEntity().sendMessage("§7Vous avez été touché par la "+((Player) event.getDamager()).getItemInHand().getItemMeta().getDisplayName()+"§7 de§c "+getName());
                     cdEnergie = 120;
                 }
             }

@@ -158,7 +158,7 @@ public class KarinV2 extends OrochimaruRoles {
                 }
                 morsureItem.timeLastUseHeal--;
                 if (morsureItem.timeLastUseHeal == 0) {
-                    this.morsureItem.getRole().getGamePlayer().sendMessage("§dMorsure§7 peut à nouveau être utiliser sans aucun§c contre-coup§7.");
+                    this.morsureItem.getRole().getGamePlayer().sendMessage("§dMorsure§7 peut à nouveau être utilisée sans aucun§c contre-coup§7.");
                 }
             }
         }

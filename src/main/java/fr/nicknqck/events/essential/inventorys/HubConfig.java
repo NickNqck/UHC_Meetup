@@ -65,11 +65,11 @@ public class HubConfig implements Listener {
                         if (AntiPvP.isAntipvplobby()) {
                             AntiPvP.setAntipvplobby(false);
                             player.sendMessage("Vous venez d'activer le PvP dans le Lobby");
-                            Bukkit.broadcastMessage("Un administrateur à activer le PvP dans le Lobby");
+                            Bukkit.broadcastMessage("Un administrateur a activé le PvP dans le Lobby");
                         } else {
                             AntiPvP.setAntipvplobby(true);
                             player.sendMessage("Vous venez de désactiver le PvP dans le lobby");
-                            Bukkit.broadcastMessage("Un administrateur à desactiver le PvP dans le Lobby");
+                            Bukkit.broadcastMessage("Un administrateur a désactivé le PvP dans le Lobby");
                         }
                     }  else if (item.isSimilar(GUIItems.getCrit(gameState))  && ChatRank.isHost(player)) {
                         if (action.equals(InventoryAction.PICKUP_ALL)) {

@@ -149,7 +149,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                 if (this.gameAssassin != null) {
                     if (this.gameAssassin.getUuid().equals(event.getPlayer().getUniqueId())) {
                         getEffects().put(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-                        event.getGamePlayerKiller().sendMessage("§7Vous avez venger votre famille, vous recevez l'effet§c Force I§7 de manière§c permanente");
+                        event.getGamePlayerKiller().sendMessage("§7Vous avez vengé votre famille, vous recevez l'effet§c Force I§7 de manière§c permanente");
                     }
                 }
             }

@@ -199,7 +199,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
                 player.sendMessage("§7Vous avez§a activé§7 votre§e souffle du Soleil§7.");
             } else {
                 active = false;
-                player.sendMessage("§7Vous avez§c désactiver§7 voter§e souffle du Soleil§7.");
+                player.sendMessage("§7Vous avez§c désactivé§7 votre§e souffle du Soleil§7.");
             }
             return true;
         }

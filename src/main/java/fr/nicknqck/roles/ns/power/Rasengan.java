@@ -37,7 +37,7 @@ public class Rasengan extends ItemPower {
             loc.setPitch(0);
             event.getEntity().setVelocity(loc.getDirection().multiply(3.0));
             player.sendMessage("§aRASENGAN !");
-            event.getEntity().sendMessage("§7Vous avez été toucher par un§a Rasengan");
+            event.getEntity().sendMessage("§7Vous avez été touché par un§a Rasengan");
             event.setCancelled(true);
             return true;
         }

@@ -102,7 +102,7 @@ public class TitanUltime extends TitansRoles {
 					giveHealedHeartatInt(owner, 3);
 					owner.getInventory().remove(owner.getItemInHand());
 					GameListener.SendToEveryone("");
-					GameListener.SendToEveryone("§6§lLE TITAN ULTIME VIENS DE CE TRANSFORMER");
+					GameListener.SendToEveryone("§6§lLE TITAN ULTIME VIENT DE SE TRANSFORMER");
 					GameListener.SendToEveryone("");
 					owner.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 					for (Player p : Bukkit.getOnlinePlayers()) {

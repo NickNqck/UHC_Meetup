@@ -193,7 +193,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                                 target.damage(0.0);
                             });
                             this.gamePlayer.sendMessage("§b"+this.nameTarget+"§f à subit§c 2❤§f de§c dégâts");
-                            target.sendMessage("§aGyomei§f vous a infliger§c 2❤§f de dégâts");
+                            target.sendMessage("§aGyomei§f vous a infligé§c 2❤§f de dégâts");
                         } else {
                             this.gamePlayer.sendMessage("§b"+this.nameTarget+"§c à déconnecter, il n'a donc pas subit les dégâts voulu");
                         }
@@ -221,7 +221,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                 final Location location = player.getLocation();
                 location.add(location.getDirection().add(new Vector(1, 0, 1)));
                 target.teleport(location);
-                target.sendMessage("§aGyomei§7 vous à attirer à sa position");
+                target.sendMessage("§aGyomei§7 vous a attiré à sa position");
                 player.sendMessage("§cVous avez récupérer§b "+target.getDisplayName());
                 target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 1, false, false), true);
                 return true;
