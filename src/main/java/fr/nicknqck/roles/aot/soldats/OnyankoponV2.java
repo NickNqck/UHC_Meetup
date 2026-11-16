@@ -84,12 +84,14 @@ public class OnyankoponV2 extends SoldatsRoles {
                         }
                         final GamePlayer gamePlayer = getRole().getGamePlayer();
                         if (!gamePlayer.check()) {
+                            adnParticle2.getAdnRunnable().cancel();
                             cancel();
                             return;
                         }
                         adnParticle2.setCenter(gamePlayer.getLastLocation());
                         if (this.time <= 0) {
                             gamePlayer.getActionBarManager().removeInActionBar("onyankopon.tp");
+                            adnParticle2.getAdnRunnable().cancel();
                             Bukkit.getScheduler().runTask(getPlugin(), () -> {
                                 final Location loc = Loc.getLocationAtDistance(gamePlayer.getLastLocation(), 150);
                                 for (GamePlayer nearbyGamePlayer : Loc.getNearbyGamePlayers(gamePlayer.getLastLocation(), 8.0)) {
