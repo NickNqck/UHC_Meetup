@@ -141,7 +141,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
             } else {
                 obanai.sendMessage("§dMitsuri§a vous appel, vous devriez essayez de la rejoindre, elle se situt à environ §c"+((int)distance)+"§a de vous§c "+ ArrowTargetUtils.calculateArrow(obanai,player.getLocation()));
                 player.sendMessage("§7Vous avez envoyez votre position à §aObanai§7.");
-                new TrouveMoi(obanai.getUniqueId(), mitsuriV2);
+                new TrouveMoi(obanai.getUniqueId(), mitsuriV2).runTaskTimer(Main.getInstance(), 0, 20);
             }
             return true;
         }
