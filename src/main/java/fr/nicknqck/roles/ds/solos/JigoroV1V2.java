@@ -173,7 +173,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                     if (!event.getAction().name().contains("RIGHT")) return false;
                     if (player.getItemInHand() == null) return false;
                     if (!player.getItemInHand().hasItemMeta()) return false;
-                    if (!"§eOrage Brûlant".equals(player.getItemInHand().getItemMeta().getDisplayName())) return false;
+                    if (!"§eQuatrième mouvement: Orage Brûlant".equals(player.getItemInHand().getItemMeta().getDisplayName())) return false;
 
                     Player target = getShowGlowingRunnable().getTarget();
                     if (target == null) {
