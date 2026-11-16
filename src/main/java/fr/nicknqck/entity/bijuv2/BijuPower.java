@@ -87,7 +87,7 @@ public class BijuPower extends ItemPower {
             }
             if (this.timeRemaining <= 0) {
                 this.gamePlayer.getActionBarManager().removeInActionBar("bijurunnable."+this.bijuPower.getBiju().getName());
-                this.bijuPower.getBiju().onEnd(this.gamePlayer.getRole());
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.bijuPower.getBiju().onEnd(this.gamePlayer.getRole()));
                 this.gamePlayer.sendMessage("§7Vous n'êtes plus sous l'effet de "+this.bijuPower.getBiju().getName()+"§7.");
                 cancel();
                 return;
