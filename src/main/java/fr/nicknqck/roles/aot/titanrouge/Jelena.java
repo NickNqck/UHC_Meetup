@@ -58,6 +58,10 @@ public class Jelena extends TitansRoles {
 		if (args.length == 2) {
 			if (args[1] != null) {
 				Player target = Bukkit.getPlayer(args[1]);
+				if (target == null) {
+					owner.sendMessage("§cCe joueur n'est pas connecté !");
+					return;
+				}
 				if (!gameState.hasRoleNull(target.getUniqueId())) {
 					if (invuse > 0) {
 						   // Créer un nouvel inventaire avec la taille d'un double coffre (54 emplacements)
