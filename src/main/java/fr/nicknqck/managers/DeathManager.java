@@ -91,7 +91,9 @@ public class DeathManager implements Listener {
     public void ReelKillHandler(@NonNull final Player killedPlayer, @Nullable final Entity entityKiller) {
         final GameState gameState = GameState.getInstance();
         final GamePlayer gamePlayerKiller = entityKiller == null ? null : GamePlayer.of(entityKiller.getUniqueId());
-        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), gamePlayerKiller);
+        final GamePlayer killedGamePlayer = gameState.getGamePlayer().get(killedPlayer.getUniqueId());
+        final RoleBase killedRole = killedGamePlayer == null ? null : killedGamePlayer.getRole();
+        UHCDeathEvent uhcDeathEvent = new UHCDeathEvent(killedPlayer, gameState, killedRole, gamePlayerKiller);
         Bukkit.getPluginManager().callEvent(uhcDeathEvent);
         if (uhcDeathEvent.isCancelled()) {
             return;
@@ -119,7 +121,7 @@ public class DeathManager implements Listener {
         final List<GamePlayer> assists = Main.getInstance().getAssistManager() == null
                 ? new ArrayList<>()
                 : Main.getInstance().getAssistManager().giveAssists(killedPlayer, entityKiller);
-        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, gameState.getGamePlayer().get(killedPlayer.getUniqueId()).getRole(), entityKiller, assists);
+        final FinalDeathEvent finalDeathEvent = new FinalDeathEvent(killedPlayer, gameState, killedGamePlayer == null ? null : killedGamePlayer.getRole(), entityKiller, assists);
         Bukkit.getPluginManager().callEvent(finalDeathEvent);
         //damager = le tueur
         //player = la victim/le mort
