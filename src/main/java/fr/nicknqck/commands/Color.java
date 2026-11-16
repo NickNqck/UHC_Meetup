@@ -157,6 +157,7 @@ public class Color implements CommandExecutor, Listener {
             if (event.getInventory().getTitle().equals("§cChoix des couleurs")) {
                 if (event.getWhoClicked() == null)return;
                 if (event.getWhoClicked().getUniqueId().equals(uuid)) {
+                    event.setCancelled(true);
                     if (event.getCurrentItem() == null)return;
                     if (event.getCurrentItem().getItemMeta() == null)return;
                     if (event.getCurrentItem().getItemMeta().getDisplayName() == null)return;
