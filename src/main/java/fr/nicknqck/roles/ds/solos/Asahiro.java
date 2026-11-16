@@ -304,6 +304,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         }
         @EventHandler
         private void onDamage(@NonNull final EntityDamageByEntityEvent event) {
+            if (!event.getDamager().getUniqueId().equals(getRole().getPlayer())) return;
             if (this.pointsRunnable.map.getOrDefault(event.getEntity().getUniqueId(), 0) >= this.pointsRunnable.maxTime) {
                 event.setDamage(event.getDamage()*(1+((double) Main.getInstance().getGameConfig().getForcePercent() /100)/2));
             }
