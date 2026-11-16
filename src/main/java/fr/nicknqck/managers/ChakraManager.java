@@ -86,8 +86,6 @@ public class ChakraManager implements Listener {
 
         // On ne complète que pour "/ns <arg>" en cours de frappe du 2e argument
         final String lastToken = event.getLastToken();
-        event.getPlayer().sendMessage(lastToken);
-        event.getPlayer().sendMessage("l="+args.length);
         if (args.length != 2) return;
         if (!args[0].equalsIgnoreCase("/ns")) return;
 
