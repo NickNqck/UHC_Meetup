@@ -146,6 +146,7 @@ public class TitanUltime extends TitansRoles {
 			if (invvide && killtitan) {
 				if (countEmptySlots(owner) > 0 ) {
 					owner.getInventory().addItem(getItems());
+					invvide = false;
 				}else {
 					owner.sendMessage("Votre inventaire est remplie veuiller le vidée pour obtenir la§6§l Transformation Ultime");
 				}
