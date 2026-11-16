@@ -218,7 +218,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
         private void onEat(final PlayerItemConsumeEvent event) {
             if (this.inSoleil.containsKey(event.getPlayer().getUniqueId())) {
                 final Long currentTime = System.currentTimeMillis();
-                if (inSoleil.get(event.getPlayer().getUniqueId()) - currentTime <= 10000) {
+                if (currentTime - inSoleil.get(event.getPlayer().getUniqueId()) <= 10000) {
                     final Player player = event.getPlayer();
                     Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20*6, 0, false, false), true);
