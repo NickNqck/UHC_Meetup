@@ -207,7 +207,7 @@ public class HubListener implements Listener {
 	public void giveOriginelInventory(final Player p) {
 		p.getInventory().setItem(0, Items.getdiamondsword());
 		p.getInventory().setItem(2, Items.getbow());
-		if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() == 1) {
+		if (Main.getInstance().getGameConfig().getStuffConfig().getPearl() > 0) {
 			p.getInventory().setItem(4, new ItemStack(Material.ENDER_PEARL, Main.getInstance().getGameConfig().getStuffConfig().getPearl()));
 		}
 		p.getInventory().setItem(5, new ItemStack(Material.GOLDEN_CARROT, 64));
