@@ -63,7 +63,7 @@ public class BertoltV2 extends MahrRoles implements Listener {
                         continue;
                     }
                 }
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 60, 0, false, false));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*30, 0, false, false));
             }
         }
     }
