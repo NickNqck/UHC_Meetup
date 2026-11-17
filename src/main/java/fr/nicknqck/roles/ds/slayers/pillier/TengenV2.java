@@ -171,7 +171,7 @@ public class TengenV2 extends PilierRoles {
                 this.attaqueFurtive = attaqueFurtive;
                 this.gameState = attaqueFurtive.getRole().getGameState();
                 this.timeRemaining = 60;
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                runTaskTimer(Main.getInstance(), 0, 20);
                 attaqueFurtive.getRole().getGamePlayer().getActionBarManager().addToActionBar("tengenv2.attaquefurtive", "§bTemp d'invisibilité restant:§c "+ StringUtils.secondsTowardsBeautiful(timeRemaining));
             }
 
