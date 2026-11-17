@@ -375,6 +375,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                                 if (i <= 0) {
                                     getRole().getGamePlayer().sendMessage("§7Votre zone ne fait plus d'effet");
                                     cancel();
+                                    return;
                                 }
                                 for (Player p : Loc.getNearbyPlayersExcept(event.getEntity(), 25, (Player) event.getEntity().getShooter())) {
                                     p.damage(0.0);
