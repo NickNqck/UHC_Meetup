@@ -175,7 +175,8 @@ public class Sieg extends TitansRoles {
                 if (!this.gamePlayer.isAlive() || !Main.getInstance().getTitanManager().hasTitan(this.gamePlayer.getUuid())) {
                     return;
                 }
-                if (!power.checkUse(Bukkit.getPlayer(this.gamePlayer.getUuid()), new HashMap<>())) {
+                final Player sieg = Bukkit.getPlayer(this.gamePlayer.getUuid());
+                if (sieg == null || !power.checkUse(sieg, new HashMap<>())) {
                     return;
                 }
                 @NonNull TitanBase titan = Main.getInstance().getTitanManager().getTitan(this.gamePlayer.getUuid());
