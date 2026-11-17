@@ -93,7 +93,7 @@ public abstract class PortesRoles extends HShinobiRoles implements Listener {
                     player.sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
                     return false;
                 }
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60 + 30, 0, false, false), true);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 90, 0, false, false), true);
                 if (event.getPlayer().getHealth() - 2.0 <= 0.0) {
                     event.getPlayer().setHealth(1.0);
                 } else {
