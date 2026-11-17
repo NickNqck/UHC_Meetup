@@ -179,6 +179,7 @@ public class GabiV2 extends AotRoles implements Listener {
             for (final GamePlayer gamePlayer : copyList) {
                 if (!gabi.isGamePlayerGood(gamePlayer)) {
                     this.gabi.titanList.remove(gamePlayer);
+                    continue;
                 }
                 if (!gamePlayer.getLastLocation().getWorld().equals(gabi.getGamePlayer().getLastLocation().getWorld())) {
                     continue;
