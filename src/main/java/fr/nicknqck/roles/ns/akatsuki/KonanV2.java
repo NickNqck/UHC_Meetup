@@ -288,7 +288,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                             ((Player) entity).setHealth(Math.max(1.0, ((Player) entity).getHealth()-3.0));
                             MathUtil.sendParticle(EnumParticle.EXPLOSION_HUGE, entity.getLocation());
                             target++;
-                            entity.sendMessage("§7Vous avez été toucher par un§c parchemin explosif§7.");
+                            entity.sendMessage("§7Vous avez été touché par un§c parchemin explosif§7.");
                         }
                     }
                     this.locations.clear();

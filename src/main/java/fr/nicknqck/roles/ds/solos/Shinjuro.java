@@ -230,7 +230,7 @@ public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
                 activate = true;
             } else {
                 EventUtils.unregisterEvents(this);
-                player.sendMessage(Main.getInstance().getNAME()+"§7 Vous§c désactiver§7 votre§6 /ds flamme§7.");
+                player.sendMessage(Main.getInstance().getNAME()+"§7 Vous§c désactivez§7 votre§6 /ds flamme§7.");
                 this.activate = false;
             }
             return true;

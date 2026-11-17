@@ -151,7 +151,7 @@ public class DomaV2 extends DemonsRoles {
                             if (gamePlayer == null)continue;
                             if (!gamePlayer.isOnline())continue;
                             if (!gamePlayer.isAlive())continue;
-                            player.sendMessage("§7Vous avez touché par la§b décharge de gèle§7 de§c Doma§7.");
+                            player.sendMessage("§7Vous avez été touché par la§b décharge de gel§7 de§c Doma§7.");
                             if (gamePlayer.getRole() == null) {
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*30, 1, false, false), true);
                                 continue;
@@ -186,10 +186,10 @@ public class DomaV2 extends DemonsRoles {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (!activate) {
                 activate = true;
-                player.sendMessage("§7Votre§b gèle§7 est maintenant§a activer§7.");
+                player.sendMessage("§7Votre§b gel§7 est maintenant§a activé§7.");
             } else {
                 activate = false;
-                player.sendMessage("§7Votre§b gèle§7 est maintenant§c désactiver§7.");
+                player.sendMessage("§7Votre§b gel§7 est maintenant§c désactivé§7.");
             }
             return true;
         }

@@ -527,7 +527,7 @@ public class CrystalManager implements Listener {
                             ?
                             "est§a utilisable"
                             :
-                            "a atteint son§c utilisation maximal§f."
+                            "a atteint son§c utilisation maximale§f."
                     )
             );
         }

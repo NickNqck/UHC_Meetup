@@ -215,7 +215,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
                 this.power = power;
                 runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
                 this.power.invisible = true;
-                this.power.getRole().getGamePlayer().getActionBarManager().addToActionBar("zetsu.invisibilite", "§bTemp d'invisibilité:§c 60s");
+                this.power.getRole().getGamePlayer().getActionBarManager().addToActionBar("zetsu.invisibilite", "§bTemps d'invisibilité:§c 60s");
             }
 
             @Override
@@ -231,7 +231,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
                 }
                 timeLeft--;
                 int toshow = timeLeft/20;
-                this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("zetsu.invisibilite", "§bTemp d'invisibilité:§c "+(StringUtils.secondsTowardsBeautiful((60*5)-toshow)));
+                this.power.getRole().getGamePlayer().getActionBarManager().updateActionBar("zetsu.invisibilite", "§bTemps d'invisibilité:§c "+(StringUtils.secondsTowardsBeautiful((60*5)-toshow)));
                 for (Player p : zabuza.getGamePlayer().getLastLocation().getWorld().getPlayers()) {
                     final GamePlayer gamePlayer = GamePlayer.of(p.getUniqueId());
                     if (gamePlayer == null)continue;

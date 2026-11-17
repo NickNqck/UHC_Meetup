@@ -143,7 +143,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 "§8 -§c Épée du§b Tenseigan§7: Permet de passer à travers la résistance des joueurs frappés,",
                 "§7elle est également enchantée tranchant III",
                 "",
-                "§cLa personne ayant été toucher par l'event restera§e Solitaire§7 jusqu'a la fin de la partie",
+                "§cLa personne ayant été touchée par l'event restera§e Solitaire§7 jusqu'à la fin de la partie",
                 "§7(§cCela outrepasse aussi l'infection de§e§l Shisui§r§7)",
                 "",
                 "§fL'annonce de l'évènement ce fera après que l'utilisateur ai utiliser pendant§c 1 minute",

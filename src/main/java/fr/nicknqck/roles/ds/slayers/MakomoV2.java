@@ -71,7 +71,7 @@ public class MakomoV2 extends SlayerRoles implements Listener{
     }
     public void targetedByUrokodaki() {
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 80, 1, false, false), EffectWhen.DAY);
-        getGamePlayer().sendMessage("§7Vous avez gagnez l'effet§e Speed II§7 le§c jour§7.");
+        getGamePlayer().sendMessage("§7Vous avez gagné l'effet§e Speed II§7 le§c jour§7.");
         this.targetByUrokodaki = true;
     }
     @EventHandler
@@ -185,7 +185,7 @@ public class MakomoV2 extends SlayerRoles implements Listener{
                         owner.sendMessage("§7Votre§b liquéfaction§7 a atteint§c "+target.getDisplayName()+"§7.");
                         this.step++;
                         target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*30, 0, false, false), true);
-                        target.sendMessage("§7Vous avez été toucher par la§b liquéfaction§7 de§a Makomo§7.");
+                        target.sendMessage("§7Vous avez été touché par la§b liquéfaction§7 de§a Makomo§7.");
                         return;
                     }
                 }

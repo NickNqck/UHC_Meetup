@@ -172,7 +172,7 @@ public class TengenV2 extends PilierRoles {
                 this.gameState = attaqueFurtive.getRole().getGameState();
                 this.timeRemaining = 60;
                 runTaskTimer(Main.getInstance(), 0, 20);
-                attaqueFurtive.getRole().getGamePlayer().getActionBarManager().addToActionBar("tengenv2.attaquefurtive", "§bTemp d'invisibilité restant:§c "+ StringUtils.secondsTowardsBeautiful(timeRemaining));
+                attaqueFurtive.getRole().getGamePlayer().getActionBarManager().addToActionBar("tengenv2.attaquefurtive", "§bTemps d'invisibilité restant:§c "+ StringUtils.secondsTowardsBeautiful(timeRemaining));
             }
 
             @Override
@@ -188,7 +188,7 @@ public class TengenV2 extends PilierRoles {
                     cancel();
                     return;
                 }
-                this.attaqueFurtive.getRole().getGamePlayer().getActionBarManager().updateActionBar("tengenv2.attaquefurtive", "§bTemp d'invisibilité restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                this.attaqueFurtive.getRole().getGamePlayer().getActionBarManager().updateActionBar("tengenv2.attaquefurtive", "§bTemps d'invisibilité restant:§c "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                 timeRemaining--;
             }
         }

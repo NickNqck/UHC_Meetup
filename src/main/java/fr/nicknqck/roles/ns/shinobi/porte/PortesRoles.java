@@ -90,7 +90,7 @@ public abstract class PortesRoles extends HShinobiRoles implements Listener {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
                 if (role.huitUsed) {
-                    player.sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
+                    player.sendMessage("§cVous avez déjà utilisé toute votre espérance de vie");
                     return false;
                 }
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 90, 0, false, false), true);
@@ -117,7 +117,7 @@ public abstract class PortesRoles extends HShinobiRoles implements Listener {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
                 if (role.huitUsed) {
-                    event.getPlayer().sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
+                    event.getPlayer().sendMessage("§cVous avez déjà utilisé toute votre espérance de vie");
                     return false;
                 }
                 if (role.getMaxHealth() - 2.0 <= 0) {
@@ -148,7 +148,7 @@ public abstract class PortesRoles extends HShinobiRoles implements Listener {
                 PlayerInteractEvent event = (PlayerInteractEvent) args.get("event");
                 event.setCancelled(true);
                 if (role.huitUsed) {
-                    event.getPlayer().sendMessage("§cVous avez déjà utiliser toute votre espérence de vie");
+                    event.getPlayer().sendMessage("§cVous avez déjà utilisé toute votre espérance de vie");
                     return false;
                 }
                 new DoubleCircleEffect(20*60*5, EnumParticle.REDSTONE, 171, 34, 19).start(role.owner);

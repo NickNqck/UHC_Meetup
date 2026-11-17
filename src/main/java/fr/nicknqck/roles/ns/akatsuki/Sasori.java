@@ -542,7 +542,7 @@ public class Sasori extends AkatsukiRoles {
                 if (dot < -0.5) {
                     double newDamage = event.getDamage() * 0.8;
                     event.setDamage(newDamage);
-                    victim.sendMessage("§7Vous avez subit§c 20%§7 de§c dégâts§7 en§c moins§7.");
+                    victim.sendMessage("§7Vous avez subi§c 20%§7 de§c dégâts§7 en§c moins§7.");
                 }
             }
             @EventHandler
@@ -562,7 +562,7 @@ public class Sasori extends AkatsukiRoles {
                             }
                         }
                     }
-                    victim.sendMessage("§7Vous avez été toucher par§c Hiruko§7.");
+                    victim.sendMessage("§7Vous avez été touché par§c Hiruko§7.");
                 }
             }
         }

@@ -121,7 +121,7 @@ public class Choji extends ShinobiRoles {
                 getRole().givePotionEffect(this.hunger, EffectWhen.PERMANENT);
             } else {
                 getRole().getEffects().remove(this.hunger);
-                player.sendMessage("§7Vous avez§c désactiver§7 votre§a gloutonnerie§7.");
+                player.sendMessage("§7Vous avez§c désactivé§7 votre§a gloutonnerie§7.");
                 this.activate = false;
             }
             return true;

@@ -60,9 +60,9 @@ public class Doton implements IChakraV2, Listener {
 				event.setDamage(0.0);
 				event.setCancelled(true);
 				((Player) event.getEntity()).setNoDamageTicks(20);
-				event.getEntity().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez esquiver un coup grace au§6 Doton§7.");
+				event.getEntity().sendMessage(Main.getInstance().getNAME()+"§7 Vous avez esquivé un coup grâce au§6 Doton§7.");
 				if (event instanceof EntityDamageByEntityEvent) {
-					((EntityDamageByEntityEvent) event).getDamager().sendMessage(Main.getInstance().getNAME()+"§c "+event.getEntity().getName()+"§7 a esquiver un coup grace au§6 Doton§7.");
+					((EntityDamageByEntityEvent) event).getDamager().sendMessage(Main.getInstance().getNAME()+"§c "+event.getEntity().getName()+"§7 a esquivé un coup grâce au§6 Doton§7.");
 				}
 			}
 		}

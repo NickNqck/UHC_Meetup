@@ -203,7 +203,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                         return;
                     }
                     this.sharinganPower.Copied.put(this.sharinganPower.targetOfCopy.getName(), event.getGameTarget().getRole().getPermanentPotionEffects(event.getGameTarget().getPlayer()));
-                    this.sharinganPower.getRole().getGamePlayer().sendMessage("§7La copie est terminer.");
+                    this.sharinganPower.getRole().getGamePlayer().sendMessage("§7La copie est terminée.");
                     this.sharinganPower.targetOfCopy = null;
                     return;
                 }

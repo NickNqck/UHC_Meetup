@@ -227,7 +227,7 @@ public class TomiokaV2 extends PilierRoles {
                             }
                         }
                         if (!roleName.isEmpty()) {
-                            getRole().getGamePlayer().sendMessage("§7Vous allez donc devoir endosser les résponsabilités de la mort de "+roleName+"§7, vous avez maintenant§c l'effet "+effectName+"§7 le§e jour");
+                            getRole().getGamePlayer().sendMessage("§7Vous allez donc devoir endosser les responsabilités de la mort de "+roleName+"§7, vous avez maintenant§c l'effet "+effectName+"§7 le§e jour");
                         }
                     });
                 }
@@ -254,7 +254,7 @@ public class TomiokaV2 extends PilierRoles {
             if (roleBase instanceof Tanjiro) {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.DAY);
                 this.firstKill = true;
-                getRole().getGamePlayer().sendMessage("§aTanjiro§7 est§c mort§7, vous devez lui faire hônneur en étant aussi fort qu'il l'était, vous obtenez §cl'effet Force I§7 le§e jour");
+                getRole().getGamePlayer().sendMessage("§aTanjiro§7 est§c mort§7, vous devez lui faire honneur en étant aussi fort qu'il l'était, vous obtenez §cl'effet Force I§7 le§e jour");
             } else if (roleBase instanceof SabitoV2) {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
                 this.firstKill = true;

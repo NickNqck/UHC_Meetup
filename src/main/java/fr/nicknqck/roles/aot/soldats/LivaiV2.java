@@ -109,7 +109,7 @@ public class LivaiV2 extends SoldatsRoles implements Listener, Ackerman {
         if (most != null) {
             this.master = most;
             this.master.setAckerman(this);
-            getGamePlayer().sendMessage("§7Un§a maitre§7 vous a été désigner, vous saurez qui sait en vous approchant de lui");
+            getGamePlayer().sendMessage("§7Un§a maitre§7 vous a été désigné, vous saurez qui c'est en vous approchant de lui");
             addPower(this.ackermanPower);
         } else {
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

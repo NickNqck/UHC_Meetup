@@ -69,7 +69,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
     @EventHandler
     private void onDeath(@NonNull final FinalDeathEvent event) {
         if (event.getRole() instanceof ConnyV2 || event.getRole() instanceof SashaV2) {
-            getGamePlayer().sendMessage("§7Un ami extrêmement proche de vous est mort, heureusement il a eu le temps de vous envoyez sa position,§c x§7:§c "+event.getPlayer().getLocation().getBlockX()+"§7,§c y§7:§c "+event.getPlayer().getLocation().getBlockY()+"§7 et§c z§7:§c "+event.getPlayer().getLocation().getBlockZ());
+            getGamePlayer().sendMessage("§7Un ami extrêmement proche de vous est mort, heureusement il a eu le temps de vous envoyer sa position,§c x§7:§c "+event.getPlayer().getLocation().getBlockX()+"§7,§c y§7:§c "+event.getPlayer().getLocation().getBlockY()+"§7 et§c z§7:§c "+event.getPlayer().getLocation().getBlockZ());
         }
     }
     private static final class FuseCommand extends CommandPower {

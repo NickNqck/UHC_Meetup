@@ -95,7 +95,7 @@ public class InosukeV2 extends SlayerRoles {
                 traque = true;
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     if (traque) {
-                        player.sendMessage("§cVous avez mis trop de temp à vous décidez, vous ne pouvez plus traquer personne.");
+                        player.sendMessage("§cVous avez mis trop de temps à vous décider, vous ne pouvez plus traquer personne.");
                         traque = false;
                         setWorkWhenInCooldown(false);
                     }
@@ -162,11 +162,11 @@ public class InosukeV2 extends SlayerRoles {
                     "",
                     "§8 • §7Vous obtiendrez le§c nombre§7 de§c point de vie§7 du joueur visé,",
                     "",
-                    "§8 • §7Vous saurrez si le joueur possède l'effet§c force§7 et/ou l'effet§c faiblesse",
+                    "§8 • §7Vous saurez si le joueur possède l'effet§c force§7 et/ou l'effet§c faiblesse",
                     "",
-                    "§8 • §7Vous saurrez si le joueur possède l'effet§c vitesse§7 et/ou l'effet§c lenteur",
+                    "§8 • §7Vous saurez si le joueur possède l'effet§c vitesse§7 et/ou l'effet§c lenteur",
                     "",
-                    "§8 • §7Vous saurrez si le joueur possède l'effet§c résistance§7 ou non");
+                    "§8 • §7Vous saurez si le joueur possède l'effet§c résistance§7 ou non");
         }
 
         @Override

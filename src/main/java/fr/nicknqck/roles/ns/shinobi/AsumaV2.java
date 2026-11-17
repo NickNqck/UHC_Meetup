@@ -106,7 +106,7 @@ public class AsumaV2 extends HShinobiRoles {
                 for (Player p : playerList) {
                     if (player.canSee(p)) {
                         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20*20, 0, false, false), true);
-                        p.sendMessage(getPlugin().getNAME()+"§7Vous venez d'être toucher par la§a Nuées Ardentes §7de§a Asuma");
+                        p.sendMessage(getPlugin().getNAME()+"§7Vous venez d'être touché par les§a Nuées Ardentes §7de§a Asuma");
                         player.sendMessage(getPlugin().getNAME()+"§7§l"+p.getName()+"§7 a été touchée");
                     }
                 }

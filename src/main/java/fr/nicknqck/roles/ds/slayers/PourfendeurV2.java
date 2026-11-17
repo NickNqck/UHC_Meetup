@@ -149,7 +149,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                     }
                     this.cdFoudre = 60*3;
                     event.getOriginEvent().getDamager().sendMessage("§7Votre§e Soufle de la Foudre§7 à fait effet.");
-                    event.getOriginEvent().getEntity().sendMessage("§7Vous avez subit les effets du§e Soufle de la Foudre§7.");
+                    event.getOriginEvent().getEntity().sendMessage("§7Vous avez subi les effets du§e Soufle de la Foudre§7.");
                     event.getVictim().getRole().owner.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false), true);
                     if (getTeam().equals(TeamList.Solo)){
                         event.getVictim().getRole().owner.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*15, 0, false, false), true);

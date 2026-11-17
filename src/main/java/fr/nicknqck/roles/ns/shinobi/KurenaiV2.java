@@ -100,7 +100,7 @@ public class KurenaiV2 extends ShinobiRoles {
                     player.sendMessage("§cIl faut viser un joueur !");
                     return false;
                 }
-                player.sendMessage("§7Vous utiliser votre§c Genjutsu§7 sur§a "+target.getDisplayName());
+                player.sendMessage("§7Vous utilisez votre§c Genjutsu§7 sur§a "+target.getDisplayName());
                 player.setGameMode(GameMode.SPECTATOR);
                 getRole().getGameState().getGamePlayer().get(target.getUniqueId()).stun(5*20);
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
@@ -109,7 +109,7 @@ public class KurenaiV2 extends ShinobiRoles {
                     loc.setZ(loc.getZ()+Math.sin(Math.toRadians(target.getEyeLocation().getYaw()-90)));
                     loc.setPitch(0);
                     player.setGameMode(GameMode.SURVIVAL);
-                    player.sendMessage("§7Votre§c Genjutsu§7 est terminer.");
+                    player.sendMessage("§7Votre§c Genjutsu§7 est terminé.");
                     player.teleport(loc);
                 }, 100);
                 return true;

@@ -216,7 +216,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                 }
                 target.teleport(player);
                 player.sendMessage("§cBenshô Ten'in !");
-                target.sendMessage("§7Vous avez été toucher par le§c Benshô Ten'in");
+                target.sendMessage("§7Vous avez été touché par le§c Benshô Ten'in");
                 return true;
             }
         }

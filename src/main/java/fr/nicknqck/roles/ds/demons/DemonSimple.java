@@ -65,7 +65,7 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGamePlayerKiller().getUuid().equals(getPlayer())) {
             addBonusforce(3.0);
-            event.getGamePlayerKiller().sendMessage("§7Vous avez gagnez§c 3%§7 de§c force§7, ce qui vous fait monter à §c"+getBonusForce()+" de force§7.");
+            event.getGamePlayerKiller().sendMessage("§7Vous avez gagné§c 3%§7 de§c force§7, ce qui vous fait monter à §c"+getBonusForce()+" de force§7.");
         }
     }
     @EventHandler

@@ -372,7 +372,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                             final Player player = Bukkit.getPlayer(gamePlayer.getUuid());
                             if (player.getUniqueId().equals(this.zoneDeFoudre.getRole().getPlayer()))continue;
                             player.damage(0.0);
-                            player.sendMessage("§7Vous avez été toucher par un§e éclair§7 de§e Jigoro§7.");
+                            player.sendMessage("§7Vous avez été touché par un§e éclair§7 de§e Jigoro§7.");
                             player.getWorld().strikeLightningEffect(player.getLocation());
                             player.setHealth(Math.max(1.0, player.getHealth()-3));
                             this.amountFoudroyed++;

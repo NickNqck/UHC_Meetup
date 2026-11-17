@@ -90,7 +90,7 @@ public class KumoV2 extends DemonInferieurRole {
         public PrisonPower(@NonNull RoleBase role) {
             super("Prison de toile", new Cooldown(60*5), new ItemBuilder(Material.WEB).setName("§cPrison de toile"), role,
                     "§7Crée un dôme fait en§c cobweb§7 pendant une durée de§c 30 secondes§7.",
-                            "§7Si vous êtes coincé dans vos propre toile d'araignée, le dôme disparaitra au bout de§c 4 secondes§7.");
+                            "§7Si vous êtes coincé dans vos propres toiles d'araignée, le dôme disparaitra au bout de§c 4 secondes§7.");
             EventUtils.registerRoleEvent(this);
         }
 
@@ -172,7 +172,7 @@ public class KumoV2 extends DemonInferieurRole {
                 for (final Block block : blockList) {
                     block.setType(Material.WEB);
                 }
-                player.sendMessage("§bVous avez enfermer dans un cocon§c "+target.getName());
+                player.sendMessage("§bVous avez enfermé dans un cocon§c "+target.getName());
                 target.sendMessage("§cVous avez été pris dans le cocon de§6 Kumo§c.");
                 return true;
             }

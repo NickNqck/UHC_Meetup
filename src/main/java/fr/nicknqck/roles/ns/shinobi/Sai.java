@@ -424,7 +424,7 @@ public class Sai extends ShinobiRoles implements Listener {
                                 return false;
                             }
                             new SangsueRunnable(this, gamePlayer).runTaskTimer(getPlugin(), 1, 80);
-                            player.sendMessage("§b"+gamePlayer.getPlayerName()+"§7 a été toucher par vos§c "+getName());
+                            player.sendMessage("§b"+gamePlayer.getPlayerName()+"§7 a été touché par vos§c "+getName());
                             gamePlayer.sendMessage("§aSai§7 vous a toucher avec ses§c Sangsue§7.");
                             return true;
                         }

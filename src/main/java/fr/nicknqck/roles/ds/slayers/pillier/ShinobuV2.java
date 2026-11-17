@@ -280,7 +280,7 @@ public class ShinobuV2 extends PilierRoles {
                 gameTarget.getRole().givePotionEffect(this.mapEffect.get(deux), EffectWhen.NOW);
             }
             getCooldown().use();
-            event.getDamager().sendMessage("§c"+((Player) event.getEntity()).getDisplayName()+"§7 a subit votre§2 Poison§7.");
+            event.getDamager().sendMessage("§c"+((Player) event.getEntity()).getDisplayName()+"§7 a subi votre§2 Poison§7.");
             getRole().getGamePlayer().getActionBarManager().updateActionBar("shinobu.poisons", "§bVous utilisez actuellement le poison:§c "+getActualString());
         }
         @EventHandler

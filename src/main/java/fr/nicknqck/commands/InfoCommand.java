@@ -33,7 +33,7 @@ public class InfoCommand implements CommandExecutor {
                     return true;
                 }
                 Main.getInstance().getInfoManager().resetData(player.getUniqueId());
-                player.sendMessage("§aVos statistiques ont bien été réinitialisé !");
+                player.sendMessage("§aVos statistiques ont bien été réinitialisées !");
                 return true;
             }
             if (!player.isOp()) {
@@ -76,7 +76,7 @@ public class InfoCommand implements CommandExecutor {
         viewer.sendMessage(new String[]{
                 "§e--- Statistiques de " + name + " ---",
                 "§7Connexions: §a" + info.getJoinCount(),
-                "§7Temp en jeu: §a" + StringUtils.secondsTowardsBeautiful(info.getTimePlayed()),
+                "§7Temps en jeu: §a" + StringUtils.secondsTowardsBeautiful(info.getTimePlayed()),
                 "§7Flèches tirées: §a" + info.getArrowsShot(),
                 "§7Nombre de changement de camp:§a "+info.getAmountTeamChange(),
                 "§7Nombre de game joué:§a "+info.getGamePlayed(),

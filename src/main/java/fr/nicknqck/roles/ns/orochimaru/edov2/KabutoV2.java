@@ -159,7 +159,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         addBonusResi(10);
     }
     private void onOrochimaruDeath() {
-        getGamePlayer().sendMessage("§7Maitre§5 Orochimaru§7 est malheureusement mort, en son hônneur vous allez vous aussi utiliser l'§5Edo Tensei§7.");
+        getGamePlayer().sendMessage("§7Maitre§5 Orochimaru§7 est malheureusement mort, en son honneur vous allez vous aussi utiliser l'§5Edo Tensei§7.");
         addPower(new EdoTenseiPower(this), true);
         this.orochimaruDEAD = true;
     }

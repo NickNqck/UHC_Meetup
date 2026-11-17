@@ -280,7 +280,7 @@ public class AdminCommands implements CommandExecutor{
 									if (gameState.getAvailableRoles().get(roles) > 0) {
 										int e = gameState.getAvailableRoles().get(roles);
 										gameState.addInAvailableRoles(roles, Math.max(0, gameState.getAvailableRoles().get(roles)-gameState.getAvailableRoles().get(roles)));
-										sender.sendMessage(roles.getTeam().getColor()+roles+"§f (§7x"+e+"§f) à été retiré de la compo");
+										sender.sendMessage(roles.getTeam().getColor()+roles+"§f (§7x"+e+"§f) a été retiré de la compo");
 										sender.sendMessage("");
 										return;
 									}
@@ -375,7 +375,7 @@ public class AdminCommands implements CommandExecutor{
 						if (args[0].equalsIgnoreCase("nuit")) {
 									gameState.nightTime = true;
 									Bukkit.broadcastMessage("");
-									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant nuit");
+									Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur a changé le temps, il fait maintenant nuit");
 									Bukkit.broadcastMessage("");
 									Main.getInstance().getWorldManager().getGameWorld().setTime(13000);
 									gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
@@ -385,7 +385,7 @@ public class AdminCommands implements CommandExecutor{
 						} else if (args[0].equalsIgnoreCase("jour")) {
                             gameState.nightTime = false;
                             Bukkit.broadcastMessage("");
-                            Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur à changer le temp, il fait maintenant jour");
+                            Bukkit.broadcastMessage(ChatColor.RED+"!"+ChatColor.BOLD+"ALERT"+"! "+ChatColor.RESET+ChatColor.BOLD+"Un administrateur a changé le temps, il fait maintenant jour");
                             Bukkit.broadcastMessage("");
 							gameState.setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
                             Main.getInstance().getWorldManager().getGameWorld().setTime(0);
@@ -393,7 +393,7 @@ public class AdminCommands implements CommandExecutor{
                             return true;
                         }
 					} else {
-						player.sendMessage(ChatColor.RED+"Vous devez être OP ou Hostpour utiliser cette commande.");
+						player.sendMessage(ChatColor.RED+"Vous devez être OP ou Host pour utiliser cette commande.");
 					}
 				}else {
 					if (gameState.getServerState() == ServerStates.InLobby) {
@@ -438,8 +438,8 @@ public class AdminCommands implements CommandExecutor{
 													Player p = Bukkit.getPlayer(u);
 													if (p == null)continue;
 													p.playSound(p.getLocation(), Sound.BLAZE_HIT, 1, 50);
-													NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respectés");
-													p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respectez");
+													NMSPacket.sendTitle(p, 0, 20*3, 0, "§cGroupe de§6 "+args[1], "Veuillez les respecter");
+													p.sendTitle("§cGroupe de§6 "+args[1],"§cVeuillez les respecter");
 												}
 												return true;
 											}
@@ -500,7 +500,7 @@ public class AdminCommands implements CommandExecutor{
 												gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(team);
 												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+team.getColor()+" "+team.name());
 												p.sendMessage("Vous appartenez maintenant au camp des"+team.getColor()+" "+team.name());
-												GameListener.SendToEveryone("Un joueur à rejoint le camp des "+team.getColor()+team.name()+"§r par un Administrateur/Host");
+												GameListener.SendToEveryone("Un joueur a rejoint le camp des "+team.getColor()+team.name()+"§r par un Administrateur/Host");
 												return true;
 											}
 										}
@@ -582,7 +582,7 @@ public class AdminCommands implements CommandExecutor{
                                 } else {
 									p.getInventory().addItem(Items.getLamedenichirin());
 									Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+p.getName());
-									sender.sendMessage("Vous avez donnez une Lame de nichirin a "+p.getDisplayName());
+									sender.sendMessage("Vous avez donné une Lame de nichirin à "+p.getDisplayName());
                                 }
                             } else {
 								sender.sendMessage("Il faut préciser un joueur");
@@ -632,7 +632,7 @@ public class AdminCommands implements CommandExecutor{
 									return true;
 								} else {
 									if (!gameState.hasRoleNull(p.getUniqueId())) {
-									Bukkit.broadcastMessage("Le joueur: "+sender.getName()+" connais maintenant le rôle du joueur: "+p.getName());
+									Bukkit.broadcastMessage("Le joueur: "+sender.getName()+" connaît maintenant le rôle du joueur: "+p.getName());
 									sender.sendMessage("Le rôle de la personne: "+p.getName()+" est "+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam().getColor()+gameState.getGamePlayer().get(p.getUniqueId()).getRole().getName());
 									return true;
 									}
@@ -655,7 +655,7 @@ public class AdminCommands implements CommandExecutor{
 								} else {
 									if (!gameState.hasRoleNull(p.getUniqueId())) {
 										gameState.RevivePlayer(p);
-										sender.sendMessage(p.getName()+" à bien été réssucité");
+										sender.sendMessage(p.getName()+" a bien été ressuscité");
 										HubListener.getInstance().giveStartInventory(p);
 										final RoleBase role = gameState.getGamePlayer().get(p.getUniqueId()).getRole();
 										role.GiveItems();
