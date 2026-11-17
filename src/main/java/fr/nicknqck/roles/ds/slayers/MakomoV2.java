@@ -194,6 +194,7 @@ public class MakomoV2 extends SlayerRoles implements Listener{
                         block.setType(Material.AIR, true);
                     }
                     this.liquefactionAccelere.blocks.clear();
+                    cancel();
                 }
             }
         }
