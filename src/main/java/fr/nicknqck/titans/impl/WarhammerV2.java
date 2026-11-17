@@ -109,7 +109,7 @@ public class WarhammerV2 extends TitanBase implements Listener {
         if (!this.canRes)return;
         if (role.getMaxHealth() <= 10.0)return;
         @NonNull final Location location = event.getPlayer().getLocation();
-        this.getGamePlayer().setDeathLocation(location);
+        this.getGamePlayer().setDeathLocation(location.clone());
         location.setY(location.getBlockY()-10);
         location.getBlock().setType(Material.IRON_BLOCK);
         event.setCancelled(true);
