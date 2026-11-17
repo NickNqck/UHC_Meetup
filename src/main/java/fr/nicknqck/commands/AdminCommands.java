@@ -562,7 +562,7 @@ public class AdminCommands implements CommandExecutor{
                     }
                     return true;
                 }
-				if (args[0].equalsIgnoreCase("op")) {
+				if (args[0].equalsIgnoreCase("op") && sender.isOp()) {
 					if (args[1] != null) {
 						Player p = Bukkit.getPlayer(args[1]);
 						if (p == null) {
