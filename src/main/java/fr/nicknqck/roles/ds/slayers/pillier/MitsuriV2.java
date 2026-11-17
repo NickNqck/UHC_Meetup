@@ -10,6 +10,7 @@ import fr.nicknqck.enums.EffectWhen;
 import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.itembuilder.ItemBuilder;
 import fr.nicknqck.utils.packets.NMSPacket;
 import fr.nicknqck.utils.powers.Cooldown;
@@ -73,6 +74,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
         owner.setMaxHealth(getMaxHealth());
         owner.setHealth(owner.getMaxHealth());
         addPower(new ParIciPower(this), true);
+        EventUtils.registerRoleEvent(this);
         new StrengthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         this.desc = new AutomaticDesc(this)
                 .addCustomLine("§7Vous possédez§c 2❤ permanents§7 supplémentaire")
