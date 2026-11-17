@@ -207,6 +207,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                     "§7d'§cesquiver§7 les coups qui vous sont portés."
             );
             this.zoneRunnable = new ZoneRunnable(this);
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
