@@ -222,6 +222,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
         @EventHandler
         private void onDamage(EntityDamageByEntityEvent event) {
             if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
+                if (Main.RANDOM.nextInt(100) >= 10) return;
                 event.getDamager().setFireTicks(event.getDamager().getFireTicks()+160);
                 event.getDamager().sendMessage("§aKyojuro§7 vous a§6§l enflammé");
                 event.getEntity().sendMessage("§7Vous avez§6 brûlé§7§l "+event.getDamager().getName());
