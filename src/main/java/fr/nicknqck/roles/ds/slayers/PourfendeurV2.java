@@ -214,7 +214,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
     }
     private void giveSoufle(Soufles soufle) {
         this.souflesList.add(soufle);
-        owner.sendMessage("§7Vous avez obtenue le soufle "+soufle.getName());
+        owner.sendMessage("§7Vous avez obtenu le souffle "+soufle.getName());
         switch (soufle) {
             case ROCHE:
                 givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.DAY);

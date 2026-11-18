@@ -130,9 +130,9 @@ public class TitanUltime extends TitansRoles {
 					killtitan = true;
 					if (countEmptySlots(owner) > 0 ) {
 						owner.getInventory().addItem(getItems());
-						owner.sendMessage("Vous avez obtenue votre§6§l Transformation Ultime");
+						owner.sendMessage("Vous avez obtenu votre§6§l Transformation Ultime");
 					}else {
-						owner.sendMessage("Votre inventaire est remplie vous devez donc faire§6§l /aot claim§f pour obtenir votre§6§l Transformation Ultime");
+						owner.sendMessage("Votre inventaire est plein, vous devez donc faire§6§l /aot claim§f pour obtenir votre§6§l Transformation Ultime");
 						invvide = true;
 					}
 				}
@@ -148,7 +148,7 @@ public class TitanUltime extends TitansRoles {
 					owner.getInventory().addItem(getItems());
 					invvide = false;
 				}else {
-					owner.sendMessage("Votre inventaire est remplie veuiller le vidée pour obtenir la§6§l Transformation Ultime");
+					owner.sendMessage("Votre inventaire est plein, veuillez le vider pour obtenir la§6§l Transformation Ultime");
 				}
 			}
 		}

@@ -95,7 +95,7 @@ public class MuichiroV2 extends PilierRoles {
                 final List<Location> locs = new ArrayList<>(MathUtil.getCircle(player.getLocation(), 10));
                 locs.removeIf(loc -> !loc.getBlock().getType().equals(Material.AIR));
                 if (locs.isEmpty()) {
-                    player.sendMessage("§cAucun endroit n'est apte pour vous téléportez là bas");
+                    player.sendMessage("§cAucun endroit n'est apte pour vous téléporter là-bas");
                     return false;
                 }
                 Collections.shuffle(locs, Main.RANDOM);
@@ -105,7 +105,7 @@ public class MuichiroV2 extends PilierRoles {
                     if (trye == i) {
                         player.setNoDamageTicks(20);
                         player.teleport(loc);
-                        player.sendMessage("§7Vous avez utiliser votre "+getName());
+                        player.sendMessage("§7Vous avez utilisé votre "+getName());
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 0, false, false));
                         return true;
                     }

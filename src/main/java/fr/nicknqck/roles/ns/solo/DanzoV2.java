@@ -359,7 +359,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
                 if (gm.getRole() == null)continue;
                 if (gm.getRole() instanceof IUchiwa) {
                     nmbUchiwa++;
-                    owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autour de vous, son aura vous fait donné l'impression qu'il est§c "+((IUchiwa)gm.getRole()).getUchiwaType().getName());
+                    owner.sendMessage("§7Il y a au moins un§4§l Uchiwa§7 autour de vous, son aura vous donne l'impression qu'il est§c "+((IUchiwa)gm.getRole()).getUchiwaType().getName());
                     break;
                 }
             }

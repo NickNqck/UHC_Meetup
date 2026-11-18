@@ -139,7 +139,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (!inRituel) {
                     if (this.uuidTarget == null) {
-                        player.sendMessage("§cIl faut d'abord frappé un joueur avec votre Faux !");
+                        player.sendMessage("§cIl faut d'abord frapper un joueur avec votre Faux !");
                         return false;
                     }
                     final Player target = Bukkit.getPlayer(this.uuidTarget);

@@ -147,7 +147,7 @@ public class HotaruV2 extends SlayerRoles {
                         if (gamePlayer.getRole() != null && gamePlayer.getRole() instanceof DemonsSlayersRoles) {
                             if (((DemonsSlayersRoles) gamePlayer.getRole()).isHasblade()) {
                                ((DemonsSlayersRoles) gamePlayer.getRole()).setLameincassable(true);
-                               player1.sendMessage("§7votre lame a été rendu incassable par §aHotaru");
+                               player1.sendMessage("§7Votre lame a été rendue incassable par §aHotaru");
                                player.sendMessage("§7vous venez de rendre incassable la lame de §a"+gamePlayer.getPlayerName());
                             } else {
                                 player.sendMessage("§7Vous venez de rendre incassable la lame d'un joueur qui ne possède pas de lame. §cPauvre con!!");
@@ -190,7 +190,7 @@ public class HotaruV2 extends SlayerRoles {
                     if (item.isSimilar(tuclique)){
                         removeOldBlade();
                         map.get(item).getUsers().put(e.getWhoClicked().getUniqueId(), Integer.MAX_VALUE);
-                        e.getWhoClicked().sendMessage("§7Vous venez de choisisr la lame "+item);
+                        e.getWhoClicked().sendMessage("§7Vous venez de choisir la lame "+item);
                         getCooldown().use();
                         break;
                     }

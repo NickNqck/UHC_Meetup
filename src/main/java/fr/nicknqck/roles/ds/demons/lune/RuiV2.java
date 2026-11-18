@@ -183,7 +183,7 @@ public class RuiV2 extends DemonsRoles {
                     target.sendMessage("§7Vous avez été atteint par le§2 poison§7 de§c Rui");
                     player.sendMessage("§7Votre§2 poison§7 à atteint§c "+target.getDisplayName());
                 }
-                player.sendMessage("§7Vous avez utiliser votre§c "+getName()+"§7 sur§c "+target.getDisplayName());
+                player.sendMessage("§7Vous avez utilisé votre§c "+getName()+"§7 sur§c "+target.getDisplayName());
                 target.sendMessage("§cRui§c a utilisé son "+getName()+" sur vous");
                 return true;
             }

@@ -87,7 +87,7 @@ public class Leolio extends RoyaumeBase implements IGotBuyable {
             return new ItemBuilder(Material.DIAMOND_PICKAXE)
                     .setName("§aCassage instantané")
                     .hideAllAttributes()
-                    .setLore("§7Une fois§a acheter§7, vous aurez§c 1 chance sur deux§7 de§a casser instantanément",
+                    .setLore("§7Une fois§a acheté§7, vous aurez§c 1 chance sur deux§7 de§a casser instantanément",
                             "§7les§c blocs§7 que vous§c taperez§7 avec une§f pioche§7.",
                             "",
                             "§7(§c1 fois maximum par seconde§7)",

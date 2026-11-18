@@ -51,7 +51,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
         addContent(new ItemBuilder(Material.APPLE)
                 .setName("§fCoût d'utilisation de l'§5Edo Tensei")
                 .setLore(
-                        "§fValeur actuel:§c "+(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)+ AllDesc.coeur,
+                        "§fValeur actuelle:§c "+(Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)+ AllDesc.coeur,
                         "",
                         "§7Définie le coût que la personne utilisant le pouvoir",
                         "§7de l'§5Edo Tensei§7 devra payer pour l'utiliser."
@@ -71,7 +71,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
         addContent(new ItemBuilder(Material.EYE_OF_ENDER)
                 .setName("§dObito§f peut récupérer le§c Sharingan§f de§a Kakashi")
                 .setLore(
-                        "§fValeur actuel:§c "+ (Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye() ? "§aActivé" : "§cDésactivé"),
+                        "§fValeur actuelle:§c "+ (Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye() ? "§aActivé" : "§cDésactivé"),
                         "",
                         "§7Si§a activer§7 et qu'§dObito§7 obtient le§c Sharingan§7 de§a Kakashi§7, alors,",
                         "§7tout ses§c cooldowns§7 seront§c divisé§7 par§c deux§7."
@@ -83,7 +83,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
                 }
         );
         addContent(new ItemBuilder(Material.INK_SACK).setDurability(EChakras.KATON.getColorCode()).setName(EChakras.KATON.getShowedName()).setLore(
-                "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+"%",
+                "§fValeur actuelle:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getKatonPercent()+"%",
                 "",
                 "§fClic gauche:§a +1%",
                 "",
@@ -99,7 +99,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
         addContent(new ItemBuilder(Material.INK_SACK).setDurability(EChakras.RAITON.getColorCode()).setName(EChakras.RAITON.getShowedName()).setLore(
-                "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+"%",
+                "§fValeur actuelle:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getRaitonPercent()+"%",
                 "",
                 "§fClic gauche:§a +1%",
                 "",
@@ -115,7 +115,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
         addContent(new ItemBuilder(Material.INK_SACK).setDurability(EChakras.DOTON.getColorCode()).setName(EChakras.DOTON.getShowedName()).setLore(
-                "§fValeur actuel:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%",
+                "§fValeur actuelle:§c "+Main.getInstance().getGameConfig().getNarutoConfig().getDotonPercent()+"%",
                 "",
                 "§fClic gauche:§a +1%",
                 "",
@@ -131,7 +131,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
         addContent(new ItemBuilder(Material.EYE_OF_ENDER).setName("§aIzanami§f peut infecter les rôles§e Solo").setLore(
-                "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo() ? "§aOui" : "§cNon"),
+                "§fValeur actuelle: "+(Main.getInstance().getGameConfig().getNarutoConfig().isIzanamiCanInfectSolo() ? "§aOui" : "§cNon"),
                 "",
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {
@@ -140,7 +140,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             new MDJ_NS_Config().open((Player) event.getWhoClicked());
         });
         addContent(new ItemBuilder(Material.ENDER_PEARL).setName("§e§lShisui§f ignore la réglementation sur l'§aIzanami§f des rôles§e Solos").setLore(
-                "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiByPassIzanamiLimitation() ? "§aOui" : "§cNon"),
+                "§fValeur actuelle: "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiByPassIzanamiLimitation() ? "§aOui" : "§cNon"),
                 "",
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {
@@ -151,7 +151,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             c.openPage(2);
         });
         addContent(new ItemBuilder(Material.FERMENTED_SPIDER_EYE).setName("§aKotoAmatsukami§7 de§e§l Shisui§7 peut§a infecter§7 les§e rôles Solitaire").setLore(
-                "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo() ? "§aOui" : "§cNon"),
+                "§fValeur actuelle: "+(Main.getInstance().getGameConfig().getNarutoConfig().isShisuiKotoAmatsukamiInfectSolo() ? "§aOui" : "§cNon"),
                 "",
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {
@@ -162,7 +162,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
             c.openPage(2);
         });
         addContent(new ItemBuilder(Material.ARMOR_STAND).setName("§cSasori§7 peut§a ressusciter un joueur").setLore(
-                "§fValeur actuel: "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"),
+                "§fValeur actuelle: "+(Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive() ? "§aOui" : "§cNon"),
                 "",
                 "§fCliquez pour modifier ce paramètre."
         ).toItemStack(), event -> {

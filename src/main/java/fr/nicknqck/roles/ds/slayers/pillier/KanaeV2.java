@@ -108,7 +108,7 @@ public class KanaeV2 extends PilierRoles {
                     toKanae = null;
                     toVictim = null;
                     ((Player) event.getDamager()).setHealth(Math.min(((Player) event.getDamager()).getMaxHealth(), ((Player) event.getDamager()).getHealth()+4.0));
-                    event.getDamager().sendMessage("§7Vous vous êtes soigner de§c 2"+ AllDesc.coeur+"§7.");
+                    event.getDamager().sendMessage("§7Vous vous êtes soigné de§c 2"+ AllDesc.coeur+"§7.");
                 } else if (rdm >= 95) {
                     toKanae.append("10 secondes§7 de§c Weakness§7,§c Slowness§7 et§c Poison§7.");
                     toVictim.append("10 secondes§7 de§c Weakness§7,§c Slowness§7 et§c Poison");

@@ -34,7 +34,7 @@ public class Bartholome extends GuildeBase implements IGotMultpleFaction, Listen
 
     @Override
     public void onRoleGive(@NonNull GameState gameState) {
-        addKnowedPlayersWithRoles("§7Voici vos§5 alliés§7 que vous aviez recruter pour vous enrichir:", Bartholome.class);
+        addKnowedPlayersWithRoles("§7Voici vos§5 alliés§7 que vous aviez recrutés pour vous enrichir:", Bartholome.class);
         EventUtils.registerRoleEvent(this);
     }
 

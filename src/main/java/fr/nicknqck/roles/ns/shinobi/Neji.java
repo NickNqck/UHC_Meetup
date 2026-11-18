@@ -170,7 +170,7 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
             text.setHoverEvent(new HoverEvent(
                     HoverEvent.Action.SHOW_TEXT,
                     new BaseComponent[]{
-                            new TextComponent("§c§lCLIQUEZ ICI POUR TRAQUEZ §a"+ target.getName()+"§7 (§6/ns byakugan <joueur>§7)")
+                            new TextComponent("§c§lCLIQUEZ ICI POUR TRAQUER §a"+ target.getName()+"§7 (§6/ns byakugan <joueur>§7)")
                     }
             ));
             text.setClickEvent(new ClickEvent(
@@ -295,7 +295,7 @@ public class Neji extends ShinobiRoles implements IByakuganUser {
                             if (((NSRoles) role).getChakras().equals(chakras)) {
                                 player.sendMessage("§c" + target.getDisplayName() + "§7 possède§c " + role.getPowers().size() + " pouvoirs");
                             } else {
-                                player.sendMessage("§7Il semblerait que vous vous soyez tromper de§a nature de chakra§7.");
+                                player.sendMessage("§7Il semblerait que vous vous soyez trompé de§a nature de chakra§7.");
                             }
                             return true;
                         } else {

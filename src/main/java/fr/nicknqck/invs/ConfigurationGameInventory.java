@@ -273,7 +273,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.openPage(currentPage());
         });
         addContent(new ItemBuilder(Material.IRON_SWORD).setName("§fLes joueurs§a stun§f peuvent subir des dégâts").setLore(
-                "§fValeur actuel: "+(Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage() ? "§aActiver" : "§cDésactiver")
+                "§fValeur actuelle: "+(Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage() ? "§aActiver" : "§cDésactiver")
         ).toItemStack(), event -> {
             Main.getInstance().getGameConfig().setPlayerStunCanTakeDamage(!Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage());
             sendHostMessage((Player) event.getWhoClicked(), event.getCurrentItem().getItemMeta().getDisplayName(), Main.getInstance().getGameConfig().isPlayerStunCanTakeDamage());

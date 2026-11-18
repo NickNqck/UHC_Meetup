@@ -395,7 +395,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                     }, 20*15);
                     player.teleport(new Location(target.getWorld(), target.getLocation().getX(), target.getLocation().getY()+6.0, target.getLocation().getZ()));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*15, 1, false, false));
-                    player.sendMessage("§7Vous avez utiliser votre§8 Soufle de la Roche");
+                    player.sendMessage("§7Vous avez utilisé votre§8 Souffle de la Roche");
                     return true;
                 } else {
                     player.sendMessage("§cIl faut viser un joueur");

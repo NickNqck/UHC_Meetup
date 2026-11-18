@@ -88,12 +88,12 @@ public class Magath extends MahrRoles {
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
 		if (args[0].equalsIgnoreCase("search")) {
 			if (args.length == 1) {
-				owner.sendMessage("Veuiller indiquer un pseudo !");
+				owner.sendMessage("Veuillez indiquer un pseudo !");
 			}else {
 				if (args[1] != null && args.length == 2) {
 					Player target = Bukkit.getPlayer(args[1]);
 					if (target == null) {
-						owner.sendMessage("Veuiller écrire un pseudo correcte");
+						owner.sendMessage("Veuillez écrire un pseudo correct");
 					}else {
 						if (target.getUniqueId().equals(getPlayer())) {
 							target.sendMessage("§cVous ne pouvez pas vous traquer vous même !");
@@ -121,7 +121,7 @@ public class Magath extends MahrRoles {
 						}
 					}
 				}else {
-					owner.sendMessage("Veuiller indiquer un pseudo");
+					owner.sendMessage("Veuillez indiquer un pseudo");
 				}
 			}			
 		}

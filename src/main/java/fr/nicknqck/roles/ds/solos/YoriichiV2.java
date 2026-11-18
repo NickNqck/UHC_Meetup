@@ -124,18 +124,18 @@ public class YoriichiV2 extends DemonsSlayersRoles {
             if (role instanceof DemonsRoles) {
                 if (this.demonKills == 0) {
                     this.yoriichiV2.giveItem(event.getGamePlayerKiller().getPlayer(), false, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bÉpée de§e Yoriichi").addEnchant(Enchantment.DAMAGE_ALL, 4).toItemStack());
-                    event.getGamePlayerKiller().sendMessage("§7Vous avez obtenue votre§c épée en diamant");
+                    event.getGamePlayerKiller().sendMessage("§7Vous avez obtenu votre§c épée en diamant");
                 }
                 this.demonKills++;
             } else if (role instanceof SlayerRoles) {
                 if (this.slayerKills == 0) {
                     this.yoriichiV2.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.DAY);
-                    event.getGamePlayerKiller().sendMessage("§7Vous avez obtenue l'effet§c résistance 1§7 le§e jour");
+                    event.getGamePlayerKiller().sendMessage("§7Vous avez obtenu l'effet§c résistance 1§7 le§e jour");
                 }
                 this.slayerKills++;
             } else if (role.getOriginTeam().equals(TeamList.Solo) || role.getOriginTeam().equals(TeamList.Jubi) || role.getOriginTeam().equals(TeamList.Zabuza_et_Haku)) {
                 this.yoriichiV2.addSpeedAtInt(event.getGamePlayerKiller().getPlayer(), 5.0f);
-                event.getGamePlayerKiller().sendMessage("§7Vous avez obtenue§c 5% de speed");
+                event.getGamePlayerKiller().sendMessage("§7Vous avez obtenu§c 5% de speed");
             }
             if (this.demonKills == 3 && this.slayerKills == 3) {
                 this.yoriichiV2.givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.NIGHT);

@@ -70,8 +70,8 @@ public class AdminCommands implements CommandExecutor{
 					if (args[1].equalsIgnoreCase("start")) {
 						if (Main.getInstance().getGameConfig().getStuffConfig().getStarterInvConfigurator() == null) {
 							Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(((Player) sender).getUniqueId());
-							Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 commence a éditer l'inventaire.");
-							sender.sendMessage("§7Vous commencez a éditer l'inventaire de départ, pour sauvegarder, vous devrez faire la commande§6 /a invconfig save§7, si vous voulez quitter l'édition sans sauvegarder, il faudra faire§6 /a invconfig quit§7.");
+							Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 commence à éditer l'inventaire.");
+							sender.sendMessage("§7Vous commencez à éditer l'inventaire de départ, pour sauvegarder, vous devrez faire la commande§6 /a invconfig save§7, si vous voulez quitter l'édition sans sauvegarder, il faudra faire§6 /a invconfig quit§7.");
 							((Player) sender).getInventory().clear();
 							((Player) sender).setGameMode(GameMode.CREATIVE);
 							for (int slot = 0; slot <= 53; slot++) {
@@ -148,7 +148,7 @@ public class AdminCommands implements CommandExecutor{
 						if (target != null) {
 							damage = Math.max(0.1, target.getHealth() - damage);
 							target.setHealth(damage);
-							sender.sendMessage("§c"+target.getName()+"§b est maintenant a§c "+damage);
+							sender.sendMessage("§c"+target.getName()+"§b est maintenant à§c "+damage);
 						} else {
 							System.out.println("Player not found: " + args[1]);
 						}
@@ -369,7 +369,7 @@ public class AdminCommands implements CommandExecutor{
 						if (gameState.getServerState() != ServerStates.InGame)return false;
 						if (args[0].equalsIgnoreCase("detectwin") || args[0].equalsIgnoreCase("detect")) {
 							GameListener.detectWin(gameState);
-							sender.sendMessage("Detection de la victoire...");
+							sender.sendMessage("Détection de la victoire...");
 							return true;
 						}
 						if (args[0].equalsIgnoreCase("nuit")) {
@@ -448,7 +448,7 @@ public class AdminCommands implements CommandExecutor{
 										}
 
 									} else {
-										sender.sendMessage("§cIl faut être en jeux pour faire cette commande !");
+										sender.sendMessage("§cIl faut être en jeu pour faire cette commande !");
 										return true;
 									}
 								}
@@ -515,7 +515,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
+									sender.sendMessage("Veuillez indiquer un pseudo correct");
                                 } else {
 									if (ChatRank.isHost(p)) {
 										sender.sendMessage("Cette personne est déjà host...");
@@ -541,7 +541,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
+									sender.sendMessage("Veuillez indiquer un pseudo correct");
                                 } else {
 									if (ChatRank.Host.contains(p.getUniqueId())) {
 										ChatRank.Host.remove(p.getUniqueId());
@@ -566,7 +566,7 @@ public class AdminCommands implements CommandExecutor{
 					if (args[1] != null) {
 						Player p = Bukkit.getPlayer(args[1]);
 						if (p == null) {
-							sender.sendMessage("Veuiller indiquer un pseudo correcte");
+							sender.sendMessage("Veuillez indiquer un pseudo correct");
                         } else {
 							p.setOp(true);
                         }
@@ -578,7 +578,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
+									sender.sendMessage("Veuillez indiquer un pseudo correct");
                                 } else {
 									p.getInventory().addItem(Items.getLamedenichirin());
 									Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+p.getName());
@@ -598,7 +598,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
+									sender.sendMessage("Veuillez indiquer un pseudo correct");
 									return true;
 								} else {
 									if (!gameState.hasRoleNull(p.getUniqueId())) {
@@ -628,7 +628,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
+									sender.sendMessage("Veuillez indiquer un pseudo correct");
 									return true;
 								} else {
 									if (!gameState.hasRoleNull(p.getUniqueId())) {
@@ -650,7 +650,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
+									sender.sendMessage("Veuillez indiquer un pseudo correct");
 									return true;
 								} else {
 									if (!gameState.hasRoleNull(p.getUniqueId())) {
@@ -677,10 +677,10 @@ public class AdminCommands implements CommandExecutor{
 							if (args[1] != null) {
 								Player p = Bukkit.getPlayer(args[1]);
 								if (p == null) {
-									sender.sendMessage("Veuiller indiquer un pseudo correcte");
+									sender.sendMessage("Veuillez indiquer un pseudo correct");
                                 } else {
 									sender.sendMessage("");
-									TextComponent texte = new TextComponent("Voici les informations disponible sur§b "+p.getName()+"\n");
+									TextComponent texte = new TextComponent("Voici les informations disponibles sur§b "+p.getName()+"\n");
 									texte.addExtra("\n");
 									texte.addExtra("UUID:§b "+p.getUniqueId().toString()+"\n");
 									texte.addExtra("\n");

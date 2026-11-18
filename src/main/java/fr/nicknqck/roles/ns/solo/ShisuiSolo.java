@@ -286,7 +286,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                     return;
                 }
                 if (this.points >= 2500) {
-                    this.power.getRole().getGamePlayer().sendMessage("§7Votre§c Kotoamatsukami§7 à réussis,§c "+this.gameTarget.getPlayerName()+"§7 rejoint votre équipe.");
+                    this.power.getRole().getGamePlayer().sendMessage("§7Votre§c Kotoamatsukami§7 a réussi,§c "+this.gameTarget.getPlayerName()+"§7 rejoint votre équipe.");
                     this.power.getRole().getGamePlayer().getActionBarManager().removeInActionBar("shisui.kotoamatsukami");
                     gameTarget.getRole().setTeam(TeamList.Shisui);
                     gameTarget.sendMessage("§7Vous avez rejoint le camp de§e Shisui§7, vous gagnez maintenant avec lui");
@@ -354,7 +354,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
             super("/ns shurikenjutsu", "shurikenjutsu", null, role, CommandType.NS,
                     "§7Vous permet d'§aactiver§7 ou de§c désactiver§7 votre§c Shuriken Jutsu§7",
                     "",
-                    "§7Quand il est§a activé§7 en faisant§c clic droit§7 avec une§c épée§7 vous pourrez lancé une§c flèche§7 qui,",
+                    "§7Quand il est§a activé§7 en faisant§c clic droit§7 avec une§c épée§7 vous pourrez lancer une§c flèche§7 qui,",
                     "§7S'il elle touche un joueur lui infligera un effet de§c stun§7 pendant§c 0,5s",
                     "",
                     "§cAttention, par défaut ce pouvoir est§4 désactiver");

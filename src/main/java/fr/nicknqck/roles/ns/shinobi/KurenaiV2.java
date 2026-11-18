@@ -123,7 +123,7 @@ public class KurenaiV2 extends ShinobiRoles {
 
         public GenjutsuTemporel(@NonNull KurenaiV2 kurenaiV2) {
             super("Genjutsu Temporel", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§cGenjutsu Temporel"), kurenaiV2,
-                    "§7Vous permet de crée un point de téléportation qui restera actif pendant§c 60 secondse§7,",
+                    "§7Vous permet de créer un point de téléportation qui restera actif pendant§c 60 secondes§7,",
                     "",
                     "§7Au bout de§c 60 secondes§7 ou si vous§c mourez§7 vous§a ressusciterez§7 à votre point de téléportation avec le même stuff qu'à l'activation");
             this.kurenaiV2 = kurenaiV2;

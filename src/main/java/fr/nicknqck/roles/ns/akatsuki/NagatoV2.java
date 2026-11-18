@@ -110,7 +110,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
         if (event.getEntity().getUniqueId().equals(getPlayer())) {
             if (Main.RANDOM.nextInt(100) <= 15) {
                 event.setDamage(event.getDamage()*0.75);
-                event.getEntity().sendMessage("§aGakido§7 vous à protégez des dégâts, vous avez donc subit§c 25% de dégât en moins");
+                event.getEntity().sendMessage("§aGakido§7 vous a protégé des dégâts, vous avez donc subi§c 25% de dégât en moins");
             }
         }
     }

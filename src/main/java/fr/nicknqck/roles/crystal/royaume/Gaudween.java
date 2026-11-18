@@ -68,7 +68,7 @@ public class Gaudween extends RoyaumeBase {
                     "",
                     "§aThéologie§7:",
                     "",
-                    "§7Tant que vous êtes sous cette effet, des que vous êtes à moins de§c 4❤§7",
+                    "§7Tant que vous êtes sous cet effet, dès que vous êtes à moins de§c 4❤§7",
                     "§7votre§a vie§7 augmente jusqu'à§c 8❤§7."
             );
         }

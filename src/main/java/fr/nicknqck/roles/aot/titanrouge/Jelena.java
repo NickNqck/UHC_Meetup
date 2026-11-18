@@ -37,9 +37,9 @@ public class Jelena extends TitansRoles {
 				"",
 				AllDesc.commande,
 				"",
-				AllDesc.point+"§6/aot inv <§ljoueur§r§6>§f: Permet de visualisé l'inventaire d'un joueur désignée, cette commande n'est utilisable que 2x dans la partie et ne possède pas de cooldown,Les joueurs espionnés recevront un message comme si c'était §aArmin qui avait utilisé la commande.",
+				AllDesc.point+"§6/aot inv <§ljoueur§r§6>§f: Permet de visualiser l'inventaire d'un joueur désigné, cette commande n'est utilisable que 2x dans la partie et ne possède pas de cooldown,Les joueurs espionnés recevront un message comme si c'était §aArmin qui avait utilisé la commande.",
 				"",
-				AllDesc.point+"Si vous espionnez Eren vous obtindrez l'inventaire d'un soldat aléatoire",
+				AllDesc.point+"Si vous espionnez Eren vous obtiendrez l'inventaire d'un soldat aléatoire",
 				"",
 				AllDesc.bar,
 		};
@@ -112,7 +112,7 @@ public class Jelena extends TitansRoles {
 				}
 			}	
 		} else {
-			owner.sendMessage("Veuiller indiquer le pseudo d'un joueur");	
+			owner.sendMessage("Veuillez indiquer le pseudo d'un joueur");	
 		}
 	}
 

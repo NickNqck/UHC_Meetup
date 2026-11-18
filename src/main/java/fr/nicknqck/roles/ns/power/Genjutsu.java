@@ -136,7 +136,7 @@ public class Genjutsu extends ItemPower implements Listener {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             @NonNull final List<Player> playerList = Loc.getNearbyPlayersExcept(player, 30);
             if (playerList.isEmpty()) {
-                player.sendMessage("§cIl n'y a aucun joueur autour de vous, impossible de lancé le§4 Tsukuyomi§c.");
+                player.sendMessage("§cIl n'y a aucun joueur autour de vous, impossible de lancer le§4 Tsukuyomi§c.");
                 return false;
             }
             for (@NonNull final Player target : playerList) {

@@ -138,7 +138,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
             text.setHoverEvent(new HoverEvent(
                     HoverEvent.Action.SHOW_TEXT,
                     new BaseComponent[]{
-                            new TextComponent("§c§lCLIQUEZ ICI POUR TRAQUEZ §a"+ target.getName()+"§7 (§6/ns byakugan <joueur>§7)")
+                            new TextComponent("§c§lCLIQUEZ ICI POUR TRAQUER §a"+ target.getName()+"§7 (§6/ns byakugan <joueur>§7)")
                     }
             ));
             text.setClickEvent(new ClickEvent(
@@ -303,7 +303,7 @@ public class Hinata extends HShinobiRoles implements IByakuganUser {
                                  gamePlayer = event.getGameTarget();
                                  final List<Power> powerList = new ArrayList<>(gamePlayer.getRole().getPowers());
                                  if (powerList.size() == grp) {
-                                     final TextComponent textComponent = new TextComponent("§aHinata§7 vous demande de divulger le nom de l'un de vos pouvoirs, si vous n'en choisissez pas un, vous perdez§c 1❤ permanent§7.\n\n");
+                                     final TextComponent textComponent = new TextComponent("§aHinata§7 vous demande de divulguer le nom de l'un de vos pouvoirs, si vous n'en choisissez pas un, vous perdez§c 1❤ permanent§7.\n\n");
                                      int amount = 0;
                                      for (Power power : powerList) {
                                          final TextComponent powerComponent = new TextComponent(AutomaticDesc.fromLegacyTextSafe("\n§8 -§a "+(power instanceof ItemPower ? ((ItemPower) power).getItem().getItemMeta().getDisplayName() : power.getName())+"\n\n"));

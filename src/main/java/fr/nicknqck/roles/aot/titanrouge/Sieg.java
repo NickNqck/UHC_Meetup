@@ -122,7 +122,7 @@ public class Sieg extends TitansRoles {
                         player.sendMessage("§c§lSieg vient de crier !!!");
                         if (this.titansRouge.contains(gp)) {
                             if (!gp.isAlive())continue;
-                            player.sendMessage("§c§lAu vue du son il doit sûrement être en§c x:"+
+                            player.sendMessage("§c§lAu vu du son il doit sûrement être en§c x:"+
                                     this.gamePlayer.getLastLocation().getBlockX()+"§7,§c y:"+
                                     this.gamePlayer.getLastLocation().getBlockY()+"§7,§c z:"+
                                     this.gamePlayer.getLastLocation().getBlockZ()+"§7.");

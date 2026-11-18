@@ -203,7 +203,7 @@ public class Akaza extends DemonsRoles implements Listener {
 			NMSPacket.sendActionBar(owner, "§7Coup infliger:§c "+akaza.coupInfliged+"§7/§6"+akaza.coupToInflig);
 			if (akaza.coupInfliged >= akaza.coupToInflig) {
 				Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*30, 0, false, false), true));
-				owner.sendMessage("§7Vous avez obtenue l'effet§c Résistance I§7 pendant§c 30 secondes§7.");
+				owner.sendMessage("§7Vous avez obtenu l'effet§c Résistance I§7 pendant§c 30 secondes§7.");
 				akaza.coupInfliged = 0;
 			}
 		}
