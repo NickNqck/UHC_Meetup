@@ -234,7 +234,7 @@ public class GinkakuV2 extends KumogakureRole {
                 }
                 if (this.amountCoups >= 15) {
                     this.amountCoups = 0;
-                    new SaignementRunnable(getRole().getGameState(), event.getVictim());
+                    new SaignementRunnable(getRole().getGameState(), event.getVictim()).runTaskTimer(Main.getInstance(), 0, 20);
                     player.sendMessage("§c"+event.getVictim().getPlayerName());
                     return true;
                 }
