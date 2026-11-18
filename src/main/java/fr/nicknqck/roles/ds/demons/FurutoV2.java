@@ -149,15 +149,15 @@ public class FurutoV2 extends DemonInferieurRole {
         }
         @EventHandler
         private void onDamage(EntityDamageEvent event) {
-            if (bonusForceList.contains(event.getEntity().getUniqueId())) {
-                event.setDamage(event.getDamage()*1.1);
-            }
             if (bonusResistanceList.contains(event.getEntity().getUniqueId())) {
                 event.setDamage(event.getDamage()*0.9);
             }
         }
         @EventHandler
         private void onDamageAgainst(EntityDamageByEntityEvent event) {
+            if (bonusForceList.contains(event.getDamager().getUniqueId())) {
+                event.setDamage(event.getDamage()*1.1);
+            }
             if (bonusWeaknessList.contains(event.getDamager().getUniqueId())) {
                 event.setDamage(event.getDamage()*0.85);
             }
