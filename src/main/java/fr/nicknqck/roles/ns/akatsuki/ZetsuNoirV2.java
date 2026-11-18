@@ -213,7 +213,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
                 this.zabuza = power.getRole();
                 this.gameState = this.zabuza.getGameState();
                 this.power = power;
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 1);
+                runTaskTimer(Main.getInstance(), 0, 1);
                 this.power.invisible = true;
                 this.power.getRole().getGamePlayer().getActionBarManager().addToActionBar("zetsu.invisibilite", "§bTemps d'invisibilité:§c 60s");
             }
