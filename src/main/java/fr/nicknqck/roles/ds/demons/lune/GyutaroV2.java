@@ -229,6 +229,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             }
         }
         private void reCreateFaux(final Player player) {
+            if (player == null) return;
             int slot = -1;
             ItemStack[] contents = player.getInventory().getContents();
 
