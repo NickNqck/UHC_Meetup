@@ -152,6 +152,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
             getGamePlayer().setLastArmorContent(event.getPlayer().getInventory().getArmorContents());
             getGamePlayer().setLastInventoryContent(event.getPlayer().getInventory().getContents());
             this.getArmors = event.getPlayer().getInventory().getArmorContents();
+            getContents.clear();
             int i = 0;
             for (ItemStack stack : event.getPlayer().getInventory().getContents()) {
                 if (stack != null && stack.getType() != Material.AIR){
