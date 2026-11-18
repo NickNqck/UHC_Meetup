@@ -181,6 +181,7 @@ public class MakomoV2 extends SlayerRoles implements Listener{
                     final Player target = Bukkit.getPlayer(this.gameTarget.getUuid());
                     if (target != null) {
                         target.getLocation().getBlock().setType(Material.STATIONARY_WATER, true);
+                        this.liquefactionAccelere.blocks.add(target.getLocation().getBlock());
                         owner.teleport(target);
                         owner.sendMessage("§7Votre§b liquéfaction§7 a atteint§c "+target.getDisplayName()+"§7.");
                         this.step++;
