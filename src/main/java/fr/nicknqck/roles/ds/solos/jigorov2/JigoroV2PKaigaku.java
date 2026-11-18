@@ -59,7 +59,7 @@ public class JigoroV2PKaigaku extends JigoroV2 implements Listener {
             kaigaku.setMaxHealth(kaigaku.getMaxHealth()+1.0);
             setMaxHealth(getMaxHealth()+1.0);
             if (!event.getGameState().hasRoleNull(event.getPlayer().getUniqueId())) {
-                final RoleBase role = event.getGamePlayerKiller().getRole();
+                final RoleBase role = event.getRole();
                 if (role instanceof ZenItsuV2) {
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
                     getGamePlayer().sendMessage("§aZen'Itsu§7 est§c mort§7, grâce à ceci vous gagnez l'effet§c Force I§7 de manière§c permanente");
