@@ -148,7 +148,7 @@ public class KumoV2 extends DemonInferieurRole {
         private void resetBlocks() {
             this.blockMaterialMap.keySet().forEach(location -> location.setType(this.blockMaterialMap.get(location)));
             this.blockMaterialMap.clear();
-            this.timeLeft = 60;
+            this.timeLeft = 30;
             this.timeInside = 4;
         }
     }
