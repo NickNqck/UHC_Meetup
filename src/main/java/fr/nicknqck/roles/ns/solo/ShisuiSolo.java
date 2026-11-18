@@ -258,7 +258,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                         event.getWhoClicked().sendMessage("§cImpossible de démarrer le§a Kotoamatsukami§c, §b"+target.getName()+"§c n'a pas de rôle.");
                         return;
                     }
-                    new KotoRunnable(this.getRole().getGameState(), this, getRole().getGameState().getGamePlayer().get(target.getUniqueId())).runTaskTimerAsynchronously(getPlugin(), 0, 20);
+                    new KotoRunnable(this.getRole().getGameState(), this, getRole().getGameState().getGamePlayer().get(target.getUniqueId())).runTaskTimer(getPlugin(), 0, 20);
                     setUse(getUse()+1);
                     event.getWhoClicked().sendMessage("§7Démarrage du§c Kotoamatsukami");
                 }
