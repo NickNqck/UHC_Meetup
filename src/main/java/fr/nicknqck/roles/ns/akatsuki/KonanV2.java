@@ -188,6 +188,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
 
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
+                this.active = true;
                 new LanceRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
                 player.sendMessage("§7Pendant les§c 60 prochaines secondes§7 vous aurez un§c bonus de force§7.");
                 player.closeInventory();
