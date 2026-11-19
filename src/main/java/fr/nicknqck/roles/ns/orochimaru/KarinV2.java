@@ -201,7 +201,7 @@ public class KarinV2 extends OrochimaruRoles {
                 if (owner == null)return;
                 for (@NonNull final Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
                     if (this.infoObtainPower.getRole().getGameState().hasRoleNull(p.getUniqueId())) {
-                        return;
+                        continue;
                     }
                     if (this.infoObtainPower.timePassedNearby.containsKey(p.getUniqueId())) {
                         final GamePlayer gamePlayer = GamePlayer.of(p.getUniqueId());
