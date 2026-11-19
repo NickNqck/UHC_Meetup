@@ -242,8 +242,10 @@ public class KagayaV2 extends SlayerRoles {
             }
             if (!kagaya.getGamePlayer().isAlive())return;
             if (this.actualTime == maxTime) {
-                this.augmentationStade();
-                this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 s'aggrave, elle à atteind le §cniveau "+stade);
+                Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                    this.augmentationStade();
+                    this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 s'aggrave, elle à atteind le §cniveau "+stade);
+                });
                 this.actualTime = 0;
                 return;
             }
