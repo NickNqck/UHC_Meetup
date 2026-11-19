@@ -310,7 +310,7 @@ public class IzanamiV2 implements Listener {
         if (e.getPlayer().getUniqueId().equals(this.gameTarget.getUuid())) {
             if (isGoodMission(MissionUser.Lave)) {
                 Player user = Bukkit.getPlayer(this.gamePlayer.getUuid());
-                if (e.getFrom().getBlock().getType().name().contains("LAVA") || e.getTo().getBlock().getType().name().contains("LAVA") && user != null) {
+                if ((e.getFrom().getBlock().getType().name().contains("LAVA") || e.getTo().getBlock().getType().name().contains("LAVA")) && user != null) {
                     if (Loc.getNearbyPlayers(user, 15).contains(e.getPlayer())) {
                         setTrueMissions(MissionUser.Lave);
                     }
