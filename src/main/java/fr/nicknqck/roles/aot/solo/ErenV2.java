@@ -132,7 +132,7 @@ public class ErenV2 extends AotRoles implements Listener{
 
         public FastTimeTravelPower(@NonNull RoleBase role) {
             super("/aot fasttimetravel <Temp entre 1 et 60 secondes>", "fasttimetravel", new Cooldown(60*8), role, CommandType.AOT,
-                    "§7Vous permet de vous téléportez la ou vous étiez a un temp donné de maximum§c 60 secondes");
+                    "§7Vous permet de vous téléporter là où vous étiez à un temps donné de maximum§c 60 secondes");
             this.timeLocations = new HashMap<>();
             new ChangeOldPositionRunnable(role.getGameState(), this).runTaskTimerAsynchronously(getPlugin(), 0, 20);
         }

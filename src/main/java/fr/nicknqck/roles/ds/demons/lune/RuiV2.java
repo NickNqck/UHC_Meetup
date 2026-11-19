@@ -239,7 +239,7 @@ public class RuiV2 extends DemonsRoles {
                     block.setType(Material.WEB);
                 }
                 player.sendMessage("§c"+target.getDisplayName()+"§7 à complètement été recouvert de toile d'araignée");
-                target.sendMessage("§cRui vous à attraper dans sa§c toile d'araignée");
+                target.sendMessage("§cRui vous a attrapé dans sa§c toile d'araignée");
                 return true;
             }
             private List<Block> getBlockAround(@NonNull final Player target) {

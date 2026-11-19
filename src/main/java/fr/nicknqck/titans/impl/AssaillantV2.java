@@ -39,7 +39,7 @@ public class AssaillantV2 extends TitanBase {
                 " \n"+
                 "§8 -§7 Lorsque votre transformation se termine vous obtenez§c 2 minutes§7 de l'effet§c Force I§7.\n"+
                 " \n"+
-                "§8 -§7 Votre transformation à une durée de§c 4 minutes§7.\n"+
+                "§8 -§7 Votre transformation a une durée de§c 4 minutes§7.\n"+
                 " \n"+
                 "§8 -§7 Vous possédez l'item \"§lShutDown§r§7\", il vous permet d'empêcher de bouger§c tous les joueurs§7 étant à moins de§c 50 blocs§7 de vous, il possède un cooldown de§c 10 minutes§7.";
     }

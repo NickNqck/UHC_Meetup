@@ -63,7 +63,7 @@ public class KanaeV2 extends PilierRoles {
 
         protected VegetalPower(@NonNull RoleBase role){
             super("§aÉpée Végétal", new Cooldown(40), new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aLame végétal"), role,
-                    "§7Lorsque vous frappez un joueur il y a un certain§c pourcentage§7 de chance§7 que certaine action se produise",
+                    "§7Lorsque vous frappez un joueur il y a un certain§c pourcentage§7 de chance§7 que certaines actions se produisent",
                     "",
                     AllDesc.point+"§c25%§7 de ne rien faire du tout",
                     "",

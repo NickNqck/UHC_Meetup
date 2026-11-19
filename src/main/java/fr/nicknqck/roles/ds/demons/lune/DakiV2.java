@@ -109,7 +109,7 @@ public class DakiV2 extends DemonsRoles {
             if (event.getRole() == null)return;
             if (event.getRole() instanceof GyutaroV2) {
                 this.gyutaroDead = true;
-                getRole().getGamePlayer().sendMessage("§cGyutaro§7 est§c mort§7, mais il vous à léguez l'un de ses yeux, n'en faite pas un mauvais usage...");
+                getRole().getGamePlayer().sendMessage("§cGyutaro§7 est§c mort§7, mais il vous a légué l'un de ses yeux, n'en faites pas un mauvais usage...");
             }
         }
 

@@ -199,14 +199,14 @@ public class InosukeV2 extends SlayerRoles {
             String toReturn= "§cSi vous voyez ce message c'est qu'il y a un bug au niveau du random";
             switch (random) {
                 case 0:
-                    toReturn = "§aVous sentez la force vitale de§c "+target.getDisplayName()+"§a il à l'air d'avoir §c"+
+                    toReturn = "§aVous sentez la force vitale de§c "+target.getDisplayName()+"§a il a l'air d'avoir §c"+
                             new DecimalFormat("0").format(target.getMaxHealth())+"❤ permanents§a, on dirait même qu'il possède§c "+
                             getHealthPercentage(target)+"§a de sa vie maximum.";
                     break;
                 case 1:
                     toReturn = "§aVous sentez la force de§c "+
                             target.getDisplayName()+
-                            "§a il à l'air "+
+                            "§a il a l'air "+
                             (target.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
                             "§c force§a et "+
                             (target.hasPotionEffect(PotionEffectType.WEAKNESS) ? "d'avoir l'effet " : "de ne pas avoir l'effet")+
@@ -214,11 +214,11 @@ public class InosukeV2 extends SlayerRoles {
                     break;
                 case 2:
                     toReturn = "§aVous sentez la puissance se trouvant dans les jambes de§c "+target.getDisplayName()+
-                            "§a il à l'air "+(target.hasPotionEffect(PotionEffectType.SPEED) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
+                            "§a il a l'air "+(target.hasPotionEffect(PotionEffectType.SPEED) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
                             " §evitesse§a et "+(target.hasPotionEffect(PotionEffectType.SLOW) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+"§7 lenteur";
                     break;
                 case 3:
-                    toReturn = "§aVous sentez la musculature de§c "+target.getDisplayName()+"§a il à l'air "+(target.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
+                    toReturn = "§aVous sentez la musculature de§c "+target.getDisplayName()+"§a il a l'air "+(target.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE) ? "d'avoir l'effet" : "de ne pas avoir l'effet")+
                             "§9 résistance";
                     break;
             }

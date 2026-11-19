@@ -258,7 +258,7 @@ public class TomiokaV2 extends PilierRoles {
             } else if (roleBase instanceof SabitoV2) {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
                 this.firstKill = true;
-                getRole().getGamePlayer().sendMessage("§aSabito§7, est§c mort§7, vous devez lui montrer qu'il à bien fait de vous sauver la vie, vous obtenez§c l'effet§9 Résistance I§7 le§e jour");
+                getRole().getGamePlayer().sendMessage("§aSabito§7, est§c mort§7, vous devez lui montrer qu'il a bien fait de vous sauver la vie, vous obtenez§c l'effet§9 Résistance I§7 le§e jour");
             } else if (roleBase instanceof MakomoV2) {
                 this.firstKill = true;
                 final Player owner = Bukkit.getPlayer(getRole().getPlayer());

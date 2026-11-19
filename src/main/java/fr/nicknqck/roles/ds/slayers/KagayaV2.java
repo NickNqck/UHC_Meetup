@@ -140,13 +140,13 @@ public class KagayaV2 extends SlayerRoles {
                             if (args[2].equals("coeur")) {
                                 getRole().setMaxHealth(getRole().getMaxHealth()+1);
                                 player.setMaxHealth(getRole().getMaxHealth());
-                                player.sendMessage("§7Vous avez récupérer un petit peut d'§aénergie vitale§7.");
+                                player.sendMessage("§7Vous avez récupéré un petit peu d'§aénergie vitale§7.");
                                 this.predictings.remove(UUID.fromString(args[1]));
                                 return true;
                             } else if (args[2].equals("time")) {
                                 this.predictings.remove(UUID.fromString(args[1]));
                                 this.kagaya.maladieRunnable.actualTime = 0;
-                                player.sendMessage("§7Le temp avant l'expension de votre maladie à été réduit.");
+                                player.sendMessage("§7Le temps avant l'expansion de votre maladie a été réduit.");
                                 return true;
                             }
                         }
@@ -244,7 +244,7 @@ public class KagayaV2 extends SlayerRoles {
             if (this.actualTime == maxTime) {
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                     this.augmentationStade();
-                    this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 s'aggrave, elle à atteind le §cniveau "+stade);
+                    this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 s'aggrave, elle a atteint le §cniveau "+stade);
                 });
                 this.actualTime = 0;
                 return;

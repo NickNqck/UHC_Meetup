@@ -236,7 +236,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 					final Player owner = Bukkit.getPlayer(role.getPlayer());
 					if (owner != null) {
 						owner.setMaxHealth(this.role.getMaxHealth());
-						owner.sendMessage(Main.getInstance().getNAME()+"§7 Votre§c Forme Démoniaque§7 vous à fait perdre§c 1❤ permanent§7.");
+						owner.sendMessage(Main.getInstance().getNAME()+"§7 Votre§c Forme Démoniaque§7 vous a fait perdre§c 1❤ permanent§7.");
 					}
 					});
 					this.power.timeLeft = 60;

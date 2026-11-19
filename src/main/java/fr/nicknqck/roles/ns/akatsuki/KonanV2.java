@@ -90,7 +90,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                     "§7§o(1x/5m)",
                     "",
                     "§8 -§c Parchemins explosifs§7: Pose un§c parchemin§7 à votre position, si vous faites§f shift + clic§7 celà fera exploser§c tout§7",
-                    "§7les§c parchemins explosifs§7 que vous aviez précédemment poser, infligeant donc§c 1,5❤§7 au joueurs toucher.",
+                    "§7les§c parchemins explosifs§7 que vous aviez précédemment posés, infligeant donc§c 1,5❤§7 aux joueurs touchés.",
                     "§7§o(1x/3m)"
             );
             setWorkWhenInCooldown(true);
@@ -152,7 +152,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                 super("§cFuite anticipé§r", new Cooldown(60*8), role,
                         "§7Vous permet de placer un§c point de téléportation§7.",
                         "",
-                        "§7Une fois poser, vous pourrez§c réutiliser§7 ce§c pouvoir§7 pour vous§a téléporter§7 a l'endroit définie.",
+                        "§7Une fois posé, vous pourrez§c réutiliser§7 ce§c pouvoir§7 pour vous§a téléporter§7 à l'endroit défini.",
                         "§7§o(Une fois que vous vous§a téléportez§7§o, le§c point§7§o§c supprimer§7§o)",
                         "",
                         "§bCooldown§7:§c 8 minutes");
@@ -167,7 +167,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                     location = player.getLocation();
                     return false;
                 }
-                player.sendMessage("§7Vous vous§c téléportez§7 a la position§c enregistrer§7.");
+                player.sendMessage("§7Vous vous§c téléportez§7 à la position§c enregistrée§7.");
                 player.teleport(location);
                 location = null;
                 return true;
@@ -261,7 +261,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                 super("§cParchemins explosif§r", new Cooldown(60*3), role,
                         "§7Vous permet de poser un§c parchemin§7 la ou vous êtes§7. (1x/3m)",
                         "",
-                        "§7Dans le menu, en faisant un§f shift + clic§7, déclenche des explosions partout la ou vous aviez poser",
+                        "§7Dans le menu, en faisant un§f shift + clic§7, déclenche des explosions partout là où vous les aviez posés",
                         "§7des§c parchemins explosif§7, les joueurs touchés perdront§c 1,5❤§7 par§c explosion§7.",
                         "",
                         "§7§o(Aucun joueur ne peut mourir de vos explosions).",

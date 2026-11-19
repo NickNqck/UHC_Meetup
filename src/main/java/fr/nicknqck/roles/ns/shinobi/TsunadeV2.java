@@ -134,10 +134,10 @@ public class TsunadeV2 extends HShinobiRoles {
                             target.setHealth(target.getHealth() + healNeeded);
                             this.stocked -= healNeeded;
                             target.sendMessage("§7Vous avez été§d soigner§7 de manière§c complète§7 par§d Katsuyu§7.");
-                            player.sendMessage("§c"+target.getName()+"§7 a été§d soigner§7 de manière§c complète§7.");
+                            player.sendMessage("§c"+target.getName()+"§7 a été§d soigné§7 de manière§c complète§7.");
                         } else {
                             target.sendMessage("§7Vous avez été§d soigner§7 de§c "+(this.stocked/2)+"❤§7 par§d Katsuyu§7.");
-                            player.sendMessage("§c"+target.getName()+"§7 a été§d soigner§7 de§c "+(this.stocked/2)+"❤§7 par§d Katsuyu§7.");
+                            player.sendMessage("§c"+target.getName()+"§7 a été§d soigné§7 de§c "+(this.stocked/2)+"❤§7 par§d Katsuyu§7.");
                             target.setHealth(target.getHealth() + this.stocked);
                             this.stocked = 0.0;
                         }

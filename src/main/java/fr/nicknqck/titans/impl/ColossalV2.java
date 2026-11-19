@@ -39,7 +39,7 @@ public class ColossalV2 extends TitanBase {
 
     @Override
     public @NonNull String getParticularites() {
-        return "§8 -§7 Votre transformation à une durée de§c 3 minutes§7.\n"+
+        return "§8 -§7 Votre transformation a une durée de§c 3 minutes§7.\n"+
                 " \n"+
                 "§8 -§7 Lorsque vous êtes transformé en titan vous avez les effets§c Résistance II§7 ainsi que l'effet§c Résistance au Feu§7.\n"+
                 " \n"+

@@ -116,7 +116,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                 if (!give) {
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.DAY);
                 }
-                event.getGamePlayerKiller().sendMessage("§7En tuant§a Zen'Itsu§7 vous avez obtenue l'effet§c Force I§7 le§c jour§7.");
+                event.getGamePlayerKiller().sendMessage("§7En tuant§a Zen'Itsu§7 vous avez obtenu l'effet§c Force I§7 le§c jour§7.");
                 addPower(this.speedTroisPower, true);
                 this.killZenItsu = true;
             }
@@ -135,7 +135,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                 if (!give) {
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
                 }
-                event.getGamePlayerKiller().sendMessage("§7En tuant§c Kaigaku§7 vous avez obtenue l'effet§c Force I§7 la§c nuit§7.");
+                event.getGamePlayerKiller().sendMessage("§7En tuant§c Kaigaku§7 vous avez obtenu l'effet§c Force I§7 la§c nuit§7.");
                 addPower(this.orageBrulantItem, true);
                 this.killKaigaku = true;
             }

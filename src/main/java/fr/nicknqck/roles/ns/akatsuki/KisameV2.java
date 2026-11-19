@@ -100,7 +100,7 @@ public class KisameV2 extends AkatsukiRoles {
 
         protected SamehadaSwordPower(@NonNull RoleBase role) {
             super("Samehada", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cSamehada").addEnchant(Enchantment.DAMAGE_ALL, 3), role,
-                    "§7Tout les§c 25 coups§7 infligé a un joueur, vous lui infligerez§c 2❤ supplémentaire§7 de§c dégâts");
+                    "§7Tous les§c 25 coups§7 infligés à un joueur, vous lui infligerez§c 2❤ supplémentaires§7 de§c dégâts");
             role.getGamePlayer().getActionBarManager().addToActionBar("kisame.coupremaining", "§7Coup restant: §c0§7/§625");
         }
 

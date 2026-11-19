@@ -49,7 +49,7 @@ public class BestialV2 extends TitanBase implements Listener {
 
     @Override
     public @NonNull String getParticularites() {
-        return "§8 -§7 Votre transformation à une durée de§c 4 minutes§7.\n"+
+        return "§8 -§7 Votre transformation a une durée de§c 4 minutes§7.\n"+
                 " \n"+
                 "§8 -§7 Votre transformation possède plusieurs forme différente, celle que vous avez est définie aléatoirement lorsque vous recevez le titan.\n"+
                 " \n"+

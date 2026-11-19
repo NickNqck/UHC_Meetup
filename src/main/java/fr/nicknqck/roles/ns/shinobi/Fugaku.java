@@ -138,7 +138,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").setDurability(7).toItemStack());
             fastInv.setItem(12, new ItemBuilder(Material.FERMENTED_SPIDER_EYE)
                     .setName("§r§fAffaiblissement")
-                    .setLore("§7Inflige l'effet§8 Weakness I§7 pendant §c18 secondes§7 a un joueur visée",
+                    .setLore("§7Inflige l'effet§8 Weakness I§7 pendant §c18 secondes§7 à un joueur visé",
                             "",
                             (this.affaiblissementPower.getCooldown().getCooldownRemaining() <= 0 ? "§cPouvoir Utilisable" : "§7Cooldown: §c"+ StringUtils.secondsTowardsBeautiful(this.affaiblissementPower.getCooldown().getCooldownRemaining())))
                     .toItemStack(), event -> {

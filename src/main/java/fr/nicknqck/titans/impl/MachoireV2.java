@@ -39,7 +39,7 @@ public class MachoireV2 extends TitanBase implements Listener {
 
     @Override
     public @NonNull String getParticularites() {
-        return "§8 -§7 Votre transformation à une durée de§c 3 minutes§7.\n"+
+        return "§8 -§7 Votre transformation a une durée de§c 3 minutes§7.\n"+
                 " \n"+
                 "§8 -§7 Lorsque vous êtes transformé en titan vous avez l'effet§c Speed I§7 ainsi que§a No Fall§7.\n"+
                 " \n"+

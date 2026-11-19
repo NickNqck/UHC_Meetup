@@ -171,7 +171,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
     }
     private void onItachiKill(boolean msg) {
         if (msg) {
-            getGamePlayer().sendMessage("§7Bravo, vous avez enfin vengé votre clan, était-ce une bonne idée ? Seul l'avenir nous le dira, en attendant vous avez obtenue §c2❤ supplémentaire§7 ainsi que les§c Genjutsus§7 de§c Itachi§7 (§c/ns me pour plus détail§7).");
+            getGamePlayer().sendMessage("§7Bravo, vous avez enfin vengé votre clan, était-ce une bonne idée ? Seul l'avenir nous le dira, en attendant vous avez obtenu §c2❤ supplémentaires§7 ainsi que les§c Genjutsus§7 de§c Itachi§7 (§c/ns me pour plus détail§7).");
         }
         this.itachiDEAD = true;
         addPower(new Genjutsu(this), true);

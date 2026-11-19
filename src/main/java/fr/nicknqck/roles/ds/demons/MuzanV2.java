@@ -204,7 +204,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                             return false;
                         }
                         player.sendMessage("§cVous avez donné le pouvoir de l'infection à§b "+target.getDisplayName());
-                        target.sendMessage("§4Muzan§c vous à donnez le pouvoir de l'infection, ne le gâchez pas... (§6/ds infection <joueur>§7)");
+                        target.sendMessage("§4Muzan§c vous a donné le pouvoir de l'infection, ne le gâchez pas... (§6/ds infection <joueur>§7)");
                         Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> role.addPower(new InfectPower((DemonsRoles) role)));
                         return true;
                     }
@@ -284,16 +284,16 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                     target.sendTitle("§cVous avez été infecté", "Vous gagnez maintenant avec les Démons");
                     target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*15, 0, false, false));
 
-                    target.sendMessage(target.getName()+" à été infecté");
+                    target.sendMessage(target.getName()+" a été infecté");
                     for (final UUID u : gameState.getInGamePlayers()) {
                         final Player z = Bukkit.getPlayer(u);
                         if (z == null)continue;
                         if (gameState.hasRoleNull(u)) continue;
                         if (gameState.getGamePlayer().get(u).getRole().getOriginTeam().equals(TeamList.Demon)) {
-                            z.sendMessage("§4Un joueur à été infecté et à rejoins le camp des§c Démons");
+                            z.sendMessage("§4Un joueur a été infecté et a rejoint le camp des§c Démons");
                         }
                     }
-                    this.roleInfecteur.getGamePlayer().sendMessage(target.getName()+" à été infecté");
+                    this.roleInfecteur.getGamePlayer().sendMessage(target.getName()+" a été infecté");
                     if (gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam() != TeamList.Slayer) {
                         target.sendMessage("Vous avez été §cinfecté§f mais comme vous n'étiez pas du camp§a Slayer§r vous n'avez pas pus être§c infecté§f, vous restez donc dans votre camp d'origine");
                     }
