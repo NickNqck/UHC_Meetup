@@ -153,6 +153,7 @@ public class TsunadeV2 extends HShinobiRoles {
         }
         @EventHandler
         private void onEat(@NonNull final GamePlayerEatGappleEvent event) {
+            if (!event.getPlayer().getUniqueId().equals(getRole().getPlayer())) return;
             final double actualHealth = event.getPlayer().getHealth();
             final double maxHealth = event.getPlayer().getMaxHealth();
             if (actualHealth + 4.0 > maxHealth) {
