@@ -136,7 +136,7 @@ public class RaikageV2 extends ShinobiRoles {
                 }
                 final Player owner = Bukkit.getPlayer(this.armureRaiton.getRole().getPlayer());
                 if (owner != null) {
-                    if (owner.getItemInHand() != null && owner.getItemInHand().isSimilar(this.armureRaiton.getItem())) {
+                    if (owner.getItemInHand() != null && owner.getItemInHand().isSimilar(this.armureRaiton.getItem()) && !this.armureRaiton.activate) {
                         this.armureRaiton.getRole().getGamePlayer().getActionBarManager().addToActionBar("raikage.armure", "§bTemps restant (§eArmure Raiton§b): "+ StringUtils.secondsTowardsBeautiful(this.armureRaiton.timeLeft));
                         return;
                     }
