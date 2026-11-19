@@ -154,7 +154,7 @@ public class EntityDamageEvents implements Listener{
 							if (!gameState.hasRoleNull(player.getUniqueId())) {
 								if (gameState.getGamePlayer().get(player.getUniqueId()).getRole().isCanRespawn()) {
 									assert damageur instanceof Player;
-									gameState.getGamePlayer().get(player.getUniqueId()).getRole().PlayerKilled((Player)damageur, player, gameState);
+									gameState.getGamePlayer().get(player.getUniqueId()).getRole().PlayerKilled(damageur instanceof Player ? (Player) damageur : null, player, gameState);
 									event.setCancelled(true);
 								}
 							}
