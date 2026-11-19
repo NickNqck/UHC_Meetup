@@ -49,14 +49,14 @@ public class AllianceV2 extends Event implements Listener {
             }
             if (this.shinjuro != null && this.kyojuro != null && this.shinjuro instanceof IAllianceRole && this.kyojuro instanceof IAllianceRole) {
                 this.kyojuro.setTeam(TeamList.Alliance, true);
-                this.kyojuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Shinjuro).getName());
+                this.kyojuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+this.shinjuro.getGamePlayer().getPlayerName());
                 this.kyojuro.getGamePlayer().sendMessage("Vous avez convaincu votre père d'arrêter l'alcool, tant que vous serez en vie il aura "+ AllDesc.Force+" 1 proche de vous, de plus vous gagnez §c2"+AllDesc.coeur);
                 this.kyojuro.giveHealedHeartatInt(2);
                 this.kyojuro.givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
                 ((IAllianceRole) this.kyojuro).setInAlliance(true);
 
                 this.shinjuro.setTeam(TeamList.Alliance, true);
-                this.shinjuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+gameState.getOwner(Roles.Kyojuro).getName());
+                this.shinjuro.getGamePlayer().sendMessage("Vous gagnez maintenant avec "+TeamList.Alliance.getColor()+this.kyojuro.getGamePlayer().getPlayerName());
                 this.shinjuro.getGamePlayer().sendMessage("Votre fils vous a convaincu d'arrêter l'alcool, tant qu'il sera en vie vous obtiendrez "+AllDesc.Force+" 1 proche de lui, de plus vous aurez un traqueur vers lui.");
                 break;
             }
