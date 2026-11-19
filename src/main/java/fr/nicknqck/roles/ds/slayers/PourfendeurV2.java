@@ -241,7 +241,11 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
             } else if (RandomUtils.getOwnRandomProbability(5)) {
                 setTeam(TeamList.Solo);
                 owner.getInventory().remove(this.soufleEauItem);
-                owner.getInventory().getBoots().getItemMeta().addEnchant(Enchantment.DEPTH_STRIDER, 2, true);
+                final ItemStack boots = owner.getInventory().getBoots();
+                if (boots != null) {
+                    boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 2);
+                    owner.getInventory().setBoots(boots);
+                }
                 givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
             }
