@@ -147,6 +147,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                 this.gaaraV2.getGamePlayer().getActionBarManager().updateActionBar("gaara.shukaku", "§eShukaku:§c "+StringUtils.secondsTowardsBeautiful(this.timeLeft));
                 this.timeLeft--;
             } else if (this.timeLeft == 0) {
+                this.gaaraV2.divisor = 1;
                 this.gaaraV2.getGamePlayer().getActionBarManager().removeInActionBar("gaara.shukaku");
                 this.gaaraV2.getGamePlayer().sendMessage("§7Vous n'êtes plus sous l'effet de§e Shukaku§7.");
                 this.timeLeft--;
