@@ -94,6 +94,7 @@ public class EclaireurV2 extends SoldatsRoles {
                 player.sendMessage(Main.getInstance().getNAME()+"§7 Vous avez annulé votre opération d'§aEclairage !");
                 this.runnable.stop();
                 this.runnable.cancel();
+                this.runnable.updateEquipmentForObservers(player, false);
             } else {
                 player.sendMessage(Main.getInstance().getNAME()+"§7 Vous commencez votre§a Eclairage !");
                 this.runnable.updateEquipmentForObservers(player, true);
