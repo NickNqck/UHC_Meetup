@@ -125,7 +125,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
                     "§7les§c dégâts§7 que vous subissez dans votre§c zone§7 d'activation à§b celui-ci§7.",
                     "",
                     "§7Si jamais votre§c cible§7 n'est plus dans la même§c dimension§7 que vous ou qu'elle se situe à plus de§c 100 blocs§7",
-                    "§7alors, elle ne subira pas les dégâts (uniquement si elle à moins de§c 1❤§7)",
+                    "§7alors, elle ne subira pas les dégâts (uniquement si elle a moins de§c 1❤§7)",
                     "",
                     "§7Si elle se situe à plus de§c 50 blocs");
             this.sword = new ItemBuilder(Material.DIAMOND_SWORD).setName("§cFaux§7 (§cRituel de Jashin§7)").addEnchant(Enchantment.DAMAGE_ALL, 4).setUnbreakable(true)

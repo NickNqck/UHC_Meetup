@@ -38,7 +38,7 @@ public class LaraV2 extends MahrRoles implements Listener {
                 .addEffects(getEffects())
                 .setPowers(getPowers())
                 .addCustomLine("§7Tant que vous êtes transformé en titan vous recevez §c5%§7 de §cdégâts en moins")
-                .addCustomLine("§7Même si vous n'êtes pas transformé en titan, vous pourrez§c réssusciter§7 comme si vous l'étiez (voir §6/aot info§7)")
+                .addCustomLine("§7Même si vous n'êtes pas transformé en titan, vous pourrez§c ressusciter§7 comme si vous l'étiez (voir §6/aot info§7)")
                 .getText();
     }
 

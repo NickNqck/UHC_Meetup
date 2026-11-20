@@ -178,7 +178,7 @@ public class DomaV2 extends DemonsRoles {
                     "§7Vous permet d'§aactiver§7 et de§c désactiver§7 votre§b gel§7.",
                     "",
                     "§7Lorsque votre§b gel§7 est§a activé§7, tous les§c 15 coups§7 (unique à chaque joueur§7)",
-                    "§7la personne que vous avez frapper ne pourra§c pas utiliser ses pouvoirs§7 pendant§c 10 secondes§7.");
+                    "§7la personne que vous avez frappée ne pourra§c pas utiliser ses pouvoirs§7 pendant§c 10 secondes§7.");
             EventUtils.registerRoleEvent(this);
         }
 

@@ -385,7 +385,7 @@ public class CrystalManager implements Listener {
                     }
                 }
                 if (!inside) {
-                    gamePlayer.getActionBarManager().updateActionBar("crystal.percent", "§cImpossible de raffiné quelque chose que vous n'avez pas");
+                    gamePlayer.getActionBarManager().updateActionBar("crystal.percent", "§cImpossible de raffiner quelque chose que vous n'avez pas");
                     return;
                 }
                 if (result >= Main.getInstance().getGameConfig().getCrystalConfig().getNmbBlockForRaffinage()) {

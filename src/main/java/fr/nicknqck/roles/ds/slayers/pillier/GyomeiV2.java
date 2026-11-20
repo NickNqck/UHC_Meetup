@@ -173,7 +173,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                     direction.multiply(-2);
                     target.setVelocity(direction.normalize().multiply(8).setY(0.8));
                     target.sendMessage("§cVous avez été repousser par§a Gyomei");
-                    gamePlayer.sendMessage("Vous avez repousser§c "+this.nameTarget+"§f, il subira§c 2❤§f de dégât dans§c 5 secondes");
+                    gamePlayer.sendMessage("Vous avez repoussé§c "+this.nameTarget+"§f, il subira§c 2❤§f de dégât dans§c 5 secondes");
                     runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }
 

@@ -37,7 +37,7 @@ public class PieckV2 extends MahrRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Vous possédez une régénération naturel à hauteurs de§c 1/2❤ §7toute les§c 30 secondes§7, si vous êtes transformer en titan le §ccooldown§7 de votre§d régénération§7 sera§c divisé§7 par§c deux.")
+                .addCustomLine("§7Vous possédez une régénération naturelle à hauteur de§c 1/2❤ §7toutes les§c 30 secondes§7, si vous êtes transformé en titan le §ccooldown§7 de votre§d régénération§7 sera§c divisé§7 par§c deux.")
                 .getText();
     }
 

@@ -218,7 +218,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
                     if (distance <= 65) {
                         fastInv.addContent(new ItemBuilder(GlobalUtils.getPlayerHead(uuid))
                                 .setName("§a"+target.getName())
-                                .setLore("§7Cliquez ici pour réssusciter ce joueur !",
+                                .setLore("§7Cliquez ici pour ressusciter ce joueur !",
                                         "§7Coût: §c"+
                                 ((Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove())/2)
                                 +"❤ permanent")

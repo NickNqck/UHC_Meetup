@@ -89,7 +89,7 @@ public class SusamaruV2 extends DemonsRoles {
                     "",
                     "§cBallon Explosif§7: A l'§cimpact§7, crée une explosion infligeant§c 2❤§7 de§c dégâts§7. (1x/15s)",
                     "",
-                    "§cBallon Transporteur§7: Vous fait suivre la flèche que vous avez lancer jusqu'à ce qu'elle touche quelqu'un ou le sol. (1x/60s)",
+                    "§cBallon Transporteur§7: Vous fait suivre la flèche que vous avez lancée jusqu'à ce qu'elle touche quelqu'un ou le sol. (1x/60s)",
                     "",
                     "§7Vous pouvez changer le modèle de votre§c Ballon§7 en faisant un§c clic gauche§7 avec votre§c arc§7.");
             EventUtils.registerRoleEvent(this);

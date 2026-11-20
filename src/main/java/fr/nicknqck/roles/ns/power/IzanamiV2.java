@@ -332,7 +332,7 @@ public class IzanamiV2 implements Listener {
                     if (infecteur instanceof ShisuiSolo && Main.getInstance().getGameConfig().getNarutoConfig().isShisuiByPassIzanamiLimitation()) {
                         return this.applySuccessfullInfection(infecteur, infecter, toIzanami, gOwner, owner, gTo);
                     }
-                    toIzanami.sendMessage(this.color+infecteur.getName()+"§7 a essayé de vous forcez à rejoindre son camp, hors, vous êtes beaucoup trop fort pour lui alors ce n'est pas arrivé (lui pense que ça a fonctionné).");
+                    toIzanami.sendMessage(this.color+infecteur.getName()+"§7 a essayé de vous forcer à rejoindre son camp, or, vous êtes beaucoup trop fort pour lui alors ce n'est pas arrivé (lui pense que ça a fonctionné).");
                     gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.color+"Izanami§7 (§cÉchoué§7))");
                     final IzanamiFinishEvent izanamiFinishEvent = new IzanamiFinishEvent(infecteur, infecter, this.color, owner, toIzanami, false);
                     Bukkit.getPluginManager().callEvent(izanamiFinishEvent);

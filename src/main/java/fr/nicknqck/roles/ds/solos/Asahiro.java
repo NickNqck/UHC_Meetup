@@ -293,7 +293,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                     "",
                     "§8 -§9 Bleu: Les autres camps",
                     "",
-                    "§7Vous aurez§c Force 0,5§7 contre les joueurs avec qui vous serez rester§c 4 minutes§7.");
+                    "§7Vous aurez§c Force 0,5§7 contre les joueurs avec qui vous serez resté§c 4 minutes§7.");
             this.pointsRunnable = new PointsRunnable(role);
             this.pointsRunnable.runTaskTimerAsynchronously(getPlugin(), 100, 20);
             EventUtils.registerRoleEvent(this);

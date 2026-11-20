@@ -283,7 +283,7 @@ public class Sasori extends AkatsukiRoles {
                     "",
                     "§8 -§f Clic gauche§7: Permet d'utiliser l'effet de la§c marionette équiper§7.",
                     "",
-                    "§7Si vous avez fabriquer toute vos marionnette, tant qu'une est§a équiper§7, vous pouvez changer rapidement via§f Shift + Clic droit§7."
+                    "§7Si vous avez fabriqué toutes vos marionnettes, tant qu'une est§a équipée§7, vous pouvez changer rapidement via§f Shift + Clic droit§7."
             );
             marionnetteMap.put(new Hiruko(role), false);
             marionnetteMap.put(new Kazegake(role), false);

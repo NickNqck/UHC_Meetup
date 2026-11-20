@@ -286,7 +286,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
             super("Ninjutsu Spatio-Temporel", new Cooldown(60*8), new ItemBuilder(Material.NETHER_STAR).setName("§dNinjutsu Spatio-Temporel"), role,
                     "§7Vous permet de vous rendre§c invisible§7 pendant une durée de§c 60 secondes§7.",
                     "",
-                    "§7(Vous pouvez retirer votre invisibilité en réapuyant sur cette item)");
+                    "§7(Vous pouvez retirer votre invisibilité en réappuyant sur cet item)");
             this.ninjutsuRunnable = new NinjutsuRunnable(role.getGameState(), this);
             setWorkWhenInCooldown(true);
             EventUtils.registerRoleEvent(this);

@@ -97,7 +97,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
                     if (target != null) {
                         if (player.getWorld().equals(this.role.killLocation.get(uuid).getWorld())) {
                             if (player.getLocation().distance(this.role.killLocation.get(uuid)) <= 50) {
-                                inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(uuid)).setName(target.getName()).setLore("§7Cliquez ici pour réssusciter ce joueur !\n\n/7Coût: §c"+
+                                inv.addItem(new ItemBuilder(GlobalUtils.getPlayerHead(uuid)).setName(target.getName()).setLore("§7Cliquez ici pour ressusciter ce joueur !\n\n/7Coût: §c"+
                                         (Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove()/2)
                                         +"❤ permanent").toItemStack());
                             }

@@ -115,7 +115,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                     "",
                     "§fClic droit§7: Vous permet d'ouvrir un menu vous permettant de choisir une technique parmi§a celle-ci§f:",
                     "",
-                    "§7     →§cC1§7: Avec ce mode d'§aactiver§7, vos flèches créeront une explosion qui à l'impacte, inflige§c 1❤ de dégât au joueurs proche.§7 (1x/20s)",
+                    "§7     →§cC1§7: Avec ce mode§a activé§7, vos flèches créeront une explosion qui, à l'impact, inflige§c 1❤ de dégât aux joueurs proches.§7 (1x/20s)",
                     "",
                     "§7     →§cC2§7: La prochaine flèche que vous tirerez avec l'§cArc Explosif§7 créera une explosion à l'impact de la même puissance que le§c C1§7, de plus,",
                     "§7il vous donnera un§a fly§7 de§c 10s§7, qui, chaque§c seconde§7, lâchera une§c TNT§7 en dessous de vous.§7 (1x/8m)",

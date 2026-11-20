@@ -101,7 +101,7 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
         return AutomaticDesc.createAutomaticDesc(this)
                 .addCustomLine(killItachi ? "" :
                         "§7Si vous parvenez à tuer§c Itachi§7, la distance pour savoir si un §7joueur utilise un pouvoir change (§c100§7 -> §c150§7)," +
-                                " la distance §7pour savoir quel pouvoir a été utiliser a aussi changer (§c25§7 -> §c100§7),"+
+                                " la distance §7pour savoir quel pouvoir a été utilisé a aussi changé (§c25§7 -> §c100§7),"+
                                 "§7de plus, l'§cintégralité§7 de§c vos pouvoirs§7 verront leurs §ccooldowns diviser par deux§7."
                 )
                 .getText();

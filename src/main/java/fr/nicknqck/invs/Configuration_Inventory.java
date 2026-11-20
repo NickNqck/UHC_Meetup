@@ -26,11 +26,11 @@ public class Configuration_Inventory extends FastInv {
             if (event.isShiftClick()) {
                 if (Main.getInstance().getGameConfig().getStuffConfig().isDefaultInventory()) {
                     Main.getInstance().getGameConfig().getStuffConfig().setDefaultInventory(false);
-                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié l'inventaire, il n'est§c plus§7 définie sur§c par défaut§7.");
+                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié l'inventaire, il n'est§c plus§7 défini sur§c par défaut§7.");
                     new Configuration_Inventory().open((Player) event.getWhoClicked());
                 } else {
                     Main.getInstance().getGameConfig().getStuffConfig().setDefaultInventory(true);
-                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié l'inventaire, il est§c maintenant§7 définie sur§c par défaut§7.");
+                    Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+event.getWhoClicked().getName()+"§7 a modifié l'inventaire, il est§c maintenant§7 défini sur§c par défaut§7.");
                     new Configuration_Inventory().open((Player) event.getWhoClicked());
                 }
                 return;
