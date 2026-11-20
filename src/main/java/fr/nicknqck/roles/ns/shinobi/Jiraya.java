@@ -266,6 +266,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
                         int essai = 15;
                         Player target = null;
                         while (target == null ||target.getUniqueId().equals(this.gamabuntaPower.getRole().getPlayer())) {
+                            if (playerList.isEmpty()) break;
                             Collections.shuffle(playerList);
                             target = playerList.get(0);
                             if (target != null) {
