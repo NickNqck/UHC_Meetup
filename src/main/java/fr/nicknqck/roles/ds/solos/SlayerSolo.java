@@ -265,7 +265,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                         mBoots.addEnchant(Enchantment.DEPTH_STRIDER, 3, true);
                         boots.setItemMeta(mBoots);
                         player.getInventory().setBoots(boots);
-                        Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
+                        Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
                             ItemStack boot = player.getInventory().getBoots();
                             if (boot != null) {
                                 ItemMeta mBoot = boot.getItemMeta();
