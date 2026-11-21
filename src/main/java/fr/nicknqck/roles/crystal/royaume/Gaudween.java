@@ -138,6 +138,7 @@ public class Gaudween extends RoyaumeBase {
                 if (this.gamePlayer != null) {
                     if (!gamePlayer.check()) {
                         power.getRole().getGamePlayer().sendMessage("§7Vous n'êtes plus sous l'effet de votre§a Théologie");
+                        this.power.getRole().getGamePlayer().getActionBarManager().removeInActionBar("godwin.preche");
                         cancel();
                         return;
                     }
