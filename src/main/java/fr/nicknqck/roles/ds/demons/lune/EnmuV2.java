@@ -308,7 +308,7 @@ public class EnmuV2 extends DemonsRoles {
                 }
                 //Si le perdant c'est Enmu
                 if (victim.getUuid().equals(this.sommeilUltime.getRole().getPlayer())) {
-                    event.getGamePlayerKiller().getRole().owner.getInventory().remove(this.sommeilUltime.getItem());
+                    event.getPlayer().getInventory().remove(this.sommeilUltime.getItem());
                     victim.getRole().getPowers().remove(this.sommeilUltime);
                     victim.getRole().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth()-4.0);
                     event.getPlayer().setMaxHealth(this.sommeilUltime.getRole().getMaxHealth());
