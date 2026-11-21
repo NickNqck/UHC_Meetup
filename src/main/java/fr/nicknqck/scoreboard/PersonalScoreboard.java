@@ -10,6 +10,7 @@ import fr.nicknqck.scenarios.impl.FFA;
 import fr.nicknqck.utils.ArrowTargetUtils;
 import fr.nicknqck.utils.StringUtils;
 import fr.nicknqck.utils.rank.ChatRank;
+import fr.nicknqck.utils.tab.CustomTabManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -53,6 +54,12 @@ public class PersonalScoreboard {
      */
     private final AtomicBoolean updatePending = new AtomicBoolean(false);
     /*
+     * Préfixe du rôle à mettre dans le tab de tout le monde (roletab), calculé dans
+     * buildLines() puis appliqué sur le thread principal ; null s'il n'y a rien à appliquer.
+     */
+    private volatile String pendingRolePrefix = null;
+    private volatile UUID pendingRolePrefixTarget = null;
+    /*
      * Hauteur du bloc le plus haut en (0, 0) : lue uniquement sur le thread principal
      * (au plus une fois par seconde) et mise en cache pour la ligne "Centre".
      */
@@ -84,6 +91,7 @@ public class PersonalScoreboard {
                     if (this.gameState.getServerState() == ServerStates.InGame && this.player.isOnline()) {
                         refreshCenterY();
                     }
+                    applyRolePrefix();
                     Bukkit.getPluginManager().callEvent(new ScoreBoardUpdateEvent(this.objectiveSign.lines, this.objectiveSign.scores, this));
                     objectiveSign.updateLines();
                 } finally {
@@ -101,6 +109,7 @@ public class PersonalScoreboard {
     private void buildLines(String ip){
     	String premsg = "§7§l ┃ §r";
 		ChatRank.updateRank(this.player);
+    	this.pendingRolePrefix = null;
     	if (this.gameState.getServerState() == ServerStates.InLobby) {
     		 	objectiveSign.setDisplayName(this.gameState.msgBoard);
     	        objectiveSign.setLine(0, premsg+"§1");
@@ -163,11 +172,25 @@ public class PersonalScoreboard {
     			if (this.gameState.roleTimer < this.gameState.getInGameTime()) {
     				if (!this.gameState.hasRoleNull(player.getUniqueId())) {
 						final RoleBase role = this.gameState.getGamePlayer().get(player.getUniqueId()).getRole();
-						Main.getInstance().getCustomTabManager().setPrefixForAll(role.getPlayer(), role.getOriginTeam().getColor()+role.getName()+" §r");
+						this.pendingRolePrefixTarget = role.getPlayer();
+						this.pendingRolePrefix = role.getOriginTeam().getColor()+role.getName()+" §r";
                     }
     			}
     		}
     	}
+    }
+    /**
+     * Met le préfixe du rôle (roletab) dans le tab de tout le monde, sur le thread principal.
+     * Rien n'est envoyé si tous les viewers l'ont déjà : il est renvoyé seulement s'il a changé,
+     * si un joueur vient de se connecter, ou si un autre préfixe l'a remplacé (ex. Jubi).
+     */
+    private void applyRolePrefix() {
+        final String prefix = this.pendingRolePrefix;
+        final UUID target = this.pendingRolePrefixTarget;
+        if (prefix == null || target == null) return;
+        final CustomTabManager tabManager = Main.getInstance().getCustomTabManager();
+        if (tabManager.hasPrefixForAll(target, prefix)) return;
+        tabManager.setPrefixForAll(target, prefix);
     }
     /**
      * Retourne la hauteur en cache du bloc le plus haut en (0, 0) dans {@code world},

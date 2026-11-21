@@ -141,6 +141,21 @@ public class CustomTabManager implements Listener {
     }
 
     /**
+     * Indique si {@code targetUUID} a déjà le préfixe {@code prefix} dans le tab de TOUS
+     * les viewers connectés (lecture du cache persistant, aucun envoi).
+     * Un viewer sans personnalisation pour cette cible (ex. qui vient de se connecter)
+     * renvoie {@code false}. À appeler sur le thread principal.
+     */
+    public boolean hasPrefixForAll(@NonNull UUID targetUUID, @NonNull String prefix) {
+        for (final UUID viewerUUID : playerTabs.keySet()) {
+            final Map<UUID, TabEntry> viewerCache = customizationCache.get(viewerUUID);
+            final TabEntry cached = (viewerCache != null) ? viewerCache.get(targetUUID) : null;
+            if (cached == null || !prefix.equals(cached.getPrefix())) return false;
+        }
+        return true;
+    }
+
+    /**
      * Applique un suffixe à une cible dans le tab de TOUS les viewers.
      */
     public void setSuffixForAll(@NonNull UUID targetUUID, @NonNull String suffix) {
