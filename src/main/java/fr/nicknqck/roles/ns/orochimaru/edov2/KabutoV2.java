@@ -118,11 +118,11 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
                 )
                 .addCustomLine(
                         !this.orochimaruDEAD ?
-                                "§7A la mort de§5 Orochimaru§7, vous obtiendrez l'accès l'§5Edo Tensei§7.":""
+                                "§7A la mort de§5 Orochimaru§7, vous obtiendrez l'accès à l'§5Edo Tensei§7.":""
                 )
                 .addCustomLine(
                         !solo ?
-                                "§7Si vous êtes le dernier disciple d'§5Orochimaru§7, vous devriendrez un rôle§e Solitaire§7.":""
+                                "§7Si vous êtes le dernier disciple d'§5Orochimaru§7, vous deviendrez un rôle§e Solitaire§7.":""
                 )
                 .getText();
     }
@@ -154,7 +154,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         this.jugoDEAD = true;
     }
     private void onKimimaruDeath() {
-        getGamePlayer().sendMessage("§5Kimimaro§7 est mort, grâce à la génétique de ses os vous avez pus renforcé votre corp, vous infligez§c 10%§7 de§c dégâts supplémentaires§7 et recevez§c 10%§7 de§c dégâts en moins§7.");
+        getGamePlayer().sendMessage("§5Kimimaro§7 est mort, grâce à la génétique de ses os vous avez pu renforcer votre corps, vous infligez§c 10%§7 de§c dégâts supplémentaires§7 et recevez§c 10%§7 de§c dégâts en moins§7.");
         this.kimimaroDEAD = true;
         addBonusforce(10);
         addBonusResi(10);

@@ -47,7 +47,7 @@ public class EveilTenseiGan extends Event implements Listener {
     private boolean activate = false;
     private final String print = "[EveilTenseiganEvent] ";
     private GamePlayer gamePlayer;
-    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).setName("§cÉpée du§b Tenseigan").setLore("§7Vous permet de passer à travers la résistance des personnes frappés").toItemStack();
+    private final ItemStack sword = new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setUnbreakable(true).setName("§cÉpée du§b Tenseigan").setLore("§7Vous permet de passer à travers la résistance des personnes frappées").toItemStack();
     private boolean getTenseigan = false;
 
     @Override
@@ -81,7 +81,7 @@ public class EveilTenseiGan extends Event implements Listener {
         final GamePlayer gamePlayer = buyakuganUserList.get(0);
         System.out.println(print+gamePlayer.getPlayerName()+" has been chose, size of the list: "+buyakuganUserList.size());
         final RoleBase role = gamePlayer.getRole();
-        gamePlayer.sendMessage("§7Qu'est-ce qui se passe ? Vous sentez qu'un étrange§a chakra§7 se déverse dans vos yeux, après vérification on dirait qu'il s'agit la d'un§a chakra§e Otsutsuki§7, vous devriez essayer de récupérer d'autres§a byakugans§7 pour éveiller de nouveaux pouvoirs.");
+        gamePlayer.sendMessage("§7Qu'est-ce qui se passe ? Vous sentez qu'un étrange§a chakra§7 se déverse dans vos yeux, après vérification on dirait qu'il s'agit là d'un§a chakra§e Otsutsuki§7, vous devriez essayer de récupérer d'autres§a byakugans§7 pour éveiller de nouveaux pouvoirs.");
         role.setTeam(TeamList.Solo, true);
         this.gamePlayer = gamePlayer;
         if (buyakuganUserList.size() == 1) {//donc si mon joueur est le seul porteur du byakugan
@@ -129,7 +129,7 @@ public class EveilTenseiGan extends Event implements Listener {
     @Override
     public String[] getExplications() {
         return new String[] {
-                "§7Un joueur possédant le§a Byakugan§7 est choisis aléatoirement pour devenir un§e rôle solitaire§7,",
+                "§7Un joueur possédant le§a Byakugan§7 est choisi aléatoirement pour devenir un§e rôle solitaire§7,",
                 "§7ce joueur recevra les effets§b Speed I§7 et§9 Résistance I§7, s'il parvient à rester§c 5 secondes",
                 "§7sur le cadavre d'un autre porteur du§a Byakugan§7 (ou s'il n'y en a pas d'autre dans la partie),",
                 "§7il recevra les items§b Mode Chakra§7 et§a Sphère de Vérité§7.","",
@@ -137,7 +137,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 "§7quand le pouvoir est activé l'utilisateur possède§b Speed II§7,§a NoFall§7 et",
                 "§7à§c 5%§7 de§c chance§7 d'§6enflammer§7 le joueur attaquer.",
                 "",
-                "§8 -§b Sphere de vérité§7: Permet d'activer le fait de pouvoir§a voler§7,",
+                "§8 -§b Sphère de vérité§7: Permet d'activer le fait de pouvoir§a voler§7,",
                 "§7ce pouvoir n'est utilisable que quand le§b Mode Chakra§7 est actif et coûte§c 2x plus de temps",
                 "",
                 "§8 -§c Épée du§b Tenseigan§7: Permet de passer à travers la résistance des joueurs frappés,",
@@ -146,7 +146,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 "§cLa personne ayant été touchée par l'event restera§e Solitaire§7 jusqu'à la fin de la partie",
                 "§7(§cCela outrepasse aussi l'infection de§e§l Shisui§r§7)",
                 "",
-                "§fL'annonce de l'évènement ce fera après que l'utilisateur ai utiliser pendant§c 1 minute",
+                "§fL'annonce de l'évènement se fera après que l'utilisateur ait utilisé pendant§c 1 minute",
                 "§fson§b Mode Chakra"
         };
     }
@@ -263,7 +263,7 @@ public class EveilTenseiGan extends Event implements Listener {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (this.chakraRunnable.running) {
                     if (sphereVeritePower.fly) {
-                        player.sendMessage("§cImpossible d'enlever votre§b Mode Chakra§c, vos§a Spheres de vérités§c sont trop puissante pour que vous puissiez le supporter sans lui.");
+                        player.sendMessage("§cImpossible d'enlever votre§b Mode Chakra§c, vos§a Sphères de vérités§c sont trop puissante pour que vous puissiez le supporter sans lui.");
                         return false;
                     }
                     this.chakraRunnable.stop();
@@ -375,7 +375,7 @@ public class EveilTenseiGan extends Event implements Listener {
             private boolean fly = false;
 
             public SphereVeritePower(@NonNull ModeChakraPower chakraPower) {
-                super("Sphere de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphere de vérité"), chakraPower.getRole(),
+                super("Sphère de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphère de vérité"), chakraPower.getRole(),
                         "§7Via un clic droit§a active§7/§cdésactive§7 votre§a fly§7,",
                         "§7Si un joueur vous frappe ou que vous attaquez un autre joueur votre§a vol§7 s'arrêtera.",
                         "§7A l'activation vous perdrez§c 15 secondes directement§7.",

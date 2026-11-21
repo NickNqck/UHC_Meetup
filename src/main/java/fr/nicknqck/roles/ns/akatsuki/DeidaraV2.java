@@ -127,7 +127,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                     "§7     →§cArt Ultime§7:§c Après avoir sélectionné§7 ce§c mode§7, en faisant un§c Shift + clic gauche avec le§6 Bakûton§7 vous empêche de bouger pendant§c 10s§7 puis,",
                     "§7crée une explosion énorme tuant tout joueurs dans la zone de cette dernière (dont vous).§7 (1x/partie)",
                     "",
-                    "§fClic gauche§7: Vous permet de changer§c rapidement§7 de§c mode§7 (ne vous permet d'accédez à l'§cArt Ultime§7)."
+                    "§fClic gauche§7: Vous permet de changer§c rapidement§7 de§c mode§7 (ne vous permet pas d'accéder à l'§cArt Ultime§7)."
             );
             this.mode = Mode.C1;
             setSendCooldown(false);
