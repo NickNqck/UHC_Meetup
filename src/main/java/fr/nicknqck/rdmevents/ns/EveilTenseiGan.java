@@ -163,6 +163,7 @@ public class EveilTenseiGan extends Event implements Listener {
     }
 
     private void giveTenseiGan() {
+        if (this.getTenseigan)return;
         if (this.gamePlayer == null)return;
         if (!this.gamePlayer.isOnline())return;
         if (gamePlayer.getRole() == null)return;
@@ -220,14 +221,20 @@ public class EveilTenseiGan extends Event implements Listener {
     }
     @EventHandler
     private void onDeath(final UHCDeathEvent event) {
-        if (!this.getTenseigan)return;
+        if (this.getTenseigan || this.gamePlayer == null)return;
         if (event.getRole() instanceof IByakuganUser) {
             final GamePlayer g = event.getRole().getGamePlayer();
-            new CadavreRunnable(this.gamePlayer, g, this);
-            this.gamePlayer.sendMessage("§7Vous ressentez le cadavre§7 d'un autre utilisateur du§a Byakugan§7, il est en§c x§7:§c "+
-                            g.getDeathLocation().getBlockX()+"§7,§c y§7:§c "+g.getDeathLocation().getBlockY()+"§7,§c z§7:§c "+g.getDeathLocation().getBlockZ(),
-                    "§e",
-                    "§7Si vous y allez peut-être que vous pourriez récupérer ses§a Byakugan§7 et donc de nouveaux pouvoirs.");
+            if (g.getUuid().equals(this.gamePlayer.getUuid()))return;//Le porteur choisi ne peut pas récupérer son propre cadavre
+            //getDeathLocation() n'est rempli qu'après l'évènement (DeathManager) : on attend 1 tick
+            Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
+                if (this.getTenseigan)return;
+                if (g.isAlive() || g.getDeathLocation() == null)return;//Mort annulée
+                new CadavreRunnable(this.gamePlayer, g, this);
+                this.gamePlayer.sendMessage("§7Vous ressentez le cadavre§7 d'un autre utilisateur du§a Byakugan§7, il est en§c x§7:§c "+
+                                g.getDeathLocation().getBlockX()+"§7,§c y§7:§c "+g.getDeathLocation().getBlockY()+"§7,§c z§7:§c "+g.getDeathLocation().getBlockZ(),
+                        "§e",
+                        "§7Si vous y allez peut-être que vous pourriez récupérer ses§a Byakugan§7 et donc de nouveaux pouvoirs.");
+            });
         }
     }
     private static class ModeChakraPower extends ItemPower implements Listener {
