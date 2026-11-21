@@ -146,7 +146,7 @@ public class Gaudween extends RoyaumeBase {
                     final Player owner = Bukkit.getPlayer(this.power.getRole().getPlayer());
                     if (owner != null) {
                         if (owner.getHealth() <= 8.0) {
-                            owner.setHealth(16.0);
+                            owner.setHealth(Math.min(16.0, owner.getMaxHealth()));
                             owner.sendMessage("§aIncroyable, votre Théologie vous a évité bien des problèmes !");
                             this.timeLeft = 0;
                         }
