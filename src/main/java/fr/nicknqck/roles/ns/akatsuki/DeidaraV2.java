@@ -423,6 +423,7 @@ public class DeidaraV2 extends AkatsukiRoles {
             }
             @EventHandler(priority = EventPriority.NORMAL)
             private void onDamage2(@NonNull final EntityDamageEvent event) {
+                if (!event.getEntity().getUniqueId().equals(getRole().getPlayer()))return;
                 if (event.getCause().name().contains("EXPLOSION")) {
                     event.setDamage(0.0);
                     event.setCancelled(true);
