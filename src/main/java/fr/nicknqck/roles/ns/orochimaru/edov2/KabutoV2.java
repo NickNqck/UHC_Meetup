@@ -35,6 +35,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.UUID;
@@ -91,7 +92,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
             if (!this.orochimaruDEAD && !gameState.getAttributedRole().contains(Roles.Orochimaru)) {
                 onOrochimaruDeath();
             }
-            tryProcSolo(gameState);
+            tryProcSolo(gameState, null);
         }, 20*10);
         EventUtils.registerRoleEvent(this);
         super.RoleGiven(gameState);
@@ -140,7 +141,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         if (event.getRole() instanceof OrochimaruV2 && !orochimaruDEAD) {
             onOrochimaruDeath();
         }
-        tryProcSolo(event.getGameState());
+        tryProcSolo(event.getGameState(), event.getPlayer().getUniqueId());
     }
     private void onKarinDeath() {
         getGamePlayer().sendMessage("§5Karin§7 est morte, en inspiration de son pouvoirs de guérison votre§d Soins§7 s'améliore, il soignera maintenant de§c 5❤§7 au lieu de§c 2❤§7.");
@@ -163,10 +164,17 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         addPower(new EdoTenseiPower(this), true);
         this.orochimaruDEAD = true;
     }
-    private void tryProcSolo(@NonNull final GameState gameState) {
+    /**
+     * @param deadUUID joueur en train de mourir (UHCDeathEvent) : il est encore marqué vivant
+     *                 pendant l'évènement, donc on l'exclut du compte ; null hors d'une mort.
+     */
+    private void tryProcSolo(@NonNull final GameState gameState, @Nullable final UUID deadUUID) {
+        if (this.solo || !getGamePlayer().isAlive() || !getTeam().equals(TeamList.Orochimaru))return;
+        if (getPlayer().equals(deadUUID))return;//C'est Kabuto qui meurt
         int amountOrochimaru = 0;
         for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
             if (!gamePlayer.isAlive())continue;
+            if (gamePlayer.getUuid().equals(deadUUID))continue;
             if (gamePlayer.getRole() == null)continue;
             if (gamePlayer.getRole().getTeam().equals(TeamList.Orochimaru) && gamePlayer.getRole() instanceof OrochimaruRoles) {
                 amountOrochimaru++;
@@ -177,6 +185,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         }
     }
     private void procSolo() {
+        if (this.solo)return;//Deux morts dans le même tick
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
         setTeam(TeamList.Kabuto);
         giveHealedHeartatInt(2.0);
