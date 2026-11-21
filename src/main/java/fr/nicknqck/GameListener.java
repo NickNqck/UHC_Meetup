@@ -672,8 +672,8 @@ public class GameListener implements Listener {
 	@EventHandler
     public void onPrepareCraft(PrepareItemCraftEvent event) {
         ItemStack itemStack = event.getInventory().getResult();
-        ItemStack zero = event.getInventory().getItem(0).clone();
-        if (zero.getType() == Material.APPLE) {
+        ItemStack zero = event.getInventory().getItem(0);
+        if (zero != null && zero.getType() == Material.APPLE) {
         	event.getInventory().setResult(new ItemStack(Material.OBSIDIAN, 1));
         }
         if (itemStack == null || itemStack.getType() == Material.AIR) {
