@@ -178,6 +178,7 @@ public class InoV2 extends ShinobiRoles {
                 } else if (event.getPlayer().getUniqueId().equals(this.toTalk.getUuid())){
                     event.getPlayer().sendMessage("§a"+event.getPlayer().getName()+": §7"+ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(1)));
                     this.getRole().getGamePlayer().sendMessage("§a"+event.getPlayer().getName()+": §7"+ChatColor.translateAlternateColorCodes('&', event.getMessage().substring(1)));
+                    event.setCancelled(true);
                 }
             }
         }
