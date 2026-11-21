@@ -315,11 +315,6 @@ public class EnmuV2 extends DemonsRoles {
                     victim.sendMessage("§7Vous avez perdu votre§c duel§7, pourtant il était à votre avantage... Tant pis vous allez ressusciter dans§c 10 secondes§7 en perdant§c 2❤ permanents");
                     this.enmuItems = event.getPlayer().getInventory().getContents();
                     this.enmuArmors = event.getPlayer().getInventory().getArmorContents();
-                    for (final ItemStack itemStack : this.enmuItems) {
-                        if (itemStack == null)continue;
-                        if (itemStack.getType().equals(Material.AIR))continue;
-                        GameListener.dropItem(event.getPlayer().getLocation(), itemStack);
-                    }
                     //Et la je tp les deux joueurs avec chacun sont propres runnable
                     new ReturnBackRunnable(this, event.getGamePlayerKiller(), false).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
                     new ReturnBackRunnable(this, victim, true).runTaskTimerAsynchronously(this.sommeilUltime.getPlugin(), 0, 20);
