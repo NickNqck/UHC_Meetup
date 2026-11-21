@@ -64,7 +64,7 @@ public class JubiCraft extends CommandPower {
             this.getRole().addPower(new JubiPower2(getRole()), true);
             return true;
         } else {
-            player.sendMessage("§cImpossible de craft§d Jubi§c il vous manque§d "+count+" bijuus§c.");
+            player.sendMessage("§cImpossible de craft§d Jubi§c il vous manque§d "+(6-count)+" bijuus§c.");
         }
         return false;
     }
