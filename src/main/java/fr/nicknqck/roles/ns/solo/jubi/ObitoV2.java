@@ -110,7 +110,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
     @Override
     public ISubRoleWorld getSubWorld() {
         if (this.kamuiPower == null) {
-            //Je peux faire ceci, car normalement, ce sera utiliser juste pour le menu donc c'est OK
+            //Je peux faire ceci, car normalement, ce sera utilisé juste pour le menu donc c'est OK
             return new KamuiDimension();
         }
         return this.kamuiPower.getKamuiDimension();

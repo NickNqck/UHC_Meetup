@@ -114,8 +114,8 @@ public class Tayuya extends OrochimaruRoles {
             super("Flûte Démoniaque", new Cooldown(60*10), new ItemBuilder(Material.STICK).setName("§5Flûte Démoniaque").addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes(), role,
                     "§7Fait apparaître§c 3 golems§7 qui auront pour but d'attaquer le joueur visé,",
                     "",
-                    "§7Lorsque l'un de vos golems est attaquer par un joueur, ce dernier aura§c 5%§7 de§c chance§7 d'§cexploser",
-                    "§7Si l'un de vos§c golems§7 est à plus de§c 35 blocs§7 de la§c cible§7 ou dans l'§beau§7 alors il sera téléporter autour de la personne"
+                    "§7Lorsque l'un de vos golems est attaqué par un joueur, ce dernier aura§c 5%§7 de§c chance§7 d'§cexploser",
+                    "§7Si l'un de vos§c golems§7 est à plus de§c 35 blocs§7 de la§c cible§7 ou dans l'§beau§7 alors il sera téléporté autour de la personne"
             );
             EventUtils.registerRoleEvent(this);
             setTargetDistance(50);

@@ -43,7 +43,7 @@ public class KamuiPower extends ItemPower implements Listener{
                 "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximal de§c 5 minutes§7. (1x/5m)",
                 "",
                 "§dSonohaka§7: Vous permet d'ouvrir un autre menu vous permettant de cibler un joueur,",
-                "§7La personne cibler ce verra téléporter dans la§c dimension Kamui§7 pendant§c 5 minutes§7. (1x/10m)"
+                "§7La personne ciblée se verra téléporter dans la§c dimension Kamui§7 pendant§c 5 minutes§7. (1x/10m)"
         );
         if (getPlugin().getRoleWorldManager().getSubRoleWorldMap().containsKey("Kamui") && getPlugin().getRoleWorldManager().getSubRoleWorldMap().get("Kamui") instanceof KamuiDimension) {
             this.kamuiDimension = (KamuiDimension) getPlugin().getRoleWorldManager().getSubRoleWorldMap().get("Kamui");

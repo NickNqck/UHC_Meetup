@@ -148,7 +148,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         ((Player) event.getOriginEvent().getEntity()).setHealth(((Player) event.getOriginEvent().getEntity()).getHealth()-2.0);
                     }
                     this.cdFoudre = 60*3;
-                    event.getOriginEvent().getDamager().sendMessage("§7Votre§e Soufle de la Foudre§7 à fait effet.");
+                    event.getOriginEvent().getDamager().sendMessage("§7Votre§e Soufle de la Foudre§7 a fait effet.");
                     event.getOriginEvent().getEntity().sendMessage("§7Vous avez subi les effets du§e Soufle de la Foudre§7.");
                     event.getVictim().getRole().owner.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false), true);
                     if (getTeam().equals(TeamList.Solo)){
@@ -179,7 +179,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         event.setCancelled(true);
                         return;
                     }
-                    event.getPlayer().sendMessage("§7Votre§e Soufle de la Foudre§7 est§c activé§7, vous devez maintenant tapé un §cjoueur§7.");
+                    event.getPlayer().sendMessage("§7Votre§e Soufle de la Foudre§7 est§c activé§7, vous devez maintenant taper un §cjoueur§7.");
                     this.cdFoudre = -500;
                     event.setCancelled(true);
                 }
@@ -283,7 +283,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
             if (role.cdEau >= 0) {
                 role.cdEau--;
                 if (role.cdEau == 0) {
-                    role.owner.sendMessage("§7Vous pouvez à nouveua utiliser votre§b Soufle de l'Eau§7.");
+                    role.owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§b Soufle de l'Eau§7.");
                 }
             }
         }

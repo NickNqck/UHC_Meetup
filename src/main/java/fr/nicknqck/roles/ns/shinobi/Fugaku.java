@@ -219,7 +219,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                         final GamePlayer gamePlayer = (GamePlayer) map.get("gameplayer");
                         gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*18, 0, false, false), EffectWhen.NOW);
                         target.sendMessage("§aFugaku§7 vous fait sentir impuissant");
-                        player.sendMessage("§7Vous avez donner à §c"+target.getName()+"§7 l'effet§8 Weakness I§7 pendant§c 18 secondes");
+                        player.sendMessage("§7Vous avez donné à §c"+target.getName()+"§7 l'effet§8 Weakness I§7 pendant§c 18 secondes");
                         player.closeInventory();
                         return true;
                     }
@@ -423,7 +423,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             Player owner = Bukkit.getPlayer(fugaku.getPlayer());
             if (owner != null) {
                 timeRemaining--;
-                if (!croised) {//donc je fais le code juste en dessous que s'il n'a croiser personne
+                if (!croised) {//donc je fais le code juste en dessous que s'il n'a croisé personne
                     for (Player p : Loc.getNearbyPlayersExcept(owner, 10)) {
                         if (fugaku.getGameState().hasRoleNull(p.getUniqueId()))continue;
                         RoleBase role = fugaku.getGameState().getGamePlayer().get(p.getUniqueId()).getRole();

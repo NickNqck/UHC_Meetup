@@ -80,7 +80,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
     @Override
     public ISubRoleWorld getSubWorld() {
         if (this.kamuiPower == null) {
-            //Je peux faire ceci, car normalement, ce sera utiliser juste pour le menu donc c'est OK
+            //Je peux faire ceci, car normalement, ce sera utilisé juste pour le menu donc c'est OK
             return new KamuiDimension();
         }
         return this.kamuiPower.getKamuiDimension();
@@ -102,7 +102,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                     "§7Ouvre un menu ayant plusieurs choix de pouvoir: ",
                     "§7     →§a Copie§7: Ouvre un menu permettant de sélectionner un joueur,",
                     "§7en le sélectionnant cela crée une§c bar§7 de§a 1600 points§7,",
-                    "§7vous augmentez ces dernier en étant plus ou moins proche de la cible:",
+                    "§7vous augmentez ces derniers en étant plus ou moins proche de la cible:",
                     "",
                     "§8 -§f 5 blocs:§a + 20 points",
                     "§8 -§f 10 blocs:§6 + 10 points",
@@ -112,7 +112,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                     "",
                     "§7     →§a Technique§7: Ouvre un menu ayant à l'intérieur la liste des joueurs a qui vous avez copié les effets,",
                     "§7en cliquant sur la tête d'un de ces joueurs",
-                    "§7vous obtiendrez a nouveau les effets permanent de la cible (vous retire vos effet actuel).",
+                    "§7vous obtiendrez à nouveau les effets permanents de la cible (vous retire vos effets actuels).",
                     "");
             new SharinganRunnable(this).runTaskTimerAsynchronously(getPlugin(), 100, 20);
         }

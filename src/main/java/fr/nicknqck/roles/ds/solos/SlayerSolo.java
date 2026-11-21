@@ -230,7 +230,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     assert player.isOnline();
                     if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                        player.sendMessage("§7Votre§a Soufle du Vent§7 est maintenant désactiver");
+                        player.sendMessage("§7Votre§a Soufle du Vent§7 est maintenant désactivé");
                     }
                     EventUtils.unregisterEvents(this);
                 },20*120);
@@ -275,7 +275,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                                     boot.setItemMeta(mBoot);
                                     player.getInventory().setBoots(boot);
                                     if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                                        player.sendMessage("§7Votre§b Soufle de l'Eau§7 ne fais plus effet");
+                                        player.sendMessage("§7Votre§b Soufle de l'Eau§7 ne fait plus effet");
                                     }
                                 }
                             }
@@ -350,7 +350,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 if (timeRemaining <= 0) {
                     final Player owner = Bukkit.getPlayer(feuPower.getRole().getPlayer());
                     if (owner != null) {
-                        owner.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactiver");
+                        owner.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactivé");
                     }
                     cancel();
                     EventUtils.unregisterEvents(this.feuPower);

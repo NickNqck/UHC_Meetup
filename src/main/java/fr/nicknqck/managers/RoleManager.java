@@ -276,7 +276,7 @@ public class RoleManager implements Listener {
             //Grace au mélance je get un rôle au hasard
             Class<? extends RoleBase> classRole = roleList.get(0);
             try {
-                //La j'instancie le rôle avec l'UUID qui a été donner au début
+                //La j'instancie le rôle avec l'UUID qui a été donné au début
                 role = classRole.getConstructor(UUID.class).newInstance(uuid);
                 //La j'envoie des infos à la console
                 GameState.getInstance().print(uuid, role);

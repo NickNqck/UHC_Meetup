@@ -101,7 +101,7 @@ public class AdminCommands implements CommandExecutor{
 							return true;
 						}
 						Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(null);
-						Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 a éditer l'inventaire de départ");
+						Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 a édité l'inventaire de départ");
 						player.setGameMode(GameMode.ADVENTURE);
 						Main.getInstance().getGameConfig().getStuffConfig().getStartInventoryMap().clear();
 
@@ -130,7 +130,7 @@ public class AdminCommands implements CommandExecutor{
 							return true;
 						}
 						Main.getInstance().getGameConfig().getStuffConfig().setStarterInvConfigurator(null);
-						Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 a éditer l'inventaire de départ");
+						Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+"§c "+sender.getName()+"§7 a édité l'inventaire de départ");
 						player.setGameMode(GameMode.ADVENTURE);
 						player.updateInventory();
 						player.getInventory().clear();

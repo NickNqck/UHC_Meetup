@@ -109,7 +109,7 @@ public class SusamaruV2 extends DemonsRoles {
                     return false;
                 }
                 if (event.getAction().name().contains("LEFT")) {
-                    player.sendMessage("§7Vous avez changer le pouvoir de votre§c Ballon");
+                    player.sendMessage("§7Vous avez changé le pouvoir de votre§c Ballon");
                     this.explosifPower = !this.explosifPower;
                     return true;
                 }
@@ -123,7 +123,7 @@ public class SusamaruV2 extends DemonsRoles {
                 if (event.getBow().isSimilar(getItem())) {
                     if (this.explosifPower) {
                         if (!this.cdExplosif.isInCooldown()) {
-                            event.getEntity().sendMessage("§7Vous avez lancer votre§c Ballon Explosif");
+                            event.getEntity().sendMessage("§7Vous avez lancé votre§c Ballon Explosif");
                             event.getProjectile().setMetadata("susamaruv2.actualpower", new FixedMetadataValue(Main.getInstance(), event.getEntity().getName()));
                             event.getProjectile().setCustomName("§cBallon");
                             event.getProjectile().setCustomNameVisible(true);
@@ -131,7 +131,7 @@ public class SusamaruV2 extends DemonsRoles {
                         }
                     } else {
                         if (!cdTransporteur.isInCooldown()) {
-                            event.getEntity().sendMessage("§7Vous avez lancer votre§c Ballon Transporteur");
+                            event.getEntity().sendMessage("§7Vous avez lancé votre§c Ballon Transporteur");
                             event.getProjectile().setCustomName("§cBallon");
                             event.getProjectile().setCustomNameVisible(true);
                             new TransporteurRunnable((Arrow) event.getProjectile(), (Player) event.getEntity(), this).runTaskTimer(Main.getInstance(), 0, 1);

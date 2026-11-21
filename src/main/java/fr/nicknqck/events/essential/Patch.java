@@ -189,7 +189,7 @@ public class Patch implements Listener{
 			}
 			resi = 1-resi;
 			event.setDamage(event.getDamage()*resi);
-		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décider de ne pas patch l'effet de rési car il est de base dans les valeurs que je veux
+		//	event.setDamage(event.getDamage() * (100 - reiPercent)/ 80.0f); //J'ai décidé de ne pas patch l'effet de rési car il est de base dans les valeurs que je veux
 			*/
 			if (Main.isDebug()){
                 Main.getInstance().debug("Resi Damage to "+event.getDamage());

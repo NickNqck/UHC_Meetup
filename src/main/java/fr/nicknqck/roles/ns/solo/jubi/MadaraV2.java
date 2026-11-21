@@ -133,7 +133,7 @@ public class MadaraV2 extends JubiRoles {
             super("Chibaku Tensei", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cChibaku Tensei"), role,
                     "§7Vous permet d'ouvrir un menu, ce dernier vous permettra d'accéder aux§c 3 pouvoirs§7 suivants: ",
                     "",
-                    "§8 - §cBenshô Ten'in§7: Ouvre un menu permettant de sélectionner un§c joueur§7, une fois fait ce dernier sera téléporter à votre position. (1x/5m)",
+                    "§8 - §cBenshô Ten'in§7: Ouvre un menu permettant de sélectionner un§c joueur§7, une fois fait ce dernier sera téléporté à votre position. (1x/5m)",
                     "",
                     "§8 -§c Shinra Tensei§7: Vous permet de repousser toutes les entités autour de vous. (1x/5m)",
                     "",
@@ -201,7 +201,7 @@ public class MadaraV2 extends JubiRoles {
                     this.shinraTensei.getCooldown().isInCooldown() ? "§7Cooldown: "+StringUtils.secondsTowardsBeautiful(this.shinraTensei.getCooldown().getCooldownRemaining()) : "§cPouvoir utilisable !"
             ).toItemStack());
             inv.setItem(15, new ItemBuilder(Material.STONE).setName("§cMétéorite").setLore(
-                    this.meteorite.getUse() == 0 ? "§cPouvoir utilisable !" : "§cVous avez déjà utiliser ce pouvoir"
+                    this.meteorite.getUse() == 0 ? "§cPouvoir utilisable !" : "§cVous avez déjà utilisé ce pouvoir"
             ).toItemStack());
             player.openInventory(inv);
         }

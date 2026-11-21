@@ -226,7 +226,7 @@ public class KyogaiV3 extends DemonsRoles {
                 if (map.containsKey("target") && map.get("target") instanceof Player) {
                     final Player target = (Player) map.get("target");
                     Loc.inverserDirectionJoueur(target);
-                    player.sendMessage("§7Vous avez retourner§c "+target.getDisplayName());
+                    player.sendMessage("§7Vous avez retourné§c "+target.getDisplayName());
                     target.sendMessage("§7Vous avez été retourné par§e Kyogai§7.");
                     return true;
                 }

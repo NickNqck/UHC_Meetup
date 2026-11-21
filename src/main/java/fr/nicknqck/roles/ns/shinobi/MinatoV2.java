@@ -212,7 +212,7 @@ public class MinatoV2 extends HShinobiRoles {
             if (!(event.getProjectile() instanceof Arrow))return;
             event.getProjectile().setMetadata("minato.hiraishin", new FixedMetadataValue(getPlugin(), getName()));
             this.aroundArrowRunnable = new AroundArrowRunnable(this, (Arrow) event.getProjectile());
-            event.getEntity().sendMessage("§7Vous avez lancer un§a Hiraishin No Kunai§7.");
+            event.getEntity().sendMessage("§7Vous avez lancé un§a Hiraishin No Kunai§7.");
             ((Arrow) event.getProjectile()).setBounce(false);
         }
         @EventHandler
@@ -303,7 +303,7 @@ public class MinatoV2 extends HShinobiRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (player.isSneaking()) {
                     if (balises.size() >= 3) {
-                        player.sendMessage("§cVous avez déjà poser toute vos réserves de§a balises permanentes§c.");
+                        player.sendMessage("§cVous avez déjà posé toutes vos réserves de§a balises permanentes§c.");
                         return false;
                     }
                     if (!player.getWorld().getName().equalsIgnoreCase("arena")) {

@@ -166,7 +166,7 @@ public abstract class PortesRoles extends HShinobiRoles implements Listener {
                         if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)) {
                             if (!role.gameState.hasRoleNull(owner.getUniqueId())) {
                                 if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole().roleID == this.role.roleID) {
-                                    if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole().StringID.equals(role.StringID)) {//donc c'est définitivement la même partie que quand il a activer
+                                    if (role.gameState.getGamePlayer().get(owner.getUniqueId()).getRole().StringID.equals(role.StringID)) {//donc c'est définitivement la même partie que quand il a activé
                                         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                                             role.setMaxHealth(10.0);
                                             role.owner.setMaxHealth(role.getMaxHealth());

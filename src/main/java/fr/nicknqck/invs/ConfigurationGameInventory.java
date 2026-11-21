@@ -143,10 +143,10 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         addContent(GUIItems.getTabRoleInfo(GameState.getInstance()), event -> {
             if (ChatRank.isHost(event.getWhoClicked())) {
                 if (!GameState.getInstance().roletab) {
-                    event.getWhoClicked().sendMessage("Les roles seront maintenant afficher dans le tab");
+                    event.getWhoClicked().sendMessage("Les roles seront maintenant affichés dans le tab");
                     GameState.getInstance().roletab = true;
                 } else {
-                    event.getWhoClicked().sendMessage("Les roles ne seront plus afficher dans le tab");
+                    event.getWhoClicked().sendMessage("Les roles ne seront plus affichés dans le tab");
                     GameState.getInstance().roletab = false;
                 }
                 ConfigurationGameInventory inventory = new ConfigurationGameInventory();

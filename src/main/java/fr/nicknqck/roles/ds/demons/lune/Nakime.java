@@ -159,7 +159,7 @@ public class Nakime extends DemonsRoles {
 					if (p.getWorld().equals(Bukkit.getWorld("nakime"))) {
 						LocPlayer locPlayer = new LocPlayer(Main.getInstance().getWorldManager().getNakimeWorld());
 						p.teleport(locPlayer.getRandomPositionRespawn());
-						p.sendMessage("§7Vous avez été téléporter aléatoirement");
+						p.sendMessage("§7Vous avez été téléporté aléatoirement");
 						gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(true);
 						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(false), 40);
 					}

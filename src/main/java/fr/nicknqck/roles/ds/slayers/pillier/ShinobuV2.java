@@ -208,7 +208,7 @@ public class ShinobuV2 extends PilierRoles {
                     "§7Cette objet vous permet de changer le§c Poison§7 que vous§c utiliser§7",
                     "§7voici ceux qui sont utilisable:§c Poison§7,§c Nausée§7,§c Wither§7,§c Slowness§7,§c Blindness§7,§c Weakness§7.",
                     "",
-                    "§7Chacun des effets est appliquer en frappant un joueur avec une épée, également les effets ont une durée de§c 10 secondes§7.",
+                    "§7Chacun des effets est appliqué en frappant un joueur avec une épée, également les effets ont une durée de§c 10 secondes§7.",
                     "",
                     "§7Si§a Kanae§7 viens à mourir, lorsqu'un effet de§c Poison§7 doit être appliqué vous appliquerez le suivant (dans l'ordre de la description)");
             role.getGamePlayer().getActionBarManager().addToActionBar("shinobu.poisons", "§bVous utilisez actuellement le poison:§c "+getActualString());

@@ -150,8 +150,8 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
             power.setCooldown(new Cooldown(power.getCooldown().getOriginalCooldown()/2));
             if (power instanceof Observation) {
                 power.setDescriptions(new String[] {
-                        "§7Lorsqu'un joueur utilise un§c pouvoir§7 à§c moins§7 de§c 150 blocs§7 vous saurez qu'il la utiliser",
-                        "§7(Si la personne utilise son§c pouvoir§7 à moins de§c 100 blocs§7, vous saurez quel pouvoir a été utiliser)"
+                        "§7Lorsqu'un joueur utilise un§c pouvoir§7 à§c moins§7 de§c 150 blocs§7 vous saurez qu'il l'a utilisé",
+                        "§7(Si la personne utilise son§c pouvoir§7 à moins de§c 100 blocs§7, vous saurez quel pouvoir a été utilisé)"
                 });
             }
         }
@@ -163,8 +163,8 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
 
         public Observation(@NonNull RoleBase role) {
             super("§cObservation§r", null, role,
-                    "§7Lorsqu'un joueur utilise un§c pouvoir§7 à§c moins§7 de§c 100 blocs§7 vous saurez qu'il la utiliser",
-                    "§7(Si la personne utilise son§c pouvoir§7 à moins de§c 25 blocs§7, vous saurez quel pouvoir a été utiliser)"
+                    "§7Lorsqu'un joueur utilise un§c pouvoir§7 à§c moins§7 de§c 100 blocs§7 vous saurez qu'il l'a utilisé",
+                    "§7(Si la personne utilise son§c pouvoir§7 à moins de§c 25 blocs§7, vous saurez quel pouvoir a été utilisé)"
             );
             EventUtils.registerRoleEvent(this);
         }
@@ -197,8 +197,8 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
             final boolean killItachi = getRole() instanceof JubiSasuke && ((JubiSasuke) getRole()).killItachi;
             if (killItachi) {
                 return new String[]{
-                        "§7Lorsqu'un joueur utilise un§c pouvoir§7 à§c moins§7 de§c 150 blocs§7 vous saurez qu'il la utiliser",
-                        "§7(Si la personne utilise son§c pouvoir§7 à moins de§c 100 blocs§7, vous saurez quel pouvoir a été utiliser)"
+                        "§7Lorsqu'un joueur utilise un§c pouvoir§7 à§c moins§7 de§c 150 blocs§7 vous saurez qu'il l'a utilisé",
+                        "§7(Si la personne utilise son§c pouvoir§7 à moins de§c 100 blocs§7, vous saurez quel pouvoir a été utilisé)"
                 };
             }
             return getDescriptions();

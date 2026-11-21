@@ -172,7 +172,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                     final Vector direction = target.getLocation().getDirection();
                     direction.multiply(-2);
                     target.setVelocity(direction.normalize().multiply(8).setY(0.8));
-                    target.sendMessage("§cVous avez été repousser par§a Gyomei");
+                    target.sendMessage("§cVous avez été repoussé par§a Gyomei");
                     gamePlayer.sendMessage("Vous avez repoussé§c "+this.nameTarget+"§f, il subira§c 2❤§f de dégât dans§c 5 secondes");
                     runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }
@@ -222,7 +222,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                 location.add(location.getDirection().add(new Vector(1, 0, 1)));
                 target.teleport(location);
                 target.sendMessage("§aGyomei§7 vous a attiré à sa position");
-                player.sendMessage("§cVous avez récupérer§b "+target.getDisplayName());
+                player.sendMessage("§cVous avez récupéré§b "+target.getDisplayName());
                 target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 1, false, false), true);
                 return true;
             }

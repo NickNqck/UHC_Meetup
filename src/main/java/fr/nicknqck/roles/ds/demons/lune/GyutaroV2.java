@@ -168,7 +168,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
                     "§7Il vous permettra d'avoir§c 5%§7 de§c chance§7 d'infliger l'effet§c Wither I§7 à la personne que vous",
                     "§7frappez avec votre épée \"§cFaux Démoniaques§7\", l'effet aura une durée de§c 5 secondes§7.",
                     "",
-                    "§7Pour chaque§c 10§e pommes d'or§c mangé§7, le§c pourcentage§7 de chance d'infliger l'effet§c Wither I§7 sera augmenter de§c 1%§7 (§cmaximum 15%§7)");
+                    "§7Pour chaque§c 10§e pommes d'or§c mangées§7, le§c pourcentage§7 de chance d'infliger l'effet§c Wither I§7 sera augmentée de§c 1%§7 (§cmaximum 15%§7)");
             EventUtils.registerRoleEvent(this);
         }
         @Override
@@ -275,7 +275,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
                     "§7Il vous permettra d'avoir§c "+this.pourcentage+"%§7 de§c chance§7 d'infliger l'effet§c Wither I§7 à la personne que vous",
                     "§7frappez avec votre épée \"§cFaux Démoniaques§7\", l'effet aura une durée de§c 5 secondes§7.",
                     "",
-                    "§7Pour chaque§c 10§e pommes d'or§c mangé§7, le§c pourcentage§7 de chance d'infliger l'effet§c Wither I§7 sera augmenter de§c 1%§7 (§cmaximum 15%§7)"
+                    "§7Pour chaque§c 10§e pommes d'or§c mangées§7, le§c pourcentage§7 de chance d'infliger l'effet§c Wither I§7 sera augmentée de§c 1%§7 (§cmaximum 15%§7)"
             };
         }
         private static class TroisiemeOeil extends ItemPower {

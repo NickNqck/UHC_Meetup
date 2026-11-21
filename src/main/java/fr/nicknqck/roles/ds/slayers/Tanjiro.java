@@ -97,14 +97,14 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getSentir() {
         TextComponent dsSentir = new TextComponent("§c/ds sentir");
         dsSentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Vous permet de savoir combien il y a de§c démon§7 dans un rayon de§c 30 blocs§7 autour de vous (§aNezuko§7 est compter dedans). (1x/5m)")}));
+                "§7Vous permet de savoir combien il y a de§c démon§7 dans un rayon de§c 30 blocs§7 autour de vous (§aNezuko§7 est compté dedans). (1x/5m)")}));
         dsSentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir"));
         return dsSentir;
     }
     private TextComponent getSentirJoueur() {
         TextComponent sentir = new TextComponent("§c/ds §csentir <joueur>");
         sentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Vous permet de savoir si un joueur est un§c démons§7 ou non (§aNezuko§7 est compter comme§c démon§7). (1x/partie)")}));
+                "§7Vous permet de savoir si un joueur est un§c démons§7 ou non (§aNezuko§7 est compté comme§c démon§7). (1x/partie)")}));
         sentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir "));
         return sentir;
     }

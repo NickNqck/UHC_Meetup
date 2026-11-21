@@ -124,7 +124,7 @@ public class HokageManager implements Listener {
                             danzo.sendMessage("§7Voici le rôle de l'Hokage: §a"+gamePlayer.getRole().getName()+"§7 (§cAttention vous êtes le seul joueur à avoir cette information§7)");
                         }
                     }
-                    //On s'en fiche de donner ces choses en Async car elles ne sont pas capitale et ne peuvent pas causer d'erreur
+                    //On s'en fiche de donner ces choses en Async car elles ne sont pas capitales et ne peuvent pas causer d'erreur
                     gamePlayer.getRole().addBonusforce(10.0);
                     gamePlayer.getRole().addBonusResi(10.0);
                     gamePlayer.getRole().addPower(new NSBoost(gamePlayer.getRole()));

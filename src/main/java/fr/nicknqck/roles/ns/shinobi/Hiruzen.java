@@ -179,7 +179,7 @@ public class Hiruzen extends HShinobiRoles implements Listener {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§7Vous avez créer une grande§6 coulé de boue§7.");
+                player.sendMessage("§7Vous avez créé une grande§6 coulée de boue§7.");
                 new CouleDeBoueRunnable(this, player.getLocation()).runTaskTimerAsynchronously(getPlugin(), 0,20);
                 return true;
             }

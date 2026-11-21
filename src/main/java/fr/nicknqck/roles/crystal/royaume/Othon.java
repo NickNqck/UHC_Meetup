@@ -62,7 +62,7 @@ public class Othon extends RoyaumeBase {
 
         public EpeeDeNoblePower(@NonNull RoleBase role) {
             super("§aÉpée de noble§r", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§aÉpée de noble").addEnchant(Enchantment.DAMAGE_ALL, 4), role,
-                    "§7Tant que vous avez cette§a épée§7 en§a main§7, votre§c réputation§7 sera perçu comme étant§c plus haute§7."
+                    "§7Tant que vous avez cette§a épée§7 en§a main§7, votre§c réputation§7 sera perçue comme étant§c plus haute§7."
             );
             EventUtils.registerRoleEvent(this);
         }

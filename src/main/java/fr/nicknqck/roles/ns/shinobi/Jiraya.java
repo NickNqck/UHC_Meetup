@@ -206,7 +206,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
                         for (@NonNull final Player target : playerList) {
                             Collections.shuffle(locationList);
                             target.teleport(locationList.get(0));
-                            target.sendMessage("§7Vous avez été aspirer dans le§a Ventre du crapaud");
+                            target.sendMessage("§7Vous avez été aspiré dans le§a Ventre du crapaud");
                         }
                         new GamabuntaRunnable(this, (JirayaSubWorld) iSubRoleWorld).runTaskTimerAsynchronously(getPlugin(), 0, 20);
                         return true;

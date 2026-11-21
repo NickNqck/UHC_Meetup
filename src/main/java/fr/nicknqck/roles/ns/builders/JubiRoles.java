@@ -67,7 +67,7 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
                 if (this.roles == null)return false;
                 if (!this.getPlugin().getBijuManager().isBijuEnable()) {
                     this.roles.getPowers().remove(this);
-                    player.sendMessage("§7Les bijus sont désactiver pendant cette partie.");
+                    player.sendMessage("§7Les bijus sont désactivés pendant cette partie.");
                     player.setItemInHand(null);
                     return true;
                 }
@@ -83,7 +83,7 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
                     }
                     if (empty) {
                         this.roles.getPowers().remove(this);
-                        player.sendMessage("§7Les bijus sont désactiver pendant cette partie.");
+                        player.sendMessage("§7Les bijus sont désactivés pendant cette partie.");
                         player.setItemInHand(null);
                         return true;
                     }

@@ -466,15 +466,15 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                 switch (name) {
                     case "§eTsunami":
                         this.attaque = Attaque.TSUNAMI;
-                        event.getWhoClicked().sendMessage("§7Vous avez équiper le pouvoir§e Tsunami§7.");
+                        event.getWhoClicked().sendMessage("§7Vous avez équipé le pouvoir§e Tsunami§7.");
                         break;
                     case "§eSarcophage de sable":
                         this.attaque = Attaque.SARCOPHAGE;
-                        event.getWhoClicked().sendMessage("§7Vous avez équiper le pouvoir§e Sarcophage de sable§7.");
+                        event.getWhoClicked().sendMessage("§7Vous avez équipé le pouvoir§e Sarcophage de sable§7.");
                         break;
                     case "§cLance":
                         this.attaque = Attaque.LANCE;
-                        event.getWhoClicked().sendMessage("§7Vous avez équiper le pouvoir§c Lance§7.");
+                        event.getWhoClicked().sendMessage("§7Vous avez équipé le pouvoir§c Lance§7.");
                         break;
                 }
                 event.getWhoClicked().closeInventory();

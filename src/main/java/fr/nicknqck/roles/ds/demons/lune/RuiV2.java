@@ -79,7 +79,7 @@ public class RuiV2 extends DemonsRoles {
 
         protected FilPower(@NonNull RuiV2 role) {
             super("Fils de Rui", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cFils de Rui"), role,
-                    "§7Vous permet d'utiliser vos fils, pour les changées il vous faudra effectuer un§n clic gauche§r§7:",
+                    "§7Vous permet d'utiliser vos fils, pour les changer il vous faudra effectuer un§n clic gauche§r§7:",
                     "",
                     "§fAttaque longue porté§7: En visant un §cjoueur§7, vous permet de lui infliger §c 2,5❤§7 ainsi que§c 15%§7 de chance de lui donner en plus§c 15 secondes§7 de§2 poison 1§7. (1x/7m)",
                     "",
@@ -126,7 +126,7 @@ public class RuiV2 extends DemonsRoles {
                     setTargetDistance(this.equipedPower.getTargetDistance());
                 } else if (event.getAction().name().contains("RIGHT")){
                     if (this.equipedPower == null) {
-                        player.sendMessage("§cAucun pouvoir n'a été équiper.");
+                        player.sendMessage("§cAucun pouvoir n'a été équipé.");
                         return false;
                     }
                     if (this.equipedPower.getCooldown().isInCooldown()) {
@@ -204,8 +204,8 @@ public class RuiV2 extends DemonsRoles {
                     return false;
                 }
                 pullPlayerTowards(player, target);
-                player.sendMessage("§7Vous avez attirer§c "+target.getDisplayName());
-                target.sendMessage("§cRui vous a attirer dans sa direction");
+                player.sendMessage("§7Vous avez attiré§c "+target.getDisplayName());
+                target.sendMessage("§cRui vous a attiré dans sa direction");
                 return true;
             }
             private void pullPlayerTowards(final @NonNull Player owner,final @NonNull Player target) {

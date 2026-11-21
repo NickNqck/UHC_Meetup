@@ -260,7 +260,7 @@ public class SabitoV2 extends SlayerRoles {
                 }
                 if (this.timeLeft <= 0) {
                     this.souffleItem.getRole().getGamePlayer().getActionBarManager().removeInActionBar("sabito.souffle");
-                    this.souffleItem.getRole().getGamePlayer().sendMessage("§7Les effets du§b Souffle de l'Eau§7 s'estompe...");
+                    this.souffleItem.getRole().getGamePlayer().sendMessage("§7Les effets du§b Souffle de l'Eau§7 s'estompent...");
                     cancel();
                     return;
                 }
