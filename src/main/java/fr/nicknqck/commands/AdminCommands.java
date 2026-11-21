@@ -159,7 +159,7 @@ public class AdminCommands implements CommandExecutor{
 			}
 			if (args[0].equalsIgnoreCase("list")) {
 				if ((sender instanceof Player && ChatRank.hasRank(((Player) sender).getUniqueId()) && ChatRank.isHost(((Player) sender).getUniqueId())) || sender.hasPermission("Host")) {
-					gameState.getGamePlayer().forEach((key, value) -> sender.sendMessage("§7 - "+value.getPlayerName()+"§7 -> "+value.getRole().getTeamColor()+value.getRole().getName()));
+					gameState.getGamePlayer().forEach((key, value) -> { if (value.getRole() != null) sender.sendMessage("§7 - "+value.getPlayerName()+"§7 -> "+value.getRole().getTeamColor()+value.getRole().getName()); });
 					return true;
 				}
 			}
