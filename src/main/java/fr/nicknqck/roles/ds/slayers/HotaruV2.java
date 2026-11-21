@@ -12,6 +12,7 @@ import fr.nicknqck.roles.ds.builders.SlayerRoles;
 import fr.nicknqck.enums.Soufle;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Cooldown;
+import fr.nicknqck.utils.event.EventUtils;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -167,6 +168,7 @@ public class HotaruV2 extends SlayerRoles {
             super("/ds chooseblade", "role", new Cooldown(60*5), role, CommandType.DS, "§7Vous permet de choisir votre lame.");
             this.map = new HashMap<>();
             init();
+            EventUtils.registerRoleEvent(this);
         }
 
 
@@ -184,16 +186,20 @@ public class HotaruV2 extends SlayerRoles {
         }
         @EventHandler
         private void OnInventoryclick(InventoryClickEvent e){
-            if (e.getClickedInventory().getTitle().equals("§fChoix de la lame")) {
-                ItemStack tuclique = e.getCurrentItem();
-                for (ItemStack item : map.keySet()){
-                    if (item.isSimilar(tuclique)){
-                        removeOldBlade();
-                        map.get(item).getUsers().put(e.getWhoClicked().getUniqueId(), Integer.MAX_VALUE);
-                        e.getWhoClicked().sendMessage("§7Vous venez de choisir la lame "+item);
-                        getCooldown().use();
-                        break;
-                    }
+            if (!e.getWhoClicked().getUniqueId().equals(getRole().getPlayer()))return;
+            if (!e.getInventory().getTitle().equals("§fChoix de la lame"))return;
+            //Aucun clic ne doit pouvoir sortir les vraies lames du menu (y compris shift-clic et double-clic depuis son inventaire)
+            e.setCancelled(true);
+            if (e.getClickedInventory() == null || !e.getClickedInventory().equals(e.getInventory()))return;
+            ItemStack tuclique = e.getCurrentItem();
+            for (ItemStack item : map.keySet()){
+                if (item.isSimilar(tuclique)){
+                    removeOldBlade();
+                    map.get(item).getUsers().put(e.getWhoClicked().getUniqueId(), Integer.MAX_VALUE);
+                    e.getWhoClicked().sendMessage("§7Vous venez de choisir la lame "+item.getItemMeta().getDisplayName());
+                    getCooldown().use();
+                    e.getWhoClicked().closeInventory();
+                    break;
                 }
             }
         }
