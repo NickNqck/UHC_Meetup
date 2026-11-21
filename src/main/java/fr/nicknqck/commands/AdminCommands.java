@@ -141,7 +141,7 @@ public class AdminCommands implements CommandExecutor{
 				}
 			}
 			if (args[0].equalsIgnoreCase("vie")) {
-				if (args.length == 3) {
+				if (args.length == 3 && ChatRank.isHost(sender)) {
 					Player target = Bukkit.getPlayer(args[1]);
 					try {
 						double damage = Double.parseDouble(args[2]);
@@ -187,7 +187,7 @@ public class AdminCommands implements CommandExecutor{
 					}
 				}
 			}
-			if (args[0].equalsIgnoreCase("resetCooldown")) {
+			if (args[0].equalsIgnoreCase("resetCooldown") && ChatRank.isHost(sender)) {
 				if (args.length == 2) {
 					Player player = Bukkit.getPlayer(args[1]);
 					if (player == null) {
@@ -294,7 +294,7 @@ public class AdminCommands implements CommandExecutor{
 					}.runTaskTimer(Main.getInstance(), 0, 12);
 					return true;
 				}
-                if (args[0].equalsIgnoreCase("debug")) {
+                if (args[0].equalsIgnoreCase("debug") && ChatRank.isHost(sender)) {
                     final boolean d = Main.isDebug();
                     Main.getInstance().getLogger().info("Debug avant = "+d);
                     if (d) {
@@ -474,7 +474,7 @@ public class AdminCommands implements CommandExecutor{
 						return true;
 					}
 				}
-				if (args[0].equalsIgnoreCase("delRole")) {
+				if (args[0].equalsIgnoreCase("delRole") && ChatRank.isHost(sender)) {
 					if (args[1] != null) {
 						for (Roles roles : Roles.values()) {
 							if (roles.name().equalsIgnoreCase(args[1])) {
@@ -742,7 +742,7 @@ public class AdminCommands implements CommandExecutor{
 					}
 				}
 			}//args.length == 2
-			if (args.length == 3) {
+			if (args.length == 3 && ChatRank.isHost(sender)) {
 				if (args[0].equalsIgnoreCase("time")) {
 					if (args[1].equalsIgnoreCase("set")) {
 						Integer anint = Integer.parseInt(args[2]);
