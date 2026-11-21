@@ -176,6 +176,7 @@ public class MinatoV2 extends HShinobiRoles {
                 @NonNull final Location location = this.aroundArrowRunnable.arrow.getLocation();
                 @NonNull final Player target = (Player) event.getEntity();
                 this.aroundArrowRunnable.arrow.remove();
+                this.aroundArrowRunnable = null;
                 target.teleport(location);
                 player.sendMessage("§7Vous avez utilisez l'§aHiraishin§7 sur§c "+uhcEvent.getVictim().getPlayerName()+"§7.");
                 target.sendMessage("§7Vous avez été touché par l'§aHiraishin§7.");
@@ -193,6 +194,7 @@ public class MinatoV2 extends HShinobiRoles {
                         if (this.aroundArrowRunnable != null) {
                             @NonNull final Location location = this.aroundArrowRunnable.arrow.getLocation();
                             this.aroundArrowRunnable.arrow.remove();
+                            this.aroundArrowRunnable = null;
                             player.teleport(location);
                             player.sendMessage("§7Vous avez utilisez l'§aHiraishin§7 sur§c vous même§7.");
                             PotionUtils.addTempNoFall(player.getUniqueId(), 1);
