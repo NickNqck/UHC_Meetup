@@ -53,6 +53,10 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
 
     @Override
     public void onProc(GameState gameState) {
+        this.AkazaWin = false;
+        this.KyojuroWin = false;
+        this.endEvent = false;
+        this.realEnd = false;
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.dispatchCommand(console, "nakime E4jL5cOzv0sI2XqY7wNpD3Ab");
         if (Bukkit.getWorld("AkazaVSKyojuro") != null) {
