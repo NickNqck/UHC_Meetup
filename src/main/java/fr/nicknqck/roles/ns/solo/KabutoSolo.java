@@ -242,8 +242,9 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
                 edoTenseis.remove(event.getPlayer().getUniqueId(), event.getRole());
             }
         }
-        @EventHandler
+        @EventHandler(priority = EventPriority.MONITOR)
         private void onUHCKill(@NonNull final UHCDeathEvent event){
+            if (event.isCancelled()) return;
             if (event.getGamePlayerKiller() != null) {
                 if (event.getGamePlayerKiller().getUuid().equals(this.getRole().getPlayer())) {
                     this.killLocation.put(event.getPlayer().getUniqueId(), event.getPlayer().getLocation());
