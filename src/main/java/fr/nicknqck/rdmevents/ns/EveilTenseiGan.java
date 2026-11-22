@@ -158,6 +158,8 @@ public class EveilTenseiGan extends Event implements Listener {
 
     @Override
     public boolean onGameStart(@Nonnull GameState gameState) {
+        this.getTenseigan = false;
+        this.gamePlayer = null;
         EventUtils.registerRoleEvent(this);
         return true;
     }
