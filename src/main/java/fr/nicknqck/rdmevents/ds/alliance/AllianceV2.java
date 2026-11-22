@@ -34,6 +34,8 @@ public class AllianceV2 extends Event implements Listener {
 
     @Override
     public void onProc(final GameState gameState) {
+        this.kyojuro = null;
+        this.shinjuro = null;
         for (final GamePlayer gamePlayer : gameState.getGamePlayer().values()) {
             if (!gamePlayer.isAlive())continue;
             if (gamePlayer.getRole() == null)continue;
