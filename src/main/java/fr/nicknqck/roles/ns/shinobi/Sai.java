@@ -585,7 +585,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     "§aFugaku§7,§c Itachi§7 et§d Sasuke§7 (§dcamp Jubi§7) seront détectés comme étant§5 Sasuke§7.",
                     "§7Si vous§c tuez§5 Sasuke§7 alors ce pouvoirs permettra d'obtenir l'information du§c camp§7 de la personne"
             );
-            new EvaluationRunnable(this).runTaskTimerAsynchronously(getPlugin(), 100, 20);
+            new EvaluationRunnable(this).runTaskTimer(getPlugin(), 100, 20);
         }
 
         @Override
