@@ -202,7 +202,7 @@ public class KisameV2 extends AkatsukiRoles {
                 this.gameState = gameState;
                 this.gamePlayer = gamePlayer;
                 this.suibun = suibun;
-                runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
+                runTaskTimer(Main.getInstance(), 0, 20);
             }
 
             @Override
