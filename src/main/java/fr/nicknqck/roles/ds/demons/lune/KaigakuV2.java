@@ -203,10 +203,10 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             if (((Player) event.getDamager()).getItemInHand() == null)return;
             if (((Player) event.getEntity()).getItemInHand() == null)return;
             if (event.getDamager().getUniqueId().equals(getRole().getPlayer())) {
-                if (((Player) event.getDamager()).getItemInHand().getType().name().contains("SWORD"))return;
+                if (!((Player) event.getDamager()).getItemInHand().getType().name().contains("SWORD"))return;
                 addCharge(1);
             } else if (event.getEntity().getUniqueId().equals(getRole().getPlayer())) {
-                if (((Player) event.getEntity()).getItemInHand().getType().name().contains("SWORD"))return;
+                if (!((Player) event.getDamager()).getItemInHand().getType().name().contains("SWORD"))return;
                 addCharge(1);
             }
         }
