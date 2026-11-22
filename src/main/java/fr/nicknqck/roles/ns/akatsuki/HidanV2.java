@@ -262,9 +262,9 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
             final List<GamePlayer> gamePlayerList = Loc.getNearbyGamePlayers(this.hidan.getGamePlayer().getLastLocation(), 15);
             if (gamePlayerList.isEmpty())return;
             for (final GamePlayer gamePlayer : gamePlayerList) {
-                if (!gamePlayer.isOnline())return;
-                if (!gamePlayer.isAlive())return;
-                if (gamePlayer.getRole() == null)return;
+                if (!gamePlayer.isOnline())continue;
+                if (!gamePlayer.isAlive())continue;
+                if (gamePlayer.getRole() == null)continue;
                 if ((gamePlayer.getRole() instanceof KakuzuV2)) {
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> this.hidan.givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 0, false, false), EffectWhen.NOW));
                     break;
