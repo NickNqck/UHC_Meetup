@@ -335,7 +335,7 @@ public class Shikamaru extends HShinobiRoles {
                         }
                         return true;
                     } else {
-                        player.sendMessage("§c" + target.getDisplayName() + "§7 ne viens pas du§a Naruto§2 UHC");
+                        player.sendMessage("§c" + target.getDisplayName() + "§7 ne vient pas du§a Naruto§2 UHC");
                     }
                 } else {
                     player.sendMessage("§b"+args[1]+"§c n'est pas connecter");

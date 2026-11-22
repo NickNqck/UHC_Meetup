@@ -188,7 +188,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (this.killLocation.isEmpty()) {
-                    player.sendMessage("§7Il faut avoir tuer un joueur pour utiliser cette technique.");
+                    player.sendMessage("§7Il faut avoir tué un joueur pour utiliser cette technique.");
                     event.setCancelled(true);
                     return false;
                 }
@@ -530,7 +530,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            player.sendMessage("§7La§a Mue du serpent§7 vous a donnez un§c nouveau corp§7.");
+            player.sendMessage("§7La§a Mue du serpent§7 vous a donné un§c nouveau corps§7.");
             final Location loc = Loc.getRandomLocationAroundPlayer(player, 25);
             player.teleport(loc);
             getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*30, 1, false, false), EffectWhen.NOW);

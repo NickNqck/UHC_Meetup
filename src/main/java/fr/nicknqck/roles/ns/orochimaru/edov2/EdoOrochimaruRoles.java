@@ -82,7 +82,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
                     return false;
                 }
                 if (this.role.killLocation.isEmpty()) {
-                    player.sendMessage("§7Il faut avoir tuer un joueur pour utiliser cette technique.");
+                    player.sendMessage("§7Il faut avoir tué un joueur pour utiliser cette technique.");
                     event.setCancelled(true);
                     return false;
                 }

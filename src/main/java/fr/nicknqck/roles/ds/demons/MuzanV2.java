@@ -234,7 +234,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                         return false;
                     }
                     if (target.getUniqueId().equals(player.getUniqueId())) {
-                        player.sendMessage("§cImpossible de s'infecter sois même");
+                        player.sendMessage("§cImpossible de s'infecter soi-même");
                         return false;
                     }
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
@@ -295,7 +295,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                     }
                     this.roleInfecteur.getGamePlayer().sendMessage(target.getName()+" a été infecté");
                     if (gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam() != TeamList.Slayer) {
-                        target.sendMessage("Vous avez été §cinfecté§f mais comme vous n'étiez pas du camp§a Slayer§r vous n'avez pas pus être§c infecté§f, vous restez donc dans votre camp d'origine");
+                        target.sendMessage("Vous avez été §cinfecté§f mais comme vous n'étiez pas du camp§a Slayer§r vous n'avez pas pu être§c infecté§f, vous restez donc dans votre camp d'origine");
                     }
                     if (gameState.getGamePlayer().get(target.getUniqueId()).getRole().getTeam() == TeamList.Slayer) {
                         gameState.getGamePlayer().get(target.getUniqueId()).getRole().setTeam(TeamList.Demon);
@@ -312,7 +312,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
 
         public RegenPower(@NonNull RoleBase role) {
             super("Pouvoir régénérant", null, role,
-                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toutes les§c 10 secondes");
+                    "§7Vous possédez une§c régénération naturelle§7 à hauteur de§c 1/2❤§7 toutes les§c 10 secondes");
             new RegenerationRunnable(role.getGameState(), role.getPlayer(), this);
         }
 

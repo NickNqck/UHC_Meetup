@@ -72,7 +72,7 @@ public class AssaillantV2 extends TitanBase {
 
         protected ShutDownPower(@NonNull RoleBase role) {
             super("ShutDown", new Cooldown(60*10), new ItemBuilder(Material.RECORD_11).addEnchant(Enchantment.DAMAGE_ALL, 1).hideEnchantAttributes().setName("§7§lShutDown"), role,
-                    "§7Vous permet d'empêcher tous les autres joueurs présent à moins de§c 50 blocs§7 de vous de bouger");
+                    "§7Vous permet d'empêcher tous les autres joueurs présents à moins de§c 50 blocs§7 de vous de bouger");
         }
 
         @Override

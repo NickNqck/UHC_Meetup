@@ -48,14 +48,14 @@ public class JigoroV2PSolo extends JigoroV2 implements Listener {
             this.killZen = true;
             addSpeedAtInt(event.getGamePlayerKiller().getPlayer(), 10);
             givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 0, false, false), EffectWhen.DAY);
-            event.getGamePlayerKiller().sendMessage("Vous venez de tuez§a Zen'Itsu§f vous obtenez donc§9 résistance 1§f le§e jour§f, ainsi que§c 10%§f de §bSpeed");
+            event.getGamePlayerKiller().sendMessage("Vous venez de tuer§a Zen'Itsu§f vous obtenez donc§9 résistance 1§f le§e jour§f, ainsi que§c 10%§f de §bSpeed");
         }
         if (role instanceof KaigakuV2) {
             if (killKai)return;
             killKai = true;
             addSpeedAtInt(event.getGamePlayerKiller().getPlayer(), 10);
             givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 0, false, false), EffectWhen.NIGHT);
-            event.getGamePlayerKiller().sendMessage("Vous venez de tuez§c Kaigaku§f vous obtenez donc§9 résistance 1§f la§c nuit§f, ainsi que§c 10%§f de§b Speed");
+            event.getGamePlayerKiller().sendMessage("Vous venez de tuer§c Kaigaku§f vous obtenez donc§9 résistance 1§f la§c nuit§f, ainsi que§c 10%§f de§b Speed");
 
         }
     }

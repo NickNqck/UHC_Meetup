@@ -266,7 +266,7 @@ public class HubListener implements Listener {
 		p.getInventory().setBoots(Items.getdiamondboots());
 		p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()));
 	}
-	// Creer une plateforme pour le spawn des joueurs (Suppression possible grace a Material.AIR)
+	// Creer une plateforme pour le spawn des joueurs (Suppression possible grâce à Material.AIR)
 	public static void spawnPlatform(final World world, final Material material) {
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {

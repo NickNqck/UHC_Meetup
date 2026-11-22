@@ -82,7 +82,7 @@ public class Gyokko extends DemonsRoles implements Listener {
                         giveItem(killer, false, Items.getGyokkoBoots());
                     }
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.DAY);
-                    killer.sendMessage("§7Vous venez de tuez§a Muichiro§7 vous obtenez donc§c force 1 le§e jour§7, ainsi que des bottes en diamant enchantée avec:§6 Depht Strider 2");
+                    killer.sendMessage("§7Vous venez de tuer§a Muichiro§7 vous obtenez donc§c force 1 le§e jour§7, ainsi que des bottes en diamant enchantée avec:§6 Depth Strider 2");
                 }
             }
         }

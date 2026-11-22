@@ -180,7 +180,7 @@ public class AkazaVSKyojuroV2 extends Event implements Listener {
     @Override
     public String[] getExplications() {
         return new String[] {
-                "§7Crée un duel entre§a Kyojuro§7 et§c Akaza§7 sur une map personnalisé",
+                "§7Crée un duel entre§a Kyojuro§7 et§c Akaza§7 sur une map personnalisée",
                 "§7le combat a une durée§c maximum§7 de§c 5 minutes§7",
                 "§7il se terminera si l'un des deux combattants tue l'autre ou si le temps atteint 0",
                 "",

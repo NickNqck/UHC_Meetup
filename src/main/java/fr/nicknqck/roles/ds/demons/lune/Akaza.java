@@ -132,7 +132,7 @@ public class Akaza extends DemonsRoles implements Listener {
 			if (!event.getOriginEvent().isCancelled() && event.getOriginEvent().getDamager() instanceof Player) {
 				if (event.getDamager().getUuid().equals(getPlayer())) {
 					this.coupInfliged++;
-					NMSPacket.sendActionBar((Player) event.getOriginEvent().getDamager(), "§7Coup infliger:§c "+coupInfliged+"§7/§6"+coupToInflig);
+					NMSPacket.sendActionBar((Player) event.getOriginEvent().getDamager(), "§7Coups infligés:§c "+coupInfliged+"§7/§6"+coupToInflig);
 				}
 			}
 		}
@@ -200,7 +200,7 @@ public class Akaza extends DemonsRoles implements Listener {
 				}
 			}
 			timeRemaining--;
-			NMSPacket.sendActionBar(owner, "§7Coup infliger:§c "+akaza.coupInfliged+"§7/§6"+akaza.coupToInflig);
+			NMSPacket.sendActionBar(owner, "§7Coups infligés:§c "+akaza.coupInfliged+"§7/§6"+akaza.coupToInflig);
 			if (akaza.coupInfliged >= akaza.coupToInflig) {
 				Bukkit.getScheduler().runTask(Main.getInstance(), () -> owner.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*30, 0, false, false), true));
 				owner.sendMessage("§7Vous avez obtenu l'effet§c Résistance I§7 pendant§c 30 secondes§7.");

@@ -164,11 +164,11 @@ public class KagayaV2 extends SlayerRoles {
             if (event.getRole() == null)return;
             if (predictings.containsKey(event.getPlayer().getUniqueId())) {
                 if (event.getRole().getName().contains(this.predictings.get(event.getPlayer().getUniqueId()))) {
-                    final TextComponent toSend = new TextComponent("§c"+event.getPlayer().getName()+"§7 était belle et bien§c "+event.getRole().getName()+"§7, vous avez maintenant le choix entre:\n\n");
+                    final TextComponent toSend = new TextComponent("§c"+event.getPlayer().getName()+"§7 était bel et bien§c "+event.getRole().getName()+"§7, vous avez maintenant le choix entre:\n\n");
                     HoverEvent hoverEvent = new HoverEvent(
                             HoverEvent.Action.SHOW_TEXT,
                             new BaseComponent[]{
-                                    new TextComponent("§a§lCLIQUEZ ICI POUR FAIRE VOTER CHOIX")
+                                    new TextComponent("§a§lCLIQUEZ ICI POUR FAIRE VOTRE CHOIX")
                             }
                     );
                     final TextComponent choice1 = getChoice1(event, hoverEvent);
@@ -185,7 +185,7 @@ public class KagayaV2 extends SlayerRoles {
         }
 
         private TextComponent getChoice1(UHCDeathEvent event, HoverEvent hoverEvent) {
-            final TextComponent choice1 = new TextComponent("§aRegagner un brain de§c vie§7 (§a+§c1/2❤ permanent§7)");
+            final TextComponent choice1 = new TextComponent("§aRegagner un brin de§c vie§7 (§a+§c1/2❤ permanent§7)");
 
             choice1.setHoverEvent(hoverEvent);
             choice1.setClickEvent(new ClickEvent(
@@ -195,7 +195,7 @@ public class KagayaV2 extends SlayerRoles {
             return choice1;
         }
         private TextComponent getChoice2(UHCDeathEvent event, HoverEvent hoverEvent) {
-            final TextComponent choice2 = new TextComponent("§aRetarder l'inévitable§7 (Remet le timer de perde de§c coeur§7 à §c0§7)");
+            final TextComponent choice2 = new TextComponent("§aRetarder l'inévitable§7 (Remet le timer de perte de§c coeur§7 à §c0§7)");
             choice2.setHoverEvent(hoverEvent);
             choice2.setClickEvent(new ClickEvent(
                     ClickEvent.Action.RUN_COMMAND,

@@ -145,7 +145,7 @@ public class TsunadeV2 extends HShinobiRoles {
                         location.add(0.0, 1.2, 0.0);
                         MathUtil.sendParticle(EnumParticle.HEART, location);
                     }
-                    getRole().getGamePlayer().getActionBarManager().updateActionBar("tsunadev2.katsuyu", "§aVie stocker:§c "+(this.stocked/2)+"❤");
+                    getRole().getGamePlayer().getActionBarManager().updateActionBar("tsunadev2.katsuyu", "§aVie stockée:§c "+(this.stocked/2)+"❤");
                     return true;
                 }
             }
@@ -159,7 +159,7 @@ public class TsunadeV2 extends HShinobiRoles {
             if (actualHealth + 4.0 > maxHealth) {
                 final double dif = Math.abs((actualHealth + 4.0) - maxHealth);
                 this.stocked += dif;
-                getRole().getGamePlayer().getActionBarManager().updateActionBar("tsunadev2.katsuyu", "§aVie stocker:§c "+(this.stocked/2)+"❤");
+                getRole().getGamePlayer().getActionBarManager().updateActionBar("tsunadev2.katsuyu", "§aVie stockée:§c "+(this.stocked/2)+"❤");
             }
         }
     }
@@ -171,7 +171,7 @@ public class TsunadeV2 extends HShinobiRoles {
                     "§7vous lui§a enseignerez§7 comment utiliser§d Katsuyu§7,",
                     "§7celà durera plus ou moins de temps en fonction de son§a intelligence§7. (§6/ns intelligences§7)",
                     "",
-                    "§7Une fois fait, vous obtiendrez§c 2❤ permanents supplémentaire§7."
+                    "§7Une fois fait, vous obtiendrez§c 2❤ permanents supplémentaires§7."
             );
             setMaxUse(1);
         }

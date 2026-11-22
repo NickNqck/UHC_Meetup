@@ -178,7 +178,7 @@ public class MinatoV2 extends HShinobiRoles {
                 this.aroundArrowRunnable.arrow.remove();
                 this.aroundArrowRunnable = null;
                 target.teleport(location);
-                player.sendMessage("§7Vous avez utilisez l'§aHiraishin§7 sur§c "+uhcEvent.getVictim().getPlayerName()+"§7.");
+                player.sendMessage("§7Vous avez utilisé l'§aHiraishin§7 sur§c "+uhcEvent.getVictim().getPlayerName()+"§7.");
                 target.sendMessage("§7Vous avez été touché par l'§aHiraishin§7.");
                 PotionUtils.addTempNoFall(target.getUniqueId(), 1);
                 event.setCancelled(true);
@@ -196,7 +196,7 @@ public class MinatoV2 extends HShinobiRoles {
                             this.aroundArrowRunnable.arrow.remove();
                             this.aroundArrowRunnable = null;
                             player.teleport(location);
-                            player.sendMessage("§7Vous avez utilisez l'§aHiraishin§7 sur§c vous même§7.");
+                            player.sendMessage("§7Vous avez utilisé l'§aHiraishin§7 sur§c vous même§7.");
                             PotionUtils.addTempNoFall(player.getUniqueId(), 1);
                             this.own = true;
                             return true;
@@ -253,17 +253,17 @@ public class MinatoV2 extends HShinobiRoles {
                     return;
                 }
                 if (arrow == null) {
-                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7Vous ne pouvez plus vous téléportez.");
+                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7Vous ne pouvez plus vous téléporter.");
                     cancel();
                     return;
                 }
                 if (arrow.isDead()) {
-                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7Vous ne pouvez plus vous téléportez.");
+                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7Vous ne pouvez plus vous téléporter.");
                     cancel();
                     return;
                 }
                 if (!arrow.hasMetadata("minato.hiraishin")) {
-                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7Vous ne pouvez plus vous téléportez.");
+                    this.arcHiraishin.getRole().getGamePlayer().sendMessage("§7Vous ne pouvez plus vous téléporter.");
                     cancel();
                     return;
                 }
@@ -350,7 +350,7 @@ public class MinatoV2 extends HShinobiRoles {
                         return;
                     }
                     event.getWhoClicked().teleport(location);
-                    event.getWhoClicked().sendMessage("§cVous vous êtes téléportez a la§a balise permanente§c: "+name);
+                    event.getWhoClicked().sendMessage("§cVous vous êtes téléporté à la§a balise permanente§c: "+name);
                     getCooldown().use();
                 });
                 i+=2;

@@ -48,11 +48,11 @@ public class WorldConfig implements Listener {
                 player.closeInventory();
                 Main.getInstance().getWorldListener().setEnable(true);
                 if (!Main.getInstance().initGameWorld()) {
-                    player.sendMessage("§cImpossible de supprimer le monde de jeu actuel, un joueur est peut être encore dedans ?");
+                    player.sendMessage("§cImpossible de supprimer le monde de jeu actuel, un joueur est peut-être encore dedans ?");
                     event.setCancelled(true);
                     return;
                 }
-                event.getWhoClicked().sendMessage("§7Vous avez crée un nouveau monde.");
+                event.getWhoClicked().sendMessage("§7Vous avez créé un nouveau monde.");
                 if (Main.getInstance().getGameConfig().isPregen()) {
                     Main.getInstance().getGameConfig().setPregen(false);
                 }

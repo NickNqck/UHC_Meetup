@@ -33,7 +33,7 @@ public class YameruPower extends CommandPower {
                             if (((KamuiDimension) iSubRoleWorld).getBeforeTpMap().containsKey(target.getUniqueId())) {
                                 target.teleport(((KamuiDimension) iSubRoleWorld).getBeforeTpMap().get(target.getUniqueId()));
                                 ((KamuiDimension) iSubRoleWorld).getBeforeTpMap().remove(target.getUniqueId());
-                                target.sendMessage("§7Vous avez été§c éjecter§7 du§d Kamui§7.");
+                                target.sendMessage("§7Vous avez été§c éjecté§7 du§d Kamui§7.");
                                 player.sendMessage("§c"+target.getName()+"§7 a été§c éjecté§7 du§d Kamui§7.");
                                 return true;
                             } else {

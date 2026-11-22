@@ -74,7 +74,7 @@ public class MDJ_NS_Config extends PaginatedFastInv {
                         "§fValeur actuelle:§c "+ (Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye() ? "§aActivé" : "§cDésactivé"),
                         "",
                         "§7Si§a activer§7 et qu'§dObito§7 obtient le§c Sharingan§7 de§a Kakashi§7, alors,",
-                        "§7tout ses§c cooldowns§7 seront§c divisé§7 par§c deux§7."
+                        "§7tous ses§c cooldowns§7 seront§c divisés§7 par§c deux§7."
                 )
                 .toItemStack(), event -> {
             Main.getInstance().getGameConfig().getNarutoConfig().setObitoCanGetKakashiEye(!Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye());

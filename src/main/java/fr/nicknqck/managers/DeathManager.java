@@ -229,7 +229,7 @@ public class DeathManager implements Listener {
         gamePlayer.setDeathLocation(gamePlayer.getLastLocation());
         if (gamePlayer.getRole() != null) gameState.getDeadRoles().add(gamePlayer.getRole().getRoles());
         for (ItemStack item : gamePlayer.getLastInventoryContent()){
-            if (item == null)continue;//l'IDE me dit que c'est impossible que item sois égale à null mais c'est faux
+            if (item == null)continue;//l'IDE me dit que c'est impossible que item soit égal à null mais c'est faux
             if (item.getType() != Material.AIR) {
                 if (item.getAmount() <= 64) {
                     if (item.getAmount() > 0) {

@@ -93,15 +93,15 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                                 "§7 -§c Tuer§7 un§c joueur§7:§a +10%")
                 }),
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                        new TextComponent("§7Si vous tué§a Zen'Itsu§7 votre§c Électrokinésie§7 aura des changements:\n\n" +
-                                "§7 - Votre§c clic droit§7 fera§c toujours§7 les mêmes effet que s'il est à pleine charge\n" +
+                        new TextComponent("§7Si vous tuez§a Zen'Itsu§7 votre§c Électrokinésie§7 aura des changements:\n\n" +
+                                "§7 - Votre§c clic droit§7 fera§c toujours§7 les mêmes effets que s'il est à pleine charge\n" +
                                 "§7 - Le dernier palier de charge aura un autre pouvoir qui s'activera en essayant de§c drop§7 votre§c item§7:\n\n" +
-                                "§7     → Créera une ligne d'§eéclair§7 qui infligera§c 2❤§7 à tous les joueurs qui seront touché")
+                                "§7     → Créera une ligne d'§eéclair§7 qui infligera§c 2❤§7 à tous les joueurs qui seront touchés")
                 }),
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                         new TextComponent("§7Si vous êtes§c pacté§7 par§e Jigoro§7 des§c bonus§7:\n\n" +
                                 "§7     → Vous obtiendrez l'effet§b Speed I§c permanent\n" +
-                                "§7     → Lorsque vous ou lui tué un joueur vous gagnerez§a +§c1/2❤ permanent\n" +
+                                "§7     → Lorsque vous ou lui tuez un joueur vous gagnerez§a +§c1/2❤ permanent\n" +
                                 "§7     → Vous obtiendrez§9 Résistance I§7 à moins de§c 30 blocs§7 de§e Jigoro")
                 })
         ).getText();
@@ -126,7 +126,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             role.addPower(tpPower);
             role.addPower(foudrePower);
             EventUtils.registerRoleEvent(this);
-            getRole().getGamePlayer().getActionBarManager().addToActionBar("kaigaku.electro", "§bCharge actuel: "+charge+"%");
+            getRole().getGamePlayer().getActionBarManager().addToActionBar("kaigaku.electro", "§bCharge actuelle: "+charge+"%");
             new LifeRunnable(role.getGamePlayer(), this, role.getGameState());
             getShowCdRunnable().setCustomText(true);
             getShowCdRunnable().setCustomTexte("");
@@ -194,7 +194,7 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
             } else {
                 setTargetDistance(0);
             }
-            getRole().getGamePlayer().getActionBarManager().updateActionBar("kaigaku.electro", "§bCharge actuel: "+charge+"%");
+            getRole().getGamePlayer().getActionBarManager().updateActionBar("kaigaku.electro", "§bCharge actuelle: "+charge+"%");
         }
         @EventHandler
         private void EntityDamageByEntityEvent(final EntityDamageByEntityEvent event) {

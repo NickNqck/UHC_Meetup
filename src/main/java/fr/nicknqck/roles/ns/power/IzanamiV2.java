@@ -53,7 +53,7 @@ public class IzanamiV2 implements Listener {
     }
     @Getter
     public enum MissionUser {
-        Taper(0, "\"Tapée la cible 15x\""),
+        Taper(0, "\"Taper la cible 15x\""),
         Lave(1, "\"Mettre de la§6 lave§f sous la cible\""),
         Fraper(2, "\"être frappé par l'épée de la cible 15x\""),
         Gap(3, "\"Donner une pomme d'or à la cible\""),
@@ -212,8 +212,8 @@ public class IzanamiV2 implements Listener {
     }
     private String getOtherStrings(MissionUser mu) {
         return (mu == MissionUser.Taper ?
-                "§7Coup restant à infligé:§c§l "+taperCoupRemaining : mu == MissionUser.Fraper ?
-                "§7Coup restant à subir:§c§l "+FraperCoupRemaining : "");
+                "§7Coups restants à infliger:§c§l "+taperCoupRemaining : mu == MissionUser.Fraper ?
+                "§7Coups restants à subir:§c§l "+FraperCoupRemaining : "");
     }
     @EventHandler
     private void onEat(PlayerItemConsumeEvent e) {
@@ -323,7 +323,7 @@ public class IzanamiV2 implements Listener {
         Player owner = Bukkit.getPlayer(infecteur.getPlayer());
         Player toIzanami = Bukkit.getPlayer(infecter.getPlayer());
         if (owner != null && toIzanami != null) {
-            owner.sendMessage("§7L'infection est terminé§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
+            owner.sendMessage("§7L'infection est terminée§c "+toIzanami.getName()+"§7 rejoint maintenant votre camp");
             toIzanami.resetTitle();
             GamePlayer gOwner = GameState.getInstance().getGamePlayer().get(owner.getUniqueId());
             GamePlayer gTo = GameState.getInstance().getGamePlayer().get(toIzanami.getUniqueId());

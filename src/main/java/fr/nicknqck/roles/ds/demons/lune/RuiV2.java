@@ -276,7 +276,7 @@ public class RuiV2 extends DemonsRoles {
                     }
                 }
                 if (amountInCd >= 2) {
-                    player.sendMessage("§cVous avez trop utiliser vos fils pour pouvoir utiliser cette technique-ci");
+                    player.sendMessage("§cVous avez trop utilisé vos fils pour pouvoir utiliser cette technique-ci");
                     return false;
                 }
                 for (final Power power : this.filPower.powerMap.values()) {

@@ -102,7 +102,7 @@ public class AllianceV2 extends Event implements Listener {
     @Override
     public String[] getExplications() {
         return new String[] {
-                "§7Fait en sorte que§a Kyojuro§7 et§e Shinjuro§7 (§6V1§7) sois en alliance et gagne ensemble,",
+                "§7Fait en sorte que§a Kyojuro§7 et§e Shinjuro§7 (§6V1§7) soient en alliance et gagnent ensemble,",
                 "§7pour les aider ils gagnent l'effet§c Force I§7 proche l'un de l'autre",
                 "§1",
                 "§8 -§e Shinjuro§7: Il perdra son§c Sake§7 mais gagnera un traqueur permanent vers§a Kyojuro§7.",

@@ -123,7 +123,7 @@ public class Sai extends ShinobiRoles implements Listener {
                             //Si Danzo est infecté par Shisui alors, il ne peut plus changer de camp, donc on fait rejoindre à Sai ce camp-là
                             gamePlayer.getRole().setTeam(TeamList.Racine);
                             this.setTeam(gamePlayer.getRole().getTeam());
-                            gamePlayer.sendMessage("§aSai§7 et vous faites maintenant la pair, la§a victoire§7 semble assuré !");
+                            gamePlayer.sendMessage("§aSai§7 et vous faites maintenant la paire, la§a victoire§7 semble assurée !");
                             this.getGamePlayer().sendMessage("§eDanzo§7 a reconnu votre valeur, vous pouvez enfin§a gagner§7 avec lui, il ne devrait pas vous trahir...");
                         }
                     }
@@ -136,7 +136,7 @@ public class Sai extends ShinobiRoles implements Listener {
     private void onBecomeHokage(@NonNull final GamePlayerBecomeHokageEvent event) {
         if (!event.getHokage().check())return;
         if (event.getHokage().getRole() instanceof DanzoV2 && !this.unlocked) {
-            event.getHokage().sendMessage("§7Vous êtes devenu le nouvel§a Hokage§7, si vous souhaitez que§a Saï§7 rejoigne votre§a camp§7, faite la commande§6 /ns sai§7.");
+            event.getHokage().sendMessage("§7Vous êtes devenu le nouvel§a Hokage§7, si vous souhaitez que§a Saï§7 rejoigne votre§a camp§7, faites la commande§6 /ns sai§7.");
             this.unlocked = true;
         }
     }
@@ -152,7 +152,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     for (@NonNull PotionEffect potionEffect : danzoEffects.keySet()) {
                         if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE) && danzoEffects.get(potionEffect).equals(EffectWhen.PERMANENT)) {
                             this.unlocked = true;
-                            gamePlayer.getRole().getGamePlayer().sendMessage("§7En tuant ces maudits démon du clan§4§l Uchiwa§r§7, vous vous êtes souvenue que§a Sai§7 existe, faite la commande§6 /ns sai§7 pour le rallier à votre cause.");
+                            gamePlayer.getRole().getGamePlayer().sendMessage("§7En tuant ces maudits démons du clan§4§l Uchiwa§r§7, vous vous êtes souvenue que§a Sai§7 existe, faites la commande§6 /ns sai§7 pour le rallier à votre cause.");
                             break;
                         }
                     }
@@ -184,7 +184,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     "",
                     "§8 -§a Scellement de papier§7: En visant un joueur, puis, en restant proche de lui pendant§c 10 secondes§7",
                     "§7vous§a scellerez§7 ses§c pouvoirs§7, il ne pourra donc plus les utiliser tant que vous êtes à moins de§c 150 blocs§7",
-                    "§7de lui, aussi, lors de votre§c mort§7 il pourra à nouveau les utilisés."
+                    "§7de lui, aussi, lors de votre§c mort§7 il pourra à nouveau les utiliser."
             );
             setShowCdInDesc(false);
             setSendCooldown(false);
@@ -504,7 +504,7 @@ public class Sai extends ShinobiRoles implements Listener {
                                 player.sendMessage("§cIl vous est impossible de viser maitre§e Danzo§7.");
                                 return false;
                             }
-                            player.sendMessage("§7Le "+getName()+"§7 a commencé, restez§c 10 secondes§7 proche de§a "+gamePlayer.getPlayerName()+"§7 pour que ce sois définitif§7.");
+                            player.sendMessage("§7Le "+getName()+"§7 a commencé, restez§c 10 secondes§7 proche de§a "+gamePlayer.getPlayerName()+"§7 pour que ce soit définitif§7.");
                             new ScellementRunnable(this, gamePlayer).runTaskTimerAsynchronously(getPlugin(), 1, 20);
                             return true;
                         }

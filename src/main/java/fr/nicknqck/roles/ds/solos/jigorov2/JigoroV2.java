@@ -126,7 +126,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			if (event.getInventory().getTitle().equals("§fChoix de pacte§e Jigoro§7 (§6V2§7)")) {
 				if (!this.pacte) {
 					setMaxUse(getMaxUse() + 1);
-					event.getPlayer().sendMessage("Vous n'avez pas encore utiliser votre§c pacte");
+					event.getPlayer().sendMessage("Vous n'avez pas encore utilisé votre§c pacte");
 				}
 				EventUtils.unregisterEvents(this);
 			}
@@ -167,7 +167,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 			final GameState gameState = getRole().getGameState();
 			switch (event.getPacte()) {
 				case SOLO:
-					owner.sendMessage("§7Vous avez choisis le pacte§6 1");
+					owner.sendMessage("§7Vous avez choisi le pacte§6 1");
 					final JigoroV2PSolo jigoro = new JigoroV2PSolo(getRole().getPlayer(), getRole().getGamePlayer());
 					jigoro.getEffects().putAll(getRole().getEffects());
 					jigoro.getPowers().addAll(getRole().getPowers());
@@ -181,7 +181,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 						owner.closeInventory();
 						return;
 					}
-					owner.sendMessage("§7Vous avez choisis le pacte§c 2");
+					owner.sendMessage("§7Vous avez choisi le pacte§c 2");
 					final JigoroV2PKaigaku jigorok = new JigoroV2PKaigaku(getRole().getPlayer(), kaigaku, getRole().getGamePlayer());
 					gameState.getGamePlayer().get(getRole().getPlayer()).setRole(jigorok);
 					jigorok.getEffects().putAll(getRole().getEffects());
@@ -195,7 +195,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 					jigorok.setMaxHealth(getRole().getMaxHealth());
 					break;
 				case ZENITSU:
-					getRole().getGamePlayer().sendMessage("§7Vous avez choisis le pacte§6 3");
+					getRole().getGamePlayer().sendMessage("§7Vous avez choisi le pacte§6 3");
 					final ZenItsuV2 zenItsu = findZenItsu(gameState);
 					if (zenItsu == null) {
 						setMaxUse(getMaxUse()+1);

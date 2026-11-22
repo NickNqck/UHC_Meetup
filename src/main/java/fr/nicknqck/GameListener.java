@@ -660,7 +660,7 @@ public class GameListener implements Listener {
 		if (to.getY() < 0) {
 			p.teleport(new Location(to.getWorld(), to.getX(), to.getWorld().getHighestBlockYAt(to), to.getZ()));
 		}
-        if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ce passe rien
+        if(to.getX() == from.getX() && to.getY() == from.getY() && from.getZ() == to.getZ()) return;//autrement dit si le joueur fait rien il ne se passe rien
     	if (gameState.shutdown.contains(e.getPlayer())) {
     		p.teleport(from);
     		p.setAllowFlight(false);

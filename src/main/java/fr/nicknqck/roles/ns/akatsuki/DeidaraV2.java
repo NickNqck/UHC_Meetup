@@ -167,7 +167,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                             if (player.isSneaking()) {
                                 return this.artUltimePower.checkUse(player, map);
                             } else {
-                                player.sendMessage("§7Pour vous§c sacrifiez§7 il faudra faire un§c Shift + Clic gauche§7.");
+                                player.sendMessage("§7Pour vous§c sacrifier§7 il faudra faire un§c Shift + Clic gauche§7.");
                             }
                         }
                     } else {

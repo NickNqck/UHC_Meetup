@@ -101,7 +101,7 @@ public class Hiruzen extends HShinobiRoles implements Listener {
                             .addEnchant(Enchantment.DAMAGE_ALL, 4)
                     .setName("§aEnma"),
                     role,
-                    "§7Qui à besoin d'§aami§7 quand§a Enma§7 est la pour nous.");
+                    "§7Qui a besoin d'§aami§7 quand§a Enma§7 est là pour nous.");
         }
 
         @Override

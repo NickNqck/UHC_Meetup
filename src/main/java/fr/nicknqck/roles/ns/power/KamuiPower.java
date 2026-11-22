@@ -87,7 +87,7 @@ public class KamuiPower extends ItemPower implements Listener{
     private void openMenu(@NonNull final Player player) {
         @NonNull final Inventory inv = Bukkit.createInventory(player, 27, "§7(§c!§7)§d Kamui");
         inv.setItem(12, new ItemBuilder(Material.EYE_OF_ENDER).setName("§dArimasu").setLore("§7Cooldown "+ StringUtils.secondsTowardsBeautiful(this.arimasu.getCooldown().getCooldownRemaining()),
-                "§7Permet de vous téléportez dans le Kamui").toItemStack());
+                "§7Permet de vous téléporter dans le Kamui").toItemStack());
         inv.setItem(14, new ItemBuilder(Material.ENDER_PEARL).setName("§dSonohaka").setLore("§7Cooldown "+StringUtils.secondsTowardsBeautiful(this.sonohaka.getCooldown().getCooldownRemaining()),
                 "§7Permet de téléporter un joueur dans le Kamui").toItemStack());
         player.openInventory(inv);

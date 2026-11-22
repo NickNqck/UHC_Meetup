@@ -190,7 +190,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
 
         public GamabuntaPower(@NonNull RoleBase role) {
             super("§aVentre du crapaud§r", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§aVentre du crapaud"), role,
-                    "§7Téléporte tous les joueurs autour de vous dans une autre dimensions",
+                    "§7Téléporte tous les joueurs autour de vous dans une autre dimension",
                     "§7toutes les§c 5 secondes§7 à l'intérieur un joueur reçoit§c 5 secondes§7 de§2 poison§7.");
         }
 

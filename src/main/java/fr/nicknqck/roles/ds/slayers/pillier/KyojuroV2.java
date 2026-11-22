@@ -111,7 +111,7 @@ public class KyojuroV2 extends PilierRoles implements IAllianceRole {
 
         public FlammePower(@NonNull KyojuroV2 role) {
             super("§6/ds flamme", "flamme", new Cooldown(60*10), role, CommandType.DS,
-                    "§7Vous permet d'§6enflammer§7 les joueurs que vous frappez et ceux sur lesquelles vous tirez,",
+                    "§7Vous permet d'§6enflammer§7 les joueurs que vous frappez et ceux sur lesquels vous tirez,",
                     "§7En frappant un joueur vous aurez§c 35%§7 de§c chance§7 de recevoir§c 5 secondes§7 de l'effet§c Force I§7.");
         }
 

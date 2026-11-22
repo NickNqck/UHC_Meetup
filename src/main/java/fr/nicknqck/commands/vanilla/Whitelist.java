@@ -62,7 +62,7 @@ public class Whitelist implements CommandExecutor, Listener {
 								p.kickPlayer("§cVous n'êtes pas whitelist !");
 							}
 						}
-						sender.sendMessage("§7Toute les personnes non whitelist on été éjécté.");
+						sender.sendMessage("§7Toutes les personnes non whitelist ont été éjectées.");
 						return true;
 					}
 				}

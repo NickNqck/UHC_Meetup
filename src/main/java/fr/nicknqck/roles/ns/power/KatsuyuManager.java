@@ -53,7 +53,7 @@ public class KatsuyuManager implements Listener {
         event.getPlayer().setHealth(Math.min(event.getPlayer().getMaxHealth(), actual + this.katsuyu.stocked));
         final double dif = Math.abs(event.getPlayer().getHealth() - actual);
         this.katsuyu.stocked = this.katsuyu.stocked-dif;
-        event.getPlayer().sendMessage("§7Vous vous êtes§d soigner§7 complètement.");
+        event.getPlayer().sendMessage("§7Vous vous êtes§d soigné§7 complètement.");
         event.setCancelled(true);
     }
     @EventHandler
@@ -114,10 +114,10 @@ public class KatsuyuManager implements Listener {
     public String[] getPowerDescription(){
         return new String[] {
                 "§7Lorsque vous mangez une§e pomme d'or§7 la§a vie§7 qui§c n'est pas§d régénérer§7",
-                "§7est§c stocked§7 à la place.",
+                "§7est§c stockée§7 à la place.",
                 "",
                 "§7Si vous faites un§f clique§7 avec§d Katsuyu§7, vous vous§d régénérez§7 le plus possible",
-                "§7en fonction de la§a vie stocker§7."
+                "§7en fonction de la§a vie stockée§7."
         };
     }
     @Getter
@@ -153,7 +153,7 @@ public class KatsuyuManager implements Listener {
                     final GamePlayer gamePlayer = GamePlayer.of(uuid);
                     if (gamePlayer == null)continue;
                     if (!gamePlayer.isAlive())continue;
-                    gamePlayer.getActionBarManager().updateActionBar("katsuyu.stock", "§aVie stocker:§d "+new DecimalFormat("#.#").format(this.katsuyu.stocked)+" HP");
+                    gamePlayer.getActionBarManager().updateActionBar("katsuyu.stock", "§aVie stockée:§d "+new DecimalFormat("#.#").format(this.katsuyu.stocked)+" HP");
                 }
             }
         }

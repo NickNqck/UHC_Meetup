@@ -287,7 +287,7 @@ public class ShinobuV2 extends PilierRoles {
         private void onDeath(final UHCDeathEvent event) {
             if (event.getRole() instanceof KanaeV2) {
                 this.kanaeDead = true;
-                getRole().getGamePlayer().sendMessage("§aKanae§7 est§c morte§7, votre§2 Poison§7 a été§c améliorer§7.");
+                getRole().getGamePlayer().sendMessage("§aKanae§7 est§c morte§7, votre§2 Poison§7 a été§c amélioré§7.");
             }
         }
         private String getActualString() {

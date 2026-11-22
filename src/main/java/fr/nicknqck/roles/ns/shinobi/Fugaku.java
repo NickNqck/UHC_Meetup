@@ -148,7 +148,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             fastInv.setItem(14, new ItemBuilder(Material.IRON_SWORD)
                     .hideAllAttributes()
                     .setName("§cAttaque")
-                    .setLore("§7Vous permet de vous téléporter dans un rayon de§c 10 blocs§7 autour d'un joueur visée",
+                    .setLore("§7Vous permet de vous téléporter dans un rayon de§c 10 blocs§7 autour d'un joueur visé",
                             "",
                             (this.attaquePower.getCooldown().getCooldownRemaining() <= 0 ? "§cPouvoir Utilisable":"§7Cooldown:§c "+StringUtils.secondsTowardsBeautiful(this.attaquePower.getCooldown().getCooldownRemaining())))
                     .toItemStack(), event -> {
@@ -276,7 +276,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                         Location loc = Loc.getRandomLocationAroundPlayer(target, 10);
                         player.teleport(loc);
                         target.sendMessage("§7Vous sentez quelque chose de nouveau autour de vous.");
-                        player.sendMessage("§7Vous vous êtes téléportez autour de§c "+target.getName());
+                        player.sendMessage("§7Vous vous êtes téléporté autour de§c "+target.getName());
                         player.closeInventory();
                         return true;
                     }

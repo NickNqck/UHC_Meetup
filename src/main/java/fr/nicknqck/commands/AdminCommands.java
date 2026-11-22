@@ -298,13 +298,13 @@ public class AdminCommands implements CommandExecutor{
                     final boolean d = Main.isDebug();
                     Main.getInstance().getLogger().info("Debug avant = "+d);
                     if (d) {
-                        Main.getInstance().getLogger().info("Debug est maintenant desactiver");
+                        Main.getInstance().getLogger().info("Debug est maintenant désactivé");
                         Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§c désactivé§7 le§c debug§7.");
                         Main.getInstance().setDebug(false);
                     } else {
                         Main.getInstance().sendMessageToHosts("§c"+sender.getName()+"§7 a§a activé§7 le§c debug§7.");
                         Main.getInstance().setDebug(true);
-                        Main.getInstance().getLogger().info("Debug est maintenant activer");
+                        Main.getInstance().getLogger().info("Debug est maintenant activé");
                     }
                     Main.getInstance().getLogger().info("Debug apres = "+Main.isDebug());
                     return true;

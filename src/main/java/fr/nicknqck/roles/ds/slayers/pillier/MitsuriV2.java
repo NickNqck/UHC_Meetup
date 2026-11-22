@@ -77,7 +77,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
         EventUtils.registerRoleEvent(this);
         new StrengthRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         this.desc = new AutomaticDesc(this)
-                .addCustomLine("§7Vous possédez§c 2❤ permanents§7 supplémentaire")
+                .addCustomLine("§7Vous possédez§c 2❤ permanents§7 supplémentaires")
                 .addCustomLine("§7Vous possédez l'effet§c Force I§7 proche d'§aObanai")
                 .setPowers(getPowers())
                 .addParticularites(

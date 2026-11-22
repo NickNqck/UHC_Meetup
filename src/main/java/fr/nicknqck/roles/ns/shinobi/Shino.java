@@ -174,7 +174,7 @@ public class Shino extends ShinobiRoles {
 
         public TracagePower(@NonNull RoleBase role) {
             super("/ns tracer <joueur>", "tracer", new Cooldown(60*8), role, CommandType.NS,
-                    "§7Permet de suivre à la trace un joueur, cependant, il faut être à moins de§c 10 blocs§7 pour démarer le§c traçage§7."
+                    "§7Permet de suivre à la trace un joueur, cependant, il faut être à moins de§c 10 blocs§7 pour démarrer le§c traçage§7."
             );
             setMaxUse(3);
             this.trackers = new ArrayList<>();

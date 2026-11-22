@@ -78,7 +78,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
           ),
           new TripleMap<>(
                   new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                       new TextComponent("§7Vous donne l'effet§e Speed I§7 et enchante vos bottes§b Depht Strider III§7 pendant§c 3 minutes")
+                       new TextComponent("§7Vous donne l'effet§e Speed I§7 et enchante vos bottes§b Depth Strider III§7 pendant§c 3 minutes")
                   }),
                   "§bSoufle de l'Eau",
                   60*3

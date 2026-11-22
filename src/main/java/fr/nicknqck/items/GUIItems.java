@@ -421,7 +421,7 @@ public static ItemStack getSelectConfigButton() {
 	public static ItemStack getSelectEventButton() {
 		return new ItemBuilder(Material.FIREWORK)
 				.setName("§fConfiguration§7 -> §6Événement")
-				.setLore("§7Pour choisir quels événements seront présent dans la partie")
+				.setLore("§7Pour choisir quels événements seront présents dans la partie")
 				.toItemStack();
 	}
 	public static ItemStack getSelectConfigAotButton() {

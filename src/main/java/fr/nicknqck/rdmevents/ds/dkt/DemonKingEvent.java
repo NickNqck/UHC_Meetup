@@ -123,7 +123,7 @@ public class DemonKingEvent extends Event {
     public String[] getExplications() {
         return new String[] {
                 "§7Au moment de l'activation si§a Tanjiro§7 est en§a vie§7 et que§c Muzan§7 est§c mort§7",
-                "§7alors§a Tanjiro§7 deviendra§c démon§7, il perdra l'accès à tout ses pouvoirs",
+                "§7alors§a Tanjiro§7 deviendra§c démon§7, il perdra l'accès à tous ses pouvoirs",
                 "§7et gagnera les effets§e Speed I§7,§9 Résistance I§7 et§c Force I§7 de manière§c permanente§7.",
                 "§7il recevra aussi un objet nommé \"§f§lBoule d'énergie§7\"",
                 "§7lui permettant en frappant un joueur de lui infliger§c 2❤§7 de§c dégâts§7 via une§c explosion§7.",

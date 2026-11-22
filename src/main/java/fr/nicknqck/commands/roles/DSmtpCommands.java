@@ -113,8 +113,8 @@ public class DSmtpCommands implements CommandExecutor {
 	  	if (gameState.getServerState() == ServerStates.InGame) {
 			String premsg = "§7§l ┃ §r§6";
 			sender.sendMessage(ChatColor.GOLD+"CommandHelper"+"§7§o§m-----------------------------------");//starting message
-			sender.sendMessage(premsg+"/ds roles§r: Permet de voir la list (actualisé) des roles présent dans la partie");
-			sender.sendMessage(premsg+"/ds list§r: Affiche la list (non actualisé) des roles présent dans la partie");
+			sender.sendMessage(premsg+"/ds roles§r: Permet de voir la liste (actualisée) des rôles présents dans la partie");
+			sender.sendMessage(premsg+"/ds list§r: Affiche la liste (non actualisée) des rôles présents dans la partie");
 			sender.sendMessage(premsg+"/ds doc§r: Donne le lien contenant le doc du mode de jeux");
 			sender.sendMessage(premsg+"/ds discord§r: Donne le lien du discord du mode de jeux");
 			sender.sendMessage(premsg+"/ds lame§r: Donne des informations sur les lames du mode de jeux");

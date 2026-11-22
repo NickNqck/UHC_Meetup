@@ -61,7 +61,7 @@ public class JigoroV2PZenItsu extends JigoroV2 implements Listener {
             final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
             if (role instanceof KaigakuV2) {
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 1, false, false), EffectWhen.MID_LIFE);
-                getGamePlayer().sendMessage("§6"+event.getGamePlayerKiller().getRole().getName()+"§f à tué§c Kaigaku§f ce qui vous permet d'avoir§b Speed II§f en dessous de §c5❤");
+                getGamePlayer().sendMessage("§6"+event.getGamePlayerKiller().getRole().getName()+"§f a tué§c Kaigaku§f ce qui vous permet d'avoir§b Speed II§f en dessous de §c5❤");
                 this.killKaigaku = true;
             }
         }

@@ -150,7 +150,7 @@ public class BijuManager implements Listener {
                 final RoleBase role = GameState.getInstance().getGamePlayer().get(event.getKiller().getUniqueId()).getRole();
                 if (!this.ownerMap.containsKey(role.getGamePlayer())) {
                     role.addPower(new BijuPower(event.getBiju(), role), true);
-                    role.getGamePlayer().sendMessage("§7Vous êtes devenus l'hôte de "+event.getBiju().getName());
+                    role.getGamePlayer().sendMessage("§7Vous êtes devenu l'hôte de "+event.getBiju().getName());
                     this.ownerMap.put(role.getGamePlayer(), event.getBiju());
                 } else {
                     role.giveItem(event.getKiller(), false, event.getBiju().getItemInMenu());

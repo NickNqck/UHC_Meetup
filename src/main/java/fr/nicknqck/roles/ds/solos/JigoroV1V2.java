@@ -378,7 +378,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                             this.amountFoudroyed++;
                             if (this.amountFoudroyed == 3) {
                                 this.timeLeft++;
-                                owner.sendMessage("§7La durée de votre§e Zone de Foudre§7 a été§c augmenter§7 de§c 1 seconde§7.");
+                                owner.sendMessage("§7La durée de votre§e Zone de Foudre§7 a été§c augmentée§7 de§c 1 seconde§7.");
                             }
                             if (owner instanceof CraftPlayer) {
                                 ((CraftPlayer)owner).getHandle().setAbsorptionHearts(((CraftPlayer) owner).getHandle().getAbsorptionHearts()+2f );

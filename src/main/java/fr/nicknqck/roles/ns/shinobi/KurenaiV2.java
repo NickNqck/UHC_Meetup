@@ -88,7 +88,7 @@ public class KurenaiV2 extends ShinobiRoles {
             super("Genjutsu des bois", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§aGenjutsu des bois"), role,
                     "§7En ciblant un joueur, vous permet de le§a stun§7 pendant§c 5 secondes§7.",
                     "",
-                    "§7Après ceci, vous serez téléporter derrière la personne, également, il subira§c 3❤§7 de§c dégâts§7.");
+                    "§7Après ceci, vous serez téléporté derrière la personne, également, il subira§c 3❤§7 de§c dégâts§7.");
             setTargetDistance(30);
         }
 

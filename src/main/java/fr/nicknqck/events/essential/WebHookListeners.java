@@ -54,7 +54,7 @@ public class WebHookListeners implements Listener {
                 if (name.equalsIgnoreCase("<joueur>")) {
                     name = event.getPlayer().getName();
                 }
-                sendWebHook(name, event.getPlayer().getName()+" a quitter la partie");
+                sendWebHook(name, event.getPlayer().getName()+" a quitté la partie");
             }
         }
     }

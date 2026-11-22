@@ -308,7 +308,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                     final Location loc = event.getPlayer().getLocation();
                     final DecimalFormat df = new DecimalFormat("0");
                     for (final Player p : liste) {
-                        p.sendMessage("§aTanjiro§7 a utiliser sa§6 danse du dieu du feu§7 en§c x: "+
+                        p.sendMessage("§aTanjiro§7 a utilisé sa§6 danse du dieu du feu§7 en§c x: "+
                                 df.format(loc.getBlockX())+", y: "+
                                 df.format(loc.getBlockY())+", z: "+
                                 df.format(loc.getBlockZ()));

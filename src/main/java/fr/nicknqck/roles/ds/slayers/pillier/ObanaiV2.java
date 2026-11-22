@@ -72,7 +72,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
         AutomaticDesc automaticDesc = new AutomaticDesc(this)
                 .addCustomLine("§7Vous possédez l'effet§e Speed I§7 proche de§a Mitsuri")
                 .setPowers(getPowers())
-                .addCustomLine("§7A la mort de§a Mitsuri§7 vous obtenez l'effet§e Speed I§7 durant le cycle ou elle est morte, également, vous obtiendrez le§c pseudo§7 de son§c tueur§7.");
+                .addCustomLine("§7A la mort de§a Mitsuri§7 vous obtenez l'effet§e Speed I§7 durant le cycle où elle est morte, également, vous obtiendrez le§c pseudo§7 de son§c tueur§7.");
         this.textComponent = automaticDesc.getText();
         new SpeedRunnable(this).runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
         Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
