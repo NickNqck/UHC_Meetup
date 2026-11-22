@@ -156,9 +156,9 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
                     for (final Player p : aroundPlayers) {
                         stringBuilder.append("§c").append(p.getDisplayName()).append("§7, ");
                         Loc.inverserDirectionJoueur(p);
-                        target.sendMessage("§cKyogai§7 vous a retourné");
+                        p.sendMessage("§cKyogai§7 vous a retourné");
                     }
-                    player.sendMessage("§7Vous avez retourné les joueurs: "+ stringBuilder.substring(3));
+                    player.sendMessage("§7Vous avez retourné les joueurs: "+ stringBuilder.substring(0, stringBuilder.length() - 4));
                     return true;
                 }
             }
