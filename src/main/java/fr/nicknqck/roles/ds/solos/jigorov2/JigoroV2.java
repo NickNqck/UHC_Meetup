@@ -196,7 +196,6 @@ public class JigoroV2 extends DemonsSlayersRoles {
 					break;
 				case ZENITSU:
 					getRole().getGamePlayer().sendMessage("§7Vous avez choisis le pacte§6 3");
-					getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 					final ZenItsuV2 zenItsu = findZenItsu(gameState);
 					if (zenItsu == null) {
 						setMaxUse(getMaxUse()+1);
@@ -204,6 +203,7 @@ public class JigoroV2 extends DemonsSlayersRoles {
 						owner.closeInventory();
 						return;
 					}
+					getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 					final JigoroV2PZenItsu jigoroz = new JigoroV2PZenItsu(getRole().getPlayer(), zenItsu, getRole().getGamePlayer());
 					gameState.getGamePlayer().get(getRole().getPlayer()).setRole(jigoroz);
 					jigoroz.getEffects().putAll(getRole().getEffects());
