@@ -160,8 +160,10 @@ public class Nakime extends DemonsRoles {
 						LocPlayer locPlayer = new LocPlayer(Main.getInstance().getWorldManager().getNakimeWorld());
 						p.teleport(locPlayer.getRandomPositionRespawn());
 						p.sendMessage("§7Vous avez été téléporté aléatoirement");
-						gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(true);
-						Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(false), 40);
+						if (!gameState.hasRoleNull(p.getUniqueId())) {
+							gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(true);
+							Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> gameState.getGamePlayer().get(p.getUniqueId()).getRole().setInvincible(false), 40);
+						}
 					}
 				}
 			}
