@@ -84,8 +84,9 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
         addPower(new RituelPower(this), true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     private void onDeath(final UHCDeathEvent event) {
+        if (event.isCancelled())return;
         if (event.getRole() == null)return;
         if (event.getRole() instanceof KakuzuV2) {
             this.kakuzuDeath = true;
