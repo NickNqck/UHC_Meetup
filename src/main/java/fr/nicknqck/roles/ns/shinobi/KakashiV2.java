@@ -162,9 +162,22 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                 fastInv.setItem(14, new ItemBuilder(Material.BARRIER)
                         .setName("§cAnnuler")
                         .setLore(targetOfCopy == null ? "§cLa cible n'est pas connectée" : "§cLa cible est§4 "+targetOfCopy.getName()+"§c.")
-                        .toItemStack());
+                        .toItemStack(), event -> {
+                    cancelCopy();
+                    event.getWhoClicked().sendMessage("§7Vous avez§c annulé§7 la copie.");
+                    event.getWhoClicked().closeInventory();
+                });
             }
             fastInv.open(player);
+        }
+        /**
+         * Annule la copie en cours : plus de cible, points remis à 0, barre d'action retirée
+         */
+        private void cancelCopy() {
+            this.coping = false;
+            this.targetOfCopy = null;
+            this.actualPoint = 0;
+            getRole().getGamePlayer().getActionBarManager().removeInActionBar("kakashi.copy");
         }
         private void openTechniqueInventory(@NonNull final Player player) {
             @NonNull final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(27, "§cSharingan§7 ->§a Technique");
