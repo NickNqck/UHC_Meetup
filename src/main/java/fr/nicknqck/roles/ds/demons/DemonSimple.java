@@ -110,6 +110,7 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
                 Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
                     if (!this.gameState.isNightTime()) {
                         player.removePotionEffect(PotionEffectType.WEAKNESS);
+                        this.demonSimple.resistance = false;
                     } else {
                         this.demonSimple.resistance = true;
                     }
