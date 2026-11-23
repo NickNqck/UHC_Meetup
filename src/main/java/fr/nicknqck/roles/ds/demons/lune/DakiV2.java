@@ -175,7 +175,7 @@ public class DakiV2 extends DemonsRoles {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.sendMessage("§7Vous démarrez votre visée avec des§c Obis§7.");
-                new ObisRunnable(this).runTaskTimerAsynchronously(getPlugin(), 0, 1);
+                new ObisRunnable(this).runTaskTimer(getPlugin(), 0, 1);
                 return true;
             }
             return false;
