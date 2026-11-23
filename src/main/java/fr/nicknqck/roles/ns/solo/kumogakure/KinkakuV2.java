@@ -139,7 +139,7 @@ public class KinkakuV2 extends KumogakureRole {
         }
         @EventHandler
         private void onKill(@NonNull final UHCDeathEvent event) {
-            if (event.getGamePlayerKiller() != null) {
+            if (event.getGamePlayerKiller() != null && event.getGamePlayerKiller().getUuid().equals(getRole().getPlayer())) {
                 final GamePlayer gamePlayer = GamePlayer.of(event.getPlayer().getUniqueId());
                 if (gamePlayer != null && gamePlayer.check()) {
                     if (gamePlayer.getRole() instanceof NSRoles) {
