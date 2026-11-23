@@ -210,7 +210,7 @@ public class HokageManager implements Listener {
                         player.sendMessage("§7Vous avez offert votre boost à§c "+target.getDisplayName());
                         return true;
                     } else {
-                        player.sendMessage("§7La personne visé(e) n'a pas de rôle, impossible de la boost");
+                        player.sendMessage("§7La personne visée n'a pas de rôle, impossible de la boost");
                         return false;
                     }
                 } else {
@@ -284,7 +284,7 @@ public class HokageManager implements Listener {
                         "§8 -§c "+gamePlayers.get(2).getPlayerName(),
                         "§8 -§c "+gamePlayers.get(3).getPlayerName(),
                         "",
-                        "§7Dans la liste de joueurs ci-dessus il y a (pas dans cette ordre là) un§a Shinobi§7, une personne n'étant pas un§a Shinobi§7 ainsi que§c 2 joueurs§7 ayant un camp§c aléatoire§7."
+                        "§7Dans la liste de joueurs ci-dessus il y a (pas dans cet ordre-là) un§a Shinobi§7, une personne n'étant pas un§a Shinobi§7 ainsi que§c 2 joueurs§7 ayant un camp§c aléatoire§7."
                 });
             } else {
                 player.sendMessage("§cVos informateurs n'ont rien pu trouver de concluant sur les joueurs encore en vie");

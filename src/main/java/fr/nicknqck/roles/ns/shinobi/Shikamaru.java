@@ -73,7 +73,7 @@ public class Shikamaru extends HShinobiRoles {
         new StunExecutable(this);
         AutomaticDesc desc = new AutomaticDesc(this).setItems(new TripleMap<>(
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Permet d'ouvrir un menu vous permettant de choisir un§c joueur§7 étant à moins de§c 25 blocs§7 (portée augmenter de§c 10 blocs§7 s'il fait§c nuit§7),\n§7Ce joueur ainsi que vous serrez§a stun§7 pendant§c 10 secondes§7.\n\n"
+                "§7Permet d'ouvrir un menu vous permettant de choisir un§c joueur§7 étant à moins de§c 25 blocs§7 (portée augmentée de§c 10 blocs§7 s'il fait§c nuit§7),\n§7Ce joueur ainsi que vous serez§a stun§7 pendant§c 10 secondes§7.\n\n"
                 +"§7Vous et le joueur§a stun§7 pourrez vous faire§c frappez§7 pendant le temp du§a stun§7.\n\n"
                 +"§7Si au moment de choisir le joueur vous faites un§c clic droit§7 vous infligerez au joueur visé§c 1/2❤§7 toutes les§c 2 secondes§7.")}),
                 "§aStun",
@@ -338,7 +338,7 @@ public class Shikamaru extends HShinobiRoles {
                         player.sendMessage("§c" + target.getDisplayName() + "§7 ne vient pas du§a Naruto§2 UHC");
                     }
                 } else {
-                    player.sendMessage("§b"+args[1]+"§c n'est pas connecter");
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté");
                 }
             }
             return false;

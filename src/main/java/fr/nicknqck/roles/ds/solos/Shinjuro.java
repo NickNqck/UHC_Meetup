@@ -322,9 +322,9 @@ public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
                         || eye.getBlock().getType().name().contains("LAVA") || eye.getBlock().getType().name().contains("FIRE")) {
                     this.regenTimeLeft--;
                     if (!this.gamePlayer.getActionBarManager().containsKey("shinjuro.healtime")) {
-                        gamePlayer.getActionBarManager().addToActionBar("shinjuro.healtime", "§bTemp avant§d régénération§b:§c "+this.regenTimeLeft+"s");
+                        gamePlayer.getActionBarManager().addToActionBar("shinjuro.healtime", "§bTemps avant§d régénération§b:§c "+this.regenTimeLeft+"s");
                     } else {
-                        this.gamePlayer.getActionBarManager().updateActionBar("shinjuro.healtime", "§bTemp avant§d régénération§b:§c "+this.regenTimeLeft+"s");
+                        this.gamePlayer.getActionBarManager().updateActionBar("shinjuro.healtime", "§bTemps avant§d régénération§b:§c "+this.regenTimeLeft+"s");
                     }
                 } else {
                     this.gamePlayer.getActionBarManager().removeInActionBar("shinjuro.healtime");

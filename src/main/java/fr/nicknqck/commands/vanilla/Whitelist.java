@@ -53,7 +53,7 @@ public class Whitelist implements CommandExecutor, Listener {
 					}
 					if (args[0].equalsIgnoreCase("reset")) {
 						Whitelisted.clear();
-						sender.sendMessage("§7La whitelist à bien été réinitialisé");
+						sender.sendMessage("§7La whitelist a bien été réinitialisée");
 						return true;
 					}
 					if (args[0].equalsIgnoreCase("force")) {
@@ -98,9 +98,9 @@ public class Whitelist implements CommandExecutor, Listener {
 				"",
 				"§7 -§6 /wl remove <joueur>§7: Permet de retirer un joueur de la whitelist.",
 				"",
-				"§7 -§6 /wl reset§7: Permet de réinitialisé la whitelist.",
+				"§7 -§6 /wl reset§7: Permet de réinitialiser la whitelist.",
 				"",
-				"§7 -§6 /wl force§7: Permet d'éjecté du serveur tout joueur n'étant pas dans la whitelist."
+				"§7 -§6 /wl force§7: Permet d'éjecter du serveur tout joueur n'étant pas dans la whitelist."
 		});
 		return true;
 	}
@@ -111,7 +111,7 @@ public class Whitelist implements CommandExecutor, Listener {
 	//	Player player = Bukkit.getPlayer(e.getUniqueId());
 		if (e.getName().contains(" ")) {
 			e.setLoginResult(Result.KICK_BANNED);
-			e.setKickMessage("§cPseudo incorect désolé !");
+			e.setKickMessage("§cPseudo incorrect, désolé !");
 		}
 		if (!Whitelisted.contains(e.getUniqueId()) && wlActivated && !ChatRank.isHost(e.getUniqueId())) {
 			e.setLoginResult(Result.KICK_WHITELIST);

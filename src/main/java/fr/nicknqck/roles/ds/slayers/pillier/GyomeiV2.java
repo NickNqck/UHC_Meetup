@@ -168,7 +168,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                     this.nameTarget = target.getDisplayName();
                     this.gamePlayer = gamePlayer;
                     this.timeLeft = 5;
-                    this.gamePlayer.getActionBarManager().addToActionBar("gyomei.repousser", "§bTemp avant dégât contre§c "+this.nameTarget+"§b:§c "+timeLeft+"s");
+                    this.gamePlayer.getActionBarManager().addToActionBar("gyomei.repousser", "§bTemps avant dégât contre§c "+this.nameTarget+"§b:§c "+timeLeft+"s");
                     final Vector direction = target.getLocation().getDirection();
                     direction.multiply(-2);
                     target.setVelocity(direction.normalize().multiply(8).setY(0.8));
@@ -183,7 +183,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                         cancel();
                         return;
                     }
-                    this.gamePlayer.getActionBarManager().updateActionBar("gyomei.repousser", "§bTemp avant dégât contre§c "+this.nameTarget+"§b:§c "+timeLeft+"s");
+                    this.gamePlayer.getActionBarManager().updateActionBar("gyomei.repousser", "§bTemps avant dégât contre§c "+this.nameTarget+"§b:§c "+timeLeft+"s");
                     if (this.timeLeft <= 0) {
                         this.gamePlayer.getActionBarManager().removeInActionBar("gyomei.repousser");
                         final Player target = Bukkit.getPlayer(uuidTarget);

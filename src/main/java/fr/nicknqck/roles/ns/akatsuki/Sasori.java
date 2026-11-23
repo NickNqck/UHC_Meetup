@@ -102,7 +102,7 @@ public class Sasori extends AkatsukiRoles {
 
         public MarionetisationCommand(@NonNull RoleBase role) {
             super("/ns marionette", "marionette", null, role, CommandType.NS,
-                    "§7Lorsque vous effectuer cette commande vous§a activer§7/§cdésactiver§7 la \"§cMarionetisation§7\".",
+                    "§7Lorsque vous effectuez cette commande vous§a activez§7/§cdésactiver§7 la \"§cMarionetisation§7\".",
                     "",
                     "§7Si la§c Marionetisation§7 est§a activée§7, lorsqu'un joueur§c meurt§7 à moins de§c 20 blocs§7 de§c vous§7,",
                     "§7vous pourrez§c cliquer§7 sur un message dans votre§c chat§7 pour le§a réanimer§7 dans votre§c camp§7.",
@@ -124,7 +124,7 @@ public class Sasori extends AkatsukiRoles {
                             final GamePlayer gameTarget = GamePlayer.of(uuid);
                             if (gameTarget != null && gameTarget.getRole() != null && !resurrectedPlayers.contains(uuid)) {
                                 if (!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive()) {
-                                    player.sendMessage("§cLes paramètres de la partie vous empêche d'utiliser ce pouvoir.");
+                                    player.sendMessage("§cLes paramètres de la partie vous empêchent d'utiliser ce pouvoir.");
                                     return false;
                                 }
                                 if (!gameTarget.isAlive()){
@@ -147,7 +147,7 @@ public class Sasori extends AkatsukiRoles {
             }
             if (!activate) {
                 if (!Main.getInstance().getGameConfig().getNarutoConfig().isSasoriCanRevive()) {
-                    player.sendMessage("§cLes paramètres de la partie vous empêche d'utiliser ce pouvoir.");
+                    player.sendMessage("§cLes paramètres de la partie vous empêchent d'utiliser ce pouvoir.");
                     return false;
                 }
                 activate = true;
@@ -163,7 +163,7 @@ public class Sasori extends AkatsukiRoles {
             RoleBase targetRole = gameState.getGamePlayer().get(target.getUniqueId()).getRole();
             /// Envoie des messages et du Title
             owner.sendMessage("§7Votre§c art§7 a touché§c "+target.getName()+"§7.");
-            target.sendMessage("§7Vous avez été§c réanimer§7 par la§c Marionetisation§7 de§c Sasori§7.");
+            target.sendMessage("§7Vous avez été§c réanimé§7 par la§c Marionetisation§7 de§c Sasori§7.");
             target.resetTitle();
             target.sendTitle("§cMarionetisation !", "Vous êtes maintenant dans le camp "+this.getRole().getTeam().getName());
 

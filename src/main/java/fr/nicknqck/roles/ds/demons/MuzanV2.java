@@ -256,7 +256,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                     this.roleInfecteur = roleInfecteur;
                     this.roleTarget = roleTarget;
                     this.timeRemaining = Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime();
-                    roleInfecteur.getGamePlayer().getActionBarManager().addToActionBar("infection.timer", "§bTemp avant§c infection§b: "+ this.timeRemaining);
+                    roleInfecteur.getGamePlayer().getActionBarManager().addToActionBar("infection.timer", "§bTemps avant§c infection§b: "+ this.timeRemaining);
                     runTaskTimerAsynchronously(Main.getInstance(), 0, 20);
                 }
 
@@ -266,7 +266,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                         cancel();
                         return;
                     }
-                    this.roleInfecteur.getGamePlayer().getActionBarManager().updateActionBar("infection.timer", "§bTemp avant§c infection§b: "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
+                    this.roleInfecteur.getGamePlayer().getActionBarManager().updateActionBar("infection.timer", "§bTemps avant§c infection§b: "+StringUtils.secondsTowardsBeautiful(this.timeRemaining));
                     if (timeRemaining <= 0) {
                         final Player target = Bukkit.getPlayer(roleTarget.getPlayer());
                         if (target == null)return;

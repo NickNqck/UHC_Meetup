@@ -157,7 +157,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
             } else {
                 fastInv.setItem(14, new ItemBuilder(Material.BARRIER)
                         .setName("§cAnnuler")
-                        .setLore(targetOfCopy == null ? "§cLa cible n'est pas connecter" : "§cLa cible est§4 "+targetOfCopy.getName()+"§c.")
+                        .setLore(targetOfCopy == null ? "§cLa cible n'est pas connectée" : "§cLa cible est§4 "+targetOfCopy.getName()+"§c.")
                         .toItemStack());
             }
             fastInv.open(player);

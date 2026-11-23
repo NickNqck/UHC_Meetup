@@ -201,7 +201,7 @@ public class Gyokko extends DemonsRoles implements Listener {
 					player.sendMessage("§cVous n'avez pas assez de vie pour utiliser ce pouvoir");
 					return false;
 				}
-				getRole().getGamePlayer().getActionBarManager().addToActionBar("gyokko.forme", "§bTemp avant perte de§c coeur§b: §c"+timeLeft+"s");
+				getRole().getGamePlayer().getActionBarManager().addToActionBar("gyokko.forme", "§bTemps avant perte de§c coeur§b: §c"+timeLeft+"s");
 				this.activated = true;
 				player.sendMessage("Activation de votre§c Forme Démoniaque");
 				if (player.getInventory().getChestplate() != null) {

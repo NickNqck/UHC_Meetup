@@ -335,7 +335,7 @@ public class GameListener implements Listener {
 					if (gameState.getInGamePlayers().get(0) != null) {
 						UUID uuid = gameState.getInGamePlayers().get(0);
 						Player winer = Bukkit.getPlayer(uuid);
-						String win = winer == null ? "§cDéconnecter" : winer.getName();
+						String win = winer == null ? "§cDéconnecté" : winer.getName();
 						String Vainqueurs = "Vainqueur:§l "+team.getColor()+win;
 						Vainqueurs += "\n§fQui était "+team.getColor()+gameState.getGamePlayer().get(uuid).getRole().getRoles().getItem().getItemMeta().getDisplayName()+"§f avec§6 "+gameState.getGamePlayer().get(uuid).getKillAmounts()+"§f kill(s)";
 						title = "Victoire de: "+team.getColor()+gameState.getGamePlayer().get(uuid).getRole().getRoles().getItem().getItemMeta().getDisplayName();

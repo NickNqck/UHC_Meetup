@@ -113,10 +113,10 @@ public class KatsuyuManager implements Listener {
     }
     public String[] getPowerDescription(){
         return new String[] {
-                "§7Lorsque vous mangez une§e pomme d'or§7 la§a vie§7 qui§c n'est pas§d régénérer§7",
+                "§7Lorsque vous mangez une§e pomme d'or§7 la§a vie§7 qui§c n'est pas§d régénérée§7",
                 "§7est§c stockée§7 à la place.",
                 "",
-                "§7Si vous faites un§f clique§7 avec§d Katsuyu§7, vous vous§d régénérez§7 le plus possible",
+                "§7Si vous faites un§f clic§7 avec§d Katsuyu§7, vous vous§d régénérez§7 le plus possible",
                 "§7en fonction de la§a vie stockée§7."
         };
     }

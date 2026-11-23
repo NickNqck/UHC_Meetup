@@ -187,7 +187,7 @@ public class TomiokaV2 extends PilierRoles {
                     Bukkit.getScheduler().runTask(getPlugin(), () -> {
                         EventUtils.unregisterEvents(this);
                         int random = Main.RANDOM.nextInt(101);
-                        getRole().getGamePlayer().sendMessage("§7C'est étrange, on dirait que n'y§a Sabito§7, n'y§a Makomo§7, n'y§a Tanjiro§7 ne sont présant dans la partie");
+                        getRole().getGamePlayer().sendMessage("§7C'est étrange, on dirait que ni§a Sabito§7, ni§a Makomo§7, ni§a Tanjiro§7 ne sont présents dans la partie");
                         String roleName = "";
                         String effectName = "";
                         if (random <= 33) {
@@ -219,7 +219,7 @@ public class TomiokaV2 extends PilierRoles {
                             effectName = "§bSpeed II";
                         }
                         if (random == 100){
-                            getRole().getGamePlayer().sendMessage("§7L'absence de§a Tanjiro§7,§a Makomo§7 et§a Sabito§7 sont trop lourd sur vos épaule, pour vous aider à ne pas faillir vous n'allez gagner aucun des effets que vous auriez dû avoir, mais plutôt§a +§c3❤ permanents");
+                            getRole().getGamePlayer().sendMessage("§7L'absence de§a Tanjiro§7,§a Makomo§7 et§a Sabito§7 est trop lourde pour vos épaules, pour vous aider à ne pas faillir vous n'allez gagner aucun des effets que vous auriez dû avoir, mais plutôt§a +§c3❤ permanents");
                             getRole().setMaxHealth(getRole().getMaxHealth()+6.0);
                             final Player owner = Bukkit.getPlayer(getRole().getPlayer());
                             if (owner != null) {

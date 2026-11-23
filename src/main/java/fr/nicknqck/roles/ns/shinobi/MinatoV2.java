@@ -153,10 +153,10 @@ public class MinatoV2 extends HShinobiRoles {
                     .hideEnchantAttributes(), role,
                     "§7Lorsque vous lancez une§c flèche§7 avec l'§aArc Hiraishin§7, elle devient une§c balise§7.",
                     "",
-                    "§7Vous pouvez§c vous téléportez§7 à la dernière§a balise§7 poser en faisant un§f shift + clic gauche§7,",
+                    "§7Vous pouvez§c vous téléporter§7 à la dernière§a balise§7 posée en faisant un§f shift + clic gauche§7,",
                     "§7vous pouvez également téléporter un autre joueur en le frappant.",
                     "",
-                    "§7A chaque fois que quelqu'un se§a téléporte§7 à votre§a balise§7, elle sera supprimé.",
+                    "§7A chaque fois que quelqu'un se§a téléporte§7 à votre§a balise§7, elle sera supprimée.",
                     "§7Si vous utilisez votre§a Hiraishin§7 pour vous§a téléportez§c vous même§7, votre§c cooldown§7 s'écoulera§c 2x plus vite§7.",
                     "§cAucun joueur ne peut prendre de dégâts de cette arc."
             );
@@ -188,7 +188,7 @@ public class MinatoV2 extends HShinobiRoles {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (((PlayerInteractEvent) map.get("event")).getAction().name().contains("LEFT")){
                     if (!player.isSneaking()) {
-                        player.sendMessage("§7Pour vous téléportez à votre§a Kunai§7 il vous faudra être§c accroupi§7.");
+                        player.sendMessage("§7Pour vous téléporter à votre§a Kunai§7 il vous faudra être§c accroupi§7.");
                         return false;
                     } else {
                         if (this.aroundArrowRunnable != null) {

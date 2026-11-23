@@ -50,10 +50,10 @@ public class HansiV2 extends SoldatsRoles {
         return AutomaticDesc.createAutomaticDesc(this)
                 .addCustomLines(
                         new String[]{
-                                "§7Toute les§c 5 minutes§7, vous recevrez une§c lance explosive§7.",
+                                "§7Toutes les§c 5 minutes§7, vous recevrez une§c lance explosive§7.",
                                 "",
-                                "§7Lorsqu'un joueur est toucher par une§c lance explosive§7 il §7subirat des§c dégâts",
-                                "§7plus ou moins conséquant en fonction de s'il est§c transformer §7ou§c non§7."
+                                "§7Lorsqu'un joueur est touché par une§c lance explosive§7 il §7subira des§c dégâts",
+                                "§7plus ou moins conséquents en fonction de s'il est§c transformé §7ou§c non§7."
                         }
                 )
                 .getText();

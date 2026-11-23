@@ -81,7 +81,7 @@ public class Sai extends ShinobiRoles implements Listener {
 
     @Override
     public @NonNull TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.unlocked ? "" : "§7Si vous parvenez à tué§5 Sasuke§7 ou que§e Danzo§7 réussi l'un de§c ses objectifs§7,§e il§7 obtiendra l'accès à la commande§c /ns sai§7, ce qui lui permettra de vous faire rejoindre son camp").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.unlocked ? "" : "§7Si vous parvenez à tuer§5 Sasuke§7 ou que§e Danzo§7 réussit l'un de§c ses objectifs§7,§e il§7 obtiendra l'accès à la commande§c /ns sai§7, ce qui lui permettra de vous faire rejoindre son camp").getText();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class Sai extends ShinobiRoles implements Listener {
                 for (@NonNull final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
                     if (!gamePlayer.check())continue;
                     if (gamePlayer.getRole() instanceof DanzoV2) {
-                        gamePlayer.sendMessage("§aSaï§7 (§a"+getGamePlayer().getPlayerName()+"§7) a enfin accompli sa mission, vous l'avez peut être§c manipuler§7 mais vous pourriez bien§c sacrifier 2❤ permanents§7 pour§a gagner avec lui§7.");
+                        gamePlayer.sendMessage("§aSaï§7 (§a"+getGamePlayer().getPlayerName()+"§7) a enfin accompli sa mission, vous l'avez peut-être§c manipulé§7 mais vous pourriez bien§c sacrifier 2❤ permanents§7 pour§a gagner avec lui§7.");
                     }
                 }
             }
@@ -152,7 +152,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     for (@NonNull PotionEffect potionEffect : danzoEffects.keySet()) {
                         if (potionEffect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE) && danzoEffects.get(potionEffect).equals(EffectWhen.PERMANENT)) {
                             this.unlocked = true;
-                            gamePlayer.getRole().getGamePlayer().sendMessage("§7En tuant ces maudits démons du clan§4§l Uchiwa§r§7, vous vous êtes souvenue que§a Sai§7 existe, faites la commande§6 /ns sai§7 pour le rallier à votre cause.");
+                            gamePlayer.getRole().getGamePlayer().sendMessage("§7En tuant ces maudits démons du clan§4§l Uchiwa§r§7, vous vous êtes souvenu que§a Sai§7 existe, faites la commande§6 /ns sai§7 pour le rallier à votre cause.");
                             break;
                         }
                     }
@@ -173,7 +173,7 @@ public class Sai extends ShinobiRoles implements Listener {
 
         public ToileAuMonstreFantomatique(@NonNull RoleBase role) {
             super("§aToile au monstres fantomatiques", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§aToile au monstres fantomatiques"), role,
-                    "§fClic gauche§7: Permet d'utiliser le§c pouvoir séléctionner§7.",
+                    "§fClic gauche§7: Permet d'utiliser le§c pouvoir sélectionné§7.",
                     "",
                     "§fClic droit§7: Ouvre un inventaire, avec à l'intérieur les§c pouvoirs§7 ci-dessous.",
                     "",

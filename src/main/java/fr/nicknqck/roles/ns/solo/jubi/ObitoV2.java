@@ -210,7 +210,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
             if (!event.getPlayer().getWorld().getName().equals("arena") && !event.getPlayer().getWorld().getName().equalsIgnoreCase("kamui"))return;
             if (!this.getRole().getPowers().contains(this))return;
             if (event.getRole() instanceof KakashiV2) {
-                getRole().getGamePlayer().sendMessage("§aKakashi§c est mort ! C'est sûrement l'occasion pour vous de récupérer §nvotre§4 Sharingan§c, avec un peu de chance vous pourriez obtenir un Susanô voir même diminuer vos cooldowns...",
+                getRole().getGamePlayer().sendMessage("§aKakashi§c est mort ! C'est sûrement l'occasion pour vous de récupérer §nvotre§4 Sharingan§c, avec un peu de chance vous pourriez obtenir un Susanô voire même diminuer vos cooldowns...",
                         " ",
                         "§cx: "+event.getPlayer().getLocation().getBlockX(),
                         " ",

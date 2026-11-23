@@ -155,7 +155,7 @@ public class ObanaiV2 extends PilierRoles implements Listener{
             super("§6/ds drop", "drop", new Cooldown(60*10), role, CommandType.DS, "§7Vous permet de lâcher votre serpent pendant§c 5 minutes§7,",
                     "§7A chaque mort, le rôle du tueur ainsi que 2 rôles aléatoires de la partie seront enregistrés",
                     "",
-                    "§7Au bout des§c 5 minutes§7 le§2 serpent§7 reviens et vous donnera§c TOUTE§7 les informations accumulé.");
+                    "§7Au bout des§c 5 minutes§7 le§2 serpent§7 revient et vous donnera§c TOUTES§7 les informations accumulées.");
             this.roleBaseMap = new HashMap<>();
         }
 

@@ -287,7 +287,7 @@ public class AdminCommands implements CommandExecutor{
 								}
 							} else {
 								gameState.updateGameCanLaunch();
-								sender.sendMessage("Suppression total de tous les rôles dans la partie fini");
+								sender.sendMessage("Suppression totale de tous les rôles dans la partie finie");
 								cancel();
 							}
 						}
@@ -349,7 +349,7 @@ public class AdminCommands implements CommandExecutor{
 							if (args[0].equalsIgnoreCase("preview")) {
 								World world = Main.getInstance().getWorldManager().getGameWorld();
 								if (world == null) {
-									player.sendMessage("§7Le monde de jeu n'a pas été crée");
+									player.sendMessage("§7Le monde de jeu n'a pas été créé");
                                 } else {
 									if (player.getWorld().equals(world)) {
 										player.sendMessage("§7Vous quittez la§c preview§7 de§c arena");
@@ -413,7 +413,7 @@ public class AdminCommands implements CommandExecutor{
 						if (ChatRank.isHost(sender)) {
 							Player p = (Player) sender;
 							p.getInventory().addItem(Items.getLamedenichirin());
-							Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+sender.getName());
+							Bukkit.broadcastMessage(sender.getName()+" a give une lame de nichirin au joueur nommé: "+sender.getName());
                         } else {
 							sender.sendMessage("Il faut être Host ou op pour faire cette commande");
                         }
@@ -498,7 +498,7 @@ public class AdminCommands implements CommandExecutor{
 										if (args[0].equalsIgnoreCase(team.name())){
 											if (!gameState.getGamePlayer().get(p.getUniqueId()).getRole().getTeam().equals(team)){
 												gameState.getGamePlayer().get(p.getUniqueId()).getRole().setTeam(team);
-												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenue"+team.getColor()+" "+team.name());
+												sender.sendMessage("Le joueur§6 "+p.getName()+"§r est bel et bien devenu"+team.getColor()+" "+team.name());
 												p.sendMessage("Vous appartenez maintenant au camp des"+team.getColor()+" "+team.name());
 												GameListener.SendToEveryone("Un joueur a rejoint le camp des "+team.getColor()+team.name()+"§r par un Administrateur/Host");
 												return true;
@@ -581,7 +581,7 @@ public class AdminCommands implements CommandExecutor{
 									sender.sendMessage("Veuillez indiquer un pseudo correct");
                                 } else {
 									p.getInventory().addItem(Items.getLamedenichirin());
-									Bukkit.broadcastMessage(sender.getName()+" à give une lame de nichirin au joueur nommé: "+p.getName());
+									Bukkit.broadcastMessage(sender.getName()+" a give une lame de nichirin au joueur nommé: "+p.getName());
 									sender.sendMessage("Vous avez donné une Lame de nichirin à "+p.getDisplayName());
                                 }
                             } else {

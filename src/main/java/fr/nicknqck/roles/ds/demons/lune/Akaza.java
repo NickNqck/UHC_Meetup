@@ -55,10 +55,10 @@ public class Akaza extends DemonsRoles implements Listener {
 		getKnowedRoles().add(MuzanV2.class);
 		AutomaticDesc desc = new AutomaticDesc(this);
 		desc.addEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
-		desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez une§c régénération§7 naturel à hauteur de§c 1/2"+ AllDesc.coeur+"§7 toutes les§c 20 secondes§7.")}),
+		desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous possédez une§c régénération§7 naturelle à hauteur de§c 1/2"+ AllDesc.coeur+"§7 toutes les§c 20 secondes§7.")}),
 				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Toutes les§c 5 minutes§7 vous êtes informé du nombre de§c piliers§7 que vous avez croisés ces§c 5 dernières minutes§7.")}),
-				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Tout les§c 50 coups§7 infliger vous gagnerez§c 30 secondes§7 de l'effet§c Résistance I§7.")}),
-				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque mort d'une§c lune supérieur§7 les coups requis pour obtenir l'effet§c Résistance I§7 réduise de§c 5§7.")}));
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Tous les§c 50 coups§7 infligés, vous gagnerez§c 30 secondes§7 de l'effet§c Résistance I§7.")}),
+				new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque mort d'une§c lune supérieure§7, les coups requis pour obtenir l'effet§c Résistance I§7 sont réduits de§c 5§7.")}));
 		this.desc = desc.getText();
 		givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 0, false, false), EffectWhen.PERMANENT);
 		this.runnable = new AkazaPilierRunnable(this);

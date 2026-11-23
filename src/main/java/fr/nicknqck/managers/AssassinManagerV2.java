@@ -124,7 +124,7 @@ public class AssassinManagerV2 implements Listener {
                     owner.resetTitle();
                     owner.sendTitle("§c§lVous êtes l'§4§lAssassin", "§cVous obtenez donc 2❤ supplémentaires !");
                 }
-                this.futureAssassin.sendMessage("§cVous êtes l'§4assassin§c vous possédez désormais§c 2❤ supplémentaire de manière permanente, faite attention au rôle de§a Tanjiro§c qui obtiendra un bonus s'il vous§4 tue§c.");
+                this.futureAssassin.sendMessage("§cVous êtes l'§4assassin§c vous possédez désormais§c 2❤ supplémentaires de manière permanente, faites attention au rôle de§a Tanjiro§c qui obtiendra un bonus s'il vous§4 tue§c.");
                 Bukkit.getPluginManager().callEvent(new ProcAssassinEvent(this.gameState, this.futureAssassin, role));
                 cancel();
                 return;
