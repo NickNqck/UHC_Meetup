@@ -185,6 +185,8 @@ public class ObanaiV2 extends PilierRoles implements Listener{
 
                     }
                 }
+                // Chaque rapport ne donne que les morts survenues pendant ce lâcher du serpent
+                this.roleBaseMap.clear();
                 return;
             }
             this.timePassed++;
