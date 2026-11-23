@@ -185,6 +185,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
             if (this.uuidTarget == null)return;
             final Player target = Bukkit.getPlayer(this.uuidTarget);
             if (target == null)return;
+            if (!this.location.getWorld().equals(event.getEntity().getWorld()))return;
             if (this.location.distance(event.getEntity().getLocation()) > 2.0) {
                 event.getEntity().sendMessage("§7Trop loin");
                 return;
