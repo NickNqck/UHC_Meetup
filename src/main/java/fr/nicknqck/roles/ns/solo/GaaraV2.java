@@ -355,6 +355,8 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
         private static class ArmurePower extends Power {
 
             private final DefensePower defensePower;
+            // Sable réellement payé à l'activation (25 ou 25/2 sous Shukaku), rendu à la désactivation
+            private int paidSand = 0;
 
             public ArmurePower(@NonNull DefensePower defensePower) {
                 super("Armure de sable", null, defensePower.getRole());
@@ -369,10 +371,12 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                 if (this.defensePower.armure){
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, false, false), true);
                     player.sendMessage("§7Vous avez§a activé§7 votre§e "+getName());
-                    this.defensePower.gaaraV2.reserve-=25/this.defensePower.gaaraV2.divisor;
+                    this.paidSand = 25/this.defensePower.gaaraV2.divisor;
+                    this.defensePower.gaaraV2.reserve-=this.paidSand;
                 } else {
                     player.sendMessage("§7Vous avez§c désactivé§7 votre§e "+getName());
-                    this.defensePower.gaaraV2.reserve+=25;
+                    this.defensePower.gaaraV2.reserve+=this.paidSand;
+                    this.paidSand = 0;
                 }
                 return true;
             }
