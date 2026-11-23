@@ -43,7 +43,7 @@ public class Lame implements Listener{
 							lames.removeAll(role.getCantHave());
 							Collections.shuffle(lames, Main.RANDOM);
 							toGett = lames.get(0);
-							toGett.getConsumer().accept(e);
+							if (toGett != Lames.Coeur) toGett.getConsumer().accept(e);
 							giveLame(role, toGett);
 							e.getPlayer().setItemInHand(new ItemStack(Material.AIR));
 						}
