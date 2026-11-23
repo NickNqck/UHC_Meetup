@@ -28,7 +28,7 @@ public class EffectsGiver implements Listener {
     private void onKill(@NonNull final UHCDeathEvent event) {
         if (event.getGamePlayerKiller() != null) {
             final Player killer = Bukkit.getPlayer(event.getGamePlayerKiller().getUuid());
-            if (killer != null) {
+            if (killer != null && event.getGamePlayerKiller().getRole() != null) {
                 for (PotionEffect potionEffect : event.getGamePlayerKiller().getRole().getEffects().keySet()) {
                     if (event.getGamePlayerKiller().getRole().getEffects().get(potionEffect).equals(EffectWhen.AT_KILL)) {
                         killer.addPotionEffect(potionEffect, true);
