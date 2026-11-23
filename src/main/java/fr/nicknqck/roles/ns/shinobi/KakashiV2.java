@@ -157,6 +157,9 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                             event1.getWhoClicked().closeInventory();
                                 });
                     }
+                    if (event.getWhoClicked() instanceof Player) {
+                        inv.open((Player) event.getWhoClicked());
+                    }
                 });
             } else {
                 fastInv.setItem(14, new ItemBuilder(Material.BARRIER)
