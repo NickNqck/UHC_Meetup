@@ -226,11 +226,10 @@ public class InfoManager {
 
         try (Reader reader = new FileReader(file)) {
             PlayerInfo info = gson.fromJson(reader, PlayerInfo.class);
-            if (info != null) {
-                data.put(uuid, info);
-            }
-        } catch (IOException e) {
+            data.put(uuid, info != null ? info : new PlayerInfo(uuid));
+        } catch (IOException | JsonParseException e) {
             e.printStackTrace();
+            data.putIfAbsent(uuid, new PlayerInfo(uuid));
         }
     }
 
