@@ -48,7 +48,7 @@ public class DemonKingEvent extends Event {
                             newRole.setGamePlayer(gamePlayer);
                             gamePlayer.setRole(newRole);
                             Main.getInstance().getGetterList().getDemonList(owner);
-                            if (role.getLames().equals(Lames.Coeur)) {
+                            if (Lames.Coeur.equals(role.getLames())) {
                                 newRole.setMaxHealth(24.0);
                             } else {
                                 newRole.setMaxHealth(20.0);
