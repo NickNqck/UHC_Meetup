@@ -90,7 +90,7 @@ public class TomiokaV2 extends PilierRoles {
         public FindOthersPower(@NonNull RoleBase role) {
             super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", null, role,
                     "§7Permet de savoir toutes les "+(Main.getInstance().getGameConfig().isMinage() ? "§c10 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autour de vous ou non");
-            new FinderRunnable(role.getGameState(), this);
+            new FinderRunnable(role.getGameState(), this).runTaskTimer(Main.getInstance(), 20, 20);
         }
 
         @Override
@@ -128,7 +128,8 @@ public class TomiokaV2 extends PilierRoles {
                         return;
                     }
                     Player owner = Bukkit.getPlayer(gamePlayer.getUuid());
-                    if (owner != null) {
+                    // checkUse seulement au moment de la détection : le passif reste bloquable (PowerActivateEvent)
+                    if (owner != null && this.power.checkUse(owner, new HashMap<>())) {
                         boolean isPresent = false;
                         for (Player p : Loc.getNearbyPlayersExcept(owner, 20)) {
                             if (!gameState.hasRoleNull(p.getUniqueId())) {
@@ -149,10 +150,6 @@ public class TomiokaV2 extends PilierRoles {
                         }
                     }
                     actualTime = maxTime;
-                }
-                final Player owner = Bukkit.getPlayer(this.power.getRole().getPlayer());
-                if (owner != null) {
-                    if (this.power.checkUse(owner, new HashMap<>()))return;
                 }
                 actualTime--;
             }
