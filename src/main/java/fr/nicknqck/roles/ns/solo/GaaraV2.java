@@ -124,7 +124,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
 
         public ShukakuPower(@NonNull GaaraV2 role) {
             super("Shukaku", new Cooldown(60*20), new ItemBuilder(Material.INK_SACK).setDurability(11).setName("§eShukaku"), role,
-                    "§7Pendant§c 5 minutes§7, vous donne l'effet§c Force I§7, également, vos technique utiliseront§c 2x moins§7 de§e sable§7. (1x/20m)");
+                    "§7Pendant§c 5 minutes§7, vous donne l'effet§c Force I§7, également, vos techniques utiliseront§c 2x moins§7 de§e sable§7. (1x/20m)");
             this.gaaraV2 = role;
             EventUtils.registerRoleEvent(this);
         }
@@ -165,14 +165,14 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
 
         public DefensePower(@NonNull GaaraV2 role) {
             super("Defense", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§eDéfense"), role,
-                    "§7Ouvre un menu permettant d'équiper l'un des pouvoirs suivant: ",
+                    "§7Ouvre un menu permettant d'équiper l'un des pouvoirs suivants: ",
                     "",
-                    "§8 -§e Suspension du désert§7: Vous permet de vous§a envolez§7 pendant§c 20 secondes§7, ",
+                    "§8 -§e Suspension du désert§7: Vous permet de vous§a envoler§7 pendant§c 20 secondes§7, ",
                             "§7si vous subissez des dégâts pendant le§a vol§7 vous arrêterez de voler. (Coût:§e 96 sables§7)",
                     "",
                     "§8 -§e Armure de sable§7: Vous permet d'activer un passif de§9 Résistance II§7 vous coûtant§c 5 sables§7 à chaque coup reçu. (Coût:§e 25 sables§7)",
                     "",
-                    "§7Pour ouvrir le menu il vous faudra faire§c clic droit§7 et pour activer le pouvoir sélectionner il faudra faire un§a clic gauche");
+                    "§7Pour ouvrir le menu il vous faudra faire§c clic droit§7 et pour activer le pouvoir sélectionné il faudra faire un§a clic gauche");
             this.gaaraV2 = role;
             this.suspensionPower = new SuspensionPower(role, this);
             this.armurePower = new ArmurePower(this);
@@ -287,9 +287,9 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                 getShowCdRunnable().setCustomTexte("§cAucun pouvoir n'a été sélectionné");
             } else {
                 if (this.defense.equals(Defense.ARMURE)) {
-                    getShowCdRunnable().setCustomTexte("§eArmure de sable§7 est actuellement "+(this.armure ? "§aactivé" : "§cdésactivé"));
+                    getShowCdRunnable().setCustomTexte("§eArmure de sable§7 est actuellement "+(this.armure ? "§aactivée" : "§cdésactivée"));
                 } else if (this.defense.equals(Defense.SUSPENSION)) {
-                    getShowCdRunnable().setCustomTexte("§eSuspension du désert§7 est équiper");
+                    getShowCdRunnable().setCustomTexte("§eSuspension du désert§7 est équipée");
                 }
             }
         }
@@ -392,7 +392,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
 
         public AttackPower(@NonNull GaaraV2 role) {
             super("Attaque", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§eAttaque"), role,
-                    "§7Ouvre un menu permettant d'équiper l'un des pouvoirs suivant: ",
+                    "§7Ouvre un menu permettant d'équiper l'un des pouvoirs suivants: ",
                     "",
                     "§8 -§e Tsunami de sable§7: Crée une§e vague de sable§7 devant vous propulsant les joueurs touchés et leurs infligeant§c 1❤§7 de§c dégâts§7. (Coût:§e 30 sables§7)",
                     "",
@@ -400,7 +400,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
                     "",
                     "§8 -§cLance§7: Fabrique une épée en diamant enchantée§c tranchant 4§7 ayant§c 30 durabilité§7. (Coût§7:§e 64 sables§7)",
                     "",
-                    "§7Pour ouvrir le menu il vous faudra faire§c clic droit§7 et pour activer le pouvoir sélectionner il faudra faire un§a clic gauche");
+                    "§7Pour ouvrir le menu il vous faudra faire§c clic droit§7 et pour activer le pouvoir sélectionné il faudra faire un§a clic gauche");
             this.gaaraV2 = role;
             this.tsunamiPower = new TsunamiPower(this);
             this.sarcophagePower = new SarcophagePower(this);
