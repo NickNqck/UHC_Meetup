@@ -17,6 +17,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -48,8 +49,9 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
         public EdoRegister(EdoOrochimaruRoles roles) {
             this.role = roles;
         }
-        @EventHandler
+        @EventHandler(priority = EventPriority.MONITOR)
         private void onUHCKill(@NonNull final UHCDeathEvent event){
+            if (event.isCancelled()) return;
             if (event.getGamePlayerKiller() != null) {
                 if (event.getGamePlayerKiller().getUuid().equals(this.role.getPlayer())) {
                     this.role.killLocation.put(event.getPlayer().getUniqueId(), event.getPlayer().getLocation());
