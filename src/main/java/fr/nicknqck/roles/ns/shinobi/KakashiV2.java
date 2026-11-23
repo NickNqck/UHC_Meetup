@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.ns.shinobi;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.InfoType;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.power.PowerTakeInfoEvent;
@@ -66,6 +67,9 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
     @Override
     public void RoleGiven(GameState gameState) {
         this.kamuiPower = new KamuiPower(this);
+        // La map des mondes est vidée en fin de partie : on réenregistre le monde Kamui,
+        // avec l'instance du KamuiPower (partagée avec Obito si elle était déjà dans la map)
+        Main.getInstance().getRoleWorldManager().addWorldManaged(this.kamuiPower.getKamuiDimension());
         addPower(this.kamuiPower, true);
         addPower(new SharinganPower(this), true);
         addPower(new YameruPower(this));
