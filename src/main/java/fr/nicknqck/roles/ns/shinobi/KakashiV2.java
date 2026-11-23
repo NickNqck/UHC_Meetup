@@ -4,6 +4,7 @@ import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.InfoType;
 import fr.nicknqck.enums.Roles;
+import fr.nicknqck.events.custom.death.UHCDeathEvent;
 import fr.nicknqck.events.power.PowerTakeInfoEvent;
 import fr.nicknqck.interfaces.IRoleGotSubWorld;
 import fr.nicknqck.interfaces.ISubRoleWorld;
@@ -18,6 +19,7 @@ import fr.nicknqck.roles.ns.power.YameruPower;
 import fr.nicknqck.utils.GlobalUtils;
 import fr.nicknqck.utils.KamuiDimension;
 import fr.nicknqck.utils.Loc;
+import fr.nicknqck.utils.event.EventUtils;
 import fr.nicknqck.utils.fastinv.FastInv;
 import fr.nicknqck.utils.fastinv.InventoryScheme;
 import fr.nicknqck.utils.fastinv.PaginatedFastInv;
@@ -28,6 +30,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -90,7 +95,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
         return this.kamuiPower.getKamuiDimension();
     }
 
-    private static class SharinganPower extends ItemPower {
+    private static class SharinganPower extends ItemPower implements Listener {
 
         private static final InventoryScheme SCHEME = new InventoryScheme()
                 .mask(" 1111111 ")
@@ -119,6 +124,7 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                     "§7vous obtiendrez à nouveau les effets permanents de la cible (vous retire vos effets actuels).",
                     "");
             new SharinganRunnable(this).runTaskTimerAsynchronously(getPlugin(), 100, 20);
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
@@ -182,6 +188,14 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
             this.actualPoint = 0;
             getRole().getGamePlayer().getActionBarManager().removeInActionBar("kakashi.copy");
         }
+        @EventHandler(priority = EventPriority.MONITOR)
+        private void onTargetDeath(@NonNull final UHCDeathEvent event) {
+            if (event.isCancelled())return;
+            if (!this.coping || this.targetOfCopy == null)return;
+            if (!event.getPlayer().getUniqueId().equals(this.targetOfCopy.getUniqueId()))return;
+            cancelCopy();
+            getRole().getGamePlayer().sendMessage("§7Votre cible est§c morte§7, la copie est annulée.");
+        }
         private void openTechniqueInventory(@NonNull final Player player) {
             @NonNull final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(27, "§cSharingan§7 ->§a Technique");
             paginatedFastInv.setItems(paginatedFastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").setDurability(7).toItemStack());
@@ -228,13 +242,16 @@ public class KakashiV2 extends HShinobiRoles implements IRoleGotSubWorld {
                     return;
                 }
                 sharinganPower.getRole().getGamePlayer().getActionBarManager().updateActionBar("kakashi.copy", "§aPoints:§c "+this.sharinganPower.actualPoint+"/§6"+1600);
-                if (Loc.getNearbyPlayersExcept(owner, 5).contains(this.sharinganPower.targetOfCopy)) {
+                // Cible retrouvée par son UUID : si elle s'est déconnectée, la copie est en pause
+                final Player target = Bukkit.getPlayer(this.sharinganPower.targetOfCopy.getUniqueId());
+                if (target == null)return;
+                if (Loc.getNearbyPlayersExcept(owner, 5).contains(target)) {
                     this.sharinganPower.actualPoint+=20;
-                } else if (Loc.getNearbyPlayersExcept(owner, 10).contains(this.sharinganPower.targetOfCopy)) {
+                } else if (Loc.getNearbyPlayersExcept(owner, 10).contains(target)) {
                     this.sharinganPower.actualPoint+=10;
-                } else if (Loc.getNearbyPlayersExcept(owner, 20).contains(this.sharinganPower.targetOfCopy)) {
+                } else if (Loc.getNearbyPlayersExcept(owner, 20).contains(target)) {
                     this.sharinganPower.actualPoint+=5;
-                } else if (Loc.getNearbyPlayersExcept(owner, 40).contains(this.sharinganPower.targetOfCopy)) {
+                } else if (Loc.getNearbyPlayersExcept(owner, 40).contains(target)) {
                     this.sharinganPower.actualPoint+=1;
                 }
             }
