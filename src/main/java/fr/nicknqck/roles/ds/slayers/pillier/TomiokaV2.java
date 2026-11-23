@@ -64,7 +64,7 @@ public class TomiokaV2 extends PilierRoles {
     public TextComponent getComponent() {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
-                .addCustomLine("§7Vous possédez un livre enchanter§b Depth Strider III")
+                .addCustomLine("§7Vous possédez un livre enchanté§b Depth Strider III")
                 .setPowers(getPowers())
                 .getText();
     }
@@ -88,8 +88,8 @@ public class TomiokaV2 extends PilierRoles {
     private static class FindOthersPower extends Power {
 
         public FindOthersPower(@NonNull RoleBase role) {
-            super("§7(§cPassif§7) Chercheur d'utilisateur du§b Soufle de l'Eau", null, role,
-                    "§7Permet de savoir toutes les "+(Main.getInstance().getGameConfig().isMinage() ? "§c10 minutes" : "§c3 minutes")+"§7 si un utilisateur du Soufle de l'§bEau§7 est présent autour de vous ou non");
+            super("§7(§cPassif§7) Chercheur d'utilisateur du§b Souffle de l'Eau", null, role,
+                    "§7Permet de savoir toutes les "+(Main.getInstance().getGameConfig().isMinage() ? "§c10 minutes" : "§c3 minutes")+"§7 si un utilisateur du Souffle de l'§bEau§7 est présent autour de vous ou non");
             new FinderRunnable(role.getGameState(), this).runTaskTimer(Main.getInstance(), 20, 20);
         }
 
@@ -137,7 +137,7 @@ public class TomiokaV2 extends PilierRoles {
                                 if (gm.isAlive()) {
                                     if (gm.getRole() instanceof DemonsSlayersRoles) {
                                         if (((DemonsSlayersRoles) gm.getRole()).getSoufle().equals(Soufle.EAU) || ((DemonsSlayersRoles) gm.getRole()).getSoufle().equals(Soufle.TOUS)) {
-                                            owner.sendMessage("§7Quelque chose vous fait penser qu'un utilisateur du§b Soufle de l'Eau§7 est proche de vous");
+                                            owner.sendMessage("§7Quelque chose vous fait penser qu'un utilisateur du§b Souffle de l'Eau§7 est proche de vous");
                                             isPresent = true;
                                             break;
                                         }
@@ -146,7 +146,7 @@ public class TomiokaV2 extends PilierRoles {
                             }
                         }
                         if (!isPresent) {
-                            owner.sendMessage("§7Vous ne sentez aucun autre utilisateur du§b Soufle de l'eau§7 autour de vous");
+                            owner.sendMessage("§7Vous ne sentez aucun autre utilisateur du§b Souffle de l'Eau§7 autour de vous");
                         }
                     }
                     actualTime = maxTime;
@@ -161,7 +161,7 @@ public class TomiokaV2 extends PilierRoles {
 
         public DeathPassifPower(@NonNull TomiokaV2 role) {
             super("Pilier de l'eau", null, role,
-                    "§7Lors de la §cmort§7 de l'un de vos confrère élève d'§aUrokodaki§7 vous obtiendrez un bonus en fonction du §crôle§7 du§c joueur§7: ",
+                    "§7Lors de la §cmort§7 de l'un de vos confrères élèves d'§aUrokodaki§7 vous obtiendrez un bonus en fonction du §crôle§7 du§c joueur§7: ",
                     "",
                     "§7     →§aTanjiro§7:§c Force I§7 de§e jour",
                     "",
@@ -169,7 +169,7 @@ public class TomiokaV2 extends PilierRoles {
                     "",
                     "§7     →§aMakomo§7:§b Speed II§7 durant le§e jour",
                     "",
-                    "§4!§c Vous obtiendrez les bonus ci-dessus que s'il s'agit du premier mort, sinon vous obtiendrez§a +§c1❤ permanent§4!");
+                    "§4!§c Vous n'obtiendrez les bonus ci-dessus que s'il s'agit du premier mort, sinon vous obtiendrez§a +§c1❤ permanent§4!");
             EventUtils.registerRoleEvent(this);
             Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                 boolean ig = false;
@@ -255,7 +255,7 @@ public class TomiokaV2 extends PilierRoles {
             } else if (roleBase instanceof SabitoV2) {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.DAY);
                 this.firstKill = true;
-                getRole().getGamePlayer().sendMessage("§aSabito§7, est§c mort§7, vous devez lui montrer qu'il a bien fait de vous sauver la vie, vous obtenez§c l'effet§9 Résistance I§7 le§e jour");
+                getRole().getGamePlayer().sendMessage("§aSabito§7 est§c mort§7, vous devez lui montrer qu'il a bien fait de vous sauver la vie, vous obtenez§c l'effet§9 Résistance I§7 le§e jour");
             } else if (roleBase instanceof MakomoV2) {
                 this.firstKill = true;
                 final Player owner = Bukkit.getPlayer(getRole().getPlayer());
