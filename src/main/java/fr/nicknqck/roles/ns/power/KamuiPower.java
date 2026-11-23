@@ -40,10 +40,10 @@ public class KamuiPower extends ItemPower implements Listener{
         super("Kamui", null, new ItemBuilder(Material.NETHER_STAR).setName("§dKamui"), role,
                 "§7Vous ouvre un menu vous permettant d'accéder à§c deux pouvoirs§7:",
                 "",
-                "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximal de§c 5 minutes§7. (1x/5m)",
+                "§dArimasu§7: Vous permet de rentrer dans la§c dimension Kamui§7 pendant une durée maximale de§c 5 minutes§7. (1x/5m)",
                 "",
                 "§dSonohaka§7: Vous permet d'ouvrir un autre menu vous permettant de cibler un joueur,",
-                "§7La personne ciblée se verra téléporter dans la§c dimension Kamui§7 pendant§c 5 minutes§7. (1x/10m)"
+                "§7La personne ciblée se verra téléportée dans la§c dimension Kamui§7 pendant§c 5 minutes§7. (1x/10m)"
         );
         if (getPlugin().getRoleWorldManager().getSubRoleWorldMap().containsKey("Kamui") && getPlugin().getRoleWorldManager().getSubRoleWorldMap().get("Kamui") instanceof KamuiDimension) {
             this.kamuiDimension = (KamuiDimension) getPlugin().getRoleWorldManager().getSubRoleWorldMap().get("Kamui");
