@@ -46,7 +46,7 @@ public class AssassinManagerV2 implements Listener {
         final PrepareAssassinEvent prepareAssassinEvent = new PrepareAssassinEvent(this.gameState, new ArrayList<>(), false);
         Bukkit.getPluginManager().callEvent(prepareAssassinEvent);
         if (prepareAssassinEvent.isCancelled()) return;
-        if (event.getRole() instanceof DemonsRoles && !(event.getRole() instanceof NezukoV2)) {
+        if (!event.isEndGive() && event.getRole() instanceof DemonsRoles && !(event.getRole() instanceof NezukoV2)) {
             this.canBeAssassin.add(event.getGamePlayer());
             System.out.println(this.prefix+"GamePlayer: "+event.getGamePlayer()+", has been added to canBeAssassin List !");
         }
