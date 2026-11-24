@@ -20,11 +20,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -152,9 +154,11 @@ public class SabitoV2 extends SlayerRoles {
 
             Location startLoc = player.getLocation().clone(); // point de départ
             double maxDistance = 20.0; // distance cible
+            int maxTicks = 40; // durée maximale (contre un mur, la distance n'est jamais atteinte)
 
             new BukkitRunnable() {
                 double distanceTravelled = 0;
+                int ticks = 0;
 
                 @Override
                 public void run() {
@@ -175,11 +179,15 @@ public class SabitoV2 extends SlayerRoles {
                     for (int x = -1; x <= 1; x++) {
                         for (int z = -1; z <= 1; z++) {
                             if (Math.abs(x) + Math.abs(z) != 1) continue;
-                            Location loc = player.getLocation().clone().add(x, -1, z);
-                            if (!changedBlocks.containsKey(loc)) {
-                                changedBlocks.put(loc, loc.getBlock().getType());
-                                loc.getBlock().setType(Material.WATER);
-                            }
+                            // Position du bloc (entière) : un même bloc n'est enregistré qu'une fois
+                            final Block block = player.getLocation().getBlock().getRelative(x, -1, z);
+                            final Location loc = block.getLocation();
+                            if (changedBlocks.containsKey(loc)) continue;
+                            // Les blocs à contenu (coffres, fours…) perdraient leur contenu
+                            if (block.getState() instanceof InventoryHolder) continue;
+                            changedBlocks.put(loc, block.getType());
+                            // Eau stationnaire sans physique : elle ne s'écoule pas hors des blocs enregistrés
+                            block.setType(Material.STATIONARY_WATER, false);
                         }
                     }
 
@@ -200,8 +208,10 @@ public class SabitoV2 extends SlayerRoles {
                     // Incrémenter distance
                     distanceTravelled = startLoc.distance(player.getLocation());
 
-                    // Fin du dash une fois 20 blocs atteints
-                    if (distanceTravelled >= maxDistance) {
+                    ticks += 2;
+
+                    // Fin du dash une fois 20 blocs atteints, ou après la durée maximale
+                    if (distanceTravelled >= maxDistance || ticks >= maxTicks) {
                         cleanup();
                         cancel();
 
