@@ -36,8 +36,8 @@ public class PatchCritical {
         double c = 1.0;
         if(i != null) c = getAttackDamage(i);//Prendre les dégâts de base de l'épée
         if(p.hasPotionEffect(PotionEffectType.WEAKNESS))
-            c -= 0.5D;//Si il a weakness on ajoute 0.5 coeurs. On passe la weakness en priorité
-        if(p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))//Si il a force on fait * 2.3 pour ses dégâts
+            c -= 0.5D;//S'il a weakness on ajoute 0.5 coeurs. On passe la weakness en priorité
+        if(p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))//S'il a force on fait * 2.3 pour ses dégâts
            c *= 2.3D;
         //On va ajouter des dégâts si l'item a sharpness
         if(i == null) return c;
@@ -56,7 +56,7 @@ public class PatchCritical {
         }
         Player p = (Player) e.getDamager();
         double a = getAttackValue(p);
-        DecimalFormat df = new DecimalFormat("0.00");//Les dégâts de la force diffère a 0.0000001 environ.
+        DecimalFormat df = new DecimalFormat("0.00");//Les dégâts de la force diffèrent à 0.0000001 environ.
         return !df.format(e.getOriginalDamage(EntityDamageEvent.DamageModifier.BASE)).equals(df.format(a));//Si les dégâts sont pas pareil on return true
     }
 
@@ -71,7 +71,7 @@ public class PatchCritical {
         }
     }
 
-    private double getAttackDamage(ItemStack itemStack) {//Trouver sur https://www.spigotmc.org/threads/how-to-get-attack-damage-attributemodifier-from-an-itemstack-as-displayed-on-items-in-game.284455/
+    private double getAttackDamage(ItemStack itemStack) {//Trouvé sur https://www.spigotmc.org/threads/how-to-get-attack-damage-attributemodifier-from-an-itemstack-as-displayed-on-items-in-game.284455/
     	if (itemStack == null)return 1.0;
         double attackDamage = 1.0;
         UUID uuid = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");

@@ -71,7 +71,7 @@ public class AllDesc{
             "",
             ChatColor.BOLD + "Pacte 1: ",
             "",
-            "Vous gagner seul, pour ce faire vous obtiendrez§6 "+Resi+" 1 le jour en tuant§a ZenItsu§r ainsi que§6 "+Resi+" 1 la "+nuit+" si vous tuez§c Kaigaku§r, de plus pour chaque kill de vos disciple effectué vous récupérerez 10% de "+Speed,
+            "Vous gagnez seul, pour ce faire vous obtiendrez§6 "+Resi+" 1 le jour en tuant§a ZenItsu§r ainsi que§6 "+Resi+" 1 la "+nuit+" si vous tuez§c Kaigaku§r, de plus pour chaque kill de vos disciples effectué vous récupérerez 10% de "+Speed,
             "",
             bar	
 	};
@@ -89,7 +89,7 @@ public class AllDesc{
             "",
             ChatColor.BOLD + "Pacte 2: ",
             "",
-            "Vous gagner en duo avec§c Kaigaku§r, pour ce faire vous et§c lui§r obtenez l'effet§3 "+Resi+" 1§r à moins de 50blocs l'un de l'autre, de plus quand§c Kaigaku§r ou vous faites un kill vous deux obtenez 1 demi"+coeur+" permanent, pour finir vous disposer d'un chat en commun via la commande§6 /ds chat",
+            "Vous gagnez en duo avec§c Kaigaku§r, pour ce faire vous et§c lui§r obtenez l'effet§3 "+Resi+" 1§r à moins de 50blocs l'un de l'autre, de plus quand§c Kaigaku§r ou vous faites un kill vous deux obtenez 1 demi"+coeur+" permanent, pour finir vous disposez d'un chat en commun via la commande§6 /ds chat",
             "",
             bar	
 	};
@@ -107,7 +107,7 @@ public class AllDesc{
             "",
             ChatColor.BOLD + "Pacte 3: ",
             "",
-            "Vous gagner en duo avec§a ZenItsu§r, pour ce faire vous et§a lui§r obtenez l'effet§c "+Force+" 1§r à moins de 20blocs l'un de l'autre et l'effet§3 "+Resi+" 1§r permanent, de plus si vous ou§a ZenItsu§r parvenez à tué§c Kaigaku§r vous gagnerez§b "+Speed+" 2§r en dessous de 5"+coeur,
+            "Vous gagnez en duo avec§a ZenItsu§r, pour ce faire vous et§a lui§r obtenez l'effet§c "+Force+" 1§r à moins de 20blocs l'un de l'autre et l'effet§3 "+Resi+" 1§r permanent, de plus si vous ou§a ZenItsu§r parvenez à tuer§c Kaigaku§r vous gagnerez§b "+Speed+" 2§r en dessous de 5"+coeur,
             "",
             bar	
 	};
@@ -117,7 +117,7 @@ public class AllDesc{
             "",
             effet,
             "",
-            point+weak+" 1 permanent sauf dans votre cage ou une fois à l'intérieur vous possédez "+Force+" 1, "+Resi+" 1 ainsi que§a NoFall",
+            point+weak+" 1 permanent sauf dans votre cage où, une fois à l'intérieur vous possédez "+Force+" 1, "+Resi+" 1 ainsi que§a NoFall",
             "",
             items,
             "",
@@ -125,7 +125,7 @@ public class AllDesc{
             "",
             commande,
             "",
-            point+"§7/§cds return§7: Vous permet d'éjécter tous les joueurs étant dans votre§c cage de Nakime§7 (dont vous)",
+            point+"§7/§cds return§7: Vous permet d'éjecter tous les joueurs étant dans votre§c cage de Nakime§7 (dont vous)",
             "",
             bar
     };

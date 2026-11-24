@@ -122,11 +122,11 @@ public class KyojuroV2 extends PilierRoles implements IAllianceRole {
             }
             end = false;
             EventUtils.registerEvents(this);
-            player.sendMessage("§7Vous activez votre§c Soufle de la Flamme");
+            player.sendMessage("§7Vous activez votre§c Souffle de la Flamme");
             Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                 if (end)return;
                 EventUtils.unregisterEvents(this);
-                player.sendMessage("§7Votre§c Soufle de la Flamme§7 se désactive");
+                player.sendMessage("§7Votre§c Souffle de la Flamme§7 se désactive");
             }, 20*60*3);
             return true;
         }

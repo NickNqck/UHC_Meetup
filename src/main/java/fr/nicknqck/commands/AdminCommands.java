@@ -702,7 +702,7 @@ public class AdminCommands implements CommandExecutor{
 											for (final DeathRapport deathRapport : new ArrayList<>(role.getGamePlayer().getKillsList())) {
                                                 if (deathRapport.getGameKiller() == null)continue;
 												if (!deathRapport.getGameKiller().getUuid().equals(role.getPlayer())) {
-													Main.getInstance().debug("ERREUR | Le tueur n'est pas le meme dans le DeathRapport et dans la liste indiquer");
+													Main.getInstance().debug("ERREUR | Le tueur n'est pas le même dans le DeathRapport et dans la liste indiquée");
 													continue;
 												}
 												if (i > 0) {

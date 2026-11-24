@@ -80,7 +80,7 @@ public class ShinobuV2 extends PilierRoles {
 
         public PapillonsCommand(@NonNull RoleBase role) {
             super("§a/ds papillons", "papillons", null, role, CommandType.DS,
-                    "§7Vous permet de choisir qu'elles§c joueurs§7 seront affecter par votre §aSoins");
+                    "§7Vous permet de choisir quels§c joueurs§7 seront affectés par votre §aSoins");
             this.affected = new ArrayList<>();
             EventUtils.registerRoleEvent(this);
         }
@@ -147,9 +147,9 @@ public class ShinobuV2 extends PilierRoles {
 
         protected HealPower(@NonNull ShinobuV2 role) {
             super("§aSoins", null, new ItemBuilder(Material.NETHER_STAR).setName("§aSoins"), role,
-                    "§7Lorsqu'un de vos protéger choisis via le§6 /ds papillons§7 est en dessous de§c 4❤§7 vous recevrez une notification pour le§d soigner§c complètement§7.",
+                    "§7Lorsqu'un de vos protégés choisis via le§6 /ds papillons§7 est en dessous de§c 4❤§7 vous recevrez une notification pour le§d soigner§c complètement§7.",
                     "",
-                    "§c! Pour pouvoir réutiliser ce pouvoir il faudra que vous et/ou le dernier joueur soigner§c mangiez un total de§e 25 pommes d'or");
+                    "§c! Pour pouvoir réutiliser ce pouvoir il faudra que vous et/ou le dernier joueur soigné§c mangiez un total de§e 25 pommes d'or");
             setMaxUse(1);
             this.shinobuV2 = role;
             this.lastPlayerlow = role.getPlayer();
@@ -177,7 +177,7 @@ public class ShinobuV2 extends PilierRoles {
                         this.lastPlayerlow = event.getEntity().getUniqueId();
                         Player shinobu = Bukkit.getPlayer(shinobuV2.getPlayer());
                         if (shinobu != null) {
-                            shinobu.sendMessage("§7L'un de vos protéger (§c"+event.getEntity().getName()+"§7) est en dessous de§c 4❤§7, utiliser votre item "+getName()+"§7 pour le§d soigner§7.");
+                            shinobu.sendMessage("§7L'un de vos protégés (§c"+event.getEntity().getName()+"§7) est en dessous de§c 4❤§7, utilisez votre item "+getName()+"§7 pour le§d soigner§7.");
                         }
                     }
                 }
@@ -189,7 +189,7 @@ public class ShinobuV2 extends PilierRoles {
                 if (event.getItem().getType().equals(Material.GOLDEN_APPLE) && gapToEat >= 0) {
                     gapToEat--;
                     if (gapToEat == 0) {
-                        getRole().getGamePlayer().sendMessage("§7Vous pouvez à nouveau§d soigner§7 l'un de vos allier");
+                        getRole().getGamePlayer().sendMessage("§7Vous pouvez à nouveau§d soigner§7 l'un de vos alliés");
                         setMaxUse(getMaxUse()+1);
                         gapToEat = -1;
                     }
@@ -205,12 +205,12 @@ public class ShinobuV2 extends PilierRoles {
 
         public PoisonsPower(@NonNull RoleBase role) {
             super("Poisons", new Cooldown(30), new ItemBuilder(Material.NETHER_STAR).setName("§2Poisons"), role,
-                    "§7Cette objet vous permet de changer le§c Poison§7 que vous§c utiliser§7",
-                    "§7voici ceux qui sont utilisable:§c Poison§7,§c Nausée§7,§c Wither§7,§c Slowness§7,§c Blindness§7,§c Weakness§7.",
+                    "§7Cet objet vous permet de changer le§c Poison§7 que vous§c utilisez§7",
+                    "§7voici ceux qui sont utilisables:§c Poison§7,§c Nausée§7,§c Wither§7,§c Slowness§7,§c Blindness§7,§c Weakness§7.",
                     "",
                     "§7Chacun des effets est appliqué en frappant un joueur avec une épée, également les effets ont une durée de§c 10 secondes§7.",
                     "",
-                    "§7Si§a Kanae§7 viens à mourir, lorsqu'un effet de§c Poison§7 doit être appliqué vous appliquerez le suivant (dans l'ordre de la description)");
+                    "§7Si§a Kanae§7 vient à mourir, lorsqu'un effet de§c Poison§7 doit être appliqué vous appliquerez le suivant (dans l'ordre de la description)");
             role.getGamePlayer().getActionBarManager().addToActionBar("shinobu.poisons", "§bVous utilisez actuellement le poison:§c "+getActualString());
             mapEffect.put(1, new PotionEffect(PotionEffectType.POISON, 20*10, 0, false, false));
             mapEffect.put(2, new PotionEffect(PotionEffectType.CONFUSION, 20*10, 0, false, false));

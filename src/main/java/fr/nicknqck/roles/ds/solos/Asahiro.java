@@ -81,8 +81,8 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         return new String[] {
                 amount,
                 "",
-                "§7Ce rôle ne viens pas de l'univers§c DemonSlayer§7 mais entièrement",
-                "§7par§b NickNqck§7, il est simplement inspirer de son§c univers§7,",
+                "§7Ce rôle ne vient pas de l'univers§c DemonSlayer§7 mais entièrement",
+                "§7par§b NickNqck§7, il est simplement inspiré de son§c univers§7,",
                 "",
                 "§7Lore:",
                 "",
@@ -117,7 +117,7 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
                 .addCustomLine("§7Lorsque vous êtes en dessous de §c5❤§7 vous recevez§c 10%§7 de§c dégâts en moins§7.")
-                .addCustomLine(this.killLune ? "" : "§7Si vous parvenez à§c vaincre§7 une§c Lune Supérieur§7 ou§c Muzan§7, vous gagnerez§c Force I§7 la§c nuit§7.")
+                .addCustomLine(this.killLune ? "" : "§7Si vous parvenez à§c vaincre§7 une§c Lune Supérieure§7 ou§c Muzan§7, vous gagnerez§c Force I§7 la§c nuit§7.")
                 .addCustomLine(this.killPilier ? "" : "§7Si vous parvenez à§c vaincre§7 un§a Pilier§7, vous gagnerez§e Speed I§7 le§c jour§7.")
                 .getText();
     }
@@ -139,14 +139,14 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
                 if (role.getRank().equals(DemonType.SUPERIEUR) || role.getRank().equals(DemonType.NEZUKO) || role instanceof MuzanV2) {
                     this.killLune = true;
                     givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-                    event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant une§c Lune Supérieur§7, vous avez acquis du§c sang de démon§7, ce qui vous permet de vous§c renforcer la nuit§7.");
+                    event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant une§c Lune Supérieure§7, vous avez acquis du§c sang de démon§7, ce qui vous permet de vous§c renforcer la nuit§7.");
                 }
             }
             //Donc si Asahiro est le tueur
             if (event.getGamePlayerKiller().getUuid().equals(getPlayer()) && !killPilier && event.getRole() instanceof PilierRoles) {
                 this.killPilier = true;
                 givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-                event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous a permis d'être§c plus rapide§7 le§c jour§7.");
+                event.getGamePlayerKiller().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexpérience§7, ce qui vous a permis d'être§c plus rapide§7 le§c jour§7.");
             }
         }
     }
@@ -172,21 +172,21 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
         if (!pil) {
             this.killPilier = true;
             givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.DAY);
-            getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexperience§7, ce qui vous a permis d'être§c plus rapide§7 le§c jour§7.");
+            getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 En tuant un§a Pilier§7, vous avez acquis de l'§cexpérience§7, ce qui vous a permis d'être§c plus rapide§7 le§c jour§7.");
         }
         if (!lun) {
             this.killLune = true;
             givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.NIGHT);
-            getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 En tuant une§c Lune Supérieur§7, vous avez acquis du§c sang de démon§7, ce qui vous permet de vous§c renforcer la nuit§7.");
+            getGamePlayer().sendMessage(Main.getInstance().getNAME()+"§7 En tuant une§c Lune Supérieure§7, vous avez acquis du§c sang de démon§7, ce qui vous permet de vous§c renforcer la nuit§7.");
         }
     }
     private static final class SwordPower extends ItemPower {
 
         public SwordPower(@NonNull final RoleBase role) {
-            super("§aÉpée de grand père§r", null, new ItemBuilder(Material.IRON_SWORD)
-                            .setName("§aÉpée de grand père")
+            super("§aÉpée de grand-père§r", null, new ItemBuilder(Material.IRON_SWORD)
+                            .setName("§aÉpée de grand-père")
                             .addEnchant(Enchantment.DAMAGE_ALL, Main.getInstance().getGameConfig().getStuffConfig().getSharpness()+1), role,
-                    "§7L'Épée mystérieuse de§a grand père§7, il n'a jamais expliquer comment il l'avait eu...");
+                    "§7L'Épée mystérieuse de§a grand-père§7, il n'a jamais expliqué comment il l'avait eue...");
         }
 
         @Override
@@ -284,8 +284,8 @@ public class Asahiro extends DemonsSlayersRoles implements RoleCustomLore, Liste
 
         public PatiencePower(@NonNull RoleBase role) {
             super("§fPatience§r", null, role,
-                    "§7Au bout de§c 4 minutes§7 passer proche d'un joueur vous verrez",
-                    "§7des particules autour de lui qui seront coloré en fonction de son§a camp§7:",
+                    "§7Au bout de§c 4 minutes§7 passées proche d'un joueur vous verrez",
+                    "§7des particules autour de lui qui seront colorées en fonction de son§a camp§7:",
                     "",
                     "§8 -§a Vert: Slayer",
                     "",

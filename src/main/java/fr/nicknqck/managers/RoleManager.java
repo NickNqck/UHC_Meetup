@@ -264,21 +264,21 @@ public class RoleManager implements Listener {
         //Création d'une Map à partir des rôles activés
         final Map<Class<? extends RoleBase>, Integer> map = new LinkedHashMap<>(getRolesEnable());
         final List<Class<? extends RoleBase>> roleList = new LinkedList<>();
-        //J'utilise ce code pour remplir roleList des rôles ayant un nombre supérieur a 0
+        //J'utilise ce code pour remplir roleList des rôles ayant un nombre supérieur à 0
         for (final Class<? extends RoleBase> classRole : map.keySet()) {
             if (map.getOrDefault(classRole, 0) < 1)continue;
             roleList.add(classRole);
         }
         RoleBase role = null;
-        //La je mélance le roleList
+        //Là je mélange le roleList
         Collections.shuffle(roleList, Main.RANDOM);
         if (!roleList.isEmpty()) {
-            //Grace au mélance je get un rôle au hasard
+            //Grâce au mélange je get un rôle au hasard
             Class<? extends RoleBase> classRole = roleList.get(0);
             try {
-                //La j'instancie le rôle avec l'UUID qui a été donné au début
+                //Là j'instancie le rôle avec l'UUID qui a été donné au début
                 role = classRole.getConstructor(UUID.class).newInstance(uuid);
-                //La j'envoie des infos à la console
+                //Là j'envoie des infos à la console
                 GameState.getInstance().print(uuid, role);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                      NoSuchMethodException e) {
@@ -295,7 +295,7 @@ public class RoleManager implements Listener {
             if (gamePlayer.getRole() == null)continue;
             final RoleBase role = gamePlayer.getRole();
             if (role instanceof IAkatsukiChief) {
-                role.addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§d Obito§7):"
+                role.addKnowedPlayersWithRoles("§7Voici la liste de l'§cAkatsuki§7 (§cAttention il y a un traître dans cette liste ayant le rôle de§d Obito§7):"
                         , DeidaraV2.class, HidanV2.class, ItachiV2.class,
                         KakuzuV2.class, KisameV2.class, gamePlayer.getRole().getClass(),
                         NagatoV2.class,

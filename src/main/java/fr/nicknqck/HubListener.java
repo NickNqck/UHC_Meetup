@@ -107,7 +107,7 @@ public class HubListener implements Listener {
 			}
 			gamePlayer.setHeadItem(Main.getInstance().getPlayersHeadItemDB().get(gamePlayer.getUuid()));
 			gameState.getGamePlayer().put(u, gamePlayer);
-			System.out.println("Player "+p+" a ete ajouter a la partie");
+			System.out.println("Player "+p+" a été ajouté à la partie");
 		}
 		gameState.nightTime = false;
 		Main.getInstance().getWorldManager().getGameWorld().setGameRuleValue("naturalRegeneration", "false");
@@ -266,7 +266,7 @@ public class HubListener implements Listener {
 		p.getInventory().setBoots(Items.getdiamondboots());
 		p.getInventory().setItem(3, new ItemStack(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()));
 	}
-	// Creer une plateforme pour le spawn des joueurs (Suppression possible grâce à Material.AIR)
+	// Créer une plateforme pour le spawn des joueurs (Suppression possible grâce à Material.AIR)
 	public static void spawnPlatform(final World world, final Material material) {
 		for (int x = -16; x <= 16; x++) {
 			for (int z = -16; z <= 16; z++) {
@@ -274,7 +274,7 @@ public class HubListener implements Listener {
 			}
 		}
 	}
-	// Gerer l'interaction avec un item
+	// Gérer l'interaction avec un item
 
 	@EventHandler
 	public void OnItemInteract(PlayerInteractEvent event) {

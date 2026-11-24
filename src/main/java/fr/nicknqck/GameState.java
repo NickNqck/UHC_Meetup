@@ -555,7 +555,7 @@ public class GameState{
             if (externalPluginEvent.getRoleBase() != null) {
                 role = externalPluginEvent.getRoleBase();
             } else {
-                Main.getInstance().debug("Impossible de trouver le role associer, il faut utiliser l'event fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent ("+externalPluginEvent.getRoleType()+")");
+                Main.getInstance().debug("Impossible de trouver le rôle associé, il faut utiliser l'event fr.nicknqck.events.custom.GiveRoleDeclenchExternalPluginEvent ("+externalPluginEvent.getRoleType()+")");
             }
         }
 		if (role == null) return null;

@@ -48,7 +48,7 @@ public class LaraV2 extends MahrRoles implements Listener {
         setTitan(warhammerV2);
         Main.getInstance().getTitanManager().addTitan(getPlayer(), warhammerV2);
         EventUtils.registerRoleEvent(this);
-        addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
+        addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipiers§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
     }
     @EventHandler
     private void onDamage(@NonNull final EntityDamageEvent event) {

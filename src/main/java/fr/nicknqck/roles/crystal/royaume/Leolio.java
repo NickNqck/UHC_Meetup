@@ -200,7 +200,7 @@ public class Leolio extends RoyaumeBase implements IGotBuyable {
 
         public MoreCrystalPower(@NonNull RoleBase role) {
             super("§aChance du mineur§r", null, role,
-                    "§7Lorsque vous§c miner§7 des§d cristaux§7, vous avez§c 50%§7 de§a chance§7 de faire§c x2§7 sur la somme§c miner§7.");
+                    "§7Lorsque vous§c minez§7 des§d cristaux§7, vous avez§c 50%§7 de§a chance§7 de faire§c x2§7 sur la somme§c minée§7.");
             EventUtils.registerRoleEvent(this);
             if (!getPlugin().getGameConfig().isMinage()) {
                 getRole().giveItem(getRole().owner, false, new ItemBuilder(Material.EMERALD_ORE).setAmount(10).setName("§dCrystal Ore").toItemStack());

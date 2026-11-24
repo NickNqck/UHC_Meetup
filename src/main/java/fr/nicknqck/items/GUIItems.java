@@ -126,8 +126,8 @@ public abstract class GUIItems{
 			ItemStack stack = new ItemStack(Material.WATER_BUCKET, Main.getInstance().getGameConfig().getStuffConfig().getEau());
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
-					"Minimum: "+ChatColor.GOLD+"1 Sceau d'Eau",
-					"§r"+"Maximum: "+ChatColor.GOLD+"4 Sceau d'Eau"));
+					"Minimum: "+ChatColor.GOLD+"1 Seau d'eau",
+					"§r"+"Maximum: "+ChatColor.GOLD+"4 Seau d'eau"));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -135,8 +135,8 @@ public abstract class GUIItems{
 			ItemStack stack = new ItemStack(Material.LAVA_BUCKET, Main.getInstance().getGameConfig().getStuffConfig().getLave());
 			ItemMeta meta = stack.getItemMeta();
 			meta.setLore(Arrays.asList("§r"+"Click to Change",
-					"Minimum: "+ChatColor.GOLD+"0 Sceau de lave",
-					"§r"+"Maximum: "+ChatColor.GOLD+"4 Sceau de lave"));
+					"Minimum: "+ChatColor.GOLD+"0 Seau de lave",
+					"§r"+"Maximum: "+ChatColor.GOLD+"4 Seau de lave"));
 			stack.setItemMeta(meta);
 			return stack;
 		}
@@ -169,7 +169,7 @@ public abstract class GUIItems{
 		public static ItemStack getCrit(GameState gameState) {
 			ItemStack stack = new ItemStack(Material.IRON_SWORD, 1);
 			ItemMeta meta = stack.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Pourcentage de nerf des coups critique");
+			meta.setDisplayName(ChatColor.GOLD+"Pourcentage de nerf des coups critiques");
 			meta.setLore(Arrays.asList("§r"+"(50% = non nerf) "+ChatColor.GOLD+ Main.getInstance().getGameConfig().getCritPercent()+"%"));
 			stack.setItemMeta(meta);
 			return stack;
@@ -178,7 +178,7 @@ public abstract class GUIItems{
 		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 5); // Green
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Commencer la partie");
-		meta.setLore(Arrays.asList("§r"+"Demarre instantanément la partie"));
+		meta.setLore(Arrays.asList("§r"+"Démarre instantanément la partie"));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -186,7 +186,7 @@ public abstract class GUIItems{
 		ItemStack stack = new ItemStack(Material.STAINED_CLAY, 1, (byte) 14); // Red
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Commencer la partie");
-		meta.setLore(Arrays.asList("§r"+"Demarre instantanément la partie"));
+		meta.setLore(Arrays.asList("§r"+"Démarre instantanément la partie"));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -211,7 +211,7 @@ public static ItemStack getSelectConfigButton() {
 		ItemStack stack = new ItemStack(Material.WATCH, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§fConfiguration§7 ->§6 Partie");
-		meta.setLore(Collections.singletonList("§r"+"Configurez l'entièretée de la partie"));
+		meta.setLore(Collections.singletonList("§r"+"Configurez l'entièreté de la partie"));
 		stack.setItemMeta(meta);
 		return stack;
 	}

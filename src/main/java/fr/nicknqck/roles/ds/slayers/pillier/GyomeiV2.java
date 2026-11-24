@@ -72,7 +72,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
         givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 0, false, false), EffectWhen.PERMANENT);
         addPower(new SouffleDeLaRochePower(this), true);
         EventUtils.registerEvents(this);
-        AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffects(getEffects()).addCustomLine("§7Vous possédez§c 2❤§c permanent§7 supplémentaire").setPowers(getPowers());
+        AutomaticDesc automaticDesc = new AutomaticDesc(this).addEffects(getEffects()).addCustomLine("§7Vous possédez§c 2❤§c permanents§7 supplémentaires").setPowers(getPowers());
         this.desc = automaticDesc.getText();
         setCanuseblade(true);
     }
@@ -89,7 +89,7 @@ public class GyomeiV2 extends PilierRoles implements Listener {
 
         protected SouffleDeLaRochePower(@NonNull RoleBase role) {
             super("Souffle de la roche", new Cooldown(20), new ItemBuilder(Material.STONE_AXE).setName("§aSouffle de la Roche").addEnchant(Enchantment.DAMAGE_ALL, 4).hideEnchantAttributes(), role,
-                    "§7Vous permet (en visant un joueur) d'activer un pouvoir différant en fonction de votre§c clique§7:",
+                    "§7Vous permet (en visant un joueur) d'activer un pouvoir différent en fonction de votre§c clic§7:",
                     "",
                     "§aFracas§7 (§cClic gauche§7): Vous permet de§c repousser§7 le joueur visé puis de lui infliger§c 2❤§7 de dégâts§c 5 secondes§7 plus tard (1x/5m)",
                     "",
@@ -192,10 +192,10 @@ public class GyomeiV2 extends PilierRoles implements Listener {
                                 target.setHealth(Math.max(0.1, target.getHealth()-4.0));
                                 target.damage(0.0);
                             });
-                            this.gamePlayer.sendMessage("§b"+this.nameTarget+"§f à subit§c 2❤§f de§c dégâts");
+                            this.gamePlayer.sendMessage("§b"+this.nameTarget+"§f a subi§c 2❤§f de§c dégâts");
                             target.sendMessage("§aGyomei§f vous a infligé§c 2❤§f de dégâts");
                         } else {
-                            this.gamePlayer.sendMessage("§b"+this.nameTarget+"§c à déconnecter, il n'a donc pas subit les dégâts voulu");
+                            this.gamePlayer.sendMessage("§b"+this.nameTarget+"§c s'est déconnecté, il n'a donc pas subi les dégâts voulus");
                         }
                         cancel();
                         return;

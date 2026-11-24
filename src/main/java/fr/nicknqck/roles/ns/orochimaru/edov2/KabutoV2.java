@@ -114,7 +114,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
                 )
                 .addCustomLine(
                         !this.kimimaroDEAD ?
-                                "§7A la mort de§5 Kimimaro§7, vous subirez§c 10%§7 de dégâts en moins et infligerez§c 10%§7 de dégâts supplémentaire.":""
+                                "§7A la mort de§5 Kimimaro§7, vous subirez§c 10%§7 de dégâts en moins et infligerez§c 10%§7 de dégâts supplémentaires.":""
                 )
                 .addCustomLine(
                         !this.orochimaruDEAD ?
@@ -144,7 +144,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         tryProcSolo(event.getGameState(), event.getPlayer().getUniqueId());
     }
     private void onKarinDeath() {
-        getGamePlayer().sendMessage("§5Karin§7 est morte, en inspiration de son pouvoirs de guérison votre§d Soins§7 s'améliore, il soignera maintenant de§c 5❤§7 au lieu de§c 2❤§7.");
+        getGamePlayer().sendMessage("§5Karin§7 est morte, en inspiration de ses pouvoirs de guérison votre§d Soins§7 s'améliore, il soignera maintenant de§c 5❤§7 au lieu de§c 2❤§7.");
         this.healPower.toHeal = 10.0;
         this.karinDEAD = true;
     }
@@ -208,11 +208,11 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
 
         public HealPower(@NonNull RoleBase role) {
             super("Soins", null, new ItemBuilder(Material.NETHER_STAR).setName("§dSoins"), role,
-                    "§7Vous permet de vous soignez ou de soigner quelqu'un d'autre: ",
+                    "§7Vous permet de vous soigner ou de soigner quelqu'un d'autre: ",
                     "",
                     "§fClic gauche§7: Vous soigne de§c 2❤§7. (1x/1m30s)",
                     "",
-                    "§fClic droite§7: Soigne la personne visé de§c 2❤§7. (1x/2m)");
+                    "§fClic droit§7: Soigne la personne visée de§c 2❤§7. (1x/2m)");
             this.toHeal = 4.0;
             this.gaucheCD = new Cooldown(90);
             this.droiteCD = new Cooldown(120);
@@ -226,11 +226,11 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
                 event.setCancelled(true);
                 if (event.getAction().name().contains("LEFT")) {
                     if (gaucheCD.isInCooldown()) {
-                        player.sendMessage("§cImpossible de vous soignez, vous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(this.gaucheCD.getCooldownRemaining()));
+                        player.sendMessage("§cImpossible de vous soigner, vous êtes en cooldown:§b "+ StringUtils.secondsTowardsBeautiful(this.gaucheCD.getCooldownRemaining()));
                         return false;
                     }
                     player.setHealth(Math.min(player.getMaxHealth(), player.getHealth()+toHeal));
-                    player.sendMessage("§7Vous vous êtes soignés de§c "+new DecimalFormat("0").format(this.toHeal/2)+"❤§7.");
+                    player.sendMessage("§7Vous vous êtes soigné de§c "+new DecimalFormat("0").format(this.toHeal/2)+"❤§7.");
                     this.gaucheCD.use();
                     return true;
                 } else if (event.getAction().name().contains("RIGHT")) {
@@ -244,7 +244,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
                         return false;
                     }
                     target.setHealth(Math.min(target.getMaxHealth(), target.getHealth()+this.toHeal));
-                    player.sendMessage("§7Vous avez soignés§c "+target.getDisplayName()+"§7 de§c "+new DecimalFormat("0").format(this.toHeal/2)+"❤§7.");
+                    player.sendMessage("§7Vous avez soigné§c "+target.getDisplayName()+"§7 de§c "+new DecimalFormat("0").format(this.toHeal/2)+"❤§7.");
                     this.droiteCD.use();
                     return true;
                 }

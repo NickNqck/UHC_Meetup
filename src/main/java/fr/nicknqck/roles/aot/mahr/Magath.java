@@ -30,7 +30,7 @@ public class Magath extends MahrRoles {
 	@Override
 	public void RoleGiven(GameState gameState) {
 		giveHealedHeartatInt(4.0);
-		addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
+		addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipiers§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
 	}
 	@Nonnull
     @Override
@@ -75,11 +75,11 @@ public class Magath extends MahrRoles {
 				"",
 				AllDesc.capacite,
 				"",
-				AllDesc.point+"Vous possédez 2"+AllDesc.coeur+" supplémentaire, vous possédez également la list des§9 Mahr§r, cependant vous n'apparaissez pas dedans",
+				AllDesc.point+"Vous possédez 2"+AllDesc.coeur+" supplémentaires, vous possédez également la liste des§9 Mahr§r, cependant vous n'apparaissez pas dedans",
 				"",
 				AllDesc.commande,
 				"",
-				AllDesc.point+"§6/aot search§r: Permet de chercher un de vos allier§9 Mahr§r possédant un Titan, de plus si la personne visée est transformée en Titan et que vous êtes proche (15blocs) de cette dernière vous obtiendrez "+AllDesc.Resi+" §9I",
+				AllDesc.point+"§6/aot search§r: Permet de chercher un de vos alliés§9 Mahr§r possédant un Titan, de plus si la personne visée est transformée en Titan et que vous êtes proche (15blocs) de cette dernière vous obtiendrez "+AllDesc.Resi+" §9I",
 				"",
 				AllDesc.bar
 		};	
@@ -96,7 +96,7 @@ public class Magath extends MahrRoles {
 						owner.sendMessage("Veuillez écrire un pseudo correct");
 					}else {
 						if (target.getUniqueId().equals(getPlayer())) {
-							target.sendMessage("§cVous ne pouvez pas vous traquer vous même !");
+							target.sendMessage("§cVous ne pouvez pas vous traquer vous-même !");
 							return;
 						}
 						if (!gameState.hasRoleNull(target.getUniqueId())) {

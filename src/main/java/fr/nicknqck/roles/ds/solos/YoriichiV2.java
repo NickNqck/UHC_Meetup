@@ -94,17 +94,17 @@ public class YoriichiV2 extends DemonsSlayersRoles {
                     "",
                     "§7     →§c 1 kill§7: Vous obtiendrez l'effet§c résistance I§7 le§e jour",
                     "§7     →§c 2 kills§7: Vous obtiendrez§c régénération III§7 en mangeant une§e pomme d'or§7 (Vous ne vous soignerez quand même que de§c 2❤§7)",
-                    "§7     →§c 3 kills§7: En mangeant une§e pomme d'or§7 les secondes de§c régénérations III§7 seront§c cumulé§7.",
+                    "§7     →§c 3 kills§7: En mangeant une§e pomme d'or§7 les secondes de§c régénération III§7 seront§c cumulées§7.",
                     "",
                     "§cDémons§7: ",
                     "",
                     "§7     →§c 1 kill§7: Vous obtiendrez une§c épée en diamant§7 enchantée§c tranchant IV",
                     "§7     →§c 2 kills§7: Vous obtiendrez§c 10% de force§7 supplémentaire la§c nuit",
-                    "§7     →§c 3 kills§7: Vous obtiendrez§c 10 de force§7 supplémentaire le§e jour",
+                    "§7     →§c 3 kills§7: Vous obtiendrez§c 10% de force§7 supplémentaire le§e jour",
                     "",
-                    "§eRole Solitaire§7: A chaque§c kill§7 vous obtiendrez§c 5%§7 de§c speed§7 supplémentaire",
+                    "§eRôle Solitaire§7: A chaque§c kill§7 vous obtiendrez§c 5%§7 de§c speed§7 supplémentaire",
                     "",
-                    "§cTips:§7 Si vous arrivez à tué 3§a Slayers§7 et§c 3 Démons§7 vous obtiendrez l'effet§c résistance I§7 la §cnuit"
+                    "§cTips:§7 Si vous arrivez à tuer 3§a Slayers§7 et§c 3 Démons§7 vous obtiendrez l'effet§c résistance I§7 la §cnuit"
             );
             EventUtils.registerRoleEvent(this);
             this.yoriichiV2 = role;
@@ -187,7 +187,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
             super("/ds souffle", "souffle", null, role, CommandType.DS,
                     "§7Vous permet d'§aactiver§7/§cdésactiver§7 votre§e souffle du Soleil§7",
                     "",
-                    "§7Lorsqu'il est§a activé§7, les joueurs que vous frappez se§c régénèreront§7 plus§c lentement§7 et ne recevrons qu'§e1❤ d'absorption§7",
+                    "§7Lorsqu'il est§a activé§7, les joueurs que vous frappez se§c régénèreront§7 plus§c lentement§7 et ne recevront qu'§e1❤ d'absorption§7",
                     "§7pendant§c 10 secondes§7.");
             EventUtils.registerRoleEvent(this);
         }

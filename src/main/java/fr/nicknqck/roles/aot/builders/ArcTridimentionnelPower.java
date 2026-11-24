@@ -35,7 +35,7 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
         super("§bArc tridimensionnel", new Cooldown(Main.getInstance().getGameConfig().getAotConfig().getTridiCooldown()), new ItemBuilder(Material.BOW)
                 .setName("§bArc tridimensionnel")
                 .addEnchant(Enchantment.ARROW_INFINITE, 1), role,
-                "§7Lancez une§c flèche§7, lorsqu'elle atterrit, vous vous§c téléportez§7 à cette endroit."
+                "§7Lancez une§c flèche§7, lorsqu'elle atterrit, vous vous§c téléportez§7 à cet endroit."
         );
         EventUtils.registerRoleEvent(this);
         getShowCdRunnable().setCustomText(true);
@@ -97,7 +97,7 @@ public class ArcTridimentionnelPower extends ItemPower implements Listener {
                 if (!bow.getItemMeta().getLore().equals(Arrays.asList(getDescriptions())))return;
                 //Si la personne a un titan
                 if (Main.getInstance().getTitanManager().hasTitan(((Player)event.getEntity().getShooter()).getUniqueId())) {
-                    //Si la personne est transformé en titan
+                    //Si la personne est transformée en titan
                     if (Main.getInstance().getTitanManager().getTitan(((Player)event.getEntity().getShooter()).getUniqueId()).isTransformed()) {
                         //Alors, on annule la flèche
                         ((Player)event.getEntity().getShooter()).sendMessage("§cLes titans n'ont pas accès à§b l'équipement tridimensionnel§c.");

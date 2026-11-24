@@ -90,7 +90,7 @@ public class ConnyV2 extends SoldatsRoles {
                     if (gamePlayer != null) {
                         if (gamePlayer.getRole() != null && gamePlayer.isOnline() && gamePlayer.isAlive()) {
                             amisList.add(gamePlayer);
-                            player.sendMessage("§a"+target.getName()+"§7 est maintenant considéré comme un/une§a ami§7§ae§7).");
+                            player.sendMessage("§a"+target.getName()+"§7 est maintenant considéré comme un/une§a ami§7(§ae§7).");
                             return true;
                         }
                     }
@@ -134,7 +134,7 @@ public class ConnyV2 extends SoldatsRoles {
         private void onDeath(@NonNull final FinalDeathEvent event) {
             if (this.amisList.contains(event.getRole().getGamePlayer())) {
                 this.forceRunnable.start();
-                getRole().getGamePlayer().sendMessage("§7Votre§a ami§7(§ae§7)§a "+event.getPlayer().getName()+"§7 est§c mort§7, de§c rage§7 votre tension monte et vous vous apercevez l'endroit ou§a il§7/§aelle§7 est§c mort§7(§ce§7), c'était ici:§c x§7:§c "+event.getPlayer().getLocation().getBlockX()+"§7,§c y§7:§c "+event.getPlayer().getLocation().getBlockY()+"§7,§c z§7:§c "+event.getPlayer().getLocation().getBlockZ()+"§7.");
+                getRole().getGamePlayer().sendMessage("§7Votre§a ami§7(§ae§7)§a "+event.getPlayer().getName()+"§7 est§c mort§7, de§c rage§7 votre tension monte et vous apercevez l'endroit où§a il§7/§aelle§7 est§c mort§7(§ce§7), c'était ici:§c x§7:§c "+event.getPlayer().getLocation().getBlockX()+"§7,§c y§7:§c "+event.getPlayer().getLocation().getBlockY()+"§7,§c z§7:§c "+event.getPlayer().getLocation().getBlockZ()+"§7.");
             }
         }
         @Override

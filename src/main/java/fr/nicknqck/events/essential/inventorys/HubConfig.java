@@ -235,14 +235,14 @@ public class HubConfig implements Listener {
                     }
 
                     if (item.getItemMeta().hasDisplayName()){
-                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée minimal de spawn des bijus")){
+                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée minimale de spawn des bijus")){
                             if (action == InventoryAction.PICKUP_ALL){
                                 Border.setMinBijuSpawn(Math.min(Border.getMinBijuSpawn()+50, Border.getMaxBijuSpawn()-50));
                             } else {
                                 Border.setMinBijuSpawn(Math.max(Border.getMinBijuSpawn()-50, Border.getMinBorderSize()+50));
                             }
                         }
-                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée maximal de spawn des bijus")){
+                        if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fCoordonnée maximale de spawn des bijus")){
                             if (action == InventoryAction.PICKUP_ALL){
                                 Border.setMaxBijuSpawn(Math.min(Border.getMaxBijuSpawn()+50, Border.getMaxBorderSize()-50));
                             } else {

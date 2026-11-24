@@ -52,7 +52,7 @@ public class TitanUltime extends TitansRoles {
 				"",
 				AllDesc.point+"Vous possédez une plume enchantée (transformation) qui à son activation vous donnera l'effet "+AllDesc.Speed+" 1 ou "+AllDesc.Resi+" 1",
 				"",
-				AllDesc.point+"Si vous venez à tuer un Titan vous obtiendrez votre transformation ultime, qui à son activation vous octroie les effets "+AllDesc.Speed+" 3,"+AllDesc.Force+" 1 ansi que 3 "+AllDesc.coeur+" supplémentaire",
+				AllDesc.point+"Si vous venez à tuer un Titan vous obtiendrez votre transformation ultime, qui à son activation vous octroie les effets "+AllDesc.Speed+" 3,"+AllDesc.Force+" 1 ainsi que 3 "+AllDesc.coeur+" supplémentaires",
 				"",
 				AllDesc.point+"Vous pourrez utiliser votre transformation Ultime uniquement si vous avez utilisé votre transformation auparavant",
 				"",

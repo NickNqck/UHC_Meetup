@@ -20,7 +20,7 @@ public class Rasengan extends ItemPower {
 
     public Rasengan(@NonNull RoleBase role) {
         super("§aRasengan§r", new Cooldown(120), new ItemBuilder(Material.NETHER_STAR).setName("§aRasengan"), role,
-                "§7En frappant un joueur, vous permet§a repousse le joueur§7 en lui infligeant§c 2❤§7 de§c dégâts");
+                "§7En frappant un joueur, vous permet de§a repousser le joueur§7 en lui infligeant§c 2❤§7 de§c dégâts");
     }
 
     @Override

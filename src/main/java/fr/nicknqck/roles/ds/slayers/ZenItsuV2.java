@@ -132,13 +132,13 @@ public class ZenItsuV2 extends SlayerRoles implements Listener {
         private void callDie(Player target, Player player, RoleBase role) {
             Player owner = Bukkit.getPlayer(getRole().getPlayer());
             if (owner == null)return;
-            owner.sendMessage("§aAu loin vous entendez ce qui se§c trame§a proche de§c "+target.getName()+"§a, vous avez entendu les crie d'agonie de§c "+player.getName()+"§a qui était "+role.getOriginTeam().getColor()+role.getName());
+            owner.sendMessage("§aAu loin vous entendez ce qui se§c trame§a proche de§c "+target.getName()+"§a, vous avez entendu les cris d'agonie de§c "+player.getName()+"§a qui était "+role.getOriginTeam().getColor()+role.getName());
         }
 
         private void call(Player player) {
             Player owner = Bukkit.getPlayer(getRole().getPlayer());
             if (owner == null)return;
-            owner.sendMessage("§aAu loin vous entendez ce qui se passe avec§c "+player.getName()+"§a, on dirait qu'il a§c subit§a/§cinfliger§a des coups");
+            owner.sendMessage("§aAu loin vous entendez ce qui se passe avec§c "+player.getName()+"§a, on dirait qu'il a§c subi§a/§cinfligé§a des coups");
         }
         private static class EcouterTargeter implements Listener {
 

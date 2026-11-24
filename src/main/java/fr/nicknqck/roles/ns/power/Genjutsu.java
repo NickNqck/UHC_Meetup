@@ -44,7 +44,7 @@ public class Genjutsu extends ItemPower implements Listener {
                 "§8 -§c Attaque§7: Vous permet d'ouvrir un menu vous permettant de sélectionner un joueur, cela vous téléportera derrière ce joueur. (1x/5m)",
                 "",
                 "§8 - "+role.getTeamColor()+"Izanami§7: Vous permet d'ouvrir un menu vous permettant de sélectionner un joueur,",
-                "§7Celà vous donnera des missions à faire pour que la cible rejoigne votre camp. (1x/partie)");
+                "§7Cela vous donnera des missions à faire pour que la cible rejoigne votre camp. (1x/partie)");
         this.tsukuyomi = new TsukuyomiPower(role);
         this.attaque = new AttaquePower(role);
         this.izanami = new IzanamiPower(role);

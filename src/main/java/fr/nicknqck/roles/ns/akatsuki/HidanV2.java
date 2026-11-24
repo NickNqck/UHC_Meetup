@@ -145,7 +145,7 @@ public class HidanV2 extends AkatsukiRoles implements Listener {
                     }
                     final Player target = Bukkit.getPlayer(this.uuidTarget);
                     if (target == null) {
-                        player.sendMessage("§cVotre cible n'est pas connecté !");
+                        player.sendMessage("§cVotre cible n'est pas connectée !");
                         return false;
                     }
                     if (!target.getWorld().equals(player.getWorld())) {

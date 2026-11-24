@@ -102,7 +102,7 @@ public class Sasori extends AkatsukiRoles {
 
         public MarionetisationCommand(@NonNull RoleBase role) {
             super("/ns marionette", "marionette", null, role, CommandType.NS,
-                    "§7Lorsque vous effectuez cette commande vous§a activez§7/§cdésactiver§7 la \"§cMarionetisation§7\".",
+                    "§7Lorsque vous effectuez cette commande vous§a activez§7/§cdésactivez§7 la \"§cMarionetisation§7\".",
                     "",
                     "§7Si la§c Marionetisation§7 est§a activée§7, lorsqu'un joueur§c meurt§7 à moins de§c 20 blocs§7 de§c vous§7,",
                     "§7vous pourrez§c cliquer§7 sur un message dans votre§c chat§7 pour le§a réanimer§7 dans votre§c camp§7.",
@@ -250,7 +250,7 @@ public class Sasori extends AkatsukiRoles {
                 final GamePlayer gamePlayer = GamePlayer.of(targetUuid);
                 if (this.marionetisationCommand.possibleReviving.containsKey(target.getUniqueId()) && gamePlayer != null && !gamePlayer.isAlive() && gamePlayer.getRole() != null) {
                     if (this.marionetisationCommand.possibleReviving.get(target.getUniqueId()) >= 10) {
-                        this.marionetisationCommand.getRole().getGamePlayer().sendMessage("§cVous ne pouvez plus faire de§2 "+targetName+"§7 votre§2 marionette§c.");
+                        this.marionetisationCommand.getRole().getGamePlayer().sendMessage("§cVous ne pouvez plus faire de§2 "+targetName+"§7 votre§2 marionnette§c.");
                         this.marionetisationCommand.possibleReviving.remove(this.targetUuid);
                         cancel();
                         return;
@@ -275,13 +275,13 @@ public class Sasori extends AkatsukiRoles {
 
         public MarionnetteSansVie(@NonNull RoleBase role) {
             super("Marionnettes sans vie", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cMarionnettes sans vie"), role,
-                    "§7Effectue différente action en fonction du clic: ",
+                    "§7Effectue différentes actions en fonction du clic: ",
                     "",
-                    "§8 -§f Clic droit§7: Ouvre un menu, à l'intérieur vous aurez§c plusieurs§7 possibilité de fabrication de§c marionette§7,",
+                    "§8 -§f Clic droit§7: Ouvre un menu, à l'intérieur vous aurez§c plusieurs§7 possibilités de fabrication de§c marionnette§7,",
                     "§7chacune aura ses spécificités et son§c coût§7 de§c fabrication§7.",
-                    "§7Une fois§c fabriquer§7, vous pourrez choisir une§c marionette§7 à§c équiper§7.",
+                    "§7Une fois§c fabriquée§7, vous pourrez choisir une§c marionnette§7 à§c équiper§7.",
                     "",
-                    "§8 -§f Clic gauche§7: Permet d'utiliser l'effet de la§c marionette équiper§7.",
+                    "§8 -§f Clic gauche§7: Permet d'utiliser l'effet de la§c marionnette équipée§7.",
                     "",
                     "§7Si vous avez fabriqué toutes vos marionnettes, tant qu'une est§a équipée§7, vous pouvez changer rapidement via§f Shift + Clic droit§7."
             );
@@ -341,19 +341,19 @@ public class Sasori extends AkatsukiRoles {
                                 .setName(marionnette.getName())
                                 .setLore(this.marionnetteMap.get(marionnette) ? new ArrayList<>() : marionnette.getWhatIsNeededToCraft(player))
                                 .addLoreLine("")
-                                .addLoreLine("§fEffet: Lance une§c flèche§f la ou vous regardez,")
+                                .addLoreLine("§fEffet: Lance une§c flèche§f là où vous regardez,")
                                 .addLoreLines(marionnette.onTouch())
                                 .addLoreLine("")
-                                .addLoreLine("§f§lVous "+(this.marionnetteMap.get(marionnette) ? "§a§lpossédez" : "§c§lne possédez pas")+"§f§l cette§c§l marionette§f§l.")
-                                .addLoreLine(marionnetteMap.get(marionnette) ? actualMarionnette == null ? null : actualMarionnette.getClass().equals(marionnette.getClass()) ? "§f§lCette§c§l marionette§f§l est actuellement utiliser" : null : null)
+                                .addLoreLine("§f§lVous "+(this.marionnetteMap.get(marionnette) ? "§a§lpossédez" : "§c§lne possédez pas")+"§f§l cette§c§l marionnette§f§l.")
+                                .addLoreLine(marionnetteMap.get(marionnette) ? actualMarionnette == null ? null : actualMarionnette.getClass().equals(marionnette.getClass()) ? "§f§lCette§c§l marionnette§f§l est actuellement utilisée" : null : null)
                                 .toItemStack(), event1 -> {
                     if (!this.marionnetteMap.get(marionnette)) {
                         if (!marionnette.takeItemsToCraft((Player) event1.getWhoClicked())) {
-                            event1.getWhoClicked().sendMessage("§cVous n'avez pas les matériaux nécéssaire à la fabrication de "+marionnette.getName());
+                            event1.getWhoClicked().sendMessage("§cVous n'avez pas les matériaux nécessaires à la fabrication de "+marionnette.getName());
                             return;
                         }
                         this.marionnetteMap.put(marionnette, true);
-                        event1.getWhoClicked().sendMessage("§7Vous avez§a fabriquer§7 la§c marionette§7: \""+marionnette.getName()+"§7\".");
+                        event1.getWhoClicked().sendMessage("§7Vous avez§a fabriqué§7 la§c marionnette§7: \""+marionnette.getName()+"§7\".");
                         openChooseInv((Player) event1.getWhoClicked());
                         getRole().addPower(marionnette);
                         return;
@@ -362,11 +362,11 @@ public class Sasori extends AkatsukiRoles {
                                 if (this.actualMarionnette.equals(marionnette)) {
                                     return;
                                 }
-                                event1.getWhoClicked().sendMessage("§7Vous§c n'êtes plus§7 équiper de la§c marionette§7: \"" + actualMarionnette.getName() + "§7\".");
+                                event1.getWhoClicked().sendMessage("§7Vous§c n'êtes plus§7 équipé de la§c marionnette§7: \"" + actualMarionnette.getName() + "§7\".");
                                 actualMarionnette.onUnEquip();
                             }
                             this.actualMarionnette = marionnette;
-                            event1.getWhoClicked().sendMessage("§7Vous avez§a équiper§7 la§c marionette§7: \""+marionnette.getName()+"§7\".");
+                            event1.getWhoClicked().sendMessage("§7Vous avez§a équipé§7 la§c marionnette§7: \""+marionnette.getName()+"§7\".");
                             event1.getWhoClicked().closeInventory();
                             this.actualMarionnette.onEquip();
                         });
@@ -378,9 +378,9 @@ public class Sasori extends AkatsukiRoles {
         public void tryUpdateActionBar() {
             StringBuilder toSend = new StringBuilder();
             if (this.actualMarionnette != null) {
-                toSend.append("§fÉquiper: ").append(this.actualMarionnette.getName()).append("§7 | ");
+                toSend.append("§fÉquipée: ").append(this.actualMarionnette.getName()).append("§7 | ");
             } else {
-                toSend.append("§fÉquiper:§c Aucune marionnette équiper§7 | ");
+                toSend.append("§fÉquipée:§c Aucune marionnette équipée§7 | ");
             }
             for (BasicMarionnette basicMarionnette : this.marionnetteMap.keySet()) {
                 if (this.marionnetteMap.get(basicMarionnette)) {
@@ -558,7 +558,7 @@ public class Sasori extends AkatsukiRoles {
                         if (gamePlayer.getRole() != null) {
                             gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.POISON, 20*8, 0, false, false), EffectWhen.NOW);
                             if (arrow.getShooter() instanceof Player) {
-                                ((Player) arrow.getShooter()).sendMessage("§7Votre§c Senbon§7 a infliger§c 8 secondes§7 de§c Poison I§7 a§c "+victim.getDisplayName());
+                                ((Player) arrow.getShooter()).sendMessage("§7Votre§c Senbon§7 a infligé§c 8 secondes§7 de§c Poison I§7 à§c "+victim.getDisplayName());
                             }
                         }
                     }
@@ -588,7 +588,7 @@ public class Sasori extends AkatsukiRoles {
                 list.add(new ItemBuilder(Material.GOLDEN_APPLE, 5).setName("§ePommes d'or").toItemStack());
                 list.add(new ItemBuilder(Material.SAND, 64).setName("§eSables").toItemStack());
                 list.add(new ItemBuilder(Material.OBSIDIAN, 4).setName("§fBlocs d'obsidienne").toItemStack());
-                list.add(new ItemBuilder(Material.SPIDER_EYE, 1).setName("§2Oeil d'araigné").toItemStack());
+                list.add(new ItemBuilder(Material.SPIDER_EYE, 1).setName("§2Œil d'araignée").toItemStack());
                 list.add(new ItemBuilder(Material.BONE, 3).setName("§fOs").toItemStack());
                 return list;
             }
@@ -632,7 +632,7 @@ public class Sasori extends AkatsukiRoles {
                     event.setDamage(0.0);
                     victim.setHealth(Math.max(1.0, victim.getHealth()-3.0));
                     if (arrow.getShooter() instanceof Player) {
-                        ((Player) arrow.getShooter()).sendMessage("§7Une§c Scie Circulaire§7 a toucher§a "+victim.getDisplayName());
+                        ((Player) arrow.getShooter()).sendMessage("§7Une§c Scie Circulaire§7 a touché§a "+victim.getDisplayName());
                     }
                     if (RandomUtils.getOwnRandomProbability(80.0)) {
                         final GamePlayer gamePlayer = GamePlayer.of(victim.getUniqueId());
@@ -640,7 +640,7 @@ public class Sasori extends AkatsukiRoles {
                             if (gamePlayer.getRole() != null) {
                                 gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.WITHER, 20*8, 1, false, false), EffectWhen.NOW);
                                 if (arrow.getShooter() instanceof Player) {
-                                    ((Player) arrow.getShooter()).sendMessage("§7Votre§c Scie Circulaire§7 a infliger§c 8 secondes§7 de§c Wither II§7 a§c "+victim.getDisplayName());
+                                    ((Player) arrow.getShooter()).sendMessage("§7Votre§c Scie Circulaire§7 a infligé§c 8 secondes§7 de§c Wither II§7 à§c "+victim.getDisplayName());
                                 }
                             }
                         }
@@ -650,7 +650,7 @@ public class Sasori extends AkatsukiRoles {
                             if (gamePlayer.getRole() != null) {
                                 gamePlayer.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*8, 0, false, false), EffectWhen.NOW);
                                 if (arrow.getShooter() instanceof Player) {
-                                    ((Player) arrow.getShooter()).sendMessage("§7Votre§c Scie Circulaire§7 a infliger§c 8 secondes§7 de§c Slowness I§7 a§c "+victim.getDisplayName());
+                                    ((Player) arrow.getShooter()).sendMessage("§7Votre§c Scie Circulaire§7 a infligé§c 8 secondes§7 de§c Slowness I§7 à§c "+victim.getDisplayName());
                                 }
                             }
                         }

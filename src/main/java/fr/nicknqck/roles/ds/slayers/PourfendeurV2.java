@@ -53,10 +53,10 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         }
     }
     private final List<Soufles> souflesList = new ArrayList<>();
-    private final ItemStack soufleVentItem = new ItemBuilder(Material.FEATHER).setName("§aSoufle du Vent").setUnbreakable(true).setDroppable(false).toItemStack();
+    private final ItemStack soufleVentItem = new ItemBuilder(Material.FEATHER).setName("§aSouffle du Vent").setUnbreakable(true).setDroppable(false).toItemStack();
     private int cdVent, cdFoudre, cdEau;
-    private final ItemStack soufleFoudreItem = new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eSoufle de la Foudre").setUnbreakable(true).setDroppable(false).toItemStack();
-    private final ItemStack soufleEauItem = new ItemBuilder(Material.NETHER_STAR).setName("§bSoufle de l'Eau").setUnbreakable(true).setDroppable(false).toItemStack();
+    private final ItemStack soufleFoudreItem = new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eSouffle de la Foudre").setUnbreakable(true).setDroppable(false).toItemStack();
+    private final ItemStack soufleEauItem = new ItemBuilder(Material.NETHER_STAR).setName("§bSouffle de l'Eau").setUnbreakable(true).setDroppable(false).toItemStack();
     public PourfendeurV2(UUID player) {
         super(player);
     }
@@ -80,11 +80,11 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
         setCanuseblade(true);
         AutomaticDesc desc = new AutomaticDesc(this);
         desc.addParticularites(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Au début de la partie un souffle aléatoire vous est défini parmi :\n\n"
-                        + AllDesc.tab+"§6Souffle du feu§7: A chaque coup §cinfliger§7 vous aurez§c 10%§7 de§c chance§7 que le coup§6 enflamme§7 la§c cible§7.\n\n"
-                        + AllDesc.tab+"§bSouffle de l'eau§7: Vous obtenez un livre enchanter§b Depth Strider I§7 ainsi qu'un item vous donnant§b Speed I§7 pendant§c 3 minutes§7. (1x/5m)\n\n"
+                        + AllDesc.tab+"§6Souffle du feu§7: A chaque coup §cinfligé§7 vous aurez§c 10%§7 de§c chance§7 que le coup§6 enflamme§7 la§c cible§7.\n\n"
+                        + AllDesc.tab+"§bSouffle de l'eau§7: Vous obtenez un livre enchanté§b Depth Strider I§7 ainsi qu'un item vous donnant§b Speed I§7 pendant§c 3 minutes§7. (1x/5m)\n\n"
                         + AllDesc.tab+"§aSouffle du vent§7: Vous obtenez un item vous donnant§b Speed II§7 pendant§c 2 minutes§7. (1x/4min)\n\n"
                         + AllDesc.tab+"§8Souffle de la roche§7: Vous aurez l'effet§8 Résistance I§7 le jour.\n\n"
-                        + AllDesc.tab+"§eSouffle de la foudre§7: Vous aurez un item vous permettant d'infliger (§caprès activation§7)§c 1❤§7 de§c dégat§7 ainsi que l'effet§l Slowness I§r§7. (1x/3min)")})
+                        + AllDesc.tab+"§eSouffle de la foudre§7: Vous aurez un item vous permettant d'infliger (§caprès activation§7)§c 1❤§7 de§c dégât§7 ainsi que l'effet§l Slowness I§r§7. (1x/3min)")})
                 , new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A chaque§c kill§7 que vous faites vous obtenez un souffle aléatoire parmi ceux cités.")}),
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Lorsque vous obtenez le§c cinquième§7 et §cdernier§7 souffle disponible vous aurez un certain§c pourcentage de chance§7 de: \n\n"
                         +AllDesc.tab+"§7(§c5%§7) Devenir§e Solo§7: Si cela arrive vous obtiendrez les effets§b Speed I§7 et§c Force I§7 permanent\n§7Votre item \"§eSouffle de la Foudre§7\" infligera en plus de l'effet§l Slowness I§7 l'effet§l Weakness I§7 pendant§c 15 secondes\n§7Pour finir vous obtiendrez l'§cenchantement§b Depth Strider 2§7 sur vos bottes.\n\n"
@@ -148,8 +148,8 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         ((Player) event.getOriginEvent().getEntity()).setHealth(((Player) event.getOriginEvent().getEntity()).getHealth()-2.0);
                     }
                     this.cdFoudre = 60*3;
-                    event.getOriginEvent().getDamager().sendMessage("§7Votre§e Soufle de la Foudre§7 a fait effet.");
-                    event.getOriginEvent().getEntity().sendMessage("§7Vous avez subi les effets du§e Soufle de la Foudre§7.");
+                    event.getOriginEvent().getDamager().sendMessage("§7Votre§e Souffle de la Foudre§7 a fait effet.");
+                    event.getOriginEvent().getEntity().sendMessage("§7Vous avez subi les effets du§e Souffle de la Foudre§7.");
                     event.getVictim().getRole().owner.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*15, 0, false, false), true);
                     if (getTeam().equals(TeamList.Solo)){
                         event.getVictim().getRole().owner.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20*15, 0, false, false), true);
@@ -168,7 +168,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         sendCooldown(event.getPlayer(), cdVent);
                         return;
                     }
-                    event.getPlayer().sendMessage("§7Vous avez activé votre§a Soufle du vent§7.");
+                    event.getPlayer().sendMessage("§7Vous avez activé votre§a Souffle du vent§7.");
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*2, 1, false, false), true);
                     this.cdVent = 60*6;
                     event.setCancelled(true);
@@ -179,7 +179,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         event.setCancelled(true);
                         return;
                     }
-                    event.getPlayer().sendMessage("§7Votre§e Soufle de la Foudre§7 est§c activé§7, vous devez maintenant taper un §cjoueur§7.");
+                    event.getPlayer().sendMessage("§7Votre§e Souffle de la Foudre§7 est§c activé§7, vous devez maintenant taper un §cjoueur§7.");
                     this.cdFoudre = -500;
                     event.setCancelled(true);
                 }
@@ -189,7 +189,7 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
                         event.setCancelled(true);
                         return;
                     }
-                    event.getPlayer().sendMessage("§7Vous avez activé votre§b Soufle de l'Eau§7.");
+                    event.getPlayer().sendMessage("§7Vous avez activé votre§b Souffle de l'Eau§7.");
                     this.cdEau = 60*8;
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*3, 0, false, false), true);
                     event.setCancelled(true);
@@ -271,19 +271,19 @@ public class PourfendeurV2 extends SlayerRoles implements Listener {
             if (role.cdVent >= 0) {
                 role.cdVent--;
                 if (role.cdVent == 0) {
-                    role.owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§a Soufle du vent§7.");
+                    role.owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§a Souffle du vent§7.");
                 }
             }
             if (role.cdFoudre >= 0) {
                 role.cdFoudre--;
                 if (role.cdFoudre == 0) {
-                    role.owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§e Soufle de la Foudre§7.");
+                    role.owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§e Souffle de la Foudre§7.");
                 }
             }
             if (role.cdEau >= 0) {
                 role.cdEau--;
                 if (role.cdEau == 0) {
-                    role.owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§b Soufle de l'Eau§7.");
+                    role.owner.sendMessage("§7Vous pouvez à nouveau utiliser votre§b Souffle de l'Eau§7.");
                 }
             }
         }

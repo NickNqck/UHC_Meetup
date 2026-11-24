@@ -41,7 +41,7 @@ public class BertoltV2 extends MahrRoles implements Listener {
     public void RoleGiven(GameState gameState) {
         Main.getInstance().getTitanManager().addTitan(getPlayer(), new ColossalV2(getGamePlayer()));
         EventUtils.registerRoleEvent(this);
-        addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipier§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
+        addKnowedPlayersWithRoles("§7Voici la liste de vos coéquipiers§9 Mahr§7: ", BertoltV2.class, LaraV2.class, PorcoV2.class, ReinerV2.class, Magath.class, PieckV2.class);
     }
 
     @Nonnull
@@ -50,7 +50,7 @@ public class BertoltV2 extends MahrRoles implements Listener {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Lorsque vous vous transformez/détransformez en titan vous donnerez l'effet§c Weakness I§7 pendant§c 30 secondes§7 à toutes les personnes (sauf vos coéquipier) dans un rayon de§c 50 blocs")
+                .addCustomLine("§7Lorsque vous vous transformez/détransformez en titan vous donnerez l'effet§c Weakness I§7 pendant§c 30 secondes§7 à toutes les personnes (sauf vos coéquipiers) dans un rayon de§c 50 blocs")
                 .getText();
     }
     @EventHandler

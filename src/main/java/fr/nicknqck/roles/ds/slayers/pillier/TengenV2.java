@@ -77,8 +77,8 @@ public class TengenV2 extends PilierRoles {
         private boolean invisible = false;
 
         protected AttaqueFurtive(@NonNull RoleBase role) {
-            super("§eSoufle du son", new Cooldown(60*5), new ItemBuilder(Material.FEATHER).setName("§eSoufle du son"), role,
-                    "§7Vous met §cinvisible§7 et vous donne§e Speed III§7 pendant§c 60 secondes§7, le premier §cjoueur§7 que vous frapperez subira ses§c dégâts§7 multiplié par§c 1,5");
+            super("§eSouffle du son", new Cooldown(60*5), new ItemBuilder(Material.FEATHER).setName("§eSouffle du son"), role,
+                    "§7Vous met §cinvisible§7 et vous donne§e Speed III§7 pendant§c 60 secondes§7, le premier §cjoueur§7 que vous frapperez subira ses§c dégâts§7 multipliés par§c 1,5");
             EventUtils.registerRoleEvent(this);
         }
 
@@ -197,7 +197,7 @@ public class TengenV2 extends PilierRoles {
 
         protected Kunai(@NonNull RoleBase role) {
             super("§cKunai empoisonné", new Cooldown(60), new ItemBuilder(Material.SNOW_BALL).setName("§cKunai empoisonné"), role,
-                    "§fBoule de neige§7 ayant§c 25%§7 de§c chance§7 de donner§c 6 secondes§7 de§2 Poison I§7 au joueur toucher");
+                    "§fBoule de neige§7 ayant§c 25%§7 de§c chance§7 de donner§c 6 secondes§7 de§2 Poison I§7 au joueur touché");
             EventUtils.registerRoleEvent(this);
         }
 

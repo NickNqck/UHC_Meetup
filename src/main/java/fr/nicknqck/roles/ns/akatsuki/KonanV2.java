@@ -80,16 +80,16 @@ public class KonanV2 extends ChiefAkatsukiRoles {
         private final ParcheminsExplosifs parcheminsExplosifs;
 
         public DanceDuShikigami(@NonNull RoleBase role) {
-            super("§cDance du Shikigami§r", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cDance du Shikigami"), role,
+            super("§cDanse du Shikigami§r", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§cDanse du Shikigami"), role,
                     "§7Ouvre un menu vous offrant§c plusieurs choix§7:",
                     "",
-                    "§8 -§c Fuite anticiper§7: Permet de poser un§c point de téléportation§7 puis de s'y§c re-téléporter§7 en rappuyant dans le menu.",
+                    "§8 -§c Fuite anticipée§7: Permet de poser un§c point de téléportation§7 puis de s'y§c re-téléporter§7 en rappuyant dans le menu.",
                     "§7§o(1x/8m)",
                     "",
                     "§8 -§c Lance§7: Pendant§c 60 secondes§7, vous offre§c 20%§7 de§c force§7 (§c+2%§7 par§c 1/2❤§7 manquant).",
                     "§7§o(1x/5m)",
                     "",
-                    "§8 -§c Parchemins explosifs§7: Pose un§c parchemin§7 à votre position, si vous faites§f shift + clic§7 celà fera exploser§c tout§7",
+                    "§8 -§c Parchemins explosifs§7: Pose un§c parchemin§7 à votre position, si vous faites§f shift + clic§7 cela fera exploser§c tout§7",
                     "§7les§c parchemins explosifs§7 que vous aviez précédemment posés, infligeant donc§c 1,5❤§7 aux joueurs touchés.",
                     "§7§o(1x/3m)"
             );
@@ -108,7 +108,7 @@ public class KonanV2 extends ChiefAkatsukiRoles {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                @NonNull final FastInv inv = new FastInv(27, "§cDance du Shikigami");
+                @NonNull final FastInv inv = new FastInv(27, "§cDanse du Shikigami");
                 inv.setItems(inv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").setDurability(7).toItemStack());
                 inv.setItem(11, new ItemBuilder(Material.ENDER_PEARL).setName(this.fuiteAnticipePower.getName()).setLore(this.fuiteAnticipePower.getDescriptions()).toItemStack(),
                         event -> this.fuiteAnticipePower.checkUse((Player) event.getWhoClicked(), new HashMap<>()));
@@ -147,11 +147,11 @@ public class KonanV2 extends ChiefAkatsukiRoles {
             private Location location;
 
             public FuiteAnticipePower(@NonNull RoleBase role) {
-                super("§cFuite anticipé§r", new Cooldown(60*8), role,
+                super("§cFuite anticipée§r", new Cooldown(60*8), role,
                         "§7Vous permet de placer un§c point de téléportation§7.",
                         "",
                         "§7Une fois posé, vous pourrez§c réutiliser§7 ce§c pouvoir§7 pour vous§a téléporter§7 à l'endroit défini.",
-                        "§7§o(Une fois que vous vous§a téléportez§7§o, le§c point§7§o§c supprimer§7§o)",
+                        "§7§o(Une fois que vous vous§a téléportez§7§o, le§c point§7§o est§c supprimé§7§o)",
                         "",
                         "§bCooldown§7:§c 8 minutes");
                 setShowInDesc(false);
@@ -256,11 +256,11 @@ public class KonanV2 extends ChiefAkatsukiRoles {
             private final List<Location> locations = new ArrayList<>();
 
             public ParcheminsExplosifs(@NonNull RoleBase role) {
-                super("§cParchemins explosif§r", new Cooldown(60*3), role,
-                        "§7Vous permet de poser un§c parchemin§7 la ou vous êtes§7. (1x/3m)",
+                super("§cParchemins explosifs§r", new Cooldown(60*3), role,
+                        "§7Vous permet de poser un§c parchemin§7 là où vous êtes§7. (1x/3m)",
                         "",
                         "§7Dans le menu, en faisant un§f shift + clic§7, déclenche des explosions partout là où vous les aviez posés",
-                        "§7des§c parchemins explosif§7, les joueurs touchés perdront§c 1,5❤§7 par§c explosion§7.",
+                        "§7des§c parchemins explosifs§7, les joueurs touchés perdront§c 1,5❤§7 par§c explosion§7.",
                         "",
                         "§7§o(Aucun joueur ne peut mourir de vos explosions).",
                         "",

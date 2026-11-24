@@ -83,7 +83,7 @@ public class UrokodakiV3 extends SlayerRoles {
         private boolean using = false;
 
         public ImpacteItem(@NonNull RoleBase role) {
-            super("Impacte de la Cascade", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bImpacte de la cascade"), role,
+            super("Impact de la Cascade", new Cooldown(60*7), new ItemBuilder(Material.NETHER_STAR).setName("§bImpact de la cascade"), role,
                     "§7En visant un joueur, vous propulse dans sa direction puis, lui fait perdre§c 2❤ non permanents§7 et",
                     "§7lui donne pendant§c 10 secondes§7 l'effet§c Slowness II§7.");
             EventUtils.registerRoleEvent(this);
@@ -181,7 +181,7 @@ public class UrokodakiV3 extends SlayerRoles {
                         if (!give){
                             to.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1, false, false), true);
                         }
-                        getRole().getGamePlayer().sendMessage("§c"+to.getDisplayName()+"§7 a subi votre§b Impacte de la cascade§7.");
+                        getRole().getGamePlayer().sendMessage("§c"+to.getDisplayName()+"§7 a subi votre§b Impact de la cascade§7.");
                         to.sendMessage("§7Vous avez été touché par l'§bImpact de la cascade§7.");
                     }, 20);
                 }
@@ -206,7 +206,7 @@ public class UrokodakiV3 extends SlayerRoles {
 
         public DSWATER(@NonNull RoleBase role) {
             super("/ds water <joueur>", "water", null, role, CommandType.DS,
-                    "§7Si la personne visée est l'un de vos élève, vous obtiendrez l'effet§e Speed I§7 de manière§c permanente§7 et",
+                    "§7Si la personne visée est l'un de vos élèves, vous obtiendrez l'effet§e Speed I§7 de manière§c permanente§7 et",
                     "§9Résistance I§7 proche de la§c cible§7.",
                     "",
                     "§7Vos élèves sont:§a Tanjiro§7,§a Tomioka§7,§a Sabito§7 et§a Makomo§7.");

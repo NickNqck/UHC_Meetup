@@ -71,13 +71,13 @@ public class EclaireurV2 extends SoldatsRoles {
 
         public Eclairage(@NonNull RoleBase role) {
             super("§aEclairage !§r", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§aEclairage !"), role,
-                    "§7Vous offre§c 3 minutes§7 d'§cinvisibilité§7 tout-en cachant",
+                    "§7Vous offre§c 3 minutes§7 d'§cinvisibilité§7 tout en cachant",
                     "§7votre§c armure§7 auprès des§c autres joueurs§7.",
                     "",
                     "§8 -§7 En réutilisant votre§c item§7, vous serez de nouveau§a visible§7.",
                     "§8 -§7 Si vous vous§c faites attaquer§7 ou qu'on§c vous attaque§7,",
                     "§7vous deviendrez à nouveau§a visible§7.",
-                    "§8 -§7 Lors de vos§a eclairages§7, les autres joueurs ne",
+                    "§8 -§7 Lors de vos§a éclairages§7, les autres joueurs ne",
                     "§7verront pas les objets que vous avez en main.");
             this.runnable = new EclairageRunnable(this);
             setWorkWhenInCooldown(true);

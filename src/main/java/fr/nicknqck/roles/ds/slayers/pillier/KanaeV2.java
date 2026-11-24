@@ -62,7 +62,7 @@ public class KanaeV2 extends PilierRoles {
     private static class VegetalPower extends ItemPower {
 
         protected VegetalPower(@NonNull RoleBase role){
-            super("§aÉpée Végétal", new Cooldown(40), new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aLame végétal"), role,
+            super("§aÉpée Végétale", new Cooldown(40), new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 3).setName("§aLame végétale"), role,
                     "§7Lorsque vous frappez un joueur il y a un certain§c pourcentage§7 de chance§7 que certaines actions se produisent",
                     "",
                     AllDesc.point+"§c25%§7 de ne rien faire du tout",
@@ -73,7 +73,7 @@ public class KanaeV2 extends PilierRoles {
                     "",
                     AllDesc.point+"§c15%§7 d'infliger§c Poison I§7 pendant§c 10s",
                     "",
-                    AllDesc.point+"§c10%§7 de vous§c soignez§7 de§c 2❤",
+                    AllDesc.point+"§c10%§7 de vous§c soigner§7 de§c 2❤",
                     "",
                     AllDesc.point+"§c5%§7 d'infliger§c Weakness I§7,§c Slowness I§7 et§c Poison I§7 pendant§c 10s");
             setSendCooldown(false);

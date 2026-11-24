@@ -127,7 +127,7 @@ public class MitsuriV2 extends PilierRoles implements Listener {
             }
             Player obanai = Bukkit.getPlayer(mitsuriV2.obanai.getPlayer());
             if (obanai == null) {
-                player.sendMessage("§aObanai§c n'est pas connecter");
+                player.sendMessage("§aObanai§c n'est pas connecté");
                 return false;
             }
             if (!player.getWorld().equals(obanai.getWorld())) {

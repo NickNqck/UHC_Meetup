@@ -62,7 +62,7 @@ public class InventoryConfig implements Listener {
                 }
             }
             if (item.getItemMeta().hasDisplayName()) {
-                if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fNombre de pomme d'§eor")) {
+                if (item.getItemMeta().getDisplayName().equalsIgnoreCase("§r§fNombre de pommes d'§eor")) {
                     if (action.equals(InventoryAction.PICKUP_ALL)) {
                         if (Main.getInstance().getGameConfig().getStuffConfig().getNmbGap() != 64) {
                             Main.getInstance().getGameConfig().getStuffConfig().setNmbGap(Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()+1);

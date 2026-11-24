@@ -151,7 +151,7 @@ public class WebHookListeners implements Listener {
         return Main.getInstance().getWebhookConfig().getString("url", "");
     }
     private String getOriginName() {
-        return Main.getInstance().getWebhookConfig().getString("name", "Nom par defaut");
+        return Main.getInstance().getWebhookConfig().getString("name", "Nom par défaut");
     }
     private boolean isLobbyEnable() {
         return Main.getInstance().getWebhookConfig().getBoolean("lobby", false);

@@ -46,7 +46,7 @@ public abstract class KumogakureRole extends NSSoloRoles {
 
         public KyubiPower(@NonNull RoleBase role) {
             super("Kyubi (Kumogakure)", new Cooldown(60*15), new ItemBuilder(Material.NETHER_STAR).setName("§6Kyubi"), role,
-                    "§7Pendant§c 3 minutes§7 vous offre des effets, cependant ils changent chaque minutes: ",
+                    "§7Pendant§c 3 minutes§7 vous offre des effets, cependant ils changent chaque minute: ",
                     "§8 - §aPremière minute§7: Vous obtenez les effets§e Speed II§7 ainsi que§c Force I§7.",
                     "§8 - §6Deuxième minute§7: Vous obtenez les effets§e Speed I§7 ainsi que§c Force I§7.",
                     "§8 - §cTroisième minute§7: Vous obtenez l'effet§e Speed I§7.");

@@ -147,7 +147,7 @@ public abstract class EdoOrochimaruRoles extends OrochimaruRoles implements List
             RoleBase role = gameState.getGamePlayer().get(clicked.getUniqueId()).getRole();
             edoTenseis.put(clicked.getUniqueId(), role);
             owner.closeInventory();
-            clicked.sendMessage("§7Vous avez été invoquée par l'§5Edo Tensei");
+            clicked.sendMessage("§7Vous avez été invoqué par l'§5Edo Tensei");
             owner.sendMessage("§5Edo Tensei !");
             role.setTeam(this.role.getTeam());
             role.setMaxHealth(20.0);

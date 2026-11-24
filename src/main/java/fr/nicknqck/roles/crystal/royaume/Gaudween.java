@@ -61,7 +61,7 @@ public class Gaudween extends RoyaumeBase {
 
         public PrechePower(@NonNull RoleBase role) {
             super("/cr preche <joueur>", "preche", new Cooldown(60*10), role, CommandType.CRYSTAL,
-                    "§7Augmente la§a réputation§7 du joueur§c cibler§7.",
+                    "§7Augmente la§a réputation§7 du joueur§c ciblé§7.",
                     "",
                     "§7S'il a plus de§a réputation§7 que vous, alors, il ne gagnera rien,",
                     "§7Si ce n'est pas le cas alors, vous obtiendrez pendant§c 8 minutes§7 la§a Théologie§7.",
@@ -96,7 +96,7 @@ public class Gaudween extends RoyaumeBase {
                             }
                         }
                     }
-                    player.sendMessage("§cCe genre de personne ne peuvent pas être sauvé...");
+                    player.sendMessage("§cCe genre de personnes ne peut pas être sauvé...");
                     return false;
                 } else {
                     player.sendMessage("§b"+args[1]+"§c n'existe pas ou n'est pas connecté(e) !");

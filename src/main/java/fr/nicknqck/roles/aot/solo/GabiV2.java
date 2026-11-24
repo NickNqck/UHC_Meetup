@@ -137,7 +137,7 @@ public class GabiV2 extends AotRoles implements Listener {
                 hasTitan ? "/*" :"",
                 hasTitan ? "/*" :"§8 - §7Qu'importe le nombre de joueurs essayant de récupérer §7ce §ctitan§7, vous serez toujours§c prioritaire§7.",
                 hasTitan ? "/*" :"",
-                hasTitan ? "/*" :"§8 - §7Si vous récupérez de cette façon un titan appartenenant §7originellement au camp§9 Mahr§7, vous rejoindrez ce dernier.",
+                hasTitan ? "/*" :"§8 - §7Si vous récupérez de cette façon un titan appartenant §7originellement au camp§9 Mahr§7, vous rejoindrez ce dernier.",
                 hasTitan ? "/*" : "",
                 hasTitan ? "/*" : "§8 - §7En récupérant un§c titan§7, vous perdez immédiatement§c 3"+ AllDesc.coeur+" §cpermanents§7."
         };

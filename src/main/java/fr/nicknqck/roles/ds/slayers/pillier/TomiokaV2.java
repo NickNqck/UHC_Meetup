@@ -239,14 +239,14 @@ public class TomiokaV2 extends PilierRoles {
         private void UHCDeathEvent(final UHCDeathEvent event) {
             if (event.getRole() == null)return;
             final RoleBase roleBase = event.getRole();
-            if (firstKill) {//J'ajoute 1❤ perma a Tomioka
+            if (firstKill) {//J'ajoute 1❤ perma à Tomioka
                 if (!isGoodRole(roleBase))return;
                 getRole().setMaxHealth(getRole().getMaxHealth()+2.0);
                 final Player owner = Bukkit.getPlayer(getRole().getPlayer());
                 if (owner != null) {
                     owner.setMaxHealth(getRole().getMaxHealth());
                 }
-                return;//J'empêche Tomioka d'obtenir d'autre bonus que le ❤ perma s'il en a déjà eu 1
+                return;//J'empêche Tomioka d'obtenir d'autres bonus que le ❤ perma s'il en a déjà eu 1
             }
             if (roleBase instanceof Tanjiro) {
                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.DAY);

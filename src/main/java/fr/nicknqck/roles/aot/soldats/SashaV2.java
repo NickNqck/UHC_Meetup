@@ -51,7 +51,7 @@ public class SashaV2 extends SoldatsRoles {
     @Nonnull
     @Override
     public TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7A l'annonce des rôles vous obtenez§c 32 flèches §csupplémentaires§7.").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7À l'annonce des rôles vous obtenez§c 32 flèches §csupplémentaires§7.").getText();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class SashaV2 extends SoldatsRoles {
         public ArcDuChasseurItem(@NonNull RoleBase role) {
             super("§aArc du Chasseur§r", new Cooldown(60), new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 3).setName("§aArc du chasseur"), role,
                     "§7Lorsque vous tirez une flèche et qu'elle atteint un joueur,",
-                    "§7cela lui inflige un malus différent en fonction de l'endroit toucher",
+                    "§7cela lui inflige un malus différent en fonction de l'endroit touché",
                     "",
                     "§aTête§7: Elle obtiendra§c 7 secondes§7 de§9 Blindness",
                     "§aTorse§7: Elle perdra§c 1"+AllDesc.coeur+"§c supplémentaire§7 (en plus des dégâts de la flèche)",

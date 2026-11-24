@@ -18,9 +18,9 @@ public class Configuration_Inventory extends FastInv {
                 .setDurability(10)
                 .setName("§aConfiguration de l'inventaire")
                 .setLore(
-                        "§7Vous permet de modifier l'inventaire à votre guise l'inventaire de départ,",
+                        "§7Vous permet de modifier à votre guise l'inventaire de départ,",
                         "",
-                        "§7Si vous faites§f Shift + Clic§7 vous pourrez remettre l'inventaire par défaut (votre édition sera sauvegarder)."
+                        "§7Si vous faites§f Shift + Clic§7 vous pourrez remettre l'inventaire par défaut (votre édition sera sauvegardée)."
                 )
                 .toItemStack(), event -> {
             if (event.isShiftClick()) {
@@ -47,7 +47,7 @@ public class Configuration_Inventory extends FastInv {
                 }
         );
         if (Main.getInstance().getGameConfig().getStuffConfig().isDefaultInventory()) {
-            setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()).setName("§fNombre de pomme d'§eor").setLore(
+            setItem(48, new ItemBuilder(Material.GOLDEN_APPLE, Main.getInstance().getGameConfig().getStuffConfig().getNmbGap()).setName("§fNombre de pommes d'§eor").setLore(
                             "§fClic gauche:§a +1",
                             "§fClic droit:§c -1",
                             "§fMontant actuel:§e "+Main.getInstance().getGameConfig().getStuffConfig().getNmbGap())
@@ -90,7 +90,7 @@ public class Configuration_Inventory extends FastInv {
             });
             setItem(18, new ItemBuilder(Material.IRON_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 2)
                     .setLore(
-                            "§fClic gauche; §a+1",
+                            "§fClic gauche: §a+1",
                             "§fClic droit: §c-1",
                             "§fNiveau de protection:§b "+Main.getInstance().getGameConfig().getStuffConfig().getProtectionLeggings())
                     .toItemStack(), event -> {
@@ -180,7 +180,7 @@ public class Configuration_Inventory extends FastInv {
                     .setLore(
                             "§fClic gauche:§a +1",
                             "§fClic droit:§c -1",
-                            "§fNombre de seau de lave:§c "+Main.getInstance().getGameConfig().getStuffConfig().getLave()
+                            "§fNombre de seaux de lave:§c "+Main.getInstance().getGameConfig().getStuffConfig().getLave()
                     )
                     .toItemStack(), event -> {
                 if (event.isLeftClick()) {
@@ -196,7 +196,7 @@ public class Configuration_Inventory extends FastInv {
                     .setLore(
                             "§fClic gauche:§a +1",
                             "§fClic droit:§c -1",
-                            "§fNombre de seau d'eau:§c "+Main.getInstance().getGameConfig().getStuffConfig().getEau()
+                            "§fNombre de seaux d'eau:§c "+Main.getInstance().getGameConfig().getStuffConfig().getEau()
                     )
                     .toItemStack(), event -> {
                 if (event.isLeftClick()) {

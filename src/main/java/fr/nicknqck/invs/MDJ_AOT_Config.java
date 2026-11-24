@@ -32,7 +32,7 @@ public class MDJ_AOT_Config extends FastInv {
 
         if (Main.getInstance().getGameConfig().getAotConfig().isRodTridimenssionel()) {
             setItem(11, new ItemBuilder(Material.FISHING_ROD)
-                    .setName("§fEquipement Tridimentionnel")
+                    .setName("§fÉquipement Tridimensionnel")
                     .toItemStack(), event -> {
                 Main.getInstance().getGameConfig().getAotConfig().setRodTridimenssionel(false);
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a défini l'équipement tridimensionnel sur: \"§fArc§7\".");
@@ -40,7 +40,7 @@ public class MDJ_AOT_Config extends FastInv {
             });
         } else {
             setItem(11, new ItemBuilder(Material.BOW)
-                    .setName("§fEquipement Tridimentionnel")
+                    .setName("§fÉquipement Tridimensionnel")
                     .toItemStack(), event -> {
                 Main.getInstance().getGameConfig().getAotConfig().setRodTridimenssionel(true);
                 Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§7 a défini l'équipement tridimensionnel sur: \"§fCanne à pêche§7\".");
@@ -48,18 +48,18 @@ public class MDJ_AOT_Config extends FastInv {
             });
         }
         setItem(12, new ItemBuilder(Material.LAVA_BUCKET)
-                .setName("§fCapacité d'utiliser de la§6 lave§f pour les§c titans§f (§ctransformer§f)")
+                .setName("§fCapacité d'utiliser de la§6 lave§f pour les§c titans§f (§ctransformés§f)")
                 .setLore(Main.getInstance().getGameConfig().getAotConfig().isLaveTitans() ?
-                        "§fLes titans§a peuvent§f utiliser de la§6 lave§f une fois§c transformer§f."
+                        "§fLes titans§a peuvent§f utiliser de la§6 lave§f une fois§c transformés§f."
                         :
-                        "§fLes titans§c ne§f peuvent§c pas§f utiliser de la§6 lave§f une fois§c transformer§f.")
+                        "§fLes titans§c ne§f peuvent§c pas§f utiliser de la§6 lave§f une fois§c transformés§f.")
                 .toItemStack(), event -> {
             if (!Main.getInstance().getGameConfig().getAotConfig().isLaveTitans()) {
                 Main.getInstance().getGameConfig().getAotConfig().setLaveTitans(true);
-                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a défini la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§a Activer");
+                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a défini la capacité des§c titans§f (§ctransformés§f) d'utiliser de la§6 lave§f sur:§a Activer");
             } else {
                 Main.getInstance().getGameConfig().getAotConfig().setLaveTitans(false);
-                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a défini la capacité des§c titans§f (§ctransformer§f) d'utiliser de la§6 lave§f sur:§c Désactiver");
+                Main.getInstance().sendMessageToHosts(Main.getInstance().getNAME()+" §c"+event.getWhoClicked().getName()+"§f a défini la capacité des§c titans§f (§ctransformés§f) d'utiliser de la§6 lave§f sur:§c Désactiver");
             }
             new MDJ_AOT_Config().open((Player) event.getWhoClicked());
         });

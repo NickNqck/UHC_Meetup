@@ -146,7 +146,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 "§cLa personne ayant été touchée par l'event restera§e Solitaire§7 jusqu'à la fin de la partie",
                 "§7(§cCela outrepasse aussi l'infection de§e§l Shisui§r§7)",
                 "",
-                "§fL'annonce de l'évènement se fera après que l'utilisateur ait utilisé pendant§c 1 minute",
+                "§fL'annonce de l'évènement se fera après que l'utilisateur a utilisé pendant§c 1 minute",
                 "§fson§b Mode Chakra"
         };
     }
@@ -265,7 +265,7 @@ public class EveilTenseiGan extends Event implements Listener {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (this.chakraRunnable.running) {
                     if (sphereVeritePower.fly) {
-                        player.sendMessage("§cImpossible d'enlever votre§b Mode Chakra§c, vos§a Sphères de vérités§c sont trop puissante pour que vous puissiez le supporter sans lui.");
+                        player.sendMessage("§cImpossible d'enlever votre§b Mode Chakra§c, vos§a Sphères de vérité§c sont trop puissantes pour que vous puissiez le supporter sans lui.");
                         return false;
                     }
                     this.chakraRunnable.stop();
@@ -380,7 +380,7 @@ public class EveilTenseiGan extends Event implements Listener {
                 super("Sphère de vérité", new Cooldown(5), new ItemBuilder(Material.FEATHER).setName("§aSphère de vérité"), chakraPower.getRole(),
                         "§7Via un clic droit§a active§7/§cdésactive§7 votre§a fly§7,",
                         "§7Si un joueur vous frappe ou que vous attaquez un autre joueur votre§a vol§7 s'arrêtera.",
-                        "§7A l'activation vous perdrez§c 15 secondes directement§7.",
+                        "§7À l'activation vous perdrez§c 15 secondes directement§7.",
                         "",
                         "§c!ATTENTION! Quand votre§a fly§7 est§a activé§7 le temps dépensé dans votre§c banque de temps§7 sera§c doublé§7.");
                 this.modeChakraPower = chakraPower;

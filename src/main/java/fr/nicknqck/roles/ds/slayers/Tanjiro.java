@@ -104,7 +104,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getSentirJoueur() {
         TextComponent sentir = new TextComponent("§c/ds §csentir <joueur>");
         sentir.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Vous permet de savoir si un joueur est un§c démons§7 ou non (§aNezuko§7 est compté comme§c démon§7). (1x/partie)")}));
+                "§7Vous permet de savoir si un joueur est un§c démon§7 ou non (§aNezuko§7 est compté comme§c démon§7). (1x/partie)")}));
         sentir.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/ds sentir "));
         return sentir;
     }
@@ -120,8 +120,8 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getDanseText() {
         TextComponent danseItem = new TextComponent(" §7\"§6Danse §6du dieu §6du Feu§7\"");
         danseItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§r§7Vous obtenez pendant§l§c 5 minutes§r§7 l'Effet §9Resistance 1 §r§7et vous devenez §6invulnerable aux degâts de feu, §r§7également,\n"+
-                "§r§7pendant§l§c 1 minute§r§7 vos coups §6embrasent§r§7 les joueurs touchés, de plus le joueur possédant le role de §aNezuko§r§7\n"+
+                "§r§7Vous obtenez pendant§l§c 5 minutes§r§7 l'Effet §9Résistance 1 §r§7et vous devenez §6invulnérable aux dégâts de feu, §r§7également,\n"+
+                "§r§7pendant§l§c 1 minute§r§7 vos coups §6embrasent§r§7 les joueurs touchés, de plus le joueur possédant le rôle de §aNezuko§r§7\n"+
                 "§r§7obtiendra l'effet §espeed 2§r§7 pendant§l§c 5 minutes§r§7, à la dissipation des effets vous perdez  §c2"+AllDesc.coeur+"§r§7 permanent§7. (1x/12m)."
         )}));
         return danseItem;
@@ -129,7 +129,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
     private TextComponent getKillAssassin() {
         TextComponent texte = new TextComponent("§6§lParticularité");
         texte.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(
-                "§7Aléatoirement, un membre du camp des§c démons§7 est choisis pour devenir l'§4Assassin§7,\n§7Si vous parvenez à le tuer vous obtiendrez l'effet§c§l Force I§7 permanent")}));
+                "§7Aléatoirement, un membre du camp des§c démons§7 est choisi pour devenir l'§4Assassin§7,\n§7Si vous parvenez à le tuer vous obtiendrez l'effet§c§l Force I§7 permanent")}));
         return texte;
     }
 
@@ -284,7 +284,7 @@ public class Tanjiro extends SlayerRoles implements Listener {
                         return true;
                     }
                 } else {
-                    player.sendMessage("§c"+args[1]+" n'est pas connectée !");
+                    player.sendMessage("§c"+args[1]+" n'est pas connecté !");
                 }
                 return false;
             }

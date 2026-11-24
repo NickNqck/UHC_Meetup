@@ -82,7 +82,7 @@ public class DemonSimple extends DemonInferieurRole implements Listener {
                 .addEffects(getEffects())
                 .setPowers(getPowers())
                 .addCustomLine("§7En tuant un joueur, vous recevrez§c 3%§7 de§c force§7.")
-                .addCustomLine("§7Lorsque vous êtes proche de votre§c Lune Supérieur§7,\n" +
+                .addCustomLine("§7Lorsque vous êtes proche de votre§c Lune supérieure§7,\n" +
                         "§7Si c'est le§e jour§7 vous ne recevrez pas votre effet§8 Weakness§7,\n" +
                         "§7Si c'est la§c nuit§7 vous recevrez§c 5%§7 de§c dégâts§7 en moins.")
                 .getText();

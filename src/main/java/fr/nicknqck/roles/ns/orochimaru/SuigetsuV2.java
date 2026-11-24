@@ -199,7 +199,7 @@ public class SuigetsuV2 extends OrochimaruRoles implements Listener {
 
         public SuikaPower(@NonNull RoleBase role) {
             super("Suika", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§bSuika"), role,
-                    "§7Vous permet de vous téléportez environ§c 5 blocs plus loins§7 (à travers les murs et les obstacles)");
+                    "§7Vous permet de vous téléporter environ§c 5 blocs plus loin§7 (à travers les murs et les obstacles)");
         }
 
         @Override

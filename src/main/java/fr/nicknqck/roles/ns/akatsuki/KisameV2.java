@@ -101,7 +101,7 @@ public class KisameV2 extends AkatsukiRoles {
         protected SamehadaSwordPower(@NonNull RoleBase role) {
             super("Samehada", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cSamehada").addEnchant(Enchantment.DAMAGE_ALL, 3), role,
                     "§7Tous les§c 25 coups§7 infligés à un joueur, vous lui infligerez§c 2❤ supplémentaires§7 de§c dégâts");
-            role.getGamePlayer().getActionBarManager().addToActionBar("kisame.coupremaining", "§7Coup restant: §c0§7/§625");
+            role.getGamePlayer().getActionBarManager().addToActionBar("kisame.coupremaining", "§7Coups restants: §c0§7/§625");
         }
 
         @Override
@@ -129,12 +129,12 @@ public class KisameV2 extends AkatsukiRoles {
                         player.sendMessage("§cSamehada§7 fait effet sur§c "+victim.getDisplayName());
                         victim.sendMessage("§cSamehada fait effet sur vous !");
                     }
-                    this.getRole().getGamePlayer().getActionBarManager().updateActionBar("kisame.coupremaining", "§7Coup restant (§b"+victim.getDisplayName()+"§7): §c"+a+"§7/§625");
+                    this.getRole().getGamePlayer().getActionBarManager().updateActionBar("kisame.coupremaining", "§7Coups restants (§b"+victim.getDisplayName()+"§7): §c"+a+"§7/§625");
                     return true;
                 } else {
                     int a = 1;
                     this.map.put(victim.getDisplayName(), a);
-                    this.getRole().getGamePlayer().getActionBarManager().updateActionBar("kisame.coupremaining", "§7Coup restant (§b"+victim.getDisplayName()+"§7): §c"+a+"§7/§625");
+                    this.getRole().getGamePlayer().getActionBarManager().updateActionBar("kisame.coupremaining", "§7Coups restants (§b"+victim.getDisplayName()+"§7): §c"+a+"§7/§625");
                     return true;
                 }
             }
@@ -149,7 +149,7 @@ public class KisameV2 extends AkatsukiRoles {
             super("Suibun", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§bSuibun"), role,
                     "§7Remplace les blocs d'air autour de vous par de l'§beau§7 en téléportant tous les joueurs proches de vous à votre position.",
                     "",
-                    "§7L'§beau§7 disparaitra au bout de§c 5 secondes§7 passé hors de l'§beau§7.");
+                    "§7L'§beau§7 disparaitra au bout de§c 5 secondes§7 passées hors de l'§beau§7.");
             this.blockList = new ArrayList<>();
         }
 

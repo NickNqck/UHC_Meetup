@@ -63,7 +63,7 @@ public class HansiV2 extends SoldatsRoles {
         public GiveSeringueCommand(@NonNull RoleBase role) {
             super("/aot seringue <joueur>", "seringue", new Cooldown(300), role, CommandType.AOT,
                     "§7Vous permet de donner une§a§l Seringue§7 à un joueur",
-                    "§7§o(Si vous vous visez vous même vous perdrez§c 2"+ AllDesc.coeur+"§c permanent§7§o)",
+                    "§7§o(Si vous vous visez vous-même vous perdrez§c 2"+ AllDesc.coeur+"§c permanents§7§o)",
                     "",
                     "§7Les joueurs ayant une§a§l Seringue§7 peuvent récupérer un§c titan§7 si son détenteur",
                     "§7meurt à moins de§c 25 blocs§7 d'eux."

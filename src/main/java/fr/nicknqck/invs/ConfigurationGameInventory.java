@@ -102,7 +102,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.open((Player) event.getWhoClicked());
             inventory.openPage(currentPage());
         });
-        addContent(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemps avant annonce des roles").setLore(
+        addContent(new ItemBuilder(Material.SKULL_ITEM).setName("§r§fTemps avant annonce des rôles").setLore(
                 "§r§f[0 minute < "+GameState.getInstance().getRoleTimer()/60+" minutes > 40 minutes]",
                 "§r§fClic gauche: §a+1 minute",
                 "§r§fClic droit: §c-1 minute"
@@ -117,7 +117,7 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
             inventory.openPage(currentPage());
         });
         addContent(new ItemBuilder(Material.WATCH).setName("§r§fDurée du jour (et de la nuit)").setLore(
-                "§r§fDurée actuel:§6 "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getMaxTimeDay()),
+                "§r§fDurée actuelle:§6 "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getMaxTimeDay()),
                 "§r§fClic gauche: §a+10 secondes",
                 "§r§fClic droit: §c-10 secondes"
         ).toItemStack(), event -> {
@@ -143,10 +143,10 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
         addContent(GUIItems.getTabRoleInfo(GameState.getInstance()), event -> {
             if (ChatRank.isHost(event.getWhoClicked())) {
                 if (!GameState.getInstance().roletab) {
-                    event.getWhoClicked().sendMessage("Les roles seront maintenant affichés dans le tab");
+                    event.getWhoClicked().sendMessage("Les rôles seront maintenant affichés dans le tab");
                     GameState.getInstance().roletab = true;
                 } else {
-                    event.getWhoClicked().sendMessage("Les roles ne seront plus affichés dans le tab");
+                    event.getWhoClicked().sendMessage("Les rôles ne seront plus affichés dans le tab");
                     GameState.getInstance().roletab = false;
                 }
                 ConfigurationGameInventory inventory = new ConfigurationGameInventory();

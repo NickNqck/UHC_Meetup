@@ -134,7 +134,7 @@ public class IzanamiV2 implements Listener {
         for (MissionTarget mt : TargetMissions.keySet()) {
             return mt;
         }
-        return MissionTarget.Gap;//Je le met comme base au cas ou
+        return MissionTarget.Gap;//Je le met comme base au cas où
     }
     public boolean isAllTrue() {
         for (MissionUser mu : Missions.keySet()) {
@@ -268,7 +268,7 @@ public class IzanamiV2 implements Listener {
     private void onRecup(PlayerPickupItemEvent e) {
         if (isGoodMission(MissionUser.Gap) && isNotNull()) {
             if (e.getItem().hasMetadata("Izanami.Gap"+ this.gamePlayer.getUuid())) {
-                //		Bukkit.getPlayer(user).sendMessage("§c"+e.getPlayer().getDisplayName()+"§7 a récupérer votre§c");
+                //		Bukkit.getPlayer(user).sendMessage("§c"+e.getPlayer().getDisplayName()+"§7 a récupéré votre§c");
                 if (e.getPlayer().getUniqueId().equals(this.gameTarget.getUuid())) {
                     setTrueMissions(MissionUser.Gap);
                 }
@@ -347,7 +347,7 @@ public class IzanamiV2 implements Listener {
     private boolean applySuccessfullInfection(NSRoles infecteur, RoleBase infecter, Player toIzanami, GamePlayer gOwner, Player owner, GamePlayer gTo) {
         infecter.setTeam(infecteur.getTeam());
         toIzanami.sendTitle("§cVous êtes sous l'effet de l'§lIzanami", "§cVous êtes maintenant dans le camp "+gOwner.getRole().getTeamColor()+ infecteur.getOriginTeam().name());
-        toIzanami.sendMessage("§7Voici l'identité de votre coéquipier"+this.color+infecteur.getName()+": "+(infecteur.getPlayerFromRole((Roles) infecteur.getRoles()) != null ? infecteur.getPlayerFromRole((Roles)infecteur.getRoles()).getName() : "§cMort"));
+        toIzanami.sendMessage("§7Voici l'identité de votre coéquipier "+this.color+infecteur.getName()+": "+(infecteur.getPlayerFromRole((Roles) infecteur.getRoles()) != null ? infecteur.getPlayerFromRole((Roles)infecteur.getRoles()).getName() : "§cMort"));
         gTo.getRole().setSuffixString(gTo.getRole().getSuffixString()+"§7 ("+this.color+"Izanami§7)");
         final IzanamiFinishEvent izanamiFinishEvent = new IzanamiFinishEvent(infecteur, infecter, this.color, owner, toIzanami, true);
         Bukkit.getPluginManager().callEvent(izanamiFinishEvent);

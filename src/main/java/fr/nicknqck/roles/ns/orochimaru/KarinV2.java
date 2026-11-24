@@ -73,7 +73,7 @@ public class KarinV2 extends OrochimaruRoles {
 
         public DonItem(@NonNull RoleBase role) {
             super("/ns don <joueur>", "don", new Cooldown(60*3), role, CommandType.NS,
-                    "§7L'un des pouvoirs de la personne viser verra son§c cooldown réduit§7 de§c 1 minute§7.");
+                    "§7L'un des pouvoirs de la personne visée verra son§c cooldown réduit§7 de§c 1 minute§7.");
         }
 
         @Override
@@ -82,7 +82,7 @@ public class KarinV2 extends OrochimaruRoles {
             if (args.length == 2) {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
-                    player.sendMessage("§b"+args[1]+"§c n'existe pas ou n'est pas connecter !");
+                    player.sendMessage("§b"+args[1]+"§c n'existe pas ou n'est pas connecté !");
                     return false;
                 }
                 final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
@@ -174,7 +174,7 @@ public class KarinV2 extends OrochimaruRoles {
                     "§7En restant proche des autres joueurs vous connaitrez dans quel camp ils sont.",
                     "",
                     "§8 -§c 2 minutes§7 si la personne a pour camp d'origine "+TeamList.Orochimaru.getName(),
-                    "§8 -§c 5 minutes§7 pour les autres camp");
+                    "§8 -§c 5 minutes§7 pour les autres camps");
             knowRunnable = new KnowRunnable(this);
             this.knowRunnable.runTaskTimerAsynchronously(getPlugin(), 100, 20);
         }

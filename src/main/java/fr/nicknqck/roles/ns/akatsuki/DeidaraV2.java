@@ -111,9 +111,9 @@ public class DeidaraV2 extends AkatsukiRoles {
 
         public BakutonItem(@NonNull RoleBase role) {
             super("§6Bakuton§r", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§6Bakuton"), role,
-                    "§7Effectue plusieurs actions selon le§c clique effectué§7:",
+                    "§7Effectue plusieurs actions selon le§c clic effectué§7:",
                     "",
-                    "§fClic droit§7: Vous permet d'ouvrir un menu vous permettant de choisir une technique parmi§a celle-ci§f:",
+                    "§fClic droit§7: Vous permet d'ouvrir un menu vous permettant de choisir une technique parmi§a celles-ci§f:",
                     "",
                     "§7     →§cC1§7: Avec ce mode§a activé§7, vos flèches créeront une explosion qui, à l'impact, inflige§c 1❤ de dégât aux joueurs proches.§7 (1x/20s)",
                     "",
@@ -125,7 +125,7 @@ public class DeidaraV2 extends AkatsukiRoles {
                     "§7     →§cC4§7: Pendant§c 15s§7 tous les joueurs à moins de 25 blocs de la zone d'§catterissage§7 de la §c flèche§7 perdront§c 1/2"+AllDesc.coeur+"/§cs§7.§7 (1x/8m)",
                     "",
                     "§7     →§cArt Ultime§7:§c Après avoir sélectionné§7 ce§c mode§7, en faisant un§c Shift + clic gauche avec le§6 Bakûton§7 vous empêche de bouger pendant§c 10s§7 puis,",
-                    "§7crée une explosion énorme tuant tout joueurs dans la zone de cette dernière (dont vous).§7 (1x/partie)",
+                    "§7crée une explosion énorme tuant tous les joueurs dans la zone de cette dernière (dont vous).§7 (1x/partie)",
                     "",
                     "§fClic gauche§7: Vous permet de changer§c rapidement§7 de§c mode§7 (ne vous permet pas d'accéder à l'§cArt Ultime§7)."
             );
@@ -202,7 +202,7 @@ public class DeidaraV2 extends AkatsukiRoles {
 
         @Override
         public void tryUpdateActionBar() {
-            getShowCdRunnable().setCustomTexte("§fTechnique§6 Bakuton§f actuel§7: "+this.mode.getItem().getItemMeta().getDisplayName() + "§7 | " +
+            getShowCdRunnable().setCustomTexte("§fTechnique§6 Bakuton§f actuelle§7: "+this.mode.getItem().getItemMeta().getDisplayName() + "§7 | " +
                     (!this.cd1.isInCooldown() ? "§cC1§7:§a ✔" : "§cC1§7:§c "+ StringUtils.secondsTowardsBeautiful(this.cd1.getCooldownRemaining()))
                     + "§7 | " +
                     (!this.cd2.isInCooldown() ? "§cC2§7:§a ✔" : "§cC2§7:§c "+StringUtils.secondsTowardsBeautiful(this.cd2.getCooldownRemaining()))
@@ -284,7 +284,7 @@ public class DeidaraV2 extends AkatsukiRoles {
 
             @Override
             public void tryUpdateActionBar() {
-                getShowCdRunnable().setCustomTexte("§fTechnique§6 Bakuton§f actuel§7: "+this.bakutonItem.mode.getItem().getItemMeta().getDisplayName() + "§7 | " +
+                getShowCdRunnable().setCustomTexte("§fTechnique§6 Bakuton§f actuelle§7: "+this.bakutonItem.mode.getItem().getItemMeta().getDisplayName() + "§7 | " +
                         (!this.bakutonItem.cd1.isInCooldown() ? "§cC1§7:§a ✔" : "§cC1§7:§c "+ StringUtils.secondsTowardsBeautiful(this.bakutonItem.cd1.getCooldownRemaining()))
                         + "§7 | " +
                         (!this.bakutonItem.cd2.isInCooldown() ? "§cC2§7:§a ✔" : "§cC2§7:§c "+StringUtils.secondsTowardsBeautiful(this.bakutonItem.cd2.getCooldownRemaining()))

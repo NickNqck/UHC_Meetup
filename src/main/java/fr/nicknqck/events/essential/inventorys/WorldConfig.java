@@ -105,7 +105,7 @@ public class WorldConfig implements Listener {
     public void openInitConfig(Player player) {
         Inventory wConfig = Bukkit.createInventory(player, 54, "§fConfiguration§7 ->§a Monde");
         wConfig.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§6Configuration des grottes").toItemStack());
-        wConfig.setItem(13, new ItemBuilder(Material.EYE_OF_ENDER).setName("§fObserver le monde générer").toItemStack());
+        wConfig.setItem(13, new ItemBuilder(Material.EYE_OF_ENDER).setName("§fObserver le monde généré").toItemStack());
         wConfig.setItem(15, new ItemBuilder(Material.GRASS).setName("§aChanger de Monde").toItemStack());
         wConfig.setItem(17, new ItemBuilder(Material.FEATHER).setName("§aNettoyer les maps").toItemStack());
         wConfig.setItem(wConfig.getSize()-1, GUIItems.getSelectBackMenu());
@@ -113,9 +113,9 @@ public class WorldConfig implements Listener {
     }
     private void openMineralConfig(Player player) {
         Inventory inv = Bukkit.createInventory(player, 27, "§fConfiguration§7 ->§6 Grottes");
-        inv.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§fBoost des mineraix d'§6 or").setLore("","§7Boost actuel:§c x"+getGoldBooster()).toItemStack());
+        inv.setItem(11, new ItemBuilder(Material.GOLD_ORE).setName("§fBoost des minerais d'§6 or").setLore("","§7Boost actuel:§c x"+getGoldBooster()).toItemStack());
         inv.setItem(13, new ItemBuilder(Material.STONE).setName("§fBoost des§8 grottes").setLore("","§7Boost actuel: §c x"+getCaveBooster()).toItemStack());
-        inv.setItem(15, new ItemBuilder(Material.DIAMOND_ORE).setName("§fBoost des mineraix de§b diamant").setLore("","§7Boost actual:§c x"+getDiamondBooster()).toItemStack());
+        inv.setItem(15, new ItemBuilder(Material.DIAMOND_ORE).setName("§fBoost des minerais de§b diamant").setLore("","§7Boost actuel:§c x"+getDiamondBooster()).toItemStack());
         inv.setItem(inv.getSize()-1, GUIItems.getSelectBackMenu());
         player.openInventory(inv);
     }

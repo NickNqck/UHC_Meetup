@@ -149,7 +149,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                 "",
                 gDesign,
                 "",
-                "§7Cette version de§e Jigoro§7 n'à pas accès aux différents§c pactes§7."
+                "§7Cette version de§e Jigoro§7 n'a pas accès aux différents§c pactes§7."
         };
     }
 
@@ -275,7 +275,7 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
     private static class SpeedTroisPower extends ItemPower {
 
         protected SpeedTroisPower(@NonNull RoleBase role) {
-            super("Soufle de la foudre: Premier Mouvement", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§ePremier Mouvement: Accélération"), role,
+            super("Souffle de la foudre: Premier Mouvement", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§ePremier Mouvement: Accélération"), role,
                     "§7Vous donne l'effet§e Speed III§7 pendant§c 60 secondes§7.");
         }
 
@@ -325,8 +325,8 @@ public class JigoroV1V2 extends DemonsSlayersRoles implements Listener, RoleCust
                     "§7tous les joueurs présents dans la§e zone de Foudre§7 perdront§c 1,5❤§7 via un§e éclair§7,",
                     "§7pour chaque joueur§e foudroyé§7 vous obtiendrez§e 1❤ d'absorption§7.",
                     "",
-                    "§7Votre§e Zone de Foudre§7 à une durée d'§cactivation§7 de§c 15 secondes§7,",
-                    "§7tout les§c 3 joueurs§7 touché par un§e éclair§7, votre§c zone§7 gagne§c 1 seconde§7 (Uniquement la zone actuel).");
+                    "§7Votre§e Zone de Foudre§7 a une durée d'§cactivation§7 de§c 15 secondes§7,",
+                    "§7tous les§c 3 joueurs§7 touchés par un§e éclair§7, votre§c zone§7 gagne§c 1 seconde§7 (Uniquement la zone actuelle).");
         }
 
         @Override

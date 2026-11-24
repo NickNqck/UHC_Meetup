@@ -63,7 +63,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine("§7A la mort de§a Conny§7 et de§a Sasha§7, vous obtiendrez leurs §7position.")
+                .addCustomLine("§7À la mort de§a Conny§7 et de§a Sasha§7, vous obtiendrez leur §7position.")
                 .getText();
     }
     @EventHandler
@@ -79,8 +79,8 @@ public class JeanV2 extends SoldatsRoles implements Listener {
                     "§c15 secondes§7 après l'exécution de cette commande, lance une§a fusée",
                     "§7sa couleur dépendra de s'il y§a a§7 ou§c non§7 au moins§c 1 ennemi§7.",
                     "",
-                    "§7Lors de l'explosion de votre§a fusé§7, vous obtiendrez§c 5 minutes§7 de",
-                    "§9résistance 1§7 s'il y a au moins§c méchant§7 autour de vous.",
+                    "§7Lors de l'explosion de votre§a fusée§7, vous obtiendrez§c 5 minutes§7 de",
+                    "§9résistance 1§7 s'il y a au moins§c 1 méchant§7 autour de vous.",
                     "",
                     "§7Vous obtiendrez la liste des joueurs étant à moins de§c 30 blocs§7 au",
                     "§7moment de l'§cexplosion§7.");
@@ -135,7 +135,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
                         inZone.add(gm);
                     }
                     Bukkit.getScheduler().runTask(Main.getInstance(), () -> createFirework(gamePlayer.getLastLocation(), mechant.isEmpty() ? Color.GREEN : Color.RED));
-                    gamePlayer.sendMessage(Main.getInstance().getNAME()+"§b Voici la liste des personnes étant proche de vous: ");
+                    gamePlayer.sendMessage(Main.getInstance().getNAME()+"§b Voici la liste des personnes étant proches de vous: ");
                     inZone.forEach(e -> gamePlayer.sendMessage("§8 -§a "+e.getPlayerName()));
                     cancel();
                     return;
@@ -163,7 +163,7 @@ public class JeanV2 extends SoldatsRoles implements Listener {
                 }.runTaskLater(Main.getInstance(), 20L); // 20L équivaut à une seconde
                 if (color.equals(Color.RED)) {
                     this.fuseCommand.getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 0, false, false), EffectWhen.NOW);
-                    this.fuseCommand.getRole().getGamePlayer().sendMessage("§7Comme il y a au moins§c 1 traitre§7 autour de vous, vous avez reçu§c 5 minutes§7 de§9 Résistance 1§7.");
+                    this.fuseCommand.getRole().getGamePlayer().sendMessage("§7Comme il y a au moins§c 1 traître§7 autour de vous, vous avez reçu§c 5 minutes§7 de§9 Résistance 1§7.");
                 }
             }
         }

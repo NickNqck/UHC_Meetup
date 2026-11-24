@@ -86,7 +86,7 @@ public class Othon extends RoyaumeBase {
 
         public MenteauDeNoblePower(@NonNull RoleBase role) {
             super("§aManteau de Noble", null, role,
-                    "§7Tant que votre§c réputation§7 est au dessus de§c 6§7, vous serez immunisé aux dégâts de§c force§7."
+                    "§7Tant que votre§c réputation§7 est au-dessus de§c 6§7, vous serez immunisé aux dégâts de§c force§7."
             );
             EventUtils.registerRoleEvent(this);
         }

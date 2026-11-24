@@ -76,7 +76,7 @@ public class CrystalManager implements Listener {
             .setName("§dCrystal")
             .addEnchant(Enchantment.DURABILITY, 1)
             .hideEnchantAttributes()
-            .setLore("§7Il parait que le§a forgeron§7 peut§c fabriquer§7 des choses§a très utile§7 avec ceci§7.")
+            .setLore("§7Il paraît que le§a forgeron§7 peut§c fabriquer§7 des choses§a très utiles§7 avec ceci§7.")
             .toItemStack();
 
     public static final ItemStack refinedCrystalItem = new ItemBuilder(Material.EMERALD_BLOCK)
@@ -306,7 +306,7 @@ public class CrystalManager implements Listener {
     private void deleteForge() {
         this.inMap = false;
         this.timeSpawn = 0;
-        //On transforme tout en air pour qu'il n'y est plus rien
+        //On transforme tout en air pour qu'il n'y ait plus rien
         for (Block block : this.blockList) {
             block.setType(Material.AIR);
         }
@@ -349,7 +349,7 @@ public class CrystalManager implements Listener {
         if (event.getRecipe().getResult().isSimilar(refinedCrystalItem)) {
             for (HumanEntity humanEntity : event.getViewers()) {
                 if (new ArrayList<>(Arrays.asList(humanEntity.getInventory().getContents())).contains(refinedCrystalItem)) {
-                    humanEntity.sendMessage("§cVous avez déjà§d 1 crystal raffiné§c, votre corp ne pourrait pas en supporter plus");
+                    humanEntity.sendMessage("§cVous avez déjà§d 1 crystal raffiné§c, votre corps ne pourrait pas en supporter plus");
                     event.setCancelled(true);
                 } else {
                     final GamePlayer gamePlayer = GamePlayer.of(humanEntity.getUniqueId());
@@ -424,7 +424,7 @@ public class CrystalManager implements Listener {
     @EventHandler
     private void onDrop(@NonNull final PlayerDropItemEvent event) {
         if (event.getItemDrop().getItemStack().isSimilar(refinedCrystalItem)) {
-            event.getPlayer().sendMessage("§7Le§d crystal raffiné§7 est trop§c instable§7 pour être§c jeter§7.");
+            event.getPlayer().sendMessage("§7Le§d crystal raffiné§7 est trop§c instable§7 pour être§c jeté§7.");
             event.setCancelled(true);
         }
     }
@@ -568,7 +568,7 @@ public class CrystalManager implements Listener {
                                     .hideEnchantAttributes()
                                     .setLore(ceintureElements.getDescription())
                                     .addLoreLine("")
-                                    .addLoreLine("§aActuellement équiper")
+                                    .addLoreLine("§aActuellement équipé")
                                     .addLoreLine("")
                                     .addLoreLine("§fUtilisation:§a "+power.ceintures.get(ceintureElements).getUse()+"§7/§c"+power.ceintures.get(ceintureElements).getMaxUse())
                                     .toItemStack());
@@ -624,7 +624,7 @@ public class CrystalManager implements Listener {
                             event.getWhoClicked().sendMessage("§7[§aOscar le Forgeron§7]§f Merci de m'avoir acheté le pouvoir \"§c"+buyable.getMenuItem().getItemMeta().getDisplayName()+"§f\".");
                         } else {
                             event.getWhoClicked().closeInventory();
-                            event.getWhoClicked().sendMessage("§7[§aOscar le Forgeron§7]§c A quoi tu joue ? Tu es trop pauvre pour m'acheter ça !");
+                            event.getWhoClicked().sendMessage("§7[§aOscar le Forgeron§7]§c À quoi tu joues ? Tu es trop pauvre pour m'acheter ça !");
                         }
                     });
                 } else {
@@ -646,12 +646,12 @@ public class CrystalManager implements Listener {
                             event.getWhoClicked().sendMessage("§7[§aOscar le Forgeron§7]§f Merci de m'avoir acheté le pouvoir \"§c"+buyable.getMenuItem().getItemMeta().getDisplayName()+"§f\".");
                         } else {
                             event.getWhoClicked().closeInventory();
-                            event.getWhoClicked().sendMessage("§7[§aOscar le Forgeron§7]§c A quoi tu joue ? Tu es trop pauvre pour m'acheter ça !");
+                            event.getWhoClicked().sendMessage("§7[§aOscar le Forgeron§7]§c À quoi tu joues ? Tu es trop pauvre pour m'acheter ça !");
                         }
                     });
                 }
             } else {
-                setItem(13, new ItemBuilder(Material.BARRIER).setName("§cArticle déjà acheter").toItemStack());
+                setItem(13, new ItemBuilder(Material.BARRIER).setName("§cArticle déjà acheté").toItemStack());
             }
         }
     }

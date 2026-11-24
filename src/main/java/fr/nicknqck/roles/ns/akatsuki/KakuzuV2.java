@@ -123,8 +123,8 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
         if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;//Si le tueur n'est pas mon Kakuzu return
         if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;//Si la victime n'a pas de rôle return
         final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();//récupération de l'instance du rôle
-        if (!(role instanceof NSRoles))return;//si le rôle ne viens pas du NaruVerse return
-        if (((NSRoles) role).getChakras() == null)return;//Si la victim n'à pas de chakra return
+        if (!(role instanceof NSRoles))return;//si le rôle ne vient pas du NaruVerse return
+        if (((NSRoles) role).getChakras() == null)return;//Si la victim n'a pas de chakra return
         if (!this.chakrasVoled.contains(((NSRoles) role).getChakras())) {
             final EChakras chakras = ((NSRoles) role).getChakras();
             event.getGamePlayerKiller().sendMessage("§7Vous avez gagné la§a nature de chakra§7: "+chakras.getShowedName());
@@ -140,7 +140,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
             event.getPlayer().sendMessage("§7Vous n'avez plus assez de§a nature de chakra§7 pour§c réapparaître !");
             return;
         }
-        if (getMaxHealth() > 10.0) {//Il faut que le Kakuzu revive tant qu'il a + que 5coeurs perma (ça lui coûte une nature de chakra et 1coeurs perma)
+        if (getMaxHealth() > 10.0) {//Il faut que le Kakuzu revive tant qu'il a + que 5 cœurs perma (ça lui coûte une nature de chakra et 1 cœur perma)
             setMaxHealth(getMaxHealth()-2.0);
             this.chakrasVoled.remove(getChakras());
             Collections.shuffle(this.chakrasVoled);
@@ -207,7 +207,7 @@ public class KakuzuV2 extends AkatsukiRoles implements Listener {
 
         public NSChangeCommand(@NonNull KakuzuV2 role) {
             super("/ns change", "change", null, role, CommandType.NS,
-                    "§7Vous permet de changer de§a nature de chakra§7 (parmi celle que vous possédez).");
+                    "§7Vous permet de changer de§a nature de chakra§7 (parmi celles que vous possédez).");
             this.kakuzuV2 = role;
             EventUtils.registerRoleEvent(this);
         }

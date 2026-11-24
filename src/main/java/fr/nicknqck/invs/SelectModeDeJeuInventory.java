@@ -15,7 +15,7 @@ import java.util.List;
 public class SelectModeDeJeuInventory extends PaginatedFastInv {
 
     public SelectModeDeJeuInventory() {
-        super(27, "§fSéléction du mode de jeu");
+        super(27, "§fSélection du mode de jeu");
         setItems(getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
         final List<Integer> list = new ArrayList<>();
         for (int i = 10; i <= 16; i++) {

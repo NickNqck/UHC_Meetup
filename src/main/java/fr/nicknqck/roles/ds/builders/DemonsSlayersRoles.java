@@ -75,7 +75,7 @@ public abstract class DemonsSlayersRoles extends RoleBase {
                     }
                 }
             } else {
-                target.sendMessage("On dirait qu'on a essayé de donner une lame incassable, cependant au moment où on vous l'a donné vous n'aviez pas de rôle");
+                target.sendMessage("On dirait qu'on a essayé de donner une lame incassable, cependant au moment où on vous l'a donnée vous n'aviez pas de rôle");
             }
 
         }, 20);

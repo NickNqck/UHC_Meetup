@@ -87,7 +87,7 @@ public class Tayuya extends OrochimaruRoles {
             super("Marque Maudite", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§5Marque Maudite"), role,
                     "§7Vous permet d'obtenir§9 Résistance I§7 pendant§c 3 minutes§7.",
                     "",
-                    "§7Ce pouvoir à un coût de§c 1❤ permanent§7, à la mort d'§5Orochimaru§7 ce pouvoir ne coûtera plus rien.");
+                    "§7Ce pouvoir a un coût de§c 1❤ permanent§7, à la mort d'§5Orochimaru§7 ce pouvoir ne coûtera plus rien.");
         }
 
         @Override

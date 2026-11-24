@@ -67,7 +67,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         owner.setHealth(owner.getMaxHealth());
         AutomaticDesc automaticDesc = new AutomaticDesc(this)
                 .addEffects(getEffects())
-                .addCustomLine("§7Vous possédez§c 2❤ permanent§7 supplémentaire.")
+                .addCustomLine("§7Vous possédez§c 2❤ permanents§7 supplémentaires.")
                 .setItems(
           new TripleMap<>(
                   new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
@@ -80,37 +80,37 @@ public class SlayerSolo extends DemonsSlayersRoles {
                   new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                        new TextComponent("§7Vous donne l'effet§e Speed I§7 et enchante vos bottes§b Depth Strider III§7 pendant§c 3 minutes")
                   }),
-                  "§bSoufle de l'Eau",
+                  "§bSouffle de l'Eau",
                   60*3
           ),
           new TripleMap<>(
                   new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                           new TextComponent("§7Vous donne l'effet§e Speed II§7 et§a No Fall§7 pendant§c 2 minutes")
                   }),
-                  "§aSoufle du Vent",
+                  "§aSouffle du Vent",
                   60*3
           ),
           new TripleMap<>(
                   new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                      new TextComponent("§7Déclanche un§c timer§7 de§c 60 secondes§7, durant lesquelles le §cpremier§7 coup porter à chaque§c joueur\n" +
-                              "§7infligera§c 2❤§7 supplémentaire ainsi que l'effet§8 Slowness I§7 pendant§c 15 secondes§7.")
+                      new TextComponent("§7Déclenche un§c timer§7 de§c 60 secondes§7, durant lesquelles le §cpremier§7 coup porté à chaque§c joueur\n" +
+                              "§7infligera§c 2❤§7 supplémentaires ainsi que l'effet§8 Slowness I§7 pendant§c 15 secondes§7.")
                   }),
-                  "§eSoufle de la Foudre",
+                  "§eSouffle de la Foudre",
                   60*5
         ),
         new TripleMap<>(
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
-                        new TextComponent("§7Vous donne l'effet§6 Résistance au feu§7 et§c 20%§7 de§c chance§7 de§6 bruler§7 les joueurs que vous frappez pendant§c 3 minutes§7.")
+                        new TextComponent("§7Vous donne l'effet§6 Résistance au feu§7 et§c 20%§7 de§c chance§7 de§6 brûler§7 les joueurs que vous frappez pendant§c 3 minutes§7.")
                 }),
-                "§cSoufle du Feu",
+                "§cSouffle du Feu",
                 60*3
         ),
         new TripleMap<>(
                 new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
                     new TextComponent("§7En visant un joueur, permet de l'enfermer dans une boule de pierre\n" +
-                            "§7et de vous §ctéléportez§7 au dessus de cette dernière, également, vous donne§c 10 secondes§7 de§6 Haste II§7.")
+                            "§7et de vous §ctéléporter§7 au dessus de cette dernière, également, vous donne§c 10 secondes§7 de§6 Haste II§7.")
                 }),
-                "§8Soufle de la Roche",
+                "§8Souffle de la Roche",
                 60*8-15
         )
                 );
@@ -155,7 +155,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
         private final List<UUID> taped = new ArrayList<>();
 
         protected FoudrePower(RoleBase role) {
-            super("§eSoufle de la Foudre", new Cooldown(60*6), new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eSoufle de la Foudre"), role);
+            super("§eSouffle de la Foudre", new Cooldown(60*6), new ItemBuilder(Material.GLOWSTONE_DUST).setName("§eSouffle de la Foudre"), role);
         }
 
         @Override
@@ -218,19 +218,19 @@ public class SlayerSolo extends DemonsSlayersRoles {
     private static class VentPower extends ItemPower implements Listener{
 
         protected VentPower(RoleBase role) {
-            super("§aSoufle du vent", new Cooldown(60*5), new ItemBuilder(Material.FEATHER).setName("§aSoufle du Vent"), role);
+            super("§aSouffle du vent", new Cooldown(60*5), new ItemBuilder(Material.FEATHER).setName("§aSouffle du Vent"), role);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*120, 1, false, false), true);
-                player.sendMessage("§7Vous activez votre §aSoufle du Vent");
+                player.sendMessage("§7Vous activez votre §aSouffle du Vent");
                 EventUtils.registerRoleEvent(this);
                 Bukkit.getScheduler().runTaskLaterAsynchronously(getPlugin(), () -> {
                     assert player.isOnline();
                     if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                        player.sendMessage("§7Votre§a Soufle du Vent§7 est maintenant désactivé");
+                        player.sendMessage("§7Votre§a Souffle du Vent§7 est maintenant désactivé");
                     }
                     EventUtils.unregisterEvents(this);
                 },20*120);
@@ -250,13 +250,13 @@ public class SlayerSolo extends DemonsSlayersRoles {
     private static class EauPower extends ItemPower implements Listener {
 
         protected EauPower(RoleBase role) {
-            super("§bSoufle de l'Eau", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§bSoufle de l'Eau"), role);
+            super("§bSouffle de l'Eau", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§bSouffle de l'Eau"), role);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§7Vous activez le§b Soufle de l'Eau");
+                player.sendMessage("§7Vous activez le§b Souffle de l'Eau");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*180, 0, false, false));
                 ItemStack boots = player.getInventory().getBoots();
                 if (boots != null) {
@@ -275,7 +275,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                                     boot.setItemMeta(mBoot);
                                     player.getInventory().setBoots(boot);
                                     if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                                        player.sendMessage("§7Votre§b Soufle de l'Eau§7 ne fait plus effet");
+                                        player.sendMessage("§7Votre§b Souffle de l'Eau§7 ne fait plus effet");
                                     }
                                 }
                             }
@@ -305,13 +305,13 @@ public class SlayerSolo extends DemonsSlayersRoles {
     private static class FeuPower extends ItemPower implements Listener{
 
         protected FeuPower(RoleBase role) {
-            super("§cSoufle du Feu", new Cooldown(60*6), new ItemBuilder(Material.BLAZE_ROD).setName("§cSoufle du Feu"), role);
+            super("§cSouffle du Feu", new Cooldown(60*6), new ItemBuilder(Material.BLAZE_ROD).setName("§cSouffle du Feu"), role);
         }
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.sendMessage("§7Activation du§c Soufle du Feu");
+                player.sendMessage("§7Activation du§c Souffle du Feu");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20*180, 0, false, false));
                 EventUtils.registerRoleEvent(this);
                 new FeuRunnable(getRole().getGameState(), this);
@@ -350,7 +350,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                 if (timeRemaining <= 0) {
                     final Player owner = Bukkit.getPlayer(feuPower.getRole().getPlayer());
                     if (owner != null) {
-                        owner.sendMessage("§7Votre§c Soufle du Feu§7 est maintenant§c désactivé");
+                        owner.sendMessage("§7Votre§c Souffle du Feu§7 est maintenant§c désactivé");
                     }
                     cancel();
                     EventUtils.unregisterEvents(this.feuPower);
@@ -361,7 +361,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
     private static class RochePower extends ItemPower {
 
         protected RochePower(RoleBase role) {
-            super("§8Soufle de la Roche", new Cooldown(60*8), new ItemBuilder(Material.STONE_AXE).setName("§8Soufle de la Roche").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideEnchantAttributes(), role);
+            super("§8Souffle de la Roche", new Cooldown(60*8), new ItemBuilder(Material.STONE_AXE).setName("§8Souffle de la Roche").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideEnchantAttributes(), role);
             setTargetDistance(25);
         }
 
@@ -390,7 +390,7 @@ public class SlayerSolo extends DemonsSlayersRoles {
                         });
                         assert player.isOnline();
                         if (GameState.getInstance().getServerState().equals(GameState.ServerStates.InGame)){
-                            player.sendMessage("§7Votre§8 Soufle de la Roche§7 s'arrête maintenant");
+                            player.sendMessage("§7Votre§8 Souffle de la Roche§7 s'arrête maintenant");
                         }
                     }, 20*15);
                     player.teleport(new Location(target.getWorld(), target.getLocation().getX(), target.getLocation().getY()+6.0, target.getLocation().getZ()));

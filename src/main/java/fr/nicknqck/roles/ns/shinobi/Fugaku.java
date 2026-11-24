@@ -94,7 +94,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
         private final PlaceAuCombat placeAuCombat;
 
         public OeilPower(@NonNull RoleBase role) {
-            super("§cOeil maléfique§r", new Cooldown(1), new ItemBuilder(Material.EYE_OF_ENDER).setName("§cOeil maléfique"), role,
+            super("§cŒil maléfique§r", new Cooldown(1), new ItemBuilder(Material.EYE_OF_ENDER).setName("§cŒil maléfique"), role,
                     "§7Ouvre un menu donnant accès à§c 3 pouvoirs§7:",
                             "",
                             AllDesc.point+"§fAffaiblissement§7: Donne à la cible l'effet§8 Weakness I§7 pendant§c 18 secondes§7. (1x/2min)",
@@ -134,7 +134,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             }
         }
         private void openFirstInventory(Player player) {
-            final FastInv fastInv = new FastInv(27, "§cOeil Maléfique");
+            final FastInv fastInv = new FastInv(27, "§cŒil Maléfique");
             fastInv.setItems(fastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setName(" ").setDurability(7).toItemStack());
             fastInv.setItem(12, new ItemBuilder(Material.FERMENTED_SPIDER_EYE)
                     .setName("§r§fAffaiblissement")
@@ -160,8 +160,8 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
                     .setLore("§7En visant un joueur vous obtiendrez des§c bonus§7 pendant§c 1 minute§7: ",
                             "",
                             AllDesc.tab+"§7Vous serez insensible à tous les projectiles",
-                            AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégât au joueur visé",
-                            AllDesc.tab+"§7Vous subirez §c-25%§7 de dégât de sa part",
+                            AllDesc.tab+"§7Vous infligerez §c+25%§7 de dégâts au joueur visé",
+                            AllDesc.tab+"§7Vous subirez §c-25%§7 de dégâts de sa part",
                             "",
                             (this.placeAuCombat.getCooldown().getCooldownRemaining() <= 0 ? "§cPouvoir Utilisable" : "§7Cooldown:§c "+StringUtils.secondsTowardsBeautiful(this.placeAuCombat.getCooldown().getCooldownRemaining())))
                     .toItemStack(), event -> {
@@ -181,7 +181,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (map.isEmpty()) {
-                    final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(9*5, "§cOeil Maléfique§7 ->§f Affaiblissement");
+                    final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(9*5, "§cŒil Maléfique§7 ->§f Affaiblissement");
                     paginatedFastInv.setItems(paginatedFastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
                     final List<Integer> integerList = new ArrayList<>();
                     for (int line = 0; line <= 2; line++ ) {
@@ -238,7 +238,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (map.isEmpty()) {
-                    final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(9*5, "§cOeil Maléfique§7 ->§c Attaque");
+                    final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(9*5, "§cŒil Maléfique§7 ->§c Attaque");
                     paginatedFastInv.setItems(paginatedFastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
                     final List<Integer> integerList = new ArrayList<>();
                     for (int line = 0; line <= 2; line++ ) {
@@ -295,7 +295,7 @@ public class Fugaku extends ShinobiRoles implements IUchiwa {
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (map.isEmpty()) {
-                    final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(9*5, "§cOeil Maléfique§7 ->§6 Place au combat !");
+                    final PaginatedFastInv paginatedFastInv = new PaginatedFastInv(9*5, "§cŒil Maléfique§7 ->§6 Place au combat !");
                     paginatedFastInv.setItems(paginatedFastInv.getCorners(), new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability(7).setName(" ").toItemStack());
                     final List<Integer> integerList = new ArrayList<>();
                     for (int line = 0; line <= 2; line++ ) {

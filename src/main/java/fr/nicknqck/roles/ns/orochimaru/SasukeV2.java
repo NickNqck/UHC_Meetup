@@ -97,7 +97,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!gameState.getAttributedRole().contains(Roles.Orochimaru)) {
                 setTeam(TeamList.Sasuke);
-                getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aidez vous obtenez §c3❤ supplémentaire§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
+                getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aider vous obtenez §c3❤ supplémentaires§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
                 giveHealedHeartatInt(3.0);
                 givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.PERMANENT);
                 for (@NonNull final GamePlayer gamePlayer : getGameState().getGamePlayer().values()) {
@@ -123,7 +123,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
         if (event.isCancelled())return;
         if (event.getRole() instanceof OrochimaruV2 && getTeam() != TeamList.Sasuke) {
             setTeam(TeamList.Sasuke);
-            getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aidez vous obtenez §c3❤ supplémentaire§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
+            getGamePlayer().sendMessage("§5Orochimaru§7 est mort, vous devenez maintenant un rôle§e Solitaire§7, pour vous aider vous obtenez §c3❤ supplémentaires§7 ainsi que l'effet §cForce I§7 de manière§c permanente§7.", "§7Pour vous aidez à venger votre clan, vous obtenez un traqueur qui pointe en direction de§c Itachi§7.");
             giveHealedHeartatInt(3.0);
             givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, false, false), EffectWhen.PERMANENT);
             for (@NonNull final GamePlayer gamePlayer : event.getGameState().getGamePlayer().values()) {
@@ -163,7 +163,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
                 )
                 .addCustomLine(
                         !itachiDEAD ?
-                                "§7Si vous tuez§c Itachi§7 vous obtiendrez§c 2❤ permanent§7 ainsi qu'un§c Genjutsu§7."
+                                "§7Si vous tuez§c Itachi§7 vous obtiendrez§c 2❤ permanents§7 ainsi qu'un§c Genjutsu§7."
                                 :
                                 ""
                 )
@@ -171,7 +171,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
     }
     private void onItachiKill(boolean msg) {
         if (msg) {
-            getGamePlayer().sendMessage("§7Bravo, vous avez enfin vengé votre clan, était-ce une bonne idée ? Seul l'avenir nous le dira, en attendant vous avez obtenu §c2❤ supplémentaires§7 ainsi que les§c Genjutsus§7 de§c Itachi§7 (§c/ns me pour plus détail§7).");
+            getGamePlayer().sendMessage("§7Bravo, vous avez enfin vengé votre clan, était-ce une bonne idée ? Seul l'avenir nous le dira, en attendant vous avez obtenu §c2❤ supplémentaires§7 ainsi que les§c Genjutsus§7 de§c Itachi§7 (§c/ns me pour plus de détails§7).");
         }
         this.itachiDEAD = true;
         addPower(new Genjutsu(this), true);
@@ -252,7 +252,7 @@ public class SasukeV2 extends OrochimaruRoles implements IUchiwa, Listener, IUnc
                     if (this.timeLeft <= 0 || !activate) {
                         activate = false;
                         getRole().getGamePlayer().getActionBarManager().removeInActionBar("sasuke.sub");
-                        getRole().getGamePlayer().sendMessage("§7Les§c bonus§7 de l'§cArc Divin§7 ont été perdu.");
+                        getRole().getGamePlayer().sendMessage("§7Les§c bonus§7 de l'§cArc Divin§7 ont été perdus.");
                         cancel();
                         return;
                     }

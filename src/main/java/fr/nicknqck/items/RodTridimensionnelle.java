@@ -25,7 +25,7 @@ import java.text.DecimalFormat;
 
 public class RodTridimensionnelle implements Listener {
     public static ItemStack getItem() {
-        return new ItemBuilder(Material.FISHING_ROD).setName("§f§lEquipement Tridimensionnel").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore("§7Utilisation plus réaliste de l'§lEquipement Tridimentionnel").setUnbreakable(true).toItemStack();
+        return new ItemBuilder(Material.FISHING_ROD).setName("§f§lEquipement Tridimensionnel").addEnchant(Enchantment.ARROW_DAMAGE, 1).hideAllAttributes().setLore("§7Utilisation plus réaliste de l'§lÉquipement Tridimensionnel").setUnbreakable(true).toItemStack();
     }
     GameState gameState;
     public RodTridimensionnelle(GameState gameState) {
@@ -84,7 +84,7 @@ public class RodTridimensionnelle implements Listener {
             			event.setCancelled(true);
             		}
             	} else {
-            		player.sendMessage("§7Vous n'avez pas assez de gaz pour utiliser§l l'Equipement Tridimensionnel");
+            		player.sendMessage("§7Vous n'avez pas assez de gaz pour utiliser§l l'Équipement Tridimensionnel");
             		event.setCancelled(true);
             	}
         	}

@@ -45,7 +45,7 @@ public class QuitEvents implements Listener{
 	        quitMessage = "(Spec) "+ChatColor.LIGHT_PURPLE + player.getDisplayName() + ChatColor.RED + " A quitté(e) la partie";
 	        }
 	        event.setQuitMessage(quitMessage);
-	        System.out.println("Le joueur: " + player.getName() + " c'est deconnecter il est donc mort suite a ceci");
+	        System.out.println("Le joueur: " + player.getName() + " s'est déconnecté, il est donc mort suite à ceci");
 		//	GameListener.detectWin(gameState);
 	    }
 	}

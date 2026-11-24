@@ -130,7 +130,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
                     "§7Vous permet de vous rendre§a invisible§7 et d'avoir§c Speed II§7 pendant§c 5 minutes§7.",
                     "§7",
                     "§7En réutilisant ce§c pouvoir§7, vous pourrez vous retirer l'§ainvisibilité§7.",
-                    "§7Tant que vous êtes§a Invisible§7 vous ne pourrez n'y§c recevoir de coup§7, n'y en§c infliger§7.",
+                    "§7Tant que vous êtes§a Invisible§7 vous ne pourrez ni§c recevoir de coup§7, ni en§c infliger§7.",
                     "§7Tant que vous êtes§a invisible§7, tous les§c zetsu étant dans votre camp pourront voir des§c particules§7 à vos pieds."
             );
             this.cooldown = new Cooldown(60*5);
@@ -249,7 +249,7 @@ public class ZetsuNoirV2 extends AkatsukiRoles implements Listener {
 
         public RegenPower(@NonNull RoleBase role) {
             super("Pouvoir régénérant", null, role,
-                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toutes les§c 15 secondes");
+                    "§7Vous possédez une§c régénération naturelle§7 à hauteur de§c 1/2❤§7 toutes les§c 15 secondes");
             new RegenPower.RegenerationRunnable(role.getGameState(), role.getPlayer(), this);
         }
 

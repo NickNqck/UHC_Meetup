@@ -55,7 +55,7 @@ public abstract class JubiRoles extends NSSoloRoles implements IUchiwa{
         private BijuBase traqued = null;
         public TraqueurPower(@NonNull JubiRoles role) {
             super("§dTraqueur de biju", null, new ItemBuilder(Material.COMPASS).setName("§dTraqueur"), role,
-                    "§7Vous permet de traquer les§d bijus§7 qui sont activé dans la partie");
+                    "§7Vous permet de traquer les§d bijus§7 qui sont activés dans la partie");
             this.roles = role;
             EventUtils.registerEvents(this);
         }

@@ -112,11 +112,11 @@ public class MikasaV2 extends SoldatsRoles implements Ackerman, Listener {
         if (most != null) {
             this.master = most;
             this.master.setAckerman(this);
-            getGamePlayer().sendMessage("§7Un§a maitre§7 vous a été désigné, vous saurez qui c'est en vous approchant de lui");
+            getGamePlayer().sendMessage("§7Un§a maître§7 vous a été désigné, vous saurez qui c'est en vous approchant de lui");
             addPower(this.ackermanPower);
         } else {
             Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-                getGamePlayer().sendMessage("§cAucun maitre n'a pu vous être attribué, en compensation vous avez reçu 2❤ permanents.");
+                getGamePlayer().sendMessage("§cAucun maître n'a pu vous être attribué, en compensation vous avez reçu 2❤ permanents.");
                 setMaxHealth(24.0);
                 owner.setMaxHealth(getMaxHealth());
             }, 2);

@@ -76,7 +76,7 @@ public class Choji extends ShinobiRoles {
 
         public BouletHumain(@NonNull RoleBase role) {
             super("§aBoulet Humain", new Cooldown(60*5), new ItemBuilder(Material.FEATHER).setName("§aBoulet Humain"), role,
-                    "§7Vous propulse dans la direction regarder et vous donne§b Speed I§7 pendant§c 30 secondes§7."
+                    "§7Vous propulse dans la direction regardée et vous donne§b Speed I§7 pendant§c 30 secondes§7."
             );
         }
 
@@ -106,7 +106,7 @@ public class Choji extends ShinobiRoles {
                     "",
                     "§7Vous ne pouvez manger qu'une§e pomme d'or§7 toutes les§c 5 secondes§7 avec ce pouvoir.",
                     "§7Tant que ce§c pouvoir§7 est§a actif§7 vous avez§2 Hunger II§7 de manière§c permanente§7.",
-                    "§7Manger une§e pomme d'or§7 avec ce pouvoir§c ne remplie pas§7 la§a barre de nouriture§7. "
+                    "§7Manger une§e pomme d'or§7 avec ce pouvoir§c ne remplit pas§7 la§a barre de nourriture§7. "
             );
             EventUtils.registerRoleEvent(this);
             hunger = new PotionEffect(PotionEffectType.HUNGER, 60, 1, false, false);

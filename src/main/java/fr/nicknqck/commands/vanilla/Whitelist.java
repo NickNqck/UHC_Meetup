@@ -38,7 +38,7 @@ public class Whitelist implements CommandExecutor, Listener {
 							wlActivated = true;
 							sender.sendMessage("§7La whitelist est maintenant§a activée");
 						} else {
-							sender.sendMessage("§7§cLa whitelist est déjà activé");
+							sender.sendMessage("§7§cLa whitelist est déjà activée");
 						}
 						return true;
 					}
@@ -88,7 +88,7 @@ public class Whitelist implements CommandExecutor, Listener {
 			}
 		}
 		zzzz.sendMessage(new String[] {
-				"§7Voici les commandes utilisable:",
+				"§7Voici les commandes utilisables:",
 				"",
 				"§7 -§6 /wl on§7: Permet d'activer la whitelist.",
 				"",

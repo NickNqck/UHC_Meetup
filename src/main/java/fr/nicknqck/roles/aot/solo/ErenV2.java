@@ -73,7 +73,7 @@ public class ErenV2 extends AotRoles implements Listener{
             for (GamePlayer gamePlayer : gamePlayerList) {
                 if (!gamePlayer.check())continue;
                 if (gamePlayer.getRole().getTeam().getColor().equals("§a")) {
-                    getGamePlayer().sendMessage("§7Vous avez été ciblé par un§c pouvoir§7 visant a savoir quel est votre§a "+event.getInfoType().getName().toLowerCase());
+                    getGamePlayer().sendMessage("§7Vous avez été ciblé par un§c pouvoir§7 visant à savoir quel est votre§a "+event.getInfoType().getName().toLowerCase());
                     event.setGameTarget(gamePlayer);
                     break;
                 }
@@ -114,7 +114,7 @@ public class ErenV2 extends AotRoles implements Listener{
             }
             if (titan instanceof MachoireV2) {
                 this.getRole().addBonusforce(5.0);
-                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Machoire§7 vous avez obtenu§c 5%§7 de§c force supplémentaire");
+                event.getGamePlayerKiller().sendMessage("§7En tuant la personne ayant le§c Titan Mâchoire§7 vous avez obtenu§c 5%§7 de§c force supplémentaire");
             }
             if (titan instanceof CuirasseV2) {
                 this.getRole().addBonusResi(5.0);
@@ -131,7 +131,7 @@ public class ErenV2 extends AotRoles implements Listener{
         private final Map<Integer, Location> timeLocations;
 
         public FastTimeTravelPower(@NonNull RoleBase role) {
-            super("/aot fasttimetravel <Temp entre 1 et 60 secondes>", "fasttimetravel", new Cooldown(60*8), role, CommandType.AOT,
+            super("/aot fasttimetravel <Temps entre 1 et 60 secondes>", "fasttimetravel", new Cooldown(60*8), role, CommandType.AOT,
                     "§7Vous permet de vous téléporter là où vous étiez à un temps donné de maximum§c 60 secondes");
             this.timeLocations = new HashMap<>();
             new ChangeOldPositionRunnable(role.getGameState(), this).runTaskTimerAsynchronously(getPlugin(), 0, 20);

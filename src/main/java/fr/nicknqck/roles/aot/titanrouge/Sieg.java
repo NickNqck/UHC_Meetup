@@ -51,7 +51,7 @@ public class Sieg extends TitansRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Lorsque vous êtes transformé en titan vous donné l'effet§c Force I§7 aux joueurs transformés en titan étant dans votre camp")
+                .addCustomLine("§7Lorsque vous êtes transformé en titan vous donnez l'effet§c Force I§7 aux joueurs transformés en titan étant dans votre camp")
                 .getText();
     }
 
@@ -60,7 +60,7 @@ public class Sieg extends TitansRoles {
         Main.getInstance().getTitanManager().addTitan(getPlayer(), new BestialV2(getGamePlayer()));
         addPower(new CriPower(this));
         addPower(new GiveStrengthPower(this));
-        addKnowedPlayersWithRoles("§7Voici la liste des§c Titans Rouge§7 (§cAttention il y a un traitre dans cette liste ayant le rôle de§e Titan Ultime§7):",
+        addKnowedPlayersWithRoles("§7Voici la liste des§c Titans Rouges§7 (§cAttention il y a un traître dans cette liste ayant le rôle de§e Titan Ultime§7):",
                 GrandTitan.class, PetitTitan.class, TitanDeviant.class,
                 TitanUltime.class, TitanSouriant.class, Jelena.class);
     }

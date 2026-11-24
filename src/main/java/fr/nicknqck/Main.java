@@ -199,7 +199,7 @@ public class Main extends JavaPlugin {
 		File webhookFile = new File(getDataFolder(), "webhook.yml");
 
 		if (!webhookFile.exists()) {
-			getLogger().info("Creation du fichier webhook.yml par defaut...");
+			getLogger().info("Création du fichier webhook.yml par défaut...");
 			saveResource("webhook.yml", false);
 		} else {
 			getLogger().info("Fichier webhook.yml déjà présent.");
@@ -443,14 +443,14 @@ public class Main extends JavaPlugin {
         		",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +
 				"\"seaLevel\":" + 62 +
         		",\"useCaves\":" + true + //S'il y aura des caves ou non
-        		",\"useDungeons\":" + true + //S'il y aura des dongeons ou non
+        		",\"useDungeons\":" + true + //S'il y aura des donjons ou non
         		",\"dungeonChance\":" + 8 + //Probo dongeon 8 = vanilla
         		",\"useStrongholds\":" + true + //S'il y aura des strongholds
         		",\"useVillages\":" + true + //S'il y aura des villages ou non
         		",\"useMineShafts\":" + false + //S'il y aura des mineshafts ou non
         		",\"useTemples\":" + false + //S'il y aura des temples de la jungle
         		",\"useMonuments\":" + false+ //
-        		",\"useRavines\":" + true + //Si il y aura des failles ou non
+        		",\"useRavines\":" + true + //S'il y aura des failles ou non
         		",\"useWaterLakes\":" + true + //S'il y aura des lacs d'eau
         		",\"waterLakeChance\":" + 4 + //La proba d'avoir des lacs d'eau 4 = vanilla
         		",\"useLavaLakes\":" + true + //S'il y aura des lacs de lave ou non

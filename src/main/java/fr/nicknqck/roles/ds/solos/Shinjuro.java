@@ -114,9 +114,9 @@ public class Shinjuro extends DemonsSlayersRoles implements IAllianceRole{
 
         public UniversDeFlammePower(@NonNull RoleBase role) {
             super("§6Univers de Flamme§r", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§6Univers de Flamme"), role,
-                    "§7Vous permet de faire un saut en avant, à l'arriver,",
+                    "§7Vous permet de faire un saut en avant, à l'arrivée,",
                     "§7un immense§c cercle de feu§7 se dessinera n'importe quel joueur",
-                    "§7toucher sera§c enflammer§7 pour une durée de§c 12 secondes§7 (ils§c ne§7 pourront§c pas s'éteindre§7).",
+                    "§7touché sera§c enflammé§7 pour une durée de§c 12 secondes§7 (ils§c ne§7 pourront§c pas s'éteindre§7).",
                     "",
                     "§7En utilisant cet objet avec le§c clic gauche§7 vous ne ferez pas de saut en avant."
             );

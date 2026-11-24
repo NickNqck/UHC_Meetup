@@ -28,7 +28,7 @@ public final class StunManager implements Listener{
     private final List<UUID> stunedPlayers = new ArrayList<>();
 
     public StunManager() {
-        //RoleEvent parce qu'un GamePlayer est créé a chaque démarrage de partie pour chaque joueur
+        //RoleEvent parce qu'un GamePlayer est créé à chaque démarrage de partie pour chaque joueur
         EventUtils.registerRoleEvent(this);
     }
 

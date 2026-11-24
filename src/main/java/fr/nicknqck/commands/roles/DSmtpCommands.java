@@ -115,12 +115,12 @@ public class DSmtpCommands implements CommandExecutor {
 			sender.sendMessage(ChatColor.GOLD+"CommandHelper"+"§7§o§m-----------------------------------");//starting message
 			sender.sendMessage(premsg+"/ds roles§r: Permet de voir la liste (actualisée) des rôles présents dans la partie");
 			sender.sendMessage(premsg+"/ds list§r: Affiche la liste (non actualisée) des rôles présents dans la partie");
-			sender.sendMessage(premsg+"/ds doc§r: Donne le lien contenant le doc du mode de jeux");
-			sender.sendMessage(premsg+"/ds discord§r: Donne le lien du discord du mode de jeux");
-			sender.sendMessage(premsg+"/ds lame§r: Donne des informations sur les lames du mode de jeux");
-			sender.sendMessage(premsg+"/ds nuit§r: Met la nuit (si vous êtes en jeux)");
-			sender.sendMessage(premsg+"/ds jour§r: Met le jour (si vous êtes en jeux)");
-			sender.sendMessage(premsg+"/ds effect§r: Vous donne des informations sur vos effet");
+			sender.sendMessage(premsg+"/ds doc§r: Donne le lien contenant le doc du mode de jeu");
+			sender.sendMessage(premsg+"/ds discord§r: Donne le lien du discord du mode de jeu");
+			sender.sendMessage(premsg+"/ds lame§r: Donne des informations sur les lames du mode de jeu");
+			sender.sendMessage(premsg+"/ds nuit§r: Met la nuit (si vous êtes en jeu)");
+			sender.sendMessage(premsg+"/ds jour§r: Met le jour (si vous êtes en jeu)");
+			sender.sendMessage(premsg+"/ds effect§r: Vous donne des informations sur vos effets");
 			sender.sendMessage(ChatColor.GOLD+"CommandHelper"+"§7§o§m-----------------------------------");//end message
 			return true;	
 		} 
@@ -130,8 +130,8 @@ public class DSmtpCommands implements CommandExecutor {
 
 	private static ArrayList<String> getStrings() {
 		ArrayList<String> message = new ArrayList<>();
-		message.add(ChatColor.GOLD+"List des lames possibles : ");
-		message.add(ChatColor.GOLD + "Lame Coeur :" + ChatColor.LIGHT_PURPLE + " Donne 2 coeurs en plus permanent jusqu'à la fin de la partie.");
+		message.add(ChatColor.GOLD+"Liste des lames possibles : ");
+		message.add(ChatColor.GOLD + "Lame Coeur :" + ChatColor.LIGHT_PURPLE + " Donne 2 coeurs en plus permanents jusqu'à la fin de la partie.");
 		message.add(ChatColor.GOLD+"Lame de Résistance :"+ChatColor.GRAY+" Donne + 10% de résistance jusqu'à la fin de la partie.");
 		message.add(ChatColor.GOLD+"Lame de Speed :"+ ChatColor.GREEN+ " Donne + 10% de speed jusqu'à la fin de la partie.");
 		message.add("§6Lame de Force:§c Donne +10% de force jusqu'à la fin de la partie");

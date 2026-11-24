@@ -64,7 +64,7 @@ public class MuichiroV2 extends PilierRoles {
 
         protected T4ItemPower(@NonNull RoleBase role) {
             super("§bLame de Muichiro", new Cooldown(60), new ItemBuilder(Material.DIAMOND_SWORD).setName("§bLame de Muichiro").addEnchant(Enchantment.DAMAGE_ALL, 4), role,
-                    "§7Épée enchanter§c Tranchant IV","§7Lorsque vous§c tapez§7 un joueur vous lui infligerez§c 5 secondes§7 de§1 Blindness I");
+                    "§7Épée enchantée§c Tranchant IV","§7Lorsque vous§c tapez§7 un joueur vous lui infligerez§c 5 secondes§7 de§1 Blindness I");
             setSendCooldown(false);
         }
 
@@ -84,7 +84,7 @@ public class MuichiroV2 extends PilierRoles {
 
         protected FrappeBrumeuse(@NonNull RoleBase role) {
             super("§bFrappe Brumeuse", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§bFrappe Brumeuse"), role,
-                    "§7Vous permet de vous§c téléportez§7 dans un rayon de§c 10 blocs§7 autour de vous",
+                    "§7Vous permet de vous§c téléporter§7 dans un rayon de§c 10 blocs§7 autour de vous",
                     "§7Le premier joueur que vous§c frapperez§7 après ceci prendra des §cdégâts triplés",
                     "§7Il obtiendra également§1 Blindness I§7 pendant§c 15 secondes");
         }

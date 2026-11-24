@@ -110,7 +110,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
         if (event.getEntity().getUniqueId().equals(getPlayer())) {
             if (Main.RANDOM.nextInt(100) <= 15) {
                 event.setDamage(event.getDamage()*0.75);
-                event.getEntity().sendMessage("§aGakido§7 vous a protégé des dégâts, vous avez donc subi§c 25% de dégât en moins");
+                event.getEntity().sendMessage("§aGakido§7 vous a protégé des dégâts, vous avez donc subi§c 25% de dégâts en moins");
             }
         }
     }
@@ -120,7 +120,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
 
         protected ShikushodoPower(@NonNull RoleBase role) {
             super("Shikoshodo", new Cooldown(60*5), new ItemBuilder(Material.NETHER_STAR).setName("§fShikushodo"), role,
-                    "§7Vous permet de vous téléporter à une position que vous aurez poser au préalable via un §c Shift§7 +§c Clic droit");
+                    "§7Vous permet de vous téléporter à une position que vous aurez posée au préalable via un §c Shift§7 +§c Clic droit");
         }
 
         @Override
@@ -128,7 +128,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (player.isSneaking()) {
                     this.location = player.getLocation();
-                    player.sendMessage("§7Vous avez définie la position de§f Shikushodo§7 en:§c x: "+
+                    player.sendMessage("§7Vous avez défini la position de§f Shikushodo§7 en:§c x: "+
                             this.location.getBlockX()+
                             ", y: "+
                             this.location.getBlockY()+
@@ -136,7 +136,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
                             this.location.getBlockZ());
                 } else {
                     if (this.location == null) {
-                        player.sendMessage("§cIl faut d'abord définir un endroit pour pouvoir vous téléportez !.");
+                        player.sendMessage("§cIl faut d'abord définir un endroit pour pouvoir vous téléporter !.");
                         return false;
                     }
                     player.teleport(this.location);
@@ -155,7 +155,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
 
         protected BenshoTeninPower(@NonNull RoleBase role) {
             super("Benshô Ten'in", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cBenshô Ten'in"), role,
-                    "§7Effectue différente action en fonction du clic utiliser:",
+                    "§7Effectue différentes actions en fonction du clic utilisé:",
                     "",
                     "§aClic gauche§7: Vous permet de repousser toute entité étant à moins de§c 20 blocs§7 de vous.",
                     "",
@@ -225,7 +225,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
 
         public JigokudoPower(@NonNull RoleBase role) {
             super("/ns jigokudo <joueur>", "jigokudo", null, role, CommandType.NS,
-                    "§7Vous permet d'obtenir plusieurs information sur un joueur visé:",
+                    "§7Vous permet d'obtenir plusieurs informations sur un joueur visé:",
                     "",
                     "§8 - §7S'il/elle possède oui ou non un ou des effets permanent(s)",
                     "",
@@ -243,7 +243,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
             if (args.length == 2) {
                 @NonNull final Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
-                    player.sendMessage("§b"+args[1]+"§c n'est pas connectée");
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté");
                     return false;
                 }
                 if (this.getRole().getGameState().hasRoleNull(target.getUniqueId())) {
@@ -276,7 +276,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
             super("/ns ningendo <joueur>", "ningendo", null, role, CommandType.NS,
                     "§7Vous permet d'obtenir des informations sur le joueur visé: ",
                     "",
-                    "§8 - §7Les effets permanent que possède le joueur",
+                    "§8 - §7Les effets permanents que possède le joueur",
                     "",
                     "§8 - §7Le nombre de §epommes d'or§7 que possède le joueur",
                     "",
@@ -292,7 +292,7 @@ public class NagatoV2 extends ChiefAkatsukiRoles implements Listener {
             if (args.length == 2) {
                 @NonNull final Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
-                    player.sendMessage("§b"+args[1]+"§c n'est pas connectée");
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté");
                     return false;
                 }
                 if (this.getRole().getGameState().hasRoleNull(target.getUniqueId())) {
