@@ -1,6 +1,7 @@
 package fr.nicknqck.roles.aot.soldats;
 
 import fr.nicknqck.GameState;
+import fr.nicknqck.Main;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.player.GamePlayer;
 import fr.nicknqck.roles.aot.builders.AotRoles;
@@ -42,6 +43,25 @@ public class HansiV2 extends SoldatsRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new GiveSeringueCommand(this));
         LancePowerManager.giveLance(getGamePlayer(), 3);
+        new LanceRunnable(this).runTaskTimer(Main.getInstance(), 20*60*5, 20*60*5);
+    }
+    /** Une lance explosive toutes les 5 minutes (dans la limite de lances de la configuration AoT). */
+    private static final class LanceRunnable extends BukkitRunnable {
+
+        private final HansiV2 hansi;
+
+        private LanceRunnable(HansiV2 hansi) {
+            this.hansi = hansi;
+        }
+
+        @Override
+        public void run() {
+            if (!GameState.inGame() || !this.hansi.getGamePlayer().isAlive()) {
+                cancel();
+                return;
+            }
+            LancePowerManager.giveLance(this.hansi.getGamePlayer());
+        }
     }
 
     @Nonnull
@@ -87,6 +107,10 @@ public class HansiV2 extends SoldatsRoles {
                             final AotRoles role = (AotRoles) gamePlayer.getRole();
                             if (!role.isCanVoleTitan()) {
                                 player.sendMessage("§b"+target.getDisplayName()+"§7 recevra bientôt une§a§l Seringue§7.");
+                                if (target.getUniqueId().equals(player.getUniqueId())) {
+                                    getRole().setMaxHealth(getRole().getMaxHealth()-4.0);
+                                    player.sendMessage("§7Vous vous êtes visé vous-même, vous perdez§c 2"+AllDesc.coeur+"§7 permanents.");
+                                }
                                 new SeringueRunnable(role, this.getRole()).runTaskTimerAsynchronously(getPlugin(), 1, 20);
                                 return true;
                             }
