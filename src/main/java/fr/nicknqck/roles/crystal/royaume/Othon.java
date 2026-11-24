@@ -93,7 +93,7 @@ public class Othon extends RoyaumeBase {
 
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
-            return false;
+            return true;
         }
         @EventHandler(priority = EventPriority.HIGHEST)
         private void onDamage(@NonNull final ForcePatchEvent event) {

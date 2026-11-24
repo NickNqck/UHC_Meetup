@@ -219,7 +219,7 @@ public class GameListener implements Listener {
 					//role = Main.getInstance().getRoleManager().getRandomRole(u);
                     if (role != null){
 						if (role instanceof AotRoles) {
-							if (!gameState.rod) {
+							if (!Main.getInstance().getGameConfig().getAotConfig().isRodTridimenssionel()) {
 								role.addPower(new ArcTridimentionnelPower(role), true);
 							} else {
 								role.giveItem(p, false, gameState.EquipementTridi());

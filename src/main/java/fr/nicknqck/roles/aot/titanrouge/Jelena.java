@@ -55,6 +55,7 @@ public class Jelena extends TitansRoles {
 	}
 	@Override
 	public void onAotCommands(String arg, String[] args, GameState gameState) {
+		if (!args[0].equalsIgnoreCase("inv")) return;
 		if (args.length == 2) {
 			if (args[1] != null) {
 				Player target = Bukkit.getPlayer(args[1]);

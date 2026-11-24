@@ -79,7 +79,7 @@ public class KabutoV2 extends EdoOrochimaruRoles implements Listener, IUncompati
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 0, false, false), EffectWhen.PERMANENT);
         this.healPower = new HealPower(this);
         addPower(this.healPower, true);
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Main.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
             if (!this.karinDEAD && !gameState.getAttributedRole().contains(Roles.Karin)) {
                 onKarinDeath();
             }

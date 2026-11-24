@@ -610,6 +610,9 @@ public class CrystalManager implements Listener {
                         if (!(event.getWhoClicked() instanceof Player))return;
                         final Buyable buyable = ((IGotBuyable) role).getBuyable();
                         if (GlobalUtils.getItemAmount((Player) event.getWhoClicked(), CrystalManager.crystalItem) >= buyable.getCrystalCost()) {
+                            final ItemStack cost = CrystalManager.crystalItem.clone();
+                            cost.setAmount(buyable.getCrystalCost());
+                            ((Player) event.getWhoClicked()).getInventory().removeItem(cost);
                             Power power = buyable.createPower(this.role);
                             if (power instanceof ItemPower) {
                                 role.addPower((ItemPower) power, true);
@@ -629,6 +632,9 @@ public class CrystalManager implements Listener {
                         if (!(event.getWhoClicked() instanceof Player))return;
                         final Buyable buyable = new CommonBuyablePower();
                         if (GlobalUtils.getItemAmount((Player) event.getWhoClicked(), CrystalManager.crystalItem) >= buyable.getCrystalCost()) {
+                            final ItemStack cost = CrystalManager.crystalItem.clone();
+                            cost.setAmount(buyable.getCrystalCost());
+                            ((Player) event.getWhoClicked()).getInventory().removeItem(cost);
                             Power power = buyable.createPower(this.role);
                             if (power instanceof ItemPower) {
                                 role.addPower((ItemPower) power, true);

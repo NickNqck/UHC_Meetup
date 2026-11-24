@@ -647,7 +647,7 @@ public class GameState{
     }
 	public boolean rod = false;
 	public ItemStack EquipementTridi() {
-		if (this.rod) {
+		if (Main.getInstance().getGameConfig().getAotConfig().isRodTridimenssionel()) {
 			return RodTridimensionnelle.getItem();
 		}else {
 			return new ItemBuilder(Material.ARROW, 4).setName("§cUne erreur est survenue").toItemStack();

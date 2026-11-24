@@ -28,7 +28,7 @@ public class Whitelist implements CommandExecutor, Listener {
 		if (args.length >= 1) {
 			if (zzzz instanceof Player) {
 				Player sender = (Player)zzzz;
-				if (ChatRank.isHost(sender)) {
+				if (!ChatRank.isHost(sender)) {
 					sender.sendMessage("§cIl faut être§l HOST§c pour whitelister un joueur");
 					return true;
 				}

@@ -131,7 +131,7 @@ public class ShinobuV2 extends PilierRoles {
                         ItemMeta itemMeta = item.getItemMeta();
                         itemMeta.setDisplayName((affected.contains(player.getUniqueId()) ? "§a" : "§c")+player.getName());
                         item.setItemMeta(itemMeta);
-                        player.closeInventory();
+                        event.getWhoClicked().closeInventory();
                     }
                 } else {
                     event.getWhoClicked().closeInventory();

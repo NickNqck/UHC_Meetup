@@ -117,13 +117,11 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                 inv.setItem(15, new ItemBuilder(Material.PAPER).setName(this.parcheminsExplosifs.getName()).setLore(this.parcheminsExplosifs.getDescriptions()).toItemStack(),
                         event -> {
                     if (event.isShiftClick()) {
-                        player.sendMessage("try");
                         final Map<String, Object> uwu = new HashMap<>();
                         uwu.put("activate", "activate");
                         this.parcheminsExplosifs.checkUse((Player) event.getWhoClicked(), uwu);
                         return;
                     }
-                    player.sendMessage("ok");
                     this.parcheminsExplosifs.checkUse((Player) event.getWhoClicked(), new HashMap<>());
                         });
                 inv.open(player);
@@ -281,7 +279,6 @@ public class KonanV2 extends ChiefAkatsukiRoles {
                     }
                     int target = 0;
                     for (@NonNull final Location location : locations) {
-                        player.sendMessage(location.toString());
                         MathUtil.sendCircleParticle(EnumParticle.EXPLOSION_LARGE, location, 1, 16);
                         for (@NonNull final Entity entity : location.getWorld().getEntities()) {
                             if (!(entity instanceof Player))continue;

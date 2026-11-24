@@ -216,6 +216,7 @@ public class YoriichiV2 extends DemonsSlayersRoles {
         }
         @EventHandler
         private void onEat(final PlayerItemConsumeEvent event) {
+            if (event.getItem() == null || event.getItem().getType() != Material.GOLDEN_APPLE) return;
             if (this.inSoleil.containsKey(event.getPlayer().getUniqueId())) {
                 final Long currentTime = System.currentTimeMillis();
                 if (currentTime - inSoleil.get(event.getPlayer().getUniqueId()) <= 10000) {

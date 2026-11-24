@@ -75,6 +75,7 @@ Roles: NickNqck
 */
 @Getter
 public class Main extends JavaPlugin {
+	private Whitelist whitelist;
 
 	public final String PLUGIN_NAME = "UHC-Meetup";
 	private final String NAME = "§7[§6UHC-Meetup§7]";
@@ -250,7 +251,8 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BrickBlockListener(), this);
 		getServer().getPluginManager().registerEvents(new BetterItemListener(), this);
 		getServer().getPluginManager().registerEvents(new Lame(), this);
-		getServer().getPluginManager().registerEvents(new Whitelist(gameState), this);
+		this.whitelist = new Whitelist(gameState);
+		getServer().getPluginManager().registerEvents(this.whitelist, this);
 		getServer().getPluginManager().registerEvents(new Patch(gameState), this);//Patch effet de potion
 		getServer().getPluginManager().registerEvents(new AttackUtils(), this);
 		getServer().getPluginManager().registerEvents(new HubInventory(gameState), this);
@@ -294,8 +296,8 @@ public class Main extends JavaPlugin {
 		getCommand("say").setExecutor(new Say());
 		getCommand("gamemode").setExecutor(new Gamemode());
 		getCommand("gm").setExecutor(new Gamemode());
-		getCommand("wl").setExecutor(new Whitelist(gameState));
-		getCommand("whitelist").setExecutor(new Whitelist(gameState));
+		getCommand("wl").setExecutor(this.whitelist);
+		getCommand("whitelist").setExecutor(this.whitelist);
 		getCommand("discord").setExecutor(new Discord());
 		getCommand("color").setExecutor(new Color(gameState));
 		getCommand("pack").setExecutor(new PackCommand());

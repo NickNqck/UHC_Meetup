@@ -196,7 +196,7 @@ public class Configuration_Inventory extends FastInv {
                     .setLore(
                             "§fClic gauche:§a +1",
                             "§fClic droit:§c -1",
-                            "§fNombre de seau d'eau:§c "+Main.getInstance().getGameConfig().getStuffConfig().getLave()
+                            "§fNombre de seau d'eau:§c "+Main.getInstance().getGameConfig().getStuffConfig().getEau()
                     )
                     .toItemStack(), event -> {
                 if (event.isLeftClick()) {

@@ -94,9 +94,9 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
                 "§r§fClic droit: §c-1 minute"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
-                GameState.getInstance().pvpTimer += 60;
+                GameState.getInstance().pvpTimer = Math.min(40 * 60, GameState.getInstance().pvpTimer + 60);
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
-                GameState.getInstance().pvpTimer -= 60;
+                GameState.getInstance().pvpTimer = Math.max(1, GameState.getInstance().pvpTimer - 60);
             }
             ConfigurationGameInventory inventory = new ConfigurationGameInventory();
             inventory.open((Player) event.getWhoClicked());
@@ -108,9 +108,9 @@ public final class ConfigurationGameInventory extends PaginatedFastInv {
                 "§r§fClic droit: §c-1 minute"
         ).toItemStack(), event -> {
             if (event.getAction().equals(InventoryAction.PICKUP_ALL)) {
-                GameState.getInstance().roleTimer+=60;
+                GameState.getInstance().roleTimer = Math.min(40 * 60, GameState.getInstance().roleTimer + 60);
             } else if (event.getAction().equals(InventoryAction.PICKUP_HALF)) {
-                GameState.getInstance().roleTimer-=60;
+                GameState.getInstance().roleTimer = Math.max(1, GameState.getInstance().roleTimer - 60);
             }
             ConfigurationGameInventory inventory = new ConfigurationGameInventory();
             inventory.open((Player) event.getWhoClicked());
