@@ -141,6 +141,11 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
                 return false;
             }
             final double distance = player.getLocation().distance(daki.getLocation());
+            if (distance > 50.0) {
+                // Pas de téléportation : le cooldown ne doit pas être consommé
+                player.sendMessage("§cDaki§7 n'est pas à moins de§c 50 blocs§7 de vous.");
+                return false;
+            }
             if (distance <= 50.0) {
                 Location loc = Loc.getRandomLocationAroundPlayer(player, 5);
                 daki.teleport(loc);
