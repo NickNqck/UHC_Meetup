@@ -182,6 +182,10 @@ public class TsunadeV2 extends HShinobiRoles {
             if (args.length == 2) {
                 final Player target = Bukkit.getPlayer(args[1]);
                 if (target != null) {
+                    if (target.getUniqueId().equals(player.getUniqueId())) {
+                        player.sendMessage("§cVous ne pouvez pas vous enseigner§d Katsuyu§c à vous-même !");
+                        return false;
+                    }
                     final GamePlayer gamePlayer = GamePlayer.of(target.getUniqueId());
                     if (gamePlayer != null) {
                         if (gamePlayer.check()) {
