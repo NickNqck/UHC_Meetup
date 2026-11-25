@@ -367,8 +367,8 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                 } else {
                     target.setHealth(target.getHealth()-2.0);
                 }
-                target.sendMessage("§cVous sentez un§e éclair§c parcourir votre corp");
-                player.sendMessage("§eSoufle de la foudre: Quatrième Mouvement !");
+                target.sendMessage("§cVous sentez un§e éclair§c parcourir votre corps");
+                player.sendMessage("§eSouffle de la foudre: Quatrième Mouvement !");
                 return true;
             }
         }

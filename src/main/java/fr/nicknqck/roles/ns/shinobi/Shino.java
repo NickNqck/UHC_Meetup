@@ -83,11 +83,11 @@ public class Shino extends ShinobiRoles {
 
         public RinkaichuPower(@NonNull RoleBase role) {
             super("§aRinkaichu", new Cooldown(3), new ItemBuilder(Material.NETHER_STAR).setName("§aRinkaichu"), role,
-                    "§7Tant que ce pouvoir est§c actif§7, les joueurs qui vous frappe auront§c 40% de chance§7",
+                    "§7Tant que ce pouvoir est§c actif§7, les joueurs qui vous frappent auront§c 40% de chance§7",
                     "§7d'être§2 empoisonné§7.",
                     "",
-                    "§7Ce pouvoir est§a Activable§7/§cDésactivable§7 via n'importe quel§f clique§7.",
-                    "§7Toute les§c 3 minutes cumulés§7 avec ce§c pouvoir§a actif§7, vous perdrez§c 1/2❤ permanent",
+                    "§7Ce pouvoir est§a Activable§7/§cDésactivable§7 via n'importe quel§f clic§7.",
+                    "§7Toutes les§c 3 minutes cumulées§7 avec ce§c pouvoir§a actif§7, vous perdrez§c 1/2❤ permanent",
                     "§7le pouvoir se§c désactivera§7 également§c automatiquement§7."
             );
             setSendCooldown(false);

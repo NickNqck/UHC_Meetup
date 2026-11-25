@@ -166,7 +166,7 @@ public class DakiV2 extends DemonsRoles {
             super("Obis", new Cooldown(60*8), new ItemBuilder(Material.NETHER_STAR).setName("§cObis"), role,
                     "§7Pendant§c 5 secondes§7 et tant que vous avez vos§c Obis§7 dans les mains,",
                     "§7vous pouvez viser des§c joueurs§7 avec votre§c crosshair§7,",
-                    "§7une fois les§c 5 secondes§7 passés (ou si vous n'avez plus vos§c Obis§7 en§c mains§7),",
+                    "§7une fois les§c 5 secondes§7 passées (ou si vous n'avez plus vos§c Obis§7 en§c mains§7),",
                     "§7 tous les joueurs qui auront été visés seront§c stun§7 pendant§c 6 secondes§7.");
             setTargetDistance(30);
         }

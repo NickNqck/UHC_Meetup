@@ -203,7 +203,7 @@ public class ObitoV2 extends JubiRoles implements ISAkatsukiChief, IUncompatible
                 this.deathLocations.put(event.getRole().getTeamColor()+event.getRole().getName(), event.getPlayer().getLocation());
             }
         }
-        @EventHandler(priority = EventPriority.HIGH)//Priorité élever = ça passe après le code au-dessus
+        @EventHandler(priority = EventPriority.HIGH)//Priorité élevée = ça passe après le code au-dessus
         private void GamePlayerDeathEvent2(@NonNull final UHCDeathEvent event) {
             if (!Main.getInstance().getGameConfig().getNarutoConfig().isObitoCanGetKakashiEye())return;
             if (event.getPlayer().getUniqueId().equals(getRole().getPlayer()))return;

@@ -133,7 +133,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             }
             Player daki = Bukkit.getPlayer(gyutaroV2.daki.getPlayer());
             if (daki == null) {
-                player.sendMessage("§cDaki n'est pas connecter");
+                player.sendMessage("§cDaki n'est pas connectée");
                 return false;
             }
             if (!player.getWorld().equals(daki.getWorld())) {
@@ -149,8 +149,8 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             if (distance <= 50.0) {
                 Location loc = Loc.getRandomLocationAroundPlayer(player, 5);
                 daki.teleport(loc);
-                player.sendMessage("§7Vous venez de Téléportez §cDaki §7à vous.");
-                daki.sendMessage("§cGyutaro §7vous téléportez sur lui.");
+                player.sendMessage("§7Vous venez de téléporter §cDaki §7à vous.");
+                daki.sendMessage("§cGyutaro §7vous a téléportée sur lui.");
             }
             return true;
         }
@@ -227,7 +227,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             if (this.amountEateds >= 10) {
                 this.amountEateds = 0;
                 if (this.pourcentage < 15) {
-                    event.getPlayer().sendMessage("§7Vous sentez que votre§c passif§7 c'est§c renforcé§7.");
+                    event.getPlayer().sendMessage("§7Vous sentez que votre§c passif§7 s'est§c renforcé§7.");
                     this.pourcentage++;
                     reCreateFaux(event.getPlayer());
                 }
@@ -260,7 +260,7 @@ public class GyutaroV2 extends DemonsRoles implements Listener {
             player.getInventory().setItem(slot, this.FauxItem);
         }
         private void onDakiDeath() {
-            getRole().getGamePlayer().sendMessage("§cDaki§7 est§c morte§7, malgré cette perte, vous vous sentez plus§c fort§7, votre§c passif§7 c'est§c renforcé§7.");
+            getRole().getGamePlayer().sendMessage("§cDaki§7 est§c morte§7, malgré cette perte, vous vous sentez plus§c fort§7, votre§c passif§7 s'est§c renforcé§7.");
             this.pourcentage+=5;
             reCreateFaux(Bukkit.getPlayer(getRole().getPlayer()));
             final List<Power> powerList = new ArrayList<>(this.getRole().getPowers());

@@ -51,7 +51,7 @@ public class BestialV2 extends TitanBase implements Listener {
     public @NonNull String getParticularites() {
         return "§8 -§7 Votre transformation a une durée de§c 4 minutes§7.\n"+
                 " \n"+
-                "§8 -§7 Votre transformation possède plusieurs forme différente, celle que vous avez est définie aléatoirement lorsque vous recevez le titan.\n"+
+                "§8 -§7 Votre transformation possède plusieurs formes différentes, celle que vous avez est définie aléatoirement lorsque vous recevez le titan.\n"+
                 " \n"+
                 "§8 -§7 Vous avez la forme "+this.bestialForm.getName()+"§7 du titan bestial.\n"+
                 " \n"+

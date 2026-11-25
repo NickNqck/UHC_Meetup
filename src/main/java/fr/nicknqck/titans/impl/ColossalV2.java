@@ -43,7 +43,7 @@ public class ColossalV2 extends TitanBase {
                 " \n"+
                 "§8 -§7 Lorsque vous êtes transformé en titan vous avez les effets§c Résistance II§7 ainsi que l'effet§c Résistance au Feu§7.\n"+
                 " \n"+
-                "§8 -§7 Vous pouvez utiliser votre item \"§cChaleur Titanesque§7\" pour activer autour de vous une§c Zone de Feu§7 brulant toute personne étant à l'intérieur.\n"+
+                "§8 -§7 Vous pouvez utiliser votre item \"§cChaleur Titanesque§7\" pour activer autour de vous une§c Zone de Feu§7 brûlant toute personne étant à l'intérieur.\n"+
                 " \n"+
                 "§8 -§7 Lorsque votre \"§cZone de Feu§7\" est activé vous n'avez plus l'effet§c Résistance II§7.";
     }

@@ -35,7 +35,7 @@ public class AssaillantV2 extends TitanBase {
 
     @Override
     public @NonNull String getParticularites() {
-        return "§8 -§7 Lorsque vous êtes transformés en§c Titan§7 vous avez les effets§c Speed I, Force I et Résistance I§7.\n"+
+        return "§8 -§7 Lorsque vous êtes transformé en§c Titan§7 vous avez les effets§c Speed I, Force I et Résistance I§7.\n"+
                 " \n"+
                 "§8 -§7 Lorsque votre transformation se termine vous obtenez§c 2 minutes§7 de l'effet§c Force I§7.\n"+
                 " \n"+

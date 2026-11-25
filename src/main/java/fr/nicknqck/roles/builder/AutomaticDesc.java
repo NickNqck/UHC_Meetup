@@ -348,7 +348,7 @@ public class AutomaticDesc {
                         }));
                     } else if (eChakras.equals(EChakras.FUTON)) {
                         toAdd.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent[]{
-                                new TextComponent("§8 - §7Vous ne recevez§c aucun dégâts§7 de§a chute§7."),
+                                new TextComponent("§8 - §7Vous ne recevez§c aucun dégât§7 de§a chute§7."),
                                 new TextComponent("\n\n§8 - §7Vous pouvez§a activer§7/§cdésactiver§7 cette§a nature de chakra§7 via la commande§6 /ns "+eChakras.name().toLowerCase()+"§7.")
                         }));
                     } else if (eChakras.equals(EChakras.DOTON)) {

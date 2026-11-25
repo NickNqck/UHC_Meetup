@@ -81,7 +81,7 @@ public class RuiV2 extends DemonsRoles {
             super("Fils de Rui", new Cooldown(5), new ItemBuilder(Material.NETHER_STAR).setName("§cFils de Rui"), role,
                     "§7Vous permet d'utiliser vos fils, pour les changer il vous faudra effectuer un§n clic gauche§r§7:",
                     "",
-                    "§fAttaque longue porté§7: En visant un §cjoueur§7, vous permet de lui infliger §c 2,5❤§7 ainsi que§c 15%§7 de chance de lui donner en plus§c 15 secondes§7 de§2 poison 1§7. (1x/7m)",
+                    "§fAttaque longue portée§7: En visant un §cjoueur§7, vous permet de lui infliger §c 2,5❤§7 ainsi que§c 15%§7 de chance de lui donner en plus§c 15 secondes§7 de§2 poison 1§7. (1x/7m)",
                     "",
                     "§fFil attractif§7: En visant un§c joueur§7, vous permet de l'attirer très fortement vers vous§7 (1x/5m)",
                     "",
@@ -160,7 +160,7 @@ public class RuiV2 extends DemonsRoles {
         private static final class LongAttackFilPower extends Power {
 
             public LongAttackFilPower(@NonNull RuiV2 role) {
-                super("Attaque longue porté", new Cooldown(60*7), role);
+                super("Attaque longue portée", new Cooldown(60*7), role);
                 setShowInDesc(false);
                 setTargetDistance(25);
             }
@@ -181,7 +181,7 @@ public class RuiV2 extends DemonsRoles {
                 if (Main.RANDOM.nextInt(100) < 15) {
                     target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*15, 0, false, false), true);
                     target.sendMessage("§7Vous avez été atteint par le§2 poison§7 de§c Rui");
-                    player.sendMessage("§7Votre§2 poison§7 à atteint§c "+target.getDisplayName());
+                    player.sendMessage("§7Votre§2 poison§7 a atteint§c "+target.getDisplayName());
                 }
                 player.sendMessage("§7Vous avez utilisé votre§c "+getName()+"§7 sur§c "+target.getDisplayName());
                 target.sendMessage("§cRui§c a utilisé son "+getName()+" sur vous");
@@ -238,7 +238,7 @@ public class RuiV2 extends DemonsRoles {
                 for (final Block block : blockList) {
                     block.setType(Material.WEB);
                 }
-                player.sendMessage("§c"+target.getDisplayName()+"§7 à complètement été recouvert de toile d'araignée");
+                player.sendMessage("§c"+target.getDisplayName()+"§7 a complètement été recouvert de toile d'araignée");
                 target.sendMessage("§cRui vous a attrapé dans sa§c toile d'araignée");
                 return true;
             }

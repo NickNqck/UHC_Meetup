@@ -158,7 +158,7 @@ public class MinatoV2 extends HShinobiRoles {
                     "",
                     "§7A chaque fois que quelqu'un se§a téléporte§7 à votre§a balise§7, elle sera supprimée.",
                     "§7Si vous utilisez votre§a Hiraishin§7 pour vous§a téléportez§c vous même§7, votre§c cooldown§7 s'écoulera§c 2x plus vite§7.",
-                    "§cAucun joueur ne peut prendre de dégâts de cette arc."
+                    "§cAucun joueur ne peut prendre de dégâts de cet arc."
             );
             EventUtils.registerRoleEvent(this);
         }

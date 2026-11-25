@@ -303,7 +303,7 @@ public class DanzoV2 extends NSSoloRoles implements Listener {
 
         public FutonPower(@NonNull RoleBase role) {
             super("Futon", new Cooldown(60*2), new ItemBuilder(Material.FEATHER).setName("§aFuton"), role,
-                    "§7Vous permet de vous propulsez la ou vous regardez");
+                    "§7Vous permet de vous propulser là où vous regardez");
         }
 
         @Override

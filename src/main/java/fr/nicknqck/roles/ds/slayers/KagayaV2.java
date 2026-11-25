@@ -67,9 +67,9 @@ public class KagayaV2 extends SlayerRoles {
                 .addCustomLine("§7Vous possédez§c 1❤ permanent§7 supplémentaire")
                 .setPowers(getPowers())
                 .addCustomLines(new String[]{
-                        "§7Toute les§c "+(this.maladieRunnable == null ? "5 minutes" : StringUtils.secondsTowardsBeautiful(this.maladieRunnable.maxTime)+"inutes")+"§7 vous passez un§c stade§7, à chaque fois que vous en passez un vous perdez§c 1/2❤ permanent§7.",
+                        "§7Toutes les§c "+(this.maladieRunnable == null ? "5 minutes" : StringUtils.secondsTowardsBeautiful(this.maladieRunnable.maxTime)+"inutes")+"§7 vous passez un§c stade§7, à chaque fois que vous en passez un vous perdez§c 1/2❤ permanent§7.",
                         "",
-                        AllDesc.point+"§7Lorsque que vous atteignez le§c sixième stade§7 vous obtenez la capacité de voir la§a vie§7 des autres§c joueurs§7, aussi quand vous parviendrez au§c huitième stade§7 vous obtiendrez la commande§6 /ds pilier <joueur>§7, elle vous permettra de "
+                        AllDesc.point+"§7Lorsque vous atteignez le§c sixième stade§7 vous obtenez la capacité de voir la§a vie§7 des autres§c joueurs§7, aussi quand vous parviendrez au§c huitième stade§7 vous obtiendrez la commande§6 /ds pilier <joueur>§7, elle vous permettra de "
                         +"§7savoir si§a oui§7 ou§c non§7 la personne est un§a pilier§7.",
                         "",
                         AllDesc.point+"§7Votre§2 maladie§7 s'arrêtera au§c quatorzième stade§7, après cela vous garderez vos pouvoirs."
@@ -230,7 +230,7 @@ public class KagayaV2 extends SlayerRoles {
                 this.kagaya.getGamePlayer().sendMessage("§7Vous avez obtenu la capacité de savoir si un joueur est un§a pilier§7 ou§c non§6 /ds me§7 pour plus§c d'information");
             }
             if (this.stade == 14) {
-                this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 à atteind son§c stade maximum§7.");
+                this.kagaya.getGamePlayer().sendMessage("§7Votre§2 maladie§7 a atteint son§c stade maximum§7.");
                 cancel();
             }
         }
@@ -284,7 +284,7 @@ public class KagayaV2 extends SlayerRoles {
                             }
                         }
                     }
-                    player.sendMessage("§b"+args[1]+"§c n'est pas connecter ou n'est pas en vie.");
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté ou n'est pas en vie.");
                 }
                 return false;
             }

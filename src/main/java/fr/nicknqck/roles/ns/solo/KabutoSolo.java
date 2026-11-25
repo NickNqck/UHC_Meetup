@@ -105,7 +105,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
 
         public ErmitePower(@NonNull RoleBase role) {
             super("§aMode Ermite§r", new Cooldown(60*10), new ItemBuilder(Material.FERMENTED_SPIDER_EYE).setName("§aMode Ermite"), role,
-                    "§7Pendant§c 3 minutes§7, vous aurez l'effet§c Force I§7, également, des§f particules blanche§7",
+                    "§7Pendant§c 3 minutes§7, vous aurez l'effet§c Force I§7, également, des§f particules blanches§7",
                     "§7vous relieront aux§c joueurs§7 étant à§c moins§7 de§c 45 blocs§7.",
                     "",
                     "§7La§a couleur§7 des§c particules§7 changera en fonction du§c camp§7 de la personne",
@@ -174,7 +174,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
             super("Edo Tensei", null, new ItemBuilder(Material.NETHER_STAR).setName("§5Edo Tensei"), role,
                     "§7Quand vous tuez un joueur, vous pouvez le ressusciter en échange de§c "+ ((Main.getInstance().getGameConfig().getNarutoConfig().getEdoHealthRemove())/2)+"❤",
                     "",
-                    "§7Vous possédez un§c traqueur§7 pointant vers tout vos§5 Edo Tenseis§7."
+                    "§7Vous possédez un§c traqueur§7 pointant vers tous vos§5 Edo Tenseis§7."
             );
             EventUtils.registerRoleEvent(this);
             this.edoTenseis = new LinkedHashMap<>();
@@ -502,7 +502,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
                             if (integer == 10) {
                                 this.timesMap.remove(uuid);
                                 this.adnPower.edoTenseiPower.killLocation.put(uuid, adnParticle2.getCenter());
-                                owner.sendMessage("§7Vous avez réussi a récupérer l'§cadn§7 de§a "+this.adnPower.roleBaseMap.get(uuid).getGamePlayer().getPlayerName());
+                                owner.sendMessage("§7Vous avez réussi à récupérer l'§cadn§7 de§a "+this.adnPower.roleBaseMap.get(uuid).getGamePlayer().getPlayerName());
                                 adnParticle2.getAdnRunnable().cancel();
                                 this.adnPower.particle2Map.remove(uuid);
                             } else {
@@ -521,7 +521,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
 
         public MueDuSerpent(@NonNull RoleBase role) {
             super("/ns mue", "mue", new Cooldown(60*10), role, CommandType.NS,
-                    "§7Vous permet de§a muer§7 votre corp vers un autre, autrement dit, cela vous téléportera à§c 50 blocs§7.",
+                    "§7Vous permet de§a muer§7 votre corps vers un autre, autrement dit, cela vous téléportera à§c 50 blocs§7.",
                     "",
                     "§7Après la§c téléportation§7 vous obtiendrez§c 30 secondes§7 de§e Speed II§7."
             );

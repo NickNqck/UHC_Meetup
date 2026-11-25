@@ -113,7 +113,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                                 "§8 -§a 50 blocs§7:§c 1 point",
                                 "",
                                 "§7Une fois que la§c bar de points§7 à atteint les§c 1000 points§7 vous obtiendrez son§c identité§7.",
-                                "§7Toute les§c 5 minutes§7, vous obtiendrez l'information du§c nombre de points§7 que vous avez."
+                                "§7Toutes les§c 5 minutes§7, vous obtiendrez l'information du§c nombre de points§7 que vous avez."
                         }
                 )
                 .getText();

@@ -196,7 +196,7 @@ public class Inventories {
                     this.setRoleInventory(inv, GUIItems.getSBluetainedGlassPane());
 
                     inv.setItem(2, GUIItems.getSelectSoloButton());
-                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milleu
+                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milieu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
                     inv.setItem(5, GUIItems.getSelectSoldatButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
@@ -242,7 +242,7 @@ public class Inventories {
                     this.setRoleInventory(inv, GUIItems.getOrangeStainedGlassPane());
 
                     inv.setItem(2, GUIItems.getSelectMahrButton());
-                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milleu
+                    inv.setItem(3, GUIItems.getSelectTitanButton());//haut milieu
                     inv.setItem(4, GUIItems.getSelectBackMenu());
                     inv.setItem(5, GUIItems.getSelectSoldatButton());
                     if (gameState.gameCanLaunch)inv.setItem(6, GUIItems.getStartGameButton());
@@ -869,7 +869,7 @@ public class Inventories {
         final Inventory inv = Bukkit.createInventory(player, 54, "§dKrystal UHC§7 ->§e Solo");
         setRoleInventory(inv, GUIItems.getPurpleStainedGlassPane());
 
-        inv.setItem(3, GUIItems.getSelectBackMenu());//haut milleu
+        inv.setItem(3, GUIItems.getSelectBackMenu());//haut milieu
         inv.setItem(4, GUIItems.getSelectBackMenu());
         inv.setItem(5, GUIItems.getSelectBackMenu());
 

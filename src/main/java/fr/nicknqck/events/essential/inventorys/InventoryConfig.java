@@ -144,13 +144,13 @@ public class InventoryConfig implements Listener {
                     if (Main.getInstance().getGameConfig().getStuffConfig().getEau() != 4) {
                         Main.getInstance().getGameConfig().getStuffConfig().setEau(Main.getInstance().getGameConfig().getStuffConfig().getEau()+1);
                     } else {
-                        player.sendMessage("Vous avez déjà atteint la limite de sceau d'eau");
+                        player.sendMessage("Vous avez déjà atteint la limite de seau d'eau");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                     if (Main.getInstance().getGameConfig().getStuffConfig().getEau() != 1) {
                         Main.getInstance().getGameConfig().getStuffConfig().setEau(Main.getInstance().getGameConfig().getStuffConfig().getEau()-1);
                     } else {
-                        player.sendMessage("Vous avez déjà atteint la limite minimal de sceau d'eau");
+                        player.sendMessage("Vous avez déjà atteint la limite minimal de seau d'eau");
                     }
                 }
 
@@ -160,13 +160,13 @@ public class InventoryConfig implements Listener {
                     if (Main.getInstance().getGameConfig().getStuffConfig().getLave() != 4) {
                         Main.getInstance().getGameConfig().getStuffConfig().setLave(Main.getInstance().getGameConfig().getStuffConfig().getLave()+1);
                     } else {
-                        player.sendMessage("Vous avez déjà atteint la limite de sceau de lave");
+                        player.sendMessage("Vous avez déjà atteint la limite de seau de lave");
                     }
                 } else if (action.equals(InventoryAction.PICKUP_HALF)) {
                     if (Main.getInstance().getGameConfig().getStuffConfig().getLave() != 0) {
                         Main.getInstance().getGameConfig().getStuffConfig().setLave(Main.getInstance().getGameConfig().getStuffConfig().getLave()-1);
                     } else {
-                        player.sendMessage("Vous avez déjà atteint la limite minimal de sceau de lave");
+                        player.sendMessage("Vous avez déjà atteint la limite minimal de seau de lave");
                     }
                 }
             }

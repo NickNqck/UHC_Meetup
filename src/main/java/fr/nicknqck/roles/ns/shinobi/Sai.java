@@ -180,7 +180,7 @@ public class Sai extends ShinobiRoles implements Listener {
                     "§8 -§a Souris Messagères§7: Avec une rapidité de§c 10b/s§7, se dirige§a discrètement§7 vers la§c cible§7",
                     "§7une fois atteint vous aurez§c 1 minute§7 pour converser avec la personne en mettant \"§cs§7\" devant votre message.",
                     "",
-                    "§8 -§c Sangsues§7: En visant un joueur, vous lui volerez ses§a points de vie§7 petit-à-petit.",
+                    "§8 -§c Sangsues§7: En visant un joueur, vous lui volerez ses§a points de vie§7 petit à petit.",
                     "",
                     "§8 -§a Scellement de papier§7: En visant un joueur, puis, en restant proche de lui pendant§c 10 secondes§7",
                     "§7vous§a scellerez§7 ses§c pouvoirs§7, il ne pourra donc plus les utiliser tant que vous êtes à moins de§c 150 blocs§7",
@@ -579,11 +579,11 @@ public class Sai extends ShinobiRoles implements Listener {
 
         public EvaluationPower(@NonNull RoleBase role) {
             super("§aÉvaluation§r", null, role,
-                    "§7En restant proche des autres joueurs pendant un temps définie en fonction de leurs§a intelligences§7",
+                    "§7En restant proche des autres joueurs pendant un temps défini en fonction de leurs§a intelligences§7",
                     "§7vous saurez s'ils sont§5 Sasuke§7 ou§c non§7.",
                     "",
                     "§aFugaku§7,§c Itachi§7 et§d Sasuke§7 (§dcamp Jubi§7) seront détectés comme étant§5 Sasuke§7.",
-                    "§7Si vous§c tuez§5 Sasuke§7 alors ce pouvoirs permettra d'obtenir l'information du§c camp§7 de la personne"
+                    "§7Si vous§c tuez§5 Sasuke§7 alors ce pouvoir permettra d'obtenir l'information du§c camp§7 de la personne"
             );
             new EvaluationRunnable(this).runTaskTimer(getPlugin(), 100, 20);
         }
@@ -598,8 +598,8 @@ public class Sai extends ShinobiRoles implements Listener {
             if (getRole() instanceof Sai) {
                 if (((Sai) getRole()).unlocked) {
                     return new String[] {
-                            "§7En restant proche des autres joueurs pendant un temps définie en fonction de leurs§a intelligences§7",
-                            "§7vous saurez dans quel camps ils sont parmi un§a vrai§7 et un§c faux§7."
+                            "§7En restant proche des autres joueurs pendant un temps défini en fonction de leurs§a intelligences§7",
+                            "§7vous saurez dans quel camp ils sont parmi un§a vrai§7 et un§c faux§7."
                     };
                 }
             }

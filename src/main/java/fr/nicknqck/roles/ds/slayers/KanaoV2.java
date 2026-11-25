@@ -166,7 +166,7 @@ public class KanaoV2 extends SlayerRoles {
                     new FouilleListener(invName, player.getUniqueId());
                     return true;
                 } else {
-                    player.sendMessage("§b"+args[1]+"§c n'est pas connecter");
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté");
                     return false;
                 }
             }

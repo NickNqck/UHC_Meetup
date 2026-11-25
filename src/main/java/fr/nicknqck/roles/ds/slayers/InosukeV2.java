@@ -115,7 +115,7 @@ public class InosukeV2 extends SlayerRoles {
                     new TraqueRunnable(target.getUniqueId(), player.getUniqueId()).runTaskTimerAsynchronously(getPlugin(), 0, 1);
                     return true;
                 } else {
-                    player.sendMessage("§c"+args[1]+" n'existe pas ou n'est pas connecter");
+                    player.sendMessage("§c"+args[1]+" n'existe pas ou n'est pas connecté");
                     return false;
                 }
             }
@@ -160,7 +160,7 @@ public class InosukeV2 extends SlayerRoles {
             super("§a/ds sentation <joueur>", "sentation", new Cooldown(60*6), role, CommandType.DS,
                     "§7En visant un joueur (à moins de§c 5 blocs§7), permet d'obtenir§c aléatoirement§7 l'une de ses informations: ",
                     "",
-                    "§8 • §7Vous obtiendrez le§c nombre§7 de§c point de vie§7 du joueur visé,",
+                    "§8 • §7Vous obtiendrez le§c nombre§7 de§c points de vie§7 du joueur visé,",
                     "",
                     "§8 • §7Vous saurez si le joueur possède l'effet§c force§7 et/ou l'effet§c faiblesse",
                     "",
@@ -188,7 +188,7 @@ public class InosukeV2 extends SlayerRoles {
                         return false;
                     }
                 } else {
-                    player.sendMessage("§b"+args[1]+"§c n'est pas connecter");
+                    player.sendMessage("§b"+args[1]+"§c n'est pas connecté");
                     return false;}
             }
             player.sendMessage("§cCette commande prend un joueur en entrer");

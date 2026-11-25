@@ -85,7 +85,7 @@ public class SusamaruV2 extends DemonsRoles {
 
         public BallonPower(@NonNull RoleBase role) {
             super("Ballon", new Cooldown(1), new ItemBuilder(Material.BOW).setName("§cBallon").addEnchant(Enchantment.ARROW_DAMAGE, 6), role,
-                    "§7En tirant une flèche modifie l'effet selon la flèche choisis: ",
+                    "§7En tirant une flèche modifie l'effet selon la flèche choisie: ",
                     "",
                     "§cBallon Explosif§7: A l'§cimpact§7, crée une explosion infligeant§c 2❤§7 de§c dégâts§7. (1x/15s)",
                     "",
@@ -157,7 +157,7 @@ public class SusamaruV2 extends DemonsRoles {
                 double radius = 5.0; // Rayon de la zone d'explosion
                 for (Player player : world.getPlayers()) {
                     if (player.getLocation().distance(impactLocation) <= radius) {
-                        player.sendMessage("Vous avez été touché par l'§6Éxplosion§r de§c Susamaru");
+                        player.sendMessage("Vous avez été touché par l'§6Explosion§r de§c Susamaru");
                         if (player.getHealth() > 4.0) {
                             player.setHealth(player.getHealth()-4.0);
                         } else {

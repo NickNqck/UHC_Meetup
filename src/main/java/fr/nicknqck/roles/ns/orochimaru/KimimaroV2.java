@@ -144,10 +144,10 @@ public class KimimaroV2 extends OrochimaruRoles {
     private static class ForetItemPower extends ItemPower {
 
         public ForetItemPower(@NonNull RoleBase role) {
-            super("§fFôret d'os§r", new Cooldown(60*10), new ItemBuilder(Material.QUARTZ).setName("§fFôret d'os").addEnchant(Enchantment.DEPTH_STRIDER, 1).hideEnchantAttributes(), role,
-                    "§7Crée une grande§a Fôret§7 fait à base d'§fos§7.",
+            super("§fForêt d'os§r", new Cooldown(60*10), new ItemBuilder(Material.QUARTZ).setName("§fForêt d'os").addEnchant(Enchantment.DEPTH_STRIDER, 1).hideEnchantAttributes(), role,
+                    "§7Crée une grande§a Forêt§7 faite à base d'§fos§7.",
                     "",
-                    "§7Toute les§c 5 secondes§7 tous les§c joueurs§7 étant dans la§f Fôret d'os§7",
+                    "§7Toutes les§c 5 secondes§7 tous les§c joueurs§7 étant dans la§f Forêt d'os§7",
                     "§7subiront§c 1/2❤§7 de§c dégât§7 (aucun joueur ne peut mourir de cette effet).",
                     "",
                     "§7Lorsqu'un joueur subit des§c dégâts§7 dû à l'effet de ce§c pouvoir§7",

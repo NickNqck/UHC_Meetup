@@ -91,7 +91,7 @@ public class TsunadeV2 extends HShinobiRoles {
                     .hideEnchantAttributes(), role,
                     "§7Lorsque vous mangez une§e pomme d'or§7, ce qui n'est pas§d soigné§7 est stocké dans§d Katsuyu§7.",
                     "",
-                    "§7En utilisant un§c clic droit§7, vous pouvez§c vous soignez§7 de manière plus",
+                    "§7En utilisant un§c clic droit§7, vous pouvez§c vous soigner§7 de manière plus",
                     "§7ou moins complète en fonction de ce qui est stocké.",
                     "",
                     "§7En utilisant un§c clic gauche§7, vous§d soignerez§7 un joueur visé de manière plus",
@@ -108,7 +108,7 @@ public class TsunadeV2 extends HShinobiRoles {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.INTERACT)) {
                 if (this.stocked <= 0.0) {
-                    player.sendMessage(Main.getInstance().getNAME()+"§c Vous n'avez aucun§a point de vie§c stocker actuellement !");
+                    player.sendMessage(Main.getInstance().getNAME()+"§c Vous n'avez aucun§a point de vie§c stockés actuellement !");
                     return false;
                 } else {
                     final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
@@ -117,9 +117,9 @@ public class TsunadeV2 extends HShinobiRoles {
                         if (this.stocked >= healNeeded) {
                             player.setHealth(player.getHealth() + healNeeded);
                             this.stocked -= healNeeded;
-                            player.sendMessage("§7Vous vous êtes§d soigner§7 de manière§c complète§7.");
+                            player.sendMessage("§7Vous vous êtes§d soigné(e)§7 de manière§c complète§7.");
                         } else {
-                            player.sendMessage("§7Vous vous êtes§d soigner§7 de§c "+(this.stocked/2)+"❤");
+                            player.sendMessage("§7Vous vous êtes§d soigné(e)§7 de§c "+(this.stocked/2)+"❤");
                             player.setHealth(player.getHealth() + this.stocked);
                             this.stocked = 0.0;
                         }
@@ -133,10 +133,10 @@ public class TsunadeV2 extends HShinobiRoles {
                         if (this.stocked >= healNeeded) {
                             target.setHealth(target.getHealth() + healNeeded);
                             this.stocked -= healNeeded;
-                            target.sendMessage("§7Vous avez été§d soigner§7 de manière§c complète§7 par§d Katsuyu§7.");
+                            target.sendMessage("§7Vous avez été§d soigné(e)§7 de manière§c complète§7 par§d Katsuyu§7.");
                             player.sendMessage("§c"+target.getName()+"§7 a été§d soigné§7 de manière§c complète§7.");
                         } else {
-                            target.sendMessage("§7Vous avez été§d soigner§7 de§c "+(this.stocked/2)+"❤§7 par§d Katsuyu§7.");
+                            target.sendMessage("§7Vous avez été§d soigné(e)§7 de§c "+(this.stocked/2)+"❤§7 par§d Katsuyu§7.");
                             player.sendMessage("§c"+target.getName()+"§7 a été§d soigné§7 de§c "+(this.stocked/2)+"❤§7 par§d Katsuyu§7.");
                             target.setHealth(target.getHealth() + this.stocked);
                             this.stocked = 0.0;
@@ -167,9 +167,9 @@ public class TsunadeV2 extends HShinobiRoles {
 
         public EnseignementPower(@NonNull RoleBase role) {
             super("/ns enseignement <joueur>", "enseignement", null, role, CommandType.NS,
-                    "§7En restant à moins de§c 30 blocs§7 du joueur§c cibler§7,",
+                    "§7En restant à moins de§c 30 blocs§7 du joueur§c ciblé§7,",
                     "§7vous lui§a enseignerez§7 comment utiliser§d Katsuyu§7,",
-                    "§7celà durera plus ou moins de temps en fonction de son§a intelligence§7. (§6/ns intelligences§7)",
+                    "§7cela durera plus ou moins de temps en fonction de son§a intelligence§7. (§6/ns intelligences§7)",
                     "",
                     "§7Une fois fait, vous obtiendrez§c 2❤ permanents supplémentaires§7."
             );
@@ -236,8 +236,8 @@ public class TsunadeV2 extends HShinobiRoles {
                 }
                 if (this.timeLeft >= intelligence.getEnseignemenTime()) {
                     Bukkit.getScheduler().runTask(this.power.getPlugin(), () -> this.nsRoles.addPower(new KatsuyuPower(nsRoles), true));
-                    this.nsRoles.getGamePlayer().sendMessage("§aTsunade§7 vous a§a enseigner§7 comment utiliser§d Katsuyu§7.");
-                    this.power.getRole().getGamePlayer().sendMessage("§7Vous avez§a enseigner§7 comment uriliser§d Katsuyu§7 a§a "+nsRoles.getGamePlayer().getPlayerName());
+                    this.nsRoles.getGamePlayer().sendMessage("§aTsunade§7 vous a§a enseigné§7 comment utiliser§d Katsuyu§7.");
+                    this.power.getRole().getGamePlayer().sendMessage("§7Vous avez§a enseigné§7 comment utiliser§d Katsuyu§7 à§a "+nsRoles.getGamePlayer().getPlayerName());
                     this.power.getRole().getGamePlayer().getActionBarManager().removeInActionBar("tsunadev2.enseignement");
                     Bukkit.getScheduler().runTask(this.power.getPlugin(), () -> this.power.getRole().giveHealedHeartatInt(2.0));
                     cancel();

@@ -81,7 +81,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
         return AutomaticDesc.createAutomaticDesc(this).addCustomLine(this.killNezuko ?
                 "§7Vous êtes§c insensible§7 au§c dégâts§7 provenant du§c feu§7, de la§6 lave§7 ainsi qu'au§c dégâts§7 de§a chute§7."
                 :
-                "§7Si vous parvenez à tuer un joueur ayant le rôle de§a Nezuko§7 vous obtiendrez l'effet§9 Résistance I§7 de manière§c permanente§7, de plus, lorsqu'il fait§c nuit§7, vous ne recevrez plus§c aucun dégâts§7 provenant du§c feu§7 et de vos§a chute§7.")
+                "§7Si vous parvenez à tuer un joueur ayant le rôle de§a Nezuko§7 vous obtiendrez l'effet§9 Résistance I§7 de manière§c permanente§7, de plus, lorsqu'il fait§c nuit§7, vous ne recevrez plus§c aucun dégât§7 provenant du§c feu§7 et de vos§a chute§7.")
                 .getText();
     }
 
@@ -179,7 +179,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
 
         private DSGivePower(@NonNull RoleBase role) {
             super("/ds give <joueur>", "give", null, role, CommandType.DS,
-                    "§7Vous permet de donner le pouvoir de l'§cinfection§7 à un allier§c démon");
+                    "§7Vous permet de donner le pouvoir de l'§cinfection§7 à un allié§c démon");
             setMaxUse(1);
         }
 
@@ -200,7 +200,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                 if (role instanceof DemonsSlayersRoles) {
                     if (role instanceof NezukoV2 || role.getOriginTeam().equals(TeamList.Demon) || role.getTeam().equals(TeamList.Demon)) {
                         if (!getPlugin().getGameConfig().getDemonSlayerConfig().isMuzanAutoGive() && target.getUniqueId().equals(player.getUniqueId())) {
-                            player.sendMessage("§cErreur | Il est interdit selon les règles actuels de vous donnez à vous même ce pouvoir !");
+                            player.sendMessage("§cErreur | Il est interdit selon les règles actuelles de vous donner à vous-même ce pouvoir !");
                             return false;
                         }
                         player.sendMessage("§cVous avez donné le pouvoir de l'infection à§b "+target.getDisplayName());

@@ -198,7 +198,7 @@ public class Shikamaru extends HShinobiRoles {
 
         int i = 10;
         for (Player p : Loc.getNearbyPlayersExcept(owner, this.powerDistance)){
-                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse != 2 ? "§aClic droit§7 pour infliger des§c dégâts§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2": "§7Vous ne pouvez plus utiliser le deuxième pouvoirs (§fClic droit§7)").setName(p.getName()).toItemStack());
+                inv.setItem(i, new ItemBuilder(Material.SKULL_ITEM).setDurability(3).setSkullOwner(p.getName()).setLore("",poisonUse != 2 ? "§aClic droit§7 pour infliger des§c dégâts§7 à la §ccible§7 pendant le §astun§c "+poisonUse+"§7/2": "§7Vous ne pouvez plus utiliser le deuxième pouvoir (§fClic droit§7)").setName(p.getName()).toItemStack());
                 i++;
         }
         inv.setItem(2, new ItemBuilder(Material.AIR).toItemStack());

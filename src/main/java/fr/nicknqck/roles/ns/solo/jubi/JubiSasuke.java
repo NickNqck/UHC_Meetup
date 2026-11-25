@@ -102,7 +102,7 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
                 .addCustomLine(killItachi ? "" :
                         "§7Si vous parvenez à tuer§c Itachi§7, la distance pour savoir si un §7joueur utilise un pouvoir change (§c100§7 -> §c150§7)," +
                                 " la distance §7pour savoir quel pouvoir a été utilisé a aussi changé (§c25§7 -> §c100§7),"+
-                                "§7de plus, l'§cintégralité§7 de§c vos pouvoirs§7 verront leurs §ccooldowns diviser par deux§7."
+                                "§7de plus, l'§cintégralité§7 de§c vos pouvoirs§7 verront leurs §ccooldowns divisés par deux§7."
                 )
                 .getText();
     }
@@ -117,8 +117,8 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
                 "",
                 gDesign,
                 "",
-                "§7Ce rôle viens d'un univers ou§d Obito§7 est§c mort§7 écraser par le rocher",
-                "§7(Inspirer de cette vidéo:§c https://youtu.be/iDIgKG1xbHI?si=5GnBelnNN4_Sugny§7)"
+                "§7Ce rôle vient d'un univers où§d Obito§7 est§c mort§7 écrasé par le rocher",
+                "§7(Inspiré de cette vidéo:§c https://youtu.be/iDIgKG1xbHI?si=5GnBelnNN4_Sugny§7)"
         };
     }
     @EventHandler
@@ -183,9 +183,9 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
                 if (distance <= distGood) {
                     final double distPerfect = killItachi ? 100 : 25;
                     if (distance <= distPerfect) {
-                        getRole().getGamePlayer().sendMessage("§b"+event.getPlayer().getName()+"§a a utiliser la technique \"§6"+(event.getPower() instanceof ItemPower ? ((ItemPower) event.getPower()).getItem().getItemMeta().getDisplayName() : event.getPower().getName())+"§a\".");
+                        getRole().getGamePlayer().sendMessage("§b"+event.getPlayer().getName()+"§a a utilisé la technique \"§6"+(event.getPower() instanceof ItemPower ? ((ItemPower) event.getPower()).getItem().getItemMeta().getDisplayName() : event.getPower().getName())+"§a\".");
                     } else {
-                        getRole().getGamePlayer().sendMessage("§b"+event.getPlayer().getName()+"§a a utiliser une technique");
+                        getRole().getGamePlayer().sendMessage("§b"+event.getPlayer().getName()+"§a a utilisé une technique");
                     }
                 }
 
@@ -209,7 +209,7 @@ public class JubiSasuke extends JubiRoles implements IUncompatibleRole, RoleCust
         public ItachiTracker(@NonNull RoleBase role) {
             super("§cSacrifice Messianique§r", null, role,
                     "§7Tant que vous serez à§c plus§7 de§c 30 blocs§7 d'§cItachi§7,",
-                    "§7une§c flèche§7 pointra dans sa§c direction§7.");
+                    "§7une§c flèche§7 pointera dans sa§c direction§7.");
             new TrackerRunnable(this).runTaskTimerAsynchronously(getPlugin(), 1, 15);
         }
 

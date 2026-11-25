@@ -75,7 +75,7 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7Vous possédez une barre de point invisible augmentant quand vous êtes proche de§a Naruto§7, à chaque palier vous obtiendrez quelque chose: \n\n" +
+                .addCustomLine("§7Vous possédez une barre de points invisible augmentant quand vous êtes proche de§a Naruto§7, à chaque palier vous obtiendrez quelque chose: \n\n" +
                         "§8 - §a1000 points§7: Vous obtiendrez l'effet§c Force I§7 proche de§a Naruto§7.\n\n" +
                         "§8 -§a 2000 points§7: Vous connaîtrez le joueur possédant le rôle de§a Naruto§7, à partir de là, à sa mort vous obtiendrez le§a Rasengan§7.")
                 .getText();
@@ -132,7 +132,7 @@ public class KonohamaruV2 extends ShinobiRoles implements Listener {
 
         public NueArdente(@NonNull RoleBase role) {
             super("Nuée Ardente", new Cooldown(60*3), new ItemBuilder(Material.SULPHUR).setName("§aNuée Ardente"), role,
-                    "§7Donne l'effet§c Blindness I§7 pendant§c 20 secondes§7 à tous les joueurs proche.");
+                    "§7Donne l'effet§c Blindness I§7 pendant§c 20 secondes§7 à tous les joueurs proches.");
         }
 
         @Override

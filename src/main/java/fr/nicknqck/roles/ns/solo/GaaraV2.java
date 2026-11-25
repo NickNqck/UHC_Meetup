@@ -394,7 +394,7 @@ public class GaaraV2 extends NSSoloRoles implements Listener{
             super("Attaque", new Cooldown(1), new ItemBuilder(Material.NETHER_STAR).setName("§eAttaque"), role,
                     "§7Ouvre un menu permettant d'équiper l'un des pouvoirs suivants: ",
                     "",
-                    "§8 -§e Tsunami de sable§7: Crée une§e vague de sable§7 devant vous propulsant les joueurs touchés et leurs infligeant§c 1❤§7 de§c dégâts§7. (Coût:§e 30 sables§7)",
+                    "§8 -§e Tsunami de sable§7: Crée une§e vague de sable§7 devant vous propulsant les joueurs touchés et leur infligeant§c 1❤§7 de§c dégâts§7. (Coût:§e 30 sables§7)",
                     "",
                     "§8 -§e Sarcophage de sable§7: Crée un§e sarcophage§7 composé de§e sable§7 sur le joueur visé. (Coût:§e 45 sables§7)",
                     "",

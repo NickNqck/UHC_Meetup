@@ -95,7 +95,7 @@ public class EnmuV2 extends DemonsRoles {
 
         protected SommeilUltime(@NonNull RoleBase role) {
             super("§fSommeil Ultime", new Cooldown(60*10), new ItemBuilder(Material.NETHER_STAR).setName("§fSommeil ultime"), role,
-                    "§7En visant un joueur, vous permet de charger sa§b bar de sommeil§7, une fois remplie vous pourrez alors l'affronter dans un§c duel",
+                    "§7En visant un joueur, vous permet de charger sa§b barre de sommeil§7, une fois remplie vous pourrez alors l'affronter dans un§c duel",
                     "§7durant ce duel, aucun joueur ne pourra utiliser de§c pouvoir§7, également, votre adversaire ne possédera aucun effet,",
                     "",
                     "§7Si vous perdez votre§c duel§7 vous réapparaitrez en perdant§c 2❤ permanents§7 ainsi que ce pouvoir",
@@ -141,7 +141,7 @@ public class EnmuV2 extends DemonsRoles {
                     ",\"depthNoiseScaleExponent\":0.5,\"mainNoiseScaleX\":80.0,\"mainNoiseScaleY\":160.0,\"mainNoiseScaleZ\":80.0,\"baseSize\":8.5,\"stretchY\":12.0,\"biomeDepthWeight\":1.0,\"biomeDepthOffset\":0.0,\"biomeScaleWeight\":1.0,\"biomeScaleOffset\":0.0," +
                     "\"seaLevel\":" + 10 +
                     ",\"useCaves\":" + false + //S'il y aura des caves ou non
-                    ",\"useDungeons\":" + false + //S'il y aura des dongeons ou non
+                    ",\"useDungeons\":" + false + //S'il y aura des donjons ou non
                     ",\"dungeonChance\":" + 8 + //Probo dongeon 8 = vanilla
                     ",\"useStrongholds\":" + false + //S'il y aura des strongholds
                     ",\"useVillages\":" + false + //S'il y aura des villages ou non

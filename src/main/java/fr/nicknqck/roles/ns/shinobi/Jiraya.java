@@ -212,7 +212,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
                         return true;
                     }
                 } else {
-                    player.sendMessage("§cVotre rôle n'est lié a aucun monde !");
+                    player.sendMessage("§cVotre rôle n'est lié à aucun monde !");
                 }
             }
             return false;
@@ -309,7 +309,7 @@ public class Jiraya extends HShinobiRoles implements IRoleGotSubWorld {
         }
     }
 
-    //Ce monde sera donc créer automatiquement à chaque fois que le rôle est donné
+    //Ce monde sera donc créé automatiquement à chaque fois que le rôle est donné
     private static final class JirayaSubWorld implements ISubRoleWorld {
 
         private double percent = 0.0;

@@ -88,13 +88,13 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
                 .setPowers(getPowers())
                 .addParticularites(
                         new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                                new TextComponent("§7Si vous arrivez à tué§a Tanjiro§7,§a Inosuke§7 ou§a Zen'Itsu§7 vous obtiendrez l'item§6 Percussion Rapide\n\n" +
+                                new TextComponent("§7Si vous arrivez à tuer§a Tanjiro§7,§a Inosuke§7 ou§a Zen'Itsu§7 vous obtiendrez l'item§6 Percussion Rapide\n\n" +
                                         "§7Il vous permettra d'activer un§c passif§7 pour une durée de§c 10 secondes\n" +
                                         "§7Ce qui vous permettra de retourner n'importe quel joueur que vous§c frapperez\n\n" +
                                         "§7(1x/10m)")
                         }),
                         new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{
-                                new TextComponent("§7A la mort de§c Muzan§7 vous deviendrez un rôle§e Solitaire§7, vous obtiendrez donc les§c bonus§7 suivant:\n\n" +
+                                new TextComponent("§7A la mort de§c Muzan§7 vous deviendrez un rôle§e Solitaire§7, vous obtiendrez donc les§c bonus§7 suivants:\n\n" +
                                         "§7Vous obtiendrez l'effet§9 Résistance I§7 de manière§c permanente§7 ainsi que§c 3❤ permanents\n\n" +
                                         "§7Votre§c Tambour§7 aura §c50%§7 de §cchance§7 de retourner tous les joueurs autour de vous (§c30 blocs§7)")
                         })
@@ -112,7 +112,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
             addPower(new PercussionRapidePower(this), true);
             // Ne pas désinscrire tout le listener : le handler de la mort de Muzan (passage solo) doit rester actif
             this.percussionObtained = true;
-            event.getGamePlayerKiller().sendMessage("§7Vous avez réussis à tué "+role.getName()+"§7, vous obtenez donc finalement la faculté d'utiliser vos§6 Percussion Rapide");
+            event.getGamePlayerKiller().sendMessage("§7Vous avez réussi à tuer "+role.getName()+"§7, vous obtenez donc finalement la faculté d'utiliser vos§6 Percussion Rapide");
         }
     }
     @EventHandler
@@ -124,7 +124,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     private void procSolo() {
         this.solo = true;
         getGamePlayer().sendMessage("§7Vous êtes enfin libéré de l'emprise de§c Muzan§7 vous obtenez l'effet§9 Résistance I§c permanent§7 ainsi que§c 3❤ permanents§7",
-                "§7Votre§c Tambour§7 à maintenant§c 50%§7 de§c chance§7 de retourner tous les joueurs autour de vous (§c30 blocs§7)");
+                "§7Votre§c Tambour§7 a maintenant§c 50%§7 de§c chance§7 de retourner tous les joueurs autour de vous (§c30 blocs§7)");
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, false, false), EffectWhen.PERMANENT));
         setMaxHealth(getMaxHealth()+6.0);
         final Player owner = Bukkit.getPlayer(getPlayer());
