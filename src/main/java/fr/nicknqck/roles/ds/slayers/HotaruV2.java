@@ -165,7 +165,7 @@ public class HotaruV2 extends SlayerRoles {
         private final Map<ItemStack, Lames> map;
 
         public RolePower(@NonNull RoleBase role) {
-            super("/ds chooseblade", "role", new Cooldown(60*5), role, CommandType.DS, "§7Vous permet de choisir votre lame.");
+            super("/ds chooseblade", "chooseblade", new Cooldown(60*5), role, CommandType.DS, "§7Vous permet de choisir votre lame.");
             this.map = new HashMap<>();
             init();
             EventUtils.registerRoleEvent(this);
