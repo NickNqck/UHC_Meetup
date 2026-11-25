@@ -111,6 +111,8 @@ public class KurenaiV2 extends ShinobiRoles {
                     player.setGameMode(GameMode.SURVIVAL);
                     player.sendMessage("§7Votre§c Genjutsu§7 est terminé.");
                     player.teleport(loc);
+                    // 3❤ de dégâts annoncés dans la description
+                    if (!target.isDead()) target.setHealth(Math.max(0.1, target.getHealth()-6.0));
                 }, 100);
                 return true;
             }
@@ -151,14 +153,19 @@ public class KurenaiV2 extends ShinobiRoles {
                 this.initLocation = player.getLocation().clone();
                 this.owner = player.getUniqueId();
                 EventUtils.registerRoleEvent(this);
-                this.armors = player.getInventory().getArmorContents();
+                // Copies : en 1.8 les objets renvoyés suivent l'inventaire réel (usure, consommation)
+                final ItemStack[] armorContents = player.getInventory().getArmorContents();
+                this.armors = new ItemStack[armorContents.length];
+                for (int a = 0; a < armorContents.length; a++) {
+                    this.armors[a] = armorContents[a] == null ? null : armorContents[a].clone();
+                }
                 this.kurenai = kurenai;
       //          this.kurenai.getGamePlayer().setCanRevive(true);
                 int i = 0;
                 for (ItemStack stack : player.getInventory().getContents()) {
                     if (stack != null && stack.getType() != Material.AIR){
                         System.out.println("Amount: "+stack.getAmount() + ", hasItemMeta "+stack.hasItemMeta()+", Type: "+stack.getType());
-                        getContents.put(i, stack);
+                        getContents.put(i, stack.clone());
                     }
                     i++;
                 }
