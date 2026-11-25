@@ -273,6 +273,8 @@ public class KagayaV2 extends SlayerRoles {
                                 if (gameTarget.getRole() != null) {
                                     if (gameTarget.getRole() instanceof PilierRoles){
                                         player.sendMessage("§b"+gameTarget.getPlayerName()+"§a est bien un pilier");
+                                    } else {
+                                        player.sendMessage("§b"+gameTarget.getPlayerName()+"§c n'est pas un pilier");
                                     }
                                     return true;
                                 } else {
