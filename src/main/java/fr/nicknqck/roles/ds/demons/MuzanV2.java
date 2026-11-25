@@ -205,7 +205,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                         }
                         player.sendMessage("§cVous avez donné le pouvoir de l'infection à§b "+target.getDisplayName());
                         target.sendMessage("§4Muzan§c vous a donné le pouvoir de l'infection, ne le gâchez pas... (§6/ds infection <joueur>§7)");
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> role.addPower(new InfectPower((DemonsRoles) role)));
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> role.addPower(new InfectPower(role)));
                         return true;
                     }
                 }
@@ -214,7 +214,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
         }
         private static class InfectPower extends CommandPower {
 
-            private InfectPower(@NonNull DemonsRoles role) {
+            private InfectPower(@NonNull RoleBase role) {
                 super("/ds infection <joueur>", "infection", new Cooldown(-500), role, CommandType.DS,
                         "§7Cette§c commande§7 vous permet d'§cinfecter§7 le joueur ciblé dans le camp des§c Démons§7 (au bout de§c "+ StringUtils.secondsTowardsBeautiful(Main.getInstance().getGameConfig().getDemonSlayerConfig().getInfectionTime())+"§7)");
                 setMaxUse(1);
@@ -239,7 +239,7 @@ public class MuzanV2 extends DemonsRoles implements Listener {
                     }
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                     final GameState gameState = role.getGameState();
-                    new InfectionRunnable(gameState, (DemonsRoles) getRole(), role);
+                    new InfectionRunnable(gameState, getRole(), role);
                     return true;
                 }
                 return false;
@@ -247,11 +247,11 @@ public class MuzanV2 extends DemonsRoles implements Listener {
             private static final class InfectionRunnable extends BukkitRunnable {
 
                 private final GameState gameState;
-                private final DemonsRoles roleInfecteur;
+                private final RoleBase roleInfecteur;
                 private final RoleBase roleTarget;
                 private int timeRemaining;
 
-                private InfectionRunnable(GameState gameState, DemonsRoles roleInfecteur, RoleBase roleTarget) {
+                private InfectionRunnable(GameState gameState, RoleBase roleInfecteur, RoleBase roleTarget) {
                     this.gameState = gameState;
                     this.roleInfecteur = roleInfecteur;
                     this.roleTarget = roleTarget;
