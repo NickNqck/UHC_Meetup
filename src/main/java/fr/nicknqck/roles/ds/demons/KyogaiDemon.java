@@ -40,6 +40,8 @@ import java.util.UUID;
 public class KyogaiDemon extends DemonsRoles implements Listener {
 
     private boolean solo = false;
+    /** Vrai une fois la Percussion Rapide obtenue (tuer Tanjiro, Inosuke ou Zen'Itsu) */
+    private boolean percussionObtained = false;
 
     public KyogaiDemon(UUID player) {
         super(player);
@@ -101,13 +103,15 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
     @EventHandler
     private void UHCKillEvent(@NonNull final UHCDeathEvent event) {
         if (event.isCancelled())return;
+        if (this.percussionObtained)return;
         if (event.getGamePlayerKiller() == null)return;
         if (event.getGameState().hasRoleNull(event.getPlayer().getUniqueId()))return;
         if (!event.getGamePlayerKiller().getUuid().equals(getPlayer()))return;
         final RoleBase role = event.getGameState().getGamePlayer().get(event.getPlayer().getUniqueId()).getRole();
         if (role instanceof Tanjiro || role instanceof ZenItsuV2 || role instanceof InosukeV2) {
             addPower(new PercussionRapidePower(this), true);
-            EventUtils.unregisterEvents(this);
+            // Ne pas désinscrire tout le listener : le handler de la mort de Muzan (passage solo) doit rester actif
+            this.percussionObtained = true;
             event.getGamePlayerKiller().sendMessage("§7Vous avez réussis à tué "+role.getName()+"§7, vous obtenez donc finalement la faculté d'utiliser vos§6 Percussion Rapide");
         }
     }
@@ -204,7 +208,7 @@ public class KyogaiDemon extends DemonsRoles implements Listener {
             public PercussionRunnable(PercussionRapidePower percussionRapidePower, @NonNull GameState gameState) {
                 this.power = percussionRapidePower;
                 this.gameState = gameState;
-                this.timeRemaining = 15;
+                this.timeRemaining = 10;
                 power.getRole().getGamePlayer().getActionBarManager().addToActionBar("kyogai.percurapide", "§bTemps de percussion restant:§c "+timeRemaining+"s");
                 runTaskTimerAsynchronously(power.getPlugin(), 0, 20);
             }
