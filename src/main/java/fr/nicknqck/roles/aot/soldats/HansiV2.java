@@ -111,7 +111,7 @@ public class HansiV2 extends SoldatsRoles {
                                     getRole().setMaxHealth(getRole().getMaxHealth()-4.0);
                                     player.sendMessage("§7Vous vous êtes visé vous-même, vous perdez§c 2"+AllDesc.coeur+"§7 permanents.");
                                 }
-                                new SeringueRunnable(role, this.getRole()).runTaskTimerAsynchronously(getPlugin(), 1, 20);
+                                new SeringueRunnable(role, this.getRole()).runTaskTimer(getPlugin(), 1, 20);
                                 return true;
                             }
                         }
