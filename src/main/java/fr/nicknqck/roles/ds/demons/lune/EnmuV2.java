@@ -407,7 +407,7 @@ public class EnmuV2 extends DemonsRoles {
                 this.sommeilUltime = sommeilUltime;
                 this.gameState = sommeilUltime.getRole().getGameState();
                 this.uuid = uuidTarget;
-                sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemps avant sommeil:§c 5 minutes");
+                sommeilUltime.getRole().getGamePlayer().getActionBarManager().addToActionBar("enmuv2.dueltime", "§bTemps avant sommeil:§c "+StringUtils.secondsTowardsBeautiful(30));
             }
 
             @Override
