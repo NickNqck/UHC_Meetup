@@ -167,7 +167,7 @@ public class Nakime extends DemonsRoles {
 					}
 				}
 			}
-		}else if (actualworld.getName().equalsIgnoreCase("world")) {
+		}else if (actualworld.equals(Main.getInstance().getWorldManager().getGameWorld())) {
 			OLDgivePotionEffet(owner, PotionEffectType.WEAKNESS, 60, 1, true);
 		}
 		if (cooldown == 0) {
