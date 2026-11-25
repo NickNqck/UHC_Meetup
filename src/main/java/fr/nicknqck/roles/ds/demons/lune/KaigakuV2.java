@@ -393,7 +393,8 @@ public class KaigakuV2 extends DemonsRoles implements Listener{
                 for (final Player target : aroundPlayers) {
                     target.getWorld().strikeLightningEffect(target.getLocation());
                     target.setHealth(Math.max(0.1, target.getHealth()-4.0));
-                    if (this.power.charge == 100) {
+                    // Après la mort de Zen'Itsu, le clic droit a toujours les effets de la pleine charge
+                    if (this.power.charge == 100 || this.power.killZenItsu) {
                         target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20*10, 0, false, false), true);
                         target.setFireTicks(20*10);
                     }
