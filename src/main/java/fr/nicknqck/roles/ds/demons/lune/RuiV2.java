@@ -178,8 +178,8 @@ public class RuiV2 extends DemonsRoles {
                     target.setHealth(target.getHealth()-5.0);
                 }
                 target.damage(0.0);
-                if (Main.RANDOM.nextInt(100) <= 15) {
-                    target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*10, 0, false, false), true);
+                if (Main.RANDOM.nextInt(100) < 15) {
+                    target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 20*15, 0, false, false), true);
                     target.sendMessage("§7Vous avez été atteint par le§2 poison§7 de§c Rui");
                     player.sendMessage("§7Votre§2 poison§7 à atteint§c "+target.getDisplayName());
                 }
@@ -311,6 +311,7 @@ public class RuiV2 extends DemonsRoles {
                         return;
                     }
                     if (timeRemaining <= 0) {
+                        ruiV2.getGamePlayer().getActionBarManager().removeInActionBar("ruiv2.resirunnable");
                         cancel();
                         return;
                     }
