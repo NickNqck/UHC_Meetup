@@ -531,7 +531,7 @@ public class KabutoSolo extends NSSoloRoles implements IUncompatibleRole {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             player.sendMessage("§7La§a Mue du serpent§7 vous a donné un§c nouveau corps§7.");
-            final Location loc = Loc.getRandomLocationAroundPlayer(player, 25);
+            final Location loc = Loc.getRandomLocationAroundPlayer(player, 50);
             player.teleport(loc);
             getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*30, 1, false, false), EffectWhen.NOW);
             lastTimeCurrent = System.currentTimeMillis();
