@@ -94,7 +94,7 @@ public class SusamaruV2 extends DemonsRoles {
                     "§7Vous pouvez changer le modèle de votre§c Ballon§7 en faisant un§c clic gauche§7 avec votre§c arc§7.");
             EventUtils.registerRoleEvent(this);
             this.cdExplosif = new Cooldown(15);
-            this.cdTransporteur = new Cooldown(65);
+            this.cdTransporteur = new Cooldown(60);
             this.getShowCdRunnable().setCustomText(true);
             setSendCooldown(false);
             setShowCdInDesc(false);
