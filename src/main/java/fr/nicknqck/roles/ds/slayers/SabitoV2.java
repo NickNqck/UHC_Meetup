@@ -21,6 +21,7 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -150,7 +151,7 @@ public class SabitoV2 extends SlayerRoles {
 
             Vector direction = player.getLocation().getDirection().normalize().multiply(1.2);
             Set<UUID> touchedPlayers = new HashSet<>();
-            Map<Location, Material> changedBlocks = new HashMap<>();
+            Map<Location, BlockState> changedBlocks = new HashMap<>();
 
             Location startLoc = player.getLocation().clone(); // point de départ
             double maxDistance = 20.0; // distance cible
@@ -185,7 +186,8 @@ public class SabitoV2 extends SlayerRoles {
                             if (changedBlocks.containsKey(loc)) continue;
                             // Les blocs à contenu (coffres, fours…) perdraient leur contenu
                             if (block.getState() instanceof InventoryHolder) continue;
-                            changedBlocks.put(loc, block.getType());
+                            // L'état complet est gardé : type et données (couleur de la laine, sens des escaliers…)
+                            changedBlocks.put(loc, block.getState());
                             // Eau stationnaire sans physique : elle ne s'écoule pas hors des blocs enregistrés
                             block.setType(Material.STATIONARY_WATER, false);
                         }
@@ -227,8 +229,8 @@ public class SabitoV2 extends SlayerRoles {
 
                     // Restauration des blocs d'eau
                     Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-                        for (Map.Entry<Location, Material> entry : changedBlocks.entrySet()) {
-                            entry.getKey().getBlock().setType(entry.getValue());
+                        for (BlockState state : changedBlocks.values()) {
+                            state.update(true, false);
                         }
                     }, 5);
                 }
