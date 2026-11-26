@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
+import fr.nicknqck.roles.ns.orochimaru.edov2.OrochimaruV2;
 import fr.nicknqck.GameState;
 import fr.nicknqck.Main;
 import fr.nicknqck.enums.EChakras;
@@ -75,7 +76,7 @@ public final class JugoV2 extends OrochimaruRoles {
     public void RoleGiven(GameState gameState) {
         addPower(new TransformationErmite(this), true);
         addKnowedRole(KimimaroV2.class);
-        addKnowedRole(OrochimaruRoles.class);
+        addKnowedRole(OrochimaruV2.class);
     }
     private static final class TransformationErmite extends ItemPower implements Listener {
 
