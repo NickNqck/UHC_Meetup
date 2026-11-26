@@ -128,23 +128,18 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
         if (dead)return;
         final RoleBase role = event.getGamePlayerKiller().getRole();
         if (role instanceof DemonsRoles || role.getTeam().equals(TeamList.Demon) || role.getOriginTeam().equals(TeamList.Demon)) {
-            int random = Main.RANDOM.nextInt(101);
-            int proba = (
-                    role instanceof DemonsRoles ?
-                            ((DemonsRoles) role).getRank().equals(DemonType.SUPERIEUR) ?
-                                    70  :
-                                    ((DemonsRoles) role).getRank().equals(DemonType.INFERIEUR)
-                                            ? 50
-                                            :
-                                            ((DemonsRoles) role).getRank().equals(DemonType.NEZUKO) ? 70
-                                                    :
-                                                    role instanceof KokushiboV2 ? 90
-                                                            :
-                                                            role instanceof MuzanV2 ? 90 : 30
-                            :
-                            30
-            );
-            if (proba <= random) {
+            final int random = Main.RANDOM.nextInt(100);
+            final int proba;
+            if (role instanceof KokushiboV2 || role instanceof MuzanV2) {
+                proba = 90;
+            } else if (role instanceof DemonsRoles && (((DemonsRoles) role).getRank().equals(DemonType.SUPERIEUR) || ((DemonsRoles) role).getRank().equals(DemonType.NEZUKO))) {
+                proba = 70;
+            } else if (role instanceof DemonsRoles && ((DemonsRoles) role).getRank().equals(DemonType.INFERIEUR)) {
+                proba = 50;
+            } else {
+                proba = 30;
+            }
+            if (random < proba) {
                 final ItemStack[] itemStacks = event.getPlayer().getInventory().getContents();
                 final ItemStack[] armors = event.getPlayer().getInventory().getArmorContents();
                 event.setCancelled(true);
@@ -206,7 +201,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                     continue;
                 }
                 if (distance <= 15) {
-                    points+=10;
+                    points+=15;
                     continue;
                 }
                 if (distance <= 25) {
