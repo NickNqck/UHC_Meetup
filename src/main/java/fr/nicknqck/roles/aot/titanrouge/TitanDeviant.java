@@ -52,14 +52,16 @@ public class TitanDeviant extends TitansRoles {
 
 	@Override
 	public void Update(GameState gameState) {
+		int titans = 0;
 		for (Player p: Loc.getNearbyPlayers(owner, 20)) {
-			if (gameState.TitansRouge.contains(p)) {
-				List<Player> isTitanAroundDeviant = new ArrayList<>();
-				isTitanAroundDeviant.add(p);
-                isTransformedinTitan = true;
-                OLDgivePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
-
-            }
+			if (gameState.TitansRouge.contains(p)) titans++;
+		}
+		if (titans >= 1) {
+			isTransformedinTitan = true;
+			OLDgivePotionEffet(owner, PotionEffectType.SPEED, 40, 1, true);
+		}
+		if (titans >= 2) {
+			OLDgivePotionEffet(owner, PotionEffectType.DAMAGE_RESISTANCE, 40, 1, true);
 		}
 	}
 
