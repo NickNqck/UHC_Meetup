@@ -181,7 +181,7 @@ public class TenTenV2 extends ShinobiRoles {
                 }
                 final Player owner = Bukkit.getPlayer(this.parcheminItem.getRole().getPlayer());
                 for (@NonNull final Player p : Loc.getNearbyPlayers(initLoc, 20)) {
-                    //		if (p.getUniqueId() != owner.getUniqueId()) {
+                    if (owner != null && p.getUniqueId().equals(owner.getUniqueId())) continue;
                     Arrow arrow = (Arrow) p.getWorld().spawnEntity(new Location(p.getWorld(), p.getLocation().getX(), p.getLocation().getY()+2.95, p.getLocation().getZ()), EntityType.ARROW);
                     if (owner != null){
                         arrow.setShooter(owner);
@@ -190,8 +190,6 @@ public class TenTenV2 extends ShinobiRoles {
                     arrow.setFallDistance(100f);
                     arrow.setBounce(false);
                     arrow.setKnockbackStrength(2);
-
-                    //	    }
                 }
                 MathUtil.sendCircleParticle(EnumParticle.BARRIER, this.initLoc, 20, 100);
                 i--;
