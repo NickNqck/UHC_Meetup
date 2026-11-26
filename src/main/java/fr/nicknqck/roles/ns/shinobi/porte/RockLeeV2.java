@@ -87,7 +87,6 @@ public class RockLeeV2 extends PortesRoles implements Listener {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> args) {
             if (getInteractType().equals(InteractType.INTERACT)) {
-                player.setAllowFlight(true);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60, 0, false, false), true);
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20*15, 0, false, false), true), 20*60);
                 return true;
