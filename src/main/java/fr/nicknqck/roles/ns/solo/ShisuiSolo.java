@@ -127,6 +127,10 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
     @EventHandler
     private void onEndIzanami(@NonNull final IzanamiFinishEvent event) {
         if (event.getInfecteur().getPlayer().equals(this.getPlayer())) {//donc si notre Shisui est l'infecteur
+            if (!event.isSuccessful()) {//Izanami raté : Shisui doit croire que ça a fonctionné, mais rien n'est réellement appliqué
+                event.getOwner().sendMessage("§7Vous possédez maintenant un chat commun avec §c"+event.getTarget().getName()+"§7, il suffira de commencer votre message par un§c !");
+                return;
+            }
             this.infected = event.getInfected();
             event.getInfected().getGamePlayer().startChatWith("§e"+event.getInfected().getName(), "!", this.getClass());
             event.getTarget().sendMessage("§7Vous possédez maintenant un chat commun avec§e Shisui§7, il suffira de commencer votre message par un§c !");
