@@ -25,6 +25,7 @@ import fr.nicknqck.utils.powers.Power;
 import lombok.NonNull;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -436,6 +437,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                 for (Player target : player.getWorld().getPlayers()) {
                     if (target.getUniqueId().equals(player.getUniqueId()))continue;
                     if (getRole().getGameState().hasRoleNull(target.getUniqueId()))continue;
+                    if (!getRole().getGameState().getGamePlayer().get(target.getUniqueId()).isAlive())continue;
                     if (target.getLocation().distance(player.getLocation()) > 50)continue;
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                     if (role instanceof DemonsRoles)continue;
@@ -463,6 +465,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                 for (Player target : player.getWorld().getPlayers()) {
                     if (target.getUniqueId().equals(player.getUniqueId()))continue;
                     if (getRole().getGameState().hasRoleNull(target.getUniqueId()))continue;
+                    if (!getRole().getGameState().getGamePlayer().get(target.getUniqueId()).isAlive())continue;
                     if (target.getLocation().distance(player.getLocation()) > 50)continue;
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                     if (role instanceof MuzanV2)continue;
@@ -488,6 +491,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                 for (Player target : player.getWorld().getPlayers()) {
                     if (target.getUniqueId().equals(player.getUniqueId()))continue;
                     if (getRole().getGameState().hasRoleNull(target.getUniqueId()))continue;
+                    if (!getRole().getGameState().getGamePlayer().get(target.getUniqueId()).isAlive())continue;
                     if (target.getLocation().distance(player.getLocation()) > 50)continue;
                     final RoleBase role = getRole().getGameState().getGamePlayer().get(target.getUniqueId()).getRole();
                     if (role instanceof DemonsRoles)continue;
@@ -578,7 +582,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
 
                             // --- Dégâts pour tous les joueurs dans le cercle ---
                             for (Player target : arcCenter.getWorld().getPlayers()) {
-                                if (target.equals(caster)) continue;
+                                if (target.equals(caster) || target.getGameMode() == GameMode.SPECTATOR) continue;
 
                                 // distance au centre projetée dans le plan du cercle
                                 double dx = target.getLocation().getX() - arcCenter.getX();
