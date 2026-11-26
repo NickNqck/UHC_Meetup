@@ -119,7 +119,7 @@ public class HakuV2 extends NSSoloRoles {
 
             public HyotonItem(@NonNull final HyotonPower power) {
                 super("Hyôton", power.cooldown, new ItemBuilder(Material.NETHER_STAR).setName("§bHyôton"), power.getRole(),
-                        "§7Vous permet de crée un§b dôme de glace§7 pendant§c 2 minutes§7 vous donnant l'effet§c Force I§7 ainsi que§a NoFall");
+                        "§7Vous permet de crée un§b dôme de glace§7 pendant§c 3 minutes§7 vous donnant l'effet§c Force I§7 ainsi que§a NoFall");
                 setWorkWhenInCooldown(true);
                 EventUtils.registerRoleEvent(this);
                 this.power = power;
@@ -213,6 +213,7 @@ public class HakuV2 extends NSSoloRoles {
                         nouveau.setActualCooldown(old.getCooldownRemaining());
                     }
                     this.power.cooldown = nouveau;
+                    setCooldown(nouveau);
                     this.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0, false, false), EffectWhen.PERMANENT);
                     this.power.zabuzaDEAD = true;
                 }
