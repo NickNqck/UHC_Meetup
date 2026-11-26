@@ -379,7 +379,7 @@ public class AutomaticDesc {
         }
         if (this.role instanceof Ackerman) {
             if (((Ackerman) this.role).knowHisMaster() && ((Ackerman) this.role).getMaster() != null) {
-                this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a "+((Ackerman) this.role).getMaster().getGamePlayer().getPlayerName()+((((Ackerman) this.role).getGamePlayer().check() ? "" : " §7(§cMort§7)"))));
+                this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a "+((Ackerman) this.role).getMaster().getGamePlayer().getPlayerName()+((((Ackerman) this.role).getMaster().getGamePlayer().isAlive() ? "" : " §7(§cMort§7)"))));
             } else {
                 this.text.addExtra(fromLegacyTextSafe("\n\n"+AllDesc.point+"§7Votre§a maitre§7 est:§a §kJeNeSaisPas"));
             }
