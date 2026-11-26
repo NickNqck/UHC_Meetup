@@ -97,6 +97,10 @@ public class Sakura extends HShinobiRoles {
 	public boolean ItemUse(ItemStack item, GameState gameState) {
 		if (item.isSimilar(ByakugoItem())) {
 			if (!Receve) {
+				if (owner.getHealth() <= 1.0) {
+					owner.sendMessage("§7Vous n'avez pas assez de§c vie§7 pour charger votre§d Byakugo");
+					return super.ItemUse(item, gameState);
+				}
 				SavedHP += 1;
 				Heal(owner, -1.0);
 				owner.damage(0.0);
