@@ -98,7 +98,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                 .addCustomLine(this.infected == null ?
                         "§7Votre§e Izanami§7 ne peut pas avoir les missions: \"§fRester loin de vous (§c30 blocs§f) pendant§c 1 minute§7\"§7 et \"§fRester proche de la cible (§c20 blocs§f) pendant§c 5 minutes§7\""
                         : "")
-                .addCustomLine("§7Vous êtes immunisé à TOUT ce qui vous ferait changer de camp")
+                .addCustomLine("§7Vous êtes immunisé contre TOUT ce qui vous ferait changer de camp")
                 .addCustomLine("§7Une fois que vous avez infecté un joueur, il ne pourra plus changer de camp")
                 .addCustomLine("§7Tant que votre§a Shuriken Jutsu§7 est en cooldown, vous ferez§c 20%§7 de§c dégâts supplémentaires")
                 .getText();
