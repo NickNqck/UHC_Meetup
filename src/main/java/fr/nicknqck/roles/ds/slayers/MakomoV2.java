@@ -98,6 +98,7 @@ public class MakomoV2 extends SlayerRoles implements Listener{
                     "§7Une fois§c téléporter§7 la§c cible§7 obtient§c 30 secondes§7 de§c Slowness I§7.");
             this.blocks = new LinkedList<>();
             setTargetDistance(30);
+            EventUtils.registerRoleEvent(this);
         }
 
         @Override
