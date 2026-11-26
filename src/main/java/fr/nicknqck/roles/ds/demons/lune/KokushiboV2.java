@@ -238,13 +238,17 @@ public class KokushiboV2 extends DemonsRoles {
                         player.sendMessage("§cIl vous faut au minimum§4 50%§c de§7 \"§bPourcentage Lunaire§7\"§c pour utiliser votre§4 Frappe Horizontal§c.");
                         return false;
                     }
-                    return this.horizontalPower.checkUse(player, map);
+                    if (!this.horizontalPower.checkUse(player, map)) return false;
+                    this.role.pourcentageLunaire -= 50;
+                    return true;
                 } else if (event.getAction().name().contains("RIGHT")) {
                     if (this.role.pourcentageLunaire < 50) {
                         player.sendMessage("§cIl vous faut au minimum§4 50%§c de§7 \"§bPourcentage Lunaire§7\"§c pour utiliser votre§4 Frappe Vertical§c.");
                         return false;
                     }
-                    return this.verticalPower.checkUse(player, map);
+                    if (!this.verticalPower.checkUse(player, map)) return false;
+                    this.role.pourcentageLunaire -= 50;
+                    return true;
                 }
             }
             return false;
@@ -315,10 +319,8 @@ public class KokushiboV2 extends DemonsRoles {
                     direction.normalize();
 
                     // Position 2 blocs devant le joueur dans la direction regardée
-                    Location center = location.clone();
-                    if (this.lastLoc.distance(location) >= 1){
-                        center = location.clone().add(direction.multiply(2));
-                    }
+                    // Le croissant avance d'un bloc à chaque étape (10 étapes = 10 blocs)
+                    Location center = location.clone().add(direction.multiply(1));
 
                     // Paramètres du croissant
                     double outerRadius = 5.0;
