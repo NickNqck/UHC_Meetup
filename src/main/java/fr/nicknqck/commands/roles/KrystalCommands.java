@@ -79,7 +79,7 @@ public class KrystalCommands implements CommandExecutor {
                             return true;
                         }
                     } else {
-                        commandSender.sendMessage("§7La commande est§c /cr bailli <joueur>§7.");
+                        commandSender.sendMessage("§7La commande est§c /cr bailli <joueur> location§7.");
                         return true;
                     }
                 }
@@ -97,7 +97,7 @@ public class KrystalCommands implements CommandExecutor {
                 }
             }
         }
-        return false;
+        return true;
     }
 
 }
