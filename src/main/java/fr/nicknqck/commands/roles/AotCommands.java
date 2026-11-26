@@ -2,12 +2,15 @@ package fr.nicknqck.commands.roles;
 
 import fr.nicknqck.Main;
 import fr.nicknqck.roles.aot.builders.AotRoles;
+import fr.nicknqck.roles.aot.builders.titans.StealCommand;
 import fr.nicknqck.utils.powers.CommandPower;
 import fr.nicknqck.utils.powers.Power;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 
 import fr.nicknqck.GameState;
 
@@ -35,7 +38,15 @@ public class AotCommands implements CommandExecutor {
 							}
 						}
 						if (args[0].equalsIgnoreCase("steal")) {
-
+							if (!gameState.hasRoleNull(player.getUniqueId())) {
+								// un seul /aot steal à la fois (il peut y avoir un StealCommand par titan mort à proximité)
+								for (Power power : new ArrayList<>(gameState.getGamePlayer().get(player.getUniqueId()).getRole().getPowers())) {
+									if (power instanceof StealCommand && power.getUse() < power.getMaxUse()) {
+										((CommandPower) power).call(args, CommandPower.CommandType.AOT, player);
+										break;
+									}
+								}
+							}
                         } else {
 							if (args[0].equalsIgnoreCase("titan")) {
 								if (Main.getInstance().getTitanManager().hasTitan(player.getUniqueId())) {
