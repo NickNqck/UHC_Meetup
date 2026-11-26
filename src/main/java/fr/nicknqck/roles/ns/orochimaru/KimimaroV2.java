@@ -1,5 +1,6 @@
 package fr.nicknqck.roles.ns.orochimaru;
 
+import fr.nicknqck.events.custom.UHCPlayerBattleEvent;
 import fr.nicknqck.GameState;
 import fr.nicknqck.enums.Roles;
 import fr.nicknqck.events.custom.power.CooldownFinishEvent;
@@ -101,6 +102,8 @@ public class KimimaroV2 extends OrochimaruRoles {
         @Override
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             if (getInteractType().equals(InteractType.ATTACK_ENTITY)) {
+                // l'événement de combat est appelé deux fois par coup (avant et après le patch)
+                if (!((UHCPlayerBattleEvent) map.get("event")).isPatch()) return false;
                 coups++;
                 return coups >= 8;
             }
@@ -330,6 +333,7 @@ public class KimimaroV2 extends OrochimaruRoles {
                     if (owner != null) {
                         owner.sendMessage("§7Votre forêt s'est détruite !");
                     }
+                    this.foretItemPower.getRole().getGamePlayer().getActionBarManager().removeInActionBar("kimimaro.foret");
                     cancel();
                     return;
                 }
@@ -345,7 +349,7 @@ public class KimimaroV2 extends OrochimaruRoles {
                 }
 
                 damageTick++;
-                if (damageTick >= 7) {
+                if (damageTick >= 5) {
                     damageTick = 0;
 
                     for (@NonNull Player target : center.getWorld().getPlayers()) {
