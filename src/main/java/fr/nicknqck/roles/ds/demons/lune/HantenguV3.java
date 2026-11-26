@@ -79,7 +79,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine("§7Lorsque vous retirez votre§c armure§7 vous devenez§a invisible§7, lorsque vous l'êtes vous êtes insensible au§c dégâts§7 de§a chute§7 et vous avez les effets§9 Résistance II§7 et§e Speed I§7 (Ne fonctionne pas si vous êtes sous une autre§c forme§7 qu'§cHantengu§7).")
+                .addCustomLine("§7Lorsque vous retirez votre§c armure§7 vous devenez§a invisible§7, lorsque vous l'êtes vous êtes insensible aux§c dégâts§7 de§a chute§7 et vous avez les effets§9 Résistance II§7 et§e Speed I§7 (Ne fonctionne pas si vous êtes sous une autre§c forme§7 qu'§cHantengu§7).")
                 .getText();
     }
 
@@ -125,7 +125,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
             }
             if (nude) {
                 if (!message) {
-                    owner.sendMessage("§7Vous êtes devenue§a invisible§7.");
+                    owner.sendMessage("§7Vous êtes devenu§a invisible§7.");
                     this.message = true;
                     this.hantenguV3.invisible = true;
                 }
@@ -157,47 +157,47 @@ public class HantenguV3 extends DemonsRoles implements Listener {
 
         public ChoicePower(@NonNull RoleBase role) {
             super("Émotions", null, new ItemBuilder(Material.NETHER_STAR).setName("§cÉmotions"), role,
-                    "§7Vous ouvre un menu vous permettant de choisir une§c forme§7, chacune d'entre elles ont leurs propres§c particularités§7 et",
-                    "§7leurs propres pouvoir utilisable via un§c clic gauche§7 sur cet objet, chacun d'entre eux à un§c cooldown§7 de§c 2 minutes§7.",
+                    "§7Vous ouvre un menu vous permettant de choisir une§c forme§7, chacune d'entre elles a leurs propres§c particularités§7 et",
+                    "§7leurs propres pouvoirs utilisable via un§c clic gauche§7 sur cet objet, chacun d'entre eux a un§c cooldown§7 de§c 2 minutes§7.",
                     "",
                     "§8 -§c Sekido§7: ",
                     "",
                     AllDesc.tab+"§7Vous donne l'effet§c Force I§7 pendant le temps de la§c transformation§7, également pendant la transformation vous pouvez utiliser le \"§cKhakkhara§7\".",
                     "",
-                    AllDesc.tab+"§cKhakkhara§7: Tous les joueurs étant à moins de§c 50 blocs§7 et qui ne sont pas des§c démons§7 seront touché par un§e éclair§7,",
-                    "§7ce qui leurs donnera§c Slowness IV§7 et§c Blindness IV§7 pendant§c 5 secondes§7, ils perdront aussi§c 1,5❤§7 de§c dégâts§7.",
+                    AllDesc.tab+"§cKhakkhara§7: Tous les joueurs étant à moins de§c 50 blocs§7 et qui ne sont pas des§c démons§7 seront touchés par un§e éclair§7,",
+                    "§7ce qui leur donnera§c Slowness IV§7 et§c Blindness IV§7 pendant§c 5 secondes§7, ils perdront aussi§c 1,5❤§7 de§c dégâts§7.",
                     "",
                     "§8 -§a Karaku§7: ",
                     "",
-                    AllDesc.tab+"§7Vous donne l'effet§e Vitesse I§7 pendant le temps de la§c transformation§7 ainsi que l'insensibilité au§c dégâts§7 de§a chute§7,",
+                    AllDesc.tab+"§7Vous donne l'effet§e Vitesse I§7 pendant le temps de la§c transformation§7 ainsi que l'insensibilité aux§c dégâts§7 de§a chute§7,",
                     "§7également, pendant la transformation vous utiliser le \"§aUchiwa§7\".",
                     "",
                     AllDesc.tab+"§aUchiwa§7: Tous les joueurs étant à moins de§c 50 blocs§7 et qui ne sont pas§c Muzan§7 seront téléportés§c 50 blocs§7 vers le haut.",
                     "",
                     "§8 -§c Aizetsu§7: ",
-                    "§7§oCette§c§o forme§7§o nécessite d'avoir d'abord utiliser§c Sekido§7.",
+                    "§7§oCette§c§o forme§7§o nécessite d'avoir d'abord utilisé§c Sekido§7.",
                     "",
                     AllDesc.tab+"§7Vous donne l'effet§c Force I§7 pendant le temps de la§c transformation§7, également pendant la transformation vous pouvez utiliser \"§cAffaiblissement§7\".",
                     "",
                     AllDesc.tab+"§cAffaiblissement§7: Tous les joueurs étant dans un rayon de§c 50 blocs§7 et qui ne sont pas§c démons§7 obtiendront§c 30 secondes§7 de§c Weakness I§7.",
                     "",
                     "§8 -§9 Urami§7: ",
-                    "§7§oCette§c§o forme§7§o nécessite d'avoir d'abord utiliser§c Sekido§7§o ou§a Karaku§7.",
+                    "§7§oCette§c§o forme§7§o nécessite d'avoir d'abord utilisé§c Sekido§7§o ou§a Karaku§7.",
                     "",
-                    AllDesc.tab+"§7Vous donne les effets§c Weakness I§7 et§ç Résistance II§7 pendant le temps de la§c transformation§7, également, si vous§c mourrez§7 pendant la§c transformation§7",
+                    AllDesc.tab+"§7Vous donne les effets§c Weakness I§7 et§9 Résistance II§7 pendant le temps de la§c transformation§7, également, si vous§c mourez§7 pendant la§c transformation§7",
                     "§7vous§c ressusciterez§7 en perdant§c 2❤ permanents§7.",
                     "",
                     "§8 -§a Urogi§7: ",
-                    "§7§oCette§c§o forme§7§o nécessite d'avoir d'abord utiliser§a Karaku§7.",
+                    "§7§oCette§c§o forme§7§o nécessite d'avoir d'abord utilisé§a Karaku§7.",
                     "",
                     AllDesc.tab+"§7Vous donne l'effet§e Speed I§7 pendant le temps de la§c transformation§7, également pendant la transformation vous pouvez utiliser \"§aCri Sonique§7\".",
                     "",
-                    AllDesc.tab+"§aCri Sonique§7: Tire des§c cercles§7 de§c particule§7 devant vous, tous les joueurs touchés obtiennent pendant§c 20 secondes§7 les effets:§c Slowness I§7,",
+                    AllDesc.tab+"§aCri Sonique§7: Tire des§c cercles§7 de§c particules§7 devant vous, tous les joueurs touchés obtiennent pendant§c 20 secondes§7 les effets:§c Slowness I§7,",
                     "§cWeakness I§7 et§c Nausée I§7.",
                     "",
                     "§8 -§e Zohakuten§7: ",
-                    "§7§oCette§c§o forme§7§o vous permettra d'utiliser les pouvoirs des§c§o formes§7§o que vous aviez choisis jusqu'ici, les pouvoirs de§c Sekido§7§o ou de§a Karaku§7§o seront",
-                    "§7§oplacer sur le§c clic gauche§7§o, pour utiliser les pouvoirs de§c Aizetsu§7§o ou de§a Urogi§7§o il faudra faire§c shift + clic gauche§7.",
+                    "§7§oCette§c§o forme§7§o vous permettra d'utiliser les pouvoirs des§c§o formes§7§o que vous aviez choisies jusqu'ici, les pouvoirs de§c Sekido§7§o ou de§a Karaku§7§o seront",
+                    "§7§oplacés sur le§c clic gauche§7§o, pour utiliser les pouvoirs de§c Aizetsu§7§o ou de§a Urogi§7§o il faudra faire§c shift + clic gauche§7.",
                     "",
                     AllDesc.tab+"§7Vous donne les effets§c Force I§7 et§9 Résistance I§7 pendant le temps de la§c transformation§7."
             );
@@ -224,7 +224,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                     final FastInv fastInv = new FastInv(27, "§cÉmotions");
                     if (amountChoices == 0) {
                         fastInv.setItem(12, new ItemBuilder(Material.BLAZE_ROD).setName("§cSekido").toItemStack(), event -> {
-                            event.getWhoClicked().sendMessage("§7Vous avez choisis la forme \"§c Sekido§7\"");
+                            event.getWhoClicked().sendMessage("§7Vous avez choisi la forme \"§c Sekido§7\"");
                             this.amountChoices++;
                             event.getWhoClicked().closeInventory();
                             this.leftClickPower = khakkharaPower;
@@ -233,7 +233,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                             formesTakes.add(FormHantengu.SEKIDO);
                         });
                         fastInv.setItem(14, new ItemBuilder(Material.FEATHER).setName("§aKaraku").toItemStack(), event -> {
-                            event.getWhoClicked().sendMessage("§7Vous avez choisis la forme \"§aKaraku§7\"");
+                            event.getWhoClicked().sendMessage("§7Vous avez choisi la forme \"§aKaraku§7\"");
                             this.amountChoices++;
                             event.getWhoClicked().closeInventory();
                             new FormeRunnable(this, "§aKaraku");
@@ -247,7 +247,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                             fastInv.setItem(12, new ItemBuilder(Material.DIAMOND_SWORD).setName("§cAizetsu").toItemStack(), event -> {
                                 this.amountChoices++;
                                 event.getWhoClicked().closeInventory();
-                                event.getWhoClicked().sendMessage("§7Vous avez choisis la forme \"§cAizetsu§7\"");
+                                event.getWhoClicked().sendMessage("§7Vous avez choisi la forme \"§cAizetsu§7\"");
                                 new FormeRunnable(this, "§cAizetsu");
                                 formesTakes.add(FormHantengu.AIZETSU);
                                 this.leftClickPower = affaiblissementPower;
@@ -257,7 +257,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                                 fastInv.setItem(14, new ItemBuilder(Material.IRON_CHESTPLATE).setName("§9Urami").toItemStack(), event -> {
                                     this.amountChoices++;
                                     event.getWhoClicked().closeInventory();
-                                    event.getWhoClicked().sendMessage("§7Vous avez choisis la forme \"§9Urami§7\"");
+                                    event.getWhoClicked().sendMessage("§7Vous avez choisi la forme \"§9Urami§7\"");
                                     formesTakes.add(FormHantengu.URAMI);
                                     new FormeRunnable(this, "§9Urami");
                                     getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 1, false, false), EffectWhen.NOW);
@@ -269,7 +269,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                                 fastInv.setItem(12, new ItemBuilder(Material.IRON_CHESTPLATE).setName("§9Urami").toItemStack(), event -> {
                                     this.amountChoices++;
                                     event.getWhoClicked().closeInventory();
-                                    event.getWhoClicked().sendMessage("§7Vous avez choisis la forme \"§9Urami§7\"");
+                                    event.getWhoClicked().sendMessage("§7Vous avez choisi la forme \"§9Urami§7\"");
                                     formesTakes.add(FormHantengu.URAMI);
                                     new FormeRunnable(this, "§9Urami");
                                     getRole().givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*60*5, 1, false, false), EffectWhen.NOW);
@@ -279,7 +279,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                             fastInv.setItem(14, new ItemBuilder(Material.YELLOW_FLOWER).setName("§aUrogi").toItemStack(), event -> {
                                 this.amountChoices++;
                                 event.getWhoClicked().closeInventory();
-                                event.getWhoClicked().sendMessage("§7Vous avez choisis la forme \"§aUrogi§7\"");
+                                event.getWhoClicked().sendMessage("§7Vous avez choisi la forme \"§aUrogi§7\"");
                                 formesTakes.add(FormHantengu.UROGI);
                                 new FormeRunnable(this, "§aUrogi");
                                 getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*5, 0, false, false), EffectWhen.NOW);
@@ -292,7 +292,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                             this.amountChoices = 0;
                             event.getWhoClicked().closeInventory();
                             new FormeRunnable(this, "§eZohakuten");
-                            event.getWhoClicked().sendMessage("§7Vous avez choisis la forme \"§eZohakuten§7\"");
+                            event.getWhoClicked().sendMessage("§7Vous avez choisi la forme \"§eZohakuten§7\"");
                             for (final FormHantengu string : this.formesTakes) {
                                 switch (string) {
                                     case SEKIDO:
@@ -317,7 +317,7 @@ public class HantenguV3 extends DemonsRoles implements Listener {
                     fastInv.open(player);
                 } else {
                     if (this.leftClickPower == null || !using) {
-                        player.sendMessage("§7Vous n'avez aucun pouvoir équiper sur votre§c clic gauche§7 pour l'instant...");
+                        player.sendMessage("§7Vous n'avez aucun pouvoir équipé sur votre§c clic gauche§7 pour l'instant...");
                         return false;
                     }
                     if (player.isSneaking() && this.shiftClickPower != null) {

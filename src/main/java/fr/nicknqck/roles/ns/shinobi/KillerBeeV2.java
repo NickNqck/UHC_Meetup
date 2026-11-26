@@ -252,7 +252,7 @@ public class KillerBeeV2 extends ShinobiRoles implements Listener {
                 }
                 this.player.setVelocity(current);
                 cancel();
-                this.player.sendMessage("§7Vos§a tentacules§7 vous propulse !");
+                this.player.sendMessage("§7Vos§a tentacules§7 vous propulsent !");
             }
         }
     }

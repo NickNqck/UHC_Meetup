@@ -89,7 +89,7 @@ public class KanaoV2 extends SlayerRoles {
                         return false;
                     }
                     if (gamePlayer.getRole() instanceof Tanjiro) {
-                        player.sendMessage("§a"+args[1]+"§7 est bien§a Tanjiro§7 vous obtenez§c +2❤ permanents§7 ainsi que l'effet§c Force I§7 à moins de§c 20 blocs");
+                        player.sendMessage("§a"+args[1]+"§7 est bien§a Tanjiro§7 vous obtenez§c +2❤ permanentss§7 ainsi que l'effet§c Force I§7 à moins de§c 20 blocs");
                         getRole().setMaxHealth(getRole().getMaxHealth()+4.0);
                         player.setMaxHealth(getRole().getMaxHealth());
                         player.setHealth(player.getHealth()+4.0);
@@ -170,7 +170,7 @@ public class KanaoV2 extends SlayerRoles {
                     return false;
                 }
             }
-            player.sendMessage("§cCette commande prend un joueur en entrer");
+            player.sendMessage("§cCette commande prend un joueur en entrée");
             return false;
         }
         private static class FouilleListener implements Listener {

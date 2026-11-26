@@ -66,7 +66,7 @@ public class KrystalCommands implements CommandExecutor {
                                                 }
                                                 ((IGotReputation) me.getRole()).setReputation(((IGotReputation) me.getRole()).getReputation() - bailliInfoType.getReputationCost());
                                             } else {
-                                                sender.sendMessage("§aBailli Thomas§7: Hors de question que je te donne cette information, tu ne m'inspire pas confiance.");
+                                                sender.sendMessage("§aBailli Thomas§7: Hors de question que je te donne cette information, tu ne m'inspires pas confiance.");
                                             }
                                         } else {
                                             sender.sendMessage("§aBailli Thomas§7: C'est quoi ça un \"§c"+args[2]+"\"§7 ?");

@@ -61,7 +61,7 @@ public class GetterList {
     }
     public void getTitanRougeList(Player player){
         if (!gameState.getGamePlayer().isEmpty()){
-            TextComponent text = new TextComponent("§cListe des Titans Rouge:\n");
+            TextComponent text = new TextComponent("§cListe des Titans Rouges:\n");
             for (final GamePlayer gamePlayer : GameState.getInstance().getGamePlayer().values()){
                 if (gamePlayer.getRole() == null)continue;
                 final RoleBase role = gamePlayer.getRole();

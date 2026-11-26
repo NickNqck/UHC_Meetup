@@ -51,7 +51,7 @@ public class Sakura extends HShinobiRoles {
 				"",
 				AllDesc.items,
 				"",
-				AllDesc.point+ByakugoItem().getItemMeta().getDisplayName()+"§f: Vous permet de sois§c stocker votre vie§f sois§c récupérer votre vie§f stocker dans votre item, pour changer de mode d'utilisation, il faudra faire clic gauche",
+				AllDesc.point+ByakugoItem().getItemMeta().getDisplayName()+"§f: Vous permet de soit§c stocker votre vie§f soit§c récupérer votre vie§f stockée dans votre item, pour changer de mode d'utilisation, il faudra faire clic gauche",
 				"",
 				AllDesc.particularite,
 				"",

@@ -107,9 +107,9 @@ public class KokushiboV2 extends DemonsRoles {
         public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
             getRole().getGameState().nightTime = true;
             getRole().getGameState().setDayTimer(Main.getInstance().getGameConfig().getMaxTimeDay());
-            GameListener.SendToEveryone("§cKokushibo§f à forcer la§9 nuit");
+            GameListener.SendToEveryone("§cKokushibo§f a forcé la§9 nuit");
             Bukkit.getPluginManager().callEvent(new NightEvent(getRole().getGameState(), Main.getInstance().getGameConfig().getMaxTimeDay()));
-            player.sendMessage("§cVous avez forcez la nuit");
+            player.sendMessage("§cVous avez forcé la nuit");
             getRole().addSpeedAtInt(player, 10f);
             EventUtils.registerRoleEvent(this);
             return true;
@@ -132,7 +132,7 @@ public class KokushiboV2 extends DemonsRoles {
 
         public RegenPower(@NonNull RoleBase role) {
             super("Pouvoir régénérant", null, role,
-                    "§7Vous possédez une§c régénération naturel§7 à hauteur de§c 1/2❤§7 toutes les§c 15 secondes");
+                    "§7Vous possédez une§c régénération naturelle§7 à hauteur de§c 1/2❤§7 toutes les§c 15 secondes");
             new RegenPower.RegenerationRunnable(role.getGameState(), role.getPlayer(), this);
         }
 
@@ -209,17 +209,17 @@ public class KokushiboV2 extends DemonsRoles {
         private final VerticalPower verticalPower;
 
         public SouflePower(@NonNull KokushiboV2 role) {
-            super("Soufle de la lune", new Cooldown(30), new ItemBuilder(Material.NETHER_STAR).setName("§1Soufle de la lune"), role,
-                    "§7Vous permet d'utiliser votre \"§bPourcentage Lunaire§7\" pour utiliser les pouvoirs suivant: ",
+            super("Souffle de la lune", new Cooldown(30), new ItemBuilder(Material.NETHER_STAR).setName("§1Souffle de la lune"), role,
+                    "§7Vous permet d'utiliser votre \"§bPourcentage Lunaire§7\" pour utiliser les pouvoirs suivants: ",
                     "",
-                    "§fClic gauche§7 (Frappe Horizontal): Vous permet de lancer un§c croissant de lune§7 la ou vous regardez qui parcourra§c 10 blocs" ,
-                    "§7Il détruira les blocs sur son passage et en infligeant§c 2❤§7 de§c dégâts§7 au joueurs touchés tout en les repoussants fortement en arrière. (1x/5m)",
+                    "§fClic gauche§7 (Frappe Horizontale): Vous permet de lancer un§c croissant de lune§7 là où vous regardez qui parcourra§c 10 blocs" ,
+                    "§7Il détruira les blocs sur son passage et en infligeant§c 2❤§7 de§c dégâts§7 aux joueurs touchés tout en les repoussant fortement en arrière. (1x/5m)",
                     "",
-                    "§fClic droite§7 (Frappe Vertical): En visant un joueur, vous permet de lui infligez§c 2❤§7 de§c dégâts§7 et de le repousser légèrement en arrière. (1x/5m)",
+                    "§fClic droit§7 (Frappe Verticale): En visant un joueur, vous permet de lui infliger§c 2❤§7 de§c dégâts§7 et de le repousser légèrement en arrière. (1x/5m)",
                     "",
-                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à hauteurs de (nombre de joueur autour de vous) toutes les§c 4 secondes§7.",
+                    "§7Vous rechargerez automatiquement votre§b Pourcentage Lunaire§7 la§1 nuit§7 à hauteur de (nombre de joueurs autour de vous) toutes les§c 4 secondes§7.",
                     "",
-                    "§cChaque pouvoir du§1 Soufle de la lune§c vous coûtera§b 50%§c du \"§bPourcentage Lunaire§c\"");
+                    "§cChaque pouvoir du§1 Souffle de la lune§c vous coûtera§b 50%§c du \"§bPourcentage Lunaire§c\"");
             this.role = role;
             this.horizontalPower = new HorizontalPower(role);
             this.verticalPower = new VerticalPower(role);
@@ -235,7 +235,7 @@ public class KokushiboV2 extends DemonsRoles {
                 final PlayerInteractEvent event = (PlayerInteractEvent) map.get("event");
                 if (event.getAction().name().contains("LEFT")) {
                     if (this.role.pourcentageLunaire < 50) {
-                        player.sendMessage("§cIl vous faut au minimum§4 50%§c de§7 \"§bPourcentage Lunaire§7\"§c pour utiliser votre§4 Frappe Horizontal§c.");
+                        player.sendMessage("§cIl vous faut au minimum§4 50%§c de§7 \"§bPourcentage Lunaire§7\"§c pour utiliser votre§4 Frappe Horizontale§c.");
                         return false;
                     }
                     if (!this.horizontalPower.checkUse(player, map)) return false;
@@ -243,7 +243,7 @@ public class KokushiboV2 extends DemonsRoles {
                     return true;
                 } else if (event.getAction().name().contains("RIGHT")) {
                     if (this.role.pourcentageLunaire < 50) {
-                        player.sendMessage("§cIl vous faut au minimum§4 50%§c de§7 \"§bPourcentage Lunaire§7\"§c pour utiliser votre§4 Frappe Vertical§c.");
+                        player.sendMessage("§cIl vous faut au minimum§4 50%§c de§7 \"§bPourcentage Lunaire§7\"§c pour utiliser votre§4 Frappe Verticale§c.");
                         return false;
                     }
                     if (!this.verticalPower.checkUse(player, map)) return false;
@@ -259,14 +259,14 @@ public class KokushiboV2 extends DemonsRoles {
             getShowCdRunnable().setCustomTexte(this.role.pourcentageLunaire >= 50 ?
                     (//Si >=50%
                             (this.horizontalPower.getCooldown().isInCooldown() ?
-                            "§cFrappe Horizontal:§b "+StringUtils.secondsTowardsBeautiful(this.horizontalPower.getCooldown().getCooldownRemaining())//Si le pouvoir est en cooldown
+                            "§cFrappe Horizontale:§b "+StringUtils.secondsTowardsBeautiful(this.horizontalPower.getCooldown().getCooldownRemaining())//Si le pouvoir est en cooldown
                             :
-                            "§cFrappe Horizontal est§a utilisable")//Si le pouvoir est utilisable
+                            "§cFrappe Horizontale est§a utilisable")//Si le pouvoir est utilisable
                             +"§7 | "+
                                     (this.verticalPower.getCooldown().isInCooldown() ?
-                                            "§cFrappe Vertical:§b "+StringUtils.secondsTowardsBeautiful(this.verticalPower.getCooldown().getCooldownRemaining())//Si le pouvoir est en cooldown
+                                            "§cFrappe Verticale:§b "+StringUtils.secondsTowardsBeautiful(this.verticalPower.getCooldown().getCooldownRemaining())//Si le pouvoir est en cooldown
                                             :
-                                            "§cFrappe Vertical est§a utilisable")
+                                            "§cFrappe Verticale est§a utilisable")
                     )//Si >= 50%
                     :
                     "§cAucun pouvoir n'est encore utilisable"//Si < 50%
@@ -276,7 +276,7 @@ public class KokushiboV2 extends DemonsRoles {
         private static class HorizontalPower extends Power {
 
             public HorizontalPower(@NonNull RoleBase role) {
-                super("Soufle de la lune (Attaque Horizontal)", new Cooldown(60*5), role);
+                super("Souffle de la lune (Attaque Horizontale)", new Cooldown(60*5), role);
                 setShowInDesc(false);
             }
 
@@ -353,7 +353,7 @@ public class KokushiboV2 extends DemonsRoles {
                             if (entity instanceof LivingEntity && !this.alreadyTouched.contains(entity.getUniqueId())) {
                                 LivingEntity target = (LivingEntity) entity;
                                 this.alreadyTouched.add(target.getUniqueId());
-                                this.player.sendMessage("§c"+target.getName()+"§7 à subit votre§c Frappe Horizontal§7.");
+                                this.player.sendMessage("§c"+target.getName()+"§7 a subi votre§c Frappe Horizontale§7.");
                                 // Inflige les dégâts
                                 target.damage(0.0, player);
                                 target.setHealth(Math.max(1.0, target.getHealth()-4.0));
@@ -365,7 +365,7 @@ public class KokushiboV2 extends DemonsRoles {
 
                                 // Appliquer le vecteur
                                 target.setVelocity(pushDirection);
-                                target.sendMessage("§cVous avez été touché par la§4 Frappe Horizontal§c de§4 Kokushibo§c.");
+                                target.sendMessage("§cVous avez été touché par la§4 Frappe Horizontale§c de§4 Kokushibo§c.");
                             }
                         }
                     }
@@ -376,7 +376,7 @@ public class KokushiboV2 extends DemonsRoles {
         private static class VerticalPower extends Power {
 
             public VerticalPower(@NonNull RoleBase role) {
-                super("Soufle de la lune (Frappe Vertical)", new Cooldown(60*5), role);
+                super("Souffle de la lune (Frappe Verticale)", new Cooldown(60*5), role);
                 setShowInDesc(false);
                 setTargetDistance(5);
             }
@@ -398,7 +398,7 @@ public class KokushiboV2 extends DemonsRoles {
 
                 // Appliquer le vecteur
                 target.setVelocity(pushDirection);
-                target.sendMessage("§cVous avez été touché par la§4 Frappe Vertical§c de§4 Kokushibo§c.");
+                target.sendMessage("§cVous avez été touché par la§4 Frappe Verticale§c de§4 Kokushibo§c.");
                 return true;
             }
         }

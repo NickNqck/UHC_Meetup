@@ -96,11 +96,11 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                 .addEffects(getEffects())
                 .setPowers(getPowers())
                 .addCustomLine(this.infected == null ?
-                        "§7Votre§e Izanami§7 ne peut pas avoir les missions: \"§fRester loin de vous (§c30 blocs§f) pendant§c 1 minutes§7\"§7 et \"§fRester proche de la cible (§c20 blocs§f) pendant§c 5 minutes§7\""
+                        "§7Votre§e Izanami§7 ne peut pas avoir les missions: \"§fRester loin de vous (§c30 blocs§f) pendant§c 1 minute§7\"§7 et \"§fRester proche de la cible (§c20 blocs§f) pendant§c 5 minutes§7\""
                         : "")
                 .addCustomLine("§7Vous êtes immunisé à TOUT ce qui vous ferait changer de camp")
                 .addCustomLine("§7Une fois que vous avez infecté un joueur, il ne pourra plus changer de camp")
-                .addCustomLine("§7Tant que votre§a Shuriken Jutsu§7 est en cooldown, vous ferez§c 20%§7 de§c dégâts supplémentaire")
+                .addCustomLine("§7Tant que votre§a Shuriken Jutsu§7 est en cooldown, vous ferez§c 20%§7 de§c dégâts supplémentaires")
                 .getText();
     }
 
@@ -193,14 +193,14 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
             super("Kotoamatsukami", null, new ItemBuilder(Material.NETHER_STAR).setName("§cKotoamatsukami"), role,
                     "§7Ouvre un menu vous permettant de sélectionner un joueur proche de vous à moins de§c 50 blocs§7",
                     "",
-                    "§7Une fois choisis celà démarrera une infection fonctionnant avec un système de§c points§7: ",
+                    "§7Une fois choisi, cela démarrera une infection fonctionnant avec un système de§c points§7: ",
                     "",
                     "§8 -§7 5 blocs§2 + 25 points",
                     "§8 -§7 10 blocs§a + 15 points",
                     "§8 -§7 20 blocs§6 + 10 points",
                     "§8 -§7 40 blocs§c + 5 points",
                     "",
-                    "§7Une fois arriver à§6 2500 points§7 le joueur visé rejoindra votre camp et devra donc gagnez avec vous.");
+                    "§7Une fois arrivé à§6 2500 points§7 le joueur visé rejoindra votre camp et devra donc gagner avec vous.");
             this.shisuiSolo = role;
             setMaxUse(1);
             EventUtils.registerRoleEvent(this);
@@ -228,7 +228,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                 }
             }
             if (playerList.isEmpty()) {
-                player.sendMessage("§cIl n'y a pas assez de personnes valide autour de vous pour utiliser cette technique.");
+                player.sendMessage("§cIl n'y a pas assez de personnes valides autour de vous pour utiliser cette technique.");
                 return false;
             }
             final Inventory inv = Bukkit.createInventory(player, 54, "§7(§c!§7)§c Kotoamatsukami");
@@ -355,9 +355,9 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
                     "§7Vous permet d'§aactiver§7 ou de§c désactiver§7 votre§c Shuriken Jutsu§7",
                     "",
                     "§7Quand il est§a activé§7 en faisant§c clic droit§7 avec une§c épée§7 vous pourrez lancer une§c flèche§7 qui,",
-                    "§7S'il elle touche un joueur lui infligera un effet de§c stun§7 pendant§c 0,5s",
+                    "§7Si elle touche un joueur lui infligera un effet de§c stun§7 pendant§c 0,5s",
                     "",
-                    "§cAttention, par défaut ce pouvoir est§4 désactiver");
+                    "§cAttention, par défaut ce pouvoir est§4 désactivé");
             EventUtils.registerRoleEvent(this);
             this.cooldown = new Cooldown(30);
         }
@@ -418,7 +418,7 @@ public class ShisuiSolo extends NSSoloRoles implements Listener, IUchiwa {
             }
             if (!event.getDamager().getUniqueId().equals(getRole().getPlayer()))return;
             if (this.cooldown.isInCooldown()) {
-                event.setDamage(event.getDamage()*1.20);//+20% de dégat
+                event.setDamage(event.getDamage()*1.20);//+20% de dégâts
             }
         }
     }

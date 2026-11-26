@@ -31,7 +31,7 @@ public class TitanDeviant extends TitansRoles {
 				AllDesc.bar,
 				AllDesc.role+"Titan Déviant",
 				"",
-				AllDesc.capacite+"Vous êtes déjà transformé, mais pour possèdez des effets il vous faurdra être à côté de titans",
+				AllDesc.capacite+"Vous êtes déjà transformé, mais pour posséder des effets il vous faudra être à côté de titans",
 				"",
 				AllDesc.point+"§31 Titan :§r vous posséderez "+AllDesc.Speed+" 1",
 				AllDesc.point+"§32 Titans :§r vous posséderez "+AllDesc.Speed+" 1 ainsi que "+AllDesc.Resi+" 1",

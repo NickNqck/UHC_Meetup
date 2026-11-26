@@ -134,7 +134,7 @@ public class GinkakuV2 extends KumogakureRole {
         protected GourdePower(@NonNull RoleBase role) {
             super("Gourde", new Cooldown(60*7+10), new ItemBuilder(Material.HOPPER).setName("§6Gourde"), role,
                     "§7En frappant un joueur, pose un §chopper §7à sa position",
-                    "§c10 secondes§7 plus tard, si le §chopper §7 n'a pas été cassé celà téléportera le joueur sur le §chopper",
+                    "§c10 secondes§7 plus tard, si le §chopper §7 n'a pas été cassé cela téléportera le joueur sur le §chopper",
                     "§7Il obtiendra les effets:§2 Poison I§7 et§8 Wither I§7 pendant§c 10s§7.§7 (1x/7m)");
             EventUtils.registerRoleEvent(this);
         }
@@ -215,8 +215,8 @@ public class GinkakuV2 extends KumogakureRole {
 
         protected SabrePower(@NonNull RoleBase role) {
             super("Sabre des Étoiles", new Cooldown(30), new ItemBuilder(Material.DIAMOND_SWORD).setName("§aSabre des Étoiles").addEnchant(Enchantment.DAMAGE_ALL, 3), role,
-                    "§7Infligera un effet de§c saignement§7 (§c1/2❤§7 toutes les§c 2 secondes§7 pendant§c 8 secondes§7) au joueur sur qui vous infligerez§c 15 coups§7 d'affilé.§7 (1x/30s)");
-            role.getGamePlayer().getActionBarManager().addToActionBar("sabre.coups", "§7Coup avant d'infliger le§c saignement§7:§c "+this.amountCoups+"§7/§615");
+                    "§7Infligera un effet de§c saignement§7 (§c1/2❤§7 toutes les§c 2 secondes§7 pendant§c 8 secondes§7) au joueur sur qui vous infligerez§c 15 coups§7 d'affilée.§7 (1x/30s)");
+            role.getGamePlayer().getActionBarManager().addToActionBar("sabre.coups", "§7Coups avant d'infliger le§c saignement§7:§c "+this.amountCoups+"§7/§615");
             setShowCdInHand(false);
         }
 
@@ -238,7 +238,7 @@ public class GinkakuV2 extends KumogakureRole {
                     player.sendMessage("§c"+event.getVictim().getPlayerName());
                     return true;
                 }
-                this.getRole().getGamePlayer().getActionBarManager().updateActionBar("sabre.coups", "§7Coup avant d'infliger le§c saignement§7 (§b"+this.targetName+"§7):§c "+this.amountCoups+"§7/§615");
+                this.getRole().getGamePlayer().getActionBarManager().updateActionBar("sabre.coups", "§7Coups avant d'infliger le§c saignement§7 (§b"+this.targetName+"§7):§c "+this.amountCoups+"§7/§615");
             }
             return false;
         }

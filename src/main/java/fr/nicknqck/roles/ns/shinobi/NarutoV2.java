@@ -97,7 +97,7 @@ public class NarutoV2 extends HShinobiRoles {
                     "",
                     "§8 -§7 Le coup mettra la personne en§c feu§7.",
                     "",
-                    "§8 -§7 Le coup infligera§c 1/2❤§7 de§c dégâts§7 supplémentaire.");
+                    "§8 -§7 Le coup infligera§c 1/2❤§7 de§c dégâts§7 supplémentaires.");
             this.cooldown = new Cooldown(30);
             EventUtils.registerRoleEvent(this);
         }
@@ -122,7 +122,7 @@ public class NarutoV2 extends HShinobiRoles {
                 if (this.cooldown.isInCooldown())return;
                 if (Main.RANDOM.nextInt(100) <= 50) {
                     event.getEntity().setFireTicks(200);
-                    event.getDamager().sendMessage("§7La§c rage§7 de§6 Kyubi§7 enflamment§c "+((Player) event.getEntity()).getDisplayName());
+                    event.getDamager().sendMessage("§7La§c rage§7 de§6 Kyubi§7 enflamme§c "+((Player) event.getEntity()).getDisplayName());
                     this.cooldown.use();
                 } else {
                     ((Player) event.getEntity()).setHealth(Math.max(((Player) event.getEntity()).getHealth()-1.0, 1.0));
@@ -139,7 +139,7 @@ public class NarutoV2 extends HShinobiRoles {
         public NSClone(@NonNull RoleBase role) {
             super("/ns clone", "clone", new Cooldown(60*10), role, CommandType.NS,
                     "§7Vous permet de faire apparaître un§a villageois§7 portant le nom de§a Naruto§7, tant qu'il est en vie il accumule du temps,",
-                    "§7en refaisant la commande, vous obtiendrez les effets§e Speed I§7 et§c Force I§7 pendant le temp accumulé");
+                    "§7en refaisant la commande, vous obtiendrez les effets§e Speed I§7 et§c Force I§7 pendant le temps accumulé");
             EventUtils.registerRoleEvent(this);
             setWorkWhenInCooldown(true);
         }
@@ -234,7 +234,7 @@ public class NarutoV2 extends HShinobiRoles {
                 this.nsClone.getRole().getGamePlayer().getActionBarManager().removeInActionBar("naruto.clone");
                 this.nsClone.getRole().givePotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20*this.accumuledTime, 0, false, false), EffectWhen.NOW);
                 this.nsClone.getRole().givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*this.accumuledTime, 0, false, false), EffectWhen.NOW);
-                this.nsClone.getRole().getGamePlayer().sendMessage("§7Vous récupérez les effets que votre§a Clone§7 a accumulé.");
+                this.nsClone.getRole().getGamePlayer().sendMessage("§7Vous récupérez les effets que votre§a Clone§7 a accumulés.");
                 this.villager.damage(9999);
                 cancel();
             }

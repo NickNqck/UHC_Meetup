@@ -92,10 +92,10 @@ public class MakomoV2 extends SlayerRoles implements Listener{
         private final LinkedList<Block> blocks;
 
         public LiquefactionAccelere(@NonNull RoleBase role) {
-            super("Liquéfaction Accéléré", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§bLiquéfaction Accéléré"), role,
-                    "§7Vous entours d'§beau§7 pendant§c 2 secondes§7 (vous empêche de bouger), puis, vous§c téléporte§7 sur la§c cible.",
+            super("Liquéfaction Accélérée", new Cooldown(60*6), new ItemBuilder(Material.NETHER_STAR).setName("§bLiquéfaction Accélérée"), role,
+                    "§7Vous entoure d'§beau§7 pendant§c 2 secondes§7 (vous empêche de bouger), puis, vous§c téléporte§7 sur la§c cible.",
                     "",
-                    "§7Une fois§c téléporter§7 la§c cible§7 obtient§c 30 secondes§7 de§c Slowness I§7.");
+                    "§7Une fois§c téléporté§7 la§c cible§7 obtient§c 30 secondes§7 de§c Slowness I§7.");
             this.blocks = new LinkedList<>();
             setTargetDistance(30);
             EventUtils.registerRoleEvent(this);

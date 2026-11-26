@@ -107,17 +107,17 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
                 "",
                 "§lItem:",
                 "",
-                AllDesc.point+"§6Sake§r: Ce remplit avec un§c clic droit§f sur une§c source d'eau§r, cette bouteille vous permet de remplir votre§c jauge d'alcool§r, chaque stade se cumule avec les bonus des stades précédents",
-                AllDesc.tab+"§b20%§r: §c+25%§f de§c chance§f d'infliger des§c coups enflammé",
-                AllDesc.tab+"§b40%§r: §c+25%§f de§c chance§f d'infliger des§c coups enflammé§f et§c +25%§f de§c chance§f que vos§c flèches§f enflamme le§c joueur§f toucher",
-                AllDesc.tab+"§b60%§r: §c+50%§f de§c chance§f d'infliger des§c coups enflammé§f et§c +25%§f de§c chance§f que vos§c flèches§f enflamme le§c joueur§f toucher",
-                AllDesc.tab+"§b80%§r: §c+25%§f de§c chance§f que vos§c flèches§f enflamme§f le§c joueur§f toucher et vous vous§c régénérerez§f de§c 1/2"+AllDesc.coeur+"§f toutes les§c 6 secondes§f en§c feu",
+                AllDesc.point+"§6Sake§r: Se remplit avec un§c clic droit§f sur une§c source d'eau§r, cette bouteille vous permet de remplir votre§c jauge d'alcool§r, chaque stade se cumule avec les bonus des stades précédents",
+                AllDesc.tab+"§b20%§r: §c+25%§f de§c chance§f d'infliger des§c coups enflammés",
+                AllDesc.tab+"§b40%§r: §c+25%§f de§c chance§f d'infliger des§c coups enflammés§f et§c +25%§f de§c chance§f que vos§c flèches§f enflamment le§c joueur§f touché",
+                AllDesc.tab+"§b60%§r: §c+50%§f de§c chance§f d'infliger des§c coups enflammés§f et§c +25%§f de§c chance§f que vos§c flèches§f enflamment le§c joueur§f touché",
+                AllDesc.tab+"§b80%§r: §c+25%§f de§c chance§f que vos§c flèches§f enflamment§f le§c joueur§f touché et vous vous§c régénérerez§f de§c 1/2"+AllDesc.coeur+"§f toutes les§c 6 secondes§f en§c feu",
                 "",
                 "§7(Vous perdez§c 1%§7 d'§calcool§7 toutes les§c 6 secondes§7)",
                 "",
                 "§lCommande:",
                 "",
-                AllDesc.point+"§6/ds flamme§f: §aActivable§f/§cDésactivable§f, ce pouvoir vous donne l'effet§c Fire Résistance I§f de manière§c permanente§f ainsi que les bonus donner par votre§6 Sake§f.",
+                AllDesc.point+"§6/ds flamme§f: §aActivable§f/§cDésactivable§f, ce pouvoir vous donne l'effet§c Fire Résistance I§f de manière§c permanente§f ainsi que les bonus donnés par votre§6 Sake§f.",
                 "",
                 AllDesc.bar
         };
@@ -246,7 +246,7 @@ public class ShinjuroV2 extends DemonsSlayersRoles {
                         Block block = event.getPlayer().getWorld().getBlockAt(new Location(event.getClickedBlock().getWorld(), event.getClickedBlock().getX(), event.getClickedBlock().getY()+1, event.getClickedBlock().getZ()));
                         if (event.getClickedBlock().getType().name().contains("WATER") || block.getType().name().contains("WATER")){
                             event.getPlayer().setItemInHand(shinjuro.SakeRemplie);
-                            event.getPlayer().sendMessage("§7Vous avez remplie votre fiole.");
+                            event.getPlayer().sendMessage("§7Vous avez rempli votre fiole.");
                         }
                         event.setCancelled(true);
                         event.getPlayer().updateInventory();

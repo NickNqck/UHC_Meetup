@@ -62,7 +62,7 @@ public class SanemiV2 extends PilierRoles {
     private static class VentPower extends ItemPower {
 
         protected VentPower(RoleBase role) {
-            super("§aSouffle du Vent", new Cooldown(60*7+150), new ItemBuilder(Material.FEATHER).setName("§aSouffle du Vent"), role, "§7Effectue un§c dash§7 dans la direction ou vous regardez, également, vous donne l'effet§b Speed II§7 pendant§c "+ StringUtils.secondsTowardsBeautiful(150)+"§7.");
+            super("§aSouffle du Vent", new Cooldown(60*7+150), new ItemBuilder(Material.FEATHER).setName("§aSouffle du Vent"), role, "§7Effectue un§c dash§7 dans la direction où vous regardez, également, vous donne l'effet§b Speed II§7 pendant§c "+ StringUtils.secondsTowardsBeautiful(150)+"§7.");
         }
 
         @Override

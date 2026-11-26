@@ -34,7 +34,7 @@ public class TitanSouriant extends TitansRoles {
 			AllDesc.bar,
 			AllDesc.role+"Titan Souriant",
 			"",
-			AllDesc.items+"Vous possèdez un item (transformation) qui vous octroie les effets "+AllDesc.Resi+" 10% ansi que "+AllDesc.Force+" 1",
+			AllDesc.items+"Vous possédez un item (transformation) qui vous octroie les effets "+AllDesc.Resi+" 10% ainsi que "+AllDesc.Force+" 1",
 			"",
 			AllDesc.bar,
 		};

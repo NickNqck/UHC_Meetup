@@ -47,11 +47,11 @@ public class RockLeeV2 extends PortesRoles implements Listener {
     public TextComponent getComponent() {
         return new AutomaticDesc(this).setItems(troisPorteMap(), sixPorteMap(), huitPorteMap(),
                 new TripleMap<>(
-                        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'obtenir l'effet§b Speed I§7 pendant§c 1 minute§7, puis, vous obtiendrez§c 15 secondes§7 de§2 nausé§7. (1x/3m)")}),
+                        new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7Vous permet d'obtenir l'effet§b Speed I§7 pendant§c 1 minute§7, puis, vous obtiendrez§c 15 secondes§7 de§2 nausée§7. (1x/3m)")}),
                         "§aAlcoolique no Jutsu",
                         60*3
                 )).addParticularites(
-                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7A la mort de §aGai Maito§7 vous obtiendrez l'item "+huitPorteMap().getSecond())})
+                new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{new TextComponent("§7À la mort de §aGai Maito§7 vous obtiendrez l'item "+huitPorteMap().getSecond())})
         ).getText();
     }
 

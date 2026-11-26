@@ -80,7 +80,7 @@ public class ZetsuBlancV4 extends AkatsukiRoles {
                     "§7Lance vos§a spores§7 dans un§c rayon§7 de§c 50 blocs§7,",
                     "§7vous saurez quel joueur est§a Shinobi§7 (uniquement si vous avez la même§a intelligence§7).",
                     "",
-                    "§7Vous subissez§c 10%§7 de§c dégâts§7 en§c moins§7 par les joueurs découvert.",
+                    "§7Vous subissez§c 10%§7 de§c dégâts§7 en§c moins§7 par les joueurs découverts.",
                     "§7Si vous êtes la§c cible§7 d'un§c pouvoir informatif§7 venant d'une personne ayant reçu vos§a spores§7,",
                     "§7la§c cible§7 de ce§c pouvoir§7 deviendra son§a lanceur§7."
             );
@@ -157,7 +157,7 @@ public class ZetsuBlancV4 extends AkatsukiRoles {
                     if (value.equals(Intelligence.CONNUE))continue;
                     if (intelligence.equalsIgnoreCase(value.name()) && getRole() instanceof ZetsuBlancV4) {
                         ((ZetsuBlancV4) getRole()).setIntelligence(value);
-                        player.sendMessage("§7Vous avez définie votre§a intelligence§7 sur§a "+value.getName()+"§7.");
+                        player.sendMessage("§7Vous avez défini votre§a intelligence§7 sur§a "+value.getName()+"§7.");
                         return true;
                     }
                 }

@@ -90,12 +90,12 @@ public class KimimaroV2 extends OrochimaruRoles {
         private int coups = 0;
 
         public EpeeItemPower(@NonNull RoleBase role) {
-            super("§fEpée en or§r", new Cooldown(120), new ItemBuilder(new EpeeOsItem().getItem()), role,
+            super("§fÉpée en os§r", new Cooldown(120), new ItemBuilder(new EpeeOsItem().getItem()), role,
                     "§7Vous ne pouvez infliger que§c 8 coups§7 avec cet objet",
                     "",
                     "§7Au bout de§c 2 minutes§7 vous pourrez à nouveau l'utiliser§c 8 fois§7.",
                     "",
-                    "§7Les coups infliger par cet objet feront les mêmes§c dégâts§7 qu'une§b épée en diamant tranchant IV");
+                    "§7Les coups infligés par cet objet feront les mêmes§c dégâts§7 qu'une§b épée en diamant tranchant IV");
             EventUtils.registerRoleEvent(this);
         }
 
@@ -151,13 +151,13 @@ public class KimimaroV2 extends OrochimaruRoles {
                     "§7Crée une grande§a Forêt§7 faite à base d'§fos§7.",
                     "",
                     "§7Toutes les§c 5 secondes§7 tous les§c joueurs§7 étant dans la§f Forêt d'os§7",
-                    "§7subiront§c 1/2❤§7 de§c dégât§7 (aucun joueur ne peut mourir de cette effet).",
+                    "§7subiront§c 1/2❤§7 de§c dégât§7 (aucun joueur ne peut mourir de cet effet).",
                     "",
                     "§7Lorsqu'un joueur subit des§c dégâts§7 dû à l'effet de ce§c pouvoir§7",
                     "§7des§a particules§7 apparaisse autour de lui.",
                     "",
                     "§7Vous ne pouvez subir§c aucun dégât§7 venant de ce§c pouvoir§7",
-                    "§7mais les§a particules§7 apparaitront quand même.");
+                    "§7mais les§a particules§7 apparaîtront quand même.");
         }
 
         @Override

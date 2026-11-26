@@ -185,7 +185,7 @@ public class AutomaticDesc {
                 if (((ItemPower) power).getItem().getItemMeta().hasDisplayName()){
                     name = ((ItemPower) power).getItem().getItemMeta().getDisplayName();
                 } else {
-                    name = "§cLe nom n'a pas été définie";
+                    name = "§cLe nom n'a pas été défini";
                 }
             }
             String[] description = power.getDescriptions();
@@ -282,7 +282,7 @@ public class AutomaticDesc {
             BaseComponent[] hoverText = new BaseComponent[]{fromLegacyTextSafe(d.toString())};
             powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverText));
         } else {
-            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{fromLegacyTextSafe("§cAucune description trouver !")}));
+            powerName.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new BaseComponent[]{fromLegacyTextSafe("§cAucune description trouvée !")}));
         }
         return powerName;
     }
@@ -301,7 +301,7 @@ public class AutomaticDesc {
         return this;
     }
     public AutomaticDesc addParticularites(HoverEvent... hoverEvents) {
-        text.addExtra("\n\n"+AllDesc.point+"§7Voud possédez §c"+hoverEvents.length+"§7 particularités: ");
+        text.addExtra("\n\n"+AllDesc.point+"§7Vous possédez §c"+hoverEvents.length+"§7 particularités: ");
         int i = 1;
         for (HoverEvent hover : hoverEvents) {
             TextComponent toAdd = fromLegacyTextSafe("§b["+i+"]");

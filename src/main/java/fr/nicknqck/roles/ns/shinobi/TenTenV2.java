@@ -84,7 +84,7 @@ public class TenTenV2 extends ShinobiRoles {
 
         public KunaiItem(@NonNull final RoleBase role) {
             super("§aKunai§r", new Cooldown(45), new ItemBuilder(Material.SNOW_BALL).setName("§aKunai"), role,
-                    "§7La personne touché par votre§a Kunai§7 perdra immédiatement§c 1❤§7 (il pourrait en mourir).");
+                    "§7La personne touchée par votre§a Kunai§7 perdra immédiatement§c 1❤§7 (il pourrait en mourir).");
             EventUtils.registerRoleEvent(this);
         }
 
@@ -148,7 +148,7 @@ public class TenTenV2 extends ShinobiRoles {
         public ParcheminItem(@NonNull RoleBase role) {
             super("§aParchemin§r", new Cooldown(120), new ItemBuilder(Material.NETHER_STAR).setName("§aParchemin"), role,
                     "§7Crée une zone de rayon§c 20§7 autour de vous pendant§c 20 secondes§7,",
-                    "§7à l'intérieur, tous les joueurs sauf vous auront des§c flèches§7 qui apparaitront au dessus d'eux");
+                    "§7à l'intérieur, tous les joueurs sauf vous auront des§c flèches§7 qui apparaîtront au-dessus d'eux");
         }
 
         @Override

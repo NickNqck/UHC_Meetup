@@ -83,7 +83,7 @@ public class NsCommands implements CommandExecutor {
 						sender.sendMessage("§7Aucune personne n'a de rôle venant de l'univers de§a Naruto§7 n'est présent en jeu/vie");
 						return true;
 					}
-					sender.sendMessage("§7Voici la liste des§c roles§7 avec leurs§a intelligence§7:");
+					sender.sendMessage("§7Voici la liste des§c rôles§7 avec leur§a intelligence§7:");
 					sender.sendMessage("");
 					if (!genie.isEmpty()) {
 						sender.sendMessage("§2§lGénie: ");

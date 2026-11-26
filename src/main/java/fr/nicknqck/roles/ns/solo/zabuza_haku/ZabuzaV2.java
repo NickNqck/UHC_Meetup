@@ -105,7 +105,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
     }
     private void onHakuDeath(boolean msg) {
         if (msg) {
-            owner.sendMessage("§bHaku§7 est mort, pour vous vengez vous obtenez§c 10 minutes§f de§e Speed 2§7 ainsi que l'effet§9 Résistance 1§7 de manière§c permanente");
+            owner.sendMessage("§bHaku§7 est mort, pour vous venger vous obtenez§c 10 minutes§f de§e Speed 2§7 ainsi que l'effet§9 Résistance 1§7 de manière§c permanente");
         }
         givePotionEffect(new PotionEffect(PotionEffectType.SPEED, 20*60*10, 1, false, false), EffectWhen.NOW);
         givePotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 0, false, false), EffectWhen.PERMANENT);
@@ -114,7 +114,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
     @Nonnull
     @Override
     public TextComponent getComponent() {
-        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7Lorsqu'un joueur utiliser un§c pouvoir§7, vous êtes au courant §7de qui utiliser quel pouvoir").getText();
+        return AutomaticDesc.createAutomaticDesc(this).addCustomLine("§7Lorsqu'un joueur utilise un§c pouvoir§7, vous êtes au courant §7de qui utilise quel pouvoir").getText();
     }
 
     private static class InvisibilitePower extends ItemPower {
@@ -130,7 +130,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
                     "§7Vous permet de vous rendre§a invisible§7 pendant§c 5 minutes§7.",
                     "§7",
                     "§7En réutilisant ce§c pouvoir§7, vous pourrez vous retirer l'§ainvisibilité§7.",
-                    "§7Tant que vous êtes§a Invisible§7 vous ne pourrez n'y§c recevoir de coup§7, n'y en§c infliger§7.",
+                    "§7Tant que vous êtes§a Invisible§7 vous ne pourrez ni§c recevoir de coups§7, ni en§c infliger§7.",
                     "§7Tant que vous êtes§a invisible§7, tous les joueurs étant dans votre camp pourront voir des§c particules§7 à vos pieds."
             );
             this.zabuza = role;
@@ -245,7 +245,7 @@ public class ZabuzaV2 extends NSSoloRoles implements Listener {
 
         private KubikiribochoPower(@NonNull RoleBase role) {
             super("Kubikirobocho", null, new ItemBuilder(Material.DIAMOND_SWORD).setName("§bKubikiribôchô").addEnchant(Enchantment.DAMAGE_ALL,4 ), role,
-                    "§7Tout les§c 25 coups§7, vous vous§d régénérer§7 de§c 2❤§7.");
+                    "§7Tous les§c 25 coups§7, vous vous§d régénérez§7 de§c 2❤§7.");
             role.getGamePlayer().getActionBarManager().addToActionBar("zabuza.kubikiribocho", "§7Coups: §c"+this.coup+"§7/§625");
         }
 

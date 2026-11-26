@@ -156,7 +156,7 @@ public class KumoV2 extends DemonInferieurRole {
 
         public CoconPower(@NonNull RoleBase role) {
             super("Cocon", new Cooldown(60*5), new ItemBuilder(Material.STRING).setName("§cCocon"), role,
-                    "§7En visant un joueur, vous permet de lui mettre des§c cobweb§7 la ou il est.");
+                    "§7En visant un joueur, vous permet de lui mettre des§c cobweb§7 là où il est.");
             setTargetDistance(25);
         }
 

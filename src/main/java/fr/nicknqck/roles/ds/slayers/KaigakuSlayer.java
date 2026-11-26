@@ -89,30 +89,30 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
     @Override
     public TextComponent getComponent() {
         return AutomaticDesc.createAutomaticDesc(this)
-                .addCustomLine("§7Vous n'êtes pas affecté par les§c pactes§7 de§e Jigoro§7 (§6V2§7)")
+                .addCustomLine("§7Vous n'êtes pas affectée par les§c pactes§7 de§e Jigoro§7 (§6V2§7)")
                 .addCustomLines(
                         dead ? new String[0] :
                                 new String[] {
-                                        "§7Si vous vous faites tué par un§c Démon§7 vous aurez un certain§c pourcentage de chance§7 (§ben fonction de son rôle§7) de vous transformez à votre tour en§c démon§7 :",
+                                        "§7Si vous vous faites tuer par un§c Démon§7 vous aurez un certain§c pourcentage de chance§7 (§ben fonction de son rôle§7) de vous transformer à votre tour en§c démon§7 :",
                                         "",
                                         "§8 -§c Muzan§7 ou§c Kokushibo§7:§c 90%",
-                                        "§8 -§c Lunes Supérieurs§7 (hors§c Kokushibo§7 et dont§a Nezuko§7): §c70%",
-                                        "§8 -§c Lunes Inférieurs§7:§c 50%",
-                                        "§8 -§c Autres Démons§7 (dont le joueur§c infecter§7):§c 30%",
+                                        "§8 -§c Lunes Supérieures§7 (hors§c Kokushibo§7 et dont§a Nezuko§7): §c70%",
+                                        "§8 -§c Lunes Inférieures§7:§c 50%",
+                                        "§8 -§c Autres Démons§7 (dont le joueur§c infecté§7):§c 30%",
                                         "",
                                         "§7Une fois devenu un§c Démon§7 vous aurez§b Speed I§7 de manière§c permanente§7 et§c Force I§7 la§c nuit§7."
                         }
                 )
                 .addCustomLines(
                         getKnowedRoles().contains(ZenItsuV2.class) ? new String[0] : new String[] {
-                                "§7Vous possédez une§c bar de points§7 montant lorsque vous êtes proche de§a Zen'Itsu§7:",
+                                "§7Vous possédez une§c barre de points§7 montant lorsque vous êtes proche de§a Zen'Itsu§7:",
                                 "",
                                 "§8 -§a 5 blocs§7:§c +25 points",
                                 "§8 -§a 15 blocs§7:§c +15 points",
                                 "§8 -§a 25 blocs§7:§c +5 points",
                                 "§8 -§a 50 blocs§7:§c 1 point",
                                 "",
-                                "§7Une fois que la§c bar de points§7 à atteint les§c 1000 points§7 vous obtiendrez son§c identité§7.",
+                                "§7Une fois que la§c barre de points§7 a atteint les§c 1000 points§7 vous obtiendrez son§c identité§7.",
                                 "§7Toutes les§c 5 minutes§7, vous obtiendrez l'information du§c nombre de points§7 que vous avez."
                         }
                 )
@@ -145,7 +145,7 @@ public class KaigakuSlayer extends SlayerRoles implements RoleCustomLore, Listen
                 event.setCancelled(true);
                 setTeam(TeamList.Demon, true);
                 getGamePlayer().sendMessage("§7Vous avez été§c infecté§7, vous êtes maintenant dans le camp des§c Démons§7.");
-                event.getGamePlayerKiller().sendMessage("§a"+getGamePlayer().getPlayerName()+"§7 à rejoint votre§a camp§7.");
+                event.getGamePlayerKiller().sendMessage("§a"+getGamePlayer().getPlayerName()+"§7 a rejoint votre§a camp§7.");
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
                     final Player player = Bukkit.getPlayer(getGamePlayer().getUuid());
                     if (player != null) {

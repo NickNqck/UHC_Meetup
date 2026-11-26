@@ -90,11 +90,11 @@ public class FurutoV2 extends DemonInferieurRole {
 
         public FlutePower(@NonNull RoleBase role) {
             super("Flûte", new Cooldown(60*3), new ItemBuilder(Material.NETHER_STAR).setName("§cFlûte"), role,
-                    "§7Vous permet de donner un léger bonus pendant§c 15 secondes§7 à toutes les personnes autour de vous en fonction de leurs camp:",
+                    "§7Vous permet de donner un léger bonus pendant§c 15 secondes§7 à toutes les personnes autour de vous en fonction de leur camp:",
                     "",
-                    "§f Camp§c Démon§7 (et§a Nezuko§7): Les joueurs auront une chance sur trois d'obtenir§c 10%§7 de§e Speed§7 ou§c 10%§7 de§c Force§7 ou§c 10%§7 de §9Resistance",
+                    "§f Camp§c Démon§7 (et§a Nezuko§7): Les joueurs auront une chance sur trois d'obtenir§c 10%§7 de§e Speed§7 ou§c 10%§7 de§c Force§7 ou§c 10%§7 de §9Résistance",
                     "",
-                    "§fAutre camps§7: Les joueurs auront 1 chance sur deux d'obtenir Slowness 1 ou§c 15%§7 de dégât en moins");
+                    "§fAutres camps§7: Les joueurs auront 1 chance sur deux d'obtenir Slowness 1 ou§c 15%§7 de dégâts en moins");
             EventUtils.registerRoleEvent(this);
         }
 

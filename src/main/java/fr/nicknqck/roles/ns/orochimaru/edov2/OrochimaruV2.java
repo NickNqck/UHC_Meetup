@@ -38,7 +38,7 @@ import java.util.UUID;
 public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
 
     private final ItemStack kusanagi = new ItemBuilder(Material.DIAMOND_SWORD).setName("§5Kusanagi").addEnchant(Enchantment.DAMAGE_ALL, 4).
-        setLore("§7Vous permet d'avoir§c 25%§7 de§c chance§7 de voler la nature de chakra des joueurs que vous§c tuées").setUnbreakable(true).setDroppable(false).toItemStack();
+        setLore("§7Vous permet d'avoir§c 25%§7 de§c chance§7 de voler la nature de chakra des joueurs que vous§c tuez").setUnbreakable(true).setDroppable(false).toItemStack();
     @Getter
     private final List<EChakras> chakrasVoled = new ArrayList<>();
 
@@ -131,7 +131,7 @@ public class OrochimaruV2 extends EdoOrochimaruRoles implements Listener {
                                 this.chakrasVoled.add(((NSRoles) role).getChakras());
                                 final IChakraV2 iChakraV2 = Main.getInstance().getBijuManager().getChakraManager().getChakra(((NSRoles) role).getChakras());
                                 iChakraV2.setActivateFor(getPlayer(), true);
-                                event.getGamePlayerKiller().sendMessage("§7Vous maitrisez maintenant la nature de chakra: "+((NSRoles) role).getChakras().getShowedName());
+                                event.getGamePlayerKiller().sendMessage("§7Vous maîtrisez maintenant la nature de chakra: "+((NSRoles) role).getChakras().getShowedName());
                             }
                         }
                     }

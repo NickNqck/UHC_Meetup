@@ -81,7 +81,7 @@ public class HakuV2 extends NSSoloRoles {
         return new AutomaticDesc(this)
                 .addEffects(getEffects())
                 .setPowers(getPowers())
-                .addCustomLine("§7A la mort de§b Zabuza§7, vous obtiendrez l'effet§c Force I§7 de §7manière§c permanente§7 ainsi qu'une réduction de cooldown sur §7votre§b dome Hyôton")
+                .addCustomLine("§7À la mort de§b Zabuza§7, vous obtiendrez l'effet§c Force I§7 de §7manière§c permanente§7 ainsi qu'une réduction de cooldown sur §7votre§b dôme Hyôton")
                 .getText();
     }
 
@@ -119,7 +119,7 @@ public class HakuV2 extends NSSoloRoles {
 
             public HyotonItem(@NonNull final HyotonPower power) {
                 super("Hyôton", power.cooldown, new ItemBuilder(Material.NETHER_STAR).setName("§bHyôton"), power.getRole(),
-                        "§7Vous permet de crée un§b dôme de glace§7 pendant§c 3 minutes§7 vous donnant l'effet§c Force I§7 ainsi que§a NoFall");
+                        "§7Vous permet de créer un§b dôme de glace§7 pendant§c 3 minutes§7 vous donnant l'effet§c Force I§7 ainsi que§a NoFall");
                 setWorkWhenInCooldown(true);
                 EventUtils.registerRoleEvent(this);
                 this.power = power;
@@ -331,7 +331,7 @@ public class HakuV2 extends NSSoloRoles {
             @Override
             public boolean onUse(@NonNull Player player, @NonNull Map<String, Object> map) {
                 if (!this.power.blockList.isEmpty()) {
-                    player.sendMessage("§7Vous avez forcez l'arrêt de votre technique§b Hyôton§7.");
+                    player.sendMessage("§7Vous avez forcé l'arrêt de votre technique§b Hyôton§7.");
                     for (final Block block : this.power.blockList) {
                         block.setType(Material.AIR);
                     }
