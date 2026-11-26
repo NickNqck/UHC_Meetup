@@ -170,7 +170,7 @@ public class NarutoV2 extends HShinobiRoles {
         @EventHandler
         private void onEntityDeath(@NonNull final EntityDeathEvent event) {
             if (!(event.getEntity() instanceof Villager))return;
-            if (!event.getEntity().getCustomName().equals("§aNaruto"))return;
+            if (!"§aNaruto".equals(event.getEntity().getCustomName()))return;
             if (!((Villager) event.getEntity()).getProfession().equals(Villager.Profession.PRIEST))return;
             if (this.cloneRunnable == null)return;
             if (!this.getRole().getGamePlayer().getActionBarManager().containsKey("naruto.clone"))return;
