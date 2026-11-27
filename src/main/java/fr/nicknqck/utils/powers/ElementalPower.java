@@ -32,7 +32,7 @@ public abstract class ElementalPower extends Power{
         setShowInDesc(false);
     }
     public String getBallName() {
-        return "crystal."+getRole().getName();
+        return "crystal."+getRole().getName()+"."+getElement().getName();
     }
     public abstract void onImpact(@NonNull final Location impactLocation, @Nullable final Player hitPlayer);
 
